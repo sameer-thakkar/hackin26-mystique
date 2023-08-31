@@ -585,6 +585,7 @@ export const SIDEBAR_TYPES = {
   COMBO_VARIANT: 'combo-variant',
   SIDE_NAV: 'side-navigation',
   LISTICLE_CARD: 'listicle-card',
+  CONTACT_US_PANEL: 'contact-us-panel',
 };
 
 export const DATE_FORMAT_TYPES = {

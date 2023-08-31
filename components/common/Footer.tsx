@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
 import { getAppTheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
+import ContactUS, { MobileCallUsPanelDrawer } from 'components/common/ContactUs';
 import sliceHandler from 'components/Slices';
 import SocialLinks from 'components/UI/SocialLinks';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
-import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { THEMES } from 'const/index';
+import { SIDEBAR_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
@@ -168,17 +167,19 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
     grid-auto-flow: row;
     grid-template-rows: max-content;
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
-    a {
+    a, .toggle_panel_button {
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
       display: block;
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-      
-      span {
-        color: ${({ theme, isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-      }
+        isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};     
+    }
+    .toggle_panel_button {
+      background: ${({ theme }) => theme.footer.background};
+      border:none; 
+      text-align:start;
+      padding:0;
+      cursor:pointer;
     }
   }
 
@@ -190,7 +191,7 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
     }
     .links {
       ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
-      a {
+      a, .toggle_panel_button {
         ${({ isEntertainmentMb }) =>
           isEntertainmentMb &&
           `
@@ -383,11 +384,18 @@ const Footer: React.FC<FooterProps> = ({
   isEntertainmentMb = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT, isExperimentalBot } = useContext(MBContext);
-  const pageMeta = useRecoilValue(metaAtom);
   const footerRef = useRef(null);
   const isFooterIntersecting = useOnScreen({ ref: footerRef, unobserve: true });
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
+  const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
+
+  const onToggleMobileCallUsDrawer = () => {
+    setIsMobileCallUsDrawer(
+      (isMobileCallUsDrawer) => !isMobileCallUsDrawer
+    );
+  };
+
   const finalThemeName =
     themeOverride === THEMES.INHERIT ? mbTheme : themeOverride;
 
@@ -395,26 +403,24 @@ const Footer: React.FC<FooterProps> = ({
     setIsMobile(width < 768);
   }, [width]);
 
-  const getContactNo = (removeSpaces: boolean = false) => {
-    let phoneNumber: string = '';
+  const {sidebarModal: { addToAside }} = useContext(MBContext);
 
-    switch ((pageMeta?.country as any)?.code) {
-      case 'DUBAI':
-        phoneNumber = '+971 8 000 321171';
-        break;
-      case 'AU':
-        phoneNumber = '+61 3 7066 3969';
-        break;
-      default:
-        phoneNumber = '+1 347 897 0100';
-        break;
+  const toggleCallUsPanel = () => {
+    if (isMobile) {
+      onToggleMobileCallUsDrawer();
+    } else {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+      addToAside({
+        children: (
+          <div>
+            <ContactUS />
+          </div>
+        ),
+        width: '31vw',
+        title: strings.FOOTER.CALL_US,
+        type: SIDEBAR_TYPES.CONTACT_US_PANEL,
+      });
     }
-
-    if (removeSpaces) {
-      phoneNumber = phoneNumber.replace(/\s/g, '');
-    }
-
-    return phoneNumber;
   };
 
   return (
@@ -492,14 +498,12 @@ const Footer: React.FC<FooterProps> = ({
                               {strings.FOOTER.CHAT_WITH_US}
                             </a>
                           </Conditional>
-                          <a href={`tel:${getContactNo(true)}`}>
-                            <span>
-                              {`${strings.FOOTER.CALL_US} `}
-                              <span className={'hide-mobile'}>
-                                {getContactNo(true)}
-                              </span>
-                            </span>
-                          </a>
+                          <button
+                            className="toggle_panel_button"
+                            onClick={toggleCallUsPanel}
+                          >
+                            {`${strings.FOOTER.CALL_US} `}
+                          </button>
                           <a
                             href={`mailto:${
                               finalThemeName !== THEMES.MIN_BLUE
@@ -578,6 +582,11 @@ const Footer: React.FC<FooterProps> = ({
               </Container>
             </FooterLegalWrapper>
           </>
+        </Conditional>
+        <Conditional if={isMobileCallUsDrawer}>
+          <MobileCallUsPanelDrawer
+            onToggleMobileCallUsDrawer={onToggleMobileCallUsDrawer}
+          />
         </Conditional>
       </StyledFooter>
     </ThemeProvider>

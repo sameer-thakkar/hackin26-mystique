@@ -160,12 +160,12 @@ const Header = styled.div`
       .close-icon {
         transform: rotate(180deg);
       }
-        @media (max-width: 768px) {
-          display: grid;
-          grid-template-columns: 1.75rem auto auto;
-          border-bottom: 1px solid ${COLORS.GRAY.G6};
+      @media (max-width: 768px) {
+        display: grid;
+        grid-template-columns: 1.75rem auto auto;
+        border-bottom: 1px solid ${COLORS.GRAY.G6};
 
-          .close-icon {
+        .close-icon {
           padding: 0 0.375rem;
           background: ${COLORS.GRAY.G8};
           border-radius: 4px;
@@ -180,6 +180,19 @@ const Header = styled.div`
         }
       }
       `
+      : headerType === SIDEBAR_TYPES.CONTACT_US_PANEL ? `
+        border-bottom: 0.063rem solid ${COLORS.GRAY.G6};
+        padding-bottom: 1rem;
+        svg {
+          height: 1rem;
+          width: 1rem;
+        };
+        .close-icon{
+          path {
+            stroke-width: unset;
+          };
+        };
+        `
       : ''}
   top: 0;
   background: ${({
@@ -255,6 +268,12 @@ const CloseIcon = styled.div`
 
 const Title = styled.div`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+
+  ${({ sidebarType }: { sidebarType: string }) =>
+    sidebarType === SIDEBAR_TYPES.CONTACT_US_PANEL
+      ? `${expandFontToken(FONTS.HEADING_SMALL)}`
+      : ``}
+      
   @media (max-width: 768px) {
     ${({ sidebarType }: { sidebarType: string }) =>
       sidebarType === SIDEBAR_TYPES.SIDE_NAV
@@ -433,7 +452,7 @@ const AsideModal = ({
                 <StyledIcon>{LIST_ICON}</StyledIcon>
               </Conditional>
               <Title sidebarType={type}>{title}</Title>
-              {hasBack ? (
+              {hasBack && type !== SIDEBAR_TYPES.CONTACT_US_PANEL ? (
                 <BackIcon
                   // @ts-expect-error TS(2769): No overload matches this call.
                   onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
@@ -445,7 +464,12 @@ const AsideModal = ({
                   className={'close-icon'}
                   /* @ts-expect-error TS(2769): No overload matches this call. */
                   onClick={
-                    type === SIDEBAR_TYPES.SIDE_NAV ? onCloseAll : onClose
+                    [
+                      SIDEBAR_TYPES.SIDE_NAV,
+                      SIDEBAR_TYPES.CONTACT_US_PANEL,
+                    ].includes(type)
+                      ? onCloseAll
+                      : onClose
                   }
                   sidebarType={type}
                 >
