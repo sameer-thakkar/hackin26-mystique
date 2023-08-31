@@ -10,7 +10,7 @@ export const SettingsWrapper = styled.div<{
   position: relative;
 
   p {
-    font-family: Halyard Text !important;
+    font-family: 'halyard-text' !important;
     font-size: 15px !important;
     font-weight: 300 !important;
     color: ${COLORS.GRAY.G2} !important;

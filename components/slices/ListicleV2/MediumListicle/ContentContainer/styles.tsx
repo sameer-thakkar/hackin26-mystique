@@ -65,7 +65,7 @@ export const CategoryTagsWrapper = styled.div`
 export const CategoryTagWrapper = styled.div`
   padding: 0.25rem 0.5rem;
   color: ${COLORS.GRAY.G2};
-  font-family: Halyard Text;
+  font-family: 'halyard-text';
   font-size: 11px;
   font-weight: 400;
   line-height: 12px;
