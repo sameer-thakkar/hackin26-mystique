@@ -84,9 +84,13 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
-
-    let { tagged_collection: primaryCollectionId } =
-      CMSContent?.data?.data || {};
+    
+    let primaryCollectionId;
+    if (CMSContent?.data?.data) {
+      ({ tagged_collection: primaryCollectionId } = CMSContent.data.data);
+    } else if (CMSContent?.data) {
+      ({ tagged_collection: primaryCollectionId } = CMSContent.data);
+    }
 
     const metaTitle = renderShortCodes(title)?.join?.('');
     let pageTitle = '';
