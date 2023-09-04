@@ -202,15 +202,18 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
   }
 `;
 
-const LinkSlicesWrapper = styled.div<{ isEntertainmentMb: boolean }>`
+const LinkSlicesWrapper = styled.div<{
+  isEntertainmentMb: boolean;
+  slicesLength: number;
+}>`
   display: grid;
-  padding: 4rem 0;
+  padding: ${({ slicesLength }) => (slicesLength ? '4rem 0' : 'none')};
   background-color: ${COLORS.GRAY.G8};
   margin-bottom: 0;
 
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
-    padding: 2.25rem 0;
+    padding: ${({ slicesLength }) => (slicesLength ? '2.25rem 0' : 'none')};
     margin-bottom: 0;
   }
 `;
@@ -430,7 +433,10 @@ const Footer: React.FC<FooterProps> = ({
       <StyledFooter isEntertainmentMb={isEntertainmentMb} ref={footerRef}>
         <Conditional if={isExperimentalBot || isFooterIntersecting}>
           <>
-            <LinkSlicesWrapper isEntertainmentMb={isEntertainmentMb}>
+            <LinkSlicesWrapper
+              isEntertainmentMb={isEntertainmentMb}
+              slicesLength={slices?.length + secondarySlices?.length}
+            >
               <Conditional if={slices?.length}>
                 <LinkSlices
                   className={'primary-footer'}
