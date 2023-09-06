@@ -1,5 +1,5 @@
 import { sortDateArray } from 'utils/dateUtils';
-import { currencySortFn } from 'utils/gen';
+import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 import { simplifySlotData } from './inventoryUtils';
@@ -23,7 +23,9 @@ export const swrFetcher = async (url: string) => {
   return res.json();
 };
 
-export const constructHeaders = ({ cookies = {} }) => {
+export const constructHeaders = ({
+  cookies = {},
+}: { cookies?: Record<string, string> } = {}) => {
   const headers = new Headers();
   if (cookies)
     headers.set(
@@ -33,6 +35,12 @@ export const constructHeaders = ({ cookies = {} }) => {
         ''
       )
     );
+  /**
+   * Added to whitelist API calls originating from server on WAF.
+   */
+  if (isServer()) {
+    headers.set('x-api-key', process.env?.WAF_API_WHITELIST_TOKEN || '');
+  }
 
   return headers;
 };
@@ -158,11 +166,16 @@ export const fetchTourList = ({
   host = '',
   ...query
 }: Record<string, any>) => {
+  const headers = constructHeaders();
+
   return fetch(
     `${host ? host : ''}/api/tours/v6/tour-groups/${objectToQuery({
       'ids%5B%5D': tgids,
       ...query,
-    })}`
+    })}`,
+    {
+      headers,
+    }
   );
 };
 
@@ -274,7 +287,7 @@ export const fetchProductData = async ({
   lang,
   hostname,
   currency,
-  req,
+  cookies,
 }: any) => {
   const params = {
     language: lang,
@@ -284,10 +297,7 @@ export const fetchProductData = async ({
     'include-unavailable': 'true',
     ...(currency && { currency }),
   };
-  const headers = constructHeaders(
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
-    req ? { headers: { cookie: req.headers.cookie } } : {}
-  );
+  const headers = constructHeaders({ cookies: cookies ?? {} });
   const url = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupsV6,
     hostname,
@@ -750,7 +760,8 @@ export const fetchDomainConfig = async (uid: string) => {
   }
 
   const whitelabel = `https://${domainArray?.join('.')}`;
-  const customHeaders = new Headers();
+  const customHeaders = constructHeaders({});
+
   customHeaders.append(CUSTOM_HEADER.ORIGIN, whitelabel);
   const requestOptions = {
     headers: customHeaders,

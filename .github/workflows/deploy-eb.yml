@@ -117,6 +117,7 @@ jobs:
             NEXT_PUBLIC_HEADOUT_API_DOMAIN=${{ env.NEXT_PUBLIC_HEADOUT_API_DOMAIN }}
             SLACK_GRP_BKNG_WEBHOOK=${{ env.SLACK_GRP_BKNG_WEBHOOK }}
             ZENDESK_GRP_BKNG_TOKEN=${{ env.ZENDESK_GRP_BKNG_TOKEN }}
+            WAF_API_WHITELIST_TOKEN=${{ secrets.WAF_API_WHITELIST_TOKEN }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           labels: ${{ steps.docker_meta.outputs.labels }}

@@ -679,6 +679,7 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
     lang,
     hostname,
     currency,
+    cookies: serverCookies,
   }).then((data) => data);
 
   if (!shouldUseDynamicShowPage()) {
