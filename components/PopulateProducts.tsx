@@ -34,7 +34,6 @@ import {
   DESIGN,
   PROMO_CODES,
   THEMES,
-  TOUR_RANKING_EXPERIMENT,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -148,9 +147,7 @@ const PopulateProducts = (props: any) => {
   const hsid = useRecoilValue(hsidAtom);
   const isHsidSetFail = useRecoilValue(hsidSetFailAtom);
   const productsWrapperRef = useRef(null);
-  const initialVariant = Object.keys(TOUR_RANKING_EXPERIMENT).includes(uid)
-    ? null
-    : VARIANTS.CONTROL;
+  const initialVariant = VARIANTS.CONTROL;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
   const [appliedPromo, setAppliedPromo] = useState(null);
@@ -615,7 +612,6 @@ const PopulateProducts = (props: any) => {
                 bannerVideo,
                 isCollectionMB,
                 isSpecialTour,
-                isLoading: tourRankingExpVariant === null,
                 isGuidedTour:
                   tourRankingExpVariant === VARIANTS.TREATMENT &&
                   scorpioData?.[tgid]?.descriptors?.includes('GUIDED_TOUR'),
