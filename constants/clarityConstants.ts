@@ -5,4 +5,5 @@ export const CLARITY_SUPPORTED_DOMAINS = [
   'www.versailles-palace-tickets.com',
   'www.thevaticantickets.com',
   'www.colosseum-rome-tickets.com',
+  'www.desert-safari-dxb.com',
 ];
