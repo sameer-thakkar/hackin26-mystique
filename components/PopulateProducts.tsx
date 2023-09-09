@@ -270,6 +270,7 @@ const PopulateProducts = (props: any) => {
         (await fetchBatchedCalendarInventory({
           tgids,
           fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
+          currency,
           toDate: formatDateToString(
             addDays(new Date(), 30),
             'en',

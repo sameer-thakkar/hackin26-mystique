@@ -704,7 +704,7 @@ export const fetchTourGroupSlots = async ({
 
 interface TFetchCalendarInventoryTypes {
   tgid: string | number;
-  currency?: string;
+  currency?: string | null;
   fromDate?: string;
   toDate?: string;
   cookies?: { [key: string]: any };

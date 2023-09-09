@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
@@ -36,6 +37,8 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];
+
+  const currency = useRecoilValue(currencyAtom);
 
   const filters = [
     {
@@ -78,6 +81,9 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       'tour-group-ids': orderedTgids.join(','),
       'from-date': filters.filter((item) => item.key === 'today')[0].value!,
       'to-date': filters.filter((item) => item.key === 'tomorrow')[0].value!,
+      ...(currency && {
+        currency,
+      }),
     },
     id: '',
   });

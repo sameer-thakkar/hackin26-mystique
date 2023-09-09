@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
@@ -9,6 +10,7 @@ import { LandingPageWrapper } from 'components/MicrositeV2/LttLandingPageV2/styl
 import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
+import { currencyAtom } from 'store/atoms/currency';
 
 type ILandingPageV2Props = {
   isMobile: boolean;
@@ -27,6 +29,8 @@ const LttLandingPageV2 = ({
 
   const topShows = topShowsTgids.map((tgid: number) => allTours[tgid]);
 
+  const currency = useRecoilValue(currencyAtom);
+
   const DATE_TODAY = formatDateToString(new Date(), 'en', 'YYYY-MM-DD');
   const DATE_TOMORROW = formatDateToString(
     addDays(new Date(), 1),
@@ -40,6 +44,9 @@ const LttLandingPageV2 = ({
       'tour-group-ids': Object.keys(allTours).join(','),
       'from-date': DATE_TODAY,
       'to-date': DATE_TOMORROW,
+      ...(currency && {
+        currency,
+      }),
     },
     id: '',
   });

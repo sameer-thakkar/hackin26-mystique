@@ -174,6 +174,7 @@ const ShowPageBanner = ({
       const { sortedInventoryDates } =
         (await fetchCalendarInventory({
           tgid: parseInt(tgid),
+          currency,
         })) ?? {};
 
       const [firstAvailableDate] = sortedInventoryDates ?? [];
