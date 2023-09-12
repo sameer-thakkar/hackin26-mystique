@@ -4,10 +4,24 @@ const fullDomain = (req: any) =>
   req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
 const robotsContentForStage = () =>
-  `User-agent: Screaming Frog SEO Spider\nDisallow:\n\nUser-agent: *\nDisallow: /`;
+  [
+    `User-agent: Screaming Frog SEO Spider`,
+    `Disallow:`,
+    `User-agent: *`,
+    `Disallow: /`,
+  ].join('\n');
 
-const robotsContent = (domain: any) =>
-  `User-agent: *\n\nSitemap: ${domain}/sitemap.xml\nDisallow: */ja/*`;
+const robotsContent = (domain: any) => {
+  const rules = [
+    `User-agent: *`,
+    '',
+    `Sitemap: ${domain}/sitemap.xml`,
+    `Disallow: *amp=`,
+    `Disallow: */ja/*`,
+  ];
+
+  return rules.join('\n');
+};
 
 const tempRobotsContent = `User-agent: *\nDisallow: /`;
 

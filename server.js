@@ -73,7 +73,7 @@ app.prepare().then(() => {
       let swrTTL = TIME.SECONDS_IN_DAY * 1; // regular user staleness ttl
 
       if (isBot) {
-        swrTTL = TIME.SECONDS_IN_DAY * 2;
+        swrTTL = TIME.SECONDS_IN_DAY * 7;
       }
 
       const swrCacheCtrl = `stale-while-revalidate=${swrTTL}`;
