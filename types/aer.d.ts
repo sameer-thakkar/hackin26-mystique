@@ -1,23 +1,23 @@
 declare module '@headout/aer' {
-	type ButtonType = import('./declarationType').ButtonType;
-	function getFontDetailsByLabel(label: string): string;
-	const tokens = {
-		colors: Record<string, any>,
-		gradients: Record<string, any>,
-		typography: Record<string, any>,
-	};
-	const PhoneInput = React.Component<any>;
-	const Icon = React.Component<any>;
-	const TextBlock = React.Component<any>;
-	const Input = React.Component<any>;
-	const Image = React.Component<any>;
-	const Link = React.Component<any>;
-	const OldButton = React.Component<any>;
-	const Dropdown = React.Component<any>;
-	const Container = React.Component<any>;
-	const ContainerItem = React.Component<any>;
-	const FormElement = React.Component<any>;
-	const DateListItem = React.Component<any>;
-	const TabularDropdown = React.Component<any>;
-	const Button = React.Component<ButtonType>;
+  type ButtonType = import('./declarationType').ButtonType;
+  function getFontDetailsByLabel(label: string): string;
+  type tokens = {
+    colors: Record<string, any>;
+    gradients: Record<string, any>;
+    typography: Record<string, any>;
+  };
+  const PhoneInput: React.FC<any>;
+  const Icon: React.FC<any>;
+  const TextBlock: React.FC<any>;
+  const Input: React.FC<any>;
+  const Image: React.FC<any>;
+  const Link: React.FC<any>;
+  const OldButton: React.FC<any>;
+  const Dropdown: React.FC<any>;
+  const Container: React.FC<any>;
+  const ContainerItem: React.FC<any>;
+  const FormElement: React.FC<any>;
+  const DateListItem: React.FC<any>;
+  const TabularDropdown: React.FC<any>;
+  const Button: React.FC<ButtonType>;
 }

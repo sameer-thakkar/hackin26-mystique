@@ -3,7 +3,9 @@ import styled, { ThemeProvider } from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { getAppTheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
-import ContactUS, { MobileCallUsPanelDrawer } from 'components/common/ContactUs';
+import ContactUS, {
+  MobileCallUsPanelDrawer,
+} from 'components/common/ContactUs';
 import sliceHandler from 'components/Slices';
 import SocialLinks from 'components/UI/SocialLinks';
 import Image from 'UI/Image';
@@ -394,9 +396,7 @@ const Footer: React.FC<FooterProps> = ({
   const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
 
   const onToggleMobileCallUsDrawer = () => {
-    setIsMobileCallUsDrawer(
-      (isMobileCallUsDrawer) => !isMobileCallUsDrawer
-    );
+    setIsMobileCallUsDrawer((isMobileCallUsDrawer) => !isMobileCallUsDrawer);
   };
 
   const finalThemeName =
@@ -406,7 +406,9 @@ const Footer: React.FC<FooterProps> = ({
     setIsMobile(width < 768);
   }, [width]);
 
-  const {sidebarModal: { addToAside }} = useContext(MBContext);
+  const {
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
 
   const toggleCallUsPanel = () => {
     if (isMobile) {

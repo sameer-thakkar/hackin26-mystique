@@ -504,6 +504,7 @@ class MicrositeV2 extends Component<any, any> {
       categoryHeaderMenu,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
+      alternateLanguages,
     };
 
     const directTgid = this.props.router.query.tgid;

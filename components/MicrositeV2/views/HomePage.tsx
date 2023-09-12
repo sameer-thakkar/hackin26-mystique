@@ -178,6 +178,7 @@ export const HomePage = (props: any) => {
     categoryHeaderMenu,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
+    alternateLanguages,
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -349,6 +350,8 @@ export const HomePage = (props: any) => {
           categoryHeaderMenu={categoryHeaderMenu}
           primaryCity={primaryCity}
           taggedCity={taggedCity}
+          languages={alternateLanguages}
+          currentLanguage={currentLanguage}
           isMobile={false}
         />
       </Conditional>

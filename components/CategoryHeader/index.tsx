@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { CategoryHeaderProps } from 'components/CategoryHeader/interface';
@@ -10,9 +10,12 @@ import {
   StyledNestedMenuWrapper,
 } from 'components/CategoryHeader/styles';
 import Conditional from 'components/common/Conditional';
+import LocaleSelector from 'components/common/LocaleSelector';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { titleCase } from 'utils/stringUtils';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { labels } from 'const/header';
@@ -39,12 +42,20 @@ const Copyright = dynamic(() =>
 );
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
-  const { categoryHeaderMenu, primaryCity, taggedCity, isMobile } = props;
+  const {
+    categoryHeaderMenu,
+    primaryCity,
+    taggedCity,
+    languages = [],
+    currentLanguage = '',
+    isMobile,
+  } = props;
 
   const [expandMenu, setExpandMenu] = useState(false);
   const [expandNestedMenu, setExpandNestedMenu] = useState(false);
   const [selectedMainMenu, setSelectedMainMenu] = useState({ label: '' }); // using object as state to force re-render
   const [selectedNestedMenu, setSelectedNestedMenu] = useState('');
+  const [scrollPos, setScrollPos] = useState(0);
 
   let mainMenu = Object.values(categoryHeaderMenu).filter((menuItem) => {
     if (isMobile) return menuItem;
@@ -57,7 +68,27 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   }
 
   const mbCity = primaryCity?.displayName || titleCase(taggedCity || '');
+  const headerLanguages = languages?.length
+    ? [...languages, { code: currentLanguage }]
+    : [];
+  const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
+  const isSticky = scrollPos > 80;
+
+  useLayoutEffect(() => {
+    if (!window) return;
+
+    const scrollHandler = () => {
+      setScrollPos(window.scrollY);
+    };
+    const throttledScrollHandler = throttle(scrollHandler, 500);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, [scrollPos]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement | HTMLUListElement>
@@ -168,53 +199,68 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   };
 
   return (
-    <StyledCategoryHeader>
-      <StyledCategoryHeaderContainer onClick={handleClick}>
-        {mainMenu.map((menuItem, index, arr) => {
-          const { label } = menuItem;
+    <StyledCategoryHeader $showBoxShadow={isSticky}>
+      <StyledCategoryHeaderContainer
+        onClick={handleClick}
+        $showLocaleSelector={isSticky}
+      >
+        <div className="menu-items-container">
+          {mainMenu.map((menuItem, index, arr) => {
+            const { label } = menuItem;
 
-          if (expandNestedMenu) return null;
-          return (
-            <>
-              <StyledMainMenuItems
-                key={index}
-                className={`main-menu-item ${
-                  label === selectedMainMenu.label ? 'active' : ''
-                } ${index === arr.length - 1 ? 'last' : ''}`}
-                data-menu-label={label}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                $isExpanded={expandMenu}
-                $isMobile={isMobile}
-              >
-                <Conditional if={index === 0 && !isMobile}>
-                  {HAMBURGER({ fillColor: COLORS.GRAY.G3 })}
-                </Conditional>
-                {getCategoryHeaderMenuLabel({
-                  label,
-                  mbCity,
-                })}
-                <Conditional if={isMobile}>
-                  {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
-                </Conditional>
-              </StyledMainMenuItems>
-              <Conditional if={isMobile}>
-                <StyledNestedMenuWrapper
-                  $isVisible={
-                    expandMenu && selectedMainMenu.label === menuItem.label
-                  }
+            if (expandNestedMenu) return null;
+            return (
+              <>
+                <StyledMainMenuItems
+                  key={index}
+                  className={`main-menu-item ${
+                    label === selectedMainMenu.label ? 'active' : ''
+                  } ${index === arr.length - 1 ? 'last' : ''}`}
+                  data-menu-label={label}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  $isExpanded={expandMenu}
+                  $isMobile={isMobile}
                 >
-                  <NestedMenu
-                    categoryHeaderMenu={categoryHeaderMenu}
-                    selectedMenu={selectedMainMenu.label}
-                    mbCity={mbCity}
-                    isMobile={isMobile}
-                  />
-                </StyledNestedMenuWrapper>
-              </Conditional>
-            </>
-          );
-        })}
+                  <Conditional if={index === 0 && !isMobile}>
+                    {HAMBURGER({ fillColor: COLORS.GRAY.G3 })}
+                  </Conditional>
+                  {getCategoryHeaderMenuLabel({
+                    label,
+                    mbCity,
+                  })}
+                  <Conditional if={isMobile}>
+                    {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+                  </Conditional>
+                </StyledMainMenuItems>
+                <Conditional if={isMobile}>
+                  <StyledNestedMenuWrapper
+                    $isVisible={
+                      expandMenu && selectedMainMenu.label === menuItem.label
+                    }
+                  >
+                    <NestedMenu
+                      categoryHeaderMenu={categoryHeaderMenu}
+                      selectedMenu={selectedMainMenu.label}
+                      mbCity={mbCity}
+                      isMobile={isMobile}
+                    />
+                  </StyledNestedMenuWrapper>
+                </Conditional>
+              </>
+            );
+          })}
+        </div>
+        <Conditional if={!isMobile && isSticky}>
+          <div className="locale-selector-container">
+            <LocaleSelector
+              currencies={headerCurrencies}
+              languages={headerLanguages}
+              currentLanguage={currentLanguage}
+              isMobile={isMobile}
+            />
+          </div>
+        </Conditional>
         <Conditional if={isMobile && !expandNestedMenu}>
           <div className="copyright-container">
             <Copyright />

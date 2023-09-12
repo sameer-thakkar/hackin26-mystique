@@ -553,6 +553,8 @@ const MicrositeV1 = (props: any) => {
             categoryHeaderMenu={categoryHeaderMenu}
             primaryCity={primaryCity}
             taggedCity={taggedCity}
+            languages={alternateLanguages}
+            currentLanguage={currentLanguage}
             isMobile={false}
           />
         </Conditional>

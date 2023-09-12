@@ -638,6 +638,8 @@ class ContentPage extends Component<any, any> {
             categoryHeaderMenu={categoryHeaderMenu}
             primaryCity={primaryCity}
             taggedCity={taggedCity}
+            languages={alternateLanguages}
+            currentLanguage={currentLanguage}
             isMobile={false}
           />
         </Conditional>

@@ -84,7 +84,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
-    
+
     let primaryCollectionId;
     if (CMSContent?.data?.data) {
       ({ tagged_collection: primaryCollectionId } = CMSContent.data.data);

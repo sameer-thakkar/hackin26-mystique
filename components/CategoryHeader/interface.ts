@@ -10,5 +10,7 @@ export type CategoryHeaderProps = {
   categoryHeaderMenu: Record<string, TMenuItem>;
   taggedCity: string;
   primaryCity: Record<string, any>;
+  languages?: Array<Record<string, any>>;
+  currentLanguage?: string;
   isMobile: boolean;
 };

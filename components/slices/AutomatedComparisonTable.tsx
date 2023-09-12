@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error messag
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import { MBContext } from 'contexts/MBContext';
 import { createBookingURL, getCollectionSection } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { throttle } from 'utils/gen';
 import { generateSidenavId } from 'utils/helper';
 import { getCancellationPolicyString } from 'utils/productUtils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
@@ -27,9 +28,9 @@ import { expandFontToken } from 'const/typography';
 import { CHECK, CHEVRON_DOWN, CROSS } from 'assets/SvgIcons';
 
 const ComparisonTableWrapper = styled.div<{
-  tourCount?: string;
-  isExpanded?: boolean;
-  isMobile?: boolean;
+  $isMobile: boolean;
+  $tourCount: number;
+  $isTop: boolean;
 }>`
   width: auto;
   display: grid;
@@ -61,7 +62,6 @@ const ComparisonTableWrapper = styled.div<{
     display: grid;
     background: #fff;
     grid-template-columns: auto 1fr;
-    grid-gap: 8px;
   }
 
   .table {
@@ -79,8 +79,8 @@ const ComparisonTableWrapper = styled.div<{
     width: calc(100%);
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(3, 1fr) ${({ isMobile }) =>
-      isMobile ? '16px' : ''};
+    grid-template-columns: repeat(3, 1fr) ${({ $isMobile }) =>
+      $isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -131,15 +131,22 @@ const ComparisonTableWrapper = styled.div<{
   .row.sticky,
   .sticky.wrapper {
     position: sticky;
-    top: 12px;
+    top: 44px;
     background: ${COLORS.BRAND.WHITE};
-    z-index: 15;
-    padding-bottom: 8px;
+    z-index: 5;
     margin-bottom: -8px;
+    padding: auto 1rem;
   }
   .sticky.wrapper {
     width: 100%;
-    max-width: unset;
+    height: 4.125rem;
+    display: flex;
+    align-items: center;
+   ${({ $isTop }) =>
+     $isTop &&
+     `
+      border-bottom: 1px solid ${COLORS.GRAY.G6};
+    `}
   }
 
   .content-block .popup-trigger {
@@ -213,8 +220,8 @@ const ComparisonTableWrapper = styled.div<{
       max-width: 100vw;
       width: 100% !important;
       grid-column-gap: 16px;
-      grid-template-columns: 0px repeat(${({ tourCount }) =>
-        tourCount}, 164px) 4px;
+      grid-template-columns: 0px repeat(${({ $tourCount }) =>
+        $tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -375,7 +382,9 @@ const AutomatedTourComparisonTable = ({
   collectionId,
 }: any) => {
   const [isExpanded, setExpand] = useState(false);
+  const [isNamesRowTop, setNamesRowTop] = useState(false);
   const [isButtonLoading, setButtonLoading] = useState(-1);
+  const namesRowRef = useRef<HTMLDivElement>(null);
 
   const {
     lang,
@@ -388,6 +397,26 @@ const AutomatedTourComparisonTable = ({
   } = useContext(MBContext);
   const currentHost = isDev && !isStage ? `http://${host}` : `https://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
+
+  useLayoutEffect(() => {
+    if (!window) return;
+
+    const scrollHandler = () => {
+      if (!namesRowRef.current) return;
+
+      const namesRowScrollPos = namesRowRef.current.getBoundingClientRect().top;
+      if (isNamesRowTop && namesRowScrollPos > 44) setNamesRowTop(false);
+      if (!isNamesRowTop && namesRowScrollPos <= 44) setNamesRowTop(true);
+    };
+
+    const throttledScrollHandler = throttle(scrollHandler, 300);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, [isNamesRowTop]);
 
   const getLabelContent = (label: any, tour: any) => {
     if (label === 'maxDuration') {
@@ -475,9 +504,9 @@ const AutomatedTourComparisonTable = ({
   return (
     <Conditional if={tourGroups?.length}>
       <ComparisonTableWrapper
-        isExpanded={isExpanded}
-        isMobile={isMobile}
-        tourCount={tourGroups?.length}
+        $isTop={isNamesRowTop}
+        $isMobile={isMobile}
+        $tourCount={tourGroups?.length}
       >
         <div className="heading-wrapper">
           <div className="comparison-heading" id={generateSidenavId(heading)}>
@@ -503,7 +532,7 @@ const AutomatedTourComparisonTable = ({
                 );
               })}
             </div>
-            <div className="sticky wrapper">
+            <div className="sticky wrapper" ref={namesRowRef}>
               <div className="row wrapper">
                 {tourGroups?.map((tour: any, index: number) => {
                   return (

@@ -9,11 +9,12 @@ export const StyledExpandedMenu = styled.div<{ $isExpanded: boolean }>`
   border-bottom: 1px solid ${COLORS.GRAY.G6};
   width: 100%;
   height: 0;
-  z-index: 3;
+  z-index: 10;
   position: absolute;
   background: ${COLORS.BRAND.WHITE};
   visibility: hidden;
   transition: all 0.2s ease-in-out 0s;
+  box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.1);
 
   ${({ $isExpanded }) =>
     $isExpanded &&

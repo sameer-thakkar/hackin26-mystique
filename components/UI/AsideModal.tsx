@@ -180,7 +180,8 @@ const Header = styled.div`
         }
       }
       `
-      : headerType === SIDEBAR_TYPES.CONTACT_US_PANEL ? `
+      : headerType === SIDEBAR_TYPES.CONTACT_US_PANEL
+      ? `
         border-bottom: 0.063rem solid ${COLORS.GRAY.G6};
         padding-bottom: 1rem;
         svg {

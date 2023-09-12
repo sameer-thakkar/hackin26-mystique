@@ -33,6 +33,7 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
 
 const StyledHeader = styled.header<{
   $isSticky: boolean;
+  $isTop: boolean;
   $isEntertainmentMB: boolean;
 }>`
   height: 80px;
@@ -44,13 +45,10 @@ const StyledHeader = styled.header<{
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;
-  box-shadow: ${({
-    // @ts-expect-error TS(2339): Property '$isTop' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-    $isTop,
-    $isEntertainmentMB,
-  }) =>
+  box-shadow: ${({ $isTop, $isEntertainmentMB, $isSticky }) =>
     !$isTop &&
     !$isEntertainmentMB &&
+    $isSticky &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
   :hover {
@@ -293,11 +291,11 @@ const Header: React.FC<any> = (props) => {
     if (!window) return;
     const scrollHandler = () => {
       setScrollPos(window.pageYOffset);
-      if (!categoryHeaderMenuExists) {
+      if (categoryHeaderMenuExists) {
+        setIsHeaderSticky(isMobile ? true : false);
+      } else {
         const isUpScroll = scrollPos > window.pageYOffset;
         setIsHeaderSticky(isUpScroll);
-      } else {
-        setIsHeaderSticky(true);
       }
     };
     const throttledScrollHandler = throttle(scrollHandler, 500);
@@ -329,7 +327,6 @@ const Header: React.FC<any> = (props) => {
   return (
     <StyledHeader
       $isSticky={isHeaderSticky}
-      // @ts-expect-error TS(2769): No overload matches this call.
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
     >

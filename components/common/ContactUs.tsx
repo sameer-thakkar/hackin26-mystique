@@ -5,8 +5,8 @@ import { HO_CONTACT_NUMBERS } from 'const/contacts';
 import { strings } from 'const/strings';
 
 type MobileCallUsPanelDrawerProps = {
-    onToggleMobileCallUsDrawer: () => void;
-  }
+  onToggleMobileCallUsDrawer: () => void;
+};
 
 const ContactsWrapper = styled.div`
   display: flex;
