@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import COLORS from 'const/colors';
 
 export const CarouselContainer = styled.div`
   width: 100%;
@@ -59,32 +58,26 @@ const NavigationContainerStyles = css`
   bottom: 0;
   z-index: 1;
   height: 100%;
-  width: 15%;
+  width: 18%;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    90deg,
-    rgba(34, 34, 34, 0.2) 0%,
-    rgba(34, 34, 34, 0) 100%
-  );
+  cursor: pointer;
 
-  button {
+  .navigation-button {
     border: 0;
-    padding: 0;
+    padding: 0.7rem 0 0 0.3rem;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     background: none;
     cursor: pointer;
     width: 1.25rem;
-    height: 1.25rem;
+    height: fit-content;
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.1))
       drop-shadow(0px 4px 22px rgba(0, 0, 0, 0.2));
 
     svg {
-      path {
-        stroke-width: 0.125rem;
-        stroke: ${COLORS.BRAND.WHITE};
-      }
+      height: 2.25rem;
+      width: 2.25rem;
     }
   }
 `;
@@ -92,18 +85,10 @@ const NavigationContainerStyles = css`
 export const PrevButtonContainer = styled.div`
   left: 0;
   ${NavigationContainerStyles}
-
-  button {
-    margin-left: 0.25rem;
-  }
 `;
 
 export const NextButtonContainer = styled.div`
   right: 0;
-  transform: rotate(180deg);
+  transform: rotateY(180deg);
   ${NavigationContainerStyles}
-
-  button {
-    margin-left: 0.25rem;
-  }
 `;

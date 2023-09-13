@@ -17,7 +17,7 @@ import {
   ANALYTICS_PROPERTIES,
   VIDEO_POSITIONS,
 } from 'const/index';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 
@@ -146,15 +146,11 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
       </SwiperWrapper>
 
       <Conditional if={imageList.length > 1 && !isMobile}>
-        <PrevButtonContainer>
-          <button className={'navigation-button'} onClick={onPrev}>
-            {CHEVRON_LEFT}
-          </button>
+        <PrevButtonContainer onClick={onPrev}>
+          <button className={'navigation-button'}>{CHEVRON_LEFT_CIRCLE}</button>
         </PrevButtonContainer>
-        <NextButtonContainer>
-          <button className={'navigation-button'} onClick={onNext}>
-            {CHEVRON_LEFT}
-          </button>
+        <NextButtonContainer onClick={onNext}>
+          <button className={'navigation-button'}>{CHEVRON_LEFT_CIRCLE}</button>
         </NextButtonContainer>
       </Conditional>
     </CarouselContainer>
