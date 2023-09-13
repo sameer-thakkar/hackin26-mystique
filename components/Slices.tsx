@@ -48,6 +48,7 @@ const SliderAccordion = dynamic(() => import('./slices/SliderAccordion'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
+const TableV3 = dynamic(() => import('./slices/TableV3'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
 const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
@@ -318,6 +319,20 @@ const sliceHandler = (slice: any, props: any = {}) => {
           isMobile={props.isMobile}
         />
       );
+
+    case SLICE_TYPES.TABLE_V3: {
+      const { primary, slices } = slice || {};
+      const { table_heading, display_serial_number, serial_number_heading } =
+        primary || {};
+      return (
+        <TableV3
+          title={table_heading}
+          slices={slices}
+          displaySerialNum={display_serial_number}
+          serialNumHeading={serial_number_heading}
+        />
+      );
+    }
 
     case 'card_section':
       const {

@@ -17,6 +17,15 @@ strong {
   font-weight: 500;
 }
 
+.table-wrapper::-webkit-scrollbar {
+  height: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 100px;
+}
+
 * {
   outline: none;
   -moz-osx-font-smoothing: grayscale;
@@ -78,6 +87,9 @@ body.scroll-lock {
   max-width: calc(100% - 132px) !important;
 }
 
+.slice-wrapper.slice-block.table_v3 {
+  overflow-x: auto;
+}
 .slice-wrapper.automated_comparison_table {
   width: 100%;
   max-width: unset;

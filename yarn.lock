@@ -1830,9 +1830,9 @@
     protobufjs "^7.0.0"
     yargs "^17.7.2"
 
-"@headout/aer@headout/aer#ccf60c5a74ab5f2b4518d38a26d6f933bd2837f8":
+"@headout/aer@headout/aer#7c373b94a705d9452dfecd4b2b6c21f5dda11b9e":
   version "0.1.6"
-  resolved "git+ssh://git@github.com/headout/aer.git#ccf60c5a74ab5f2b4518d38a26d6f933bd2837f8"
+  resolved "git+ssh://git@github.com/headout/aer.git#7c373b94a705d9452dfecd4b2b6c21f5dda11b9e"
   dependencies:
     classnames "^2.3.1"
     country-telephone-data "^0.6.3"
