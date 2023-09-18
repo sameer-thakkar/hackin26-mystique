@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
+import { TVerticalProductCardProps } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/interface';
 import {
   ExclusivePricesBooster,
   ProductDetails,
   Wrapper,
-} from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard//style';
+} from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
@@ -16,7 +17,6 @@ import {
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
-import { getLttVerticalPosterLink } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import {
   ANALYTICS_EVENTS,
@@ -24,21 +24,17 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { VerticalProductImagePlaceholder, WALLET_SVG } from 'assets/SvgIcons';
-
-export type IVerticalProductCardProps = {
-  product: any;
-  background?: 'DARK' | 'LIGHT';
-  isMobile: boolean;
-  isTopLttShow?: boolean;
-};
+import {
+  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
+  WALLET_SVG,
+} from 'assets/SvgIcons';
 
 const VerticalProductCard = ({
   product,
   background = 'LIGHT',
   isMobile,
   isTopLttShow = false,
-}: IVerticalProductCardProps) => {
+}: TVerticalProductCardProps) => {
   const {
     lang,
     nakedDomain,
@@ -52,7 +48,6 @@ const VerticalProductCard = ({
 
   const {
     title,
-    descriptionImage,
     reviewCount,
     averageRating,
     listingPrice,
@@ -63,9 +58,10 @@ const VerticalProductCard = ({
     tgid,
     flowType,
     urlSlugs,
+    verticalImage,
   } = product;
   const { cashbackType } = listingPrice ?? {};
-
+  const { url: verticalImageUrl } = verticalImage ?? {};
   const {
     percentageSaved,
     shouldShowcashbackElement,
@@ -124,21 +120,20 @@ const VerticalProductCard = ({
       darkTheme={background === 'DARK'}
       onClick={onProductCardClick}
       hoverEffect={!isTopLttShow}
+      isVerticalImageUrlPresent={!!verticalImageUrl}
     >
       <Image
         draggable={false}
-        url={getLttVerticalPosterLink(product.tgid) ?? descriptionImage}
+        url={verticalImageUrl}
         alt={`${title} product image`}
         priority
-        height={isMobile ? 180 : 270}
-        width={isMobile ? 120 : 180}
         autoCrop={true}
         className={`pinned-card-vertical-image`}
         fetchPriority="high"
         fitCrop={true}
       />
       <span className="image-placeholder">
-        <VerticalProductImagePlaceholder
+        <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
           $width={isMobile ? 120 : 180}
           $height={isMobile ? 180 : 270}
         />

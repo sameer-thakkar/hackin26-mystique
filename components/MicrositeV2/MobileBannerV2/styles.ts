@@ -24,17 +24,12 @@ export const SwiperWrapper = styled.div`
     margin-bottom: 3.75rem;
     -webkit-transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden;
-    video {
+    video,
+    img {
       position: relative;
       object-fit: cover;
       width: 100%;
       height: 14.5rem;
-    }
-    img {
-      position: relative;
-      height: 11.8125rem;
-      width: 100%;
-      object-fit: cover;
     }
   }
 
@@ -53,7 +48,7 @@ export const SlideDescription = styled.div<{
       background: #150029;
       bottom: -2.5rem;
       .container{
-        h1{
+        .banner-header {
           ${expandFontToken(FONTS.HEADING_LARGE)};
         }
         p{
@@ -66,7 +61,7 @@ export const SlideDescription = styled.div<{
       background: transparent;
       bottom: -3rem;
       .container{
-        h1{
+        .banner-header {
           ${expandFontToken(FONTS.DISPLAY_SMALL)};
         }
       }
@@ -85,11 +80,6 @@ export const SlideDescription = styled.div<{
       color: ${COLORS.BRAND.WHITE};
       margin: 0;
       width: 84vw;
-    }
-    h2 {
-      color: #ef9494;
-      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-      margin-bottom: 0.5rem;
     }
     button {
       font-family: ${HALYARD.FONT_STACK};
@@ -127,9 +117,11 @@ export const LinearGradient = styled.div<{
       background: linear-gradient(180deg, #150029 -3.07%, rgba(21, 3, 40, 0) 100%);
     `
       : `
-      bottom: ${index! > 0 ? (hasSubText ? '57px' : `-5px`) : `-1px`};
+      bottom: ${index && index > 0 ? (hasSubText ? '55px' : `-5px`) : `-1px`};
       height: ${height}px;
-      background: linear-gradient(180deg, rgba(26, 14, 10, 0) 0%, #150029 85.94%);
+      background: linear-gradient(180deg, rgba(26, 14, 10, 0) 0%, #150029  ${
+        hasSubText ? '25.94%' : '85.94%'
+      });
     `;
   }}
 `;

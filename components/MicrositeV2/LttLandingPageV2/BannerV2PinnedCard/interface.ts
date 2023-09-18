@@ -1,4 +1,4 @@
-export type IPinnedCardProps = {
+export type TPinnedCardProps = {
   pinnedTgidData: any;
   isMobile?: boolean;
 };

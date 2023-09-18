@@ -521,6 +521,9 @@ export const getBuyTicketsUrl = (
 export const checkIfLTTMB = (uid: string | null | undefined) =>
   !!uid?.includes('www.london-theater-tickets.com');
 
+export const checkIfLTTMBLandingPage = (uid: string | null | undefined) =>
+  uid === 'www.london-theater-tickets.com';
+
 export const checkIfBroadwayMB = (uid: string | null | undefined) =>
   !!uid?.includes('www.broadway-show-tickets.com');
 
@@ -580,24 +583,4 @@ export const isF1SportsExperiment = (tgid: number): boolean =>
 
 export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
-};
-
-export const getCategorySeeAllLink = (category: string) => {
-  switch (category) {
-    case 'kids':
-      return 'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/';
-    case 'couple':
-      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
-    case 'adults':
-      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
-    case 'new arrivals':
-      return 'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/';
-    case 'plays':
-      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
-    case 'musicals':
-      return 'https://www.london-theater-tickets.com/london-musicals/';
-    case 'discounts':
-      return 'https://www.london-theater-tickets.com/discount-west-end-tickets/';
-  }
-  return '';
 };

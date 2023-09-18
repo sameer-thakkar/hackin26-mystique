@@ -24,17 +24,28 @@ export const Container = styled.div`
     background: rgba(255, 255, 255, 0.15);
     z-index: 1;
     border-radius: 4px;
-    h3 {
+    .show-title {
       margin-top: 0.75rem;
     }
     .pinned-card-image {
-      height: auto;
-
+      min-height: 162px;
+      min-width: 108px;
       img {
         height: 100%;
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
+      }
+    }
+
+    .count {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tour-scratch-price {
+      &,
+      & span {
+        color: rgba(255, 255, 255, 0.8);
       }
     }
   }
@@ -50,16 +61,22 @@ export const Container = styled.div`
   }
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isVerticalImageUrlPresent: boolean }>`
   display: flex;
   flex-direction: row;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 0.25rem;
-  .pinned-card-image {
+  position: relative;
+  .pinned-card-image,
+  .image-placeholder {
     height: auto;
     width: auto;
+    min-height: 260px;
+    min-width: 180px;
+
     margin-right: 2rem;
-    img {
+    img,
+    svg {
       height: 100%;
       border-radius: 4px 0px 0px 4px;
       text-indent: 100%;
@@ -71,6 +88,15 @@ export const Wrapper = styled.div`
       margin-right: 0.75rem;
       margin-bottom: 1.6875rem;
     }
+  }
+  .image-placeholder {
+    ${({ isVerticalImageUrlPresent }) =>
+      isVerticalImageUrlPresent &&
+      `
+    position: absolute;
+    `}
+    top: 0;
+    z-index: -1;
   }
 `;
 
@@ -84,6 +110,10 @@ export const ProductDetails = styled.div`
   .left {
     height: 100%;
     width: auto;
+
+    .count {
+      color: rgba(255, 255, 255, 0.8);
+    }
 
     .primary-descriptors {
       display: flex;
@@ -129,7 +159,7 @@ export const ProductDetails = styled.div`
       &,
       & span {
         ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-        color: ${COLORS.GRAY.G7};
+        color: rgba(255, 255, 255, 0.8);
       }
     }
 
@@ -196,13 +226,13 @@ export const SecondaryDescriptors = styled.div<{ count: number }>`
     display: flex;
     align-items: center;
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-    color: ${COLORS.GRAY.G5};
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 0.75rem;
 
     svg {
       margin-right: 0.75rem;
       path {
-        stroke: #fff;
+        stroke: rgba(255, 255, 255, 0.9);
       }
     }
   }

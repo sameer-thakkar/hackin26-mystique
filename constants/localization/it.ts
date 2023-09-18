@@ -549,8 +549,33 @@ const it = {
   WHY_WATCH: 'Perché guardarlo',
   FIND_ON_MAP: 'Mappa',
   LTT_LANDING_PAGE: {
-    TOP_WEST_END_SHOWS: 'Top West End shows',
-    LOVED_BY_MILLIONS: 'Loved by Millions',
+    TRUST_BOOSTERS: {
+      INSTANT_TICKETS: {
+        NAME: 'Biglietti istantanei',
+        DESCRIPTION: 'Conferma direttamente dal botteghino.',
+      },
+      PRICES_LOVE: {
+        NAME: `Prezzi imbattibili`,
+        DESCRIPTION: 'Prezzi imbattibili per spettacoli imperdibili.',
+      },
+      CHOOSE_SEATS: {
+        NAME: 'Scegli i tuoi posti',
+        DESCRIPTION: 'Ottieni i posti migliori per ogni spettacolo.',
+      },
+      OFFICIAL_LTT: {
+        NAME: 'Biglietti ufficiali per i teatri di Londra',
+        DESCRIPTION: 'Prenota in modo rapido e sicuro con noi.',
+      },
+    },
+    YOUR_PICK: 'La tua scelta',
+    BROWSE_BY_CATEGORIES: 'Sfoglia per categorie',
+    TOP_WEST_END_SHOWS: 'I migliori spettacoli al West End',
+    LAST_MINUTE_TICKETS: 'Biglietti last minute',
+    LOVED_BY_MILLIONS: 'Amato da milioni di persone',
+    TODAY: 'Oggi',
+    TOMORROW: 'Domani',
+    SEE_ALL: 'Vedi tutto',
+    GRAB_YOUR_TICKETS: 'Prendi subito i biglietti',
   },
   TAG_NAME: {
     BALLET: 'Balletti',

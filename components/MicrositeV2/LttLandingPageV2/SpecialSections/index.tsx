@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import SwiperType from 'swiper';
 import { SwiperProps } from 'swiper/react';
@@ -12,16 +13,17 @@ import {
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { getCategorySeeAllLink } from 'utils/helper';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { VERTICAL_PRODUCT_IMAGE_PLACEHOLDER } from 'assets/SvgIcons';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
   { ssr: false }
 );
 
-type ISpecialSections = {
+interface ISpecialSections {
   allTours: any;
   isMobile: boolean;
   title: string;
@@ -29,13 +31,16 @@ type ISpecialSections = {
     actionName: string;
     onClick: () => any[] | Promise<any[]>;
   }[];
+  updateActions?: (actions: any) => void;
   totalNumberOfShows: number;
   seeAllCardText: string;
   preselectedActionName?: string;
   maxNumberOfShows?: number;
   hideSeeAll?: boolean;
   showSeeAll?: boolean;
-};
+  useForcedSekeltonLoaders?: boolean;
+  handleSeaAllClicked?: () => void;
+}
 
 const CHEVRON_LEFT = ({
   onClick,
@@ -113,11 +118,14 @@ const SpecialSections = ({
   isMobile,
   title,
   actions,
+  updateActions,
   totalNumberOfShows,
   seeAllCardText,
   maxNumberOfShows = 12,
   hideSeeAll,
   showSeeAll,
+  useForcedSekeltonLoaders,
+  handleSeaAllClicked,
 }: ISpecialSections) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
@@ -128,6 +136,8 @@ const SpecialSections = ({
   const [hasIntersectingEventFired, sethasIntersectingEventFired] = useState(
     false
   );
+  const [forceShowSkeletonLoader, setForceShowSkeletonLoader] = useState(false);
+
   const sectionRef = useRef(null);
   const isSectionIntersecting = useOnScreen({
     ref: sectionRef,
@@ -142,7 +152,11 @@ const SpecialSections = ({
     );
     const loadFirstProducts = async () => {
       const shows = await selectedAction?.onClick();
-      if (shows) setCurrentShowList(shows?.slice(0, maxNumberOfShows));
+      if (shows && shows.length)
+        setCurrentShowList(shows?.slice(0, maxNumberOfShows));
+      else {
+        updateActions?.(actions.splice(1));
+      }
     };
 
     loadFirstProducts();
@@ -163,10 +177,6 @@ const SpecialSections = ({
       });
     }
   }, [isSectionIntersecting]);
-
-  const handleSeaAllClicked = () => {
-    window.open(getCategorySeeAllLink(selectedActionName), '_blank');
-  };
 
   const swiperParams: SwiperProps = {
     slidesPerView: isMobile ? 'auto' : 6,
@@ -214,12 +224,44 @@ const SpecialSections = ({
 
   const swiperSlidesArray = Object.values(currentShowList);
   const swiperSlides = swiperSlidesArray.map((product, index) => (
-    <VerticalProductCard
-      product={product}
-      isMobile={isMobile}
-      background="DARK"
-      key={index}
-    />
+    <div key={index}>
+      <Conditional if={forceShowSkeletonLoader}>
+        <div key={index}>
+          <div className="skeleton-placeholder-image">
+            <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+              $width={isMobile ? 120 : 180}
+              $height={isMobile ? 184 : 274}
+            />
+          </div>
+          <Skeleton
+            baseColor={`${COLORS.BRAND.WHITE}66`}
+            enableAnimation={false}
+            height={isMobile ? 8 : 12}
+            width={isMobile ? 60 : 90}
+          />
+          <Skeleton
+            baseColor={`${COLORS.BRAND.WHITE}66`}
+            enableAnimation={false}
+            height={isMobile ? 8 : 12}
+            width={isMobile ? 120 : 180}
+          />
+          <Skeleton
+            baseColor={`${COLORS.BRAND.WHITE}66`}
+            enableAnimation={false}
+            height={isMobile ? 10 : 14}
+            width={isMobile ? 80 : 120}
+          />
+        </div>
+      </Conditional>
+      <Conditional if={!forceShowSkeletonLoader}>
+        <VerticalProductCard
+          product={product}
+          isMobile={isMobile}
+          background="DARK"
+          key={index}
+        />
+      </Conditional>
+    </div>
   ));
 
   if (isMobile && showSeeAll) {
@@ -238,8 +280,15 @@ const SpecialSections = ({
     onClick: () => any[] | Promise<any[]>;
   }) => {
     const shows = await action.onClick();
+
     setCurrentShowList(shows.slice(0, maxNumberOfShows));
     setSelectedActionName(action.actionName);
+    if (useForcedSekeltonLoaders) {
+      setForceShowSkeletonLoader(true);
+      setTimeout(() => {
+        setForceShowSkeletonLoader(false);
+      }, 1500);
+    }
     swiper?.slideTo(0);
     setActiveSlideIdx(0);
     trackEvent({
@@ -288,10 +337,10 @@ const SpecialSections = ({
             <Conditional if={!isMobile && !hideSeeAll}>
               {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
               <span className="see-all" onClick={handleSeaAllClicked}>
-                See all
+                {strings.LTT_LANDING_PAGE.SEE_ALL}
               </span>
             </Conditional>
-            <Conditional if={!isMobile}>
+            <Conditional if={!isMobile && swiperSlides.length > 6}>
               <CHEVRON_LEFT onClick={goPrev} disabled={activeSlideIdx <= 0} />
               <CHEVRON_RIGHT
                 onClick={goNext}

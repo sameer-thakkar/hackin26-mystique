@@ -23,7 +23,12 @@ const LanguageSelector = (props: any) => {
   const {
     currentLanguage,
     languages: availableLanguages,
-  }: { currentLanguage: LanguagesUnion; languages: any } = props;
+    isDarkMode,
+  }: {
+    currentLanguage: LanguagesUnion;
+    languages: any;
+    isDarkMode: boolean;
+  } = props;
 
   const { mbTheme, uid, isDev } = useContext(MBContext);
 
@@ -104,6 +109,7 @@ const LanguageSelector = (props: any) => {
       options={options}
       onShowDropdown={trackDropdownShown}
       isCrawlable
+      isDarkMode={isDarkMode}
     />
   );
 };

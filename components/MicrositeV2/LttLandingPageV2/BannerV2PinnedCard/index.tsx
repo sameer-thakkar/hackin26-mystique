@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import { IPinnedCardProps } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/interface';
+import { TPinnedCardProps } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/interface';
 import {
   Container,
   Gradient,
@@ -22,7 +22,6 @@ import {
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
-import { getLttVerticalPosterLink } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
@@ -31,9 +30,12 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { WALLET_SVG } from 'assets/SvgIcons';
+import {
+  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
+  WALLET_SVG,
+} from 'assets/SvgIcons';
 
-const PinnedCard = ({ pinnedTgidData, isMobile }: IPinnedCardProps) => {
+const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
   const {
     lang,
     nakedDomain,
@@ -47,7 +49,6 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: IPinnedCardProps) => {
 
   const {
     title,
-    descriptionImage,
     reviewCount,
     descriptors: descriptorsFromProduct,
     averageRating,
@@ -61,9 +62,11 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: IPinnedCardProps) => {
     flowType,
     primarySubCategory,
     microBrandsHighlight,
+    verticalImage,
   } = pinnedTgidData;
 
   const { displayName: primarySubCategoryName } = primarySubCategory;
+  const { url: verticalImageUrl } = verticalImage ?? {};
 
   let showDetails: Record<string, any> = {};
 
@@ -134,20 +137,24 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: IPinnedCardProps) => {
 
   return (
     <Container>
-      <h2>{strings.YOUR_PICKS}</h2>
+      <h2>{strings.LTT_LANDING_PAGE.YOUR_PICK}</h2>
       <Conditional if={!isMobile}>
-        <Wrapper>
+        <Wrapper isVerticalImageUrlPresent={!!verticalImageUrl}>
           <Image
-            url={getLttVerticalPosterLink(tgid) ?? descriptionImage}
+            url={verticalImageUrl}
             alt={`${title} product image`}
             priority
-            height={isMobile ? 162 : 260}
-            width={isMobile ? 108 : 180}
             autoCrop={true}
             className={`pinned-card-image`}
             fetchPriority="high"
             fitCrop={true}
           />
+          <span className="image-placeholder">
+            <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+              $height={isMobile ? 162 : 260}
+              $width={isMobile ? 108 : 180}
+            />
+          </span>
           <ProductDetails>
             <div className="left">
               <h3>{title}</h3>

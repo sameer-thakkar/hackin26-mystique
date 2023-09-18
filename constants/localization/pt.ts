@@ -541,8 +541,33 @@ const pt = {
   WHY_WATCH: 'Por que assistir',
   FIND_ON_MAP: 'Ver no mapa',
   LTT_LANDING_PAGE: {
-    TOP_WEST_END_SHOWS: 'Top West End shows',
-    LOVED_BY_MILLIONS: 'Loved by Millions',
+    TRUST_BOOSTERS: {
+      INSTANT_TICKETS: {
+        NAME: 'Ingressos instantâneos',
+        DESCRIPTION: 'Confirmação direta da bilheteria.',
+      },
+      PRICES_LOVE: {
+        NAME: `Preços que você vai amar`,
+        DESCRIPTION: 'Preços imbatíveis para espetáculos imperdíveis.',
+      },
+      CHOOSE_SEATS: {
+        NAME: 'Escolha seu assento',
+        DESCRIPTION: 'Tenha os melhores assentos em todos os espetáculos.',
+      },
+      OFFICIAL_LTT: {
+        NAME: 'Ingressos oficiais do London Theatre',
+        DESCRIPTION: 'Reserve com rapidez e segurança conosco.',
+      },
+    },
+    YOUR_PICK: 'Sua escolha',
+    BROWSE_BY_CATEGORIES: 'Navegue por categoria',
+    TOP_WEST_END_SHOWS: 'Os melhores espetáculos West End',
+    LAST_MINUTE_TICKETS: 'Ingressos de última hora',
+    LOVED_BY_MILLIONS: 'Favoritos de milhares',
+    TODAY: 'Hoje',
+    TOMORROW: 'Amanhã',
+    SEE_ALL: 'Ver todos',
+    GRAB_YOUR_TICKETS: 'Garanta seus ingressos agora',
   },
   TAG_NAME: {
     BALLET: 'Balés',

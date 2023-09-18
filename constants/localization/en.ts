@@ -8,8 +8,6 @@ const en = {
     MAIN_TEXT: 'Authorized reseller',
     SUB_TEXT: 'Authentic experiences from trusted and verified partners.',
   },
-  GRAB_YOUR_TICKETS_NOW: 'Grab your tickets now',
-  YOUR_PICKS: 'Your pick',
   REVIEWS: 'reviews',
   AVAILABLE: 'Available',
   BANNER_CTA: 'Buy tickets',
@@ -520,8 +518,33 @@ const en = {
   WHY_WATCH: 'Why Watch',
   FIND_ON_MAP: 'Find On Map',
   LTT_LANDING_PAGE: {
+    TRUST_BOOSTERS: {
+      INSTANT_TICKETS: {
+        NAME: 'Instant tickets',
+        DESCRIPTION: 'Confirmation straight from the box office.',
+      },
+      PRICES_LOVE: {
+        NAME: `Prices you'll love`,
+        DESCRIPTION: 'Unbeatable prices for must-see shows.',
+      },
+      CHOOSE_SEATS: {
+        NAME: 'Choose your seats',
+        DESCRIPTION: 'Get the best seats for every show.',
+      },
+      OFFICIAL_LTT: {
+        NAME: 'Official London Theatre Tickets',
+        DESCRIPTION: 'Book swiftly and securely with us.',
+      },
+    },
+    YOUR_PICK: 'Your Pick',
+    BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    LAST_MINUTE_TICKETS: 'Last minute tickets',
     LOVED_BY_MILLIONS: 'Loved by Millions',
+    TODAY: 'Today',
+    TOMORROW: 'Tomorrow',
+    SEE_ALL: 'See All',
+    GRAB_YOUR_TICKETS: 'Grab your tickets now',
   },
   TAG_NAME: {
     BALLET: 'Ballet',

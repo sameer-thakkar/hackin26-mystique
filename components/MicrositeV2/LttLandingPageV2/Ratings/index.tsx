@@ -31,12 +31,12 @@ const RatingsWrapper = styled.div`
   }
 `;
 
-type IRatingProps = {
+interface IRatingProps {
   reviewCount: number;
   averageRating: number;
   showReviewsText: boolean;
   showCount?: boolean;
-};
+}
 
 const Ratings = ({
   reviewCount,

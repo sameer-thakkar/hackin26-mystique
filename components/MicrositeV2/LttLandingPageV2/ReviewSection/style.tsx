@@ -6,6 +6,9 @@ import { expandFontToken } from 'const/typography';
 export const ReviewSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: calc(100vw - 5.46vw * 2);
+  max-width: 1200px;
+  margin: 0 auto;
   .header {
     display: flex;
     justify-content: space-between;
@@ -114,6 +117,7 @@ export const Review = styled.div`
     ${expandFontToken(FONTS.PARAGRAPH_SMALL)};
     color: ${COLORS.GRAY.G4};
     text-decoration-line: underline;
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {

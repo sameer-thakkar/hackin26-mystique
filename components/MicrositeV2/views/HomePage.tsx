@@ -13,6 +13,7 @@ import Footer from 'components/common/Footer';
 import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
 import Header from 'components/MicrositeV2/Header';
 import LttLandingPageV2 from 'components/MicrositeV2/LttLandingPageV2';
+import ReviewSection from 'components/MicrositeV2/LttLandingPageV2/ReviewSection';
 import MobileBannerV2 from 'components/MicrositeV2/MobileBannerV2';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import sliceHandler from 'components/Slices';
@@ -31,7 +32,7 @@ import {
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import {
   checkIfCategoryHeaderExists,
-  checkIfLTTMB,
+  checkIfLTTMBLandingPage,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
@@ -139,6 +140,10 @@ const ListicleHeadingWrapper = styled.div`
   }
 `;
 
+const StyledReviewSectionWrapper = styled.div<{ showMargin: boolean }>`
+  margin-top: ${({ showMargin }) => (showMargin ? '4rem' : '0')};
+`;
+
 /*
 TODO: Content Tabs with Category
 TODO: Category with TGID and Category
@@ -189,7 +194,8 @@ export const HomePage = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations
   );
-  const isLTT = checkIfLTTMB(uid);
+
+  const isLTTLandingPage = checkIfLTTMBLandingPage(uid);
   const hsid = useRecoilValue(hsidAtom);
   const hsidFail = useRecoilValue(hsidSetFailAtom);
 
@@ -197,7 +203,7 @@ export const HomePage = (props: any) => {
   const [showLttTreatment, setShowLttTreatment] = useState<boolean | null>(
     null
   );
-  const [showLoader, setShowLoader] = useState(isLTT);
+  const [showLoader, setShowLoader] = useState(isLTTLandingPage);
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -277,20 +283,13 @@ export const HomePage = (props: any) => {
 
   useEffect(() => {
     if (!hsid && !hsidFail) return;
-
-    if (isLTT) {
+    if (isLTTLandingPage) {
       setShowLoader(false);
-      if (
-        uid === 'www.london-theater-tickets.com' &&
-        currentLanguage === 'en'
-      ) {
-        const variant = getABTestingVariant({
-          expName: EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
-          hsid,
-          noTrack: true,
-        });
-        setShowLttTreatment(variant === VARIANTS.TREATMENT);
-      }
+      const variant = getABTestingVariant({
+        expName: EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
+        hsid,
+      });
+      setShowLttTreatment(variant === VARIANTS.TREATMENT);
     }
     setTimeout(() => setShowLoader(false), 1000);
     if (eventsReady) {
@@ -409,6 +408,7 @@ export const HomePage = (props: any) => {
           ready={true}
           isEntertainmentMb={isEntertainmentMb}
           availableTours={allTgids}
+          uid={uid}
         />
       </Conditional>
 
@@ -482,13 +482,13 @@ export const HomePage = (props: any) => {
         <div className="main-wrapper v2-long-form" ref={v2LongFormRef}>
           <Conditional
             if={
-              longFormContent && (isExperimentalBot || isV2LongFormIntersecting)
+              longFormContent &&
+              longFormSlices?.length &&
+              (isExperimentalBot || isV2LongFormIntersecting)
             }
           >
             <LongForm
-              slicesArray={
-                showLttTreatment ? longFormSlices.slice(-1) : longFormSlices
-              }
+              slicesArray={longFormSlices}
               props={{
                 allTours,
                 isMobile,
@@ -504,6 +504,11 @@ export const HomePage = (props: any) => {
           </Conditional>
         </div>
       </ProductsContextProvider>
+      <Conditional if={showLttTreatment && currentLanguage === 'en'}>
+        <StyledReviewSectionWrapper showMargin={!longFormContent.length}>
+          <ReviewSection isMobile={isMobile} />
+        </StyledReviewSectionWrapper>
+      </Conditional>
 
       <Conditional if={isEntertainmentMb && !showLttTreatment}>
         <div className="main-wrapper" ref={lttFeatureCardRef}>

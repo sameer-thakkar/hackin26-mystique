@@ -7,7 +7,7 @@ export const CategoriesSectionWrapper = styled.div`
   padding: 0;
   > * {
     &:last-child {
-      margin-bottom: 4rem;
+      margin-bottom: 0rem;
     }
   }
   @media (max-width: 768px) {
@@ -18,7 +18,7 @@ export const CategoriesSectionWrapper = styled.div`
 
 export const CategoryCarousel = styled.div`
   padding: 0;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -39,10 +39,12 @@ export const TitleRow = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
+  margin-top: 0;
 
   .title {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
     color: ${COLORS.GRAY.G2};
+    margin: 0%;
   }
 
   .controls {
@@ -81,7 +83,7 @@ export const TitleRow = styled.div`
       .see-all {
         font-weight: 400;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 14px;
         letter-spacing: 0.2px;
         color: ${COLORS.GRAY.G3};
         padding: 6px 12px;
@@ -92,6 +94,7 @@ export const TitleRow = styled.div`
         min-width: 67px;
         height: 28px;
         box-sizing: border-box;
+        vertical-align: middle;
       }
     }
   }

@@ -4,7 +4,11 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 
-export const Wrapper = styled.div<{ darkTheme: boolean; hoverEffect: boolean }>`
+export const Wrapper = styled.div<{
+  darkTheme: boolean;
+  hoverEffect: boolean;
+  isVerticalImageUrlPresent: boolean;
+}>`
   display: flex;
   flex-direction: column;
   display: relative;
@@ -24,7 +28,11 @@ export const Wrapper = styled.div<{ darkTheme: boolean; hoverEffect: boolean }>`
   }
 
   .image-placeholder {
+    ${({ isVerticalImageUrlPresent }) =>
+      isVerticalImageUrlPresent &&
+      `
     position: absolute;
+    `}
     top: 0;
     z-index: -1;
   }

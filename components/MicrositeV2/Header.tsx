@@ -100,20 +100,6 @@ const StyledHeader = styled.div<IStyledHeader>`
     height: ${({ theme: { theme } }) =>
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
-  ${({ showLttColoredHeader }) =>
-    showLttColoredHeader &&
-    `.fixed-offset::before {
-      content: '';
-      position: fixed;
-      width: 100vw;
-      top: 0;
-      display: block;
-      background-color: #150029;
-      height: 500px;
-      @media (max-width: 789px) {
-        height:300px;
-      }
-    }`}
   
   .main-wrapper .header-city-selector {
     min-width: 180px;
@@ -163,8 +149,8 @@ const StyledHeader = styled.div<IStyledHeader>`
 `;
 
 const HeaderRight = styled.div<{
-  showLttColoredHeader?: boolean;
   isDarkMode?: boolean;
+  isLtt?: boolean;
 }>`
   display: grid;
   grid-gap: 8px;
@@ -195,32 +181,36 @@ const HeaderRight = styled.div<{
       primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   .mobi-search-trigger {
-    height: ${({ isDarkMode }) => (isDarkMode ? '16px' : '20px')};
-    width: ${({ isDarkMode }) => (isDarkMode ? '16px' : '20px')};
-    padding: ${({ isDarkMode }) => (isDarkMode ? '8px' : '0')};
+    height: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
+    width: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
+    padding: ${({ isLtt }) => (isLtt ? '8px' : '0')};
+
     background-color: ${({ isDarkMode }) =>
       isDarkMode ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
     border-radius: ${({ isDarkMode }) => (isDarkMode ? `50%` : 0)};
-    ${({ isDarkMode, showLttColoredHeader }) =>
-      isDarkMode &&
-      `svg {
+
+    svg {
+      height: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
+      width: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
+      stroke-width: ${({ isLtt }) => (isLtt ? '1.2px' : '0.8px')};
+      ${({ isDarkMode, isLtt }) =>
+        isLtt &&
+        `
         position: relative;
-        top:-1.5px;
+        top:-2px;
         path {
-          stroke: ${showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
+          stroke: ${isDarkMode ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
         }
-        height: 16px;
-        width: 16px;
-      }`}
+      `}
+    }
   }
   .menu-item-text:not(a:has(> .menu-item-text)) {
     span.label {
-      ${({ showLttColoredHeader }) => showLttColoredHeader && `color: white;`}
+      ${({ isDarkMode }) => isDarkMode && `color: white;`}
     }
     svg {
       path {
-        ${({ showLttColoredHeader }) =>
-          showLttColoredHeader && `stroke: white;`}
+        ${({ isDarkMode }) => isDarkMode && `stroke: white;`}
       }
     }
   }
@@ -635,8 +625,8 @@ const Header: FunctionComponent<HeaderProps> = ({
           <HeaderRight
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
-            showLttColoredHeader={showLttColoredHeader}
-            isDarkMode={isNewLTTLandingPageVisible}
+            isDarkMode={showLttColoredHeader}
+            isLtt={isNewLTTLandingPageVisible}
           >
             <Conditional if={!groupedHeaderSlices.length && headerLinks}>
               <HeaderLinks
@@ -693,7 +683,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
             <Conditional
               if={
-                !isMobile &&
+                (!isMobile || isNewLTTLandingPageVisible) &&
                 (headerLanguages?.length || headerCurrencies?.length)
               }
             >
@@ -701,10 +691,10 @@ const Header: FunctionComponent<HeaderProps> = ({
                 languages={headerLanguages}
                 currencies={headerCurrencies}
                 currentLanguage={lang}
-                hasLanguageDropdown={
-                  hasLanguageSelector && !isNewLTTLandingPageVisible
-                }
+                hasLanguageDropdown={hasLanguageSelector}
                 hasCurrencySelector={hideCurrencySelector}
+                isDarkMode={showLttColoredHeader}
+                isMobile={isMobile}
               />
             </Conditional>
             <Conditional if={isMobileDevice && hamburgerIconCheck}>
@@ -713,7 +703,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                 isActive={navActive}
                 onClickFn={handleHamburgerClick}
                 isGlobalMb={isGlobalMb}
-                showContainer={isNewLTTLandingPageVisible}
+                isLtt={isNewLTTLandingPageVisible}
                 isDarkMode={showLttColoredHeader}
               />
             </Conditional>

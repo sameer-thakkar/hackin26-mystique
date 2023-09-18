@@ -4,7 +4,7 @@ import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import { fetchTourListV6 } from 'utils/apiUtils';
+import { fetchMediaByTgid, fetchTourListV6 } from 'utils/apiUtils';
 import { getHostName, normaliseURL } from 'utils/helper';
 import {
   generatePromiseForCategoryTours,
@@ -21,7 +21,7 @@ import {
 } from 'utils/productUtils';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
-import { DESIGN } from 'const/index';
+import { DESIGN, LTD_COLLECTION_ID } from 'const/index';
 import type { TCategoryTourListParserV2, TProduct } from './interface';
 
 export default async function categoryTourListParserV2({
@@ -206,6 +206,31 @@ export default async function categoryTourListParserV2({
       });
       return formattedData;
     });
+
+    let verticalImagesDataMap = new Map<string, any>();
+    if (collectionIds.has(LTD_COLLECTION_ID)) {
+      const mediaData = await fetchMediaByTgid({
+        language: getHeadoutLanguagecode(lang),
+        tgids: tgids,
+      });
+      mediaData?.resourceEntityMedias?.forEach((resource) => {
+        const verticalImageData = resource.medias.find(
+          (media) => media.type === 'IMAGE'
+        );
+        if (verticalImageData) {
+          verticalImagesDataMap.set(
+            resource.resourceEntityId,
+
+            {
+              url: verticalImageData.url,
+              height: verticalImageData.metadata.height,
+              width: verticalImageData.metadata.width,
+              altText: verticalImageData.metadata.altText,
+            }
+          );
+        }
+      });
+    }
     currencyObject = allTourGroupData?.currencies?.[0];
     const tgidsWithShowPages = Object.keys(showpageData);
     const hasShowPageData = !!tgidsWithShowPages.length;
@@ -339,7 +364,7 @@ export default async function categoryTourListParserV2({
         const { media, flowType } = allTourGroupData[id] || {};
         const { productImages } = media || {};
         const [, descriptionImage] = productImages || [];
-
+        const verticalImage = verticalImagesDataMap.get(String(id));
         return {
           title: name,
           highlights: microBrandsHighlight,
@@ -390,6 +415,7 @@ export default async function categoryTourListParserV2({
           combo,
           multiVariant,
           urlSlugs: getEncodedUrlSlugs(urlSlugs),
+          verticalImage,
         };
       });
     });

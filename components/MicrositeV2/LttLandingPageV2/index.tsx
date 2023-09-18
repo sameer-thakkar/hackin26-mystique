@@ -4,30 +4,42 @@ import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
 import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
-import ReviewSection from 'components/MicrositeV2/LttLandingPageV2/ReviewSection';
+import { TLandingPageV2Props } from 'components/MicrositeV2/LttLandingPageV2/interface';
 import SpecialSections from 'components/MicrositeV2/LttLandingPageV2/SpecialSections';
 import { LandingPageWrapper } from 'components/MicrositeV2/LttLandingPageV2/style';
 import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { currencyAtom } from 'store/atoms/currency';
-
-type ILandingPageV2Props = {
-  isMobile: boolean;
-  categoryProps: any;
-  allTours: Record<number, any>[];
-};
+import { LTD_COLLECTION_ID } from 'const/index';
+import { strings } from 'const/strings';
 
 const LttLandingPageV2 = ({
   isMobile,
   categoryProps,
   allTours,
-}: ILandingPageV2Props) => {
+}: TLandingPageV2Props) => {
+  const { categories } = categoryProps;
+  const categoriesToRender: Array<Record<string, any>> =
+    categories?.filter(
+      (category: Record<string, any>) =>
+        category.id !== LTD_COLLECTION_ID &&
+        category.ranking?.popularity?.length
+    ) ?? [];
+
   const topShowsTgids = categoryProps.categories.find(
-    (category: any) => category.id === 167
+    (category: any) => category.id === LTD_COLLECTION_ID
   )?.ranking?.popularity;
 
-  const topShows = topShowsTgids.map((tgid: number) => allTours[tgid]);
+  const duplicateTgids: Record<number, boolean> = {};
+
+  const topShows: Array<Record<string, any>> = [];
+  topShowsTgids.forEach((tgid: number) => {
+    if (!duplicateTgids[tgid]) {
+      topShows.push(allTours[tgid]);
+      duplicateTgids[tgid] = true;
+    }
+  });
 
   const currency = useRecoilValue(currencyAtom);
 
@@ -61,14 +73,14 @@ const LttLandingPageV2 = ({
     if (inventoryData) {
       setLastMinuteActions([
         {
-          actionName: 'Today',
+          actionName: strings.LTT_LANDING_PAGE.TODAY,
           onClick: () =>
             topShows.filter(
               (show: any) => inventoryData[show.tgid]?.dates[DATE_TODAY]
             ),
         },
         {
-          actionName: 'Tomorrow',
+          actionName: strings.LTT_LANDING_PAGE.TOMORROW,
           onClick: () =>
             topShows.filter(
               (show: any) => inventoryData[show.tgid]?.dates[DATE_TOMORROW]
@@ -81,30 +93,35 @@ const LttLandingPageV2 = ({
   return (
     <LandingPageWrapper>
       <Conditional if={!isMobile}>
-        <BrowseByCategoriesSection />
+        <BrowseByCategoriesSection
+          categoriesToRender={categoriesToRender}
+          isMobile={isMobile}
+        />
       </Conditional>
       <TopLttShowsSection
         isMobile={isMobile}
         topShows={topShows}
         totalCount={Object.keys(allTours).length}
+        categoriesToRender={categoriesToRender}
       />
       <SpecialSections
         allTours={allTours}
         isMobile={isMobile}
-        title={'Last minute tickets'}
+        title={strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
         actions={lastMinuteActions}
+        updateActions={setLastMinuteActions}
         totalNumberOfShows={50}
         maxNumberOfShows={20}
         seeAllCardText="show tickets available" //TODO: localise
         preselectedActionName={lastMinuteActions?.[0]?.actionName}
         hideSeeAll={true}
+        useForcedSekeltonLoaders
       />
       <CategoryCarouselsSection
-        categoryProps={categoryProps}
+        categoriesToRender={categoriesToRender}
         allTours={allTours}
         isMobile={isMobile}
       />
-      <ReviewSection isMobile={isMobile} />
     </LandingPageWrapper>
   );
 };

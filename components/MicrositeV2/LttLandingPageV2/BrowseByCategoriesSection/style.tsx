@@ -23,38 +23,38 @@ export const CategoriesSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 138px;
-    height: 140px;
+    width: 96px;
+    height: 96px;
     border: 1px solid #e2e2e2;
+    box-sizing: border-box;
     border-radius: 8px;
     margin-right: 1rem;
     cursor: pointer;
     transition: ease 0.2s;
 
     .icon {
-      height: 64px;
-      width: 64px;
-      svg {
-        transition: ease 0.2s;
-      }
+      height: 48px;
+      width: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: ease 0.4s;
     }
     .name {
-      ${expandFontToken(FONTS.SUBHEADING_LARGE)};
+      ${expandFontToken(FONTS.SUBHEADING_REGULAR)};
       color: ${COLORS.GRAY.G2};
-      margin-top: 1rem;
-      transition: ease 0.2s;
+      margin-top: 0.25rem;
+      transition: ease 0.4s;
+      text-align: center;
     }
     @media (min-width: 768px) {
       &:hover {
         background-color: #fafafa;
         .icon {
-          svg {
-            transform: scale(1.09375) translateY(4px);
-          }
+          transform: scale(1.083);
         }
         .name {
-          transform: scale(1.2);
-          transform: translateY(-4px);
+          margin-bottom: -2px;
         }
         border: 1px solid #f0f0f0;
       }
@@ -97,7 +97,7 @@ export const CategoriesSection = styled.div`
         width: 24px;
       }
       .icon {
-        margin-right: 2px;
+        margin-right: 6px;
       }
       .name {
         ${expandFontToken(FONTS.UI_LABEL_REGULAR)};

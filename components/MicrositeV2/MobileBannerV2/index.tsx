@@ -3,6 +3,7 @@ import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
+import { IBannerImageProps } from 'components/MicrositeV2/DesktopBannerV2/interface';
 import PinnedCard from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard';
 import {
   IBannerProps,
@@ -28,7 +29,6 @@ import {
   PAGE_TYPES,
   VIDEO_POSITIONS,
 } from 'const/index';
-import { BANNERS } from 'const/lttCategories';
 import { strings } from 'const/strings';
 
 const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
@@ -42,7 +42,7 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
     <MediaContainer ref={containerRef}>
       <LinearGradient height={33} isTopGradient={true} />
       <LinearGradient height={33} isTopGradient={true} />
-      <Conditional if={index === 0}>
+      <Conditional if={index === 0 && item?.mobileVideoLink}>
         <Video
           key={item.mobileVideoLink}
           url={item.mobileVideoLink}
@@ -61,7 +61,7 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
           pauseOnclick
         />
       </Conditional>
-      <Conditional if={index !== 0}>
+      <Conditional if={index !== 0 || (index === 0 && !item?.mobileVideoLink)}>
         <Image
           url={item.mobile_url}
           alt={item.alt}
@@ -83,7 +83,11 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
   );
 };
 
-const MobileBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
+const MobileBannerV2 = ({
+  allTours,
+  pinnedTgid,
+  bannerImages,
+}: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -119,36 +123,50 @@ const MobileBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
     <Container>
       <SwiperWrapper>
         <Swiper {...swiperParams} onSlideChange={handleSlideChange}>
-          {BANNERS.map((item: any, index: number) => {
+          {bannerImages.map((item: IBannerImageProps, index: number) => {
             return (
               <>
                 <Media
                   index={index}
                   item={item}
-                  fallbackImage={
-                    'https://cdn-imgix.headout.com/assets/images/ltt/banner-first.png'
-                  }
-                  hasSubText={item.desc}
+                  fallbackImage={item?.url}
+                  hasSubText={!!item.bannerSubText}
                 />
                 <SlideDescription index={index}>
                   <div className="container">
-                    <h1 dangerouslySetInnerHTML={{ __html: item.title }} />
-                    {index > 0 ? (
-                      <>
-                        <p>{item.desc}</p>
+                    <Conditional if={item?.bannerHeading}>
+                      {index === 0 ? (
+                        <h1
+                          className="banner-header"
+                          dangerouslySetInnerHTML={{
+                            __html: item?.bannerHeading,
+                          }}
+                        />
+                      ) : (
+                        <h2
+                          className="banner-header"
+                          dangerouslySetInnerHTML={{
+                            __html: item?.bannerHeading,
+                          }}
+                        />
+                      )}
+                    </Conditional>
+                    <Conditional if={index > 0}>
+                      <p>{item?.bannerSubText}</p>
+                      <Conditional if={item?.showPageUrl}>
                         <Button
                           className={`tour-book-now-cta`}
                           fillType="fill"
                           onClick={() =>
-                            onGrabTicketsClicked(item.show_page_link)
+                            onGrabTicketsClicked(item?.showPageUrl?.url || '')
                           }
                           role="button"
                           tabIndex={0}
                         >
-                          {strings.GRAB_YOUR_TICKETS_NOW}
+                          {strings.LTT_LANDING_PAGE.GRAB_YOUR_TICKETS}
                         </Button>
-                      </>
-                    ) : null}
+                      </Conditional>
+                    </Conditional>
                   </div>
                 </SlideDescription>
               </>
@@ -159,13 +177,13 @@ const MobileBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
           <Paginator
             tabSize={0.9375}
             dotSize={0.375}
-            totalCount={BANNERS.length}
+            totalCount={bannerImages.length}
             activeIndex={activeSlideIndex}
             activeSlideTimer={0.1}
           />
         </div>
       </SwiperWrapper>
-      <TrustBooster hasPinnedCard={pinnedTgid} />
+      <TrustBooster hasPinnedCard={pinnedTgid} isMobile={true} />
       <Conditional if={pinnedTgid}>
         <PinnedCard pinnedTgidData={allTours?.[pinnedTgid]} isMobile={true} />
       </Conditional>

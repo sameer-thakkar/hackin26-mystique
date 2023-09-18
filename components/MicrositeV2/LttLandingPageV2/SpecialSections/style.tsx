@@ -11,6 +11,10 @@ export const SpecialSectionWrapper = styled.div`
   margin-bottom: 4rem;
   min-height: 693px;
 
+  .skeleton-placeholder-image svg {
+    opacity: 0.4;
+  }
+
   .right-corner-illustration {
     position: absolute;
     right: 0;
@@ -48,7 +52,7 @@ export const SpecialSectionWrapper = styled.div`
 
   @media (max-width: 768px) {
     width: 100vw;
-    min-height: 0;
+    min-height: 439px;
     .swiper-slide {
       width: auto;
     }

@@ -578,6 +578,7 @@ const MultiLevelNav = ({
   taggedCity,
   categoryHeaderMenu,
   categoryHeaderMenuExists,
+  isDarkMode = false,
 }: any) => {
   const [firstSlice, secondSlice, ..._ignored_only_two_nav_bar] = slice;
 
@@ -600,6 +601,7 @@ const MultiLevelNav = ({
       taggedCity={taggedCity}
       categoryHeaderMenu={categoryHeaderMenu}
       categoryHeaderMenuExists={categoryHeaderMenuExists}
+      isDarkMode={isDarkMode}
     />
   );
 };

@@ -9,7 +9,7 @@ import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { stringIdfy, withShortcodes } from 'utils/helper';
+import { checkIfLTTMB, stringIdfy, withShortcodes } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import {
@@ -255,12 +255,13 @@ const swiperParams: SwiperProps = {
 };
 
 const NewBanner: React.FC<any> = (props) => {
-  const { bannerImages, ready, isEntertainmentMb, availableTours } = props;
+  const { bannerImages, ready, isEntertainmentMb, availableTours, uid } = props;
   const [swiper, updateSwiper] = useState<SwiperClass>();
   const [isMounted, setMounted] = useState(false);
   const { lang } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
 
+  const isLtt = checkIfLTTMB(uid);
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
     [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
@@ -444,7 +445,9 @@ const NewBanner: React.FC<any> = (props) => {
                         ].includes(index)}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
-                      <Conditional if={image.bannerHeading}>
+                      <Conditional
+                        if={image.bannerHeading && !(isLtt && index !== 0)}
+                      >
                         {textOverLay(image.bannerHeading)}
                       </Conditional>
                     </a>

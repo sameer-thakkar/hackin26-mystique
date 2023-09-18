@@ -22,11 +22,11 @@ export const GradientWrapper = styled.div<{
   width: 100%;
   z-index: 2;
   ${({ position }) => {
-    return position === 'top' ? `top: 0;` : `bottom: 0;`;
+    return position === 'top' ? `top: 0;` : `bottom: 0px;`;
   }};
   background: linear-gradient(
     ${({ position }) => (position === 'top' ? '180deg' : '0deg')},
-    #150328 -3.07%,
+    #150328 -0.07%,
     rgba(21, 3, 40, 0) 100%
   );
   height: 7.125rem;
@@ -66,13 +66,6 @@ export const SwiperWrapper = styled.div`
       height: 27.0625rem;
       width: 70vw;
       object-fit: cover;
-    }
-    .image-wrap {
-      transform: scale(1.5);
-    }
-    .transition-end-state {
-      transition: transform 1.5s linear;
-      transform: scale(1);
     }
   }
 
@@ -122,7 +115,7 @@ export const SlideDescription = styled.div<{
     width: calc(100% - (5.46vw * 2));
     max-width: 1200px;
     margin: 0 auto;
-    h1 {
+    .banner-header {
       display: inline-block;
       max-width: ${({ index }) => (index === 0 ? `31.25rem;` : `23.9375rem;`)};
       margin: 0;
@@ -155,10 +148,6 @@ export const SlideDescription = styled.div<{
       background-color: ${COLORS.BRAND.WHITE};
       padding: 0.8125rem 1rem;
       border-radius: 0.5rem;
-    }
-    h2 {
-      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
-      color: #ef9494;
     }
   }
 `;

@@ -29,6 +29,30 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { GlobeIcon } from 'assets/SvgIcons';
 
+const StyledLocaleWrapper = styled.div<{ isDarkMode?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16px;
+  width: 16px;
+  padding: 8px;
+
+  ${({ isDarkMode }) =>
+    isDarkMode &&
+    `
+    background-color: ${COLORS.BRAND.WHITE}20;
+    border-radius: 50%;
+  `}
+
+  svg:not(.close-icon) path {
+    ${({ isDarkMode }) =>
+      isDarkMode &&
+      `
+        stroke: ${COLORS.BRAND.WHITE};
+      `}
+  }
+`;
+
 const DrawerTabHeading = styled.div`
   ${expandFontToken(FONTS.SUBHEADING_LARGE)}
   text-decoration: none;
@@ -98,7 +122,7 @@ const StyledLink = styled.a`
   color: inherit;
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{ isDarkMode?: boolean }>`
   padding: 10px 12px;
   display: flex;
   border-radius: 4px;
@@ -106,8 +130,10 @@ const IconWrapper = styled.div`
   ${({
     // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
     $isActive,
+    isDarkMode,
   }) =>
     $isActive &&
+    !isDarkMode &&
     `
     background: ${COLORS.GRAY.G8};
   `}
@@ -129,6 +155,7 @@ const LocaleSelector = ({
   hasLanguageDropdown = true,
   hasCurrencySelector = true,
   isMobile = false,
+  isDarkMode = false,
 }: any) => {
   const menuItemRef = useRef(null);
   const router = useRouter();
@@ -238,6 +265,7 @@ const LocaleSelector = ({
             languages={sortedLanguages}
             currentLanguage={currentLanguage}
             isMobile={isMobile}
+            isDarkMode={isDarkMode}
           />
         </Conditional>
         <CurrencySelector currencies={sortedCurrencies} />
@@ -299,11 +327,12 @@ const LocaleSelector = ({
   if (!tabsArray.length) return null;
 
   return (
-    <>
+    <StyledLocaleWrapper isDarkMode={isDarkMode}>
       <IconWrapper
         className="globe-icon"
         // @ts-expect-error TS(2769): No overload matches this call.
         $isActive={isDrawerActive}
+        isDarkMode={isDarkMode}
         onClick={onLocaleSelectorClick}
       >
         <GlobeIcon />
@@ -320,7 +349,7 @@ const LocaleSelector = ({
         </Drawer>
       </Conditional>
       <div ref={menuItemRef}></div>
-    </>
+    </StyledLocaleWrapper>
   );
 };
 

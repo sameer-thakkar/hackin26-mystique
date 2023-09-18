@@ -29,7 +29,7 @@ export const TopShowsWrapper = styled.div`
   }
 
   button {
-    margin: 3.25rem auto;
+    margin: 3.25rem auto 4rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -87,47 +87,35 @@ export const TopShowsWrapper = styled.div`
 
 export const Badge = styled.div<{ index: number }>`
   position: absolute;
-  z-index: 1;
-  right: 0;
-  top: -3px;
+  left: -10px;
+  top: 220px;
   transition: ease 0.2s;
+  z-index: 1;
 
   .rank {
     position: absolute;
-    padding-left: 14px;
-    width: calc(100% - 14px);
-    top: 0;
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    ${expandFontToken(FONTS.DISPLAY_SMALL)};
     font-size: 24px;
-    color: ${COLORS.BRAND.WHITE};
+    color: #93f;
+    font-family: 'halyard-display', sans-serif;
+    font-size: 48px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff;
+    letter-spacing: -1px;
   }
 
   @media (max-width: 768px) {
-    left: 81px;
-    right: inherit;
-    top: -3px;
-
-    svg {
-      width: 27px;
-      height: 28px;
-    }
+    left: 108px;
+    top: -16px;
 
     .rank {
-      padding-left: 0;
-      width: auto;
-      color: ${COLORS.BRAND.WHITE};
       right: ${({ index }) =>
         index >= 20 ? '1%' : index >= 10 ? '5%' : '20%'};
-      font-size: 16px;
-      font-family: 'halyard-text';
-      font-style: normal;
-      font-weight: 600;
-      line-height: 16px;
-      text-align: center;
-      top: 18%;
+      text-align: right;
+      font-size: 36px;
+      letter-spacing: 0.4px;
     }
   }
 `;

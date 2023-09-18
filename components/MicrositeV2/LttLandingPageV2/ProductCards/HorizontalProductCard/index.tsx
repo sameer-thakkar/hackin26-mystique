@@ -5,7 +5,7 @@ import {
   ProductDetails,
   Wrapper,
 } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard//style';
-import { IHorizontalProductCardProps } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard/interface';
+import { THorizontalProductCardProps } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard/interface';
 import { ExclusivePricesBooster } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
 import Image from 'UI/Image';
@@ -17,7 +17,6 @@ import {
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
-import { getLttVerticalPosterLink } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import {
   ANALYTICS_EVENTS,
@@ -25,13 +24,16 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { VerticalProductImagePlaceholder, WALLET_SVG } from 'assets/SvgIcons';
+import {
+  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
+  WALLET_SVG,
+} from 'assets/SvgIcons';
 
 const HorizontalProductCard = ({
   product,
   background = 'LIGHT',
   isTopLttShow = false,
-}: IHorizontalProductCardProps) => {
+}: THorizontalProductCardProps) => {
   const {
     lang,
     nakedDomain,
@@ -45,7 +47,6 @@ const HorizontalProductCard = ({
 
   const {
     title,
-    descriptionImage,
     reviewCount,
     averageRating,
     descriptors: descriptorsFromProduct,
@@ -57,9 +58,11 @@ const HorizontalProductCard = ({
     tgid,
     flowType,
     showPageUid,
+    verticalImage,
   } = product;
   const { displayName: primarySubCategoryName } = primarySubCategory;
   const { cashbackType } = listingPrice ?? {};
+  const { url: verticalImageUrl } = verticalImage ?? {};
 
   const {
     percentageSaved,
@@ -119,23 +122,25 @@ const HorizontalProductCard = ({
   };
 
   return (
-    <Wrapper hoverEffect={!isTopLttShow} onClick={onProductCardClick}>
+    <Wrapper
+      hoverEffect={!isTopLttShow}
+      onClick={onProductCardClick}
+      isVerticalImageUrlPresent={!!verticalImageUrl}
+    >
       <Image
-        url={getLttVerticalPosterLink(product.tgid) ?? descriptionImage}
+        url={verticalImageUrl}
         alt={`${title} product image`}
         priority
-        height={162}
-        width={108}
         autoCrop={true}
         className={`pinned-card-image`}
         fetchPriority="high"
         fitCrop={true}
       />
       <div className="image-placeholder">
-        <VerticalProductImagePlaceholder $width={108} $height={162} />
+        <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER $width={108} $height={162} />
       </div>
       <ProductDetails darkTheme={background === 'DARK'}>
-        <h3>{title}</h3>
+        <p className="show-title">{title}</p>
         <Conditional if={descriptors && descriptors.length > 0}>
           <div className="descriptors">
             {descriptors

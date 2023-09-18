@@ -1,13 +1,13 @@
-export type IMediaProps = {
+export interface IMediaProps {
   index: number;
   item: any;
   fallbackImage: string;
   className?: string;
   hasSubText?: boolean;
-};
+}
 
-export type IBannerProps = {
+export interface IBannerProps {
   bannerImages: any[];
   allTours: any;
   pinnedTgid?: any;
-};
+}

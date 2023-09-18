@@ -4,6 +4,10 @@ import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import {
+  TCategoryCarouselsSection,
+  TCategoryCarouselSwiperProps,
+} from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection/interface';
+import {
   CategoriesSectionWrapper,
   CategoryCarousel,
   TitleRow,
@@ -11,8 +15,8 @@ import {
 import VerticalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { getCategorySeeAllLink } from 'utils/helper';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
 import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
 
 const Swiper = dynamic(
@@ -20,30 +24,12 @@ const Swiper = dynamic(
   { ssr: false }
 );
 
-type ICategoryCarouselsSection = {
-  categoryProps?: any;
-  allTours: any;
-  isMobile: boolean;
-  category?: any;
-};
-
-const CATEGORIES_TO_SHOW_IN_ORDER = [
-  'New Arrivals',
-  'Musicals',
-  'Plays',
-  'Comedy',
-  'Opera',
-  'Coming Soon',
-  'Kids',
-  'Discounts',
-];
-
 const CategoryCarouselSwiper = ({
   category,
   isMobile,
   allTours,
   index,
-}: ICategoryCarouselsSection & { index: number }) => {
+}: TCategoryCarouselSwiperProps) => {
   const sliderList = isMobile
     ? category.ranking.popularity.slice(0, 10)
     : category.ranking.popularity;
@@ -52,6 +38,10 @@ const CategoryCarouselSwiper = ({
   const [hasIntersectingEventFired, sethasIntersectingEventFired] = useState(
     false
   );
+  const [slidesPerView, setSlidesPerView] = useState(6);
+  const {
+    ctaUrl: { link_type, url: seeAllUrl },
+  } = category;
 
   const sectionRef = useRef(null);
   const isSectionIntersecting = useOnScreen({
@@ -78,7 +68,7 @@ const CategoryCarouselSwiper = ({
   const goNext = () => {
     if (swiper !== null) {
       const currIdx = swiper.activeIndex;
-      const newIndex = currIdx + 6;
+      const newIndex = currIdx + slidesPerView;
       swiper.slideTo(newIndex);
       setActiveSlideIdx(newIndex);
       trackEvent({
@@ -86,7 +76,7 @@ const CategoryCarouselSwiper = ({
         Direction: 'Next',
         Category: category.name,
         [ANALYTICS_PROPERTIES.NEXT_ITEMS_COUNT]: Math.min(
-          6,
+          slidesPerView,
           sliderList?.length - newIndex
         ),
       });
@@ -95,7 +85,7 @@ const CategoryCarouselSwiper = ({
   const goPrev = () => {
     if (swiper !== null) {
       const currIdx = swiper.activeIndex;
-      const newIndex = currIdx - 6;
+      const newIndex = currIdx - slidesPerView;
       swiper.slideTo(newIndex);
       setActiveSlideIdx(newIndex);
       trackEvent({
@@ -103,7 +93,7 @@ const CategoryCarouselSwiper = ({
         Direction: 'Previous',
         Category: category.name,
         [ANALYTICS_PROPERTIES.NEXT_ITEMS_COUNT]: Math.min(
-          6,
+          slidesPerView,
           sliderList?.length - newIndex
         ),
       });
@@ -118,6 +108,21 @@ const CategoryCarouselSwiper = ({
     },
     onTouchEnd: () => {},
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
+    onBreakpoint: (swiper, { slidesPerView }) => {
+      if (swiper && slidesPerView && typeof slidesPerView === 'number') {
+        setSlidesPerView(slidesPerView);
+      }
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 16,
+      },
+      1100: {
+        slidesPerView: 6,
+        spaceBetween: 24,
+      },
+    },
   };
 
   const handleSeaAllClicked = () => {
@@ -126,7 +131,6 @@ const CategoryCarouselSwiper = ({
         eventName: ANALYTICS_EVENTS.SEE_ALL_CLICKED,
         [ANALYTICS_PROPERTIES.CATEGORY]: category.name,
       });
-      window.open(getCategorySeeAllLink(category.name.toLowerCase()), '_blank');
     }
   };
 
@@ -138,17 +142,28 @@ const CategoryCarouselSwiper = ({
       ref={sectionRef}
     >
       <TitleRow>
-        <div className="title">{category.name}</div>
+        <h2 className="title" id={category.name}>
+          {category.name}
+        </h2>
         <div className="controls">
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <span className="see-all" onClick={handleSeaAllClicked}>
-            See all
-          </span>
-          <Conditional if={!isMobile}>
+          <Conditional if={link_type === 'Web' && seeAllUrl}>
+            <a
+              role="button"
+              tabIndex={0}
+              className="see-all"
+              onClick={handleSeaAllClicked}
+              href={seeAllUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {strings.LTT_LANDING_PAGE.SEE_ALL}
+            </a>
+          </Conditional>
+          <Conditional if={!isMobile && sliderList.length > slidesPerView}>
             <LTT_CHEVRON_LEFT onClick={goPrev} disabled={activeSlideIdx <= 0} />
             <LTT_CHEVRON_RIGHT
               onClick={goNext}
-              disabled={activeSlideIdx + 6 >= sliderList.length}
+              disabled={activeSlideIdx + slidesPerView >= sliderList.length}
             />
           </Conditional>
         </div>
@@ -167,20 +182,10 @@ const CategoryCarouselSwiper = ({
 };
 
 const CategoryCarouselsSection = ({
-  categoryProps,
+  categoriesToRender,
   allTours,
   isMobile,
-}: ICategoryCarouselsSection) => {
-  const { categories } = categoryProps;
-  const categoriesToRender: any[] = [];
-
-  CATEGORIES_TO_SHOW_IN_ORDER.forEach((categoryName) => {
-    const category = categories.find(
-      ({ name }: { name: string }) => name === categoryName
-    );
-    if (category) categoriesToRender.push(category);
-  });
-
+}: TCategoryCarouselsSection) => {
   return (
     <CategoriesSectionWrapper>
       {categoriesToRender.map((category, categoryNumber) => {

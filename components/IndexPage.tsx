@@ -356,7 +356,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? !!query.mystique_uid
     : window.location.search.includes('mystique_uid');
 
-  if (host?.includes('localhost')) {
+  if (host?.includes('localhost') || host?.includes('test-headout')) {
     isMobile = localServerSideIsMobileCheck(req);
   }
 

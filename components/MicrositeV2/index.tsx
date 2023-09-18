@@ -253,6 +253,7 @@ class MicrositeV2 extends Component<any, any> {
           exclude_tgids,
           category_name,
           max_price_filter,
+          cta_url,
         } = item || {};
         const re = /\s*(?:,)\s*/g;
         const excludedTgids = exclude_tgids
@@ -314,6 +315,7 @@ class MicrositeV2 extends Component<any, any> {
           name: category_name,
           image:
             category?.category_image_url.url || category?.category_image?.url,
+          ctaUrl: cta_url,
           rank: 0,
           ranking: {
             popularity: tgids?.length ? tgids : [],
@@ -455,7 +457,7 @@ class MicrositeV2 extends Component<any, any> {
               image.mobile_banner_url?.url ||
               '',
             interaction: image.interaction,
-            alt: image.uploaded_image.alt || image.image_alt,
+            alt: image.uploaded_image.alt || image.image_alt_,
             showPageUrl: image.onclick_url,
             bannerHeading: image.main_heading,
             bannerSubText: image.sub_text,

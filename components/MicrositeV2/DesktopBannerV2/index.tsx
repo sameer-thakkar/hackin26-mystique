@@ -29,9 +29,9 @@ import {
   PAGE_TYPES,
   VIDEO_POSITIONS,
 } from 'const/index';
-import { BANNERS } from 'const/lttCategories';
 import { strings } from 'const/strings';
 import { TRANSLUCENT_LEFT, TRANSLUCENT_RIGHT } from 'assets/SvgIcons';
+import { IBannerImageProps } from './interface';
 
 const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
 
   return (
     <MediaContainer ref={containerRef} className="media-container">
-      <Conditional if={index === 0}>
+      <Conditional if={index === 0 && item?.desktopVideoLink}>
         <Video
           key={item?.desktopVideoLink}
           url={item?.desktopVideoLink}
@@ -62,7 +62,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
           pauseOnclick
         />
       </Conditional>
-      <Conditional if={index !== 0}>
+      <Conditional if={index !== 0 || (index === 0 && !item?.desktopVideoLink)}>
         <Image
           url={item.url}
           alt={item.alt}
@@ -78,7 +78,11 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   );
 };
 
-const DesktopBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
+const DesktopBannerV2 = ({
+  allTours,
+  pinnedTgid,
+  bannerImages,
+}: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -133,6 +137,7 @@ const DesktopBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
     preventInteractionOnTransition: true,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     cssMode: false,
+    initialSlide: 0,
   };
   const onGrabTicketsClicked = (showPageUrl: string) => {
     if (swiper) {
@@ -150,36 +155,44 @@ const DesktopBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
       <SwiperWrapper>
         <GradientWrapper position={'top'} />
         <Swiper {...swiperParams} className="swiper-no-swiping">
-          {BANNERS?.map((item: any, index: number) => {
-            const { title, desc, show_page_link } = item;
+          {bannerImages?.map((item: IBannerImageProps, index: number) => {
             return (
               <>
-                <Media
-                  fallbackImage={
-                    'https://cdn-imgix.headout.com/assets/images/ltt/banner-first.png?auto=compress'
-                  }
-                  item={item}
-                  index={index}
-                  className={
-                    index > 0 && index === activeSlideIndex
-                      ? 'transition-end-state'
-                      : ''
-                  }
-                />
+                <Media fallbackImage={item?.url} item={item} index={index} />
                 <SlideDescription index={index}>
                   <div className="container">
-                    <h1 dangerouslySetInnerHTML={{ __html: title }} />
+                    <Conditional if={item?.bannerHeading}>
+                      {index === 0 ? (
+                        <h1
+                          className="banner-header"
+                          dangerouslySetInnerHTML={{
+                            __html: item?.bannerHeading,
+                          }}
+                        />
+                      ) : (
+                        <h2
+                          className="banner-header"
+                          dangerouslySetInnerHTML={{
+                            __html: item?.bannerHeading,
+                          }}
+                        />
+                      )}
+                    </Conditional>
                     <Conditional if={index > 0}>
-                      <p>{desc}</p>
-                      <Conditional if={show_page_link}>
+                      <p>{item?.bannerSubText}</p>
+                      <Conditional if={item?.showPageUrl}>
                         <Button
                           className={`banner-cta-button`}
                           fillType="fill"
-                          onClick={() => onGrabTicketsClicked(show_page_link)}
+                          onClick={() =>
+                            onGrabTicketsClicked(
+                              item?.showPageUrl ? item?.showPageUrl?.url : ''
+                            )
+                          }
                           role="button"
                           tabIndex={0}
                         >
-                          {strings.GRAB_YOUR_TICKETS_NOW}
+                          {strings.LTT_LANDING_PAGE.GRAB_YOUR_TICKETS}
                         </Button>
                       </Conditional>
                     </Conditional>
@@ -196,7 +209,7 @@ const DesktopBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
             <Paginator
               tabSize={1.25}
               dotSize={0.5}
-              totalCount={BANNERS.length}
+              totalCount={bannerImages?.length}
               activeIndex={activeSlideIndex}
               activeSlideTimer={0.1}
             />

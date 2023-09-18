@@ -74,6 +74,7 @@ export enum HeadoutEndpoints {
   DomainConfig,
   ProductV6,
   CalendarInventoryForTourGroupList,
+  Media,
 }
 
 export const getHeadoutApiUrl = ({
@@ -143,10 +144,12 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.CalendarInventoryForTourGroupList:
       endpointSlug = `/api/v7/tour-groups/calendar/`;
       break;
+    case HeadoutEndpoints.Media:
+      endpointSlug = `/api/v1/media/`;
+      break;
   }
 
   let url = endpointSlug;
-
   if (hostname) {
     url = `${hostname}${endpointSlug}`;
   } else {
@@ -220,12 +223,67 @@ export const fetchTourListV6 = async ({
       id: null,
     });
     const headers = constructHeaders({ cookies });
-
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourListV6]', error);
+  }
+};
+
+interface FetchMediaProps extends CommonApiProps {
+  tgids: string[] | number[];
+  currency?: string;
+}
+interface FetchMediaResponse {
+  resourceType: string;
+  resourceEntityMedias: Array<{
+    resourceEntityId: string;
+    medias: Array<{
+      url: string;
+      type: string;
+      metadata: {
+        altText: string;
+        height: number;
+        width: number;
+        videoDuration: any;
+        uploadDate: string;
+        filename: string;
+        fileSize: number;
+      };
+      info: {
+        sourceType: string;
+        sourceUrl: string;
+        credit: string;
+        filename: string;
+        fileSize: number;
+      };
+    }>;
+  }>;
+}
+export const fetchMediaByTgid = async ({
+  tgids,
+  hostname,
+  cookies = {},
+}: FetchMediaProps) => {
+  try {
+    const params = {
+      'resource-type': 'MB_EXPERIENCE',
+      'resource-entity-ids': tgids?.join(','),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.Media,
+      hostname,
+      params,
+      id: null,
+    });
+    const headers = constructHeaders({ cookies });
+
+    const res = await fetch(apiUrl, { headers });
+    return (await res.json()) as FetchMediaResponse;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchMedia]', error);
   }
 };
 

@@ -42,7 +42,8 @@ const StyledSearchBox = styled.div<{
       isNewLTTLandingPageVisible ? '0.5rem' : ' 0.25rem'};
     width: calc(100% - 2.5rem);
     min-width: 13rem;
-    ${expandFontToken('UI/Label Medium')}
+    ${expandFontToken('UI/Label Medium')};
+    font-size: 1rem;
 
     ::placeholder {
       ${({ isEntertainmentMb }) =>

@@ -351,8 +351,3 @@ export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
     else acc[lang] = urlSlug?.replaceAll('/', '#');
     return acc;
   }, {});
-
-export const getLttVerticalPosterLink = (tgid?: number) => {
-  if (!tgid) return;
-  return `https://cdn-imgix.headout.com/assets/images/ltt/vertical-product-cards/${tgid}.png`;
-};

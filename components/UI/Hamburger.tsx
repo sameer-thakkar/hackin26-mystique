@@ -6,17 +6,16 @@ const StyledHamburger = styled.div<{
   isGlobalMb?: boolean;
   isActive?: boolean;
   theme: any;
-  showContainer?: boolean;
+  isLtt?: boolean;
   isDarkMode?: boolean;
 }>`
   display: none;
   cursor: pointer;
-  width: ${({ showContainer }) => (showContainer ? '14px' : '22px')};
-  padding: ${({ showContainer, isActive }) =>
-    showContainer && !isActive ? '6.5px 9px' : '0'};
-  border-radius: ${({ showContainer }) => (showContainer ? '50%' : '0')};
-  background-color: ${({ showContainer }) =>
-    showContainer ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
+  width: ${({ isLtt }) => (isLtt ? '14px' : '22px')};
+  padding: ${({ isLtt }) => (isLtt ? '8px' : '0')};
+  border-radius: ${({ isLtt }) => (isLtt ? '50%' : '0')};
+  background-color: ${({ isLtt }) =>
+    isLtt ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
   &:after,
   &:before,
   & div {
@@ -33,10 +32,8 @@ const StyledHamburger = styled.div<{
     border-radius: 3px;
     content: '';
     display: block;
-    height: ${({ showContainer, isActive }) =>
-      showContainer && !isActive ? '1px' : '2px'};
-    margin: ${({ showContainer, isActive }) =>
-      showContainer && !isActive ? '4px 0' : '5px 0'};
+    height: ${({ isLtt }) => (isLtt ? '1.2px' : '2px')};
+    margin: ${({ isLtt }) => (isLtt ? '2.8px 0' : '5px 0')};
     transition: all 0.2s ease-in-out;
   }
 
@@ -53,16 +50,16 @@ const StyledHamburger = styled.div<{
     }
   }
 
-  ${({ isActive }) => {
+  ${({ isActive, isLtt }) => {
     return (
       isActive &&
       `
       &:before {
-        transform: translateY(7px) rotate(135deg);
+        transform: translateY(${isLtt ? '4px' : '7px'}) rotate(135deg);
       }
       
       &:after {
-        transform: translateY(-7px) rotate(-135deg);
+        transform: translateY(-${isLtt ? '4px' : '7px'}) rotate(-135deg);
       }
       & div {
         transform: scale(0);
@@ -73,6 +70,12 @@ const StyledHamburger = styled.div<{
 
   @media (max-width: 768px) {
     display: block;
+    ${({ isLtt }) =>
+      isLtt &&
+      `
+      height: 16px;
+      width: 16px;
+    `}
   }
 `;
 
@@ -81,7 +84,7 @@ const Hamburger: React.FC<any> = ({
   onClickFn = null,
   className = '',
   isGlobalMb = false,
-  showContainer = false,
+  isLtt = false,
   isDarkMode = false,
 }) => {
   return (
@@ -93,7 +96,7 @@ const Hamburger: React.FC<any> = ({
       role="button"
       tabIndex={0}
       isGlobalMb={isGlobalMb}
-      showContainer={showContainer}
+      isLtt={isLtt}
       isDarkMode={isDarkMode}
     >
       <div role="button" tabIndex={0} />

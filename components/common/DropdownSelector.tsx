@@ -87,7 +87,7 @@ const StyledSelector = styled.div`
   }
 `;
 
-const StyledActiveValue = styled.span`
+const StyledActiveValue = styled.span<{ isDarkMode?: boolean }>`
   margin-top: 7px;
   ${expandFontToken('UI/Label Medium')}
   color: ${COLORS.GRAY.G3};
@@ -96,6 +96,9 @@ const StyledActiveValue = styled.span`
   svg {
     margin-right: 6px;
     margin-bottom: -2px;
+    path {
+      ${({ isDarkMode }) => isDarkMode && `stroke: white`}
+    }
   }
   ${({ theme }) =>
     theme.theme === THEMES.MIN_BLUE
@@ -133,6 +136,7 @@ const DropdownSelector = ({
   onShowDropdown,
   isCrawlable,
   rightAlignMenu,
+  isDarkMode,
 }: {
   options: Array<Option>;
   currentValue: Option;
@@ -140,6 +144,7 @@ const DropdownSelector = ({
   onShowDropdown?: () => void;
   isCrawlable?: boolean;
   rightAlignMenu?: boolean;
+  isDarkMode?: boolean;
 }) => {
   const [isActive, toggleActive] = useState(false);
 
@@ -161,7 +166,10 @@ const DropdownSelector = ({
       onMouseEnter={onActive}
       onMouseLeave={() => toggleActive(false)}
     >
-      <StyledActiveValue className="styled-active-value">
+      <StyledActiveValue
+        className="styled-active-value"
+        isDarkMode={isDarkMode}
+      >
         {currentValue.activeLabel ?? currentValue.label}
       </StyledActiveValue>
       <Conditional if={isActive || isCrawlable}>

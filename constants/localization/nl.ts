@@ -539,8 +539,33 @@ const nl = {
   WHY_WATCH: 'Why kijken',
   FIND_ON_MAP: 'Kaart',
   LTT_LANDING_PAGE: {
+    TRUST_BOOSTERS: {
+      INSTANT_TICKETS: {
+        NAME: 'Instant tickets',
+        DESCRIPTION: 'Bevestiging rechtstreeks van de kassa.',
+      },
+      PRICES_LOVE: {
+        NAME: `Geweldige prijzen`,
+        DESCRIPTION: 'Scherpe prijzen voor niet te missen shows.',
+      },
+      CHOOSE_SEATS: {
+        NAME: 'Kies je plaatsen',
+        DESCRIPTION: 'Vind de beste plaatsen voor elke show.',
+      },
+      OFFICIAL_LTT: {
+        NAME: 'Officiële London Theatre Tickets',
+        DESCRIPTION: 'Boek snel en veilig bij ons.',
+      },
+    },
+    YOUR_PICK: 'Jouw keuze',
+    BROWSE_BY_CATEGORIES: 'Zoek per categorie',
     TOP_WEST_END_SHOWS: 'Top West End shows',
-    LOVED_BY_MILLIONS: 'Loved by Millions',
+    LAST_MINUTE_TICKETS: 'Last-minutetickets',
+    LOVED_BY_MILLIONS: 'Geliefd door miljoenen',
+    TODAY: 'Vandaag',
+    TOMORROW: 'Morgen',
+    SEE_ALL: 'Toon alles',
+    GRAB_YOUR_TICKETS: 'Koop nu je tickets',
   },
   TAG_NAME: {
     BALLET: 'Ballet',

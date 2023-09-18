@@ -3,23 +3,21 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Wrapper = styled.div<{ hoverEffect: boolean }>`
+export const Wrapper = styled.div<{
+  hoverEffect: boolean;
+  isVerticalImageUrlPresent: boolean;
+}>`
   display: flex;
   flex-direction: row;
   position: relative;
-  .image-placeholder {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-  }
+
   ${({ hoverEffect }) =>
     hoverEffect &&
     `transition: ease 0.2s;
       &:hover {
         transform: translate3d(0, -5px, 0);
       }`}
-  img {
+  img, svg {
     border-radius: 4px;
     text-indent: 100%;
     white-space: nowrap;
@@ -28,19 +26,34 @@ export const Wrapper = styled.div<{ hoverEffect: boolean }>`
       content: '';
     }
   }
-  .pinned-card-image {
+  .pinned-card-image,
+  .image-placeholder {
     width: 108px;
     min-width: 108px;
     min-height: 162px;
     margin-right: 0.75rem;
     z-index: 0;
   }
+
+  .image-placeholder {
+    ${({ isVerticalImageUrlPresent }) =>
+      isVerticalImageUrlPresent &&
+      `
+    position: absolute;
+    `};
+    left: 0;
+    top: 0;
+    z-index: -1;
+    svg {
+      height: 100%;
+    }
+  }
 `;
 
 export const ProductDetails = styled.div<{ darkTheme: boolean }>`
   height: 100%;
 
-  h3 {
+  .show-title {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
     color: ${({ darkTheme }) =>
       darkTheme ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
@@ -72,7 +85,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
   .count {
     ${expandFontToken(FONTS.UI_LABEL_XS)};
     color: ${({ darkTheme }) =>
-      darkTheme ? COLORS.GRAY.G4 : COLORS.GRAY.G4} !important;
+      darkTheme ? `rgba(255,255,255,0.8)` : COLORS.GRAY.G4} !important;
     margin-left: 4px;
   }
 
