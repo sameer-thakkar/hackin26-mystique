@@ -54,22 +54,24 @@ type TGetProductCardLayout = {
   mbTheme?: string | null;
   hasOffer?: boolean;
   hasV1Booster?: boolean;
-  showEarliestAvailability?: boolean;
-  hasNextAvailable?: boolean;
   isTicketCard?: boolean;
   hasPromoCode?: boolean;
   isOpenDated?: boolean;
+  showAvailabilityInTitle?: boolean;
+  showGuidesLabel?: boolean;
+  showAvailabilityInLanguagesText?: boolean;
 };
 
 export const getProductCardLayout = ({
   mbTheme,
   hasOffer,
   hasV1Booster,
-  showEarliestAvailability,
-  hasNextAvailable,
   isTicketCard = false,
   hasPromoCode = false,
   isOpenDated = false,
+  showAvailabilityInTitle = false,
+  showGuidesLabel = false,
+  showAvailabilityInLanguagesText = false,
 }: TGetProductCardLayout) => {
   let layout = { desktop: [], mobile: [] };
   switch (mbTheme) {
@@ -106,10 +108,6 @@ export const getProductCardLayout = ({
           'body',
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
-          !showEarliestAvailability && 'next-available-skeleton',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
-          hasNextAvailable && 'next-available',
         ],
       };
       break;
@@ -154,15 +152,18 @@ export const getProductCardLayout = ({
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           isOpenDated && 'open-dated-descriptor open-dated-descriptor',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
-          !showEarliestAvailability &&
-            !isOpenDated &&
-            'next-available-skeleton next-available-skeleton',
+          !isOpenDated &&
+            !showAvailabilityInTitle &&
+            'next-available next-available',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
-          hasNextAvailable && !isOpenDated && 'next-available next-available',
+          showAvailabilityInLanguagesText &&
+            'tour-available-in-languages-area tour-available-in-languages-area',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           isTicketCard && hasPromoCode && 'promo-block promo-block',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer offer',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
+          showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
@@ -708,4 +709,63 @@ export const getProductCardDestination = ({
   const showPageExists = !destinationUrl.includes('/book');
 
   return { destinationUrl, showPageExists };
+};
+
+export const getMaxListItemsToShow = (
+  contentsForTab: Record<string, any>[] = []
+) => {
+  if (contentsForTab.length === 0) {
+    return 2;
+  }
+
+  const APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT = 42;
+  const MAX_LIST_ITEMS = 4;
+
+  let wordCountInListItems = 0;
+  let listItemsCount = 0;
+
+  contentsForTab.forEach((content) => {
+    if (wordCountInListItems < APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT) {
+      wordCountInListItems += content.text.split(' ').length;
+      listItemsCount++;
+    }
+  });
+
+  return Math.min(MAX_LIST_ITEMS, listItemsCount);
+};
+
+export const getProductDescriptors = ({
+  descriptors,
+  filterOut,
+}: {
+  descriptors?: any[];
+  filterOut?: any[] | null;
+}) => {
+  if (!descriptors || !filterOut || filterOut.length == 0)
+    return descriptors ?? [];
+  return descriptors.filter((descriptor) => !filterOut.includes(descriptor));
+};
+
+export const getUniqueRandomOutputs = ({
+  numArraySize = 0,
+  outputCount,
+  sampleArray,
+}: {
+  numArraySize?: number;
+  outputCount: number;
+  sampleArray?: any[];
+}) => {
+  if (
+    sampleArray ? outputCount > sampleArray.length : outputCount > numArraySize
+  )
+    return;
+  let numbers =
+    sampleArray ?? Array.from({ length: numArraySize + 1 }, (_, i) => i);
+  let selectedOutputs = [];
+  while (selectedOutputs.length < outputCount) {
+    const randomIndex = Math.floor(Math.random() * numbers.length);
+    const selectedOutput = numbers.splice(randomIndex, 1)[0];
+    selectedOutputs.push(selectedOutput);
+  }
+  return selectedOutputs;
 };

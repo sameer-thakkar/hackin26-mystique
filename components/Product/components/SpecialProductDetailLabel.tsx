@@ -1,4 +1,4 @@
-import { SpecialProductDetailLabelWrapper } from 'components/SpecialProductDetailLabel/styles';
+import { SpecialProductDetailLabelWrapper } from 'components/Product/styles';
 
 const SpecialProductDetailLabel = ({
   icon,

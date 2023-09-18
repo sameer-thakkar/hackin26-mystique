@@ -35,3 +35,8 @@ export const constantCase = (str: string) => {
     .replace(/[\s.-]+/g, '_') // replace any spaces, dots, or hyphens with underscores
     .toUpperCase(); // convert all letters to uppercase
 };
+
+export const characterLimitStrings = (str: string, limit: number) => {
+  if (str.length <= limit) return str;
+  return str.slice(0, limit - 3).concat('...');
+};

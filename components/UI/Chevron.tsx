@@ -2,9 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 
-const StyledChevron = styled.div`
-  width: 1.25em;
-  height: 1.25em;
+export type TChevron = {
+  isActive?: boolean | Boolean;
+  activeCursor?: boolean;
+  width?: string;
+  height?: string;
+  className?: string;
+};
+
+const StyledChevron = styled.div<TChevron>`
+  width: ${({ width = '1.25rem' }) => width};
+  height: ${({ height = '1.25rem' }) => height};
   display: inline-block;
   position: relative;
   &::before,
@@ -29,9 +37,7 @@ const StyledChevron = styled.div`
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
   }
-  ${({  
- // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
- isActive, activeCursor = true }) => {
+  ${({ isActive, activeCursor = true }) => {
     return isActive
       ? `&::before {
       -webkit-transform: rotate(-45deg);
@@ -46,7 +52,7 @@ const StyledChevron = styled.div`
   }}
 `;
 
-const Chevron = (props: any) => {
+const Chevron = (props: TChevron) => {
   return <StyledChevron {...props}></StyledChevron>;
 };
 

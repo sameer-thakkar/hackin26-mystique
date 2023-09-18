@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
+import { LOCALISED_DATE_FORMATS } from 'const/index';
 import { strings } from 'const/strings';
 
 dayjs.extend(advancedFormat);
@@ -87,3 +88,16 @@ export const formatDateToString = (
 
 export const addDays = (date: Date | string, nDaysToAdd: number) =>
   dayjs(date).add(nDaysToAdd, 'days').toDate();
+
+export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
+  const today = dayjs().format('YYYY-MM-DD');
+  const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
+  if (date === today) return strings.TODAY;
+  if (date === tomorrow) return strings.TOMORROW;
+  return (
+    dayjs(date)
+      .locale(currentLanguage)
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+      .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH)
+  );
+};

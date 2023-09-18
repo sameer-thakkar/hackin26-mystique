@@ -34,6 +34,7 @@ export const StyledPriceBlock = styled.div<{
 
   .tour-price-container {
     display: flex;
+    row-gap: 0.3125rem;
 
     .tour-price {
       column-gap: 4px;
@@ -54,9 +55,12 @@ export const StyledPriceBlock = styled.div<{
     }
   }
   @media (max-width: 768px) {
-    .tour-price {
-      & .strike-through {
-        display: flex;
+    .tour-price-container {
+      gap: 0.3125rem;
+      .tour-price {
+        & .strike-through {
+          display: flex;
+        }
       }
     }
   }
@@ -66,6 +70,7 @@ export const SavedTag = styled.div<{ isSportsExperiment?: boolean }>`
   padding: 0.125rem 0.25rem;
   align-self: center;
   margin-top: 1px; // hack to visually align center.
+  white-space: nowrap;
   background: ${({ theme }) =>
     theme.theme === THEMES.DEFAULT
       ? 'transparent'
@@ -146,6 +151,7 @@ type PriceBlockProps = {
   isShowPage?: boolean;
   id?: string;
   isLoading?: boolean;
+  wrapperRef?: any;
   isMobile?: boolean;
 };
 
@@ -163,6 +169,7 @@ const PriceBlock = ({
   id,
   isLoading = false,
   isMobile = false,
+  wrapperRef,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -226,11 +233,12 @@ const PriceBlock = ({
     );
 
   return (
-    <div>
+    <>
       <StyledPriceBlock
         className={'styled-price-block'}
         showScratchPrice={showScratchPrice}
         isSportsExperiment={isSportsExperiment}
+        ref={wrapperRef}
       >
         <span className="tour-scratch-price">
           {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
@@ -238,7 +246,7 @@ const PriceBlock = ({
             <LocalisedPrice
               currencyCode={currencyCode}
               lang={lang}
-              price={originalPrice}
+              price={finalPrice}
               precision={precision}
             />
           </Conditional>
@@ -292,7 +300,7 @@ const PriceBlock = ({
           id={id}
         />
       </Conditional>
-    </div>
+    </>
   );
 };
 

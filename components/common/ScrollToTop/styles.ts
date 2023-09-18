@@ -11,7 +11,7 @@ export const StyledButton = styled.div`
   border-radius: 6px;
   background: ${COLORS.BRAND.WHITE};
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
 
   svg {
     transform: rotate(180deg);

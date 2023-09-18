@@ -1,6 +1,9 @@
 import { isServer } from 'utils/gen';
 import { EXPERIMENTS, VARIANTS } from 'const/experiments';
-import { ANALYTICS_EVENTS, TOUR_RANKING_EXPERIMENT } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
+} from 'const/index';
 import { trackEvent } from '../analytics';
 import type Experiment from './experiment';
 
@@ -65,22 +68,24 @@ export const reorderProducts = ({
   tourRankingExpVariant?: string | null;
 }) => {
   if (
-    !Object.keys(TOUR_RANKING_EXPERIMENT).includes(uid) ||
+    !Object.keys(GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT).includes(uid) ||
     tourRankingExpVariant === VARIANTS.CONTROL
   )
     return productList;
   if (!tourRankingExpVariant) return productList;
   let reorderedArray = [
     ...productList.filter(
-      ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] === tgid
+      ({ tgid }: { tgid: number }) =>
+        GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === tgid
     ),
     ...productList.filter(
-      ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] !== tgid
+      ({ tgid }: { tgid: number }) =>
+        GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id !== tgid
     ),
   ];
   return reorderedArray.map((product: { tgid: number }) => {
-    if (TOUR_RANKING_EXPERIMENT[uid] === product.tgid)
-      return { ...product, isSpecialTour: true };
+    if (GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === product.tgid)
+      return { ...product, isSpecialGuidedTour: true };
     return product;
   });
 };
@@ -93,6 +98,7 @@ export const getProductRanking = ({
   uid: string;
 }) => {
   return products.findIndex(
-    ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] === tgid
+    ({ tgid }: { tgid: number }) =>
+      GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === tgid
   );
 };

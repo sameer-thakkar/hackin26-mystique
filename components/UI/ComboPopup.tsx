@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
-import { Descriptors } from 'components/Product';
+import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import Carousel from 'components/UI/Carousel';
 import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
 import { MBContext } from 'contexts/MBContext';
@@ -239,7 +239,7 @@ const ComboPopup = ({
               <ProductTitle>{productTitle}</ProductTitle>
             </ProductTitleWrapper>
             <Conditional if={!isMobile}>
-              <Descriptors
+              <ProductDescriptors
                 descriptorArray={descriptors}
                 horizontal={true}
                 minDuration={minDuration}

@@ -338,6 +338,7 @@ export const DROPDOWN_ELEMENT = {
 export const ANALYTICS_EVENTS = {
   COLLECTION_PAGE_VIEWED: 'Collection Page Viewed',
   EXP_COMPONENT_LOADED: 'Experiment Component Loaded',
+  EXP_COMPONENT_CLICKED: 'Experiment Component Clicked',
   EXPERIENCE_DETAILS_VIEWED: 'Experience Details Viewed',
   EXPERIENCE_CARD_CLICKED: 'Experience Card Clicked',
   EXPERIENCE_MORE_DETAILS_VIEWED: 'More Details Viewed',
@@ -1214,6 +1215,235 @@ export const BY_HO_BRAND_SCREEN_ENABLE = [
   'book.cruises-halongbay.com',
 ];
 
+export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
+  string,
+  {
+    id: number;
+    languageLabels: (
+      | 'ENGLISH'
+      | 'SPANISH'
+      | 'FRENCH'
+      | 'ITALIAN'
+      | 'GERMAN'
+      | 'PORTUGUESE'
+      | 'NEDERLANDS'
+    )[];
+  }
+> = {
+  'www.acropolis-tickets.com': {
+    id: 15140,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH', 'GERMAN'],
+  },
+  'www.colosseum-rome-tickets.com': {
+    id: 3075,
+    languageLabels: [
+      'ENGLISH',
+      'SPANISH',
+      'ITALIAN',
+      'FRENCH',
+      'GERMAN',
+      'PORTUGUESE',
+    ],
+  },
+  'www.thevaticantickets.com': {
+    id: 9379,
+    languageLabels: [
+      'ENGLISH',
+      'SPANISH',
+      'ITALIAN',
+      'FRENCH',
+      'GERMAN',
+      'PORTUGUESE',
+    ],
+  },
+  'www.pompeii-tickets.com': {
+    id: 10988,
+    languageLabels: [
+      'ENGLISH',
+      'SPANISH',
+      'ITALIAN',
+      'FRENCH',
+      'GERMAN',
+      'PORTUGUESE',
+    ],
+  },
+  'www.barcelona-tickets.com.park-guell': {
+    id: 6705,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH', 'GERMAN'],
+  },
+  'www.pradomuseumtickets.com': {
+    id: 4082,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.versailles-palace-tickets.com': {
+    id: 6173,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
+  },
+  'www.jeronimosmonasterytickets.com': {
+    id: 20936,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.royal-palace-madrid-tickets.com': {
+    id: 10410,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH'],
+  },
+  'www.tickets-milan.com.duomo-milan': {
+    id: 11291,
+    languageLabels: ['ENGLISH', 'SPANISH', 'GERMAN'],
+  },
+  'www.quintadaregaleiratickets.com': {
+    id: 19130,
+    languageLabels: ['SPANISH', 'PORTUGUESE'],
+  },
+  'uffizi.tickets-florence.it': {
+    id: 7713,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH'],
+  },
+  'www.accademia-tickets.com': {
+    id: 7604,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN'],
+  },
+  'www.castel-sant-angelo-ticket.com': {
+    id: 19557,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.tickets-rome.com.borghese-gallery': {
+    id: 9070,
+    languageLabels: ['ENGLISH', 'ITALIAN', 'FRENCH'],
+  },
+  'www.alcazar-seville-tickets.com': {
+    id: 10643,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
+  },
+  'www.basilicacisterntickets.com': {
+    id: 13477,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.casamila-tickets.com': {
+    id: 7679,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'cathedral.seville-tickets.com': {
+    id: 10109,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH'],
+  },
+  'www.st-marks-basilica.com': {
+    id: 8581,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
+  },
+  'www.doge-palace-tickets.com': {
+    id: 9769,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH', 'GERMAN'],
+  },
+  'www.praguecastletickets.com': {
+    id: 15284,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
+  },
+  'www.leaningtowerofpisa-tickets.com': {
+    id: 21985,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'GERMAN'],
+  },
+  'www.topkapipalace-tickets.com': {
+    id: 13472,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.tickets-florence.it.duomo-florence': {
+    id: 9079,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN'],
+  },
+  'duomo.sienatickets.com': {
+    id: 15367,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.pompeii-tickets.com.herculaneum-tickets': {
+    id: 14304,
+    languageLabels: ['ENGLISH', 'ITALIAN'],
+  },
+  'www.mezquitadescordoba.com': {
+    id: 10651,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
+  },
+  'sagradafamilia.barcelona-tickets.com': {
+    id: 10117,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
+  },
+  'www.eiffeltickets.com': {
+    id: 23604,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.tickets-amsterdam.com.rijksmuseum': {
+    id: 12180,
+    languageLabels: ['ENGLISH', 'GERMAN'],
+  },
+  'www.ticket-madrid.com.reina-sofia-museum-tickets': {
+    id: 15563,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.dolmabahcepalace-tickets.com': {
+    id: 13478,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.alhambra-granada-tickets.com': {
+    id: 10048,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
+  },
+  'www.wieliczka-salt-mine-tours.com': {
+    id: 14281,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.palazzo-vecchio-tickets.com': {
+    id: 13265,
+    languageLabels: ['ENGLISH', 'ITALIAN'],
+  },
+  'www.boboligardenstickets.com': {
+    id: 11701,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'www.palazzopittitickets.com': {
+    id: 11702,
+    languageLabels: ['ENGLISH', 'SPANISH'],
+  },
+  'museo-archeologico.tickets-naples.com': {
+    id: 16964,
+    languageLabels: ['ENGLISH', 'ITALIAN'],
+  },
+  'pantheon.tickets-rome.com': {
+    id: 15402,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.delphi-tours.com': {
+    id: 11913,
+    languageLabels: ['ENGLISH'],
+  },
+  'www.schindlers-factory-tickets.com': {
+    id: 10436,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH', 'GERMAN'],
+  },
+  'palaciodeliria.ticket-madrid.com': {
+    id: 19543,
+    languageLabels: ['ENGLISH'],
+  },
+  'schloss-schoenbrunn.wien-tickets.com': {
+    id: 18223,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'GERMAN'],
+  },
+  'www.barcelona-tickets.com.palau-de-la-musica-catalana-barcelona': {
+    id: 7681,
+    languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
+  },
+  'www.tickets-rome.com.catacombs-tours': {
+    id: 16191,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
+  },
+  'www.tickets-krakow.com.royal-wawel-castle-tickets': {
+    id: 13830,
+    languageLabels: ['ENGLISH', 'FRENCH', 'GERMAN'],
+  },
+  'www.st-peters-basilica-tickets.com': {
+    id: 3361,
+    languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH'],
+  },
+};
 export const TABLE_V3_COLUMN_TYPE = {
   TEXT_ONLY: 'Text Only',
   IMAGE_TEXT: 'Image Text',
@@ -1315,52 +1545,8 @@ export const TABLE_V3_SVG_MAPPING: Record<any, JSX.Element> = {
   cruises: CRUISES(),
   'evening cruises': EVENING_CRUISES(),
 };
-export const TOUR_RANKING_EXPERIMENT: Record<string, number> = {
-  'www.acropolis-tickets.com': 15140,
-  'www.barcelona-tickets.com.park-guell': 6705,
-  'www.pradomuseumtickets.com': 4082,
-  'www.versailles-palace-tickets.com': 6173,
-  'www.jeronimosmonasterytickets.com': 20936,
-  'www.royal-palace-madrid-tickets.com': 10410,
-  'www.london-tickets.co.uk.tower-of-london': 15090,
-  'www.tickets-milan.com.duomo-milan': 11291,
-  'www.quintadaregaleiratickets.com': 19130,
-  'uffizi.tickets-florence.it': 7713,
-  'www.castel-sant-angelo-ticket.com': 19557,
-  'www.tickets-rome.com.borghese-gallery': 9070,
-  'www.tickets-paris.fr.musee-dorsay': 16365,
-  'www.alcazar-seville-tickets.com': 10643,
-  'www.basilicacisterntickets.com': 13477,
-  'www.belemtowertickets.com': 20935,
-  'www.tickets-paris.fr.louvre-museum': 9082,
-  'www.casamila-tickets.com': 7679,
-  'cathedral.seville-tickets.com': 10109,
-  'www.doge-palace-tickets.com': 9769,
-  'www.praguecastletickets.com': 15284,
-  'www.leaningtowerofpisa-tickets.com': 21985,
-  'www.topkapipalace-tickets.com': 13472,
-  'duomo.sienatickets.com': 15367,
-  'harry-potter.london-studio-tours.com': 9578,
-  'www.pompeii-tickets.com.herculaneum-tickets': 14304,
-  'www.mezquitadescordoba.com': 10651,
-  'sagradafamilia.barcelona-tickets.com': 10117,
-  'www.london-tickets.co.uk.buckingham-palace': 12286,
-  'www.barcelona-tickets.com.camp-nou-tour': 23490,
-  'www.tickets-amsterdam.com.rijksmuseum': 12180,
-  'www.ticket-madrid.com.reina-sofia-museum-tickets': 15563,
-  'www.dolmabahcepalace-tickets.com': 13478,
-  'www.alhambra-granada-tickets.com': 10048,
-  'www.palazzo-vecchio-tickets.com': 13265,
-  'www.london-tickets.co.uk.windsor-castle-tickets': 2926,
-  'www.boboligardenstickets.com': 11701,
-  'www.london-tickets.co.uk.westminster-abbey': 21379,
-  'www.palazzopittitickets.com': 11703,
-  'www.stonehenge-london-tours.com': 2817,
-  'museo-archeologico.tickets-naples.com': 16964,
-  'pantheon.tickets-rome.com': 14412,
-  'catacombs.tickets-paris.fr': 9113,
-  'palaciodeliria.ticket-madrid.com': 19543,
-  'wanda-metropolitano.ticket-madrid.com': 3540,
-  'schloss-schoenbrunn.wien-tickets.com': 18223,
-};
+
 export const BUTTON_LOADING_DURATION = 45000;
+
+export const GUIDES_IMAGE_URL =
+  'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';

@@ -1,34 +1,48 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { useWindowWidth } from '@react-hook/window-size';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import type { SwiperProps } from 'swiper/react';
 import useSWR from 'swr';
 import parse from 'url-parse';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
-import { GuidedTourLabel } from 'components/Product/styles';
+import { BookNowCta } from 'components/Product/components/BookNowCta';
+import { GuidesBanner } from 'components/Product/components/GuidesBanner';
+import { NextAvailable } from 'components/Product/components/NextAvailable';
+import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
+import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';
+import { SpecialGuidedTour } from 'components/Product/components/SpecialGuidedTour';
+import SpecialGuidedTourSummary from 'components/Product/components/SpecialGuidedTourSummary';
+import { TourTitle } from 'components/Product/components/TourTitle';
+import {
+  Container,
+  CTABlock,
+  CTAContainer,
+  GuidedTourLabel,
+  LineMoreDetailsButton,
+  ModalCardContainer,
+  MoreDetailsBtnWrapper,
+  OpenDatedDescriptor,
+  PriceContainer,
+  PRODUCT_CARD_IMAGE_DIMENSIONS,
+  ProductBody,
+  ProductHeader,
+  ProductOfferBlock,
+  richtextElements,
+  SpecialGuidedTourMoreDetailsCTA,
+  StyledProductCard,
+  TourAvailableInLanguages,
+  V1BoosterBlock,
+} from 'components/Product/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
-import SpecialProduct from 'components/SpecialProduct';
 import Chevron from 'UI/Chevron';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
-import { StlyedSplit } from 'UI/Split';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import {
@@ -37,6 +51,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { getEarliestAvailableDate } from 'utils/dateUtils';
 import {
   checkIfGpMotorTicketsMB,
   checkIfSportsSubCategory,
@@ -45,1141 +60,39 @@ import {
 } from 'utils/helper';
 import {
   extractTabsFromHighlights,
+  getMaxListItemsToShow,
   getProductCardLayout,
 } from 'utils/productUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { descriptorIcons } from 'const/descriptorIcons';
-import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  BUTTON_LOADING_DURATION,
-  CUSTOM_TYPES,
-  DESCRIPTORS,
-  LOCALISED_DATE_FORMATS,
+  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   SIDEBAR_TYPES,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
-import { HALYARD } from 'const/ui-constants';
-import {
-  BackArrow,
-  CALENDAR,
-  CHEVRON_RIGHT_CIRCLE,
-  GuidedTourLabelBackground,
-} from 'assets/SvgIcons';
+import { CHEVRON_RIGHT, GuidedTourLabelBackground } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const SpecialGuidedTourSidePanel = dynamic(
+  import(
+    /* webpackChunkName: "SpecialGuidedTourSidePanel" */ 'components/Product/components/SpecialGuidedTourSidePanel'
+  )
 );
+
 const MediaCarousel = dynamic(() =>
   import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
-dayjs.extend(advancedFormat);
-
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
-const Container = styled.div<{
-  isCardVisible?: boolean;
-  isV3Design?: boolean;
-  indexPosition: number;
-}>`
-  display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
-
-  max-width: 1200px;
-  margin: auto;
-  width: 100%;
-  position: relative;
-  ${({ isV3Design, indexPosition }) =>
-    isV3Design &&
-    `
-    border-top: 1px solid ${COLORS.GRAY.G4A};
-    background-color: ${COLORS.GRAY.G8};
-    min-height: 400px;
-  }
-  
-  .indicator-triangle::before {
-    border-color: transparent transparent ${COLORS.GRAY.G4A};
-    border-width: 12px;
-    border-style: solid;content: "";
-    position: absolute;
-    top: -24px;
-    // use indexPosition to find the position of card in overall list and % 4 to find the order in a single row
-    // and use this info to find a perfect fir for arrow from left
-    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
-  }
-
-  .indicator-triangle::after {
-    border-color: transparent transparent ${COLORS.GRAY.G8};
-    border-width: 12px;
-    border-style: solid;content: "";
-    position: absolute;
-    top: -22px;
-    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
-    transform: translateY(0px);
-  }
-  `}
-`;
-
-const PRODUCT_CARD_IMAGE_DIMENSIONS = {
-  MOBILE: {
-    width: 400,
-    bannerProductWidth: 650,
-  },
-  DESKTOP: {
-    height: 320,
-  },
-};
-
-const cardImageStyles = css`
-  .card-img {
-    grid-area: card-img;
-    width: 258px;
-    height: 344px;
-    border-radius: 0.5rem;
-    position: relative;
-
-    img {
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-      grid-row-end: initial;
-      grid-column: span 2;
-      aspect-ratio: 21/9;
-      width: calc(100% + 2rem);
-      height: 11.25rem;
-      max-height: 11.25rem;
-      margin: -22px -16px -0.5rem;
-      border-radius: 0.5rem 0.5rem 0 0;
-
-      img {
-        border-radius: 0.5rem 0.5rem 0 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        margin: 0;
-      }
-    }
-  }
-`;
-
-const ctaBlockMobileStyles = (isSticky: boolean) => css`
-  grid-column: 1;
-  width: ${isSticky ? '84vw' : 'auto'};
-`;
-
-interface IStyledProductCard {
-  isTicketCard: boolean;
-  isMobile: boolean;
-  isV3Design?: boolean;
-  layout?: any;
-  isNewMediaSite?: boolean;
-  $isBannerCard?: boolean;
-  $isGuidedTour: boolean;
-}
-
-const StyledProductCard = styled.div<IStyledProductCard>`
-  background-color: white;
-  padding: ${({ isTicketCard, theme }) =>
-    isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile, isV3Design }) =>
-    (!isTicketCard || isMobile) &&
-    !isV3Design &&
-    `border: ${theme.productCards.border};
-    border-radius: 4px;`};
-  display: grid;
-
-  grid-row-gap: 24px;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: ${({ layout }) =>
-    layout.desktop.map((row: any) => `'${row}'`)};
-  ${StlyedSplit} {
-    margin: 0;
-    max-width: unset;
-    padding: 0;
-  }
-  ${HorizontalLine} {
-    grid-area: line;
-
-    margin: 8px 0;
-    ${({ theme }) => theme.productCards.lineStyles || ''};
-  }
-
-  .more-details {
-    ${expandFontToken('Button/Medium')}
-    color: ${COLORS.TEXT.CANDY_1};
-    margin-left: 1em;
-    margin-top: 16px;
-    cursor: pointer;
-    outline: none;
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: start;
-    grid-gap: 8px;
-
-    .chevron::before,
-    .chevron::after {
-      top: 0.6em;
-      background-color: ${COLORS.BRAND.CANDY};
-    }
-    @media (max-width: 768px) {
-      justify-content: left;
-    }
-  }
-  ${({ theme }) => theme.productCards?.styles?.desktop}
-
-  ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
-
-  grid-template-rows: min-content min-content min-content;
-  grid-template-columns: ${({ isTicketCard }) =>
-    isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
-  grid-auto-rows: min-content;
-  column-gap: 1.5rem;
-
-  .card-img {
-    border-radius: 0;
-  }
-  ${({ $isGuidedTour }) =>
-    $isGuidedTour &&
-    `
-      .swiper-pagination {
-        transform: translateY(-1.5625rem);
-      }
-  `}
-
-  @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.productCards.padding.mobile};
-    margin: 0
-      ${({ theme: { theme }, isTicketCard }) =>
-        theme !== THEMES.MIN_BLUE && !isTicketCard
-          ? '1.5rem'
-          : isTicketCard
-          ? '0'
-          : '24px'};
-    grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row: any) => `'${row}'`)};
-    width: auto;
-    grid-template-columns: 1fr;
-
-    ${({ theme }) => theme.productCards?.styles?.mobile}
-
-    .more-details {
-      margin-left: 0;
-      margin-bottom: 0;
-      ${({ isTicketCard }) =>
-        isTicketCard &&
-        `
-        padding: 0.75rem;
-        background-color: ${COLORS.GRAY.G7};
-        margin-top: 0;
-        grid-area: cta-block;
-        grid-column: 1 / 2;
-        width: 32vw;
-        border-radius: 4px;
-        color: ${COLORS.GRAY.G2};
-        position: absolute;
-        ${expandFontToken('Button/Medium')}
-        display: flex;
-        justify-content: center;
-        line-height: 125%;
-        .chevron {
-          display: none;
-        }
-      `}
-    }
-
-    .card-img {
-      width: calc(100% + 2rem);
-
-      img {
-        border-radius: 0;
-      }
-    }
-
-    .card-img img {
-      width: 100%;
-    }
-
-    
-    ${({ $isBannerCard }) =>
-      $isBannerCard &&
-      `
-        .card-img {
-          height: 22.5rem;
-          max-height: 22.5rem;
-        
-          .video-container, img {
-            height: 22.5rem;
-            width: 100%;
-          }
-        }
-      `}
-  }
-`;
-
-const ProductHeader = styled.div`
-  display: grid;
-  grid-gap: 16px;
-  display: contents;
-`;
-
-const TourTitle = styled.h2<{ isPopup?: boolean; pageType?: string }>`
-  ${expandFontToken('Heading/Large')}
-  margin: 0;
-  max-width: 768px;
-  @media (max-width: 768px) {
-    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-  }
-`;
-
-const TitleWrapper = styled.div<{
-  hasBorderedTitle?: boolean;
-  $isTicketCard?: boolean;
-}>`
-  grid-area: title;
-  ${({ hasBorderedTitle }) =>
-    hasBorderedTitle
-      ? `
-            border-bottom: 1px solid ${COLORS.GRAY.G6};
-            @media(max-width: 768px) {
-              border: none;
-            }
-          `
-      : ''}
-
-  ${({ $isTicketCard }) =>
-    !$isTicketCard &&
-    `
-    @media(max-width: 768px) {
-      margin-top: -0.5rem;
-      margin-bottom: -1rem;
-    }
-  `}
-`;
-
-const BoosterTag = styled.div`
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 13px;
-  color: ${COLORS.BRAND.CANDY};
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  background: ${COLORS.BRAND.WHITE};
-  border-radius: 2px;
-  margin-bottom: 7px;
-  padding: 2px 4px;
-  display: inline-block;
-
-  @media (max-width: 768px) {
-    position: absolute;
-    margin-top: -2.125rem;
-    padding: 5px;
-    border-radius: 4px;
-  }
-`;
-
-const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
-  ${expandFontToken('UI/Label Regular')}
-  display: grid;
-  grid-row-gap: 16px;
-  align-items: start;
-  align-content: start;
-  margin: 0;
-  margin-top: 8px;
-  color: ${COLORS.GRAY.G3};
-  ${({ horizontal }) =>
-    horizontal &&
-    `
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    grid-column-gap: 16px;
-  `}
-  .tour-tag {
-    display: grid;
-    grid-auto-flow: column;
-    grid-column-gap: 8px;
-    margin-right: 8px;
-    max-width: 230px;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 0;
-    .image-wrap {
-      display: flex;
-      align-items: start;
-      padding-top: calc(100% / 2);
-    }
-    img {
-      height: 16px;
-      width: 16px;
-      object-fit: cover;
-    }
-    ${({ pageType }) =>
-      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-        ? 'line-height: 20px;color: #444444;'
-        : ''}
-  }
-  @media (max-width: 768px) {
-    grid-area: tags;
-    align-items: start;
-    display: grid;
-    grid-template-columns: auto auto;
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-    margin-top: -8px;
-    margin-bottom: -0.5rem;
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0.5rem;
-    .tour-tag {
-      margin: 0;
-    }
-  }
-`;
-
-export const CTAContainer = styled.div<{ pageType?: any }>`
-  grid-area: cta-combo;
-  display: grid;
-  grid-gap: 16px;
-  align-content: start;
-
-  ${({ theme }) =>
-    theme.theme === THEMES.MIN_BLUE &&
-    `
-    button.tour-book-now-cta-container {
-      width: 100%;
-    }
-  `}
-  @media (max-width: 768px) {
-    display: contents;
-  }
-`;
-
-const PriceContainer = styled.div<{
-  $hasScratchPrice?: boolean;
-  pageType?: string;
-}>`
-  justify-self: center;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: end;
-  grid-column-gap: 8px;
-  justify-items: left;
-  grid-row-gap: 4px;
-  justify-self: left;
-
-  .tour-scratch-price {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: left;
-    grid-column-gap: 4px;
-    ${expandFontToken('UI/Label Small')}
-  }
-
-  .tour-price {
-    display: flex;
-    flex-direction: column;
-    ${expandFontToken('Heading/Large')}
-
-    .prefix {
-      color: ${COLORS.GRAY.G3};
-      ${expandFontToken('UI/Label Small')}
-    }
-  }
-
-  @media (max-width: 768px) {
-    grid-area: price-block;
-    margin-bottom: 0.25rem;
-    ${({ theme }) => theme.productCards.priceFontSettings.mobile}
-
-    .styled-price-block {
-      grid-column-gap: 0.25rem;
-    }
-
-    .tour-price-container .tour-price {
-      margin-right: 0;
-      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-    }
-
-    .tour-scratch-price {
-      ${expandFontToken(FONTS.SUBHEADING_SMALL)};
-    }
-
-    .savedtag-block {
-      ${expandFontToken(FONTS.MISC_TAG_REGULAR)};
-    }
-  }
-`;
-
-const CTABlock = styled.div<{
-  isTicketCard?: boolean;
-  isSticky: boolean;
-  shouldOffset?: boolean;
-}>`
-  a {
-    text-decoration: none;
-  }
-  .tour-book-now-cta-container {
-    margin: auto;
-    min-width: 14.375rem;
-    width: 100%;
-    height: 2.75rem;
-    button {
-      border: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
-
-    ${({ isSticky, shouldOffset }) =>
-      isSticky
-        ? `
-      position: sticky;
-      bottom: 16px;
-      bottom: calc(16px + env(safe-area-inset-bottom));
-      ${shouldOffset ? 'transform: translateY(32px);' : ''}
-      background: ${COLORS.BRAND.WHITE};
-      z-index: 2;
-    `
-        : ``}
-    .tour-book-now-cta-container {
-      width: 100%;
-    }
-
-    ${({ isTicketCard, isSticky }) =>
-      isTicketCard ? null : ctaBlockMobileStyles(isSticky)}
-  }
-  @media (max-width: 370px) {
-    width: 100%;
-  }
-`;
-
-const ProductBody = styled.div<{
-  noOfListItemToShow?: number;
-  hasReadMore?: boolean;
-  defaultOpen?: boolean;
-  collapsed?: boolean;
-}>`
-  grid-area: body;
-  display: grid;
-  grid-row-gap: 8px;
-  overflow-anchor: none;
-  .tour-description {
-    cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
-    ${expandFontToken('Paragraph/Medium')}
-    p {
-      margin: 0;
-    }
-    color: ${COLORS.GRAY.G2};
-    display: grid;
-    grid-gap: 0;
-    ${({ collapsed, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
-    *:not(div, svg, rect, g, path):nth-child(n + 4),
-    ul li:nth-child(n + 4) {
-      display: none;
-    }
-    `
-        : ''}
-    ul {
-      margin: 0;
-      padding: 0;
-      padding-left: 1rem;
-      display: grid;
-      list-style-type: none;
-
-      li {
-        position: relative;
-      }
-
-      li::before {
-        content: '•';
-        position: absolute;
-        left: -0.8rem;
-        color: currentColor;
-      }
-    }
-  }
-  ul:last-child {
-    margin-bottom: 0;
-  }
-  @media (max-width: 768px) {
-    position: relative;
-
-    .show-more-information {
-      p:nth-child(1) {
-        display: block;
-      }
-      ul {
-        li:nth-child(n + 2) {
-          display: list-item;
-        }
-      }
-    }
-    .tour-description {
-      ${expandFontToken('Paragraph/Medium')}
-
-      h6 {
-        ${expandFontToken('Heading/Small')}
-        margin: 16px 0;
-        margin-top: 32px;
-      }
-
-      h6:first-child {
-        margin-top: 0;
-      }
-      padding-bottom: 0.5rem;
-    }
-    ${({ collapsed, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
-        .tour-description {
-          display: none;
-        }
-    `
-        : ''}
-  }
-  .display-none {
-    display: none;
-  }
-  .display-expand {
-    display: grid;
-  }
-`;
-
-const NextAvailableBlock = styled.div`
-  color: ${COLORS.GRAY.G3};
-  display: grid;
-  grid-column-gap: 8px;
-  grid-template-columns: auto auto;
-  align-items: center;
-  justify-content: center;
-
-  .icon {
-    display: flex;
-  }
-
-  ${({ theme }) => theme.productCards?.nextAvailable?.desktop};
-
-  @media (max-width: 768px) {
-    grid-area: next-available;
-    margin-top: -1rem;
-    color: ${COLORS.GRAY.G3};
-  }
-`;
-
-const NextAvailableBlockSkeletonWrapper = styled.div`
-  display: grid;
-  align-items: center;
-  justify-content: start;
-  height: 1rem;
-
-  @media (max-width: 768px) {
-    grid-area: next-available-skeleton;
-    margin-top: -1rem;
-  }
-`;
-
-const ProductOfferBlock = styled.div`
-  grid-area: offer;
-  font-size: 14px;
-  line-height: 15px;
-  font-family: ${HALYARD.FONT_STACK};
-  font-weight: 400;
-  cursor: pointer;
-  color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
-  p {
-    margin: 0;
-    color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
-  }
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-`;
-const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
-  grid-area: booster;
-  font-family: ${HALYARD.FONT_STACK};
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21px;
-  text-align: left;
-  color: ${COLORS.GRAY.G4};
-  font-size: 1em;
-  display: inline-block;
-  p {
-    margin: 0;
-    color: ${COLORS.GRAY.G4};
-    font-size: 15px;
-    strong {
-      font-weight: unset;
-    }
-  }
-  br {
-    display: none;
-  }
-  .block-img img {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    br {
-      display: initial;
-    }
-    .block-img img {
-      width: 100%;
-      display: inline;
-    }
-    p {
-      font-size: 12px;
-      strong {
-        font-weight: 500;
-        line-height: 1.5;
-      }
-    }
-    font-size: 0.8em;
-    display: grid;
-    grid-template-columns: ${(props) => (props.boosterHasIcon ? '40px' : '')} auto;
-    grid-gap: 10px;
-    align-items: center;
-    margin: 0;
-  }
-`;
-
-const HighlightTabsWrapper = styled.div<{ hasRegularHighlights: boolean }>`
-  display: grid;
-  grid-row-gap: 16px;
-  margin-top: ${({ hasRegularHighlights }) =>
-    hasRegularHighlights ? '16px' : 0};
-`;
-
-const TabsWrapper = styled.div`
-  display: block;
-  ${expandFontToken('Paragraph/Large')}
-  border-bottom: 1px solid ${COLORS.GRAY.G6};
-  justify-content: left;
-  position: relative;
-  overflow: hidden;
-  margin-top: -0.5rem;
-  padding-top: 0.5rem;
-
-  .swiper-slide {
-    width: auto;
-  }
-`;
-
-const SwiperControls = styled.div`
-  display: flex;
-  align-items: center;
-  .prev-slide,
-  .next-slide {
-    position: absolute;
-    pointer-events: none;
-    cursor: pointer;
-    z-index: 2;
-    height: 32px;
-    svg {
-      fill: ${COLORS.BRAND.WHITE};
-      background: linear-gradient(
-        180deg,
-        ${COLORS.BRAND.WHITE} 25%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      background: -webkit-linear-gradient(
-        180deg,
-        ${COLORS.BRAND.WHITE} 25%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      circle {
-        pointer-events: auto;
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1),
-          0px 2px 8px rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
-  .prev-slide {
-    left: 0;
-    top: -0.2rem;
-    svg {
-      transform: scaleX(-1);
-    }
-  }
-  .next-slide {
-    right: 0;
-    top: -0.2rem;
-  }
-`;
-
-const TabPanelWrapper = styled.div``;
-
-const Tab = styled.div<{ isActive: boolean }>`
-  cursor: pointer;
-  padding-bottom: 8px;
-  display: block;
-  width: auto;
-  border-bottom: 1px solid transparent;
-  transform: translateY(1px);
-  ${expandFontToken('UI/Label Medium')}
-  margin-right: 2px;
-
-  ${({ isActive }) => {
-    return (
-      isActive &&
-      `
-      color: ${COLORS.TEXT.CANDY_1};
-      border-color: ${COLORS.TEXT.CANDY_1};
-      padding-bottom: 7.25px;`
-    );
-  }}
-`;
-
-const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
-  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
-  ${({ pageType }) =>
-    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-      ? `
-      li {
-        color: #666666 !important;
-      }`
-      : ''}
-`;
-
-const MoreDetailsBtnWrapper = styled.div`
-  width: 100%;
-  grid-area: cta-block;
-  margin-top: -1rem;
-`;
-
-const richtextElements = {
-  hyperlink: function Anchor({ children, data }: any) {
-    return (
-      <a href={data?.url} rel="nofollow noreferrer" target="_blank">
-        {children}
-      </a>
-    );
-  },
-};
-
-const swiperParams: SwiperProps = {
-  slidesPerView: 'auto',
-  spaceBetween: 24,
-};
-
-const HighlightTabs = ({
-  tabs,
-  hasRegularHighlights = false,
-  onTabChange,
-  pageType,
-  activeTabIndex,
-  showCard,
-  isLoading = false,
-}: any) => {
-  const width = useWindowWidth();
-  const [isMobile, setIsMobile] = useState(false);
-  const [swiper, updateSwiper] = useState(null);
-  const [_currentIndex, updateCurrentIndex] = useState(0);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-
-  const updateIndex = useCallback(() => {
-    if (isMobile) {
-      return;
-    }
-
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    updateCurrentIndex(swiper.realIndex);
-  }, [swiper, isMobile]);
-
-  const updateSliderPosition = useCallback(() => {
-    setIsBeginning((swiper as any)?.isBeginning);
-    setIsEnd((swiper as any)?.isEnd);
-  }, [swiper]);
-
-  useEffect(() => {
-    swiper && updateSliderPosition();
-  }, [swiper]);
-
-  useEffect(() => {
-    setIsMobile(width <= 768);
-  }, [width, setIsMobile]);
-
-  const goNext = () => {
-    if (swiper !== null) {
-      (swiper as any)?.slideNext();
-      updateSliderPosition();
-    }
-  };
-
-  const goPrev = () => {
-    if (swiper !== null) {
-      (swiper as any)?.slidePrev();
-      updateSliderPosition();
-    }
-  };
-
-  useEffect(() => {
-    onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
-  }, []);
-
-  const trackedTabChange = (index: number) => {
-    onTabChange({ tab: tabs[index], index });
-  };
-
-  return (
-    <Conditional if={showCard}>
-      <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
-        <TabsWrapper onClick={(e) => e.stopPropagation()}>
-          <Swiper
-            {...swiperParams}
-            // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
-            onSwiper={updateSwiper}
-            onSlideChange={updateIndex}
-          >
-            {tabs.map((tab: any, index: number) => (
-              <Tab
-                isActive={activeTabIndex == index}
-                key={index}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  trackedTabChange(index);
-                }}
-                // @ts-expect-error TS(2769): No overload matches this call.
-                pageType={pageType}
-              >
-                {tab.heading}
-              </Tab>
-            ))}
-          </Swiper>
-          <SwiperControls>
-            <Conditional if={!isBeginning}>
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goPrev}
-              >
-                {CHEVRON_RIGHT_CIRCLE}
-              </div>
-            </Conditional>
-            <Conditional if={!isEnd}>
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goNext}
-              >
-                {CHEVRON_RIGHT_CIRCLE}
-              </div>
-            </Conditional>
-          </SwiperControls>
-        </TabsWrapper>
-        <TabPanelWrapper>
-          {tabs.map((tab: any, index: number) => (
-            <TabPanel
-              isActive={activeTabIndex == index}
-              key={index}
-              pageType={pageType}
-            >
-              <Conditional if={!isLoading}>
-                <RichText render={tab.contents} elements={richtextElements} />
-              </Conditional>
-              <Conditional if={isLoading}>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-              </Conditional>
-            </TabPanel>
-          ))}
-        </TabPanelWrapper>
-      </HighlightTabsWrapper>
-    </Conditional>
-  );
-};
-
-const ModalCardContainer = styled.div`
-  @media (max-width: 768px) {
-    background: #fff;
-    border-radius: 0.75rem 0.75rem 0 0;
-
-    ${StyledProductCard} {
-      margin: 0;
-      border: none;
-      padding: 0 24px;
-      padding-top: 24px;
-    }
-
-    .card-img {
-      width: calc(100% + 3rem);
-      margin: -1.5rem -1.5rem -0.5rem;
-      max-height: 175px;
-    }
-
-    .video-container {
-      height: 11.25rem;
-
-      video {
-        height: 11.25rem;
-      }
-    }
-
-    ${TitleWrapper} {
-      max-width: calc(100% - 24px);
-    }
-    ${ProductBody} {
-      .tour-description {
-        width: 100%;
-        display: block;
-        p {
-          margin-bottom: 12px;
-        }
-        li,
-        p {
-          font-size: 15px;
-          line-height: 23px;
-        }
-      }
-      .more-details {
-        display: none;
-      }
-      ${MoreDetailsBtnWrapper} {
-        display: none;
-      }
-    }
-    ${CTABlock} {
-      width: 100%;
-      grid-column: 1 / span 2;
-    }
-  }
-`;
-
-const OpenDatedDescriptor = styled.div`
-  margin: 1.25rem 0 -0.25rem;
-  color: ${COLORS.GRAY.G3};
-  ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-
-  @media (max-width: 768px) {
-    grid-area: open-dated-descriptor;
-    margin: -0.5rem 0 0.25rem;
-    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
-  }
-`;
-
-export const Descriptors = ({
-  descriptorArray,
-  minDuration,
-  maxDuration,
-  lang = 'en',
-  isGpMotorTicketsMb = false,
-  isCombo = false,
-  horizontal = false,
-  isLoading = false,
-  pageType = '',
-}: {
-  descriptorArray: Array<string>;
-  minDuration: number | null;
-  maxDuration: number | null;
-  lang: string;
-  isGpMotorTicketsMb?: boolean;
-  isLoading?: boolean;
-  isCombo?: boolean;
-  horizontal?: boolean;
-  pageType?: string;
-}) => {
-  if (isLoading)
-    return (
-      <TourTags horizontal={horizontal} pageType={pageType}>
-        {Array.apply(null, Array(4)).map((_item: any, index: number) => {
-          return (
-            <div key={`descriptor-${index}`} className="tour-tag">
-              <Skeleton width="1rem" height="1rem" borderRadius="2px" />
-              <Skeleton height="1rem" width="8rem" borderRadius="2px" />
-            </div>
-          );
-        })}
-      </TourTags>
-    );
-
-  return (
-    <TourTags horizontal={horizontal} pageType={pageType}>
-      {descriptorArray.map((item: string, index: number) => {
-        const DescriptorSVG = descriptorIcons[item];
-        if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
-          return null;
-
-        return item ? (
-          <div key={`descriptor-${index}`} className="tour-tag">
-            <DescriptorSVG />
-
-            <Conditional if={item === DESCRIPTORS.DURATION}>
-              {getDuration({ minDuration, maxDuration, lang })}
-            </Conditional>
-            <Conditional if={item !== DESCRIPTORS.DURATION}>
-              {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
-              {strings.DESCRIPTORS?.[item]}
-            </Conditional>
-          </div>
-        ) : null;
-      })}
-    </TourTags>
-  );
-};
-
-const BookNowCta = ({
-  clickHandler,
-  isMobile,
-  ctaText,
-  mbTheme,
-}: {
-  clickHandler: () => void;
-  isMobile: boolean;
-  ctaText: string;
-  mbTheme: string | null;
-}) => {
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
-  return (
-    <div className="tour-book-now-cta-container">
-      <Button
-        size="medium"
-        color="purps"
-        variant="primary"
-        isLoading={isButtonLoading}
-        onClick={() => {
-          if (isMobile) {
-            setIsButtonLoading(true);
-            setTimeout(
-              () => setIsButtonLoading(false),
-              BUTTON_LOADING_DURATION
-            );
-          }
-          clickHandler?.();
-        }}
-        tabIndex={0}
-        text={ctaText}
-        icon={mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-        iconPosition="back"
-      />
-    </div>
-  );
-};
-
 const Product = (props: any) => {
-  const moreDetailsRef = useRef();
+  const moreDetailsRef = useRef<HTMLDivElement>(null);
   const {
     tgid,
     position,
@@ -1219,8 +132,11 @@ const Product = (props: any) => {
     isV3Design,
     isCollectionMB,
     isGuidedTour,
-    isSpecialTour,
-    isLoading = false,
+    isSpecialGuidedTour,
+    isProductCardLoading = false,
+    setDetailsPopupShown = undefined,
+    detialsPopupShown = false,
+    tourRankingExpVariant,
   } = props;
   const {
     mbTheme,
@@ -1242,17 +158,29 @@ const Product = (props: any) => {
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
+  const [showAvailabilityInTitle, setShowAvailabilityInTitle] = useState(false);
+  const priceBlockWrapperRef = useRef<HTMLDivElement>();
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
 
   const isOpenDated = scorpioData?.allVariantOpenDated;
 
+  const showAvailabilityInTitleMobile =
+    isSpecialGuidedTour &&
+    getEarliestAvailableDate(
+      earliestAvailability?.startDate,
+      currentLanguage
+    ) === strings.TODAY;
+
   useEffect(() => {
+    if (!tourRankingExpVariant) return;
     const urlParams = new URLSearchParams(window.location.search);
     const pid = urlParams.get('pid');
     const popup = urlParams.get('popup');
     if (pid != tgid) return;
+    if (detialsPopupShown) return;
+    setDetailsPopupShown?.(true);
     if (popup === 'combo') {
       if (isMobile && isComboWithMultiVariant) {
         // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
@@ -1290,7 +218,7 @@ const Product = (props: any) => {
         width: '100vw',
         children: (
           <ModalCardContainer>
-            {getProductCardElements(true)}
+            {getProductCardElements(true, false)}
           </ModalCardContainer>
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -1305,7 +233,7 @@ const Product = (props: any) => {
         },
       });
     }
-  }, [isMobile, showCard]);
+  }, [isMobile, showCard, tourRankingExpVariant]);
 
   const {
     combo: isCombo,
@@ -1462,19 +390,6 @@ const Product = (props: any) => {
     }
   };
 
-  const getDate = (date: any, currentLanguage: any) => {
-    const today = dayjs().format('YYYY-MM-DD');
-    const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
-    if (date === today) return strings.TODAY;
-    if (date === tomorrow) return strings.TOMORROW;
-    return (
-      dayjs(date)
-        .locale(currentLanguage)
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH)
-    );
-  };
-
   const boosterHasIcon =
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
@@ -1499,7 +414,8 @@ const Product = (props: any) => {
     tabs[activeTabIndex]?.contents.flat()?.length > 3 &&
     showMoreDetailsInTabs &&
     !defaultOpen;
-  const hasReadMore = shouldShowMoreDetails || isMobile;
+  const hasReadMore =
+    (shouldShowMoreDetails && !isSpecialGuidedTour) || isMobile;
 
   const noOfListItemToShow = getMaxListItemsToShow(
     // @ts-ignore
@@ -1541,6 +457,30 @@ const Product = (props: any) => {
     }
   }, [tabs, isMobile, noOfListItemToShow]);
 
+  useEffect(() => {
+    if (
+      !isSpecialGuidedTour ||
+      isProductCardLoading ||
+      !priceBlockWrapperRef ||
+      !priceBlockWrapperRef.current
+    )
+      return;
+    if (priceBlockWrapperRef.current.clientHeight > 50) {
+      setShowAvailabilityInTitle(true);
+    } else if (
+      isSpecialGuidedTour &&
+      getEarliestAvailableDate(
+        earliestAvailability?.startDate,
+        currentLanguage
+      ) === strings.TODAY
+    )
+      setShowAvailabilityInTitle(true);
+  }, [
+    isProductCardLoading,
+    earliestAvailability,
+    earliestAvailability?.startDate,
+  ]);
+
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
   if (!listingPrice) return null;
@@ -1578,16 +518,21 @@ const Product = (props: any) => {
     }
   };
 
-  const layout = getProductCardLayout({
-    hasOffer,
-    hasV1Booster,
-    mbTheme,
-    showEarliestAvailability,
-    hasNextAvailable: earliestAvailability?.startDate,
-    isTicketCard: isTicketCard,
-    hasPromoCode: promo_code,
-    isOpenDated,
-  });
+  const layout = ({ isContentExpanded }: { isContentExpanded?: boolean }) =>
+    getProductCardLayout({
+      hasOffer,
+      hasV1Booster,
+      mbTheme,
+      isTicketCard: isTicketCard,
+      hasPromoCode: promo_code,
+      isOpenDated,
+      showAvailabilityInTitle: isMobile
+        ? showAvailabilityInTitleMobile
+        : showAvailabilityInTitle,
+      showGuidesLabel: isContentExpanded && isSpecialGuidedTour && isMobile,
+      showAvailabilityInLanguagesText:
+        !isContentExpanded && isSpecialGuidedTour && isMobile,
+    });
   const trackedToggleContent = (isOpen: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
@@ -1616,28 +561,54 @@ const Product = (props: any) => {
     const innerContent = (
       <>
         {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
-        <Chevron isActive={isContentOpen} className={'chevron'} />
+        <Chevron isActive={isContentOpen} className="chevron" />
       </>
     );
-    return isMobile ? (
-      <MoreDetailsBtnWrapper>
-        <Button
-          color="purps"
-          size="medium"
-          variant="tertiary"
-          onClick={onMoreDetailsClick}
+    if (isMobile) {
+      if (isSpecialGuidedTour)
+        return (
+          <LineMoreDetailsButton role="button" onClick={onMoreDetailsClick}>
+            {strings.MORE_DETAILS}
+          </LineMoreDetailsButton>
+        );
+      return (
+        <MoreDetailsBtnWrapper>
+          <Button
+            color="purps"
+            size="medium"
+            variant="tertiary"
+            onClick={onMoreDetailsClick}
+            data-open="0"
+            tabIndex={0}
+            text={strings.MORE_DETAILS}
+          />
+        </MoreDetailsBtnWrapper>
+      );
+    }
+    if (isSpecialGuidedTour)
+      return (
+        <SpecialGuidedTourMoreDetailsCTA
           data-open="0"
+          onClick={onMoreDetailsClick}
+          onKeyDown={keyPressedOnReadMore}
+          role="button"
           tabIndex={0}
-          text={strings.MORE_DETAILS}
-        />
-      </MoreDetailsBtnWrapper>
-    ) : (
+        >
+          <span>{strings.MORE_DETAILS}</span>
+          <CHEVRON_RIGHT
+            fillColor={COLORS.TEXT.CANDY_1}
+            width={12}
+            height={12}
+            strokeWidth={1.84615}
+          />
+        </SpecialGuidedTourMoreDetailsCTA>
+      );
+    return (
       <div
-        // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
         ref={moreDetailsRef}
+        className="more-details"
         data-open="0"
         onClick={onMoreDetailsClick}
-        className="more-details"
         onKeyDown={keyPressedOnReadMore}
         role="button"
         tabIndex={0}
@@ -1670,6 +641,11 @@ const Product = (props: any) => {
     flowType,
   });
 
+  const onSidePanelClose = () => {
+    trackedToggleContent(true);
+    toggleContentOpen(false);
+  };
+
   const getBookNowButtonText = (): string => {
     switch (true) {
       case isV3Design: // This is just for the experiment. Will revert this at a later time or figure a better to do this
@@ -1683,31 +659,44 @@ const Product = (props: any) => {
     }
   };
 
-  const getProductCardElements = (expandContent: any) => (
+  const getHighlightTabs = (
+    <HighlightTabs
+      isLoading={isProductCardLoading}
+      onTabChange={onTabChange}
+      hasRegularHighlights={hasHighlights}
+      tabs={tabs}
+      pageType={pageType}
+      activeTabIndex={activeTabIndex}
+      showCard={showCard}
+    />
+  );
+
+  const getProductCardElements = (expandContent: any, isLoading?: boolean) => (
     <>
       <StyledProductCard
-        layout={layout}
+        layout={layout({ isContentExpanded: expandContent })}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        $isBannerCard={isBannerCard && !isSpecialTour && !isLoading}
+        $isBannerCard={isBannerCard && !isSpecialGuidedTour && !isLoading}
         isV3Design={isV3Design}
-        $isGuidedTour={isGuidedTour}
+        $isSwipeSheetOpen={expandContent}
         className="product-card"
       >
         <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
-            {isGuidedTour && (
+            <Conditional if={isGuidedTour && !isProductCardLoading}>
               <GuidedTourLabel>
                 <GuidedTourLabelBackground isMobile={isMobile} />
                 {strings.DESCRIPTORS.GUIDED_TOUR}
               </GuidedTourLabel>
-            )}
+            </Conditional>
             <Conditional if={!isLoading}>
               <MediaCarousel
                 imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                 videoUrl={isMobile && isBannerCard ? bannerVideo : null}
                 imageId="card-img"
                 imageAspectRatio={isMobile ? '21:9' : '3:4'}
+                backgroundColor={COLORS.GRAY.G7}
                 imageWidth={
                   isMobile
                     ? isBannerCard
@@ -1716,7 +705,7 @@ const Product = (props: any) => {
                     : undefined
                 }
                 imageHeight={
-                  isMobile && !isBannerCard
+                  isMobile && !isBannerCard && !isSpecialGuidedTour
                     ? undefined
                     : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
                 }
@@ -1732,35 +721,26 @@ const Product = (props: any) => {
         </Conditional>
 
         <ProductHeader>
-          <TitleWrapper
-            $isTicketCard={isTicketCard}
-            hasBorderedTitle={hasBorderedTitle && !tabs.length}
-          >
-            <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
-              <BoosterTag>{boosterTag}</BoosterTag>
-            </Conditional>
-            <TourTitle isPopup={isContentOpen} pageType={pageType}>
-              <Conditional if={!isLoading}>{cardTitle}</Conditional>
-              <Conditional if={isLoading}>
-                <Skeleton
-                  height={isMobile ? '1rem' : '1.25rem'}
-                  borderRadius={2}
-                />
-                <Skeleton
-                  height={isMobile ? '1rem' : '1.25rem'}
-                  borderRadius={2}
-                />
-              </Conditional>
-            </TourTitle>
-            <Conditional if={isOpenDated && !isMobile}>
-              <OpenDatedDescriptor>
-                <Emoji symbol="😇" label="blessed-face" />{' '}
-                {strings.OPEN_DATED_DESCRIPTOR}
-              </OpenDatedDescriptor>
-            </Conditional>
-          </TitleWrapper>
+          <TourTitle
+            boosterTag={boosterTag}
+            cardTitle={cardTitle}
+            hasBorderedTitle={hasBorderedTitle}
+            isContentOpen={isContentOpen}
+            isLoading={isLoading}
+            isMobile={isMobile}
+            isOpenDated={isOpenDated}
+            isTicketCard={isTicketCard}
+            mbTheme={mbTheme}
+            pageType={pageType}
+            showAvailability={
+              isMobile ? showAvailabilityInTitleMobile : showAvailabilityInTitle
+            }
+            tabs={tabs}
+            earliestAvailability={earliestAvailability}
+            currentLanguage={currentLanguage}
+          />
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-            <Descriptors
+            <ProductDescriptors
               isLoading={isLoading}
               descriptorArray={descriptorsList}
               pageType={pageType}
@@ -1807,6 +787,7 @@ const Product = (props: any) => {
                 id={tgid}
                 prefix
                 key={'price-block'}
+                wrapperRef={priceBlockWrapperRef}
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
@@ -1846,28 +827,46 @@ const Product = (props: any) => {
               </Conditional>
             </CTABlock>
             <Conditional
-              if={showNextAvailable && !showEarliestAvailability && isLoading}
-            >
-              <NextAvailableBlockSkeletonWrapper>
-                <Skeleton height="1rem" width="9rem" />
-              </NextAvailableBlockSkeletonWrapper>
-            </Conditional>
-            <Conditional
               if={
-                !isLoading &&
                 showNextAvailable &&
                 showEarliestAvailability &&
-                earliestAvailability?.startDate &&
-                !isOpenDated
+                !isOpenDated &&
+                !(isMobile
+                  ? showAvailabilityInTitleMobile
+                  : showAvailabilityInTitle)
               }
             >
-              <NextAvailableBlock>
-                <div className="icon">{CALENDAR}</div>
-                <div className="available-text">
-                  {`${strings.NEXT_AVAILABLE}`}
-                  {getDate(earliestAvailability?.startDate, currentLanguage)}
-                </div>
-              </NextAvailableBlock>
+              <NextAvailable
+                showSkeleton={
+                  !showEarliestAvailability &&
+                  !earliestAvailability &&
+                  !earliestAvailability?.startDate
+                }
+                earliestAvailability={earliestAvailability}
+                currentLanguage={currentLanguage}
+              />
+            </Conditional>
+            <Conditional if={isMobile && expandContent && isSpecialGuidedTour}>
+              <GuidesBanner isInSwipeSheet />
+            </Conditional>
+            <Conditional if={isMobile && !expandContent && isSpecialGuidedTour}>
+              <TourAvailableInLanguages
+                $increaseTopMargin={
+                  isMobile
+                    ? showAvailabilityInTitleMobile
+                    : showAvailabilityInTitle
+                }
+              >
+                {isSpecialGuidedTour &&
+                  strings.formatString(
+                    strings.TOUR_AVAILABLE_LANGUAGES,
+                    GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
+                      uid ?? ''
+                    ]?.languageLabels
+                      .map((label) => strings.LANGUAGES[label])
+                      .join(', ')
+                  )}
+              </TourAvailableInLanguages>
             </Conditional>
             <Conditional if={isOpenDated && isMobile}>
               <OpenDatedDescriptor>
@@ -1876,7 +875,7 @@ const Product = (props: any) => {
               </OpenDatedDescriptor>
             </Conditional>
             <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-              <Descriptors
+              <ProductDescriptors
                 isLoading={isLoading}
                 descriptorArray={descriptorsList}
                 pageType={pageType}
@@ -1885,6 +884,10 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isCombo={isCombo}
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
+                showLanguages={
+                  (!isMobile || expandContent) && isSpecialGuidedTour
+                }
+                uid={uid}
               />
             </Conditional>
           </CTAContainer>
@@ -1919,6 +922,11 @@ const Product = (props: any) => {
                   : null
               }
             >
+              <Conditional if={isSpecialGuidedTour && !isMobile}>
+                <SpecialGuidedTourSummary
+                  moreDetailsCTA={getMoreDetailsButton()}
+                />
+              </Conditional>
               <Conditional if={hasHighlights}>
                 <RichText
                   render={highlights || []}
@@ -1926,20 +934,12 @@ const Product = (props: any) => {
                   elements={richtextElements}
                 />
               </Conditional>
-              <Conditional if={tabs.length}>
-                <HighlightTabs
-                  isLoading={isLoading}
-                  onTabChange={onTabChange}
-                  hasRegularHighlights={hasHighlights}
-                  tabs={tabs}
-                  pageType={pageType}
-                  activeTabIndex={activeTabIndex}
-                  showCard={showCard}
-                />
+              <Conditional if={tabs.length && !isSpecialGuidedTour}>
+                {getHighlightTabs}
               </Conditional>
             </div>
           </Conditional>
-          <Conditional if={hasReadMore && !isMobile}>
+          <Conditional if={hasReadMore && !isMobile && !isSpecialGuidedTour}>
             {getMoreDetailsButton()}
           </Conditional>
         </ProductBody>
@@ -1982,43 +982,44 @@ const Product = (props: any) => {
       <Conditional if={isV3Design}>
         <div className="indicator-triangle"></div>
       </Conditional>
-      {getProductCardElements(isContentOpen)}
+      {getProductCardElements(isContentOpen, isProductCardLoading)}
     </Container>
   );
 
-  if (isSpecialTour)
+  if (isSpecialGuidedTour)
     return (
-      <Container
-        isV3Design={isV3Design}
-        indexPosition={indexPosition}
-        isCardVisible={getIsCardVisible()}
-      >
-        <SpecialProduct Product={ProductCard} isMobile={isMobile} />
-      </Container>
+      <>
+        <Conditional if={!isMobile && isContentOpen}>
+          <SpecialGuidedTourSidePanel
+            images={images}
+            tgid={tgid}
+            tourTitle={cardTitle}
+            onSidePanelClose={onSidePanelClose}
+            highlightTabsComponent={getHighlightTabs}
+            descriptorsList={descriptorsList}
+            minDuration={minDuration}
+            maxDuration={maxDuration}
+            lang={currentLanguage}
+            showScratchPrice={showScratchPrice}
+            listingPrice={finalListingPrice}
+            onBookNowClick={sendBookNowEvent}
+            showAvailabilityInTitle={
+              getEarliestAvailableDate(
+                earliestAvailability?.startDate,
+                currentLanguage
+              ) === strings.TODAY
+            }
+            earliestAvailability={earliestAvailability}
+            productBookingUrl={productBookingUrl}
+            ctaText={getBookNowButtonText()}
+            uid={uid}
+          />
+        </Conditional>
+        <SpecialGuidedTour Product={ProductCard} isMobile={isMobile} />
+      </>
     );
 
   return ProductCard;
 };
 
 export default Product;
-
-const getMaxListItemsToShow = (contentsForTab: Record<string, any>[] = []) => {
-  if (contentsForTab.length === 0) {
-    return 2;
-  }
-
-  const APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT = 42;
-  const MAX_LIST_ITEMS = 4;
-
-  let wordCountInListItems = 0;
-  let listItemsCount = 0;
-
-  contentsForTab.forEach((content) => {
-    if (wordCountInListItems < APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT) {
-      wordCountInListItems += content.text.split(' ').length;
-      listItemsCount++;
-    }
-  });
-
-  return Math.min(MAX_LIST_ITEMS, listItemsCount);
-};

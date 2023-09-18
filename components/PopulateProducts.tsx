@@ -24,6 +24,7 @@ import {
 } from 'utils/experiments/experimentUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
+import { getProductDescriptors } from 'utils/productUtils';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
@@ -32,6 +33,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESIGN,
+  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
   PROMO_CODES,
   THEMES,
 } from 'const/index';
@@ -147,13 +149,16 @@ const PopulateProducts = (props: any) => {
   const hsid = useRecoilValue(hsidAtom);
   const isHsidSetFail = useRecoilValue(hsidSetFailAtom);
   const productsWrapperRef = useRef(null);
-  const initialVariant = VARIANTS.CONTROL;
+  const initialVariant = GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid]
+    ? null
+    : VARIANTS.CONTROL;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
   const [appliedPromo, setAppliedPromo] = useState(null);
   const [allPromoCodes, setAllPromoCodes] = useState([]);
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState({});
+  const [detialsPopupShown, setDetailsPopupShown] = useState(false);
   const router = useRouter();
   const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
     {}
@@ -206,7 +211,7 @@ const PopulateProducts = (props: any) => {
       return;
     } else if (!hsid || tourRankingExpVariant) return;
     const experimentVariant = getABTestingVariant({
-      expName: EXPERIMENT_NAMES.TOUR_RANKING_EXPERIMENT,
+      expName: EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
       hsid,
       noTrack: true,
     });
@@ -218,7 +223,8 @@ const PopulateProducts = (props: any) => {
     });
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-      'Experiment Name': EXPERIMENT_NAMES.TOUR_RANKING_EXPERIMENT,
+      'Experiment Name':
+        EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
       'Experiment Variant': experimentVariant,
       'Experiment Guided Tour Ranking': getProductRanking({ products, uid }),
     });
@@ -552,7 +558,7 @@ const PopulateProducts = (props: any) => {
                 product_booster,
                 short_summary,
                 tag_booster,
-                isSpecialTour,
+                isSpecialGuidedTour,
               } = tour || {};
               const {
                 collectionId,
@@ -569,7 +575,12 @@ const PopulateProducts = (props: any) => {
                 showNextAvailable,
                 tid: tour_variant_id,
                 title: tour_title_override,
-                descriptors: scorpioData?.[tgid]?.descriptors ?? [],
+                descriptors: getProductDescriptors({
+                  descriptors: scorpioData?.[tgid]?.descriptors,
+                  filterOut: isSpecialGuidedTour
+                    ? ['GUIDED_TOUR', 'AUDIO_GUIDE']
+                    : null,
+                }),
                 highlights: tour_description_override,
                 scorpioData: scorpioData?.[tgid],
                 tourPrices,
@@ -612,10 +623,14 @@ const PopulateProducts = (props: any) => {
                 flowType,
                 bannerVideo,
                 isCollectionMB,
-                isSpecialTour,
-                isGuidedTour:
-                  tourRankingExpVariant === VARIANTS.TREATMENT &&
-                  scorpioData?.[tgid]?.descriptors?.includes('GUIDED_TOUR'),
+                isSpecialGuidedTour,
+                isProductCardLoading: tourRankingExpVariant === null,
+                detialsPopupShown,
+                tourRankingExpVariant,
+                setDetailsPopupShown,
+                isGuidedTour: scorpioData?.[tgid]?.descriptors?.includes(
+                  'GUIDED_TOUR'
+                ),
               };
               return (
                 <ProductWrapper

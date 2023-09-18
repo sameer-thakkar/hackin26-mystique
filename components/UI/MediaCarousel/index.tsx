@@ -30,6 +30,7 @@ type MediaCarouselProps = {
   imageHeight?: number;
   isFirstProduct?: boolean; // prevent lazy load on the first image of first product
   tgid: string;
+  backgroundColor?: string;
   isMobile: boolean;
 };
 
@@ -43,6 +44,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isFirstProduct,
   tgid,
   isMobile,
+  backgroundColor,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -109,7 +111,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   const imageClassNames = `swiper-lazy ${imageId}`;
 
   return (
-    <CarouselContainer ref={carouselRef}>
+    <CarouselContainer $backgroundColor={backgroundColor} ref={carouselRef}>
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {
           return videoUrl && index === 0 ? (

@@ -551,7 +551,6 @@ const TicketCard = (props: any) => {
     hasOffer,
     hasV1Booster,
     mbTheme,
-    hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard,
     hasPromoCode: promo_code,
   });
@@ -676,7 +675,9 @@ const TicketCard = (props: any) => {
         if={showEarliestAvailability && earliestAvailability?.startDate}
       >
         <NextAvailableBlock>
-          <div className="icon">{CALENDAR}</div>
+          <div className="icon">
+            <CALENDAR />
+          </div>
           <div className="available-text">
             {`${strings.NEXT_AVAILABLE}`}
             {getDate(earliestAvailability?.startDate, currentLanguage)}

@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components';
 
-export const CarouselContainer = styled.div`
+export const CarouselContainer = styled.div<{ $backgroundColor?: string }>`
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
 
   img,
   video {

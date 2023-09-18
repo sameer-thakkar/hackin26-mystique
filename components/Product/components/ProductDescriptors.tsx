@@ -1,0 +1,89 @@
+import Skeleton from 'react-loading-skeleton';
+import Conditional from 'components/common/Conditional';
+import { TProductDescriptors } from 'components/Product/interface';
+import { TourTags } from 'components/Product/styles';
+import { characterLimitStrings } from 'utils/stringUtils';
+import { getDuration } from 'utils/timeUtils';
+import { descriptorIcons } from 'const/descriptorIcons';
+import {
+  DESCRIPTORS,
+  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { GLOBE } from 'assets/SvgIcons';
+
+export const ProductDescriptors = ({
+  descriptorArray,
+  minDuration,
+  maxDuration,
+  lang = 'en',
+  isGpMotorTicketsMb = false,
+  isCombo = false,
+  horizontal = false,
+  isLoading = false,
+  pageType = '',
+  showLanguages,
+  uid,
+}: TProductDescriptors) => {
+  if (isLoading)
+    return (
+      <TourTags horizontal={horizontal} pageType={pageType}>
+        {Array.apply(null, Array(4)).map((_item: any, index: number) => {
+          return (
+            <div key={`descriptor-${index}`} className="tour-tag">
+              <Skeleton width="1rem" height="1rem" borderRadius="2px" />
+              <Skeleton height="1rem" width="8rem" borderRadius="2px" />
+            </div>
+          );
+        })}
+      </TourTags>
+    );
+
+  return (
+    <TourTags horizontal={horizontal} pageType={pageType}>
+      {descriptorArray.map((item: string, index: number) => {
+        const DescriptorSVG = descriptorIcons[item];
+        if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
+          return null;
+
+        return (
+          item && (
+            <div key={`descriptor-${index}`} className="tour-tag">
+              <DescriptorSVG />
+              <Conditional if={item === DESCRIPTORS.DURATION}>
+                {getDuration({ minDuration, maxDuration, lang })}
+              </Conditional>
+              <Conditional if={item !== DESCRIPTORS.DURATION}>
+                {(strings.DESCRIPTORS as Record<string, string>)[item]}
+              </Conditional>
+            </div>
+          )
+        );
+      })}
+      <Conditional if={showLanguages}>
+        <div key="descriptor-language" className="tour-tag language-descriptor">
+          {GLOBE}
+          <Conditional if={horizontal}>
+            {showLanguages &&
+              GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
+                uid ?? ''
+              ]?.languageLabels
+                .map((label) => strings.LANGUAGES[label])
+                .join(', ')}
+          </Conditional>
+          <Conditional if={!horizontal}>
+            {showLanguages &&
+              characterLimitStrings(
+                GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
+                  uid ?? ''
+                ]?.languageLabels
+                  .map((label) => strings.LANGUAGES[label])
+                  .join(', '),
+                26
+              )}
+          </Conditional>
+        </div>
+      </Conditional>
+    </TourTags>
+  );
+};

@@ -1,14 +1,10 @@
 import { SwiperProps } from 'swiper/react';
-import SpecialProductDetailLabel from 'components/SpecialProductDetailLabel';
-import { SpecialProductDetailsWrapper } from 'components/SpecialProductDetails/styles';
+import SpecialProductDetailLabel from 'components/Product/components/SpecialProductDetailLabel';
+import { SpecialProductDetailsWrapper } from 'components/Product/styles';
 import SwiperWrapper from 'components/Swiper';
 import { strings } from 'const/strings';
 import {
   ENGAGING_STORIES_ICON,
-  LeafLeftDesktop,
-  LeafLeftMobile,
-  LeafRightDesktop,
-  LeafRightMobile,
   LOCAL_GUIDE_ICON,
   TOP_RATED_ICON,
 } from 'assets/SvgIcons';
@@ -77,11 +73,9 @@ const SpecialProductDetails = ({
     $isOpeningAnimationComplete={isOpeningAnimationComplete}
   >
     <div className="special-product-header-wrapper">
-      {isMobile ? LeafLeftMobile : LeafLeftDesktop}
       <div className="special-product-header">
         {strings.SPECIAL_PRODUCT_HEADING}
       </div>
-      {isMobile ? LeafRightMobile : LeafRightDesktop}
     </div>
     <div className="special-product-header-separator" />
     {isMobile ? (
