@@ -314,7 +314,7 @@ class MicrositeV2 extends Component<any, any> {
           id: collection || category || sub_category,
           name: category_name,
           image:
-            category?.category_image_url.url || category?.category_image?.url,
+            category?.category_image_url?.url || category?.category_image?.url,
           ctaUrl: cta_url,
           rank: 0,
           ranking: {
