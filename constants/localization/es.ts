@@ -482,7 +482,7 @@ const es = {
     'Una visita guiada es la mejor manera de aprovechar al máximo este destino. Nuestros guías expertos serán tus compañeros de viaje y compartirán contigo historias, secretos y recomendaciones.',
     'No solo visites la ciudad, ¡vívela!',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'Qué dicen los viajeros',
   TODAY: 'hoy',
   TOMORROW: 'mañana',
   TOUR_LIST_HEADING: 'Selecciona tu experiencia',

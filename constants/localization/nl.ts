@@ -430,7 +430,7 @@ const nl = {
     'Haal het meeste uit je reis met rondleidingen. Onze deskundige gidsen zijn je vrienden ter plaatse en vertellen je verhalen, insidertips en reisaanbevelingen..',
     'Bezoek een stad niet alleen, ervaar het ook!',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'Onze gasten zeggen',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   TOUR_LIST_HEADING: 'Kies je ervaring',

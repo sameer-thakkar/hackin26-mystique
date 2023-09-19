@@ -1279,10 +1279,6 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
     id: 6173,
     languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
   },
-  'www.jeronimosmonasterytickets.com': {
-    id: 20936,
-    languageLabels: ['ENGLISH', 'SPANISH'],
-  },
   'www.royal-palace-madrid-tickets.com': {
     id: 10410,
     languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH'],
@@ -1384,11 +1380,11 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
     languageLabels: ['ENGLISH'],
   },
   'www.alhambra-granada-tickets.com': {
-    id: 10048,
+    id: 10047,
     languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
   },
   'www.wieliczka-salt-mine-tours.com': {
-    id: 14281,
+    id: 15757,
     languageLabels: ['ENGLISH'],
   },
   'www.palazzo-vecchio-tickets.com': {
@@ -1406,10 +1402,6 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
   'museo-archeologico.tickets-naples.com': {
     id: 16964,
     languageLabels: ['ENGLISH', 'ITALIAN'],
-  },
-  'pantheon.tickets-rome.com': {
-    id: 15402,
-    languageLabels: ['ENGLISH'],
   },
   'www.delphi-tours.com': {
     id: 11913,

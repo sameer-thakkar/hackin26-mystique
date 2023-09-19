@@ -628,9 +628,9 @@ const PopulateProducts = (props: any) => {
                 detialsPopupShown,
                 tourRankingExpVariant,
                 setDetailsPopupShown,
-                isGuidedTour: scorpioData?.[tgid]?.descriptors?.includes(
-                  'GUIDED_TOUR'
-                ),
+                isGuidedTour:
+                  tourRankingExpVariant === VARIANTS.TREATMENT &&
+                  scorpioData?.[tgid]?.descriptors?.includes('GUIDED_TOUR'),
               };
               return (
                 <ProductWrapper

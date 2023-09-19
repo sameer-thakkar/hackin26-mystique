@@ -430,7 +430,7 @@ const fr = {
     'Une visite guidée est le meilleur moyen de découvrir cette destination. Nos guides expert·es sont vos partenaires locaux : ils partagent avec vous histoires, secrets et conseils.',
     'Ne vous contentez pas de visiter, vivez l’expérience !',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'Avis de nos visiteurs',
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TOUR_LIST_HEADING: `Sélectionnez l'offre qui vous plaît`,

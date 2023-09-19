@@ -428,7 +428,7 @@ const de = {
     'Mit geführten Touren machen Sie das Beste aus Ihrer Reise. Unsere fachkundigen Reiseleiter sind Ihre Freunde vor Ort und verraten Ihnen Geschichten, Insidertipps und Reiseempfehlungen.',
     'Besuchen Sie eine Stadt nicht nur – erleben Sie sie!',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'Das sagen Reisende',
   TODAY: 'heute',
   TOMORROW: 'morgen',
   TOUR_LIST_HEADING: 'Wählen Sie Ihr Erlebnis',

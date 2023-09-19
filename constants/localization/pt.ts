@@ -432,7 +432,7 @@ const pt = {
     'Fazer uma visita guiada é a melhor maneira de aproveitar. Nossos guias são como amigos locais compartilhando histórias, informações privilegiadas e recomendações de viagem.',
     'Não apenas visite - viva!',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'Opinião dos visitantes',
   TODAY: 'hoje',
   TOMORROW: 'amanhã',
   TOUR_LIST_HEADING: 'Selecione a experiência desejada',

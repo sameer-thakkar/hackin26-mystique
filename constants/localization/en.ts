@@ -475,7 +475,7 @@ const en = {
     'A lot of educational content, I will surely do it again with my kids',
     'The tour was well organised and just the right time length as well',
     'Our guide really knew his stuff and his passion for history was clear',
-    'Good guide and good organization! Will recommend!!!',
+    'Good guide and organization! Will recommend!!!',
     "Our guide's little fun facts kept us all engaged and interested",
     "The tour went at a good pace and didn't feel rushed",
     'Our guide Maria was able to get spots for our best viewing point',

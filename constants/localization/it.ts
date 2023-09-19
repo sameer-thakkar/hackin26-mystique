@@ -440,7 +440,7 @@ const it = {
     'Un tour guidato è il modo migliore per scoprire al meglio questa destinazione. Le nostre guide esperte ti accompagneranno, ti racconteranno storie e curiosità e ti daranno consigli.',
     'Molto più di una semplice visita!',
   ],
-  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  HEAR_FROM_OUR_GUESTS: 'I viaggiatori dicono',
   TODAY: 'oggi',
   TOMORROW: 'domani',
   TOUR_LIST_HEADING: 'Seleziona la tua esperienza',
