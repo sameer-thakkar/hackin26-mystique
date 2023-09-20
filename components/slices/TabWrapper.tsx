@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { useWindowWidth } from '@react-hook/window-size';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
@@ -10,6 +9,7 @@ import Image from 'UI/Image';
 import { legacyBooleanCheck } from 'utils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -250,6 +250,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     tabData = [],
     findBestSeatsCtaCallback,
   } = props;
+  const { isMobile } = useRecoilValue(appAtom);
 
   // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Obje... Remove this comment to see the full error message
   const { isGlobalMb } = parentSliceProps;
@@ -281,8 +282,6 @@ const TabWrapper = (props: TabWrapperProps) => {
       : heading;
 
   // Tab Carousel
-  const width = useWindowWidth();
-  const [isMobile, setIsMobile] = useState(false);
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
   // @ts-expect-error TS(2531): Object is possibly 'null'.
@@ -315,11 +314,6 @@ const TabWrapper = (props: TabWrapperProps) => {
         setScrollPosition
       );
   }, []);
-
-  // isMobile effect
-  useEffect(() => {
-    setIsMobile(width <= 768);
-  }, [width, setIsMobile]);
 
   useEffect(() => {
     if (isMobile) return;

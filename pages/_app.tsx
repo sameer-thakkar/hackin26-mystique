@@ -44,6 +44,7 @@ type PageProps = {
   categoryTourListData: any;
   simplifiedCategoryTourListData: any;
   scorpioData: any;
+  isBot: boolean;
 };
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
@@ -81,6 +82,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
       categoryTourListData,
+      isBot,
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
@@ -175,6 +177,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isPageLoaded: false,
       uid,
       isSidenavScroll: false,
+      isBot,
+      language: lang,
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);

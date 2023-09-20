@@ -15,6 +15,12 @@ const StyledCarousel = styled.div`
   .swiper-initialized {
     width: 100%;
   }
+
+  :not(.swiper-initialized) .swiper-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2.4rem;
+  }
 `;
 
 const StyledSwiper = styled.div`

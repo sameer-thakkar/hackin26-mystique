@@ -332,6 +332,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   });
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   let isExperimentalBot = true;
+  const isBot = req
+    ? req.headers['x-bot'] === 'true'
+    : PlatformUtils.isBot(userAgent);
 
   const serverCookies = new ServerCookies(req, res);
   /**
@@ -457,6 +460,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         biLink,
         cookies: req?.cookies ?? {},
         headers: JSON.stringify(req?.headers),
+        isBot,
       },
     };
     const removeEmpty = (obj: any) => {

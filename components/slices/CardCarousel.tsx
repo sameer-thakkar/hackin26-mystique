@@ -75,6 +75,11 @@ const CardCarouselContainer = styled.div`
   .carousel-slider .swiper-button-next.swiper-button-disabled {
     opacity: 0;
   }
+  .carousel-slider :not(.swiper-initialized) .swiper-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2.4rem;
+  }
   @media (max-width: 768px) {
     max-width: 100vw;
     .carousel-slider .swiper-pagination.swiper-pagination-bullets {

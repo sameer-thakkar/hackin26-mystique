@@ -22,6 +22,7 @@ import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
 import { MBContext } from 'contexts/MBContext';
 import { ProductsContextProvider } from 'contexts/Products';
+import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
 import {
@@ -29,7 +30,6 @@ import {
   sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import {
   checkIfCategoryHeaderExists,
   checkIfLTTMBLandingPage,
@@ -41,10 +41,9 @@ import {
   withShortcodes,
 } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
-import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
@@ -185,8 +184,25 @@ export const HomePage = (props: any) => {
     baseLangBannerAndFooterCombinations,
     alternateLanguages,
   } = props;
+  const { languageProps } = header;
+  const { currentLanguage, languages } = languageProps || {};
+
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
+  const {
+    isEligible: isLTTRevampExpEligible,
+    variant: lttRevampExpVariant,
+    isExperimentResolving: isLTTRevampExpResolving,
+  } = useABTesting({
+    experimentId: 'LTT_LP_REVAMP_EXPERIMENT',
+    noTrack: true,
+    customEligibilityCheckFn: () => {
+      return checkIfLTTMBLandingPage(uid) && currentLanguage === 'en';
+    },
+  });
+
+  const showLttTreatment =
+    lttRevampExpVariant === VARIANTS.TREATMENT && isLTTRevampExpEligible;
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
@@ -195,15 +211,7 @@ export const HomePage = (props: any) => {
     baseLangBannerAndFooterCombinations
   );
 
-  const isLTTLandingPage = checkIfLTTMBLandingPage(uid);
-  const hsid = useRecoilValue(hsidAtom);
-  const hsidFail = useRecoilValue(hsidSetFailAtom);
-
   const isCollectionMicrobrand = isCollectionMB(mbType);
-  const [showLttTreatment, setShowLttTreatment] = useState<boolean | null>(
-    null
-  );
-  const [showLoader, setShowLoader] = useState(isLTTLandingPage);
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -243,14 +251,13 @@ export const HomePage = (props: any) => {
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
 
-  const { dropdownLinks, enableDropdownLinks, languageProps } = header;
+  const { dropdownLinks, enableDropdownLinks } = header;
   const selectorLinkChangeHandler = (option: any) => {
     window.location.href = option.value;
   };
   const slices = contentFramework?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
-  const { currentLanguage, languages } = languageProps || {};
   const hasLanguageSelector = languages?.length > 0;
   const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
@@ -282,16 +289,6 @@ export const HomePage = (props: any) => {
   });
 
   useEffect(() => {
-    if (!hsid && !hsidFail) return;
-    if (isLTTLandingPage) {
-      setShowLoader(false);
-      const variant = getABTestingVariant({
-        expName: EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
-        hsid,
-      });
-      setShowLttTreatment(variant === VARIANTS.TREATMENT);
-    }
-    setTimeout(() => setShowLoader(false), 1000);
     if (eventsReady) {
       sendVariablesToDataLayer({
         ...(taggedCategoryName && {
@@ -312,9 +309,9 @@ export const HomePage = (props: any) => {
         ...getCommonEventMetaData(pageMetaData),
       });
     }
-  }, [eventsReady, hsid, hsidFail]);
+  }, [eventsReady]);
 
-  if (showLoader) return <Loader />;
+  if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.

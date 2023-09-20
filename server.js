@@ -6,14 +6,6 @@ const dev = process.env.APP_ENV === 'development';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const BOTS_STATIC_HTML_EXPERIMENT_DOMAINS = [
-  'thevaticantickets.com',
-  'acropolis-tickets.com',
-  'eiffeltickets.com',
-  'seine-river-cruises.com',
-  'colosseum-rome-tickets.com',
-];
-
 const TIME = {
   SECONDS_IN_DAY: 60 * 60 * 24,
   SECONDS_IN_HOUR: 60 * 60,
@@ -46,16 +38,8 @@ app.prepare().then(() => {
 
     res.end = function (data, encoding) {
       const isBot = req.headers['x-bot'] === 'true' || isBotQuery;
-      const isStaticHTMLEnabledDomain =
-        BOTS_STATIC_HTML_EXPERIMENT_DOMAINS.findIndex((d) =>
-          req.hostname.includes(d)
-        ) > -1;
-      if (
-        isStaticHTMLEnabledDomain &&
-        isBot &&
-        data &&
-        res.getHeader('content-type')?.includes('text/html')
-      ) {
+      const isSSRPage = res.getHeader('content-type')?.includes('text/html');
+      if (isBot && data && isSSRPage) {
         let modifiedData = removeScripts(data);
         res.setHeader('Content-Length', getByteLength(modifiedData));
         data = modifiedData;

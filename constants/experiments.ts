@@ -15,6 +15,10 @@ export const EXPERIMENT_NAMES = {
     'Guided Tours Product Card Revamp',
 };
 
+/**
+ * Experiments List
+ * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
+ */
 export const EXPERIMENTS = {
   [EXPERIMENT_NAMES.LTD_LP_Experiment]: new Experiment(
     EXPERIMENT_NAMES.LTD_LP_Experiment,
