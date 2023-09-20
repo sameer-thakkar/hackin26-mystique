@@ -207,7 +207,7 @@ const PriceBlock = ({
     return (
       <div>
         <StyledPriceBlock
-          className={'styled-price-block'}
+          className="styled-price-block"
           showScratchPrice={showScratchPrice}
           isSportsExperiment={isSportsExperiment}
         >
@@ -223,7 +223,7 @@ const PriceBlock = ({
               height={isMobile ? '0.875rem' : '1.20625rem'}
             />
             <Conditional if={isLTT && showSavings && save && save > 0}>
-              <SavedTag className={'savedtag-block'}>
+              <SavedTag className="savedtag-block">
                 <Skeleton width="60px" height="18px" />
               </SavedTag>
             </Conditional>
@@ -235,7 +235,7 @@ const PriceBlock = ({
   return (
     <>
       <StyledPriceBlock
-        className={'styled-price-block'}
+        className="styled-price-block"
         showScratchPrice={showScratchPrice}
         isSportsExperiment={isSportsExperiment}
         ref={wrapperRef}
@@ -260,7 +260,7 @@ const PriceBlock = ({
             precision={precision}
           />
           <Conditional if={isLTT && showSavings && save && save > 0}>
-            <SavedTag className={'savedtag-block'}>
+            <SavedTag className="savedtag-block">
               {strings.formatString(
                 isShowPage ? strings.SAVE_PERCENT : strings.SAVE_UPTO_PERCENT,
                 `${save}`
@@ -275,21 +275,23 @@ const PriceBlock = ({
               !isSportsExperiment
             }
           >
-            <SavedTag className={'savedtag-block'}>
+            <SavedTag className="savedtag-block">
               {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
             </SavedTag>
           </Conditional>
-        </div>
-        <Conditional
-          if={showSavings && showScratchPrice && !!savingsElementsArray.length}
-        >
-          <SavedTag
-            className={`savedtag-block`}
-            isSportsExperiment={isSportsExperiment}
+          <Conditional
+            if={
+              showSavings && showScratchPrice && !!savingsElementsArray.length
+            }
           >
-            {savingsElementsArray.join(' + ')}
-          </SavedTag>
-        </Conditional>
+            <SavedTag
+              className="savedtag-block"
+              isSportsExperiment={isSportsExperiment}
+            >
+              {savingsElementsArray.join(' + ')}
+            </SavedTag>
+          </Conditional>
+        </div>
       </StyledPriceBlock>
       <Conditional
         if={showcashbackElm && (showCashbackBlock || isSportsExperiment)}
