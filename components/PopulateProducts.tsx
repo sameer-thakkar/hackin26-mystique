@@ -25,6 +25,7 @@ import {
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import { getProductDescriptors } from 'utils/productUtils';
+import { appAtom } from 'store/atoms/app';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
@@ -148,10 +149,12 @@ const PopulateProducts = (props: any) => {
   productsRef.current = [];
   const hsid = useRecoilValue(hsidAtom);
   const isHsidSetFail = useRecoilValue(hsidSetFailAtom);
+  const { isBot } = useRecoilValue(appAtom);
   const productsWrapperRef = useRef(null);
-  const initialVariant = GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid]
+  let initialVariant = GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid]
     ? null
     : VARIANTS.CONTROL;
+  initialVariant = isBot ? VARIANTS.CONTROL : initialVariant;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
   const [appliedPromo, setAppliedPromo] = useState(null);
@@ -206,7 +209,7 @@ const PopulateProducts = (props: any) => {
   };
 
   useEffect(() => {
-    if (isHsidSetFail) {
+    if (isHsidSetFail || isBot) {
       setTourRankingExpVariant(VARIANTS.CONTROL);
       return;
     } else if (!hsid || tourRankingExpVariant) return;

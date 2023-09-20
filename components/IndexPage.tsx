@@ -333,7 +333,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   let isExperimentalBot = true;
   const isBot = req
-    ? req.headers['x-bot'] === 'true'
+    ? req.headers['x-bot'] === 'true' || typeof query?.['bot'] !== 'undefined'
     : PlatformUtils.isBot(userAgent);
 
   const serverCookies = new ServerCookies(req, res);
