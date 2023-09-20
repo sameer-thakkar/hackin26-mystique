@@ -40,8 +40,8 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   }, [isEligible]);
 
   useEffect(() => {
-    if (variant !== DEFAULT_VARIANT || isHsidSetFail || isBot) return;
-
+    if (!sandboxId || variant !== DEFAULT_VARIANT || isHsidSetFail || isBot)
+      return;
     const abTestingVariant = getABTestingVariant({
       expName: EXPERIMENT_NAMES[experimentNameKey],
       hsid: sandboxId,
