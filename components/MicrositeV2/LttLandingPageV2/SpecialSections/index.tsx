@@ -137,6 +137,7 @@ const SpecialSections = ({
     false
   );
   const [forceShowSkeletonLoader, setForceShowSkeletonLoader] = useState(false);
+  const [slidesPerView, setSlidesPerView] = useState(6);
 
   const sectionRef = useRef(null);
   const isSectionIntersecting = useOnScreen({
@@ -186,11 +187,26 @@ const SpecialSections = ({
       enabled: true,
     },
     onSwiper: (swiper: any) => setSwiper(swiper),
+    onBreakpoint: (swiper, { slidesPerView }) => {
+      if (swiper && slidesPerView && typeof slidesPerView === 'number') {
+        setSlidesPerView(slidesPerView);
+      }
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 16,
+      },
+      1100: {
+        slidesPerView: 6,
+        spaceBetween: 24,
+      },
+    },
   };
   const goNext = () => {
     if (swiper !== null) {
       const currIdx = swiper.activeIndex;
-      const newIndex = currIdx + 6;
+      const newIndex = currIdx + slidesPerView;
       swiper.slideTo(newIndex);
       setActiveSlideIdx(newIndex);
       trackEvent({
@@ -198,7 +214,7 @@ const SpecialSections = ({
         Direction: 'Next',
         Category: title,
         [ANALYTICS_PROPERTIES.NEXT_ITEMS_COUNT]: Math.min(
-          6,
+          slidesPerView,
           swiperSlides?.length - newIndex
         ),
       });
@@ -207,7 +223,7 @@ const SpecialSections = ({
   const goPrev = () => {
     if (swiper !== null) {
       const currIdx = swiper.activeIndex;
-      const newIndex = currIdx - 6;
+      const newIndex = currIdx - slidesPerView;
       swiper.slideTo(newIndex);
       setActiveSlideIdx(newIndex);
       trackEvent({
@@ -215,7 +231,7 @@ const SpecialSections = ({
         Direction: 'Previous',
         Category: title,
         [ANALYTICS_PROPERTIES.NEXT_ITEMS_COUNT]: Math.min(
-          6,
+          slidesPerView,
           swiperSlides?.length - newIndex
         ),
       });
@@ -340,11 +356,11 @@ const SpecialSections = ({
                 {strings.LTT_LANDING_PAGE.SEE_ALL}
               </span>
             </Conditional>
-            <Conditional if={!isMobile && swiperSlides.length > 6}>
+            <Conditional if={!isMobile && swiperSlides.length > slidesPerView}>
               <CHEVRON_LEFT onClick={goPrev} disabled={activeSlideIdx <= 0} />
               <CHEVRON_RIGHT
                 onClick={goNext}
-                disabled={activeSlideIdx + 6 >= swiperSlides.length}
+                disabled={activeSlideIdx + slidesPerView >= swiperSlides.length}
               />
             </Conditional>
           </div>

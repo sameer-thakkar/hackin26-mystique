@@ -100,6 +100,21 @@ const StyledHeader = styled.div<IStyledHeader>`
     height: ${({ theme: { theme } }) =>
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
+
+  ${({ showLttColoredHeader }) =>
+    showLttColoredHeader &&
+    `.fixed-offset::before {
+      content: '';
+      position: fixed;
+      width: 100vw;
+      top: 0;
+      display: block;
+      background-color: #150029;
+      height: 500px;
+      @media (max-width: 789px) {
+        height:300px;
+      }
+    }`}
   
   .main-wrapper .header-city-selector {
     min-width: 180px;

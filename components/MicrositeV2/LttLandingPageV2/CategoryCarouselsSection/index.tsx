@@ -106,7 +106,6 @@ const CategoryCarouselSwiper = ({
     freeMode: {
       enabled: true,
     },
-    onTouchEnd: () => {},
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     onBreakpoint: (swiper, { slidesPerView }) => {
       if (swiper && slidesPerView && typeof slidesPerView === 'number') {

@@ -49,6 +49,7 @@ export const TopShowsWrapper = styled.div`
 
   .card-wrapper {
     position: relative;
+    max-width: 11.25rem;
     &:hover {
       transition: ease 0.2s;
       &:hover {
@@ -59,6 +60,10 @@ export const TopShowsWrapper = styled.div`
 
   @media (max-width: 768px) {
     padding-top: 0;
+
+    .card-wrapper {
+      max-width: initial;
+    }
 
     .title {
       ${expandFontToken(FONTS.HEADING_LARGE)};

@@ -532,7 +532,7 @@ const en = {
         DESCRIPTION: 'Get the best seats for every show.',
       },
       OFFICIAL_LTT: {
-        NAME: 'Official London Theatre Tickets',
+        NAME: 'Official London theatre tickets',
         DESCRIPTION: 'Book swiftly and securely with us.',
       },
     },
@@ -540,7 +540,7 @@ const en = {
     BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LAST_MINUTE_TICKETS: 'Last minute tickets',
-    LOVED_BY_MILLIONS: 'Loved by Millions',
+    LOVED_BY_MILLIONS: 'Loved by millions',
     TODAY: 'Today',
     TOMORROW: 'Tomorrow',
     SEE_ALL: 'See All',

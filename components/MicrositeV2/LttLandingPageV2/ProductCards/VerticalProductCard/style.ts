@@ -15,6 +15,8 @@ export const Wrapper = styled.div<{
   margin: 0;
   user-select: none;
   cursor: pointer;
+  max-width: 11.25rem;
+
   ${({ hoverEffect }) =>
     hoverEffect &&
     `transition: ease 0.2s;
@@ -66,6 +68,7 @@ export const Wrapper = styled.div<{
   }
   @media (max-width: 768px) {
     width: 120px;
+    max-width: initial;
     .pinned-card-vertical-image {
       min-width: 120px;
       min-height: 180px;
