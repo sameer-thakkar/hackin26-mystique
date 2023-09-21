@@ -281,7 +281,7 @@ const PopulateProducts = (props: any) => {
           fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
           currency,
           toDate: formatDateToString(
-            addDays(new Date(), 30),
+            addDays(new Date(), 60),
             'en',
             'YYYY-MM-DD'
           ),
