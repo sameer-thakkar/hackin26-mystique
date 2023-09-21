@@ -246,7 +246,7 @@ const PriceBlock = ({
             <LocalisedPrice
               currencyCode={currencyCode}
               lang={lang}
-              price={finalPrice}
+              price={originalPrice}
               precision={precision}
             />
           </Conditional>
