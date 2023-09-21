@@ -8,7 +8,7 @@ const de = {
     MAIN_TEXT: 'Autorisierter Reseller',
     SUB_TEXT: 'Erlebnisse von verifizierten Partnern.',
   },
-  AVAILABLE: 'Verfügbar am',
+  AVAILABLE: 'Verfügbar',
   BANNER_CTA: 'Tickets kaufen',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:
