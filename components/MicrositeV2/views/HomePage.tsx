@@ -22,7 +22,6 @@ import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
 import { MBContext } from 'contexts/MBContext';
 import { ProductsContextProvider } from 'contexts/Products';
-import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
 import {
@@ -43,7 +42,6 @@ import {
 import { gtmAtom } from 'store/atoms/gtm';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
@@ -69,9 +67,6 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
 );
 const Banner: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
-);
-const Loader: ComponentType<any> = dynamic(() =>
-  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
@@ -189,20 +184,8 @@ export const HomePage = (props: any) => {
 
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const {
-    isEligible: isLTTRevampExpEligible,
-    variant: lttRevampExpVariant,
-    isExperimentResolving: isLTTRevampExpResolving,
-  } = useABTesting({
-    experimentId: 'LTT_LP_REVAMP_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => {
-      return checkIfLTTMBLandingPage(uid);
-    },
-  });
 
-  const showLttTreatment =
-    lttRevampExpVariant === VARIANTS.TREATMENT && isLTTRevampExpEligible;
+  const isLtt = checkIfLTTMBLandingPage(uid);
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
@@ -311,8 +294,6 @@ export const HomePage = (props: any) => {
     }
   }, [eventsReady]);
 
-  if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
-
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
@@ -329,7 +310,7 @@ export const HomePage = (props: any) => {
         logoUrl={logoUrl}
         logoAltText={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        isNewLTTLandingPageVisible={showLttTreatment}
+        isNewLTTLandingPageVisible={isLtt}
         primaryCity={primaryCity}
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
@@ -377,14 +358,14 @@ export const HomePage = (props: any) => {
           }}
         />
       </Conditional>
-      <Conditional if={isMobile && showLttTreatment}>
+      <Conditional if={isMobile && isLtt}>
         <MobileBannerV2
           bannerImages={heroProps.banners}
           allTours={allTours}
           pinnedTgid={directTgid}
         />
       </Conditional>
-      <Conditional if={!isMobile && showLttTreatment}>
+      <Conditional if={!isMobile && isLtt}>
         <DesktopBannerV2
           bannerImages={heroProps.banners}
           allTours={allTours}
@@ -396,7 +377,7 @@ export const HomePage = (props: any) => {
           mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
           !isListicle &&
-          !showLttTreatment
+          !isLtt
         }
       >
         <Banner
@@ -450,7 +431,7 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional if={hasToursSection && !showLttTreatment}>
+      <Conditional if={hasToursSection && !isLtt}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
           hasCategoryTourList={hasCategoryTourList}
@@ -468,7 +449,7 @@ export const HomePage = (props: any) => {
           isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
-      <Conditional if={showLttTreatment}>
+      <Conditional if={isLtt}>
         <LttLandingPageV2
           isMobile={isMobile}
           allTours={allTours}
@@ -501,13 +482,13 @@ export const HomePage = (props: any) => {
           </Conditional>
         </div>
       </ProductsContextProvider>
-      <Conditional if={showLttTreatment && currentLanguage === 'en'}>
+      <Conditional if={isLtt && currentLanguage === 'en'}>
         <StyledReviewSectionWrapper showMargin={!longFormContent.length}>
           <ReviewSection isMobile={isMobile} />
         </StyledReviewSectionWrapper>
       </Conditional>
 
-      <Conditional if={isEntertainmentMb && !showLttTreatment}>
+      <Conditional if={isEntertainmentMb && !isLtt}>
         <div className="main-wrapper" ref={lttFeatureCardRef}>
           <Conditional if={isExperimentalBot || isLTTFeatureCardIntersecting}>
             <LttFeatureCard />
