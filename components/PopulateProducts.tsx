@@ -574,7 +574,8 @@ const PopulateProducts = (props: any) => {
               const childProps = {
                 tgid,
                 earliestAvailability,
-                showEarliestAvailability,
+                showEarliestAvailability:
+                  earliestAvailability?.startDate && showEarliestAvailability,
                 showNextAvailable,
                 tid: tour_variant_id,
                 title: tour_title_override,
