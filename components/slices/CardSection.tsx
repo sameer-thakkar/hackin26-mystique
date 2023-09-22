@@ -33,8 +33,7 @@ const CardCarousel = styled.div`
   position: relative;
   :not(.swiper-initialized) .swiper-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 2.4rem;
+    grid-auto-flow: column;
   }
   @media (max-width: 768px) {
     width: 100%;
