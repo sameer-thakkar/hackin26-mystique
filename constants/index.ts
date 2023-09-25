@@ -1235,7 +1235,7 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
     languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH', 'GERMAN'],
   },
   'www.colosseum-rome-tickets.com': {
-    id: 3075,
+    id: 11413,
     languageLabels: [
       'ENGLISH',
       'SPANISH',
@@ -1336,7 +1336,7 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
     languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'FRENCH', 'GERMAN'],
   },
   'www.leaningtowerofpisa-tickets.com': {
-    id: 21985,
+    id: 21882,
     languageLabels: ['ENGLISH', 'SPANISH', 'ITALIAN', 'GERMAN'],
   },
   'www.topkapipalace-tickets.com': {
@@ -1362,10 +1362,6 @@ export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
   'sagradafamilia.barcelona-tickets.com': {
     id: 10117,
     languageLabels: ['ENGLISH', 'SPANISH', 'FRENCH'],
-  },
-  'www.eiffeltickets.com': {
-    id: 23604,
-    languageLabels: ['ENGLISH'],
   },
   'www.tickets-amsterdam.com.rijksmuseum': {
     id: 12180,

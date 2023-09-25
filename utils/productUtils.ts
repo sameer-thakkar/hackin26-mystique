@@ -155,6 +155,8 @@ export const getProductCardLayout = ({
           !isOpenDated &&
             !showAvailabilityInTitle &&
             'next-available next-available',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
+          showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           showAvailabilityInLanguagesText &&
             'tour-available-in-languages-area tour-available-in-languages-area',
@@ -162,8 +164,6 @@ export const getProductCardLayout = ({
           isTicketCard && hasPromoCode && 'promo-block promo-block',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer offer',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
-          showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.

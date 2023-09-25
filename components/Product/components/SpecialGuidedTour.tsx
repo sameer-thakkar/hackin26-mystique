@@ -65,6 +65,7 @@ export const SpecialGuidedTour = ({
       </SpecialGuidedTourHeaderWrapper>
       {Product}
       <Conditional if={isMobile}>
+        <AnimationHeader>{strings.HEAR_FROM_OUR_GUESTS}</AnimationHeader>
         <AnimatedCarousel isMobile />
       </Conditional>
     </SpecialGuidedTourWrapper>

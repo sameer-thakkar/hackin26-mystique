@@ -1324,6 +1324,9 @@ export const SpecialGuidedTourWrapper = styled.div`
     ${StyledProductCard} {
       column-gap: 0;
       border: none;
+      ${NextAvailableBlock} {
+        margin-bottom: 0.25rem;
+      }
     }
   }
 `;
@@ -1824,6 +1827,9 @@ export const AnimationHeader = styled.div`
     right: -2rem;
     background: linear-gradient(90deg, #A4563B -3.28%, rgba(255, 255, 255, 0.00) 100%);
   }
+  @media (max-width: 768px) {
+    margin: -0.1875rem auto -0.4375rem;
+  }
 `;
 
 export const LineMoreDetailsButton = styled.div`
@@ -1909,6 +1915,5 @@ export const TourAvailableInLanguages = styled.div<{
   text-overflow: ellipsis;
   white-space: nowrap;
   grid-area: tour-available-in-languages-area;
-  margin-top: ${({ $increaseTopMargin }) =>
-    $increaseTopMargin ? '-1rem' : '-0.75rem'};
+  margin-top: -0.5rem;
 `;

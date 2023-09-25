@@ -529,7 +529,7 @@ const Product = (props: any) => {
       showAvailabilityInTitle: isMobile
         ? showAvailabilityInTitleMobile
         : showAvailabilityInTitle,
-      showGuidesLabel: isContentExpanded && isSpecialGuidedTour && isMobile,
+      showGuidesLabel: isSpecialGuidedTour && isMobile,
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
     });
@@ -846,17 +846,11 @@ const Product = (props: any) => {
                 currentLanguage={currentLanguage}
               />
             </Conditional>
-            <Conditional if={isMobile && expandContent && isSpecialGuidedTour}>
+            <Conditional if={isMobile && isSpecialGuidedTour}>
               <GuidesBanner isInSwipeSheet />
             </Conditional>
             <Conditional if={isMobile && !expandContent && isSpecialGuidedTour}>
-              <TourAvailableInLanguages
-                $increaseTopMargin={
-                  isMobile
-                    ? showAvailabilityInTitleMobile
-                    : showAvailabilityInTitle
-                }
-              >
+              <TourAvailableInLanguages>
                 {isSpecialGuidedTour &&
                   strings.formatString(
                     strings.TOUR_AVAILABLE_LANGUAGES,
