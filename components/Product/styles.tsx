@@ -1828,7 +1828,7 @@ export const AnimationHeader = styled.div`
     background: linear-gradient(90deg, #A4563B -3.28%, rgba(255, 255, 255, 0.00) 100%);
   }
   @media (max-width: 768px) {
-    margin: -0.1875rem auto -0.4375rem;
+    margin: 0.0625rem auto -0.4375rem;
   }
 `;
 
