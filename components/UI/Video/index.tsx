@@ -46,6 +46,7 @@ const Video: React.FC<VideoTypeProps> = ({
   imageQuality,
   dontLazyLoadImage = false,
   videoPosition,
+  children,
   showPlayIcon = true,
   pauseOnclick = false,
   eventTracking = true,
@@ -170,6 +171,7 @@ const Video: React.FC<VideoTypeProps> = ({
 
   return (
     <VideoContainer className={'video-container'} $fadeInVideo={!isVideoPaused}>
+      {children}
       <Conditional if={fallbackImage}>
         {/* Using a custom img component instead of video's poster attribute 
         to utilise the benefits of lazy-loading, fallback UI, etc. */}

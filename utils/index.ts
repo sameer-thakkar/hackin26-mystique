@@ -742,6 +742,19 @@ export const deepDeleteKeys = ({
   }, {});
 };
 
+export const getFinalisedBannerImages = (bannerImages: any) => {
+  return bannerImages.map((banner: any) => {
+    return {
+      url: banner.image_src.url || banner.uploaded_image.url,
+      alt: banner.image_alt || banner.uploaded_image.alt,
+      mobileUrl:
+        banner.mobile_banner_url?.url ||
+        banner.mobile_banner_uploaded?.url ||
+        '',
+    };
+  });
+};
+
 export const getTagPageMap = () => ({
   [strings.TAG_NAME.BALLET]:
     'https://www.london-theater-tickets.com/shows-in-london/ballet-shows/',

@@ -26,6 +26,7 @@ import {
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
+import { generateCityPageData } from 'utils/cityPageUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
@@ -53,6 +54,7 @@ import {
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
   MB_CATEGORISATION,
+  MB_TYPES,
   MICROSITE_ARRAY_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
@@ -574,6 +576,10 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.tagged_city
                     : completeMicrosite.data.data.tagged_city,
+                baseLangTaggedCountry:
+                  lang !== 'en-us'
+                    ? baseLangData.data.tagged_country
+                    : completeMicrosite.data.data.tagged_country,
               },
             },
           };
@@ -1773,6 +1779,29 @@ export const getPageData = async ({
         }
       }
 
+      const {
+        baseLangTaggedCity: mbCity,
+        baseLangTaggedCountry: mbCountry,
+      } = microsite.data;
+
+      let cityPageData = {};
+      let isCityPageMB = false;
+      if (mbType === MB_TYPES.A1_HOMEPAGE && mbCity) {
+        isCityPageMB = true;
+        cityPageData = await generateCityPageData({
+          mbCity,
+          mbCountry,
+          lang: lang || LANGUAGE_MAP.en.locale,
+          cookies,
+        });
+      }
+
+      const cityPageParams = {
+        mbLocationData: { mbCity, mbCountry },
+        isCityPageMB,
+        cityPageData,
+      };
+
       const prismicTours = toursTabFirstSlice
         ? toursTabSliceHandler(toursTabFirstSlice)
         : [];
@@ -1870,6 +1899,7 @@ export const getPageData = async ({
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
+        cityPageParams,
       };
     }
     tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];

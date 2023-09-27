@@ -19,6 +19,7 @@ import {
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
+  PAGE_TYPES,
   PAGETYPE_BY_CUSTOMTYPE,
   RTL_LANGUAGE_CODES,
   SENTRY_TAGS,
@@ -44,6 +45,7 @@ type PageProps = {
   categoryTourListData: any;
   simplifiedCategoryTourListData: any;
   scorpioData: any;
+  cityPageParams: Record<string, string>;
   isBot: boolean;
 };
 
@@ -82,6 +84,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
       categoryTourListData,
+      cityPageParams: { isCityPageMB } = {},
       isBot,
     } = pageProps;
 
@@ -155,7 +158,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
       [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isCityPageMB
+        ? PAGE_TYPES.CITY_PAGE
+        : pageType,
     });
 
     set(metaAtom, {

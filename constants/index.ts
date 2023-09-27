@@ -344,6 +344,7 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_MORE_DETAILS_VIEWED: 'More Details Viewed',
   EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
   MICROSITE_PAGE_VIEWED: 'Microsite Page Viewed',
+  MICROSITE_PAGE_SECTION_VIEWED: 'Microsite Page Section Viewed',
   CONTENT_CARD_CLICKED: 'Content Card Clicked',
   DROPDOWN_SHOWN: 'Header Dropdown Shown',
   DROPDOWN_OPTION_SELECTED: 'Header Dropdown Option Clicked',
@@ -430,6 +431,9 @@ export const ANALYTICS_EVENTS = {
   DATE_FILTER_APPLIED: 'Date Filter Applied',
   DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
   MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',
+  CITY_CARD_CLICKED: 'City Card Clicked',
+  COLLECTION_CARD_CLICKED: 'Collection Card Clicked',
+  SUBCAT_CARD_CLICKED: 'Sub-Category Card Clicked',
   SEE_ALL_CLICKED: 'See All Clicked',
   PAGE_SECTION_VIEWED: 'Page Section Viewed',
 };
@@ -550,6 +554,7 @@ export const FALLBACK_IMAGES = {
   TICKETS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/tickets.png',
   THEMEPARKS:
     'https://cdn-imgix-open.headout.com/MB/fallback-images/themeparks.png',
+  HEADOUT: '//cdn-imgix.headout.com/cities/fallback/fallback-city-image.png',
 };
 
 export const SAFETY_DETAILS_IMAGES = {
@@ -828,6 +833,8 @@ export const ANALYTICS_PROPERTIES = {
   DATE_RANGE_SELECTED: 'Date Range Selected',
   EXPERIENCES_AVAILABLE: 'Experiences Available',
   SHOULDER_PAGE_TYPE: 'Shoulder Page Type',
+  CARD_NAME: 'Card Name',
+  CITY_NAME: 'City Name',
   MB_TYPE: 'MB Type',
   VIDEO_TITLE: 'Video Title',
   PERCENT_VIEWED: 'Percentage Viewed',
@@ -838,6 +845,7 @@ export const PAGE_TYPES = {
   CONTENT_PAGE: 'Content Page',
   SHOW_PAGE: 'Show Page',
   VENUE_PAGE: 'Venue Page',
+  CITY_PAGE: 'City Page',
 };
 
 export const ANALYTICS_PLATFORM = {
@@ -913,6 +921,9 @@ export const CTA_TYPE = {
   TEXT: 'Text CTA',
   SHOW_MORE: 'Show More Button',
   VIEW_ALL_DATES: 'View all dates',
+  SEE_ALL_DAY_TRIPS: 'See all Day Trips',
+  VIEW_TRAVEL_GUIDE: 'View Travel Guide',
+  SIGN_UP: 'Sign Up',
 };
 
 export const HIGHLIGHT_TYPES = {
@@ -1207,6 +1218,22 @@ export const SORT_SELECTOR_FILTERS = {
   PRICE: 'price',
 };
 
+export const BANNER_API_PARAMS = {
+  PLATFORM: {
+    DESKTOP: 'DESKTOP',
+  },
+  RESOURCE_TYPE: {
+    CITY_BANNER: 'MB_CITY_BANNER',
+  },
+  ELM_TYPE: {
+    VIDEO: 'VIDEO',
+  },
+};
+
+export const CAROUSEL_DIR = {
+  NEXT: 'Forward',
+  PREV: 'Backward',
+};
 export const FLAGS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/home/country-flags/4x3/';
 
@@ -1214,6 +1241,17 @@ export const BY_HO_BRAND_SCREEN_ENABLE = [
   'book.hochiminh-city.com',
   'book.cruises-halongbay.com',
 ];
+
+export const EMAIL_SUBCRIPTION = {
+  BANNER_URL:
+    'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription.png',
+  ENDPOINT: 'https://vivillion.netlify.app/api/webengage',
+  CITY_PAGE_EVENT: 'City Page Subscribe',
+};
+
+export const RESOURCE_ASSET_TYPE = {
+  IMAGE: 'IMAGE',
+};
 
 export const GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT: Record<
   string,

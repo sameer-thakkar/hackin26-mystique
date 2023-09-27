@@ -1,25 +1,16 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
+import Swiper from 'components/Swiper';
 import OverflowScroll from 'UI/OverflowScroll';
 import { HALYARD, SIZES } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledCarousel = styled.div`
   position: relative;
 
   .swiper-initialized {
     width: 100%;
-  }
-
-  :not(.swiper-initialized) .swiper-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 2.4rem;
   }
 `;
 
@@ -60,7 +51,7 @@ const Controls = styled.div`
     left: unset;
     right: -20px;
     svg {
-      transform: rotate(180deg);
+      transform: rotateY(180deg);
     }
   }
 `;
@@ -78,6 +69,12 @@ interface CarouselProps {
   spaceBetween?: number;
   entrySection?: JSX.Element;
   children?: any[];
+  mobileMinWidth?: number | string;
+  slidesPerGroup?: number;
+  goNextHandler?: Function;
+  goPrevHandler?: Function;
+  isMobile?: boolean;
+  breakpoints?: Record<number, any>;
 }
 
 // @ts-expect-error TS(2322): Type '({ cardsInARow, spaceBetween, entrySection, ... Remove this comment to see the full error message
@@ -86,20 +83,19 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   spaceBetween = 24,
   entrySection,
   children,
+  mobileMinWidth = 'calc(100vw - 93px)',
+  slidesPerGroup = 1,
+  goNextHandler = () => {},
+  goPrevHandler = () => {},
+  isMobile,
+  breakpoints = {},
 }) => {
-  const width = useWindowWidth();
-  const [isMobile, setIsMobile] = useState(false);
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
   // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
-
-  // isMobile effect
-  useEffect(() => {
-    setIsMobile(width <= 768);
-  }, [width, setIsMobile]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -116,12 +112,14 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   if (!isMobile) {
     const goNext = () => {
       if (swiper !== null) {
+        goNextHandler();
         (swiper as any).slideNext();
       }
     };
 
     const goPrev = () => {
       if (swiper !== null) {
+        goPrevHandler();
         (swiper as any).slidePrev();
       }
     };
@@ -131,6 +129,8 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       spaceBetween: spaceBetween,
       shouldSwiperUpdate: true,
       onSwiper: updateSwiper,
+      slidesPerGroup,
+      breakpoints: breakpoints,
     };
 
     return (
@@ -174,7 +174,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
           <EntrySection>{entrySection}</EntrySection>
         </Conditional>
         {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
-        <OverflowScroll minWidthChild="calc(100vw - 93px)" marginBottom={0}>
+        <OverflowScroll minWidthChild={mobileMinWidth} marginBottom={0}>
           {children}
         </OverflowScroll>
       </>

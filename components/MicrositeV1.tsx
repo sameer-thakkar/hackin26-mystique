@@ -20,6 +20,7 @@ import {
   getAlternateLanguages,
   getBannerAndFooterSubtext,
   getF1MBTrustBoosters,
+  getFinalisedBannerImages,
   getHeadoutLanguagecode,
   isA1orC1MB,
   isCollectionMB,
@@ -67,6 +68,13 @@ const TextBanner = dynamic(() => import('components/TextBanner'));
 const StaticBanner = dynamic(() =>
   import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner')
 );
+
+const CityPageContainer = dynamic(() =>
+  import(
+    /* webpackChunkName: "CityPageContainer" */ 'components/CityPageContainer'
+  )
+);
+
 const Banner = dynamic(() =>
   import(/* webpackChunkName: "Banner" */ 'components/Banner')
 );
@@ -95,6 +103,7 @@ const MicrositeV1 = (props: any) => {
     collectionDetails,
     primaryCity,
     categoryHeaderMenu,
+    cityPageParams,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -115,6 +124,8 @@ const MicrositeV1 = (props: any) => {
     alternate_languages,
     mbType,
   } = data;
+
+  const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
 
   const {
     contentFramework,
@@ -340,16 +351,8 @@ const MicrositeV1 = (props: any) => {
 
   const allTours = allToursParser(micrositeData, scorpioData, pricingData);
 
-  let finalBannerImages = bannerImages.map((banner: any) => {
-    return {
-      url: banner.image_src.url || banner.uploaded_image.url,
-      alt: banner.image_alt || banner.uploaded_image.alt,
-      mobileUrl:
-        banner.mobile_banner_url?.url ||
-        banner.mobile_banner_uploaded?.url ||
-        '',
-    };
-  });
+  let finalBannerImages = getFinalisedBannerImages(bannerImages);
+
   if (autoBanner) {
     const tgidArray = csvTgidToArray(tourRanking);
     finalBannerImages = tgidArray
@@ -403,6 +406,15 @@ const MicrositeV1 = (props: any) => {
       name: ANALYTICS_PROPERTIES.PAGE_TITLE,
       value: renderedBaseLangPageTitle,
     });
+
+    if (isCityPageMB) {
+      const { mbCity, mbCountry } = mbLocationData;
+
+      sendVariablesToDataLayer({
+        [ANALYTICS_PROPERTIES.COUNTRY]: mbCountry,
+        [ANALYTICS_PROPERTIES.CITY]: mbCity,
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -425,7 +437,9 @@ const MicrositeV1 = (props: any) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isCityPageMB
+        ? PAGE_TYPES.CITY_PAGE
+        : PAGE_TYPES.COLLECTION,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
@@ -541,6 +555,7 @@ const MicrositeV1 = (props: any) => {
           taggedCity={taggedCity}
           categoryHeaderMenu={categoryHeaderMenu}
           categoryHeaderMenuExists={categoryHeaderMenuExists}
+          isCityPageMB={isCityPageMB}
         />
         <Conditional
           if={
@@ -585,7 +600,11 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={mbTheme !== THEMES.MIN_BLUE && !isCollectionMicrobrand}
+          if={
+            mbTheme !== THEMES.MIN_BLUE &&
+            !isCollectionMicrobrand &&
+            !isCityPageMB
+          }
         >
           <Banner
             bannerImages={finalBannerImages || null}
@@ -598,6 +617,16 @@ const MicrositeV1 = (props: any) => {
             boxed={true}
             hideCTA={isToursAvailable ? hideBannerCTA : true}
             orderedTgids={orderedTgids}
+          />
+        </Conditional>
+        <Conditional if={isCityPageMB}>
+          <CityPageContainer
+            cityPageData={cityPageData}
+            isMobile={isMobile}
+            lang={lang}
+            host={host}
+            isDev={isDev}
+            prismicBannerImages={finalBannerImages}
           />
         </Conditional>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE && isCollectionMicrobrand}>
@@ -642,7 +671,7 @@ const MicrositeV1 = (props: any) => {
 
         <ProductsContextProvider allTours={allTours} ready={isReady}>
           <InteractionContextProvider>
-            <Conditional if={longFormContent}>
+            <Conditional if={longFormContent && !isCityPageMB}>
               <LongForm
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}

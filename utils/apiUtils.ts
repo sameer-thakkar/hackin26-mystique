@@ -1,8 +1,10 @@
+import dayjs from 'dayjs';
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER } from 'const/index';
+import { CUSTOM_HEADER, EMAIL_SUBCRIPTION } from 'const/index';
 import { simplifySlotData } from './inventoryUtils';
+import { sendLog } from './logger';
 
 type TTgids = string[];
 type THost = string;
@@ -73,7 +75,9 @@ export enum HeadoutEndpoints {
   CalendarInventory,
   DomainConfig,
   ProductV6,
+  Banners,
   CalendarInventoryForTourGroupList,
+  CityList,
   Media,
 }
 
@@ -141,8 +145,14 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.ProductV6:
       endpointSlug = `https://api.headout.com/api/v6/tour-groups/${id}/`;
       break;
+    case HeadoutEndpoints.Banners:
+      endpointSlug = `/api/v2/banners/`;
+      break;
     case HeadoutEndpoints.CalendarInventoryForTourGroupList:
       endpointSlug = `/api/v7/tour-groups/calendar/`;
+      break;
+    case HeadoutEndpoints.CityList:
+      endpointSlug = `/api/v2/city/list/`;
       break;
     case HeadoutEndpoints.Media:
       endpointSlug = `/api/v1/media/`;
@@ -627,7 +637,7 @@ export const fetchCategory = async ({
     return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchCategory]', error);
+    sendLog({ err: error });
   }
 };
 
@@ -834,6 +844,68 @@ export const fetchDomainConfig = async (uid: string) => {
   }
 };
 
+interface TFetchBannerData {
+  cookies?: { [key: string]: any };
+  params: { [key: string]: any };
+}
+
+export const fetchBannerData = async ({
+  cookies,
+  params,
+}: TFetchBannerData) => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.Banners,
+    params,
+    id: '',
+  });
+  try {
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(apiUrl, { headers });
+    return await response.json();
+  } catch (error) {
+    sendLog({ err: error });
+  }
+};
+
+interface TFetchCityTopCollections {
+  cookies?: { [key: string]: any };
+  params: { [key: string]: any };
+}
+
+export const fetchCityTopCollections = async ({
+  cookies,
+  params,
+}: TFetchCityTopCollections) => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CollectionTop,
+    params,
+    id: '',
+  });
+  try {
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(apiUrl, { headers });
+    return await response.json();
+  } catch (error) {
+    sendLog({ err: error });
+  }
+};
+
+interface TFetchCityList extends TFetchCityTopCollections {}
+export const fetchCityList = async ({ cookies, params }: TFetchCityList) => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CityList,
+    params,
+    id: null,
+  });
+  try {
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(apiUrl, { headers });
+    return await response.json();
+  } catch (error) {
+    sendLog({ err: error });
+  }
+};
+
 type TFetchBatchedCalendarInventory = {
   tgids: Array<string> | Array<number>;
   currency?: string;
@@ -890,5 +962,31 @@ export const fetchBatchedCalendarInventory = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchBatchedCalendarInventory]', error);
+  }
+};
+
+type TEmailSubscription = {
+  userEmail: string;
+  eventName: string;
+};
+
+export const registerEmailSubscription = async ({
+  userEmail,
+  eventName,
+}: TEmailSubscription) => {
+  const { ENDPOINT } = EMAIL_SUBCRIPTION;
+  try {
+    const response = await fetch(ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: userEmail,
+        eventTime: dayjs().format('YYYY-MM-DDTHH:mm:ssZZ'),
+        url: window.location.href,
+        eventName: eventName,
+      }),
+    });
+    return await response.json();
+  } catch (err) {
+    sendLog({ err });
   }
 };

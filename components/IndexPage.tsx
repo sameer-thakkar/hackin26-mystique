@@ -137,6 +137,7 @@ const Page = (props: PageProps) => {
     domainConfig,
     categoryHeaderMenu,
     isExperimentalBot,
+    cityPageParams,
   } = props;
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -196,6 +197,7 @@ const Page = (props: PageProps) => {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
         return (
           <Microsite
+            cityPageParams={cityPageParams}
             data={CMSContent.data}
             activeCurrency={activeCurrency}
             scorpioData={tourGroupData}

@@ -112,8 +112,9 @@ const StyledHeaderContainer = styled.div`
   }
 `;
 
-const StyledLogo = styled.div(
-  // @ts-expect-error TS(2339): Property 'isEntertainmentMB' does not exist on typ... Remove this comment to see the full error message
+const StyledLogo = styled.div<{
+  isEntertainmentMB: boolean;
+}>(
   ({ isEntertainmentMB }) => `
   display: grid;
   grid-auto-flow: column;
@@ -170,7 +171,9 @@ const StyledLogo = styled.div(
 `
 );
 
-const StyledHeaderElements = styled.div`
+const StyledHeaderElements = styled.div<{
+  active: boolean;
+}>`
   justify-self: right;
   display: flex;
   align-items: center;
@@ -333,7 +336,6 @@ const Header: React.FC<any> = (props) => {
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
-          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>
             <Image
               url={logoUrl}
@@ -364,7 +366,6 @@ const Header: React.FC<any> = (props) => {
             />
           </div>
         </Conditional>
-        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <StyledHeaderElements active={hamburgerIconCheck}>
           <Conditional if={!slices && headerLinks}>
             <HeaderLinks

@@ -78,7 +78,7 @@ export const getRankedDocuments = (
   );
 };
 
-const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
+export const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc || {};
   const { noindex, redirect_url, canonical_link } = data || {};
   const pageUrl = convertUidToUrl({

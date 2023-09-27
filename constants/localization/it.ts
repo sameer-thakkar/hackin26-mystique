@@ -53,6 +53,65 @@ const it = {
   CATEGORY_SLIDER_HEADING:
     'I clienti che hanno prenotato questo spettacolo hanno visto anche',
   CHECK_AVAIL: 'Verifica disponibilità',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Scopri il meglio di',
+    TOP_ATTRACTIONS: 'Le attrazioni top',
+    GO_BEYOND: 'Oltre {0}',
+    ALL_DAY_TRIPS: 'Vedi tutte le gite di un giorno',
+    CITIES_NEARBY: 'Città vicino',
+    POPULAR_CATEGORIES: 'Categorie popolari',
+    GO_TO_GUIDE: 'Guida per andare a {0}',
+    VIEW_TRAVEL_GUIDE: 'Vedi la guida di viaggio',
+    EXPLORE: 'Scopri',
+    GUIDE_SUBHEADING:
+      "Scoprire le attrazioni di {0} non è mai stato così semplice! La nostra guida di viaggio per {0} contiene tutto quello che c'è da sapere sulla città, su cosa mangiare, dove andare, come arrivare, dove alloggiare e tanto altro!",
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Informazioni generali',
+      WHERE_TO_EAT: 'Cosa mangiare',
+      WHERE_TO_STAY: 'Dove alloggiare',
+      THINGS_TO_DO: 'Cosa fare',
+      WEATHER: 'Miglior periodo per le visite',
+      NEIGHBOURHOODS: 'Comunità locale',
+      TRANSPORTATION: 'Come spostarsi',
+      TRIP_PLANNER: 'Programma di viaggio',
+      FAMILY_TRAVEL: 'Viaggiare con bambini',
+      TRAVEL_TIPS: 'Consigli e suggerimenti di viaggio',
+      SHOPPING: 'Shopping',
+      ART_AND_CULTURE: 'Arte e cultura',
+    },
+    MAILER: {
+      HEADING:
+        'Le ispirazioni di viaggio per {0} direttamente sulla casella di posta elettronica',
+      SUBHEADING:
+        'Le migliori cose da fare, trucchi per il budget, trasporti pubblici, i migliori hotel e ristoranti, consigli culturali e tanto altro!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Informati sui requisiti per il visto, sul cambio di valuta, sul fuso orario e molto altro ancora per un soggiorno piacevole e senza intoppi.',
+    WHERE_TO_EAT:
+      'Lasciati coinvolgere dalla vivace scena culinaria, assaporando piatti diversi e gustando le prelibatezze locali in ogni angolo di {0}.',
+    WHERE_TO_STAY:
+      "Scopri gli alloggi migliori a {0}, che offrono comfort e convenienza per un'esperienza di viaggio unica.",
+    THINGS_TO_DO:
+      'Partecipa a tante attività e non lasciarti scappare attrazioni uniche, in grado di soddisfare tutti i gusti.',
+    WEATHER:
+      "Pianifica la tua visita e approfittane, perché {0} offre esperienze incantevoli durante tutto l'anno.",
+    NEIGHBOURHOODS:
+      'Fai la conoscenza di diverse comunità locali e visita quartieri vivaci che rendono {0} inimitabile.',
+    TRANSPORTATION:
+      "Visita {0} con facilità grazie all'efficiente sistema di trasporti, che offre comode opzioni per scoprire tutte le sue attrazioni.",
+    TRIP_PLANNER:
+      'Ottimizza il tuo tempo a {0} con itinerari accuratamente curati, che ti permetteranno di goderti al meglio ogni momento.',
+    FAMILY_TRAVEL:
+      "Parti per un'avventura perfetta per famiglie grazie alle attrazioni, ai parchi e alle opzioni di intrattenimento adatti ai bambini di tutte le età.",
+    TRAVEL_TIPS:
+      'Non perderti i consigli di viaggio e i trucchi per rendere il tuo viaggio e la tua visita a {0} davvero eccezionale.',
+    SHOPPING:
+      "Entra nel paradiso dello shopping: boutique, mercati e centri commerciali offrono di tutto, dall'artigianato locale all'alta moda.",
+    ART_AND_CULTURE:
+      'Immergiti nella ricca scena artistica e culturale, fatta di affascinanti musei e vivaci festival che mettono in mostra il patrimonio di {0}.',
+  },
   CLOSE: 'Chiudi',
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleziona',
@@ -85,6 +144,13 @@ const it = {
   },
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Prima disponibilità',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Inserisci la tua e-mail qui',
+    SIGN_UP: 'Iscriviti',
+    THANK_YOU: 'Grazie!',
+    SUBSCRIBED_MSG: "L'iscrizione è avvenuta con successo",
+    ERROR_MSG: 'Inserisci un indirizzo e-mail valido',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Biglietti per il teatro a Broadway',

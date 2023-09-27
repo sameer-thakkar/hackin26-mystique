@@ -51,6 +51,65 @@ const de = {
   CATEGORY_SLIDER_HEADING:
     'Was sich Zuschauer dieser Show noch angesehen haben',
   CHECK_AVAIL: 'Verfügbarkeit prüfen',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Erleben Sie die Highlights von',
+    TOP_ATTRACTIONS: 'Top-Attraktionen',
+    GO_BEYOND: 'Ausflüge von {0}',
+    ALL_DAY_TRIPS: 'Alle Tagesausflüge',
+    CITIES_NEARBY: 'Städte in der Nähe',
+    POPULAR_CATEGORIES: 'Beliebte Kategorien',
+    GO_TO_GUIDE: 'Ihr {0} Reiseführer',
+    VIEW_TRAVEL_GUIDE: 'Reiseführer anzeigen',
+    EXPLORE: 'Entdecken',
+    GUIDE_SUBHEADING:
+      'Noch nie war es so einfach, Sehenswürdigkeiten in {0} zu erkunden! In unserem Reiseführer finden Sie alles, was Sie über {0} wissen müssen – von kulinarischen Geheimtipps bis zu Unterkünften und Anreisemöglichkeiten zu beliebten Wahrzeichen.',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Allgemeines',
+      WHERE_TO_EAT: 'Kulinarisches',
+      WHERE_TO_STAY: 'Unterkünfte',
+      THINGS_TO_DO: 'Erlebnisse',
+      WEATHER: 'Beste Reisezeit',
+      NEIGHBOURHOODS: 'Stadtviertel',
+      TRANSPORTATION: 'Nahverkehr',
+      TRIP_PLANNER: 'Reiseplan',
+      FAMILY_TRAVEL: 'Reisen mit Kindern',
+      TRAVEL_TIPS: 'Reisetipps',
+      SHOPPING: 'Shoppen',
+      ART_AND_CULTURE: 'Kunst und Kultur',
+    },
+    MAILER: {
+      HEADING:
+        'Inspirationen für Ihre Reise nach {0} direkt zu Ihrem Posteingang',
+      SUBHEADING:
+        'Die besten Erlebnisse, Spartipps, Restaurants, Hotels, Infos zum ÖPNV und zu kulturellen Highlights finden Sie hier!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Visabestimmungen, Geldwechsel, Zeitzonenunterschiede und mehr – wichtige Infos für eine reibungslose Ankunft und einen angenehmen Aufenthalt.',
+    WHERE_TO_EAT:
+      'Kulinarische Köstlichkeiten, exquisite Aromen und lokale Spezialitäten erwarten Sie in {0} an jeder Ecke.',
+    WHERE_TO_STAY:
+      'Hier finden Sie die besten Unterkünfte für einen bequemen und unvergesslichen Aufenthalt in {0}.',
+    THINGS_TO_DO:
+      'Spannende Aktivitäten und Attraktionen für Groß und Klein sorgen für eine unvergessliche Zeit.',
+    WEATHER:
+      'Hier finden Sie wichtige Infos für Ihre Reiseplanung, denn {0} hat das ganze Jahr über zauberhafte Erlebnisse zu bieten.',
+    NEIGHBOURHOODS:
+      'Entdecken Sie die verschiedenen, lebhaften Viertel, die {0} so besonders machen.',
+    TRANSPORTATION:
+      'Mit dem öffentlichen Nahverkehr gelangen Sie in {0} schnell und bequem von einer Attraktion zur nächsten.',
+    TRIP_PLANNER:
+      'Mit unseren sorgfältig ausgewählten Reiseplänen nutzen Sie Ihre Zeit in {0} optimal aus und können jeden Moment vollkommen genießen.',
+    FAMILY_TRAVEL:
+      'Familienfreundliche Abenteuer mit zahlreichen Attraktionen, Parks und Unterhaltungsmöglichkeiten für alle Altersklassen erwarten Sie.',
+    TRAVEL_TIPS:
+      'Insider-Tipps und Reise-Hacks garantieren eine außergewöhnliche Reise nach {0}.',
+    SHOPPING:
+      'Ein Einkaufsparadies mit Boutiquen, Märkten und Einkaufszentren – von lokalem Kunsthandwerk bis zu hochwertiger Mode.',
+    ART_AND_CULTURE:
+      'Erkunden Sie die reiche Kunst- und Kulturszene von {0} – von faszinierenden Museen bis hin zu lebhaften Festivals.',
+  },
   CLOSE: 'Schließen',
   COMBO_VARIANT: {
     SELECT_CTA: 'Auswählen',
@@ -83,6 +142,13 @@ const de = {
   },
   DURATION: 'Dauer',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Geben Sie hier Ihre E-Mail-Adresse ein',
+    SIGN_UP: 'Anmelden',
+    THANK_YOU: 'Vielen Dank!',
+    SUBSCRIBED_MSG: 'Sie sind jetzt angemeldet.',
+    ERROR_MSG: 'Bitte eine gültige E-Mail-Adresse eingeben.',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Broadway Theater Tickets',

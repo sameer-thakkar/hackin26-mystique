@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import COLORS from 'const/colors';
 
 const StyledHamburger = styled.div<{
+  bgColor: string | undefined;
   isGlobalMb?: boolean;
   isActive?: boolean;
   theme: any;
@@ -19,16 +20,8 @@ const StyledHamburger = styled.div<{
   &:after,
   &:before,
   & div {
-    background-color: ${({ isGlobalMb, theme, isDarkMode }) => {
-      switch (true) {
-        case isDarkMode:
-          return COLORS.BRAND.WHITE;
-        case isGlobalMb:
-          return COLORS.GRAY.G2;
-        default:
-          return theme.primaryBGText || COLORS.GRAY.G2;
-      }
-    }};
+    background-color: ${({ bgColor, theme }) =>
+      bgColor ? bgColor : theme.primaryBGText || COLORS.GRAY.G2};
     border-radius: 3px;
     content: '';
     display: block;
@@ -87,6 +80,17 @@ const Hamburger: React.FC<any> = ({
   isLtt = false,
   isDarkMode = false,
 }) => {
+  const getBgColor = () => {
+    switch (true) {
+      case isDarkMode:
+        return COLORS.BRAND.WHITE;
+      case isGlobalMb:
+        return COLORS.GRAY.G2;
+      default:
+        return '';
+    }
+  };
+
   return (
     <StyledHamburger
       isActive={isActive}
@@ -95,6 +99,7 @@ const Hamburger: React.FC<any> = ({
       id="hamburger"
       role="button"
       tabIndex={0}
+      bgColor={getBgColor()}
       isGlobalMb={isGlobalMb}
       isLtt={isLtt}
       isDarkMode={isDarkMode}

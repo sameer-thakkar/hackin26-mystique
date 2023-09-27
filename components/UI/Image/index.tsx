@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FutureImage from 'next/future/image';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -54,6 +54,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fitCrop = false,
     blurFill = false,
     fetchPriority = 'auto',
+    fallbackImg = '',
   },
   ref
 ) => {
@@ -103,6 +104,25 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     blurFill
   );
 
+  const fallbackImgUrl = generateImageImgixUrl(
+    format,
+    fallbackImg,
+    // @ts-expect-error TS(2345): Argument of type 'string | number | undefined' is ... Remove this comment to see the full error message
+    calculatedWidth,
+    calculatedHeight,
+    quality,
+    aspectRatio,
+    autoCrop,
+    cropMode,
+    addDarkOverlay,
+    fitCrop,
+    blurFill
+  );
+
+  const [imgSrc, setImgSrc] = useState(
+    isMobile && mobileImageSrc ? mobileImageSrc : defaultImageSrc
+  );
+
   if (!defaultImageSrc?.length) {
     return null;
   }
@@ -115,7 +135,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     <Wrapper className={`image-wrap ${className}`} onClick={onClick} ref={ref}>
       <FutureImage
         className={imageId}
-        src={isMobile && mobileImageSrc ? mobileImageSrc : defaultImageSrc}
+        src={imgSrc}
         width={fillImageProp ? undefined : Number(calculatedWidth)}
         height={fillImageProp ? undefined : Number(calculatedHeight)}
         alt={alt}
@@ -125,6 +145,11 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         fill={fillImageProp}
         // @ts-ignore
         fetchpriority={fetchPriority}
+        onError={() => {
+          if (fallbackImgUrl) {
+            setImgSrc(fallbackImgUrl);
+          }
+        }}
       />
       <Conditional if={!!attribution}>
         <Tooltip content={attribution} trigger={INFO_ICON} />

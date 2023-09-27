@@ -171,7 +171,7 @@ const CustomLinkedTours = ({
         <RichContent render={content} />
       </TitleTextCombo>
       <TourGrid>
-        {apiTours &&
+        {Object.keys(apiTours).length &&
           tgids.map((tgid: any, index: number) => {
             const {
               title,

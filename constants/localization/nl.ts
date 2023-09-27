@@ -52,6 +52,64 @@ const nl = {
     'Je krijgt <strong>{0}%</strong> cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
   CATEGORY_SLIDER_HEADING: 'Bezoekers die deze show boekten, bekeken ook',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Ervaar het beste van',
+    TOP_ATTRACTIONS: 'Topbezienswaardigheden',
+    GO_BEYOND: 'Uitstapjes van {0}',
+    ALL_DAY_TRIPS: 'Alle dagtrips',
+    CITIES_NEARBY: 'Steden in de buurt',
+    POPULAR_CATEGORIES: 'Populaire categorieën',
+    GO_TO_GUIDE: 'Jouw {0} gids',
+    VIEW_TRAVEL_GUIDE: 'Reisgids bekijken',
+    EXPLORE: 'Verkennen',
+    GUIDE_SUBHEADING:
+      'Bezienswaardigheden in {0} ontdekken is nu makkelijker dan ooit! Onze {0} reisgids bevat alles wat je moet weten over de stad, van culinaire hotspots en accommodatie tot routebeschrijvingen naar populaire trekpleisters en meer!',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Algemeen',
+      WHERE_TO_EAT: 'Eten',
+      WHERE_TO_STAY: 'Verblijf',
+      THINGS_TO_DO: 'Activiteiten',
+      WEATHER: 'Beste tijd voor een bezoek',
+      NEIGHBOURHOODS: 'Omgeving',
+      TRANSPORTATION: 'Vervoer',
+      TRIP_PLANNER: 'Reisplan',
+      FAMILY_TRAVEL: 'Reizen met kinderen',
+      TRAVEL_TIPS: 'Reistips',
+      SHOPPING: 'Winkelen',
+      ART_AND_CULTURE: 'Kunst en cultuur',
+    },
+    MAILER: {
+      HEADING: 'Inspiraties voor je reis naar {0} rechtstreeks in je inbox',
+      SUBHEADING:
+        'Topdingen om te doen, budgethacks, openbaar vervoer, beste restaurants & hotels, cultuur tips & veel meer!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Visumvereisten, geld wisselen, tijdzoneverschillen en meer - belangrijke informatie voor een vlotte aankomst en een aangenaam verblijf.',
+    WHERE_TO_EAT:
+      'Culinaire hoogstandjes, heerlijke smaken en lokale specialiteiten worden op iedere hoek van de straat aangeboden in {0}.',
+    WHERE_TO_STAY:
+      'Hier vind je de beste accommodatie voor een comfortabel en onvergetelijk verblijf in {0}.',
+    THINGS_TO_DO:
+      'Spannende activiteiten en attracties voor jong en oud zorgen voor een onvergetelijke tijd.',
+    WEATHER:
+      'Hier vind je belangrijke informatie voor je reisplanning, want {0} heeft het hele jaar door magische ervaringen te bieden.',
+    NEIGHBOURHOODS:
+      'Ontdek de diverse, levendige buurten die {0} zo speciaal maken.',
+    TRANSPORTATION:
+      'Met het openbaar vervoer in {0} kun je snel en gemakkelijk van de ene attractie naar de andere.',
+    TRIP_PLANNER:
+      'Met onze zorgvuldig geselecteerde routes haal je het meeste uit je tijd in {0} en geniet je optimaal van elk moment.',
+    FAMILY_TRAVEL:
+      'Gezinsvriendelijke avonturen wachten op je met tal van attracties, parken en entertainment voor alle leeftijden.',
+    TRAVEL_TIPS:
+      'Insidertips en reishacks zorgen voor een uitzonderlijke reis naar {0}.',
+    SHOPPING:
+      'Een paradijs voor shoppers met boetiekjes, markten en winkelcentra - van plaatselijke kunstnijverheid tot luxe mode.',
+    ART_AND_CULTURE:
+      'Verken de rijke kunst- en cultuurscène van {0} - van fascinerende musea tot levendige festivals.',
+  },
   CLOSE: 'Sluit',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',
@@ -84,6 +142,13 @@ const nl = {
   },
   DURATION: 'Looptijd',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Vul hier je e-mailadres in',
+    SIGN_UP: 'Aanmelden',
+    THANK_YOU: 'Bedankt!',
+    SUBSCRIBED_MSG: 'Je bent nu ingeschreven',
+    ERROR_MSG: 'Geef een geldig e-mailadres op',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Broadway Theater Tickets',

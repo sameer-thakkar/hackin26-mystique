@@ -52,6 +52,65 @@ const fr = {
   CATEGORY_SLIDER_HEADING:
     'Les client·es qui ont réservé ce spectacle ont également vu',
   CHECK_AVAIL: 'Vérifier la disponibilité',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Découvrez le meilleur de',
+    TOP_ATTRACTIONS: 'Le attrazioni top',
+    GO_BEYOND: 'Oltre {0}',
+    ALL_DAY_TRIPS: 'Vedi tutte le gite di un giorno',
+    CITIES_NEARBY: 'Città vicine',
+    POPULAR_CATEGORIES: 'Categorie popolari',
+    GO_TO_GUIDE: 'Guida per {0}',
+    VIEW_TRAVEL_GUIDE: 'Vedi la guida di viaggio',
+    EXPLORE: 'Scopri',
+    GUIDE_SUBHEADING:
+      "Scoprire le attrazioni di {0} non è mai stato così semplice! La nostra guida di viaggio per {0} contiene tutto quello che c'è da sapere sulla città, su cosa mangiare, dove andare, come arrivare, dove alloggiare e tanto altro!",
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Informazioni generali',
+      WHERE_TO_EAT: 'Cosa mangiare',
+      WHERE_TO_STAY: 'Dove alloggiare',
+      THINGS_TO_DO: 'Cosa fare',
+      WEATHER: 'Miglior periodo per le visite',
+      NEIGHBOURHOODS: 'Comunità locale',
+      TRANSPORTATION: 'Come spostarsi',
+      TRIP_PLANNER: 'Programma di viaggio',
+      FAMILY_TRAVEL: 'Viaggiare con bambini',
+      TRAVEL_TIPS: 'Consigli e suggerimenti di viaggio',
+      SHOPPING: 'Shopping',
+      ART_AND_CULTURE: 'Arte e cultura',
+    },
+    MAILER: {
+      HEADING:
+        'Le ispirazioni di viaggio per {0} direttamente nella tua casella di posta elettronica',
+      SUBHEADING:
+        'Le migliori cose da fare, trucchi per il budget, trasporti pubblici, i migliori hotel e ristoranti, consigli culturali e tanto altro!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      "Renseignez-vous sur les conditions d'obtention d'un visa, les monnaies d'échange, les différences de fuseaux horaires et bien d'autres choses encore afin de faciliter votre arrivée et de rendre votre séjour agréable..",
+    WHERE_TO_EAT:
+      'Savourez une cuisine variée, des arômes de toutes sortes et des spécialités locales aux quatre coins de {0}.',
+    WHERE_TO_STAY:
+      'Découvrez les meilleurs hébergements de {0}, alliant confort, commodité et souvenirs inoubliables.',
+    THINGS_TO_DO:
+      'Profitez des nombreuses activités et attractions passionnantes qui répondront à vos attentes et vous feront passer un moment exceptionnel.',
+    WEATHER:
+      "Planifiez votre voyage judicieusement et profitez au maximum de votre visite, car {0} vous fait vivre des expériences magiques tout au long de l'année.",
+    NEIGHBOURHOODS:
+      'Apprenez à connaître les diverses communautés locales et les quartiers dynamiques qui confèrent à {0} son caractère unique.',
+    TRANSPORTATION:
+      'Parcourez {0} en douceur grâce à son système de transport efficace, qui vous offre des options pratiques pour découvrir toutes ses attractions.',
+    TRIP_PLANNER:
+      'Maximisez votre temps à {0} grâce à des itinéraires soigneusement élaborés, qui vous permettront de profiter au maximum de chaque instant.',
+    FAMILY_TRAVEL:
+      "Partez à l'aventure en famille grâce aux nombreuses attractions, parcs et activités de divertissement qui s'adressent aux enfants de tous âges.",
+    TRAVEL_TIPS:
+      "Faites le plein de conseils et d'astuces pour rendre votre visite à {0} vraiment exceptionnelle..",
+    SHOPPING:
+      "Explorez des boutiques, des marchés et des centres commerciaux où vous trouverez tout, de l'artisanat local à la mode de luxe, et qui sont un véritable paradis pour les amateurs de shopping.",
+    ART_AND_CULTURE:
+      'Découvrez une scène artistique et culturelle exceptionnelle, des musées fascinants aux festivals animés célébrant le patrimoine de {0}.',
+  },
   CLOSE: 'Fermer',
   COMBO_VARIANT: {
     SELECT_CTA: 'Sélectionner',
@@ -83,6 +142,13 @@ const fr = {
   },
   DURATION: 'Durée',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Inserisci la tua e-mail qui',
+    SIGN_UP: 'Iscriviti',
+    THANK_YOU: 'Grazie!',
+    SUBSCRIBED_MSG: 'Iscrizione riuscita',
+    ERROR_MSG: 'Inserisci un indirizzo e-mail valido',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Billets de théâtre pour Broadway',

@@ -52,6 +52,64 @@ const en = {
     'You will receive <strong>{0}%</strong> cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
   CHECK_AVAIL: 'Check availability',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Experience the best of',
+    TOP_ATTRACTIONS: 'Top Attractions',
+    GO_BEYOND: 'Go beyond {0}',
+    ALL_DAY_TRIPS: 'See all Day Trips',
+    CITIES_NEARBY: 'Cities Nearby',
+    POPULAR_CATEGORIES: 'Popular Categories',
+    GO_TO_GUIDE: 'Go-to {0} guide',
+    VIEW_TRAVEL_GUIDE: 'View Travel Guide',
+    EXPLORE: 'Explore',
+    GUIDE_SUBHEADING:
+      'Exploring {0} attractions has never been easier! Our {0} travel guide has all you need to know about the city, from what to eat, to where to go, how to get there, where to stay and much more!',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'General information',
+      WHERE_TO_EAT: 'What to eat',
+      WHERE_TO_STAY: 'Where to stay',
+      THINGS_TO_DO: 'What to do',
+      WEATHER: 'Best time to visit',
+      NEIGHBOURHOODS: 'Local Community',
+      TRANSPORTATION: 'Getting around',
+      TRIP_PLANNER: 'Travel Plan',
+      FAMILY_TRAVEL: 'Traveling with Kids',
+      TRAVEL_TIPS: 'Travel Tips & Hacks',
+      SHOPPING: 'Shopping',
+      ART_AND_CULTURE: 'Arts & Culture',
+    },
+    MAILER: {
+      HEADING: '{0} travel inspiration straight in your inbox',
+      SUBHEADING:
+        'Top things to do, budget hacks, public transportation, best restaurants & hotels, culture tips & more inside!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Learn about visa requirements, currency exchange, time zone differences, and more to ensure a smooth arrival and enjoyable stay.',
+    WHERE_TO_EAT:
+      'Indulge in the vibrant culinary scene, savoring diverse flavors and enjoying local delicacies in every corner of the {0}.',
+    WHERE_TO_STAY:
+      'Discover the best accommodations {0}, offering comfort, convenience, and a memorable experience for your stay.',
+    THINGS_TO_DO:
+      'Experience a plethora of exciting activities and attractions that cater to every interest and ensure an unforgettable time.',
+    WEATHER:
+      'Plan your trip wisely and make the most of your visit, as {0} offers enchanting experiences throughout the year.',
+    NEIGHBOURHOODS:
+      'Get to know the diverse local communities and vibrant neighborhoods that give {0} its unique character.',
+    TRANSPORTATION:
+      'Navigate {0} with ease using its efficient transportation system, providing convenient options for exploring all its attractions.',
+    TRIP_PLANNER:
+      'Maximize your time in {0} with carefully curated itineraries, ensuring you make the most of every moment.',
+    FAMILY_TRAVEL:
+      'Embark on a family-friendly adventure with numerous attractions, parks, and entertainment options that cater to kids of all ages.',
+    TRAVEL_TIPS:
+      'Discover insider tips and travel hacks to enhance your journey, making your visit to {0} truly exceptional.',
+    SHOPPING:
+      "Explore a shopper's paradise with a wide range of boutiques, markets, and malls, offering everything from local crafts to high-end fashion.",
+    ART_AND_CULTURE:
+      'Immerse yourself in the rich art and cultural scene, from captivating museums to vibrant festivals celebrating {0} heritage.',
+  },
   CLOSE: 'Close',
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
@@ -84,6 +142,13 @@ const en = {
   },
   DURATION: 'Duration',
   EARLIEST_AVAILABILITY: 'Earliest availability',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Enter your email here',
+    SIGN_UP: 'Sign up',
+    THANK_YOU: 'Thank you!',
+    SUBSCRIBED_MSG: 'You are subscribed now',
+    ERROR_MSG: 'Please enter a valid email',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Broadway Theater Tickets',

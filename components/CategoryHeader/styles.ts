@@ -106,7 +106,7 @@ export const StyledMainMenuItems = styled.div<{
   color: ${COLORS.GRAY.G3};
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
   cursor: pointer;
-
+ 
   svg {
       width: 1rem;
       height: 1rem;
@@ -122,7 +122,7 @@ export const StyledMainMenuItems = styled.div<{
     svg path, 
     svg line {
         stroke: ${COLORS.BRAND.PURPS};
-      }
+      }   
   }
 
   :first-of-type {

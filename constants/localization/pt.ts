@@ -52,6 +52,64 @@ const pt = {
   CATEGORY_SLIDER_HEADING:
     'Os clientes que reservaram esta experiência também viram',
   CHECK_AVAIL: 'Verificar disponibilidade',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Experimente o melhor de',
+    TOP_ATTRACTIONS: 'Melhores atrações',
+    GO_BEYOND: 'Vá além de {0}',
+    ALL_DAY_TRIPS: 'Viagens de um dia',
+    CITIES_NEARBY: 'Cidades próximas',
+    POPULAR_CATEGORIES: 'Categorias populares',
+    GO_TO_GUIDE: 'Guia de viagem: {0}',
+    VIEW_TRAVEL_GUIDE: 'Ver o guia de viagem',
+    EXPLORE: 'Explore',
+    GUIDE_SUBHEADING:
+      'Explorar atrações em {0} attractions nunca foi tão fácil! Nosso guia de viagem para {0} tem todas as informações sobre a cidade, como o que comer e visitar, onde se hospedar, locomoção e muito mais!',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Informações gerais',
+      WHERE_TO_EAT: 'O que comer',
+      WHERE_TO_STAY: 'Onde se hospedar',
+      THINGS_TO_DO: 'O que fazer',
+      WEATHER: 'Melhor época para visitar',
+      NEIGHBOURHOODS: 'Comunidade local',
+      TRANSPORTATION: 'Locomoção',
+      TRIP_PLANNER: 'Planejamento da viagem',
+      FAMILY_TRAVEL: 'Viajando com crianças',
+      TRAVEL_TIPS: 'Dicas e truques de viagem',
+      SHOPPING: 'Compras',
+      ART_AND_CULTURE: 'Arte e cultura',
+    },
+    MAILER: {
+      HEADING: 'Inspiração para sua viagem a {0} na sua caixa de e-mail',
+      SUBHEADING:
+        'As melhores coisas para fazer, dicas para economizar, transporte público, melhores restaurantes e hotéis, dicas culturais e mais!',
+    },
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Saiba mais sobre requisitos de visto, câmbio, diferenças de fuso horário e muito mais para garantir uma chegada tranquila e uma estadia agradável.',
+    WHERE_TO_EAT:
+      '{0}: encante-se com a culinária local e prove delícias de todos os cantos da cidade.',
+    WHERE_TO_STAY:
+      '{0}: descubra as melhores opções de hospedagem com conforto e conveniência e tenha uma experiência inesquecível.',
+    THINGS_TO_DO:
+      'Experimente uma infinidade de atividades e atrações emocionantes que atendem a todos os gostos e garantem momentos inesquecíveis.',
+    WEATHER:
+      '{0}: planeje sua viagem e aproveite ao máximo sua visita curtindo experiências incríveis durante todo o ano.',
+    NEIGHBOURHOODS:
+      '{0}: conheça seus bairros vibrantes e as comunidades locais que tornam a cidade única.',
+    TRANSPORTATION:
+      '{0}: use o sistema de transporte e transite com facilidade com opções convenientes para explorar todas as atrações da cidade.',
+    TRIP_PLANNER:
+      '{0}: aproveite ao máximo o seu tempo na cidade com itinerários selecionados cuidadosamente para você curtir cada momento.',
+    FAMILY_TRAVEL:
+      'Curta em família e conheça atrações, parques e opções de entretenimento para crianças de todas as idades.',
+    TRAVEL_TIPS:
+      '{0}: descubra dicas e truques de viagem para melhorar sua visita e ter experiências inesquecíveis.',
+    SHOPPING:
+      'Explore um paraíso de compras com uma grande variedade de butiques, mercados e shoppings, oferecendo de tudo, de artesanato local a moda sofisticada.',
+    ART_AND_CULTURE:
+      '{0}: mergulhe na rica cena artística e cultural, de museus cativantes a festivais vibrantes que celebram o patrimônio local.',
+  },
   CLOSE: 'Fechar',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecionar',
@@ -84,6 +142,13 @@ const pt = {
   },
   DURATION: 'Duração',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Insira seu e-mail aqui',
+    SIGN_UP: 'Inscreva-se',
+    THANK_YOU: 'Obrigada!',
+    SUBSCRIBED_MSG: 'Você está inscrito agora',
+    ERROR_MSG: 'Por favor, insira um e-mail válido',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Ingressos para teatro na Broadway',
