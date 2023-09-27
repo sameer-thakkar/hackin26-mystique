@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@headout/aer';
 import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { BUTTON_LOADING_DURATION, THEMES } from 'const/index';
 import { BackArrow } from 'assets/SvgIcons';
 
@@ -21,6 +22,11 @@ export const BookNowCta = ({
     }
     clickHandler?.();
   };
+  useHistoryTraversal({
+    action: () => {
+      setIsLoading(false);
+    },
+  });
   return (
     <ButtonContainer $isInSidePanel={isInSidePanel}>
       <Button

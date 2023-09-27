@@ -1,8 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { Button } from '@headout/aer';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
@@ -201,6 +201,12 @@ const StickyHeader = ({
       }),
     });
   };
+
+  useHistoryTraversal({
+    action: () => {
+      setButtonLoading(false);
+    },
+  });
 
   return (
     <>

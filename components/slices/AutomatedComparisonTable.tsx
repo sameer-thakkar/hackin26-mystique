@@ -9,6 +9,7 @@ import UIButton from 'components/UI/Button';
 import Image from 'UI/Image';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { createBookingURL, getCollectionSection } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
@@ -417,6 +418,12 @@ const AutomatedTourComparisonTable = ({
       window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, [isNamesRowTop]);
+
+  useHistoryTraversal({
+    action: () => {
+      setButtonLoading(-1);
+    },
+  });
 
   const getLabelContent = (label: any, tour: any) => {
     if (label === 'maxDuration') {

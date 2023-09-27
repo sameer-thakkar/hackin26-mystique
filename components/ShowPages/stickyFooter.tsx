@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { Button } from '@headout/aer';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
@@ -92,6 +93,12 @@ const StickyFooter = ({
         return strings.BANNER_CTA;
     }
   };
+
+  useHistoryTraversal({
+    action: () => {
+      setButtonLoading(false);
+    },
+  });
 
   return (
     <StickyFooterContentWrapper>

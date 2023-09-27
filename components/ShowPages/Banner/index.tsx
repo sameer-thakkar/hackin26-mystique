@@ -19,6 +19,7 @@ import StickyHeader from 'components/ShowPages/stickyHeader';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { createBookingURL, getNakedDomain, getTagPageMap } from 'utils';
 import {
   getProductCommonProperties,
@@ -184,6 +185,12 @@ const ShowPageBanner = ({
       fetchReopeningDate();
     }
   }, [tgid, isTourAvailable, hostname]);
+
+  useHistoryTraversal({
+    action: () => {
+      setButtonLoading(false);
+    },
+  });
 
   const getBannerTitle = () => {
     switch (currentLanguage) {
