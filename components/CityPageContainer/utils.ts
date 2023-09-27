@@ -106,12 +106,14 @@ export const getCatSubCatMedia = (obj: IgetCatSubCatMedia) => {
     const imageMediaArr = medias.filter(
       (item) => item.type === RESOURCE_ASSET_TYPE.IMAGE
     );
-    const {
-      url,
-      metadata: { altText: altTextString },
-    } = imageMediaArr[0] || {};
-    imageUrl = url;
-    altText = altTextString;
+    if (imageMediaArr.length) {
+      const {
+        url,
+        metadata: { altText: altTextString = '' },
+      } = imageMediaArr[0] || {};
+      imageUrl = url;
+      altText = altTextString;
+    }
   }
 
   return { imageUrl, altText };
