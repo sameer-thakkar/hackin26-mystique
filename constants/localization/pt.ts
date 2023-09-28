@@ -61,7 +61,7 @@ const pt = {
     POPULAR_CATEGORIES: 'Categorias populares',
     GO_TO_GUIDE: 'Guia de viagem: {0}',
     VIEW_TRAVEL_GUIDE: 'Ver o guia de viagem',
-    EXPLORE: 'Explore',
+    EXPLORE: 'Explore {0}',
     GUIDE_SUBHEADING:
       'Explorar atrações em {0} attractions nunca foi tão fácil! Nosso guia de viagem para {0} tem todas as informações sobre a cidade, como o que comer e visitar, onde se hospedar, locomoção e muito mais!',
     GUIDE_ITEM_HEADINGS: {

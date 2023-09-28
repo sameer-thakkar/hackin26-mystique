@@ -62,7 +62,7 @@ const es = {
     POPULAR_CATEGORIES: 'Categorías populares',
     GO_TO_GUIDE: 'Guía para ir a {0}',
     VIEW_TRAVEL_GUIDE: 'Ver guía de viaje',
-    EXPLORE: 'Explorar',
+    EXPLORE: 'Explora {0}',
     GUIDE_SUBHEADING:
       '¡Explorar las atracciones de {0} nunca ha sido tan fácil! Nuestra guía de viaje a {0} tiene todo lo que necesitas saber sobre la ciudad, desde qué comer, hasta dónde ir, cómo llegar, dónde alojarte y ¡mucho más!',
     GUIDE_ITEM_HEADINGS: {
@@ -70,7 +70,7 @@ const es = {
       WHERE_TO_EAT: 'Qué comer',
       WHERE_TO_STAY: 'Dónde alojarse',
       THINGS_TO_DO: 'Qué hacer',
-      WEATHER: 'La mejor época para ir',
+      WEATHER: 'Mejor época para ir',
       NEIGHBOURHOODS: 'Barrios',
       TRANSPORTATION: 'Cómo moverse',
       TRIP_PLANNER: 'Plan de viaje',

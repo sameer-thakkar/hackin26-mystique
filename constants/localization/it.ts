@@ -58,11 +58,11 @@ const it = {
     TOP_ATTRACTIONS: 'Le attrazioni top',
     GO_BEYOND: 'Oltre {0}',
     ALL_DAY_TRIPS: 'Vedi tutte le gite di un giorno',
-    CITIES_NEARBY: 'Città vicino',
+    CITIES_NEARBY: 'Nelle vicinanze',
     POPULAR_CATEGORIES: 'Categorie popolari',
     GO_TO_GUIDE: 'Guida per andare a {0}',
     VIEW_TRAVEL_GUIDE: 'Vedi la guida di viaggio',
-    EXPLORE: 'Scopri',
+    EXPLORE: 'Scopri {0}',
     GUIDE_SUBHEADING:
       "Scoprire le attrazioni di {0} non è mai stato così semplice! La nostra guida di viaggio per {0} contiene tutto quello che c'è da sapere sulla città, su cosa mangiare, dove andare, come arrivare, dove alloggiare e tanto altro!",
     GUIDE_ITEM_HEADINGS: {

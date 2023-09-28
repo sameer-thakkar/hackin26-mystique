@@ -61,7 +61,7 @@ const nl = {
     POPULAR_CATEGORIES: 'Populaire categorieën',
     GO_TO_GUIDE: 'Jouw {0} gids',
     VIEW_TRAVEL_GUIDE: 'Reisgids bekijken',
-    EXPLORE: 'Verkennen',
+    EXPLORE: 'Ontdek {0}',
     GUIDE_SUBHEADING:
       'Bezienswaardigheden in {0} ontdekken is nu makkelijker dan ooit! Onze {0} reisgids bevat alles wat je moet weten over de stad, van culinaire hotspots en accommodatie tot routebeschrijvingen naar populaire trekpleisters en meer!',
     GUIDE_ITEM_HEADINGS: {

@@ -61,7 +61,7 @@ const en = {
     POPULAR_CATEGORIES: 'Popular Categories',
     GO_TO_GUIDE: 'Go-to {0} guide',
     VIEW_TRAVEL_GUIDE: 'View Travel Guide',
-    EXPLORE: 'Explore',
+    EXPLORE: 'Explore {0}',
     GUIDE_SUBHEADING:
       'Exploring {0} attractions has never been easier! Our {0} travel guide has all you need to know about the city, from what to eat, to where to go, how to get there, where to stay and much more!',
     GUIDE_ITEM_HEADINGS: {

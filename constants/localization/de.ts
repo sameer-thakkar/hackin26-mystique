@@ -60,7 +60,7 @@ const de = {
     POPULAR_CATEGORIES: 'Beliebte Kategorien',
     GO_TO_GUIDE: 'Ihr {0} Reiseführer',
     VIEW_TRAVEL_GUIDE: 'Reiseführer anzeigen',
-    EXPLORE: 'Entdecken',
+    EXPLORE: '{0} entdecken',
     GUIDE_SUBHEADING:
       'Noch nie war es so einfach, Sehenswürdigkeiten in {0} zu erkunden! In unserem Reiseführer finden Sie alles, was Sie über {0} wissen müssen – von kulinarischen Geheimtipps bis zu Unterkünften und Anreisemöglichkeiten zu beliebten Wahrzeichen.',
     GUIDE_ITEM_HEADINGS: {

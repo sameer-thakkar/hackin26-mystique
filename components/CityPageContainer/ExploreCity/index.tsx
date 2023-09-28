@@ -70,7 +70,7 @@ const ExploreCity = ({
     <ExploreContainer ref={containerRef}>
       <Conditional if={carouselsCount}>
         <h2 className="explore-title">
-          {strings.CITY_PAGE.EXPLORE} {mbCityDisplayName}
+          {strings.formatString(strings.CITY_PAGE.EXPLORE, mbCityDisplayName)}
         </h2>
       </Conditional>
 
