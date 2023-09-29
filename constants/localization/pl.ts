@@ -46,6 +46,39 @@ const pl = {
   CASHBACK: '{0}% rabatu',
   CATEGORY_SLIDER_HEADING: 'Klienci, którzy to zamówili, wyświetlili również',
   CHECK_AVAIL: 'Sprawdź dostępność',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Najlepsze oferty na rozmaite wycieczki w mieście',
+    TOP_ATTRACTIONS: 'Najpopularniejsze atrakcje',
+    GO_BEYOND: 'Podróżuj dalej niż {0}',
+    ALL_DAY_TRIPS: 'Zobacz wszystkie wycieczki całodzienne',
+    CITIES_NEARBY: 'Miasta w pobliżu',
+    POPULAR_CATEGORIES: 'Popularne kategorie',
+    GO_TO_GUIDE: '{0}: przewodnik po mieście',
+    VIEW_TRAVEL_GUIDE: 'Wyświetl przewodnik turystyczny',
+    EXPLORE: 'Odkrywaj',
+    GUIDE_SUBHEADING:
+      'Odkrywanie atrakcji w mieście {0} nigdy nie było łatwiejsze! Nasz przewodnik turystyczny: {0} zawiera wszystko, co musisz wiedzieć o mieście – co jeść, gdzie iść, jak się tam dostać, gdzie się zatrzymać i wiele więcej!',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'Informacje ogólne',
+      WHERE_TO_EAT: 'Jedzenie',
+      WHERE_TO_STAY: 'Zakwaterowanie',
+      THINGS_TO_DO: 'Atrakcje',
+      WEATHER: 'Najlepsza pora na wizytę',
+      NEIGHBOURHOODS: 'Lokalna społeczność',
+      TRANSPORTATION: 'Poruszanie się',
+      TRIP_PLANNER: 'Plan podróży',
+      FAMILY_TRAVEL: 'Podróżowanie z dziećmi',
+      TRAVEL_TIPS: 'Porady i wskazówki dla podróżujących',
+      SHOPPING: 'Zakupy',
+      ART_AND_CULTURE: 'Sztuka i kultura',
+    },
+    MAILER: {
+      HEADING:
+        '{0}: inspiracje podróżnicze prosto do Twojej skrzynki odbiorczej',
+      SUBHEADING:
+        'Popularne atrakcje, sposoby na budżetowe podróżowanie, transport publiczny, najlepsze restauracje i hotele, wskazówki dotyczące kultury i więcej!',
+    },
+  },
   CLOSE: 'Zamknij',
   COMBO_VARIANT: {
     SELECT_CTA: 'Wybierz',
@@ -193,6 +226,13 @@ const pl = {
   },
   DURATION: 'Czas trwania',
   EARLIEST_AVAILABILITY: 'Najwcześniejszy dostępny termin',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Wpisz swój adres e-mail',
+    SIGN_UP: 'Zapisz się',
+    THANK_YOU: 'Dziękujemy!',
+    SUBSCRIBED_MSG: 'Zasubskrybowano pomyślnie',
+    ERROR_MSG: 'Podaj prawidłowy adres e-mail',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Bilety do teatru na Broadwayu',

@@ -142,6 +142,7 @@ export interface IVideoBanner {
   currentCityData: ICurrentCityData;
   cityPageBannerData: ICtyPageBannerData;
   prismicBannerImages: PrismicBannerItem[];
+  isMobile: boolean;
 }
 
 export interface IBannerParams {

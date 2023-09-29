@@ -13,8 +13,14 @@ import { VIDEO_POSITIONS } from 'const/index';
 import { strings } from 'const/strings';
 
 const BANNER_DIMENSIONS = {
-  WIDTH: 588,
-  HEIGHT: 300,
+  DESKTOP: {
+    WIDTH: 1512,
+    HEIGHT: 756,
+  },
+  MOBILE: {
+    WIDTH: 375,
+    HEIGHT: 308,
+  },
 };
 
 const VideoTitle = ({
@@ -41,6 +47,7 @@ const VideoBanner = ({
   currentCityData,
   cityPageBannerData,
   prismicBannerImages,
+  isMobile,
 }: IVideoBanner) => {
   const bannerParams: IBannerParams | undefined = getBannerParams(
     cityPageBannerData
@@ -53,13 +60,17 @@ const VideoBanner = ({
   const videoFallbackImgUrl = videoFallbackUrl || url || '';
   const imgAltText = altText || alt || '';
 
+  const { HEIGHT, WIDTH } = isMobile
+    ? BANNER_DIMENSIONS.MOBILE
+    : BANNER_DIMENSIONS.DESKTOP;
+
   return (
     <Container>
       <Video
         url={bannerVideoUrl}
         imageId={'banner-image'}
-        imageWidth={BANNER_DIMENSIONS.WIDTH}
-        imageHeight={BANNER_DIMENSIONS.HEIGHT}
+        imageWidth={WIDTH}
+        imageHeight={HEIGHT}
         fallbackImage={{
           url: videoFallbackImgUrl,
           altText: imgAltText,
@@ -70,7 +81,6 @@ const VideoBanner = ({
       >
         <VideoTitle currentCityData={currentCityData} />
       </Video>
-      <div className="gradient-wrapper"></div>
     </Container>
   );
 };

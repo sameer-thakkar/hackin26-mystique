@@ -12,20 +12,8 @@ export const Container = styled.div`
     overflow: hidden;
   }
 
-  .gradient-wrapper {
-    background: linear-gradient(180deg, rgba(10, 9, 11, 0) 0%, #060607 90.92%);
-    position: absolute;
-    bottom: -0.1rem;
-    height: 15.62rem;
-    width: 100%;
-  }
-
   video {
-    z-index: -1;
     position: relative;
-  }
-  img {
-    z-index: -1;
   }
 `;
 

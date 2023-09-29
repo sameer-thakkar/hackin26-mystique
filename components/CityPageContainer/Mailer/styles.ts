@@ -74,14 +74,17 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
     border: none;
     border-radius: 12px 0 0 12px;
     ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+    padding: 1.2rem;
+    border: 1px solid ${COLORS.GRAY.G6};
+    border-right: none; 
     ${({ isErr }) =>
       isErr &&
-      `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; border-right: none; padding: 1.2rem;`}
+      `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; border-right: none;`}
   }
   .err-msg {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     color: ${COLORS.TEXT.WARNING_RED_1};
-    margin-top: 0.3rem;
+    margin-top: 0.4rem;
   }
   .signup-btn {
     width: 11.75rem;
@@ -114,6 +117,7 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
       .email-input {
         margin-bottom: 1.4rem;
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
+        border: 1px solid ${COLORS.GRAY.G6};
         ${({ isErr }) =>
           isErr &&
           `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; margin-bottom: 0;`}

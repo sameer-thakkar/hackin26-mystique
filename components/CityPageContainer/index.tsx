@@ -70,6 +70,7 @@ const CityPageContainer = ({
         currentCityData={currentCityData}
         cityPageBannerData={cityPageBannerData}
         prismicBannerImages={prismicBannerImages}
+        isMobile={isMobile}
       />
       <Conditional if={cityTopCollectionsData?.length}>
         <TopAttractions
