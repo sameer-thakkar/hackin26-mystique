@@ -1,5 +1,9 @@
-import React, { ComponentType, useState } from 'react';
+import React, { ComponentType, useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
+import { MBContext } from 'contexts/MBContext';
+import { getProductCardDestination } from 'utils/productUtils';
+import { currencyAtom } from 'store/atoms/currency';
 import { PAGETYPE } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
@@ -25,12 +29,38 @@ export const SearchPage = (props: any) => {
   const loadHomepage = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
+  const { currentLanguage, isLTT } = props;
+  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
+  const currency = useRecoilValue(currencyAtom);
 
-  const searchItemClick = (productTgid: any) => {
-    props.changePage({
-      name: PAGETYPE.MOBILE_PRODUCT_PAGE,
-      tgid: productTgid,
-    });
+  const searchItemClick = (
+    productTgid: any,
+    showPageUid: string,
+    flowType: string,
+    urlSlugs: string[]
+  ) => {
+    if (isLTT) {
+      const { destinationUrl } = getProductCardDestination({
+        nakedDomain,
+        lang: currentLanguage,
+        tgid: productTgid,
+        redirectToHeadoutBookingFlow,
+        currency,
+        flowType,
+        urlSlugs,
+        showPageUid,
+        isDev,
+        host,
+      });
+      window.open(destinationUrl, '_self', 'noopener,noreferrer');
+    } else {
+      props.changePage({
+        name: PAGETYPE.MOBILE_PRODUCT_PAGE,
+        tgid: productTgid,
+      });
+    }
   };
 
   const { isMobile, allTours, headerProps, changePage } = props;

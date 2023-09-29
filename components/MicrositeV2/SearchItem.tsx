@@ -22,6 +22,7 @@ export const SearchItem = (props: any) => {
     price,
     onSearchResultClick,
     flowType,
+    urlSlugs,
   } = props;
   return (
     <div
@@ -29,7 +30,7 @@ export const SearchItem = (props: any) => {
       role={'button'}
       tabIndex={0}
       onClick={() => {
-        onSearchResultClick(tgid, showPageUid, flowType);
+        onSearchResultClick(tgid, showPageUid, flowType, urlSlugs);
 
         trackEvent({
           eventName: ANALYTICS_EVENTS.SEARCH_RESULT_CLICKED,

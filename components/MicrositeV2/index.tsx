@@ -509,6 +509,7 @@ class MicrositeV2 extends Component<any, any> {
       alternateLanguages,
     };
 
+    const isLTT = checkIfLTTMB(this.props.data.uid);
     const directTgid = this.props.router.query.tgid;
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
@@ -571,6 +572,8 @@ class MicrositeV2 extends Component<any, any> {
             headerProps={headerProps}
             isMobile={isMobile}
             changePage={this.changePage}
+            currentLanguage={currentLanguage}
+            isLTT={isLTT}
           />
         </Conditional>
       </InteractionContextProvider>
