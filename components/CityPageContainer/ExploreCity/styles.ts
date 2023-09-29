@@ -30,7 +30,11 @@ export const ExploreContainer = styled.div`
   .next-slide {
     top: 7.5rem;
   }
-
+  :not(.swiper-initialised) {
+    .entity-image-container {
+      width: 11.25rem;
+    }
+  }
   @media (max-width: 768px) {
     margin: 0 0 1rem 1rem;
     .explore-title {

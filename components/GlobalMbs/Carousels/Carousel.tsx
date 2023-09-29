@@ -1,16 +1,21 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
-import Swiper from 'components/Swiper';
 import OverflowScroll from 'UI/OverflowScroll';
 import { HALYARD, SIZES } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
-const StyledCarousel = styled.div`
+const Swiper = dynamic(() => import('components/Swiper'));
+
+const StyledCarousel = styled.div<{ $spaceBetween: number }>`
   position: relative;
 
   .swiper-initialized {
     width: 100%;
+  }
+  .swiper:not(.swiper-initialized) .swiper-wrapper {
+    gap: ${({ $spaceBetween }) => $spaceBetween}px;
   }
 `;
 
@@ -136,7 +141,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
     return (
       <div>
         <EntrySection>{entrySection}</EntrySection>
-        <StyledCarousel>
+        <StyledCarousel $spaceBetween={spaceBetween}>
           <StyledSwiper>
             {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
             <Swiper {...swiperParams}>{children}</Swiper>
