@@ -317,18 +317,21 @@ class ContentPage extends Component<any, any> {
 
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE,
-      value: this.props.data.shoulder_page_type,
+      value: this.props.data.baseLangCategorisationMetadata.shoulder_page_type,
     });
   }
 
   componentDidUpdate() {
-    const { eventsReady, data } = this.props;
+    const {
+      eventsReady,
+      data: { baseLangCategorisationMetadata },
+    } = this.props;
     const {
       shoulder_page_type,
       tagged_category: taggedCategoryName,
       tagged_sub_category: taggedSubCategoryName,
       tagged_mb_type: taggedMbType,
-    } = data;
+    } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
     const { pageViewEventSet } = this.state;
     if (!eventsReady) return;
 
@@ -428,9 +431,11 @@ class ContentPage extends Component<any, any> {
       microsite_document_ref,
       secondaryFooter,
       mbType,
-      tagged_city: taggedCity,
       side_navigation: sideNavToggle,
+      baseLangCategorisationMetadata,
     } = data;
+    const { tagged_city: taggedCity } =
+      (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
     const apiReady = tourAPIData !== null;
     const slices = [

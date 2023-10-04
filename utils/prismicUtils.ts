@@ -32,7 +32,6 @@ import {
   getToursGlobalCollection,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import type { TCategorisationMetadata } from 'utils/headerUtils';
 import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
 import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
 import { sendLog } from 'utils/logger';
@@ -199,7 +198,7 @@ export const getContentPageDocument = async ({
                 lang: EN_LANG_CODE,
               })
               .then((res: any) => res)
-          : micrositeData;
+          : page;
 
       const baseLangMicrositeData =
         lang !== EN_LANG_CODE
@@ -247,13 +246,33 @@ export const getContentPageDocument = async ({
         baseLangExperienceLimit = sp_experience_limit;
       }
 
-      const { data } = baseLangData ?? {};
       const {
+        tagged_city,
+        tagged_country,
         tagged_collection,
         tagged_category,
         tagged_sub_category,
         tagged_mb_type,
-      } = data ?? {};
+        tagged_page_type,
+        primary_tag,
+        shoulder_page_type,
+        shoulder_page_custom_label,
+        tagged_content_type,
+      } = baseLangData?.data || {};
+
+      const baseLangCategorisationMetadata: TCategorisationMetadata = {
+        tagged_city,
+        tagged_country,
+        tagged_collection,
+        tagged_category,
+        tagged_sub_category,
+        tagged_mb_type,
+        tagged_page_type,
+        primary_tag,
+        shoulder_page_type,
+        shoulder_page_custom_label,
+        tagged_content_type,
+      };
 
       let completePage = {
         ...page,
@@ -285,16 +304,11 @@ export const getContentPageDocument = async ({
             lang !== EN_LANG_CODE
               ? baseLangData?.data?.redirect_to_headout_booking_flow
               : page.data.redirect_to_headout_booking_flow,
-          baseLangTaggedCity:
-            lang !== EN_LANG_CODE
-              ? baseLangMicrositeData.data.tagged_city
-              : micrositeData.data.tagged_city,
-          tagged_collection,
-          tagged_category,
-          tagged_sub_category,
-          tagged_mb_type,
+          baseLangMicrositeData,
+          baseLangCategorisationMetadata,
         },
       };
+
       return {
         CMSContent: completePage,
         ContentType: CUSTOM_TYPES.CONTENT_PAGE,
@@ -507,17 +521,34 @@ export const getMicrositeDocument = async ({
           } catch (e) {
             // invalid url entered
           }
-          const baseData =
-            lang !== LANGUAGE_MAP.en.locale
-              ? baseLangData.data
-              : completeMicrosite.data.data;
 
           const {
+            tagged_city,
+            tagged_country,
             tagged_collection,
             tagged_category,
             tagged_sub_category,
             tagged_mb_type,
-          } = baseData ?? {};
+            tagged_page_type,
+            primary_tag,
+            shoulder_page_type,
+            shoulder_page_custom_label,
+            tagged_content_type,
+          } = baseLangData?.data || {};
+
+          const baseLangCategorisationMetadata: TCategorisationMetadata = {
+            tagged_city,
+            tagged_country,
+            tagged_collection,
+            tagged_category,
+            tagged_sub_category,
+            tagged_mb_type,
+            tagged_page_type,
+            primary_tag,
+            shoulder_page_type,
+            shoulder_page_custom_label,
+            tagged_content_type,
+          };
 
           const micrositeData = {
             ...completeMicrosite,
@@ -568,21 +599,11 @@ export const getMicrositeDocument = async ({
                 localisedCategoryTourListV1,
                 categoryTourListV2,
                 ...(allShowPages && { allShowPages }),
-                tagged_collection,
-                tagged_category,
-                tagged_sub_category,
-                tagged_mb_type,
-                baseLangTaggedCity:
-                  lang !== 'en-us'
-                    ? baseLangData.data.tagged_city
-                    : completeMicrosite.data.data.tagged_city,
-                baseLangTaggedCountry:
-                  lang !== 'en-us'
-                    ? baseLangData.data.tagged_country
-                    : completeMicrosite.data.data.tagged_country,
+                baseLangCategorisationMetadata,
               },
             },
           };
+
           return {
             CMSContent: micrositeData,
             ContentType: CUSTOM_TYPES.MICROSITE,
@@ -1779,10 +1800,8 @@ export const getPageData = async ({
         }
       }
 
-      const {
-        baseLangTaggedCity: mbCity,
-        baseLangTaggedCountry: mbCountry,
-      } = microsite.data;
+      const { tagged_city: mbCity, tagged_country: mbCountry } =
+        microsite.data.baseLangCategorisationMetadata || {};
 
       let cityPageData = {};
       let isCityPageMB = false;
@@ -2039,19 +2058,30 @@ export const getPageData = async ({
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
 
-    const baseLangMicrositeTaggedCity =
+    const baseLangCategorisationMetadata =
       ContentType === CUSTOM_TYPES.CONTENT_PAGE
-        ? CMSContent?.data?.baseLangTaggedCity
-        : CMSContent?.data?.data?.baseLangTaggedCity;
+        ? CMSContent?.data?.baseLangCategorisationMetadata
+        : CMSContent?.data?.data?.baseLangCategorisationMetadata;
+
+    //for content pages baseLangMicrositeData is the base lang microsite doc
+    //for microsites baseLangMicrositeData is the current microsite doc (NOT BASE LANG)
+    const baseLangMicrositeDoc =
+      ContentType === CUSTOM_TYPES.CONTENT_PAGE
+        ? CMSContent?.data?.baseLangMicrositeData
+        : CMSContent?.data;
 
     const categoryHeaderMenuExists =
       checkIfCategoryHeaderExists({
-        mbDesign: microsite?.data?.design,
+        mbDesign: baseLangMicrositeDoc?.data?.design,
         mbType,
-      }) && !!baseLangMicrositeTaggedCity;
+      }) && !!baseLangCategorisationMetadata?.tagged_city;
 
     const categoryHeaderMenu = categoryHeaderMenuExists
-      ? await getCategoryHeaderMenu(microsite)
+      ? await getCategoryHeaderMenu({
+          doc: baseLangMicrositeDoc,
+          lang: lang || LANGUAGE_MAP.en.locale,
+          ContentType,
+        })
       : {};
 
     return {

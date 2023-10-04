@@ -178,7 +178,14 @@ class MicrositeV2 extends Component<any, any> {
       body: CMSBody,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
+      baseLangCategorisationMetadata,
     } = CMSData || {};
+    const {
+      tagged_city: taggedCity,
+      tagged_category: taggedCategoryName,
+      tagged_sub_category: taggedSubCategoryName,
+      tagged_mb_type: taggedMbType,
+    } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
     const currentLanguage = getLangObject(CMSContent.lang).code;
     const languageProps = {
       uid,
@@ -499,10 +506,10 @@ class MicrositeV2 extends Component<any, any> {
       mbDesign: CMSContent?.data?.design,
       mbType: CMSContent?.data?.tagged_mb_type,
       primaryCity,
-      taggedCity: CMSContent?.data?.tagged_city,
-      taggedCategoryName: CMSContent?.data?.tagged_category,
-      taggedSubCategoryName: CMSContent?.data?.tagged_sub_cateogory,
-      taggedMbType: CMSContent?.data?.tagged_mb_type,
+      taggedCity,
+      taggedCategoryName,
+      taggedSubCategoryName,
+      taggedMbType,
       categoryHeaderMenu,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,

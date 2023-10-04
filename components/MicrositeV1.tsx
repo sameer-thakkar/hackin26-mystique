@@ -156,11 +156,14 @@ const MicrositeV1 = (props: any) => {
     design,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
+    baseLangCategorisationMetadata,
+  } = micrositeData || {};
+  const {
     tagged_city: taggedCity,
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
-  } = micrositeData || {};
+  } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
   const { COVID19_ALERT, READ_MORE } = strings;
 

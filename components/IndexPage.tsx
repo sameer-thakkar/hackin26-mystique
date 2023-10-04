@@ -36,13 +36,13 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import Analytics from './Analytics';
-import VenuePage from './VenuePage';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
+const VenuePage = dynamic(() => import('components/VenuePage'));
 
 const getValidUrlParams = (query: any) =>
   Object.entries(query)

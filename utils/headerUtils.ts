@@ -6,7 +6,6 @@ import { TMenu } from 'components/CategoryHeader/components/ExpandedMenu/interfa
 import { TMenuItem } from 'components/CategoryHeader/interface';
 import {
   getAlternateLanguageDocUid,
-  getEnglishDocUid,
   getHeadoutLanguagecode,
   handleSettledPromiseResults,
   legacyBooleanCheck,
@@ -49,18 +48,6 @@ import {
   PRISMIC_FIELD_ID,
   SEO_SUBDOMAINS,
 } from 'const/index';
-
-export type TCategorisationMetadata = {
-  tagged_category: string | null;
-  tagged_city: string | null;
-  tagged_collection: string | null;
-  tagged_content_type: Object[] | [];
-  tagged_country: string | null;
-  tagged_mb_type: string | null;
-  tagged_page_type: string | null;
-  tagged_sub_category: string | null;
-  shoulder_page_type: string | null;
-};
 
 type TCategoryApiData = {
   categories: Record<string, any>[];
@@ -1243,42 +1230,54 @@ const getA2SubcatMBMenu = async ({
   return finalMenu;
 };
 
-export const getCategoryHeaderMenu = async (doc: PrismicDocumentWithUID) => {
-  const { uid, lang, alternate_languages, data } = doc || {};
+export const getCategoryHeaderMenu = async ({
+  doc,
+  lang,
+  ContentType,
+}: {
+  doc: PrismicDocumentWithUID;
+  lang: string;
+  ContentType: string | undefined;
+}) => {
+  if (!doc || !ContentType) return {};
 
-  const baseLangUid = getEnglishDocUid(alternate_languages);
-  const baseLangData =
-    lang !== LANGUAGE_MAP.en.locale
-      ? await Client()
-          .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid || uid, {
-            lang: LANGUAGE_MAP.en.locale,
-          })
-          .then((res: PrismicDocumentWithUID) => res.data)
-      : data;
+  const { data } = doc || {};
+  let categorisationMetadata: TCategorisationMetadata;
 
-  const {
-    tagged_category,
-    tagged_city,
-    tagged_collection,
-    tagged_content_type,
-    tagged_country,
-    tagged_mb_type,
-    tagged_page_type,
-    tagged_sub_category,
-    shoulder_page_type,
-  } = baseLangData || {};
+  if (ContentType === CUSTOM_TYPES.MICROSITE) {
+    const { baseLangCategorisationMetadata } = data;
+    categorisationMetadata = baseLangCategorisationMetadata;
+  } else {
+    const {
+      tagged_city,
+      tagged_country,
+      tagged_collection,
+      tagged_category,
+      tagged_sub_category,
+      tagged_mb_type,
+      tagged_page_type,
+      primary_tag,
+      shoulder_page_type,
+      shoulder_page_custom_label,
+      tagged_content_type,
+    } = data;
 
-  const categorisationMetadata = {
-    tagged_category,
-    tagged_city,
-    tagged_collection,
-    tagged_content_type,
-    tagged_country,
-    tagged_mb_type,
-    tagged_page_type,
-    tagged_sub_category,
-    shoulder_page_type,
-  };
+    categorisationMetadata = {
+      tagged_city,
+      tagged_country,
+      tagged_collection,
+      tagged_category,
+      tagged_sub_category,
+      tagged_mb_type,
+      tagged_page_type,
+      primary_tag,
+      shoulder_page_type,
+      shoulder_page_custom_label,
+      tagged_content_type,
+    };
+  }
+
+  const { tagged_mb_type } = categorisationMetadata;
 
   let categoryHeaderMenu: Record<string, any>;
 

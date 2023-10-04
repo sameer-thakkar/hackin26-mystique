@@ -8,7 +8,7 @@ export type TMenuItem = {
 
 export type CategoryHeaderProps = {
   categoryHeaderMenu: Record<string, TMenuItem>;
-  taggedCity: string;
+  taggedCity: string | null;
   primaryCity: Record<string, any>;
   languages?: Array<Record<string, any>>;
   currentLanguage?: string;
