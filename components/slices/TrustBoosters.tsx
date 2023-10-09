@@ -19,7 +19,7 @@ const StyledTrustBoosters = styled.div`
     grid-gap: 8px;
     align-items: center;
   }
-  .trust-booster img {
+  .trust-booster .booster-img {
     width: 40px;
     height: 40px;
   }
@@ -60,7 +60,11 @@ const TrustBoosters = (props: any) => {
       {boosters.map((booster: any, index: number) => {
         return (
           <div className="trust-booster" key={index}>
-            <Image url={booster.image_url} alt={booster.title} />
+            <Image
+              className="booster-img"
+              url={booster.image_url}
+              alt={booster.title}
+            />
             <div className="booster-content">
               <span className="booster-heading">{booster.title}</span>
               <span className="booster-text">{booster.description}</span>
