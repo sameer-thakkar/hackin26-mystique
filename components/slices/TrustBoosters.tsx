@@ -20,7 +20,7 @@ const StyledTrustBoosters = styled.div`
     align-items: center;
   }
   .trust-booster .booster-img {
-    width: 40px;
+    width: 40px !important;
     height: 40px;
   }
   .trust-booster picture {
