@@ -2,7 +2,6 @@ import { isServer } from 'utils/gen';
 import { EXPERIMENTS, VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
-  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
 } from 'const/index';
 import { trackEvent } from '../analytics';
 import type Experiment from './experiment';
@@ -57,48 +56,3 @@ export const getExperimentVariables = (experimentName: string) =>
   ((window as any)?.experiments &&
     (window as any).experiments[experimentName]) ??
   {};
-
-export const reorderProducts = ({
-  productList,
-  uid,
-  tourRankingExpVariant,
-}: {
-  productList: any[];
-  uid: string;
-  tourRankingExpVariant?: string | null;
-}) => {
-  if (
-    !Object.keys(GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT).includes(uid) ||
-    tourRankingExpVariant === VARIANTS.CONTROL
-  )
-    return productList;
-  if (!tourRankingExpVariant) return productList;
-  let reorderedArray = [
-    ...productList.filter(
-      ({ tgid }: { tgid: number }) =>
-        GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === tgid
-    ),
-    ...productList.filter(
-      ({ tgid }: { tgid: number }) =>
-        GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id !== tgid
-    ),
-  ];
-  return reorderedArray.map((product: { tgid: number }) => {
-    if (GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === product.tgid)
-      return { ...product, isSpecialGuidedTour: true };
-    return product;
-  });
-};
-
-export const getProductRanking = ({
-  products,
-  uid,
-}: {
-  products: any[];
-  uid: string;
-}) => {
-  return products.findIndex(
-    ({ tgid }: { tgid: number }) =>
-      GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid].id === tgid
-  );
-};

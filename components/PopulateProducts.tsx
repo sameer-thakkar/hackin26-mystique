@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
@@ -17,24 +16,15 @@ import {
   fetchTourList,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
-import {
-  getABTestingVariant,
-  getProductRanking,
-  reorderProducts,
-} from 'utils/experiments/experimentUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import { getProductDescriptors } from 'utils/productUtils';
-import { appAtom } from 'store/atoms/app';
-import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESIGN,
-  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
   PROMO_CODES,
   THEMES,
 } from 'const/index';
@@ -147,14 +137,7 @@ const PopulateProducts = (props: any) => {
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
   productsRef.current = [];
-  const hsid = useRecoilValue(hsidAtom);
-  const isHsidSetFail = useRecoilValue(hsidSetFailAtom);
-  const { isBot } = useRecoilValue(appAtom);
   const productsWrapperRef = useRef(null);
-  let initialVariant = GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[uid]
-    ? null
-    : VARIANTS.CONTROL;
-  initialVariant = isBot ? VARIANTS.CONTROL : initialVariant;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
   const [appliedPromo, setAppliedPromo] = useState(null);
@@ -168,9 +151,6 @@ const PopulateProducts = (props: any) => {
   );
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
     false
-  );
-  const [tourRankingExpVariant, setTourRankingExpVariant] = useState(
-    initialVariant
   );
 
   const addToRef = (el: any) => {
@@ -208,30 +188,7 @@ const PopulateProducts = (props: any) => {
     setproductInfo(tourGroupMap);
   };
 
-  useEffect(() => {
-    if (isHsidSetFail || isBot) {
-      setTourRankingExpVariant(VARIANTS.CONTROL);
-      return;
-    } else if (!hsid || tourRankingExpVariant) return;
-    const experimentVariant = getABTestingVariant({
-      expName: EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
-      hsid,
-      noTrack: true,
-    });
-    setTourRankingExpVariant(experimentVariant);
-    const products = reorderProducts({
-      productList: availableToursList,
-      uid,
-      tourRankingExpVariant: experimentVariant,
-    });
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-      'Experiment Name':
-        EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
-      'Experiment Variant': experimentVariant,
-      'Experiment Guided Tour Ranking': getProductRanking({ products, uid }),
-    });
-  }, [hsid, isHsidSetFail]);
+  
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -546,11 +503,7 @@ const PopulateProducts = (props: any) => {
       <Conditional if={!productsLoading}>
         <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
           {availableToursList &&
-            reorderProducts({
-              productList: availableToursList,
-              uid,
-              tourRankingExpVariant,
-            }).map((tour: any, index: number) => {
+            availableToursList.map((tour: any, index: number) => {
               const {
                 tgid,
                 earliestAvailability,
@@ -628,13 +581,8 @@ const PopulateProducts = (props: any) => {
                 bannerVideo,
                 isCollectionMB,
                 isSpecialGuidedTour,
-                isProductCardLoading: tourRankingExpVariant === null,
                 detialsPopupShown,
-                tourRankingExpVariant,
                 setDetailsPopupShown,
-                isGuidedTour:
-                  tourRankingExpVariant === VARIANTS.TREATMENT &&
-                  scorpioData?.[tgid]?.descriptors?.includes('GUIDED_TOUR'),
               };
               return (
                 <ProductWrapper

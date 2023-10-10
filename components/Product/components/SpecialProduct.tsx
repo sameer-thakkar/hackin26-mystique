@@ -4,7 +4,6 @@ import { TSpecialProductType } from 'components/Product/interface';
 import { SpecialProductWrapper } from 'components/Product/styles';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { EXPERIMENT_NAMES } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 const SpecialProduct = ({ Product, isMobile }: TSpecialProductType) => {
@@ -17,8 +16,6 @@ const SpecialProduct = ({ Product, isMobile }: TSpecialProductType) => {
     setIsTracked(true);
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXP_COMPONENT_LOADED,
-      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-        EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
       [ANALYTICS_PROPERTIES.COMPONENT_NAME]: 'Guided Tours Design Box',
     });
   }, [isOnScreen, animationComplete]);

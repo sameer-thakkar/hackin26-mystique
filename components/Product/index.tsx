@@ -71,7 +71,6 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   SIDEBAR_TYPES,
   THEMES,
@@ -851,6 +850,9 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional if={isMobile && !expandContent && isSpecialGuidedTour}>
               <TourAvailableInLanguages>
+                
+                {/*
+                TODO: import language labels from scorpio and prismic here
                 {isSpecialGuidedTour &&
                   strings.formatString(
                     strings.TOUR_AVAILABLE_LANGUAGES,
@@ -859,7 +861,7 @@ const Product = (props: any) => {
                     ]?.languageLabels
                       .map((label) => strings.LANGUAGES[label])
                       .join(', ')
-                  )}
+                  )} */}
               </TourAvailableInLanguages>
             </Conditional>
             <Conditional if={isOpenDated && isMobile}>

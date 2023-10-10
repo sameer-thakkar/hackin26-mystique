@@ -2,12 +2,10 @@ import Skeleton from 'react-loading-skeleton';
 import Conditional from 'components/common/Conditional';
 import { TProductDescriptors } from 'components/Product/interface';
 import { TourTags } from 'components/Product/styles';
-import { characterLimitStrings } from 'utils/stringUtils';
 import { getDuration } from 'utils/timeUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
   DESCRIPTORS,
-  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { GLOBE } from 'assets/SvgIcons';
@@ -23,7 +21,6 @@ export const ProductDescriptors = ({
   isLoading = false,
   pageType = '',
   showLanguages,
-  uid,
 }: TProductDescriptors) => {
   if (isLoading)
     return (
@@ -64,14 +61,18 @@ export const ProductDescriptors = ({
         <div key="descriptor-language" className="tour-tag language-descriptor">
           {GLOBE}
           <Conditional if={horizontal}>
+            {/*
+            TODO: add language labels from scorpio or prismic
             {showLanguages &&
               GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
                 uid ?? ''
               ]?.languageLabels
                 .map((label) => strings.LANGUAGES[label])
-                .join(', ')}
+                .join(', ')} */}
           </Conditional>
           <Conditional if={!horizontal}>
+            {/*
+            TODO: add language labels from scorpio or prismic
             {showLanguages &&
               characterLimitStrings(
                 GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
@@ -80,7 +81,7 @@ export const ProductDescriptors = ({
                   .map((label) => strings.LANGUAGES[label])
                   .join(', '),
                 26
-              )}
+              )} */}
           </Conditional>
         </div>
       </Conditional>

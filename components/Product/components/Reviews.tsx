@@ -3,7 +3,6 @@ import Conditional from 'components/common/Conditional';
 import { TReviewProps } from 'components/Product/interface';
 import { ReviewCardWrapper } from 'components/Product/styles';
 import { trackEvent } from 'utils/analytics';
-import { EXPERIMENT_NAMES } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { DoubleQuotesIcon } from 'assets/SvgIcons';
 
@@ -11,8 +10,6 @@ const Reviews = ({ reviewText, className, children }: TReviewProps) => {
   const trackClick = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXP_COMPONENT_CLICKED,
-      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-        EXPERIMENT_NAMES.GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT,
       [ANALYTICS_PROPERTIES.COMPONENT_NAME]: 'Review Component',
     });
   };
