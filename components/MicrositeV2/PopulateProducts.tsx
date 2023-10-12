@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
 import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
+import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import {
@@ -236,7 +237,7 @@ const PopulateProducts = (props: any) => {
               currentLanguage={lang}
               uid={uid}
               rowsInView={rowsInView}
-              key={row[index]}
+              key={genUniqueId()}
               sectionId={sectionId}
               isListicle={isListicle}
               isDev={isDev}
