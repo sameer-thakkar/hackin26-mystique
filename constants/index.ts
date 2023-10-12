@@ -436,6 +436,7 @@ export const ANALYTICS_EVENTS = {
   SUBCAT_CARD_CLICKED: 'Sub-Category Card Clicked',
   SEE_ALL_CLICKED: 'See All Clicked',
   PAGE_SECTION_VIEWED: 'Page Section Viewed',
+  BREADCRUMBS_CLICKED: 'Navigation Breadcrumbs Clicked',
 };
 
 export const PAGE_TYPE = {
@@ -1021,14 +1022,14 @@ export const ENTERTAINMENT_MB_BREADCRUMBS = {
     ROOT_DOMAIN: 'www.london-theater-tickets.com',
     MUSICALS: 'www.london-theater-tickets.com.london-musicals',
     PLAYS: 'www.london-theater-tickets.com.west-end-plays-in-london',
-    OPERA: 'www.london-theater-tickets.com.london-operas',
+    OPERA: 'www.london-theater-tickets.com.shows-in-london.opera-shows',
   },
   BROADWAY: {
     ROOT_DOMAIN: 'www.broadway-show-tickets.com',
     MUSICALS: 'www.broadway-show-tickets.com.broadway-musicals-in-new-york',
-    PLAYS: 'www.broadway-show-tickets.broadway-plays-in-new-york',
+    PLAYS: 'www.broadway-show-tickets.com.broadway-plays-in-new-york',
     // No shoulder page for Opera adding broadway homepage as fallback
-    OPERA: 'www.broadway-show-tickets',
+    OPERA: 'www.broadway-show-tickets.com',
   },
 };
 
@@ -1128,6 +1129,10 @@ export const MB_CATEGORISATION = {
     RV_RENTALS: 'RV Rentals',
     STAYCATIONS: 'Staycations',
     SPORTS: 'Sports',
+  },
+  PRIMARY_TAG: {
+    TRAVEL_GUIDE: 'Travel Guide',
+    THINGS_TO_DO: 'Things to do',
   },
 };
 export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
@@ -1236,6 +1241,8 @@ export const CAROUSEL_DIR = {
 };
 export const FLAGS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/home/country-flags/4x3/';
+
+export const VIENNA_CONCERT_UID = 'www.vienna-concert-tickets.com';
 
 export const BY_HO_BRAND_SCREEN_ENABLE = [
   'book.hochiminh-city.com',

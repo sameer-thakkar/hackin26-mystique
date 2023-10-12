@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
@@ -8,7 +9,6 @@ import Footer from 'components/common/Footer';
 import LongForm from 'components/common/LongForm';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Header from 'components/MicrositeV2/Header';
-import Breadcrumb from 'components/slices/Breadcrumb';
 import Amenities from 'components/VenuePage/components/Amenities';
 import RichContent from 'UI/RichContent';
 import { MBContext } from 'contexts/MBContext';
@@ -20,7 +20,7 @@ import {
 } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
-import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { getLangObject } from 'utils/helper';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -43,6 +43,10 @@ import {
 import { Banner, VenuePageContainer } from './styles';
 import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
 
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
+
 const VenuePage = (props: IVenuePageProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedLimit, setExpandedLimit] = useState(4);
@@ -63,6 +67,7 @@ const VenuePage = (props: IVenuePageProps) => {
     isDev,
     serverRequestStartTimestamp,
     tgidsInPage,
+    breadcrumbs,
   } = props;
 
   const {
@@ -143,20 +148,6 @@ const VenuePage = (props: IVenuePageProps) => {
 
   const currentLanguage = getLangObject(lang).code;
 
-  const isLTT = checkIfLTTMB(uid);
-
-  const breadcrumbsLinks = [
-    {
-      link: { url: 'https://www.london-theater-tickets.com/' },
-      text: 'London Theatre Tickets',
-    },
-    {
-      link: { url: 'https://www.london-theater-tickets.com/london-theatres/' },
-      text: 'Theatres In London',
-    },
-    { text: theatreName },
-  ];
-
   const selfCanonicalLink = convertUidToUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
@@ -206,6 +197,8 @@ const VenuePage = (props: IVenuePageProps) => {
     currency,
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
   });
+
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
 
   /* Find Best Seats CTA points to the first nowPlayingShow (incase of two) */
   const onFindBestSeatsCtaClicked = () => {
@@ -370,6 +363,9 @@ const VenuePage = (props: IVenuePageProps) => {
           bannerImages: [],
           faviconUrl,
           logoUrl: logoUrl,
+          breadcrumbsDetails: {
+            breadcrumbs,
+          },
         }}
       />
       <Head>
@@ -418,13 +414,12 @@ const VenuePage = (props: IVenuePageProps) => {
       </Banner>
 
       <VenuePageContainer>
-        <Conditional if={isLTT}>
-          <div className="breadcrumb-container">
-            <Breadcrumb
-              orderedLinks={breadcrumbsLinks}
-              shouldLastNodeBeUnderlined={false}
-            />
-          </div>
+        <Conditional if={automatedBreadcrumbsExists && !isMobile}>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            isVenuePage={true}
+            isMobile={false}
+          />
         </Conditional>
         <div className="theatre-info">
           <RichContent render={theatreInfo} />
@@ -469,10 +464,11 @@ const VenuePage = (props: IVenuePageProps) => {
         }
       />
       <VenuePageContainer>
-        <Conditional if={isMobile && isLTT}>
-          <Breadcrumb
-            orderedLinks={breadcrumbsLinks}
-            shouldLastNodeBeUnderlined={false}
+        <Conditional if={automatedBreadcrumbsExists && isMobile}>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            isVenuePage={true}
+            isMobile={true}
           />
         </Conditional>
       </VenuePageContainer>

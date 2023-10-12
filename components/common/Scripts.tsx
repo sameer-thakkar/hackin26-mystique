@@ -2,6 +2,8 @@ import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
 import { CollectionDetails } from 'components/StaticBanner/index';
+import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+import { getBreadcrumbLabel } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
 
 export const TrackingScripts = ({
@@ -257,6 +259,47 @@ export const VideoMetaScript = ({
         key={'videoScriptMetadata'}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
+      />
+    </Head>
+  );
+};
+
+export const BreadcrumbsSchema = ({
+  breadcrumbs,
+  mbCity,
+  showName,
+}: {
+  breadcrumbs: TBreadcrumbs;
+  mbCity: string;
+  showName: string;
+}) => {
+  const itemListElement = Object.values(breadcrumbs).map(
+    (breadcrumb, index) => {
+      const { level, label, url } = breadcrumb;
+      return {
+        '@type': 'ListItem',
+        position: level,
+        name: getBreadcrumbLabel({
+          label,
+          mbCity,
+          showName,
+        }),
+        ...(index !== Object.values(breadcrumbs).length - 1 && { item: url }),
+      };
+    }
+  );
+  const breadcrumbList = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
+
+  return (
+    <Head>
+      <script
+        key={'breadcrumbsSchema'}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
       />
     </Head>
   );

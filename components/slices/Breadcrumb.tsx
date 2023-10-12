@@ -12,12 +12,8 @@ type BreadcrumbProps = {
 };
 
 const BreadcrumbContainer = styled.div`
-  a {
-    color: ${COLORS.TEXT.BEACH};
-  }
-
   svg {
-    margin: 0 0.5rem;
+    margin: auto 0.5rem;
     width: 8px;
     height: 8px;
   }
@@ -26,7 +22,7 @@ const BreadcrumbContainer = styled.div`
     padding: 0;
 
     svg {
-      margin: 0 0.25rem;
+      margin: 0 0.5rem;
     }
   }
 `;
@@ -36,30 +32,21 @@ const StyledBreadcrumb = styled.a<{
 }>`
   ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
 
-  &:last-child {
-    text-decoration: ${({ shouldLastNodeBeUnderlined }) => {
-      return shouldLastNodeBeUnderlined ? 'underline' : 'none';
-    }};
-  }
-
   &#breadcrumb {
-    color: ${COLORS.GRAY.G4};
-    cursor: pointer;
+    color: ${COLORS.GRAY.G3};
+
+    &:not(:last-child) {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
-  /* Using "shouldLastNodeBeUnderlined" prop since clickable node will always be underlined */
-  &#breadcrumb :last-child {
-    cursor: ${({ shouldLastNodeBeUnderlined }) => {
-      return shouldLastNodeBeUnderlined ? 'pointer' : 'default';
-    }};
-  }
   &:not(:last-child):hover {
-    color: ${COLORS.TEXT.CANDY_1} !important;
+    color: ${COLORS.BRAND.PURPS} !important;
   }
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-    text-decoration: none;
   }
 `;
 

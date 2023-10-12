@@ -7,7 +7,7 @@ export const SideNavButton = styled.div`
   display: inline;
   position: fixed;
   cursor: pointer;
-  top: 22.5rem;
+  top: 20rem;
   padding: 0.5rem 0.75rem;
   background: ${COLORS.BRAND.WHITE};
   z-index: 10;

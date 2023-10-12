@@ -5,6 +5,7 @@ import { OpenGraph, Twitter } from 'next-seo/lib/types';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
+  BreadcrumbsSchema,
   CollectionAggregatedRatingScript,
   MystiquePerfScript,
   TrackingScripts,
@@ -18,9 +19,11 @@ import {
   legacyBooleanCheck,
   shouldDisplayCollectionRatings,
 } from 'utils';
+import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
+import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   FB_DOMAIN_VERIFICATION,
@@ -28,6 +31,13 @@ import {
   QUERY_PARAMS,
   SEO_SUBDOMAINS,
 } from 'const/index';
+
+type TBreadcrumbsDetails = {
+  breadcrumbs: TBreadcrumbs;
+  taggedCity?: string | null;
+  primaryCity?: Record<string, any>;
+  showName?: string;
+};
 
 type PopulateMetaProps = {
   prismicData: { [key: string]: any };
@@ -42,6 +52,7 @@ type PopulateMetaProps = {
   faviconUrl: string;
   logoUrl?: string;
   uid?: string;
+  breadcrumbsDetails?: TBreadcrumbsDetails;
 };
 
 export default function PopulateMeta({
@@ -56,6 +67,7 @@ export default function PopulateMeta({
   faviconUrl,
   logoUrl,
   uid,
+  breadcrumbsDetails,
 }: PopulateMetaProps) {
   const {
     noTrack,
@@ -269,6 +281,10 @@ export default function PopulateMeta({
 
   const collectionVideoMeta = getCollectionVideoMeta(collectionDetails);
 
+  const { breadcrumbs = {}, taggedCity, primaryCity, showName = '' } =
+    breadcrumbsDetails || {};
+  const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
+
   return (
     <>
       <NextSeo {...metaProps} />
@@ -288,6 +304,13 @@ export default function PopulateMeta({
       </Conditional>
       <Conditional if={collectionVideoMeta}>
         <VideoMetaScript videoInfo={collectionVideoMeta} />
+      </Conditional>
+      <Conditional if={Object.keys(breadcrumbs).length > 1}>
+        <BreadcrumbsSchema
+          breadcrumbs={breadcrumbs}
+          mbCity={mbCity}
+          showName={showName}
+        />
       </Conditional>
       <MystiquePerfScript
         serverRequestStartTimestamp={serverRequestStartTimestamp}

@@ -26,7 +26,13 @@ import {
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
+import {
+  getBreadcrumbs,
+  getShowPageBreadcrumbs,
+  getVenuePageBreadcrumbs,
+} from 'utils/breadcrumbsUtils';
 import { generateCityPageData } from 'utils/cityPageUtils';
+import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
@@ -62,9 +68,9 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   SLICE_TYPES,
   THEMES,
+  VIENNA_CONCERT_UID,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
-import { getDocsForListicleSlice } from './contentPageUtils';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
@@ -1171,7 +1177,6 @@ export const getShowPage = async ({
       [common_header.id, common_footer.id],
       req
     );
-
     const { commonHeader, commonFooter } = refsArrayToObject(refArray);
     return {
       CMSContent: {
@@ -1397,6 +1402,8 @@ export const getPageData = async ({
           })
         : {};
 
+      const breadcrumbs = await getVenuePageBreadcrumbs(CMSContent);
+
       return {
         CMSContent: {
           ...CMSContent,
@@ -1412,6 +1419,7 @@ export const getPageData = async ({
         tgidsInPage: [...showsListSlicesTgids],
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
+        breadcrumbs,
       };
     }
 
@@ -1676,6 +1684,8 @@ export const getPageData = async ({
 
         const activeCurrency = tgidDataWithoutUrls?.currency;
 
+        const breadcrumbs = await getShowPageBreadcrumbs(CMSContent);
+
         return {
           CMSContent,
           tourGroupData: tgidDataWithoutUrls,
@@ -1690,6 +1700,7 @@ export const getPageData = async ({
           ...(activeCurrency && { activeCurrency }),
           currencyList: await currencyListPromise,
           domainConfig: await domainConfigPromise,
+          breadcrumbs,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -2076,13 +2087,27 @@ export const getPageData = async ({
         mbType,
       }) && !!baseLangCategorisationMetadata?.tagged_city;
 
-    const categoryHeaderMenu = categoryHeaderMenuExists
-      ? await getCategoryHeaderMenu({
+    const categoryHeaderMenuPromise = categoryHeaderMenuExists
+      ? getCategoryHeaderMenu({
           doc: baseLangMicrositeDoc,
           lang: lang || LANGUAGE_MAP.en.locale,
           ContentType,
         })
       : {};
+
+    const breadcrumbsDoc =
+      ContentType === CUSTOM_TYPES.MICROSITE ? CMSContent.data : CMSContent;
+
+    const breadcrumbsPromise = getBreadcrumbs(breadcrumbsDoc);
+
+    const aggregatedPromise = await Promise.allSettled([
+      categoryHeaderMenuPromise,
+      breadcrumbsPromise,
+    ]);
+
+    const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
+      aggregatedPromise
+    );
 
     return {
       ...scorpioAllTourGroupData,
@@ -2094,6 +2119,7 @@ export const getPageData = async ({
       currencyList: await currencyListPromise,
       domainConfig: await domainConfigPromise,
       categoryHeaderMenu,
+      breadcrumbs,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -2303,4 +2329,59 @@ export const getAlternateLanguageDocs = async ({
   );
 
   return alternateLangDocs;
+};
+
+const getConcertCollectionClientQueryPromise = ({
+  docType,
+  mbCollection,
+}: {
+  docType: string;
+  mbCollection: string;
+}) =>
+  Client().query(
+    [
+      Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      Prismic.Predicates.at(
+        `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
+        mbCollection
+      ),
+      Prismic.Predicates.any(`document.tags`, [VIENNA_CONCERT_UID]),
+    ],
+    { pageSize: 100 }
+  );
+
+export const getConcertCollectionDocs = async (mbCollection: string | null) => {
+  try {
+    if (!mbCollection) return [];
+
+    const micrositesPromises = getConcertCollectionClientQueryPromise({
+      docType: CUSTOM_TYPES.MICROSITE,
+      mbCollection,
+    });
+
+    const venuePagesPromises = getConcertCollectionClientQueryPromise({
+      docType: CUSTOM_TYPES.VENUE_PAGE,
+      mbCollection,
+    });
+
+    const aggregatedPromise = await Promise.allSettled([
+      micrositesPromises,
+      venuePagesPromises,
+    ]);
+
+    const [
+      filteredMicrosites,
+      filteredVenuePages,
+    ] = handleSettledPromiseResults(aggregatedPromise);
+
+    const aggregatedDocsStore = [
+      ...filteredMicrosites?.results,
+      ...filteredVenuePages?.results,
+    ];
+
+    return aggregatedDocsStore;
+  } catch (error) {
+    sendLog({ err: error });
+    return [];
+  }
 };

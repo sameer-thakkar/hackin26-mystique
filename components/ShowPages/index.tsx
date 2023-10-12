@@ -42,18 +42,12 @@ import {
 } from 'utils/apiUtils';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getDurationISO, getPrevDate } from 'utils/dateUtils';
-import {
-  checkIfBroadwayMB,
-  checkIfLTTMB,
-  getHostName,
-  groupSlices,
-} from 'utils/helper';
+import { getHostName, groupSlices } from 'utils/helper';
 import { generateDescriptor } from 'utils/productUtils';
 import { getProductSchema } from 'utils/schemaUtils';
 import {
   convertUidToUrl,
   getLogoRedirectionUrl,
-  getShowpageBreadcrumbUid,
   getValidUrl,
 } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
@@ -68,8 +62,10 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
-const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
 
 const ShowPageWrapper = styled.div`
   ${StyledAsideModal} {
@@ -201,6 +197,7 @@ const ShowPage = (props: any) => {
     isDev,
     serverRequestStartTimestamp,
     domainConfig,
+    breadcrumbs,
   } = props;
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
@@ -229,11 +226,8 @@ const ShowPage = (props: any) => {
 
   const { slots }: SimplifiedSlotsData = inventorySlotData || {};
 
-  const {
-    id: primarySubCategoryID,
-    displayName: primarySubCategoryName,
-    name: nonLocalisedSubCategoryName,
-  } = primarySubCategory || {};
+  const { id: primarySubCategoryID, displayName: primarySubCategoryName } =
+    primarySubCategory || {};
   const { code: cityCode } = city || {};
 
   const {
@@ -400,37 +394,6 @@ const ShowPage = (props: any) => {
     host,
   });
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
-
-  const isLTT = checkIfLTTMB(uid);
-  const isBroadway = checkIfBroadwayMB(uid);
-
-  const breadcrumbs = [
-    {
-      url: convertUidToUrl({
-        uid: getShowpageBreadcrumbUid('', isLTT),
-        lang: currentLanguage,
-        isDev,
-        hostname: host,
-      }),
-      text: isLTT
-        ? strings.ENTERTAINMENT_MB.LTT.MB_NAME
-        : strings.ENTERTAINMENT_MB.BROADWAY.MB_NAME,
-    },
-    {
-      url: convertUidToUrl({
-        uid: getShowpageBreadcrumbUid(nonLocalisedSubCategoryName, isLTT),
-        lang: currentLanguage,
-        isDev,
-        hostname: host,
-      }),
-      text: primarySubCategoryName,
-    },
-    {
-      url: pageUrl,
-      text: name + ' - ' + strings.TICKETS,
-    },
-  ];
-
   const bannerImages = [
     {
       url: getValidUrl(bannerImageTwo?.url) || getValidUrl(bannerImageOne?.url),
@@ -542,6 +505,10 @@ const ShowPage = (props: any) => {
             bannerImages,
             faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
             logoUrl: logoUrl,
+            breadcrumbsDetails: {
+              breadcrumbs,
+              showName: name,
+            },
           }}
         />
         {/* @ts-expect-error TS(2322): Type '{ reviews?: { author: { type: string; name: ... Remove this comment to see the full error message */}
@@ -659,9 +626,12 @@ const ShowPage = (props: any) => {
             currentLanguage={currentLanguage}
             categoryName={primarySubCategoryName}
           />
-          <Conditional if={isLTT || isBroadway}>
-            <Breadcrumb links={breadcrumbs} />
-          </Conditional>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            showName={name}
+            isShowPage={true}
+            isMobile={isMobile}
+          />
         </Wrapper>
         <Footer
           currentLanguage={currentLanguage}

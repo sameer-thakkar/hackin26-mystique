@@ -1,3 +1,5 @@
+import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+
 export type IAmenitiesProps = {
   isMobile: boolean;
   expandedLimit: number;
@@ -14,6 +16,7 @@ export type IVenuePageProps = {
   domainConfig: any;
   serverRequestStartTimestamp: string;
   tgidsInPage: Array<number>;
+  breadcrumbs: TBreadcrumbs;
 };
 
 export type IAccordionSlice = {

@@ -6,7 +6,10 @@ import parse from 'url-parse';
 import { isMBDesign } from 'utils';
 import { sendLog } from 'utils/logger';
 import renderShortCodes from 'utils/shortCodes';
+import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
+import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
   DESIGN,
   F1_SPORTS_EXPERIMENT_TGIDS,
@@ -527,6 +530,9 @@ export const checkIfLTTMBLandingPage = (uid: string | null | undefined) =>
 export const checkIfBroadwayMB = (uid: string | null | undefined) =>
   !!uid?.includes('www.broadway-show-tickets.com');
 
+export const checkIfViennaConcertMB = (uid: string | null | undefined) =>
+  !!uid?.includes('www.vienna-concert-tickets.com');
+
 export const checkIfGpMotorTicketsMB = (uid: string | null | undefined) =>
   !!uid?.includes('gpmotorsportstickets.com') ||
   !!uid?.includes('f1-baku-tickets.com') ||
@@ -583,4 +589,78 @@ export const isF1SportsExperiment = (tgid: number): boolean =>
 
 export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
+};
+
+export const getCategorySeeAllLink = (category: string) => {
+  switch (category) {
+    case 'kids':
+      return 'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/';
+    case 'couple':
+      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
+    case 'adults':
+      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
+    case 'new arrivals':
+      return 'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/';
+    case 'plays':
+      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
+    case 'musicals':
+      return 'https://www.london-theater-tickets.com/london-musicals/';
+    case 'discounts':
+      return 'https://www.london-theater-tickets.com/discount-west-end-tickets/';
+  }
+  return '';
+};
+
+export const getShoulderPageLabel = ({
+  shoulderPageType,
+  shoulderPageCustomLabel,
+}: {
+  shoulderPageType: string;
+  shoulderPageCustomLabel: string;
+}) => {
+  if (shoulderPageType === MISC || shoulderPageType === SUB_ATTRACTIONS) {
+    return shoulderPageCustomLabel || '';
+  } else if (Object.keys(A2_SHOULDER_PAGE_TYPES).includes(shoulderPageType)) {
+    return A2_SHOULDER_PAGE_TYPES[
+      shoulderPageType as keyof typeof A2_SHOULDER_PAGE_TYPES
+    ];
+  } else {
+    return shoulderPageCustomLabel || shoulderPageType || '';
+  }
+};
+
+export const getBreadcrumbLabel = ({
+  label,
+  mbCity,
+  showName,
+}: {
+  label: string;
+  mbCity: string;
+  showName: string;
+}) => {
+  let formattedLabel;
+
+  if (label === SHOW_NAME_TICKETS) {
+    formattedLabel = strings.formatString(
+      strings.BREADCRUMBS[label as keyof typeof strings.BREADCRUMBS],
+      showName
+    );
+  } else {
+    formattedLabel =
+      strings.formatString(
+        strings.BREADCRUMBS[label as keyof typeof strings.BREADCRUMBS],
+        mbCity
+      ) ||
+      strings.formatString(
+        strings.CATEGORY_HEADER[
+          constantCase(label) as keyof typeof strings.CATEGORY_HEADER
+        ],
+        mbCity
+      );
+  }
+  const formattedLabelString = Array.isArray(formattedLabel)
+    ? formattedLabel[0]
+    : formattedLabel;
+
+  return formattedLabelString || label;
 };

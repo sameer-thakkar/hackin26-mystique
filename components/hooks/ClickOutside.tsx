@@ -3,7 +3,7 @@ import { RefObject, useEffect } from 'react';
 export const useCaptureClickOutside = (
   elementRef: any,
   outsideClickHandler: any,
-  exceptionRefs: RefObject<HTMLDivElement>[] = []
+  exceptionRefs: RefObject<HTMLElement>[] = []
 ) => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

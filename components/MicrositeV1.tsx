@@ -82,6 +82,9 @@ const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
 const CategoryHeader = dynamic(() =>
   import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -103,6 +106,7 @@ const MicrositeV1 = (props: any) => {
     collectionDetails,
     primaryCity,
     categoryHeaderMenu,
+    breadcrumbs,
     cityPageParams,
   } = props;
 
@@ -382,6 +386,13 @@ const MicrositeV1 = (props: any) => {
     mbType,
   });
 
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+  const breadcrumbsDetails = {
+    breadcrumbs,
+    taggedCity,
+    primaryCity,
+  };
+
   useEffect(() => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
@@ -534,6 +545,7 @@ const MicrositeV1 = (props: any) => {
             faviconUrl,
             logoUrl: logoUrl,
             collectionDetails,
+            breadcrumbsDetails,
           }}
         />
         <Header
@@ -672,12 +684,22 @@ const MicrositeV1 = (props: any) => {
           {tourListSection}
         </Conditional>
 
+        <Conditional if={automatedBreadcrumbsExists}>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            taggedCity={taggedCity}
+            primaryCity={primaryCity}
+            isMobile={isMobile}
+          />
+        </Conditional>
+
         <ProductsContextProvider allTours={allTours} ready={isReady}>
           <InteractionContextProvider>
             <Conditional if={longFormContent && !isCityPageMB}>
               <LongForm
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
+                automatedBreadcrumbsExists={automatedBreadcrumbsExists}
                 isMobile={isMobile}
               />
             </Conditional>

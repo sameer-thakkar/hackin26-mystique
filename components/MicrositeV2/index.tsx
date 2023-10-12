@@ -145,6 +145,7 @@ class MicrositeV2 extends Component<any, any> {
       primaryCity,
       categoryHeaderMenu,
       isMobile,
+      breadcrumbs,
     } = this.props;
     const {
       commonFooter,
@@ -514,12 +515,19 @@ class MicrositeV2 extends Component<any, any> {
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
       alternateLanguages,
+      breadcrumbs,
     };
 
     const isLTT = checkIfLTTMB(this.props.data.uid);
     const directTgid = this.props.router.query.tgid;
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
+    const breadcrumbsDetails = {
+      breadcrumbs,
+      taggedCity,
+      primaryCity,
+    };
+
     return (
       <InteractionContextProvider
         {...categoryProps}
@@ -537,6 +545,7 @@ class MicrositeV2 extends Component<any, any> {
             bannerImages: heroProps?.banners,
             faviconUrl: domainConfig?.faviconUrl,
             logoUrl: domainConfig?.logo?.logoUrl,
+            breadcrumbsDetails,
           }}
         />
 

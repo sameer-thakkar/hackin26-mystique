@@ -51,6 +51,9 @@ const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const CategoryHeader = dynamic(() =>
   import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
 
 const ContentWrapper = styled.main`
   margin-top: 0;
@@ -416,6 +419,7 @@ class ContentPage extends Component<any, any> {
       domainConfig,
       primaryCity,
       categoryHeaderMenu,
+      breadcrumbs,
       prismicDocsForListicle,
       collectionsInListicles,
     } = this.props;
@@ -572,6 +576,13 @@ class ContentPage extends Component<any, any> {
       mbDesign,
       mbType,
     });
+    const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+    const breadcrumbsDetails = {
+      breadcrumbs,
+      taggedCity,
+      primaryCity,
+    };
+
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -599,6 +610,7 @@ class ContentPage extends Component<any, any> {
             bannerImages: [featuredImage],
             faviconUrl,
             logoUrl: logoUrl,
+            breadcrumbsDetails,
           }}
         />
 
@@ -680,6 +692,15 @@ class ContentPage extends Component<any, any> {
               visibleHeading={this.state.selectedHeading}
             />
           </Conditional>
+          <Conditional if={automatedBreadcrumbsExists}>
+            <Breadcrumbs
+              breadcrumbs={breadcrumbs}
+              taggedCity={taggedCity}
+              primaryCity={primaryCity}
+              isContentPage={true}
+              isMobile={this.state.isMobile}
+            />
+          </Conditional>
           <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
@@ -695,6 +716,7 @@ class ContentPage extends Component<any, any> {
                     >
                       {sliceHandler(slice, {
                         isMobile: this.state.isMobile,
+                        automatedBreadcrumbsExists,
                         prismicDocsForListicle,
                         collectionsInListicles,
                         ...this.props,

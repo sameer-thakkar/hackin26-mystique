@@ -74,6 +74,9 @@ const LongForm: ComponentType<any> = dynamic(() =>
 const CategoryHeader = dynamic(() =>
   import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -177,6 +180,7 @@ export const HomePage = (props: any) => {
     categoryHeaderMenu,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
+    breadcrumbs,
     alternateLanguages,
   } = props;
   const { languageProps } = header;
@@ -258,6 +262,7 @@ export const HomePage = (props: any) => {
     mbDesign,
     mbType,
   });
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
 
   const v2LongFormRef = useRef(null);
   const lttFeatureCardRef = useRef(null);
@@ -456,6 +461,15 @@ export const HomePage = (props: any) => {
           categoryProps={categoryProps}
         />
       </Conditional>
+      <Conditional if={automatedBreadcrumbsExists}>
+        <Breadcrumbs
+          breadcrumbs={breadcrumbs}
+          taggedCity={taggedCity}
+          primaryCity={primaryCity}
+          isV2MB={true}
+          isMobile={isMobile}
+        />
+      </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form" ref={v2LongFormRef}>
           <Conditional
@@ -476,6 +490,7 @@ export const HomePage = (props: any) => {
                 host,
                 uid,
                 isEntertainmentMb,
+                automatedBreadcrumbsExists,
               }}
               hasToursSection={hasToursSection}
             />

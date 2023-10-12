@@ -137,6 +137,7 @@ const Page = (props: PageProps) => {
     domainConfig,
     categoryHeaderMenu,
     isExperimentalBot,
+    breadcrumbs,
     cityPageParams,
   } = props;
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -177,6 +178,7 @@ const Page = (props: PageProps) => {
             domainConfig={domainConfig}
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
+            breadcrumbs={breadcrumbs}
           />
         );
       case CUSTOM_TYPES.VENUE_PAGE:
@@ -191,6 +193,7 @@ const Page = (props: PageProps) => {
             domainConfig={domainConfig}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             tgidsInPage={tgidsInPage}
+            breadcrumbs={breadcrumbs}
           />
         );
       case CUSTOM_TYPES.MICROSITE:
@@ -216,6 +219,7 @@ const Page = (props: PageProps) => {
             domainConfig={domainConfig}
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
+            breadcrumbs={breadcrumbs}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -240,6 +244,7 @@ const Page = (props: PageProps) => {
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
             eventsReady={eventsReady}
+            breadcrumbs={breadcrumbs}
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:
@@ -253,6 +258,7 @@ const Page = (props: PageProps) => {
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             domainConfig={domainConfig}
+            breadcrumbs={breadcrumbs}
           />
         );
       case CUSTOM_TYPES.GLOBAL_CITY:

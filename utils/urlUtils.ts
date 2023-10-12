@@ -7,6 +7,7 @@ import {
   LANGUAGE_MAP,
   LanguagesUnion,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  SUPPORTED_LANGUAGES,
 } from 'const/index';
 
 export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
@@ -351,3 +352,20 @@ export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
     else acc[lang] = urlSlug?.replaceAll('/', '#');
     return acc;
   }, {});
+
+export const getSanitizedPathArray = (url: URL) => {
+  return url.pathname
+    .split('/')
+    .filter(
+      (path) =>
+        !!path &&
+        !SUPPORTED_LANGUAGES.includes(
+          path as typeof SUPPORTED_LANGUAGES[number]
+        )
+    );
+};
+
+export const getLttVerticalPosterLink = (tgid?: number) => {
+  if (!tgid) return;
+  return `https://cdn-imgix.headout.com/assets/images/ltt/vertical-product-cards/${tgid}.png`;
+};

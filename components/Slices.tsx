@@ -398,6 +398,8 @@ const sliceHandler = (slice: any, props: any = {}) => {
     case 'horizontal_line':
       return <HorizontalLine />;
     case 'breadcrumbs':
+      if (props.automatedBreadcrumbsExists) return null;
+
       const orderedLinks = slice.items.reduce((acc: any, crumb: any) => {
         return [
           ...acc,

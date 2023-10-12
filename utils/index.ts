@@ -1,10 +1,13 @@
 import Router from 'next/router';
+import { Client } from 'config/prismic-config';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { VideoMetaInfo } from 'components/common/Scripts';
 import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
 import type { CollectionDetails } from 'components/StaticBanner';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
+import { sendLog } from 'utils/logger';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import {
@@ -819,6 +822,75 @@ export const getTagPageMap = () => ({
   [strings.TAG_NAME.TRUE_STORY]:
     'https://www.london-theater-tickets.com/shows-in-london/based-on-a-true-story/',
 });
+
+export const getCategorisationMetadata = async ({
+  doc,
+  getFromLinkedMicrosite = false,
+}: {
+  doc: PrismicDocumentWithUID;
+  getFromLinkedMicrosite?: boolean;
+}): Promise<TCategorisationMetadata> => {
+  try {
+    const { uid, type, lang, alternate_languages, data } = doc || {};
+
+    const baseLangUid = getEnglishDocUid(alternate_languages);
+    const baseLangData =
+      lang !== LANGUAGE_MAP.en.locale
+        ? await Client()
+            .getByUID(
+              getFromLinkedMicrosite ? CUSTOM_TYPES.MICROSITE : type,
+              baseLangUid || uid,
+              {
+                lang: LANGUAGE_MAP.en.locale,
+              }
+            )
+            .then((res: PrismicDocumentWithUID) => res.data)
+        : data;
+
+    const {
+      tagged_category,
+      tagged_city,
+      tagged_collection,
+      tagged_content_type,
+      tagged_country,
+      tagged_mb_type,
+      tagged_page_type,
+      tagged_sub_category,
+      primary_tag,
+      shoulder_page_type,
+    } = baseLangData || {};
+    const { shoulder_page_custom_label } = data;
+
+    return {
+      tagged_category,
+      tagged_city,
+      tagged_country,
+      tagged_collection,
+      tagged_content_type,
+      tagged_mb_type,
+      tagged_page_type,
+      tagged_sub_category,
+      primary_tag,
+      shoulder_page_type,
+      shoulder_page_custom_label,
+    };
+  } catch (error) {
+    sendLog({ err: error });
+    return {
+      tagged_category: null,
+      tagged_city: null,
+      tagged_country: null,
+      tagged_collection: null,
+      tagged_content_type: [],
+      tagged_mb_type: null,
+      tagged_page_type: null,
+      tagged_sub_category: null,
+      primary_tag: null,
+      shoulder_page_type: null,
+      shoulder_page_custom_label: null,
+    };
+  }
+};
 
 export const isEmptyObject = (obj: Record<any, any>) => {
   return Object.keys(obj).length === 0;
