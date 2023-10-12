@@ -13,6 +13,7 @@ export type TBookNowCTAProps = {
   ctaText: string;
   mbTheme?: string | null;
   width?: string;
+  showLoadingState?: boolean;
 };
 
 export type TProductDescriptors = {

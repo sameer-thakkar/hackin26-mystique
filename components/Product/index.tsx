@@ -818,6 +818,7 @@ const Product = (props: any) => {
               </Conditional>
               <Conditional if={isCombo}>
                 <BookNowCta
+                  showLoadingState={false}
                   clickHandler={handleShowComboPopup}
                   isMobile={isMobile}
                   mbTheme={mbTheme}
@@ -850,7 +851,6 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional if={isMobile && !expandContent && isSpecialGuidedTour}>
               <TourAvailableInLanguages>
-                
                 {/*
                 TODO: import language labels from scorpio and prismic here
                 {isSpecialGuidedTour &&

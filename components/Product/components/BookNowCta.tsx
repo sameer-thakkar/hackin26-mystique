@@ -13,6 +13,7 @@ export const BookNowCta = ({
   mbTheme,
   width,
   isInSidePanel,
+  showLoadingState = true,
 }: TBookNowCTAProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleButtonClick = () => {
@@ -34,7 +35,7 @@ export const BookNowCta = ({
         size="medium"
         color="purps"
         variant="primary"
-        isLoading={isLoading}
+        isLoading={showLoadingState && isLoading}
         onClick={handleButtonClick}
         tabIndex={0}
         text={ctaText}
