@@ -235,7 +235,7 @@ const PopulateProducts = (props: any) => {
               currentLanguage={lang}
               uid={uid}
               rowsInView={rowsInView}
-              key={index}
+              key={row[0] + row[1] + allTours[row[index]]?.title}
               sectionId={sectionId}
               isListicle={isListicle}
               isDev={isDev}
