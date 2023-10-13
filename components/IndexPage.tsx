@@ -134,6 +134,7 @@ const Page = (props: PageProps) => {
     biLink,
     isStage,
     collectionDetails,
+    bannerImageData,
     domainConfig,
     categoryHeaderMenu,
     isExperimentalBot,
@@ -209,6 +210,7 @@ const Page = (props: PageProps) => {
             host={host}
             toursList={toursList}
             collectionDetails={collectionDetails}
+            bannerImageData={bannerImageData}
             pathname={pathname}
             isDev={isDev}
             isStage={isStage}

@@ -133,6 +133,7 @@ const PopulateProducts = (props: any) => {
     bannerVideo,
     isCollectionMB = false,
     productsLoading,
+    isNonPoi,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
@@ -583,6 +584,7 @@ const PopulateProducts = (props: any) => {
                 isSpecialGuidedTour,
                 detialsPopupShown,
                 setDetailsPopupShown,
+                isNonPoi,
               };
               return (
                 <ProductWrapper

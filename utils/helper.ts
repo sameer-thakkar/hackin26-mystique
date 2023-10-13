@@ -3,14 +3,21 @@ import dayjs, { Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import parse from 'url-parse';
-import { isMBDesign } from 'utils';
+import {
+  isCategoryMB,
+  isCollectionMB,
+  isMBDesign,
+  isSubCategoryMB,
+} from 'utils';
 import { sendLog } from 'utils/logger';
 import renderShortCodes from 'utils/shortCodes';
 import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { CATEGORY_BANNER, SUB_CATEGORY_BANNER } from 'const/bannerDescriptors';
 import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
+  CATEGORY_IDS,
   DESIGN,
   F1_SPORTS_EXPERIMENT_TGIDS,
   LANGUAGE_MAP,
@@ -591,6 +598,32 @@ export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
 };
 
+export const getBannerDescriptors = ({
+  taggedMbType,
+  taggedCategoryName,
+  taggedSubCategoryName,
+  firstProductSubCategory,
+}: {
+  taggedMbType: string | null;
+  taggedCategoryName: string | null;
+  taggedSubCategoryName: string | null;
+  firstProductSubCategory: Record<string, any> | undefined;
+}) => {
+  const { id, name } = firstProductSubCategory || {};
+  let descriptorData = [];
+  if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
+    descriptorData = SUB_CATEGORY_BANNER()[id];
+  } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {
+    const categoryId = CATEGORY_IDS[taggedCategoryName];
+    descriptorData = CATEGORY_BANNER()[categoryId];
+  } else if (isCollectionMB(taggedMbType) && taggedSubCategoryName === name) {
+    descriptorData = SUB_CATEGORY_BANNER()[id];
+  } else if (isCollectionMB(taggedMbType) && taggedCategoryName) {
+    const categoryId = CATEGORY_IDS[taggedCategoryName];
+    descriptorData = CATEGORY_BANNER()[categoryId];
+  }
+  return descriptorData;
+}
 export const getCategorySeeAllLink = (category: string) => {
   switch (category) {
     case 'kids':

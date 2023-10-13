@@ -86,6 +86,7 @@ const COLORS = {
   PURPS: {
     SECONDARY: '#7300e5',
     DARK_TONE: '#330066',
+    LEVEL_15: '#e6d1ff',
     LIGHT_TONE_2: '#b266ff',
     LIGHT_TONE_1: '#9933ff',
     LIGHT_TONE_3: '#ecd9ff',

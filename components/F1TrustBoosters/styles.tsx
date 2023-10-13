@@ -4,8 +4,12 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const F1TrustBoosterContainer = styled.div`
-  margin: 4rem auto;
+  margin: 2.75rem auto 4rem;
   max-width: 75rem;
+
+  @media (max-width: 768px) {
+    margin: 4rem auto;
+  }
 `;
 
 export const F1TrustBoosterWrapper = styled.div`

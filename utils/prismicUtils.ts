@@ -13,6 +13,9 @@ import {
   getSinglePrismicSlice,
   getTgidsFromShow,
   handleSettledPromiseResults,
+  isCategoryMB,
+  isCollectionMB,
+  isSubCategoryMB,
   redirectTo,
   refsArrayToObject,
 } from 'utils';
@@ -21,6 +24,7 @@ import {
   fetchCollectionList,
   fetchCurrencyList,
   fetchDomainConfig,
+  fetchMediaResource,
   fetchTourGroupsByCategory,
   fetchTourGroupSlots,
   fetchTourGroupV6,
@@ -55,6 +59,7 @@ import {
 } from 'utils/urlUtils';
 import { MISC } from 'const/header';
 import {
+  CATEGORY_IDS,
   CUSTOM_TYPES,
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
@@ -66,6 +71,7 @@ import {
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  RESOURCE_TYPE,
   SLICE_TYPES,
   THEMES,
   VIENNA_CONCERT_UID,
@@ -1760,7 +1766,14 @@ export const getPageData = async ({
         allShowPages,
         localisedCategoryTourListV1,
         categoryTourListV2,
+        baseLangCategorisationMetadata,
       } = CMSData || {};
+      const {
+        tagged_mb_type: taggedMbType,
+        tagged_category: taggedCategory,
+        tagged_collection: taggedCollection,
+        tagged_city: taggedCity,
+      } = baseLangCategorisationMetadata || {};
       delete CMSData.allShowPages;
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
@@ -1771,8 +1784,7 @@ export const getPageData = async ({
         sliceName: 'category_carousel',
         slices: contentFrameworkData?.body,
       });
-
-      let categoryTourListData;
+      let categoryTourListData, bannerImageData;
       const hasCategoryTourListV1 = Object.keys(localisedCategoryTourListV1)
         ?.length;
       const hasCategoryTourListV2 = Object.keys(categoryTourListV2)?.length;
@@ -1790,6 +1802,28 @@ export const getPageData = async ({
             cookies,
             localizedStrings,
           });
+          const [firstTGID]: Record<string, any>[] = Object.values(
+            categoryTourListData.scorpioData || {}
+          );
+          const subCatId = firstTGID?.primarySubCategory?.id;
+          const categoryId = CATEGORY_IDS?.[taggedCategory];
+
+          if (isCollectionMB(taggedMbType)) {
+            bannerImageData = await fetchMediaResource({
+              resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
+              entityIds: taggedCollection,
+            });
+          } else if (isSubCategoryMB(taggedMbType)) {
+            bannerImageData = await fetchMediaResource({
+              resourceType: RESOURCE_TYPE.SUB_CATEGORY_CITY,
+              entityIds: `${subCatId}-${taggedCity}`,
+            });
+          } else if (isCategoryMB(taggedMbType)) {
+            bannerImageData = await fetchMediaResource({
+              resourceType: RESOURCE_TYPE.CATEGORY_CITY,
+              entityIds: `${categoryId}-${taggedCity}`,
+            });
+          }
           collectionDetails = categoryTourListData.collectionDetails ?? {};
         } else {
           const timestampForCoralogix = Date.now();
@@ -1926,6 +1960,7 @@ export const getPageData = async ({
         mbTheme,
         isStage,
         collectionDetails,
+        bannerImageData,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),

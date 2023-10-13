@@ -621,10 +621,15 @@ export const isMBDesign = ({
   expectedDesign: string[];
 }) => expectedDesign.includes(currentDesign);
 
-export const isCollectionMB = (mbType: string) =>
+export const isCollectionMB = (mbType: string | null) =>
   mbType === MB_TYPES.A1_COLLECTION ||
   mbType === MB_TYPES.B1_GLOBAL ||
   mbType === MB_TYPES.C1_COLLECTION;
+export const isSubCategoryMB = (mbType: string | null) =>
+  mbType === MB_TYPES.A1_SUB_CATEGORY || mbType === MB_TYPES.A2_SUB_CATEGORY;
+
+export const isCategoryMB = (mbType: string | null) =>
+  mbType === MB_TYPES.A1_CATEGORY || mbType === MB_TYPES.A2_CATEGORY;
 
 export const handleSettledPromiseResults = (
   results: PromiseSettledResult<any>[]
@@ -895,3 +900,11 @@ export const getCategorisationMetadata = async ({
 export const isEmptyObject = (obj: Record<any, any>) => {
   return Object.keys(obj).length === 0;
 };
+
+export const isMBType = ({
+  currentType,
+  expectedType,
+}: {
+  currentType: string;
+  expectedType: string[];
+}) => expectedType.includes(currentType);

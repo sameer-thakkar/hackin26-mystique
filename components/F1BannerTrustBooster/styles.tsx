@@ -16,6 +16,10 @@ export const BannerTrustBoosterBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 0.375rem;
+
+  @media (max-width: 768px) {
+    margin: 1.5rem 0 0.375rem 1.5rem;
+  }
 `;
 
 export const BannerTrustBoosterTextBox = styled.div`

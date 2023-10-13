@@ -136,6 +136,7 @@ const Product = (props: any) => {
     setDetailsPopupShown = undefined,
     detialsPopupShown = false,
     tourRankingExpVariant,
+    isNonPoi = false,
   } = props;
   const {
     mbTheme,
@@ -249,7 +250,8 @@ const Product = (props: any) => {
   const cardTitle = title || scorpioData.title;
   const { promo_code } = finalPromoCode || {};
   const isFirstProduct = indexPosition === 0;
-  const isBannerCard = isFirstProduct && isCollectionMB && bannerVideo;
+  const isBannerCard =
+    isFirstProduct && isCollectionMB && bannerVideo && !isNonPoi;
 
   const params = {
     ...(lang && {

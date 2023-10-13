@@ -23,7 +23,9 @@ import {
   getFinalisedBannerImages,
   getHeadoutLanguagecode,
   isA1orC1MB,
+  isCategoryMB,
   isCollectionMB,
+  isSubCategoryMB,
   legacyBooleanCheck,
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
@@ -35,6 +37,7 @@ import {
 import {
   checkIfCategoryHeaderExists,
   csvTgidToArray,
+  getBannerDescriptors,
   getLangObject,
   groupSlices,
 } from 'utils/helper';
@@ -104,6 +107,7 @@ const MicrositeV1 = (props: any) => {
     categoryTourListData,
     domainConfig,
     collectionDetails,
+    bannerImageData,
     primaryCity,
     categoryHeaderMenu,
     breadcrumbs,
@@ -200,7 +204,6 @@ const MicrositeV1 = (props: any) => {
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
-    collectionVideos,
   } = categoryTourListData || {};
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -241,7 +244,7 @@ const MicrositeV1 = (props: any) => {
     read_more_text: readMoreText,
     show_less_text: showLessText,
     enable_group_booking: enableGroupBooking,
-    enable_buy_tickets_shortcut: enableBuyTickets,
+    enable_buy_tickets: enableBuyTickets,
     blackout_start_date: blackoutStartDate,
     blackout_end_date: blackoutEndDate,
     block_n_days_group_booking: blockNDaysGroupBooking,
@@ -380,6 +383,15 @@ const MicrositeV1 = (props: any) => {
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isCategoryMicrobrand = isCategoryMB(mbType);
+  const isSubCategoryMicrobrand = isSubCategoryMB(mbType);
+  const showNewBanner =
+    mbTheme !== THEMES.MIN_BLUE &&
+    (isCollectionMicrobrand || isCategoryMicrobrand || isSubCategoryMicrobrand);
+
+  //Subcategory/category MBs will always be non-POI irrespective of the config on Prismic
+  const isNonPoiMB =
+    isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
@@ -479,13 +491,24 @@ const MicrositeV1 = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations
   );
+  const { primarySubCategory: firstProductSubCategory } =
+    (Object.values(scorpioData)?.[0] as Record<string, any>) || {};
+  const bannerDescriptors = getBannerDescriptors({
+    taggedMbType,
+    taggedCategoryName,
+    taggedSubCategoryName,
+    firstProductSubCategory,
+  });
+
   const availableTours = orderedTours?.filter(
     (tour: any) => scorpioData?.[tour?.tgid]?.available
   );
 
   const isToursAvailable = availableTours?.length > 0;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
-  const collectionVideo: string | undefined = collectionVideos?.[0]?.url;
+  const bannerVideo: string | undefined =
+    bannerImageData?.resourceEntityMedias?.[0]?.medias?.[0]?.url;
+
   const tourListSection = (
     <PopulateProducts
       currency={currency}
@@ -506,15 +529,17 @@ const MicrositeV1 = (props: any) => {
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
-      bannerVideo={collectionVideo}
+      bannerVideo={bannerVideo}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
+      isNonPoi={isNonPoiMB}
     />
   );
 
   const shouldDisplayProductTrustBoosters = displayProductTrustBoosters(data);
   const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
-
+  const finalEnableBuyTickets =
+    enableBuyTickets === null ? 'Yes' : enableBuyTickets;
   return (
     <div>
       <div className="microsite-container">
@@ -558,7 +583,7 @@ const MicrositeV1 = (props: any) => {
           openGroupBookingModal={openGroupBookingModal}
           isMobile={isMobile}
           showGroupBooking={showGroupBooking}
-          enableBuyTickets={isToursAvailable ? enableBuyTickets : false}
+          enableBuyTickets={isToursAvailable ? finalEnableBuyTickets : false}
           logoRedirectionURL={logoRedirectionUrl || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
@@ -613,14 +638,7 @@ const MicrositeV1 = (props: any) => {
             />
           </div>
         </Conditional>
-
-        <Conditional
-          if={
-            mbTheme !== THEMES.MIN_BLUE &&
-            !isCollectionMicrobrand &&
-            !isCityPageMB
-          }
-        >
+        <Conditional if={!showNewBanner && !isCityPageMB}>
           <Banner
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
@@ -644,15 +662,17 @@ const MicrositeV1 = (props: any) => {
             prismicBannerImages={finalBannerImages}
           />
         </Conditional>
-        <Conditional if={mbTheme !== THEMES.MIN_BLUE && isCollectionMicrobrand}>
+        <Conditional if={showNewBanner}>
           <StaticBanner
-            bannerVideo={collectionVideo}
+            bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
             bannerSubText={bannerAndFooterSubText}
             isMobile={isMobile}
             collectionDetails={collectionDetails}
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
+            isNonPoiMB={isNonPoiMB}
+            bannerDescriptors={bannerDescriptors}
           />
         </Conditional>
         <Conditional if={isA1orC1MB(mbType) && isMobile}>

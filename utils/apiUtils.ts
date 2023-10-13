@@ -242,8 +242,9 @@ export const fetchTourListV6 = async ({
 };
 
 interface FetchMediaProps extends CommonApiProps {
-  tgids: string[] | number[];
   currency?: string;
+  resourceType: string;
+  entityIds: string;
 }
 interface FetchMediaResponse {
   resourceType: string;
@@ -271,15 +272,20 @@ interface FetchMediaResponse {
     }>;
   }>;
 }
-export const fetchMediaByTgid = async ({
-  tgids,
+export const fetchMediaResource = async ({
   hostname,
   cookies = {},
+  resourceType,
+  entityIds,
 }: FetchMediaProps) => {
   try {
     const params = {
-      'resource-type': 'MB_EXPERIENCE',
-      'resource-entity-ids': tgids?.join(','),
+      ...(resourceType && {
+        'resource-type': resourceType,
+      }),
+      ...(entityIds && {
+        'resource-entity-ids': entityIds,
+      }),
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.Media,

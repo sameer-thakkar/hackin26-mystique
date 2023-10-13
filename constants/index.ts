@@ -1365,6 +1365,33 @@ export const TABLE_V3_SVG_MAPPING: Record<any, JSX.Element> = {
 
 export const BUTTON_LOADING_DURATION = 45000;
 
+export const RESOURCE_TYPE = {
+  COLLECTION_VIDEO: 'COLLECTION_VIDEO',
+  CATEGORY_CITY: 'CATEGORY_CITY',
+  SUB_CATEGORY_CITY: 'SUB_CATEGORY_CITY',
+};
+
+export const CATEGORY_IDS: Record<string, string> = {
+  Tickets: '1',
+  Tours: '2',
+  Transportation: '3',
+  'Travel Services': '4',
+  'Food & Drink': '5',
+  'Day Trips': '6',
+  Entertainment: '7',
+  Adventure: '8',
+  'Aerial Sightseeing': '9',
+  'Water Sports': '10',
+  'Nature & Wildlife': '11',
+  Wellness: '12',
+  Classes: '13',
+  Specials: '14',
+  'RV Rentals': '15',
+  Staycations: '16',
+  Cruises: '18',
+  Sports: '19',
+};
+
 export const LTD_COLLECTION_ID = 167;
 
 export const LTT_LP_HARDCODED_REVIEWS = [
@@ -1482,3 +1509,47 @@ export const LTT_LP_HARDCODED_REVIEWS = [
 
 export const GUIDES_IMAGE_URL =
   'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';
+
+export const BANNER_DESCRIPTORS = {
+  CANCELLATION:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/cancellation.svg',
+  CHAIR:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/chair.svg',
+  CHECK_CIRCLE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/check-circle.svg',
+  CLOCK:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/clock.svg',
+  COFFEE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/coffee.svg',
+  CULINARY:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/culinary.svg',
+  DOLLAR:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/dollar.svg',
+  FnB:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/food-drink.svg',
+  GLOBE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/globe.svg',
+  MAP: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/map.svg',
+  PAID:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/paid.svg',
+  PEACE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/peace.svg',
+  ROUND_TRIP:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/round-trip.svg',
+  ROUTE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/route.svg',
+  SIGHTSEEING:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sightseeing.svg',
+  STL:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/skip-the-line.svg',
+  SPARKS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sparks.svg',
+  TICK:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/tick.svg',
+  TICKET:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/ticket.svg',
+  TRANSLATE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/translate.svg',
+  WIFI:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/wifi.svg',
+};

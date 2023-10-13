@@ -4,7 +4,7 @@ import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import { fetchMediaByTgid, fetchTourListV6 } from 'utils/apiUtils';
+import { fetchMediaResource, fetchTourListV6 } from 'utils/apiUtils';
 import { getHostName, normaliseURL } from 'utils/helper';
 import {
   generatePromiseForCategoryTours,
@@ -209,9 +209,10 @@ export default async function categoryTourListParserV2({
 
     let verticalImagesDataMap = new Map<string, any>();
     if (collectionIds.has(LTD_COLLECTION_ID)) {
-      const mediaData = await fetchMediaByTgid({
+      const mediaData = await fetchMediaResource({
         language: getHeadoutLanguagecode(lang),
-        tgids: tgids,
+        resourceType: 'MB_EXPERIENCE',
+        entityIds: tgids?.join(','),
       });
       mediaData?.resourceEntityMedias?.forEach((resource) => {
         const verticalImageData = resource.medias.find(

@@ -8,7 +8,10 @@ import {
   BannerSection,
   Container,
   ContentContainer,
+  Descriptor,
+  DescriptorWrapper,
   DisclaimerText,
+  Divider,
   Heading,
   MediaContainer,
   RatingCountWrapper,
@@ -38,6 +41,8 @@ type StaticBannerProps = {
   bannerSubText: string | undefined;
   isMobile: boolean;
   shouldDisplayTrustBoosters?: boolean;
+  isNonPoiMB?: boolean;
+  bannerDescriptors: Array<{ icon: string; text: string }>;
 };
 
 type CollectionVideo = {
@@ -75,10 +80,15 @@ export type CollectionDetails = {
 };
 
 const BANNER_DIMENSIONS = {
-  WIDTH: 588,
-  HEIGHT: 300,
+  DESKTOP: {
+    WIDTH: 588,
+    HEIGHT: 300,
+  },
+  MOBILE: {
+    WIDTH: 275,
+    HEIGHT: 168,
+  },
 };
-
 const StaticBanner = ({
   bannerHeading: tempBannerHeading,
   bannerImages,
@@ -87,6 +97,8 @@ const StaticBanner = ({
   collectionDetails,
   bannerSubText,
   shouldDisplayTrustBoosters,
+  isNonPoiMB = false,
+  bannerDescriptors,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -94,6 +106,11 @@ const StaticBanner = ({
   const bannerHeading = bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0];
   const { averageRating, ratingsCount } = collectionDetails ?? {};
+  const { WIDTH, HEIGHT } = isMobile
+    ? BANNER_DIMENSIONS.MOBILE
+    : BANNER_DIMENSIONS.DESKTOP;
+  const displayRating = shouldDisplayCollectionRatings(collectionDetails);
+  const showNonPoiDesign = isNonPoiMB && !shouldDisplayTrustBoosters;
 
   useEffect(() => {
     if (!eventsReady || isMobile) return;
@@ -104,7 +121,35 @@ const StaticBanner = ({
   }, [eventsReady, isMobile]);
 
   return (
-    <BannerSection>
+    <BannerSection $isNonPoi={showNonPoiDesign}>
+      <Conditional if={isMobile && showNonPoiDesign}>
+        <div className="overlay" />
+        <MediaContainer $isNonPoi={showNonPoiDesign}>
+          <Conditional if={!bannerVideo}>
+            <Image
+              url={bannerImage.url}
+              width={WIDTH}
+              height={HEIGHT}
+              imageId={'banner-image'}
+              alt={bannerImage.alt}
+              priority
+              fill
+            />
+          </Conditional>
+          <Conditional if={bannerVideo}>
+            <Video
+              url={bannerVideo!}
+              imageId={'banner-image'}
+              imageWidth={WIDTH}
+              imageHeight={HEIGHT}
+              fallbackImage={bannerImage}
+              dontLazyLoadImage
+              shouldVideoPlay
+              videoPosition={VIDEO_POSITIONS.BANNER}
+            />
+          </Conditional>
+        </MediaContainer>
+      </Conditional>
       <Container>
         <ContentContainer>
           <Conditional if={shouldDisplayTrustBoosters}>
@@ -112,14 +157,19 @@ const StaticBanner = ({
               f1TrustBooster={getF1MBTrustBoosters(true)}
             />
           </Conditional>
-          <Heading dangerouslySetInnerHTML={{ __html: bannerHeading }} />
-          <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
-            <RatingsWrapper>
-              {STAR(COLORS.BRAND.CANDY)}
-              <AverageRatingWrapper>
+          <Heading
+            dangerouslySetInnerHTML={{ __html: bannerHeading }}
+            $isNonPoi={showNonPoiDesign}
+            $displayRating={displayRating}
+            $showTrustBooster={shouldDisplayTrustBoosters}
+          />
+          <Conditional if={displayRating}>
+            <RatingsWrapper $isNonPoi={showNonPoiDesign}>
+              {STAR(showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1)}
+              <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
                 {averageRating?.toPrecision(2)}
               </AverageRatingWrapper>
-              <RatingCountWrapper>
+              <RatingCountWrapper $isNonPoi={showNonPoiDesign}>
                 (
                 {strings.formatString(
                   strings.RATINGS,
@@ -129,17 +179,34 @@ const StaticBanner = ({
               </RatingCountWrapper>
             </RatingsWrapper>
           </Conditional>
-
-          <DisclaimerText>{bannerSubText}</DisclaimerText>
+          <Conditional if={showNonPoiDesign}>
+            <Divider />
+            <DescriptorWrapper>
+              <div className="marquee">
+                {bannerDescriptors?.map((item: Record<string, any>) => {
+                  const { icon, text } = item;
+                  return (
+                    <Descriptor key={text}>
+                      <Image url={icon} alt={text} height={20} width={20} />
+                      <span>{text}</span>
+                    </Descriptor>
+                  );
+                })}
+              </div>
+            </DescriptorWrapper>
+          </Conditional>
+          <Conditional if={!showNonPoiDesign && !shouldDisplayTrustBoosters}>
+            <DisclaimerText>{bannerSubText}</DisclaimerText>
+          </Conditional>
         </ContentContainer>
 
         <Conditional if={!isMobile}>
-          <MediaContainer>
+          <MediaContainer $isNonPoi={showNonPoiDesign}>
             <Conditional if={!bannerVideo}>
               <Image
                 url={bannerImage.url}
-                width={BANNER_DIMENSIONS.WIDTH}
-                height={BANNER_DIMENSIONS.HEIGHT}
+                width={WIDTH}
+                height={HEIGHT}
                 imageId={'banner-image'}
                 alt={bannerImage.alt}
                 priority
@@ -150,8 +217,8 @@ const StaticBanner = ({
               <Video
                 url={bannerVideo!}
                 imageId={'banner-image'}
-                imageWidth={BANNER_DIMENSIONS.WIDTH}
-                imageHeight={BANNER_DIMENSIONS.HEIGHT}
+                imageWidth={WIDTH}
+                imageHeight={HEIGHT}
                 fallbackImage={bannerImage}
                 dontLazyLoadImage
                 shouldVideoPlay
