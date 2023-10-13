@@ -133,15 +133,41 @@ export const DisclaimerText = styled.p`
   }
 `;
 
+const handleMargin = ({
+  $isNonPoi,
+  $showTrustBooster,
+}: {
+  $isNonPoi?: boolean;
+  $showTrustBooster?: boolean;
+}) => {
+  if ($isNonPoi) return '1.5rem 1.5rem 0';
+  else if ($showTrustBooster) return '0.5rem 1.5rem 1.5rem';
+  else return '0.5rem 1.5rem 0';
+};
+
+const handleGridArea = ({
+  $isNonPoi,
+  $showTrustBooster,
+}: {
+  $isNonPoi?: boolean;
+  $showTrustBooster?: boolean;
+}) => {
+  if ($isNonPoi) return 'top';
+  else if ($showTrustBooster) return 'bottom';
+  else return 'middle';
+};
+
 export const RatingsWrapper = styled.div<{
   $isNonPoi?: boolean;
+  $showTrustBooster?: boolean;
 }>`
   display: flex;
   align-items: center;
   column-gap: 0;
-  margin: ${({ $isNonPoi }) =>
-    $isNonPoi ? '1.5rem 1.5rem 0' : '0.5rem 1.5rem 0'};
-  grid-area: ${({ $isNonPoi }) => ($isNonPoi ? 'top' : 'middle')};
+  margin: ${({ $isNonPoi, $showTrustBooster }) =>
+    handleMargin({ $isNonPoi, $showTrustBooster })};
+  grid-area: ${({ $isNonPoi, $showTrustBooster }) =>
+    handleGridArea({ $isNonPoi, $showTrustBooster })};
 
   svg {
     margin-top: 0.0625rem;

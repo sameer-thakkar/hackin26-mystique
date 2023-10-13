@@ -164,7 +164,10 @@ const StaticBanner = ({
             $showTrustBooster={shouldDisplayTrustBoosters}
           />
           <Conditional if={displayRating}>
-            <RatingsWrapper $isNonPoi={showNonPoiDesign}>
+            <RatingsWrapper
+              $isNonPoi={showNonPoiDesign}
+              $showTrustBooster={shouldDisplayTrustBoosters}
+            >
               {STAR(showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1)}
               <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
                 {averageRating?.toPrecision(2)}
