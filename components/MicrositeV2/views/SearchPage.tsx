@@ -98,12 +98,11 @@ export const SearchPage = (props: any) => {
       ) : null}
       <div className="search-results">
         {results.length
-          ? results.map(({ item }, index) => {
+          ? results.map(({ item }: { item: Record<string, any> }) => {
               return (
                 <SearchItem
-                  key={index}
+                  key={item.tgid}
                   onSearchResultClick={searchItemClick}
-                  // @ts-expect-error TS(2698): Spread types may only be created from object types... Remove this comment to see the full error message
                   {...item}
                 />
               );

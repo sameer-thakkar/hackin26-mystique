@@ -621,16 +621,17 @@ const Header: FunctionComponent<HeaderProps> = ({
                 <Conditional if={results.length}>
                   <div>
                     <div className="results">
-                      {results.map(({ item }, index) => {
-                        return (
-                          <SearchItem
-                            key={index}
-                            // @ts-expect-error TS(2698): Spread types may only be created from object types... Remove this comment to see the full error message
-                            {...item}
-                            onSearchResultClick={onSearchResultClick}
-                          />
-                        );
-                      })}
+                      {results.map(
+                        ({ item }: { item: Record<string, any> }) => {
+                          return (
+                            <SearchItem
+                              key={item.tgid}
+                              {...item}
+                              onSearchResultClick={onSearchResultClick}
+                            />
+                          );
+                        }
+                      )}
                     </div>
                   </div>
                 </Conditional>
