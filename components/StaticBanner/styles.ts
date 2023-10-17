@@ -212,11 +212,13 @@ export const AverageRatingWrapper = styled.span<{
 export const RatingCountWrapper = styled.span<{
   $isNonPoi?: boolean;
 }>`
-  color: ${({ $isNonPoi }) => ($isNonPoi ? COLORS.GRAY.G3 : COLORS.GRAY.G2)};
-  ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-
+  display: block;
+  margin-top: 1px;
+  color: ${COLORS.GRAY.G3};
+  ${expandFontToken(FONTS.UI_LABEL_SMALL)};
   @media (min-width: 768px) {
-    ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+    margin: 0;
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
   }
 `;
 
