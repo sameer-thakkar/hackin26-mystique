@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { TPinnedCardProps } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/interface';
@@ -44,6 +44,35 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
     host,
   } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+  const pinnedCard = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollToCenter = () => {
+      if (pinnedCard.current && !isMobile) {
+        const rect = pinnedCard.current.getBoundingClientRect();
+        const cardCenterY = rect.top + rect.height / 2;
+        const viewportCenterY = window.innerHeight / 2;
+        const scrollTop = cardCenterY - viewportCenterY;
+
+        setTimeout(() => {
+          window.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth',
+          });
+        }, 0);
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scrollToCenter);
+    } else {
+      scrollToCenter();
+    }
+
+    return () => {
+      window.removeEventListener('DOMContentLoaded', scrollToCenter);
+    };
+  }, []);
 
   if (!pinnedTgidData) return null;
 
@@ -136,7 +165,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
   };
 
   return (
-    <Container>
+    <Container ref={pinnedCard}>
       <h2>{strings.LTT_LANDING_PAGE.YOUR_PICK}</h2>
       <Conditional if={!isMobile}>
         <Wrapper isVerticalImageUrlPresent={!!verticalImageUrl}>
