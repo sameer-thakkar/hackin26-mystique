@@ -31,7 +31,7 @@ export const FiltersWrapper = styled.div`
   background: white;
   position: sticky;
   top: 0px;
-  z-index: 15;
+  z-index: 10;
   &.sticky {
     box-shadow: 0px 4px 8px 0px #0000001f;
   }

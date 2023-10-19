@@ -58,6 +58,7 @@ import {
   YACHT_TOURS,
   ZOO_AND_AQUARIUM,
 } from 'assets/SvgIcons';
+import { strings } from './strings';
 
 export const IP_INFO_TOKEN = '108f1155413636';
 
@@ -133,79 +134,132 @@ export const SUPPORTED_LOCALE_MAP: Record<LanguagesUnion, string> = {
   ar: 'ar-ae',
 };
 
-type TLanguageMap = { displayName: string; locale: string; code: string };
+type TLanguageMap = {
+  displayName: string;
+  locale: string;
+  code: string;
+  translatedName?: string;
+};
 
 export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
   en: {
     displayName: 'English',
     locale: 'en-us',
     code: 'en',
+    translatedName: 'English',
   },
   it: {
     displayName: 'Italiano',
     locale: 'it-it',
     code: 'it',
+    translatedName: 'Italian',
   },
   es: {
     displayName: 'Español',
     locale: 'es-es',
     code: 'es',
+    translatedName: 'Spanish',
   },
   fr: {
     displayName: 'Français',
     locale: 'fr-fr',
     code: 'fr',
+    translatedName: 'French',
   },
   de: {
     displayName: 'Deutsch',
     locale: 'de-de',
     code: 'de',
+    translatedName: 'German',
   },
   nl: {
     displayName: 'Nederlands',
     locale: 'nl-nl',
     code: 'nl',
+    translatedName: 'Dutch',
   },
   pt: {
     displayName: 'Português',
     locale: 'pt-pt',
     code: 'pt',
+    translatedName: 'Portuguese',
   },
   cn: {
     displayName: '简体中文',
     locale: 'zh-cn',
     code: 'zh-hans',
+    translatedName: 'Chinese (Simplified)',
   },
   tw: {
     displayName: '繁體中文 ',
     locale: 'zh-tw',
     code: 'zh-hant',
+    translatedName: 'Chinese (Traditional)',
   },
   ja: {
     displayName: '日本語',
     locale: 'ja-jp',
     code: 'ja',
+    translatedName: 'Japanese',
   },
   ko: {
     displayName: 'Korean',
     locale: 'ko-kr',
     code: 'ko',
+    translatedName: 'Korean',
   },
   id: {
     displayName: 'Indonesian',
     locale: 'id-id',
     code: 'id',
+    translatedName: 'Indonesian',
   },
   pl: {
     displayName: 'Polish',
     locale: 'pl-pl',
     code: 'pl',
+    translatedName: 'Polish',
   },
   ar: {
     displayName: 'Arabic',
     locale: 'ar-ae',
     code: 'ar',
+    translatedName: 'Arabic',
   },
+};
+
+export type IPopularLanguage =
+  | 'en'
+  | 'es'
+  | 'it'
+  | 'nl'
+  | 'de'
+  | 'fr'
+  | 'pt'
+  | 'pl';
+
+export const LANGUAGE_CODE_MAP = {
+  EN: 'en',
+  ES: 'es',
+  IT: 'it',
+  FR: 'fr',
+  NL: 'nl',
+  PT: 'pt',
+  DE: 'de',
+  PL: 'pl',
+};
+
+export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
+  return {
+    [LANGUAGE_CODE_MAP.EN]: strings.LANGUAGES.ENGLISH,
+    [LANGUAGE_CODE_MAP.IT]: strings.LANGUAGES.ITALIAN,
+    [LANGUAGE_CODE_MAP.ES]: strings.LANGUAGES.SPANISH,
+    [LANGUAGE_CODE_MAP.FR]: strings.LANGUAGES.FRENCH,
+    [LANGUAGE_CODE_MAP.DE]: strings.LANGUAGES.GERMAN,
+    [LANGUAGE_CODE_MAP.NL]: strings.LANGUAGES.NEDERLANDS,
+    [LANGUAGE_CODE_MAP.PT]: strings.LANGUAGES.PORTUGUESE,
+    [LANGUAGE_CODE_MAP.PL]: strings.LANGUAGES.POLISH,
+  };
 };
 
 export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
@@ -900,6 +954,13 @@ export const LOCALE_ORDER = [
   LANGUAGE_MAP.de.code,
   LANGUAGE_MAP.pt.code,
   LANGUAGE_MAP.nl.code,
+  LANGUAGE_MAP.cn.code,
+  LANGUAGE_MAP.tw.code,
+  LANGUAGE_MAP.ko.code,
+  LANGUAGE_MAP.ja.code,
+  LANGUAGE_MAP.id.code,
+  LANGUAGE_MAP.pl.code,
+  LANGUAGE_MAP.ar.code,
 ];
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';
@@ -1259,7 +1320,6 @@ export const EMAIL_SUBCRIPTION = {
 export const RESOURCE_ASSET_TYPE = {
   IMAGE: 'IMAGE',
 };
-
 
 export const TABLE_V3_COLUMN_TYPE = {
   TEXT_ONLY: 'Text Only',

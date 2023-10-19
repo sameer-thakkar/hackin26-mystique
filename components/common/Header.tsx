@@ -204,11 +204,16 @@ const StyledVerticalDivider = styled.div`
 
 const StyledMenuItem = styled.div`
   margin-left: 24px;
-  font-size: 16px;
+  font-size: 15px;
   font-family: ${HALYARD.FONT_STACK};
   color: ${({ color }) => color || COLORS.BRAND.PURPS};
   text-decoration: none;
   cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  &:hover {
+    background-color: ${COLORS.BACKGROUND.FLOATING_PURPS};
+  }
   @media (max-width: 768px) {
     margin-left: 16px;
   }

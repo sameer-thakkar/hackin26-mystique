@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -35,6 +36,28 @@ const RadioItem = styled.div`
   }
 `;
 
+const CurrencyRadioLabel = styled.div<{ $isActive: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  .seperator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    height: 10px;
+    font-weight: 500;
+    ${({ $isActive }) => $isActive && `color: ${COLORS.BRAND.PURPS}`}
+  }
+
+  .bold-label {
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+    font-weight: 500;
+    ${({ $isActive }) => $isActive && `color: ${COLORS.BRAND.PURPS}`}
+  }
+`;
+
 export type RadioItemArg = { label: any; value: string; [str: string]: any };
 
 const RadioList = ({
@@ -42,15 +65,17 @@ const RadioList = ({
   // @ts-expect-error TS(2322): Type 'null' is not assignable to type '(args: Radi... Remove this comment to see the full error message
   onChange = null,
   currentValue,
+  isCurrencyLabel = false,
 }: {
   items: Array<RadioItemArg>;
   onChange: (args: RadioItemArg) => void;
   currentValue: string;
+  isCurrencyLabel?: boolean;
 }) => {
   return (
     <RadioListContainer>
       {items.map((item, index) => {
-        const { label, value } = item;
+        const { label, value, localSymbol } = item;
         const isActive = currentValue === value;
         const isClickable = !isActive && onChange;
         return (
@@ -60,7 +85,16 @@ const RadioList = ({
             // @ts-expect-error TS(2769): No overload matches this call.
             onClick={isClickable ? () => onChange(item) : null}
           >
-            <span className="label-text">{label}</span>
+            <Conditional if={isCurrencyLabel}>
+              <CurrencyRadioLabel $isActive={isActive}>
+                <span className="bold-label">{localSymbol}</span>
+                <span className="seperator">.</span>
+                <span className="label-text">{label}</span>
+              </CurrencyRadioLabel>
+            </Conditional>
+            <Conditional if={!isCurrencyLabel}>
+              <span className="label-text">{label}</span>
+            </Conditional>
             <RadioIcon isActive={isActive} />
           </RadioItem>
         );

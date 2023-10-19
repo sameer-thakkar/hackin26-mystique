@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import CurrencySelector from 'components/common/CurrencySelector';
 import Drawer from 'components/common/Drawer';
-import LanguageSelector from 'components/common/LanguageSelector';
+import CurrencySelectorMobile from 'components/common/LocalePopover/currencySelectorMobile/CurrencySelectorMobile';
+import PopOver from 'components/common/LocalePopover/LocalePopOver';
 import RadioList, { RadioItemArg } from 'components/common/RadioList';
 import SwipeableTabs, {
   Panel,
@@ -13,23 +13,28 @@ import SwipeableTabs, {
   TabControl,
 } from 'components/common/SwipeableTabs';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { getLocalisedCurrencySymbol } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
+import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import COLORS from 'const/colors';
 import { CURRENCY_CODES_ORDER, TOP_CURRENCIES } from 'const/currency';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  IPopularLanguage,
+  LANGUAGE_MAP_TRANSLATE_CONSTANT,
   LOCALE_ORDER,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { GlobeIcon } from 'assets/SvgIcons';
+import { ButtonLoader } from './LocalePopover/ButtonLoader';
 
-const StyledLocaleWrapper = styled.div<{ isDarkMode?: boolean }>`
+const StyledLocaleWrapper = styled.div<{
+  isDarkMode?: boolean;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +45,7 @@ const StyledLocaleWrapper = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) =>
     isDarkMode &&
     `
-    background-color: ${COLORS.BRAND.WHITE}20;
+    background-color: ${COLORS.BRAND.WHITE}20; 
     border-radius: 50%;
   `}
 
@@ -168,6 +173,8 @@ const LocaleSelector = ({
   const { initialCurrency } = useRecoilValue(appAtom);
   const [isDrawerActive, setDrawerActive] = useState(false);
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
+  const [localeLoader, setLocaleLoader] = useRecoilState(localeLoaderAtom);
+
   const sortedCurrencies = useMemo(() => {
     const finalTopCurrencies = TOP_CURRENCIES.filter(
       (c) => initialCurrency !== c
@@ -176,10 +183,11 @@ const LocaleSelector = ({
       new Set([activeCurrency, ...finalTopCurrencies, ...CURRENCY_CODES_ORDER])
     );
     const currenciesShallowClone = [...currencies];
-    return currenciesShallowClone.sort(
-      (cA, cB) =>
+    return currenciesShallowClone.sort((cA, cB) => {
+      return (
         orderedCurrencies.indexOf(cA.code) - orderedCurrencies.indexOf(cB.code)
-    );
+      );
+    });
   }, [currencies, activeCurrency]);
 
   const sortedLanguages = useMemo(() => {
@@ -219,6 +227,7 @@ const LocaleSelector = ({
       [ANALYTICS_PROPERTIES.OPTION_NAME]: code,
     });
     onDrawerClose();
+    setLocaleLoader(true);
   };
 
   const trackedOnClose = () => {
@@ -252,6 +261,7 @@ const LocaleSelector = ({
     });
     setCurrency(code);
     onDrawerClose();
+    setLocaleLoader(true);
 
     // push to the back of callstack, ensures currencyCode cookie is set.
     setTimeout(router.reload);
@@ -259,17 +269,14 @@ const LocaleSelector = ({
 
   if (!isMobile) {
     return (
-      <>
-        <Conditional if={hasLanguageDropdown}>
-          <LanguageSelector
-            languages={sortedLanguages}
-            currentLanguage={currentLanguage}
-            isMobile={isMobile}
-            isDarkMode={isDarkMode}
-          />
-        </Conditional>
-        <CurrencySelector currencies={sortedCurrencies} />
-      </>
+      <PopOver
+        currencies={sortedCurrencies}
+        languages={sortedLanguages}
+        currentLanguage={currentLanguage}
+        isDarkMode={isDarkMode}
+        hasLanguageDropdown={hasLanguageDropdown}
+        hasCurrencySelector={hasCurrencySelector}
+      />
     );
   }
 
@@ -277,24 +284,10 @@ const LocaleSelector = ({
   if (hasCurrencySelector) {
     tabsArray.push({
       body: (
-        <RadioList
-          onChange={onCurrencyChange}
-          // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
-          currentValue={activeCurrency}
-          items={(sortedCurrencies ?? []).map((currency) => {
-            const { code } = currency;
-            const symbolString = getLocalisedCurrencySymbol({
-              currencyCode: code,
-              currencyDisplay: 'symbol',
-              lang: currentLanguage,
-            });
-
-            return {
-              label: `${currency.currencyName} (${symbolString})`,
-              value: currency.code,
-              ...currency,
-            };
-          })}
+        <CurrencySelectorMobile
+          onCurrencyChange={onCurrencyChange}
+          activeCurrency={activeCurrency}
+          sortedCurrencies={sortedCurrencies}
         />
       ),
       header: <DrawerTabHeading>{strings.CURRENCY}</DrawerTabHeading>,
@@ -311,7 +304,9 @@ const LocaleSelector = ({
           items={sortedLanguages.map((l) => ({
             label: (
               <StyledLink href={l.code !== currentLanguage ? l.url : null}>
-                {getLangObject(l.code).displayName}
+                {LANGUAGE_MAP_TRANSLATE_CONSTANT()?.[
+                  l.code as IPopularLanguage
+                ] || getLangObject(l.code).displayName}
               </StyledLink>
             ),
             value: l.code,
@@ -335,8 +330,14 @@ const LocaleSelector = ({
         isDarkMode={isDarkMode}
         onClick={onLocaleSelectorClick}
       >
-        <GlobeIcon />
+        <Conditional if={!localeLoader}>
+          <GlobeIcon />
+        </Conditional>
+        <Conditional if={localeLoader}>
+          <ButtonLoader isDarkMode={isDarkMode} isMobile={true} />
+        </Conditional>
       </IconWrapper>
+
       <Conditional if={isDrawerActive}>
         <Drawer
           $drawerStyles={drawerStyles}

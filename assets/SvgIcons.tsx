@@ -4199,7 +4199,7 @@ export const RadioIcon = ({ isActive }: { isActive: boolean }) => (
   </svg>
 );
 
-export const GlobeIcon = () => (
+export const GlobeIcon = ({ stroke = COLORS.GRAY.G3 }: { stroke?: string }) => (
   <svg
     width={16}
     height={16}
@@ -4209,7 +4209,7 @@ export const GlobeIcon = () => (
   >
     <g
       clipPath="url(#a)"
-      stroke="#666"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
     >

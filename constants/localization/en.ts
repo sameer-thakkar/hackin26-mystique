@@ -207,11 +207,12 @@ const en = {
   LANGUAGES: {
     ENGLISH: 'English',
     SPANISH: 'Spanish',
-    FRENCH: 'Italian',
-    ITALIAN: 'French',
-    GERMAN: 'Dutch',
+    FRENCH: 'French',
+    ITALIAN: 'Italian',
+    GERMAN: 'German',
     PORTUGUESE: 'Portuguese',
-    NEDERLANDS: 'German',
+    NEDERLANDS: 'Dutch',
+    POLISH: 'Polish',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour available in {0}',
   LISTICLES: {
@@ -220,6 +221,7 @@ const en = {
     WHY_BOOK_FROM_US: 'Why Book From Us?',
   },
   MORE_DETAILS: 'More details',
+  MORE_CURRENCIES: 'More Currencies',
   NEW: 'NEW',
   NEW_ARRIVAL: 'New Arrival',
   NEXT_AVAILABLE: 'Next available: ',
@@ -232,6 +234,7 @@ const en = {
   OPENS: 'Opens',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout is an authorised and trusted partner of the venue offering a curated selection of the best experiences to enjoy this attraction. This is not the venue's website.",
+  POPULAR_CURRENCIES: 'Popular Currencies',
   PRICES_STARTING: 'Prices Starting',
   PROMO_CODES: {
     APPLY_CODE: 'APPLY CODE',
@@ -414,6 +417,7 @@ const en = {
       'We’ve developed the industry-wide See it Safely mark, so that when theatres reopen, you can feel confident and safe knowing that the venue is COVID-secure and will be following the latest government and performing arts guidance.',
     HEADING: 'See it Safely',
     MOBILE_HEADING: 'Safe Experiences',
+    MORE_CURRENCIES: 'More Currencies',
     MODAL: {
       DETAILS: {
         CONTACTLESS_MEASURES_DEFAULT: {

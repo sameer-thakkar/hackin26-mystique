@@ -92,6 +92,9 @@ const COLORS = {
     LIGHT_TONE_3: '#ecd9ff',
     LIGHT_TONE_4: '#f3E9ff',
   },
+  VIOLET: {
+    DARK_TONE: '#2c0156',
+  },
   JOY_MUSTARD: {
     SECONDARY: '#e5a900',
     TERTIARY: '#cc9600',

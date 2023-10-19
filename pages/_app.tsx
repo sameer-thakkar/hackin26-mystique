@@ -13,6 +13,7 @@ import renderShortCodes from 'utils/shortCodes';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
@@ -39,7 +40,7 @@ type PageProps = {
   currencyList: [];
   isDev: boolean;
   isStage: boolean;
-  cookies: { [k: string]: string };
+  cookies: Record<string, string>;
   isMobile: boolean;
   isCategoryV2: boolean;
   categoryTourListData: any;
@@ -47,6 +48,32 @@ type PageProps = {
   scorpioData: any;
   cityPageParams: Record<string, string>;
   isBot: boolean;
+};
+
+interface IGetCurrencyCode {
+  isValidCookieCurrency: boolean | undefined;
+  cityPageParams: Record<string, any>;
+  primaryCity: Record<string, any>;
+  cookies: Record<string, string>;
+}
+
+const getCurrencyCode = ({
+  isValidCookieCurrency,
+  cityPageParams,
+  primaryCity,
+  cookies,
+}: IGetCurrencyCode) => {
+  const { isCityPageMB, cityPageData } = cityPageParams || {};
+  if (isValidCookieCurrency) {
+    return cookies?.[COOKIE.CURRENT_CURRENCY];
+  } else if (isCityPageMB) {
+    const {
+      nearbyAndCurrentCityData: { currentCityData },
+    } = cityPageData;
+    return currentCityData?.country?.currency?.code;
+  } else {
+    return primaryCity?.country?.currency?.code;
+  }
 };
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
@@ -84,11 +111,12 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
       categoryTourListData,
-      cityPageParams: { isCityPageMB } = {},
+      cityPageParams,
       isBot,
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
+    const { isCityPageMB } = cityPageParams || {};
 
     let primaryCollectionId;
     if (CMSContent?.data?.data) {
@@ -112,9 +140,13 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     const isValidCookieCurrency = cookieCurrency
       ? currencyList?.find((c: any) => c.code === cookieCurrency)
       : false;
-    const ssrCurrencyCode = isValidCookieCurrency
-      ? cookies?.[COOKIE.CURRENT_CURRENCY]
-      : primaryCity?.country?.currency?.code;
+
+    const ssrCurrencyCode = getCurrencyCode({
+      isValidCookieCurrency,
+      cityPageParams,
+      cookies,
+      primaryCity,
+    });
 
     const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
 
@@ -187,6 +219,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);
+    set(localeLoaderAtom, false);
   };
 
   const { host } = pageProps;

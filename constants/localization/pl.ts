@@ -274,6 +274,16 @@ const pl = {
   GROUP_TICKETS: 'Bilety grupowe',
   INCLUSIONS: 'W cenie',
   LANGUAGE: 'Język',
+  LANGUAGES: {
+    ENGLISH: 'Angielski',
+    SPANISH: 'Hiszpański',
+    FRENCH: 'Francuski',
+    ITALIAN: 'Włoski',
+    GERMAN: 'Niemiecki',
+    PORTUGUESE: 'Portugalski',
+    NEDERLANDS: 'Holenderski',
+    POLISH: 'Polish',
+  },
   LISTICLES: {
     KNOW_MORE: 'Dowiedz się więcej',
     SEATING_CHART: 'Rozkład miejsc',
@@ -281,6 +291,7 @@ const pl = {
   },
   MORE_DETAILS: 'Więcej szczegółów',
   MORE_FROM: 'More from',
+  MORE_CURRENCIES: 'Więcej walut',
   NEW: 'NOWE',
   NEW_ARRIVAL: 'Nowość',
   NEXT_AVAILABLE: 'Następny dostępny: ',
@@ -294,6 +305,7 @@ const pl = {
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych wycieczek, pozwalających Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
   PRICES_STARTING: 'Ceny od',
+  POPULAR_CURRENCIES: 'Popularne waluty',
   PROMO_CODES: {
     APPLY_CODE: 'ZASTOSUJ KOD',
     DESCRIPTION: {
@@ -303,6 +315,7 @@ const pl = {
     },
     REMOVE: 'USUŃ',
   },
+
   RATINGS: 'Oceny: {0}',
   READ_MORE: 'Czytaj więcej',
   READ_MORE_TEXT: 'Czytaj więcej',

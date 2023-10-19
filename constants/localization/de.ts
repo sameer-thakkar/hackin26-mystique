@@ -209,6 +209,7 @@ const de = {
     WHY_BOOK_FROM_US: 'Unsere Vorteile?',
   },
   MORE_DETAILS: 'Mehr anzeigen',
+  MORE_CURRENCIES: 'Weitere Währungen',
   NEW: 'NEW',
   NEW_ARRIVAL: 'Neuerscheinungen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
@@ -222,6 +223,7 @@ const de = {
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout ist ein autorisierter und zuverlässiger Partner der Attraktion mit einer Auswahl der besten Erlebnisse. Dies ist nicht die Website der Attraktion.',
   POPULARITY: 'Beliebtheit',
+  POPULAR_CURRENCIES: 'Beliebte Währungen',
   PRICE: 'Preis',
   PRICES_STARTING: 'Preise ab',
   PROMO_CODES: {
@@ -482,11 +484,12 @@ const de = {
   LANGUAGES: {
     ENGLISH: 'Englisch',
     SPANISH: 'Spanisch',
-    FRENCH: 'Italienisch',
-    ITALIAN: 'Französisch',
-    GERMAN: 'Niederländisch',
+    FRENCH: 'Französisch',
+    ITALIAN: 'Italienisch',
+    GERMAN: 'Deutsch',
     PORTUGUESE: 'Portugiesisch',
-    NEDERLANDS: 'Deutsch',
+    NEDERLANDS: 'Niederländisch',
+    POLISH: 'Polnisch',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour verfügbar in {0}',
   GUIDES_BANNER: 'Authentische Erlebnisse mit unseren beliebten Reiseleitern.',
