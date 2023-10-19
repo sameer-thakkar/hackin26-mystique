@@ -19,8 +19,13 @@ const getActiveCategoryIndexFromQuery = (
   return index !== -1 ? index : 0;
 };
 
+export const uniqueTgids = (tgidArray: any) =>
+  tgidArray.filter((tgid: any, index: any, self: any) => {
+    return self.indexOf(tgid) === index;
+  });
+
 export const InteractionContextProvider = (props: any) => {
-  const { categories, queryCategory } = props;
+  const { categories, queryCategory, directTgid } = props;
   const initialActiveCategoryIndex = getActiveCategoryIndexFromQuery(
     categories,
     queryCategory
@@ -42,10 +47,13 @@ export const InteractionContextProvider = (props: any) => {
     SORT_SELECTOR_FILTERS.POPULARITY
   );
 
+  const [activeCategoryTgids, setActiveCategory] = useState(
+    uniqueTgids([directTgid ?? [], ...defaultCategory])
+  );
+
   useEffect(() => {
     const categoryId = categories?.[activeCategoryIndex]?.id;
     setActiveCategoryId(categoryId);
-    changeCategory(defaultCategory, activeCategoryIndex);
     setSliceData(currentSlice);
   }, []);
 
@@ -55,10 +63,6 @@ export const InteractionContextProvider = (props: any) => {
     section: null,
     autoScroll: true,
   });
-
-  const [activeCategoryTgids, setActiveCategory] = useState([
-    ...defaultCategory,
-  ]);
 
   const clickTour = (
     tgid: any,
@@ -101,11 +105,6 @@ export const InteractionContextProvider = (props: any) => {
     });
   };
 
-  const uniqueTgids = (tgidArray: any) =>
-    tgidArray.filter((tgid: any, index: any, self: any) => {
-      return self.indexOf(tgid) === index;
-    });
-
   const changeCategory = (tgidArray: any[], categoryIndex: number) => {
     const categoryId = categories?.[categoryIndex]?.id;
     const sliceData = categories?.[categoryIndex]?.sliceData;
@@ -135,7 +134,9 @@ export const InteractionContextProvider = (props: any) => {
         clickTour,
         changeCategory,
         closeTour,
+        setActiveTour,
         setActiveOrder,
+        setActiveCategory,
       }}
     >
       {props.children}

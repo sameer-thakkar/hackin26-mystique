@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import DatePicker from 'react-datepicker';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import Modal from 'react-modal';
+import Modal, { Styles } from 'react-modal';
 import PhoneInput from 'react-phone-input-2';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Select from 'react-select';
@@ -744,7 +743,7 @@ export default class GroupBooking extends Component<any, any> {
       blackoutEndDate
     );
 
-    const styles = {
+    const styles: Styles = {
       overlay: {
         position: 'fixed',
         top: 0,
@@ -762,7 +761,7 @@ export default class GroupBooking extends Component<any, any> {
         background: '#fff',
         borderRadius: '4px',
         padding: '0 0px 25px',
-        zIndex: '999',
+        zIndex: 999,
         top: 0,
         bottom: 0,
         height: 'max-content',

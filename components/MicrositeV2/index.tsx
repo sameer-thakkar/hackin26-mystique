@@ -532,6 +532,7 @@ class MicrositeV2 extends Component<any, any> {
       <InteractionContextProvider
         {...categoryProps}
         queryCategory={directCategory}
+        directTgid={Number(directTgid)}
       >
         <MicrositeV2GlobalStyle />
         <PopulateMeta

@@ -3,9 +3,7 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
-import InteractionContext from 'contexts/Interaction';
-import { checkIfLTTMB } from 'utils/helper';
-import { DONT_AUTO_SCROLL } from 'const/index';
+import InteractionContext, { uniqueTgids } from 'contexts/Interaction';
 
 const PopulateProducts = dynamic(() =>
   import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
@@ -27,8 +25,7 @@ const StyledProductWrapper = styled.div<{ isEntertainmentMb: boolean }>`
 export const ProductsWrapper = (props: any) => {
   const interactionContext = useContext(InteractionContext);
   // @ts-expect-error TS(2339): Property 'activeCategoryTgids' does not exist on t... Remove this comment to see the full error message
-  const { activeCategoryTgids, changeCategory, clickTour } =
-    interactionContext || {};
+  const { activeCategoryTgids, changeCategory } = interactionContext || {};
 
   const {
     isMobile,
@@ -50,16 +47,14 @@ export const ProductsWrapper = (props: any) => {
   useEffect(() => {
     const tgidArray =
       categoryProps.categories[activeCategory || 0].ranking.popularity;
-    changeCategory(tgidArray, activeCategory || 0);
-    setTimeout(() => {
-      if (directTgid) {
-        const isLTT = checkIfLTTMB(uid);
-        const section = isMobile || isLTT ? null : 'main';
+    if (directTgid) {
+      const tgids = uniqueTgids([directTgid, ...tgidArray]);
+      changeCategory(tgids, activeCategory || 0);
+    } else {
+      changeCategory(tgidArray, activeCategory || 0);
+    }
+  }, [directTgid]);
 
-        clickTour(directTgid, true, section, DONT_AUTO_SCROLL);
-      }
-    }, 1000);
-  }, []);
   if (!activeCategoryTgids?.length) return null;
   return (
     <StyledProductWrapper

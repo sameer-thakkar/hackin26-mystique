@@ -74,7 +74,7 @@ const PopulateProducts = (props: any) => {
   const {
     isMobile,
     isEntertainmentMb,
-    propTgids,
+    tgids,
     allTours,
     hasCategoryTourList,
     changePage,
@@ -88,6 +88,7 @@ const PopulateProducts = (props: any) => {
     isDev,
     isDiscountedPage,
   } = props;
+
   // @ts-expect-error TS(2339): Property 'activeCategoryTgids' does not exist on t... Remove this comment to see the full error message
   const { activeCategoryTgids, activeCategoryIndex, closeTour, activeOrder } =
     useContext(InteractionContext) || {};
@@ -209,7 +210,7 @@ const PopulateProducts = (props: any) => {
       ? activeCategoryTgids || categoryPropsRank
       : isListicle
       ? categoryPropsRank
-      : propTgids || activeCategoryTgids) || [];
+      : tgids || activeCategoryTgids) || [];
 
   const tgidsSubArr = subArrays(finalTgidListToShow, Number(offset));
   const getViewMoreLink = () => {
