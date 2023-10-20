@@ -340,6 +340,8 @@ export const createBookingURL = ({
     BY_HO_BRAND_SCREEN_ENABLE.includes(urlObject?.hostname || urlObject?.host);
   if (brandScreenEnabled) urlObject.searchParams.set('byHO', 'true');
 
+  urlObject.searchParams.set('cookieBanner', 'false');
+
   return urlObject.toString();
 };
 

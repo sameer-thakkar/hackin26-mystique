@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 import COLORS from 'const/colors';
 
 export const EVENING_CRUISES = () => (
@@ -3370,13 +3370,14 @@ export const CANDY_STAR = (
   </svg>
 );
 
-export const CROSS = (
+export const CROSS = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <circle cx="12" cy="12" r="11.5" stroke={COLORS.BRAND.CANDY} />
     <path
@@ -3817,13 +3818,14 @@ export const BLACK_RIGHT_ARROW = (
   </svg>
 );
 
-export const BLACK_CROSS = (
+export const BLACK_CROSS = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="56"
     height="56"
     viewBox="0 0 56 56"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <g filter="url(#filter0_dd)">
       <circle cx="28" cy="26" r="20" fill="white" />
@@ -6183,3 +6185,26 @@ export const DoubleQuotesIcon = (
     />
   </svg>
 );
+
+export const Cookie = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={22}
+    height={22}
+    fill="none"
+    {...props}
+  >
+    <path
+      fill="#8000FF"
+      d="M14.136 14.052a1.032 1.032 0 1 1-1.463 1.456 1.032 1.032 0 0 1 1.463-1.456Zm-6.961-.688a1.032 1.032 0 1 0 .002 0h-.002Zm.773-3.351a1.031 1.031 0 1 0-.334.223c.125-.053.239-.129.334-.225v.002Zm4.125-.086a1.032 1.032 0 1 0-1.456 1.461 1.032 1.032 0 0 0 1.456-1.461ZM19.937 11A8.938 8.938 0 1 1 11 2.062a.687.687 0 0 1 .688.688 3.438 3.438 0 0 0 3.437 3.438.687.687 0 0 1 .688.687 3.438 3.438 0 0 0 3.437 3.438.687.687 0 0 1 .688.687Zm-1.401.635A4.824 4.824 0 0 1 14.48 7.52a4.824 4.824 0 0 1-4.115-4.056 7.563 7.563 0 1 0 8.17 8.171Z"
+    />
+  </svg>
+);
+
+export const CrossIconSvg = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
+      <path d="M28.94 31.8L.6 60.1c-.77.8-.77 2.08 0 2.86.4.4.92.6 1.44.6.5 0 1.03-.2 1.42-.6L32 34.42l28.54 28.54c.4.4.9.6 1.43.6.5 0 1.03-.2 1.42-.6.78-.78.78-2.06 0-2.85L35.05 31.8 63.4 3.43c.8-.8.8-2.06 0-2.85-.78-.8-2.05-.8-2.84 0L32 29.14 3.44.6C2.64-.2 1.38-.2.6.6c-.8.78-.8 2.05 0 2.84L28.93 31.8z" />
+    </svg>
+  );
+};

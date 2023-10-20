@@ -746,5 +746,11 @@ const pt = {
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
   },
+  COOKIE_BANNER: {
+    DESKTOP:
+      'A Headout usa cookies para aprimorar sua navegação no site, com um byte por vez.',
+    MOBILE: 'O trabalho dos cookies.',
+    LEARN_MORE: 'Saiba mais.',
+  },
 };
 export default pt;

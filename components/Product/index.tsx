@@ -352,7 +352,7 @@ const Product = (props: any) => {
             variantId,
           }),
           '_blank',
-          'noopener, noreferrer'
+          'noopener noreferrer'
         );
         return;
       }

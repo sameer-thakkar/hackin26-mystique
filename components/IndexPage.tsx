@@ -31,6 +31,7 @@ import {
   COOKIE,
   CUSTOM_TYPES,
   DESIGN,
+  GDPR_COUNTRY_CODES,
   THEMES,
   TIME,
 } from 'const/index';
@@ -454,6 +455,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         ? req.headers['referer'].split(':')[0]
         : 'https';
 
+    const countryCode = req?.headers?.['cloudfront-viewer-country'] as string;
+    const isGDPRCompliant =
+      !countryCode || GDPR_COUNTRY_CODES.includes(countryCode);
+
     const response = {
       props: {
         ...props,
@@ -471,6 +476,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         cookies: req?.cookies ?? {},
         headers: JSON.stringify(req?.headers),
         isBot,
+        isGDPRCompliant,
       },
     };
     const removeEmpty = (obj: any) => {

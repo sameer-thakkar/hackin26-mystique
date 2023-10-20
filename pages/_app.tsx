@@ -4,6 +4,7 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
 import rtlPlugin from 'stylis-plugin-rtl';
 import Clarity from 'components/common/Clarity';
+import CookieBanner from 'components/common/CookieBanner';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { sendVariablesToDataLayer } from 'utils/analytics';
@@ -33,6 +34,7 @@ type PageProps = {
   host: string;
   uid: string;
   ContentType: string;
+  MBDesign?: string;
   baseLangPageTitle?: string;
   CMSContent: any;
   tourGroupData: any;
@@ -48,6 +50,7 @@ type PageProps = {
   scorpioData: any;
   cityPageParams: Record<string, string>;
   isBot: boolean;
+  isGDPRCompliant: boolean;
 };
 
 interface IGetCurrencyCode {
@@ -77,7 +80,15 @@ const getCurrencyCode = ({
 };
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
-  const { lang: locale } = pageProps;
+  const {
+    lang: locale,
+    isMobile,
+    isGDPRCompliant,
+    ContentType,
+    MBDesign,
+  } = pageProps;
+
+  const pageType = ContentType + (MBDesign || '');
 
   const langCode = getLangObject(locale).code;
   if (langCode !== 'en') initDayJSLocale(langCode);
@@ -233,6 +244,11 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         <Component {...pageProps} />
         <ScrollToTop />
         <LiveChat uid={pageProps?.uid} />
+        <CookieBanner
+          isMobile={isMobile}
+          isGDPRCompliant={isGDPRCompliant}
+          pageType={pageType}
+        />
         <Clarity host={host} />
       </RecoilRoot>
     </StyleSheetManager>
