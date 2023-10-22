@@ -1,0 +1,214 @@
+name: 'Mystique CI'
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: 'Build'
+    strategy:
+      matrix:
+        env: ['test', 'production']
+        hasTag:
+          - ${{ startsWith(github.ref, 'refs/tags/') }}
+        exclude:
+          - hasTag: false
+            env: 'production'
+          - hasTag: true
+            env: 'test'
+    env:
+      APP_ENV: ${{ matrix.env }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Why this? No idea ¯_(ツ)_/¯
+          # Refer - https://github.community/t/how-to-install-private-github-repository-via-npm-through-git-https-github-actions-workflow-ci/124302
+          persist-credentials: false
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.17.1'
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./node_modules
+          key: ${{ runner.os }}-nodejs-${{ matrix.env }}-${{ hashFiles('yarn.lock') }}
+      - name: Install Packages
+        run: |
+          git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
+          yarn
+      - name: Cache built NEXT
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./.next/
+            ./public
+            ./.env.local
+          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ steps.extract_branch.outputs.branch }}
+      - name: Prepare version label
+        run: |
+          echo "GIT_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Build NEXT
+        run: yarn build
+        env:
+          RELEASE_VERSION: ${{ env.GIT_VERSION }}
+
+  push-ecr:
+    name: 'CD (Deploy)'
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: ['test', 'production']
+        hasTag:
+          - ${{ startsWith(github.ref, 'refs/tags/') }}
+        exclude:
+          - hasTag: false
+            env: 'production'
+          - hasTag: true
+            env: 'test'
+    outputs:
+      dockerImageTag: ${{ steps.docker_meta.outputs.version }}
+      ecrRegistryUrl: ${{ steps.login_ecr.outputs.registry }}
+    env:
+      AWS_EB_S3_BUCKET: ${{ secrets.AWS_EB_S3_BUCKET }}
+      APP_ENV: ${{ matrix.env }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: restore node cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./node_modules
+          key: ${{ runner.os }}-nodejs-${{ matrix.env }}-${{ hashFiles('yarn.lock') }}
+      - name: restore next cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./.next/
+            ./public
+            ./.env.local
+          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ steps.extract_branch.outputs.branch }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ matrix.env }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ matrix.env }}-
+            ${{ runner.os }}-buildx-
+
+      - name: set aws credentials
+        id: set-aws-credentials
+        run: |
+          if [[ $APP_ENV == "production" ]]; then
+              echo "AWS_REGION=us-east-1" >> "$GITHUB_ENV"
+              echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}" >> "$GITHUB_ENV"
+              echo "AWS_SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> "$GITHUB_ENV"
+          else
+              echo "AWS_REGION=ap-south-1" >> "$GITHUB_ENV"
+              echo "AWS_ACCESS_KEY=${{ secrets.AWS_HEADOUT_TEST_ACCESS_KEY }}" >> "$GITHUB_ENV"
+              echo "AWS_SECRET_KEY=${{ secrets.AWS_HEADOUT_TEST_SECRET_KEY }}" >> "$GITHUB_ENV"
+          fi
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login_ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ steps.login_ecr.outputs.registry }}/container-images/headout-mystique
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=branch,prefix=${{ matrix.env }}-,suffix=-{{sha}}-{{date 'YYYYMMDD'}}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ci/Dockerfile
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          build-args: |
+            APP_ENV=${{ env.APP_ENV }}
+            ALT_CANCEL_SLACK_BOT_TOKEN=${{ secrets.ALT_CANCEL_SLACK_BOT_TOKEN }}
+            ZENDESK_API_TOKEN=${{ secrets.ZENDESK_API_TOKEN }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          labels: ${{ steps.docker_meta.outputs.labels }}
+        # This ugly bit is necessary if you don't want your cache to grow forever
+        # till it hits GitHub's limit of 5GB.
+        # Temp fix
+        # https://github.com/docker/build-push-action/issues/252
+        # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  create-eb-version:
+    needs: 'push-ecr'
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    env:
+      AWS_EB_S3_BUCKET: ${{ secrets.AWS_EB_S3_BUCKET }}
+      APP_ENV: 'production'
+      DOCKER_IMAGE_TAG: ${{ needs.push-ecr.outputs.dockerImageTag }}
+      LONG_DESCRIPTION: ${{ github.event.head_commit.message }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login_ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Generate deployment package
+        id: prepare_deploy
+        env:
+          ECR_DOCKER_REPO_HOST: ${{ steps.login_ecr.outputs.registry }}
+        run: |
+          ./ci/scripts/eb.sh
+          zip -r mystique-${DOCKER_IMAGE_TAG}.zip Dockerrun.aws.json .ebextensions/
+
+          IMAGE_LABEL=$APP_ENV-${GITHUB_REF#refs/*/}-${GITHUB_SHA::8}-$(date -u +%s)
+          TRIM_DESCRIPTION="$(echo $LONG_DESCRIPTION | tr '\n' ' ' | tr '\r' ' ')"
+          echo "VERSION_LABEL=$IMAGE_LABEL" >> $GITHUB_ENV
+          echo "VERSION_FILE=mystique-${DOCKER_IMAGE_TAG}.zip" >> $GITHUB_ENV
+          echo "VERSION_DESCRIPTION=${TRIM_DESCRIPTION:0:199}" >> $GITHUB_ENV
+      - name: Upload package to S3 bucket
+        run: |
+          cat $HOME/.docker/config.json | jq -M '.auths' > .dockercfg
+          aws s3 mv .dockercfg s3://$AWS_EB_S3_BUCKET/docker/.dockercfg
+          aws s3 cp $VERSION_FILE s3://$AWS_EB_S3_BUCKET/mystique/$VERSION_FILE
+      - name: Create new ElasticBeanstalk Application Version
+        run: |
+          aws elasticbeanstalk create-application-version \
+          --application-name deimos \
+          --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="mystique/$VERSION_FILE" \
+          --version-label "github-$VERSION_LABEL" \
+          --description "$VERSION_DESCRIPTION"
