@@ -31,7 +31,7 @@ cat > Dockerrun.aws.json << EOL
   "containerDefinitions": [
     {
       "name": "mystique",
-      "image": "$ECR_DOCKER_REPO_HOST/headout/mystique:$DOCKER_IMAGE_TAG",
+      "image": "$ECR_DOCKER_REPO_HOST/container-images/headout-mystique:$DOCKER_IMAGE_TAG",
       "essential": true,
       "memoryReservation": 1536,
       "dockerLabels": {
