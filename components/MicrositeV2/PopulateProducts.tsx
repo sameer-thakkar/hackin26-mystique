@@ -224,7 +224,6 @@ const PopulateProducts = (props: any) => {
       isEntertainmentMbListicle={isEntertainmentMbListicle}
     >
       {tgidsSubArr.map((row: any, index: number) => {
-        if (!row[index]) return null;
         if (showAll || index < rowsInView)
           return (
             <RowComponent
