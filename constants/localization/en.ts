@@ -111,6 +111,7 @@ const en = {
       'Immerse yourself in the rich art and cultural scene, from captivating museums to vibrant festivals celebrating {0} heritage.',
   },
   CLOSE: 'Close',
+  COLLECTION_SLICE_HEADING: 'Top things to do in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',

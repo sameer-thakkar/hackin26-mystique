@@ -623,7 +623,7 @@ export const getBannerDescriptors = ({
     descriptorData = CATEGORY_BANNER()[categoryId];
   }
   return descriptorData;
-}
+};
 export const getCategorySeeAllLink = (category: string) => {
   switch (category) {
     case 'kids':

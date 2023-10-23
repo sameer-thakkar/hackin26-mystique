@@ -113,6 +113,7 @@ const it = {
       'Immergiti nella ricca scena artistica e culturale, fatta di affascinanti musei e vivaci festival che mettono in mostra il patrimonio di {0}.',
   },
   CLOSE: 'Chiudi',
+  COLLECTION_SLICE_HEADING: 'Le migliori cose da fare a {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleziona',
     SELECT_OPTION: 'Seleziona la variante desiderata',

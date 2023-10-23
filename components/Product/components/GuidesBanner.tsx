@@ -7,9 +7,7 @@ import {
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { getUniqueRandomOutputs } from 'utils/productUtils';
-import {
-  GUIDES_IMAGE_URL,
-} from 'const/index';
+import { GUIDES_IMAGE_URL } from 'const/index';
 import { strings } from 'const/strings';
 
 export const GuidesBanner = ({

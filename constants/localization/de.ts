@@ -111,6 +111,7 @@ const de = {
       'Erkunden Sie die reiche Kunst- und Kulturszene von {0} – von faszinierenden Museen bis hin zu lebhaften Festivals.',
   },
   CLOSE: 'Schließen',
+  COLLECTION_SLICE_HEADING: 'Top-Erlebnisse in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Auswählen',
     SELECT_OPTION: 'Gewünschte Ticketvariante wählen',

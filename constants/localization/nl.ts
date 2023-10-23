@@ -111,6 +111,7 @@ const nl = {
       'Verken de rijke kunst- en cultuurscène van {0} - van fascinerende musea tot levendige festivals.',
   },
   CLOSE: 'Sluit',
+  COLLECTION_SLICE_HEADING: 'Topervaringen in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',
     SELECT_OPTION: 'Selecteer de gewenste optie',

@@ -111,6 +111,7 @@ const pt = {
       '{0}: mergulhe na rica cena artística e cultural, de museus cativantes a festivais vibrantes que celebram o patrimônio local.',
   },
   CLOSE: 'Fechar',
+  COLLECTION_SLICE_HEADING: 'Melhores coisas para fazer em {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecionar',
     SELECT_OPTION: 'Selecione a opção deseja',

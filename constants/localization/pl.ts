@@ -79,6 +79,32 @@ const pl = {
         'Popularne atrakcje, sposoby na budżetowe podróżowanie, transport publiczny, najlepsze restauracje i hotele, wskazówki dotyczące kultury i więcej!',
     },
   },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Dowiedz się więcej o wymaganiach wizowych, wymianie walut, różnicach stref czasowych i nie tylko, by cieszyć się bezproblemową podróżą i przyjemnym pobytem.',
+    WHERE_TO_EAT:
+      'Poznaj tętniącą życiem scenę kulinarną, delektując się różnorodnymi smakami i próbując lokalnych przysmaków w każdym zakątku miasta {0}.',
+    WHERE_TO_STAY:
+      'Odkryj najlepsze zakwaterowania w mieście {0}, oferujące komfort, wygodę i niezapomniane wrażenia podczas pobytu.',
+    THINGS_TO_DO:
+      'Weź udział w mnóstwie emocjonujących aktywności, które trafią we wszystkie gusta, zapewniając niezapomniany czas.',
+    WEATHER:
+      'Mądrze zaplanuj swoją wycieczkę i w pełni wykorzystaj swoją w wizytę, ponieważ {0} oferuje magiczne doświadczenia przez cały rok.',
+    NEIGHBOURHOODS:
+      'Poznaj różnorodne społeczności lokalne i tętniące życiem dzielnice, którym {0} zawdzięcza swój wyjątkowy charakter.',
+    TRANSPORTATION:
+      'Poruszaj się po mieście z łatwością, korzystając z wydajnego systemu transportowego, który oferuje {0} i wygodnie odkrywaj wszystkie atrakcja.',
+    TRIP_PLANNER:
+      'Wykorzystaj swój czas z dobrze przemyślanym planem podróży i ciesz się wszystkim, co do zaoferowania ma {0}.',
+    FAMILY_TRAVEL:
+      'Wyrusz na rodzinną przygodę z licznymi atrakcjami, parkami i innymi rozrywkami, które zaspokoją potrzeby dzieci w każdym wieku.',
+    TRAVEL_TIPS:
+      'Poznaj wskazówki lokalsów i triki podróżnicze, żeby Twoja wizyta w mieście {0} była naprawdę wyjątkowa.',
+    SHOPPING:
+      'Udaj się do raju dla kupujących z przeróżnymi butikami, targami i centrami handlowymi, oferującymi wszystko od lokalnego rzemiosła po luksusową modę.',
+    ART_AND_CULTURE:
+      'Zanurz się w bogatej scenie artystycznej i kulturalnej, od urzekających muzeów po tętniące życiem festiwale celebrujące dziedzictwo miasta {0}.',
+  },
   CLOSE: 'Zamknij',
   COMBO_VARIANT: {
     SELECT_CTA: 'Wybierz',

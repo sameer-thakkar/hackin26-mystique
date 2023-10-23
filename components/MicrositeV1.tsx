@@ -60,6 +60,12 @@ const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
+const CollectionCarousel = dynamic(() =>
+  import(
+    /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
+  )
+);
+
 const ResponsiveSelector: ComponentType<any> = dynamic(
   () =>
     import('components/MicrositeV2/ResponsiveSelector').then(
@@ -540,6 +546,7 @@ const MicrositeV1 = (props: any) => {
   const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
   const finalEnableBuyTickets =
     enableBuyTickets === null ? 'Yes' : enableBuyTickets;
+
   return (
     <div>
       <div className="microsite-container">
@@ -710,6 +717,17 @@ const MicrositeV1 = (props: any) => {
             taggedCity={taggedCity}
             primaryCity={primaryCity}
             isMobile={isMobile}
+          />
+        </Conditional>
+
+        <Conditional
+          if={isA1orC1MB(mbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
+        >
+          <CollectionCarousel
+            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+            isMobile={isMobile}
+            primaryCity={primaryCity}
+            taggedCity={taggedCity}
           />
         </Conditional>
 

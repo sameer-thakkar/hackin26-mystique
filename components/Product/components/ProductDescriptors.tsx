@@ -4,9 +4,7 @@ import { TProductDescriptors } from 'components/Product/interface';
 import { TourTags } from 'components/Product/styles';
 import { getDuration } from 'utils/timeUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
-import {
-  DESCRIPTORS,
-} from 'const/index';
+import { DESCRIPTORS } from 'const/index';
 import { strings } from 'const/strings';
 import { GLOBE } from 'assets/SvgIcons';
 

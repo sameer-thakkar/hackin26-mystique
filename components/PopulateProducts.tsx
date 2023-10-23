@@ -189,8 +189,6 @@ const PopulateProducts = (props: any) => {
     setproductInfo(tourGroupMap);
   };
 
-  
-
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
   useEffect(() => {

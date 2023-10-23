@@ -1570,6 +1570,10 @@ export const LTT_LP_HARDCODED_REVIEWS = [
 export const GUIDES_IMAGE_URL =
   'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';
 
+export const ANALYTICS_SECTION_NAMES = {
+  TOP_THINGS_TODO: 'Top things to do',
+};
+
 export const BANNER_DESCRIPTORS = {
   CANCELLATION:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/cancellation.svg',

@@ -112,6 +112,7 @@ const fr = {
       'Découvrez une scène artistique et culturelle exceptionnelle, des musées fascinants aux festivals animés célébrant le patrimoine de {0}.',
   },
   CLOSE: 'Fermer',
+  COLLECTION_SLICE_HEADING: 'Meilleures choses à faire à {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Sélectionner',
     SELECT_OPTION: 'Sélectionnez votre option',

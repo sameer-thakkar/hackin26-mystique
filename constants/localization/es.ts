@@ -113,6 +113,7 @@ const es = {
       'Sumérgete en la escena artística y cultural, desde cautivadores museos a vibrantes festivales que resaltan el patrimonio de {0}.',
   },
   CLOSE: 'Cerrar',
+  COLLECTION_SLICE_HEADING: 'Las mejores cosas que hacer en {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleccionar',
     SELECT_OPTION: 'Selecciona la opción deseada',

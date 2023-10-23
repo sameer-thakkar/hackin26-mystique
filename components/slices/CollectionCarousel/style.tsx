@@ -1,0 +1,44 @@
+import styled from 'styled-components';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
+import { SIZES } from 'const/ui-constants';
+
+export const CardContainer = styled.div`
+  max-width: ${SIZES.MAX_WIDTH};
+  margin: 0 auto;
+  .prev-slide,
+  .next-slide {
+    top: 7.5rem;
+  }
+  padding: 0 0 2rem 0;
+  .collection-image {
+    img {
+      border-radius: 4px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 0 2.5rem 0;
+    & > div {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+  }
+`;
+
+export const Card = styled.div`
+  cursor: pointer;
+`;
+
+export const Heading = styled.h3`
+  ${expandFontToken(FONTS.HEADING_LARGE)};
+  @media (max-width: 768px) {
+    padding-left: 1.5rem;
+    ${expandFontToken(FONTS.HEADING_SMALL)};
+  }
+`;
+
+export const Label = styled.div`
+  padding-top: 0.375rem;
+  ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+`;

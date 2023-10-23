@@ -464,6 +464,7 @@ const generateCityAttractionsMenu = async ({
             [`COLLECTION_${index + 1}`]: {
               label: collection.displayName,
               url,
+              collectionData: collection,
             },
           };
         }
