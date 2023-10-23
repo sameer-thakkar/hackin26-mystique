@@ -208,7 +208,7 @@ jobs:
       - name: Create new ElasticBeanstalk Application Version
         run: |
           aws elasticbeanstalk create-application-version \
-          --application-name deimos \
+          --application-name mystique \
           --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="mystique/$VERSION_FILE" \
           --version-label "github-$VERSION_LABEL" \
           --description "$VERSION_DESCRIPTION"
