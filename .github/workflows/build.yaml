@@ -153,6 +153,7 @@ jobs:
             ALT_CANCEL_SLACK_BOT_TOKEN=${{ secrets.ALT_CANCEL_SLACK_BOT_TOKEN }}
             ZENDESK_API_TOKEN=${{ secrets.ZENDESK_API_TOKEN }}
             WAF_API_WHITELIST_TOKEN=${{ secrets.WAF_API_WHITELIST_TOKEN }}
+            NEXT_PUBLIC_HEADOUT_DOMAIN=https://www.headout.com
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           labels: ${{ steps.docker_meta.outputs.labels }}
