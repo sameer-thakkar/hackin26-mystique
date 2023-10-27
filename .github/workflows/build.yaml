@@ -49,7 +49,7 @@ jobs:
             ./.next/
             ./public
             ./.env.local
-          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ steps.extract_branch.outputs.branch }}
+          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ github.sha }}
       - name: Prepare version label
         run: |
           echo "GIT_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -96,7 +96,7 @@ jobs:
             ./.next/
             ./public
             ./.env.local
-          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ steps.extract_branch.outputs.branch }}
+          key: ${{ runner.os }}-nextjs-${{ matrix.env }}-${{ github.sha }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Cache Docker layers
