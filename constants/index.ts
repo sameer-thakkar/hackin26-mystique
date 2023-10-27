@@ -117,7 +117,7 @@ export const SUPPORTED_LANGUAGES = [
 
 export type LanguagesUnion = typeof SUPPORTED_LANGUAGES[number];
 
-export const SUPPORTED_LOCALE_MAP: Record<LanguagesUnion, string> = {
+export const SUPPORTED_LOCALE_MAP = {
   en: 'en-us',
   es: 'es-es',
   it: 'it-it',
@@ -132,7 +132,9 @@ export const SUPPORTED_LOCALE_MAP: Record<LanguagesUnion, string> = {
   id: 'id-id',
   pl: 'pl-pl',
   ar: 'ar-ae',
-};
+} as const;
+
+export type TLANGUAGELOCALE = typeof SUPPORTED_LOCALE_MAP[LanguagesUnion];
 
 type TLanguageMap = {
   displayName: string;
@@ -321,6 +323,7 @@ export const GROUP_BOOKING_URL = '/api/group-submit-form';
 export const CUSTOM_TYPES = {
   MICROSITE: 'microsite',
   VENUE_PAGE: 'venue_page',
+  NEWS_PAGE: 'news_page',
   CONTENT_PAGE: 'content_page',
   FOOTER: 'common_footer',
   HEADER: 'common_header',
@@ -340,6 +343,9 @@ export const CUSTOM_TYPES = {
   PROMO_CODES: 'promo_codes',
   HEADOUT_CATEGORY_CONTENT: 'ho_category_content',
 };
+
+export type CUSTOM_TYPE_KEYS = keyof typeof CUSTOM_TYPES;
+export type CUSTOM_TYPE_VALUES = typeof CUSTOM_TYPES[CUSTOM_TYPE_KEYS];
 
 export const DOC_TYPES: Record<string, string> = {
   microsite: 'Microsite',
@@ -491,6 +497,13 @@ export const ANALYTICS_EVENTS = {
   SEE_ALL_CLICKED: 'See All Clicked',
   PAGE_SECTION_VIEWED: 'Page Section Viewed',
   BREADCRUMBS_CLICKED: 'Navigation Breadcrumbs Clicked',
+  NEWS_PAGE: {
+    RATINGS_WIDGET_CLICKED: 'Ratings Widget Clicked',
+    NEWS_CARD_CLICKED: 'News Card Clicked',
+    NEWS_PAGE_SECTION_VIEWED: 'News Page Section Viewed',
+    NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
+    TRAILER_VIEWED: 'Trailer Viewed',
+  },
 };
 
 export const PAGE_TYPE = {
@@ -893,6 +906,7 @@ export const ANALYTICS_PROPERTIES = {
   MB_TYPE: 'MB Type',
   VIDEO_TITLE: 'Video Title',
   PERCENT_VIEWED: 'Percentage Viewed',
+  IS_SHOW_PLAYING: 'Is Show Playing',
 };
 
 export const PAGE_TYPES = {
@@ -901,7 +915,13 @@ export const PAGE_TYPES = {
   SHOW_PAGE: 'Show Page',
   VENUE_PAGE: 'Venue Page',
   CITY_PAGE: 'City Page',
+  NEWS_PAGE: 'News Page',
 };
+
+export const BOOLEAN_STATES = {
+  YES: 'Yes',
+  NO: 'No',
+} as const;
 
 export const ANALYTICS_PLATFORM = {
   MOBILE: 'Mobile',
@@ -976,6 +996,7 @@ export const PAGETYPE_BY_CUSTOMTYPE = {
   [CUSTOM_TYPES.GLOBAL_HOMEPAGE]: PAGE_TYPES.COLLECTION,
   [CUSTOM_TYPES.LISTICLE]: PAGE_TYPES.COLLECTION,
   [CUSTOM_TYPES.VENUE_PAGE]: PAGE_TYPES.VENUE_PAGE,
+  [CUSTOM_TYPES.NEWS_PAGE]: PAGE_TYPES.NEWS_PAGE,
 };
 
 export const CTA_TYPE = {
@@ -986,6 +1007,13 @@ export const CTA_TYPE = {
   SEE_ALL_DAY_TRIPS: 'See all Day Trips',
   VIEW_TRAVEL_GUIDE: 'View Travel Guide',
   SIGN_UP: 'Sign Up',
+  ALL_NEWS: 'All News',
+  SEE_ALL: 'See All',
+  ALL_TRAILERS: 'All Trailers',
+  REVIEWS_CTA: 'Reviews CTA',
+  BUY_TICKETS: 'Buy Tickets',
+  THEATRE_PAGE_LINK: 'Theatre Page Link',
+  SEE_MORE_SHOWS: 'See More Shows',
 };
 
 export const HIGHLIGHT_TYPES = {
@@ -1139,6 +1167,7 @@ export const DEFAULT_LOOKER_VALUES = {
 export const VIDEO_POSITIONS = {
   BANNER: 'Banner',
   PRODUCT_CARD: 'Product Card',
+  TRAILERS: 'Trailers Section',
 };
 
 export const MB_TYPES = {
@@ -1271,6 +1300,9 @@ export const PRISMIC_FIELD_ID = {
   SHOULDER_PAGE_TYPE: 'shoulder_page_type',
   TAGGED_CONTENT_TYPE: 'tagged_content_type',
   PRIMARY_TAG: 'primary_tag',
+  TGID: 'tgid',
+  TAGS: 'tags',
+  UID: 'uid',
 };
 
 export const DYNAMIC_RENDER_UID = [
@@ -1665,5 +1697,19 @@ export const GDPR_COUNTRY_CODES = [
   'UY',
   'CA',
 ];
-
 export const COOKIE_BANNER_KEY = 'cookie-banner-state';
+export const UAE_COUNTRY_CODE = 'ae';
+
+export const TOUR_GROUP_MEDIA_RESOURCE_TYPE = {
+  MB_EXPERIENCE: 'MB_EXPERIENCE',
+} as const;
+
+export const NEWS_PAGE_DATE_FORMAT = 'DD MMM YYYY';
+export const NEWS_PAGE_SECTIONS = {
+  FEATURED_NEWS: 'Featured News',
+  MORE_READS: 'More Reads',
+  ARTICLES: 'Articles',
+  TRAILERS: 'Trailers',
+} as const;
+
+export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;

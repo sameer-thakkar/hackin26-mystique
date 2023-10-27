@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSwiperSlide } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import {
-  PlayButton,
   StyledVideoContainer,
   VideoContainer,
+  VideoIcon,
 } from 'components/UI/Video/styles';
 import Image from 'UI/Image';
+import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
+import { debounce, throttle } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { PlaySvg } from 'assets/SvgIcons';
+import { PauseSvg, PlaySvg } from 'assets/SvgIcons';
 
 interface VideoTypeProps {
   url: string;
@@ -30,6 +32,8 @@ interface VideoTypeProps {
   showPlayIcon?: boolean;
   pauseOnclick?: boolean;
   eventTracking?: boolean;
+  showPauseIcon?: boolean;
+  isMobile?: boolean;
 }
 
 const Video: React.FC<VideoTypeProps> = ({
@@ -44,10 +48,12 @@ const Video: React.FC<VideoTypeProps> = ({
   imageWidth,
   imageHeight,
   imageQuality,
+  isMobile,
   dontLazyLoadImage = false,
   videoPosition,
   children,
   showPlayIcon = true,
+  showPauseIcon = true,
   pauseOnclick = false,
   eventTracking = true,
 }) => {
@@ -58,14 +64,18 @@ const Video: React.FC<VideoTypeProps> = ({
 
   const { isPageLoaded } = useRecoilValue(appAtom);
   const [hasVideoLoaded, setHasVideoLoaded] = useState(false);
-  const [isAutoplayDisabled, setIsAutoplayDisabled] = useState(false);
   const [isVideoPaused, setIsVideoPaused] = useState(true);
+  const [shouldIconAppear, setIconAppear] = useState(true);
+  const isVideoIntersecting = useOnScreen({ ref: videoRef, unobserve: true });
+  const debouncedSetIconAppear = useCallback(
+    debounce(() => setIconAppear(false), 2000),
+    []
+  );
 
   const handleVideoPlay = async (videoElement: HTMLVideoElement) => {
     try {
       await videoElement.play();
       setIsVideoPaused(false);
-      setIsAutoplayDisabled(false);
 
       if (videoAutoplayInterval.current) {
         eventTracking &&
@@ -80,7 +90,6 @@ const Video: React.FC<VideoTypeProps> = ({
       }
     } catch (error) {
       // video autoplay prevented by the browser
-      setIsAutoplayDisabled(true);
       setIsVideoPaused(true);
       eventTracking &&
         trackEvent({
@@ -94,11 +103,13 @@ const Video: React.FC<VideoTypeProps> = ({
     if (!videoRef) return;
     videoRef.current?.play();
     setIsVideoPaused(false);
-    setIsAutoplayDisabled(false);
+    if (isMobile) debouncedSetIconAppear();
+
     eventTracking &&
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
         [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
+        [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
       });
   };
 
@@ -106,11 +117,11 @@ const Video: React.FC<VideoTypeProps> = ({
     if (!videoRef) return;
     videoRef.current?.pause();
     setIsVideoPaused(true);
+    if (isMobile) debouncedSetIconAppear();
   };
 
   useEffect(() => {
-    /* Later we can club with this intersection observer as well */
-    if (isPageLoaded && !hasVideoLoaded) {
+    if (isPageLoaded && !hasVideoLoaded && isVideoIntersecting) {
       /* to calculate the time between page loaded and video autoplay */
       if (!isDuplicateSlide) {
         // @ts-expect-error TS(2322): Type 'number' is not assignable to type 'null'.
@@ -125,24 +136,26 @@ const Video: React.FC<VideoTypeProps> = ({
       lazyVideo.load();
       setHasVideoLoaded(true);
     }
-  }, [hasVideoLoaded, isDuplicateSlide, isPageLoaded]);
+  }, [hasVideoLoaded, isDuplicateSlide, isPageLoaded, isVideoIntersecting]);
 
   useEffect(() => {
-    const videoElement: HTMLVideoElement = videoRef.current!;
+    if (shouldVideoPlay) {
+      const videoElement: HTMLVideoElement = videoRef.current!;
 
-    const startVideoAutoPlay = () => {
-      if (!hasVideoLoaded) return;
-      videoElement.currentTime = 0;
-      if (videoRef.current) videoRef.current.controls = false;
-      if (shouldVideoPlay) {
-        handleVideoPlay(videoElement);
-      } else {
-        pauseVideo();
-      }
-    };
-    videoElement.addEventListener('loadeddata', startVideoAutoPlay);
-    return () =>
-      videoElement.removeEventListener('loadeddata', startVideoAutoPlay);
+      const startVideoAutoPlay = () => {
+        if (!hasVideoLoaded) return;
+        videoElement.currentTime = 0;
+        if (videoRef.current) videoRef.current.controls = false;
+        if (shouldVideoPlay) {
+          handleVideoPlay(videoElement);
+        } else {
+          pauseVideo();
+        }
+      };
+      videoElement.addEventListener('loadeddata', startVideoAutoPlay);
+      return () =>
+        videoElement.removeEventListener('loadeddata', startVideoAutoPlay);
+    }
   }, [shouldVideoPlay, hasVideoLoaded]);
 
   useEffect(() => {
@@ -155,13 +168,36 @@ const Video: React.FC<VideoTypeProps> = ({
     }
   }, [isMuted]);
 
+  useEffect(() => {
+    videoRef.current?.addEventListener(
+      'mousemove',
+      throttle(() => setIconAppear(true), 2000)
+    );
+
+    videoRef.current?.addEventListener(
+      'mouseleave',
+      throttle(() => setIconAppear(false), 2000)
+    );
+    return () => {
+      videoRef.current?.removeEventListener(
+        'mousemove',
+        throttle(() => setIconAppear(true), 2000)
+      );
+      videoRef.current?.removeEventListener(
+        'mouseleave',
+        throttle(() => setIconAppear(false), 2000)
+      );
+    };
+  }, []);
+
   const { url: fallbackImageUrl, altText: imageAltText } = fallbackImage;
 
-  const showPlayButton =
-    showPlayIcon && isAutoplayDisabled && isVideoPaused && url;
+  const showPlayButton = !!(showPlayIcon && isVideoPaused && url);
+  const showPauseButton = !!(showPauseIcon && !isVideoPaused && url);
 
   const handleOnClick = () => {
     if (!pauseOnclick || !videoRef || !videoRef.current) return;
+    setIconAppear(true);
     if (isVideoPaused) {
       playVideo();
     } else {
@@ -189,10 +225,20 @@ const Video: React.FC<VideoTypeProps> = ({
           onClick={showPlayButton ? playVideo : () => {}}
           fill
         />
-        <Conditional if={showPlayButton}>
-          <PlayButton onClick={playVideo}>
-            <PlaySvg />
-          </PlayButton>
+        <Conditional if={shouldIconAppear && showPlayButton}>
+          <VideoIcon onClick={handleOnClick}>
+            <Conditional if={isVideoPaused}>
+              <PlaySvg />
+            </Conditional>
+          </VideoIcon>
+        </Conditional>
+        {/* Want to show pauseIcon only along with playIcon. */}
+        <Conditional if={shouldIconAppear && showPlayIcon && showPauseButton}>
+          <VideoIcon onClick={handleOnClick}>
+            <Conditional if={!isVideoPaused}>
+              <PauseSvg />
+            </Conditional>
+          </VideoIcon>
         </Conditional>
       </Conditional>
       <StyledVideoContainer

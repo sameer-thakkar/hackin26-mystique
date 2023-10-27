@@ -78,6 +78,8 @@ const VideoBanner = ({
         dontLazyLoadImage
         shouldVideoPlay
         videoPosition={VIDEO_POSITIONS.BANNER}
+        showPauseIcon={false}
+        showPlayIcon={false}
       >
         <VideoTitle currentCityData={currentCityData} />
       </Video>

@@ -4,6 +4,9 @@ export const THINGS_TO_DO = 'THINGS_TO_DO';
 export const SHOW_NAME_TICKETS = 'SHOW_NAME_TICKETS';
 export const TICKETS = 'Tickets';
 export const ATTRACTIONS = 'ATTRACTIONS';
+export const LONDON_THEATRE_NEWS = 'LONDON_THEATRE_NEWS';
+export const BROADWAY_SHOW_NEWS = 'BROADWAY_SHOW_NEWS';
+export const NEWS_PAGE = 'NEWS_PAGE';
 
 export const getEntMBLabels = ({
   isLTT = false,

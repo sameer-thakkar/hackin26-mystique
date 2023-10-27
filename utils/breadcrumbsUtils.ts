@@ -26,8 +26,11 @@ import {
 } from 'utils/urlUtils';
 import {
   ATTRACTIONS,
+  BROADWAY_SHOW_NEWS,
   getEntMBLabels,
   HOME,
+  LONDON_THEATRE_NEWS,
+  NEWS_PAGE,
   SHOW_NAME_TICKETS,
   THINGS_TO_DO,
   TICKETS,
@@ -584,9 +587,9 @@ const getCityGuideShoulderPageBreadcrumbs = async (
       };
     } else {
       try {
-        const prevSlugShoulderPageUid = `${
-          pageUrlObject.host
-        }.${pathArray.slice(0, pathArray.length - 1).join('.')}`;
+        const prevSlugShoulderPageUid = `${pageUrlObject.host}.${pathArray
+          .slice(0, pathArray.length - 1)
+          .join('.')}`;
         const { data } =
           (await Client().getByUID(
             CUSTOM_TYPES.CONTENT_PAGE,
@@ -932,6 +935,54 @@ export const getVenuePageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   breadcrumbs[`level_3`] = {
     level: 3,
     label: theatreName,
+    url: pageUrl,
+  };
+
+  return breadcrumbs;
+};
+
+export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
+  const { uid, lang } = doc;
+  const isLTT = checkIfLTTMB(uid);
+  const isBroadway = checkIfBroadwayMB(uid);
+
+  if (!isLTT && !isBroadway) return {};
+
+  let breadcrumbs: TBreadcrumbs = {};
+  const headoutLanguagecode = getHeadoutLanguagecode(lang);
+  const pageUrl = convertUidToUrl({
+    uid,
+    lang: headoutLanguagecode,
+  });
+  const pageUrlObject = new URL(pageUrl);
+  const pathArray = getSanitizedPathArray(pageUrlObject);
+
+  const { HOME } = getEntMBLabels({
+    isLTT,
+    isBroadway,
+  });
+
+  breadcrumbs[`level_1`] = {
+    level: 1,
+    label: HOME,
+    url: convertUidToUrl({
+      uid: pageUrlObject.host,
+      lang: headoutLanguagecode,
+    }),
+  };
+
+  breadcrumbs[`level_2`] = {
+    level: 2,
+    label: isLTT ? LONDON_THEATRE_NEWS : BROADWAY_SHOW_NEWS,
+    url: convertUidToUrl({
+      uid: `${pageUrlObject.host}.${pathArray[0]}`,
+      lang: headoutLanguagecode,
+    }),
+  };
+
+  breadcrumbs[`level_3`] = {
+    level: 3,
+    label: NEWS_PAGE,
     url: pageUrl,
   };
 

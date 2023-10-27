@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import CategoryCard from 'components/ShowPages/CategoryCard';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -22,6 +25,8 @@ const CardCarouselContainer = styled.div`
   }
 
   .swiper-button-next {
+    position: absolute;
+    top: 40%;
     right: -23px;
     color: black;
     z-index: 2;
@@ -33,6 +38,8 @@ const CardCarouselContainer = styled.div`
     }
   }
   .swiper-button-prev {
+    position: absolute;
+    top: 40%;
     left: -23px;
     color: black;
     z-index: 2;
@@ -118,7 +125,7 @@ const CardCarouselContainer = styled.div`
   }
 `;
 
-interface PagesDocuments {
+export interface PagesDocuments {
   uid: string;
   data: {
     tgid: string;
@@ -128,9 +135,10 @@ interface PagesDocuments {
 type OwnCardCarouselProps = {
   cards: any[];
   isMobile: boolean;
-  allShowPagesDocuments: PagesDocuments[];
+  allShowPagesDocuments: PrismicDocumentWithUID[];
   currentLanguage: string;
   categoryName: string;
+  isNewsPage: boolean;
 };
 
 type CardCarouselState = any;
@@ -152,6 +160,7 @@ export default class CategorySlider extends Component<
   static defaultProps = {
     cards: [],
     isMobile: false,
+    isNewsPage: false,
   };
 
   renderCardsSlider = () => {
@@ -161,6 +170,7 @@ export default class CategorySlider extends Component<
       allShowPagesDocuments,
       currentLanguage,
       categoryName,
+      isNewsPage,
     } = this.props;
 
     const slidesPerView = isMobile ? 1 : 4;
@@ -175,6 +185,16 @@ export default class CategorySlider extends Component<
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
       navigation: !isMobile,
+    };
+
+    const handleShowMoreCTAClick = () => {
+      this.setState({ numberOfCard: cards.length });
+      if (isNewsPage)
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+          [ANALYTICS_PROPERTIES.SECTION]: 'Popular Shows',
+          [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.SEE_MORE_SHOWS,
+        });
     };
 
     return (
@@ -197,10 +217,7 @@ export default class CategorySlider extends Component<
               })}
             </div>
             <Conditional if={this.state.numberOfCard < cards.length}>
-              <button
-                className="see-more"
-                onClick={() => this.setState({ numberOfCard: cards.length })}
-              >
+              <button className="see-more" onClick={handleShowMoreCTAClick}>
                 See More Shows
               </button>
             </Conditional>

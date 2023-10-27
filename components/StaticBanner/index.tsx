@@ -146,6 +146,8 @@ const StaticBanner = ({
               dontLazyLoadImage
               shouldVideoPlay
               videoPosition={VIDEO_POSITIONS.BANNER}
+              showPauseIcon={false}
+              showPlayIcon={false}
             />
           </Conditional>
         </MediaContainer>
@@ -226,6 +228,8 @@ const StaticBanner = ({
                 dontLazyLoadImage
                 shouldVideoPlay
                 videoPosition={VIDEO_POSITIONS.BANNER}
+                showPlayIcon={false}
+                showPauseIcon={false}
               />
             </Conditional>
           </MediaContainer>

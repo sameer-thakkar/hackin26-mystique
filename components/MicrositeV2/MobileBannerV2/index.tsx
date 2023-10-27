@@ -59,6 +59,8 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
           videoPosition={VIDEO_POSITIONS.BANNER}
           eventTracking={eventTracking}
           pauseOnclick
+          showPauseIcon={false}
+          showPlayIcon={false}
         />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.mobileVideoLink)}>

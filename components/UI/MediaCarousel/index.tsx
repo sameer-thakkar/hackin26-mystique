@@ -126,6 +126,8 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               dontLazyLoadImage={isFirstProduct}
               shouldVideoPlay={currentIndex === 0}
               videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
+              showPauseIcon={false}
+              showPlayIcon={false}
             />
           ) : (
             <Image

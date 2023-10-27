@@ -135,6 +135,8 @@ const COLORS = {
     LIGHT_TONE_3: '#adc6ff',
   },
   LIGHT_GRAY: '#d9d9d9',
+  EERIE_BLACK: '#180030',
+  CHINESE_BLACK: '#150029',
   metadata: {
     generated: 'Tue Jun 15 2021 13:18:23 GMT+0530 (India Standard Time)',
     figma: {

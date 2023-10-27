@@ -37,7 +37,7 @@ export const StyledVideoContainer = styled.video`
   object-fit: cover;
 `;
 
-export const PlayButton = styled.button`
+export const VideoIcon = styled.button`
   border: 0;
   background: ${COLORS.BRAND.WHITE};
   cursor: pointer;
@@ -45,7 +45,7 @@ export const PlayButton = styled.button`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 90;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -59,5 +59,21 @@ export const PlayButton = styled.button`
     width: 2rem;
     height: 2rem;
     fill: ${COLORS.BRAND.WHITE};
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    svg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1rem;
+      height: 1rem;
+      fill: ${COLORS.BRAND.WHITE};
+    }
   }
 `;

@@ -149,7 +149,7 @@ type PriceBlockProps = {
   showCashback?: boolean;
   showCashbackBlock?: boolean;
   isShowPage?: boolean;
-  id?: string;
+  id?: number;
   isLoading?: boolean;
   wrapperRef?: any;
   isMobile?: boolean;

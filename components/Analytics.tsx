@@ -20,6 +20,7 @@ const Analytics = ({ contentType, cmsContent }: any) => {
   useEffect(() => {
     // GTM Universal Properties
     const customType = contentType;
+    let pageHeading = '';
     if (!customType || !hsid || eventsReady) return;
 
     sendVariableToDataLayer({
@@ -30,10 +31,20 @@ const Analytics = ({ contentType, cmsContent }: any) => {
           : ANALYTICS_PLATFORM.DESKTOP,
     });
 
-    const pageHeading =
-      customType === CUSTOM_TYPES.MICROSITE
-        ? cmsContent?.data?.data?.heading
-        : cmsContent?.data?.featured_title;
+    switch (true) {
+      case customType === CUSTOM_TYPES.MICROSITE:
+        pageHeading = cmsContent?.data?.data?.heading;
+        break;
+
+      case customType === CUSTOM_TYPES.NEWS_PAGE:
+        pageHeading = cmsContent?.data?.heading;
+        break;
+
+      default:
+        pageHeading = cmsContent?.data?.featured_title;
+        break;
+    }
+
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.PAGE_HEADING,
       value: withShortcodes(pageHeading).join(''),

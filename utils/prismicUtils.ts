@@ -48,6 +48,10 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
 import {
+  getNewsPageData,
+  getNewsPageDocument,
+} from 'utils/prismicPageData/NewsPage';
+import {
   generateDescriptor,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
@@ -74,6 +78,7 @@ import {
   RESOURCE_TYPE,
   SLICE_TYPES,
   THEMES,
+  TLANGUAGELOCALE,
   VIENNA_CONCERT_UID,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
@@ -1098,7 +1103,12 @@ export const getRefsArrayByIds = async (
   req: Request
 ) => {
   // @ts-expect-error TS(2345): Argument of type 'Request' is not assignable to pa... Remove this comment to see the full error message
-  const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
+  const linkedRefsPromise = Client(req).getByIDs(
+    ref_ids.filter((id) => id),
+    {
+      pageSize: 100,
+    }
+  );
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
     return res.results;
   });
@@ -1232,6 +1242,7 @@ export const getPrismicDocument = async ({
         queryParamsString,
         uid,
       }),
+      getNewsPageDocument({ req, lang, uid }),
       getVenuePageDocument({ req, lang, uid }),
       getContentPageDocument({
         req,
@@ -1348,6 +1359,21 @@ export const getPageData = async ({
         return {};
       }
     })();
+
+    if (ContentType === CUSTOM_TYPES.NEWS_PAGE) {
+      return await getNewsPageData(
+        CMSContent,
+        ContentType,
+        isDev,
+        req,
+        host,
+        hostname,
+        lang as TLANGUAGELOCALE,
+        cookies,
+        currencyListPromise,
+        domainConfigPromise
+      );
+    }
 
     if (ContentType === CUSTOM_TYPES.VENUE_PAGE) {
       const showsListSlices = CMSContent.data?.descriptionSlices?.filter(

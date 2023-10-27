@@ -142,7 +142,7 @@ const SpecialGuidedTourSidePanel = ({
           listingPrice={listingPrice}
           lang={lang}
           showSavings
-          id={tgid}
+          id={+tgid}
           prefix
         />
         <a target="_blank" href={productBookingUrl} rel="nofollow noreferrer">

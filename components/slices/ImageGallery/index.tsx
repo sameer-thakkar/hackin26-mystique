@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import type { Swiper as ISwiper } from 'swiper';
@@ -45,8 +45,8 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, GRID_ICON } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 /**
@@ -71,7 +71,7 @@ const Swiper = dynamic(() =>
  */
 
 const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
-  const { images, heading, isMobile } = props;
+  const { images, heading, $isNewsPage, isMobile } = props;
 
   const [isDesktopLightboxOpen, setDesktopLightbox] = useState(false);
   const [isMobileLightboxOpen, setMobileLightbox] = useState(false);
@@ -269,13 +269,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   const fullImageHeading = RichText.asText(activeImage.heading);
 
   return (
-    <StyledImageGallery ref={imageGalleryRef}>
-      <h2 className="heading" id={generateSidenavId(heading)}>
-        {heading}
-      </h2>
+    <StyledImageGallery ref={imageGalleryRef} $isNewsPage={$isNewsPage}>
+      <Conditional if={heading}>
+        <h2 className="heading" id={generateSidenavId(heading)}>
+          {heading}
+        </h2>
+      </Conditional>
 
       <GridLayoutContainer>
-        <GridLayout>
+        <GridLayout $isNewspage={$isNewsPage}>
           {images.map((image, index) => {
             const caption = RichText.asText(image.heading);
             const description = RichText.asText(image.content);
@@ -317,7 +319,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             );
           })}
         </GridLayout>
-        <Conditional if={images.length > 2}>
+        <Conditional if={images.length > 2 && !$isNewsPage}>
           <TagContainer
             $ctaContainerWidth={ctaContainerWidth}
             $ctaContainerHeight={ctaContainerHeight}
@@ -330,7 +332,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
         </Conditional>
       </GridLayoutContainer>
 
-      <Conditional if={isDesktopLightboxOpen && !isMobile}>
+      <Conditional if={isDesktopLightboxOpen && !isMobile && !$isNewsPage}>
         <DesktopLightBox>
           <Swiper {...gallerySwiperParams}>
             {images.map((image, index) => {

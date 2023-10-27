@@ -12,4 +12,5 @@ export type ImageGalleryProps = {
     image_alt?: string;
   }>;
   isMobile: boolean;
+  $isNewsPage?: boolean;
 };

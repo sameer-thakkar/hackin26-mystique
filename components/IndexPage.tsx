@@ -44,6 +44,7 @@ const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
+const NewsPage = dynamic(() => import('components/NewsPage'));
 
 const getValidUrlParams = (query: any) =>
   Object.entries(query)
@@ -142,6 +143,7 @@ const Page = (props: PageProps) => {
     breadcrumbs,
     cityPageParams,
   } = props;
+
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
@@ -181,6 +183,19 @@ const Page = (props: PageProps) => {
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
             breadcrumbs={breadcrumbs}
+          />
+        );
+      case CUSTOM_TYPES.NEWS_PAGE:
+        return (
+          <NewsPage
+            data={CMSContent}
+            isMobile={isMobile}
+            host={host}
+            lang={lang}
+            uid={uid}
+            isDev={isDev}
+            domainConfig={domainConfig}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
       case CUSTOM_TYPES.VENUE_PAGE:

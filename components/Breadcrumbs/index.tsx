@@ -15,10 +15,11 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { CHEVRON_RIGHT } from 'assets/SvgIcons';
 
-const BreadcrumbsDropdown = dynamic(() =>
-  import(
-    /* webpackChunkName: "BreadcrumbsPopup" */ 'components/Breadcrumbs/components/BreadcrumbsDropdown'
-  )
+const BreadcrumbsDropdown = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "BreadcrumbsPopup" */ 'components/Breadcrumbs/components/BreadcrumbsDropdown'
+    )
 );
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
@@ -30,6 +31,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   isContentPage = false,
   isShowPage = false,
   isVenuePage = false,
+  isNewsPage = false,
   isMobile,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -72,6 +74,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       $isContentPage={isContentPage}
       $isShowPage={isShowPage}
       $isVenuePage={isVenuePage}
+      $isNewsPage={isNewsPage}
       $isDropdownOpen={isDropdownOpen}
       onClick={handleClick}
     >

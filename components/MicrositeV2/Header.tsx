@@ -92,7 +92,7 @@ const StyledHeader = styled.div<IStyledHeader>`
       isEntertainmentMbListicle &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showLttColoredHeader }) =>
-        showLttColoredHeader ? '#150029' : '#fff'}  ;
+        showLttColoredHeader ? '#150029' : '#fff'};
   }
   .fixed-offset::after {
     content: '';
@@ -115,7 +115,7 @@ const StyledHeader = styled.div<IStyledHeader>`
         height:300px;
       }
     }`}
-  
+
   .main-wrapper .header-city-selector {
     min-width: 180px;
     font-family: ${HALYARD.FONT_STACK};
@@ -130,9 +130,8 @@ const StyledHeader = styled.div<IStyledHeader>`
   }
 
   .styled-active-value {
-    color:${({ showLttColoredHeader }) =>
-      showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3}
-     
+    color: ${({ showLttColoredHeader }) =>
+      showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3};
   }
   @media (max-width: 768px) {
     .main-wrapper {
@@ -142,8 +141,8 @@ const StyledHeader = styled.div<IStyledHeader>`
         isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
-      background:${({ showLttColoredHeader }) =>
-        showLttColoredHeader ? '#150029' : '#fff'}  ;
+      background: ${({ showLttColoredHeader }) =>
+        showLttColoredHeader ? '#150029' : '#fff'};
     }
     .fixed-wrap {
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
@@ -402,6 +401,7 @@ interface HeaderProps {
   categoryHeaderMenuExists?: boolean;
   categoryHeaderMenu?: Record<string, any>;
   isNewLTTLandingPageVisible?: boolean;
+  isNewsPage?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -430,6 +430,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
+  isNewsPage = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -699,7 +700,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
             <Conditional
               if={
-                (!isMobile || isNewLTTLandingPageVisible) &&
+                (!isMobile || isNewLTTLandingPageVisible || isNewsPage) &&
                 (headerLanguages?.length || headerCurrencies?.length)
               }
             >

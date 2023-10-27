@@ -211,6 +211,7 @@ const MicrositeV1 = (props: any) => {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
   } = categoryTourListData || {};
+
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
     ? categorizedToursList

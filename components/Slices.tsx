@@ -435,6 +435,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           heading={slice.primary.heading}
           images={slice.items}
           isMobile={props.isMobile}
+          $isNewsPage={props.isNewsPage}
         />
       );
     case 'carousel_gallery':

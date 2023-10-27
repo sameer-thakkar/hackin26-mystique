@@ -12,7 +12,7 @@ export const getObject = (data: any, filterArray: any) => {
     isSafetyBanner = false,
     currentObject: any;
 
-  data.forEach((element: any) => {
+  data?.forEach((element: any) => {
     if (element.type == 'heading6') {
       // detail object heading
       detailObjectHeading = element.content.text;
@@ -39,6 +39,12 @@ export const getObject = (data: any, filterArray: any) => {
         // detail object content
         if (detailObjectHeading === strings.SHOW_PAGE.SHOW_TYPE) {
           showType = element.content.text;
+        }
+        if (
+          detailObjectHeading === strings.SHOW_PAGE.THEATRE_NAME &&
+          element?.content?.spans?.[0]?.data?.url
+        ) {
+          detailsObjects.theatrePageUrl = element.content.spans[0].data.url;
         }
         if (
           filterArray.find((x: any) => {
@@ -209,6 +215,7 @@ export const parseShowPageData = (data: any) => {
             hasSpecialOffer = true;
           }
         }
+
         if (
           DetailObjectHeading === strings.SHOW_PAGE.THEATRE_NAME &&
           element?.content?.spans?.[0]?.data?.url

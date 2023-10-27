@@ -7,10 +7,15 @@ import sliceHandler from '../Slices';
 
 export const StyledLongForm = styled.div<{
   isVenuePage?: boolean;
+  $isNewsPage?: boolean;
 }>`
   display: grid;
-  grid-row-gap: ${({ isVenuePage }) => {
-    return isVenuePage ? '64px' : '56px';
+  grid-row-gap: ${({ isVenuePage, $isNewsPage }) => {
+    if (isVenuePage) {
+      return '4rem';
+    } else if ($isNewsPage) {
+      return '1.5rem';
+    } else return '3.5rem';
   }};
   h1,
   h2,
@@ -33,7 +38,8 @@ export const StyledLongForm = styled.div<{
   h2 {
     color: ${COLORS.GRAY.G2};
     display: inline-block;
-    margin: 0.2em 0;
+    ${({ $isNewsPage }) =>
+      $isNewsPage ? 'margin: 0 0 0.5rem 0;' : 'margin: 0.2em 0;'}
     ${expandFontToken('Heading/Large')}
   }
   h3 {
@@ -53,6 +59,7 @@ export const StyledLongForm = styled.div<{
     ${expandFontToken('Paragraph/Large')}
     margin-top: 0;
     color: ${COLORS.GRAY.G2};
+    ${({ $isNewsPage }) => ($isNewsPage ? 'margin:0' : '')};
   }
   & > p > a {
     text-decoration: none;
@@ -66,15 +73,24 @@ export const StyledLongForm = styled.div<{
   }
 
   @media (max-width: 768px) {
-    ${({ isVenuePage }) =>
-      isVenuePage
-        ? `
-      && {
-        grid-row-gap: 40px
-      }`
-        : `
-       grid-row-gap: 52px;
-      `}
+    ${({ isVenuePage, $isNewsPage }) => {
+      if (isVenuePage) {
+        return `
+            && {
+              grid-row-gap: 2.5rem;
+            }
+            `;
+      } else if ($isNewsPage) {
+        return `
+              grid-row-gap: 1rem;
+            `;
+      } else {
+        return `
+              grid-row-gap: 3.25rem;
+            `;
+      }
+    }}
+
     h1 {
       ${expandFontToken('Heading/Large')}
       color: ${COLORS.GRAY.G2};
@@ -99,7 +115,9 @@ export const StyledLongForm = styled.div<{
       font-size: 0.6rem;
       color: ${COLORS.GRAY.G2};
     }
-    p, ul, ol {
+    p,
+    ul,
+    ol {
       ${expandFontToken('Paragraph/Medium')}
     }
   }
@@ -109,8 +127,11 @@ export default class LongForm extends Component<any, any> {
     const { content, ...props } = this.props;
 
     return (
-      <StyledLongForm isVenuePage={props.isVenuePage}>
-        {content.map((slice: any, index: number) => (
+      <StyledLongForm
+        isVenuePage={props.isVenuePage}
+        $isNewsPage={props.isNewsPage}
+      >
+        {content?.map((slice: any, index: number) => (
           <div
             key={`long-form-${slice?.slice_type}-${index}`}
             className={`${

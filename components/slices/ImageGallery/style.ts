@@ -4,12 +4,16 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 
-export const StyledImageGallery = styled.div`
+export const StyledImageGallery = styled.div<{
+  $isNewsPage?: boolean;
+}>`
   display: grid;
   grid-row-gap: 22px;
   overflow: hidden;
-  padding: 0 16px;
-  margin: 0 -16px;
+  pointer-events: ${({ $isNewsPage }) => ($isNewsPage ? 'none' : '')};
+
+  padding: ${({ $isNewsPage }) => ($isNewsPage ? '0' : '0 1rem')};
+  margin: ${({ $isNewsPage }) => ($isNewsPage ? '0' : '0 -1rem')};
 
   .heading {
     ${expandFontToken(FONTS.HEADING_LARGE)}
@@ -414,12 +418,15 @@ export const DesktopLightboxHeading = styled.div`
   }
 `;
 
-export const Wrapper = styled.div<{ noOfImages: number }>`
+export const Wrapper = styled.div<{
+  noOfImages: number;
+  $isNewsPage?: boolean;
+}>`
   /* Desktop and Tablet first style starts */
   position: relative;
   display: grid;
-  column-gap: 12px;
-  row-gap: 12px;
+  column-gap: ${({ $isNewsPage }) => ($isNewsPage ? '8px' : '12px')};
+  row-gap: ${({ $isNewsPage }) => ($isNewsPage ? '8px' : '12px')};
   img {
     height: 100%;
     border-radius: 8px;
@@ -434,16 +441,25 @@ export const Wrapper = styled.div<{ noOfImages: number }>`
    /* Logic for the Grid Layout for dekstop view */
    @media (min-width: 768px) {
     
-    ${({ noOfImages }) => {
-      if (noOfImages <= 2) {
+    ${({ noOfImages, $isNewsPage }) => {
+      if ($isNewsPage && noOfImages === 2) {
+        return `
+        grid-template-columns: repeat(${noOfImages}, minmax(1rem, 1fr));
+        grid-template-rows: minmax(13.5rem, 1fr);
+        `;
+      } else if (noOfImages <= 2) {
         return `
             grid-template-columns: repeat(${noOfImages}, minmax(6.5rem, 1fr));
-            grid-template-rows: minmax(23rem, 1fr)
+            grid-template-rows: minmax(${
+              $isNewsPage ? '27.875rem' : '23rem'
+            }, 1fr)
         `;
       } else if (noOfImages > 2 && noOfImages <= 4) {
         return `
             grid-template-columns: 2fr 1fr;
-            grid-template-rows: repeat(2, minmax(15rem, 1fr));
+            grid-template-rows: repeat(2, minmax(${
+              $isNewsPage ? '10rem' : '15rem'
+            }, 1fr));
             div:first-child {
                 grid-row: 1 / span 2;
                 grid-column: 1 / span 1;
@@ -488,7 +504,7 @@ export const Wrapper = styled.div<{ noOfImages: number }>`
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(1, minmax(7rem, 1fr));
       grid-auto-rows: minmax(7rem, 1fr);
-      gap: 7px;
+      gap: 8px;
 
       div:first-child {
         grid-row: ${({ noOfImages }) => noOfImages > 2 && '1 / span 2'};

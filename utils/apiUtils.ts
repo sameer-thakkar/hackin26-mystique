@@ -206,6 +206,39 @@ interface TourListProps extends CommonApiProps {
   currency?: string;
 }
 
+interface TourListMediaProps extends CommonApiProps {
+  tgids: string[] | number[];
+  resourceType: string;
+}
+
+export const fetchTourGroupMedia = async ({
+  tgids,
+  cookies = {},
+  resourceType,
+}: TourListMediaProps) => {
+  try {
+    const params = {
+      'resource-entity-ids': tgids?.join(','),
+      'resource-type': resourceType,
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.Media,
+      params,
+      id: null,
+    });
+    const headers = constructHeaders({ cookies });
+
+    const res = await fetch(apiUrl, { headers });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourGroupMedia]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
 export const fetchTourListV6 = async ({
   hostname,
   language,
@@ -238,6 +271,9 @@ export const fetchTourListV6 = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourListV6]', error);
+    sendLog({
+      err: error,
+    });
   }
 };
 
@@ -621,7 +657,8 @@ export const fetchCategory = async ({
     ...(city && { city }),
     language,
     ...(filterCategoryActiveProductCount && {
-      'filter-category-active-product-count': filterCategoryActiveProductCount.toString(),
+      'filter-category-active-product-count':
+        filterCategoryActiveProductCount.toString(),
     }),
     ...(includeUnavailable && {
       'include-unavailable': includeUnavailable.toString(),

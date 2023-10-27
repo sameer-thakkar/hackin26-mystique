@@ -60,6 +60,8 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
           shouldVideoPlay
           shouldAutoPlay
           pauseOnclick
+          showPauseIcon={false}
+          showPlayIcon={false}
         />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.desktopVideoLink)}>

@@ -1,9 +1,18 @@
 import React from 'react';
 import { Wrapper } from 'components/slices/ImageGallery/style';
 
-// @ts-ignore
-const GridLayout = ({ children }) => {
-  return <Wrapper noOfImages={children.length}>{children}</Wrapper>;
+const GridLayout = ({
+  $isNewspage,
+  children,
+}: {
+  $isNewspage: boolean | undefined;
+  children: JSX.Element[];
+}) => {
+  return (
+    <Wrapper noOfImages={children.length} $isNewsPage={$isNewspage}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default GridLayout;

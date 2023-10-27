@@ -140,6 +140,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     let pageTitle = '';
     if (customType === CUSTOM_TYPES.MICROSITE) {
       pageTitle = CMSContent?.data?.data?.heading;
+    } else if (customType === CUSTOM_TYPES.NEWS_PAGE) {
+      pageTitle = CMSContent?.data?.heading;
     } else if (customType === CUSTOM_TYPES.VENUE_PAGE) {
       pageTitle = CMSContent?.data?.theatreName;
     } else pageTitle = CMSContent?.data?.featured_title;
