@@ -57,6 +57,7 @@ jobs:
         run: yarn build
         env:
           RELEASE_VERSION: ${{ env.GIT_VERSION }}
+          NEXT_PUBLIC_HEADOUT_DOMAIN: 'https://www.headout.com'
 
   push-ecr:
     name: 'CD (Deploy)'
