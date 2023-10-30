@@ -42,7 +42,8 @@ export const PopularCategoriesContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin: 1.5rem 0 1.5rem 1rem;
+    margin: 1.875rem 0 1.875rem 1rem;
+    padding: 0;
     .popular-categories-title {
       ${expandFontToken(FONTS.HEADING_REGULAR)};
     }
@@ -50,7 +51,7 @@ export const PopularCategoriesContainer = styled.div`
       color: ${COLORS.BLACK};
       ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
       position: inherit;
-      padding-right: 0.5rem;
+      padding: 0.25rem 0.5rem 0 0;
     }
     .entity-image-container {
       max-width: min-content;

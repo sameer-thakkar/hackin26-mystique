@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { EntityContainer } from 'components/CityPageContainer/ExploreCity/styles';
 import {
   ICarouselChild,
   ICatSubCatSectionProps,
@@ -132,7 +133,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
   };
 
   return (
-    <div ref={containerRef}>
+    <EntityContainer ref={containerRef}>
       <h3 className="entity-header">{heading}</h3>
       <Carousel
         isMobile={isMobile}
@@ -193,7 +194,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
           );
         })}
       </Carousel>
-    </div>
+    </EntityContainer>
   );
 };
 

@@ -10,14 +10,12 @@ export const Container = styled.div`
   .content-wrapper {
     max-width: ${SIZES.MAX_WIDTH};
     margin: auto;
-    padding-bottom: 1rem;
+    padding: 0 0 1rem 0;
 
     @media (max-width: 768px) {
-      height: 22rem;
-      margin-top: -1.6rem;
       display: block;
       overflow: hidden;
-      padding-bottom: 0.8rem;
+      padding: 1.875rem 0;
     }
   }
 `;
@@ -37,10 +35,10 @@ export const TextContainer = styled.div`
     -webkit-text-fill-color: transparent;
   }
   @media (max-width: 768px) {
+     padding-bottom: 2rem;
     .heading-wrapper {
-      margin: revert;
       ${expandFontToken(FONTS.HEADING_LARGE)}
-      padding: 1.4rem 0 0 1rem;
+      padding: 0 0 0 1rem;
     }
   }
 `;
@@ -108,8 +106,10 @@ export const Card = styled.div<{ height: string; width: string }>`
         }
       }
       @media (max-width: 768px) {
+        padding: 0.5rem;
         .attraction-name {
           ${expandFontToken(FONTS.HEADING_XS)}
+          padding-bottom: 0.25rem;
         }
         .attraction-price {
           ${expandFontToken(FONTS.UI_LABEL_XS)}

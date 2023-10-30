@@ -7,11 +7,12 @@ export const ExploreContainer = styled.div`
   margin: 3rem auto;
   max-width: ${SIZES.MAX_WIDTH};
   .explore-title {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
   }
   .entity-header {
     ${expandFontToken(FONTS.DISPLAY_SMALL)};
+    margin-bottom: -1rem;
   }
   .entity-name {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
@@ -36,16 +37,32 @@ export const ExploreContainer = styled.div`
     }
   }
   @media (max-width: 768px) {
-    margin: 0 0 1rem 1rem;
+    padding: 1.875rem 0 1.875rem 1rem;
+    margin: 0;
     .explore-title {
-      margin-bottom: 1.5rem;
+      margin: 0 0 1.5rem;
       ${expandFontToken(FONTS.HEADING_REGULAR)};
     }
     .entity-header {
-      ${expandFontToken(FONTS.HEADING_REGULAR)};
+      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+      margin-bottom: 1rem;
     }
     .entity-image-container {
       max-width: min-content;
+      .entity-name {
+        padding-top: 0.25rem;
+      }
     }
+    :not(.swiper-initialised) {
+      .entity-image-container {
+        width: 9.75rem;
+      }
+    }
+  }
+`;
+
+export const EntityContainer = styled.div`
+  @media (max-width: 768px) {
+    margin-top: 2rem;
   }
 `;

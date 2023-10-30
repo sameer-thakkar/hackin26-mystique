@@ -6,6 +6,7 @@ import {
 import { getBannerParams } from 'components/CityPageContainer/utils';
 import {
   Container,
+  Gradient,
   TitleWrapper,
 } from 'components/CityPageContainer/VideoBanner/styles';
 import Video from 'UI/Video';
@@ -82,6 +83,7 @@ const VideoBanner = ({
         showPlayIcon={false}
       >
         <VideoTitle currentCityData={currentCityData} />
+        <Gradient />
       </Video>
     </Container>
   );

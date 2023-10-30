@@ -5,7 +5,7 @@ import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
 export const Container = styled.div`
-  height: 18rem;
+  height: 19.125rem;
   position: relative;
   @media (min-width: 768px) {
     height: 33rem;
@@ -19,11 +19,13 @@ export const Container = styled.div`
 
 export const TitleWrapper = styled.h1`
   position: absolute;
-  inset: 8rem 0 0;
+  left: 0;
+  right: 0;
+  bottom: 3rem;
   width: calc(100% - (5.46vw * 2));
   max-width: ${SIZES.MAX_WIDTH};
   margin: auto;
-  z-index: 1;
+  z-index: 10;
 
   .promo-text-wrapper {
     color: ${COLORS.GRAY.G8};
@@ -67,5 +69,26 @@ export const TitleWrapper = styled.h1`
       font-size: 24px;
       line-height: 33px;
     }
+  }
+`;
+
+export const Gradient = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 14rem;
+  z-index: 5;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 9, 11, 0) 11.16%,
+    rgba(6, 6, 7, 0.7) 90.92%
+  );
+  @media (max-width: 768px) {
+    height: 10rem;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 9, 11, 0) 5.2%,
+      rgba(6, 6, 7, 0.5) 100%
+    );
   }
 `;

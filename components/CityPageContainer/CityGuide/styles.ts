@@ -49,8 +49,8 @@ export const CityGuideContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin: 1.5rem 1rem;
-    
+    margin: 0;
+    padding: 1.875rem 1rem;
   }
 `;
 

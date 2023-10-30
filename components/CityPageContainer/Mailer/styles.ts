@@ -115,7 +115,7 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
       display: block;
       height: auto;
       .email-input {
-        margin-bottom: 1.4rem;
+        margin-bottom: 1rem;
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
         border: 1px solid ${COLORS.GRAY.G6};
         ${({ isErr }) =>
@@ -133,7 +133,6 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
       .signup-btn {
         width: 100%;
         height: 3rem;
-        margin-top: 1rem;
         border-radius: 8px;
       }
     }

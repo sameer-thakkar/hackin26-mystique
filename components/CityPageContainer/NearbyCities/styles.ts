@@ -27,11 +27,14 @@ export const NeabyCitiesContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin: 1.5rem 0 0 1rem;
+    padding: 1.875rem 0 1.875rem 1rem;
+    margin: 0;
     .cities-nearby-title {
       ${expandFontToken(FONTS.HEADING_LARGE)};
+      margin: 0 0 2rem 0;
     }
     .city-name {
+      padding: 0.5rem;
       ${expandFontToken(FONTS.HEADING_REGULAR)};
     }
   }
