@@ -135,7 +135,6 @@ const Product = (props: any) => {
     isProductCardLoading = false,
     setDetailsPopupShown = undefined,
     detialsPopupShown = false,
-    tourRankingExpVariant,
     isNonPoi = false,
   } = props;
   const {
@@ -174,7 +173,6 @@ const Product = (props: any) => {
     ) === strings.TODAY;
 
   useEffect(() => {
-    if (!tourRankingExpVariant) return;
     const urlParams = new URLSearchParams(window.location.search);
     const pid = urlParams.get('pid');
     const popup = urlParams.get('popup');
@@ -227,13 +225,13 @@ const Product = (props: any) => {
           enable: true,
           params: {
             pid: tgid,
-            popup: 'details',
+            popup: 'combo',
           },
           isQueryRestore: true,
         },
       });
     }
-  }, [isMobile, showCard, tourRankingExpVariant]);
+  }, [isMobile, showCard]);
 
   const {
     combo: isCombo,
