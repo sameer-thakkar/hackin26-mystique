@@ -14,10 +14,10 @@ import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
-import { genUniqueId, getHeadoutLanguagecode } from 'utils';
+import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { formatDateToString } from 'utils/dateUtils';
-import { truncate } from 'utils/helper';
+import { getLangObject, truncate } from 'utils/helper';
 import { extractFirstRichTextSliceContent } from 'utils/parser';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
@@ -150,7 +150,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
 
               const redirectionUrl = convertUidToUrl({
                 uid,
-                lang: getHeadoutLanguagecode(lang),
+                lang: getLangObject(lang).code,
                 isDev,
                 hostname: host,
               });

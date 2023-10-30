@@ -43,8 +43,8 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     trailerSectionData,
     showPageDocuments,
     subCategoryData,
-    videoData,
     mediaData,
+    videoData,
   } = CMSContent;
 
   const { refs, heading, authorName, bannerImage, tgid, breadcrumbs } = data;

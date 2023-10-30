@@ -34,14 +34,17 @@ export const Wrapper = styled.div<{
   display: grid;
   margin-top: 1.5rem;
   .swiper {
+    max-width: ${SIZES.MAX_WIDTH};
+    width: calc(100vw - 5.46vw * 2);
     -webkit-transform: translate3d(0, 0, 0) !important;
     z-index: 1;
   }
-  .swiper-horizontal {
-    max-width: ${SIZES.MAX_WIDTH};
-    width: calc(100vw - 5.46vw * 2);
+  :not(.swiper-initialized) .swiper-wrapper {
+    .swiper-slide {
+      width: 17.625rem;
+      margin-right: 1.5rem;
+    }
   }
-
   time {
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
   }

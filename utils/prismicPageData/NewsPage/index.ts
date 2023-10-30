@@ -67,7 +67,10 @@ export const filterArticlesBasedOnEntMb = (
   });
 };
 
-export const getFeaturedArticlesPromise = (uid: string) =>
+export const getFeaturedArticlesPromise = (
+  uid: string,
+  lang: TLANGUAGELOCALE
+) =>
   Client().query(
     [
       Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
@@ -80,10 +83,14 @@ export const getFeaturedArticlesPromise = (uid: string) =>
         uid
       ),
     ],
-    { pageSize: 30 }
+    { pageSize: 30, lang }
   );
 
-export const getArticlesWithSameTgidPromise = (tgid: number, uid: string) => {
+export const getArticlesWithSameTgidPromise = (
+  tgid: number,
+  uid: string,
+  lang: TLANGUAGELOCALE
+) => {
   return tgid
     ? Client().query(
         [
@@ -97,12 +104,12 @@ export const getArticlesWithSameTgidPromise = (tgid: number, uid: string) => {
             uid
           ),
         ],
-        { pageSize: 5 }
+        { pageSize: 5, lang }
       )
     : Promise.resolve([]);
 };
 
-export const getAllArticlesPromise = (uid: string) => {
+export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
   return Client().query(
     [
       Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
@@ -112,7 +119,7 @@ export const getAllArticlesPromise = (uid: string) => {
         uid
       ),
     ],
-    { pageSize: 100 }
+    { pageSize: 100, lang }
   );
 };
 
@@ -245,9 +252,13 @@ export const getNewsPageData = async (
   const collectionIdFromPrismic = CMSContent?.data?.taggedCollection;
   let allArticles, featuredArticles, articlesWithSameTgid, collectionReviews;
 
-  const featuredArticlesPromise = getFeaturedArticlesPromise(uid);
-  const articlesWithSameTgidPromise = getArticlesWithSameTgidPromise(tgid, uid);
-  const allArticlesPromise = getAllArticlesPromise(uid);
+  const featuredArticlesPromise = getFeaturedArticlesPromise(uid, lang);
+  const articlesWithSameTgidPromise = getArticlesWithSameTgidPromise(
+    tgid,
+    uid,
+    lang
+  );
+  const allArticlesPromise = getAllArticlesPromise(uid, lang);
 
   const aggregatedPromise = await Promise.allSettled([
     featuredArticlesPromise,

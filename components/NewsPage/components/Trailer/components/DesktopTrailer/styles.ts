@@ -176,6 +176,7 @@ export const Slider = styled.div<{
       -webkit-backface-visibility: hidden;
       position: relative;
     }
+
     .image-wrap {
       border-radius: 4px;
       height: 5.625rem;
@@ -190,6 +191,12 @@ export const Slider = styled.div<{
         box-sizing: border-box;
         border: 1px solid ${COLORS.BRAND.WHITE};
       }
+    }
+  }
+  .swiper-wrapper:not(.swiper-initialized) {
+    .swiper-slide {
+      width: 10rem;
+      margin-right: 1.5rem;
     }
   }
 `;

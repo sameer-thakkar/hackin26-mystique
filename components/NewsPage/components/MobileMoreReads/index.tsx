@@ -6,10 +6,9 @@ import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
-import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { formatDateToString } from 'utils/dateUtils';
-import { truncate } from 'utils/helper';
+import { getLangObject, truncate } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
@@ -88,7 +87,7 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({ content }) => {
 
               const redirectionUrl = convertUidToUrl({
                 uid: article.uid,
-                lang: getHeadoutLanguagecode(lang),
+                lang: getLangObject(lang).code,
                 isDev,
                 hostname: host,
               });

@@ -5,10 +5,9 @@ import type { TDesktopFeaturedNewsProps } from 'components/NewsPage/components/D
 import { FeaturedNewsContainer } from 'components/NewsPage/components/DesktopFeaturedNews/styles';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
-import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { formatDateToString } from 'utils/dateUtils';
-import { truncate } from 'utils/helper';
+import { getLangObject, truncate } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
@@ -70,7 +69,7 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
 
               const redirectionUrl = convertUidToUrl({
                 uid: article.uid,
-                lang: getHeadoutLanguagecode(lang),
+                lang: getLangObject(lang).code,
                 isDev,
                 hostname: host,
               });

@@ -9,10 +9,9 @@ import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
 import { Paginator } from 'UI/Paginator';
 import { MBContext } from 'contexts/MBContext';
-import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { formatDateToString } from 'utils/dateUtils';
-import { truncate } from 'utils/helper';
+import { getLangObject, truncate } from 'utils/helper';
 import { extractFirstRichTextSliceContent } from 'utils/parser';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
@@ -86,7 +85,7 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
 
             const redirectionUrl = convertUidToUrl({
               uid: article.uid,
-              lang: getHeadoutLanguagecode(lang),
+              lang: getLangObject(lang).code,
               isDev,
               hostname: host,
             });
