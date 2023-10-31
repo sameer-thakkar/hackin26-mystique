@@ -208,11 +208,21 @@ interface IStyledProductCard {
   isV3Design?: boolean;
   layout?: any;
   isNewMediaSite?: boolean;
+  isContentExpanded?: boolean;
+  collapsed?: boolean;
+  defaultOpen?: boolean;
   $isBannerCard?: boolean;
   $isSwipeSheetOpen?: boolean;
 }
 
 export const StyledProductCard = styled.div<IStyledProductCard>`
+  ${({ collapsed, defaultOpen, isMobile }) =>
+    collapsed && !defaultOpen && !isMobile
+      ? `
+        max-height: 344px;
+        overflow: hidden;
+      `
+      : ''}
   background-color: white;
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
@@ -242,12 +252,20 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   .more-details {
     ${expandFontToken('Button/Medium')}
     color: ${COLORS.TEXT.CANDY_1};
-    margin-left: 1rem;
-    margin-top: 1rem;
+    z-index: 1;
+    width: calc(100% - 36.6rem);
+    position: absolute;
+    bottom: 1px;
+    padding-bottom: 1.5rem;
+    height: 15%;
+    ${({ isContentExpanded }) =>
+      !isContentExpanded &&
+      'background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgba(255, 255, 255, 0.88) 48.92%, #FFF 70%);'};
     cursor: pointer;
     outline: none;
     display: grid;
     grid-auto-flow: column;
+    align-items: flex-end;
     justify-content: start;
     grid-gap: 8px;
 
@@ -515,8 +533,8 @@ export const CTABlock = styled.div<{
 `;
 
 export const ProductBody = styled.div<{
-  noOfListItemToShow?: number;
   hasReadMore?: boolean;
+  maxHeight?: number;
   defaultOpen?: boolean;
   collapsed?: boolean;
 }>`
@@ -533,14 +551,12 @@ export const ProductBody = styled.div<{
     color: ${COLORS.GRAY.G2};
     display: grid;
     grid-gap: 0;
-    ${({ collapsed, defaultOpen }) =>
+    ${({ collapsed, defaultOpen, maxHeight }) =>
       collapsed && !defaultOpen
         ? `
-    *:not(div, svg, rect, g, path):nth-child(n + 4),
-    ul li:nth-child(n + 4) {
-      display: none;
-    }
-    `
+        max-height: ${maxHeight || 265}px;
+        overflow: hidden;
+      `
         : ''}
     ul {
       margin: 0;

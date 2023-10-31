@@ -587,9 +587,9 @@ const getCityGuideShoulderPageBreadcrumbs = async (
       };
     } else {
       try {
-        const prevSlugShoulderPageUid = `${pageUrlObject.host}.${pathArray
-          .slice(0, pathArray.length - 1)
-          .join('.')}`;
+        const prevSlugShoulderPageUid = `${
+          pageUrlObject.host
+        }.${pathArray.slice(0, pathArray.length - 1).join('.')}`;
         const { data } =
           (await Client().getByUID(
             CUSTOM_TYPES.CONTENT_PAGE,

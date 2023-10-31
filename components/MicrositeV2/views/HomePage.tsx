@@ -67,8 +67,8 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
     /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
   ).then((mod) => mod.ProductsWrapper)
 );
-const Banner: ComponentType<any> = dynamic(
-  () => import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
+const Banner: ComponentType<any> = dynamic(() =>
+  import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
 const Loader: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
@@ -76,12 +76,11 @@ const Loader: ComponentType<any> = dynamic(() =>
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
 );
-const CategoryHeader = dynamic(
-  () =>
-    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const V2MicrositeWrapper = styled.div`

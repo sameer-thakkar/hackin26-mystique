@@ -45,8 +45,8 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, GRID_ICON } from 'assets/SvgIcons';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 /**

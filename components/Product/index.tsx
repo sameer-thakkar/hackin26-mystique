@@ -90,8 +90,14 @@ const MediaCarousel = dynamic(() =>
 
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
+const maxProductHeight = 395;
+const maxProductBodyHeight = 265;
+
 const Product = (props: any) => {
   const moreDetailsRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>();
+  const collapsibleContentRef = useRef<HTMLDivElement>();
+
   const {
     tgid,
     position,
@@ -408,25 +414,18 @@ const Product = (props: any) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
-  const shouldShowMoreDetails =
-    // @ts-ignore
-    tabs[activeTabIndex]?.contents.flat()?.length > 3 &&
-    showMoreDetailsInTabs &&
-    !defaultOpen;
-  const hasReadMore =
-    (shouldShowMoreDetails && !isSpecialGuidedTour) || isMobile;
-
-  const noOfListItemToShow = getMaxListItemsToShow(
-    // @ts-ignore
-    tabs[activeTabIndex]?.contents
-  );
-
   const onTabChange = ({ tab, index, defaultSelection }: any) => {
     const noOfListItems = getMaxListItemsToShow(tab.contents);
+    // kept the old truncation logic for mobile view
+    const isTruncated = isMobile
+      ? tab.contents.length > noOfListItems
+      : isTicketCard
+      ? false
+      : (collapsibleContentRef.current?.offsetHeight ?? 0) >=
+          maxProductBodyHeight ||
+        (productRef.current?.offsetHeight ?? 0) >= maxProductHeight;
+    if (isMobile) setShowMoreDetails(isTruncated);
 
-    const isTruncated = tab.contents.length > noOfListItems;
-
-    setShowMoreDetails(isTruncated);
     setActiveTabIndex(index);
 
     if (!defaultSelection)
@@ -447,14 +446,18 @@ const Product = (props: any) => {
       });
   };
 
+  // This is used to determine whether the tab should have a showMoreDetails CTA,
+  // It runs only when the tab changes, to check if, before collapsing, the content overflows
   useEffect(() => {
     if (isMobile) return;
     // @ts-ignore
-    const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
-    if (isTruncated) {
-      setShowMoreDetails(isTruncated);
-    }
-  }, [tabs, isMobile, noOfListItemToShow]);
+    const isTruncated = isTicketCard
+      ? false
+      : (collapsibleContentRef.current?.offsetHeight ?? 0) >=
+          maxProductBodyHeight ||
+        (productRef.current?.offsetHeight ?? 0) >= maxProductHeight;
+    setShowMoreDetails(isTruncated);
+  }, [isMobile, activeTabIndex, isTicketCard]);
 
   useEffect(() => {
     if (
@@ -674,12 +677,17 @@ const Product = (props: any) => {
     <>
       <StyledProductCard
         layout={layout({ isContentExpanded: expandContent })}
+        isContentExpanded={expandContent}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
         $isBannerCard={isBannerCard && !isSpecialGuidedTour && !isLoading}
         isV3Design={isV3Design}
         $isSwipeSheetOpen={expandContent}
         className="product-card"
+        collapsed={!expandContent && !isTicketCard}
+        defaultOpen={defaultOpen}
+        // @ts-ignore
+        ref={productRef}
       >
         <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
@@ -892,10 +900,14 @@ const Product = (props: any) => {
           <HorizontalLine colorProp={COLORS.GRAY.G6} />
         </Conditional>
         <ProductBody
-          hasReadMore={hasReadMore}
-          collapsed={!expandContent}
-          noOfListItemToShow={noOfListItemToShow + 1}
+          hasReadMore={
+            showMoreDetailsInTabs && !defaultOpen && !isSpecialGuidedTour
+          }
+          collapsed={!expandContent && !isTicketCard}
           defaultOpen={defaultOpen}
+          maxHeight={maxProductBodyHeight}
+          // @ts-ignore
+          ref={collapsibleContentRef}
         >
           <Conditional
             if={
@@ -935,11 +947,20 @@ const Product = (props: any) => {
               </Conditional>
             </div>
           </Conditional>
-          <Conditional if={hasReadMore && !isMobile && !isSpecialGuidedTour}>
+          <Conditional
+            if={
+              showMoreDetailsInTabs &&
+              !defaultOpen &&
+              !isMobile &&
+              !isSpecialGuidedTour
+            }
+          >
             {getMoreDetailsButton()}
           </Conditional>
         </ProductBody>
-        <Conditional if={hasReadMore && isMobile && !expandContent}>
+        <Conditional
+          if={!defaultOpen && isMobile && !expandContent && !isTicketCard}
+        >
           {getMoreDetailsButton()}
         </Conditional>
       </StyledProductCard>
