@@ -21,8 +21,10 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
+  CATEGORY_IDS,
   LANGUAGE_MAP,
   REOPENING_CATEGORIES,
+  SUBCATEGORY_IDS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -392,7 +394,6 @@ const Product = (props: any) => {
     isVenuePage,
     showPageUid: showPageUidForVenuePage,
   } = props;
-
   const currency = useRecoilValue(currencyAtom);
   const {
     lang,
@@ -423,8 +424,8 @@ const Product = (props: any) => {
     secondaryDescriptors = [],
     hasSpecialOffer,
     urlSlugs,
+    combo,
   } = tour || {};
-
   const { singleCard, productCardHeight } = productCardStyles ?? {};
 
   const isLTT = checkIfLTTMB(uid);
@@ -586,6 +587,13 @@ const Product = (props: any) => {
       : IMAGE_DIMENSIONS.MOBILE.V2
     : IMAGE_DIMENSIONS.DESKTOP;
 
+  const shouldCropImage =
+    !combo &&
+    ![CATEGORY_IDS['Transportation'], CATEGORY_IDS['Travel Services']].includes(
+      String(primaryCategory?.id)
+    ) &&
+    String(primarySubCategory?.id) !== SUBCATEGORY_IDS['Combo'];
+
   const cardComponent = (
     <ProductCard
       onClick={handleProductClick}
@@ -614,6 +622,9 @@ const Product = (props: any) => {
               ? productCardStyles.productCardHeight
               : cardImageHeight
           }
+          autoCrop={false}
+          fitCrop={shouldCropImage}
+          {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
         />
         {getBooster()}
       </ProductImage>
@@ -738,6 +749,9 @@ const Product = (props: any) => {
                     : cardImageHeight
                 }
                 alt={title ?? name}
+                autoCrop={false}
+                fitCrop={shouldCropImage}
+                cropMode={shouldCropImage ? ['faces', 'edges'] : undefined}
               />
               {getBooster()}
             </ProductImage>

@@ -1,5 +1,16 @@
 import { ImageProps } from 'next/future/image';
 
+export type TCropMode =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'faces'
+  | 'focalpoint'
+  | 'edges'
+  | 'entropy'
+  | '';
+
 export interface IImageProps
   extends Omit<ImageProps, 'src' | 'width' | 'height'> {
   url: string;
@@ -13,16 +24,7 @@ export interface IImageProps
   height?: number | string;
   imageId?: string;
   fitCrop?: boolean;
-  cropMode?:
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right'
-    | 'faces'
-    | 'focalpoint'
-    | 'edges'
-    | 'entropy'
-    | '';
+  cropMode?: TCropMode | Array<TCropMode>;
   fill?: boolean;
   blurFill?: boolean;
   fetchPriority?: 'high' | 'low' | 'auto';

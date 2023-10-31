@@ -32,6 +32,7 @@ type MediaCarouselProps = {
   tgid: string;
   backgroundColor?: string;
   isMobile: boolean;
+  shouldCrop?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -45,6 +46,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   tgid,
   isMobile,
   backgroundColor,
+  shouldCrop,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -137,6 +139,8 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               alt={image.altText}
               aspectRatio={imageAspectRatio}
               autoCrop={false}
+              fitCrop={shouldCrop}
+              {...(shouldCrop && {cropMode: ['faces', 'edges']})}
               width={imageWidth}
               height={imageHeight}
               priority={isMobile && isFirstProduct && index === 0}

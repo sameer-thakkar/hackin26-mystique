@@ -1463,6 +1463,10 @@ export const RESOURCE_TYPE = {
   SUB_CATEGORY_CITY: 'SUB_CATEGORY_CITY',
 };
 
+export const SUBCATEGORY_IDS: Record<string, string> = {
+  Combo: '1080'
+};
+
 export const CATEGORY_IDS: Record<string, string> = {
   Tickets: '1',
   Tours: '2',

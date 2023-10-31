@@ -71,6 +71,7 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CATEGORY_IDS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   SIDEBAR_TYPES,
   THEMES,
@@ -673,6 +674,14 @@ const Product = (props: any) => {
     />
   );
 
+  const COMBO_SUBCATEGORY_ID = 1080;
+  const shouldCropImage =
+    !isCombo &&
+    ![CATEGORY_IDS['Transportation'], CATEGORY_IDS['Travel Services']].includes(
+      String(primaryCategory?.id)
+    ) &&
+    primarySubCategory?.id !== COMBO_SUBCATEGORY_ID;
+
   const getProductCardElements = (expandContent: any, isLoading?: boolean) => (
     <>
       <StyledProductCard
@@ -719,6 +728,7 @@ const Product = (props: any) => {
                 isFirstProduct={isFirstProduct}
                 tgid={tgid}
                 isMobile={isMobile}
+                shouldCrop={shouldCropImage}
               />
             </Conditional>
             <Conditional if={isLoading}>

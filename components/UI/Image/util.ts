@@ -1,3 +1,4 @@
+import { TCropMode } from 'components/UI/Image/interface';
 import { attachQueryParam } from '../../../utils/helper';
 
 export const generateImageImgixUrl = (
@@ -8,7 +9,7 @@ export const generateImageImgixUrl = (
   quality: number | string,
   aspectRatio: string,
   autoCrop: boolean,
-  cropMode: string,
+  cropMode: TCropMode | TCropMode[],
   addDarkOverlay: boolean,
   fitCrop: boolean,
   blurFill: boolean
@@ -47,7 +48,10 @@ export const generateImageImgixUrl = (
   }
 
   if (cropMode) {
-    imigxOptionsQueryParams.set('crop', cropMode);
+    imigxOptionsQueryParams.set(
+      'crop',
+      Array.isArray(cropMode) ? cropMode.join(',') : cropMode
+    );
     imigxOptionsQueryParams.delete('fit');
   }
 
