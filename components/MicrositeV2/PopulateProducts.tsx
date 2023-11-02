@@ -252,7 +252,7 @@ const PopulateProducts = (props: any) => {
           onClick={viewMore}
           className="view-more"
         >
-          {isEntertainmentMbListicle
+          {isEntertainmentMb || isEntertainmentMbListicle
             ? strings.SEE_MORE_SHOWS
             : // @ts-expect-error TS(2531): Object is possibly 'null'.
               mbContext.buttons.see_more_text || strings.VIEW_MORE}

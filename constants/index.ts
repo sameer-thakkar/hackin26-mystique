@@ -1115,8 +1115,8 @@ export const ENTERTAINMENT_MB_BREADCRUMBS = {
   },
   BROADWAY: {
     ROOT_DOMAIN: 'www.broadway-show-tickets.com',
-    MUSICALS: 'www.broadway-show-tickets.com.broadway-musicals-in-new-york',
-    PLAYS: 'www.broadway-show-tickets.com.broadway-plays-in-new-york',
+    MUSICALS: 'www.broadway-show-tickets.com.musical',
+    PLAYS: 'www.broadway-show-tickets.com.plays',
     // No shoulder page for Opera adding broadway homepage as fallback
     OPERA: 'www.broadway-show-tickets.com',
   },

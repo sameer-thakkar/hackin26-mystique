@@ -25,7 +25,7 @@ export const TitleWrapper = styled.h1`
   width: calc(100% - (5.46vw * 2));
   max-width: ${SIZES.MAX_WIDTH};
   margin: auto;
-  z-index: 10;
+  z-index: 3;
 
   .promo-text-wrapper {
     color: ${COLORS.GRAY.G8};
@@ -77,7 +77,7 @@ export const Gradient = styled.div`
   bottom: 0;
   width: 100%;
   height: 14rem;
-  z-index: 5;
+  z-index: 2;
   background: linear-gradient(
     180deg,
     rgba(10, 9, 11, 0) 11.16%,
