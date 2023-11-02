@@ -1,15 +1,10 @@
-import React, {
-  ComponentType,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
+import LazyComponent from 'components/common/LazyComponent';
 import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
 import Header from 'components/MicrositeV2/Header';
 import LttLandingPageV2 from 'components/MicrositeV2/LttLandingPageV2';
@@ -23,7 +18,6 @@ import DismissAlert from 'UI/DismissAlert';
 import { MBContext } from 'contexts/MBContext';
 import { ProductsContextProvider } from 'contexts/Products';
 import useABTesting from 'hooks/useABTesting';
-import useOnScreen from 'hooks/useOnScreen';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
 import {
   getCommonEventMetaData,
@@ -267,7 +261,7 @@ export const HomePage = (props: any) => {
   const { secondaryFooter } = footer;
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
-  const { mbTheme, isExperimentalBot } = useContext(MBContext);
+  const { mbTheme } = useContext(MBContext);
   const coverHeading = withShortcodes(heroProps?.coverHeading);
   const allTgids = Object.keys(allTours);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
@@ -280,18 +274,6 @@ export const HomePage = (props: any) => {
     mbType,
   });
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
-
-  const v2LongFormRef = useRef(null);
-  const lttFeatureCardRef = useRef(null);
-
-  const isV2LongFormIntersecting = useOnScreen({
-    ref: v2LongFormRef,
-    unobserve: true,
-  });
-  const isLTTFeatureCardIntersecting = useOnScreen({
-    ref: lttFeatureCardRef,
-    unobserve: true,
-  });
 
   useEffect(() => {
     if (eventsReady) {
@@ -490,14 +472,8 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
-        <div className="main-wrapper v2-long-form" ref={v2LongFormRef}>
-          <Conditional
-            if={
-              longFormContent &&
-              longFormSlices?.length &&
-              (isExperimentalBot || isV2LongFormIntersecting)
-            }
-          >
+        <div className="main-wrapper v2-long-form">
+          <Conditional if={longFormContent && longFormSlices?.length}>
             <LongForm
               slicesArray={longFormSlices}
               props={{
@@ -523,10 +499,10 @@ export const HomePage = (props: any) => {
       </Conditional>
 
       <Conditional if={isEntertainmentMb && !showLttTreatment}>
-        <div className="main-wrapper" ref={lttFeatureCardRef}>
-          <Conditional if={isExperimentalBot || isLTTFeatureCardIntersecting}>
+        <div className="main-wrapper">
+          <LazyComponent>
             <LttFeatureCard />
-          </Conditional>
+          </LazyComponent>
         </div>
       </Conditional>
 

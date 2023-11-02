@@ -13,7 +13,6 @@ import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import {
   BY_HO_BRAND_SCREEN_ENABLE,
   CUSTOM_TYPES,
-  DYNAMIC_RENDER_UID,
   HEADOUT_NAKED_DOMAIN,
   LANGUAGE_MAP,
   LanguagesUnion,
@@ -724,8 +723,6 @@ export const displayBannerTrustBoosters = (data: Record<string, any>) =>
 export const displayProductTrustBoosters = (data: Record<string, any>) =>
   data?.data?.f1_product_trust_booster;
 
-export const shouldRenderDynamicPage = (CMSContent: Record<string, any>) =>
-  CMSContent?.data?.uid && DYNAMIC_RENDER_UID.includes(CMSContent.data.uid);
 export const deepDeleteKeys = ({
   obj,
   keys,

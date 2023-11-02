@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
+import LongForm from 'components/common/LongForm';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Masthead from 'components/Masthead';
-import sliceHandler from 'components/Slices';
 import Alert from 'components/UI/Alert';
 import DismissAlert from 'components/UI/DismissAlert';
 import SideNavModal from 'UI/SideNav';
@@ -42,7 +42,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DROPDOWN_ELEMENT,
-  FULL_WIDTH_SLICES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -704,28 +703,13 @@ class ContentPage extends Component<any, any> {
           <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
-                {[...body, ...contentFWSlices].map((slice, index) => {
-                  const sliceComponent = (
-                    <div
-                      key={index}
-                      className={`${
-                        !FULL_WIDTH_SLICES.includes(slice.slice_type)
-                          ? 'slice-wrapper'
-                          : ''
-                      } slice-block ${slice.slice_type}`}
-                    >
-                      {sliceHandler(slice, {
-                        isMobile: this.state.isMobile,
-                        automatedBreadcrumbsExists,
-                        prismicDocsForListicle,
-                        collectionsInListicles,
-                        ...this.props,
-                      })}
-                    </div>
-                  );
-
-                  return sliceComponent;
-                })}
+                <LongForm
+                  content={[...body, ...contentFWSlices]}
+                  prismicDocsForListicle={prismicDocsForListicle}
+                  collectionsInListicles={collectionsInListicles}
+                  automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+                  {...this.props}
+                />
               </InteractionContextProvider>
             </ProductsContextProvider>
           </StyledContentPage>

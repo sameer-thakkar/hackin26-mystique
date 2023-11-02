@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { getAppTheme } from 'style/theme';
@@ -6,11 +6,11 @@ import Conditional from 'components/common/Conditional';
 import ContactUS, {
   MobileCallUsPanelDrawer,
 } from 'components/common/ContactUs';
+import LazyComponent from 'components/common/LazyComponent';
 import sliceHandler from 'components/Slices';
 import SocialLinks from 'components/UI/SocialLinks';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
-import useOnScreen from 'hooks/useOnScreen';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { SIDEBAR_TYPES, THEMES } from 'const/index';
@@ -388,9 +388,7 @@ const Footer: React.FC<FooterProps> = ({
   primaryHeading = '',
   isEntertainmentMb = false,
 }) => {
-  const { mbTheme = THEMES.DEFAULT, isExperimentalBot } = useContext(MBContext);
-  const footerRef = useRef(null);
-  const isFooterIntersecting = useOnScreen({ ref: footerRef, unobserve: true });
+  const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
@@ -432,8 +430,8 @@ const Footer: React.FC<FooterProps> = ({
     // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
-      <StyledFooter isEntertainmentMb={isEntertainmentMb} ref={footerRef}>
-        <Conditional if={isExperimentalBot || isFooterIntersecting}>
+      <StyledFooter isEntertainmentMb={isEntertainmentMb}>
+        <LazyComponent>
           <>
             <LinkSlicesWrapper
               isEntertainmentMb={isEntertainmentMb}
@@ -590,7 +588,7 @@ const Footer: React.FC<FooterProps> = ({
               </Container>
             </FooterLegalWrapper>
           </>
-        </Conditional>
+        </LazyComponent>
         <Conditional if={isMobileCallUsDrawer}>
           <MobileCallUsPanelDrawer
             onToggleMobileCallUsDrawer={onToggleMobileCallUsDrawer}

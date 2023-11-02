@@ -20,10 +20,14 @@ export default function useOnScreen({
 
   if (typeof window !== 'undefined') {
     observer = new IntersectionObserver(([entry]) => {
-      setIntersecting(entry.isIntersecting);
-      if (entry.isIntersecting && unobserve) {
-        observer.unobserve(ref.current);
-      }
+      setIntersecting(() => {
+        const isIntersecting = entry.isIntersecting;
+        if (isIntersecting && unobserve) {
+          observer.unobserve(ref.current);
+        }
+
+        return isIntersecting;
+      });
     }, options);
   }
 

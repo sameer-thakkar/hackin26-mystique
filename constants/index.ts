@@ -1305,8 +1305,17 @@ export const PRISMIC_FIELD_ID = {
   UID: 'uid',
 };
 
-export const DYNAMIC_RENDER_UID = [
-  'www.london-theater-tickets.com.london-musicals',
+export const LAZY_LOAD_ENABLED_DOMAINS = [
+  'thevaticantickets.com',
+  'acropolis-tickets.com',
+  'eiffeltickets.com',
+  'seine-river-cruises.com',
+  'colosseum-rome-tickets.com',
+  'tickets-paris.fr',
+  'ticket-madrid.com',
+  'versailles-palace-tickets.com',
+  'aquarium-tickets.com',
+  'pradomuseumtickets.com',
 ];
 
 export const PRISMIC_DEV_TAG = '[DEV]';
@@ -1464,7 +1473,7 @@ export const RESOURCE_TYPE = {
 };
 
 export const SUBCATEGORY_IDS: Record<string, string> = {
-  Combo: '1080'
+  Combo: '1080',
 };
 
 export const CATEGORY_IDS: Record<string, string> = {

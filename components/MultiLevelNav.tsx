@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
-import { MBContext } from 'contexts/MBContext';
-import useOnScreen from 'hooks/useOnScreen';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { withTrailingSlash } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
@@ -14,6 +12,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
+import LazyComponent from './common/LazyComponent';
 import LinkResolver from './LinkResolver';
 
 const CategoryHeader = dynamic(() =>
@@ -268,9 +267,7 @@ const Navigation = (props: any) => {
     categoryHeaderMenu,
     categoryHeaderMenuExists,
   } = props;
-  const { isExperimentalBot } = useContext(MBContext);
   const navigationRef = useRef(null);
-  const isIntersecting = useOnScreen({ ref: navigationRef, unobserve: true });
   return (
     <Nav
       className={navOpen ? 'navigation-nav-open' : ''}
@@ -287,8 +284,8 @@ const Navigation = (props: any) => {
         />
       </Conditional>
       <Conditional if={!categoryHeaderMenuExists}>
-        {(isExperimentalBot || isIntersecting) &&
-          slices.map((slice: any, index: number) =>
+        <LazyComponent>
+          {slices.map((slice: any, index: number) =>
             HeaderSliceHandler(slice, {
               index,
               isMobile,
@@ -296,6 +293,7 @@ const Navigation = (props: any) => {
               isGlobalMb,
             })
           )}
+        </LazyComponent>
       </Conditional>
     </Nav>
   );

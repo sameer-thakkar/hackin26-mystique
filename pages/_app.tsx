@@ -26,6 +26,7 @@ import {
   RTL_LANGUAGE_CODES,
   SENTRY_TAGS,
 } from 'const/index';
+import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-relativetimeformat/polyfill';
 import 'public/global.css';
 

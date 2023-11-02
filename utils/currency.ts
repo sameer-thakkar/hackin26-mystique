@@ -60,50 +60,54 @@ export const getLocalisedPrice = ({
   precision = 2,
   currencyList,
 }: TGetLocalisedPrice) => {
-  if ((!price && !isNaN(price)) || !currencyCode) return '';
+  try {
+    if ((!price && !isNaN(price)) || !currencyCode) return '';
 
-  const isInteger = Number.isInteger(price);
+    const isInteger = Number.isInteger(price);
 
-  const formatOptions: Intl.NumberFormatOptions = {
-    style: 'currency',
-    currency: currencyCode,
-    currencyDisplay: 'code',
-    useGrouping: true,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: isInteger ? 0 : precision,
-  };
+    const formatOptions: Intl.NumberFormatOptions = {
+      style: 'currency',
+      currency: currencyCode,
+      currencyDisplay: 'code',
+      useGrouping: true,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: isInteger ? 0 : precision,
+    };
 
-  const formatter = new Intl.NumberFormat(lang, formatOptions);
+    const formatter = new Intl.NumberFormat(lang, formatOptions);
 
-  const parts = formatter.formatToParts(price);
+    const parts = formatter.formatToParts(price);
 
-  // We want to keep the currencySymbol uniform across locales instead of the varying symbols that Web API provides.
-  let formattedParts = parts.map((part) => {
-    switch (part.type) {
-      case 'currency':
-        if (LESSER_KNOWN_CURRENCY_CODES.includes(part.value)) {
+    // We want to keep the currencySymbol uniform across locales instead of the varying symbols that Web API provides.
+    let formattedParts = parts.map((part) => {
+      switch (part.type) {
+        case 'currency':
+          if (LESSER_KNOWN_CURRENCY_CODES.includes(part.value)) {
+            return part.value;
+          }
+          return (
+            getCurrencySymbol(currencyCode, lang, currencyList) ?? part.value
+          );
+        default:
           return part.value;
-        }
-        return (
-          getCurrencySymbol(currencyCode, lang, currencyList) ?? part.value
-        );
-      default:
-        return part.value;
-    }
-  });
-
-  const hasCurrencyCode = formattedParts.includes(currencyCode);
-
-  /* This is done to remove any extra whitespace added by the Intl API when using the 'code' option for currency display. This applies ONLY for English and if the currency Symbol is present*/
-  if (lang === 'en' && !hasCurrencyCode) {
-    formattedParts = formattedParts.filter((p) => {
-      const regex = /\s/;
-      if (!regex.test(p)) {
-        return p;
       }
     });
+
+    const hasCurrencyCode = formattedParts.includes(currencyCode);
+
+    /* This is done to remove any extra whitespace added by the Intl API when using the 'code' option for currency display. This applies ONLY for English and if the currency Symbol is present*/
+    if (lang === 'en' && !hasCurrencyCode) {
+      formattedParts = formattedParts.filter((p) => {
+        const regex = /\s/;
+        if (!regex.test(p)) {
+          return p;
+        }
+      });
+    }
+    return formattedParts.join('');
+  } catch (e) {
+    return '';
   }
-  return formattedParts.join('');
 };
 
 /**
@@ -136,15 +140,19 @@ export const getLocalisedCurrencySymbol = ({
   currencyCode,
   currencyDisplay,
 }: TGetLocalisedCurrencySymbol) => {
-  const numberFormat = new Intl.NumberFormat(lang, {
-    style: 'currency',
-    currency: currencyCode,
-    currencyDisplay,
-    minimumFractionDigits: 0,
-  });
-  const parts = numberFormat.formatToParts();
+  try {
+    const numberFormat = new Intl.NumberFormat(lang, {
+      style: 'currency',
+      currency: currencyCode,
+      currencyDisplay,
+      minimumFractionDigits: 0,
+    });
+    const parts = numberFormat.formatToParts();
 
-  const currency = parts.find((c) => c.type === 'currency');
+    const currency = parts.find((c) => c.type === 'currency');
 
-  return currency?.value ?? currencyCode;
+    return currency?.value ?? currencyCode;
+  } catch (e) {
+    return '';
+  }
 };

@@ -10,12 +10,7 @@ import Cookies from 'js-cookie';
 import { getAppTheme } from 'style/theme';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
-import {
-  getLanguageFromPathname,
-  isNakedDomain,
-  reflect,
-  shouldRenderDynamicPage,
-} from 'utils';
+import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
@@ -139,7 +134,6 @@ const Page = (props: PageProps) => {
     bannerImageData,
     domainConfig,
     categoryHeaderMenu,
-    isExperimentalBot,
     breadcrumbs,
     cityPageParams,
   } = props;
@@ -330,7 +324,6 @@ const Page = (props: PageProps) => {
             primaryCountry={primaryCountry}
             primaryCity={primaryCity}
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
-            isExperimentalBot={isExperimentalBot}
           >
             {Component}
             {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
@@ -357,7 +350,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     default: localizedStrings,
   });
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-  let isExperimentalBot = true;
   const isBot = req
     ? req.headers['x-bot'] === 'true' || typeof query?.['bot'] !== 'undefined'
     : PlatformUtils.isBot(userAgent);
@@ -435,12 +427,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   );
 
-  if (shouldRenderDynamicPage(props?.CMSContent)) {
-    isExperimentalBot = req
-      ? req.headers['x-bot'] === 'true'
-      : PlatformUtils.isBot(userAgent);
-  }
-
   try {
     let url =
       props?.CMSContent?.data?.data?.redirect_url?.url ||
@@ -477,7 +463,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
-        isExperimentalBot,
+        isBot,
         localizedStrings,
         serverRequestStartTimestamp,
         windowUrl: req
@@ -490,7 +476,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         biLink,
         cookies: req?.cookies ?? {},
         headers: JSON.stringify(req?.headers),
-        isBot,
         isGDPRCompliant,
       },
     };

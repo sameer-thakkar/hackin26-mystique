@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import LazyComponent from 'components/common/LazyComponent';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { FULL_WIDTH_SLICES } from '../../constants';
+import { FULL_WIDTH_SLICES } from 'constants/index';
 import sliceHandler from '../Slices';
 
 const StyledLongform = styled.div<{
@@ -125,7 +126,7 @@ const LongForm = (props: any) => {
             !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
           } slice-block ${slice.slice_type}`}
         >
-          {sliceHandler(slice, sliceProps)}
+          <LazyComponent>{sliceHandler(slice, sliceProps)}</LazyComponent>
         </div>
       ))}
     </StyledLongform>

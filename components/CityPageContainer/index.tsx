@@ -4,6 +4,7 @@ import Mailer from 'components/CityPageContainer/Mailer';
 import { Container } from 'components/CityPageContainer/styles';
 import VideoBanner from 'components/CityPageContainer/VideoBanner';
 import Conditional from 'components/common/Conditional';
+import LazyComponent from 'components/common/LazyComponent';
 import { EMAIL_SUBCRIPTION } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -64,6 +65,8 @@ const CityPageContainer = ({
 
   const { HEADING, SUBHEADING } = strings.CITY_PAGE.MAILER;
 
+  const hasPopularEntities = popularEntities?.length > 2;
+
   return (
     <Container>
       <VideoBanner
@@ -79,43 +82,55 @@ const CityPageContainer = ({
         />
       </Conditional>
 
-      <Conditional if={popularEntities?.length > 2}>
+      <Conditional if={hasPopularEntities}>
         <PopularCategories popularEntities={popularEntities} {...utilProps} />
       </Conditional>
 
       <Conditional if={showExploreSection}>
-        <ExploreCity
-          exploreSectionData={exploreSectionData}
-          {...utilProps}
-          mbCityDisplayName={mbCityDisplayName}
-        />
+        <LazyComponent target={!hasPopularEntities ? 'NONE' : 'USER'}>
+          <ExploreCity
+            exploreSectionData={exploreSectionData}
+            {...utilProps}
+            mbCityDisplayName={mbCityDisplayName}
+          />
+        </LazyComponent>
       </Conditional>
 
       <Conditional
         if={nearbyTopCollectionsData.nearbyTopCollections?.length > 2}
       >
-        <BeyondCity
-          mbCityDisplayName={mbCityDisplayName}
-          nearbyTopCollectionsData={nearbyTopCollectionsData}
-          {...utilProps}
-        />
+        <LazyComponent
+          target={!hasPopularEntities && !showExploreSection ? 'NONE' : 'USER'}
+        >
+          <BeyondCity
+            mbCityDisplayName={mbCityDisplayName}
+            nearbyTopCollectionsData={nearbyTopCollectionsData}
+            {...utilProps}
+          />
+        </LazyComponent>
       </Conditional>
       <Conditional if={cityGuideData?.length}>
-        <CityGuide
-          mbCityDisplayName={mbCityDisplayName}
-          cityGuideData={cityGuideData}
-          {...utilProps}
-        />
+        <LazyComponent>
+          <CityGuide
+            mbCityDisplayName={mbCityDisplayName}
+            cityGuideData={cityGuideData}
+            {...utilProps}
+          />
+        </LazyComponent>
       </Conditional>
       <Conditional if={nearbyCitiesData?.length > 2}>
-        <NearbyCities cities={nearbyCitiesData} {...utilProps} />
+        <LazyComponent>
+          <NearbyCities cities={nearbyCitiesData} {...utilProps} />
+        </LazyComponent>
       </Conditional>
-      <Mailer
-        isMobile={isMobile}
-        heading={strings.formatString(HEADING, mbCityDisplayName)}
-        subHeading={SUBHEADING}
-        eventName={EMAIL_SUBCRIPTION.CITY_PAGE_EVENT}
-      />
+      <LazyComponent>
+        <Mailer
+          isMobile={isMobile}
+          heading={strings.formatString(HEADING, mbCityDisplayName)}
+          subHeading={SUBHEADING}
+          eventName={EMAIL_SUBCRIPTION.CITY_PAGE_EVENT}
+        />
+      </LazyComponent>
     </Container>
   );
 };

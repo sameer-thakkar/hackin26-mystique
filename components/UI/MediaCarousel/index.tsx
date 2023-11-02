@@ -140,7 +140,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               aspectRatio={imageAspectRatio}
               autoCrop={false}
               fitCrop={shouldCrop}
-              {...(shouldCrop && {cropMode: ['faces', 'edges']})}
+              {...(shouldCrop && { cropMode: ['faces', 'edges'] })}
               width={imageWidth}
               height={imageHeight}
               priority={isMobile && isFirstProduct && index === 0}

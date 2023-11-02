@@ -41,14 +41,18 @@ export const localisedRelativeTimeFormat = ({
   numeric = 'auto',
   style = 'short',
 }: LocalisedRelativeTimeFormat) => {
-  const rtf = new Intl.RelativeTimeFormat(locale, {
-    localeMatcher,
-    numeric,
-    style,
-  });
-  return formatToParts
-    ? rtf.formatToParts(value, unit) || []
-    : rtf.format(value, unit);
+  try {
+    const rtf = new Intl.RelativeTimeFormat(locale, {
+      localeMatcher,
+      numeric,
+      style,
+    });
+    return formatToParts
+      ? rtf.formatToParts(value, unit) || []
+      : rtf.format(value, unit);
+  } catch (e) {
+    return '';
+  }
 };
 
 export function roundOffTo(num: number, roundingFactor: number) {

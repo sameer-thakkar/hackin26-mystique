@@ -18,6 +18,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "dependencies": {
+    "@formatjs/intl-locale": "^3.4.0",
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@headout/aer": "headout/aer#7c373b94a705d9452dfecd4b2b6c21f5dda11b9e",
     "@newrelic/next": "^0.5.1",

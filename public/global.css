@@ -95,6 +95,9 @@ body.scroll-lock {
   max-width: unset;
   padding: 0;
 }
+.scroll-blur {
+  filter: blur(2.5rem);
+}
 
 @media (max-width: 768px) {
   .slice-wrapper.ugc_carousel {

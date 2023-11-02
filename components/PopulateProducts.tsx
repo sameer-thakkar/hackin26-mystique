@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import Conditional from 'components/common/Conditional';
-import Product from 'components/Product';
-import TicketCard from 'components/slices/ContentPageTicketsCard';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Spinner from 'UI/Spinner';
 import { MBContext } from 'contexts/MBContext';
@@ -30,6 +29,16 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import LazyComponent from './common/LazyComponent';
+
+const Product = dynamic(() =>
+  import(/* webpackChunkName: "Product" */ 'components/Product')
+);
+const TicketCard = dynamic(() =>
+  import(
+    /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
+  )
+);
 
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
@@ -585,23 +594,28 @@ const PopulateProducts = (props: any) => {
                 isNonPoi,
               };
               return (
-                <ProductWrapper
-                  ref={addToRef}
-                  data-tgid={tour.tgid}
+                <LazyComponent
                   key={tour.tgid}
+                  target={index === 0 ? 'NONE' : 'USER'}
                 >
-                  {isTicketCard ? (
-                    <TicketCard {...childProps} />
-                  ) : (
-                    <Product
-                      {...childProps}
-                      growthExperiment7Variant={growthExperiment7Variant}
-                    />
-                  )}
-                  <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                    <HorizontalLine colorProp={COLORS.GRAY.G6} />
-                  </Conditional>
-                </ProductWrapper>
+                  <ProductWrapper
+                    ref={addToRef}
+                    data-tgid={tour.tgid}
+                    key={tour.tgid}
+                  >
+                    {isTicketCard ? (
+                      <TicketCard {...childProps} />
+                    ) : (
+                      <Product
+                        {...childProps}
+                        growthExperiment7Variant={growthExperiment7Variant}
+                      />
+                    )}
+                    <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                      <HorizontalLine colorProp={COLORS.GRAY.G6} />
+                    </Conditional>
+                  </ProductWrapper>
+                </LazyComponent>
               );
             })}
         </ProductContainer>

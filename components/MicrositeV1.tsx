@@ -10,6 +10,7 @@ import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LastMinuteFilters from 'components/common/LastMinuteFilters';
+import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -724,12 +725,14 @@ const MicrositeV1 = (props: any) => {
         <Conditional
           if={isA1orC1MB(mbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
         >
-          <CollectionCarousel
-            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
-            isMobile={isMobile}
-            primaryCity={primaryCity}
-            taggedCity={taggedCity}
-          />
+          <LazyComponent>
+            <CollectionCarousel
+              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+              isMobile={isMobile}
+              primaryCity={primaryCity}
+              taggedCity={taggedCity}
+            />
+          </LazyComponent>
         </Conditional>
 
         <ProductsContextProvider allTours={allTours} ready={isReady}>

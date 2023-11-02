@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { scroller } from 'react-scroll';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { ISideNavModalProps } from 'UI/SideNav/interface';
 import {
@@ -13,6 +13,7 @@ import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { generateSidenavId } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
+import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -35,10 +36,12 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
   const {
     sidebarModal: { addToAside, closeAside },
   } = useContext(MBContext);
+  const setLazyLoadOverride = useSetRecoilState(lazyLoadOverrideAtom);
   const container = useRef(null);
 
   const onSideNavClick = (e: any) => {
     e.stopPropagation();
+    setLazyLoadOverride(true);
     trackEvent({
       eventName: ANALYTICS_EVENTS.TOC_OPENED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
@@ -54,7 +57,12 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
       title: strings.TABLE_OF_CONTENTS,
     });
   };
-  const scrollToElement = (id: string, index: number, headingItem: string) => {
+
+  const scrollToElement = async (
+    id: string,
+    index: number,
+    headingItem: string
+  ) => {
     scroller.scrollTo(id, {
       duration: 1200,
       smooth: 'easeInOutQuart',

@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { FULL_WIDTH_SLICES } from '../../constants';
+import { FULL_WIDTH_SLICES } from 'constants/index';
 import sliceHandler from '../Slices';
+import LazyComponent from './LazyComponent';
 
 export const StyledLongForm = styled.div<{
   isVenuePage?: boolean;
   $isNewsPage?: boolean;
 }>`
+  transition: filter 2s ease-out;
   display: grid;
   grid-row-gap: ${({ isVenuePage, $isNewsPage }) => {
     if (isVenuePage) {
@@ -61,6 +63,10 @@ export const StyledLongForm = styled.div<{
     color: ${COLORS.GRAY.G2};
     ${({ $isNewsPage }) => ($isNewsPage ? 'margin:0' : '')};
   }
+  .page_tabs + .rich_text .rich-text > p {
+    margin-top: 1rem;
+  }
+  
   & > p > a {
     text-decoration: none;
     color: ${COLORS.BRAND.PURPS};
@@ -122,28 +128,29 @@ export const StyledLongForm = styled.div<{
     }
   }
 `;
-export default class LongForm extends Component<any, any> {
-  render() {
-    const { content, ...props } = this.props;
 
-    return (
-      <StyledLongForm
-        isVenuePage={props.isVenuePage}
-        $isNewsPage={props.isNewsPage}
-      >
-        {content?.map((slice: any, index: number) => (
-          <div
-            key={`long-form-${slice?.slice_type}-${index}`}
-            className={`${
-              !FULL_WIDTH_SLICES.includes(slice.slice_type)
-                ? 'slice-wrapper'
-                : ''
-            } slice-block ${slice.slice_type}`}
-          >
+const LongForm = (longFormProps: {
+  content: Array<any>;
+  isVenuePage?: boolean;
+  [k: string]: any;
+}) => {
+  const { content, ...props } = longFormProps;
+  return (
+    <StyledLongForm id="longform" isVenuePage={props.isVenuePage}>
+      {content.map((slice: any, index: number) => (
+        <div
+          key={`long-form-${slice?.slice_type}-${index}`}
+          className={`${
+            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
+          } slice-block ${slice.slice_type}`}
+        >
+          <LazyComponent>
             {sliceHandler(slice, { ...props, sliceIndex: index })}
-          </div>
-        ))}
-      </StyledLongForm>
-    );
-  }
-}
+          </LazyComponent>
+        </div>
+      ))}
+    </StyledLongForm>
+  );
+};
+
+export default LongForm;
