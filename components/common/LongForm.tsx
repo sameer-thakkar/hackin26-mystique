@@ -132,23 +132,33 @@ export const StyledLongForm = styled.div<{
 const LongForm = (longFormProps: {
   content: Array<any>;
   isVenuePage?: boolean;
+  isContentPage?: boolean;
   [k: string]: any;
 }) => {
-  const { content, ...props } = longFormProps;
+  const { content, isContentPage, ...props } = longFormProps;
   return (
-    <StyledLongForm id="longform" isVenuePage={props.isVenuePage}>
-      {content.map((slice: any, index: number) => (
-        <div
-          key={`long-form-${slice?.slice_type}-${index}`}
-          className={`${
-            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
-          } slice-block ${slice.slice_type}`}
-        >
-          <LazyComponent>
-            {sliceHandler(slice, { ...props, sliceIndex: index })}
-          </LazyComponent>
-        </div>
-      ))}
+    <StyledLongForm
+      id="longform"
+      isVenuePage={props.isVenuePage}
+      $isNewsPage={props.isNewsPage}
+    >
+      {content.map((slice: any, index: number) => {
+        const shouldLazyLoad = isContentPage ? index > 2 : true;
+        return (
+          <div
+            key={`long-form-${slice?.slice_type}-${index}`}
+            className={`${
+              !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                ? 'slice-wrapper'
+                : ''
+            } slice-block ${slice.slice_type}`}
+          >
+            <LazyComponent target={shouldLazyLoad ? 'USER' : 'NONE'}>
+              {sliceHandler(slice, { ...props, sliceIndex: index })}
+            </LazyComponent>
+          </div>
+        );
+      })}
     </StyledLongForm>
   );
 };

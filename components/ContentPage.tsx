@@ -708,6 +708,7 @@ class ContentPage extends Component<any, any> {
                   prismicDocsForListicle={prismicDocsForListicle}
                   collectionsInListicles={collectionsInListicles}
                   automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+                  isContentPage
                   {...this.props}
                 />
               </InteractionContextProvider>
