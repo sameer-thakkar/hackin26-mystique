@@ -10,7 +10,7 @@ import { CloseIcon } from 'assets/SvgIcons';
 
 const DrawerContainer = styled.div`
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   bottom: 0;
   left: 0;
   width: 100%;
