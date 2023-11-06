@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 
-export const CurrencySelectorWrapper = styled.div`
+export const CurrencySelectorWrapper = styled.div<{
+  $isMarginBottom?: boolean;
+}>`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.5rem;
+  margin-bottom: ${({ $isMarginBottom }) => ($isMarginBottom ? '1.5rem' : '0')};
   .header {
     color: ${COLORS.GRAY.G2};
     ${expandFontToken('Heading/XS')}
@@ -46,10 +48,12 @@ export const StyledSearchBox = styled.div<{
       padding: 0.875rem 1rem;
       padding-left: 2.25rem;
       ${expandFontToken('UI/Label Medium')};
+
+      ::-webkit-input-placeholder {
+        color: ${COLORS.GRAY.G3};
+      }
     }
-    ::placeholder {
-      color: ${COLORS.GRAY.G4};
-    }
+
     ${({ isDarkMode }) => isDarkMode && `color: ${COLORS.BRAND.WHITE};`}
 
     .input-icon {
@@ -74,4 +78,12 @@ export const StyledSearchBox = styled.div<{
       }
     }
   }
+`;
+
+export const StyledNoValues = styled.div`
+  color: ${COLORS.GRAY.G2};
+`;
+
+export const StyledCurrencyListContent = styled.div`
+  padding-bottom: 3.125rem;
 `;

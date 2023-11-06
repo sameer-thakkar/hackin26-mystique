@@ -217,6 +217,7 @@ const fr = {
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout est une marque de confiance qui a servi plus de 15 millions de personnes et qui propose une sélection des meilleures expériences. Ceci n'est pas le site web du lieu.",
+  NO_RESULT_FOUND: 'Aucun résultat trouvé',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
     'Réservez avec flexibilité - Pas besoin de choisir une date',

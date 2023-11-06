@@ -492,7 +492,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const pageMetaData = useRecoilValue(metaAtom);
   const headerLanguages = languageProps?.languages.length
     ? [...(languageProps?.languages ?? []), { code: lang }]
-    : [];
+    : [{ code: lang }];
 
   const convertedRegularMenuItems =
     headerLinks

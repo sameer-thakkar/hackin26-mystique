@@ -249,7 +249,8 @@ const Header: React.FC<any> = (props) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
-    : [];
+    : [{ code: currentLanguage }];
+
   const { isSidenavScroll } = useRecoilValue(appAtom);
   const hamburgerIconCheck = categoryHeaderMenuExists
     ? Object.keys(categoryHeaderMenu).length > 0

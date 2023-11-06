@@ -123,7 +123,9 @@ function PopOver(props: IPopover) {
       [ANALYTICS_PROPERTIES.LANGUAGE]: option.value,
     });
     setIsOpen(false);
-    if (!(event?.metaKey || event?.ctrlKey)) {
+    if (
+      !(event?.metaKey || event?.ctrlKey || option?.value === currentLanguage)
+    ) {
       setLocaleLoader(true);
     }
   };
@@ -182,15 +184,16 @@ function PopOver(props: IPopover) {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     option: any
   ) => {
-    setCurrency(option.value);
-    trackCurrencyChange(option);
     setIsOpen(false);
-    if (!(event?.metaKey || event?.ctrlKey)) {
-      setLocaleLoader(true);
+    if (option.value !== activeCurrency) {
+      setCurrency(option.value);
+      trackCurrencyChange(option);
+      if (!(event?.metaKey || event?.ctrlKey)) {
+        setLocaleLoader(true);
+      }
+      // push to the back of callstack, ensures currencyCode cookie is set.
+      setTimeout(router.reload);
     }
-
-    // push to the back of callstack, ensures currencyCode cookie is set.
-    setTimeout(router.reload);
   };
 
   let tabs: any[] = [];
@@ -276,8 +279,10 @@ function PopOver(props: IPopover) {
           <div className="button-text">
             {LANGUAGE_MAP?.[currentLanguage]?.displayName}
           </div>
-          <StyledVerticalDivider $isDarkMode={isDarkMode} />
-          <div className="button-text">{activeCurrency}</div>
+          <Conditional if={activeCurrency}>
+            <StyledVerticalDivider $isDarkMode={isDarkMode} />
+            <div className="button-text">{activeCurrency}</div>
+          </Conditional>
         </StyledButtonWrapper>
       </Conditional>
 

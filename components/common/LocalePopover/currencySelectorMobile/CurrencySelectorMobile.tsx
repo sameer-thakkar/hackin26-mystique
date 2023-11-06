@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import {
   CurrencySelectorWrapper,
+  StyledCurrencyListContent,
+  StyledNoValues,
   StyledSearchBox,
 } from 'components/common/LocalePopover/currencySelectorMobile/styles';
 import {
@@ -10,7 +12,10 @@ import {
 } from 'components/common/LocalePopover/interface';
 import RadioList from 'components/common/RadioList';
 import { getCurrencyOptionsMobile } from 'utils/localeSelectorUtlis';
-import { POPULAR_CURRENCIES } from 'const/localeSelectorConstants';
+import {
+  MORE_CURRENCIES,
+  POPULAR_CURRENCIES,
+} from 'const/localeSelectorConstants';
 import { strings } from 'const/strings';
 import { SEARCH_ICON } from 'assets/SvgIcons';
 
@@ -33,6 +38,13 @@ function CurrencySelectorMobile({
   const currencyMap = useMemo(() => {
     return getCurrencyOptionsMobile(sortedCurrencies, lowerCaseSearchQuery);
   }, [searchQuery]);
+
+  const isCurrenciesEmpty =
+    currencyMap[MORE_CURRENCIES]?.length === 0 &&
+    currencyMap[POPULAR_CURRENCIES]?.length === 0;
+
+  const isNoBorderBottom =
+    searchQuery && currencyMap[MORE_CURRENCIES]?.length ? false : true;
 
   const getListItems = (item: IcurrencyMapkeyType) => {
     const data = (currencyMap[item] ?? [])?.map((currency) => {
@@ -59,29 +71,41 @@ function CurrencySelectorMobile({
         />
         <div className="input-icon">{SEARCH_ICON}</div>
       </StyledSearchBox>
-      {Object.keys(currencyMap || {})?.map((item) => {
-        return (
-          <Conditional
-            key={item}
-            if={currencyMap?.[item as IcurrencyMapkeyType]?.length}
-          >
-            <CurrencySelectorWrapper>
-              <div className="header">
-                {item === POPULAR_CURRENCIES
-                  ? strings.POPULAR_CURRENCIES
-                  : strings.MORE_CURRENCIES}
-              </div>
-              <RadioList
-                onChange={onCurrencyChange}
-                // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
-                currentValue={activeCurrency}
-                isCurrencyLabel={true}
-                items={getListItems(item as IcurrencyMapkeyType)}
-              />
-            </CurrencySelectorWrapper>
-          </Conditional>
-        );
-      })}
+      <Conditional if={isCurrenciesEmpty}>
+        <StyledNoValues>{`${strings.NO_RESULT_FOUND}`}</StyledNoValues>
+      </Conditional>
+      <Conditional if={!isCurrenciesEmpty}>
+        <StyledCurrencyListContent>
+          {Object.keys(currencyMap || {})?.map((item) => {
+            return (
+              <Conditional
+                key={item}
+                if={currencyMap?.[item as IcurrencyMapkeyType]?.length}
+              >
+                <CurrencySelectorWrapper $isMarginBottom={!searchQuery}>
+                  <Conditional if={!searchQuery}>
+                    <div className="header">
+                      {item === POPULAR_CURRENCIES
+                        ? strings.POPULAR_CURRENCIES
+                        : strings.MORE_CURRENCIES}
+                    </div>
+                  </Conditional>
+                  <RadioList
+                    onChange={onCurrencyChange}
+                    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
+                    currentValue={activeCurrency}
+                    isCurrencyLabel={true}
+                    items={getListItems(item as IcurrencyMapkeyType)}
+                    isNoBorderBottom={
+                      item === POPULAR_CURRENCIES && isNoBorderBottom
+                    }
+                  />
+                </CurrencySelectorWrapper>
+              </Conditional>
+            );
+          })}
+        </StyledCurrencyListContent>
+      </Conditional>
     </>
   );
 }

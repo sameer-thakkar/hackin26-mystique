@@ -70,7 +70,8 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
-    : [];
+    : [{ code: currentLanguage }];
+
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
   const isSticky = scrollPos > 80;

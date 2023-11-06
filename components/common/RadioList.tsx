@@ -8,7 +8,7 @@ import { RadioIcon } from 'assets/SvgIcons';
 
 const RadioListContainer = styled.div``;
 
-const RadioItem = styled.div`
+const RadioItem = styled.div<{ $isNoBorderBottom?: boolean }>`
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
@@ -17,7 +17,7 @@ const RadioItem = styled.div`
   border-bottom: 1px solid ${COLORS.GRAY.G6};
 
   &:last-child {
-    border-bottom: none;
+    ${({ $isNoBorderBottom }) => $isNoBorderBottom && `border-bottom: none;`}
   }
   ${({
     // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
@@ -66,11 +66,13 @@ const RadioList = ({
   onChange = null,
   currentValue,
   isCurrencyLabel = false,
+  isNoBorderBottom = true,
 }: {
   items: Array<RadioItemArg>;
   onChange: (args: RadioItemArg) => void;
   currentValue: string;
   isCurrencyLabel?: boolean;
+  isNoBorderBottom?: boolean;
 }) => {
   return (
     <RadioListContainer>
@@ -84,6 +86,7 @@ const RadioList = ({
             key={index}
             // @ts-expect-error TS(2769): No overload matches this call.
             onClick={isClickable ? () => onChange(item) : null}
+            $isNoBorderBottom={isNoBorderBottom}
           >
             <Conditional if={isCurrencyLabel}>
               <CurrencyRadioLabel $isActive={isActive}>

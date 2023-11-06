@@ -216,6 +216,7 @@ const de = {
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout ist ein Unternehmen, dem über 15 Millionen Gäste vertrauen und das eine Auswahl der besten Erlebnisse bietet. Dies ist nicht die Website des Erlebnisortes.',
+  NO_RESULT_FOUND: 'Keine Ergebnisse gefunden',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Flexibel buchen – keine Terminsauswahl nötig',
   OPENING_DATE: 'Eröffnungsdatum',

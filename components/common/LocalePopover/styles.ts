@@ -137,7 +137,7 @@ export const StyledPopOverContent = styled.div`
   }
 `;
 
-export const StyledPopOver = styled.main`
+export const StyledPopOver = styled.div`
   position: relative;
 `;
 

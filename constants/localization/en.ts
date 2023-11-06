@@ -228,6 +228,7 @@ const en = {
   NEXT_AVAILABLE: 'Next available: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout is a brand trusted by over 15 million guests that offers a curated selection of the best experiences. This is not the venue's website.",
+  NO_RESULT_FOUND: 'Hmm, no results found.',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Book with flexibility - no date selection needed',
   OPENING_DATE: 'Opening Date',

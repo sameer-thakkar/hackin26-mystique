@@ -218,6 +218,7 @@ const pt = {
   NEXT_AVAILABLE: 'Próxima disponível: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
+  NO_RESULT_FOUND: 'Não foi encontrado nenhum resultado',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
     'Reserve com flexibilidade - não é preciso selecionar uma data',

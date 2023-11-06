@@ -218,6 +218,7 @@ const it = {
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è scelto da oltre 15 milioni di persone per trovare una selezione curata delle migliori esperienze. Questo non è il sito ufficiale dell'attrazione.",
+  NO_RESULT_FOUND: 'Non è stato trovato nessun risultato',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
     'Prenota con flessibilità: non è necessario selezionare la data',

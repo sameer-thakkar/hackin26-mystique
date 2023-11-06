@@ -220,6 +220,7 @@ const es = {
   NEXT_AVAILABLE: 'Próxima disponible: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es una marca en la que confían más de 15 millones de clientes y que ofrece una selección de las mejores experiencias. Este no es el sitio oficial de la sede de la experiencia.',
+  NO_RESULT_FOUND: 'No se ha encontrado ningún resultado',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Plan flexible: reserva sin fecha fija',
   OPENING_DATE: 'Fecha de estreno',

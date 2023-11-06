@@ -215,6 +215,7 @@ const nl = {
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een merk waarop 15 miljoen gasten vertrouwen en dat een gecureerde selectie van unieke ervaringen biedt. Dit is niet de website van de locatie.',
+  NO_RESULT_FOUND: 'Geen resulaten gevonden',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Boek met flexibiliteit - geen datumselectie nodig',
   OPENING_DATE: 'Openingsdatum',

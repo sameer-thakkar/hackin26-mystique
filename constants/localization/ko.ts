@@ -260,6 +260,7 @@ const ko = {
   NEXT_AVAILABLE: '다음 예약일: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     '1,500만 명 이상의 고객이 신뢰하는 Headout은 최고의 티켓과 투어를 엄선하여 제공하는 여러분의 든든한 동반자입니다. 여기는 공식 홈페이지가 아닙니다.',
+  NO_RESULT_FOUND: '결과가 없습니다',
   OFF: '휴일',
   OPEN_DATED_DESCRIPTOR: '날짜를 선택할 필요 없이 느긋하게 예약하세요',
   OPENING_DATE: '개장일',

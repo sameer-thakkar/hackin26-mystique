@@ -323,6 +323,7 @@ const pl = {
   NEXT_AVAILABLE: 'Następny dostępny: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout to marka, której zaufało ponad 15 milionów odwiedzających, oferująca starannie dobraną selekcję najlepszych wycieczek. To nie jest strona internetowa obiektu.',
+  NO_RESULT_FOUND: 'Nie znaleziono żadnych wyników',
   OFF: 'zniżki',
   OPEN_DATED_DESCRIPTOR: 'Rezerwuj elastycznie – niewymagany wybór daty',
   OPENING_DATE: 'Data otwarcia',

@@ -135,6 +135,7 @@ const ar = {
   NEXT_AVAILABLE: 'المتوفر التالي: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout هي علامة تجارية موثوق بها من قبل أكثر من 15 مليون زائر تقدم مجموعة منتقاة من أفضل التجارب. هذا ليس الموقع الرسمي للمكان.',
+  NO_RESULT_FOUND: 'لا توجد نتائج',
   OFF: 'ايقاف',
   OPEN_DATED_DESCRIPTOR: 'احجز بمرونة - لا داعي لتحديد التاريخ',
   OPENING_DATE: 'تاريخ الافتتاح',
