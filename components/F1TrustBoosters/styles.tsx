@@ -8,7 +8,7 @@ export const F1TrustBoosterContainer = styled.div`
   max-width: 75rem;
 
   @media (max-width: 768px) {
-    margin: 4rem auto;
+    margin: 2.5rem auto;
   }
 `;
 

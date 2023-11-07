@@ -237,7 +237,7 @@ const ko = {
   GET_CASHBACK: '얻다 {0}% 캐쉬백',
   GROUP_TICKETS: '그룹 티켓',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
+    MAIN_TEXT: '20+ Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },

@@ -33,11 +33,13 @@ import {
   SIMILE_BOOSTER,
 } from 'assets/SvgIcons';
 
-export const shouldDisplayCollectionRatings = (
-  collectionDetails: CollectionDetails | undefined
-): boolean => {
-  const { averageRating, ratingsCount } = collectionDetails ?? {};
-
+export const shouldDisplayCollectionRatings = ({
+  averageRating,
+  ratingsCount,
+}: {
+  averageRating: number | undefined;
+  ratingsCount: number | undefined;
+}): boolean => {
   if (!averageRating || !ratingsCount) return false;
   return averageRating >= 4 && ratingsCount >= 100;
 };

@@ -11,6 +11,7 @@ import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
+import { shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import {
   getBoosterValueFromListingPrice,
@@ -143,7 +144,12 @@ const VerticalProductCard = ({
           <span className="subcategory-name">
             {subCategoryName?.toUpperCase()}
           </span>
-          <Conditional if={averageRating > 0}>
+          <Conditional
+            if={shouldDisplayCollectionRatings({
+              averageRating,
+              ratingsCount: reviewCount,
+            })}
+          >
             <Ratings
               averageRating={averageRating}
               reviewCount={reviewCount}

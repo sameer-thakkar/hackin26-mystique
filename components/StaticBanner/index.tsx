@@ -109,7 +109,10 @@ const StaticBanner = ({
   const { WIDTH, HEIGHT } = isMobile
     ? BANNER_DIMENSIONS.MOBILE
     : BANNER_DIMENSIONS.DESKTOP;
-  const displayRating = shouldDisplayCollectionRatings(collectionDetails);
+  const displayRating = shouldDisplayCollectionRatings({
+    averageRating,
+    ratingsCount,
+  });
   const showNonPoiDesign = isNonPoiMB && !shouldDisplayTrustBoosters;
 
   useEffect(() => {

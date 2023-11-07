@@ -284,6 +284,7 @@ export default function PopulateMeta({
   const { breadcrumbs = {}, taggedCity, primaryCity, showName = '' } =
     breadcrumbsDetails || {};
   const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
+  const { averageRating, ratingsCount } = collectionDetails || {};
 
   return (
     <>
@@ -297,7 +298,12 @@ export default function PopulateMeta({
         />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
-      <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
+      <Conditional
+        if={shouldDisplayCollectionRatings({
+          averageRating,
+          ratingsCount,
+        })}
+      >
         <CollectionAggregatedRatingScript
           collectionDetails={collectionDetails}
         />

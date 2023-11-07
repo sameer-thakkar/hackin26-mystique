@@ -113,7 +113,7 @@ const ar = {
   GET_CASHBACK: 'يحصل {0}% استرداد النقود',
   GROUP_TICKETS: 'تذاكر المجموعات',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
+    MAIN_TEXT: '20+ Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },

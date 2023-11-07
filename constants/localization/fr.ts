@@ -194,7 +194,7 @@ const fr = {
   GET_CASHBACK: 'Recevez un cashback de {0} %',
   GROUP_TICKETS: 'Billets de groupe',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '+ de 18 millions de client·e·s',
+    MAIN_TEXT: '+ de 20 millions de client·e·s',
     SUB_TEXT:
       'La satisfaction de nos client·e·s est notre priorité. Rejoignez le club !',
   },

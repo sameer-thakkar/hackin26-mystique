@@ -194,7 +194,7 @@ const nl = {
   GET_CASHBACK: 'Ontvang {0}% cashback',
   GROUP_TICKETS: 'Groepskaartjes',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Miljoen tevreden klanten',
+    MAIN_TEXT: '20+ Miljoen tevreden klanten',
     SUB_TEXT: 'Je tevredenheid is onze prioriteit. Sluit je bij ons aan.',
   },
   HELP_CENTER: {
