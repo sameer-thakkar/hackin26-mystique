@@ -53,6 +53,7 @@ const ko = {
   CLOSE: '닫기',
   COMBO_VARIANT: {
     SELECT_CTA: '선택',
+    SELECT_PREFERENCE: '선호유형을 선택하세요',
     SELECT_OPTION: '옵션 선택',
     SELECT_TICKET: '티켓 선택',
   },

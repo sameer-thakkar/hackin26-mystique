@@ -108,6 +108,7 @@ const pl = {
   CLOSE: 'Zamknij',
   COMBO_VARIANT: {
     SELECT_CTA: 'Wybierz',
+    SELECT_PREFERENCE: 'Wybierz swoje preferencje',
     SELECT_OPTION: 'Wybierz opcję',
     SELECT_TICKET: 'Wybierz bilet',
   },

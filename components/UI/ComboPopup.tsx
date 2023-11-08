@@ -56,6 +56,8 @@ const CloseIconWrapper = styled.div`
   align-items: center;
   position: absolute;
   align-items: center;
+  border-radius: 0.5rem;
+  border: 1px solid ${COLORS.GRAY.G6};
   background: ${COLORS.GRAY.G8};
   top: 0;
   right: 0;
@@ -93,7 +95,7 @@ const ProductTitleWrapper = styled.div`
 
 const ProductTitle = styled.div`
   font-family: ${HALYARD.FONT_STACK};
-  font-weight: 600;
+  font-weight: 500;
   font-size: 24px;
   line-height: 28px;
   color: ${COLORS.GRAY.G2};
@@ -119,15 +121,32 @@ const StyledVariantsWrapper = styled.div`
   gap: 24px;
   h3 {
     font-family: ${HALYARD.FONT_STACK};
-    font-weight: 600;
+    font-weight: 500;
     font-size: 21px;
-    line-height: 28px;
+    line-height: 24px;
+    letter-spacing: 0.6px;
     color: ${COLORS.GRAY.G2};
     margin: 0;
     @media (max-width: 768px) {
       font-size: 16px;
       line-height: 20px;
     }
+  }
+  // override carousel design, just for the variants popup
+  .swiper-initialized {
+    margin: -0.5rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .prev-slide {
+    right: unset;
+    left: -1.4rem;
+    top: calc(50% - 1rem);
+  }
+  .next-slide {
+    right: unset;
+    left: calc(min(90vw, 1180px) - 1rem);
+    top: calc(50% - 1.1rem);
   }
 `;
 
@@ -249,7 +268,7 @@ const ComboPopup = ({
             </Conditional>
           </ProductInfo>
           <StyledVariantsWrapper>
-            <h3>{strings.COMBO_VARIANT.SELECT_OPTION}</h3>
+            <h3>{strings.COMBO_VARIANT.SELECT_PREFERENCE}</h3>
             <Conditional if={!tourGroupData}>
               <VariantCardSkeletonWrapper>
                 <VariantCardSkeleton isMobile={isMobile} />

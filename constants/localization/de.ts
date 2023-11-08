@@ -114,6 +114,7 @@ const de = {
   COLLECTION_SLICE_HEADING: 'Top-Erlebnisse in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Auswählen',
+    SELECT_PREFERENCE: 'Wählen Sie die gewünschte Ticketvariante aus',
     SELECT_OPTION: 'Gewünschte Ticketvariante wählen',
     SELECT_TICKET: 'Ticket wählen',
   },

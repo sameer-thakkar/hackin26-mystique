@@ -50,6 +50,7 @@ const id = {
   CLOSE: 'Tutup',
   COMBO_VARIANT: {
     SELECT_CTA: 'Pilih',
+    SELECT_PREFERENCE: 'Pilih preferensi Anda',
     SELECT_OPTION: 'Pilih opsi Anda',
     SELECT_TICKET: 'Pilih tiket Anda',
   },

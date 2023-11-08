@@ -114,6 +114,7 @@ const nl = {
   COLLECTION_SLICE_HEADING: 'Topervaringen in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',
+    SELECT_PREFERENCE: 'Selecteer je voorkeur',
     SELECT_OPTION: 'Selecteer de gewenste optie',
     SELECT_TICKET: 'Selecteer je ticket',
   },

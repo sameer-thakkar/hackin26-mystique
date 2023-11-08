@@ -51,6 +51,7 @@ const ar = {
   CLOSE: 'أغلق',
   COMBO_VARIANT: {
     SELECT_CTA: 'تحديد',
+    SELECT_PREFERENCE: 'اختيار ما تفضله',
     SELECT_OPTION: 'حدد خيارك',
     SELECT_TICKET: 'حدد تذكرتك',
   },

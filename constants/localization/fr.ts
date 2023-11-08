@@ -115,6 +115,7 @@ const fr = {
   COLLECTION_SLICE_HEADING: 'Meilleures choses à faire à {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Sélectionner',
+    SELECT_PREFERENCE: 'Indiquez votre préférence',
     SELECT_OPTION: 'Sélectionnez votre option',
     SELECT_TICKET: 'Sélectionnez votre billet',
   },

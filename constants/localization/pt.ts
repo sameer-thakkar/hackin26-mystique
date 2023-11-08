@@ -114,6 +114,7 @@ const pt = {
   COLLECTION_SLICE_HEADING: 'Melhores coisas para fazer em {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecionar',
+    SELECT_PREFERENCE: 'Selecione uma opção',
     SELECT_OPTION: 'Selecione a opção deseja',
     SELECT_TICKET: 'Selecione seu bilhete',
   },

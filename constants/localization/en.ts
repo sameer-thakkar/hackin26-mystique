@@ -114,6 +114,7 @@ const en = {
   COLLECTION_SLICE_HEADING: 'Top things to do in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
+    SELECT_PREFERENCE: 'Select your preference',
     SELECT_OPTION: 'Select your option',
     SELECT_TICKET: 'Select your ticket',
   },

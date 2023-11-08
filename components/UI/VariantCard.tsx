@@ -11,6 +11,7 @@ import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -19,7 +20,8 @@ const VariantCardWrapper = styled.div`
   height: inherit;
   overflow-x: hidden;
   background: ${COLORS.BRAND.WHITE};
-  border: 1px solid ${COLORS.GRAY.G6};
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 14px 16px 16px;
   box-sizing: border-box;
@@ -40,10 +42,19 @@ const VariantCardWrapper = styled.div`
     line-height: 16px;
     font-weight: 400;
     margin-top: 16px;
+
+    &.collapsed {
+      margin-top: 0;
+    }
   }
-  .chevron::after,
-  .chevron::before {
-    background-color: ${COLORS.TEXT.PURPS_3};
+  .chevron {
+    margin-bottom: -0.4rem;
+
+    &::after,
+    &::before {
+      background-color: ${COLORS.TEXT.PURPS_3};
+      border-radius: 5px;
+    }
   }
   ul {
     margin: 0;
@@ -52,9 +63,7 @@ const VariantCardWrapper = styled.div`
 
 const Name = styled.div`
   margin-bottom: 20px;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
+  ${expandFontToken('Heading/Small')}
   ${({
     // @ts-expect-error TS(2339): Property 'isSkeleton' does not exist on type 'Pick... Remove this comment to see the full error message
     isSkeleton,
@@ -82,9 +91,10 @@ const Price = styled.div`
   row-gap: 2px;
   .variant-price {
     color: ${COLORS.GRAY.G2};
-    font-weight: 600;
+    font-weight: 500;
     font-family: ${HALYARD.FONT_STACK};
-    font-size: 16px;
+    font-size: 15px;
+    letter-spacing: 0.6px;
     line-height: 20px;
     margin-right: 8px;
     @media (max-width: 768px) {
@@ -104,25 +114,33 @@ const Price = styled.div`
 `;
 
 const Button = styled.div`
-  padding: 7px 12px 5px 12px;
+  box-sizing: border-box;
+  display: flex;
+  height: 2.25rem;
+  padding: 0.5rem 0.75rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: stretch;
   border: 1px solid ${COLORS.BRAND.PURPS};
   border-radius: 4px;
-  min-width: 65px;
   text-align: center;
   background-color: ${COLORS.BRAND.WHITE};
   color: ${COLORS.BRAND.PURPS};
   cursor: pointer;
   font-size: 14px;
+  font-weight: 400;
   line-height: 16px;
   letter-spacing: 0.2px;
   word-wrap: break-word;
+  margin-top: 0.5rem;
+
   @media (max-width: 768px) {
     padding: 8px 12px;
   }
   &:hover {
     background-color: ${COLORS.BRAND.PURPS};
     color: ${COLORS.BRAND.WHITE};
-    border: none;
   }
 `;
 
@@ -154,8 +172,15 @@ const Description = styled.div`
   }
 
   .desc-text {
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 20px;
     white-space: pre-line;
     color: ${COLORS.GRAY.G2};
+  }
+
+  li::marker {
+    font-size: 0.7rem;
   }
 `;
 
@@ -260,13 +285,18 @@ const VariantCard = ({
     const innerContent = (
       <>
         {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
-        <Chevron isActive={isContentOpen} className={'chevron'} />
+        <Chevron
+          isActive={isContentOpen}
+          className="chevron"
+          width="1.13rem"
+          height="1.13rem"
+        />
       </>
     );
     return (
       <div
         onClick={() => toggleContentOpen(!isContentOpen)}
-        className="more-details"
+        className={`more-details ${!isContentOpen && 'collapsed'}`}
         onKeyDown={keyPressedOnReadMore}
         role="button"
         tabIndex={0}
@@ -298,12 +328,21 @@ const VariantCard = ({
             </Conditional>
           </div>
         </Price>
+        <Conditional if={isMobile}>
+          <a href={bookUrl} target="_blank" rel="noopener noreferrer">
+            <Button onClick={trackVariantSelection}>
+              {strings.COMBO_VARIANT.SELECT_CTA}
+            </Button>
+          </a>
+        </Conditional>
+      </PriceWrapper>
+      <Conditional if={!isMobile}>
         <a href={bookUrl} target="_blank" rel="noopener noreferrer">
           <Button onClick={trackVariantSelection}>
             {strings.COMBO_VARIANT.SELECT_CTA}
           </Button>
         </a>
-      </PriceWrapper>
+      </Conditional>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Description hasVariantInfo={variantInfo !== null}>
         <Conditional if={!isMobile || isContentOpen}>
