@@ -4,7 +4,7 @@ import { expandFontToken } from 'const/typography';
 
 export const StyledContainer = styled.div`
   max-width: 75rem;
-  margin: 1.25rem auto 0;
+  margin: 1.25rem auto 2.5rem;
 
   .shared-transfer-products {
     margin-bottom: 4rem;

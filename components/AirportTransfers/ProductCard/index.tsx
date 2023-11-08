@@ -58,7 +58,7 @@ export const PrivateAirportTranferProductCard = ({
   const {
     title,
     averageRating,
-    reviewCount,
+    ratingCount,
     images,
     listingPrice,
   } = scorpioData;
@@ -147,7 +147,7 @@ export const PrivateAirportTranferProductCard = ({
         <RatingAndDurationContainer>
           <StarIcon />
           <span className="rating">{averageRating}</span>
-          <span className="ratings-count">({reviewCount})</span>
+          <span className="ratings-count">({ratingCount})</span>
 
           <LineSeparator />
 
@@ -250,7 +250,7 @@ export const PrivateAirportTranferProductCard = ({
           onClose={() => setIsMoreDetailsSidebarOpen(false)}
           title={title}
           averageRating={averageRating}
-          ratingsCount={reviewCount}
+          ratingsCount={ratingCount}
           listingPrice={listingPrice}
           productBookingUrl={productBookingUrl}
           highlights={scorpioData.highlights}
@@ -268,7 +268,7 @@ export const PrivateAirportTranferProductCard = ({
           <RatingAndDurationContainer>
             <StarIcon />
             <span className="rating">{averageRating}</span>
-            <span className="ratings-count">({reviewCount})</span>
+            <span className="ratings-count">({ratingCount})</span>
           </RatingAndDurationContainer>
 
           <HighlightTabs

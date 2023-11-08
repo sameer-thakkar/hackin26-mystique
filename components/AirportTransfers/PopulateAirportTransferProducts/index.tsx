@@ -117,8 +117,8 @@ export const PopulateAirportTransfersProducts = ({
         </StyledSectionTitle>
 
         <StyledSectionInfo>
-          A comfortable cost-effective transportation option in for multiple
-          passengers traveling to or from an airport.
+          A comfortable cost-effective transportation option for multiple
+          passengers traveling to or from an airport
         </StyledSectionInfo>
       </Conditional>
 

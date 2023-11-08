@@ -29,7 +29,7 @@ import {
   isSubCategoryMB,
   legacyBooleanCheck,
 } from 'utils';
-import { calcAvgRatingAndTotalReviews } from 'utils/airportTransfersUtils';
+import { calculateAvgRatingAndTotalReviews } from 'utils/airportTransfersUtils';
 import allToursParser from 'utils/allToursParser';
 import {
   sendVariablesToDataLayer,
@@ -702,7 +702,7 @@ const MicrositeV1 = (props: any) => {
             collectionDetails={collectionDetails}
             ratingsAndReviewsData={
               isAirportTransfersMB
-                ? calcAvgRatingAndTotalReviews(scorpioData)
+                ? calculateAvgRatingAndTotalReviews(scorpioData)
                 : undefined
             }
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}

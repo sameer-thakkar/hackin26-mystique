@@ -4,7 +4,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const StyledContainer = styled.div`
-  margin-top: 5rem;
+  margin-top: 3.375rem;
   margin-bottom: 2rem;
   overflow: hidden;
 
@@ -13,7 +13,7 @@ export const StyledContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-top: 4rem;
+    margin-top: 3.25rem;
     margin-bottom: 0;
 
     overflow: hidden;
@@ -145,7 +145,7 @@ export const TranferTypeTag = styled.div<{
 export const StyledTextSection = styled.div<{
   $type: string;
 }>`
-  max-width: 70%;
+  max-width: 85%;
   margin: 1.5rem 0 0;
 
   div,

@@ -62,6 +62,7 @@ export type TScorpioData = {
   primarySubCategory: TSubCategory;
   flowType: string;
   allVariantOpenDated: boolean;
+  ratingCount: number;
 };
 
 export type TScorpioDataHighlight = {

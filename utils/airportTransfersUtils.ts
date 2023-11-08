@@ -1,17 +1,17 @@
 import { TScorpioData } from 'components/AirportTransfers/PopulateAirportTransferProducts/interfaces';
 
-export function calcAvgRatingAndTotalReviews(
+export function calculateAvgRatingAndTotalReviews(
   scorpioData: Record<number, TScorpioData>
 ) {
   const scorpioDataArray = Object.values(scorpioData ?? {});
 
   let sumOfAvgRatings = 0;
-  let totalReviewCount = 0;
+  let totalRatingsCount = 0;
 
   for (const item of scorpioDataArray) {
-    if (item.averageRating && item.reviewCount) {
+    if (item.averageRating && item.ratingCount) {
       sumOfAvgRatings += item.averageRating;
-      totalReviewCount += item.reviewCount;
+      totalRatingsCount += item.ratingCount;
     }
   }
 
@@ -19,6 +19,6 @@ export function calcAvgRatingAndTotalReviews(
 
   return {
     averageRating: isNaN(averageOfAverageRatings) ? 0 : averageOfAverageRatings,
-    ratingsCount: totalReviewCount,
+    ratingsCount: totalRatingsCount,
   };
 }
