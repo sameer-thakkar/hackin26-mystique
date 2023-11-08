@@ -42,6 +42,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DROPDOWN_ELEMENT,
+  SHOULDER_PAGE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -422,7 +423,6 @@ class ContentPage extends Component<any, any> {
       prismicDocsForListicle,
       collectionsInListicles,
     } = this.props;
-
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,
@@ -437,7 +437,7 @@ class ContentPage extends Component<any, any> {
       side_navigation: sideNavToggle,
       baseLangCategorisationMetadata,
     } = data;
-    const { tagged_city: taggedCity } =
+    const { tagged_city: taggedCity, shoulder_page_type } =
       (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
     const apiReady = tourAPIData !== null;
@@ -730,6 +730,10 @@ class ContentPage extends Component<any, any> {
           secondarySlices={secondaryFooter?.data?.body || []}
           primaryHeading={commonFooter?.data?.footer_heading}
           secondaryHeading={secondaryFooter?.data?.footer_heading}
+          showGmapsDisclaimer={
+            shoulder_page_type === SHOULDER_PAGE_TYPES.DIRECTIONS ||
+            shoulder_page_type === SHOULDER_PAGE_TYPES.PLAN_YOUR_VISIT
+          }
         />
       </div>
     );

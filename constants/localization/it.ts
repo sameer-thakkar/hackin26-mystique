@@ -178,6 +178,9 @@ const it = {
     CALL_US: 'Chiamaci',
     CHAT_WITH_US: 'Chatta con noi',
     COMPANY_DETAILS: 'Dettagli sulla società',
+    INFORMATION: 'Informazioni',
+    GMAPS_DISCLAIMER:
+      'Tutte le schermate delle mappe presenti in questa pagina provengono da Google in conformità con il principio di utilizzo legittimo. Tutti i diritti relativi a tali schermate appartengono alla piattaforma specifica e il loro utilizzo è esclusivamente a scopo informativo o orientativo.',
     DISCLAIMER:
       'Questo non è il sito internet ufficiale della seguente attrazione: <attraction>. Questo sito è gestito da Headout e lavora con attrazioni e tour operator per fornire esperienze incredibili al tocco di un pulsante.',
     EMAIL_US: 'Contattaci via E-mail',

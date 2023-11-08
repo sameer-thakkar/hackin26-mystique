@@ -176,6 +176,9 @@ const de = {
     CALL_US: 'Telefon',
     CHAT_WITH_US: 'Live-Chat',
     COMPANY_DETAILS: 'Unternehmensangaben',
+    INFORMATION: 'Informationen',
+    GMAPS_DISCLAIMER:
+      'Alle Screenshots von Karten, die auf dieser Seite zu finden sind, stammen von Google in Übereinstimmung mit dem Fair Use-Prinzip. Alle Rechte an diesen Screenshots liegen bei der jeweiligen Plattform und ihre Verwendung dient ausschließlich zu Informations- und Orientierungszwecken.',
     DISCLAIMER:
       'Diese Website ist nicht die offizielle Website <attraction>. Die Website wird vom Unternehmen Headout betrieben, das mit Veranstaltern für Attraktionen und Touren zusammenarbeitet, um unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
     EMAIL_US: 'E-Mail',

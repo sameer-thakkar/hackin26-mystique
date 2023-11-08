@@ -176,6 +176,9 @@ const pt = {
     CALL_US: 'Telefone',
     CHAT_WITH_US: 'Chat',
     COMPANY_DETAILS: 'Sobre a empresa',
+    INFORMATION: 'Informações',
+    GMAPS_DISCLAIMER:
+      'Todas as imagens de mapas exibidas nesta página são provenientes do Google, de acordo com o uso justo. Todos os direitos sobre tais imagens pertencem à plataforma específica e seu uso destina-se exclusivamente a fins informativos ou orientativos.',
     DISCLAIMER:
       'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
     EMAIL_US: 'E-mail',

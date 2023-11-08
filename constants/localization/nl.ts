@@ -176,6 +176,9 @@ const nl = {
     CALL_US: 'Bel ons',
     CHAT_WITH_US: 'Chat met ons',
     COMPANY_DETAILS: 'Bedrijfsgegevens',
+    INFORMATION: 'informatie',
+    GMAPS_DISCLAIMER:
+      'Alle schermafbeeldingen van plattegronden op deze pagina zijn afkomstig van Google in overeenstemming met fair use. Alle rechten op dergelijke schermafbeeldingen liggen bij het specifieke platform en het gebruik is uitsluitend bedoeld als informatie of advies.',
     DISCLAIMER:
       'Deze website is niet de officiële website van <attraction>. Hij wordt gerund door Headout dat samenwerkt met attracties en touroperators om met één druk op de knop ongelooflijke ervaringen aan te bieden.',
     EMAIL_US: 'Email ons',

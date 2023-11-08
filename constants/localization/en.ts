@@ -175,6 +175,9 @@ const en = {
     CALL_US: 'Call Us',
     CHAT_WITH_US: 'Chat with Us',
     COMPANY_DETAILS: 'Company Details',
+    INFORMATION: 'Information',
+    GMAPS_DISCLAIMER:
+      'All screenshots of maps found on this page are sourced from Google in accordance with fair use. All rights to such screenshots lie with the specific platform, and their use is solely for informational or guidance purposes.',
     DISCLAIMER:
       'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
     EMAIL_US: 'Email Us',

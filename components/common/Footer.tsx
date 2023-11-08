@@ -16,7 +16,11 @@ import { FONTS } from 'const/fonts';
 import { SIDEBAR_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
+import {
+  OUTLINED_INFO_ICON,
+  POWERED_BY_HEADOUT,
+  WHITE_BLIP,
+} from 'assets/SvgIcons';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -220,6 +224,31 @@ const LinkSlicesWrapper = styled.div<{
   }
 `;
 
+const GmapsDisclaimer = styled.div`
+  padding: 1rem 1.3rem;
+  align-items: flex-start;
+  border-radius: 8px;
+  border: 1px solid rgba(164, 110, 0, 0.2);
+  background: #fff8ef;
+  margin-top: 2.5rem;
+  ${expandFontToken(FONTS.PARAGRAPH_REGULAR)}
+
+  p {
+    margin: 0.5rem 0 0 0;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      margin: 0;
+      ${expandFontToken(FONTS.HEADING_XS)}
+    }
+  }
+`;
+
 const FooterLegal = styled.div<{
   isEntertainmentMb: boolean;
   invertLogoColor: boolean;
@@ -342,6 +371,7 @@ type FooterProps = {
   secondaryHeading?: string;
   primaryHeading?: string;
   isEntertainmentMb?: boolean;
+  showGmapsDisclaimer?: boolean;
 };
 
 const LinkSlices = ({ linksTitle, slices, theme, className = '' }: any) => (
@@ -387,6 +417,7 @@ const Footer: React.FC<FooterProps> = ({
   secondaryHeading = '',
   primaryHeading = '',
   isEntertainmentMb = false,
+  showGmapsDisclaimer = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
@@ -453,6 +484,17 @@ const Footer: React.FC<FooterProps> = ({
                   theme={finalThemeName}
                 />
               </Conditional>
+              <Container>
+                <Conditional if={showGmapsDisclaimer}>
+                  <GmapsDisclaimer>
+                    <div className="row">
+                      {OUTLINED_INFO_ICON}
+                      <p>{strings.FOOTER.INFORMATION}</p>
+                    </div>
+                    <p>{strings.FOOTER.GMAPS_DISCLAIMER}</p>
+                  </GmapsDisclaimer>
+                </Conditional>
+              </Container>
             </LinkSlicesWrapper>
             {/* @ts-expect-error TS(2769): No overload matches this call. */}
             <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>

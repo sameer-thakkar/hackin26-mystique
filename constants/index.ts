@@ -918,6 +918,11 @@ export const PAGE_TYPES = {
   NEWS_PAGE: 'News Page',
 };
 
+export const SHOULDER_PAGE_TYPES = {
+  DIRECTIONS: 'Directions',
+  PLAN_YOUR_VISIT: 'Plan your visit',
+};
+
 export const BOOLEAN_STATES = {
   YES: 'Yes',
   NO: 'No',

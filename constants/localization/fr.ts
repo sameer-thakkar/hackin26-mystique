@@ -177,6 +177,9 @@ const fr = {
     CALL_US: 'Appelez-nous',
     CHAT_WITH_US: 'Chattez avec nous',
     COMPANY_DETAILS: 'Notre entreprise',
+    INFORMATION: 'Informations',
+    GMAPS_DISCLAIMER:
+      "Toutes les captures d'écran des cartes figurant sur cette page proviennent de Google, conformément au droit à l'utilisation équitable. Tous les droits relatifs à ces captures d'écran appartiennent à la plateforme concernée, et leur utilisation est uniquement destinée à des fins d'information ou d'orientation.",
     DISCLAIMER: `Ce site n'est pas le site officiel <attraction>. Il est géré par Headout et travaille en collaboration avec des attractions et des tour-opérateurs pour vous offrir des expériences incroyables en un clic !`,
     EMAIL_US: 'Contactez-nous',
     GET_HELP: 'Aide',
