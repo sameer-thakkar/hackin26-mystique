@@ -607,7 +607,7 @@ const en = {
         DESCRIPTION: 'Book swiftly and securely with us.',
       },
     },
-    YOUR_PICK: 'Your Pick',
+    YOUR_PICK: 'Your pick',
     BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LAST_MINUTE_TICKETS: 'Last minute tickets',
