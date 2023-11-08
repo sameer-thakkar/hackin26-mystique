@@ -18,7 +18,7 @@ export const LongFormAndStaticContent = ({
     <>
       <TransferVehicleTypesCarousel
         isMobile={isMobile}
-        sliceItems={carsCarouselSlice.items}
+        sliceItems={carsCarouselSlice?.items}
       />
 
       <AirportTransferFeatures isMobile={isMobile} />

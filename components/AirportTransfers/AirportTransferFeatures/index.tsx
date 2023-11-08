@@ -122,7 +122,7 @@ export const AirportTransferFeatures = ({
     <StyledGradientContainer>
       <StyledHeaderSection>
         <StyledSectionTitle>
-          Hassle-free Airport transfer experience
+          Hassle-free airport transfer experience
         </StyledSectionTitle>
 
         <div className="carousel-controls">

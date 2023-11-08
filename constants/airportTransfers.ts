@@ -39,15 +39,6 @@ export const AIRPORT_TRANSFER_REVIEWS = [
     text:
       'Headout helpdesk, was awesome when I had a problem... that at the end turn out to be my fault. The show was fantastic. Even my son loved it. Recommended for groups of friends and families!',
   },
-  {
-    avatarPath: `/static/images/review-avatar-3.png`,
-    name: '4th reviewer',
-    countryEmoji: '🇨🇭 ',
-    country: 'Switzerland',
-    // stars: 5,
-    text:
-      'Headout helpdesk, was awesome when I had a problem... that at the end turn out to be my fault. The show was fantastic. Even my son loved it. Recommended for groups of friends and families!',
-  },
 ];
 
 export const AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE = 'Airport Transfers';

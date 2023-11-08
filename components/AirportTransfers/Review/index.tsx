@@ -58,7 +58,7 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
     <StyledReviewsContainer>
       <StyledHeaderSection>
         <StyledSectionTitle>
-          Seamless Transfers, Trusted Worldwide
+          Seamless transfers, trusted Worldwide
         </StyledSectionTitle>
 
         <div className="carousel-controls">
