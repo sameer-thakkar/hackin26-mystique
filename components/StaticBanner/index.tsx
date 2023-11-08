@@ -43,6 +43,11 @@ type StaticBannerProps = {
   shouldDisplayTrustBoosters?: boolean;
   isNonPoiMB?: boolean;
   bannerDescriptors: Array<{ icon: string; text: string }>;
+  ratingsAndReviewsData?: {
+    averageRating: number;
+    ratingsCount: number;
+  };
+  city: string | null;
 };
 
 type CollectionVideo = {
@@ -99,20 +104,30 @@ const StaticBanner = ({
   shouldDisplayTrustBoosters,
   isNonPoiMB = false,
   bannerDescriptors,
+  ratingsAndReviewsData,
+  city,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
   const bannerHeading = bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0];
-  const { averageRating, ratingsCount } = collectionDetails ?? {};
+  let { averageRating, ratingsCount } = collectionDetails ?? {};
   const { WIDTH, HEIGHT } = isMobile
     ? BANNER_DIMENSIONS.MOBILE
     : BANNER_DIMENSIONS.DESKTOP;
-  const displayRating = shouldDisplayCollectionRatings({
+
+  if (ratingsAndReviewsData) {
+    averageRating = ratingsAndReviewsData?.averageRating ?? 0;
+    ratingsCount = ratingsAndReviewsData?.ratingsCount ?? 0;
+  }
+
+  const displayCollectionRating = shouldDisplayCollectionRatings({
     averageRating,
     ratingsCount,
   });
+  const displayAirportTransfersRating = averageRating > 0 && ratingsCount > 0;
+
   const showNonPoiDesign = isNonPoiMB && !shouldDisplayTrustBoosters;
 
   useEffect(() => {
@@ -122,6 +137,12 @@ const StaticBanner = ({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
     });
   }, [eventsReady, isMobile]);
+
+  let bannerHeadingWithCityName = null;
+
+  if (city) {
+    bannerHeadingWithCityName = `<span>${city}</span> ${bannerHeading}`;
+  }
 
   return (
     <BannerSection $isNonPoi={showNonPoiDesign}>
@@ -162,13 +183,22 @@ const StaticBanner = ({
               f1TrustBooster={getF1MBTrustBoosters(true)}
             />
           </Conditional>
+
           <Heading
-            dangerouslySetInnerHTML={{ __html: bannerHeading }}
+            dangerouslySetInnerHTML={{
+              __html: bannerHeadingWithCityName
+                ? bannerHeadingWithCityName
+                : bannerHeading,
+            }}
             $isNonPoi={showNonPoiDesign}
-            $displayRating={displayRating}
+            $displayRating={
+              displayCollectionRating || displayAirportTransfersRating
+            }
             $showTrustBooster={shouldDisplayTrustBoosters}
           />
-          <Conditional if={displayRating}>
+          <Conditional
+            if={displayCollectionRating || displayAirportTransfersRating}
+          >
             <RatingsWrapper
               $isNonPoi={showNonPoiDesign}
               $showTrustBooster={shouldDisplayTrustBoosters}

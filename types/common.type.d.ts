@@ -9,6 +9,7 @@ type ListingPrice = {
   cashbackValue: number;
   cashbackType: 'PERCENTAGE';
   tourId: number;
+  localSymbol: string;
 };
 
 type Media = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Autoplay,
+  EffectCards,
   EffectFade,
   FreeMode,
   Lazy,
@@ -10,11 +11,12 @@ import {
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/effect-cards';
+import 'swiper/css/effect-fade';
+import 'swiper/css/lazy';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/lazy';
-import 'swiper/css/autoplay';
-import 'swiper/css/effect-fade';
 
 interface ISwiperWrapper extends SwiperProps {
   children: React.ReactNode[];
@@ -28,7 +30,8 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
     showNavigation = props.navigation,
     enableAutoplay = props.autoplay,
     enableFadeEffect = props.fadeEffect,
-    isLazy = props.lazy;
+    isLazy = props.lazy,
+    enableCardsEffect = props.cardsEffect;
 
   const {
     nextButton,
@@ -45,6 +48,7 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
   isLazy && modules.push(Lazy);
   isFreeMode && modules.push(FreeMode);
   enableFadeEffect && modules.push(EffectFade);
+  enableCardsEffect && modules.push(EffectCards);
 
   return (
     <React.Fragment>

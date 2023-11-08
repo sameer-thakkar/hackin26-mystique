@@ -50,7 +50,7 @@ const skipSvg = () => {
   );
 };
 
-const clockSvg = () => {
+export const ClockSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -334,7 +334,7 @@ export const userSvg = () => {
 export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
-  DURATION: clockSvg,
+  DURATION: ClockSvg,
   INSTANT_CONFIRMATION: quickSvg,
   MOBILE_TICKET: phoneSvg,
   SKIP_THE_LINE: skipSvg,

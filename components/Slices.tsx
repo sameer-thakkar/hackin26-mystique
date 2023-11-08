@@ -1,4 +1,3 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
 import { SLICE_TYPES } from 'const/index';
 import GoogleMap from './ShowPages/GoogleMap';

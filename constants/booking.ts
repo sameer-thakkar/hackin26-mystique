@@ -1,10 +1,11 @@
-export enum BOOKING_FLOW_TYPE {
-  SEATMAP = 'SEATMAP',
-  SVG = 'SVG',
-  NORMAL = 'NORMAL',
-  COMBO = 'COMBO',
-  RESERVATION = 'RESERVE',
-}
+export const BOOKING_FLOW_TYPE = {
+  SEATMAP: 'SEATMAP',
+  SVG: 'SVG',
+  NORMAL: 'NORMAL',
+  COMBO: 'COMBO',
+  RESERVATION: 'RESERVE',
+  AIRPORT_TRANSFER: 'AIRPORT_TRANSFER',
+} as const;
 
 export const BOOKING_FLOW_STAGE = {
   SELECT: 'select',

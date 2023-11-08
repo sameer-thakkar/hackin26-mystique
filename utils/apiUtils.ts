@@ -79,6 +79,7 @@ export enum HeadoutEndpoints {
   CalendarInventoryForTourGroupList,
   CityList,
   Media,
+  Airports,
 }
 
 export const getHeadoutApiUrl = ({
@@ -157,6 +158,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.Media:
       endpointSlug = `/api/v1/media/`;
       break;
+    case HeadoutEndpoints.Airports:
+      endpointSlug = '/api/v1/airport-transfers/fetch-airports';
+      break;
   }
 
   let url = endpointSlug;
@@ -164,6 +168,7 @@ export const getHeadoutApiUrl = ({
     url = `${hostname}${endpointSlug}`;
   } else {
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
+
     url = `https://api.headout.com${formattedEndpointSlug}`;
   }
   if (params && Object.keys(params).length) {
@@ -492,6 +497,7 @@ export const fetchTourGroupsByCategory = async ({
     id: categoryId,
     params,
   });
+
   try {
     const response = await fetch(url, { headers });
 

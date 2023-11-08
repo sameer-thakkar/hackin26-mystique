@@ -53,6 +53,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
   }headout.com/api/${(req.query.slug as string[])?.join('/')}/${
     queryParamsString ? `?${queryParamsString}` : ''
   }`;
+
   await fetch(url)
     .then((apiResponse) => {
       if (!apiResponse.ok) {

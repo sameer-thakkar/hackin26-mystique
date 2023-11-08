@@ -38,6 +38,7 @@ export type TProductHighlightTabs = {
   activeTabIndex?: number;
   showCard?: boolean;
   isLoading?: boolean;
+  className?: string;
 };
 
 export type TSpecialProductType = {

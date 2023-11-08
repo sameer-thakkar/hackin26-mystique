@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { CategoryHeaderProps } from 'components/CategoryHeader/interface';
@@ -76,7 +76,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const isSticky = scrollPos > 80;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!window) return;
 
     const scrollHandler = () => {

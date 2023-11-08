@@ -1,4 +1,4 @@
-import React, { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
@@ -29,6 +29,7 @@ import {
   isSubCategoryMB,
   legacyBooleanCheck,
 } from 'utils';
+import { calcAvgRatingAndTotalReviews } from 'utils/airportTransfersUtils';
 import allToursParser from 'utils/allToursParser';
 import {
   sendVariablesToDataLayer,
@@ -46,6 +47,8 @@ import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
+import { AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE } from 'const/airportTransfers';
+import { BOOKING_FLOW_TYPE } from 'const/booking';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
@@ -55,6 +58,9 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { LOCATION } from 'assets/SvgIcons';
+import { LongFormAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
+import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
+import { TTour } from './AirportTransfers/PopulateAirportTransferProducts/interfaces';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -147,7 +153,9 @@ const MicrositeV1 = (props: any) => {
     commonFooter,
     secondaryFooter,
     commonHeader,
+    productCardData,
   } = refs;
+
   const {
     attraction: attractionCMS,
     images: bannerImages,
@@ -348,6 +356,7 @@ const MicrositeV1 = (props: any) => {
   const [orderedFilteredTours, setOrderedFilteredTours] = useState(
     orderedTours
   );
+
   const [productsLoading, setProductsLoading] = useState(false);
 
   const orderedTgids = orderedTours?.length
@@ -500,7 +509,7 @@ const MicrositeV1 = (props: any) => {
     baseLangBannerAndFooterCombinations
   );
   const { primarySubCategory: firstProductSubCategory } =
-    (Object.values(scorpioData)?.[0] as Record<string, any>) || {};
+    (Object.values(scorpioData ?? {})?.[0] as Record<string, any>) || {};
   const bannerDescriptors = getBannerDescriptors({
     taggedMbType,
     taggedCategoryName,
@@ -517,10 +526,15 @@ const MicrositeV1 = (props: any) => {
   const bannerVideo: string | undefined =
     bannerImageData?.resourceEntityMedias?.[0]?.medias?.[0]?.url;
 
+  const isAirportTransfersMB =
+    productCardData?.template === AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
+
   const tourListSection = (
     <PopulateProducts
       currency={currency}
-      uncategorizedTours={orderedFilteredTours}
+      uncategorizedTours={orderedFilteredTours.filter(
+        (tour: TTour) => tour.flowType !== BOOKING_FLOW_TYPE.AIRPORT_TRANSFER
+      )}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
@@ -541,6 +555,7 @@ const MicrositeV1 = (props: any) => {
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
       isNonPoi={isNonPoiMB}
+      isAirportTransfersMB={isAirportTransfersMB}
     />
   );
 
@@ -548,6 +563,12 @@ const MicrositeV1 = (props: any) => {
   const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
   const finalEnableBuyTickets =
     enableBuyTickets === null ? 'Yes' : enableBuyTickets;
+
+  const showAirportTransferProducts =
+    hasTours &&
+    !hasTourListContentFW &&
+    isToursAvailable &&
+    isAirportTransfersMB;
 
   return (
     <div>
@@ -679,9 +700,15 @@ const MicrositeV1 = (props: any) => {
             bannerSubText={bannerAndFooterSubText}
             isMobile={isMobile}
             collectionDetails={collectionDetails}
+            ratingsAndReviewsData={
+              isAirportTransfersMB
+                ? calcAvgRatingAndTotalReviews(scorpioData)
+                : undefined
+            }
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
             isNonPoiMB={isNonPoiMB}
             bannerDescriptors={bannerDescriptors}
+            city={isAirportTransfersMB ? productCardData?.city?.city : null}
           />
         </Conditional>
         <Conditional if={isA1orC1MB(mbType) && isMobile}>
@@ -694,9 +721,11 @@ const MicrositeV1 = (props: any) => {
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
           <TextBanner bannerHeading={bannerHeading || null} />
         </Conditional>
+
         <Conditional if={alertPopup}>
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </Conditional>
+
         <Conditional if={coverSlices?.length}>
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />
@@ -709,9 +738,29 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-        <Conditional if={hasTours && !hasTourListContentFW && isToursAvailable}>
+
+        <Conditional
+          if={
+            hasTours &&
+            !hasTourListContentFW &&
+            isToursAvailable &&
+            !isAirportTransfersMB
+          }
+        >
           {tourListSection}
         </Conditional>
+
+        {showAirportTransferProducts ? (
+          <PopulateAirportTransfersProducts
+            uncategorizedTours={orderedFilteredTours}
+            isMobile={isMobile}
+            scorpioData={scorpioData}
+            city={productCardData.city}
+            sharedTransferProducts={tourListSection}
+            uid={uid}
+            currentLanguage={currentLanguage}
+          />
+        ) : null}
 
         <Conditional if={automatedBreadcrumbsExists}>
           <Breadcrumbs
@@ -719,6 +768,13 @@ const MicrositeV1 = (props: any) => {
             taggedCity={taggedCity}
             primaryCity={primaryCity}
             isMobile={isMobile}
+          />
+        </Conditional>
+
+        <Conditional if={isAirportTransfersMB && longFormContent}>
+          <LongFormAndStaticContent
+            isMobile={isMobile}
+            content={contentFWSlices}
           />
         </Conditional>
 
@@ -747,6 +803,7 @@ const MicrositeV1 = (props: any) => {
             </Conditional>
           </InteractionContextProvider>
         </ProductsContextProvider>
+
         <Footer
           currentLanguage={currentLanguage}
           attraction={footerAttractionName}

@@ -1099,6 +1099,8 @@ export const SLICE_TYPES = {
   ACCORDION: 'accordion',
   LISTICLE_SECTION_START: 'listicle_section___start',
   TABLE_V3: 'table_v3',
+  // Airport Transfer
+  CARS_CAROUSEL: 'cars_carousel',
 };
 
 export const CASHBACK_TYPES = {
@@ -1661,6 +1663,11 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/translate.svg',
   WIFI:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/wifi.svg',
+  SPARKS_NEW:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sparks-new.svg',
+
+  LUGGAGE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/luggage.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [

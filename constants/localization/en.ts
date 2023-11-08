@@ -810,6 +810,8 @@ const en = {
     CULTURAL_EXPERIENCE: 'Authentic Cultural Experiences',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    INSTANT_CONFIRMATION: 'Instant Confirmation',
+    LUGGAGE_ASSISTANCE: 'Luggage Assistance',
   },
   COOKIE_BANNER: {
     DESKTOP:

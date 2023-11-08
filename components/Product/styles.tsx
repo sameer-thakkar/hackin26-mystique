@@ -851,7 +851,7 @@ export const SwiperControls = styled.div`
   }
 `;
 
-export const Tab = styled.div<{ isActive: boolean }>`
+export const Tab = styled.div`
   cursor: pointer;
   padding-bottom: 0.5rem;
   display: block;
@@ -861,15 +861,11 @@ export const Tab = styled.div<{ isActive: boolean }>`
   ${expandFontToken('UI/Label Medium')}
   margin-right: 0.125rem;
 
-  ${({ isActive }) => {
-    return (
-      isActive &&
-      `
-      color: ${COLORS.TEXT.CANDY_1};
-      border-color: ${COLORS.TEXT.CANDY_1};
-      padding-bottom: 0.453125rem;`
-    );
-  }}
+  &.active {
+    color: ${COLORS.TEXT.CANDY_1};
+    border-color: ${COLORS.TEXT.CANDY_1};
+    padding-bottom: 0.453125rem;
+  }
 `;
 
 export const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`

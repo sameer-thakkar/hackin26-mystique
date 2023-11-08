@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import * as Sentry from '@sentry/nextjs';
+import { captureException } from '@sentry/nextjs';
 import type {
   CollectionDetails,
   CollectionVideos,
@@ -74,7 +74,9 @@ export const categoryTourListParserV1 = async ({
     exclusions,
     cta_url_suffix: commonCtaUrlSuffix,
     show_scratch_price: commonScratchPrice,
+    additional_sub_category_ids: additionalSubCategoryIds,
   } = productCard || {};
+
   const { cityCode, countryCode, country: countryName } = city || {};
   const localeRanking = csvTgidToArray(locale_ranking);
   const commonRanking = csvTgidToArray(ranking);
@@ -145,7 +147,7 @@ export const categoryTourListParserV1 = async ({
         videos,
       };
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }
@@ -164,7 +166,7 @@ export const categoryTourListParserV1 = async ({
       tourData.push(...categoryData?.pageData?.items);
       primaryCity = categoryData?.city;
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }
@@ -179,15 +181,38 @@ export const categoryTourListParserV1 = async ({
         limit: finalLimit,
         cookies,
       });
+
       currency = subCategoryData?.currency;
       primaryCity = subCategoryData?.city;
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }
   }
+
+  // Airport transfers has additional sub categories (2 sub categories)
+  if (additionalSubCategoryIds) {
+    try {
+      const additionalSubCategoryData = await fetchTourGroupsByCategory({
+        categoryId: additionalSubCategoryIds,
+        hostname,
+        isSubCategory: true,
+        city: cityCode,
+        language,
+        limit: finalLimit,
+        cookies,
+      });
+
+      tourData.push(...additionalSubCategoryData?.pageData?.items);
+    } catch (err) {
+      captureException(err);
+      sendLog({ err });
+      console.error(err);
+    }
+  }
+
   if (tourData?.length || finalRanking?.length) {
     let allTours = [...tourData];
     const intialTgids = tourData?.map((tour) => tour.id);
@@ -220,6 +245,7 @@ export const categoryTourListParserV1 = async ({
     } else {
       orderedTGIDRanking = [...finalRanking];
     }
+
     const orderedTours = allTours?.sort((tourA, tourB) => {
       return (
         orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
@@ -308,6 +334,7 @@ export const categoryTourListParserV1 = async ({
       let {
         microBrandsHighlight,
       }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
+
       const {
         urlSlugs: _primaryCategoryUrlSlugs,
         ...primaryCategoryWithoutSlugs
@@ -576,7 +603,7 @@ export const getToursGlobalCollection = async ({
         : headoutPicksSection?.tourGroups?.items;
       tourData.push(...finalSection);
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }
@@ -593,7 +620,7 @@ export const getToursGlobalCollection = async ({
       currency = subCategoryData?.currency;
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }
@@ -608,7 +635,7 @@ export const getToursGlobalCollection = async ({
       tourData.push(tgidData);
       primaryCity = tgidData?.city;
     } catch (err) {
-      Sentry.captureException(err);
+      captureException(err);
       sendLog({ err });
       console.error(err);
     }

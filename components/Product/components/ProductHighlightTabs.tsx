@@ -35,6 +35,7 @@ export const HighlightTabs = ({
   activeTabIndex,
   showCard,
   isLoading = false,
+  className,
 }: TProductHighlightTabs) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
@@ -88,8 +89,14 @@ export const HighlightTabs = ({
 
   return (
     <Conditional if={showCard}>
-      <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
-        <TabsWrapper onClick={(e) => e.stopPropagation()}>
+      <HighlightTabsWrapper
+        className={className}
+        hasRegularHighlights={hasRegularHighlights}
+      >
+        <TabsWrapper
+          onClick={(e) => e.stopPropagation()}
+          className="tabs-wrapper"
+        >
           <Swiper
             {...swiperParams}
             onSwiper={updateSwiper}
@@ -97,7 +104,7 @@ export const HighlightTabs = ({
           >
             {tabs.map((tab: any, index: number) => (
               <Tab
-                isActive={activeTabIndex == index}
+                className={`tab ${activeTabIndex == index ? 'active' : ''}`}
                 key={index}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -137,6 +144,7 @@ export const HighlightTabs = ({
               isActive={activeTabIndex == index}
               key={index}
               pageType={pageType}
+              className="tab-panel"
             >
               <Conditional if={!isLoading}>
                 <RichText render={tab.contents} elements={richtextElements} />

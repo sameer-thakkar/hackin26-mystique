@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -138,12 +138,13 @@ const PopulateProducts = (props: any) => {
     sectionTitle = '',
     sectionSubtext = '',
     pageType = '',
-    growthExperiment7Variant,
     bannerVideo,
     isCollectionMB = false,
     productsLoading,
     isNonPoi,
+    isAirportTransfersMB,
   } = props;
+
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
   productsRef.current = [];
@@ -350,6 +351,7 @@ const PopulateProducts = (props: any) => {
       (checkIfScorpioHighlightsExist || tour?.tour_description_override?.length)
     );
   });
+
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
     if (!productsRef.current) return;
@@ -469,7 +471,10 @@ const PopulateProducts = (props: any) => {
     currentDesign: design || '',
     expectedDesign: [DESIGN.V1],
   });
-  const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
+
+  const shouldShowHeading = isV1DesignSite
+    ? !isCollectionMB && !isAirportTransfersMB
+    : true;
   return (
     <StyledProductsWrapper
       isLoading={productsLoading}
@@ -481,6 +486,7 @@ const PopulateProducts = (props: any) => {
           <Spinner />
         </SpinnerWrapper>
       )}
+
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional
@@ -508,6 +514,7 @@ const PopulateProducts = (props: any) => {
           </Conditional>
         </div>
       </Conditional>
+
       <Conditional if={!productsLoading}>
         <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
           {availableToursList &&
@@ -593,6 +600,7 @@ const PopulateProducts = (props: any) => {
                 setDetailsPopupShown,
                 isNonPoi,
               };
+
               return (
                 <LazyComponent
                   key={tour.tgid}
@@ -606,10 +614,7 @@ const PopulateProducts = (props: any) => {
                     {isTicketCard ? (
                       <TicketCard {...childProps} />
                     ) : (
-                      <Product
-                        {...childProps}
-                        growthExperiment7Variant={growthExperiment7Variant}
-                      />
+                      <Product {...childProps} />
                     )}
                     <Conditional if={mbTheme === THEMES.MIN_BLUE}>
                       <HorizontalLine colorProp={COLORS.GRAY.G6} />

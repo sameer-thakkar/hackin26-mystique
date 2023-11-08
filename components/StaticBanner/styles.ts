@@ -114,6 +114,12 @@ export const Heading = styled.h1<{
     `margin: ${$displayRating ? '0.25rem 1.5rem 0' : '1.25rem 1.5rem 0'};
   `}
 
+  // Airport transfers
+  span {
+    color: ${COLORS.BRAND.PURPS};
+    display: block;
+  }
+
   @media (min-width: 768px) {
     margin: ${({ $showTrustBooster }) =>
       $showTrustBooster ? '0' : '0.5rem 0 0'};

@@ -158,6 +158,7 @@ const Drawer = ({
   $drawerStyles,
   // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLElement... Remove this comment to see the full error message
   container = null,
+  hideSeparator = false,
 }: {
   closeHandler?: Function;
   contents?: JSX.Element;
@@ -167,6 +168,7 @@ const Drawer = ({
   noMargin?: boolean;
   $drawerStyles?: any;
   container?: HTMLElement;
+  hideSeparator?: boolean;
 }) => {
   const [mounted, setMounted] = useState(false);
   const drawerRef = useRef(null);
@@ -252,7 +254,10 @@ const Drawer = ({
           <PanelAnchor />
           <Conditional if={heading}>
             <HeadingText>{heading}</HeadingText>
-            <Separator />
+
+            <Conditional if={!hideSeparator}>
+              <Separator />
+            </Conditional>
           </Conditional>
           <CloseIcon
             // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message

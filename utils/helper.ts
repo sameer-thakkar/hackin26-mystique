@@ -610,8 +610,16 @@ export const getBannerDescriptors = ({
   firstProductSubCategory: Record<string, any> | undefined;
 }) => {
   const { id, name } = firstProductSubCategory || {};
+
+  const isAirportTransfersMB =
+    name === 'Private Airport Transfers' &&
+    taggedSubCategoryName === 'Airport Transfers';
+
   let descriptorData = [];
-  if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
+
+  if (isAirportTransfersMB) {
+    descriptorData = SUB_CATEGORY_BANNER()[id];
+  } else if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
     descriptorData = SUB_CATEGORY_BANNER()[id];
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {
     const categoryId = CATEGORY_IDS[taggedCategoryName];
@@ -624,6 +632,7 @@ export const getBannerDescriptors = ({
   }
   return descriptorData;
 };
+
 export const getCategorySeeAllLink = (category: string) => {
   switch (category) {
     case 'kids':

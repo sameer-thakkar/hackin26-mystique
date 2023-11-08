@@ -296,6 +296,7 @@ export const createBookingURL = ({
     case BOOKING_FLOW_TYPE.RESERVATION:
     case BOOKING_FLOW_TYPE.COMBO:
     case BOOKING_FLOW_TYPE.NORMAL:
+    case BOOKING_FLOW_TYPE.AIRPORT_TRANSFER:
       bookingStageSuffix = BOOKING_FLOW_STAGE.SELECT;
   }
 
