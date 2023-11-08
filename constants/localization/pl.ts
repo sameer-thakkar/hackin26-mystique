@@ -575,7 +575,7 @@ const pl = {
     CANCELLATION_POLICY: 'Zasady anulowania',
     CAST_AND_CREW: 'Obsada i ekipa',
     CLOSING_DATE: 'Czas zamknięcia',
-    CLOSING_DATE_SPECIAL_OFFER: 'Ostateczny termin: oferta specjalna',
+    CLOSING_DATE_SPECIAL_OFFER: 'Oferta specjalna: Ostatni termin',
     DURATION: 'Czas trwania',
     FACILITIES_AND_ACCESSIBILITY: 'Udogodnienia i dostępność',
     FREQUENTLY_ASKED_QUESTIONS: 'Często zadawane pytania',
