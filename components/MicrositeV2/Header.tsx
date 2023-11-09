@@ -27,6 +27,8 @@ import COLORS from 'const/colors';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CTA_TYPE,
   PAGETYPE,
   THEMES,
 } from 'const/index';
@@ -479,6 +481,10 @@ const Header: FunctionComponent<HeaderProps> = ({
     window.scrollBy({
       top: 540,
       behavior: 'smooth',
+    });
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.BUY_TICKETS,
     });
   };
 

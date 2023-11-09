@@ -17,7 +17,7 @@ import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
@@ -333,6 +333,18 @@ const Header: React.FC<any> = (props) => {
     return () => clearTimeout(timer);
   }, [isSidenavScroll]);
 
+  const onClickByTickets = () => {
+    scroller.scrollTo('products-container', {
+      duration: 1200,
+      offset: isMobile ? -130 : -100,
+      smooth: 'easeInOutQuart',
+    });
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.BUY_TICKETS,
+    });
+  };
+
   return (
     <StyledHeader
       $isSticky={isHeaderSticky}
@@ -399,15 +411,7 @@ const Header: React.FC<any> = (props) => {
             </span>
           </Conditional>
           <Conditional if={enableBuyTickets === 'Yes'}>
-            <StyledMenuItem
-              onClick={() => {
-                scroller.scrollTo('products-container', {
-                  duration: 1200,
-                  offset: isMobile ? -130 : -100,
-                  smooth: 'easeInOutQuart',
-                });
-              }}
-            >
+            <StyledMenuItem onClick={onClickByTickets}>
               {strings.BANNER_CTA}
             </StyledMenuItem>
           </Conditional>

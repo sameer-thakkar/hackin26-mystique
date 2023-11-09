@@ -6,10 +6,16 @@ import { useRouter } from 'next/router';
 import styled, { css, keyframes } from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import useWindowSize from 'hooks/useWindowSize';
+import { trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
 import { addUrlParams } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { SIDEBAR_TYPES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  SIDEBAR_TYPES,
+} from 'const/index';
 import { expandFontToken } from 'const/typography';
 import {
   BackArrow,
@@ -356,6 +362,8 @@ const AsideModal = ({
   isGlobalMb = false,
   onCloseCallback = null,
   isQueryRestore = false,
+  isProductCardTracking = false,
+  tgid = '',
 }: any) => {
   const container = useRef(null);
   // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
@@ -367,6 +375,11 @@ const AsideModal = ({
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
   const router = useRouter();
+  const scrollRef = useRef(null);
+  const [scrollDetails, setScrollDetails] = useState({
+    percentage: 0,
+    isScrolledComplete: false,
+  });
 
   useEffect(() => {
     scroller.scrollTo('active-element', {
@@ -393,6 +406,37 @@ const AsideModal = ({
 
     return () => window.removeEventListener('popstate', onPopState);
   }, [active, isMobile]);
+
+  useEffect(() => {
+    const isScrolled =
+      isProductCardTracking &&
+      scrollDetails.percentage === 100 &&
+      !scrollDetails.isScrolledComplete;
+
+    if (isScrolled) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: scrollDetails.percentage,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+      });
+      setScrollDetails({ ...scrollDetails, isScrolledComplete: true });
+    }
+  }, [scrollDetails.percentage]);
+
+  const getScrollPercent = () => {
+    if (scrollRef?.current && isProductCardTracking) {
+      const {
+        scrollTop = 0,
+        scrollHeight = 0,
+        clientHeight = 0,
+      } = scrollRef.current;
+      const percentageScrolled =
+        (scrollTop / (scrollHeight - clientHeight)) * 100;
+      setScrollDetails({ ...scrollDetails, percentage: percentageScrolled });
+    }
+  };
+
+  const throttledScrollHandler = throttle(getScrollPercent, 200);
 
   const onClose = (e = null, options: OnCloseOptions = {}) => {
     if ((e as any)?.target) {
@@ -484,6 +528,8 @@ const AsideModal = ({
               /* @ts-expect-error TS(2769): No overload matches this call. */
               windowHeight={windowHeight}
               sidebarType={type}
+              ref={scrollRef}
+              onScroll={throttledScrollHandler}
               id="side-container-index"
             >
               {children}

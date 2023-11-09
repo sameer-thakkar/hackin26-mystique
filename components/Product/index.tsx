@@ -506,7 +506,9 @@ const Product = (props: any) => {
           </ModalCardContainer>
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
-        onCloseCallback: () => trackedToggleContent(true),
+        onCloseCallback: () => {
+          trackedToggleContent(true);
+        },
         history: {
           enable: true,
           params: {
@@ -514,6 +516,8 @@ const Product = (props: any) => {
             popup: 'details',
           },
         },
+        tgid: tgid,
+        isProductCardTracking: true,
       });
     } else {
       trackedToggleContent(isContentOpen);

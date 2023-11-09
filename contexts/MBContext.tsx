@@ -71,6 +71,8 @@ export const MBContextProvider = (props: any) => {
     type = SIDEBAR_TYPES.DEFAULT,
     onCloseCallback,
     history,
+    isProductCardTracking = false,
+    tgid = '',
   }: any) => {
     const modalState = {
       children,
@@ -80,6 +82,8 @@ export const MBContextProvider = (props: any) => {
       type,
       onCloseCallback,
       history,
+      isProductCardTracking,
+      tgid,
     };
 
     // @ts-expect-error TS(2322): Type '{ children: any; title: any; width: any; sid... Remove this comment to see the full error message
@@ -174,6 +178,10 @@ export const MBContextProvider = (props: any) => {
           onCloseCallback={(getActiveAside() as any)?.onCloseCallback}
           isQueryRestore={(getActiveAside() as any)?.history?.isQueryRestore}
           isGlobalMb={isGlobalMb}
+          isProductCardTracking={
+            (getActiveAside() as any)?.isProductCardTracking
+          }
+          tgid={(getActiveAside() as any)?.tgid}
         >
           {(getActiveAside() as any)?.children}
         </AsideModal>

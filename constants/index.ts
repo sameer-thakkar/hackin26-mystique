@@ -491,6 +491,7 @@ export const ANALYTICS_EVENTS = {
   DATE_FILTER_APPLIED: 'Date Filter Applied',
   DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
   MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',
+  MORE_DETAILS_SECTION_VIEWED: 'More Details Section Viewed',
   CITY_CARD_CLICKED: 'City Card Clicked',
   COLLECTION_CARD_CLICKED: 'Collection Card Clicked',
   SUBCAT_CARD_CLICKED: 'Sub-Category Card Clicked',
@@ -907,6 +908,8 @@ export const ANALYTICS_PROPERTIES = {
   VIDEO_TITLE: 'Video Title',
   PERCENT_VIEWED: 'Percentage Viewed',
   IS_SHOW_PLAYING: 'Is Show Playing',
+  PERCENTAGE_VIEWED: 'Pecentage Viewed',
+  IS_DATE_FILTER: 'Is Date Filter',
 };
 
 export const PAGE_TYPES = {

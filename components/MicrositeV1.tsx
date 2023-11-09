@@ -53,6 +53,7 @@ import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BOOLEAN_STATES,
   PAGE_TYPES,
   THEMES,
 } from 'const/index';
@@ -486,6 +487,10 @@ const MicrositeV1 = (props: any) => {
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+      [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
+        isA1orC1MB(mbType) && isMobile
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
     });
   }, [eventsReady]);
 
