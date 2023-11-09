@@ -29,7 +29,7 @@ export const SearchPage = (props: any) => {
   const loadHomepage = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
-  const { currentLanguage, isLTT } = props;
+  const { currentLanguage } = props;
   const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
@@ -41,32 +41,24 @@ export const SearchPage = (props: any) => {
     flowType: string,
     urlSlugs: string[]
   ) => {
-    if (isLTT) {
-      const { destinationUrl } = getProductCardDestination({
-        nakedDomain,
-        lang: currentLanguage,
-        tgid: productTgid,
-        redirectToHeadoutBookingFlow,
-        currency,
-        flowType,
-        urlSlugs,
-        showPageUid,
-        isDev,
-        host,
-      });
-      window.open(destinationUrl, '_self', 'noopener,noreferrer');
-    } else {
-      props.changePage({
-        name: PAGETYPE.MOBILE_PRODUCT_PAGE,
-        tgid: productTgid,
-      });
-    }
+    const { destinationUrl } = getProductCardDestination({
+      nakedDomain,
+      lang: currentLanguage,
+      tgid: productTgid,
+      redirectToHeadoutBookingFlow,
+      currency,
+      flowType,
+      urlSlugs,
+      showPageUid,
+      isDev,
+      host,
+    });
+    window.open(destinationUrl, '_self', 'noopener,noreferrer');
   };
 
   const { isMobile, allTours, headerProps, changePage } = props;
   const defaultSearchTgids = headerProps.recommendedTours;
   const allToursArray = Object.values(allTours);
-
   return (
     <div>
       <div className="search-header">
