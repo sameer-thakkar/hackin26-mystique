@@ -94,7 +94,7 @@ const ProductTitleWrapper = styled.div`
 `;
 
 const ProductTitle = styled.div`
-  font-family: ${HALYARD.FONT_STACK};
+  font-family: ${HALYARD.DISPLAY};
   font-weight: 500;
   font-size: 24px;
   line-height: 28px;
@@ -120,7 +120,7 @@ const StyledVariantsWrapper = styled.div`
   grid-template-rows: repeat(2, max-content);
   gap: 24px;
   h3 {
-    font-family: ${HALYARD.FONT_STACK};
+    font-family: ${HALYARD.DISPLAY};
     font-weight: 500;
     font-size: 21px;
     line-height: 24px;

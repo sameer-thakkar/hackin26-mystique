@@ -453,6 +453,7 @@ const Product = (props: any) => {
   useEffect(() => {
     if (isMobile) return;
     // @ts-ignore
+    toggleContentOpen(false);
     const isTruncated = isTicketCard
       ? false
       : (collapsibleContentRef.current?.offsetHeight ?? 0) >=

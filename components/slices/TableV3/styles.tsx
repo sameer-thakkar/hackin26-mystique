@@ -148,6 +148,7 @@ export const BoosterTextWrapper = styled.div`
   ${expandFontToken(FONTS.TABLE_REGULAR)};
   color: ${COLORS.GRAY.G3};
   font-family: halyard-text;
+  height: 1.25rem;
 `;
 
 export const SubTextWrapper = styled.div`
@@ -241,6 +242,7 @@ export const StyledRow = styled.div<{
 }>`
   background: ${COLORS.BRAND.WHITE};
   display: grid;
+  align-items: center;
   grid-auto-flow: column;
   grid-auto-rows: 1fr;
   border-bottom: 1px solid ${COLORS.GRAY.G6};

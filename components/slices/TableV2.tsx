@@ -33,6 +33,7 @@ const StyledRow = styled.div`
     background: ${COLORS.GRAY.G8};
     color: ${COLORS.GRAY.G2};
   }
+  align-items: center;
   display: grid;
   grid-auto-flow: column;
   grid-auto-rows: 1fr;

@@ -182,7 +182,9 @@ const TableV3 = ({
             <ScratchPrice>{scratched_price}</ScratchPrice>
             <FinalPriceBoosterWrapper>
               <FinalPrice>{final_price}</FinalPrice>
-              <DiscountTextWrapper>{booster_text}</DiscountTextWrapper>
+              <Conditional if={booster_text}>
+                <DiscountTextWrapper>{booster_text}</DiscountTextWrapper>
+              </Conditional>
             </FinalPriceBoosterWrapper>
           </ScratchPriceWrapper>
         );
@@ -278,8 +280,12 @@ const TableV3 = ({
       case TABLE_V3_COLUMN_TYPE.NUMERIC_TEXT:
         return (
           <NumericTextWrapper>
-            <NumericWrapper>{primary_number_text}</NumericWrapper>
-            <NumericText>{text}</NumericText>
+            <Conditional if={primary_number_text}>
+              <NumericWrapper>{primary_number_text}</NumericWrapper>
+            </Conditional>
+            <Conditional if={text}>
+              <NumericText>{text}</NumericText>
+            </Conditional>
           </NumericTextWrapper>
         );
 
