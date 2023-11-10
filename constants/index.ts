@@ -1484,6 +1484,15 @@ export const RESOURCE_TYPE = {
 
 export const SUBCATEGORY_IDS: Record<string, string> = {
   Combo: '1080',
+  'City Cards': '1008',
+  'Airport Transfers': '1019',
+  'Public Transport': '1022',
+  'Wifin & SIM Cards': '1023',
+  'Food Passes': '1031',
+  'Ferry Tickets': '1108',
+  'Train Tickets': '1133',
+  'Train Passes': '1139',
+  'Shared Airport Transfers': '1145',
 };
 
 export const CATEGORY_IDS: Record<string, string> = {

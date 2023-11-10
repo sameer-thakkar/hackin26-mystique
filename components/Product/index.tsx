@@ -74,6 +74,7 @@ import {
   CATEGORY_IDS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   SIDEBAR_TYPES,
+  SUBCATEGORY_IDS,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -678,13 +679,24 @@ const Product = (props: any) => {
     />
   );
 
-  const COMBO_SUBCATEGORY_ID = 1080;
+  const croppingExcludedSubCats = [
+    SUBCATEGORY_IDS['Combo'],
+    SUBCATEGORY_IDS['City Cards'],
+    SUBCATEGORY_IDS['Airport Transfers'],
+    SUBCATEGORY_IDS['Public Transport'],
+    SUBCATEGORY_IDS['Wifin & SIM Cards'],
+    SUBCATEGORY_IDS['Food Passes'],
+    SUBCATEGORY_IDS['Ferry Tickets'],
+    SUBCATEGORY_IDS['Train Tickets'],
+    SUBCATEGORY_IDS['Train Passes'],
+    SUBCATEGORY_IDS['Shared Airport Transfers'],
+  ];
   const shouldCropImage =
     !isCombo &&
     ![CATEGORY_IDS['Transportation'], CATEGORY_IDS['Travel Services']].includes(
       String(primaryCategory?.id)
     ) &&
-    primarySubCategory?.id !== COMBO_SUBCATEGORY_ID;
+    !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
   const getProductCardElements = (expandContent: any, isLoading?: boolean) => (
     <>

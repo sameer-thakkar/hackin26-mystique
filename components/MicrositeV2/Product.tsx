@@ -587,12 +587,24 @@ const Product = (props: any) => {
       : IMAGE_DIMENSIONS.MOBILE.V2
     : IMAGE_DIMENSIONS.DESKTOP;
 
+  const croppingExcludedSubCats = [
+    SUBCATEGORY_IDS['Combo'],
+    SUBCATEGORY_IDS['City Cards'],
+    SUBCATEGORY_IDS['Airport Transfers'],
+    SUBCATEGORY_IDS['Public Transport'],
+    SUBCATEGORY_IDS['Wifin & SIM Cards'],
+    SUBCATEGORY_IDS['Food Passes'],
+    SUBCATEGORY_IDS['Ferry Tickets'],
+    SUBCATEGORY_IDS['Train Tickets'],
+    SUBCATEGORY_IDS['Train Passes'],
+    SUBCATEGORY_IDS['Shared Airport Transfers'],
+  ];
   const shouldCropImage =
     !combo &&
     ![CATEGORY_IDS['Transportation'], CATEGORY_IDS['Travel Services']].includes(
       String(primaryCategory?.id)
     ) &&
-    String(primarySubCategory?.id) !== SUBCATEGORY_IDS['Combo'];
+    !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
   const cardComponent = (
     <ProductCard
