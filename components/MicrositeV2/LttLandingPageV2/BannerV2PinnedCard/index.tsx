@@ -172,11 +172,11 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
           <Image
             url={verticalImageUrl}
             alt={`${title} product image`}
-            priority
             autoCrop={true}
             className={`pinned-card-image`}
-            fetchPriority="high"
             fitCrop={true}
+            width={180}
+            height={260}
           />
           <span className="image-placeholder">
             <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER

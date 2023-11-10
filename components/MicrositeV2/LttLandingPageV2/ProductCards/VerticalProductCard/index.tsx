@@ -132,6 +132,8 @@ const VerticalProductCard = ({
         className={`pinned-card-vertical-image`}
         fetchPriority="high"
         fitCrop={true}
+        height={270}
+        width={180}
       />
       <span className="image-placeholder">
         <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER

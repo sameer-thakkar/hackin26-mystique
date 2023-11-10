@@ -54,7 +54,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
           imageId={String(index)}
           imageWidth={375}
           imageHeight={232}
-          dontLazyLoadImage={false}
+          dontLazyLoadImage={true}
           videoPosition={VIDEO_POSITIONS.BANNER}
           eventTracking={eventTracking}
           shouldVideoPlay
@@ -68,12 +68,10 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
         <Image
           url={item.url}
           alt={item.alt}
-          priority
-          height={843}
-          width={1350}
+          height={433}
+          width={784}
           autoCrop={true}
           className={`banner-image-${index} ${className}`}
-          fetchPriority="high"
         />
       </Conditional>
     </MediaContainer>

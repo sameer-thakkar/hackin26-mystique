@@ -54,7 +54,7 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
           imageId={String(index)}
           imageWidth={375}
           imageHeight={232}
-          dontLazyLoadImage={false}
+          dontLazyLoadImage={true}
           shouldVideoPlay={true}
           videoPosition={VIDEO_POSITIONS.BANNER}
           eventTracking={eventTracking}
@@ -67,12 +67,10 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
         <Image
           url={item.mobile_url}
           alt={item.alt}
-          priority
           height={189}
           width={375}
           autoCrop={true}
           className={`banner-image-${index}`}
-          fetchPriority="high"
         />
       </Conditional>
       <LinearGradient

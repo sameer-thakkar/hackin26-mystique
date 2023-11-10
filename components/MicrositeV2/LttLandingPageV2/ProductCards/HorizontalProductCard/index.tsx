@@ -136,6 +136,8 @@ const HorizontalProductCard = ({
         className={`pinned-card-image`}
         fetchPriority="high"
         fitCrop={true}
+        height={162}
+        width={108}
       />
       <div className="image-placeholder">
         <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER $width={108} $height={162} />
