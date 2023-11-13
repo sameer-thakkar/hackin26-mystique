@@ -79,6 +79,8 @@ jobs:
     env:
       AWS_EB_S3_BUCKET: ${{ secrets.AWS_EB_S3_BUCKET }}
       APP_ENV: ${{ matrix.env }}
+      WAF_API_WHITELIST_TOKEN: ${{ secrets.WAF_API_WHITELIST_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
       - name: Extract branch name
@@ -141,6 +143,13 @@ jobs:
             type=ref,event=branch,prefix=${{ matrix.env }}-,suffix=-{{sha}}-{{date 'YYYYMMDD'}}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
+      - name: Validate Build Arguements
+        run: |
+          if [ -z "$APP_ENV" ] || [ -z "$WAF_API_WHITELIST_TOKEN" ]; then
+              echo "APP_ENV and/or WAF_API_WHITELIST_TOKEN build-args are missing. Exiting workflow."
+              exit 1
+          fi
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -153,7 +162,7 @@ jobs:
             APP_ENV=${{ env.APP_ENV }}
             ALT_CANCEL_SLACK_BOT_TOKEN=${{ secrets.ALT_CANCEL_SLACK_BOT_TOKEN }}
             ZENDESK_API_TOKEN=${{ secrets.ZENDESK_API_TOKEN }}
-            WAF_API_WHITELIST_TOKEN=${{ secrets.WAF_API_WHITELIST_TOKEN }}
+            WAF_API_WHITELIST_TOKEN=${{ env.WAF_API_WHITELIST_TOKEN }}
             NEXT_PUBLIC_HEADOUT_DOMAIN=https://www.headout.com
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
