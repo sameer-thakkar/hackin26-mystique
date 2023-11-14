@@ -5,7 +5,7 @@ export const LandingPageWrapper = styled.div`
   flex-direction: column;
   justify-content: start;
   margin: 0 auto;
-  padding: 3rem 0 0rem;
+  padding: 0;
   .hroizontally-aligned-child {
     width: calc(100% - (1.5rem * 2));
     max-width: 75rem;

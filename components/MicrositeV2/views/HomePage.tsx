@@ -1,4 +1,10 @@
-import React, { ComponentType, useContext, useEffect, useState } from 'react';
+import React, {
+  ComponentType,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -6,8 +12,9 @@ import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import LazyComponent from 'components/common/LazyComponent';
 import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
-import Header from 'components/MicrositeV2/Header';
+import Header, { StyledHeader } from 'components/MicrositeV2/Header';
 import LttLandingPageV2 from 'components/MicrositeV2/LttLandingPageV2';
+import { CategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/style';
 import ReviewSection from 'components/MicrositeV2/LttLandingPageV2/ReviewSection';
 import MobileBannerV2 from 'components/MicrositeV2/MobileBannerV2';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
@@ -77,7 +84,9 @@ const Breadcrumbs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
-const V2MicrositeWrapper = styled.div`
+const V2MicrositeWrapper = styled.div<{
+  $isCategoriesSectionSticking?: boolean;
+}>`
   .alert-wrapper {
     margin-top: 40px;
   }
@@ -102,7 +111,25 @@ const V2MicrositeWrapper = styled.div`
     margin-left: auto;
     margin-right: auto;
   }
+  @media (min-width: 768px) {
+    ${CategoriesSection} {
+      ${({ $isCategoriesSectionSticking }) =>
+        $isCategoriesSectionSticking &&
+        `
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10), 0px 0px 1px 0px rgba(0, 0, 0, 0.10);
+        `};
+    }
 
+    ${StyledHeader} {
+      .fixed-wrap {
+        ${({ $isCategoriesSectionSticking }) =>
+          $isCategoriesSectionSticking &&
+          `
+        box-shadow: none;
+        `};
+      }
+    }
+  }
   @media (max-width: 768px) {
     .main-wrapper {
       padding-left: 16px;
@@ -187,6 +214,12 @@ export const HomePage = (props: any) => {
 
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
+  const browseByCategorySectionRef = useRef<HTMLDivElement | null>(null);
+  const [
+    isCategoriesSectionSticking,
+    setIsCategoriesSectionSticking,
+  ] = useState(false);
+
   const {
     isEligible: isLTTRevampExpEligible,
     variant: lttRevampExpVariant,
@@ -298,11 +331,23 @@ export const HomePage = (props: any) => {
     }
   }, [eventsReady]);
 
+  useEffect(() => {
+    const observeCategoriesSection = () => {
+      const top =
+        browseByCategorySectionRef.current?.getBoundingClientRect?.()?.top ?? 0;
+      setIsCategoriesSectionSticking(top === 80);
+    };
+    window.addEventListener('scroll', observeCategoriesSection);
+
+    return () => window.removeEventListener('scroll', observeCategoriesSection);
+  }, []);
+
   if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
 
   return (
-    // @ts-expect-error TS(2769): No overload matches this call.
-    <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
+    <V2MicrositeWrapper
+      $isCategoriesSectionSticking={isCategoriesSectionSticking}
+    >
       <Header
         {...header}
         host={host}
@@ -460,6 +505,7 @@ export const HomePage = (props: any) => {
           isMobile={isMobile}
           allTours={allTours}
           categoryProps={categoryProps}
+          browseByCategoriesRef={browseByCategorySectionRef}
         />
       </Conditional>
       <Conditional if={automatedBreadcrumbsExists}>

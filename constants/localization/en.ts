@@ -614,6 +614,7 @@ const en = {
     YOUR_PICK: 'Your pick',
     BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    TOP_SHOWS: 'Top Shows',
     LAST_MINUTE_TICKETS: 'Last minute tickets',
     LOVED_BY_MILLIONS: 'Loved by millions',
     TODAY: 'Today',

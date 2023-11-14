@@ -8,12 +8,12 @@ export const TopShowsWrapper = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  padding-top: 4rem;
+  padding-top: 0.875rem;
 
   .title {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
     color: ${COLORS.GRAY.G2};
-    margin: 0 0 2rem;
+    margin: 0 0 1.5rem;
     display: flex;
     flex-direction: row;
     align-items: start;

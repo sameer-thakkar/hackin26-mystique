@@ -204,6 +204,7 @@ const DesktopBannerV2 = ({
         </Swiper>
 
         <GradientWrapper position={'bottom'} />
+        <GradientWrapper position={'right'} />
         <div className="paginator">
           <div className="paginator-container">
             <Paginator

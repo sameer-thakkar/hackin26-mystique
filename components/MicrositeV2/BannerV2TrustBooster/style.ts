@@ -4,14 +4,15 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div<{ hasPinnedCard?: boolean }>`
-  margin-top: 1.125rem;
+  margin-top: 0;
+  padding-top: 1rem;
   @media (max-width: 768px) {
     height: 4.5rem;
     margin-top: 0;
     width: 100%;
     height: fit-content;
     height: 5rem;
-    padding-top: 0.5rem;
+    padding: 0.5rem 0 0;
     background: ${({ hasPinnedCard }) =>
       hasPinnedCard
         ? '#150328'
@@ -27,7 +28,6 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: 0 auto;
-  margin-bottom: 1.25rem;
   /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {
     display: none;
@@ -35,7 +35,7 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-
+  padding-bottom: 1.25rem;
   ${({ hasPinnedCard }) =>
     hasPinnedCard &&
     `
@@ -46,10 +46,8 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
     padding-bottom: 1.75rem;`}
 
   .trust-booster {
-    margin-bottom: 1.25rem;
-
     .icon {
-      margin-right: 0.5rem;
+      margin-right: 0.75rem;
     }
     display: flex;
     h3,
@@ -75,6 +73,7 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
     max-width: 1200px;
     box-sizing: border-box;
     margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     overflow: hidden;
     height: 3.8125rem;
 
@@ -82,6 +81,9 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
       height: 2.5625rem;
       margin: 0px;
       z-index: -1;
+      .icon {
+        margin-right: 0.5rem;
+      }
     }
     .swiper-slide {
       height: 2.5625rem !important;
@@ -90,7 +92,6 @@ export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
   @media (min-width: 768px) {
     display: flex;
     justify-content: space-between;
-    padding: 0;
     .trust-booster {
       margin-right: 1.5rem;
       box-sizing: border-box;

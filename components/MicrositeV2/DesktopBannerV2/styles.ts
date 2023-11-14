@@ -8,6 +8,7 @@ export const Container = styled.div`
   height: auto;
   background: #150029;
   -webkit-transform: translate3d(0, 0, 0);
+  margin-bottom: 0.875rem;
 
   .banner-cta-button:hover {
     box-shadow: 0px 8px 15px 0px rgba(255, 255, 255, 0.24);
@@ -15,21 +16,40 @@ export const Container = styled.div`
 `;
 
 export const GradientWrapper = styled.div<{
-  position: 'top' | 'bottom';
+  position: 'top' | 'bottom' | 'right';
 }>`
   pointer-events: none;
   position: absolute;
   width: 100%;
   z-index: 2;
+
   ${({ position }) => {
-    return position === 'top' ? `top: 0;` : `bottom: 0px;`;
+    if (position === 'top') {
+      return `top: 0;`;
+    } else if (position === 'bottom') {
+      return `bottom: 0px;`;
+    } else if (position === 'right') {
+      return `right: 0;`;
+    }
   }};
-  background: linear-gradient(
-    ${({ position }) => (position === 'top' ? '180deg' : '0deg')},
-    #150328 -0.07%,
-    rgba(21, 3, 40, 0) 100%
-  );
-  height: 7.125rem;
+
+  background: ${({ position }) => {
+    if (position === 'top') {
+      return 'linear-gradient(180deg, #150328 -0.07%, rgba(21, 3, 40, 0) 100%)';
+    } else if (position === 'bottom') {
+      return 'linear-gradient(0deg, #150328 -0.07%, rgba(21, 3, 40, 0) 100%)';
+    } else if (position === 'right') {
+      return 'linear-gradient(90deg, rgba(21, 3, 40, 0) -0.7%, #150328 100%)';
+    }
+  }};
+
+  height: ${({ position }) =>
+    position === 'right' ? '21.875rem' : '7.125rem'};
+
+  @media (min-width: 768px) {
+    width: ${({ position }) => (position === 'right' ? '7.125rem' : '70vw')};
+    ${({ position }) => (position === 'right' ? 'top: 0;' : 'right: 0;')};
+  }
 `;
 
 export const SwiperWrapper = styled.div`
@@ -58,13 +78,13 @@ export const SwiperWrapper = styled.div`
     video {
       position: relative;
       object-fit: cover;
-      width: 70vw;
-      height: 27.0625rem;
+      width: 65vw;
+      height: 19.25rem;
     }
     img {
       position: relative;
-      height: 27.0625rem;
-      width: 70vw;
+      height: 19.25rem;
+      width: 65vw;
       object-fit: cover;
     }
   }
@@ -73,7 +93,7 @@ export const SwiperWrapper = styled.div`
     margin: 0 auto;
     position: absolute;
     z-index: 9;
-    bottom: 42px;
+    bottom: 1rem;
     width: 100%;
 
     .paginator-container {
@@ -99,7 +119,7 @@ export const SlideDescription = styled.div<{
   width: 100%;
   background: -webkit-linear-gradient(
     0deg,
-    #150029 59.74%,
+    #150029 67.74%,
     rgba(21, 0, 41, 0) 100%
   );
   background-repeat: repeat-y;
@@ -129,7 +149,7 @@ export const SlideDescription = styled.div<{
        letter-spacing: 0.9px;
       `
           : `
-        ${expandFontToken(FONTS.DISPLAY_LARGE)};
+        ${expandFontToken(FONTS.DISPLAY_REGULAR)};
         margin-bottom: 0.5rem;
       `}
     }
@@ -142,7 +162,7 @@ export const SlideDescription = styled.div<{
     }
     button {
       pointer-events: all;
-      margin-top: 2.25rem;
+      margin-top: 1.25rem;
       ${expandFontToken(FONTS.BUTTON_MEDIUM)};
       color: #130029;
       background-color: ${COLORS.BRAND.WHITE};

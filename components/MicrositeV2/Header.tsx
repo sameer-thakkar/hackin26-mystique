@@ -60,9 +60,10 @@ interface IStyledHeader {
   headerHover?: boolean;
   showLttColoredHeader: boolean;
   isTop?: boolean;
+  isNewLTTLandingPageVisible?: boolean;
 }
 
-const StyledHeader = styled.div<IStyledHeader>`
+export const StyledHeader = styled.div<IStyledHeader>`
   .main-wrapper {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -73,8 +74,9 @@ const StyledHeader = styled.div<IStyledHeader>`
     user-select: none;
   }
   .fixed-wrap {
-    box-shadow: ${({ isTop }) =>
+    box-shadow: ${({ isTop, isNewLTTLandingPageVisible }) =>
       !isTop &&
+      !isNewLTTLandingPageVisible &&
       '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
     position: fixed;
     width: calc(100vw - (100vw - 100%));
@@ -112,7 +114,7 @@ const StyledHeader = styled.div<IStyledHeader>`
       top: 0;
       display: block;
       background-color: #150029;
-      height: 500px;
+      height: 472px;
       @media (max-width: 789px) {
         height:300px;
       }
@@ -575,6 +577,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
       showLttColoredHeader={showLttColoredHeader}
+      isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
       isTop={scrollPos <= 80}
     >
       <div className="fixed-offset"></div>

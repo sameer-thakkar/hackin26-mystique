@@ -10,6 +10,7 @@ import {
 import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
+import { LTT_CATEGORIES } from 'const/lttCategories';
 import { strings } from 'const/strings';
 
 interface ITopLttShowsSectionProps {
@@ -64,7 +65,10 @@ const TopLttShowsSection = ({
   };
 
   return (
-    <TopShowsWrapper className="hroizontally-aligned-child">
+    <TopShowsWrapper
+      id={LTT_CATEGORIES.top.name}
+      className="hroizontally-aligned-child"
+    >
       <div className="title">{strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}</div>
       <div className="shows">
         {shows.map((show, index) =>

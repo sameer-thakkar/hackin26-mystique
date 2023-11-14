@@ -18,6 +18,7 @@ const LttLandingPageV2 = ({
   isMobile,
   categoryProps,
   allTours,
+  browseByCategoriesRef,
 }: TLandingPageV2Props) => {
   const { categories } = categoryProps;
   const categoriesToRender: Array<Record<string, any>> =
@@ -96,6 +97,7 @@ const LttLandingPageV2 = ({
         <BrowseByCategoriesSection
           categoriesToRender={categoriesToRender}
           isMobile={isMobile}
+          ref={browseByCategoriesRef}
         />
       </Conditional>
       <TopLttShowsSection
