@@ -8,6 +8,7 @@ import { HighlightTabs } from 'components/Product/components/ProductHighlightTab
 import { PRODUCT_CARD_IMAGE_DIMENSIONS } from 'components/Product/styles';
 import MediaCarousel from 'UI/MediaCarousel';
 import { MBContext } from 'contexts/MBContext';
+import { useAirportsList } from 'hooks/useAirportsList';
 import { createBookingURL } from 'utils';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
@@ -44,10 +45,10 @@ import {
 export const PrivateAirportTranferProductCard = ({
   isMobile,
   scorpioData,
-  airportName = 'Airport',
   tour,
   uid,
   currentLanguage,
+  cityCode,
 }: TPrivateAirportTransferProductCardProps) => {
   const [isMoreDetailsSidebarOpen, setIsMoreDetailsSidebarOpen] = useState(
     false
@@ -74,6 +75,11 @@ export const PrivateAirportTranferProductCard = ({
   const currency = useRecoilValue(currencyAtom);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: airportsList } = useAirportsList(cityCode);
+
+  const airportName =
+    airportsList?.find((a) => a.tourGroupId === tour.tgid)?.name ?? 'Airport';
 
   let url = host || window.location.host;
   const currentHost = !isDev ? url : parse(uid, true).pathname;

@@ -6,7 +6,7 @@ import {
 export type TPrivateAirportTransferProductCardProps = {
   isMobile: boolean;
   scorpioData: TScorpioData;
-  airportName: string;
+  cityCode: string;
   tour: TTour;
   uid: string;
   currentLanguage: string;

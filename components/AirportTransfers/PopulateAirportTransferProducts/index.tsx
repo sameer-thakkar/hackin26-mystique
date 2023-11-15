@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/ProductCard/index';
 import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
-import { useAirportsList } from 'hooks/useAirportsList';
 import { debounce } from 'utils/gen';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { TPopulateAirportTransferProductsProps } from './interfaces';
@@ -24,8 +23,6 @@ export const PopulateAirportTransfersProducts = ({
 }: TPopulateAirportTransferProductsProps) => {
   const cityCode = city.cityCode;
 
-  const { data: airportsList } = useAirportsList(cityCode);
-
   const availableToursList = uncategorizedTours?.filter((tour: any) => {
     const checkIfScorpioHighlightsExist =
       scorpioData[tour.tgid]?.isMBHighlightsExist;
@@ -45,11 +42,6 @@ export const PopulateAirportTransfersProducts = ({
 
   const hasSharedTransferProducts =
     availableToursList.length - privateTransfersProductsList.length > 0;
-
-  const airportName =
-    airportsList?.find(
-      (a) => a.tourGroupId === privateTransfersProductsList[0]?.tgid
-    )?.name ?? 'Airport';
 
   const sharedTransfersHeadingRef = useRef<HTMLDivElement>(null);
 
@@ -140,10 +132,10 @@ export const PopulateAirportTransfersProducts = ({
         <StyledProductCardsContainer>
           {privateTransfersProductsList.map((tour) => (
             <PrivateAirportTranferProductCard
+              cityCode={cityCode}
               isMobile={isMobile}
               key={tour.tgid}
               tour={tour}
-              airportName={airportName}
               uid={uid}
               scorpioData={scorpioData[tour.tgid]}
               currentLanguage={currentLanguage}
