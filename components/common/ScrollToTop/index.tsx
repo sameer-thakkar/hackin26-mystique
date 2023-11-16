@@ -3,7 +3,7 @@ import Conditional from 'components/common/Conditional';
 import { StyledButton } from 'components/common/ScrollToTop/styles';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import ChevronDown from 'assets/ChevrontDown';
 
 const ScrollToTop = () => {
   const [showButton, setShowButton] = useState(false);
@@ -33,7 +33,9 @@ const ScrollToTop = () => {
   };
   return (
     <Conditional if={showButton}>
-      <StyledButton onClick={() => handleScroll()}>{CHEVRON_DOWN}</StyledButton>
+      <StyledButton onClick={() => handleScroll()}>
+        <ChevronDown />
+      </StyledButton>
     </Conditional>
   );
 };

@@ -1,13 +1,17 @@
+import { useEffect } from 'react';
 import { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import { StyleSheetManager } from 'styled-components';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
+import Cookies from 'js-cookie';
 import rtlPlugin from 'stylis-plugin-rtl';
 import Clarity from 'components/common/Clarity';
-import CookieBanner from 'components/common/CookieBanner';
+import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
-import { sendVariablesToDataLayer } from 'utils/analytics';
+import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
+import { checkIfLazyLoadApplicable } from 'utils/gen';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
 import renderShortCodes from 'utils/shortCodes';
@@ -18,6 +22,7 @@ import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
+  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
@@ -26,9 +31,15 @@ import {
   RTL_LANGUAGE_CODES,
   SENTRY_TAGS,
 } from 'const/index';
-import '@formatjs/intl-locale/polyfill';
-import '@formatjs/intl-relativetimeformat/polyfill';
 import 'public/global.css';
+
+const CookieBanner = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CollectionCarousel" */ 'components/common/CookieBanner'
+    ),
+  { ssr: false }
+);
 
 type PageProps = {
   lang: string;
@@ -52,6 +63,7 @@ type PageProps = {
   cityPageParams: Record<string, string>;
   isBot: boolean;
   isGDPRCompliant: boolean;
+  isLazyExpTreatment: boolean;
 };
 
 interface IGetCurrencyCode {
@@ -87,6 +99,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     isGDPRCompliant,
     ContentType,
     MBDesign,
+    isLazyExpTreatment,
+    uid,
   } = pageProps;
 
   const pageType = ContentType + (MBDesign || '');
@@ -102,6 +116,24 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         return null;
     }
   };
+
+  useEffect(() => {
+    const isLazyLoadApplicable = checkIfLazyLoadApplicable(uid);
+    if (!isLazyLoadApplicable) return;
+
+    if (typeof Cookies.get(COOKIE.IS_LAZY) === 'undefined')
+      Cookies.set(COOKIE.IS_LAZY, isLazyExpTreatment ? '1' : '0', {
+        path: '/',
+        expires: 31,
+      });
+    setTimeout(() => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        'Experiment Name': 'Lazy Load Experiment',
+        'Experiment Variant': isLazyExpTreatment ? 'Treatment' : 'Control',
+      });
+    });
+  }, [uid, isLazyExpTreatment]);
 
   const initRecoil = ({ set }: MutableSnapshot) => {
     if (!pageProps?.ContentType) return;
@@ -230,6 +262,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isSidenavScroll: false,
       isBot,
       language: lang,
+      isLazyExpTreatment,
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);
@@ -247,11 +280,13 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         <Component {...pageProps} />
         <ScrollToTop />
         <LiveChat uid={pageProps?.uid} />
-        <CookieBanner
-          isMobile={isMobile}
-          isGDPRCompliant={isGDPRCompliant}
-          pageType={pageType}
-        />
+        <DeferredComponent delay={3_000}>
+          <CookieBanner
+            isMobile={isMobile}
+            isGDPRCompliant={isGDPRCompliant}
+            pageType={pageType}
+          />
+        </DeferredComponent>
         <Clarity host={host} />
       </RecoilRoot>
     </StyleSheetManager>

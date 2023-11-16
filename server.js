@@ -53,20 +53,29 @@ app.prepare().then(() => {
     const isAPIRoute = /\/(fe)?api\//.test(req.path);
     if (!isAPIRoute) {
       const isBot = req.headers['x-bot'] === 'true';
-      const sweTTL = TIME.SECONDS_IN_DAY * 1;
+      const sieTTL = TIME.SECONDS_IN_DAY * 1;
       let swrTTL = TIME.SECONDS_IN_DAY * 1; // regular user staleness ttl
+      let maxAge = null;
 
       if (isBot) {
         swrTTL = TIME.SECONDS_IN_DAY * 7;
+        maxAge = TIME.SECONDS_IN_DAY * 1;
       }
 
       const swrCacheCtrl = `stale-while-revalidate=${swrTTL}`;
-      const sweCacheCtrl = `stale-if-error=${sweTTL}`;
+      const sieCacheCtrl = `stale-if-error=${sieTTL}`;
+      const maxAgeCacheCtrl = maxAge ? `max-age=${maxAge}` : '';
 
-      res.setHeader(
-        'Cache-Control',
-        `public, ${swrCacheCtrl}, ${sweCacheCtrl}`
-      );
+      const cacheCtrlHeader = [
+        'public',
+        swrCacheCtrl,
+        sieCacheCtrl,
+        maxAgeCacheCtrl,
+      ]
+        .filter((c) => c)
+        .join(', ');
+
+      res.setHeader('Cache-Control', cacheCtrlHeader);
     }
     next();
   });

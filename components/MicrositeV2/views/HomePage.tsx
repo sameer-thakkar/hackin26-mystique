@@ -9,17 +9,10 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import Footer from 'components/common/Footer';
 import LazyComponent from 'components/common/LazyComponent';
-import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
-import LttLandingPageV2 from 'components/MicrositeV2/LttLandingPageV2';
 import { CategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/style';
-import ReviewSection from 'components/MicrositeV2/LttLandingPageV2/ReviewSection';
-import MobileBannerV2 from 'components/MicrositeV2/MobileBannerV2';
-import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import sliceHandler from 'components/Slices';
-import MonthTabs from 'components/slices/MonthTabs';
 import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
 import { MBContext } from 'contexts/MBContext';
@@ -82,6 +75,38 @@ const CategoryHeader = dynamic(() =>
 );
 const Breadcrumbs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
+const MonthTabs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/slices/MonthTabs')
+);
+
+const LttLandingPageV2 = dynamic(() =>
+  import(
+    /* webpackChunkName: "LttLandingPageV2" */ 'components/MicrositeV2/LttLandingPageV2'
+  )
+);
+const ReviewSection = dynamic(() =>
+  import(
+    /* webpackChunkName: "ReviewSection" */ 'components/MicrositeV2/LttLandingPageV2/ReviewSection'
+  )
+);
+const MobileBannerV2 = dynamic(() =>
+  import(
+    /* webpackChunkName: "MobileBannerV2" */ 'components/MicrositeV2/MobileBannerV2'
+  )
+);
+const LttFeatureCard = dynamic(() =>
+  import(
+    /* webpackChunkName: "LttFeatureCard" */ 'components/ShowPages/FeatureCard'
+  )
+);
+const DesktopBannerV2 = dynamic(() =>
+  import(
+    /* webpackChunkName: "DesktopBannerV2" */ 'components/MicrositeV2/DesktopBannerV2'
+  )
+);
+const Footer = dynamic(() =>
+  import(/* webpackChunkName: "Footer" */ 'components/common/Footer')
 );
 
 const V2MicrositeWrapper = styled.div<{
@@ -509,13 +534,15 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <Conditional if={automatedBreadcrumbsExists}>
-        <Breadcrumbs
-          breadcrumbs={breadcrumbs}
-          taggedCity={taggedCity}
-          primaryCity={primaryCity}
-          isV2MB={true}
-          isMobile={isMobile}
-        />
+        <LazyComponent>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            taggedCity={taggedCity}
+            primaryCity={primaryCity}
+            isV2MB={true}
+            isMobile={isMobile}
+          />
+        </LazyComponent>
       </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
@@ -539,9 +566,11 @@ export const HomePage = (props: any) => {
         </div>
       </ProductsContextProvider>
       <Conditional if={showLttTreatment && currentLanguage === 'en'}>
-        <StyledReviewSectionWrapper showMargin={!longFormContent.length}>
-          <ReviewSection isMobile={isMobile} />
-        </StyledReviewSectionWrapper>
+        <LazyComponent>
+          <StyledReviewSectionWrapper showMargin={!longFormContent.length}>
+            <ReviewSection isMobile={isMobile} />
+          </StyledReviewSectionWrapper>
+        </LazyComponent>
       </Conditional>
 
       <Conditional if={isEntertainmentMb && !showLttTreatment}>
@@ -552,24 +581,26 @@ export const HomePage = (props: any) => {
         </div>
       </Conditional>
 
-      <Footer
-        currentLanguage={currentLanguage}
-        attraction={footer.attraction || 'attraction'}
-        logoURL={logoUrl}
-        logoAlt={whiteLabelName || ''}
-        hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        disclaimerText={
-          isCollectionMicrobrand
-            ? bannerAndFooterSubtext
-            : footer.disclaimer_text
-        }
-        slices={footer.body || []}
-        themeOverride={themeOverride}
-        secondarySlices={secondaryFooter?.data?.body}
-        secondaryHeading={secondaryFooter?.data?.footer_heading}
-        primaryHeading={footer?.footer_heading}
-        isEntertainmentMb={isEntertainmentMb}
-      />
+      <LazyComponent>
+        <Footer
+          currentLanguage={currentLanguage}
+          attraction={footer.attraction || 'attraction'}
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+          disclaimerText={
+            isCollectionMicrobrand
+              ? bannerAndFooterSubtext
+              : footer.disclaimer_text
+          }
+          slices={footer.body || []}
+          themeOverride={themeOverride}
+          secondarySlices={secondaryFooter?.data?.body}
+          secondaryHeading={secondaryFooter?.data?.footer_heading}
+          primaryHeading={footer?.footer_heading}
+          isEntertainmentMb={isEntertainmentMb}
+        />
+      </LazyComponent>
     </V2MicrositeWrapper>
   );
 };

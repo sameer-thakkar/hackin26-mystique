@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
 import { CollectionDetails } from 'components/StaticBanner/index';
@@ -26,7 +27,8 @@ export const TrackingScripts = ({
 
   return (
     <Head>
-      <script
+      <Script
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer = dataLayer || [];
@@ -34,14 +36,16 @@ export const TrackingScripts = ({
 			`,
         }}
       />
-      <script
+      <Script
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer_content = [];
 				dataLayer.push( dataLayer_content );//]]>`,
         }}
       />
-      <script
+      <Script
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -768,12 +768,14 @@ const MicrositeV1 = (props: any) => {
         ) : null}
 
         <Conditional if={automatedBreadcrumbsExists}>
-          <Breadcrumbs
-            breadcrumbs={breadcrumbs}
-            taggedCity={taggedCity}
-            primaryCity={primaryCity}
-            isMobile={isMobile}
-          />
+          <LazyComponent placeHolderHeight="3rem">
+            <Breadcrumbs
+              breadcrumbs={breadcrumbs}
+              taggedCity={taggedCity}
+              primaryCity={primaryCity}
+              isMobile={isMobile}
+            />
+          </LazyComponent>
         </Conditional>
 
         <Conditional if={isAirportTransfersMB && longFormContent}>

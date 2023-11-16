@@ -2,9 +2,9 @@ import React, { PropsWithChildren, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useOnScreen from 'hooks/useOnScreen';
+import { checkIfLazyLoadApplicable } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
-import { LAZY_LOAD_ENABLED_DOMAINS } from 'const/index';
 
 const DEFAULT_PLACEHOLDER_HEIGHT = '22rem';
 
@@ -23,10 +23,10 @@ const LazyComponent = ({
     ref: lazyElementRef,
     unobserve: true,
   });
-  const { isBot, uid } = useRecoilValue(appAtom);
+  const { isBot, uid, isLazyExpTreatment } = useRecoilValue(appAtom);
   const overrideLazyLoading = useRecoilValue(lazyLoadOverrideAtom);
   const isLazyLoadApplicable =
-    LAZY_LOAD_ENABLED_DOMAINS.findIndex((domain) => uid.includes(domain)) > -1;
+    isLazyExpTreatment && checkIfLazyLoadApplicable(uid);
 
   const shouldRender = useMemo(() => {
     switch (true) {
@@ -47,13 +47,7 @@ const LazyComponent = ({
       default:
         return false;
     }
-  }, [
-    isBot,
-    isIntersecting,
-    isLazyLoadApplicable,
-    target,
-    overrideLazyLoading,
-  ]);
+  }, [isBot, isIntersecting, target, overrideLazyLoading]);
 
   if (shouldRender) return <>{children}</>;
 

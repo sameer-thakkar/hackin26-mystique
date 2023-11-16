@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
+import LazyComponent from 'components/common/LazyComponent';
 import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
 import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
 import { TLandingPageV2Props } from 'components/MicrositeV2/LttLandingPageV2/interface';
@@ -100,30 +101,36 @@ const LttLandingPageV2 = ({
           ref={browseByCategoriesRef}
         />
       </Conditional>
-      <TopLttShowsSection
-        isMobile={isMobile}
-        topShows={topShows}
-        totalCount={Object.keys(allTours).length}
-        categoriesToRender={categoriesToRender}
-      />
-      <SpecialSections
-        allTours={allTours}
-        isMobile={isMobile}
-        title={strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
-        actions={lastMinuteActions}
-        updateActions={setLastMinuteActions}
-        totalNumberOfShows={50}
-        maxNumberOfShows={20}
-        seeAllCardText="show tickets available" //TODO: localise
-        preselectedActionName={lastMinuteActions?.[0]?.actionName}
-        hideSeeAll={true}
-        useForcedSekeltonLoaders
-      />
-      <CategoryCarouselsSection
-        categoriesToRender={categoriesToRender}
-        allTours={allTours}
-        isMobile={isMobile}
-      />
+      <LazyComponent>
+        <TopLttShowsSection
+          isMobile={isMobile}
+          topShows={topShows}
+          totalCount={Object.keys(allTours).length}
+          categoriesToRender={categoriesToRender}
+        />
+      </LazyComponent>
+      <LazyComponent>
+        <SpecialSections
+          allTours={allTours}
+          isMobile={isMobile}
+          title={strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
+          actions={lastMinuteActions}
+          updateActions={setLastMinuteActions}
+          totalNumberOfShows={50}
+          maxNumberOfShows={20}
+          seeAllCardText="show tickets available" //TODO: localise
+          preselectedActionName={lastMinuteActions?.[0]?.actionName}
+          hideSeeAll={true}
+          useForcedSekeltonLoaders
+        />
+      </LazyComponent>
+      <LazyComponent>
+        <CategoryCarouselsSection
+          categoriesToRender={categoriesToRender}
+          allTours={allTours}
+          isMobile={isMobile}
+        />
+      </LazyComponent>
     </LandingPageWrapper>
   );
 };

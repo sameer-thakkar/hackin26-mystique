@@ -284,7 +284,7 @@ const Navigation = (props: any) => {
         />
       </Conditional>
       <Conditional if={!categoryHeaderMenuExists}>
-        <LazyComponent>
+        <LazyComponent placeHolderHeight={'1rem'}>
           {slices.map((slice: any, index: number) =>
             HeaderSliceHandler(slice, {
               index,

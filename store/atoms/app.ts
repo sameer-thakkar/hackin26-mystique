@@ -13,5 +13,6 @@ export const appAtom = atom({
     isSidenavScroll: false,
     isBot: false,
     language: '',
+    isLazyExpTreatment: false,
   },
 });

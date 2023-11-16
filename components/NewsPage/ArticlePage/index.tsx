@@ -1,13 +1,11 @@
 import dynamic from 'next/dynamic';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
+import LazyComponent from 'components/common/LazyComponent';
 import { Container, MainContent } from 'components/NewsPage/ArticlePage/styles';
 import PageContent from 'components/NewsPage/components/Content';
 import NewsMeta from 'components/NewsPage/components/NewsMeta';
-import NewsPageSidebar from 'components/NewsPage/components/Sidebar';
-import Trailer from 'components/NewsPage/components/Trailer';
 import { TNewsPageProps } from 'components/NewsPage/interface';
-import CategorySlider from 'components/ShowPages/CategorySlider';
 import { formatDateToString } from 'utils/dateUtils';
 import { getLangObject } from 'utils/helper';
 import { NEWS_PAGE_DATE_FORMAT } from 'const/index';
@@ -27,6 +25,21 @@ const MobileMoreReads = dynamic(() =>
 const MobileFeaturedNews = dynamic(() =>
   import(
     /*webpackChunkName: "MobileFeauturedNews"*/ 'components/NewsPage/components/MobileFeaturedNews'
+  )
+);
+const NewsPageSidebar = dynamic(() =>
+  import(
+    /* webpackChunkName: "NewsPageSidebar" */ 'components/NewsPage/components/Sidebar'
+  )
+);
+const Trailer = dynamic(() =>
+  import(
+    /* webpackChunkName: "Trailer" */ 'components/NewsPage/components/Trailer'
+  )
+);
+const CategorySlider = dynamic(() =>
+  import(
+    /* webpackChunkName: "CategorySlider" */ 'components/ShowPages/CategorySlider'
   )
 );
 
@@ -81,68 +94,78 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               contentFrameworkSlices: contentFramework?.data?.body,
             }}
           />
-          <NewsPageSidebar
-            content={{
-              tgidMappingData,
-              featuredArticles,
-              showPageDocuments: showPageDocuments.results,
-              mediaData,
-              tgid,
-            }}
-          />
+          <LazyComponent>
+            <NewsPageSidebar
+              content={{
+                tgidMappingData,
+                featuredArticles,
+                showPageDocuments: showPageDocuments.results,
+                mediaData,
+                tgid,
+              }}
+            />
+          </LazyComponent>
         </MainContent>
         <Conditional if={!isMobile}>
-          <DesktopMoreReads
-            content={{
-              uniqueArticlesWithSameTgidData,
-              featuredArticles,
-              CFData,
-            }}
-          />
+          <LazyComponent>
+            <DesktopMoreReads
+              content={{
+                uniqueArticlesWithSameTgidData,
+                featuredArticles,
+                CFData,
+              }}
+            />
+          </LazyComponent>
         </Conditional>
         <Conditional if={isMobile}>
-          <MobileMoreReads
-            content={{
-              uniqueArticlesWithSameTgidData,
-              featuredArticles,
-              CFData,
-            }}
-            heading={strings.NEWS_PAGE.MORE_READS}
-            showAllNewsCTA
-            showMoreCTAText={''}
-            numberOfArticlesToShow={10}
-            initialArticlesToShow={3}
-          />
-          <MobileFeaturedNews
-            featuredNewsContent={{
-              content: featuredArticles,
-              CFData,
-            }}
-          />
+          <LazyComponent>
+            <MobileMoreReads
+              content={{
+                uniqueArticlesWithSameTgidData,
+                featuredArticles,
+                CFData,
+              }}
+              heading={strings.NEWS_PAGE.MORE_READS}
+              showAllNewsCTA
+              showMoreCTAText={''}
+              numberOfArticlesToShow={10}
+              initialArticlesToShow={3}
+            />
+            <MobileFeaturedNews
+              featuredNewsContent={{
+                content: featuredArticles,
+                CFData,
+              }}
+            />
+          </LazyComponent>
         </Conditional>
       </Container>
-      <Trailer
-        content={{
-          trailerSectionData,
-          CFData,
-          showPageDocuments: showPageDocuments.results,
-          tgid,
-          videoData,
-        }}
-        isMobile={isMobile}
-      />
+      <LazyComponent>
+        <Trailer
+          content={{
+            trailerSectionData,
+            CFData,
+            showPageDocuments: showPageDocuments.results,
+            tgid,
+            videoData,
+          }}
+          isMobile={isMobile}
+        />
+      </LazyComponent>
       <Conditional if={subCategoryData?.length > 0}>
-        <Container>
-          <h2>{strings.NEWS_PAGE.POPULAR_SHOWS}</h2>
-          <CategorySlider
-            cards={subCategoryData}
-            isMobile={isMobile}
-            allShowPagesDocuments={showPageDocuments.results}
-            currentLanguage={currentLanguage}
-            categoryName={tgidMappingData?.primarySubCategoryName?.name}
-            isNewsPage
-          />
-        </Container>
+        <LazyComponent>
+          <Container>
+            <h2>{strings.NEWS_PAGE.POPULAR_SHOWS}</h2>
+            <CategorySlider
+              cards={subCategoryData}
+              isMobile={isMobile}
+              allShowPagesDocuments={showPageDocuments.results}
+              currentLanguage={currentLanguage}
+              categoryName={tgidMappingData?.primarySubCategoryName?.name}
+              isNewsPage
+            />
+          </Container>
+        </LazyComponent>
       </Conditional>
     </>
   );

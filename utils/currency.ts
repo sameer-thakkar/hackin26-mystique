@@ -2,6 +2,7 @@ import {
   CURRENCY_SYMBOL_OVERRIDES,
   LESSER_KNOWN_CURRENCY_CODES,
 } from 'const/currency';
+import '@formatjs/intl-locale/polyfill';
 
 export type CurrencyDisplayType = 'symbol' | 'code';
 

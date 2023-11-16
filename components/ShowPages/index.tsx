@@ -11,6 +11,7 @@ import cloneDeep from 'lodash.clonedeep';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
+import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import ShowPageBanner from 'components/ShowPages/Banner/index';
 import CategorySlider from 'components/ShowPages/CategorySlider';
@@ -583,67 +584,81 @@ const ShowPage = (props: any) => {
           <AboutTheatreSectionWrapper>
             <RichText render={(aboutTheatreSection as any)?.tab_content} />
           </AboutTheatreSectionWrapper>
-          {isMobile ? (
-            <ComponentWrapper>
-              <AccordionGroup
-                accordions={tabSchemaInfo.map((element: any) => {
-                  return {
-                    heading: element.tab_name,
-                    content: element.tab_content,
-                  };
-                })}
-                heading={''}
-                useSchema={true}
-                isOpenOverride={false}
-              />
-            </ComponentWrapper>
-          ) : (
-            <>
-              <ContentTabs
-                tabsArr={tabHeadingInfo}
-                contentArr={tabSchemaInfo}
-              />
-            </>
-          )}
-          <GoogleMap mapURL={mapURL} />
-          <AccordionGroup
-            accordions={faqSchema}
-            heading={faqHeading}
-            useSchema={true}
-          />
+          <LazyComponent>
+            {isMobile ? (
+              <ComponentWrapper>
+                <AccordionGroup
+                  accordions={tabSchemaInfo.map((element: any) => {
+                    return {
+                      heading: element.tab_name,
+                      content: element.tab_content,
+                    };
+                  })}
+                  heading={''}
+                  useSchema={true}
+                  isOpenOverride={false}
+                />
+              </ComponentWrapper>
+            ) : (
+              <>
+                <ContentTabs
+                  tabsArr={tabHeadingInfo}
+                  contentArr={tabSchemaInfo}
+                />
+              </>
+            )}
+          </LazyComponent>
+          <LazyComponent>
+            <GoogleMap mapURL={mapURL} />
+          </LazyComponent>
+          <LazyComponent>
+            <AccordionGroup
+              accordions={faqSchema}
+              heading={faqHeading}
+              useSchema={true}
+            />
+          </LazyComponent>
           <Conditional if={customerReviews.length}>
-            <>
+            <LazyComponent>
               <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
               <CustomerReview cards={customerReviews} isMobile={isMobile} />
-            </>
+            </LazyComponent>
           </Conditional>
-          <FeatureCard />
-          <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
-          <CategorySlider
-            cards={similarProductData}
-            isMobile={isMobile}
-            allShowPagesDocuments={allShowPagesDocuments}
-            currentLanguage={currentLanguage}
-            categoryName={primarySubCategoryName}
-          />
-          <Breadcrumbs
-            breadcrumbs={breadcrumbs}
-            showName={name}
-            isShowPage={true}
-            isMobile={isMobile}
-          />
+          <LazyComponent>
+            <FeatureCard />
+          </LazyComponent>
+          <LazyComponent>
+            <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
+            <CategorySlider
+              cards={similarProductData}
+              isMobile={isMobile}
+              allShowPagesDocuments={allShowPagesDocuments}
+              currentLanguage={currentLanguage}
+              categoryName={primarySubCategoryName}
+            />
+          </LazyComponent>
+          <LazyComponent>
+            <Breadcrumbs
+              breadcrumbs={breadcrumbs}
+              showName={name}
+              isShowPage={true}
+              isMobile={isMobile}
+            />
+          </LazyComponent>
         </Wrapper>
-        <Footer
-          currentLanguage={currentLanguage}
-          logoURL={logoUrl}
-          logoAlt={whiteLabelName || ''}
-          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          disclaimerText={commonFooter?.data?.disclaimer_text}
-          slices={commonFooter?.data?.body || []}
-          attraction={commonFooter?.data?.attraction || 'attraction'}
-          primaryHeading={commonFooter?.data?.footer_heading}
-          isEntertainmentMb={true}
-        />
+        <LazyComponent>
+          <Footer
+            currentLanguage={currentLanguage}
+            logoURL={logoUrl}
+            logoAlt={whiteLabelName || ''}
+            hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+            disclaimerText={commonFooter?.data?.disclaimer_text}
+            slices={commonFooter?.data?.body || []}
+            attraction={commonFooter?.data?.attraction || 'attraction'}
+            primaryHeading={commonFooter?.data?.footer_heading}
+            isEntertainmentMb={true}
+          />
+        </LazyComponent>
       </ShowPageWrapper>
     </>
   );

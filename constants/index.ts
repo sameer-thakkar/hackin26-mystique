@@ -80,6 +80,7 @@ export const COOKIE = {
   CURRENT_CURRENCY: 'currentCurrency',
   EXPERIMENT_OVERRIDE: 'experimentOverride',
   CLARITY_PROJECT_ID: 'clarity-pid',
+  IS_LAZY: 'is-lazy',
 };
 
 export const TIME = {
@@ -1056,7 +1057,7 @@ export const CANCELLATION_POLICY_POSSIBLE_LABELS = [
 export const RTL_LANGUAGE_CODES = [LANGUAGE_MAP.ar.code];
 
 export const LIVE_CHAT = {
-  DELAY: 3000,
+  DELAY: 5000,
   LICENCE_KEY: '8339531',
   SALES_TRACKER_ID: 'xKAt5wZBBFuxqR7H2oMHEdeZksNqY2VL',
 };
