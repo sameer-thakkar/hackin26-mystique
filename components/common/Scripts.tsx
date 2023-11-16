@@ -27,15 +27,13 @@ export const TrackingScripts = ({
 
   return (
     <>
-      <Script strategy="beforeInteractive" id="gtm-data">
-        {`var dataLayer = dataLayer || [];`}
-      </Script>
-      <Script strategy="beforeInteractive" id="gtm-content">
+      <Script id="gtm-data">{`var dataLayer = dataLayer || [];`}</Script>
+      <Script id="gtm-content">
         {`
 				var dataLayer_content = [];
 				dataLayer.push( dataLayer_content );`}
       </Script>
-      <Script id="gtm-script" strategy="beforeInteractive">
+      <Script id="gtm-script">
         {`
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
