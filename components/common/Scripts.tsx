@@ -26,38 +26,26 @@ export const TrackingScripts = ({
   GTM_ENV = `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
 
   return (
-    <Head>
-      <Script
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
-				var dataLayer = dataLayer || [];
-			//]]>
-			`,
-        }}
-      />
-      <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
+    <>
+      <Script strategy="beforeInteractive" id="gtm-data">
+        {`var dataLayer = dataLayer || [];`}
+      </Script>
+      <Script strategy="beforeInteractive" id="gtm-content">
+        {`
 				var dataLayer_content = [];
-				dataLayer.push( dataLayer_content );//]]>`,
-        }}
-      />
-      <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
+				dataLayer.push( dataLayer_content );`}
+      </Script>
+      <Script id="gtm-script" strategy="beforeInteractive">
+        {`
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '${GTM_AUTH || ''}${
-            GTM_ENV || ''
-          }';f.parentNode.insertBefore(j,f);
-				})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`,
-        }}
-      />
-    </Head>
+          GTM_ENV || ''
+        }';f.parentNode.insertBefore(j,f);
+				})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');`}
+      </Script>
+    </>
   );
 };
 
