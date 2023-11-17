@@ -20,6 +20,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
+import { shortcodesAtom } from 'store/atoms/shortcodes';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
   ANALYTICS_EVENTS,
@@ -63,6 +64,8 @@ type PageProps = {
   cityPageParams: Record<string, string>;
   isBot: boolean;
   isGDPRCompliant: boolean;
+  bestDiscount?: number;
+  minPrice?: number;
   isLazyExpTreatment: boolean;
 };
 
@@ -157,7 +160,13 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       categoryTourListData,
       cityPageParams,
       isBot,
+      minPrice,
+      bestDiscount,
     } = pageProps;
+    set(shortcodesAtom, {
+      minPrice,
+      bestDiscount,
+    });
 
     const { title } = CMSContent?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
@@ -240,7 +249,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         ? PAGE_TYPES.CITY_PAGE
         : pageType,
     });
-
     set(metaAtom, {
       city: primaryCity,
       country: primaryCity?.country,

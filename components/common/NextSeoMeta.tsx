@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
+import { useRecoilValue } from 'recoil';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
@@ -25,6 +26,9 @@ import { withShortcodes } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
+import { shortcodesAtom } from 'store/atoms/shortcodes';
 import {
   FB_DOMAIN_VERIFICATION,
   PAGE_URL_STRUCTURE,
@@ -79,6 +83,9 @@ export default function PopulateMeta({
     lang,
     language_full,
   } = useContext(MBContext);
+  const { minPrice, bestDiscount } = useRecoilValue(shortcodesAtom);
+  const currencyCode = useRecoilValue(currencyAtom);
+  const currencyList = useRecoilValue(currencyListAtom);
   const { query } = useRouter();
   const {
     [QUERY_PARAMS.LIMIT]: limit,
@@ -132,8 +139,16 @@ export default function PopulateMeta({
 
   const primaryDomainUrl = pageUrl ? new URL(pageUrl).hostname : '';
   const metaImageUrl = image?.url || logoUrl;
-  const title = withShortcodes(rawTitle).join('');
-  const description = withShortcodes(rawDescription).join('');
+  const metaShortCodeProps = {
+    currencyCode,
+    currencyList,
+    minPrice,
+    bestDiscount,
+  };
+  const title = withShortcodes(rawTitle, metaShortCodeProps).join('');
+  const description = withShortcodes(rawDescription, metaShortCodeProps).join(
+    ''
+  );
   let modifiedCanonicalLink = canonicalLink;
 
   const { WIDTH } = isMobile ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;

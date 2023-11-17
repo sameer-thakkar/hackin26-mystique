@@ -297,6 +297,8 @@ export const categoryTourListParserV1 = async ({
       )
     );
 
+    let minPrice = finalTours?.[0]?.listingPrice.finalPrice;
+    let bestDiscount = finalTours?.[0]?.listingPrice.bestDiscount;
     const scorpioData = finalTours?.reduce((acc, tour) => {
       const {
         id,
@@ -327,6 +329,11 @@ export const categoryTourListParserV1 = async ({
         exclusionsRichText,
         ratingCount,
       } = tour ?? {};
+      if (listingPrice.finalPrice < minPrice)
+        minPrice = listingPrice.finalPrice;
+      if (listingPrice.bestDiscount > bestDiscount)
+        bestDiscount = listingPrice.bestDiscount;
+
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
         descriptors,
@@ -418,6 +425,8 @@ export const categoryTourListParserV1 = async ({
       activeCurrency: currency,
       collectionDetails,
       collectionVideos,
+      minPrice,
+      bestDiscount,
     };
   } else {
     return {

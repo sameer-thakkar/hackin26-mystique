@@ -363,9 +363,9 @@ export const getLangObject = (language: string) => {
   );
 };
 
-export const withShortcodes = (text: string = '') => {
+export const withShortcodes = (text: string = '', props = {}) => {
   if (!text) return [];
-  return renderShortCodes(text);
+  return renderShortCodes(text, props);
 };
 
 export const normaliseURL = (url = '') =>

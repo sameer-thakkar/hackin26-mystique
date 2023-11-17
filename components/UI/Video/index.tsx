@@ -41,7 +41,7 @@ const Video: React.FC<VideoTypeProps> = ({
   fallbackImage,
   isLooped = true,
   isMuted = true,
-  shouldAutoPlay,
+  // shouldAutoPlay,
   shouldVideoPlay /* relevant only when autoplay is false */,
   imageId = '',
   imageAspectRatio,
@@ -183,6 +183,7 @@ const Video: React.FC<VideoTypeProps> = ({
         'mousemove',
         throttle(() => setIconAppear(true), 2000)
       );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       videoRef.current?.removeEventListener(
         'mouseleave',
         throttle(() => setIconAppear(false), 2000)
@@ -243,11 +244,12 @@ const Video: React.FC<VideoTypeProps> = ({
       </Conditional>
       <StyledVideoContainer
         ref={videoRef}
-        autoPlay={shouldAutoPlay}
+        // autoPlay={shouldAutoPlay}
         loop={isLooped}
         muted={isMuted}
         playsInline={true}
         onClick={handleOnClick}
+        preload="none"
       >
         <source data-src={url} type={'video/mp4'} />
       </StyledVideoContainer>

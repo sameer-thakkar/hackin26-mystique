@@ -1,7 +1,9 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { WrapInLazyComponent } from 'components/common/LazyComponent';
+import BestDiscount from 'components/shortcodes/BestDiscount';
 import DynamicDate from 'components/shortcodes/DynamicDate';
+import MinPrice from 'components/shortcodes/MinPrice';
 import { SHORT_CODE_TYPES } from 'const/index';
 
 const InlinePrice = dynamic(() => import('components/InlinePrice'));
@@ -56,6 +58,14 @@ interface ShortCodeDictionary {
 const shortCodesDict: ShortCodeDictionary = {
   price: {
     component: InlinePrice,
+  },
+  'min-price': {
+    function: MinPrice,
+    type: SHORT_CODE_TYPES.FUNCTION,
+  },
+  'best-discount': {
+    function: BestDiscount,
+    type: SHORT_CODE_TYPES.FUNCTION,
   },
   'next-available': {
     component: NextAvailable,
@@ -257,9 +267,12 @@ export const renderShortCodes = (CMSString = '', props = {}): Array<string> => {
     let shortcodeElement = null;
     if (shortCodesDict[shortCodeObj.name].type === SHORT_CODE_TYPES.FUNCTION) {
       // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-      shortcodeElement = shortCodesDict[shortCodeObj.name].function({
-        ...shortCodeObj.attributes.named,
-      });
+      shortcodeElement = shortCodesDict[shortCodeObj.name].function(
+        {
+          ...shortCodeObj.attributes.named,
+        },
+        props
+      );
     } else {
       shortcodeElement = React.createElement(
         // @ts-expect-error TS(2769): No overload matches this call.

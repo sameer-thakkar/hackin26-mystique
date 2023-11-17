@@ -1341,6 +1341,8 @@ export const getPageData = async ({
      */
     let scorpioAllTourGroupData: any = {};
     let tgidsArray: any = [];
+    let minPrice = 0;
+    let bestDiscount = 0;
     const queryParams = (function getQueryparams() {
       try {
         const href = req ? `http://${host}${req.url}` : window.location.href;
@@ -1500,6 +1502,8 @@ export const getPageData = async ({
           cookies,
           localizedStrings,
         });
+        minPrice = categoryTourListData.minPrice;
+        bestDiscount = categoryTourListData.bestDiscount;
       }
 
       const prismicTours = toursTabFirstSlice
@@ -1828,6 +1832,8 @@ export const getPageData = async ({
             cookies,
             localizedStrings,
           });
+          minPrice = categoryTourListData.minPrice;
+          bestDiscount = categoryTourListData.bestDiscount;
           const [firstTGID]: Record<string, any>[] = Object.values(
             categoryTourListData.scorpioData || {}
           );
@@ -2169,7 +2175,6 @@ export const getPageData = async ({
     const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
       aggregatedPromise
     );
-
     return {
       ...scorpioAllTourGroupData,
       ...(activeCurrency && { activeCurrency }),
@@ -2181,6 +2186,8 @@ export const getPageData = async ({
       domainConfig: await domainConfigPromise,
       categoryHeaderMenu,
       breadcrumbs,
+      minPrice,
+      bestDiscount,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });
