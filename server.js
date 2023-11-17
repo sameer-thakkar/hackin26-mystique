@@ -59,7 +59,7 @@ app.prepare().then(() => {
 
       if (isBot) {
         swrTTL = TIME.SECONDS_IN_DAY * 7;
-        maxAge = TIME.SECONDS_IN_DAY * 1;
+        maxAge = TIME.SECONDS_IN_DAY * 4;
       }
 
       const swrCacheCtrl = `stale-while-revalidate=${swrTTL}`;
