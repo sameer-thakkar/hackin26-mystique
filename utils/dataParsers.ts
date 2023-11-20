@@ -296,9 +296,10 @@ export const categoryTourListParserV1 = async ({
         fetchTourGroupV6({ tgid, hostname, language, cookies })
       )
     );
+    
+    let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
+    let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
 
-    let minPrice = finalTours?.[0]?.listingPrice.finalPrice;
-    let bestDiscount = finalTours?.[0]?.listingPrice.bestDiscount;
     const scorpioData = finalTours?.reduce((acc, tour) => {
       const {
         id,
@@ -329,10 +330,9 @@ export const categoryTourListParserV1 = async ({
         exclusionsRichText,
         ratingCount,
       } = tour ?? {};
-      if (listingPrice.finalPrice < minPrice)
-        minPrice = listingPrice.finalPrice;
-      if (listingPrice.bestDiscount > bestDiscount)
-        bestDiscount = listingPrice.bestDiscount;
+
+      minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
+      bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
 
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -414,6 +414,7 @@ export const categoryTourListParserV1 = async ({
       };
     }, {});
 
+    if (minPrice == Infinity) minPrice = 0;
     return {
       scorpioData,
       primaryCountry: primaryCity?.country ?? {
