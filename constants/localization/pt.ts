@@ -754,6 +754,7 @@ const pt = {
     CULTURAL_EXPERIENCE: 'Experiências culturais autênticas',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Assistência com bagagens',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -770,6 +771,46 @@ const pt = {
     TRAILERS: 'Todos os trailers',
     GET_YOUR_TICKETS: 'Garanta seus ingressos',
     POPULAR_SHOWS: 'Espetáculos populares',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Traslados privados',
+    SHARED_TRANSFERS: 'Traslados compartilhados',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Reserve online',
+        DESCRIPTION:
+          'Tenha uma experiência de reserva rápida e conveniente ao reservar suas passagens online.',
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Confirmação imediata',
+        DESCRIPTION:
+          'Receba uma confirmação imediata ao reservar sua passagem de traslado de/para o aeroporto.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Embarque conveniente',
+        DESCRIPTION:
+          'Evite o incômodo de longas filas, pois o veículo do traslado estará à sua espera no seu ponto de embarque.',
+      },
+      DROP_OFF: {
+        TITLE: 'Desembarque',
+        DESCRIPTION: 'Chegue ao seu destino de forma rápida e confortável.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Traslados compartilhados em {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      'Uma opção de transporte confortável e econômica para vários passageiros partindo de ou para um aeroporto.',
+    PRIVATE_TRANSFERS_IN: 'Traslados privados em {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      'Um serviço de transporte conveniente e personalizado para indivíduos e pequenos grupos, que oferece uma viagem confortável e direta partindo de ou para um aeroporto.',
+    ANYWHERE_IN_THE_CITY: 'Qualquer lugar da cidade',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Diversas opções de veículos',
+      FREE_CANCELLATION: 'Cancelamento grátis',
+    },
+    SEAMLESS_TRANSFERS: 'Traslados cômodos e confiáveis em todo mundo',
+    PICK_THE_BEST_AIRPORT_TRANSFER:
+      'Escolha o melhor traslado de/para o aeroporto',
   },
 };
 export default pt;

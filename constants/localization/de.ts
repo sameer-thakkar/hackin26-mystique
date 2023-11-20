@@ -751,6 +751,7 @@ const de = {
     CULTURAL_EXPERIENCE: 'Authentische kulturelle Erlebnisse',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Hilfe mit Gepäck',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -767,6 +768,46 @@ const de = {
     TRAILERS: 'Alle Trailer',
     GET_YOUR_TICKETS: 'Tickets buchen',
     POPULAR_SHOWS: 'Beliebte Shows',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Privattransfers',
+    SHARED_TRANSFERS: 'Gemeinschaftstransfers',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Online buchen',
+        DESCRIPTION: 'Buchen Sie Ihre Tickets schnell und bequem online.',
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Sofortbestätigung',
+        DESCRIPTION:
+          'Sie erhalten eine sofortige Buchungsbestätigung für Ihren Flughafentransfer.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Bequeme Abholung',
+        DESCRIPTION:
+          'Vergessen Sie lange Wartezeiten. Ihr Fahrzeug wartet bereits am gewählten Abholort auf Sie.',
+      },
+      DROP_OFF: {
+        TITLE: 'Ankunftsort',
+        DESCRIPTION: 'Sie erreichen Ihr Ziel schnell und komfortabel.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Gemeinschaftstransfers in {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      'Bequeme und kostengünstige Transferdienste für mehrere Fahrgäste, die zu oder von einem Flughafen reisen.',
+    PRIVATE_TRANSFERS_IN: 'Privattransfers in {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      'Bequeme und direkte Transferdienste für Einzelpersonen oder kleine Gruppen, die zu und von einem Flughafen reisen.',
+    ANYWHERE_IN_THE_CITY: 'Überall in der Stadt',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Verschiedene Fahrzeugoptionen',
+      FREE_CANCELLATION: 'Kostenlose Stornierung',
+    },
+    SEAMLESS_TRANSFERS:
+      'Reibungslose und zuverlässige Transfers auf der ganzen Welt',
+    PICK_THE_BEST_AIRPORT_TRANSFER:
+      'Wählen Sie den besten Flughafentransfer für Sie',
   },
 };
 

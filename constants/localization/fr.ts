@@ -754,6 +754,7 @@ const fr = {
     CULTURAL_EXPERIENCE: 'Expériences culturelles authentiques',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Aide pour les bagages',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -770,6 +771,47 @@ const fr = {
     TRAILERS: 'Toutes les bandes-annonces',
     GET_YOUR_TICKETS: 'Achetez vos billets',
     POPULAR_SHOWS: 'Spectacles populaires',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Navettes privées',
+    SHARED_TRANSFERS: 'Navettes partagées',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Réservation en ligne',
+        DESCRIPTION:
+          "Réservez vos billets en ligne et profitez d'une expérience rapide et pratique.",
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Confirmation immédiate',
+        DESCRIPTION:
+          "Recevez une confirmation directement après la réservation de votre navette d'aéroport.",
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Prise en charge pratique',
+        DESCRIPTION:
+          "Évitez les longues files d'attente grâce à votre navette qui vous attendra au point de prise en charge que vous aurez choisi.",
+      },
+      DROP_OFF: {
+        TITLE: "Lieu d'arrivée",
+        DESCRIPTION:
+          'Rejoignez votre destination rapidement et confortablement.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Navettes partagées à {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      'Un moyen de transport confortable et économique pour plusieurs passagers voyageant vers ou depuis un aéroport.',
+    PRIVATE_TRANSFERS_IN: 'Navettes privées à {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      'Un moyen de transport pratique et personnalisé pour les personnes seules ou les petits groupes, offrant un trajet confortable et direct depuis et vers un aéroport.',
+    ANYWHERE_IN_THE_CITY: "N'importe où dans la ville",
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Multiples options de véhicules',
+      FREE_CANCELLATION: 'Annulation gratuite',
+    },
+    SEAMLESS_TRANSFERS: 'Navettes rapides et fiables à travers le monde',
+    PICK_THE_BEST_AIRPORT_TRANSFER:
+      "Choisissez la navette d'aéroport qui vous convient le mieux",
   },
 };
 export default fr;

@@ -4,6 +4,7 @@ import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
 import { debounce } from 'utils/gen';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
+import { strings } from 'const/strings';
 import { TPopulateAirportTransferProductsProps } from './interfaces';
 import {
   StyledContainer,
@@ -105,12 +106,14 @@ export const PopulateAirportTransfersProducts = ({
 
       <Conditional if={hasSharedTransferProducts}>
         <StyledSectionTitle ref={sharedTransfersHeadingRef}>
-          Shared transfers in {cityCountryString}
+          {strings.formatString(
+            strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_IN,
+            cityCountryString
+          )}
         </StyledSectionTitle>
 
         <StyledSectionInfo>
-          A comfortable cost-effective transportation option for multiple
-          passengers traveling to or from an airport
+          {strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_DESCRIPTION}
         </StyledSectionInfo>
       </Conditional>
 
@@ -120,13 +123,14 @@ export const PopulateAirportTransfersProducts = ({
 
       <Conditional if={!!privateTransfersProductsList.length}>
         <StyledSectionTitle ref={privateTransfersHeadingRef}>
-          Private transfers in {cityCountryString}
+          {strings.formatString(
+            strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_IN,
+            cityCountryString
+          )}
         </StyledSectionTitle>
 
         <StyledSectionInfo>
-          A convenient, personalized transportation service for individuals or
-          small groups, offering a comfortable and direct ride to and from an
-          airport.
+          {strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_DESCRIPTION}
         </StyledSectionInfo>
 
         <StyledProductCardsContainer>

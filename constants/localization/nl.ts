@@ -752,6 +752,7 @@ const nl = {
     CULTURAL_EXPERIENCE: 'Authentieke culturele ervaringen',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Hulp met bagage',
   },
   COOKIE_BANNER: {
     DESKTOP:

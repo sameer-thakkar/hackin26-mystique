@@ -8,6 +8,7 @@ import {
   TVehicleTypes,
   VEHICLE_TYPE_ILLUSTRATION_MAP,
 } from 'const/airportTransfers';
+import { strings } from 'const/strings';
 import {
   ArrowCircleRight,
   LuggageIconSVG,
@@ -80,7 +81,7 @@ export const TransferVehicleTypesCarousel = ({
     <StyledContainer>
       <StyledHeaderSection className="header">
         <StyledSectionTitle>
-          Pick the best airport transfer for you
+          {strings.AIRPORT_TRANSFER.PICK_THE_BEST_AIRPORT_TRANSFER}
         </StyledSectionTitle>
 
         <div className="carousel-controls">

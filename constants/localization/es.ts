@@ -805,6 +805,7 @@ const es = {
     CULTURAL_EXPERIENCE: 'Experiencias culturales auténticas',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Asistencia con el equipaje',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -821,6 +822,46 @@ const es = {
     TRAILERS: 'Todos los tráilers',
     GET_YOUR_TICKETS: 'Consigue tus entradas',
     POPULAR_SHOWS: 'Espectáculos populares',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Traslados privados',
+    SHARED_TRANSFERS: 'Traslados compartidos',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Reserva en línea',
+        DESCRIPTION:
+          'Disfruta de una experiencia cómoda y rápida reservando en línea.',
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Confirmación instantánea',
+        DESCRIPTION:
+          'Recibe confirmación instantánea al reservar tus billetes de traslado.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Servicio de recogida',
+        DESCRIPTION:
+          'Evita las largas colas, ya que el vehículo de traslado te esperará en el punto de recogida seleccionado.',
+      },
+      DROP_OFF: {
+        TITLE: 'Lugar de destino',
+        DESCRIPTION: 'Desplázate a tu destino de forma rápida y cómoda.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Traslados compartidos en {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      'Una opción de transporte cómoda y rentable para múltiples pasajeros viajando desde o hacia el aeropuerto.',
+    PRIVATE_TRANSFERS_IN: 'Traslados privados en {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      'Un servicio de transporte cómodo y personalizado para particulares o grupos pequeños, que ofrece un viaje cómodo y directo desde o hacia el aeropuerto.',
+    ANYWHERE_IN_THE_CITY: 'Cualquier lugar de la ciudad',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Múltiples opciones de vehículo',
+      FREE_CANCELLATION: 'Cancelación gratuita',
+    },
+    SEAMLESS_TRANSFERS: 'Traslados cómodos y confiables en todo el mundo',
+    PICK_THE_BEST_AIRPORT_TRANSFER:
+      'Elige el mejor traslado de aeropuerto para ti',
   },
 };
 export default es;

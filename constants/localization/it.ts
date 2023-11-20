@@ -763,6 +763,7 @@ const it = {
     CULTURAL_EXPERIENCE: 'Esperienze culturali autentiche',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    LUGGAGE_ASSISTANCE: 'Assistenza con i bagagli',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -779,6 +780,48 @@ const it = {
     TRAILERS: 'Tutti i trailer',
     GET_YOUR_TICKETS: 'Acquista i biglietti',
     POPULAR_SHOWS: 'Spettacoli in voga',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Trasferimenti privati',
+    SHARED_TRANSFERS: 'Trasferimenti condivisi',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Prenota online',
+        DESCRIPTION:
+          "Prenota i tuoi biglietti online per un'esperienza veloce e conveniente.",
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Conferma immediata',
+        DESCRIPTION:
+          'Ricevi una conferma immediata della prenotazione del tuo trasferimento aeroportuale.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Prelievo comodo',
+        DESCRIPTION:
+          'Evita il fastidio delle lunghe code perché il tuo veicolo di trasferimento ti aspetterà al punto di prelievo selezionato.',
+      },
+      DROP_OFF: {
+        TITLE: 'Arrivo comodo',
+        DESCRIPTION:
+          'Raggiungi la tua destinazione in modo rapido e confortevole.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Trasferimenti condivisi a {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      "Un'opzione di trasporto confortevole ed economica per più passeggeri che viaggiano da o verso un aeroporto.",
+    PRIVATE_TRANSFERS_IN: 'Trasferimenti privati a {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      'Un servizio di trasporto comodo e personalizzato per singoli o piccoli gruppi, che offre un viaggio comodo e diretto da e verso un aeroporto.',
+    ANYWHERE_IN_THE_CITY: 'In qualsiasi punto della città',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Molteplici opzioni di veicoli',
+      FREE_CANCELLATION: 'Cancellazione gratuita',
+    },
+    SEAMLESS_TRANSFERS:
+      'Trasferimenti senza problemi e affidabili in tutto il mondo',
+    PICK_THE_BEST_AIRPORT_TRANSFER:
+      'Scegli il trasferimento aeroportuale migliore per te',
   },
 };
 export default it;

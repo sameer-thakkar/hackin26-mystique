@@ -815,7 +815,6 @@ const en = {
     CULTURAL_EXPERIENCE: 'Authentic Cultural Experiences',
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
-    INSTANT_CONFIRMATION: 'Instant Confirmation',
     LUGGAGE_ASSISTANCE: 'Luggage Assistance',
   },
   COOKIE_BANNER: {
@@ -833,6 +832,47 @@ const en = {
     TRAILERS: 'Trailers',
     GET_YOUR_TICKETS: 'Get your tickets',
     POPULAR_SHOWS: 'Popular Shows',
+  },
+
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Private transfers',
+    SHARED_TRANSFERS: 'Shared transfers',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Book Online',
+        DESCRIPTION:
+          'Enjoy a fast, and convenient booking experience by booking your tickets online.',
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Instant Confirmation',
+        DESCRIPTION:
+          'Get instant confirmation on booking your airport transfer ticket.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Convenient Pickup',
+        DESCRIPTION:
+          'Avoid the hassle of long queues as your transfer vehicle will be waiting for you at your selected pickup point.',
+      },
+      DROP_OFF: {
+        TITLE: 'Drop Off',
+        DESCRIPTION:
+          'Get to reach your destination in a fast and comfortable manner.',
+      },
+    },
+
+    SHARED_TRANSFERS_IN: 'Shared transfers in {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      ' A comfortable cost-effective transportation option in for multiple passengers traveling to or from an airport.',
+    PRIVATE_TRANSFERS_IN: 'Private transfers in {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      ' A convenient, personalized transportation service for individuals or small groups, offering a comfortable and direct ride to and from an airport.',
+    ANYWHERE_IN_THE_CITY: 'Anywhere in the city',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Multiple vehicle options',
+      FREE_CANCELLATION: 'Free cancellation',
+    },
+    SEAMLESS_TRANSFERS: 'Seamless transfers, trusted worldwide',
+    PICK_THE_BEST_AIRPORT_TRANSFER: 'Pick the best airport transfer for you',
   },
 };
 

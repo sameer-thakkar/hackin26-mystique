@@ -4,6 +4,7 @@ import Image from 'next/image';
 import type Swiper from 'swiper';
 import { AIRPORT_TRANSFER_REVIEWS } from 'const/airportTransfers';
 import { StarIcon } from 'const/descriptorIcons';
+import { strings } from 'const/strings';
 import { ArrowCircleRight } from 'assets/airportTransfers';
 import { StyledHeaderSection } from '../AirportTransferFeatures/styles';
 import {
@@ -58,7 +59,7 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
     <StyledReviewsContainer>
       <StyledHeaderSection>
         <StyledSectionTitle>
-          Seamless transfers, trusted Worldwide
+          {strings.AIRPORT_TRANSFER.SEAMLESS_TRANSFERS}
         </StyledSectionTitle>
 
         <div className="carousel-controls">

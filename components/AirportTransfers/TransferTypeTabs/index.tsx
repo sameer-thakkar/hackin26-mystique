@@ -1,3 +1,4 @@
+import { strings } from 'const/strings';
 import { StyledContainer, StyledTabsContainer, Tab } from './styles';
 
 export const TransferTypeTabs = ({
@@ -19,7 +20,7 @@ export const TransferTypeTabs = ({
             onTabClick('shared');
           }}
         >
-          Shared transfers
+          {strings.AIRPORT_TRANSFER.SHARED_TRANSFERS}
         </Tab>
 
         <Tab
@@ -29,7 +30,7 @@ export const TransferTypeTabs = ({
             onTabClick('private');
           }}
         >
-          Private transfers
+          {strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS}
         </Tab>
       </StyledTabsContainer>
     </StyledContainer>

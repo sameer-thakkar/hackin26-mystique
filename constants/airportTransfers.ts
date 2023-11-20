@@ -11,6 +11,7 @@ export const VEHICLE_TYPE_ILLUSTRATION_MAP = {
 
 export type TVehicleTypes = keyof typeof VEHICLE_TYPE_ILLUSTRATION_MAP;
 
+// TODO: check if reviews will need localisation
 export const AIRPORT_TRANSFER_REVIEWS = [
   {
     avatarPath: '/static/images/review-avatar-1.png',

@@ -106,7 +106,7 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     '1019': [
       {
         icon: BANNER_DESCRIPTORS.CHECK_CIRCLE,
-        text: strings.BANNER_DESCRIPTORS.INSTANT_CONFIRMATION,
+        text: strings.DESCRIPTORS.INSTANT_CONFIRMATION,
       },
       {
         icon: BANNER_DESCRIPTORS.SPARKS_NEW,

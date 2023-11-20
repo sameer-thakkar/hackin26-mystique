@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type Swiper from 'swiper';
 import { EffectCards } from 'swiper';
+import { strings } from 'const/strings';
 import {
   ArrowCircleRight,
   CarIconSVG,
@@ -18,30 +19,33 @@ import {
 
 const SwiperWrapper = dynamic(() => import('components/Swiper'));
 
+const {
+  BOOK_ONLINE,
+  CONVENIENT_PICKUP,
+  DROP_OFF,
+  INSTANT_CONFIRMATION,
+} = strings.AIRPORT_TRANSFER.BOOKING_STEPS;
+
 const CARDS = [
   {
     icon: <PhoneSVG />,
-    title: 'Book Online',
-    description:
-      'Enjoy a fast, and convenient booking experience by booking your tickets online.',
+    title: BOOK_ONLINE.TITLE,
+    description: BOOK_ONLINE.DESCRIPTION,
   },
   {
     icon: <TICKET />,
-    title: 'Instant Confirmation',
-    description:
-      'Get instant confirmation on booking your airport transfer ticket.',
+    title: INSTANT_CONFIRMATION.TITLE,
+    description: INSTANT_CONFIRMATION.DESCRIPTION,
   },
   {
     icon: <CarIconSVG />,
-    title: 'Convenient Pickup',
-    description:
-      'Avoid the hassle of long queues as your transfer vehicle will be waiting for you at your selected pickup point.',
+    title: CONVENIENT_PICKUP.TITLE,
+    description: CONVENIENT_PICKUP.DESCRIPTION,
   },
   {
     icon: <MapSVG />,
-    title: 'Drop Off',
-    description:
-      'Get to reach your destination in a fast and comfortable manner.',
+    title: DROP_OFF.TITLE,
+    description: DROP_OFF.DESCRIPTION,
   },
 ];
 

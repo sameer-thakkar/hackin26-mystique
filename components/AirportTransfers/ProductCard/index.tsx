@@ -15,6 +15,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import COLORS from 'const/colors';
 import { ClockSvg, StarIcon } from 'const/descriptorIcons';
 import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
+import { strings } from 'const/strings';
 import {
   BoltSVG,
   CarIconSVG,
@@ -168,7 +169,9 @@ export const PrivateAirportTranferProductCard = ({
             <div className="dotted-line"></div>
 
             <LocationPinPurpleSVG />
-            <span className="anywhere-chip">Anywhere in the city</span>
+            <span className="anywhere-chip">
+              {strings.AIRPORT_TRANSFER.ANYWHERE_IN_THE_CITY}
+            </span>
           </LocationFromToDesktop>
         </Conditional>
 
@@ -181,20 +184,29 @@ export const PrivateAirportTranferProductCard = ({
 
             <LocationPinPurpleSVG />
 
-            <span>Anywhere in the city</span>
+            <span>{strings.AIRPORT_TRANSFER.ANYWHERE_IN_THE_CITY}</span>
           </LocationFromAndToMobile>
         </Conditional>
 
         <DescriptorsContainer>
-          <Descriptor icon={<CarIconSVG />} text="Multiple Vehicle Options" />
+          <Descriptor
+            icon={<CarIconSVG />}
+            text={strings.AIRPORT_TRANSFER.DESCRIPTORS.MULTIPLE_VEHICLE}
+          />
 
           <LineSeparator />
 
-          <Descriptor icon={<ShieldTickSVG />} text="Free Cancellation" />
+          <Descriptor
+            icon={<ShieldTickSVG />}
+            text={strings.AIRPORT_TRANSFER.DESCRIPTORS.FREE_CANCELLATION}
+          />
 
           <LineSeparator />
 
-          <Descriptor icon={<BoltSVG />} text="Instant Confirmation" />
+          <Descriptor
+            icon={<BoltSVG />}
+            text={strings.DESCRIPTORS.INSTANT_CONFIRMATION}
+          />
 
           <LineSeparator />
 
@@ -232,7 +244,7 @@ export const PrivateAirportTranferProductCard = ({
             isLoading={isLoading}
             onClick={isMobile ? handleCTAClick : undefined}
             tabIndex={0}
-            text={'Check availability'}
+            text={strings.CHECK_AVAIL}
           />
         </a>
 
@@ -246,7 +258,7 @@ export const PrivateAirportTranferProductCard = ({
             isLoading={false}
             onClick={() => setIsMoreDetailsSidebarOpen(true)}
             tabIndex={0}
-            text={'More Details'}
+            text={strings.MORE_DETAILS}
           />
         </Conditional>
       </PricingAndCTASection>
