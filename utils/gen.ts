@@ -165,4 +165,4 @@ export const getObjectNestingCount = (
 };
 
 export const checkIfLazyLoadApplicable = (uid: string) =>
-  LAZY_LOAD_ENABLED_DOMAINS.findIndex((domain) => uid.includes(domain)) > -1;
+  LAZY_LOAD_ENABLED_DOMAINS.findIndex((domain) => uid?.includes(domain)) > -1;
