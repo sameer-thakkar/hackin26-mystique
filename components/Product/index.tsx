@@ -698,7 +698,6 @@ const Product = (props: any) => {
       String(primaryCategory?.id)
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
-
   const getProductCardElements = (expandContent: any, isLoading?: boolean) => (
     <>
       <StyledProductCard

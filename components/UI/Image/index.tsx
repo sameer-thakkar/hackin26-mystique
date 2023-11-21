@@ -119,9 +119,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     blurFill
   );
 
-  const [imgSrc, setImgSrc] = useState(
-    isMobile && mobileImageSrc ? mobileImageSrc : defaultImageSrc
-  );
+  const [useFallback, setUseFallback] = useState(false);
 
   if (!defaultImageSrc?.length) {
     return null;
@@ -130,6 +128,12 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
   if (fill || (!calculatedHeight && !calculatedWidth)) {
     fillImageProp = true;
   }
+
+  const imgSrc = useFallback
+    ? fallbackImgUrl
+    : isMobile && mobileImageSrc
+    ? mobileImageSrc
+    : defaultImageSrc;
 
   return (
     <Wrapper className={`image-wrap ${className}`} onClick={onClick} ref={ref}>
@@ -147,7 +151,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         fetchpriority={fetchPriority}
         onError={() => {
           if (fallbackImgUrl) {
-            setImgSrc(fallbackImgUrl);
+            setUseFallback(true);
           }
         }}
       />

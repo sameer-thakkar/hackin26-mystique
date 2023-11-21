@@ -763,7 +763,7 @@ const Product = (props: any) => {
                 alt={title ?? name}
                 autoCrop={false}
                 fitCrop={shouldCropImage}
-                cropMode={shouldCropImage ? ['faces', 'edges'] : undefined}
+                {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
               />
               {getBooster()}
             </ProductImage>
