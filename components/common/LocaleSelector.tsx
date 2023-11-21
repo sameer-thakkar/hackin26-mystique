@@ -343,7 +343,6 @@ const LocaleSelector = ({
           $drawerStyles={drawerStyles}
           noMargin
           closeHandler={trackedOnClose}
-          // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLElement... Remove this comment to see the full error message
           container={menuItemRef?.current}
         >
           <SwipeableTabs tabs={tabsArray} onTabView={onTabView} />

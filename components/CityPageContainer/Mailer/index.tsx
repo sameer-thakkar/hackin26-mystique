@@ -37,7 +37,10 @@ export const IMAGE_DIMENSIONS = {
   },
 };
 
-const SubscriptionForm = ({ eventName }: ISubscriptionForm) => {
+const SubscriptionForm = ({
+  eventName,
+  isCatOrSubCatPage,
+}: ISubscriptionForm) => {
   const {
     EMAIL_FIELD_PLACEHOLDER,
     SIGN_UP,
@@ -67,7 +70,7 @@ const SubscriptionForm = ({ eventName }: ISubscriptionForm) => {
   };
 
   return (
-    <SubscriptionCont isErr={isErr}>
+    <SubscriptionCont isErr={isErr} $isCatOrSubCatPage={isCatOrSubCatPage}>
       {isSubscribed ? (
         <div className="subcription-msg">
           {GREEN_CHECK}
@@ -99,8 +102,16 @@ const SubscriptionForm = ({ eventName }: ISubscriptionForm) => {
   );
 };
 
-const Mailer = ({ isMobile, heading, subHeading, eventName }: IMailerProps) => {
-  const { BANNER_URL: subcriptionImg } = EMAIL_SUBCRIPTION;
+const Mailer = ({
+  isMobile,
+  heading,
+  subHeading,
+  eventName,
+  isCatOrSubCatPage,
+}: IMailerProps) => {
+  const subcriptionImg = isCatOrSubCatPage
+    ? EMAIL_SUBCRIPTION.BANNER_URL.CAT_SUBCAT_PAGE
+    : EMAIL_SUBCRIPTION.BANNER_URL.CITY_PAGE;
 
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
@@ -116,12 +127,15 @@ const Mailer = ({ isMobile, heading, subHeading, eventName }: IMailerProps) => {
     : IMAGE_DIMENSIONS.DESKTOP;
 
   return (
-    <MailerContainer ref={containerRef}>
+    <MailerContainer ref={containerRef} $isCatOrSubCatPage={isCatOrSubCatPage}>
       <div className="mailer-wrapper">
-        <TextContainer>
+        <TextContainer $isCatOrSubCatPage={isCatOrSubCatPage}>
           <p className="mailer-heading">{heading}</p>
           <p className="mailer-subheading">{subHeading}</p>
-          <SubscriptionForm eventName={eventName} />
+          <SubscriptionForm
+            eventName={eventName}
+            isCatOrSubCatPage={isCatOrSubCatPage}
+          />
         </TextContainer>
 
         <ImageContainer>

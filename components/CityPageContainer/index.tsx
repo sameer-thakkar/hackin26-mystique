@@ -129,6 +129,7 @@ const CityPageContainer = ({
           heading={strings.formatString(HEADING, mbCityDisplayName)}
           subHeading={SUBHEADING}
           eventName={EMAIL_SUBCRIPTION.CITY_PAGE_EVENT}
+          isCatOrSubCatPage={false}
         />
       </LazyComponent>
     </Container>

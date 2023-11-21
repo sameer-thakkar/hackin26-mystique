@@ -198,7 +198,7 @@ const VenuePage = (props: IVenuePageProps) => {
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
   });
 
-  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
 
   /* Find Best Seats CTA points to the first nowPlayingShow (incase of two) */
   const onFindBestSeatsCtaClicked = () => {

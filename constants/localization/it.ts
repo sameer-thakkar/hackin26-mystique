@@ -765,6 +765,20 @@ const it = {
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Assistenza con i bagagli',
   },
+  CAT_SUBCAT_PAGE: {
+    ALL: 'Tutto',
+    POPULAR_SUBCATEGORY: '{0}: di tendenza',
+    TOP_CATEGORY: '{0}: il meglio',
+    ATTRACTIONS: 'Attrazioni',
+    ALL_SUBCATEGORY: '{0}: tutto',
+    BROWSE_BY_CATEGORIES: 'Sfoglia per categoria',
+    TICKETS_FROM: 'Biglietti a partire da',
+    PRICE_LOW_HIGH: 'Prezzo (dal più basso al più alto)',
+    PRICE_HIGH_LOW: 'Prezzo (dal più alto al più basso)',
+    FILTERS: 'Filtri',
+    RESET: 'Cancella',
+    APPLY: 'Applica',
+  },
   COOKIE_BANNER: {
     DESKTOP:
       'Headout utilizza i cookie per aiutarti a navigare meglio, un byte alla volta.',

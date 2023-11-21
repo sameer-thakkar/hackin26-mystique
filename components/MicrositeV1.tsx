@@ -6,6 +6,7 @@ import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
+import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -44,6 +45,7 @@ import {
   groupSlices,
 } from 'utils/helper';
 import renderShortCodes from 'utils/shortCodes';
+import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
@@ -54,6 +56,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
+  EMAIL_SUBCRIPTION,
   PAGE_TYPES,
   THEMES,
 } from 'const/index';
@@ -102,6 +105,11 @@ const CategoryHeader = dynamic(() =>
 const Breadcrumbs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
+const CatAndSubCatPage = dynamic(() =>
+  import(
+    /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
+  )
+);
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -126,6 +134,8 @@ const MicrositeV1 = (props: any) => {
     categoryHeaderMenu,
     breadcrumbs,
     cityPageParams,
+    catAndSubCatPageData,
+    isCatOrSubCatPage,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -416,7 +426,7 @@ const MicrositeV1 = (props: any) => {
     mbType,
   });
 
-  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
   const breadcrumbsDetails = {
     breadcrumbs,
     taggedCity,
@@ -673,7 +683,8 @@ const MicrositeV1 = (props: any) => {
             />
           </div>
         </Conditional>
-        <Conditional if={!showNewBanner && !isCityPageMB}>
+
+        <Conditional if={!showNewBanner && !isCityPageMB && !isCatOrSubCatPage}>
           <Banner
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
@@ -687,7 +698,8 @@ const MicrositeV1 = (props: any) => {
             orderedTgids={orderedTgids}
           />
         </Conditional>
-        <Conditional if={isCityPageMB}>
+
+        <Conditional if={isCityPageMB && !isCatOrSubCatPage}>
           <CityPageContainer
             cityPageData={cityPageData}
             isMobile={isMobile}
@@ -697,7 +709,8 @@ const MicrositeV1 = (props: any) => {
             prismicBannerImages={finalBannerImages}
           />
         </Conditional>
-        <Conditional if={showNewBanner}>
+
+        <Conditional if={showNewBanner && !isCatOrSubCatPage}>
           <StaticBanner
             bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
@@ -723,7 +736,7 @@ const MicrositeV1 = (props: any) => {
             setProductsLoading={setProductsLoading}
           />
         </Conditional>
-        <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+        <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>
           <TextBanner bannerHeading={bannerHeading || null} />
         </Conditional>
 
@@ -731,7 +744,7 @@ const MicrositeV1 = (props: any) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </Conditional>
 
-        <Conditional if={coverSlices?.length}>
+        <Conditional if={coverSlices?.length && !isCatOrSubCatPage}>
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>
@@ -749,6 +762,7 @@ const MicrositeV1 = (props: any) => {
             hasTours &&
             !hasTourListContentFW &&
             isToursAvailable &&
+            !isCatOrSubCatPage &&
             !isAirportTransfersMB
           }
         >
@@ -767,7 +781,7 @@ const MicrositeV1 = (props: any) => {
           />
         ) : null}
 
-        <Conditional if={automatedBreadcrumbsExists}>
+        <Conditional if={automatedBreadcrumbsExists && !isCatOrSubCatPage}>
           <LazyComponent placeHolderHeight="3rem">
             <Breadcrumbs
               breadcrumbs={breadcrumbs}
@@ -776,6 +790,15 @@ const MicrositeV1 = (props: any) => {
               isMobile={isMobile}
             />
           </LazyComponent>
+        </Conditional>
+
+        <Conditional if={isCatOrSubCatPage}>
+          <CatAndSubCatPage
+            catAndSubCatPageData={catAndSubCatPageData}
+            breadcrumbs={breadcrumbs}
+            primaryCity={primaryCity}
+            isMobile={isMobile}
+          />
         </Conditional>
 
         <Conditional if={isAirportTransfersMB && longFormContent}>
@@ -805,11 +828,27 @@ const MicrositeV1 = (props: any) => {
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
                 automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+                isRevampedDesign={isCatOrSubCatPage}
                 isMobile={isMobile}
               />
             </Conditional>
           </InteractionContextProvider>
         </ProductsContextProvider>
+
+        <Conditional if={isCatOrSubCatPage}>
+          <LazyComponent>
+            <Mailer
+              isMobile={isMobile}
+              heading={strings.formatString(
+                strings.CITY_PAGE.MAILER.HEADING,
+                titleCase(taggedCity || primaryCity?.displayName || '')
+              )}
+              subHeading={strings.CITY_PAGE.MAILER.SUBHEADING}
+              eventName={EMAIL_SUBCRIPTION.CAT_SUBCAT_PAGE_EVENT}
+              isCatOrSubCatPage={true}
+            />
+          </LazyComponent>
+        </Conditional>
 
         <Footer
           currentLanguage={currentLanguage}
@@ -825,6 +864,7 @@ const MicrositeV1 = (props: any) => {
           secondaryHeading={footerHeadingSFoot}
           primaryHeading={footerHeadingCFoot}
           secondarySlices={!isSecondaryFooterInherited ? slicesSFoot || [] : []}
+          isCatOrSubCatPage={isCatOrSubCatPage}
         />
         <Conditional if={hasOffer}>
           <FreeTourPopup

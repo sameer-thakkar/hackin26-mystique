@@ -55,17 +55,21 @@ type TCategoryApiData = {
   city: string | null;
 };
 
-export const getRankedDocuments = (
-  docs: PrismicDocumentWithUID[]
-): PrismicDocumentWithUID[] => {
+export const getRankedDocuments = ({
+  docs,
+  ranking = DOCUMENT_PRIORITY,
+}: {
+  docs: PrismicDocumentWithUID[];
+  ranking?: Array<string>;
+}): PrismicDocumentWithUID[] => {
   return docs.sort(
     (docA, docB) =>
-      DOCUMENT_PRIORITY.indexOf(docA?.data?.tagged_mb_type) -
-      DOCUMENT_PRIORITY.indexOf(docB?.data?.tagged_mb_type)
+      ranking.indexOf(docA?.data?.tagged_mb_type) -
+      ranking.indexOf(docB?.data?.tagged_mb_type)
   );
 };
 
-export const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
+export const shouldIncludeinQueries = (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc || {};
   const { noindex, redirect_url, canonical_link } = data || {};
   const pageUrl = convertUidToUrl({
@@ -94,7 +98,7 @@ export const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
   return !finalNoIndex;
 };
 
-const getMenuUrl = ({
+export const getMenuUrl = ({
   docFound,
   lang,
 }: {
@@ -194,7 +198,7 @@ const generateAboutMenuItem = async ({
   const docFound = docsStore.find(
     (doc) =>
       doc?.data?.shoulder_page_type === ABOUT.ABOUT.label &&
-      shouldIncludeinMenu(doc)
+      shouldIncludeinQueries(doc)
   );
 
   if (docFound) {
@@ -259,7 +263,7 @@ const generateSubAttractionsMenu = async ({
   subAttractionsDocs.forEach((doc) => {
     const { uid, data } = doc;
     const { shoulder_page_custom_label: customLabel } = data || {};
-    if (customLabel && !map.has(customLabel) && shouldIncludeinMenu(doc)) {
+    if (customLabel && !map.has(customLabel) && shouldIncludeinQueries(doc)) {
       const data = {
         label: customLabel,
         url: convertUidToUrl({
@@ -307,7 +311,7 @@ const addMiscMenuItems = async ({
       misc_page_mapping: menuMapping,
     } = data || {};
     const finalMenuMapping = menuMapping || labels.ABOUT;
-    if (customLabel && shouldIncludeinMenu(doc)) {
+    if (customLabel && shouldIncludeinQueries(doc)) {
       const data = {
         label: customLabel,
         url: convertUidToUrl({
@@ -352,7 +356,7 @@ const generateShoulderPageMenu = async ({
       const docFound = docsStore.find(
         (doc) =>
           doc?.data?.shoulder_page_type?.toLowerCase() ===
-            menuItem.label.toLowerCase() && shouldIncludeinMenu(doc)
+            menuItem.label.toLowerCase() && shouldIncludeinQueries(doc)
       );
       if (docFound) {
         const url = getMenuUrl({ docFound, lang });
@@ -442,7 +446,7 @@ const generateCityAttractionsMenu = async ({
       { pageSize: 100 }
     )) || {};
 
-  const docsStore = getRankedDocuments(filteredMicrosites);
+  const docsStore = getRankedDocuments({ docs: filteredMicrosites });
 
   const menu = topCollectionsData?.items?.reduce(
     (
@@ -453,7 +457,7 @@ const generateCityAttractionsMenu = async ({
       const docFound = docsStore?.find(
         (doc) =>
           collection?.id?.toString() === doc?.data?.tagged_collection &&
-          shouldIncludeinMenu(doc)
+          shouldIncludeinQueries(doc)
       );
 
       if (docFound) {
@@ -567,7 +571,7 @@ const generateSubCategoryMenu = async ({
       { pageSize: 100 }
     )) || {};
 
-  const docsStore = getRankedDocuments(filteredMicrosites);
+  const docsStore = getRankedDocuments({ docs: filteredMicrosites });
 
   const menu = Object.keys(subCategories).reduce((acc, subcat) => {
     const subCategoryData = subCategories[subcat as keyof typeof subCategories];
@@ -576,7 +580,7 @@ const generateSubCategoryMenu = async ({
     const docFound = docsStore?.find(
       (doc) =>
         baseLangName === doc?.data?.tagged_sub_category &&
-        shouldIncludeinMenu(doc)
+        shouldIncludeinQueries(doc)
     );
 
     if (docFound) {
@@ -629,7 +633,7 @@ const generateCityGuideMenu = ({
       const docFound = docsStore.find(
         (doc) =>
           doc?.data?.primary_tag?.toLowerCase() ===
-            menuItem.label.toLowerCase() && shouldIncludeinMenu(doc)
+            menuItem.label.toLowerCase() && shouldIncludeinQueries(doc)
       );
       if (docFound) {
         const url = getMenuUrl({ docFound, lang });

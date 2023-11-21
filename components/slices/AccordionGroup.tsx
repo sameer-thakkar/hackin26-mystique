@@ -3,6 +3,7 @@ import { FAQPageJsonLd } from 'next-seo';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import FaqSection from 'components/CatAndSubCatPage/faqSection';
 import Conditional from 'components/common/Conditional';
 import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
@@ -36,13 +37,14 @@ type AccordionGroupProps = {
     heading: string;
   }[];
   heading: string | undefined;
-  useSchema: Boolean;
-  isMobile?: Boolean;
+  useSchema: boolean;
+  isMobile?: boolean;
   sliceProps?: any;
-  isOpenOverride?: Boolean;
-  headingNeedsSeparator?: Boolean;
+  isOpenOverride?: boolean;
+  headingNeedsSeparator?: boolean;
   tabData?: [];
   findBestSeatsCtaCallback?: () => void | null;
+  isRevampedDesign?: boolean;
   isVenuePage?: boolean;
 };
 
@@ -55,6 +57,7 @@ const AccordionGroup = ({
   headingNeedsSeparator = false,
   tabData = [],
   findBestSeatsCtaCallback,
+  isRevampedDesign,
   isVenuePage,
   isMobile,
 }: AccordionGroupProps) => {
@@ -72,33 +75,45 @@ const AccordionGroup = ({
 
   return (
     <>
-      <div>
-        <Conditional if={heading}>
-          <TitleTextCombo isVenuePage={isVenuePage} noMargin />
-          <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
-          <Conditional if={headingNeedsSeparator && isMobile}>
-            <br />
-            <Divider />
+      <Conditional if={isRevampedDesign}>
+        <FaqSection
+          faqData={accordions}
+          isOpenOverride={isOpenOverride}
+          useSchema={useSchema}
+          isMobile={isMobile || false}
+        />
+      </Conditional>
+
+      <Conditional if={!isRevampedDesign}>
+        <div>
+          <Conditional if={heading}>
+            <TitleTextCombo isVenuePage={isVenuePage} noMargin />
+            <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
+            <Conditional if={headingNeedsSeparator && isMobile}>
+              <br />
+              <Divider />
+            </Conditional>
           </Conditional>
-        </Conditional>
-        {accordions.map((accordion, index) => {
-          const content = <RichContent render={accordion.content} />;
-          return (
-            <Accordion
-              key={index}
-              index={index}
-              content={content}
-              isOpenOverride={index == 0 && isOpenOverride}
-              heading={accordion.heading}
-              isGlobalMb={isGlobalMb}
-              useSchema={useSchema}
-              tabData={tabData}
-              isVenuePage={isVenuePage}
-              findBestSeatsCtaCallback={findBestSeatsCtaCallback}
-            />
-          );
-        })}
-      </div>
+          {accordions.map((accordion, index) => {
+            const content = <RichContent render={accordion.content} />;
+            return (
+              <Accordion
+                key={index}
+                index={index}
+                content={content}
+                isOpenOverride={index == 0 && isOpenOverride}
+                heading={accordion.heading}
+                isGlobalMb={isGlobalMb}
+                useSchema={useSchema}
+                tabData={tabData}
+                isVenuePage={isVenuePage}
+                findBestSeatsCtaCallback={findBestSeatsCtaCallback}
+              />
+            );
+          })}
+        </div>
+      </Conditional>
+
       <Conditional if={useSchema}>
         <FAQPageJsonLd mainEntity={faqSchemaProps} />
       </Conditional>

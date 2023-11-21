@@ -753,6 +753,20 @@ const de = {
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Hilfe mit Gepäck',
   },
+  CAT_SUBCAT_PAGE: {
+    ALL: 'Alle',
+    POPULAR_SUBCATEGORY: 'Beliebte {0}',
+    TOP_CATEGORY: 'Top-{0}',
+    ATTRACTIONS: 'Attraktionen',
+    ALL_SUBCATEGORY: 'Alle {0}',
+    BROWSE_BY_CATEGORIES: 'Kategorien durchstöbern',
+    TICKETS_FROM: 'Tickets ab',
+    PRICE_LOW_HIGH: 'Preis (niedrigster zuerst)',
+    PRICE_HIGH_LOW: 'Preis (höchster zuerst)',
+    FILTERS: 'Filter',
+    RESET: 'Zurücksetzen',
+    APPLY: 'Anwenden',
+  },
   COOKIE_BANNER: {
     DESKTOP:
       'Headout verwendet Cookies, um Ihnen eine bessere Nutzererfahrung zu bieten.',

@@ -13,7 +13,7 @@ import {
   PRISMIC_FIELD_ID,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
-import { shouldIncludeinMenu as shouldIncludeDoc } from '../headerUtils';
+import { shouldIncludeinQueries as shouldIncludeDoc } from '../headerUtils';
 
 const {
   MB_TYPE: { A1_CITY_GUIDE },

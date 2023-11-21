@@ -146,6 +146,8 @@ class MicrositeV2 extends Component<any, any> {
       categoryHeaderMenu,
       isMobile,
       breadcrumbs,
+      isCatOrSubCatPage,
+      catAndSubCatPageData,
     } = this.props;
     const {
       commonFooter,
@@ -516,6 +518,8 @@ class MicrositeV2 extends Component<any, any> {
       baseLangBannerAndFooterCombinations,
       alternateLanguages,
       breadcrumbs,
+      isCatOrSubCatPage,
+      catAndSubCatPageData,
     };
 
     const isLTT = checkIfLTTMB(this.props.data.uid);

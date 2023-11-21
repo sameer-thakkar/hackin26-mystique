@@ -6,33 +6,46 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { RadioIcon } from 'assets/SvgIcons';
 
-const RadioListContainer = styled.div``;
+const RadioListContainer = styled.div<{ $isCatOrSubCatPage: boolean }>`
+  ${({ $isCatOrSubCatPage }) =>
+    $isCatOrSubCatPage &&
+    ` display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    `}
+`;
 
-const RadioItem = styled.div<{ $isNoBorderBottom?: boolean }>`
+const RadioItem = styled.div<{
+  $isActive: boolean;
+  $isCatOrSubCatPage: boolean;
+  $isNoBorderBottom?: boolean;
+}>`
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
   cursor: pointer;
-  padding: calc(16px - 0.5px) 0; // 1px to offset border.
-  border-bottom: 1px solid ${COLORS.GRAY.G6};
+
+  ${({ $isCatOrSubCatPage }) =>
+    !$isCatOrSubCatPage &&
+    ` padding: calc(16px - 0.5px) 0;
+      border-bottom: 1px solid ${COLORS.GRAY.G6}; 
+      &:last-child {
+        border-bottom: none;
+      }
+    `}
 
   &:last-child {
     ${({ $isNoBorderBottom }) => $isNoBorderBottom && `border-bottom: none;`}
   }
-  ${({
-    // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
-    $isActive,
-  }) => $isActive && `pointer-events: none;`}
+
+  ${({ $isActive }) => $isActive && `pointer-events: none;`}
+
   .label-text.label-text {
-    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-    ${({
-      // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
-      $isActive,
-    }) =>
-      $isActive &&
-      `
-        color: ${COLORS.BRAND.PURPS};
-    `}
+    ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage
+        ? expandFontToken(FONTS.BUTTON_SMALL)
+        : expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+    ${({ $isActive }) => $isActive && `color: ${COLORS.BRAND.PURPS};`}
   }
 `;
 
@@ -62,30 +75,32 @@ export type RadioItemArg = { label: any; value: string; [str: string]: any };
 
 const RadioList = ({
   items = [],
-  // @ts-expect-error TS(2322): Type 'null' is not assignable to type '(args: Radi... Remove this comment to see the full error message
-  onChange = null,
+  onChange,
   currentValue,
   isCurrencyLabel = false,
+  isCatOrSubCatPage = false,
   isNoBorderBottom = true,
 }: {
   items: Array<RadioItemArg>;
   onChange: (args: RadioItemArg) => void;
   currentValue: string;
   isCurrencyLabel?: boolean;
+  isCatOrSubCatPage?: boolean;
   isNoBorderBottom?: boolean;
 }) => {
   return (
-    <RadioListContainer>
+    <RadioListContainer $isCatOrSubCatPage={isCatOrSubCatPage}>
       {items.map((item, index) => {
         const { label, value, localSymbol } = item;
         const isActive = currentValue === value;
         const isClickable = !isActive && onChange;
+
         return (
           <RadioItem
             $isActive={isActive}
+            $isCatOrSubCatPage={isCatOrSubCatPage}
             key={index}
-            // @ts-expect-error TS(2769): No overload matches this call.
-            onClick={isClickable ? () => onChange(item) : null}
+            onClick={isClickable ? () => onChange(item) : undefined}
             $isNoBorderBottom={isNoBorderBottom}
           >
             <Conditional if={isCurrencyLabel}>

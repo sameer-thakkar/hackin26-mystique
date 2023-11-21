@@ -6650,6 +6650,33 @@ export const DoubleQuotesIcon = (
   </svg>
 );
 
+export const RIGHT_ARROW_POINTED = ({
+  fillColor = COLORS.GRAY.G2,
+}: TCommonSvgProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+  >
+    <path
+      d="M1.5 6L10.5 6"
+      stroke={fillColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6 1.5L10.5 6L6 10.5"
+      stroke={fillColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const Cookie = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -6772,6 +6799,43 @@ export const AVATAR = (
     <path
       d="M65.3739 158.453C101.724 129.935 158.133 127.502 198.133 150.971C200.508 152.364 206.59 145.727 204.905 144.74C161.916 119.518 103.372 124.4 64.8279 154.637C63.9467 155.325 60.7475 157.942 61.5137 159.255C62.3183 160.639 64.5118 159.132 65.3739 158.453Z"
       fill="black"
+    />
+  </svg>
+);
+
+export const REVERSIBLE_ARROW = ({
+  fillColor = COLORS.GRAY.G2,
+}: TCommonSvgProps) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M14 6H2"
+      stroke={fillColor}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2 6L6 2"
+      stroke={fillColor}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2 10L14 10"
+      stroke={fillColor}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14 9.99999L10 14"
+      stroke={fillColor}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

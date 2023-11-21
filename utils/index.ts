@@ -642,7 +642,10 @@ export const handleSettledPromiseResults = (
     (result) => result.status === 'rejected' && result?.reason
   );
   if (errors.length) {
-    // todo - handle aggregated errors
+    sendLog({
+      err: errors,
+      message: `[handleSettledPromiseResults] - ${errors}`,
+    });
   }
   return results.map(
     (result) => result.status === 'fulfilled' && result?.value

@@ -1,42 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $gap: number; $unsetWrapperMargin: boolean }>`
   display: flex;
+  ${({ $gap }) => $gap && `gap: ${$gap}rem;`}
   overflow-x: auto;
   overflow-y: hidden;
-  margin: 0 -16px;
-  max-width: calc(100vw - 32px);
-  padding: 0 16px;
+  margin: ${({ $unsetWrapperMargin }) =>
+    $unsetWrapperMargin ? '0' : '0 -1rem'};
+  max-width: calc(100vw - 2rem);
+  padding: 0 1rem;
+
   &::-webkit-scrollbar {
     display: none;
   }
   scrollbar-width: none;
 `;
 
-const Child = styled.div`
-  min-width: ${({
-    // @ts-expect-error TS(2339): Property 'minWidth' does not exist on type 'Pick<D... Remove this comment to see the full error message
-    minWidth,
-  }) => (minWidth ? `${minWidth}` : `max-content`)};
-  margin: 0px 12px
-    ${({
-      // @ts-expect-error TS(2339): Property 'marginBottom' does not exist on type 'Pi... Remove this comment to see the full error message
-      marginBottom,
-    }) => marginBottom}px
-    0;
+const Child = styled.div<{
+  minWidth: string | null;
+  marginBottom: number;
+  $unsetChildrenMargin: boolean;
+  $unsetChildrenPadding: boolean;
+}>`
+  min-width: ${({ minWidth }) => (minWidth ? `${minWidth}` : `max-content`)};
+  margin: ${({ $unsetChildrenMargin, marginBottom }) =>
+    $unsetChildrenMargin ? '0' : `0px 10px ${marginBottom}px 0`};
+  padding-right: ${({ $unsetChildrenPadding }) =>
+    $unsetChildrenPadding ? '0' : '10px'};
 `;
 
 const OverflowScroll: React.FC<{
   children: React.ReactNode[];
   minWidthChild?: string;
   marginBottom?: number;
-}> = ({ children, minWidthChild = null, marginBottom = 0 }) => {
+  unsetWrapperMargin?: boolean;
+  unsetChildrenMargin?: boolean;
+  unsetChildrenPadding?: boolean;
+  gap?: number;
+}> = ({
+  children,
+  minWidthChild = null,
+  marginBottom = 0,
+  unsetWrapperMargin = false,
+  unsetChildrenMargin = false,
+  unsetChildrenPadding = false,
+  gap = 0,
+}) => {
   return (
-    <Wrapper>
+    <Wrapper $gap={gap} $unsetWrapperMargin={unsetWrapperMargin}>
       {children?.map((child, index) => (
-        // @ts-expect-error TS(2769): No overload matches this call.
-        <Child key={index} minWidth={minWidthChild} marginBottom={marginBottom}>
+        <Child
+          key={index}
+          minWidth={minWidthChild}
+          marginBottom={marginBottom}
+          $unsetChildrenMargin={unsetChildrenMargin}
+          $unsetChildrenPadding={unsetChildrenPadding}
+        >
           {child}
         </Child>
       ))}

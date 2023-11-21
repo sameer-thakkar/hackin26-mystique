@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 export type ButtonType = {
   size: 'large' | 'medium' | 'small';
-  text?: string;
+  text?: string | React.ReactNode;
   icon?: React.ReactNode;
   iconPosition?: 'front' | 'back';
   className?: string;

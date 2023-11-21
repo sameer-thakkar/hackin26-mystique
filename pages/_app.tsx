@@ -6,6 +6,7 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
 import Cookies from 'js-cookie';
 import rtlPlugin from 'stylis-plugin-rtl';
+import { TCatAndSubCatPageData } from 'components/CatAndSubCatPage/interface';
 import Clarity from 'components/common/Clarity';
 import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
@@ -61,7 +62,9 @@ type PageProps = {
   categoryTourListData: any;
   simplifiedCategoryTourListData: any;
   scorpioData: any;
-  cityPageParams: Record<string, string>;
+  cityPageParams: Record<string, any>;
+  catAndSubCatPageData: TCatAndSubCatPageData;
+  isCatOrSubCatPage: boolean;
   isBot: boolean;
   isGDPRCompliant: boolean;
   bestDiscount?: number;
@@ -158,6 +161,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
       categoryTourListData,
+      catAndSubCatPageData,
+      isCatOrSubCatPage,
       cityPageParams,
       isBot,
       minPrice,
@@ -170,6 +175,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
 
     const { title } = CMSContent?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
+    const { isSubCategoryPage } = catAndSubCatPageData || {};
 
     let primaryCollectionId;
     if (CMSContent?.data?.data) {
@@ -236,6 +242,20 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         },
       });
     }
+
+    const getPageType = () => {
+      switch (true) {
+        case isCityPageMB:
+          return PAGE_TYPES.CITY_PAGE;
+        case isCatOrSubCatPage && !isSubCategoryPage:
+          return PAGE_TYPES.CATEGORY_PAGE;
+        case isCatOrSubCatPage && isSubCategoryPage:
+          return PAGE_TYPES.SUB_CATEGORY_PAGE;
+        default:
+          return pageType;
+      }
+    };
+
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
       [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
@@ -245,9 +265,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
       [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isCityPageMB
-        ? PAGE_TYPES.CITY_PAGE
-        : pageType,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getPageType(),
     });
     set(metaAtom, {
       city: primaryCity,
@@ -271,6 +289,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isBot,
       language: lang,
       isLazyExpTreatment,
+      isPillBarSticky: false,
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);

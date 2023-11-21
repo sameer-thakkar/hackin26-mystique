@@ -61,6 +61,8 @@ interface IStyledHeader {
   showLttColoredHeader: boolean;
   isTop?: boolean;
   isNewLTTLandingPageVisible?: boolean;
+  $categoryHeaderMenuExists: boolean;
+  $isPillBarSticky: boolean;
 }
 
 export const StyledHeader = styled.div<IStyledHeader>`
@@ -74,11 +76,13 @@ export const StyledHeader = styled.div<IStyledHeader>`
     user-select: none;
   }
   .fixed-wrap {
-    box-shadow: ${({ isTop, isNewLTTLandingPageVisible }) =>
+    box-shadow: ${({ isTop, isNewLTTLandingPageVisible, $isPillBarSticky }) =>
       !isTop &&
       !isNewLTTLandingPageVisible &&
+      !$isPillBarSticky &&
       '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
-    position: fixed;
+    ${({ $categoryHeaderMenuExists }) =>
+      !$categoryHeaderMenuExists && `position: fixed;`}
     width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
@@ -92,15 +96,16 @@ export const StyledHeader = styled.div<IStyledHeader>`
       check || headerHover ? 100 : 15};
     ${({ isGlobalMb }) =>
       isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
-    ${({ isEntertainmentMbListicle }) =>
-      isEntertainmentMbListicle &&
+    ${({ isEntertainmentMbListicle, $isPillBarSticky }) =>
+      (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showLttColoredHeader }) =>
         showLttColoredHeader ? '#150029' : '#fff'};
   }
   .fixed-offset::after {
     content: '';
-    display: block;
+    display: ${({ $categoryHeaderMenuExists }) =>
+      $categoryHeaderMenuExists ? 'none' : 'block'};
     height: ${({ theme: { theme } }) =>
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
@@ -149,6 +154,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
         showLttColoredHeader ? '#150029' : '#fff'};
     }
     .fixed-wrap {
+      position: fixed;
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
       height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
       background-color: transparent;
@@ -439,7 +445,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
-  const { isMobile } = useRecoilValue(appAtom);
+  const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
@@ -579,6 +585,8 @@ const Header: FunctionComponent<HeaderProps> = ({
       showLttColoredHeader={showLttColoredHeader}
       isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
       isTop={scrollPos <= 80}
+      $categoryHeaderMenuExists={categoryHeaderMenuExists}
+      $isPillBarSticky={isPillBarSticky}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">

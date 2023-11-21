@@ -754,6 +754,20 @@ const nl = {
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Hulp met bagage',
   },
+  CAT_SUBCAT_PAGE: {
+    ALL: 'Alles',
+    POPULAR_SUBCATEGORY: 'Populaire {0}',
+    TOP_CATEGORY: 'De beste {0}',
+    ATTRACTIONS: 'Bezienswaardigheden',
+    ALL_SUBCATEGORY: 'Alle {0}',
+    BROWSE_BY_CATEGORIES: 'Zoek per categorie',
+    TICKETS_FROM: 'Tickets vanaf',
+    PRICE_LOW_HIGH: 'Prijs (laag naar hoog)',
+    PRICE_HIGH_LOW: 'Prijs (hoog tot laag)',
+    FILTERS: 'Filters',
+    RESET: 'Reset',
+    APPLY: 'Toepassen',
+  },
   COOKIE_BANNER: {
     DESKTOP:
       'Headout gebruikt cookies om je een betere gebruikerservaring te bieden.',

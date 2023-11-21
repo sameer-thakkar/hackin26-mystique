@@ -15,38 +15,37 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
-export const StyledAccordion = styled.div`
-  padding: 16px 0;
-  margin-right: ${({
-    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-    isGlobalMb,
-  }) => (isGlobalMb ? '0' : '24px')};
-  border-bottom: 1px solid ${COLORS.GRAY.G7};
+export const StyledAccordion = styled.div<{
+  isOpen: boolean;
+  $isCatOrSubCatPage?: boolean;
+  isGlobalMb?: boolean;
+}>`
+  padding: 1rem 0;
+  margin-right: ${({ isGlobalMb, $isCatOrSubCatPage }) =>
+    isGlobalMb || $isCatOrSubCatPage ? '0' : '1.5rem'};
+  border-bottom: ${({ $isCatOrSubCatPage }) =>
+    $isCatOrSubCatPage
+      ? `1px solid ${COLORS.GRAY.G6}`
+      : `1px solid ${COLORS.GRAY.G7}`};
   display: grid;
   grid-template-rows: max-content max-content;
-  ${({
-    // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-    isOpen,
-  }) => isOpen && 'grid-row-gap: 8px'};
+  ${({ isOpen, $isCatOrSubCatPage }) =>
+    isOpen && !$isCatOrSubCatPage && 'grid-row-gap: 0.5rem'};
 
   &:last-child {
     border-bottom: none;
   }
+
   @media (max-width: 768px) {
-    ${({
-      // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-      isOpen,
-    }) => isOpen && 'grid-row-gap: 16px'};
+    ${({ isOpen, $isCatOrSubCatPage }) =>
+      isOpen && !$isCatOrSubCatPage && 'grid-row-gap: 1rem'};
     margin-right: 0;
-    padding: 16px 0;
 
     &:first-child {
-      border-top: ${({
-        // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-        isGlobalMb,
-      }) => isGlobalMb && `1px solid ${COLORS.GRAY.G7}`};
-      border-top: 1px solid ${COLORS.GRAY.G7};
+      border-top: ${({ $isCatOrSubCatPage }) =>
+        !$isCatOrSubCatPage && `1px solid ${COLORS.GRAY.G7}`};
     }
+
     &.accordion-container[expanded] header .chevron-icon {
       &::before {
         -webkit-transform: rotate(-45deg);
@@ -61,56 +60,60 @@ export const StyledAccordion = styled.div`
 `;
 
 const Title = styled.div<{
-  headingNeedsSeparator: boolean;
   isVenuePage?: boolean;
+  isGlobalMb?: boolean;
+  $isCatOrSubCatPage?: boolean;
 }>`
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-column-gap: 10px;
-  ${expandFontToken('Heading/Small')}
-  ${({ isVenuePage }) =>
-    isVenuePage
-      ? `
-     ${expandFontToken(FONTS.SUBHEADING_LARGE)};
-   `
-      : `
-    ${expandFontToken(FONTS.HEADING_SMALL)};
-   `}
+  grid-column-gap: 0.625rem;
+  ${({ isVenuePage, $isCatOrSubCatPage }) => {
+    switch (true) {
+      case $isCatOrSubCatPage:
+        return expandFontToken(FONTS.HEADING_REGULAR);
+      case isVenuePage:
+        return expandFontToken(FONTS.SUBHEADING_LARGE);
+      default:
+        return expandFontToken(FONTS.HEADING_SMALL);
+    }
+  }}
+  ${({ isGlobalMb }) => isGlobalMb && `font-size: 1rem;`}
 
-  ${({
-    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-    isGlobalMb,
-  }) => isGlobalMb && `font-size: 16px;`}
   .question-text {
     cursor: pointer;
   }
+
   @media (max-width: 768px) {
-    ${({ isVenuePage }) =>
-      isVenuePage
-        ? `
-    &&{
-      ${expandFontToken(FONTS.SUBHEADING_REGULAR)};
-    }
-    `
-        : `
-     ${expandFontToken(FONTS.HEADING_SMALL)};
-    `}
+    ${({ isVenuePage, $isCatOrSubCatPage }) =>
+      (isVenuePage || $isCatOrSubCatPage) &&
+      expandFontToken(FONTS.SUBHEADING_REGULAR)}
   }
 `;
 
-const ContentBlock = styled.div`
-  display: ${({
-    // @ts-expect-error TS(2339): Property '$isOpen' does not exist on type 'Pick<De... Remove this comment to see the full error message
-    $isOpen,
-  }) => ($isOpen ? 'grid' : 'none')};
-  grid-row-gap: 16px;
+const ContentBlock = styled.div<{
+  $isOpen: boolean;
+  $isGlobalMb?: boolean;
+  $isCatOrSubCatPage?: boolean;
+}>`
+  display: ${({ $isOpen }) => ($isOpen ? 'grid' : 'none')};
+  ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `grid-row-gap: 1rem;`}
+  ${({ $isCatOrSubCatPage }) => $isCatOrSubCatPage && `padding-top: 1rem;`}
+
+  ${({ $isCatOrSubCatPage }) =>
+    $isCatOrSubCatPage &&
+    `
+      * {
+        margin: unset;
+
+      }
+    `};
+
   p {
     margin: 0;
-    ${({
-      // @ts-expect-error TS(2339): Property '$isGlobalMb' does not exist on type 'Pic... Remove this comment to see the full error message
-      $isGlobalMb,
-    }) =>
+    ${({ $isGlobalMb }) =>
       $isGlobalMb ? `font-size: 14px; line-height: 20px;` : `font-size: 15px;`}
+    ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage && expandFontToken(FONTS.PARAGRAPH_LARGE)}
   }
   a {
     color: ${COLORS.TEXT.CANDY_1};
@@ -143,37 +146,46 @@ const ContentBlock = styled.div`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    ${({ $isCatOrSubCatPage }) => $isCatOrSubCatPage && `padding-top: 0.5rem;`}
+
+    p, ol, ul {
+      ${({ $isCatOrSubCatPage }) =>
+        $isCatOrSubCatPage && expandFontToken(FONTS.PARAGRAPH_SMALL)}
+    }
+  }
 `;
 
 type AccordionProps = {
-  clickHandler?: Function;
-  isOpenOverride?: Boolean;
+  clickHandler?: Function | null;
+  isOpenOverride?: boolean;
   heading: string;
   content: any;
-  isGlobalMb?: Boolean;
-  useSchema?: Boolean;
-  index?: number;
+  isGlobalMb?: boolean;
+  useSchema?: boolean;
+  index: number;
   tabData?: Array<{
     image_source: string;
     legend_image_source: string;
   }>;
   findBestSeatsCtaCallback?: () => void | null;
   isVenuePage?: boolean;
+  isCatOrSubCatPage?: boolean;
 };
 
 const Accordion = ({
   heading,
   content,
   isOpenOverride = false,
-  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'Function'.
   clickHandler = null,
   isGlobalMb,
   useSchema = false,
-  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'number'.
-  index = null,
+  index,
   tabData = [],
   findBestSeatsCtaCallback,
   isVenuePage,
+  isCatOrSubCatPage,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
   const chevronContainerClass = classNames({
@@ -210,17 +222,21 @@ const Accordion = ({
   };
 
   return (
-    // @ts-expect-error TS(2769): No overload matches this call.
-    <StyledAccordion isOpen={isOpen} as={'div'} isGlobalMb={isGlobalMb}>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
+    <StyledAccordion
+      as={'div'}
+      isOpen={isOpen}
+      $isCatOrSubCatPage={isCatOrSubCatPage}
+      isGlobalMb={isGlobalMb}
+    >
       <Title
         role="button"
         tabIndex={0}
         className="question"
-        as={'div'}
+        as="div"
         onClick={onAccordionToggle}
         isGlobalMb={isGlobalMb}
         isVenuePage={isVenuePage}
+        $isCatOrSubCatPage={isCatOrSubCatPage}
       >
         <div className="question-text">{heading}</div>
         <div className={chevronContainerClass}>
@@ -233,9 +249,9 @@ const Accordion = ({
       </Title>
       <ContentBlock
         className="answer"
-        // @ts-expect-error TS(2769): No overload matches this call.
         $isOpen={isOpen}
         $isGlobalMb={isGlobalMb}
+        $isCatOrSubCatPage={isCatOrSubCatPage}
       >
         <Conditional if={typeof content !== 'string'}>
           {content}

@@ -240,6 +240,7 @@ const SliderAccordion = (props: any) => {
               heading={accordion.question}
               clickHandler={() => setActiveAccordionIndex(index)}
               key={index}
+              index={index}
               isGlobalMb={isGlobalMb}
             />
           );

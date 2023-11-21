@@ -4,8 +4,16 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
-export const MailerContainer = styled.div`
-  background: linear-gradient(180deg, ${COLORS.PURPS.LIGHT_TONE_4} 0%, rgba(248, 246, 255, 0) 100%);
+export const MailerContainer = styled.div<{ $isCatOrSubCatPage: boolean }>`
+  background: ${({ $isCatOrSubCatPage }) =>
+    $isCatOrSubCatPage
+      ? `linear-gradient(91deg, #241136 3.49%, #5E2B90 93.86%)`
+      : `linear-gradient(
+      180deg,
+      ${COLORS.PURPS.LIGHT_TONE_4} 0%,
+      rgba(248, 246, 255, 0) 100%
+    )`};
+
   .mailer-wrapper {
     max-width: ${SIZES.MAX_WIDTH};
     margin: auto;
@@ -14,17 +22,15 @@ export const MailerContainer = styled.div`
     grid-template-areas: 'textBox imageBox';
     padding: 4rem 0;
     justify-content: space-between;
-    margin-top: 3rem;
+    ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 3rem;`}
   }
-  
 
-  @media(max-width: 1024px) {
-   .mailer-wrapper {
-      grid-template-areas: 'imageBox' 'textBox' ;
+  @media (max-width: 1024px) {
+    .mailer-wrapper {
+      grid-template-areas: 'imageBox' 'textBox';
       padding: 2rem 1.5rem 2.75rem 1.5rem;
-   }
+    }
   }
-}
 `;
 
 export const ImageContainer = styled.div`
@@ -42,17 +48,22 @@ export const ImageContainer = styled.div`
   }
 `;
 
-export const TextContainer = styled.div`
+export const TextContainer = styled.div<{ $isCatOrSubCatPage: boolean }>`
   grid-area: textBox;
   width: 31.5rem;
+
   .mailer-heading {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)}
+    ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage && `color: ${COLORS.BRAND.WHITE}`}
   }
   .mailer-subheading {
     ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
+    ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage && `color: ${COLORS.BRAND.WHITE}`}
   }
   @media (max-width: 768px) {
-    text-align: center;
+    ${($isCatOrSubCatPage) => !$isCatOrSubCatPage && `text-align: center;`}
     width: 100%;
     .mailer-heading {
       ${expandFontToken(FONTS.HEADING_LARGE)}
@@ -63,10 +74,12 @@ export const TextContainer = styled.div`
   }
 `;
 
-export const SubscriptionCont = styled.div<{ isErr: boolean }>`
+export const SubscriptionCont = styled.div<{
+  isErr: boolean;
+  $isCatOrSubCatPage: boolean;
+}>`
 .input-form {
   width: 100%;
-  height: 4rem;
   display: flex;
   .email-input {
     width: 20rem;
@@ -88,12 +101,14 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
   }
   .signup-btn {
     width: 11.75rem;
-    color: ${COLORS.BRAND.WHITE};
-    background-color: ${COLORS.BRAND.PURPS};
+    color: ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage ? COLORS.BRAND.PURPS : COLORS.BRAND.WHITE};
+    background-color: ${({ $isCatOrSubCatPage }) =>
+      $isCatOrSubCatPage ? COLORS.PURPS.LIGHT_TONE_4 : COLORS.BRAND.PURPS};
     border: none;
     border-radius: 0 12px 12px 0;
     cursor: pointer;
-    height: 3.8rem;
+    height: 3.77rem;
     ${expandFontToken(FONTS.BUTTON_BIG)}
   }
 }
@@ -123,12 +138,15 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
           `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; margin-bottom: 0;`}
         width: 78vw;
         border-radius: 8px;
+        padding: 0.875rem 1rem;
       }
       .err-msg {
         ${expandFontToken(FONTS.UI_LABEL_SMALL)}
         color: ${COLORS.TEXT.WARNING_RED_1};
         text-align: left;
         margin-left: 0.5rem;
+        ${($isCatOrSubCatPage) =>
+          $isCatOrSubCatPage && `margin: 0.5rem 0 0.5rem 0.5rem;`}
       }
       .signup-btn {
         width: 100%;
@@ -138,7 +156,7 @@ export const SubscriptionCont = styled.div<{ isErr: boolean }>`
     }
     .subcription-msg {
       display: block;
-      text-align: center;
+      ${($isCatOrSubCatPage) => !$isCatOrSubCatPage && `text-align: center;`}
       .subscription-text {
         margin: 0;
         ${expandFontToken(FONTS.SUBHEADING_SMALL)};

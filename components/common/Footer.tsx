@@ -22,14 +22,19 @@ import {
   WHITE_BLIP,
 } from 'assets/SvgIcons';
 
-const StyledFooter = styled.footer`
+const StyledFooter = styled.footer<{
+  isEntertainmentMb: boolean;
+  $isCatOrSubCatPage: boolean;
+}>`
   width: 100%;
   display: grid;
-  margin-top: 40px;
+  ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 40px;`}
   border-top: 1px solid ${COLORS.GRAY.G8};
 `;
 
-const FooterLinksWrapper = styled.div`
+const FooterLinksWrapper = styled.div<{
+  $isCatOrSubCatPage: boolean;
+}>`
   padding-bottom: 32px;
   &.primary-footer {
     margin-bottom: 0;
@@ -47,10 +52,11 @@ const FooterLinksWrapper = styled.div`
     display: block;
   }
   &.secondary-footer {
-    margin-top: 3.25rem;
+    ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 3.25rem;`}
     padding-bottom: 0;
     @media (max-width: 768px) {
-      margin-top: 1.5rem;
+      ${({ $isCatOrSubCatPage }) =>
+        !$isCatOrSubCatPage && `margin-top: 1.5rem;`}
     }
   }
   .quick-links {
@@ -211,15 +217,34 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
 const LinkSlicesWrapper = styled.div<{
   isEntertainmentMb: boolean;
   slicesLength: number;
+  $isCatOrSubCatPage: boolean;
 }>`
   display: grid;
-  padding: ${({ slicesLength }) => (slicesLength ? '4rem 0' : 'none')};
+  padding: ${({ slicesLength, $isCatOrSubCatPage }) => {
+    switch (true) {
+      case !slicesLength:
+        return 'none';
+      case $isCatOrSubCatPage:
+        return '3.125rem 0';
+      default:
+        return '4rem 0';
+    }
+  }};
   background-color: ${COLORS.GRAY.G8};
   margin-bottom: 0;
 
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
-    padding: ${({ slicesLength }) => (slicesLength ? '2.25rem 0' : 'none')};
+    padding: ${({ slicesLength, $isCatOrSubCatPage }) => {
+      switch (true) {
+        case !slicesLength:
+          return 'none';
+        case $isCatOrSubCatPage:
+          return '1.5rem 0';
+        default:
+          return '2.25rem 0';
+      }
+    }};
     margin-bottom: 0;
   }
 `;
@@ -371,11 +396,29 @@ type FooterProps = {
   secondaryHeading?: string;
   primaryHeading?: string;
   isEntertainmentMb?: boolean;
+  isCatOrSubCatPage?: boolean;
   showGmapsDisclaimer?: boolean;
 };
 
-const LinkSlices = ({ linksTitle, slices, theme, className = '' }: any) => (
-  <FooterLinksWrapper className={className}>
+type TLinkSlices = {
+  linksTitle: string;
+  slices: Array<Record<string, any>>;
+  theme: string | null;
+  className?: string;
+  isCatOrSubCatPage: boolean;
+};
+
+const LinkSlices = ({
+  linksTitle,
+  slices,
+  theme,
+  className = '',
+  isCatOrSubCatPage,
+}: TLinkSlices) => (
+  <FooterLinksWrapper
+    className={className}
+    $isCatOrSubCatPage={isCatOrSubCatPage}
+  >
     <Container>
       <Conditional if={theme !== THEMES.MIN_BLUE}>
         <div
@@ -417,6 +460,7 @@ const Footer: React.FC<FooterProps> = ({
   secondaryHeading = '',
   primaryHeading = '',
   isEntertainmentMb = false,
+  isCatOrSubCatPage = false,
   showGmapsDisclaimer = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
@@ -460,13 +504,16 @@ const Footer: React.FC<FooterProps> = ({
   return (
     // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
-      <StyledFooter isEntertainmentMb={isEntertainmentMb}>
+      <StyledFooter
+        isEntertainmentMb={isEntertainmentMb}
+        $isCatOrSubCatPage={isCatOrSubCatPage}
+      >
         <LazyComponent>
           <>
             <LinkSlicesWrapper
               isEntertainmentMb={isEntertainmentMb}
               slicesLength={slices?.length + secondarySlices?.length}
+              $isCatOrSubCatPage={isCatOrSubCatPage}
             >
               <Conditional if={slices?.length}>
                 <LinkSlices
@@ -474,6 +521,7 @@ const Footer: React.FC<FooterProps> = ({
                   linksTitle={primaryHeading}
                   slices={slices}
                   theme={finalThemeName}
+                  isCatOrSubCatPage={isCatOrSubCatPage}
                 />
               </Conditional>
               <Conditional if={secondarySlices?.length}>
@@ -482,6 +530,7 @@ const Footer: React.FC<FooterProps> = ({
                   linksTitle={secondaryHeading}
                   slices={secondarySlices}
                   theme={finalThemeName}
+                  isCatOrSubCatPage={isCatOrSubCatPage}
                 />
               </Conditional>
               <Container>

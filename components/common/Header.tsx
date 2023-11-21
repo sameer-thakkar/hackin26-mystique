@@ -35,6 +35,7 @@ const StyledHeader = styled.header<{
   $isSticky: boolean;
   $isTop: boolean;
   $isEntertainmentMB: boolean;
+  $isPillBarSticky: boolean;
 }>`
   height: 80px;
   width: 100%;
@@ -45,9 +46,10 @@ const StyledHeader = styled.header<{
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;
-  box-shadow: ${({ $isTop, $isEntertainmentMB, $isSticky }) =>
+  box-shadow: ${({ $isTop, $isEntertainmentMB, $isSticky, $isPillBarSticky }) =>
     !$isTop &&
     !$isEntertainmentMB &&
+    !$isPillBarSticky &&
     $isSticky &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
@@ -74,8 +76,15 @@ const StyledHeader = styled.header<{
       top: -3.5rem;
     `}
 
-    ${({ $isEntertainmentMB }) =>
-      $isEntertainmentMB && `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
+    ${({ $isPillBarSticky }) =>
+      $isPillBarSticky &&
+      `
+      box-shadow: none;
+    `}
+
+    ${({ $isEntertainmentMB, $isPillBarSticky }) =>
+      ($isEntertainmentMB || $isPillBarSticky) &&
+      `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
   }
 `;
 
@@ -251,7 +260,7 @@ const Header: React.FC<any> = (props) => {
     ? [...languages, { code: currentLanguage }]
     : [{ code: currentLanguage }];
 
-  const { isSidenavScroll } = useRecoilValue(appAtom);
+  const { isSidenavScroll, isPillBarSticky } = useRecoilValue(appAtom);
   const hamburgerIconCheck = categoryHeaderMenuExists
     ? Object.keys(categoryHeaderMenu).length > 0
     : showGroupBooking ||
@@ -350,6 +359,7 @@ const Header: React.FC<any> = (props) => {
       $isSticky={isHeaderSticky}
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
+      $isPillBarSticky={isPillBarSticky}
     >
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>

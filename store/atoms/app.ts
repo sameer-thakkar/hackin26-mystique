@@ -14,5 +14,6 @@ export const appAtom = atom({
     isBot: false,
     language: '',
     isLazyExpTreatment: false,
+    isPillBarSticky: false,
   },
 });

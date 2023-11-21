@@ -499,6 +499,13 @@ export const ANALYTICS_EVENTS = {
   SEE_ALL_CLICKED: 'See All Clicked',
   PAGE_SECTION_VIEWED: 'Page Section Viewed',
   BREADCRUMBS_CLICKED: 'Navigation Breadcrumbs Clicked',
+  CAT_SUBCAT_PAGE: {
+    COLLECTION_CARD_CTA_CLICKED: 'Collection Card CTA Clicked',
+    CATEGORY_CARD_CLICKED: 'Category Card Clicked',
+    SUBCATEGORY_PILL_CLICKED: 'Sub-Category Pill Clicked',
+    COLLECTIONS_SORTED: 'Collections Sorted',
+    SORT_BY_CLICKED: 'Sort By Clicked',
+  },
   NEWS_PAGE: {
     RATINGS_WIDGET_CLICKED: 'Ratings Widget Clicked',
     NEWS_CARD_CLICKED: 'News Card Clicked',
@@ -908,6 +915,8 @@ export const ANALYTICS_PROPERTIES = {
   MB_TYPE: 'MB Type',
   VIDEO_TITLE: 'Video Title',
   PERCENT_VIEWED: 'Percentage Viewed',
+  LABEL: 'Label',
+  SORTING_ORDER: 'Sorting Order',
   IS_SHOW_PLAYING: 'Is Show Playing',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
@@ -919,6 +928,8 @@ export const PAGE_TYPES = {
   SHOW_PAGE: 'Show Page',
   VENUE_PAGE: 'Venue Page',
   CITY_PAGE: 'City Page',
+  CATEGORY_PAGE: 'Category Page',
+  SUB_CATEGORY_PAGE: 'Sub-Category Page',
   NEWS_PAGE: 'News Page',
 };
 
@@ -1016,8 +1027,9 @@ export const CTA_TYPE = {
   SEE_ALL_DAY_TRIPS: 'See all Day Trips',
   VIEW_TRAVEL_GUIDE: 'View Travel Guide',
   SIGN_UP: 'Sign Up',
-  ALL_NEWS: 'All News',
   SEE_ALL: 'See All',
+  LANDING_PAGE: 'Landing Page',
+  ALL_NEWS: 'All News',
   ALL_TRAILERS: 'All Trailers',
   REVIEWS_CTA: 'Reviews CTA',
   BUY_TICKETS: 'Buy Tickets',
@@ -1363,10 +1375,15 @@ export const BY_HO_BRAND_SCREEN_ENABLE = [
 ];
 
 export const EMAIL_SUBCRIPTION = {
-  BANNER_URL:
-    'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription.png',
+  BANNER_URL: {
+    CITY_PAGE:
+      'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription.png',
+    CAT_SUBCAT_PAGE:
+      'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription_cat_page.png',
+  },
   ENDPOINT: 'https://vivillion.netlify.app/api/webengage',
   CITY_PAGE_EVENT: 'City Page Subscribe',
+  CAT_SUBCAT_PAGE_EVENT: 'Category/Sub Category Page Subscribe',
 };
 
 export const RESOURCE_ASSET_TYPE = {
@@ -1634,6 +1651,9 @@ export const LTT_LP_HARDCODED_REVIEWS = [
 
 export const GUIDES_IMAGE_URL =
   'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';
+
+export const ENTITY_ICONS_FOLDER_URL =
+  'https://cdn-imgix-open.headout.com/categories';
 
 export const ANALYTICS_SECTION_NAMES = {
   TOP_THINGS_TODO: 'Top things to do',

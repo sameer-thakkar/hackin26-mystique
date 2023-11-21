@@ -1,14 +1,20 @@
-import type { NumberField, SelectField } from '@prismicio/types';
+import type {
+  NumberField,
+  PrismicDocumentWithUID,
+  SelectField,
+} from '@prismicio/types';
 import dayjs, { Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import parse from 'url-parse';
 import {
+  getHeadoutLanguagecode,
   isCategoryMB,
   isCollectionMB,
   isMBDesign,
   isSubCategoryMB,
 } from 'utils';
+import { fetchCategory } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import renderShortCodes from 'utils/shortCodes';
 import { constantCase } from 'utils/stringUtils';
@@ -18,7 +24,9 @@ import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
   CATEGORY_IDS,
+  CUSTOM_TYPES,
   DESIGN,
+  ENTITY_ICONS_FOLDER_URL,
   F1_SPORTS_EXPERIMENT_TGIDS,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
@@ -598,6 +606,104 @@ export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
 };
 
+export const checkIfCatOrSubCatPage = async (
+  doc: PrismicDocumentWithUID,
+  baseLangCategorisationMetadata?: TCategorisationMetadata
+) => {
+  const { type, data, lang } = doc;
+
+  if (type !== CUSTOM_TYPES.MICROSITE) return false;
+
+  const finalBaseLangCategorisationMetadata =
+    data?.baseLangCategorisationMetadata || baseLangCategorisationMetadata;
+
+  const {
+    tagged_city: taggedCity,
+    tagged_mb_type: taggedMbType,
+    tagged_page_type: taggedPageType,
+    tagged_category: taggedCategory,
+  } = finalBaseLangCategorisationMetadata || {};
+
+  const allowedMBTypes = [
+    MB_CATEGORISATION.MB_TYPE.A1_CATEGORY,
+    MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY,
+  ];
+
+  const baseConditions =
+    allowedMBTypes.includes(taggedMbType) &&
+    taggedPageType === MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE &&
+    taggedCategory === MB_CATEGORISATION.CATEGORY.TICKETS &&
+    !!taggedCity;
+
+  if (!baseConditions) return false;
+
+  let categoryApiData: Record<string, any> = {};
+  try {
+    categoryApiData = await fetchCategory({
+      city: taggedCity,
+      language: getHeadoutLanguagecode(lang),
+    });
+  } catch (err) {
+    sendLog({
+      err,
+      message: `[checkIfCatOrSubCatPage] - 
+      ${JSON.stringify({
+        taggedCity,
+        taggedCategory,
+        taggedPageType,
+        taggedMbType,
+        lang,
+      })}
+    `,
+    });
+    return false;
+  }
+  const { categories } = categoryApiData;
+  const categoryData = categories?.find(
+    (category: Record<string, any>) => category.name === taggedCategory
+  );
+
+  if (taggedMbType === MB_CATEGORISATION.MB_TYPE.A1_CATEGORY && categoryData) {
+    return true;
+  }
+
+  if (taggedMbType === MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY) {
+    const { subCategories } = categoryData;
+    const { tagged_sub_category: taggedSubCategory } =
+      finalBaseLangCategorisationMetadata || {};
+    return subCategories?.some(
+      (subCategory: Record<string, any>) =>
+        subCategory.name === taggedSubCategory
+    );
+  }
+
+  return false;
+};
+
+export const getSubCategoryIconUrl = (
+  subCategoryId: number | undefined | null
+) => {
+  if (!subCategoryId) return `${ENTITY_ICONS_FOLDER_URL}/cat_1.svg`;
+  return `${ENTITY_ICONS_FOLDER_URL}/sub_${subCategoryId}.svg`;
+};
+
+export const getCatAndSubcatPageLabel = ({
+  label,
+  replacementString = '',
+}: {
+  label: string;
+  replacementString?: string;
+}) => {
+  const formattedLabel = strings.formatString(
+    strings.CAT_SUBCAT_PAGE[label as keyof typeof strings.CAT_SUBCAT_PAGE],
+    replacementString
+  );
+  const formattedLabelString = Array.isArray(formattedLabel)
+    ? formattedLabel[0]
+    : formattedLabel;
+  return formattedLabelString || label;
+};
+
 export const getBannerDescriptors = ({
   taggedMbType,
   taggedCategoryName,
@@ -631,26 +737,6 @@ export const getBannerDescriptors = ({
     descriptorData = CATEGORY_BANNER()[categoryId];
   }
   return descriptorData;
-};
-
-export const getCategorySeeAllLink = (category: string) => {
-  switch (category) {
-    case 'kids':
-      return 'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/';
-    case 'couple':
-      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
-    case 'adults':
-      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
-    case 'new arrivals':
-      return 'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/';
-    case 'plays':
-      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
-    case 'musicals':
-      return 'https://www.london-theater-tickets.com/london-musicals/';
-    case 'discounts':
-      return 'https://www.london-theater-tickets.com/discount-west-end-tickets/';
-  }
-  return '';
 };
 
 export const getShoulderPageLabel = ({

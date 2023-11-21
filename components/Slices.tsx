@@ -69,6 +69,23 @@ const CollectionCarousel = dynamic(() =>
 const sliceHandler = (slice: any, props: any = {}) => {
   if (slice?.primary?.hide_slice) return null;
 
+  if (props?.isRevampedDesign) {
+    if (slice?.slice_type === 'accordion') {
+      const { isRevampedDesign, isMobile } = props;
+      return (
+        <AccordionGroup
+          accordions={slice?.items}
+          heading={slice?.primary?.heading}
+          useSchema={slice?.primary?.use_faq_schema || false}
+          sliceProps={props}
+          tabData={slice?.items}
+          isRevampedDesign={isRevampedDesign}
+          isMobile={isMobile}
+        />
+      );
+    } else return null;
+  }
+
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':

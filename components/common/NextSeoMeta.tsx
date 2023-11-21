@@ -295,11 +295,11 @@ export default function PopulateMeta({
     ));
 
   const collectionVideoMeta = getCollectionVideoMeta(collectionDetails);
+  const { averageRating, ratingsCount } = collectionDetails || {};
 
   const { breadcrumbs = {}, taggedCity, primaryCity, showName = '' } =
     breadcrumbsDetails || {};
   const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
-  const { averageRating, ratingsCount } = collectionDetails || {};
 
   return (
     <>
@@ -314,10 +314,7 @@ export default function PopulateMeta({
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional
-        if={shouldDisplayCollectionRatings({
-          averageRating,
-          ratingsCount,
-        })}
+        if={shouldDisplayCollectionRatings({ averageRating, ratingsCount })}
       >
         <CollectionAggregatedRatingScript
           collectionDetails={collectionDetails}

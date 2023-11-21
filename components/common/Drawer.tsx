@@ -106,22 +106,23 @@ const CoreDrawerText = styled.div`
   }
 `;
 
-const Separator = styled.div`
+export const Separator = styled.div`
   border-top: 1px solid ${COLORS.GRAY.G6};
 `;
 
-const HeadingContainer = styled.div`
+export const HeadingContainer = styled.div`
   display: grid;
   grid-template-columns: ${({
     // @ts-expect-error TS(2339): Property '$hasHeading' does not exist on type 'Pic... Remove this comment to see the full error message
     $hasHeading,
-  }) => ($hasHeading ? '1fr 1.6rem' : '1fr')};
+  }) => ($hasHeading ? '1fr 1fr' : '1fr')};
   grid-row-gap: 1.2rem;
   align-items: center;
   ${Separator} {
     grid-column: 1 / 3;
   }
   .close-icon {
+    margin-left: auto;
     grid-column: 2 / 3;
     grid-row: 1;
   }
@@ -133,6 +134,7 @@ const PanelAnchor = styled.div`
   width: 32px;
   background-color: ${COLORS.GRAY.G6};
   border-radius: 100px;
+  grid-column: span 2;
   justify-self: center;
   margin: 8px 0;
 
@@ -156,7 +158,6 @@ const Drawer = ({
   children,
   noMargin = false,
   $drawerStyles,
-  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLElement... Remove this comment to see the full error message
   container = null,
   hideSeparator = false,
 }: {
@@ -167,7 +168,7 @@ const Drawer = ({
   children?: JSX.Element | Array<JSX.Element>;
   noMargin?: boolean;
   $drawerStyles?: any;
-  container?: HTMLElement;
+  container?: HTMLElement | null;
   hideSeparator?: boolean;
 }) => {
   const [mounted, setMounted] = useState(false);

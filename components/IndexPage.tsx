@@ -136,6 +136,8 @@ const Page = (props: PageProps) => {
     categoryHeaderMenu,
     breadcrumbs,
     cityPageParams,
+    isCatOrSubCatPage,
+    catAndSubCatPageData,
   } = props;
 
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -177,6 +179,8 @@ const Page = (props: PageProps) => {
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
             breadcrumbs={breadcrumbs}
+            isCatOrSubCatPage={isCatOrSubCatPage}
+            catAndSubCatPageData={catAndSubCatPageData}
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -232,6 +236,8 @@ const Page = (props: PageProps) => {
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
             breadcrumbs={breadcrumbs}
+            isCatOrSubCatPage={isCatOrSubCatPage}
+            catAndSubCatPageData={catAndSubCatPageData}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:

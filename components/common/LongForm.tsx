@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { FULL_WIDTH_SLICES } from 'constants/index';
+import { FULL_WIDTH_SLICES, SLICE_TYPES } from 'constants/index';
 import sliceHandler from '../Slices';
 import LazyComponent from './LazyComponent';
 
 export const StyledLongForm = styled.div<{
+  $isRevampedDesign?: boolean;
+  $faqSectionExists?: boolean;
   isVenuePage?: boolean;
   $isNewsPage?: boolean;
 }>`
@@ -78,6 +80,16 @@ export const StyledLongForm = styled.div<{
     padding-left: 20px;
   }
 
+  ${({ $isRevampedDesign, $faqSectionExists }) =>
+    $isRevampedDesign &&
+    $faqSectionExists &&
+    `
+      display: block;
+      padding: 3rem 0;
+      background: ${COLORS.BACKGROUND.FLOATING_PURPS};
+    `}
+  
+
   @media (max-width: 768px) {
     ${({ isVenuePage, $isNewsPage }) => {
       if (isVenuePage) {
@@ -126,6 +138,14 @@ export const StyledLongForm = styled.div<{
     ol {
       ${expandFontToken('Paragraph/Medium')}
     }
+
+    ${({ $isRevampedDesign, $faqSectionExists }) =>
+      $isRevampedDesign &&
+      $faqSectionExists &&
+      `
+      padding: 2rem 0;
+    `}
+  
   }
 `;
 
@@ -136,11 +156,18 @@ const LongForm = (longFormProps: {
   [k: string]: any;
 }) => {
   const { content, isContentPage, ...props } = longFormProps;
+  const { isRevampedDesign, isVenuePage, isNewsPage } = props;
+  const faqSectionExists = content.some(
+    (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.ACCORDION
+  );
+
   return (
     <StyledLongForm
       id="longform"
-      isVenuePage={props.isVenuePage}
-      $isNewsPage={props.isNewsPage}
+      $isRevampedDesign={isRevampedDesign}
+      $faqSectionExists={faqSectionExists}
+      isVenuePage={isVenuePage}
+      $isNewsPage={isNewsPage}
     >
       {content.map((slice: any, index: number) => {
         const shouldLazyLoad = isContentPage ? index > 2 : true;

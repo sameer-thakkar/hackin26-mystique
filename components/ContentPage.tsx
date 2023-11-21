@@ -575,7 +575,7 @@ class ContentPage extends Component<any, any> {
       mbDesign,
       mbType,
     });
-    const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+    const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
     const breadcrumbsDetails = {
       breadcrumbs,
       taggedCity,

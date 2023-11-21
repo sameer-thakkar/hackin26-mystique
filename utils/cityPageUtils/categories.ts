@@ -19,7 +19,7 @@ import {
   ISubCategoryEntity,
 } from 'utils/cityPageUtils/interface';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinMenu as shouldIncludeDoc } from 'utils/headerUtils';
+import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
 import { sendLog } from 'utils/logger';
 import { CAT, EXPLORE_CATSUBCAT, SUBCAT } from 'const/cityPage';
 import {

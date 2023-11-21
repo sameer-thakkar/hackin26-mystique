@@ -15,6 +15,7 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { throttle } from 'utils/gen';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { titleCase } from 'utils/stringUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
@@ -56,6 +57,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   const [selectedMainMenu, setSelectedMainMenu] = useState({ label: '' }); // using object as state to force re-render
   const [selectedNestedMenu, setSelectedNestedMenu] = useState('');
   const [scrollPos, setScrollPos] = useState(0);
+  const { isPillBarSticky } = useRecoilValue(appAtom);
 
   let mainMenu = Object.values(categoryHeaderMenu).filter((menuItem) => {
     if (isMobile) return menuItem;
@@ -200,7 +202,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   };
 
   return (
-    <StyledCategoryHeader $showBoxShadow={isSticky}>
+    <StyledCategoryHeader $showBoxShadow={isPillBarSticky ? false : isSticky}>
       <StyledCategoryHeaderContainer
         onClick={handleClick}
         $showLocaleSelector={isSticky}

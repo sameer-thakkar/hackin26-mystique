@@ -35,6 +35,7 @@ import {
   getShowPageBreadcrumbs,
   getVenuePageBreadcrumbs,
 } from 'utils/breadcrumbsUtils';
+import { getCatAndSubCatPageData } from 'utils/categoryPageUtils';
 import { generateCityPageData } from 'utils/cityPageUtils';
 import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import {
@@ -43,7 +44,11 @@ import {
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
-import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
+import {
+  checkIfCategoryHeaderExists,
+  checkIfCatOrSubCatPage,
+  getHostName,
+} from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
@@ -384,6 +389,34 @@ export const getMicrositeDocument = async ({
           } = baseLangData || { data: {} };
           completeMicrosite.data.mbType = mbType;
 
+          const {
+            tagged_city,
+            tagged_country,
+            tagged_collection,
+            tagged_category,
+            tagged_sub_category,
+            tagged_mb_type,
+            tagged_page_type,
+            primary_tag,
+            shoulder_page_type,
+            shoulder_page_custom_label,
+            tagged_content_type,
+          } = baseLangData?.data || {};
+
+          const baseLangCategorisationMetadata: TCategorisationMetadata = {
+            tagged_city,
+            tagged_country,
+            tagged_collection,
+            tagged_category,
+            tagged_sub_category,
+            tagged_mb_type,
+            tagged_page_type,
+            primary_tag,
+            shoulder_page_type,
+            shoulder_page_custom_label,
+            tagged_content_type,
+          };
+
           let allShowPages, productCardData;
           if (isEntertainmentMb) {
             allShowPages = await fetchAllMatchingDocs({
@@ -424,6 +457,11 @@ export const getMicrositeDocument = async ({
             {}
           );
 
+          const isCatOrSubCatPage = await checkIfCatOrSubCatPage(
+            completeMicrosite?.data,
+            baseLangCategorisationMetadata
+          );
+
           // Base lang Fallback for Tour Ranking.
           const tourTabSlice = completeMicrosite.data.data.body1[0];
           if (tourTabSlice?.primary && !tourTabSlice.primary.ranking) {
@@ -432,27 +470,35 @@ export const getMicrositeDocument = async ({
           }
 
           // Base lang Fallback for CategorisedToursV1
-          let localisedCategoryTourListV1 = getSinglePrismicSlice({
-            sliceName: 'tour_list_category_v1',
-            slices: localisedCategoryTourListSlice,
-          });
-
+          let localisedCategoryTourListV1 = !isCatOrSubCatPage
+            ? getSinglePrismicSlice({
+                sliceName: 'tour_list_category_v1',
+                slices: localisedCategoryTourListSlice,
+              })
+            : {};
           const englishCategoryTourListSlice = completeMicrosite.data.data.body;
 
-          let categoryTourListV1 = getSinglePrismicSlice({
-            sliceName: 'tour_list_category_v1',
-            slices: englishCategoryTourListSlice,
-          });
+          let categoryTourListV1 = !isCatOrSubCatPage
+            ? getSinglePrismicSlice({
+                sliceName: 'tour_list_category_v1',
+                slices: englishCategoryTourListSlice,
+              })
+            : {};
 
-          let categoryTourListV2 = getSinglePrismicSlice({
-            sliceName: 'tour_list_category',
-            slices:
-              lang === LANGUAGE_MAP.en.locale
-                ? englishCategoryTourListSlice
-                : localisedCategoryTourListSlice,
-          });
+          let categoryTourListV2 = !isCatOrSubCatPage
+            ? getSinglePrismicSlice({
+                sliceName: 'tour_list_category',
+                slices:
+                  lang === LANGUAGE_MAP.en.locale
+                    ? englishCategoryTourListSlice
+                    : localisedCategoryTourListSlice,
+              })
+            : {};
 
-          if (Object.keys(localisedCategoryTourListV1)?.length) {
+          if (
+            Object.keys(localisedCategoryTourListV1)?.length &&
+            !isCatOrSubCatPage
+          ) {
             localisedCategoryTourListV1.primary.locale_ranking =
               categoryTourListV1?.primary?.locale_ranking ||
               localisedCategoryTourListV1?.primary?.locale_ranking;
@@ -460,12 +506,15 @@ export const getMicrositeDocument = async ({
               categoryTourListV1?.primary?.locale_exclusions ||
               localisedCategoryTourListV1?.primary?.locale_exclusions;
           }
-          if (!categoryTourListV1?.primary?.product_cards?.id) {
+          if (
+            !categoryTourListV1?.primary?.product_cards?.id &&
+            !isCatOrSubCatPage
+          ) {
             categoryTourListV1 = localisedCategoryTourListV1;
           }
 
           const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
-          if (hasCategoryTourListV1) {
+          if (hasCategoryTourListV1 && !isCatOrSubCatPage) {
             const { primary } = categoryTourListV1;
             const { product_cards } = primary || {};
             const { id: productCardsId } = product_cards || {};
@@ -538,34 +587,6 @@ export const getMicrositeDocument = async ({
           } catch (e) {
             // invalid url entered
           }
-
-          const {
-            tagged_city,
-            tagged_country,
-            tagged_collection,
-            tagged_category,
-            tagged_sub_category,
-            tagged_mb_type,
-            tagged_page_type,
-            primary_tag,
-            shoulder_page_type,
-            shoulder_page_custom_label,
-            tagged_content_type,
-          } = baseLangData?.data || {};
-
-          const baseLangCategorisationMetadata: TCategorisationMetadata = {
-            tagged_city,
-            tagged_country,
-            tagged_collection,
-            tagged_category,
-            tagged_sub_category,
-            tagged_mb_type,
-            tagged_page_type,
-            primary_tag,
-            shoulder_page_type,
-            shoulder_page_custom_label,
-            tagged_content_type,
-          };
 
           const micrositeData = {
             ...completeMicrosite,
@@ -1810,10 +1831,14 @@ export const getPageData = async ({
       const toursTabSlice = body?.[0];
       const toursTabFirstSlice = body1[0];
 
-      const categoryCarouselCF = getSinglePrismicSlice({
-        sliceName: 'category_carousel',
-        slices: contentFrameworkData?.body,
-      });
+      const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent?.data);
+
+      const categoryCarouselCF = !isCatOrSubCatPage
+        ? getSinglePrismicSlice({
+            sliceName: 'category_carousel',
+            slices: contentFrameworkData?.body,
+          })
+        : {};
       let categoryTourListData, bannerImageData;
       const hasCategoryTourListV1 = Object.keys(localisedCategoryTourListV1)
         ?.length;
@@ -1822,7 +1847,7 @@ export const getPageData = async ({
         hasCategoryTourListV2 ||
         hasCategoryTourListV1 ||
         Object.keys(categoryCarouselCF)?.length;
-      if (hasCategoryTourList) {
+      if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
           categoryTourListData = await categoryTourListParserV1({
             productCard: productCardData,
@@ -1898,9 +1923,10 @@ export const getPageData = async ({
         cityPageData,
       };
 
-      const prismicTours = toursTabFirstSlice
-        ? toursTabSliceHandler(toursTabFirstSlice)
-        : [];
+      const prismicTours =
+        toursTabFirstSlice && !isCatOrSubCatPage
+          ? toursTabSliceHandler(toursTabFirstSlice)
+          : [];
       const offers = prismicTours
         ?.filter((tour: any) => tour.offer__free_tour?.id)
         ?.map((tour: any) => tour.offer__free_tour?.id);
@@ -1938,38 +1964,39 @@ export const getPageData = async ({
         ...rawCategories
       }: any = categoryTourListData ?? {};
 
-      const simplifiedCategoryTourListData = !hasCategoryTourListV1
-        ? Object.entries(rawCategories || {}).reduce<{
-            tourGroupMap: TGIDProductCardMap;
-          }>(
-            (simpleCategoryData: any, [categoryId, productGroups]: any) => {
-              const tgids: Array<number> = [];
-              const productGroupMap: TGIDProductCardMap = productGroups?.reduce(
-                (map: TGIDProductCardMap, productGroup: ProductCard) => {
-                  if (productGroup.showPageUid) {
-                    delete productGroup.highlights;
-                  }
-                  tgids.push(productGroup.tgid);
-                  return {
-                    ...map,
-                    [productGroup.tgid]: productGroup,
-                  };
-                },
-                {}
-              );
+      const simplifiedCategoryTourListData =
+        !hasCategoryTourListV1 && !isCatOrSubCatPage
+          ? Object.entries(rawCategories || {}).reduce<{
+              tourGroupMap: TGIDProductCardMap;
+            }>(
+              (simpleCategoryData: any, [categoryId, productGroups]: any) => {
+                const tgids: Array<number> = [];
+                const productGroupMap: TGIDProductCardMap = productGroups?.reduce(
+                  (map: TGIDProductCardMap, productGroup: ProductCard) => {
+                    if (productGroup.showPageUid) {
+                      delete productGroup.highlights;
+                    }
+                    tgids.push(productGroup.tgid);
+                    return {
+                      ...map,
+                      [productGroup.tgid]: productGroup,
+                    };
+                  },
+                  {}
+                );
 
-              return {
-                ...simpleCategoryData,
-                tourGroupMap: {
-                  ...simpleCategoryData.tourGroupMap,
-                  ...productGroupMap,
-                },
-                [categoryId]: tgids,
-              };
-            },
-            { tourGroupMap: {} }
-          )
-        : {};
+                return {
+                  ...simpleCategoryData,
+                  tourGroupMap: {
+                    ...simpleCategoryData.tourGroupMap,
+                    ...productGroupMap,
+                  },
+                  [categoryId]: tgids,
+                };
+              },
+              { tourGroupMap: {} }
+            )
+          : {};
       const primaryCountry = primaryCity?.country;
 
       scorpioAllTourGroupData = {
@@ -2175,6 +2202,17 @@ export const getPageData = async ({
     const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
       aggregatedPromise
     );
+
+    const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent?.data);
+    const catAndSubCatPageData = isCatOrSubCatPage
+      ? await getCatAndSubCatPageData({
+          doc: CMSContent?.data,
+          attractionsHeaderMenu: categoryHeaderMenu?.ATTRACTIONS?.menu || {},
+          themesHeaderMenu: categoryHeaderMenu?.THEMES?.menu || {},
+          cookies,
+        })
+      : {};
+
     return {
       ...scorpioAllTourGroupData,
       ...(activeCurrency && { activeCurrency }),
@@ -2186,6 +2224,8 @@ export const getPageData = async ({
       domainConfig: await domainConfigPromise,
       categoryHeaderMenu,
       breadcrumbs,
+      isCatOrSubCatPage,
+      catAndSubCatPageData,
       minPrice,
       bestDiscount,
     };
@@ -2315,7 +2355,7 @@ export const getShoulderPageDocs = async ({
     ...filteredContentPages?.results,
   ];
 
-  return getRankedDocuments(aggregatedDocsStore);
+  return getRankedDocuments({ docs: aggregatedDocsStore });
 };
 
 const getCityGuideClientQueryPromise = ({
@@ -2371,7 +2411,7 @@ export const getCityGuideDocs = async (
     ...filteredContentPages?.results,
   ];
 
-  return getRankedDocuments(aggregatedDocsStore);
+  return getRankedDocuments({ docs: aggregatedDocsStore });
 };
 
 export const getAlternateLanguageDocs = async ({
@@ -2397,6 +2437,64 @@ export const getAlternateLanguageDocs = async ({
   );
 
   return alternateLangDocs;
+};
+
+export const getTopCollectionsCarouselDocs = async ({
+  mbCity,
+  collectionsIds,
+}: {
+  mbCity: string;
+  collectionsIds: Array<string>;
+}) => {
+  try {
+    const { results: filteredMicrosites } =
+      (await Client().query(
+        [
+          Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
+          Prismic.Predicates.at(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+            mbCity
+          ),
+          Prismic.Predicates.at(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
+            MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
+          ),
+          Prismic.Predicates.any(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
+            [
+              MB_CATEGORISATION.MB_TYPE.C1_COLLECTION,
+              MB_CATEGORISATION.MB_TYPE.A1_COLLECTION,
+              MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
+            ]
+          ),
+          Prismic.Predicates.any(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
+            collectionsIds
+          ),
+        ],
+        { pageSize: 50 }
+      )) || {};
+
+    return getRankedDocuments({
+      docs: filteredMicrosites,
+      ranking: [
+        MB_CATEGORISATION.MB_TYPE.C1_COLLECTION,
+        MB_CATEGORISATION.MB_TYPE.A1_COLLECTION,
+        MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
+      ],
+    });
+  } catch (err) {
+    sendLog({
+      err,
+      message: `[getTopCollectionsCarouselDocs] - 
+        ${JSON.stringify({
+          mbCity,
+          collectionsIds,
+        })}
+      `,
+    });
+    return [];
+  }
 };
 
 const getConcertCollectionClientQueryPromise = ({

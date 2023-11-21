@@ -4,7 +4,7 @@ import { PrismicDocumentWithUID } from '@prismicio/types';
 import { getAlternateLanguageDocUid, getHeadoutLanguagecode } from 'utils';
 import { fetchCityTopCollections } from 'utils/apiUtils';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinMenu as shouldIncludeDoc } from 'utils/headerUtils';
+import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
 import { sendLog } from 'utils/logger';
 import {
   COOKIE,

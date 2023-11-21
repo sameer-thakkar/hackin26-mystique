@@ -8,6 +8,7 @@ import React, {
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
@@ -34,12 +35,18 @@ import {
   groupSlices,
   withShortcodes,
 } from 'utils/helper';
+import { titleCase } from 'utils/stringUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  EMAIL_SUBCRIPTION,
+  THEMES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
@@ -75,6 +82,11 @@ const CategoryHeader = dynamic(() =>
 );
 const Breadcrumbs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
+const CatAndSubCatPage = dynamic(() =>
+  import(
+    /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
+  )
 );
 const MonthTabs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/slices/MonthTabs')
@@ -233,6 +245,8 @@ export const HomePage = (props: any) => {
     baseLangBannerAndFooterCombinations,
     breadcrumbs,
     alternateLanguages,
+    isCatOrSubCatPage,
+    catAndSubCatPageData,
   } = props;
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
@@ -331,7 +345,7 @@ export const HomePage = (props: any) => {
     mbDesign,
     mbType,
   });
-  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 1;
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
 
   useEffect(() => {
     if (eventsReady) {
@@ -422,7 +436,12 @@ export const HomePage = (props: any) => {
         </div>
       </Conditional>
       <Conditional
-        if={showCovid19Alert && covid19AlertOpen && !isEntertainmentMb}
+        if={
+          showCovid19Alert &&
+          covid19AlertOpen &&
+          !isEntertainmentMb &&
+          !isCatOrSubCatPage
+        }
       >
         <DismissAlert
           readMoreLink={strings.COVID19_ALERT.LINK}
@@ -434,14 +453,14 @@ export const HomePage = (props: any) => {
           }}
         />
       </Conditional>
-      <Conditional if={isMobile && showLttTreatment}>
+      <Conditional if={isMobile && showLttTreatment && !isCatOrSubCatPage}>
         <MobileBannerV2
           bannerImages={heroProps.banners}
           allTours={allTours}
           pinnedTgid={directTgid}
         />
       </Conditional>
-      <Conditional if={!isMobile && showLttTreatment}>
+      <Conditional if={!isMobile && showLttTreatment && !isCatOrSubCatPage}>
         <DesktopBannerV2
           bannerImages={heroProps.banners}
           allTours={allTours}
@@ -453,7 +472,8 @@ export const HomePage = (props: any) => {
           mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
           !isListicle &&
-          !showLttTreatment
+          !showLttTreatment &&
+          !isCatOrSubCatPage
         }
       >
         <Banner
@@ -466,12 +486,12 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
 
-      <Conditional if={isEntertainmentMbListicle}>
+      <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>
         </ListicleHeadingWrapper>
       </Conditional>
-      <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+      <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>
         <TextBanner bannerHeading={coverHeading ? coverHeading : null} />
       </Conditional>
       <Conditional if={alertPopup?.uid}>
@@ -479,7 +499,13 @@ export const HomePage = (props: any) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
       </Conditional>
-      <Conditional if={heroSectionSlice.length && !isEntertainmentMbListicle}>
+      <Conditional
+        if={
+          heroSectionSlice.length &&
+          !isEntertainmentMbListicle &&
+          !isCatOrSubCatPage
+        }
+      >
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -496,7 +522,7 @@ export const HomePage = (props: any) => {
         </ProductsContextProvider>
       </Conditional>
 
-      <Conditional if={isEntertainmentMbListicle}>
+      <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             <MonthTabs
@@ -507,7 +533,9 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional if={hasToursSection && !showLttTreatment}>
+      <Conditional
+        if={hasToursSection && !showLttTreatment && !isCatOrSubCatPage}
+      >
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
           hasCategoryTourList={hasCategoryTourList}
@@ -525,7 +553,7 @@ export const HomePage = (props: any) => {
           isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
-      <Conditional if={showLttTreatment}>
+      <Conditional if={showLttTreatment && !isCatOrSubCatPage}>
         <LttLandingPageV2
           isMobile={isMobile}
           allTours={allTours}
@@ -533,7 +561,8 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
         />
       </Conditional>
-      <Conditional if={automatedBreadcrumbsExists}>
+
+      <Conditional if={automatedBreadcrumbsExists && !isCatOrSubCatPage}>
         <LazyComponent>
           <Breadcrumbs
             breadcrumbs={breadcrumbs}
@@ -544,6 +573,16 @@ export const HomePage = (props: any) => {
           />
         </LazyComponent>
       </Conditional>
+
+      <Conditional if={isCatOrSubCatPage}>
+        <CatAndSubCatPage
+          catAndSubCatPageData={catAndSubCatPageData}
+          breadcrumbs={breadcrumbs}
+          primaryCity={primaryCity}
+          isMobile={isMobile}
+        />
+      </Conditional>
+
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           <Conditional if={longFormContent && longFormSlices?.length}>
@@ -559,6 +598,7 @@ export const HomePage = (props: any) => {
                 uid,
                 isEntertainmentMb,
                 automatedBreadcrumbsExists,
+                isRevampedDesign: isCatOrSubCatPage,
               }}
               hasToursSection={hasToursSection}
             />
@@ -573,12 +613,29 @@ export const HomePage = (props: any) => {
         </LazyComponent>
       </Conditional>
 
-      <Conditional if={isEntertainmentMb && !showLttTreatment}>
+      <Conditional
+        if={isEntertainmentMb && !showLttTreatment && !isCatOrSubCatPage}
+      >
         <div className="main-wrapper">
           <LazyComponent>
             <LttFeatureCard />
           </LazyComponent>
         </div>
+      </Conditional>
+
+      <Conditional if={isCatOrSubCatPage}>
+        <LazyComponent>
+          <Mailer
+            isMobile={isMobile}
+            heading={strings.formatString(
+              strings.CITY_PAGE.MAILER.HEADING,
+              titleCase(taggedCity || primaryCity?.displayName || '')
+            )}
+            subHeading={strings.CITY_PAGE.MAILER.SUBHEADING}
+            eventName={EMAIL_SUBCRIPTION.CAT_SUBCAT_PAGE_EVENT}
+            isCatOrSubCatPage={true}
+          />
+        </LazyComponent>
       </Conditional>
 
       <LazyComponent>
@@ -599,6 +656,7 @@ export const HomePage = (props: any) => {
           secondaryHeading={secondaryFooter?.data?.footer_heading}
           primaryHeading={footer?.footer_heading}
           isEntertainmentMb={isEntertainmentMb}
+          isCatOrSubCatPage={isCatOrSubCatPage}
         />
       </LazyComponent>
     </V2MicrositeWrapper>

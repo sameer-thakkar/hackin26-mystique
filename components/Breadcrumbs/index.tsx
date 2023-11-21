@@ -30,6 +30,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   isContentPage = false,
   isShowPage = false,
   isVenuePage = false,
+  isCatOrSubCatPage = false,
   isNewsPage = false,
   isMobile,
 }) => {
@@ -73,6 +74,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       $isContentPage={isContentPage}
       $isShowPage={isShowPage}
       $isVenuePage={isVenuePage}
+      $isCatOrSubCatPage={isCatOrSubCatPage}
       $isNewsPage={isNewsPage}
       $isDropdownOpen={isDropdownOpen}
       onClick={handleClick}
@@ -91,6 +93,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 href={url}
                 target="_blank"
                 className="breadcrumb"
+                $isCatOrSubCatPage={isCatOrSubCatPage}
                 $isCrumbCollapsed={isCrumbCollapsed}
               >
                 {getBreadcrumbLabel({
@@ -124,7 +127,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               </Conditional>
             </Conditional>
             <Conditional if={array.length - 1 === index}>
-              <StyledBreadcrumbSpan>
+              <StyledBreadcrumbSpan $isCatOrSubCatPage={isCatOrSubCatPage}>
                 {getBreadcrumbLabel({
                   label,
                   mbCity,

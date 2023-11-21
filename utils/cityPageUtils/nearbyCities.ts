@@ -13,7 +13,7 @@ import {
   IGetNearbyCities,
 } from 'utils/cityPageUtils/interface';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinMenu as shouldIncludeDoc } from 'utils/headerUtils';
+import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
 import { sendLog } from 'utils/logger';
 import {
   CUSTOM_TYPES,
