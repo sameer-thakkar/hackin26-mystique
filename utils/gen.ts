@@ -1,5 +1,5 @@
 import { CURRENCY_CODES_ORDER } from 'const/currency';
-import { LAZY_LOAD_ENABLED_DOMAINS, LOCALE_ORDER } from 'const/index';
+import { LOCALE_ORDER } from 'const/index';
 
 export const fromEntries = (iterable: any) =>
   [...iterable].reduce(
@@ -163,6 +163,3 @@ export const getObjectNestingCount = (
     ...Object.values(obj).map((val) => getObjectNestingCount(val, level + 1))
   );
 };
-
-export const checkIfLazyLoadApplicable = (uid: string) =>
-  LAZY_LOAD_ENABLED_DOMAINS.findIndex((domain) => uid?.includes(domain)) > -1;

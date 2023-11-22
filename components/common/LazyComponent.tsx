@@ -2,7 +2,6 @@ import React, { PropsWithChildren, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useOnScreen from 'hooks/useOnScreen';
-import { checkIfLazyLoadApplicable } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 
@@ -23,26 +22,20 @@ const LazyComponent = ({
     ref: lazyElementRef,
     unobserve: true,
   });
-  const { isBot, uid, isLazyExpTreatment } = useRecoilValue(appAtom);
+  const { isBot } = useRecoilValue(appAtom);
   const overrideLazyLoading = useRecoilValue(lazyLoadOverrideAtom);
-  const isLazyLoadApplicable =
-    isLazyExpTreatment && checkIfLazyLoadApplicable(uid);
 
   const shouldRender = useMemo(() => {
     switch (true) {
       case overrideLazyLoading:
         return true;
-      case isLazyLoadApplicable && isBot && target === 'USER': // If Bot and target audience for Lazy Loading is User, render.
-      case isLazyLoadApplicable && !isBot && target === 'BOT': // If User and target audience for Lazy Loading is Bot, render
+      case isBot && target === 'USER': // If Bot and target audience for Lazy Loading is User, render.
+      case !isBot && target === 'BOT': // If User and target audience for Lazy Loading is Bot, render
         return true;
-      case isLazyLoadApplicable && target === 'BOT' && isBot && isIntersecting: // if Bot and target audience is Bot and element in view, render.
-      case isLazyLoadApplicable &&
-        target === 'USER' &&
-        !isBot &&
-        isIntersecting: // if user and target audience is User & element is in view, render.
-      case isLazyLoadApplicable && target === 'BOTH' && isIntersecting: // if target audience is Both, and element is in view, render.
+      case target === 'BOT' && isBot && isIntersecting: // if Bot and target audience is Bot and element in view, render.
+      case target === 'USER' && !isBot && isIntersecting: // if user and target audience is User & element is in view, render.
+      case target === 'BOTH' && isIntersecting: // if target audience is Both, and element is in view, render.
       case target === 'NONE': // if target audience is NONE, render
-      case !isLazyLoadApplicable:
         return true;
       default:
         return false;

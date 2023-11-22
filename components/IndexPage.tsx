@@ -374,8 +374,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     serverCookies.set(COOKIE.CURRENT_CURRENCY);
   }
 
-  const isLazyExpTreatment = req.headers['x-lazy'] === '1';
-
   let isMobile = req
     ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
     : window?.outerWidth < 768;
@@ -485,7 +483,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         cookies: req?.cookies ?? {},
         headers: JSON.stringify(req?.headers),
         isGDPRCompliant,
-        isLazyExpTreatment,
       },
     };
     const removeEmpty = (obj: any) => {

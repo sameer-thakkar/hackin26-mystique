@@ -1,18 +1,15 @@
-import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { StyleSheetManager } from 'styled-components';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
-import Cookies from 'js-cookie';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { TCatAndSubCatPageData } from 'components/CatAndSubCatPage/interface';
 import Clarity from 'components/common/Clarity';
 import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
-import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
-import { checkIfLazyLoadApplicable } from 'utils/gen';
+import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
 import renderShortCodes from 'utils/shortCodes';
@@ -24,7 +21,6 @@ import { metaAtom } from 'store/atoms/meta';
 import { shortcodesAtom } from 'store/atoms/shortcodes';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
-  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
@@ -69,7 +65,6 @@ type PageProps = {
   isGDPRCompliant: boolean;
   bestDiscount?: number;
   minPrice?: number;
-  isLazyExpTreatment: boolean;
 };
 
 interface IGetCurrencyCode {
@@ -105,8 +100,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     isGDPRCompliant,
     ContentType,
     MBDesign,
-    isLazyExpTreatment,
-    uid,
   } = pageProps;
 
   const pageType = ContentType + (MBDesign || '');
@@ -122,24 +115,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         return null;
     }
   };
-
-  useEffect(() => {
-    const isLazyLoadApplicable = checkIfLazyLoadApplicable(uid);
-    if (!isLazyLoadApplicable) return;
-
-    if (typeof Cookies.get(COOKIE.IS_LAZY) === 'undefined')
-      Cookies.set(COOKIE.IS_LAZY, isLazyExpTreatment ? '1' : '0', {
-        path: '/',
-        expires: 31,
-      });
-    setTimeout(() => {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        'Experiment Name': 'Lazy Load Experiment',
-        'Experiment Variant': isLazyExpTreatment ? 'Treatment' : 'Control',
-      });
-    });
-  }, [uid, isLazyExpTreatment]);
 
   const initRecoil = ({ set }: MutableSnapshot) => {
     if (!pageProps?.ContentType) return;
@@ -288,7 +263,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isSidenavScroll: false,
       isBot,
       language: lang,
-      isLazyExpTreatment,
       isPillBarSticky: false,
     });
     set(currencyListAtom, currencyList);
