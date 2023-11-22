@@ -31,7 +31,7 @@ export const StyledTabsContainer = styled.div<{
     position: absolute;
     bottom: 0;
     left: ${({ $activeTab }) =>
-      $activeTab === 'shared' ? 0 : 'calc(50% + 1.5rem)'};
+      $activeTab === 'first' ? 0 : 'calc(50% + 1.5rem)'};
     width: ${({ $activeTab }) => ($activeTab ? 'calc(50% - 1.5rem)' : '0')};
 
     transition: left 0.2s ease-in-out;
@@ -42,7 +42,7 @@ export const StyledTabsContainer = styled.div<{
 
     ::before {
       left: ${({ $activeTab }) =>
-        $activeTab === 'shared' ? 0 : 'calc(50% + .75rem)'};
+        $activeTab === 'first' ? 0 : 'calc(50% + .75rem)'};
       width: ${({ $activeTab }) => ($activeTab ? 'calc(50% - .75rem)' : '0')};
     }
   }

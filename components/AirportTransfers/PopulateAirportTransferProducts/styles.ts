@@ -52,9 +52,9 @@ export const StyledProductCardsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 1.5rem 0;
+  margin: 1.5rem 0 4rem 0;
 
   @media (max-width: 768px) {
-    margin: 1.25rem 1.5rem 0;
+    margin: 1.25rem 1.5rem 2rem;
   }
 `;

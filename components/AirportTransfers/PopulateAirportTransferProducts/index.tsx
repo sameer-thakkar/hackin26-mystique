@@ -1,17 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/ProductCard/index';
 import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
 import { debounce } from 'utils/gen';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { strings } from 'const/strings';
-import { TPopulateAirportTransferProductsProps } from './interfaces';
+import {
+  TPopulateAirportTransferProductsProps,
+  TScorpioData,
+  TTour,
+} from './interfaces';
 import {
   StyledContainer,
   StyledProductCardsContainer,
   StyledSectionInfo,
   StyledSectionTitle,
 } from './styles';
+
+const TAB_ORDER_MAP = {
+  private: ['private', 'shared'],
+  shared: ['shared', 'private'],
+} as const;
 
 export const PopulateAirportTransfersProducts = ({
   isMobile,
@@ -44,23 +54,39 @@ export const PopulateAirportTransfersProducts = ({
   const hasSharedTransferProducts =
     availableToursList.length - privateTransfersProductsList.length > 0;
 
+  const router = useRouter();
+  const { airport_transfer_type } = router.query;
+
+  const firstTransferTypeToShowFromQuery =
+    airport_transfer_type === 'private' ? 'private' : 'shared';
+
+  const [activeTab, setActiveTab] = useState<'private' | 'shared'>(
+    firstTransferTypeToShowFromQuery
+  );
+
+  const tabOrder = TAB_ORDER_MAP[firstTransferTypeToShowFromQuery];
+
   const sharedTransfersHeadingRef = useRef<HTMLDivElement>(null);
 
   const privateTransfersHeadingRef = useRef<HTMLDivElement>(null);
 
-  const [activeTab, setActiveTab] = useState<'private' | 'shared'>('shared');
-
   useEffect(() => {
     const handleScroll = debounce(() => {
       const sharedTransfersHeading = sharedTransfersHeadingRef?.current;
+      const privateTransfersHeading = privateTransfersHeadingRef?.current;
 
-      if (!sharedTransfersHeading) return;
+      const firstHeading =
+        tabOrder[0] === 'private'
+          ? privateTransfersHeading
+          : sharedTransfersHeading;
+
+      if (!firstHeading) return;
 
       const isSharedTranfersVisible =
-        sharedTransfersHeading.getBoundingClientRect().top >= 100;
+        firstHeading.getBoundingClientRect().top >= 100;
 
       if (isSharedTranfersVisible) {
-        setActiveTab('shared');
+        setActiveTab(tabOrder[0]);
         return;
       }
     }, 50);
@@ -98,55 +124,122 @@ export const PopulateAirportTransfersProducts = ({
         if={privateTransfersProductsList.length && hasSharedTransferProducts}
       >
         <TransferTypeTabs
+          tabOrder={tabOrder}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onTabClick={handleTabClick}
         />
       </Conditional>
 
-      <Conditional if={hasSharedTransferProducts}>
-        <StyledSectionTitle ref={sharedTransfersHeadingRef}>
-          {strings.formatString(
-            strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_IN,
-            cityCountryString
-          )}
-        </StyledSectionTitle>
-
-        <StyledSectionInfo>
-          {strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_DESCRIPTION}
-        </StyledSectionInfo>
-      </Conditional>
-
-      <div className="shared-transfer-products">
-        {!hasSharedTransferProducts ? null : sharedTransferProducts}
-      </div>
-
-      <Conditional if={!!privateTransfersProductsList.length}>
-        <StyledSectionTitle ref={privateTransfersHeadingRef}>
-          {strings.formatString(
-            strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_IN,
-            cityCountryString
-          )}
-        </StyledSectionTitle>
-
-        <StyledSectionInfo>
-          {strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_DESCRIPTION}
-        </StyledSectionInfo>
-
-        <StyledProductCardsContainer>
-          {privateTransfersProductsList.map((tour) => (
-            <PrivateAirportTranferProductCard
-              cityCode={cityCode}
-              isMobile={isMobile}
-              key={tour.tgid}
-              tour={tour}
-              uid={uid}
-              scorpioData={scorpioData[tour.tgid]}
-              currentLanguage={currentLanguage}
+      {tabOrder.map((tab) => {
+        if (tab === 'shared') {
+          return (
+            <SharedTransfersSection
+              key={tab}
+              sharedTransferProducts={sharedTransferProducts}
+              cityCountryString={cityCountryString}
+              hasSharedTransferProducts={hasSharedTransferProducts}
+              sharedTransfersHeadingRef={sharedTransfersHeadingRef}
             />
-          ))}
-        </StyledProductCardsContainer>
-      </Conditional>
+          );
+        }
+
+        return (
+          <PrivateTransfersSection
+            key={tab}
+            privateTransfersProductsList={privateTransfersProductsList}
+            cityCountryString={cityCountryString}
+            cityCode={cityCode}
+            isMobile={isMobile}
+            uid={uid}
+            scorpioData={scorpioData}
+            currentLanguage={currentLanguage}
+            privateTransfersHeadingRef={privateTransfersHeadingRef}
+          />
+        );
+      })}
     </StyledContainer>
+  );
+};
+
+const SharedTransfersSection = ({
+  sharedTransferProducts,
+  cityCountryString,
+  hasSharedTransferProducts,
+  sharedTransfersHeadingRef,
+}: {
+  sharedTransferProducts: ReactNode;
+  cityCountryString: string;
+  hasSharedTransferProducts: boolean;
+  sharedTransfersHeadingRef: React.RefObject<HTMLDivElement>;
+}) => {
+  if (!hasSharedTransferProducts) return null;
+
+  return (
+    <>
+      <StyledSectionTitle ref={sharedTransfersHeadingRef}>
+        {strings.formatString(
+          strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_IN,
+          cityCountryString
+        )}
+      </StyledSectionTitle>
+
+      <StyledSectionInfo>
+        {strings.AIRPORT_TRANSFER.SHARED_TRANSFERS_DESCRIPTION}
+      </StyledSectionInfo>
+
+      <div className="shared-transfer-products">{sharedTransferProducts}</div>
+    </>
+  );
+};
+
+const PrivateTransfersSection = ({
+  privateTransfersProductsList,
+  cityCountryString,
+  cityCode,
+  isMobile,
+  uid,
+  scorpioData,
+  currentLanguage,
+  privateTransfersHeadingRef,
+}: {
+  privateTransfersProductsList: TTour[];
+  cityCountryString: string;
+  cityCode: string;
+  isMobile: boolean;
+  uid: string;
+  scorpioData: TScorpioData[];
+  currentLanguage: string;
+  privateTransfersHeadingRef: React.RefObject<HTMLDivElement>;
+}) => {
+  if (privateTransfersProductsList.length === 0) return null;
+
+  return (
+    <>
+      <StyledSectionTitle ref={privateTransfersHeadingRef}>
+        {strings.formatString(
+          strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_IN,
+          cityCountryString
+        )}
+      </StyledSectionTitle>
+
+      <StyledSectionInfo>
+        {strings.AIRPORT_TRANSFER.PRIVATE_TRANSFERS_DESCRIPTION}
+      </StyledSectionInfo>
+
+      <StyledProductCardsContainer>
+        {privateTransfersProductsList.map((tour) => (
+          <PrivateAirportTranferProductCard
+            cityCode={cityCode}
+            isMobile={isMobile}
+            key={tour.tgid}
+            tour={tour}
+            uid={uid}
+            scorpioData={scorpioData[tour.tgid]}
+            currentLanguage={currentLanguage}
+          />
+        ))}
+      </StyledProductCardsContainer>
+    </>
   );
 };
