@@ -55,7 +55,7 @@ export const StyledProductCardContainer = styled.div`
     grid-template-columns: 1fr;
 
     width: auto;
-    height: auto;
+    max-height: max-content;
 
     .card-images-carousel {
       width: 100%;
