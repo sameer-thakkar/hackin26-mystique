@@ -16,6 +16,7 @@ import {
 } from 'utils';
 import { fetchCategory } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
+import { getStructure } from 'utils/lookerUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
@@ -30,6 +31,7 @@ import {
   F1_SPORTS_EXPERIMENT_TGIDS,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
+  PAGE_URL_STRUCTURE,
 } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -610,9 +612,20 @@ export const checkIfCatOrSubCatPage = async (
   doc: PrismicDocumentWithUID,
   baseLangCategorisationMetadata?: TCategorisationMetadata
 ) => {
-  const { type, data, lang } = doc;
+  const { type, data, lang, uid } = doc;
 
   if (type !== CUSTOM_TYPES.MICROSITE) return false;
+
+  const pageUrl = convertUidToUrl({
+    uid,
+    lang: getHeadoutLanguagecode(lang),
+  });
+  const url = new URL(pageUrl);
+  const isSubdomain =
+    getStructure(url) === PAGE_URL_STRUCTURE.SUBDOMAIN ||
+    getStructure(url) === PAGE_URL_STRUCTURE.SUBDOMAIN_SUBFOLDER;
+
+  if (isSubdomain) return false;
 
   const finalBaseLangCategorisationMetadata =
     data?.baseLangCategorisationMetadata || baseLangCategorisationMetadata;
