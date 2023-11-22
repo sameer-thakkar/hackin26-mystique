@@ -6,6 +6,7 @@ import { richtextElements, SidePanelOverlay } from 'components/Product/styles';
 import { SavedTag } from 'UI/PriceBlock';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { StarIcon } from 'const/descriptorIcons';
+import { strings } from 'const/strings';
 import { CloseIcon } from 'assets/SvgIcons';
 import Accordion from '../Accordion';
 import { TScorpioDataHighlight } from '../PopulateAirportTransferProducts/interfaces';
@@ -135,7 +136,7 @@ export const MoreDetailsSideDrawer = ({
               color="purps"
               variant="primary"
               tabIndex={0}
-              text={'Check availability'}
+              text={strings.CHECK_AVAIL}
             />
           </a>
         </StyledPricingAndCTA>

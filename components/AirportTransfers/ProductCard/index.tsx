@@ -266,7 +266,7 @@ export const PrivateAirportTranferProductCard = ({
           <LineSeparator />
 
           <MoreDetailsButton onClick={handleMoreDetailsClick}>
-            More Details
+            {strings.MORE_DETAILS}
             <TailedArrowSVG />
           </MoreDetailsButton>
         </DescriptorsContainer>
@@ -292,7 +292,7 @@ export const PrivateAirportTranferProductCard = ({
           className="booking-link"
         >
           <Button
-            width={isMobile ? '100%' : '15.75rem'}
+            width={isMobile ? '100%' : '13.5rem'}
             size="medium"
             color="purps"
             variant="primary"
@@ -371,7 +371,7 @@ export const PrivateAirportTranferProductCard = ({
               className="booking-link"
             >
               <Button
-                width={isMobile ? '100%' : '15.75rem'}
+                width={'100%'}
                 size="medium"
                 color="purps"
                 variant="primary"

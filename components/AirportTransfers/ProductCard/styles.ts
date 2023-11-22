@@ -22,10 +22,11 @@ export const VeritcalDashedSeparator = styled.div`
 `;
 
 export const StyledProductCardContainer = styled.div`
+  box-sizing: border-box;
   max-width: 75rem;
   margin: 0 auto;
   width: 100%;
-  height: 13rem;
+  max-height: 14rem;
 
   display: grid;
   grid-template-columns: auto 1fr min-content auto;
