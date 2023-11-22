@@ -220,7 +220,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     }
 
     const isAirportTransferMB =
-      CMSContent?.data?.refs?.productCardData.template ===
+      CMSContent?.data?.refs?.productCardData?.template ===
       AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
 
     const getPageType = () => {
