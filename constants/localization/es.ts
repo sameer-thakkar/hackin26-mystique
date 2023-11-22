@@ -876,6 +876,7 @@ const es = {
     SEAMLESS_TRANSFERS: 'Traslados cómodos y confiables en todo el mundo',
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Elige el mejor traslado de aeropuerto para ti',
+    HASSLE_FREE_TRANSFER: 'Traslados de aeropuerto sin complicaciones',
   },
 };
 export default es;

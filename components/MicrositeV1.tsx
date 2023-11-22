@@ -433,6 +433,9 @@ const MicrositeV1 = (props: any) => {
     primaryCity,
   };
 
+  const isAirportTransfersMB =
+    productCardData?.template === AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
+
   useEffect(() => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
@@ -491,7 +494,9 @@ const MicrositeV1 = (props: any) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isCityPageMB
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isAirportTransfersMB
+        ? PAGE_TYPES.AIRPORT_TRANSFERS
+        : isCityPageMB
         ? PAGE_TYPES.CITY_PAGE
         : PAGE_TYPES.COLLECTION,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
@@ -540,9 +545,6 @@ const MicrositeV1 = (props: any) => {
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const bannerVideo: string | undefined =
     bannerImageData?.resourceEntityMedias?.[0]?.medias?.[0]?.url;
-
-  const isAirportTransfersMB =
-    productCardData?.template === AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
 
   const tourListSection = (
     <PopulateProducts

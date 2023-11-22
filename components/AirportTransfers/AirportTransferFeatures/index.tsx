@@ -1,7 +1,11 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type Swiper from 'swiper';
 import { EffectCards } from 'swiper';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import {
   ArrowCircleRight,
@@ -19,35 +23,36 @@ import {
 
 const SwiperWrapper = dynamic(() => import('components/Swiper'));
 
-const {
-  BOOK_ONLINE,
-  CONVENIENT_PICKUP,
-  DROP_OFF,
-  INSTANT_CONFIRMATION,
-} = strings.AIRPORT_TRANSFER.BOOKING_STEPS;
-
-const CARDS = [
-  {
-    icon: <PhoneSVG />,
-    title: BOOK_ONLINE.TITLE,
-    description: BOOK_ONLINE.DESCRIPTION,
-  },
-  {
-    icon: <TICKET />,
-    title: INSTANT_CONFIRMATION.TITLE,
-    description: INSTANT_CONFIRMATION.DESCRIPTION,
-  },
-  {
-    icon: <CarIconSVG />,
-    title: CONVENIENT_PICKUP.TITLE,
-    description: CONVENIENT_PICKUP.DESCRIPTION,
-  },
-  {
-    icon: <MapSVG />,
-    title: DROP_OFF.TITLE,
-    description: DROP_OFF.DESCRIPTION,
-  },
-];
+const getCards = (localisedStrings: typeof strings) => {
+  const {
+    BOOK_ONLINE,
+    CONVENIENT_PICKUP,
+    DROP_OFF,
+    INSTANT_CONFIRMATION,
+  } = localisedStrings.AIRPORT_TRANSFER.BOOKING_STEPS;
+  return [
+    {
+      icon: <PhoneSVG />,
+      title: BOOK_ONLINE.TITLE,
+      description: BOOK_ONLINE.DESCRIPTION,
+    },
+    {
+      icon: <TICKET />,
+      title: INSTANT_CONFIRMATION.TITLE,
+      description: INSTANT_CONFIRMATION.DESCRIPTION,
+    },
+    {
+      icon: <CarIconSVG />,
+      title: CONVENIENT_PICKUP.TITLE,
+      description: CONVENIENT_PICKUP.DESCRIPTION,
+    },
+    {
+      icon: <MapSVG />,
+      title: DROP_OFF.TITLE,
+      description: DROP_OFF.DESCRIPTION,
+    },
+  ];
+};
 
 const SWIPER_BREAKPOINTS = {
   0: {
@@ -99,6 +104,25 @@ export const AirportTransferFeatures = ({
     swiper?.slideTo?.(swiper.slides?.length - 1);
   }, [isMobile, swiper]);
 
+  const enSectionTitle = en.AIRPORT_TRANSFER.HASSLE_FREE_TRANSFER;
+
+  const sectionVisibilityTrackingRef = useRef(null);
+
+  const isIntersecting = useOnScreen({
+    ref: sectionVisibilityTrackingRef,
+    unobserve: true,
+  });
+
+  useEffect(() => {
+    if (isIntersecting) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+        [ANALYTICS_PROPERTIES.RANKING]: 3,
+      });
+    }
+  }, [isIntersecting, enSectionTitle]);
+
   const handleSwiper = (s: Swiper) => {
     setSwiper(s);
 
@@ -123,7 +147,7 @@ export const AirportTransferFeatures = ({
   };
 
   return (
-    <StyledGradientContainer>
+    <StyledGradientContainer ref={sectionVisibilityTrackingRef}>
       <StyledHeaderSection>
         <StyledSectionTitle>
           Hassle-free airport transfer experience
@@ -131,12 +155,26 @@ export const AirportTransferFeatures = ({
 
         <div className="carousel-controls">
           <ArrowCircleRight
-            onClick={() => swiper?.slidePrev()}
+            onClick={() => {
+              swiper?.slidePrev();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Backward',
+              });
+            }}
             className={isSwiperStart ? 'disabled' : ''}
           />
 
           <ArrowCircleRight
-            onClick={() => swiper?.slideNext()}
+            onClick={() => {
+              swiper?.slideNext();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Forward',
+              });
+            }}
             className={isSwiperEnd ? 'disabled' : ''}
           />
         </div>
@@ -172,7 +210,7 @@ export const AirportTransferFeatures = ({
           loop={isMobile}
           autoplay={isMobile ? swiperAutoPlayConfig : undefined}
         >
-          {CARDS.map((card, i) => (
+          {getCards(strings).map((card, i) => (
             <Card
               key={i}
               icon={card.icon}

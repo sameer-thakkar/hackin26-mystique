@@ -19,6 +19,7 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
 import { shortcodesAtom } from 'store/atoms/shortcodes';
+import { AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE } from 'const/airportTransfers';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
   ANALYTICS_PROPERTIES,
@@ -218,6 +219,10 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       });
     }
 
+    const isAirportTransferMB =
+      CMSContent?.data?.refs?.productCardData.template ===
+      AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
+
     const getPageType = () => {
       switch (true) {
         case isCityPageMB:
@@ -226,6 +231,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
           return PAGE_TYPES.CATEGORY_PAGE;
         case isCatOrSubCatPage && isSubCategoryPage:
           return PAGE_TYPES.SUB_CATEGORY_PAGE;
+        case isAirportTransferMB:
+          return PAGE_TYPES.AIRPORT_TRANSFERS;
         default:
           return pageType;
       }

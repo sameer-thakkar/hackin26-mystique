@@ -887,6 +887,7 @@ const en = {
     },
     SEAMLESS_TRANSFERS: 'Seamless transfers, trusted worldwide',
     PICK_THE_BEST_AIRPORT_TRANSFER: 'Pick the best airport transfer for you',
+    HASSLE_FREE_TRANSFER: 'Hassle-free airport transfer experience',
   },
 };
 

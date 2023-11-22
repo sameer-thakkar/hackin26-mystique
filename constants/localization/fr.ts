@@ -826,6 +826,7 @@ const fr = {
     SEAMLESS_TRANSFERS: 'Navettes rapides et fiables à travers le monde',
     PICK_THE_BEST_AIRPORT_TRANSFER:
       "Choisissez la navette d'aéroport qui vous convient le mieux",
+    HASSLE_FREE_TRANSFER: 'Navette aéroport en toute tranquillité',
   },
 };
 export default fr;

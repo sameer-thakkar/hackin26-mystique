@@ -43,10 +43,10 @@ export const StyledReviewCardContainer = styled.div`
   );
   padding: 1.5rem;
 
-  height: 12.3125rem;
+  height: 14.3125rem;
 
   display: grid;
-  grid-template-columns: 2.75rem auto auto;
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
 
   grid-column-gap: 0.5rem;
@@ -58,7 +58,7 @@ export const StyledReviewCardContainer = styled.div`
   .name {
     ${expandFontToken(FONTS.HEADING_SMALL)};
   }
-  .country {
+  .vehicle-type {
     margin-top: 0.15rem;
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
     color: ${COLORS.GRAY.G3};

@@ -10,4 +10,5 @@ export type TPrivateAirportTransferProductCardProps = {
   tour: TTour;
   uid: string;
   currentLanguage: string;
+  index: number;
 };

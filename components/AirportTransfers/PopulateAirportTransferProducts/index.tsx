@@ -3,8 +3,12 @@ import { useRouter } from 'next/router';
 import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/ProductCard/index';
 import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
 import { debounce } from 'utils/gen';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import {
   TPopulateAirportTransferProductsProps,
@@ -110,13 +114,57 @@ export const PopulateAirportTransfersProducts = ({
         top: privateTransfersHeadingRef?.current?.offsetTop - 100,
         behavior: 'smooth',
       });
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_TAB_CLICKED,
+        Label: en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS,
+      });
     } else {
       window.scrollTo({
         top: sharedTransfersHeadingRef?.current?.offsetTop - 120,
         behavior: 'smooth',
       });
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_TAB_CLICKED,
+        Label: en.AIRPORT_TRANSFER.SHARED_TRANSFERS,
+      });
     }
   };
+
+  const sharedTransfersVisibilityTrackingRef = useRef(null);
+
+  const privateTransfersVisibilityTrackingRef = useRef(null);
+
+  const isSharedTransfersVisible = useOnScreen({
+    ref: sharedTransfersVisibilityTrackingRef,
+    unobserve: true,
+  });
+
+  const isPrivateTransfersVisible = useOnScreen({
+    ref: privateTransfersVisibilityTrackingRef,
+    unobserve: true,
+  });
+
+  useEffect(() => {
+    if (isSharedTransfersVisible) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: en.AIRPORT_TRANSFER.SHARED_TRANSFERS,
+        [ANALYTICS_PROPERTIES.RANKING]: tabOrder.indexOf('shared') + 1,
+      });
+    }
+  }, [isSharedTransfersVisible]);
+
+  useEffect(() => {
+    if (isPrivateTransfersVisible) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS,
+        [ANALYTICS_PROPERTIES.RANKING]: tabOrder.indexOf('private') + 1,
+      });
+    }
+  }, [isPrivateTransfersVisible]);
 
   return (
     <StyledContainer>
@@ -228,8 +276,9 @@ const PrivateTransfersSection = ({
       </StyledSectionInfo>
 
       <StyledProductCardsContainer>
-        {privateTransfersProductsList.map((tour) => (
+        {privateTransfersProductsList.map((tour, index) => (
           <PrivateAirportTranferProductCard
+            index={index}
             cityCode={cityCode}
             isMobile={isMobile}
             key={tour.tgid}

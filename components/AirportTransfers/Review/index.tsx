@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import type Swiper from 'swiper';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
 import { AIRPORT_TRANSFER_REVIEWS } from 'const/airportTransfers';
 import { StarIcon } from 'const/descriptorIcons';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import { ArrowCircleRight } from 'assets/airportTransfers';
 import { StyledHeaderSection } from '../AirportTransferFeatures/styles';
@@ -46,6 +49,25 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
 
   const [isSwiperStart, setIsSwiperStart] = useState(true);
 
+  const enSectionTitle = en.AIRPORT_TRANSFER.SEAMLESS_TRANSFERS;
+
+  const sectionVisibilityTrackingRef = useRef(null);
+
+  const isIntersecting = useOnScreen({
+    ref: sectionVisibilityTrackingRef,
+    unobserve: true,
+  });
+
+  useEffect(() => {
+    if (isIntersecting) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+        [ANALYTICS_PROPERTIES.RANKING]: 4,
+      });
+    }
+  }, [enSectionTitle, isIntersecting]);
+
   const handleSlideChange = () => {
     if (!swiper) {
       return;
@@ -56,7 +78,7 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
   };
 
   return (
-    <StyledReviewsContainer>
+    <StyledReviewsContainer ref={sectionVisibilityTrackingRef}>
       <StyledHeaderSection>
         <StyledSectionTitle>
           {strings.AIRPORT_TRANSFER.SEAMLESS_TRANSFERS}
@@ -64,12 +86,26 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
 
         <div className="carousel-controls">
           <ArrowCircleRight
-            onClick={() => swiper?.slidePrev()}
+            onClick={() => {
+              swiper?.slidePrev();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Backward',
+              });
+            }}
             className={isSwiperStart ? 'disabled' : ''}
           />
 
           <ArrowCircleRight
-            onClick={() => swiper?.slideNext()}
+            onClick={() => {
+              swiper?.slideNext();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Forward',
+              });
+            }}
             className={isSwiperEnd ? 'disabled' : ''}
           />
         </div>
@@ -92,39 +128,28 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
 };
 
 const ReviewCard = ({
-  avatarPath,
   name,
-  countryEmoji,
-  country,
+  rating,
+  vehicleType,
   text,
 }: {
-  avatarPath: string;
   name: string;
-  countryEmoji: string;
-  country: string;
+  rating: number;
+  vehicleType: string;
   text: string;
 }) => {
   return (
     <StyledReviewCardContainer>
-      <Image src={avatarPath} width={44} height={44} />
-
-      <div className="name-and-country">
+      <div>
         <p className="name">{name}</p>
 
-        <div className="country">
-          <span role="img" aria-label={`Flag of ${country}`}>
-            {countryEmoji}
-          </span>
-          {country}
-        </div>
+        <div className="vehicle-type">{vehicleType}</div>
       </div>
 
       <div className="stars">
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
+        {Array.from({ length: rating }).map((_, index) => (
+          <StarIcon key={index} />
+        ))}
       </div>
 
       <div className="text">{text}</div>

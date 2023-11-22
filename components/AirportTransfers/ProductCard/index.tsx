@@ -10,11 +10,17 @@ import MediaCarousel from 'UI/MediaCarousel';
 import { MBContext } from 'contexts/MBContext';
 import { useAirportsList } from 'hooks/useAirportsList';
 import { createBookingURL } from 'utils';
+import { trackEvent } from 'utils/analytics';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import COLORS from 'const/colors';
 import { ClockSvg, StarIcon } from 'const/descriptorIcons';
-import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  MEDIA_CAROUSEL_IMAGE_LIMIT,
+} from 'const/index';
+import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import {
   BoltSVG,
@@ -50,6 +56,7 @@ export const PrivateAirportTranferProductCard = ({
   uid,
   currentLanguage,
   cityCode,
+  index,
 }: TPrivateAirportTransferProductCardProps) => {
   const [isMoreDetailsSidebarOpen, setIsMoreDetailsSidebarOpen] = useState(
     false
@@ -123,11 +130,59 @@ export const PrivateAirportTranferProductCard = ({
   }, []);
 
   const handleCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: scorpioData.primaryCategory.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]:
+        scorpioData.primaryCategory.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: scorpioData.primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]:
+        scorpioData.primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.SECTION]: 'Private Transfers',
+    });
+
+    if (!isMobile) return;
+
     setIsLoading(true);
 
     setTimeout(() => {
       setIsLoading(false);
     }, 6000);
+  };
+
+  const handleMoreDetailsClick = () => {
+    setIsMoreDetailsSidebarOpen(true);
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_DETAILS_VIEWED,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.SECTION]: en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS,
+      [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+    });
+  };
+
+  const handleMwebHighlightsTabChange = ({
+    index,
+    defaultSelection,
+    tab,
+  }: {
+    index: number;
+    defaultSelection: boolean;
+    tab: any;
+  }) => {
+    setActiveTabIndex(index);
+
+    if (defaultSelection) return;
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: tab.heading,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
+      [ANALYTICS_PROPERTIES.SECTION]: 'Private Transfers',
+    });
   };
 
   return (
@@ -210,7 +265,7 @@ export const PrivateAirportTranferProductCard = ({
 
           <LineSeparator />
 
-          <MoreDetailsButton onClick={() => setIsMoreDetailsSidebarOpen(true)}>
+          <MoreDetailsButton onClick={handleMoreDetailsClick}>
             More Details
             <TailedArrowSVG />
           </MoreDetailsButton>
@@ -242,7 +297,7 @@ export const PrivateAirportTranferProductCard = ({
             color="purps"
             variant="primary"
             isLoading={isLoading}
-            onClick={isMobile ? handleCTAClick : undefined}
+            onClick={handleCTAClick}
             tabIndex={0}
             text={strings.CHECK_AVAIL}
           />
@@ -256,7 +311,7 @@ export const PrivateAirportTranferProductCard = ({
             color="purps"
             variant="tertiary"
             isLoading={false}
-            onClick={() => setIsMoreDetailsSidebarOpen(true)}
+            onClick={handleMoreDetailsClick}
             tabIndex={0}
             text={strings.MORE_DETAILS}
           />
@@ -292,9 +347,7 @@ export const PrivateAirportTranferProductCard = ({
           <HighlightTabs
             className="product-highlight-tabs"
             isLoading={false}
-            onTabChange={({ index }: { index: number }) =>
-              setActiveTabIndex(index)
-            }
+            onTabChange={handleMwebHighlightsTabChange}
             hasRegularHighlights={highlights.length > 0}
             tabs={tabs}
             pageType={''}
@@ -323,9 +376,9 @@ export const PrivateAirportTranferProductCard = ({
                 color="purps"
                 variant="primary"
                 isLoading={isLoading}
-                onClick={isMobile ? handleCTAClick : undefined}
+                onClick={handleCTAClick}
                 tabIndex={0}
-                text={'Check availability'}
+                text={strings.CHECK_AVAIL}
               />
             </a>
           </PricingAndCTASection>

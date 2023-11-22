@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Swiper from 'swiper';
 import { StyledHeaderSection } from 'components/AirportTransfers/AirportTransferFeatures/styles';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
 import {
   TVehicleTypes,
   VEHICLE_TYPE_ILLUSTRATION_MAP,
 } from 'const/airportTransfers';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import {
   ArrowCircleRight,
@@ -66,6 +70,25 @@ export const TransferVehicleTypesCarousel = ({
 
   const [isSwiperStart, setIsSwiperStart] = useState(true);
 
+  const enSectionTitle = en.AIRPORT_TRANSFER.PICK_THE_BEST_AIRPORT_TRANSFER;
+
+  const sectionVisibilityTrackingRef = useRef(null);
+
+  const isIntersecting = useOnScreen({
+    ref: sectionVisibilityTrackingRef,
+    unobserve: true,
+  });
+
+  useEffect(() => {
+    if (isIntersecting) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+        [ANALYTICS_PROPERTIES.RANKING]: 3,
+      });
+    }
+  }, [isIntersecting, enSectionTitle]);
+
   if (!sliceItems) return null;
 
   const handleSlideChange = () => {
@@ -78,7 +101,7 @@ export const TransferVehicleTypesCarousel = ({
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={sectionVisibilityTrackingRef}>
       <StyledHeaderSection className="header">
         <StyledSectionTitle>
           {strings.AIRPORT_TRANSFER.PICK_THE_BEST_AIRPORT_TRANSFER}
@@ -89,12 +112,24 @@ export const TransferVehicleTypesCarousel = ({
             onClick={() => {
               swiper?.slidePrev();
               setIsSwiperEnd(false);
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Backward',
+              });
             }}
             className={isSwiperStart ? 'disabled' : ''}
           />
 
           <ArrowCircleRight
-            onClick={() => swiper?.slideNext()}
+            onClick={() => {
+              swiper?.slideNext();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+                [ANALYTICS_PROPERTIES.SECTION]: enSectionTitle,
+                [ANALYTICS_PROPERTIES.DIRECTION]: 'Forward',
+              });
+            }}
             className={isSwiperEnd ? 'disabled' : ''}
           />
         </div>

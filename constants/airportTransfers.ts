@@ -14,31 +14,39 @@ export type TVehicleTypes = keyof typeof VEHICLE_TYPE_ILLUSTRATION_MAP;
 // TODO: check if reviews will need localisation
 export const AIRPORT_TRANSFER_REVIEWS = [
   {
-    avatarPath: '/static/images/review-avatar-1.png',
-    name: 'Hung Wai',
-    countryEmoji: '🇭🇰',
-    country: 'Hong Kong',
-    // stars: 5,
-    text: `We LOVEEEE it! The show is great! Very good atmosphere and everyone's so happy after the play. The Headout platform is easy to use. You just scan your ticket on your phone for entry.`,
+    name: 'Mark Wilson',
+    rating: 5,
+    vehicleType: 'Airport Bus',
+    text:
+      'Departure point was easy to locate and it was a short wait for the bus. Only had to open the email on my phone for the conductor to scan. Best way to travel to the airport. Thank you!',
   },
   {
-    avatarPath: '/static/images/review-avatar-2.png',
-    name: 'Karen Kadore',
-    countryEmoji: '🇬🇧 ',
-    country: 'United Kingdom',
-    // stars: 5,
+    name: 'Anna Meritt',
+    rating: 5,
+    vehicleType: 'Private Cab',
     text:
-      'Ease of booking, regular updates and the text on the day with tickets, maps and easy ordering from the bar. The show was brilliant. Wonderful day!',
+      'Our cab was very easy to find due to the clear meeting point instructions that were shared with us beforehand. Entire process from booking online to getting dropped at our hotel was seamless!',
   },
-
   {
-    avatarPath: `/static/images/review-avatar-3.png`,
-    name: 'Lucia Quiroz',
-    countryEmoji: '🇨🇭 ',
-    country: 'Switzerland',
-    // stars: 5,
+    name: 'James Campbell',
+    rating: 4,
+    vehicleType: 'Shared Shuttle',
     text:
-      'Headout helpdesk, was awesome when I had a problem... that at the end turn out to be my fault. The show was fantastic. Even my son loved it. Recommended for groups of friends and families!',
+      "I'm almost 80 yrs old and booking online for anything gets me a bit tense. But there was no hitch booking a ticket with your shuttle service. The driver was very cheerful and polite.",
+  },
+  {
+    name: 'Gemma Bradford',
+    rating: 5,
+    vehicleType: 'Airport Train',
+    text:
+      'Everything was perfect. Train was on time and we had a smooth ride. This was definitely a much better way to get to the city without any traffic hassles.',
+  },
+  {
+    name: 'Abner Gutierrez',
+    rating: 4,
+    vehicleType: 'Private Cab',
+    text:
+      'The cab was very clean, the driver was very polite and helpful. He even helped us with our luggage! The cab arrived at our hotel very early and we were able to reach the airport on time.',
   },
 ];
 
