@@ -79,7 +79,6 @@ import {
   MICROSITE_ARRAY_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
-  PRISMIC_API_ROUTE_MB,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
   PRISMIC_LANG_TO_ROUTE_PARAM,
@@ -1402,29 +1401,17 @@ export const getPageData = async ({
 
   try {
     let initial_tgids: any = [];
-    let prismicApiResponse: Awaited<ReturnType<typeof getPrismicDocument>>,
-      prismicApiCacheStatus: string | null = '';
-
-    if (PRISMIC_API_ROUTE_MB.includes(uid)) {
-      ({
-        prismicApiResponse,
-        prismicApiCacheStatus,
-      } = await fetchPrismicDocument({
-        req,
-        host,
-        isDev,
-        uid,
-        lang,
-        invalidateApi,
-      }));
-    } else {
-      prismicApiResponse = await getPrismicDocument({
-        req,
-        isDev,
-        uid,
-        lang,
-      });
-    }
+    const {
+      prismicApiResponse,
+      prismicApiCacheStatus,
+    } = await fetchPrismicDocument({
+      req,
+      host,
+      isDev,
+      uid,
+      lang,
+      invalidateApi,
+    });
 
     const {
       ContentType,
