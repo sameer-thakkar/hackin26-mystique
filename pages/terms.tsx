@@ -46,7 +46,7 @@ export default class TermsPage extends Component<any, any> {
     }
   }
 
-  static async getData({ req, res, isDev, query }: any) {
+  static async getData({ req, isDev, query }: any) {
     let uid;
     const { host } = req ? req.headers : window.location;
     if (isDev) {
@@ -58,10 +58,9 @@ export default class TermsPage extends Component<any, any> {
     }
     const { ContentType, CMSContent } = await getPrismicDocument({
       req,
-      serverResponse: res,
-      query,
+      uid,
+      lang: 'en-us',
       isDev,
-      useHostAsUid: !isDev,
     });
     const { faviconUrl, logo, name: whiteLabelName } = await fetchDomainConfig(
       uid

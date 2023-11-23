@@ -296,7 +296,7 @@ export const categoryTourListParserV1 = async ({
         fetchTourGroupV6({ tgid, hostname, language, cookies })
       )
     );
-    
+
     let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
     let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
 

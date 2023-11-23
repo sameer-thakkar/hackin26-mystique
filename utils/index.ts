@@ -157,8 +157,6 @@ type TDocumentUidUpdateRedirectHandler = {
   isDev: boolean;
   host: string;
   lang: string;
-  queryParamsString: string;
-  serverResponse: any;
   redirectType?: number;
 };
 
@@ -167,8 +165,6 @@ export const documentUidUpdateRedirectHandler = ({
   isDev,
   host,
   lang,
-  queryParamsString,
-  serverResponse,
   redirectType = 301,
 }: TDocumentUidUpdateRedirectHandler) => {
   const url = convertUidToUrl({
@@ -178,22 +174,14 @@ export const documentUidUpdateRedirectHandler = ({
     hostname: host,
   });
 
-  const existingParams = new URLSearchParams(queryParamsString);
-
   if (url) {
     const urlObject = new URL(url);
-    existingParams.forEach((value, key) => {
-      if (key !== 'mystique_uid' && key !== 'lang') {
-        urlObject.searchParams.set(key, value);
-      }
-    });
-
-    const finalUrl = urlObject.toString();
-    redirectTo({
-      res: serverResponse,
-      url: finalUrl,
-      type: redirectType,
-    });
+    return {
+      redirectInfo: {
+        url: urlObject.toString(),
+        type: redirectType,
+      },
+    };
   }
 };
 

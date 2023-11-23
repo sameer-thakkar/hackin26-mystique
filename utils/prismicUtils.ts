@@ -16,10 +16,10 @@ import {
   isCategoryMB,
   isCollectionMB,
   isSubCategoryMB,
-  redirectTo,
   refsArrayToObject,
 } from 'utils';
 import {
+  constructHeaders,
   fetchCollection,
   fetchCollectionList,
   fetchCurrencyList,
@@ -74,9 +74,11 @@ import {
   LINKED_MICROSITE_PROPS,
   MB_CATEGORISATION,
   MB_TYPES,
+  MICROBRANDS_URL,
   MICROSITE_ARRAY_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
+  PRISMIC_API_ROUTE_MB,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
   PRISMIC_LANG_TO_ROUTE_PARAM,
@@ -85,6 +87,7 @@ import {
   THEMES,
   TLANGUAGELOCALE,
   VIENNA_CONCERT_UID,
+  X_CACHE_HEADER_KEY,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
@@ -137,14 +140,7 @@ export const getPromoCodesDocument = async () => {
   return Promise.reject();
 };
 
-export const getContentPageDocument = async ({
-  req,
-  uid,
-  lang,
-  queryParamsString,
-  serverResponse,
-  host,
-}: any) => {
+export const getContentPageDocument = async ({ req, uid, lang, host }: any) => {
   return await Client(req)
     .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
       fetchLinks: [...LINKED_MICROSITE_PROPS],
@@ -163,11 +159,12 @@ export const getContentPageDocument = async ({
               url = url.split('//')?.join('//stage-');
             }
           }
-          redirectTo({
-            res: serverResponse,
-            url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
-            type: 301,
-          });
+          return {
+            redirectInfo: {
+              url,
+              type: 301,
+            },
+          };
         }
       }
       // Listicle Page Logic
@@ -180,10 +177,12 @@ export const getContentPageDocument = async ({
         page.data?.redirect_url?.url ||
         page.data.microsite_document_ref?.data.redirect_url?.url;
       if (url) {
-        redirectTo({
-          res: serverResponse,
-          url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
-        });
+        return {
+          redirectInfo: {
+            url,
+            type: 301,
+          },
+        };
       }
 
       /**
@@ -341,8 +340,6 @@ export const getContentPageDocument = async ({
 export const getMicrositeDocument = async ({
   req,
   uid,
-  serverResponse,
-  queryParamsString,
   lang,
   host,
 }: any): Promise<any> => {
@@ -363,11 +360,12 @@ export const getMicrositeDocument = async ({
               url = url.split('//').join('//stage-');
             }
           }
-          redirectTo({
-            res: serverResponse,
-            url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
-            type: completeMicrosite.data.data.redirect_type,
-          });
+          return {
+            redirectInfo: {
+              url,
+              type: completeMicrosite.data.data.redirect_type,
+            },
+          };
         } else {
           const baseLangUid = getEnglishDocUid(
             completeMicrosite?.data?.alternate_languages
@@ -1167,28 +1165,21 @@ export const getShowPageCollections = async ({
   return allResults;
 };
 
-export const getShowPage = async ({
-  req,
-  lang,
-  uid,
-  isDev,
-  serverResponse,
-  host,
-  queryParamsString,
-}: any) => {
+export const getShowPage = async ({ req, lang, uid, isDev, host }: any) => {
   const page = await Client(req).getByUID(CUSTOM_TYPES.SHOW_PAGE, uid, {
     lang,
   });
 
   if (page.uid !== uid) {
-    documentUidUpdateRedirectHandler({
+    const handlerData = documentUidUpdateRedirectHandler({
       toUid: page.uid,
-      serverResponse,
       isDev,
       host,
-      queryParamsString,
       lang,
     });
+    if (handlerData?.redirectInfo) {
+      return handlerData;
+    }
   }
 
   // const baseLangData =
@@ -1235,42 +1226,39 @@ export const getShowPage = async ({
 
 export const getPrismicDocument = async ({
   req,
-  serverResponse,
-  query,
   isDev,
-  useHostAsUid = false,
-}: any): Promise<{
+  lang,
+  uid,
+}: {
+  req: any;
+  lang: any;
+  uid: any;
+  isDev?: boolean;
+}): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
-  isDev?: boolean;
-  useHostAsUid?: boolean;
+  redirectInfo?: {
+    url: string;
+    type: number;
+  };
 }> => {
   const { host } = req.headers || window.location;
-  const { lang } = getLangUID(req, query);
-  const uid = useHostAsUid
-    ? host.replace('stage-', '')
-    : getLangUID(req, query)?.uid;
-  const queryParamsString = getValidUrlParams(query);
 
   try {
     return await Promise.any([
       getMicrositeDocument({
         req,
-        serverResponse,
         host,
         lang,
-        queryParamsString,
         uid,
       }),
       getNewsPageDocument({ req, lang, uid }),
       getVenuePageDocument({ req, lang, uid }),
       getContentPageDocument({
         req,
-        serverResponse,
         host,
         lang,
-        queryParamsString,
         uid,
       }),
       getShowPage({
@@ -1278,9 +1266,7 @@ export const getPrismicDocument = async ({
         lang,
         uid,
         isDev,
-        serverResponse,
         host,
-        queryParamsString,
       }),
       getGlobalHomepage({ req, lang, uid }),
       getGlobalExperience({ req, lang, uid }),
@@ -1325,8 +1311,61 @@ export const getPrismicDocument = async ({
   }
 };
 
+const fetchPrismicDocument = async ({
+  req,
+  host,
+  uid,
+  lang,
+  isDev,
+  invalidateApi,
+}: {
+  req: any;
+  host: string;
+  uid: any;
+  lang: any;
+  isDev: boolean;
+  invalidateApi: string;
+}): Promise<{
+  prismicApiResponse: {
+    ContentType?: string;
+    CMSContent?: any;
+    statusCode?: number;
+    redirectInfo?: {
+      url: string;
+      type: number;
+    };
+  };
+  prismicApiCacheStatus: string | null;
+}> => {
+  const { headers, cookies } = req;
+  const requestHeaders = constructHeaders({ cookies, currentHeaders: headers });
+
+  const params = new URLSearchParams({
+    uid,
+    lang,
+    isDev: String(isDev),
+  });
+
+  // Bypass prismic api cache.
+  if (invalidateApi) {
+    params.append('invalidate-api', invalidateApi);
+  }
+
+  params.sort();
+  const paramsString = params.toString();
+
+  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const endpoint = `${domain}/api/prismic?${paramsString}`;
+
+  const response = (await fetch(endpoint, {
+    headers: requestHeaders,
+  })) || { statusCode: 404 };
+  const cacheHeader = response.headers.get(X_CACHE_HEADER_KEY);
+  const data = await response.json();
+  return { prismicApiResponse: data, prismicApiCacheStatus: cacheHeader };
+};
+
 export const getPageData = async ({
-  res: serverResponse,
   req,
   query,
   isDev,
@@ -1334,23 +1373,58 @@ export const getPageData = async ({
 }: any) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
-  const cookies = req.cookies;
+  const { cookies } = req;
   const { uid, lang } = getLangUID(req, query);
   const hostname = getHostName(isStage, isDev, host);
+  const { invalidateApi } = query;
 
   try {
     let initial_tgids: any = [];
+    let prismicApiResponse: Awaited<ReturnType<typeof getPrismicDocument>>,
+      prismicApiCacheStatus: string | null = '';
 
-    const { ContentType, CMSContent, statusCode } = (await getPrismicDocument({
-      query,
-      req,
-      serverResponse,
-      isDev,
-    })) || { statusCode: 404 };
+    if (PRISMIC_API_ROUTE_MB.includes(uid)) {
+      ({
+        prismicApiResponse,
+        prismicApiCacheStatus,
+      } = await fetchPrismicDocument({
+        req,
+        host,
+        isDev,
+        uid,
+        lang,
+        invalidateApi,
+      }));
+    } else {
+      prismicApiResponse = await getPrismicDocument({
+        req,
+        isDev,
+        uid,
+        lang,
+      });
+    }
+
+    const {
+      ContentType,
+      CMSContent,
+      statusCode,
+      redirectInfo,
+    } = prismicApiResponse;
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
 
-    if (statusCode) {
+    if (redirectInfo) {
+      const { url, type } = redirectInfo;
+      const queryParamsString = getValidUrlParams(query);
+      const urlWithParams = `${url}${
+        queryParamsString ? `?${queryParamsString}` : ''
+      }`;
+
+      return {
+        url: urlWithParams,
+        type,
+      };
+    } else if (statusCode) {
       return {
         statusCode,
       };
@@ -1475,6 +1549,7 @@ export const getPageData = async ({
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
         breadcrumbs,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1561,6 +1636,7 @@ export const getPageData = async ({
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1630,6 +1706,7 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1645,6 +1722,7 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1661,6 +1739,7 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1709,6 +1788,7 @@ export const getPageData = async ({
         ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
+        prismicApiCacheStatus,
       };
     }
 
@@ -1758,6 +1838,7 @@ export const getPageData = async ({
           currencyList: await currencyListPromise,
           domainConfig: await domainConfigPromise,
           breadcrumbs,
+          prismicApiCacheStatus,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -2228,6 +2309,7 @@ export const getPageData = async ({
       catAndSubCatPageData,
       minPrice,
       bestDiscount,
+      prismicApiCacheStatus,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

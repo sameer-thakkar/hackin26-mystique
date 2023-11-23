@@ -27,8 +27,13 @@ export const swrFetcher = async (url: string) => {
 
 export const constructHeaders = ({
   cookies = {},
-}: { cookies?: Record<string, string> } = {}) => {
-  const headers = new Headers();
+  currentHeaders = {},
+}: {
+  cookies?: Record<string, string>;
+  currentHeaders?: Record<string, string>;
+} = {}) => {
+  const headers = new Headers(currentHeaders);
+
   if (cookies)
     headers.set(
       'cookie',

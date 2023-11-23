@@ -1760,3 +1760,12 @@ export const NEWS_PAGE_SECTIONS = {
 } as const;
 
 export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;
+
+export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
+
+export const X_CACHE_HEADER_KEY = 'x-cache' as const;
+
+export const PRISMIC_API_ROUTE_MB = [
+  'www.penapalacetickets.com',
+  'www.new-york-tickets.com',
+];

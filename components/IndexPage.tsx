@@ -139,7 +139,6 @@ const Page = (props: PageProps) => {
     isCatOrSubCatPage,
     catAndSubCatPageData,
   } = props;
-
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
@@ -443,6 +442,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         redirect: {
           destination: url,
           type: 302,
+          permanent: false,
+          props: {},
+        },
+      };
+    }
+
+    if (props?.redirectInfo) {
+      return {
+        redirect: {
+          destination: props?.redirectInfo?.url,
+          type: props?.redirectInfo?.type,
           permanent: false,
           props: {},
         },
