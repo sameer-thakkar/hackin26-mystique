@@ -20,6 +20,7 @@ import { getStructure } from 'utils/lookerUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID } from 'const/airportTransfers';
 import { CATEGORY_BANNER, SUB_CATEGORY_BANNER } from 'const/bannerDescriptors';
 import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
@@ -731,13 +732,15 @@ export const getBannerDescriptors = ({
   const { id, name } = firstProductSubCategory || {};
 
   const isAirportTransfersMB =
-    name === 'Private Airport Transfers' &&
+    (name === 'Private Airport Transfers' || name === 'Airport Transfers') &&
     taggedSubCategoryName === 'Airport Transfers';
 
   let descriptorData = [];
 
   if (isAirportTransfersMB) {
-    descriptorData = SUB_CATEGORY_BANNER()[id];
+    descriptorData = SUB_CATEGORY_BANNER()[
+      AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID
+    ];
   } else if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
     descriptorData = SUB_CATEGORY_BANNER()[id];
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {

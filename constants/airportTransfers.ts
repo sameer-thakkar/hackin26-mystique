@@ -51,3 +51,5 @@ export const AIRPORT_TRANSFER_REVIEWS = [
 ];
 
 export const AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE = 'Airport Transfers';
+
+export const AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID = 1019;
