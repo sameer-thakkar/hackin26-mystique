@@ -1421,8 +1421,10 @@ export const getPageData = async ({
       }`;
 
       return {
-        url: urlWithParams,
-        type,
+        redirectInfo: {
+          url: urlWithParams,
+          type,
+        },
       };
     } else if (statusCode) {
       return {
