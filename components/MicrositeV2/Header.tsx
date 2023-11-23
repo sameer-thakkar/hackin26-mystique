@@ -76,13 +76,12 @@ export const StyledHeader = styled.div<IStyledHeader>`
     user-select: none;
   }
   .fixed-wrap {
+    position: fixed;
     box-shadow: ${({ isTop, isNewLTTLandingPageVisible, $isPillBarSticky }) =>
       !isTop &&
       !isNewLTTLandingPageVisible &&
       !$isPillBarSticky &&
       '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
-    ${({ $categoryHeaderMenuExists }) =>
-      !$categoryHeaderMenuExists && `position: fixed;`}
     width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};

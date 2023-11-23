@@ -12,11 +12,14 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
-const StyledCategoryBar = styled.div<{ isMobile?: boolean }>`
+const StyledCategoryBar = styled.div<{
+  isMobile?: boolean;
+  $isEntertainmentMb: boolean;
+}>`
   height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
-  top: ${({ isMobile }) => (isMobile ? '35px' : '56px')};
+  top: 56px;
   z-index: 2;
 
   .swiper-container {
@@ -28,6 +31,7 @@ const StyledCategoryBar = styled.div<{ isMobile?: boolean }>`
   @media (max-width: 768px) {
     margin-left: -1rem;
     margin-right: -1rem;
+    top: ${({ $isEntertainmentMb }) => ($isEntertainmentMb ? '30px' : '56px')};
   }
 `;
 
@@ -262,7 +266,11 @@ const CategoryBar = (props: any) => {
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
-      <StyledCategoryBar ref={category_bar} isMobile={isMobile}>
+      <StyledCategoryBar
+        ref={category_bar}
+        isMobile={isMobile}
+        $isEntertainmentMb={isEntertainmentMb}
+      >
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
             {categories.map((category: any, index: number) => {
