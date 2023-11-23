@@ -1376,7 +1376,7 @@ const fetchPrismicDocument = async ({
   const paramsString = params.toString();
 
   const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
-  const endpoint = `${domain}/api/prismic?${paramsString}`;
+  const endpoint = `${domain}/api/prismic/?${paramsString}`;
 
   const response = (await fetch(endpoint, {
     headers: requestHeaders,
