@@ -803,6 +803,8 @@ const nl = {
     TOP_ATTRACTIONS: 'Topbezienswaardigheden van de route',
     CALENDAR_FOOTNOTE: '* Alle prijzen zijn in {0}',
     GOT_IT: 'Begrepen',
+    TOUR_TIMINGS: 'Tijden',
+    TOUR_FREQUENCY: 'Frequentie',
   },
 };
 export default nl;

@@ -805,6 +805,8 @@ const fr = {
     TOP_ATTRACTIONS: 'Principales attractions',
     CALENDAR_FOOTNOTE: '* Tous les prix sont en {0}',
     GOT_IT: "J'ai compris",
+    TOUR_TIMINGS: 'Horaires',
+    TOUR_FREQUENCY: 'Fréquence',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Navettes privées',

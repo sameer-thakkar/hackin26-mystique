@@ -814,6 +814,8 @@ const it = {
     TOP_ATTRACTIONS: 'Attrazioni principali',
     CALENDAR_FOOTNOTE: '* Tutti i prezzi sono in {0}',
     GOT_IT: 'Capito',
+    TOUR_TIMINGS: 'Orari',
+    TOUR_FREQUENCY: 'Frequenza',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Trasferimenti privati',

@@ -801,6 +801,8 @@ const de = {
     STARTING_LOCATION: 'Startpunkt',
     TOP_ATTRACTIONS: 'Top-Sehenswürdigkeiten der Route',
     CALENDAR_FOOTNOTE: '* Alle Preise sind in {0}',
+    TOUR_TIMINGS: 'Tourzeiten',
+    TOUR_FREQUENCY: 'Häufigkeit',
     GOT_IT: 'Alles klar',
   },
   AIRPORT_TRANSFER: {

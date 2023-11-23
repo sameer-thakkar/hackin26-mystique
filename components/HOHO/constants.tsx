@@ -6,7 +6,7 @@ export const SECTION_NAMES = {
   BUS_ROUTES: 'Bus Routes',
 };
 
-export const FILTERED_HIGHLIGHTS = [
+export const FILTERED_HIGHLIGHTS = () => [
   strings.HOHO.TOUR_TIMINGS,
   strings.HOHO.TOUR_FREQUENCY,
 ];

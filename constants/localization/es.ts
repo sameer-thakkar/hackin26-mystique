@@ -856,6 +856,8 @@ const es = {
     TOP_ATTRACTIONS: 'Atracciones principales',
     CALENDAR_FOOTNOTE: '*Todos los precios están en {0}',
     GOT_IT: 'Vale',
+    TOUR_TIMINGS: 'Horarios',
+    TOUR_FREQUENCY: 'Frecuencia',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

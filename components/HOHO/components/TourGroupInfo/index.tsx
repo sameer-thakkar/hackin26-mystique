@@ -70,7 +70,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
 
   const { detailsObjects = {} } = getObject(
     tourGroupHighlights,
-    FILTERED_HIGHLIGHTS
+    FILTERED_HIGHLIGHTS()
   );
   const finalTimings = detailsObjects[strings.HOHO.TOUR_TIMINGS];
   const finalFrequecy = detailsObjects[strings.HOHO.TOUR_FREQUENCY];

@@ -54,7 +54,7 @@ export const filterFromHighlights = (highlights: Record<string, any>[]) => {
   const filteredData: Record<string, any> = [];
 
   highlights.forEach((item) => {
-    if (item.type === 'heading6' && FILTERED_HIGHLIGHTS.includes(item.text)) {
+    if (item.type === 'heading6' && FILTERED_HIGHLIGHTS().includes(item.text)) {
       exclude = true;
     } else if (item.type === 'heading6') {
       exclude = false;
