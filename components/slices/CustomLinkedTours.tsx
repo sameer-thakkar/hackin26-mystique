@@ -151,7 +151,11 @@ const CustomLinkedTours = ({
     fetcher: swrFetcher,
   });
   const apiTours = tourListData ? tourListApiParser(tourListData, lang) : {};
-
+  
+  //filtering out tgids if no data returned from api
+  tgids = tgids.filter((tgid: any) =>
+    Object.keys(apiTours).includes(String(tgid))
+  );
   const defaultURL = (tgid: any, flowType: string) =>
     createBookingURL({
       nakedDomain,

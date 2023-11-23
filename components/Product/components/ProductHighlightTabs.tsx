@@ -24,7 +24,7 @@ const Swiper = dynamic(() =>
 
 const swiperParams: SwiperProps = {
   slidesPerView: 'auto',
-  spaceBetween: 24,
+  spaceBetween: 0,
 };
 
 export const HighlightTabs = ({

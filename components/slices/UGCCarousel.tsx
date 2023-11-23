@@ -619,10 +619,10 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                 </PlayButton>
               </Conditional>
               <Image
+                key={index}
+                fill
                 url={imageURL}
                 alt={caption}
-                height={isMobile ? 208 : 240}
-                width={isMobile ? 158 : 180}
                 quality={100}
                 onClick={() => {
                   window.open(url), trackRedirectToIG(index, postType);

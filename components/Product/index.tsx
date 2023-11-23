@@ -986,7 +986,7 @@ const Product = (props: any) => {
           </Conditional>
         </ProductBody>
         <Conditional
-          if={!defaultOpen && isMobile && !expandContent && !isTicketCard}
+          if={!defaultOpen && isMobile && !expandContent}
         >
           {getMoreDetailsButton()}
         </Conditional>

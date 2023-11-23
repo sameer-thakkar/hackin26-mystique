@@ -524,8 +524,7 @@ export const CTABlock = styled.div<{
         box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
       `}
 
-    ${({ isTicketCard, isSticky }) =>
-      isTicketCard ? null : ctaBlockMobileStyles(isSticky)}
+    ${({isSticky }) => ctaBlockMobileStyles(isSticky)}
   }
   @media (max-width: 370px) {
     width: 100%;
@@ -859,7 +858,7 @@ export const Tab = styled.div`
   border-bottom: 0.0625rem solid transparent;
   transform: translateY(0.0625rem);
   ${expandFontToken('UI/Label Medium')}
-  margin-right: 0.125rem;
+  margin-right: 1.5rem;
 
   &.active {
     color: ${COLORS.TEXT.CANDY_1};
