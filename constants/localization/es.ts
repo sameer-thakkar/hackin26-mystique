@@ -806,6 +806,8 @@ const es = {
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Asistencia con el equipaje',
+    TOP_ATTRACTIONS: 'Principales atracciones incluidas',
+    FREQ_DEP_MULTI_ROUTE: 'Salidas frecuentes en rutas múltiples',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Todo',
@@ -836,6 +838,24 @@ const es = {
     TRAILERS: 'Todos los tráilers',
     GET_YOUR_TICKETS: 'Consigue tus entradas',
     POPULAR_SHOWS: 'Espectáculos populares',
+  },
+  HOHO: {
+    HOHO: 'Billetes de autobús turístico',
+    ROUTE_DETAILS: 'Ruta',
+    MORE_DETAILS: 'Otra información',
+    ROUTES_SCHEDULES: 'Rutas y horarios',
+    VALIDITY: 'Válido durante 1 día',
+    VALIDITY_NOTE:
+      'Tu experiencia es válida durante {0} día(s) natural(es). Si reservas tu billete para el 6 de mayo de 2023- este será válido hasta el 6 de mayo de 2023, a las 21:00 PST.',
+    BESTSELLER: 'Lo más vendido',
+    SEE_ALL: 'Ver todo',
+    TIMINGS: 'HORARIO',
+    FREQUENCY: 'FRECUENCIA',
+    DURATION: 'DURACIÓN',
+    STARTING_LOCATION: 'Punto de partida',
+    TOP_ATTRACTIONS: 'Atracciones principales',
+    CALENDAR_FOOTNOTE: '*Todos los precios están en {0}',
+    GOT_IT: 'Vale',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

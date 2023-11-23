@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { debounce } from 'utils/gen';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 const TabWrapper = styled.div`
@@ -15,30 +16,37 @@ const TabWrapper = styled.div`
   }
 `;
 
-const SubHeadingLarge = styled.div`
-  width: max-content;
-  ${expandFontToken('UI/Label Large')}
-`;
-
 export const TabControl = styled.div`
   display: grid;
   grid-auto-flow: column;
   justify-content: left;
   column-gap: 12px;
   border-bottom: 1px solid ${COLORS.GRAY.G6};
+  overflow-x: scroll;
+  overflow-y: hidden;
+  grid-auto-columns: max-content;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
   @media (min-width: 768px) {
     column-gap: 24px;
   }
 `;
 
-export const Tab = styled(SubHeadingLarge)`
+export const Tab = styled.div<{
+  isBoldTab?: boolean;
+  active?: boolean;
+}>`
   padding-bottom: 12px;
   border-bottom: 2px solid;
-
-  ${({
-    // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-    active,
-  }) =>
+  width: max-content;
+  ${expandFontToken(FONTS.UI_LABEL_LARGE)}
+  ${({ active }) =>
     active ? `color: ${COLORS.TEXT.PURPS_3};` : ` border-color: transparent;`};
   transform: translateY(1px);
   cursor: pointer;
@@ -130,10 +138,10 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
       <TabControl>
         {tabs.map((tab, index) => (
           <Tab
-            // @ts-expect-error TS(2769): No overload matches this call.
             active={index === activeTab}
             key={`tab${index + 1}`}
             onClick={() => setTab(index)}
+            className="tab"
           >
             {tab.header}
           </Tab>

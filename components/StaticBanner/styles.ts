@@ -3,14 +3,20 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
+export const BannerPlaceholder = styled.div`
+  height: 18.75rem;
+  @media (max-width: 768px) {
+    height: 22.188rem;
+  }
+`;
 export const BannerSection = styled.div<{
   $isNonPoi?: boolean;
 }>`
   margin: 0;
   .overlay {
     position: absolute;
-    height: 5rem;
-    inset: 13.25rem 0 0;
+    height: 5.125rem;
+    inset: 12.375rem 0 0;
     z-index: 1;
     background: linear-gradient(
       180deg,
@@ -114,8 +120,17 @@ export const Heading = styled.h1<{
     `margin: ${$displayRating ? '0.25rem 1.5rem 0' : '1.25rem 1.5rem 0'};
   `}
 
+  .bold-city {
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: 0.4px;
+    font-style: normal;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 30px;
+  }
   // Airport transfers
-  span {
+  span.airport-transfers {
     color: ${COLORS.BRAND.PURPS};
     display: block;
   }
@@ -124,6 +139,13 @@ export const Heading = styled.h1<{
     margin: ${({ $showTrustBooster }) =>
       $showTrustBooster ? '0' : '0.5rem 0 0'};
     ${expandFontToken(FONTS.DISPLAY_REGULAR)}
+
+    .bold-city {
+      font-size: 48px;
+      line-height: 54px;
+      letter-spacing: 0.6px;
+      color: ${COLORS.PURPS.MEDIUM_TONE};
+    }
   }
 `;
 
@@ -146,7 +168,7 @@ const handleMargin = ({
   $isNonPoi?: boolean;
   $showTrustBooster?: boolean;
 }) => {
-  if ($isNonPoi) return '1.5rem 1.5rem 0';
+  if ($isNonPoi) return '-1rem 1.5rem 0';
   else if ($showTrustBooster) return '0.5rem 1.5rem 1.5rem';
   else return '0.5rem 1.5rem 0';
 };
@@ -166,6 +188,7 @@ const handleGridArea = ({
 export const RatingsWrapper = styled.div<{
   $isNonPoi?: boolean;
   $showTrustBooster?: boolean;
+  $showPointer?: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -180,8 +203,10 @@ export const RatingsWrapper = styled.div<{
     height: 0.75rem;
     width: 0.75rem;
   }
+  z-index: 1;
 
   @media (min-width: 768px) {
+    ${({ $showPointer }) => $showPointer && `cursor: pointer;`}
     ${({ $isNonPoi }) =>
       $isNonPoi &&
       `
@@ -231,7 +256,7 @@ export const RatingCountWrapper = styled.span<{
 export const Divider = styled.div`
   background: ${COLORS.PURPS.LEVEL_15};
   height: 0.063rem;
-  margin: 1rem 1.5rem 1.25rem;
+  margin: 1rem 1.5rem 0.75rem;
   grid-area: 'bottom';
   opacity: 0.5;
   @media (min-width: 768px) {
@@ -244,18 +269,11 @@ export const DescriptorWrapper = styled.div`
   @media (max-width: 768px) {
     overflow: hidden;
     width: 100%;
-    .marquee {
-      display: flex;
-      animation: marquee-scroll 17s linear infinite;
-      gap: 1rem;
+    .swiper-slide {
+      width: auto;
     }
-    @keyframes marquee-scroll {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(-120%);
-      }
+    .swiper-wrapper {
+      transition-timing-function: linear;
     }
   }
 `;
@@ -270,5 +288,10 @@ export const Descriptor = styled.div`
 
   .image-wrap {
     width: auto;
+  }
+
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    margin-bottom: 0.75rem;
   }
 `;

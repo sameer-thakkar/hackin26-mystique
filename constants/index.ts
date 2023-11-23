@@ -343,6 +343,13 @@ export const CUSTOM_TYPES = {
   SAFETY_BANNER: 'safety_banner',
   PROMO_CODES: 'promo_codes',
   HEADOUT_CATEGORY_CONTENT: 'ho_category_content',
+  HOHO_ROUTES: 'hoho_routes',
+  TOP_ATTRACTIONS: 'top_attractions',
+};
+
+export const TEMPLATES = {
+  HOHO: 'HOHO',
+  AIRPORT_TRANSFERS: 'Airport Transfers',
 };
 
 export type CUSTOM_TYPE_KEYS = keyof typeof CUSTOM_TYPES;
@@ -513,6 +520,12 @@ export const ANALYTICS_EVENTS = {
     NEWS_PAGE_SECTION_VIEWED: 'News Page Section Viewed',
     NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
     TRAILER_VIEWED: 'Trailer Viewed',
+  },
+  HOHO: {
+    ROUTE_DETAILS_VIEWED: 'Route Details Viewed',
+    MORE_DETAILS_VIEWED: 'More Details Viewed',
+    CALENDAR_CLOSED: 'Calendar Closed',
+    CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
   },
 };
 
@@ -731,6 +744,7 @@ export const SIDEBAR_TYPES = {
   SIDE_NAV: 'side-navigation',
   LISTICLE_CARD: 'listicle-card',
   CONTACT_US_PANEL: 'contact-us-panel',
+  TOUR_GROUP_INFO: 'tour-group-info',
 };
 
 export const DATE_FORMAT_TYPES = {
@@ -841,6 +855,7 @@ export const ANALYTICS_PROPERTIES = {
   TGID: 'Tour Group ID',
   VID: 'Variant ID',
   VARIANT_ID: 'Variant ID',
+  VARIANT_NAME: 'Variant Name',
   PAGE_TYPE: 'Page Type',
   COLLECTION_ID: 'Collection ID',
   HEADER: 'Header',
@@ -919,6 +934,7 @@ export const ANALYTICS_PROPERTIES = {
   LABEL: 'Label',
   SORTING_ORDER: 'Sorting Order',
   IS_SHOW_PLAYING: 'Is Show Playing',
+  SELECTED_DATE: 'Selected Date',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
 };
@@ -932,6 +948,7 @@ export const PAGE_TYPES = {
   CATEGORY_PAGE: 'Category Page',
   SUB_CATEGORY_PAGE: 'Sub-Category Page',
   NEWS_PAGE: 'News Page',
+  HOHO: 'Hop-On Hop-Off',
   AIRPORT_TRANSFERS: 'Airport Transfers',
 };
 
@@ -1037,11 +1054,16 @@ export const CTA_TYPE = {
   BUY_TICKETS: 'Buy Tickets',
   THEATRE_PAGE_LINK: 'Theatre Page Link',
   SEE_MORE_SHOWS: 'See More Shows',
+  VIEW_ROUTES: 'View All Routes',
 };
 
 export const HIGHLIGHT_TYPES = {
   H6_HEADING: 'heading6',
+  HEADING: 'heading',
   LIST_ITEM: 'list-item',
+};
+export const OBJECT_TYPES = {
+  DETAIL: 'DETAIL',
 };
 
 export const VALIDITY_TYPES = {
@@ -1122,6 +1144,7 @@ export const SLICE_TYPES = {
   ACCORDION: 'accordion',
   LISTICLE_SECTION_START: 'listicle_section___start',
   TABLE_V3: 'table_v3',
+  STRUCTURED_CARD: 'structured_card',
   // Airport Transfer
   CARS_CAROUSEL: 'cars_carousel',
 };
@@ -1640,6 +1663,13 @@ export const LTT_LP_HARDCODED_REVIEWS = [
 
 export const GUIDES_IMAGE_URL =
   'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';
+export const LANDSCAPE =
+  'https://cdn-imgix-open.headout.com/MB/assets/landscape.svg';
+export const LANDSCAPE_MWEB =
+  'https://cdn-imgix-open.headout.com/MB/assets/landscape_mobile.svg';
+export const BUS = 'https://cdn-imgix-open.headout.com/MB/assets/bus.svg';
+export const HO_LOGO =
+  'https://cdn-imgix-open.headout.com/MB/assets/ho_logo_circle.svg';
 
 export const ENTITY_ICONS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/categories';

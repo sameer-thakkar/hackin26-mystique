@@ -1,6 +1,7 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import dayjs from 'dayjs';
+import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { createBookingURL } from 'utils';
 import {
   dateToString,
@@ -46,6 +47,25 @@ export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   );
 
   return { highlights: nonTabHighlights, tabs };
+};
+
+export const filterFromHighlights = (highlights: Record<string, any>[]) => {
+  let exclude = false;
+  const filteredData: Record<string, any> = [];
+
+  highlights.forEach((item) => {
+    if (item.type === 'heading6' && FILTERED_HIGHLIGHTS.includes(item.text)) {
+      exclude = true;
+    } else if (item.type === 'heading6') {
+      exclude = false;
+    }
+
+    if (!exclude) {
+      filteredData.push(item);
+    }
+  });
+
+  return filteredData;
 };
 
 const PRODUCT_CARD_DESKTOP_IMG_GRID_AREA = 'card-img ';

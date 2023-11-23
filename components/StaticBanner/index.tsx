@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
+import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import {
@@ -32,6 +33,9 @@ import { STAR } from 'assets/SvgIcons';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
 
 type StaticBannerProps = {
   bannerHeading: string;
@@ -43,6 +47,8 @@ type StaticBannerProps = {
   shouldDisplayTrustBoosters?: boolean;
   isNonPoiMB?: boolean;
   bannerDescriptors: Array<{ icon: string; text: string }>;
+  cityName?: string;
+  isHOHO?: boolean;
   ratingsAndReviewsData?: {
     averageRating: number;
     ratingsCount: number;
@@ -104,15 +110,25 @@ const StaticBanner = ({
   shouldDisplayTrustBoosters,
   isNonPoiMB = false,
   bannerDescriptors,
+  cityName,
+  isHOHO,
   ratingsAndReviewsData,
   city,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
-  const bannerHeading = bannerHeadingArray?.join(' ');
+  const bannerHeading =
+    isHOHO && cityName
+      ? `<span class='bold-city'>${cityName}</span><br/>${strings.HOHO.HOHO}`
+      : bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0];
-  let { averageRating, ratingsCount } = collectionDetails ?? {};
+
+  const finalCollectionDetails = isHOHO
+    ? { averageRating: 4.3, ratingsCount: 5193 }
+    : collectionDetails;
+
+  let { averageRating, ratingsCount } = finalCollectionDetails ?? {};
   const { WIDTH, HEIGHT } = isMobile
     ? BANNER_DIMENSIONS.MOBILE
     : BANNER_DIMENSIONS.DESKTOP;
@@ -138,10 +154,39 @@ const StaticBanner = ({
     });
   }, [eventsReady, isMobile]);
 
+  const onRatingsClick = () => {
+    if (!isHOHO) return;
+    const section = document.querySelector('.slice-block.reviews');
+    section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const swiperParams: SwiperProps = {
+    spaceBetween: 16,
+    centeredSlides: true,
+    speed: 5000,
+    autoplay: {
+      delay: 1,
+      disableOnInteraction: true,
+    },
+    loop: true,
+    slidesPerView: 'auto',
+    allowTouchMove: false,
+  };
+  const getBannerDescriptors = () => {
+    return bannerDescriptors?.map((item: Record<string, any>) => {
+      const { icon, text } = item;
+      return (
+        <Descriptor key={text}>
+          <Image url={icon} alt={text} height={20} width={20} />
+          <span>{text}</span>
+        </Descriptor>
+      );
+    });
+  };
   let bannerHeadingWithCityName = null;
 
   if (city) {
-    bannerHeadingWithCityName = `<span>${city}</span> ${bannerHeading}`;
+    bannerHeadingWithCityName = `<span class='airport-transfers'>${city}</span> ${bannerHeading}`;
   }
 
   return (
@@ -202,6 +247,8 @@ const StaticBanner = ({
             <RatingsWrapper
               $isNonPoi={showNonPoiDesign}
               $showTrustBooster={shouldDisplayTrustBoosters}
+              onClick={onRatingsClick}
+              $showPointer={isHOHO}
             >
               {STAR(showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1)}
               <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
@@ -220,17 +267,11 @@ const StaticBanner = ({
           <Conditional if={showNonPoiDesign}>
             <Divider />
             <DescriptorWrapper>
-              <div className="marquee">
-                {bannerDescriptors?.map((item: Record<string, any>) => {
-                  const { icon, text } = item;
-                  return (
-                    <Descriptor key={text}>
-                      <Image url={icon} alt={text} height={20} width={20} />
-                      <span>{text}</span>
-                    </Descriptor>
-                  );
-                })}
-              </div>
+              {isMobile && bannerDescriptors?.length ? (
+                <Swiper {...swiperParams}>{getBannerDescriptors()}</Swiper>
+              ) : (
+                getBannerDescriptors()
+              )}
             </DescriptorWrapper>
           </Conditional>
           <Conditional if={!showNonPoiDesign && !shouldDisplayTrustBoosters}>

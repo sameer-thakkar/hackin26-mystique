@@ -3,4 +3,5 @@ export type ReviewsProps = {
   reviews: any[];
   type?: string;
   isMobile?: boolean;
+  showNewDesign?: boolean;
 };

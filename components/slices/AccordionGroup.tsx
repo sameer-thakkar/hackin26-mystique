@@ -36,7 +36,7 @@ type AccordionGroupProps = {
     content: any;
     heading: string;
   }[];
-  heading: string | undefined;
+  heading?: string;
   useSchema: boolean;
   isMobile?: boolean;
   sliceProps?: any;
@@ -46,6 +46,8 @@ type AccordionGroupProps = {
   findBestSeatsCtaCallback?: () => void | null;
   isRevampedDesign?: boolean;
   isVenuePage?: boolean;
+  openAll?: boolean;
+  isSideModal?: boolean;
 };
 
 const AccordionGroup = ({
@@ -60,6 +62,8 @@ const AccordionGroup = ({
   isRevampedDesign,
   isVenuePage,
   isMobile,
+  openAll = false,
+  isSideModal = false,
 }: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const faqSchemaProps = accordions.map((acc) => {
@@ -101,13 +105,14 @@ const AccordionGroup = ({
                 key={index}
                 index={index}
                 content={content}
-                isOpenOverride={index == 0 && isOpenOverride}
+                isOpenOverride={(index == 0 && isOpenOverride) || openAll}
                 heading={accordion.heading}
                 isGlobalMb={isGlobalMb}
                 useSchema={useSchema}
                 tabData={tabData}
                 isVenuePage={isVenuePage}
                 findBestSeatsCtaCallback={findBestSeatsCtaCallback}
+                isSideModal={isSideModal}
               />
             );
           })}

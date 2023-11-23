@@ -14,12 +14,17 @@ import LastMinuteFilters from 'components/common/LastMinuteFilters';
 import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
+import TopAttractionsCarousel from 'components/HOHO/components/TopAttractions';
+import HOHOCard from 'components/HOHO/index';
+import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
+import useABTesting from 'hooks/useABTesting';
 import {
   displayBannerTrustBoosters,
   displayProductTrustBoosters,
   getAlternateLanguages,
+  getAnalyticsPageType,
   getBannerAndFooterSubtext,
   getF1MBTrustBoosters,
   getFinalisedBannerImages,
@@ -49,8 +54,8 @@ import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
-import { AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE } from 'const/airportTransfers';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
+import { VARIANTS } from 'const/experiments';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
@@ -58,6 +63,7 @@ import {
   BOOLEAN_STATES,
   EMAIL_SUBCRIPTION,
   PAGE_TYPES,
+  TEMPLATES,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -85,8 +91,15 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 const TextBanner = dynamic(() => import('components/TextBanner'));
-const StaticBanner = dynamic(() =>
-  import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner')
+
+const StaticBanner = dynamic(
+  () =>
+    import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner'),
+  {
+    loading: function BannerSkeleton() {
+      return <BannerPlaceholder />;
+    },
+  }
 );
 
 const CityPageContainer = dynamic(() =>
@@ -104,6 +117,9 @@ const CategoryHeader = dynamic(() =>
 );
 const Breadcrumbs = dynamic(() =>
   import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+);
+const Loader = dynamic(() =>
+  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
 const CatAndSubCatPage = dynamic(() =>
   import(
@@ -134,6 +150,8 @@ const MicrositeV1 = (props: any) => {
     categoryHeaderMenu,
     breadcrumbs,
     cityPageParams,
+    variantsData = [],
+    routeDetails,
     catAndSubCatPageData,
     isCatOrSubCatPage,
   } = props;
@@ -161,6 +179,7 @@ const MicrositeV1 = (props: any) => {
 
   const {
     contentFramework,
+    contentFrameworkTreatment,
     commonFooter,
     secondaryFooter,
     commonHeader,
@@ -191,6 +210,7 @@ const MicrositeV1 = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
     baseLangCategorisationMetadata,
+    topAttractionsData,
   } = micrositeData || {};
   const {
     tagged_city: taggedCity,
@@ -212,6 +232,22 @@ const MicrositeV1 = (props: any) => {
 
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
+  const { template } = productCardData || {};
+  const isHOHO = template === TEMPLATES.HOHO;
+  const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
+
+  const {
+    isEligible: isHohoExpEligible,
+    isExperimentResolving,
+    variant: hohoVariant,
+  } = useABTesting({
+    experimentId: 'HOHO_REVAMP_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => isHOHO,
+  });
+  const showHohoRevamp =
+    hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
+
   const {
     attraction: attractionCFoot,
     body: slicesCFoot,
@@ -251,6 +287,126 @@ const MicrositeV1 = (props: any) => {
     name: whiteLabelName,
   } = domainConfig || {};
 
+  const sortTours = (
+    tgidToScroll: any,
+    toursArray: any,
+    isCategorisedTours: any
+  ) => {
+    if (!tgidToScroll) return toursArray;
+    if (tgidToScroll) {
+      return toursArray?.reduce((accum = [], item: any) => {
+        const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
+        if (item.tgid === tgid) {
+          return [item, ...accum];
+        } else {
+          return [...accum, item];
+        }
+      }, []);
+    }
+  };
+
+  const orderedTGIDRanking = csvTgidToArray(tourRanking);
+  const orderedUncategorizedTours = isCategorisedTours
+    ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
+    : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
+
+  const orderedTours =
+    isCategorisedTours || tgidToScroll
+      ? orderedUncategorizedTours
+      : orderedTGIDRanking?.length
+      ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
+          );
+        })
+      : orderedUncategorizedTours;
+
+  const [orderedFilteredTours, setOrderedFilteredTours] = useState(
+    orderedTours
+  );
+
+  const [productsLoading, setProductsLoading] = useState(false);
+
+  const orderedTgids = orderedTours?.length
+    ? orderedTours?.map((tour: any) => tour.tgid)
+    : [];
+
+  useEffect(() => {
+    setIsMobile(windowWidth < 768);
+  }, [windowWidth]);
+
+  useEffect(() => {
+    if (tgidToScroll) {
+      scroller.scrollTo(tgidToScroll, {
+        duration: 1500,
+        delay: 100,
+        offset: isMobile ? -80 : -100,
+        smooth: 'easeInOutQuint',
+      });
+    }
+
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.LANGUAGE,
+      value: currentLanguage,
+    });
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
+      value: renderedBaseLangPageTitle,
+    });
+
+    if (isCityPageMB) {
+      const { mbCity, mbCountry } = mbLocationData;
+
+      sendVariablesToDataLayer({
+        [ANALYTICS_PROPERTIES.COUNTRY]: mbCountry,
+        [ANALYTICS_PROPERTIES.CITY]: mbCity,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!eventsReady) return;
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
+
+    sendVariablesToDataLayer({
+      ...(taggedCategoryName && {
+        [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
+      }),
+      ...(taggedSubCategoryName && {
+        [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
+      }),
+      ...(taggedMbType && {
+        [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+      }),
+    });
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getAnalyticsPageType({
+        isCityPageMB,
+        isHOHO,
+        isAirportTransferMB: isAirportTransfersMB,
+        defaultType: PAGE_TYPES.COLLECTION,
+        isCatOrSubCatPage,
+        isSubCategoryPage: isSubCategoryMicrobrand,
+      }),
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+      [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
+        isA1orC1MB(mbType) && isMobile
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+    });
+  }, [eventsReady]);
   const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
   let footerThemeOverride = themeOverrideCFoot || THEMES.INHERIT;
   footerThemeOverride = themeOverrideCMS || THEMES.INHERIT;
@@ -329,52 +485,9 @@ const MicrositeV1 = (props: any) => {
       });
   }
 
-  const sortTours = (
-    tgidToScroll: any,
-    toursArray: any,
-    isCategorisedTours: any
-  ) => {
-    if (!tgidToScroll) return toursArray;
-    if (tgidToScroll) {
-      return toursArray?.reduce((accum = [], item: any) => {
-        const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
-        if (item.tgid === tgid) {
-          return [item, ...accum];
-        } else {
-          return [...accum, item];
-        }
-      }, []);
-    }
-  };
-
-  const orderedTGIDRanking = csvTgidToArray(tourRanking);
-  const orderedUncategorizedTours = isCategorisedTours
-    ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
-    : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
-
-  const orderedTours =
-    isCategorisedTours || tgidToScroll
-      ? orderedUncategorizedTours
-      : orderedTGIDRanking?.length
-      ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
-          return (
-            orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
-            orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
-          );
-        })
-      : orderedUncategorizedTours;
-
-  const [orderedFilteredTours, setOrderedFilteredTours] = useState(
-    orderedTours
-  );
-
-  const [productsLoading, setProductsLoading] = useState(false);
-
-  const orderedTgids = orderedTours?.length
-    ? orderedTours?.map((tour: any) => tour.tgid)
-    : [];
-
-  const slices = contentFramework?.data?.body;
+  const slices = showHohoRevamp
+    ? contentFrameworkTreatment?.data?.body
+    : contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
   const hasTourListContentFW: boolean = !!contentFWSlices.find(
@@ -433,82 +546,6 @@ const MicrositeV1 = (props: any) => {
     primaryCity,
   };
 
-  const isAirportTransfersMB =
-    productCardData?.template === AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
-
-  useEffect(() => {
-    setIsMobile(windowWidth < 768);
-  }, [windowWidth]);
-
-  useEffect(() => {
-    if (tgidToScroll) {
-      scroller.scrollTo(tgidToScroll, {
-        duration: 1500,
-        delay: 100,
-        offset: isMobile ? -80 : -100,
-        smooth: 'easeInOutQuint',
-      });
-    }
-
-    const renderedBaseLangPageTitle = renderShortCodes(
-      baseLangPageTitle
-    )?.join?.('');
-
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.LANGUAGE,
-      value: currentLanguage,
-    });
-
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
-      value: renderedBaseLangPageTitle,
-    });
-
-    if (isCityPageMB) {
-      const { mbCity, mbCountry } = mbLocationData;
-
-      sendVariablesToDataLayer({
-        [ANALYTICS_PROPERTIES.COUNTRY]: mbCountry,
-        [ANALYTICS_PROPERTIES.CITY]: mbCity,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!eventsReady) return;
-    const renderedBaseLangPageTitle = renderShortCodes(
-      baseLangPageTitle
-    )?.join?.('');
-
-    sendVariablesToDataLayer({
-      ...(taggedCategoryName && {
-        [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
-      }),
-      ...(taggedSubCategoryName && {
-        [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
-      }),
-      ...(taggedMbType && {
-        [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
-      }),
-    });
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: isAirportTransfersMB
-        ? PAGE_TYPES.AIRPORT_TRANSFERS
-        : isCityPageMB
-        ? PAGE_TYPES.CITY_PAGE
-        : PAGE_TYPES.COLLECTION,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
-      [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
-        isA1orC1MB(mbType) && isMobile
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
-    });
-  }, [eventsReady]);
-
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
   };
@@ -528,8 +565,9 @@ const MicrositeV1 = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations
   );
+  const firstProduct = orderedTgids?.[0];
   const { primarySubCategory: firstProductSubCategory } =
-    (Object.values(scorpioData ?? {})?.[0] as Record<string, any>) || {};
+    scorpioData[firstProduct] || {};
   const bannerDescriptors = getBannerDescriptors({
     taggedMbType,
     taggedCategoryName,
@@ -587,6 +625,7 @@ const MicrositeV1 = (props: any) => {
     isToursAvailable &&
     isAirportTransfersMB;
 
+  if (isHohoExpEligible && isExperimentResolving) return <Loader />;
   return (
     <div>
       <div className="microsite-container">
@@ -728,8 +767,31 @@ const MicrositeV1 = (props: any) => {
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
             isNonPoiMB={isNonPoiMB}
             bannerDescriptors={bannerDescriptors}
+            isHOHO={showHohoRevamp}
+            cityName={primaryCity?.displayName}
             city={isAirportTransfersMB ? productCardData?.city?.city : null}
           />
+        </Conditional>
+
+        <Conditional if={showHohoRevamp}>
+          {variantsData?.map((item: Record<string, any>, index: number) => {
+            const tgid = item?.id;
+            const isCombo = scorpioData?.[tgid]?.combo;
+            return (
+              <Conditional if={!isCombo && scorpioData?.[tgid]} key={tgid}>
+                <HOHOCard
+                  isMobile={isMobile}
+                  key={tgid}
+                  variants={item?.data}
+                  tourGroupData={scorpioData?.[tgid]}
+                  tourGroupId={tgid}
+                  routeDetails={routeDetails?.[`${tgid}-route`]}
+                  currency={currency}
+                  index={index}
+                />
+              </Conditional>
+            );
+          })}
         </Conditional>
         <Conditional if={isA1orC1MB(mbType) && isMobile}>
           <LastMinuteFilters
@@ -758,17 +820,20 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-
         <Conditional
           if={
             hasTours &&
             !hasTourListContentFW &&
             isToursAvailable &&
+            !showHohoRevamp &&
             !isCatOrSubCatPage &&
             !isAirportTransfersMB
           }
         >
           {tourListSection}
+        </Conditional>
+        <Conditional if={topAttractionsData && showHohoRevamp}>
+          <TopAttractionsCarousel {...topAttractionsData} isMobile={isMobile} />
         </Conditional>
 
         {showAirportTransferProducts ? (
@@ -832,6 +897,7 @@ const MicrositeV1 = (props: any) => {
                 automatedBreadcrumbsExists={automatedBreadcrumbsExists}
                 isRevampedDesign={isCatOrSubCatPage}
                 isMobile={isMobile}
+                isHOHORevamp={showHohoRevamp}
               />
             </Conditional>
           </InteractionContextProvider>

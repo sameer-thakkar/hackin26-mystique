@@ -683,6 +683,16 @@ const id = {
     TRANSPORTATION: 'Transportasi',
     FESTIVALS_EVENTS: 'Festival dan Acara',
   },
+  HOHO: {
+    ROUTE_DETAILS: 'Route Details',
+    MORE_DETAILS: 'More Details',
+    ROUTES_SCHEDULES: 'Routes & Schedules',
+    TOP_ATTRACTIONS: 'Top attractions covered',
+    TIMINGS: 'TIMINGS',
+    FREQUENCY: 'FREQUENCY',
+    DURATION: 'DURATION',
+    CALENDAR_FOOTNOTE: '* Semua harga dalam {0}',
+  },
 };
 
 export default id;

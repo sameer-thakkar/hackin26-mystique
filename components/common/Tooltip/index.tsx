@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import { TooltipProps } from 'components/common/Tooltip/interface';
 import {
+  ButtonWrapper,
   CloseIcon,
   Content,
   TooltipContainer,
@@ -10,6 +12,7 @@ import {
   Trigger,
 } from 'components/common/Tooltip/styles';
 import { isMobile } from 'utils/helper';
+import { strings } from 'const/strings';
 import { SWEIPESHEET_CROSS } from 'assets/SvgIcons';
 
 const Tooltip = ({
@@ -18,6 +21,9 @@ const Tooltip = ({
   content,
   showClose = true,
   onHover = () => {},
+  triggerClassName,
+  showHeadingForDesktop,
+  showCTA = false,
 }: TooltipProps) => {
   const [swipeSheetOpen, setSwipeSheetOpen] = useState(false);
   const mobile = isMobile();
@@ -29,10 +35,12 @@ const Tooltip = ({
   };
   return mobile ? (
     <>
-      <Trigger onClick={handleOpen}>{trigger}</Trigger>
+      <Trigger onClick={handleOpen} className={`trigger ${triggerClassName}`}>
+        {trigger}
+      </Trigger>
       <Conditional if={swipeSheetOpen}>
         <TooltipOverlay onClick={handleClose} />
-        <TooltipSwipeSheet topMargin={!heading}>
+        <TooltipSwipeSheet topMargin={!heading} className="tooltip-swipesheet">
           <Conditional if={heading}>
             <div className="swipe-sheet-header">{heading}</div>
             <hr />
@@ -44,14 +52,30 @@ const Tooltip = ({
             className="swipe-sheet-content"
             dangerouslySetInnerHTML={{ __html: content || '' }}
           />
+          <Conditional if={showCTA}>
+            <ButtonWrapper>
+              <Button
+                tabIndex={0}
+                size="medium"
+                color="purps"
+                variant="primary"
+                onClick={handleClose}
+                text={strings.HOHO.GOT_IT}
+              />
+            </ButtonWrapper>
+          </Conditional>
         </TooltipSwipeSheet>
       </Conditional>
     </>
   ) : (
-    <TooltipContainer>
-      <Trigger onMouseEnter={onHover}>{trigger}</Trigger>
+    <TooltipContainer className="tooltip-container">
+      <Trigger onMouseEnter={onHover} className={`trigger ${triggerClassName}`}>
+        {trigger}
+      </Trigger>
       <Content className="tooltip">
-        <div className="tooltip-heading">{heading}</div>
+        <Conditional if={heading && showHeadingForDesktop}>
+          <div className="tooltip-heading">{heading}</div>
+        </Conditional>
         <div
           className="tooltip-content"
           dangerouslySetInnerHTML={{ __html: content || '' }}

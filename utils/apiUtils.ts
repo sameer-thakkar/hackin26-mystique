@@ -84,6 +84,7 @@ export enum HeadoutEndpoints {
   CalendarInventoryForTourGroupList,
   CityList,
   Media,
+  Variants,
   Airports,
 }
 
@@ -162,6 +163,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.Media:
       endpointSlug = `/api/v1/media/`;
+      break;
+    case HeadoutEndpoints.Variants:
+      endpointSlug = `/api/v7/tour-groups/variants`;
       break;
     case HeadoutEndpoints.Airports:
       endpointSlug = '/api/v1/airport-transfers/fetch-airports';
@@ -828,6 +832,7 @@ interface TFetchCalendarInventoryTypes {
   currency?: string | null;
   fromDate?: string;
   toDate?: string;
+  variantId?: string | number;
   cookies?: { [key: string]: any };
 }
 
@@ -836,6 +841,7 @@ export const fetchCalendarInventory = async ({
   currency,
   fromDate = '',
   toDate = '',
+  variantId,
   cookies,
 }: TFetchCalendarInventoryTypes) => {
   try {
@@ -845,6 +851,9 @@ export const fetchCalendarInventory = async ({
       }),
       ...(toDate && {
         'to-date': toDate,
+      }),
+      ...(variantId && {
+        variantId: variantId?.toString(),
       }),
       ...(currency && {
         currency,
@@ -1041,5 +1050,43 @@ export const registerEmailSubscription = async ({
     return await response.json();
   } catch (err) {
     sendLog({ err });
+  }
+};
+
+type TFetchBatchedVariants = {
+  tgids: Array<number | string>;
+  language?: string;
+  currency?: string;
+  populateTours?: boolean;
+  cookies?: Record<string, any>;
+};
+
+export const fetchBatchedVariants = async ({
+  tgids,
+  currency,
+  cookies,
+  language = 'en',
+  populateTours = true,
+}: TFetchBatchedVariants) => {
+  try {
+    const params = {
+      'tour-group-ids': tgids?.join(','),
+      ...(language && { language }),
+      ...(currency && {
+        currency,
+      }),
+      ...(populateTours && { 'populate-tours': 'true' }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.Variants,
+      id: null,
+      params,
+    });
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(url, { headers });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('[fetchBatchedVariants]', error);
   }
 };

@@ -14,15 +14,17 @@ import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { DOWN_CHEVRON } from 'assets/SvgIcons';
 
 export const StyledAccordion = styled.div<{
   isOpen: boolean;
   $isCatOrSubCatPage?: boolean;
+  isSideModal?: boolean;
   isGlobalMb?: boolean;
 }>`
   padding: 1rem 0;
-  margin-right: ${({ isGlobalMb, $isCatOrSubCatPage }) =>
-    isGlobalMb || $isCatOrSubCatPage ? '0' : '1.5rem'};
+  margin-right: ${({ isGlobalMb, $isCatOrSubCatPage, isSideModal }) =>
+    isGlobalMb || $isCatOrSubCatPage || isSideModal ? '0' : '1.5rem'};
   border-bottom: ${({ $isCatOrSubCatPage }) =>
     $isCatOrSubCatPage
       ? `1px solid ${COLORS.GRAY.G6}`
@@ -42,8 +44,8 @@ export const StyledAccordion = styled.div<{
     margin-right: 0;
 
     &:first-child {
-      border-top: ${({ $isCatOrSubCatPage }) =>
-        !$isCatOrSubCatPage && `1px solid ${COLORS.GRAY.G7}`};
+      border-top: ${({ $isCatOrSubCatPage, isSideModal }) =>
+        !$isCatOrSubCatPage && !isSideModal && `1px solid ${COLORS.GRAY.G7}`};
     }
 
     &.accordion-container[expanded] header .chevron-icon {
@@ -63,30 +65,47 @@ const Title = styled.div<{
   isVenuePage?: boolean;
   isGlobalMb?: boolean;
   $isCatOrSubCatPage?: boolean;
+  isSideModal?: boolean;
+  isOpen?: boolean;
 }>`
   display: grid;
   grid-template-columns: 1fr auto;
   grid-column-gap: 0.625rem;
-  ${({ isVenuePage, $isCatOrSubCatPage }) => {
+  ${({ isVenuePage, $isCatOrSubCatPage, isSideModal }) => {
     switch (true) {
       case $isCatOrSubCatPage:
         return expandFontToken(FONTS.HEADING_REGULAR);
+      case isSideModal:
+        return expandFontToken(FONTS.HEADING_LARGE);
       case isVenuePage:
         return expandFontToken(FONTS.SUBHEADING_LARGE);
       default:
         return expandFontToken(FONTS.HEADING_SMALL);
     }
   }}
+
   ${({ isGlobalMb }) => isGlobalMb && `font-size: 1rem;`}
 
   .question-text {
     cursor: pointer;
   }
+  .state-icon {
+    ${({ isOpen, isSideModal }) =>
+      isSideModal && isOpen && `transform: rotate(180deg);`}
+  }
 
   @media (max-width: 768px) {
-    ${({ isVenuePage, $isCatOrSubCatPage }) =>
-      (isVenuePage || $isCatOrSubCatPage) &&
-      expandFontToken(FONTS.SUBHEADING_REGULAR)}
+    ${({ isVenuePage, isSideModal, $isCatOrSubCatPage }) => {
+      switch (true) {
+        case isVenuePage:
+        case $isCatOrSubCatPage:
+          return expandFontToken(FONTS.SUBHEADING_REGULAR);
+        case isSideModal:
+          return expandFontToken(FONTS.HEADING_REGULAR);
+        default:
+          return expandFontToken(FONTS.HEADING_SMALL);
+      }
+    }}
   }
 `;
 
@@ -94,10 +113,15 @@ const ContentBlock = styled.div<{
   $isOpen: boolean;
   $isGlobalMb?: boolean;
   $isCatOrSubCatPage?: boolean;
+  isSideModal?: boolean;
 }>`
   display: ${({ $isOpen }) => ($isOpen ? 'grid' : 'none')};
   ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `grid-row-gap: 1rem;`}
   ${({ $isCatOrSubCatPage }) => $isCatOrSubCatPage && `padding-top: 1rem;`}
+  * {
+    ${({ isSideModal }) =>
+      isSideModal && expandFontToken(FONTS.PARAGRAPH_LARGE)}
+  }
 
   ${({ $isCatOrSubCatPage }) =>
     $isCatOrSubCatPage &&
@@ -148,6 +172,9 @@ const ContentBlock = styled.div<{
   }
 
   @media (max-width: 768px) {
+    ul {
+      ${({ isSideModal }) => isSideModal && `padding-left: 1.5rem`}
+    }
     ${({ $isCatOrSubCatPage }) => $isCatOrSubCatPage && `padding-top: 0.5rem;`}
 
     p, ol, ul {
@@ -171,6 +198,7 @@ type AccordionProps = {
   }>;
   findBestSeatsCtaCallback?: () => void | null;
   isVenuePage?: boolean;
+  isSideModal?: boolean;
   isCatOrSubCatPage?: boolean;
 };
 
@@ -185,6 +213,7 @@ const Accordion = ({
   tabData = [],
   findBestSeatsCtaCallback,
   isVenuePage,
+  isSideModal,
   isCatOrSubCatPage,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
@@ -226,6 +255,7 @@ const Accordion = ({
       as={'div'}
       isOpen={isOpen}
       $isCatOrSubCatPage={isCatOrSubCatPage}
+      isSideModal={isSideModal}
       isGlobalMb={isGlobalMb}
     >
       <Title
@@ -236,21 +266,27 @@ const Accordion = ({
         onClick={onAccordionToggle}
         isGlobalMb={isGlobalMb}
         isVenuePage={isVenuePage}
+        isSideModal={isSideModal}
+        isOpen={isOpen}
         $isCatOrSubCatPage={isCatOrSubCatPage}
       >
         <div className="question-text">{heading}</div>
         <div className={chevronContainerClass}>
-          <Chevron
-            isActive={isOpen}
-            activeCursor={true}
-            className={'chevron-icon'}
-          />
+          <Conditional if={!isSideModal}>
+            <Chevron
+              isActive={isOpen}
+              activeCursor={true}
+              className={'chevron-icon'}
+            />
+          </Conditional>
+          <Conditional if={isSideModal}>{DOWN_CHEVRON(2)}</Conditional>
         </div>
       </Title>
       <ContentBlock
         className="answer"
         $isOpen={isOpen}
         $isGlobalMb={isGlobalMb}
+        isSideModal={isSideModal}
         $isCatOrSubCatPage={isCatOrSubCatPage}
       >
         <Conditional if={typeof content !== 'string'}>

@@ -153,6 +153,7 @@ type PriceBlockProps = {
   isLoading?: boolean;
   wrapperRef?: any;
   isMobile?: boolean;
+  showDummyScratchPrice?: boolean;
 };
 
 const PriceBlock = ({
@@ -170,6 +171,7 @@ const PriceBlock = ({
   isLoading = false,
   isMobile = false,
   wrapperRef,
+  showDummyScratchPrice = false,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -184,7 +186,9 @@ const PriceBlock = ({
     cashbackType,
     cashbackValue,
   } = listingPrice ?? {};
-  const showScratchPrice = originalPrice > finalPrice && showScratchPriceProp;
+  const showScratchPrice =
+    (originalPrice > finalPrice && showScratchPriceProp) ||
+    showDummyScratchPrice;
   const showPrefix = prefix && otherPricesExist;
   const showcashbackElm =
     (showCashback || showCashbackBlock || isSportsExperiment) &&
@@ -240,7 +244,13 @@ const PriceBlock = ({
         isSportsExperiment={isSportsExperiment}
         ref={wrapperRef}
       >
-        <span className="tour-scratch-price">
+        <span
+          className={`tour-scratch-price ${
+            showDummyScratchPrice && !(originalPrice > finalPrice)
+              ? 'dummy'
+              : ''
+          }`}
+        >
           {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
           <Conditional if={showScratchPrice}>
             <LocalisedPrice

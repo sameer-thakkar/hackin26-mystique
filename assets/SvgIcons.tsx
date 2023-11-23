@@ -2713,6 +2713,7 @@ export const CHEVRON_LEFT = (
       stroke={COLORS.GRAY.G2}
       strokeLinecap="round"
       strokeLinejoin="round"
+      strokeWidth="1"
     />
   </svg>
 );
@@ -6124,7 +6125,7 @@ export const LTT_CHEVRON_LEFT = ({
     viewBox="0 0 36 36"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="chevron-left"
+    className={`chevron-left ${disabled ? 'disabled' : ''}`}
     onClick={onClick}
   >
     <circle
@@ -6160,7 +6161,7 @@ export const LTT_CHEVRON_RIGHT = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     onClick={onClick}
-    className="chevron-right"
+    className={`chevron-right ${disabled ? 'disabled' : ''}`}
   >
     <circle
       cx="18"
@@ -6834,6 +6835,456 @@ export const REVERSIBLE_ARROW = ({
     <path
       d="M14 9.99999L10 14"
       stroke={fillColor}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const TIMINGS = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+  >
+    <g clipPath="url(#clip0_4521_37518)">
+      <path
+        d="M5.8975 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V3.5C1.5 3.23478 1.60536 2.98043 1.79289 2.79289C1.98043 2.60536 2.23478 2.5 2.5 2.5H8.5C8.76522 2.5 9.01957 2.60536 9.20711 2.79289C9.39464 2.98043 9.5 3.23478 9.5 3.5V5.5"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 11C10.1046 11 11 10.1046 11 9C11 7.89543 10.1046 7 9 7C7.89543 7 7 7.89543 7 9C7 10.1046 7.89543 11 9 11Z"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.5 1.5V3.5"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3.5 1.5V3.5"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M1.5 5.5H9.5"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 8.24805V9.00005L9.5 9.50005"
+        stroke="#666666"
+        strokeWidth="0.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4521_37518">
+        <rect width="12" height="12" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const LANDMARK_GRADIENT = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <rect
+      x="2"
+      y="5"
+      width="12"
+      height="10"
+      fill="url(#paint0_linear_5945_27922)"
+    />
+    <path
+      d="M7.87033 1.58343C7.94938 1.53261 8.05083 1.53261 8.12989 1.58343L14.3126 5.55812C14.5141 5.68765 14.4224 6 14.1829 6H1.81717C1.57763 6 1.48589 5.68764 1.68739 5.55812L7.87033 1.58343Z"
+      fill="url(#paint1_linear_5945_27922)"
+      stroke="url(#paint2_linear_5945_27922)"
+    />
+    <path
+      d="M1.5 14.5H14.5"
+      stroke="url(#paint3_linear_5945_27922)"
+      strokeLinecap="round"
+    />
+    <path
+      d="M13.5 12.5V8"
+      stroke="url(#paint4_linear_5945_27922)"
+      strokeLinecap="round"
+    />
+    <path
+      d="M6 12.5V8"
+      stroke="url(#paint5_linear_5945_27922)"
+      strokeLinecap="round"
+    />
+    <path
+      d="M10 12.5V8"
+      stroke="url(#paint6_linear_5945_27922)"
+      strokeLinecap="round"
+    />
+    <path
+      d="M2.5 12.5V8"
+      stroke="url(#paint7_linear_5945_27922)"
+      strokeLinecap="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_5945_27922"
+        x1="8"
+        y1="5"
+        x2="8"
+        y2="15"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#CB98FF" />
+        <stop offset="1" stopColor="#E4C9FF" />
+      </linearGradient>
+      <linearGradient
+        id="paint1_linear_5945_27922"
+        x1="11"
+        y1="6"
+        x2="6"
+        y2="2"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#BA75FF" />
+        <stop offset="1" stopColor="#F7D9FF" />
+      </linearGradient>
+      <linearGradient
+        id="paint2_linear_5945_27922"
+        x1="10"
+        y1="3.5"
+        x2="8"
+        y2="6"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#6600CC" />
+        <stop offset="1" stopColor="#A851FF" />
+      </linearGradient>
+      <linearGradient
+        id="paint3_linear_5945_27922"
+        x1="8"
+        y1="14.5"
+        x2="8"
+        y2="15.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#6600CC" />
+        <stop offset="1" stopColor="#D6ADFF" />
+      </linearGradient>
+      <linearGradient
+        id="paint4_linear_5945_27922"
+        x1="14"
+        y1="8"
+        x2="14"
+        y2="12.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#9232F2" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+      <linearGradient
+        id="paint5_linear_5945_27922"
+        x1="6.5"
+        y1="8"
+        x2="6.5"
+        y2="12.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#9232F2" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+      <linearGradient
+        id="paint6_linear_5945_27922"
+        x1="10.5"
+        y1="8"
+        x2="10.5"
+        y2="12.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#9232F2" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+      <linearGradient
+        id="paint7_linear_5945_27922"
+        x1="3"
+        y1="8"
+        x2="3"
+        y2="12.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#9232F2" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export const FREQUENCY = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+  >
+    <g clipPath="url(#clip0_4521_37530)">
+      <path
+        d="M1.12109 6.08344H3.82943L5.9961 10.4168V1.75012L8.16277 6.08344H10.8711"
+        stroke="#666666"
+        strokeWidth="0.749999"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4521_37530">
+        <rect width="12" height="12" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const MAP_GRADIENT = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <path
+      d="M1 4.54545V14.7273L5.45455 12.1818L10.5455 14.7273L15 12.1818V2L10.5455 4.54545L5.45455 2L1 4.54545Z"
+      fill="url(#paint0_linear_5118_6330)"
+      stroke="url(#paint1_linear_5118_6330)"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M5.45441 2V12.1818"
+      stroke="url(#paint2_linear_5118_6330)"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M10.5456 4.54565V14.7275"
+      stroke="url(#paint3_linear_5118_6330)"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_5118_6330"
+        x1="8"
+        y1="2"
+        x2="8"
+        y2="14.7273"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#CF9EFF" />
+        <stop offset="1" stopColor="#E3C6FF" />
+      </linearGradient>
+      <linearGradient
+        id="paint1_linear_5118_6330"
+        x1="8"
+        y1="2"
+        x2="8"
+        y2="14.7273"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#B56BFF" />
+        <stop offset="1" stopColor="#6701CD" />
+      </linearGradient>
+      <linearGradient
+        id="paint2_linear_5118_6330"
+        x1="5.95441"
+        y1="2"
+        x2="5.95441"
+        y2="12.1818"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#B369FE" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+      <linearGradient
+        id="paint3_linear_5118_6330"
+        x1="11.0456"
+        y1="4.54565"
+        x2="11.0456"
+        y2="14.7275"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#A95AF7" />
+        <stop offset="1" stopColor="#6600CC" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export const DURATION = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+  >
+    <g clipPath="url(#clip0_4811_32714)">
+      <path
+        d="M6.00155 10.4999C8.48679 10.4999 10.5014 8.48518 10.5014 5.99994C10.5013 3.51469 8.48663 1.5 6.00139 1.5C3.51615 1.5 1.5015 3.51469 1.50155 5.99994C1.50159 8.48518 3.51631 10.4999 6.00155 10.4999Z"
+        stroke="#666666"
+        strokeWidth="0.749988"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.00281 3.50006L6.00285 6.00003L7.50285 7.50001"
+        stroke="#666666"
+        strokeWidth="0.749988"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4811_32714">
+        <rect
+          width="11.9998"
+          height="11.9998"
+          fill="white"
+          transform="matrix(1 0 1.80437e-05 1 0 6.10352e-05)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const BADGE = (children: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="120"
+    height="28"
+    viewBox="0 0 120 28"
+    fill="none"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M120 0H0L0.603015 5.25H0.603058L2.47542 20.9475C2.95531 24.9708 6.36733 28 10.4191 28H108.809C112.716 28 116.051 25.1778 116.698 21.3247L119.397 5.25H119.397L120 0Z"
+      fill="url(#paint0_linear_5130_3338)"
+    />
+
+    <text x="28" y="19" fontSize="14" font-color="white" fill="white">
+      {children}
+    </text>
+    <defs>
+      <linearGradient
+        id="paint0_linear_5130_3338"
+        x1="3.95723e-07"
+        y1="3.06251"
+        x2="116.836"
+        y2="12.0555"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#E5006E" />
+        <stop offset="1" stopColor="#FF66AF" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export const TRIANGLE = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="7"
+    viewBox="0 0 10 7"
+    fill="none"
+  >
+    <path d="M5 0L0.23686 6.75H9.76314L5 0Z" fill="#660031" />
+  </svg>
+);
+
+export const DROPDOWN_TRIANGLE = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="7"
+    viewBox="0 0 10 7"
+    fill="none"
+  >
+    <path
+      d="M4.8493 6.32543C4.92906 6.41752 5.07192 6.41752 5.15167 6.32543L9.91005 0.830931C10.0222 0.701402 9.93021 0.5 9.75886 0.5H0.242117C0.0707662 0.5 -0.0212447 0.701402 0.0909305 0.830931L4.8493 6.32543Z"
+      fill="#666666"
+    />
+  </svg>
+);
+
+export const HO_LOGO = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="27"
+    height="28"
+    viewBox="0 0 27 28"
+    fill="none"
+  >
+    <circle cx="13.5" cy="14" r="13.5" fill="#8000FF" />
+  </svg>
+);
+
+export const DOWN_CHEVRON = (strokeWidth = 1) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M1.33329 4.66675L7.99996 11.3334L14.6666 4.66675"
+      stroke={COLORS.GRAY.G2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={strokeWidth}
+    />
+  </svg>
+);
+
+export const DIAGONAL_ARROW = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+  >
+    <path
+      d="M5.07112 13.5561L13.5564 5.0708"
+      stroke="#444444"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M5.07109 5.07084H13.5564V13.5561"
+      stroke="#444444"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

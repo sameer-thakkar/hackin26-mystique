@@ -53,7 +53,7 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
   return (
     <React.Fragment>
       <Swiper {...restProps} modules={modules}>
-        {children.map((element, index) =>
+        {children?.map((element, index) =>
           element ? <SwiperSlide key={index}>{element}</SwiperSlide> : null
         )}
         <Conditional if={nextButton && showNavigation}>

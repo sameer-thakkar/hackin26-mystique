@@ -9,6 +9,7 @@ import Clarity from 'components/common/Clarity';
 import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
+import { getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
@@ -25,10 +26,10 @@ import {
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
-  PAGE_TYPES,
   PAGETYPE_BY_CUSTOMTYPE,
   RTL_LANGUAGE_CODES,
   SENTRY_TAGS,
+  TEMPLATES,
 } from 'const/index';
 import 'public/global.css';
 
@@ -149,8 +150,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       bestDiscount,
     });
 
-    const { title } = CMSContent?.data ?? {};
+    const { title, refs = {} } = CMSContent?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
+    const isHOHO = refs?.productCardData?.template === TEMPLATES.HOHO;
     const { isSubCategoryPage } = catAndSubCatPageData || {};
 
     let primaryCollectionId;
@@ -223,21 +225,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       CMSContent?.data?.refs?.productCardData?.template ===
       AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
 
-    const getPageType = () => {
-      switch (true) {
-        case isCityPageMB:
-          return PAGE_TYPES.CITY_PAGE;
-        case isCatOrSubCatPage && !isSubCategoryPage:
-          return PAGE_TYPES.CATEGORY_PAGE;
-        case isCatOrSubCatPage && isSubCategoryPage:
-          return PAGE_TYPES.SUB_CATEGORY_PAGE;
-        case isAirportTransferMB:
-          return PAGE_TYPES.AIRPORT_TRANSFERS;
-        default:
-          return pageType;
-      }
-    };
-
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
       [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
@@ -247,7 +234,14 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
       [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getPageType(),
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getAnalyticsPageType({
+        isCityPageMB,
+        isHOHO,
+        isCatOrSubCatPage,
+        isSubCategoryPage,
+        isAirportTransferMB,
+        defaultType: pageType,
+      }),
     });
     set(metaAtom, {
       city: primaryCity,

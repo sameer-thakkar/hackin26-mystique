@@ -3,19 +3,21 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const StyledReviewsContainer = styled.div`
+export const StyledReviewsContainer = styled.div<{ noMargin?: boolean }>`
   max-width: 75rem;
-  margin: 5rem auto;
+  margin: ${({ noMargin }) => (noMargin ? '2rem auto' : '5rem auto')};
 
   .swiper {
     margin-top: 2rem;
+    max-width: calc(100vw - (5.46vw * 2));
   }
 
   @media (max-width: 768px) {
-    margin: 4rem 0;
+    margin: ${({ noMargin }) => (noMargin ? '2rem 0' : '4rem 0')};
 
     .swiper {
-      margin: 1.5rem 1.5rem 0 1.5rem;
+      margin: ${({ noMargin }) =>
+        noMargin ? '1.5rem 0 0' : '1.5rem 1.5rem 0 1.5rem'};
     }
   }
 `;

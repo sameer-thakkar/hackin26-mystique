@@ -41,6 +41,7 @@ import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
+  parseVariantsData,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
@@ -84,6 +85,7 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   RESOURCE_TYPE,
   SLICE_TYPES,
+  TEMPLATES,
   THEMES,
   TLANGUAGELOCALE,
   VIENNA_CONCERT_UID,
@@ -415,7 +417,7 @@ export const getMicrositeDocument = async ({
             tagged_content_type,
           };
 
-          let allShowPages, productCardData;
+          let allShowPages, productCardData, topAttractionsData;
           if (isEntertainmentMb) {
             allShowPages = await fetchAllMatchingDocs({
               query: [
@@ -523,6 +525,16 @@ export const getMicrositeDocument = async ({
                     lang: 'en-us',
                   })) || {};
                 productCardData = data;
+                const { template, city, sub_category: subcategoryId } =
+                  productCardData || {};
+                const { cityCode: cityName } = city || {};
+                if (template === TEMPLATES.HOHO && cityName && subcategoryId) {
+                  topAttractionsData = await getTopAttractionsDoc({
+                    cityName,
+                    subcategoryId,
+                    lang,
+                  });
+                }
               } catch (e) {
                 Sentry.captureException(e);
                 sendLog({
@@ -553,6 +565,8 @@ export const getMicrositeDocument = async ({
             completeMicrosite.data.data.secondary_footer?.id || '';
           const contentSectionId =
             completeMicrosite.data.data.content_framework.id || '';
+          const contentSectionTreatmentId =
+            completeMicrosite.data.data.content_framework_treatment?.id || '';
           const commonHeaderId =
             completeMicrosite.data.data.common_header_ref?.id ||
             baseLangData.data.common_header_ref?.id ||
@@ -561,6 +575,7 @@ export const getMicrositeDocument = async ({
           const linkedRefIDs = [];
           linkedRefIDs.push(footerID);
           linkedRefIDs.push(contentSectionId);
+          linkedRefIDs.push(contentSectionTreatmentId);
           linkedRefIDs.push(commonHeaderId);
           linkedRefIDs.push(secondaryFooterId);
           const refArray = await getRefsArrayByIds(linkedRefIDs, req);
@@ -570,6 +585,9 @@ export const getMicrositeDocument = async ({
             contentFramework,
             secondaryFooter,
           } = refsArrayToObject(refArray);
+          const contentFrameworkTreatment = refArray?.find(
+            (ref: Record<string, any>) => ref?.id === contentSectionTreatmentId
+          );
 
           let canonicalLink = strValues?.canonical_link;
           try {
@@ -593,12 +611,16 @@ export const getMicrositeDocument = async ({
               refs: {
                 commonFooter,
                 contentFramework,
+                contentFrameworkTreatment,
                 commonHeader,
                 secondaryFooter,
                 productCardData,
               },
               data: {
                 ...completeMicrosite.data.data,
+                ...(topAttractionsData && {
+                  topAttractionsData,
+                }),
                 ...strValues,
                 ...objValues,
                 ...arrValues,
@@ -1888,6 +1910,7 @@ export const getPageData = async ({
 
     if (ContentType === CUSTOM_TYPES.MICROSITE) {
       let collectionDetails: CollectionDetails | Object = {};
+      let finalTgids: Array<number | string> = [];
       const { data } = CMSContent || {};
       const { refs, data: CMSData } = data || {};
       const { contentFramework, productCardData } = refs || {};
@@ -1922,7 +1945,9 @@ export const getPageData = async ({
             slices: contentFrameworkData?.body,
           })
         : {};
-      let categoryTourListData, bannerImageData;
+      let categoryTourListData: Record<string, any> = {};
+      let variantsData: Array<Record<string, any>> = [];
+      let bannerImageData, routeDetails;
       const hasCategoryTourListV1 = Object.keys(localisedCategoryTourListV1)
         ?.length;
       const hasCategoryTourListV2 = Object.keys(categoryTourListV2)?.length;
@@ -1948,6 +1973,15 @@ export const getPageData = async ({
           const subCatId = firstTGID?.primarySubCategory?.id;
           const categoryId = CATEGORY_IDS?.[taggedCategory];
 
+          if (productCardData?.template === TEMPLATES.HOHO) {
+            variantsData = await parseVariantsData({
+              finalTgids: categoryTourListData?.finalTgids || [],
+              currencyCode: categoryTourListData?.activeCurrency?.code,
+              language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+              cookies,
+            });
+          }
+
           if (isCollectionMB(taggedMbType)) {
             bannerImageData = await fetchMediaResource({
               resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -1965,6 +1999,14 @@ export const getPageData = async ({
             });
           }
           collectionDetails = categoryTourListData.collectionDetails ?? {};
+          finalTgids = categoryTourListData.finalTgids || [];
+          const { template } = productCardData || {};
+          if (template === TEMPLATES.HOHO) {
+            routeDetails = await getRouteDetailsDoc({
+              tgids: finalTgids,
+              lang: lang ?? 'en',
+            });
+          }
         } else {
           const timestampForCoralogix = Date.now();
           categoryTourListData = await categoryTourListParserV2({
@@ -2107,6 +2149,8 @@ export const getPageData = async ({
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
         cityPageParams,
+        ...(variantsData && { variantsData }),
+        ...(routeDetails && { routeDetails }),
       };
     }
     tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
@@ -2522,7 +2566,70 @@ export const getAlternateLanguageDocs = async ({
 
   return alternateLangDocs;
 };
+export const getRouteDetailsDoc = async ({
+  tgids,
+  lang = 'en',
+}: {
+  tgids: Array<number | string>;
+  lang: string;
+}): Promise<Record<string, any>> => {
+  const uidsArr = tgids?.map((el) => `${el}-route`);
+  try {
+    const { results } =
+      (await Client().query(
+        [
+          Prismic.Predicates.not(`document.tags`, ['[DEV]']),
+          Prismic.Predicates.any(`my.${CUSTOM_TYPES.HOHO_ROUTES}.uid`, uidsArr),
+        ],
+        { pageSize: 10, lang }
+      )) || {};
+    const routeData = results.reduce(
+      (acc: Record<string, any>, elem: Record<string, any>) => {
+        return {
+          ...acc,
+          [elem?.uid]: elem?.data,
+        };
+      },
+      {}
+    );
+    return routeData;
+  } catch (error) {
+    sendLog({
+      err: error,
+      message: `getRouteDetailsDoc failed. UID: ${JSON.stringify(uidsArr)}`,
+    });
+    return [];
+  }
+};
 
+export const getTopAttractionsDoc = async ({
+  cityName,
+  subcategoryId,
+  lang = 'en',
+}: {
+  cityName: string;
+  subcategoryId: number | string;
+  lang: string;
+}): Promise<Record<string, any>> => {
+  const uid = `${cityName?.toLowerCase()}-${subcategoryId}`;
+  try {
+    const topAttractionsDoc = await Client().getByUID(
+      CUSTOM_TYPES.TOP_ATTRACTIONS,
+      uid,
+      {
+        lang,
+      }
+    );
+    const { data } = topAttractionsDoc || {};
+    return data;
+  } catch (error) {
+    sendLog({
+      err: error,
+      message: `getTopAttractionsDoc failed. UID: ${uid}`,
+    });
+    return {};
+  }
+};
 export const getTopCollectionsCarouselDocs = async ({
   mbCity,
   collectionsIds,

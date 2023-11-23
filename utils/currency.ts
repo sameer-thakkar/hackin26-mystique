@@ -28,6 +28,7 @@ export type TGetLocalisedPrice = Omit<
   price: number;
   precision?: number;
   currencyList: Array<TCurrencyObj>;
+  hideCurrency?: boolean;
 };
 
 export const getCurrencyObject = (
@@ -60,6 +61,7 @@ export const getLocalisedPrice = ({
   lang = 'en',
   precision = 2,
   currencyList,
+  hideCurrency = false,
 }: TGetLocalisedPrice) => {
   try {
     if ((!price && !isNaN(price)) || !currencyCode) return '';
@@ -83,6 +85,9 @@ export const getLocalisedPrice = ({
     let formattedParts = parts.map((part) => {
       switch (part.type) {
         case 'currency':
+          if (hideCurrency) {
+            return ' ';
+          }
           if (LESSER_KNOWN_CURRENCY_CODES.includes(part.value)) {
             return part.value;
           }

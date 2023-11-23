@@ -759,5 +759,15 @@ const pl = {
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festiwale i imprezy',
   },
+  HOHO: {
+    ROUTE_DETAILS: 'Route Details',
+    MORE_DETAILS: 'More Details',
+    ROUTES_SCHEDULES: 'Routes & Schedules',
+    TOP_ATTRACTIONS: 'Top attractions covered',
+    TIMINGS: 'TIMINGS',
+    FREQUENCY: 'FREQUENCY',
+    DURATION: 'DURATION',
+    CALENDAR_FOOTNOTE: '* Wszystkie ceny są podane w {0}',
+  },
 };
 export default pl;

@@ -18,6 +18,7 @@ import {
   LanguagesUnion,
   MB_TYPES,
   NON_SUPPORTED_LANGUAGES,
+  PAGE_TYPES,
   PARTNERED_AND_SENSITIVE_COMBINATIONS,
   PRISMIC_LANG_TO_ROUTE_PARAM,
   SHOW_DATE_SELECTION_PAGE_TGIDS,
@@ -223,6 +224,7 @@ type TCreateBookingUrl = {
   tgid: string | number;
   date?: Record<string, any> | null;
   tourId?: string | null;
+  variantId?: string | null;
   promoCode?: string | null;
   biLink?: string | null;
   isMobile?: boolean;
@@ -238,6 +240,7 @@ export const createBookingURL = ({
   nakedDomain,
   tgid,
   date = null,
+  variantId = null,
   tourId = null,
   promoCode = null,
   biLink = null,
@@ -311,7 +314,8 @@ export const createBookingURL = ({
     !SHOW_DATE_SELECTION_PAGE_TGIDS.includes(Number(tgid))
   ) {
     urlObject.searchParams.set('date', date?.startDate);
-    tourId && urlObject.searchParams.set('variantId', tourId);
+    variantId && urlObject.searchParams.set('variantId', variantId);
+    tourId && urlObject.searchParams.set('tourId', tourId);
 
     date?.startTime && urlObject.searchParams.set('time', date?.startTime);
   }
@@ -901,3 +905,36 @@ export const isMBType = ({
   currentType: string;
   expectedType: string[];
 }) => expectedType.includes(currentType);
+
+type TGetAnalyticsPageType = {
+  isCityPageMB: boolean;
+  isAirportTransferMB: boolean;
+  isHOHO: boolean;
+  isCatOrSubCatPage: boolean;
+  isSubCategoryPage: boolean;
+  defaultType: string;
+};
+
+export const getAnalyticsPageType = ({
+  isCityPageMB,
+  isHOHO,
+  isAirportTransferMB,
+  isCatOrSubCatPage,
+  isSubCategoryPage,
+  defaultType,
+}: TGetAnalyticsPageType) => {
+  switch (true) {
+    case isCityPageMB:
+      return PAGE_TYPES.CITY_PAGE;
+    case isHOHO:
+      return PAGE_TYPES.HOHO;
+    case isAirportTransferMB:
+      return PAGE_TYPES.AIRPORT_TRANSFERS;
+    case isCatOrSubCatPage && !isSubCategoryPage:
+      return PAGE_TYPES.CATEGORY_PAGE;
+    case isCatOrSubCatPage && isSubCategoryPage:
+      return PAGE_TYPES.SUB_CATEGORY_PAGE;
+    default:
+      return defaultType;
+  }
+};

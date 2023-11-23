@@ -39,6 +39,33 @@ to {
 }
 `;
 
+const moveInRight = keyframes`
+from {
+  transform: translateX(100%);
+}
+to {
+  transform: translateX(0);
+}
+`;
+
+const moveOutLeft = keyframes`
+from {
+  transform: translateX(0);
+}
+to {
+  transform: translateX(100%);
+}
+`;
+
+const moveInTop = keyframes`
+from {
+  bottom: -100%;
+}
+to {
+  bottom: 0;
+}
+`;
+
 export const StyledAsideModal = styled.div`
   position: fixed;
   top: 0;
@@ -78,7 +105,30 @@ export const StyledAsideModal = styled.div`
             animation: unset;
           }
         `
+      : sidebarType === SIDEBAR_TYPES.TOUR_GROUP_INFO
+      ? css`
+          padding: 0;
+          ::-webkit-scrollbar {
+            display: none;
+          }
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+
+          animation: ${moveInRight} 250ms ease-in-out;
+          &.closing-modal {
+            animation: ${moveOutLeft} 250ms ease-in-out;
+          }
+          @media (max-width: 768px) {
+            height: 90%;
+            animation: ${moveInTop} 250ms ease-in-out;
+            overflow-x: hidden;
+            &.closing-modal {
+              animation: unset;
+            }
+          }
+        `
       : ``}
+      
   background: ${COLORS.BRAND.WHITE};
   z-index: 100;
   @media (max-width: 768px) {
@@ -102,6 +152,16 @@ export const StyledAsideModal = styled.div`
           overflow-y: unset;
           max-width: unset;
         `;
+        case SIDEBAR_TYPES.TOUR_GROUP_INFO:
+          return `
+          left: unset;
+          box-sizing: border-box;
+          width: 100%;
+          border-radius: 20px 20px 0 0;
+          height: 90%;
+          bottom: 0;
+          top: unset;
+          `;
         case SIDEBAR_TYPES.COMBO_VARIANT:
           return `height: auto;
           padding: 0;
@@ -184,6 +244,19 @@ const Header = styled.div`
             stroke-width: 1.8px;
           }
         }
+      }
+      `
+      : headerType === SIDEBAR_TYPES.TOUR_GROUP_INFO
+      ? ` 
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.10);
+      margin: 0;
+      padding: 1.5rem 2.5rem;
+      align-items: center;
+      gap: 2.5rem;
+      @media (max-width: 768px) {      
+        padding: 1.5rem;
+        box-shadow: none;
+        border-bottom: 1px solid ${COLORS.GRAY.G6};
       }
       `
       : headerType === SIDEBAR_TYPES.CONTACT_US_PANEL
@@ -274,19 +347,21 @@ const CloseIcon = styled.div`
 `;
 
 const Title = styled.div`
-  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
-
-  ${({ sidebarType }: { sidebarType: string }) =>
-    sidebarType === SIDEBAR_TYPES.CONTACT_US_PANEL
-      ? `${expandFontToken(FONTS.HEADING_SMALL)}`
-      : ``}
-      
+  ${({ sidebarType }) => {
+    switch (sidebarType) {
+      case SIDEBAR_TYPES.CONTACT_US_PANEL:
+        return expandFontToken(FONTS.HEADING_SMALL);
+      case SIDEBAR_TYPES.TOUR_GROUP_INFO:
+        return expandFontToken(FONTS.DISPLAY_SMALL);
+      default:
+        return expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY);
+    }
+  }}
   @media (max-width: 768px) {
     ${({ sidebarType }: { sidebarType: string }) =>
-      sidebarType === SIDEBAR_TYPES.SIDE_NAV
-        ? `
-    ${expandFontToken(FONTS.HEADING_SMALL)}`
-        : ``}
+      (sidebarType === SIDEBAR_TYPES.SIDE_NAV ||
+        sidebarType === SIDEBAR_TYPES.TOUR_GROUP_INFO) &&
+      expandFontToken(FONTS.HEADING_SMALL)}
   }
 `;
 
@@ -344,6 +419,26 @@ const ModalContent = styled.div`
         border-radius: 1000px;
         background-color: ${COLORS.GRAY.G4A};
       }`
+      : sidebarType === SIDEBAR_TYPES.TOUR_GROUP_INFO
+      ? `
+      padding: 0 1.875rem 1.25rem 2.5rem;
+      overflow-y: scroll;
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        border: 4px solid ${COLORS.BRAND.WHITE};
+        border-radius: 1000px;
+        background-color: ${COLORS.GRAY.G4A};
+      }
+      @media (max-width: 768px) {
+      padding: 0 0.875rem 4.25rem 1.5rem;
+      li {
+        ${expandFontToken(FONTS.LIST_REGULAR)}
+        margin-bottom: 0.5rem;
+      }
+      }
+      `
       : ``}
 `;
 
@@ -375,6 +470,7 @@ const AsideModal = ({
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(active);
   const scrollRef = useRef(null);
   const [scrollDetails, setScrollDetails] = useState({
     percentage: 0,
@@ -442,6 +538,7 @@ const AsideModal = ({
     if ((e as any)?.target) {
       (e as any).stopPropagation();
     }
+    setIsOpen(!active);
     if (!options.triggeredByPopstate) {
       if (isQueryRestore) {
         //go to landing page
@@ -467,23 +564,31 @@ const AsideModal = ({
     if (onCloseCallback) onCloseCallback();
     closeModal();
   };
-  const onCloseAll = () => {
+
+  const onCloseAll = (delay = 0) => {
+    setIsOpen(!active);
+    if (isMobile) window.scrollTo(0, scrollY);
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     container.current.classList.remove('scroll-lock');
-    if (isMobile) window.scrollTo(0, scrollY);
-    resetAside();
+    setTimeout(() => {
+      resetAside();
+    }, delay);
   };
+
+  const closeDelay =
+    type === SIDEBAR_TYPES.TOUR_GROUP_INFO && !isMobile ? 250 : 0;
 
   return container.current && active
     ? createPortal(
         <>
-          <Mask onClick={onCloseAll} />
+          <Mask onClick={() => onCloseAll(closeDelay)} />
           <StyledAsideModal
             // @ts-expect-error TS(2769): No overload matches this call.
             windowHeight={windowHeight}
             sidebarType={type}
             width={width}
             sidePadding={sidePadding}
+            className={!isOpen ? 'closing-modal' : ''}
           >
             <Header
               // @ts-expect-error TS(2769): No overload matches this call.
@@ -512,8 +617,9 @@ const AsideModal = ({
                     [
                       SIDEBAR_TYPES.SIDE_NAV,
                       SIDEBAR_TYPES.CONTACT_US_PANEL,
+                      SIDEBAR_TYPES.TOUR_GROUP_INFO,
                     ].includes(type)
-                      ? onCloseAll
+                      ? () => onCloseAll(closeDelay)
                       : onClose
                   }
                   sidebarType={type}

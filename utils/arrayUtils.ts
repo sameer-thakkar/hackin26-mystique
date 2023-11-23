@@ -27,3 +27,11 @@ export const groupBy = (array: Record<string, any>[], key: string) => {
     return acc;
   }, {});
 };
+
+export const arrayMedian = (arr: Array<any>) => {
+  const half = Math.floor(arr.length / 2);
+  arr.sort((a, b) => a - b);
+
+  if (arr.length % 2) return arr[half];
+  return (arr[half - 1] + arr[half]) / 2.0;
+};

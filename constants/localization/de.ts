@@ -752,6 +752,8 @@ const de = {
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Hilfe mit Gepäck',
+    TOP_ATTRACTIONS: 'Top-Attraktionen inklusive',
+    FREQ_DEP_MULTI_ROUTE: 'Häufige Abfahrten auf mehreren Routen',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alle',
@@ -782,6 +784,24 @@ const de = {
     TRAILERS: 'Alle Trailer',
     GET_YOUR_TICKETS: 'Tickets buchen',
     POPULAR_SHOWS: 'Beliebte Shows',
+  },
+  HOHO: {
+    HOHO: 'Hop-on Hop-off Tickets',
+    ROUTE_DETAILS: 'Details zur Route',
+    MORE_DETAILS: 'Weitere Infos',
+    ROUTES_SCHEDULES: 'Routen und Fahrpläne',
+    VALIDITY: 'Gültig für 1 Tag',
+    VALIDITY_NOTE:
+      'Ihr Erlebnis ist für {0} Kalendertag/e gültig. Wenn Sie Ihr Ticket für den 06.05.2023 buchen, ist es bis zum 06.05.2023 um 21:00 Uhr PST gültig.',
+    BESTSELLER: 'Bestseller',
+    SEE_ALL: 'Alle anzeigen',
+    TIMINGS: 'FAHRZEITEN',
+    FREQUENCY: 'HÄUFIGKEIT',
+    DURATION: 'DAUER',
+    STARTING_LOCATION: 'Startpunkt',
+    TOP_ATTRACTIONS: 'Top-Sehenswürdigkeiten der Route',
+    CALENDAR_FOOTNOTE: '* Alle Preise sind in {0}',
+    GOT_IT: 'Alles klar',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Privattransfers',

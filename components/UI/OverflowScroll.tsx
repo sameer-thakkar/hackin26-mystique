@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div<{ $gap: number; $unsetWrapperMargin: boolean }>`
+const Wrapper = styled.div<{
+  sidePadding?: number;
+  wrapperMargin?: number;
+  $gap: number;
+  $unsetWrapperMargin: boolean;
+}>`
   display: flex;
   ${({ $gap }) => $gap && `gap: ${$gap}rem;`}
   overflow-x: auto;
   overflow-y: hidden;
-  margin: ${({ $unsetWrapperMargin }) =>
-    $unsetWrapperMargin ? '0' : '0 -1rem'};
+  padding: 0 ${({ sidePadding }) => sidePadding}px;
+  margin: ${({ $unsetWrapperMargin, wrapperMargin }) =>
+    $unsetWrapperMargin ? '0' : `0 ${wrapperMargin}px`};
   max-width: calc(100vw - 2rem);
   padding: 0 1rem;
 
@@ -34,6 +40,8 @@ const OverflowScroll: React.FC<{
   children: React.ReactNode[];
   minWidthChild?: string;
   marginBottom?: number;
+  wrapperPadding?: number;
+  wrapperMargin?: number;
   unsetWrapperMargin?: boolean;
   unsetChildrenMargin?: boolean;
   unsetChildrenPadding?: boolean;
@@ -42,13 +50,20 @@ const OverflowScroll: React.FC<{
   children,
   minWidthChild = null,
   marginBottom = 0,
+  wrapperPadding = 16,
+  wrapperMargin = -16,
   unsetWrapperMargin = false,
   unsetChildrenMargin = false,
   unsetChildrenPadding = false,
   gap = 0,
 }) => {
   return (
-    <Wrapper $gap={gap} $unsetWrapperMargin={unsetWrapperMargin}>
+    <Wrapper
+      $gap={gap}
+      $unsetWrapperMargin={unsetWrapperMargin}
+      sidePadding={wrapperPadding}
+      wrapperMargin={wrapperMargin}
+    >
       {children?.map((child, index) => (
         <Child
           key={index}

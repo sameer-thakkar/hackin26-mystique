@@ -60,6 +60,7 @@ import {
 } from 'utils/helper';
 import {
   extractTabsFromHighlights,
+  filterFromHighlights,
   getMaxListItemsToShow,
   getProductCardLayout,
 } from 'utils/productUtils';
@@ -410,7 +411,7 @@ const Product = (props: any) => {
   const showScratchPrice = isScratchPriceEnabled;
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
-    : scorpioData.highlights;
+    : filterFromHighlights(scorpioData.highlights);
 
   const { highlights, tabs } = isMobile
     ? { highlights: finalHighlights, tabs: [] }
@@ -637,7 +638,7 @@ const Product = (props: any) => {
     currency,
     tgid,
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
-    tourId,
+    variantId: tourId,
     biLink,
     date:
       instantCheckout && earliestAvailability

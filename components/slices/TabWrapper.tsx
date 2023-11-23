@@ -206,11 +206,13 @@ const SlideControls = styled.div`
 `;
 
 type TabWrapperProps = {
-  heading: string;
+  heading?: string;
   slices?: Array<any>;
   sliceProps?: Object;
   description?: any[];
   tabData?: any[];
+  tabElements?: any[];
+  renderTabElements?: boolean;
   findBestSeatsCtaCallback?: () => void;
 };
 
@@ -249,30 +251,35 @@ const TabWrapper = (props: TabWrapperProps) => {
     description = [],
     tabData = [],
     findBestSeatsCtaCallback,
+    tabElements = [],
+    renderTabElements = false,
   } = props;
   const { isMobile } = useRecoilValue(appAtom);
 
   // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Obje... Remove this comment to see the full error message
-  const { isGlobalMb } = parentSliceProps;
+  const { isGlobalMb } = parentSliceProps || {};
   const defaultFromPrismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
 
-  const defaultTab = stringIdfy(
-    tabData[0]?.heading ||
-      (defaultFromPrismic[0] || slices[0])?.primary?.title ||
-      ''
-  );
-  const [activeTabId, setActiveTab] = useState(defaultTab);
-  const [activeTabIndex, setActiveTabIndex] = useState(
-    tabData.length
+  const defaultTab = renderTabElements
+    ? stringIdfy(tabElements?.[0]?.heading)
+    : stringIdfy(
+        tabData[0]?.heading ||
+          (defaultFromPrismic[0] || slices[0])?.primary?.title ||
+          ''
+      );
+  const defaultTabIndex =
+    renderTabElements || tabData.length
       ? 0
       : slices.indexOf((slice: any) =>
           legacyBooleanCheck(slice.primary.is_default)
-        ) ?? 0
-  );
+        ) ?? 0;
+  const [activeTabId, setActiveTab] = useState(defaultTab);
+  const [activeTabIndex, setActiveTabIndex] = useState(defaultTabIndex);
   let sliceProps: any = {
     activeTabId,
+    activeTabIndex,
     ...parentSliceProps,
   };
   const cityName = sliceProps?.cityName;
@@ -409,7 +416,7 @@ const TabWrapper = (props: TabWrapperProps) => {
       <>
         <TitleTextCombo noMargin={true}>
           <Conditional if={heading?.length}>
-            <h2 id={generateSidenavId(heading)}>{tabSectionHeading}</h2>
+            <h2 id={generateSidenavId(heading || '')}>{tabSectionHeading}</h2>
           </Conditional>
           {description ? <RichContent render={description} /> : null}
         </TitleTextCombo>
@@ -480,7 +487,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     <StyledTabWrapper isGlobalMb={isGlobalMb}>
       <TitleTextCombo noMargin={true}>
         <Conditional if={heading?.length}>
-          <h2 id={generateSidenavId(heading)}>{heading}</h2>
+          <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
         </Conditional>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
@@ -508,6 +515,30 @@ const TabWrapper = (props: TabWrapperProps) => {
                   {tab.heading}
                 </StyledTab>
               </div>
+            );
+          })}
+        </Conditional>
+        <Conditional if={renderTabElements}>
+          {tabElements?.map((tab: Record<string, any>, index: number) => {
+            const tabId = stringIdfy(tab.heading);
+            return (
+              <StyledTab
+                key={tabId}
+                // @ts-expect-error TS(2769): No overload matches this call.
+                isActive={index === activeTabIndex}
+                onClick={(e) =>
+                  onTabClick({
+                    tabId,
+                    heading: tab.heading,
+                    index,
+                    isScrollTab: true,
+                    scrollTarget: e.target,
+                    section: heading,
+                  })
+                }
+              >
+                {tab.heading}
+              </StyledTab>
             );
           })}
         </Conditional>
@@ -593,6 +624,9 @@ const TabWrapper = (props: TabWrapperProps) => {
               </div>
             </Conditional>
           </div>
+        </Conditional>
+        <Conditional if={renderTabElements}>
+          <div> {tabElements?.[activeTabIndex]?.children}</div>
         </Conditional>
         <Conditional if={!tabData.length}>
           {slices.map((slice, keyIndex) => {

@@ -2,16 +2,18 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
-import { LOCALISED_DATE_FORMATS } from 'const/index';
+import localeData from 'dayjs/plugin/localeData';
+import { LANGUAGE_CODE_MAP, LOCALISED_DATE_FORMATS } from 'const/index';
 import { strings } from 'const/strings';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(customParseFormat);
 dayjs.extend(duration);
+dayjs.extend(localeData);
 
 export const dateToString = (
   date: string,
-  currentLanguage = 'en',
+  currentLanguage = LANGUAGE_CODE_MAP.EN,
   dateFormat = 'DD MMM YYYY'
 ) => {
   const today = [dayjs().format('YYYY-MM-DD'), dayjs().format('DD-MM-YYYY')];
@@ -101,3 +103,33 @@ export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
       .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH)
   );
 };
+
+export const getWeekdaysShort = (locale: string) => {
+  dayjs.locale(locale || LANGUAGE_CODE_MAP.EN);
+  const dayInitials = dayjs.weekdaysShort();
+  return dayInitials;
+};
+
+export const formatToDay = (dayJSDate: any) =>
+  dayJSDate.format('ddd').replace('.', '');
+
+export const formatInMonthTitleFormat = (date: string, locale: string) =>
+  dayjs(date)
+    .locale(locale || LANGUAGE_CODE_MAP.EN)
+    .format('MMMM YYYY');
+
+export const getLastAndFirstDayOfMonthAndYear = (
+  year: number,
+  month: number,
+  isLastDayDate: boolean
+) =>
+  dayjs(
+    new Date(year, isLastDayDate ? month : month - 1, isLastDayDate ? 0 : 1)
+  ).format('YYYY-MM-DD');
+
+export const localDateToJsDate = (dateString?: string) => {
+  if (!dateString) return '';
+  return dayjs(dateString, 'YYYY-MM-DD').toDate();
+};
+export const formatDate = (date: Date, dateFormat = 'DD-MM-YYYY') =>
+  dayjs(date).format(dateFormat);

@@ -1,0 +1,250 @@
+import styled from 'styled-components';
+import { CarouselContainer } from 'UI/MediaCarousel/styles';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { HO_LOGO } from 'const/index';
+import { expandFontToken } from 'const/typography';
+
+export const TourInfoContainer = styled.div<{ lessMargin?: boolean }>`
+  max-width: 75rem;
+  margin: 2.5rem auto 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-self: stretch;
+
+  @media (max-width: 768px) {
+    margin: ${({ lessMargin }) =>
+      lessMargin ? '2rem auto 1.25rem 1.5rem;' : '3rem auto 1.25rem 1.5rem;'};
+    max-width: 90vw;
+  }
+`;
+
+export const SidePanelImageContainer = styled.div`
+  height: 13.625rem;
+  margin: 1.5rem 0 0.5rem;
+
+  ${CarouselContainer} {
+    border-radius: 8px;
+  }
+
+  img {
+    object-fit: cover;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 1rem 1.5rem;
+  background: ${COLORS.BRAND.WHITE};
+  box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+export const TourInfo = styled.div`
+  display: grid;
+  grid-template-columns: 4.188rem 1fr;
+  gap: 0.75rem;
+  align-items: center;
+
+  img {
+    border-radius: 8px;
+    object-fit: cover;
+    height: 4.188rem;
+    width: 4.188rem;
+  }
+
+  .textinfo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .timings {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    ${expandFontToken(FONTS.UI_LABEL_LARGE)}
+    color: ${COLORS.GRAY.G3}
+    margin: 0;
+  }
+
+  .vertical-divider {
+    width: 0.063rem;
+    height: 1rem;
+    align-self: end;
+    background: ${COLORS.GRAY.G5};
+  }
+
+  .details-container, .pills-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  h2 {
+    margin: 0;
+    ${expandFontToken(FONTS.HEADING_LARGE)}
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 5rem 1fr;
+
+    img {
+      height: 5rem;
+      width: 5rem;
+    }
+
+    .textinfo-container {
+      gap: 0.25rem;
+    }
+    .details-container {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: start;
+    }
+    .pills-container {
+      flex-direction: row;
+    }
+    .timings {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    }
+    h2 {
+      ${expandFontToken(FONTS.HEADING_REGULAR)}
+    }
+  }
+ 
+`;
+export const DetailsPill = styled.div`
+  ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+  color: ${COLORS.GRAY.G3};
+  border-radius: 2rem;
+  border: 1px solid ${COLORS.GRAY.G7};
+  background: ${COLORS.GRAY.G8};
+  padding: 0.25rem 0.75rem 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+
+  svg {
+    margin-top: 0.125rem;
+  }
+
+  @media (max-width: 768px) {
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    padding: 0.125rem 0.5rem 0.1875rem 0.5rem;
+  }
+`;
+
+export const SwiperControls = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+  align-items: center;
+
+  svg:not(.disabled):hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+  }
+
+  .prev-pill,
+  .next-pill {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+`;
+
+export const RouteInfoContainer = styled.div`
+  padding: 1.5rem 0;
+  ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
+
+  @media (max-width: 768px) {
+    padding: 0;
+    ${expandFontToken(FONTS.LIST_REGULAR)}
+
+    .tab {
+      ${expandFontToken(FONTS.SUBHEADING_LARGE)}
+    }
+  }
+`;
+
+export const TourRouteInfo = styled.div`
+  img {
+    margin: 1rem auto 1.5rem;
+    border-radius: 8px;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    height: 22.063rem;
+  }
+  ul:not(.attraction-list) {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  .attraction-list {
+    position: relative;
+    list-style-type: none;
+  }
+
+  .attraction-list::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: ${COLORS.GRAY.G7};
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    margin: 5px 0 15px -2.5px;
+  }
+
+  .container {
+    position: relative;
+    width: 50%;
+    padding-bottom: 1rem;
+  }
+
+  .starting-text {
+    color: ${COLORS.GRAY.G4};
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+  }
+  .attraction-name {
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+  }
+
+  .container:first-child::before {
+    content: url(${HO_LOGO});
+    position: absolute;
+    top: 5px;
+    left: -34px;
+  }
+
+  .container:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: ${COLORS.PURPS.SECONDARY};
+    border-radius: 50%;
+    left: -25.5px;
+    margin: 5px 0px;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      height: 12.5rem;
+    }
+  }
+`;

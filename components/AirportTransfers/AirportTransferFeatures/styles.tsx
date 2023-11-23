@@ -97,7 +97,7 @@ export const StyledGradientContainer = styled.div`
 `;
 
 export const StyledHeaderSection = styled.div`
-  width: 75rem;
+  width: 100%;
   max-width: 75rem;
   margin: 0 auto;
 

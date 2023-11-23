@@ -105,3 +105,11 @@ export const CloseIcon = styled.div`
   top: 1.75rem;
   right: 1.5rem;
 `;
+
+export const ButtonWrapper = styled.div`
+  padding: 1rem 1.5rem;
+  background: ${COLORS.BRAND.WHITE};
+  box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+`;

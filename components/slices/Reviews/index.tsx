@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import type Swiper from 'swiper';
+import { StyledHeaderSection } from 'components/AirportTransfers/AirportTransferFeatures/styles';
+import { StyledReviewsContainer } from 'components/AirportTransfers/Review/styles';
+import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
+import { SECTION_NAMES } from 'components/HOHO/constants';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { ReviewsProps } from 'components/slices/Reviews/interface';
 import {
@@ -23,12 +28,39 @@ import {
 } from 'components/slices/Reviews/styles';
 import Image from 'UI/Image';
 import Rating from 'UI/Rating';
+import useOnScreen from 'hooks/useOnScreen';
+import { genUniqueId } from 'utils';
 import { generateSidenavId, truncate } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FLAGS_FOLDER_URL } from 'const/index';
+import { ArrowCircleRight } from 'assets/airportTransfers';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Slider = dynamic(() => import('UI/Slider'));
+const SwiperWrapper = dynamic(() => import('components/Swiper'));
+const SWIPER_BREAKPOINTS = {
+  0: {
+    slidesPerView: 1,
+    spaceBetween: 12,
+  },
+  768: {
+    slidesPerView: 2,
+    spaceBetween: 16,
+  },
+  1024: {
+    slidesPerView: 3,
+    spaceBetween: 18,
+  },
+  1440: {
+    slidesPerView: 3,
+    spaceBetween: 24,
+  },
+};
+
+const swiperAutoPlayConfig = {
+  delay: 2000,
+  disableOnInteraction: false,
+};
 dayjs.extend(relativeTime);
 
 /**
@@ -64,6 +96,7 @@ const Reviews: React.FC<ReviewsProps> = ({
   title = '',
   reviews,
   isMobile,
+  showNewDesign = false,
 }) => {
   const reviewSlides = reviews
     .filter((review) => !!review.review_text?.length)
@@ -99,8 +132,111 @@ const Reviews: React.FC<ReviewsProps> = ({
       };
     });
 
-  return (
-    <StyledReviews reviewType={type}>
+  const containerRef = useRef(null);
+  const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
+  const [swiper, setSwiper] = useState<Swiper | null>(null);
+  const [isSwiperEnd, setIsSwiperEnd] = useState(false);
+  const [isSwiperStart, setIsSwiperStart] = useState(true);
+  const handleSlideChange = () => {
+    if (!swiper) {
+      return;
+    }
+
+    setIsSwiperEnd(swiper?.isEnd ?? false);
+    setIsSwiperStart(swiper?.isBeginning ?? false);
+  };
+
+  useEffect(() => {
+    if (isIntersecting) {
+      trackPageSection({ section: SECTION_NAMES.REVIEWS });
+    }
+  }, [isIntersecting]);
+
+  const getReviewSlides = () => {
+    return reviewSlides.map(
+      ({
+        reviewText,
+        reviewerName,
+        reviewerSubtext,
+        reviewerCountry,
+        footerText,
+        imageUrl,
+        imageAlt,
+        rating,
+        ratingDate,
+      }) => (
+        <Review key={genUniqueId()} showNewDesign={showNewDesign}>
+          <ReviewContent>
+            <ReviewTop>
+              <Reviewer>
+                <ReviewerImage>
+                  <Image url={imageUrl} alt={imageAlt} height={48} width={48} />
+                </ReviewerImage>
+                <ReviewerName>{reviewerName}</ReviewerName>
+                <ReviewerSubtext>
+                  <Conditional if={reviewerCountry}>
+                    <ReviewerCountry>
+                      <Image
+                        url={`${FLAGS_FOLDER_URL}${reviewerCountry}.svg`}
+                        alt={reviewerCountry}
+                        height={16}
+                        width={16}
+                      />
+                    </ReviewerCountry>
+                  </Conditional>
+                  {reviewerSubtext}
+                </ReviewerSubtext>
+              </Reviewer>
+              <RatingWrapper>
+                <Rating fillColor={COLORS.BRAND.CANDY} value={rating} />
+                <RatingTime>{ratingDate}</RatingTime>
+              </RatingWrapper>
+            </ReviewTop>
+            <ReviewText>{truncate(reviewText, 300)}</ReviewText>
+          </ReviewContent>
+          <Conditional if={footerText}>
+            <ReviewFooter>
+              <HorizontalLine colorProp={COLORS.GRAY.G5} />
+              {footerText}
+            </ReviewFooter>
+          </Conditional>
+        </Review>
+      )
+    );
+  };
+
+  return showNewDesign ? (
+    <StyledReviewsContainer noMargin={true} ref={containerRef}>
+      <StyledHeaderSection>
+        <Title id={generateSidenavId(title)} showNewDesign={showNewDesign}>
+          {title}
+        </Title>
+        <div className="carousel-controls">
+          <ArrowCircleRight
+            onClick={() => swiper?.slidePrev()}
+            className={isSwiperStart ? 'disabled' : ''}
+          />
+
+          <ArrowCircleRight
+            onClick={() => swiper?.slideNext()}
+            className={isSwiperEnd ? 'disabled' : ''}
+          />
+        </div>
+      </StyledHeaderSection>
+
+      <SwiperWrapper
+        onSwiper={setSwiper}
+        onSlideChange={handleSlideChange}
+        breakpoints={SWIPER_BREAKPOINTS}
+        loop={isMobile}
+        autoplay={isMobile ? swiperAutoPlayConfig : false}
+        centeredSlides={isMobile}
+      >
+        {getReviewSlides()}
+      </SwiperWrapper>
+    </StyledReviewsContainer>
+  ) : (
+    <StyledReviews reviewType={type} ref={containerRef}>
       <Title id={generateSidenavId(title)}>{title}</Title>
       <Slider
         sliderOptions={{
@@ -110,64 +246,7 @@ const Reviews: React.FC<ReviewsProps> = ({
         nextButton={!isMobile ? CHEVRON_LEFT_CIRCLE : undefined}
         prevButton={!isMobile ? CHEVRON_LEFT_CIRCLE : undefined}
       >
-        {reviewSlides.map(
-          (
-            {
-              reviewText,
-              reviewerName,
-              reviewerSubtext,
-              reviewerCountry,
-              footerText,
-              imageUrl,
-              imageAlt,
-              rating,
-              ratingDate,
-            },
-            index
-          ) => (
-            <Review key={index}>
-              <ReviewContent>
-                <ReviewTop>
-                  <Reviewer>
-                    <ReviewerImage>
-                      <Image
-                        url={imageUrl}
-                        alt={imageAlt}
-                        height={48}
-                        width={48}
-                      />
-                    </ReviewerImage>
-                    <ReviewerName>{reviewerName}</ReviewerName>
-                    <ReviewerSubtext>
-                      <Conditional if={reviewerCountry}>
-                        <ReviewerCountry>
-                          <Image
-                            url={`${FLAGS_FOLDER_URL}${reviewerCountry}.svg`}
-                            alt={reviewerCountry}
-                            height={16}
-                            width={16}
-                          />
-                        </ReviewerCountry>
-                      </Conditional>
-                      {reviewerSubtext}
-                    </ReviewerSubtext>
-                  </Reviewer>
-                  <RatingWrapper>
-                    <Rating fillColor={COLORS.BRAND.CANDY} value={rating} />
-                    <RatingTime>{ratingDate}</RatingTime>
-                  </RatingWrapper>
-                </ReviewTop>
-                <ReviewText>{truncate(reviewText, 300)}</ReviewText>
-              </ReviewContent>
-              <Conditional if={footerText}>
-                <ReviewFooter>
-                  <HorizontalLine colorProp={COLORS.GRAY.G5} />
-                  {footerText}
-                </ReviewFooter>
-              </Conditional>
-            </Review>
-          )
-        )}
+        {getReviewSlides()}
       </Slider>
     </StyledReviews>
   );

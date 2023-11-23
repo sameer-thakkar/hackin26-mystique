@@ -65,6 +65,9 @@ const ExperienceCarousel = dynamic(() =>
 const CollectionCarousel = dynamic(() =>
   import('./GlobalMbs/Carousels/CollectionCarousel')
 );
+const StructuredCard = dynamic(() =>
+  import(/* webpackChunkName: "StructuredCard" */ './slices/StructuredCard')
+);
 
 const sliceHandler = (slice: any, props: any = {}) => {
   if (slice?.primary?.hide_slice) return null;
@@ -583,6 +586,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           type={slice.primary.type}
           reviews={slice.items}
           isMobile={props.isMobile}
+          showNewDesign={props.isHOHORevamp}
         />
       );
 
@@ -680,6 +684,34 @@ const sliceHandler = (slice: any, props: any = {}) => {
         <GoogleMap
           mapURL={slice.primary.google_map_url.url}
           isVenuePage={props.isVenuePage}
+        />
+      );
+
+    case SLICE_TYPES.STRUCTURED_CARD:
+      const {
+        intro_text,
+        outro_text,
+        timings,
+        frequency,
+        duration,
+        cta_text: structured_card_cta_text,
+        cta_url,
+        card_image_url,
+        image_alt,
+      } = slice.primary || {};
+      return (
+        <StructuredCard
+          introText={intro_text}
+          outroText={outro_text}
+          cardImageUrl={card_image_url}
+          altText={image_alt}
+          timings={timings}
+          frequency={frequency}
+          duration={duration}
+          ctaText={structured_card_cta_text}
+          ctaUrl={cta_url}
+          isMobile={props.isMobile}
+          activeTabIndex={props?.activeTabIndex}
         />
       );
 

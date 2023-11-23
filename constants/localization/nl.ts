@@ -753,6 +753,8 @@ const nl = {
     GUARANTEED_SEAT: 'Guaranteed Seat',
     ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
     LUGGAGE_ASSISTANCE: 'Hulp met bagage',
+    TOP_ATTRACTIONS: 'Topattracties inbegrepen',
+    FREQ_DEP_MULTI_ROUTE: 'Regelmatig vertrek op meerdere routes',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alles',
@@ -783,6 +785,24 @@ const nl = {
     TRAILERS: 'Alle trailers',
     GET_YOUR_TICKETS: 'Koop je tickets',
     POPULAR_SHOWS: 'Populaire shows',
+  },
+  HOHO: {
+    HOHO: 'Hop-on hop-off Tickets',
+    ROUTE_DETAILS: ' Details route ',
+    MORE_DETAILS: 'Meer informatie',
+    ROUTES_SCHEDULES: 'Routes en dienstregelingen',
+    VALIDITY: 'Geldig voor 1 dag',
+    VALIDITY_NOTE:
+      'Je ervaring is geldig voor {0} kalenderdag(en). Als je je ticket boekt voor 6 mei 2023, is je ticket geldig tot 6 mei 2023, 21.00 uur PST.',
+    BESTSELLER: 'Bestseller',
+    SEE_ALL: 'Toon alles',
+    TIMINGS: 'TIJDEN',
+    FREQUENCY: 'FREQUENTIE',
+    DURATION: 'DUUR',
+    STARTING_LOCATION: 'Startpunt',
+    TOP_ATTRACTIONS: 'Topbezienswaardigheden van de route',
+    CALENDAR_FOOTNOTE: '* Alle prijzen zijn in {0}',
+    GOT_IT: 'Begrepen',
   },
 };
 export default nl;

@@ -560,7 +560,7 @@ const TicketCard = (props: any) => {
     lang: currentLanguage,
     currency,
     tgid,
-    tourId,
+    variantId: tourId,
     biLink,
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
     date: instantCheckout && earliestAvailability ? earliestAvailability : null,

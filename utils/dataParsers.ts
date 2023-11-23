@@ -5,6 +5,7 @@ import type {
   CollectionVideos,
 } from 'components/StaticBanner/index';
 import {
+  fetchBatchedVariants,
   fetchCollection,
   fetchCollectionList,
   fetchTourGroupsByCategory,
@@ -413,6 +414,7 @@ export const categoryTourListParserV1 = async ({
         },
       };
     }, {});
+    const finalTgids = finalTours?.map((el) => el?.id);
 
     if (minPrice == Infinity) minPrice = 0;
     return {
@@ -426,6 +428,7 @@ export const categoryTourListParserV1 = async ({
       activeCurrency: currency,
       collectionDetails,
       collectionVideos,
+      finalTgids,
       minPrice,
       bestDiscount,
     };
@@ -750,4 +753,40 @@ export const getToursGlobalCollection = async ({
     orderedTours: repeatableObj,
     primaryCity,
   };
+};
+
+type TParseVariantsData = {
+  finalTgids: Array<number | string>;
+  currencyCode: string;
+  language: string;
+  cookies?: Record<string, any>;
+};
+
+export const parseVariantsData = async ({
+  finalTgids = [],
+  currencyCode,
+  language,
+  cookies = {},
+}: TParseVariantsData) => {
+  const unorderedVariants = await fetchBatchedVariants({
+    tgids: finalTgids,
+    currency: currencyCode,
+    language,
+    cookies,
+  });
+  const variantsArr: Array<Record<string, any>> = [];
+  Object.keys(unorderedVariants || {})?.forEach((el, index) =>
+    variantsArr?.push({
+      id: el,
+      data: Object.values(unorderedVariants || {})[index],
+    })
+  );
+  const orderedVariants = variantsArr?.sort((tourA, tourB) => {
+    return (
+      finalTgids?.indexOf(parseInt(tourA.id)) -
+      finalTgids?.indexOf(parseInt(tourB.id))
+    );
+  });
+
+  return orderedVariants;
 };

@@ -102,7 +102,20 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
         text: strings.BANNER_DESCRIPTORS.CULTURAL_EXPERIENCE,
       },
     ],
-    // Airport Transfers
+    '1011': [
+      {
+        icon: BANNER_DESCRIPTORS.MAP,
+        text: strings.BANNER_DESCRIPTORS.TOP_ATTRACTIONS,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.TRANSLATE,
+        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GT,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.CLOCK,
+        text: strings.BANNER_DESCRIPTORS.FREQ_DEP_MULTI_ROUTE,
+      },
+    ],
     '1019': [
       {
         icon: BANNER_DESCRIPTORS.CHECK_CIRCLE,

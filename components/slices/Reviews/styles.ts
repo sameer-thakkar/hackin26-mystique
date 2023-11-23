@@ -54,30 +54,31 @@ export const StyledReviews = styled.div`
   }
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h2<{ showNewDesign?: boolean }>`
   font-size: 24px !important;
   line-height: 28px !important;
   font-weight: unset !important;
   display: block !important;
   text-align: left;
-  padding-bottom: 2rem;
+  padding-bottom: ${({ showNewDesign }) => (showNewDesign ? '0' : '2rem')};
   ::after {
     content: unset !important;
   }
 `;
 
-export const Review = styled.div`
+export const Review = styled.div<{ showNewDesign?: boolean }>`
   border: 1px solid ${COLORS.GRAY.G7};
   border-radius: 8px;
   height: 100%;
   display: grid;
-  min-height: 15rem;
-  margin-right: 1.625rem;
+  min-height: 13rem;
+  margin-right: ${({ showNewDesign }) => (showNewDesign ? '0' : '1.625rem')};
   background: linear-gradient(
     154deg,
     rgba(255, 236, 255, 0.21) 0%,
     rgba(226, 216, 255, 0.31) 100%
   );
+
   @media (max-width: 768px) {
     margin-right: 0;
   }
@@ -121,8 +122,8 @@ export const ReviewerName = styled.div`
 `;
 
 export const ReviewerSubtext = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
+  gap: 0.25rem;
   font-size: 14px;
   line-height: 20px;
   color: ${COLORS.GRAY.G4};
@@ -156,4 +157,28 @@ export const RatingTime = styled.div`
   font-size: 12px;
   line-height: 16px;
   color: ${COLORS.GRAY.G4};
+`;
+
+export const SwiperControls = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+  align-items: center;
+
+  svg:not(.disabled):hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+  }
+
+  .prev-pill,
+  .next-pill {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
 `;
