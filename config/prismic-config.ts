@@ -27,17 +27,8 @@ export const hrefResolver = (doc: PrismicDocumentWithUID) => {
 // -- Client method to query Prismic
 // Avoids reinitializing an API connection for every query, handling instead with a Client object
 let frontClient: any;
-const CACHED_CLIENT_EXPIRY = 1000 * 60 * 15; // 15 minutes
 
 export const Client = (req = null, parentOptions: any = {}) => {
-  const cachedClient = global['prismicClient'];
-  if (
-    cachedClient &&
-    Date.now() - cachedClient?.timestamp < CACHED_CLIENT_EXPIRY
-  ) {
-    return cachedClient;
-  }
-
   if (!req && frontClient) return frontClient; // Prevents generating new instances for client side since we don't need the refreshed request object.
   const { ref } = parentOptions;
   // Reinitializes Client only if there's a req object present, which is used for Previews
@@ -48,13 +39,7 @@ export const Client = (req = null, parentOptions: any = {}) => {
   );
   const apiEndpointURL = new URL(apiEndpoint);
   if (ref) apiEndpointURL.searchParams.set('ref', ref);
-  const client = Prismic.client(apiEndpointURL.toString(), {
-    ...options,
-    apiDataTTL: CACHED_CLIENT_EXPIRY,
-    req,
-  });
-  global['prismicClient'] = Object.assign(client, { timestamp: Date.now() });
 
   // Connects to the given repository to facilitate data queries
-  return client;
+  return Prismic.client(apiEndpointURL.toString(), options);
 };
