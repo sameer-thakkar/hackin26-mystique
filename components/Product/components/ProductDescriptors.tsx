@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import Conditional from 'components/common/Conditional';
 import { TProductDescriptors } from 'components/Product/interface';
-import { TourTags } from 'components/Product/styles';
+import {
+  CancellationPolicyHoverCard,
+  TourTags,
+} from 'components/Product/styles';
 import { getDuration } from 'utils/timeUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { DESCRIPTORS } from 'const/index';
@@ -19,7 +23,14 @@ export const ProductDescriptors = ({
   isLoading = false,
   pageType = '',
   showLanguages,
+  cancellationPolicy,
+  cancellationPolicyHoverCallBack,
 }: TProductDescriptors) => {
+  const [
+    cancellationPolicyEventRecorded,
+    setCancellationPolicyEventRecorded,
+  ] = useState(false);
+
   if (isLoading)
     return (
       <TourTags horizontal={horizontal} pageType={pageType}>
@@ -41,15 +52,41 @@ export const ProductDescriptors = ({
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
           return null;
 
+        const canShowCancellationPolicyHover =
+          !horizontal &&
+          cancellationPolicy &&
+          item === DESCRIPTORS.FREE_CANCELLATION;
+
+        const onCancellationPolicyHover = () => {
+          if (
+            !canShowCancellationPolicyHover ||
+            cancellationPolicyEventRecorded
+          )
+            return;
+          cancellationPolicyHoverCallBack?.();
+          setCancellationPolicyEventRecorded(true);
+        };
+
         return (
           item && (
-            <div key={`descriptor-${index}`} className="tour-tag">
+            <div
+              key={`descriptor-${index}`}
+              className={`tour-tag ${
+                canShowCancellationPolicyHover ? 'free-cancellation' : ''
+              }`}
+              onMouseEnter={onCancellationPolicyHover}
+            >
               <DescriptorSVG />
               <Conditional if={item === DESCRIPTORS.DURATION}>
                 {getDuration({ minDuration, maxDuration, lang })}
               </Conditional>
               <Conditional if={item !== DESCRIPTORS.DURATION}>
                 {(strings.DESCRIPTORS as Record<string, string>)[item]}
+              </Conditional>
+              <Conditional if={canShowCancellationPolicyHover}>
+                <CancellationPolicyHoverCard>
+                  {cancellationPolicy}
+                </CancellationPolicyHoverCard>
               </Conditional>
             </div>
           )

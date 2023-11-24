@@ -8,6 +8,25 @@ import { CUSTOM_TYPES, THEMES } from 'const/index';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 
+export const CancellationPolicyHoverCard = styled.p`
+  background: ${COLORS.BRAND.WHITE};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 13.375rem;
+  ${expandFontToken(FONTS.PARAGRAPH_SMALL)}
+  height: max-content;
+  text-wrap: wrap;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.75rem 0 #0000001a, 0 0 0.0625rem 0 #0000001a;
+  z-index: 10;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+`;
+
 export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
   ${expandFontToken('UI/Label Regular')}
   display: grid;
@@ -49,6 +68,19 @@ export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
         ? `line-height: 1.25rem;
             color: #444444;`
         : ''}
+
+    &.free-cancellation {
+      text-decoration: underline;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        ${CancellationPolicyHoverCard} {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
   }
   @media (max-width: 768px) {
     grid-area: tags;
@@ -162,6 +194,10 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   },
   DESKTOP: {
     height: 320,
+    productcardexperiment: {
+      width: 460,
+      height: 253,
+    },
   },
 };
 
@@ -202,333 +238,10 @@ export const ctaBlockMobileStyles = (isSticky: boolean) => css`
   width: ${isSticky ? '100%' : 'auto'};
 `;
 
-interface IStyledProductCard {
-  isTicketCard: boolean;
-  isMobile: boolean;
-  isV3Design?: boolean;
-  layout?: any;
-  isNewMediaSite?: boolean;
-  isContentExpanded?: boolean;
-  collapsed?: boolean;
-  defaultOpen?: boolean;
-  $isBannerCard?: boolean;
-  $isSwipeSheetOpen?: boolean;
-}
-
-export const StyledProductCard = styled.div<IStyledProductCard>`
-  ${({ collapsed, defaultOpen, isMobile }) =>
-    collapsed && !defaultOpen && !isMobile
-      ? `
-        max-height: 344px;
-        overflow: hidden;
-      `
-      : ''}
-  background-color: white;
-  padding: ${({ isTicketCard, theme }) =>
-    isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile, isV3Design }) =>
-    (!isTicketCard || isMobile) &&
-    !isV3Design &&
-    `border: ${theme.productCards.border};
-    border-radius: 4px;`};
-  display: grid;
-
-  grid-row-gap: 24px;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: ${({ layout }) =>
-    layout.desktop.map((row: any) => `'${row}'`)};
-  ${StlyedSplit} {
-    margin: 0;
-    max-width: unset;
-    padding: 0;
-  }
-  ${HorizontalLine} {
-    grid-area: line;
-
-    ${({ theme }) => theme.productCards.lineStyles || ''};
-    margin: 0;
-  }
-
-  .more-details {
-    ${expandFontToken('Button/Medium')}
-    color: ${COLORS.TEXT.CANDY_1};
-    z-index: 1;
-    width: calc(100% - 36.6rem);
-    position: absolute;
-    bottom: 1px;
-    padding-bottom: 1.5rem;
-    ${({ isContentExpanded }) =>
-      !isContentExpanded &&
-      `background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgba(255, 255, 255, 0.88) 48.92%, #FFF 70%);
-      height: 15%;`};
-    cursor: pointer;
-    outline: none;
-    display: grid;
-    grid-auto-flow: column;
-    align-items: flex-end;
-    justify-content: start;
-    grid-gap: 8px;
-
-    .chevron::before,
-    .chevron::after {
-      top: 0.6rem;
-      background-color: ${COLORS.BRAND.CANDY};
-    }
-    @media (max-width: 768px) {
-      justify-content: left;
-    }
-  }
-  ${({ theme }) => theme.productCards?.styles?.desktop}
-
-  ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
-
-  grid-template-rows: min-content min-content min-content;
-  grid-template-columns: ${({ isTicketCard }) =>
-    isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
-  grid-auto-rows: min-content;
-  column-gap: 1.5rem;
-
-  .card-img {
-    border-radius: 0;
-  }
-
-  @media (min-width: 768px) {
-    ${TourTags} {
-      margin-top: 0;
-    }
-  }
-  @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.productCards.padding.mobile};
-    margin: 0
-      ${({ theme: { theme }, isTicketCard }) =>
-        theme !== THEMES.MIN_BLUE && !isTicketCard
-          ? '1.5rem'
-          : isTicketCard
-          ? '0'
-          : '24px'};
-    grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row: any) => `'${row}'`)};
-    width: auto;
-    grid-template-columns: 1fr;
-
-    ${({ theme }) => theme.productCards?.styles?.mobile}
-
-    .more-details {
-      margin-left: 0;
-      margin-bottom: 0;
-      ${({ isTicketCard }) =>
-        isTicketCard &&
-        `
-        padding: 0.75rem;
-        background-color: ${COLORS.GRAY.G7};
-        margin-top: 0;
-        grid-area: cta-block;
-        grid-column: 1 / 2;
-        width: 32vw;
-        border-radius: 4px;
-        color: ${COLORS.GRAY.G2};
-        position: absolute;
-        ${expandFontToken('Button/Medium')}
-        display: flex;
-        justify-content: center;
-        line-height: 125%;
-        .chevron {
-          display: none;
-        }
-      `}
-    }
-
-    .card-img {
-      width: calc(100% + 2rem);
-
-      img {
-        border-radius: 0;
-      }
-    }
-
-    .card-img img {
-      width: 100%;
-    }
-
-    
-    ${({ $isBannerCard }) =>
-      $isBannerCard &&
-      `
-        .card-img {
-          height: 22.5rem;
-          max-height: 22.5rem;
-        
-          .video-container, img {
-            height: 22.5rem;
-            width: 100%;
-          }
-        }
-      `}
-  }
-`;
-
 export const ProductHeader = styled.div`
   display: grid;
   grid-gap: 16px;
   display: contents;
-`;
-
-export const TourTitleWrapper = styled.h2<{
-  isPopup?: boolean;
-  pageType?: string;
-}>`
-  ${expandFontToken('Heading/Large')}
-  margin: 0;
-  max-width: 768px;
-  @media (max-width: 768px) {
-    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-  }
-`;
-
-export const TitleWrapper = styled.div<{
-  hasBorderedTitle?: boolean;
-  $isTicketCard?: boolean;
-}>`
-  grid-area: title;
-  ${({ hasBorderedTitle }) =>
-    hasBorderedTitle
-      ? `
-            border-bottom: 1px solid ${COLORS.GRAY.G6};
-            @media(max-width: 768px) {
-              border: none;
-            }
-          `
-      : ''}
-
-  ${({ $isTicketCard }) =>
-    !$isTicketCard &&
-    `
-    @media(max-width: 768px) {
-      margin-top: -0.5rem;
-      margin-bottom: -1rem;
-    }
-  `}
-`;
-
-export const BoosterTag = styled.div`
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 13px;
-  color: ${COLORS.BRAND.CANDY};
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  background: ${COLORS.BRAND.WHITE};
-  border-radius: 2px;
-  margin-bottom: 7px;
-  padding: 2px 4px;
-  display: inline-block;
-
-  @media (max-width: 768px) {
-    position: absolute;
-    margin-top: -2.125rem;
-    padding: 5px;
-    border-radius: 4px;
-  }
-`;
-
-export const CTAContainer = styled.div<{ pageType?: any }>`
-  grid-area: cta-combo;
-  display: grid;
-  grid-gap: 16px;
-  align-content: start;
-  @media (max-width: 768px) {
-    display: contents;
-  }
-`;
-
-export const PriceContainer = styled.div<{
-  $hasScratchPrice?: boolean;
-  pageType?: string;
-}>`
-  justify-self: center;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: end;
-  grid-column-gap: 8px;
-  justify-items: left;
-  grid-row-gap: 4px;
-  justify-self: left;
-
-  .tour-scratch-price {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: left;
-    grid-column-gap: 4px;
-    ${expandFontToken('UI/Label Small')}
-  }
-
-  .tour-price {
-    display: flex;
-    flex-direction: column;
-    ${expandFontToken('Heading/Large')}
-
-    .prefix {
-      color: ${COLORS.GRAY.G3};
-      ${expandFontToken('UI/Label Small')}
-    }
-  }
-
-  @media (max-width: 768px) {
-    grid-area: price-block;
-    margin-bottom: 0.25rem;
-    ${({ theme }) => theme.productCards.priceFontSettings.mobile}
-
-    .styled-price-block {
-      grid-column-gap: 0.25rem;
-    }
-
-    .tour-price-container .tour-price {
-      margin-right: 0;
-      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-    }
-
-    .tour-scratch-price {
-      ${expandFontToken(FONTS.SUBHEADING_SMALL)};
-    }
-
-    .savedtag-block {
-      ${expandFontToken(FONTS.MISC_TAG_REGULAR)};
-    }
-  }
-`;
-
-export const CTABlock = styled.div<{
-  isTicketCard?: boolean;
-  isSticky: boolean;
-  shouldOffset?: boolean;
-}>`
-  a {
-    text-decoration: none;
-  }
-
-  @media (max-width: 768px) {
-    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
-
-    ${({ isSticky, shouldOffset }) =>
-      isSticky &&
-      `
-        position: sticky;
-        bottom: 0;
-        transform: translateX(-1rem);
-        background: #fff;
-        bottom: env(safe-area-inset-bottom);
-        ${shouldOffset ? 'transform: translateY(2rem);' : ''}
-        background: ${COLORS.BRAND.WHITE};
-        z-index: 2;
-        padding: 1rem;
-        box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
-      `}
-
-    ${({isSticky }) => ctaBlockMobileStyles(isSticky)}
-  }
-  @media (max-width: 370px) {
-    width: 100%;
-  }
 `;
 
 export const ProductBody = styled.div<{
@@ -620,6 +333,441 @@ export const ProductBody = styled.div<{
   }
   .display-expand {
     display: grid;
+  }
+`;
+
+export const CTAContainer = styled.div<{ pageType?: any }>`
+  grid-area: cta-combo;
+  display: grid;
+  grid-gap: 16px;
+  align-content: start;
+  @media (max-width: 768px) {
+    display: contents;
+  }
+`;
+
+export const PriceContainer = styled.div<{
+  $hasScratchPrice?: boolean;
+  pageType?: string;
+}>`
+  justify-self: center;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: end;
+  grid-column-gap: 8px;
+  justify-items: left;
+  grid-row-gap: 4px;
+  justify-self: left;
+
+  .tour-scratch-price {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: left;
+    grid-column-gap: 4px;
+    ${expandFontToken('UI/Label Small')}
+  }
+
+  .tour-price {
+    display: flex;
+    flex-direction: column;
+    ${expandFontToken('Heading/Large')}
+
+    .prefix {
+      color: ${COLORS.GRAY.G3};
+      ${expandFontToken('UI/Label Small')}
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-area: price-block;
+    margin-bottom: 0.25rem;
+    ${({ theme }) => theme.productCards.priceFontSettings.mobile}
+
+    .styled-price-block {
+      grid-column-gap: 0.25rem;
+    }
+
+    .tour-price-container .tour-price {
+      margin-right: 0;
+      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+    }
+
+    .tour-scratch-price {
+      ${expandFontToken(FONTS.SUBHEADING_SMALL)};
+    }
+
+    .savedtag-block {
+      ${expandFontToken(FONTS.MISC_TAG_REGULAR)};
+    }
+  }
+`;
+
+interface IStyledProductCard {
+  isTicketCard: boolean;
+  isMobile: boolean;
+  isV3Design?: boolean;
+  layout?: any;
+  isNewMediaSite?: boolean;
+  isContentExpanded?: boolean;
+  collapsed?: boolean;
+  defaultOpen?: boolean;
+  $isBannerCard?: boolean;
+  $isSwipeSheetOpen?: boolean;
+  $isProductCardExperimentTreatmentVariant?: boolean;
+  $isAsideBarOverlay?: boolean;
+}
+
+const pcExperimentStyles = css`
+  grid-row-gap: 1rem;
+  grid-template-rows: auto 1px 1fr;
+  max-height: max-content;
+
+  .card-img {
+    width: 18rem;
+    min-height: 21.5rem;
+    height: 100%;
+    max-height: 23rem;
+  }
+`;
+
+const asideBarExperimentStyles = css`
+  max-height: none;
+  padding: 1.25rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 1rem;
+  border-radius: 0;
+
+  .card-img {
+    width: 28.75rem;
+    height: 15.8125rem;
+    max-height: 15.8125rem;
+    min-height: 15.8125rem;
+  }
+
+  ${ProductHeader} {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0.75rem;
+
+    ${NextAvailableBlock} {
+      margin-bottom: 0.25rem;
+
+      // text type not given on figma
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1rem;
+      text-align: left;
+
+      text-transform: uppercase;
+    }
+
+    ${TourTags} {
+      margin-top: 0.75rem;
+
+      .tour-tag {
+        grid-column-gap: 0.25rem;
+
+        ${CancellationPolicyHoverCard} {
+          top: 80%;
+        }
+
+        &:not(:last-child) {
+          margin: 0;
+
+          &::after {
+            content: '';
+            position: relative;
+            height: 0.75rem;
+            width: 1px;
+            background-color: ${COLORS.GRAY.G6};
+            margin-left: 0.4rem;
+            border-radius: 10px;
+            transform: translateY(2px);
+          }
+        }
+      }
+    }
+
+    ${CTAContainer} {
+      position: fixed;
+      bottom: 0;
+      background-color: white;
+      box-shadow: 0px -2px 12px 0px #5454541a;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      padding: 0.75rem 1.5rem;
+      width: 28.25rem;
+      z-index: 10;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      ${PriceContainer} {
+        .tour-price {
+          ${expandFontToken(FONTS.HEADING_REGULAR)}
+        }
+      }
+    }
+  }
+
+  ${ProductBody} {
+    padding-bottom: 6.25rem;
+  }
+`;
+
+export const StyledProductCard = styled.div<IStyledProductCard>`
+  ${({ collapsed, defaultOpen, isMobile }) =>
+    collapsed && !defaultOpen && !isMobile
+      ? `
+        max-height: 344px;
+        overflow: hidden;
+      `
+      : ''}
+  background-color: white;
+  padding: ${({ isTicketCard, theme }) =>
+    isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
+  ${({ isTicketCard, theme, isMobile, isV3Design }) =>
+    (!isTicketCard || isMobile) &&
+    !isV3Design &&
+    `border: ${theme.productCards.border};
+    border-radius: 4px;`};
+  display: grid;
+
+  grid-row-gap: 24px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: ${({ layout }) =>
+    layout.desktop.map((row: any) => `'${row}'`)};
+  ${StlyedSplit} {
+    margin: 0;
+    max-width: unset;
+    padding: 0;
+  }
+  ${HorizontalLine} {
+    grid-area: line;
+
+    ${({ theme }) => theme.productCards.lineStyles || ''};
+    margin: 0;
+  }
+
+  .more-details {
+    ${expandFontToken('Button/Medium')}
+    color: ${COLORS.TEXT.CANDY_1};
+    z-index: 1;
+    width: calc(100% - 36.6rem);
+    position: absolute;
+    bottom: 1px;
+    padding-bottom: 1.5rem;
+    ${({ isContentExpanded }) =>
+      !isContentExpanded &&
+      `background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgba(255, 255, 255, 0.88) 48.92%, #FFF 70%);
+      height: 15%;`};
+    cursor: pointer;
+    outline: none;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: flex-end;
+    justify-content: start;
+    grid-gap: 8px;
+
+    .chevron::before,
+    .chevron::after {
+      top: 0.6rem;
+      background-color: ${COLORS.BRAND.CANDY};
+    }
+    @media (max-width: 768px) {
+      justify-content: left;
+    }
+  }
+  ${({ theme }) => theme.productCards?.styles?.desktop}
+
+  ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
+  ${({ $isProductCardExperimentTreatmentVariant }) =>
+    $isProductCardExperimentTreatmentVariant && pcExperimentStyles}
+
+  grid-template-rows: min-content min-content min-content;
+  grid-template-columns: ${({ isTicketCard }) =>
+    isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
+  grid-auto-rows: min-content;
+  column-gap: 1.5rem;
+
+  .card-img {
+    border-radius: 0;
+  }
+
+
+  ${({ $isProductCardExperimentTreatmentVariant, $isAsideBarOverlay }) => {
+    if ($isProductCardExperimentTreatmentVariant)
+      return $isAsideBarOverlay ? asideBarExperimentStyles : pcExperimentStyles;
+    return null;
+  }}
+
+  @media (min-width: 768px) {
+    ${TourTags} {
+      margin-top: 0;
+    }
+  }
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.productCards.padding.mobile};
+    margin: 0
+      ${({ theme: { theme }, isTicketCard }) =>
+        theme !== THEMES.MIN_BLUE && !isTicketCard
+          ? '1.5rem'
+          : isTicketCard
+          ? '0'
+          : '24px'};
+    grid-template-areas: ${({ layout }) =>
+      layout.mobile.map((row: any) => `'${row}'`)};
+    width: auto;
+    grid-template-columns: 1fr;
+
+    ${({ theme }) => theme.productCards?.styles?.mobile}
+
+    .more-details {
+      margin-left: 0;
+      margin-bottom: 0;
+      ${({ isTicketCard }) =>
+        isTicketCard &&
+        `
+        padding: 0.75rem;
+        background-color: ${COLORS.GRAY.G7};
+        margin-top: 0;
+        grid-area: cta-block;
+        grid-column: 1 / 2;
+        width: 32vw;
+        border-radius: 4px;
+        color: ${COLORS.GRAY.G2};
+        position: absolute;
+        ${expandFontToken('Button/Medium')}
+        display: flex;
+        justify-content: center;
+        line-height: 125%;
+        .chevron {
+          display: none;
+        }
+      `}
+    }
+
+    .card-img {
+      width: calc(100% + 2rem);
+
+      img {
+        border-radius: 0;
+      }
+    }
+
+    .card-img img {
+      width: 100%;
+    }
+
+    
+    ${({ $isBannerCard }) =>
+      $isBannerCard &&
+      `
+        .card-img {
+          height: 22.5rem;
+          max-height: 22.5rem;
+        
+          .video-container, img {
+            height: 22.5rem;
+            width: 100%;
+          }
+        }
+      `}
+  }
+`;
+
+export const TourTitleWrapper = styled.h2<{
+  isPopup?: boolean;
+  pageType?: string;
+}>`
+  ${expandFontToken('Heading/Large')}
+  margin: 0;
+  max-width: 768px;
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+  }
+`;
+
+export const TitleWrapper = styled.div<{
+  hasBorderedTitle?: boolean;
+  $isTicketCard?: boolean;
+}>`
+  grid-area: title;
+  ${({ hasBorderedTitle }) =>
+    hasBorderedTitle
+      ? `
+            border-bottom: 1px solid ${COLORS.GRAY.G6};
+            @media(max-width: 768px) {
+              border: none;
+            }
+          `
+      : ''}
+
+  ${({ $isTicketCard }) =>
+    !$isTicketCard &&
+    `
+    @media(max-width: 768px) {
+      margin-top: -0.5rem;
+      margin-bottom: -1rem;
+    }
+  `}
+`;
+
+export const BoosterTag = styled.div`
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 13px;
+  color: ${COLORS.BRAND.CANDY};
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: ${COLORS.BRAND.WHITE};
+  border-radius: 2px;
+  margin-bottom: 7px;
+  padding: 2px 4px;
+  display: inline-block;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    margin-top: -2.125rem;
+    padding: 5px;
+    border-radius: 4px;
+  }
+`;
+export const CTABlock = styled.div<{
+  isTicketCard?: boolean;
+  isSticky: boolean;
+  shouldOffset?: boolean;
+}>`
+  a {
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
+
+    ${({ isSticky, shouldOffset }) =>
+      isSticky &&
+      `
+        position: sticky;
+        bottom: 0;
+        transform: translateX(-1rem);
+        background: #fff;
+        bottom: env(safe-area-inset-bottom);
+        ${shouldOffset ? 'transform: translateY(2rem);' : ''}
+        background: ${COLORS.BRAND.WHITE};
+        z-index: 2;
+        padding: 1rem;
+        box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
+      `}
+
+    ${({isSticky }) => ctaBlockMobileStyles(isSticky)}
+  }
+  @media (max-width: 370px) {
+    width: 100%;
   }
 `;
 
@@ -1927,4 +2075,37 @@ export const TourAvailableInLanguages = styled.div<{
   white-space: nowrap;
   grid-area: tour-available-in-languages-area;
   margin-top: -0.5rem;
+`;
+
+export const HLine = styled.div`
+  grid-area: hline;
+  width: 100%;
+  height: 1px;
+  background-color: ${COLORS.GRAY.G6};
+`;
+
+export const Wrapper = styled(HighlightTabsWrapper)`
+  position: relative;
+  row-gap: 0.75rem;
+`;
+
+export const Heading = styled.h3`
+  ${expandFontToken(FONTS.HEADING_SMALL)}
+  margin: 0;
+`;
+
+export const ViewMoreButton = styled.button`
+  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+  color: ${COLORS.BRAND.CANDY};
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 1rem;
+  width: max-content;
+  cursor: pointer;
+
+  svg {
+    height: 0.675rem;
+    stroke-width: .15rem;
+  }
 `;

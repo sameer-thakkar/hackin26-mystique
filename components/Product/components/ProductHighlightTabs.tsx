@@ -83,8 +83,14 @@ export const HighlightTabs = ({
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
   }, []);
 
+  useEffect(() => {
+    if (activeTabIndex !== undefined && activeTabIndex !== _currentIndex)
+      updateCurrentIndex(activeTabIndex);
+  }, [activeTabIndex]);
+
   const trackedTabChange = (index: number) => {
     onTabChange({ tab: tabs[index], index });
+    updateCurrentIndex(index);
   };
 
   return (
@@ -104,7 +110,7 @@ export const HighlightTabs = ({
           >
             {tabs.map((tab: any, index: number) => (
               <Tab
-                className={`tab ${activeTabIndex == index ? 'active' : ''}`}
+                className={`tab ${_currentIndex == index ? 'active' : ''}`}
                 key={index}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -141,7 +147,7 @@ export const HighlightTabs = ({
         <div>
           {tabs.map((tab: any, index: number) => (
             <TabPanel
-              isActive={activeTabIndex == index}
+              isActive={_currentIndex == index}
               key={index}
               pageType={pageType}
               className="tab-panel"

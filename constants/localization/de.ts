@@ -850,6 +850,9 @@ const de = {
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Wählen Sie den besten Flughafentransfer für Sie',
   },
+  PC_EXP: {
+    SHOW_INCL: 'Inklusivleistungen und wichtige Infos',
+  },
 };
 
 export default de;

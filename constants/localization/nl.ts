@@ -796,6 +796,9 @@ const nl = {
       SUBHEADING: `Meld je aan voor onze nieuwsbrief en ontvang als eerste nieuws en aanbiedingen voor voorstellingen.`,
     },
   },
+  PC_EXP: {
+    SHOW_INCL: 'Inclusies en belangrijke info',
+  },
   HOHO: {
     HOHO: 'Hop-on hop-off Tickets',
     ROUTE_DETAILS: ' Details route ',

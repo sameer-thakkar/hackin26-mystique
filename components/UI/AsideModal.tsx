@@ -39,6 +39,14 @@ to {
 }
 `;
 
+const simplerFadeRight = (from: string, to: string) => keyframes`
+from {
+  transform: translateX(${from});
+}
+to {
+  transform: translateX(${to});
+}`;
+
 const moveInRight = keyframes`
 from {
   transform: translateX(100%);
@@ -79,15 +87,19 @@ export const StyledAsideModal = styled.div`
   padding-top: 0;
   max-width: calc(
     ${({ width }: { width: string | null }) =>
-      width ? (1440 * parseFloat(width)) / 100 : '606'}px - 48px
+        width ? (1440 * parseFloat(width)) / 100 : '606'}px - 48px
   );
   width: calc(
     ${({ width, sidePadding }: { sidePadding: number; width: string | null }) =>
       `${width ? width : '27.5vw'} - ${sidePadding ? sidePadding * 2 : '48'}px`}
   );
+  background: ${COLORS.BRAND.WHITE};
+  z-index: 100;
   ${({
     // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
     sidebarType,
+    // @ts-expect-error
+    shouldSlideOut,
   }) =>
     sidebarType === SIDEBAR_TYPES.SIDE_NAV
       ? css`
@@ -103,6 +115,21 @@ export const StyledAsideModal = styled.div`
           }
           @media (max-width: 768px) {
             animation: unset;
+          }
+        `
+      : sidebarType === SIDEBAR_TYPES.PRODUCT_CARD_EXP
+      ? css`
+          z-index: 9999999999;
+          padding: 0;
+          animation: ${simplerFadeRight('100%', '0')} 300ms ease-in-out;
+          ${shouldSlideOut &&
+          css`
+            animation: ${simplerFadeRight('0', '100%')} 300ms ease-in-out;
+          `}
+          ::-webkit-scrollbar {
+            width: 0;
+            opacity: 0;
+            visibility: hidden;
           }
         `
       : sidebarType === SIDEBAR_TYPES.TOUR_GROUP_INFO
@@ -128,9 +155,7 @@ export const StyledAsideModal = styled.div`
           }
         `
       : ``}
-      
-  background: ${COLORS.BRAND.WHITE};
-  z-index: 100;
+
   @media (max-width: 768px) {
     position: absolute;
     height: 100vh;
@@ -194,6 +219,7 @@ const Header = styled.div`
   grid-template-columns: auto auto;
   padding-top: 20px;
   padding-bottom: 24px;
+
   position: ${({
     // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
     headerType,
@@ -273,6 +299,14 @@ const Header = styled.div`
           };
         };
         `
+      : headerType === SIDEBAR_TYPES.PRODUCT_CARD_EXP
+      ? css`
+          padding: 0.75rem 1.25rem 1rem;
+          gap: 0.75rem;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 0.063rem solid ${COLORS.GRAY.G6};
+        `
       : ''}
   top: 0;
   background: ${({
@@ -336,6 +370,7 @@ const CloseIcon = styled.div`
   justify-self: right;
   cursor: pointer;
   z-index: 999;
+
   ${({ sidebarType }: { sidebarType: string }) =>
     sidebarType !== SIDEBAR_TYPES.SIDE_NAV
       ? `
@@ -343,20 +378,51 @@ const CloseIcon = styled.div`
         stroke: #545454;
         stroke-width: 1.8px;
       }`
-      : ''}
+      : ''};
+
+  ${({ sidebarType }: { sidebarType: string }) =>
+    sidebarType === SIDEBAR_TYPES.PRODUCT_CARD_EXP &&
+    `
+    border: 1px solid ${COLORS.GRAY.G6};
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: ${COLORS.GRAY.G7};
+    border-radius: 8px;
+
+    svg {
+      height: 0.75rem;
+      width: 0.75rem;
+
+      path {
+        stroke: ${COLORS.GRAY.G2};
+      }
+    }
+  `};
 `;
 
 const Title = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
   ${({ sidebarType }) => {
     switch (sidebarType) {
       case SIDEBAR_TYPES.CONTACT_US_PANEL:
         return expandFontToken(FONTS.HEADING_SMALL);
       case SIDEBAR_TYPES.TOUR_GROUP_INFO:
         return expandFontToken(FONTS.DISPLAY_SMALL);
+      case SIDEBAR_TYPES.PRODUCT_CARD_EXP:
+        return expandFontToken(FONTS.HEADING_XS);
       default:
         return expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY);
     }
   }}
+
   @media (max-width: 768px) {
     ${({ sidebarType }: { sidebarType: string }) =>
       (sidebarType === SIDEBAR_TYPES.SIDE_NAV ||
@@ -394,6 +460,12 @@ const ModalContent = styled.div`
   overflow-x: scroll;
   height: ${windowHeight - 46}px;
   border-radius: 10px 10px 0 0;
+
+  ::-webkit-scrollbar {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
   `
       : sidebarType === SIDEBAR_TYPES.LISTICLE_CARD
       ? `
@@ -476,6 +548,7 @@ const AsideModal = ({
     percentage: 0,
     isScrolledComplete: false,
   });
+  const [shouldSlideOut, setSlideOut] = useState(false);
 
   useEffect(() => {
     scroller.scrollTo('active-element', {
@@ -534,35 +607,52 @@ const AsideModal = ({
 
   const throttledScrollHandler = throttle(getScrollPercent, 200);
 
+  const slideOut = (callback: () => void) => {
+    if (!isMobile) {
+      setSlideOut(true);
+      setTimeout(() => {
+        callback();
+      }, 300);
+    }
+  };
+
   const onClose = (e = null, options: OnCloseOptions = {}) => {
     if ((e as any)?.target) {
       (e as any).stopPropagation();
     }
-    setIsOpen(!active);
-    if (!options.triggeredByPopstate) {
-      if (isQueryRestore) {
-        //go to landing page
-        const {
-          pid: routerPid,
-          popup: routerPopup,
-          ...otherParams
-        } = router.query;
-        const { pid, popup, ...historyState } = window.history.state;
-        addUrlParams({
-          urlParams: { ...otherParams },
-          historyState: { ...historyState },
-          replace: false,
-        });
-      } else {
-        history.back();
-      }
-    }
 
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    container.current.classList.remove('scroll-lock');
-    if (isMobile) window.scrollTo(0, scrollY);
-    if (onCloseCallback) onCloseCallback();
-    closeModal();
+    const close = () => {
+      setIsOpen(!active);
+      if (!options.triggeredByPopstate) {
+        if (isQueryRestore) {
+          //go to landing page
+          const {
+            pid: routerPid,
+            popup: routerPopup,
+            ...otherParams
+          } = router.query;
+          const { pid, popup, ...historyState } = window.history.state;
+          addUrlParams({
+            urlParams: { ...otherParams },
+            historyState: { ...historyState },
+            replace: false,
+          });
+        } else {
+          history.back();
+        }
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
+        container.current.classList.remove('scroll-lock');
+        if (isMobile) window.scrollTo(0, scrollY);
+        if (onCloseCallback) onCloseCallback();
+        closeModal();
+      }
+    };
+
+    if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP) {
+      slideOut(close);
+    } else {
+      close();
+    }
   };
 
   const onCloseAll = (delay = 0) => {
@@ -570,9 +660,14 @@ const AsideModal = ({
     if (isMobile) window.scrollTo(0, scrollY);
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     container.current.classList.remove('scroll-lock');
-    setTimeout(() => {
-      resetAside();
-    }, delay);
+    if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP)
+      slideOut(() => {
+        resetAside();
+      });
+    else
+      setTimeout(() => {
+        resetAside();
+      }, delay);
   };
 
   const closeDelay =
@@ -588,6 +683,7 @@ const AsideModal = ({
             sidebarType={type}
             width={width}
             sidePadding={sidePadding}
+            shouldSlideOut={shouldSlideOut}
             className={!isOpen ? 'closing-modal' : ''}
           >
             <Header

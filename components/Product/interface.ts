@@ -28,6 +28,8 @@ export type TProductDescriptors = {
   pageType?: string;
   uid?: string;
   showLanguages?: boolean;
+  cancellationPolicy?: string;
+  cancellationPolicyHoverCallBack?: () => void;
 };
 
 export type TProductHighlightTabs = {

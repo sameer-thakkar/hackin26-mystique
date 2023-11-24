@@ -861,5 +861,8 @@ const fr = {
       "Choisissez la navette d'aéroport qui vous convient le mieux",
     HASSLE_FREE_TRANSFER: 'Navette aéroport en toute tranquillité',
   },
+  PC_EXP: {
+    SHOW_INCL: 'Inclusions et infos importantes',
+  },
 };
 export default fr;

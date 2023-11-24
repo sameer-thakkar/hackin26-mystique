@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
+import Highlights from 'components/Product/components/Highlights';
 import { NextAvailable } from 'components/Product/components/NextAvailable';
 import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';
@@ -23,6 +24,7 @@ import {
   CTABlock,
   CTAContainer,
   GuidedTourLabel,
+  HLine,
   LineMoreDetailsButton,
   ModalCardContainer,
   MoreDetailsBtnWrapper,
@@ -59,6 +61,7 @@ import {
   isF1SportsExperiment,
 } from 'utils/helper';
 import {
+  extractCancellationPolicyFromHighlights,
   extractTabsFromHighlights,
   filterFromHighlights,
   getMaxListItemsToShow,
@@ -74,6 +77,7 @@ import {
   ANALYTICS_PROPERTIES,
   CATEGORY_IDS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
+  PRODUCT_CARD_REVAMP,
   SIDEBAR_TYPES,
   SUBCATEGORY_IDS,
   THEMES,
@@ -145,6 +149,7 @@ const Product = (props: any) => {
     setDetailsPopupShown = undefined,
     detialsPopupShown = false,
     isNonPoi = false,
+    isProductCardExperimentTreatmentVariant = false,
   } = props;
   const {
     mbTheme,
@@ -220,25 +225,42 @@ const Product = (props: any) => {
       }
     }
     if (popup === 'details') {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-      addToAside({
-        width: '100vw',
-        children: (
-          <ModalCardContainer>
-            {getProductCardElements(true, false)}
-          </ModalCardContainer>
-        ),
-        type: SIDEBAR_TYPES.PRODUCT_CARD,
-        onCloseCallback: () => trackedToggleContent(true),
-        history: {
-          enable: true,
-          params: {
-            pid: tgid,
-            popup: 'combo',
+      if (isProductCardExperimentTreatmentVariant) {
+        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+        addToAside({
+          width: '540px',
+          title: cardTitle,
+          sidePadding: 20,
+          children: getProductCardElements(true, isProductCardLoading, true),
+          type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
+          history: {
+            enable: true,
+            params: {
+              popup: 'details',
+            },
           },
-          isQueryRestore: true,
-        },
-      });
+        });
+      } else {
+        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+        addToAside({
+          width: '100vw',
+          children: (
+            <ModalCardContainer>
+              {getProductCardElements(true, false)}
+            </ModalCardContainer>
+          ),
+          type: SIDEBAR_TYPES.PRODUCT_CARD,
+          onCloseCallback: () => trackedToggleContent(true),
+          history: {
+            enable: true,
+            params: {
+              pid: tgid,
+              popup: 'combo',
+            },
+            isQueryRestore: true,
+          },
+        });
+      }
     }
   }, [isMobile, showCard]);
 
@@ -281,7 +303,13 @@ const Product = (props: any) => {
     togglePopup();
   };
 
-  const sendBookNowEvent = () => {
+  const sendBookNowEvent = (placement?: string) => {
+    const placementProperty = placement
+      ? {
+          [ANALYTICS_PROPERTIES.PLACEMENT]: placement,
+        }
+      : {};
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -299,6 +327,32 @@ const Product = (props: any) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      ...placementProperty,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+  };
+
+  const trackCancellationPolicyHover = () => {
+    const { listingPrice } = tourPrices[tgid] ?? {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.FREE_CANCELLATION_TOOLTIP_VIEWED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       [ANALYTICS_PROPERTIES.DISCOUNT]:
         isScratchPriceEnabled && originalPrice > finalPrice,
@@ -336,9 +390,9 @@ const Product = (props: any) => {
     });
   };
 
-  const handleShowComboPopup = () => {
+  const handleShowComboPopup = (placement?: string) => {
     const { variants } = tourGroupData || {};
-    sendBookNowEvent();
+    sendBookNowEvent(placement);
     if (tourGroupData && isComboWithSingleVariant) {
       if (typeof window !== 'undefined') {
         const { id: variantId } = variants[0];
@@ -417,12 +471,17 @@ const Product = (props: any) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
+  const cancellationPolicy = useMemo(
+    () => extractCancellationPolicyFromHighlights(finalHighlights),
+    [finalHighlights]
+  );
+
   const onTabChange = ({ tab, index, defaultSelection }: any) => {
     const noOfListItems = getMaxListItemsToShow(tab.contents);
     // kept the old truncation logic for mobile view
     const isTruncated = isMobile
       ? tab.contents.length > noOfListItems
-      : isTicketCard
+      : isTicketCard || isProductCardExperimentTreatmentVariant
       ? false
       : (collapsibleContentRef.current?.offsetHeight ?? 0) >=
           maxProductBodyHeight ||
@@ -542,6 +601,7 @@ const Product = (props: any) => {
       showGuidesLabel: isSpecialGuidedTour && isMobile,
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
+      isProductCardExperimentTreatmentVariant,
     });
   const trackedToggleContent = (isOpen: any) => {
     trackEvent({
@@ -669,7 +729,30 @@ const Product = (props: any) => {
     }
   };
 
-  const getHighlightTabs = (
+  const getHighlightTabs = isProductCardExperimentTreatmentVariant ? (
+    <Highlights
+      isLoading={isProductCardLoading}
+      hasRegularHighlights={hasHighlights}
+      tabs={tabs}
+      onClick={() => {
+        trackedToggleContent(true);
+        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+        addToAside({
+          width: '540px',
+          title: cardTitle,
+          sidePadding: 20,
+          children: getProductCardElements(true, isProductCardLoading, true),
+          type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
+          history: {
+            enable: true,
+            params: {
+              popup: 'details',
+            },
+          },
+        });
+      }}
+    />
+  ) : (
     <HighlightTabs
       isLoading={isProductCardLoading}
       onTabChange={onTabChange}
@@ -699,7 +782,9 @@ const Product = (props: any) => {
       String(primaryCategory?.id)
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
-  const getProductCardElements = (expandContent: any, isLoading?: boolean) => (
+
+  const getProductCardElements = (expandContent: any, isLoading?: boolean, 
+    isAsideBarOverlay = false) => (
     <>
       <StyledProductCard
         layout={layout({ isContentExpanded: expandContent })}
@@ -710,14 +795,23 @@ const Product = (props: any) => {
         isV3Design={isV3Design}
         $isSwipeSheetOpen={expandContent}
         className="product-card"
-        collapsed={!expandContent && !isTicketCard}
+        collapsed={
+          (!expandContent && !isTicketCard) ||
+          isProductCardExperimentTreatmentVariant
+        }
         defaultOpen={defaultOpen}
+        $isProductCardExperimentTreatmentVariant={
+          isProductCardExperimentTreatmentVariant
+        }
+        $isAsideBarOverlay={isAsideBarOverlay}
         // @ts-ignore
         ref={productRef}
       >
         <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
-            <Conditional if={isGuidedTour && !isProductCardLoading}>
+            <Conditional
+              if={isGuidedTour && !isProductCardLoading && !isAsideBarOverlay}
+            >
               <GuidedTourLabel>
                 <GuidedTourLabelBackground isMobile={isMobile} />
                 {strings.DESCRIPTORS.GUIDED_TOUR}
@@ -728,24 +822,36 @@ const Product = (props: any) => {
                 imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                 videoUrl={isMobile && isBannerCard ? bannerVideo : null}
                 imageId="card-img"
-                imageAspectRatio={isMobile ? '21:9' : '3:4'}
+                imageAspectRatio={
+                  isMobile ? '21:9' : isAsideBarOverlay ? '16:9' : '3:4'
+                }
                 backgroundColor={COLORS.GRAY.G7}
                 imageWidth={
                   isMobile
                     ? isBannerCard
                       ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
                       : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                    : isProductCardExperimentTreatmentVariant
+                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP
+                        .productcardexperiment.width
                     : undefined
                 }
                 imageHeight={
                   isMobile && !isBannerCard && !isSpecialGuidedTour
                     ? undefined
+                    : isProductCardExperimentTreatmentVariant
+                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP
+                        .productcardexperiment.height
                     : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
                 }
                 isFirstProduct={isFirstProduct}
                 tgid={tgid}
                 isMobile={isMobile}
-                shouldCrop={shouldCropImage}
+                shouldCrop={
+                  isProductCardExperimentTreatmentVariant
+                    ? isAsideBarOverlay
+                    : shouldCropImage
+                }
               />
             </Conditional>
             <Conditional if={isLoading}>
@@ -755,6 +861,27 @@ const Product = (props: any) => {
         </Conditional>
 
         <ProductHeader>
+          <Conditional
+            if={
+              showNextAvailable &&
+              showEarliestAvailability &&
+              !isOpenDated &&
+              !(isMobile
+                ? showAvailabilityInTitleMobile
+                : showAvailabilityInTitle) &&
+              isAsideBarOverlay
+            }
+          >
+            <NextAvailable
+              showSkeleton={
+                !showEarliestAvailability &&
+                !earliestAvailability &&
+                !earliestAvailability?.startDate
+              }
+              earliestAvailability={earliestAvailability}
+              currentLanguage={currentLanguage}
+            />
+          </Conditional>
           <TourTitle
             boosterTag={boosterTag}
             cardTitle={cardTitle}
@@ -773,7 +900,7 @@ const Product = (props: any) => {
             earliestAvailability={earliestAvailability}
             currentLanguage={currentLanguage}
           />
-          <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+          <Conditional if={mbTheme === THEMES.MIN_BLUE || isAsideBarOverlay}>
             <ProductDescriptors
               isLoading={isLoading}
               descriptorArray={descriptorsList}
@@ -783,6 +910,8 @@ const Product = (props: any) => {
               lang={currentLanguage}
               isCombo={isCombo}
               isGpMotorTicketsMb={isGpMotorTicketsMb}
+              horizontal={isAsideBarOverlay}
+              cancellationPolicy={cancellationPolicy}
             />
           </Conditional>
           <Conditional if={hasV1Booster}>
@@ -831,7 +960,6 @@ const Product = (props: any) => {
                 currencyCode={finalListingPrice?.currencyCode ?? ''}
               />
             </Conditional>
-
             <CTABlock
               isSticky={expandContent}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
@@ -844,7 +972,13 @@ const Product = (props: any) => {
                   rel="nofollow noreferrer"
                 >
                   <BookNowCta
-                    clickHandler={sendBookNowEvent}
+                    clickHandler={() =>
+                      sendBookNowEvent(
+                        isAsideBarOverlay
+                          ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
+                          : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                      )
+                    }
                     isMobile={isMobile}
                     mbTheme={mbTheme}
                     ctaText={getBookNowButtonText()}
@@ -854,7 +988,13 @@ const Product = (props: any) => {
               <Conditional if={isCombo}>
                 <BookNowCta
                   showLoadingState={false}
-                  clickHandler={handleShowComboPopup}
+                  clickHandler={() =>
+                    handleShowComboPopup(
+                      isAsideBarOverlay
+                        ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
+                        : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                    )
+                  }
                   isMobile={isMobile}
                   mbTheme={mbTheme}
                   ctaText={getBookNowButtonText()}
@@ -868,7 +1008,8 @@ const Product = (props: any) => {
                 !isOpenDated &&
                 !(isMobile
                   ? showAvailabilityInTitleMobile
-                  : showAvailabilityInTitle)
+                  : showAvailabilityInTitle) &&
+                !isAsideBarOverlay
               }
             >
               <NextAvailable
@@ -905,7 +1046,7 @@ const Product = (props: any) => {
                 {strings.OPEN_DATED_DESCRIPTOR}
               </OpenDatedDescriptor>
             </Conditional>
-            <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+            <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isAsideBarOverlay}>
               <ProductDescriptors
                 isLoading={isLoading}
                 descriptorArray={descriptorsList}
@@ -919,18 +1060,32 @@ const Product = (props: any) => {
                   (!isMobile || expandContent) && isSpecialGuidedTour
                 }
                 uid={uid}
+                cancellationPolicy={cancellationPolicy}
+                cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
               />
             </Conditional>
           </CTAContainer>
         </ProductHeader>
-        <Conditional if={!isMobile}>
+        <Conditional if={!isMobile && !isAsideBarOverlay}>
           <HorizontalLine colorProp={COLORS.GRAY.G6} />
+        </Conditional>
+        <Conditional
+          if={isProductCardExperimentTreatmentVariant && !isAsideBarOverlay}
+        >
+          <HLine />
         </Conditional>
         <ProductBody
           hasReadMore={
-            showMoreDetailsInTabs && !defaultOpen && !isSpecialGuidedTour
+            showMoreDetailsInTabs &&
+            !defaultOpen &&
+            !isSpecialGuidedTour &&
+            !isProductCardExperimentTreatmentVariant
           }
-          collapsed={!expandContent && !isTicketCard}
+          collapsed={
+            !expandContent &&
+            !isTicketCard &&
+            !isProductCardExperimentTreatmentVariant
+          }
           defaultOpen={defaultOpen}
           maxHeight={maxProductBodyHeight}
           // @ts-ignore
@@ -948,7 +1103,9 @@ const Product = (props: any) => {
               id={`tour-description-${position}`}
               // @ts-expect-error TS(2322): Type '((e: MouseEvent<HTMLDivElement, MouseEvent>)... Remove this comment to see the full error message
               onClick={
-                !isMobile && !defaultOpen
+                !isMobile &&
+                !defaultOpen &&
+                !isProductCardExperimentTreatmentVariant
                   ? (e) => {
                       e.stopPropagation();
                       toggleContentOpen(!isContentOpen);
@@ -970,7 +1127,19 @@ const Product = (props: any) => {
                 />
               </Conditional>
               <Conditional if={tabs.length && !isSpecialGuidedTour}>
-                {getHighlightTabs}
+                {isAsideBarOverlay ? (
+                  <HighlightTabs
+                    isLoading={isProductCardLoading}
+                    onTabChange={onTabChange}
+                    hasRegularHighlights={hasHighlights}
+                    tabs={tabs}
+                    pageType={pageType}
+                    activeTabIndex={activeTabIndex}
+                    showCard={showCard}
+                  />
+                ) : (
+                  getHighlightTabs
+                )}
               </Conditional>
             </div>
           </Conditional>
@@ -979,14 +1148,21 @@ const Product = (props: any) => {
               showMoreDetailsInTabs &&
               !defaultOpen &&
               !isMobile &&
-              !isSpecialGuidedTour
+              !isSpecialGuidedTour &&
+              !isProductCardExperimentTreatmentVariant
             }
           >
             {getMoreDetailsButton()}
           </Conditional>
         </ProductBody>
         <Conditional
-          if={!defaultOpen && isMobile && !expandContent}
+          if={
+            !defaultOpen &&
+            isMobile &&
+            !expandContent &&
+            !isTicketCard &&
+            !isProductCardExperimentTreatmentVariant
+          }
         >
           {getMoreDetailsButton()}
         </Conditional>

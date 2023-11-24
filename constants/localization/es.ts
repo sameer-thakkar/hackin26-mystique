@@ -911,5 +911,8 @@ const es = {
       'Elige el mejor traslado de aeropuerto para ti',
     HASSLE_FREE_TRANSFER: 'Traslados de aeropuerto sin complicaciones',
   },
+  PC_EXP: {
+    SHOW_INCL: 'Qué incluye e información importante',
+  },
 };
 export default es;

@@ -921,6 +921,9 @@ const en = {
     PICK_THE_BEST_AIRPORT_TRANSFER: 'Pick the best airport transfer for you',
     HASSLE_FREE_TRANSFER: 'Hassle-free airport transfer experience',
   },
+  PC_EXP: {
+    SHOW_INCL: 'Show inclusions & important info',
+  },
 };
 
 export default en;

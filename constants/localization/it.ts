@@ -870,5 +870,8 @@ const it = {
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Scegli il trasferimento aeroportuale migliore per te',
   },
+  PC_EXP: {
+    SHOW_INCL: 'Inclusioni e informazioni importanti',
+  },
 };
 export default it;

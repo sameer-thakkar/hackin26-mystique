@@ -49,6 +49,23 @@ export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   return { highlights: nonTabHighlights, tabs };
 };
 
+export const extractCancellationPolicyFromHighlights = (
+  highlights: Array<Record<string, any>>
+) => {
+  let cancellationPolicy: string | undefined;
+
+  highlights.forEach(({ text, type }, index) => {
+    if (
+      type === HIGHLIGHT_TYPES.H6_HEADING &&
+      text === strings.CANCELLATION_POLICY_HEADING
+    ) {
+      cancellationPolicy = highlights[index + 1]?.text ?? "";
+    }
+  });
+
+  return cancellationPolicy;
+}
+
 export const filterFromHighlights = (highlights: Record<string, any>[]) => {
   let exclude = false;
   const filteredData: Record<string, any> = [];
@@ -80,6 +97,7 @@ type TGetProductCardLayout = {
   showAvailabilityInTitle?: boolean;
   showGuidesLabel?: boolean;
   showAvailabilityInLanguagesText?: boolean;
+  isProductCardExperimentTreatmentVariant?: boolean;
 };
 
 export const getProductCardLayout = ({
@@ -92,41 +110,35 @@ export const getProductCardLayout = ({
   showAvailabilityInTitle = false,
   showGuidesLabel = false,
   showAvailabilityInLanguagesText = false,
+  isProductCardExperimentTreatmentVariant = false,
 }: TGetProductCardLayout) => {
-  let layout = { desktop: [], mobile: [] };
+  let layout: {
+    desktop: Array<string | boolean | undefined | null>;
+    mobile: Array<string | boolean | undefined | null>;
+  } = {
+    desktop: [],
+    mobile: [],
+  };
+
   switch (mbTheme) {
     case THEMES.MIN_BLUE:
       layout = {
         desktop: [
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title cta-combo',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer cta-combo',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster cta-combo',
-          // @ts-expect-error TS(2322): Type 'string | boolean' is not assignable to type ... Remove this comment to see the full error message
           (!hasOffer || !hasV1Booster) && '. cta-combo',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'line line',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body body',
         ],
         mobile: [
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'price-block',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster ',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block',
         ],
       };
@@ -136,61 +148,47 @@ export const getProductCardLayout = ({
     default:
       layout = {
         desktop: [
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } offer line cta-combo`,
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } booster line cta-combo`,
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
+          isProductCardExperimentTreatmentVariant &&
+            `${
+              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+            } hline line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           } body line cta-combo`,
-          // @ts-expect-error TS(2322): Type 'string | boolean' is not assignable to type ... Remove this comment to see the full error message
           !hasV1Booster &&
             !hasOffer &&
             !isTicketCard &&
+            !isProductCardExperimentTreatmentVariant &&
             'card-img . line cta-combo',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
         mobile: [
-          // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'ne... Remove this comment to see the full error message
           isTicketCard ? null : 'card-img card-img',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title title',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'price-block price-block',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           isOpenDated && 'open-dated-descriptor open-dated-descriptor',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           !isOpenDated &&
             !showAvailabilityInTitle &&
             'next-available next-available',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           showAvailabilityInLanguagesText &&
             'tour-available-in-languages-area tour-available-in-languages-area',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           isTicketCard && hasPromoCode && 'promo-block promo-block',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer offer',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
-          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster booster',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body body',
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block cta-block',
         ],
       };

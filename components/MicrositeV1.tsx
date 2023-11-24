@@ -175,6 +175,15 @@ const MicrositeV1 = (props: any) => {
     mbType,
   } = data;
 
+  const {
+    variant: productCardRevampExperimentVariant,
+    isExperimentResolving: isProductCardRevampExperimentResolving,
+    isEligible: isEligibleForProductCardRevamp,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
+    customEligibilityCheckFn: () => isA1orC1MB(mbType) && !isMobile,
+  });
+
   const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
 
   const {
@@ -611,6 +620,14 @@ const MicrositeV1 = (props: any) => {
       productsLoading={productsLoading}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
+      isProductCardExperimentTreatmentVariant={
+        isEligibleForProductCardRevamp
+          ? productCardRevampExperimentVariant === VARIANTS.TREATMENT
+          : false
+      }
+      showSkeleton={
+        isEligibleForProductCardRevamp && isProductCardRevampExperimentResolving
+      }
     />
   );
 

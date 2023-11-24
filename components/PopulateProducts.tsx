@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -45,6 +46,20 @@ const StyledProductsWrapper = styled.div<{
 }>`
   margin: 0 auto;
   position: relative;
+
+  .product-card-skeleton-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .product-card-skeleton {
+    max-width: 75rem;
+    margin: auto;
+    height: 21.5rem;
+    border-radius: 1rem;
+  }
+
   #tour-list-heading {
     max-width: 1200px;
     margin: 0 auto;
@@ -143,6 +158,8 @@ const PopulateProducts = (props: any) => {
     productsLoading,
     isNonPoi,
     isAirportTransfersMB,
+    isProductCardExperimentTreatmentVariant = false,
+    showSkeleton = false,
   } = props;
 
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
@@ -517,6 +534,20 @@ const PopulateProducts = (props: any) => {
 
       <Conditional if={!productsLoading}>
         <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
+          <Conditional if={showSkeleton}>
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+          </Conditional>
           {availableToursList &&
             availableToursList.map((tour: any, index: number) => {
               const {
@@ -599,6 +630,7 @@ const PopulateProducts = (props: any) => {
                 detialsPopupShown,
                 setDetailsPopupShown,
                 isNonPoi,
+                isProductCardExperimentTreatmentVariant,
               };
 
               return (

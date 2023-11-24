@@ -521,6 +521,7 @@ export const ANALYTICS_EVENTS = {
     NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
     TRAILER_VIEWED: 'Trailer Viewed',
   },
+  FREE_CANCELLATION_TOOLTIP_VIEWED: 'Free Cancellation Tooltip Viewed',
   REVIEWS_SECTION_VIEWED: 'Reviews Section Viewed',
   HOHO: {
     ROUTE_DETAILS_VIEWED: 'Route Details Viewed',
@@ -532,6 +533,13 @@ export const ANALYTICS_EVENTS = {
 
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
+};
+
+export const PRODUCT_CARD_REVAMP = {
+  PLACEMENT: {
+    SIDE_SHEET: 'Side Sheet',
+    PRODUCT_CARD: 'Product Card',
+  },
 };
 
 export const COMMON_DATA_PROPS_FOR_LISTICLE: string[] = [
@@ -587,6 +595,7 @@ export const MICROSITE_STRING_KEYS: string[] = [
 
 export const DESCRIPTORS = {
   DURATION: 'DURATION',
+  FREE_CANCELLATION: 'FREE_CANCELLATION',
 };
 
 export const MICROSITE_OBJECT_KEYS: string[] = [
@@ -745,6 +754,7 @@ export const SIDEBAR_TYPES = {
   SIDE_NAV: 'side-navigation',
   LISTICLE_CARD: 'listicle-card',
   CONTACT_US_PANEL: 'contact-us-panel',
+  PRODUCT_CARD_EXP: 'product-card-exp',
   TOUR_GROUP_INFO: 'tour-group-info',
 };
 
@@ -939,6 +949,7 @@ export const ANALYTICS_PROPERTIES = {
   SELECTED_DATE: 'Selected Date',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
+  PLACEMENT: 'Placement',
 };
 
 export const PAGE_TYPES = {
