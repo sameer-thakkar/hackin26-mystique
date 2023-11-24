@@ -28,7 +28,8 @@ const getPrismicDocumentData = async (
     res.status(200).json({ redirectInfo });
     return;
   } else if (statusCode) {
-    res.status(200).json({ statusCode });
+    res.setHeader('Cache-Control', 'max-age=60');
+    res.status(statusCode).json({ statusCode });
     return;
   }
   res.status(200).json({ CMSContent, ContentType });
