@@ -1352,6 +1352,8 @@ export const SETTINGS_TYPE = {
   SETTINGS_THREE: 'SettingsThree',
 };
 
+export const GLOBAL_MB_ENABLED_DOMAINS = ['themeparkstickets.com'];
+
 export const PRISMIC_FIELD_ID = {
   TAGGED_COLLECTION: 'tagged_collection',
   TAGGED_CATEGORY: 'tagged_category',
