@@ -10,6 +10,7 @@ import {
   refsArrayToObject,
 } from 'utils';
 import {
+  fetchCollectionReviews,
   fetchTourGroupMedia,
   fetchTourGroupsByCategory,
   fetchTourGroupsByCollection,
@@ -22,7 +23,6 @@ import { getRefsArrayByIds } from 'utils/prismicUtils';
 import {
   CUSTOM_TYPE_VALUES,
   CUSTOM_TYPES,
-  LANGUAGE_MAP,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
   SUPPORTED_LOCALE_MAP,
@@ -123,6 +123,19 @@ export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
   );
 };
 
+export const getCollectionReviewsPromise = (
+  collectionId: number,
+  cookies: any,
+  lang: TLANGUAGELOCALE
+) => {
+  return fetchCollectionReviews({
+    collectionId,
+    cookies,
+    limit: '9',
+    language: getHeadoutLanguagecode(lang),
+  });
+};
+
 export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
   try {
     const response = await Client(req).getByUID(CUSTOM_TYPES.NEWS_PAGE, uid, {
@@ -176,6 +189,7 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
             contentFramework,
           },
           breadcrumbs,
+          isLandingPage: response?.data?.is_landing_page,
           heading: response?.data?.heading,
           authorName: response?.data?.author_name,
           bannerImage: response?.data?.banner_image,
@@ -233,6 +247,12 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
   }
 };
 
+export const getTgidFromCollectionReviews = (reviews: any) => {
+  return reviews?.items?.map((review: any) => {
+    return review?.tourGroup?.id;
+  });
+};
+
 export const getNewsPageData = async (
   CMSContent: PrismicDocumentWithUID,
   ContentType: CUSTOM_TYPE_VALUES,
@@ -250,7 +270,11 @@ export const getNewsPageData = async (
   const { tgid, isLandingPage, taggedCity } = data;
   const collectionDataTgids: number[] = [];
   const collectionIdFromPrismic = CMSContent?.data?.taggedCollection;
-  let allArticles, featuredArticles, articlesWithSameTgid, collectionReviews;
+  let allArticles,
+    featuredArticles,
+    articlesWithSameTgid,
+    collectionReviews,
+    collectionReviewsTgid;
 
   const featuredArticlesPromise = getFeaturedArticlesPromise(uid, lang);
   const articlesWithSameTgidPromise = getArticlesWithSameTgidPromise(
@@ -259,45 +283,46 @@ export const getNewsPageData = async (
     lang
   );
   const allArticlesPromise = getAllArticlesPromise(uid, lang);
+  const collectionReviewsPromise = getCollectionReviewsPromise(
+    collectionIdFromPrismic,
+    cookies,
+    lang
+  );
 
   const aggregatedPromise = await Promise.allSettled([
     featuredArticlesPromise,
     articlesWithSameTgidPromise,
-    allArticlesPromise,
+    collectionReviewsPromise,
+    isLandingPage ? allArticlesPromise : [],
   ]);
 
   [
     featuredArticles,
     articlesWithSameTgid,
-    allArticles,
     collectionReviews,
+    allArticles,
   ] = handleSettledPromiseResults(aggregatedPromise);
 
   const uidToCFIdMap = new Map<string, any>();
   const CFIdToDataMap = new Map<string, any>();
   const videoDataMap = new Map<string, string>();
-  if (isLandingPage) {
-    allArticles = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
-        Prismic.Predicates.at('document.type', `${CUSTOM_TYPES.NEWS_PAGE}`),
-        Prismic.Predicates.not(
-          `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`,
-          uid
-        ),
-      ],
-      { pageSize: 100 }
-    );
-  }
 
   featuredArticles = filterArticlesBasedOnEntMb(featuredArticles?.results, uid);
   articlesWithSameTgid = filterArticlesBasedOnEntMb(
     articlesWithSameTgid?.results,
     uid
   );
+  allArticles = filterArticlesBasedOnEntMb(allArticles?.results, uid);
+
+  const tgidsFromCollectionReviews = getTgidFromCollectionReviews(
+    collectionReviews
+  );
+  collectionReviewsTgid = new Set([
+    tgidsFromCollectionReviews ? tgidsFromCollectionReviews : [],
+  ]);
 
   const articles = [
-    ...(allArticles?.results ? allArticles?.results : []),
+    ...(allArticles ? allArticles : []),
     ...(featuredArticles ? featuredArticles : []),
     ...(articlesWithSameTgid ? articlesWithSameTgid : []),
   ];
@@ -325,7 +350,7 @@ export const getNewsPageData = async (
     ? await fetchTourGroupV6({
         tgid,
         hostname,
-        language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+        language: getHeadoutLanguagecode(lang),
         cookies,
       })
     : null;
@@ -339,6 +364,7 @@ export const getNewsPageData = async (
           collectionId,
           hostname,
           cookies,
+          language: getHeadoutLanguagecode(lang),
         })
       )?.pageData?.items
     : [];
@@ -358,7 +384,7 @@ export const getNewsPageData = async (
 
   const mediaData = await fetchTourGroupMedia({
     hostname,
-    tgids: [...collectionDataTgids],
+    tgids: [...collectionDataTgids, ...Array.from(collectionReviewsTgid)],
     cookies,
     resourceType: TOUR_GROUP_MEDIA_RESOURCE_TYPE.MB_EXPERIENCE,
   });
@@ -380,7 +406,7 @@ export const getNewsPageData = async (
         categoryId: primarySubCategory?.id,
         hostname,
         isSubCategory: true,
-        language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+        language: getHeadoutLanguagecode(lang),
         limit: '10',
         city: taggedCity,
         cookies,

@@ -75,6 +75,7 @@ export enum HeadoutEndpoints {
   Collection,
   CollectionSections,
   CollectionTop,
+  CollectionReviews,
   Category,
   CurrencyList,
   CalendarInventory,
@@ -164,6 +165,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.Media:
       endpointSlug = `/api/v1/media/`;
       break;
+    case HeadoutEndpoints.CollectionReviews:
+      endpointSlug = `/api/v1/collection/${id}/reviews`;
+      break;
     case HeadoutEndpoints.Variants:
       endpointSlug = `/api/v7/tour-groups/variants`;
       break;
@@ -224,6 +228,13 @@ interface TourListMediaProps extends CommonApiProps {
   tgids: string[] | number[];
   resourceType: string;
 }
+interface CollectionReviewsProps extends CommonApiProps {
+  collectionId: number;
+  limit?: string;
+  offset?: string;
+  sortOrder?: 'DESC' | 'ASC';
+  language?: string;
+}
 
 export const fetchTourGroupMedia = async ({
   tgids,
@@ -240,6 +251,7 @@ export const fetchTourGroupMedia = async ({
       params,
       id: null,
     });
+
     const headers = constructHeaders({ cookies });
 
     const res = await fetch(apiUrl, { headers });
@@ -247,6 +259,39 @@ export const fetchTourGroupMedia = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourGroupMedia]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+export const fetchCollectionReviews = async ({
+  collectionId,
+  cookies = {},
+  limit = '10',
+  offset = '0',
+  sortOrder = 'DESC',
+  language = 'EN',
+}: CollectionReviewsProps) => {
+  try {
+    const params = {
+      limit,
+      offset,
+      sortOrder,
+      language,
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CollectionReviews,
+      params,
+      id: collectionId,
+    });
+    const headers = constructHeaders({ cookies });
+
+    const res = await fetch(apiUrl, { headers });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCollectionReviews]', error);
     sendLog({
       err: error,
     });

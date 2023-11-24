@@ -868,6 +868,16 @@ const en = {
     TRAILERS: 'Trailers',
     GET_YOUR_TICKETS: 'Get your tickets',
     POPULAR_SHOWS: 'Popular Shows',
+    FEATURED: 'Featured',
+    RECENT_NEWS: 'Recent news',
+    SHOW_MORE_ARTICLES: 'Show more articles',
+    COLLAPSE_ALL: 'Collapse All',
+    REVIEWS: 'Reviews',
+    SHOW_ALL_REVIEWS: 'Show all reviews',
+    MAILER: {
+      HEADING: 'Best theatre deals & news straight to your inbox',
+      SUBHEADING: `Join our mailing list to get the latest news & hottest deals on theatre shows.`,
+    },
   },
 
   AIRPORT_TRANSFER: {

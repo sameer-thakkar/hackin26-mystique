@@ -60,6 +60,7 @@ export const Wrapper = styled.div`
       max-height: 2.5rem;
       text-overflow: ellipsis;
       overflow: hidden;
+      ${expandFontToken(FONTS.SUBHEADING_REGULAR)};
     }
     .author-details {
       position: absolute;

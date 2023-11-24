@@ -135,7 +135,7 @@ const MobileTrailer: React.FC<TMobileTrailerProps> = ({ content }) => {
                   <SlideDescription>
                     <div className="description-header">
                       <span className="subcategory">
-                        {trailer.primarySubCategory.name.toUpperCase()}
+                        {trailer.primarySubCategory?.displayName?.toUpperCase?.()}
                       </span>
                       <div className="ratings-and-reviews">
                         <Ratings

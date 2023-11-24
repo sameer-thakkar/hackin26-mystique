@@ -784,6 +784,11 @@ const de = {
     TRAILERS: 'Alle Trailer',
     GET_YOUR_TICKETS: 'Tickets buchen',
     POPULAR_SHOWS: 'Beliebte Shows',
+    MAILER: {
+      HEADING:
+        'Deals und Neuigkeiten der Theaterwelt direkt zu Ihrem Posteingang',
+      SUBHEADING: `Abonnieren Sie unseren Newsletter, um Neuigkeiten und Angebote für Shows vor allen anderen zu erhalten!`,
+    },
   },
   HOHO: {
     HOHO: 'Hop-on Hop-off Tickets',

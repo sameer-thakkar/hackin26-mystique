@@ -239,7 +239,7 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
                     </ImageContainer>
                     <CardInfoHeader>
                       <span className="subcategory-name">
-                        {primarySubCategory?.name.toUpperCase()}
+                        {primarySubCategory?.displayName?.toUpperCase?.()}
                       </span>
                       <span className="separator">|</span>
                       <div className="ratings-and-reviews">

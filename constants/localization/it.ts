@@ -796,6 +796,17 @@ const it = {
     TRAILERS: 'Tutti i trailer',
     GET_YOUR_TICKETS: 'Acquista i biglietti',
     POPULAR_SHOWS: 'Spettacoli in voga',
+    FEATURED: 'In evidenza',
+    RECENT_NEWS: 'Novità',
+    SHOW_MORE_ARTICLES: 'Mostra altri articoli',
+    COLLAPSE_ALL: 'Riduci tutto',
+    REVIEWS: 'Recensioni',
+    SHOW_ALL_REVIEWS: 'Mostra tutte le recensioni',
+    MAILER: {
+      HEADING:
+        'Le migliori offerte e novità sul teatro nella tua casella di posta',
+      SUBHEADING: `Iscriviti alla nostra newsletter per ricevere le ultime notizie e le offerte più interessanti sugli spettacoli teatrali.`,
+    },
   },
   HOHO: {
     HOHO: 'Biglietti Hop On Hop Off',

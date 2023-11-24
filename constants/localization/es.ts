@@ -838,6 +838,17 @@ const es = {
     TRAILERS: 'Todos los tráilers',
     GET_YOUR_TICKETS: 'Consigue tus entradas',
     POPULAR_SHOWS: 'Espectáculos populares',
+    FEATURED: 'Destacado',
+    RECENT_NEWS: 'Artículos recientes',
+    SHOW_MORE_ARTICLES: 'Ver más artículos',
+    COLLAPSE_ALL: 'Ocultar todo',
+    REVIEWS: 'Reseñas',
+    SHOW_ALL_REVIEWS: 'Ver todas las reseñas',
+    MAILER: {
+      HEADING:
+        'Las mejores ofertas y novedades sobre teatro directamente en tu bandeja de entrada',
+      SUBHEADING: `Únete a nuestra lista de correo y recibe actualizaciones y las mejores ofertas en espectáculos teatrales.`,
+    },
   },
   HOHO: {
     HOHO: 'Billetes de autobús turístico',

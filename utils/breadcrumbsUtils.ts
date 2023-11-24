@@ -942,7 +942,9 @@ export const getVenuePageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 };
 
 export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
-  const { uid, lang } = doc;
+  const { uid, lang, data } = doc;
+  const { is_landing_page: isLandingPage } = data;
+
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
 
@@ -985,6 +987,10 @@ export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     label: NEWS_PAGE,
     url: pageUrl,
   };
+
+  if (isLandingPage) {
+    delete breadcrumbs.level_3;
+  }
 
   return breadcrumbs;
 };

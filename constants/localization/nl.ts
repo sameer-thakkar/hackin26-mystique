@@ -785,6 +785,16 @@ const nl = {
     TRAILERS: 'Alle trailers',
     GET_YOUR_TICKETS: 'Koop je tickets',
     POPULAR_SHOWS: 'Populaire shows',
+    FEATURED: 'Aanbevolen',
+    RECENT_NEWS: 'Het laatste nieuws',
+    SHOW_MORE_ARTICLES: 'Toon meer artikelen',
+    COLLAPSE_ALL: 'Alles inklappen',
+    REVIEWS: 'Recensies',
+    SHOW_ALL_REVIEWS: 'Toon alle recensies',
+    MAILER: {
+      HEADING: ' Deals en nieuws van het theater rechtstreeks in je inbox',
+      SUBHEADING: `Meld je aan voor onze nieuwsbrief en ontvang als eerste nieuws en aanbiedingen voor voorstellingen.`,
+    },
   },
   HOHO: {
     HOHO: 'Hop-on hop-off Tickets',

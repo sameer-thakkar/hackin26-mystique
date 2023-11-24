@@ -521,6 +521,7 @@ export const ANALYTICS_EVENTS = {
     NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
     TRAILER_VIEWED: 'Trailer Viewed',
   },
+  REVIEWS_SECTION_VIEWED: 'Reviews Section Viewed',
   HOHO: {
     ROUTE_DETAILS_VIEWED: 'Route Details Viewed',
     MORE_DETAILS_VIEWED: 'More Details Viewed',
@@ -934,6 +935,7 @@ export const ANALYTICS_PROPERTIES = {
   LABEL: 'Label',
   SORTING_ORDER: 'Sorting Order',
   IS_SHOW_PLAYING: 'Is Show Playing',
+  TITLE: 'Title',
   SELECTED_DATE: 'Selected Date',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
@@ -1003,6 +1005,7 @@ export const QUERY_PARAMS = {
   CATEGORY: 'category',
   LIMIT: 'limit',
   OFFSET: 'offset',
+  PAGE: 'page',
 };
 
 export const LOCALE_ORDER = [
@@ -1054,6 +1057,7 @@ export const CTA_TYPE = {
   BUY_TICKETS: 'Buy Tickets',
   THEATRE_PAGE_LINK: 'Theatre Page Link',
   SEE_MORE_SHOWS: 'See More Shows',
+  SHOW_MORE_ARTICLES: 'Show More Articles',
   VIEW_ROUTES: 'View All Routes',
 };
 
@@ -1395,6 +1399,7 @@ export const EMAIL_SUBCRIPTION = {
   },
   ENDPOINT: 'https://vivillion.netlify.app/api/webengage',
   CITY_PAGE_EVENT: 'City Page Subscribe',
+  NEWS_PAGE_EVENT: 'News Page Subscribe',
   CAT_SUBCAT_PAGE_EVENT: 'Category/Sub Category Page Subscribe',
 };
 
@@ -1787,6 +1792,9 @@ export const NEWS_PAGE_SECTIONS = {
   MORE_READS: 'More Reads',
   ARTICLES: 'Articles',
   TRAILERS: 'Trailers',
+  RECENT_NEWS: 'Recent News',
+  LANDING_PAGE_BANNER: 'Landing Page Banner',
+  REVIEWS: 'Reviews',
 } as const;
 
 export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;

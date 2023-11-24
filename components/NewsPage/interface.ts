@@ -36,9 +36,7 @@ export type TourGroupDataType = {
 
 export type TNewsPageData = {
   tgidMappingData: any;
-  allArticles: {
-    results: PrismicDocumentWithUID[];
-  };
+  allArticles: PrismicDocumentWithUID[];
   featuredArticles: PrismicDocumentWithUID[];
   articlesWithSameTgid: PrismicDocumentWithUID[];
   CFData: Record<string, any>;

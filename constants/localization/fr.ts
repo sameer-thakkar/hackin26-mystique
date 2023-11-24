@@ -787,6 +787,17 @@ const fr = {
     TRAILERS: 'Toutes les bandes-annonces',
     GET_YOUR_TICKETS: 'Achetez vos billets',
     POPULAR_SHOWS: 'Spectacles populaires',
+    FEATURED: ' À la une',
+    RECENT_NEWS: 'Derniers articles',
+    SHOW_MORE_ARTICLES: `Afficher plus d'articles`,
+    COLLAPSE_ALL: 'Réduire tout',
+    REVIEWS: 'Avis',
+    SHOW_ALL_REVIEWS: 'Voir tous les avis',
+    MAILER: {
+      HEADING:
+        'Les meilleures offres de théâtre et actualités tout droit dans votre boîte de réception',
+      SUBHEADING: `Inscrivez-vous à notre liste pour recevoir les dernières informations et les offres les plus intéressantes sur les spectacles et pièces de théâtre.`,
+    },
   },
   HOHO: {
     HOHO: 'Billets Hop-On Hop-Off',

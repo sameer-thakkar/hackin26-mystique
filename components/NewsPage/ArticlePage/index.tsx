@@ -6,11 +6,11 @@ import { Container, MainContent } from 'components/NewsPage/ArticlePage/styles';
 import PageContent from 'components/NewsPage/components/Content';
 import NewsMeta from 'components/NewsPage/components/NewsMeta';
 import { TNewsPageProps } from 'components/NewsPage/interface';
+import { uniqueArticlesWithoutRepetition } from 'components/NewsPage/utils';
 import { formatDateToString } from 'utils/dateUtils';
 import { getLangObject } from 'utils/helper';
 import { NEWS_PAGE_DATE_FORMAT } from 'const/index';
 import { strings } from 'const/strings';
-import { uniqueArticlesWithoutRepetition } from '../utils';
 
 const DesktopMoreReads = dynamic(() =>
   import(
@@ -126,8 +126,8 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
                 CFData,
               }}
               heading={strings.NEWS_PAGE.MORE_READS}
-              showAllNewsCTA
-              showMoreCTAText={''}
+              showAllNewsCTA={false}
+              showMoreCTAText={strings.NEWS_PAGE.LOAD_MORE}
               numberOfArticlesToShow={10}
               initialArticlesToShow={3}
             />

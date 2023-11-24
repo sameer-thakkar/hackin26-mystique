@@ -787,6 +787,17 @@ const pt = {
     TRAILERS: 'Todos os trailers',
     GET_YOUR_TICKETS: 'Garanta seus ingressos',
     POPULAR_SHOWS: 'Espetáculos populares',
+    FEATURED: 'Destaques',
+    RECENT_NEWS: 'Notícias',
+    SHOW_MORE_ARTICLES: 'Ver mais artigos',
+    COLLAPSE_ALL: 'Ocultar todos',
+    REVIEWS: 'Comentários',
+    SHOW_ALL_REVIEWS: 'Ver todos os comentários',
+    MAILER: {
+      HEADING:
+        'As melhores ofertas e novidades do teatro diretamente na sua caixa de entrada',
+      SUBHEADING: `Inscreva-se na nossa newsletter para receber as últimas novidades e ofertas incríveis dos espetáculos teatrais.`,
+    },
   },
   HOHO: {
     HOHO: 'Bilhetes hop-on hop-off',

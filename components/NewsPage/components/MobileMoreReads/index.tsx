@@ -13,47 +13,58 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
-  // CTA_TYPE,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { AVATAR } from 'assets/SvgIcons';
 
-const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({ content }) => {
+const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
+  content,
+  showAllNewsCTA,
+  heading,
+  showMoreCTAText,
+  numberOfArticlesToShow, // This higlights the total number of articles to show in component
+  initialArticlesToShow,
+}) => {
   const { host, lang, isDev } = useContext(MBContext);
-  const [articlesToShow, setArticlesToShow] = useState(3);
+  const [articlesToShow, setArticlesToShow] = useState(initialArticlesToShow);
   const moreReadsRef = useRef(null);
   const isMoreReadsSectionVisible = useOnScreen({
     ref: moreReadsRef,
     unobserve: true,
   });
 
-  const { MORE_READS, LOAD_MORE } = strings.NEWS_PAGE;
-  const { uniqueArticlesWithSameTgidData, featuredArticles } = content;
+  const { ALL_NEWS } = strings.NEWS_PAGE;
+  const {
+    uniqueArticlesWithSameTgidData = [],
+    featuredArticles = [],
+  } = content;
 
   const moreReadsData = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
     ...(featuredArticles ? featuredArticles.slice(4) : []),
-  ].slice(0, 10);
+  ].slice(0, numberOfArticlesToShow);
 
-  const handleArticleClick = (index: number) => {
+  const handleArticleClick = (index: number, title: string) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+      [ANALYTICS_PROPERTIES.TITLE]: title,
     });
     return;
   };
 
-  // const handleCTAClick = () => {
-  //   trackEvent({
-  //     eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
-  //     [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
-  //     [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
-  //   });
-  //   return;
-  // };
+  const handleCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+    });
+    return;
+  };
 
   useEffect(() => {
     if (isMoreReadsSectionVisible) {
@@ -68,8 +79,10 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({ content }) => {
     <Conditional if={moreReadsData?.length > 0}>
       <Wrapper ref={moreReadsRef}>
         <div className="heading-wrapper">
-          <h2>{MORE_READS}</h2>
-          {/* <Button onClick={handleCTAClick}>{ALL_NEWS}</Button> */}
+          <h2>{heading}</h2>
+          <Conditional if={showAllNewsCTA}>
+            <Button onClick={handleCTAClick}>{ALL_NEWS}</Button>
+          </Conditional>
         </div>
         <div className="articles">
           {moreReadsData
@@ -95,10 +108,10 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({ content }) => {
               return (
                 <a
                   href={redirectionUrl}
-                  key={index}
+                  key={article.uid}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => handleArticleClick(index)}
+                  onClick={() => handleArticleClick(index, heading)}
                 >
                   <article className="news-article">
                     <div className="article-image">
@@ -131,9 +144,11 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({ content }) => {
           <Conditional if={articlesToShow < moreReadsData.length}>
             <Button
               className="load-more"
-              onClick={() => setArticlesToShow(articlesToShow + 3)}
+              onClick={() =>
+                setArticlesToShow(articlesToShow + initialArticlesToShow)
+              }
             >
-              {LOAD_MORE}
+              {showMoreCTAText}
             </Button>
           </Conditional>
         </div>

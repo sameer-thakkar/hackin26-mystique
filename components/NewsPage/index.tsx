@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
 // import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import PopulateMeta from 'components/common/NextSeoMeta';
@@ -19,6 +20,7 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 import { TNewsPageProps } from './interface';
+import NewsLandingPage from './LandingPage';
 
 const NewsPage: React.FC<TNewsPageProps> = (props) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -51,6 +53,7 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
     taggedCountry,
     taggedCollection,
     taggedMbType,
+    isLandingPage,
   } = data;
   const { commonHeader, commonFooter, secondaryFooter } = refs;
   const {
@@ -143,7 +146,12 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
         hasPoweredByHeadoutLogo
         isNewsPage
       />
-      <ArticlePage {...props} />
+      <Conditional if={!isLandingPage}>
+        <ArticlePage {...props} />
+      </Conditional>
+      <Conditional if={isLandingPage}>
+        <NewsLandingPage {...props} />
+      </Conditional>
       <Footer
         currentLanguage={currentLanguage}
         attraction={commonFooter?.data?.attraction || 'attraction'}
