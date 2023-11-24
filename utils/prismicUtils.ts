@@ -1373,8 +1373,6 @@ const fetchPrismicDocument = async ({
   const requestHeaders = constructHeaders({ cookies, currentHeaders: headers });
 
   const params = new URLSearchParams({
-    uid,
-    lang,
     isDev: String(isDev),
   });
 
@@ -1387,7 +1385,7 @@ const fetchPrismicDocument = async ({
   const paramsString = params.toString();
 
   const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
-  const endpoint = `${domain}/api/prismic/?${paramsString}`;
+  const endpoint = `${domain}/api/prismic/${uid}/${lang}/?${paramsString}`;
 
   const response = (await fetch(endpoint, {
     headers: requestHeaders,
