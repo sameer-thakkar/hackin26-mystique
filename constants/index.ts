@@ -1794,6 +1794,7 @@ export const GDPR_COUNTRY_CODES = [
 ];
 export const COOKIE_BANNER_KEY = 'cookie-banner-state';
 export const UAE_COUNTRY_CODE = 'ae';
+export const THRESHOLD = [90, 75, 50, 25];
 
 export const TOUR_GROUP_MEDIA_RESOURCE_TYPE = {
   MB_EXPERIENCE: 'MB_EXPERIENCE',

@@ -808,3 +808,19 @@ export const getBreadcrumbLabel = ({
 
   return formattedLabelString || label;
 };
+
+export const getScrollPercentage = (percentage: number) => {
+  let scrollPercentage = null;
+
+  if (20 < percentage && percentage < 30) {
+    scrollPercentage = 25;
+  } else if (45 < percentage && percentage < 55) {
+    scrollPercentage = 50;
+  } else if (70 < percentage && percentage < 80) {
+    scrollPercentage = 75;
+  } else if (90 < percentage && percentage < 100) {
+    scrollPercentage = 90;
+  }
+
+  return scrollPercentage;
+};

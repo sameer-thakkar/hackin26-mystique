@@ -8,6 +8,7 @@ import Conditional from 'components/common/Conditional';
 import useWindowSize from 'hooks/useWindowSize';
 import { trackEvent } from 'utils/analytics';
 import { throttle } from 'utils/gen';
+import { getScrollPercentage } from 'utils/helper';
 import { addUrlParams } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -15,6 +16,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   SIDEBAR_TYPES,
+  THRESHOLD,
 } from 'const/index';
 import { expandFontToken } from 'const/typography';
 import {
@@ -515,6 +517,17 @@ const ModalContent = styled.div`
 `;
 
 type OnCloseOptions = { triggeredByPopstate?: boolean };
+type ScrollStateT = {
+  triggered: Record<number, boolean>;
+};
+
+const triggerEvent = (percentage: number, tgid: string) => {
+  trackEvent({
+    eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
+    [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: percentage,
+    [ANALYTICS_PROPERTIES.TGID]: tgid,
+  });
+};
 
 const AsideModal = ({
   active,
@@ -544,9 +557,14 @@ const AsideModal = ({
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(active);
   const scrollRef = useRef(null);
-  const [scrollDetails, setScrollDetails] = useState({
-    percentage: 0,
-    isScrolledComplete: false,
+  const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [scrollDetails, setScrollDetails] = useState<ScrollStateT>({
+    triggered: {
+      25: false,
+      50: false,
+      75: false,
+      90: false,
+    },
   });
   const [shouldSlideOut, setSlideOut] = useState(false);
 
@@ -577,20 +595,23 @@ const AsideModal = ({
   }, [active, isMobile]);
 
   useEffect(() => {
-    const isScrolled =
-      isProductCardTracking &&
-      scrollDetails.percentage === 100 &&
-      !scrollDetails.isScrolledComplete;
+    if (isProductCardTracking) {
+      const scrollThreshold = getScrollPercentage(scrollPercentage);
+      const triggered: ScrollStateT['triggered'] = {
+        ...scrollDetails['triggered'],
+      };
 
-    if (isScrolled) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
-        [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: scrollDetails.percentage,
-        [ANALYTICS_PROPERTIES.TGID]: tgid,
-      });
-      setScrollDetails({ ...scrollDetails, isScrolledComplete: true });
+      if (scrollThreshold !== null) {
+        THRESHOLD.forEach((threshold) => {
+          if (scrollThreshold >= threshold && !triggered[threshold]) {
+            triggerEvent(threshold, tgid);
+            triggered[threshold] = true;
+          }
+        });
+        setScrollDetails({ triggered });
+      }
     }
-  }, [scrollDetails.percentage]);
+  }, [scrollPercentage]);
 
   const getScrollPercent = () => {
     if (scrollRef?.current && isProductCardTracking) {
@@ -601,7 +622,7 @@ const AsideModal = ({
       } = scrollRef.current;
       const percentageScrolled =
         (scrollTop / (scrollHeight - clientHeight)) * 100;
-      setScrollDetails({ ...scrollDetails, percentage: percentageScrolled });
+      setScrollPercentage(percentageScrolled);
     }
   };
 
