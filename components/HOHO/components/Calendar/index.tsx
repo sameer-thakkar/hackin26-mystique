@@ -260,6 +260,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
         redirectToHeadoutBookingFlow,
         biLink,
         bookSubdomain,
+        showFullScreenPax: true,
       }),
       isMobile ? '_self' : '_blank',
       'noopener, noreferrer'

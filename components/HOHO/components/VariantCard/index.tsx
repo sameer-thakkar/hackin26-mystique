@@ -59,7 +59,7 @@ const formatVariantInfo = (
           <div className="item" key={line}>
             <TickSvg strokeColor={COLORS.TEXT.OKAY_GREEN_3} />
             <Tooltip
-              trigger={truncate(line, 33)}
+              trigger={truncate(line, 36)}
               heading={line}
               triggerClassName="validity-info"
               showHeadingForDesktop={false}
@@ -79,7 +79,7 @@ const formatVariantInfo = (
           <Conditional key={line} if={line}>
             <div className="item">
               <TickSvg strokeColor={COLORS.TEXT.OKAY_GREEN_3} />
-              <span className="desc-text">{truncate(line, 33)}</span>
+              <span className="desc-text">{truncate(line, 36)}</span>
             </div>
           </Conditional>
         ))}

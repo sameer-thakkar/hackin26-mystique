@@ -213,6 +213,12 @@ export const Description = styled.div`
       margin-bottom: -0.188rem;
     }
   }
+  @media (max-width: 768px) {
+    .desc-list > .item,
+    .booster-info {
+      white-space: nowrap;
+    }
+  }
 `;
 
 export const BadgeWrapper = styled.div`

@@ -104,7 +104,7 @@ export const SwiperWrapper = styled.div`
   width: 100%;
   margin: auto;
   position: absolute;
-  bottom: 7.5rem;
+  top: 0;
 
   .swiper-wrapper {
     transition-timing-function: linear;
@@ -123,7 +123,7 @@ export const StyledSlide = styled.div`
   background: ${COLORS.BRAND.WHITE};
   display: flex;
   padding: 0.75rem 0.75rem 1rem;
-  margin: 1.25rem 0 1.5rem;
+  margin: 0.25rem 0 1.5rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;

@@ -71,7 +71,7 @@ export const Review = styled.div<{ showNewDesign?: boolean }>`
   border-radius: 8px;
   height: 100%;
   display: grid;
-  min-height: 13rem;
+  min-height: 15rem;
   margin-right: ${({ showNewDesign }) => (showNewDesign ? '0' : '1.625rem')};
   background: linear-gradient(
     154deg,

@@ -233,6 +233,7 @@ type TCreateBookingUrl = {
   redirectToHeadoutBookingFlow?: boolean;
   ctaSuffix?: string;
   flowType?: string;
+  showFullScreenPax?: boolean;
 };
 
 export const createBookingURL = ({
@@ -250,6 +251,7 @@ export const createBookingURL = ({
   redirectToHeadoutBookingFlow = false,
   ctaSuffix = '',
   flowType = undefined,
+  showFullScreenPax = false,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -323,6 +325,9 @@ export const createBookingURL = ({
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
+  if (showFullScreenPax)
+    urlObject.searchParams.set('showFullScreenPax', 'true');
+
   if (ctaSuffix) {
     const suffixes = new URLSearchParams(ctaSuffix);
     for (const [key, value] of suffixes.entries()) {
