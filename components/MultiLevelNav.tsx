@@ -145,6 +145,8 @@ const NestedMenu = styled.ul`
   position: absolute;
   top: 24px;
   left: 0;
+  max-height: 25rem;
+  overflow-y: scroll;
   z-index: 11;
   width: max-content;
   background-color: ${({ theme: { primaryBackground } }) =>
@@ -161,6 +163,17 @@ const NestedMenu = styled.ul`
   & ul.off-screen {
     left: unset;
     right: 100%;
+  }
+  ::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${COLORS.GRAY.G6};
+    border-radius: 5px;
+    height: 106px;
   }
 
   ${StyledMenuItem}:hover > .link-element > & {

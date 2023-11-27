@@ -277,6 +277,7 @@ const Accordion = ({
               isActive={isOpen}
               activeCursor={true}
               className={'chevron-icon'}
+              width="1.4rem"
             />
           </Conditional>
           <Conditional if={isSideModal}>{DOWN_CHEVRON(2)}</Conditional>

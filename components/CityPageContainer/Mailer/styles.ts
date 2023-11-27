@@ -83,11 +83,11 @@ export const SubscriptionCont = styled.div<{
   display: flex;
   .email-input {
     width: 20rem;
-    padding: 1.25rem;
+    height: 4rem;
+    padding: 0 1.25rem;
     border: none;
     border-radius: 12px 0 0 12px;
     ${expandFontToken(FONTS.UI_LABEL_LARGE)};
-    padding: 1.2rem;
     border: 1px solid ${COLORS.GRAY.G6};
     border-right: none; 
     ${({ isErr }) =>
@@ -108,7 +108,7 @@ export const SubscriptionCont = styled.div<{
     border: none;
     border-radius: 0 12px 12px 0;
     cursor: pointer;
-    height: 3.77rem;
+    height: 4rem;
     ${expandFontToken(FONTS.BUTTON_BIG)}
   }
 }
