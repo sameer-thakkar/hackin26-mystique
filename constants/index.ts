@@ -218,7 +218,7 @@ export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
     translatedName: 'Indonesian',
   },
   pl: {
-    displayName: 'Polish',
+    displayName: 'Polski',
     locale: 'pl-pl',
     code: 'pl',
     translatedName: 'Polish',

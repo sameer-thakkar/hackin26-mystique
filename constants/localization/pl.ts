@@ -3,36 +3,41 @@ const pl = {
     BANNER: 'Darmowy audioprzewodnik',
     PRODUCT_SUFFIX: 'z audioprzewodnikiem',
   },
+  AUTHORISED_AND_TRUSTED_PARTNER: 'Autoryzowany i zaufany partner',
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Autoryzowany odsprzedawca',
+    SUB_TEXT:
+      'Autentyczne doświadczenia zaufanych i zweryfikowanych partnerów.',
+  },
+  REVIEWS: 'ocen(-y)',
   AVAILABLE: 'Dostępne',
   BANNER_CTA: 'Kup bilety',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:
-      'Headout to marka, której zaufało miliony odwiedzających na całym świecie, oferująca niezwykłe wycieczki, podczas których można poznać tę atrakcję.',
+      'Headout to marka, której zaufały miliony odwiedzających na całym świecie, oferująca niezwykłe aktywności, podczas których można poznać tę atrakcję.',
     NON_PARTNERED_SENSITIVE:
-      'Headout to marka, której zaufało miliony odwiedzających na całym świecie, oferująca niezwykłe wycieczki, podczas których można poznać tę atrakcję. To nie jest strona internetowa obiektu.',
+      'Headout to marka, której zaufały miliony odwiedzających na całym świecie, oferująca niezwykłe aktywności, podczas których można poznać tę atrakcję. To nie jest strona internetowa obiektu.',
     PARTNERED_NON_SENSITIVE:
-      'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje niezwykłe wycieczki, pozwalające Ci poznać tę atrakcję.',
+      'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje niezwykłe aktywności, pozwalające Ci poznać tę atrakcję.',
     PARTNERED_SENSITIVE:
-      'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje niezwykłe wycieczki, pozwalające Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
+      'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje niezwykłe aktywności, pozwalające Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
   },
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
-    'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych wycieczek, pozwalających Ci poznać tę atrakcję.',
-  BANNER_SUBTEXT_DISCLAIMER:
-    'Jesteśmy zaufanym partnerem, oferującym starannie wybrane najlepsze bilety i wycieczki. To nie jest oficjalna strona internetowa.',
-  BOOK_NOW_CTA: 'Zamów teraz',
+    'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję.',
+  BOOK_NOW_CTA: 'Zarezerwuj teraz',
   BUY_TICKETS_CTA: 'Kup bilety',
   CANCELLATION_POLICY: {
     CANCELLABLE:
-      'Możesz anulować te bilety do {0} godz. przed rozpoczęciem wycieczki, aby uzyskać pełen zwrot.',
+      'Możesz anulować te bilety do {0} godzin przed rozpoczęciem aktywności, aby uzyskać pełen zwrot.',
     CANCELLABLE_ANYTIME:
-      'Darmowe anulowanie w dowolnym momencie przed rozpoczęciem wycieczki',
+      'Darmowe anulowanie w dowolnym momencie przed rozpoczęciem aktywności',
     CANCELLABLE_DAYS:
-      'Możesz anulować te bilety do {0} dni przed rozpoczęciem wycieczki, aby uzyskać pełen zwrot.',
+      'Możesz anulować te bilety do {0} dni przed rozpoczęciem aktywności, aby uzyskać pełen zwrot.',
     EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Tych biletów nie można anulować. Jednak ich ważność została przedłużona.',
+      'Tych biletów nie można anulować. Jednak okres ich ważności został przedłużony.',
     HEADING: 'Zasady zmiany rezerwacji',
     NON_CANCELLABLE_BUT_RESCHEDULABLE:
-      'Tych biletów nie można anulować. Jednak można zmienić ich termin do {0} godz. przed rozpoczęciem wycieczki.',
+      'Tych biletów nie można anulować. Jednak można zmienić ich termin do {0} godz. przed rozpoczęciem aktywności.',
     NON_CANCELLABLE_NON_RESCHEDULABLE:
       'Tych biletów nie można anulować ani przełożyć.',
     VALID_UNTIL_DATE:
@@ -43,11 +48,14 @@ const pl = {
       'Tych biletów nie można anulować. Jednak możesz użyć ich w dowolnym momencie w ciągu następnych {0} miesięcy.',
   },
   CANCELLATION_POLICY_HEADING: 'Zasady anulowania',
-  CASHBACK: '{0}% rabatu',
-  CATEGORY_SLIDER_HEADING: 'Klienci, którzy to zamówili, wyświetlili również',
+  CASHBACK: '{0}% cashbacku',
+  CASHBACK_INFO:
+    'Otrzymasz cashback <strong>{0}%</strong>, gdy zarezerwujesz tę aktywność. Twój cashback zostanie automatycznie przyznany Twojemu kontu Headout i&nbsp;będziesz móc wykorzystać go na dowolne zamówienie na Headout w&nbsp;przyszłości.',
+  CATEGORY_SLIDER_HEADING:
+    'Klienci, którzy zarezerwowali ten spektakl, wyświetlili również',
   CHECK_AVAIL: 'Sprawdź dostępność',
   CITY_PAGE: {
-    BANNER_TITLE: 'Najlepsze oferty na rozmaite wycieczki w mieście',
+    BANNER_TITLE: 'Doświadcz tego, co do zaoferowania ma',
     TOP_ATTRACTIONS: 'Najpopularniejsze atrakcje',
     GO_BEYOND: 'Podróżuj dalej niż {0}',
     ALL_DAY_TRIPS: 'Zobacz wszystkie wycieczki całodzienne',
@@ -55,7 +63,7 @@ const pl = {
     POPULAR_CATEGORIES: 'Popularne kategorie',
     GO_TO_GUIDE: '{0}: przewodnik po mieście',
     VIEW_TRAVEL_GUIDE: 'Wyświetl przewodnik turystyczny',
-    EXPLORE: 'Odkrywaj',
+    EXPLORE: 'Poznaj miasto {0}',
     GUIDE_SUBHEADING:
       'Odkrywanie atrakcji w mieście {0} nigdy nie było łatwiejsze! Nasz przewodnik turystyczny: {0} zawiera wszystko, co musisz wiedzieć o mieście – co jeść, gdzie iść, jak się tam dostać, gdzie się zatrzymać i wiele więcej!',
     GUIDE_ITEM_HEADINGS: {
@@ -85,7 +93,7 @@ const pl = {
     WHERE_TO_EAT:
       'Poznaj tętniącą życiem scenę kulinarną, delektując się różnorodnymi smakami i próbując lokalnych przysmaków w każdym zakątku miasta {0}.',
     WHERE_TO_STAY:
-      'Odkryj najlepsze zakwaterowania w mieście {0}, oferujące komfort, wygodę i niezapomniane wrażenia podczas pobytu.',
+      'Odkryj najlepsze zakwaterowanie w mieście {0}, oferujące komfort, wygodę i niezapomniane wrażenia podczas pobytu.',
     THINGS_TO_DO:
       'Weź udział w mnóstwie emocjonujących aktywności, które trafią we wszystkie gusta, zapewniając niezapomniany czas.',
     WEATHER:
@@ -106,150 +114,35 @@ const pl = {
       'Zanurz się w bogatej scenie artystycznej i kulturalnej, od urzekających muzeów po tętniące życiem festiwale celebrujące dziedzictwo miasta {0}.',
   },
   CLOSE: 'Zamknij',
+  COLLECTION_SLICE_HEADING: 'Popularne aktywności w mieście {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Wybierz',
-    SELECT_PREFERENCE: 'Wybierz swoje preferencje',
     SELECT_OPTION: 'Wybierz opcję',
     SELECT_TICKET: 'Wybierz bilet',
   },
-  COMPARE_ALL_DETAILS: 'Porównaj szczegóły',
+  COMPARE_ALL_DETAILS: 'Porównaj wszystkie szczegóły',
   COVID19_ALERT: {
-    KEY_TEXT: 'Najnowsze informacje dotyczące COVID-19',
+    KEY_TEXT: 'Aktualności dotyczące COVID-19',
     LINK:
       'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
     TEXT:
-      'Jesteś naszym priorytetem. Sprawdź naszą stronę pomocy, aby znaleźć najnowsze informacje na temat naszych elastycznych zasady anulowania',
+      'Jesteś naszym priorytetem. Zapoznaj się z naszą stroną pomocy, aby znaleźć najnowsze informacje na temat naszych elastycznych zasad anulowania rezerwacji',
   },
   CURRENCY: 'Waluta',
   CUSTOMER_REVIEW_HEADING: 'Opinie klientów',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audioprzewodnik',
     DURATION: 'Czas trwania: {0}',
-    EXTENDED_VALIDITY: 'Dłuższy okres wartości',
+    EXTENDED_VALIDITY: 'Przedłużony okres ważności',
     FLEXIBLE_DURATION: 'Elastyczny czas trwania',
-    FREE_CANCELLATION: 'Darmowe anulowanie',
-    GUIDED_TOUR: 'Wycieczka z przewodnikiem',
-    HOTEL_PICKUP: 'Transfer z hotelu',
+    FREE_CANCELLATION: 'Bezpłatne anulowanie',
+    GUIDED_TOUR: 'Wycieczka z przewodnikiem',
+    HOTEL_PICKUP: 'Odbiór z hotelu',
     INSTANT_CONFIRMATION: 'Natychmiastowe potwierdzenie',
-    MEALS_INCLUDED: 'Posiłki w cenie',
-    MOBILE_TICKET: 'Bilet na komórkę',
+    MEALS_INCLUDED: 'Posiłki wliczone w cenę',
+    MOBILE_TICKET: 'Bilet mobilny',
     SKIP_THE_LINE: 'Omiń kolejkę',
-    TRANSFERS: 'Transfery w cenie',
-  },
-  DISCOUNTED_FUTURES: {
-    BANNER: {
-      DESCRIPTION_LINE1: 'Zaoszczędź aż do 50%.',
-      DESCRIPTION_LINE2:
-        'Ważny w dowolnym momencie między <cooldownDate> a 31 grudnia 2021 r.',
-      HEADING_LINE1: 'Nie jesteś pewien, kiedy następna wycieczka?',
-      HEADING_LINE2:
-        'Zamów bilet otwarty dla większej elastyczności i niższej ceny!',
-    },
-    BOOKING_MODAL: {
-      BOOK_NOW: 'Zamów teraz',
-      BOOK_NOW_HEADING: 'Bilet czasowy',
-      BOOK_NOW_PITCH:
-        'Wybierz datę i godzinę, żeby zamówić swoje doświadczenie.',
-      GET_THIS: 'Zamów teraz',
-      GO_LATER_HEADING: 'Bilet otwarty',
-      GO_LATER_PITCH:
-        'Zamów tę wycieczkę ze zniżką i wybierz datę oraz godzinę wizyty później. Możesz odebrać bilet w dowolnym terminie między <stDate> a <edDate>.',
-      LEARN_MORE: 'Dowiedz się więcej',
-      LIMITED: 'Oferta ograniczona czasowa',
-      SELECT_DATE: 'Wybierz datę',
-    },
-    DESCRIPTION:
-      'Przez ograniczony okres możesz zarezerwować **bilet otwarty** na niektóre z naszych ulubionych aktywności, ważny w dowolnym momencie aż do 31 grudnia 2021 r. Bilet oferuje niezwykłe zniżki, większą elastyczność podczas planowania następnych wakacji i gwarancję dobrej zabawy!',
-    FAQ_QUESTIONS: {
-      CANCEL: {
-        ANSWER:
-          'Jeśli nie odebrałeś swojego biletu otwartego, możesz anulować swoją rezerwację w dowolnym momencie przed 31 grudnia 2021 r., aby otrzymać pełen zwrot. Jeśli wykorzystałeś swój bilet otwarty, aby zarezerwować bilety na konkretną datę, nie możesz już zmienić ani anulować rezerwacji.',
-        QUESTION: 'Jakie są zasady anulowania dla tych zamówień?',
-      },
-      DATE_TIME: {
-        ANSWER:
-          'Wycieczki dostępne w ramach promocji „Zamów teraz, wykorzystaj, kiedy chcesz” są oznaczone odpowiednią odznaką i będą oferować opcję wykupienia biletu otwartego. Gdy zamówisz doświadczenie w ramach biletu otwartego, nie będziesz musieć od razu wybierać daty i godziny wizyty. Możesz odebrać swój bilet otwarty na konkretną datę i godzinę później, tak jak Ci wygodnie.',
-        QUESTION:
-          'Jak mogę zamówić opcję „Zamów teraz, wykorzystaj, kiedy chcesz” na Headout?',
-      },
-      ELIGIBLE: {
-        ANSWER:
-          'Wycieczki objęte tą promocją są oznaczone odznaką „Zamów teraz, wykorzystaj, kiedy chcesz”.',
-        QUESTION: 'Które wycieczki są dostępne w tej opcji?',
-      },
-      EXERCISE: {
-        ANSWER: [
-          'Gdy dokonasz rezerwacji, otrzymasz e-mail z potwierdzeniem zamówienia i kuponem dla wybranej wycieczki',
-          'Otrzymasz też e-mail z linkiem do zamówienia, którego możesz użyć, żeby odebrać swój kupon i wybrać datę oraz godzinę swojej wizyty. Jeśli dana atrakcja lub operator doświadczenia nie wznowili jeszcze działalności, otrzymasz link do zamówienia, gdy tak się stanie. Możesz ukończyć ten krok w dowolnym momencie ważności kuponu, np. 31.12.2021 r.',
-          'Po odebraniu kuponu otrzymasz wiadomość e-mail z biletem na Twoje doświadczenie o wybranej dacie i godzinie',
-          'Odwiedź lokal w wybranym przez Ciebie terminie i ciesz się wybranym doświadczeniem.',
-        ],
-        QUESTION: 'Jak dokonać takiego zamówienia?',
-      },
-      LIMITS: {
-        ANSWER: [
-          'Podczas zakupu biletów otwartych nie obowiązują kody zniżkowe czy rabatowe',
-          'Podczas zakupu biletów otwartych nie można użyć rabatów ani punktów promocyjnych ze swojego portfela <mbName>.',
-          'Kiedy odbierzesz swój bilet otwarty, wybierając datę swojej wizyty, nie możesz już zmienić ani anulować rezerwacji.',
-          'Podczas trwania tej promocji można złożyć maksymalnie 2 rezerwacje na osobę na jedną wycieczkę.',
-        ],
-        QUESTION:
-          'Czy są jakieś ograniczenia lub limity dotyczące zakupu biletów otwartych? ',
-      },
-      WHEN: {
-        ANSWER:
-          'Możesz odebrać swój bilet otwarty w dowolnym momencie po dokonaniu rezerwacji. Data wizyty nie może być wcześniejsza niż 30 dni po dacie rezerwacji ani późniejsza niż 31 grudnia 2021 r.',
-        QUESTION:
-          'Kiedy mogę odebrać moje zamówienie „Zamów teraz, wykorzystaj, kiedy chcesz”?',
-      },
-      WORKING: {
-        ANSWER:
-          'Teraz umożliwiamy Ci wygodne zamówienie biletów na ulubione wycieczki, atrakcje i wydarzenia bez wybierania konkretnej daty i godziny. Już teraz możesz kupić niektóre z wycieczek w ramach biletu otwartego i wykorzystać go w dowolnym dniu aż do 31 grudnia 2021 r. Wszystkie produkty w ramach biletu otwartego są objęte specjalną zniżką. Kiedy będziesz gotów, by zacząć planować swoją podróż i wykorzystać wykupione atrakcje – możesz odebrać bilet otwarty, wybierając konkretną datę i godzinę wizyty.',
-        QUESTION: 'Czym jest opcja „Zamów teraz, wykorzystaj, kiedy chcesz”?',
-      },
-    },
-    FLAG_TEXT: 'Zamów teraz, wykorzystaj, kiedy chcesz',
-    HEADING: 'Zamów teraz, oszczędzaj pieniądze i podróżuj, kiedy chcesz',
-    HEADING_WORKS: 'Jak to działa?',
-    HOW_IT_WORKS: {
-      PICK: {
-        HEADING: 'Wybierz atrakcję, o której marzyłeś',
-        SUB_TEXT:
-          'Wszystkie doświadczenia oznaczone jako „Zamów teraz, wykorzystaj, kiedy chcesz” można wykupić w ramach biletu otwartego z dużą zniżką, więc wybierz doświadczenie, które Cię interesuje i zamów swój bilet otwarty.',
-      },
-      REDEEM: {
-        HEADING: 'Miłej zabawy!',
-        SUB_TEXT:
-          'Gotowe. Ruszaj w drogę i baw się dobrze na swoich wakacjach!',
-      },
-      VOUCHER: {
-        HEADING: 'Odbierz i zarezerwuj, gdy będziesz gotowy',
-        SUB_TEXT:
-          'Gdy potwierdzisz swoje plany podróżnicze, możesz odebrać swój bilet otwarty, rezerwując doświadczenie na wybraną przez Ciebie datę i godzinę. Twój bilet jest ważny od <cooldownDate> do 31.12.2021 r.',
-      },
-    },
-    IMAGES_SECTION: {
-      HEADING: 'Świat czeka – czas znowu ruszać w drogę',
-    },
-    PITCH: {
-      BUCKET_LIST: {
-        HEADING: 'Elastyczne anulowanie',
-        SUB_TEXT:
-          'Jeśli nie odebrałeś swojego kuponu, możesz anulować swoje zamówienie w dowolnym momencie, aby otrzymać pełen zwrot. Wiemy, że zmiana planów podróży może być stresująca, dlatego chcemy odjąć Ci jeden powód do zmartwień.',
-      },
-      GO_ANYTIME: {
-        HEADING: 'Podróżuj, kiedy chcesz',
-        SUB_TEXT:
-          'Wiemy, że planowanie jest ostatnio szczególnie ciężkie, dlatego możesz wykorzystać te kupony w dowolnym momencie do <date>, co daje Ci mnóstwo czasu, żeby zaplanować swoje następne wakacje.',
-      },
-      SAVE_MONEY: {
-        HEADING: 'Oszczędzaj pieniądze',
-        SUB_TEXT:
-          'Jeśli szukasz kolejnego powodu, by wkrótce wyruszyć w następną podróż – te atrakcyjne zniżki pomogą Ci zaoszczędzić pieniądze podczas następnej wycieczki.',
-      },
-    },
-    SHORT_DESCRIPTION:
-      'Kup bilet otwarty dla większej elastyczności i niższej ceny. Ważny w dowolnym momencie aż do 31 grudnia 2021 r.',
+    TRANSFERS: 'Transfery wliczone w cenę',
   },
   DURATION: 'Czas trwania',
   EARLIEST_AVAILABILITY: 'Najwcześniejszy dostępny termin',
@@ -262,10 +155,10 @@ const pl = {
   },
   ENTERTAINMENT_MB: {
     BROADWAY: {
-      MB_NAME: 'Bilety do teatru na Broadwayu',
+      MB_NAME: 'Bilety do teatru na Broadwayu',
     },
     LTT: {
-      MB_NAME: 'Bilety do teatru w Londynie',
+      MB_NAME: 'Bilety do teatru w Londynie',
     },
   },
   EXCLUSIONS: 'Nie w cenie',
@@ -274,174 +167,190 @@ const pl = {
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% bezpieczne',
     HEADING_SUPPORT: 'Centrum pomocy 24/7',
-    SUB_HEADING_CUSTOMER: 'klientów zadowolonych z 10 000+ wycieczek',
+    SUB_HEADING_CUSTOMER: 'Klienci zadowoleni z 10 000+ aktywności',
     SUB_HEADING_RATING:
       '5000+ zweryfikowanych opinii z doskonałym wynikiem 90%',
     SUB_HEADING_SAFE:
-      'Wszystkie aktywności na świeżym powietrzu są 100% bezpieczne',
+      'Wszystkie aktywności na świeżym powietrzu są w 100% bezpieczne',
     SUB_HEADING_SUPPORT:
       'Masz pytanie? Czatuj na żywo z lokalnymi ekspertami, gdzie chcesz i kiedy chcesz',
   },
-  FLEXIBLE: 'Elastyczne',
+  FLEXIBLE: 'Elastyczność',
   FOOTER: {
-    CALL_US: 'Zadzwoń do nas',
-    CHAT_WITH_US: 'Porozmawiaj z nami',
+    CALL_US: 'Zadzwoń do nas',
+    CHAT_WITH_US: 'Czatuj z nami',
     COMPANY_DETAILS: 'Dane firmy',
+    INFORMATION: 'Informacja',
     DISCLAIMER:
-      'Ta strona internetowa nie jest oficjalną stroną internetową <attraction>. Jest prowadzona przez Headout, które współpracuje z operatorami atrakcji i wycieczek, aby zapewniać niezwykłe doświadczenia w kilku kliknięciach.',
-    EMAIL_US: 'Napisz do nas',
+      'Ta strona nie jest oficjalną stroną internetową <attraction>. Jest prowadzona przez Headout, które współpracuje z operatorami atrakcji i wycieczek, aby zapewniać niezwykłe doświadczenia w kilku kliknięciach.',
+    EMAIL_US: 'Napisz do nas',
     GET_HELP: 'Uzyskaj pomoc',
-    LEGAL: 'Informacje prawne',
+    GMAPS_DISCLAIMER:
+      'Wszystkie zrzuty ekranu map znajdujące się na tej stronie są pozyskiwane z Google zgodnie z zasadami dozwolonego użytku. Wszelkie prawa do takich zrzutów ekranu należą do konkretnej platformy, a ich wykorzystanie służy wyłącznie celom informacyjnym lub orientacyjnym.',
     PRIVACY_POLICY: 'Polityka prywatności',
     QUICK_LINKS: 'Szybkie linki',
     TERMS_AND_CONDITIONS: 'Warunki korzystania',
+    COPYRIGHT: '© Headout Inc.',
+    MADE_WITH: 'Stworzone z ',
+    ALL_OVER_THE: ' na całym ',
   },
-  FREE_CANCELLATION: 'Darmowe anulowanie',
+  FREE_CANCELLATION: 'Bezpłatne anulowanie',
+  FREE_CANCELLATION_SUBTEXT:
+    'Rozumiemy, że plany się zmieniają – anuluj bezpłatnie do 72 godzin przed wydarzeniem.',
   FROM: 'Od',
+  GET_CASHBACK: 'Zdobądź {0}% cashbacku',
   GROUP_TICKETS: 'Bilety grupowe',
+  HAPPY_CUSTOMER: {
+    MAIN_TEXT: '18+ milionów zadowolonych klientów',
+    SUB_TEXT:
+      'Zadowolenie klientów jest naszym priorytetem. Dołącz do grona naszych szczęśliwych klientów.',
+  },
+  HELP_CENTER: {
+    MAIN_TEXT: 'Centrum pomocy 24/7',
+    SUB_TEXT:
+      'Masz pytania lub obawy? Możesz liczyć na naszą pomoc 24/7 — przez telefon, czat oraz e-mail.',
+  },
   INCLUSIONS: 'W cenie',
   LANGUAGE: 'Język',
   LANGUAGES: {
-    ENGLISH: 'Angielski',
-    SPANISH: 'Hiszpański',
-    FRENCH: 'Francuski',
-    ITALIAN: 'Włoski',
-    GERMAN: 'Niemiecki',
-    PORTUGUESE: 'Portugalski',
-    NEDERLANDS: 'Holenderski',
-    POLISH: 'Polish',
+    ENGLISH: 'angielski',
+    SPANISH: 'hiszpański',
+    FRENCH: 'francuski',
+    ITALIAN: 'włoski',
+    GERMAN: 'niemiecki',
+    PORTUGUESE: 'portugalski',
+    NEDERLANDS: 'holenderski',
+    POLISH: 'polski',
   },
+  TOUR_AVAILABLE_LANGUAGES: 'Wycieczka dostępna w języku: {0}',
   LISTICLES: {
-    KNOW_MORE: 'Dowiedz się więcej',
+    KNOW_MORE: 'Dowiedz się więcej',
     SEATING_CHART: 'Rozkład miejsc',
-    WHY_BOOK_FROM_US: 'Dlaczego zamówić u nas?',
+    WHY_BOOK_FROM_US: 'Czemu warto zarezerwować u nas?',
   },
   MORE_DETAILS: 'Więcej szczegółów',
-  MORE_FROM: 'More from',
   MORE_CURRENCIES: 'Więcej walut',
-  NEW: 'NOWE',
+  NEW: 'NOWOŚĆ',
   NEW_ARRIVAL: 'Nowość',
-  NEXT_AVAILABLE: 'Następny dostępny: ',
+  NEXT_AVAILABLE: 'Następne dostępne: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout to marka, której zaufało ponad 15 milionów odwiedzających, oferująca starannie dobraną selekcję najlepszych wycieczek. To nie jest strona internetowa obiektu.',
-  NO_RESULT_FOUND: 'Nie znaleziono żadnych wyników',
+    'Headout to marka, której zaufało ponad 15 milionów odwiedzających, oferująca starannie dobraną selekcję najlepszych aktywności. To nie jest strona internetowa obiektu.',
+  NO_RESULT_FOUND: 'Hmm, nie znaleziono wyników.',
   OFF: 'zniżki',
-  OPEN_DATED_DESCRIPTOR: 'Rezerwuj elastycznie – niewymagany wybór daty',
-  OPENING_DATE: 'Data otwarcia',
-  OPENING_ON: 'Otwarcie w dniu',
-  OPENS: 'Otwarcie',
+  OPEN_DATED_DESCRIPTOR: 'Rezerwuj z elastycznością - nie musisz wybierać daty',
+  OPENING_DATE: 'Data premiery',
+  OPENING_ON: 'Premiera',
+  OPENS: 'Premiera',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych wycieczek, pozwalających Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
-  PRICES_STARTING: 'Ceny od',
+    'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
   POPULAR_CURRENCIES: 'Popularne waluty',
+  PRICES_STARTING: 'Ceny od',
   PROMO_CODES: {
     APPLY_CODE: 'ZASTOSUJ KOD',
+    APPLIED: 'ZASTOSOWANO',
+    TOOL_TIP_INFO: 'Ta zniżka zostanie zastosowana przy finalizacji zamówienia',
     DESCRIPTION: {
-      ABSOLUTE: 'Otrzymaj {0} zniżki',
-      CAPPED: 'Otrzymaj {0}% zniżki aż do {1}',
-      PERCENTAGE: 'Otrzymaj {0}% zniżki',
+      ABSOLUTE: 'Uzyskaj {0} zniżki',
+      CAPPED: 'Uzyskaj {0}% zniżki, do {1}',
+      PERCENTAGE: 'Uzyskaj {0}% zniżki',
     },
     REMOVE: 'USUŃ',
   },
-
   RATINGS: 'Oceny: {0}',
   READ_MORE: 'Czytaj więcej',
   READ_MORE_TEXT: 'Czytaj więcej',
-  REOPENING: 'Ponowne otwarcie',
-  REOPENING_DATE: 'Data ponownego otwarcia',
-  REOPENING_ON: 'Ponowne otwarcie w dniu',
-  REOPENS: 'Ponowne otwarcie',
+  READ_LESS: 'Czytaj mniej',
+  VIEW_DETAILS: 'Wyświetl szczegóły',
+  REOPENING: 'Ponowne rozpoczęcie',
+  REOPENING_DATE: 'Data ponownego rozpoczęcia',
+  REOPENING_ON: 'Ponowne rozpoczęcie',
+  REOPENS: 'Rozpoczyna się ponownie',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
       CTA_URL:
         'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
       TEXT:
-        'Obowiązują zasady 2G: dostęp do między innymi zakwaterowania, instytucji kultury oraz restauracji/barów jest dostępny jedynie z dowodem szczepienia lub przebytej choroby. Negatywny test przeciw COVID-19 jest już niewystarczający.',
+        'Obowiązują przepisy dotyczące 2G: dostęp do zakwaterowania, instytucji kultury, restauracji/barów jest możliwy tylko z dowodem pełnego zaszczepienia lub przeszłego zakażenia. Ujemny wynik testu na obecność COVID-19 nie jest już wystarczający.',
     },
     AU_DESCRIPTION: {
       CTA_URL:
         'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
       TEXT:
-        'Odwiedzający w wieku 16 lat i starsi muszą zaprezentować dowód szczepienia przeciw COVID-19 lub zwolnienie ze szczepienia. ',
+        'Odwiedzający w wieku 16 lat i starsi muszą zaprezentować dowód szczepienia przeciw COVID-19 lub zwolnienie ze szczepienia. ',
     },
-    BANNER_CTA: 'Dowiedz się więcej',
+    BANNER_CTA: 'Dowiedz się więcej',
     BERLIN_DESCRIPTION: {
       CTA_URL:
         'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
       TEXT:
-        'Obowiązują zasady 2G: wstęp mają jedynie w pełni zaszczepieni odwiedzający i ozdrowieńcy, którzy przedstawią odpowiednie certyfikaty. Odwiedzający poniżej 18 roku życia i ci, którzy z powodów medycznych nie mogą się zaszczepić, muszą zaprezentować negatywny wynik testu na COVID przed wejściem. Ci, którzy z powodów medycznych nie mogą się zaszczepić, powinni też udowodnić to, prezentując odpowiednie zwolnienie ze szczepienia przed wejściem.',
+        'Obowiązują zasady 2G: wstęp mają jedynie w pełni zaszczepieni odwiedzający i ozdrowieńcy, którzy przedstawią odpowiednie certyfikaty. Odwiedzający poniżej 18 roku życia lub ci, którzy nie mogą być zaszczepieni z powodów medycznych, muszą przedstawić przy wejściu negatywny wynik testu na COVID. Ci, którzy z powodów medycznych nie mogą się zaszczepić, również powinni to udowodnić, prezentując odpowiednie zwolnienie ze szczepienia przed wejściem.',
     },
-    CTA_TEXT: 'Szczegóły dotyczące bezpieczeństwa',
-    DESCRIPTION_CTA: 'Dowiedz się więcej.',
+    CTA_TEXT: 'Szczegóły bezpieczeństwa',
+    DESCRIPTION_CTA: 'Dowiedz się więcej.',
     EU_DESCRIPTION: {
       CTA_URL:
         'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
       TEXT:
-        'Od 21 lipca 2021 r. wszyscy odwiedzający w wieku 12 lat i starsi muszą zaprezentować unijny certyfikat COVID. ',
+        'Od 21 lipca 2021 r. wszyscy odwiedzający w wieku 12 lat i starsi muszą zaprezentować unijny certyfikat COVID. ',
     },
     EU_HEADING: 'Wymagany unijny certyfikat COVID',
     EU_PREFIX: 'Uwaga: ',
     EXPERIENCE_DESCRIPTION:
-      'Ta wycieczka została zweryfikowana jako doświadczenie zgodne z najwyższymi standardami bezpieczeństwa według lokalnych przepisów oraz Światowej Organizacji Zdrowia',
+      'Ta aktywność została zweryfikowana jako aktywność zgodna z najwyższymi standardami bezpieczeństwa według lokalnych przepisów oraz Światowej Organizacji Zdrowia',
     FLAG_TEXT: 'Największe bezpieczeństwo',
     GENERAL_DESCRIPTION:
-      'Wszystkie wycieczki z tą odznaką zostały zweryfikowane jako doświadczenia zgodne z najwyższymi standardami bezpieczeństwa według lokalnych przepisów dotyczących zdrowia.',
+      'Wszystkie aktywności z tą odznaką zostały zweryfikowane jako aktywności zgodne z najwyższymi standardami bezpieczeństwa według lokalnych przepisów dotyczących zdrowia.',
     HEADING: 'Najwyższe standardy bezpieczeństwa',
     IT_DESCRIPTION: {
       CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
       TEXT:
-        'Od 6 sierpnia 2021 r. wszyscy odwiedzający w wieku 11 lat i starsi muszą zaprezentować unijny certyfikat COVID, czyli tak zwany paszport covidowy. ',
+        'Od 6 sierpnia 2021 r. wszyscy odwiedzający w wieku 11 lat i starsi muszą zaprezentować unijny certyfikat COVID, czyli tak zwany paszport covidowy. ',
     },
     IT_PREFIX: 'Uwaga: ',
-    MOBILE_HEADING: 'Bezpieczne wycieczki',
+    MOBILE_HEADING: 'Bezpieczne aktywności',
     MODAL: {
       BADGE_DESCRIPTION:
-        'Ta odznaka na wycieczce potwierdza, że standardy bezpieczeństwa zostały przez nas zweryfikowane',
+        'Ta odznaka na aktywności potwierdza, że standardy bezpieczeństwa zostały przez nas zweryfikowane',
       DETAILS: {
         SAFETY_CLEANED_DEFAULT: {
           DESCRIPTION:
-            'Wszystkie sprzęty, pojazdy i często dotykane powierzchnie są odkażane po każdym użyciu. Po prostu usiądź wygodnie i ciesz się doświadczeniem.',
-          HEADING: 'Wszystkie powierzchnie i sprzęty są odkażane',
+            'Wszystkie sprzęty, pojazdy i często dotykane powierzchnie są odkażane po każdym użyciu. Po prostu usiądź wygodnie i ciesz się wydarzeniem.',
+          HEADING: 'Wszystkie powierzchnie i sprzęty są odkażane',
         },
         SAFETY_CLEANED_EQUIPMENTS: {
           DESCRIPTION:
-            'Wszystkie sprzęty dostępne podczas wycieczki są starannie odkażane po każdym użyciu. Zawsze.',
-          HEADING: 'Wszystkie powierzchnie i sprzęty są odkażane',
+            'Wszystkie sprzęty dostępne podczas aktywności są starannie odkażane po każdym użyciu. Zawsze.',
+          HEADING: 'Wszystkie powierzchnie i sprzęty są odkażane',
         },
         SAFETY_CLEANED_VEHICLES: {
           DESCRIPTION:
-            'Wszystkie pojazdy dostępne podczas wycieczki są starannie odkażane po każdym użyciu. Zawsze',
+            'Wszystkie pojazdy dostępne podczas aktywności są starannie odkażane po każdym użyciu. Zawsze',
           HEADING: 'Wszystkie pojazdy są odkażane',
-        },
-        SAFETY_CONTACTLESS: {
-          DESCRIPTION:
-            'W 2020 r. powinieneś móc cieszyć się dowolnym doświadczeniem bez potrzeby dotykania czegokolwiek lub kogokolwiek. I możesz.',
-          HEADING: 'Bezproblemowe, bezdotykowe wejście ',
         },
         SAFETY_HANDWASH: {
           DESCRIPTION:
-            'Podczas tej bezpiecznej wycieczki będziesz mieć dostęp do mydła i stacji sanitarnych. Bez obaw! ',
-          HEADING: 'Mydło oraz stacje sanitarne dostępne w obiekcie',
+            'Podczas tej bezpiecznej aktywności będziesz mieć dostęp do mydła i stacji sanitarnych. Bez obaw! ',
+          HEADING: 'Mydło oraz stacje sanitarne dostępne w obiekcie',
         },
         SAFETY_MASK_BOTH: {
           DESCRIPTION:
-            'Maski są obowiązkowe dla wszystkich odwiedzających oraz pracowników podczas tej wycieczki. Dzięki temu wszyscy mogą bawić się przy zachowaniu bezpieczeństwa.',
-          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa.',
+            'Maski są obowiązkowe dla wszystkich odwiedzających oraz pracowników podczas tej aktywności. Dzięki temu wszyscy mogą bawić się przy zachowaniu bezpieczeństwa.',
+          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa',
         },
         SAFETY_MASK_DEFAULT: {
           DESCRIPTION:
-            'Nasi partnerzy, którzy zostali zweryfikowani jako „Bezpieczne wycieczki”, przestrzegają lokalnych regulacji dotyczących noszenia maseczek. Jeśli to obowiązkowe, wszyscy odwiedzający i pracownicy noszą maseczki. Robią, co w ich mocy, by zapewnić Ci komfort i bezpieczeństwo.',
-          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa',
+            'Nasi partnerzy, którzy zostali zweryfikowani jako „Bezpieczne aktywności”, przestrzegają lokalnych regulacji dotyczących noszenia maseczek. Jeśli jest to obowiązkowe, wszyscy odwiedzający i pracownicy noszą maseczki. Robią, co w ich mocy, by zapewnić Ci komfort i bezpieczeństwo.',
+          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa',
         },
         SAFETY_MASK_GUEST: {
           DESCRIPTION:
-            'Maski są obowiązkowe dla wszystkich odwiedzających podczas tej wycieczki. Dzięki temu wszyscy mogą bawić się przy zachowaniu bezpieczeństwa.',
-          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa.',
+            'Maski są obowiązkowe dla wszystkich odwiedzających podczas tej aktywności. Dzięki temu wszyscy mogą bawić się przy zachowaniu bezpieczeństwa.',
+          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa',
         },
         SAFETY_MASK_STAFF: {
           DESCRIPTION:
-            'Wszyscy pracownicy podczas tej wycieczki noszą maseczki na twarzy, żeby zapewnić Ci maksymalną zabawę i minimalne zmartwienia.',
-          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa.',
+            'Wszyscy pracownicy podczas tej aktywności noszą maseczki na twarzy, żeby zapewnić Ci maksymalną zabawę i minimalne zmartwienia.',
+          HEADING: 'Wszyscy noszą maski dla Twojego bezpieczeństwa',
         },
         SAFETY_RESTRICTED_CAPACITY: {
           DESCRIPTION:
@@ -450,93 +359,94 @@ const pl = {
         },
         SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
           DESCRIPTION:
-            'Podczas tej wycieczki obowiązują zasady dotyczące dystansu społecznego. Obowiązują ograniczenia ilości osób, aby umożliwić przestrzeganie zasad dotyczących dystansu społecznego. Aby to umożliwić, odwiedziny w dużych grupach nie są dozwolone.',
+            'Podczas tej wycieczki obowiązują zasady dotyczące dystansu społecznego. Obowiązują ograniczenia ilości osób, aby umożliwić przestrzeganie zasad dotyczących dystansu społecznego. Aby to umożliwić, wizyty w dużych grupach nie są dozwolone.',
           HEADING: 'Przestrzega się zasad dotyczących dystansu społecznego',
         },
         SAFETY_SOCIAL_DISTANCING: {
           DESCRIPTION:
-            'Podczas tej wycieczki cały czas przestrzega się zasad dotyczących dystansu społecznego.',
+            'Podczas tej aktywności cały czas przestrzega się zasad dotyczących dystansu społecznego.',
           HEADING: 'Przestrzega się zasad dotyczących dystansu społecznego',
         },
         SAFETY_SOCIAL_DISTANCING_DEFAULT: {
           DESCRIPTION:
-            'Podczas tej wycieczki cały czas przestrzega się zasad dotyczących dystansu społecznego. Aby to umożliwić, mogą obowiązywać ograniczenia dotyczące ilości osób. Oddychaj bez obaw.',
+            'Podczas tej aktywności cały czas przestrzega się zasad dotyczących dystansu społecznego. Aby to umożliwić, mogą obowiązywać ograniczenia dotyczące ilości osób. Oddychaj bez obaw.',
           HEADING: 'Przestrzega się zasad dotyczących dystansu społecznego',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           DESCRIPTION:
-            'Podczas tej wycieczki cały czas przestrzega się zasad dotyczących dystansu społecznego. Aby to umożliwić, wizyty w dużych grupach nie są dozwolone.',
+            'Podczas tej aktywności cały czas przestrzega się zasad dotyczących dystansu społecznego. Aby to umożliwić, wizyty w dużych grupach nie są dozwolone.',
           HEADING: 'Przestrzega się zasad dotyczących dystansu społecznego',
         },
         SAFETY_TEMPERATURE_DEFAULT: {
           DESCRIPTION:
-            'Temperatura wszystkich odwiedzających zostanie sprawdzona na początku wycieczki, aby zapewnić wszystkim bezpieczeństwo. Temperatura wszystkich pracowników jest wielokrotnie sprawdzana każdego dnia.',
+            'Temperatura wszystkich odwiedzających zostanie sprawdzona na początku wycieczki, aby zapewnić wszystkim bezpieczeństwo. Temperatura wszystkich pracowników jest wielokrotnie sprawdzana każdego dnia.',
           HEADING: 'Obowiązuje sprawdzanie temperatury',
         },
         SAFETY_TEMPERATURE_GUEST: {
           DESCRIPTION:
-            'Temperatura wszystkich odwiedzających zostanie sprawdzona na początku wycieczki, aby zapewnić wszystkim bezpieczeństwo. ',
+            'Temperatura wszystkich odwiedzających zostanie sprawdzona na początku wycieczki, aby zapewnić wszystkim bezpieczeństwo. ',
           HEADING: 'Obowiązuje sprawdzanie temperatury',
         },
         SAFETY_TEMPERATURE_STAFF: {
           DESCRIPTION:
-            'Temperatura wszystkich pracowników jest wielokrotnie sprawdzana. Pracownikom, których temperatura przekracza limit, zabrania się wstępu; są proszeni o zostanie w domu do momentu wyzdrowienia.',
+            'Temperatura wszystkich pracowników jest wielokrotnie sprawdzana. Pracownikom, których temperatura przekracza limit, zabrania się wstępu; są proszeni o zostanie w domu do momentu powrotu do zdrowia.',
           HEADING: 'Obowiązuje sprawdzanie temperatury',
         },
         SAFETY_TRAINED_STAFF: {
           DESCRIPTION:
-            'Pracownicy obsługujący wycieczkę są przeszkoleni zgodnie z wytycznymi WHO i są w stanie poradzić sobie ze wszelkimi potencjalnymi wypadkami i sytuacjami',
-          HEADING: 'Pracownicy przeszkoleni z zakresu wytycznych WHO',
+            'Pracownicy obsługujący aktywność są przeszkoleni zgodnie z wytycznymi WHO i są w stanie poradzić sobie ze wszelkimi potencjalnymi wypadkami i sytuacjami',
+          HEADING: 'Pracownicy są przeszkoleni z zakresu wytycznych WHO',
         },
       },
-      HEADING: 'Bezpieczne wycieczki',
+      HEADING: 'Bezpieczne aktywności',
       SUB_HEADING:
-        'Pracujemy z naszymi partnerami na całym świecie, aby wdrażać najwyższe standardy bezpieczeństwa zgodne z wytycznymi Światowej Organizacji Zdrowia. Wszystkie środki bezpieczeństwa podejmowane w miejscu wycieczki zostały zweryfikowane i są tu wyświetlane. Czas znów cieszyć się światem wokół nas.',
+        'Pracujemy z naszymi partnerami z całego świata, aby wdrażać najwyższe standardy bezpieczeństwa zgodne z wytycznymi Światowej Organizacji Zdrowia. Wszystkie środki bezpieczeństwa podejmowane w miejscu aktywności zostały zweryfikowane i są tu wyświetlane. Czas znów cieszyć się światem wokół nas.',
     },
     NL_DESCRIPTION: {
       CTA_URL:
         'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
       TEXT:
-        'Odwiedzający w wieku 13 lat i starsi muszą mieć (cyfrowy lub wydrukowany) certyfikat COVID, który potwierdza szczepienie, negatywny wynik niedawno zrobionego testu lub ważny certyfikat ozdrowieńca. Noszenie maseczki na twarzy jest obowiązkowe. ',
+        'Odwiedzający w wieku 13 lat i starsi muszą mieć (cyfrowy lub wydrukowany) certyfikat COVID, który potwierdza szczepienie, negatywny wynik niedawno zrobionego testu lub ważny certyfikat ozdrowieńca. Noszenie maseczki jest obowiązkowe. ',
     },
     SG_DESCRIPTION: {
       CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
       TEXT:
-        'Od 13 października 2021 r. tylko w pełni zaszczepieni odwiedzający mogą wchodzić w dwuosobowych grupach. Przed wejściem konieczne będzie zaprezentowanie dowodu szczepienia, negatywnego wyniku niedawno zrobionego testu przeciwko COVID-19 i/lub certyfikatu ozdrowieńca. ',
+        'Od 13 października 2021 r. tylko w pełni zaszczepieni odwiedzający mogą wchodzić w dwuosobowych grupach. Przed wejściem konieczne będzie zaprezentowanie dowodu szczepienia, negatywnego wyniku niedawno zrobionego testu przeciwko COVID-19 i/lub certyfikatu ozdrowieńca. ',
     },
     SHORT_HEADING: 'Obowiązują najwyższe standardy bezpieczeństwa',
   },
   SAFE_EXPERIENCE_NEW: {
-    CTA_TEXT: 'Szczegóły dotyczące bezpieczeństwa',
+    CTA_TEXT: 'Szczegóły bezpieczeństwa',
     EXPERIENCE_DESCRIPTION:
-      'Ta wycieczka została zweryfikowana jako doświadczenie zgodne z najwyższymi standardami bezpieczeństwa według lokalnych przepisów oraz Światowej Organizacji Zdrowia',
+      'Ta aktywność została zweryfikowana jako aktywność zgodna z najwyższymi standardami bezpieczeństwa według lokalnych przepisów oraz Światowej Organizacji Zdrowia',
     FLAG_TEXT: 'Największe bezpieczeństwo',
     GENERAL_DESCRIPTION:
       'Ten obiekt jest ZABEZPIECZONY PRZED COVID i przestrzega wszystkich środków bezpieczeństwa zalecanych przez rząd w celu zapewnienia wszystkim bezpiecznej zabawy przy zachowaniu dystansu społecznego podczas wizyty w teatrze.',
     GENERAL_DESCRIPTION_V2:
       'Opracowaliśmy znany w całej branży symbol „Zobacz to bezpiecznie”, więc gdy teatry otworzą się ponownie, będziesz móc czuć się bezpiecznie, wiedząc, że obiekt został zabezpieczony przed COVID i przestrzega najnowszych wytycznych rządowych i wytycznych dotyczących sztuk widowiskowych.',
     HEADING: 'Zobacz to bezpiecznie',
-    MOBILE_HEADING: 'Bezpieczne wycieczki',
+    MOBILE_HEADING: 'Bezpieczne aktywności',
+    MORE_CURRENCIES: 'Więcej walut',
     MODAL: {
       DETAILS: {
         CONTACTLESS_MEASURES_DEFAULT: {
           DESCRIPTION:
-            '<li>Akceptowane są jedynie bilety wydrukowane w domu lub e-bilety</li>',
+            '<li>Akceptowane są jedynie bilety wydrukowane w&nbsp;domu lub e-bilety</li>',
           HEADING: 'Bezdotykowe e-bilety',
         },
         PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
           DESCRIPTION:
-            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n<li>Przed wejściem do obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
+            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
           HEADING: 'Zapobiegawcze środki bezpieczeństwa',
         },
         SANITIZATION_MEASURES_DEFAULT: {
           DESCRIPTION:
-            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n<li>Przed wejściem do obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
+            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
           HEADING: 'Sanitaryzacja',
         },
         SOCIAL_DISTANCING_MEASURES_DEFAULT: {
           DESCRIPTION:
-            '<li>Obiekt został zmieniony, tak aby minimalizować kontakt między widzami</li>\n<li>Różnym grupom przydzielane są oddzielne miejsca</li>\n<li>W miarę możliwości zorganizowane zostanie wstępne zamawianie przekąsek na przerwę</li>\n<li>Zalecane są bezdotykowe, elektroniczne transakcje.</li>\n<li>Widzów prosi się o ograniczenie ilości zabieranych ze sobą przedmiotów osobistych, ponieważ szatnie mogą być zamknięte</li>\n<li>Aktywności takie jak robienie zdjęć z artystami czy rozdawanie autografów mogą być ograniczone</li>\n',
+            '<li>Obiekt został zmieniony, tak aby minimalizować kontakt między widzami</li>\n            <li>Różnym grupom przydzielane są oddzielne miejsca</li>\n            <li>W&nbsp;miarę możliwości zorganizowane zostanie wstępne zamawianie przekąsek na przerwę</li>\n            <li>Zalecane są bezdotykowe, elektroniczne transakcje.</li>\n            <li>Widzów prosi się o ograniczenie ilości zabieranych ze sobą przedmiotów osobistych, ponieważ szatnie mogą być zamknięte</li>\n            <li>Aktywności takie jak robienie zdjęć z&nbsp;artystami czy rozdawanie autografów mogą być ograniczone</li>\n            ',
           HEADING: 'Środki dystansu społecznego',
         },
       },
@@ -549,72 +459,117 @@ const pl = {
   SANITARY_ALERT: {
     KEY_TEXT: 'Twoje bezpieczeństwo jest naszym priorytetem',
     TEXT:
-      'Podjęliśmy istotne kroki w celu poprawy czystości i stosujemy środki dezynfekcyjne podczas kompleksowego i częstego czyszczenia powierzchni. Zapobiegamy też tłumom, kontrolując liczbę ludzi.',
+      'Podjęliśmy istotne kroki w celu poprawy czystości i stosujemy środki dezynfekcyjne podczas kompleksowego i częstego czyszczenia powierzchni. Zapobiegamy też tłumom, kontrolując liczbę ludzi.',
   },
   SAVE: 'Zaoszczędź {0}%',
   SAVE_PERCENT: 'Zaoszczędź {0}%',
-  SAVE_UPTO: 'Zaoszczędź do',
-  SAVE_UPTO_PERCENT: 'Zaoszczędź aż do {0}%',
+  SAVE_UPTO_PERCENT: 'Zaoszczędź do {0}%',
   SEE_ALL: 'Zobacz wszystko',
-  SEE_MORE_SHOWS: 'Zobacz więcej przedstawień',
+  SEARCH: 'Szukaj',
+  POPULARITY: 'Popularność',
+  PRICE: 'Cena',
+  SEE_MORE_SHOWS: 'Zobacz więcej spektakli',
   SELECT_CITY: 'Wybierz miasto',
-  SEE_ALL_PHOTOS: 'Pokaż wszystkie zdjęcia',
-  SHOW_CLOSED: 'Pokaż zamknięte',
+  SELECT_SECTION: 'Wybierz sekcję',
+  SEE_ALL_PHOTOS: 'Zobacz wszystkie zdjęcia',
+  SHOW_CLOSED: 'Spektakl zakończony',
+  SHOW_LESS: 'Pokaż mniej',
   SHOW_LESS_TEXT: 'Pokaż mniej',
+  SHOW_MORE: 'Pokaż więcej',
   SHOW_PAGE: {
-    ABOUT_SHOW: 'O przedstawieniu',
+    ABOUT_SHOW: 'O spektaklu',
     ABOUT_THEATRE: 'O teatrze',
-    ADDITIONAL_INFORMATION: 'Dodatkowe informacje',
-    AGE_LIMIT: 'Ograniczenia wiekowe',
-    AGE_SUITABILITY: 'Zalecany wiek',
+    ADDITIONAL_INFORMATION: 'Informacje dodatkowe',
+    AGE_LIMIT: 'Ograniczenie wiekowe',
+    AGE_SUITABILITY: 'Odpowiedni wiek',
     ANSWER: ['Odpowiedź:'],
-    BLOG_SHOW_PAGE: 'Blog Strona przedstawienia',
-    BLOG_SUMMARY: 'Blog Podsumowanie',
-    BLOG_THEATRE_PAGE: 'Blog Strona teatru',
-    BLOG_THEATRE_SEATING_PLAN: 'Blog Rozkład miejsc teatru',
-    CANCELLATION_AND_REFUNDS: 'Anulowanie i zwroty',
+    BLOG_SHOW_PAGE: 'Blog: strona spektaklu',
+    BLOG_SUMMARY: 'Blog: podsumowanie',
+    BLOG_THEATRE_PAGE: 'Blog: strona teatru',
+    BLOG_THEATRE_SEATING_PLAN: 'Blog: układ siedzeń teatru',
+    CANCELLATION_AND_REFUNDS: 'Anulowanie i zwroty',
     CANCELLATION_POLICY: 'Zasady anulowania',
-    CAST_AND_CREW: 'Obsada i ekipa',
-    CLOSING_DATE: 'Czas zamknięcia',
-    CLOSING_DATE_SPECIAL_OFFER: 'Oferta specjalna: Ostatni termin',
+    CAST_AND_CREW: 'Obsada i ekipa',
+    CLOSING_DATE: 'Data zakończenia',
+    CLOSING_DATE_SPECIAL_OFFER: 'Oferta specjalna: ostatni termin',
     DURATION: 'Czas trwania',
-    FACILITIES_AND_ACCESSIBILITY: 'Udogodnienia i dostępność',
+    FACILITIES_AND_ACCESSIBILITY: 'Udogodnienia i dostępność',
     FREQUENTLY_ASKED_QUESTIONS: 'Często zadawane pytania',
     GETTING_THERE: 'Dojazd',
-    GETTING_THERE_MAP_LINK: 'Link do mapy dojazdu',
-    GOOGLE_MAP: 'Google Maps',
+    GETTING_THERE_MAP_LINK: 'Dojazd: link do mapy',
+    GOOGLE_MAP: 'Mapa Google',
     HIGHLIGHTS: 'Główne punkty',
-    LISTICLE_SHOW_SUMMARY: 'Listicle Show Summary',
-    LISTICLE_SHOW_WHY_WATCH: 'Listicle Show Why Watch',
-    OPENING_DATE: 'Data otwarcia',
+    LISTICLE_SHOW_SUMMARY: 'Listicle Podsumowanie spektaklu',
+    LISTICLE_SHOW_WHY_WATCH: 'Listicle Dlaczego warto obejrzeć',
+    OPENING_DATE: 'Data premiery',
     QUESTION: ['Pytanie:'],
     SAFETY_BANNER: 'Baner bezpieczeństwa',
-    SHOW_DETAILS: 'Szczegóły przedstawienia',
-    SHOW_TIMINGS: 'Godziny przedstawień',
-    SHOW_TYPE: 'Rodzaj przedstawienia',
+    SHOW_DETAILS: 'Szczegóły spektaklu',
+    SHOW_TIMINGS: 'Terminy spektakli',
+    SHOW_TYPE: 'Rodzaj spektaklu',
     SPECIAL_OFFER: 'Oferta specjalna',
     THE_STORY: 'Historia',
     THEATRE_ADDRESS: 'Adres teatru',
-    THEATRE_CAPACITY: 'Liczba miejsc',
+    THEATRE_CAPACITY: 'Pojemność teatru',
     THEATRE_NAME: 'Nazwa teatru',
     TICKETS: 'Bilety',
     TICKETS_REDEMPTION: 'Odbiór biletów',
-    TOP_SONGS: 'Najpopularniejsze piosenki',
+    TOP_SONGS: 'Popularne utwory',
     YOUR_TICKETS: 'Twoje bilety',
+    ABOUT_CONCERT: 'O koncercie',
+    PROGRAM: 'Program',
   },
+  SORT_BY: 'Sortuj według',
   SPECIAL_OFFER: 'Oferta specjalna',
   THEATRE: 'Teatr',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Pobliskie teatry',
+    NOW_PLAYING: 'Aktualnie wystawiane',
+    UPCOMING_SHOWS: 'Nadchodzące spektakle',
+    PAST_SHOWS: 'Minione spektakle',
+    FIND_BEST_SEATS: 'Znajdź najlepsze miejsca',
+  },
   TICKET_CAN_BE_CANCELED:
-    'Możesz odwołać z wyprzedzeniem min. {hours} godz., aby otrzymać pełen zwrot.',
+    'Możesz anulować z wyprzedzeniem do {hours} godzin, aby uzyskać pełen zwrot pieniędzy.',
   TICKET_CANNOT_BE_CANCELED:
-    'Tego biletu nie można anulować, jednak na życzenie można przełożyć go na inny termin.',
+    'Tego biletu nie można anulować, ale na żądanie można przenieść go na inny termin.',
   TICKETS: 'Bilety',
-  TIMINGS: 'Terminy',
+  TIMINGS: 'Harmonogram',
+  SPECIAL_PRODUCT_HEADING: 'Najbardziej uwielbiane',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Profesjonalni lokalni przewodnicy',
+    ENGAGING_STORIES: 'Wciągające historie',
+    TOP_RATED: 'Najwyżej oceniane',
+  },
+  GUIDED_TOUR_REVIEWS: [
+    'Nasza przewodniczka Angela była wspaniała i bardzo dobrze znała obiekt',
+    'Przewodnik chętnie odpowiadał na pytania dotyczące wycieczki',
+    'Nasza przewodniczka była świetna, a nawet poleciła nam świetne miejsce na lunch!',
+    'Dzięki dobrej organizacji i naszemu przewodnikowi doświadczenie było naprawdę przyjemne',
+    'Dużo treści edukacyjnych, na pewno zrobię to ponownie z moimi dziećmi',
+    'Wycieczka była dobrze zorganizowana i miała odpowiedni czas trwania',
+    'Nasz przewodnik naprawdę znał się na rzeczy i czuło się jego pasję do historii',
+    'Dobry przewodnik i organizacja! Polecam!!!',
+    'Zabawne ciekawostki naszego przewodnika sprawiły, że wszyscy byliśmy aktywni i zainteresowani',
+    'Wycieczka miała dobre tempo i mogliśmy zwiedzać bez pośpiechu',
+    'Nasza przewodniczka Maria była w stanie zdobyć miejsca z najlepszym widokiem',
+    'Nasz przewodnik wzbogacił naszą wizytę w sposób, który nie byłby możliwy bez niego',
+    'Szczegółowa i poruszająca wycieczka prowadzona przez pełnego pasji przewodnika',
+    'Jeff pokazał nam aspekty obiektu, które inaczej by nam umknęły',
+  ],
+  GUIDES_BANNER:
+    'Zwiedzaj jak miejscowy z naszymi przewodnikami uwielbianymi przez odwiedzających.',
+  SPECIAL_GUIDED_TOUR_PRODUCT_SUMMARY: [
+    'Zwiedzanie z przewodnikiem to najlepszy sposób na poznanie tego miejsca. Nasi profesjonalni przewodnicy pełnią rolę Twoich lokalnych znajomych, dzieląc się historiami, ukrytymi perełkami i rekomendacjami podróżniczymi.',
+    'Nie tylko odwiedzaj - doświadczaj!',
+  ],
+  HEAR_FROM_OUR_GUESTS: 'Poznaj opinie naszych gości',
+  GUIDES: 'Przewodniki',
   TODAY: 'Dzisiaj',
   TOMORROW: 'Jutro',
-  TOUR_LIST_HEADING: 'Wybierz wycieczkę',
+  TOUR_LIST_HEADING: 'Wybierz aktywność',
   TOUR_LIST_SUB_HEADING:
-    'Wybieraj spośród różnych biletów, wycieczek i pakietów od zweryfikowanych operatorów',
+    'Wybieraj spośród wielu biletów, wycieczek i zestawów biletów sprawdzonych operatorów',
   UGC: {
     FOLLOW: 'Obserwuj',
     FOLLOW_IG: 'Obserwuj na Instagramie',
@@ -624,61 +579,89 @@ const pl = {
   UNAVAILABLE: 'Niedostępne',
   VALIDITY: {
     EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Ważność tych biletów została przedłużona. Na bilecie znajdziesz dokładną datę.',
+      'Ważność tych biletów została przedłużona. Na bilecie znajdziesz dokładne informacje.',
     UNTIL_DATE: 'Te bilety są ważne do {0}.',
     UNTIL_DAYS_FROM_PURCHASE:
       'Te bilety są ważne przez {0} dni od daty zakupu.',
     UNTIL_MONTHS_FROM_PURCHASE:
       'Te bilety są ważne przez {0} mies. od daty zakupu.',
   },
-  VIEW_LESS: 'Pokaż mniej',
-  VIEW_MORE: 'Zobacz więcej',
-  WHY_TAKE_THIS_DAY_TRIP: 'Dlaczego wybrać się na tę wycieczkę jednodniową?',
-  WHY_WATCH: 'Czemu warto zobaczyć',
+  TABLE_OF_CONTENTS: 'Zawartość',
+  VIEW_LESS: 'Wyświetl mniej',
+  VIEW_MORE: 'Wyświetl więcej',
+  WHY_TAKE_THIS_DAY_TRIP:
+    'Dlaczego warto wybrać się na tę wycieczkę jednodniową?',
+  WHY_WATCH: 'Dlaczego warto to obejrzeć',
+  FIND_ON_MAP: 'Znajdź na mapie',
   LTT_LANDING_PAGE: {
-    TOP_WEST_END_SHOWS: 'Top West End shows',
-    LOVED_BY_MILLIONS: 'Loved by Millions',
+    TRUST_BOOSTERS: {
+      INSTANT_TICKETS: {
+        NAME: 'Bilety natychmiastowe',
+        DESCRIPTION: 'Potwierdzenie prosto z kasy biletowej.',
+      },
+      PRICES_LOVE: {
+        NAME: 'Ceny, które pokochasz',
+        DESCRIPTION: 'Bezkonkurencyjne ceny popularnych spektakli.',
+      },
+      CHOOSE_SEATS: {
+        NAME: 'Wybierz miejsca',
+        DESCRIPTION: 'Zdobądź najlepsze miejsca na każdy spektakl.',
+      },
+      OFFICIAL_LTT: {
+        NAME: 'Oficjalne bilety do teatru w Londynie',
+        DESCRIPTION: 'Rezerwuj z nami szybko i bezpiecznie.',
+      },
+    },
+    YOUR_PICK: 'Twój wybór',
+    BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
+    TOP_WEST_END_SHOWS: 'Popularne spektakle na West Endzie',
+    LAST_MINUTE_TICKETS: 'Bilety last minute',
+    LOVED_BY_MILLIONS: 'Uwielbiane przez miliony',
+    TODAY: 'Dzisiaj',
+    TOMORROW: 'Jutro',
+    SEE_ALL: 'Zobacz wszystko',
+    GRAB_YOUR_TICKETS: 'Zdobądź bilety już teraz',
   },
   TAG_NAME: {
-    BALLET: 'Ballet',
-    CABARET: 'Cabaret',
-    CHRISTMAS: 'Christmas',
-    CIRCUS: 'Circus',
-    CLASSIC: 'Classic',
-    COMEDY: 'Comedy',
-    COMING_SOON: 'Coming Soon',
-    CRITICS_CHOICE: "Critics' Choice",
-    DANCE: 'Dance',
+    BALLET: 'Balet',
+    CABARET: 'Kabaret',
+    CHRISTMAS: 'Boże Narodzenie',
+    CIRCUS: 'Cyrk',
+    CLASSIC: 'Klasyka',
+    COMEDY: 'Komedie',
+    COMING_SOON: 'Już wkrótce',
+    CRITICS_CHOICE: 'Wybór krytyków',
+    DANCE: 'Taniec',
     DISNEY: 'Disney',
-    DRAMA: 'Drama',
-    ENGLISH_NATIONAL_BALLET: 'English National Ballet',
-    ENGLISH_NATIONAL_OPERA: 'English National Opera',
-    FANTASY: 'Fantasy',
+    DRAMA: 'Dramaty',
+    ENGLISH_NATIONAL_BALLET: 'Narodowy Balet Angielski',
+    ENGLISH_NATIONAL_OPERA: 'Angielska Opera Narodowa',
+    FANTASY: 'Fantastyka',
     HALLOWEEN: 'Halloween',
-    IMMERSIVE_THEATRE: 'Immersive Theatre',
+    IMMERSIVE_THEATRE: 'Teatr immersyjny',
     JUKEBOX: 'Jukebox',
-    KIDS: 'Kids',
-    MAGIC: 'Magic',
-    MUSICALS: 'Musicals',
-    NEW_ARRIVAL: 'New Arrival',
-    OFF_WEST_END: 'Off West End',
+    KIDS: 'Dla dzieci',
+    MAGIC: 'Magia',
+    MUSICALS: 'Musicale',
+    NEW_ARRIVAL: 'Nowość',
+    OFF_WEST_END: 'Poza West Endem',
     OLIVIER_WINNER: 'Olivier Winner',
     OPERA: 'Opera',
-    PANTOMIMES: 'Pantomimes',
-    PLAYS: 'Plays',
-    ROMANCE: 'Romance',
-    SHAKESPEARE: 'Shakespeare',
-    STARS_ON_STAGE: 'Stars on Stage',
-    THEATRICAL_CONCERT: 'Theatrical Concert',
-    TRUE_STORY: 'True Story',
+    PANTOMIMES: 'Pantomimy',
+    PLAYS: 'Sztuki',
+    ROMANCE: 'Romanse',
+    SHAKESPEARE: 'Szekspir',
+    STARS_ON_STAGE: 'Gwiazdy na scenie',
+    THEATRICAL_CONCERT: 'Koncert teatralny',
+    TRUE_STORY: 'Prawdziwe historie',
   },
   INVENTORY_UNAVAILABLE: {
-    HEADING: 'Uh oh, we’ve a problem',
-    MESSAGE: `Sorry! All experiences for this date are either sold out or
-    unavailable. But we’ve loads of them available on other dates. All
-    you gotta do is be flexible.`,
+    HEADING: 'Ups, mamy problem',
+    MESSAGE:
+      'Przepraszamy! Wszystkie aktywności tego dnia są wyprzedane lub\n    niedostępne. Ale jest ich mnóstwo w innych terminach. Jedyne,\n    co musisz zrobić, to zachować elastyczność.',
+    CTA: 'Wyświetl wszystkie daty',
   },
-  ALL_DATES: 'All dates',
+  ALL_DATES: 'Wszystkie daty',
   CATEGORY_HEADER: {
     MAIN_MENU: 'Menu główne',
     EXPLORE: 'Odkrywaj',
@@ -694,7 +677,7 @@ const pl = {
     ABOUT: 'Informacje',
     TOURS: 'Wycieczki',
     SKIP_THE_LINE_TOURS: 'Wycieczki „Omiń kolejkę”',
-    GUIDED_TOURS: 'Zwiedzanie z przewodnikiem',
+    GUIDED_TOURS: 'Wycieczki z przewodnikiem',
     NIGHT_TOURS: 'Wycieczki nocą',
     FOOD_TOURS: 'Wycieczki kulinarne',
     HISTORY: 'Historia',
@@ -727,7 +710,7 @@ const pl = {
     TIPS: 'Wskazówki',
     MAP: 'Mapa',
     RIDES: 'Przejazdy',
-    SHOWS: 'Pokazy',
+    SHOWS: 'Spektakle',
     DINING: 'Posiłki',
     SHOPPING: 'Zakupy',
     EVENTS: 'Wydarzenia',
@@ -758,6 +741,95 @@ const pl = {
     FAMILY_TRAVEL: 'Podróże z rodziną',
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festiwale i imprezy',
+  },
+  BREADCRUMBS: {
+    HOME: 'Strona główna',
+    TRAVEL_GUIDE: 'Przewodnik turystyczny',
+    THINGS_TO_DO: 'Aktywności w mieście {0}',
+    SHOW_NAME_TICKETS: '{0} - bilety',
+    LTT_HOME: 'Bilety do teatru w Londynie',
+    LTT_VENUE_PAGE_HOME: 'Teatry w Londynie',
+    BROADWAY_HOME: 'Bilety na spektakl na Broadwayu',
+    BROADWAY_VENUE_PAGE_HOME: 'Teatry na Broadwayu',
+    VIENNA_CONCERT_HOME: 'Bilety na koncert w Wiedniu',
+    VIENNA_CONCERT_VENUE_PAGE_HOME: 'Sale koncertowe w Wiedniu',
+    ATTRACTIONS: 'Atrakcje',
+    A2_SIGHTSEEING_CRUISES: 'Rejsy wycieczkowe',
+    A2_DINNER_CRUISES: 'Rejsy z kolacją',
+    A2_EVENING_CRUISES: 'Rejsy nocą',
+    A2_LUNCH_CRUISES: 'Rejsy z lunchem',
+    A2_YACHT_TOURS: 'Wycieczki jachtem',
+    LONDON_THEATRE_NEWS: 'Aktualności z londyńskich teatrów',
+    BROADWAY_SHOW_NEWS: 'Aktualności na temat spektakli na Broadwayu',
+    NEWS_PAGE: 'Strona aktualności',
+  },
+  AMENITIES: {
+    Restaurant: 'Restauracja',
+    Cafe: 'Kawiarnia',
+    'Dedicated Parking': 'Dedykowany parking',
+    Elevators: 'Windy',
+    Lift: 'Winda',
+    'Wheelchair Accessible': 'Dostępne dla osób na wózków inwalidzkich',
+    Cloakroom: 'Szatnia',
+    'Air Conditioning': 'Klimatyzacja',
+    WiFi: 'Wi-Fi',
+    Bar: 'Bar',
+    'Water Fountain': 'Wodotrysk z wodą pitną',
+    Washrooms: 'Łazienki',
+    Toilets: 'Toalety',
+    Binoculars: 'Lornetki',
+    'Adapted Toilets': 'Przystosowane toalety',
+    'Accessible Toilets': 'Toalety dla niepełnosprawnych',
+    'Assistive Listening System': 'System wspomagający słyszenie',
+    'Hearing Assistance': 'Wspomaganie słuchu',
+    'Booster Cushions': 'Poduszki podwyższające',
+    Shop: 'Sklep',
+    'Souvenir Shop': 'Sklep z pamiątkami',
+    'Guide Dogs': 'Psy przewodnicy',
+    'Baby Changing Facilities': 'Przebieralnia dla dzieci',
+    'Security Check': 'Kontrola bezpieczeństwa',
+    Ramp: 'Rampa',
+    'Level Access': 'Wejście bez schodów',
+  },
+  BANNER_DESCRIPTORS: {
+    EXPERT_MULTILINGUAL_GUIDES: 'Profesjonalni wielojęzyczni przewodnicy',
+    STL: 'Wstęp bez kolejki',
+    PERSONALIZED: 'Spersonalizowane doświadczenie',
+    LOCAL_FOOD: 'Lokalne jedzenie i kultura',
+    MULTILINGUAL_GUIDES: 'Wielojęzyczni przewodnicy',
+    CULINARY_EXPERTS: 'Specjaliści kulinarni',
+    SIGHTSEEING: 'Zwiedzanie i rozrywka na pokładzie',
+    MULTILINGUAL_GT: 'Wycieczki z przewodnikiem w wielu językach',
+    MULTI_ROUTES: 'Wiele opcji tras',
+    HASSLE_FREE: 'Bezproblemowa rezerwacja',
+    FREQUENT_DEPARTURES: 'Częste wyjazdy',
+    ONBOARD_AMENITIES: 'Najlepsze udogodnienia na pokładzie',
+    FLEXI_TRAVEL: 'Elastyczne podróże na wielu trasach',
+    FLEXI_EXCHANGE_CANCEL: 'Elastyczne opcje zmiany i anulowania',
+    EXTRA_DISCOUNT: 'Dodatkowe zniżki dla młodzieży, seniorów i rodzin',
+    PREPAID: 'Wygodna wcześniejsza płatność',
+    EASY_ACTIVATION: 'Łatwa aktywacja',
+    INSTANT_CONNECTIVITY: 'Natychmiastowa łączność z globalnym zasięgiem',
+    ROUND_TRIP: 'Transfery w obie strony',
+    CULTURAL_EXPERIENCE: 'Autentyczne doświadczenia kulturowe',
+    GUARANTEED_SEAT: 'Gwarantowane miejsce',
+    ONBOARD_WIFI: 'Wbudowane porty Wi-Fi i ładowania',
+  },
+  COOKIE_BANNER: {
+    DESKTOP:
+      'Headout wykorzystuje pliki cookie, aby usprawnić korzystanie ze strony internetowej, bajt po bajcie.',
+    MOBILE: 'Wykorzystywane pliki cookie.',
+    LEARN_MORE: 'Dowiedz się więcej.',
+  },
+  SHOW_UNAVAILABLE: 'Spektakl niedostępny',
+  NEWS_PAGE: {
+    FEATURED_NEWS: 'Polecane aktualności',
+    ALL_NEWS: 'Wszystkie aktualności',
+    MORE_READS: 'Więcej artykułów',
+    LOAD_MORE: 'Załaduj więcej',
+    TRAILERS: 'Zwiastuny',
+    GET_YOUR_TICKETS: 'Pobierz bilety',
+    POPULAR_SHOWS: 'Popularne spektakle',
   },
   HOHO: {
     ROUTE_DETAILS: 'Route Details',

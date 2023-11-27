@@ -764,7 +764,7 @@ export const CTABlock = styled.div<{
         box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
       `}
 
-    ${({isSticky }) => ctaBlockMobileStyles(isSticky)}
+    ${({ isSticky }) => ctaBlockMobileStyles(isSticky)}
   }
   @media (max-width: 370px) {
     width: 100%;

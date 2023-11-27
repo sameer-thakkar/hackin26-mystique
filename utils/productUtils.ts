@@ -59,12 +59,12 @@ export const extractCancellationPolicyFromHighlights = (
       type === HIGHLIGHT_TYPES.H6_HEADING &&
       text === strings.CANCELLATION_POLICY_HEADING
     ) {
-      cancellationPolicy = highlights[index + 1]?.text ?? "";
+      cancellationPolicy = highlights[index + 1]?.text ?? '';
     }
   });
 
   return cancellationPolicy;
-}
+};
 
 export const filterFromHighlights = (highlights: Record<string, any>[]) => {
   let exclude = false;

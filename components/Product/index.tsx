@@ -783,8 +783,11 @@ const Product = (props: any) => {
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
-  const getProductCardElements = (expandContent: any, isLoading?: boolean, 
-    isAsideBarOverlay = false) => (
+  const getProductCardElements = (
+    expandContent: any,
+    isLoading?: boolean,
+    isAsideBarOverlay = false
+  ) => (
     <>
       <StyledProductCard
         layout={layout({ isContentExpanded: expandContent })}
