@@ -1391,8 +1391,12 @@ const fetchPrismicDocument = async ({
     headers: requestHeaders,
   })) || { statusCode: 404 };
   const cacheHeader = response.headers.get(X_CACHE_HEADER_KEY);
+  const cacheAge = response.headers.get('age');
   const data = await response.json();
-  return { prismicApiResponse: data, prismicApiCacheStatus: cacheHeader };
+  return {
+    prismicApiResponse: data,
+    prismicApiCacheStatus: `${cacheHeader}, Age: ${cacheAge ?? -1}`,
+  };
 };
 
 export const getPageData = async ({
