@@ -1,3 +1,4 @@
+import Prismic from 'prismic-javascript';
 import { Client } from 'config/prismic-config';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import {
@@ -30,7 +31,6 @@ import {
   getEntMBLabels,
   HOME,
   LONDON_THEATRE_NEWS,
-  NEWS_PAGE,
   SHOW_NAME_TICKETS,
   THINGS_TO_DO,
   TICKETS,
@@ -40,6 +40,7 @@ import {
   CUSTOM_TYPES,
   MB_CATEGORISATION,
   PAGE_URL_STRUCTURE,
+  PRISMIC_FIELD_ID,
   SEO_SUBDOMAINS,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
@@ -942,8 +943,19 @@ export const getVenuePageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 };
 
 export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
-  const { uid, lang, data } = doc;
-  const { is_landing_page: isLandingPage } = data;
+  const { data } = doc || {};
+  const { tgid } = data || {};
+
+  if (tgid) {
+    return getTgidBasedNewsPageBreadcrumbs(doc);
+  } else return getNonTgidBasedNewsPageBreadcrumbs(doc);
+};
+
+export const getTgidBasedNewsPageBreadcrumbs = async (
+  doc: PrismicDocumentWithUID
+) => {
+  const { uid, lang, data } = doc || {};
+  const { tgid, heading } = data || {};
 
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
@@ -952,6 +964,83 @@ export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 
   let breadcrumbs: TBreadcrumbs = {};
   const headoutLanguagecode = getHeadoutLanguagecode(lang);
+  const { primarySubCategory = '', name = '' } = tgid
+    ? (await fetchTourGroupV6({
+        tgid,
+        language: headoutLanguagecode,
+      })) || {}
+    : {};
+  const showPageDocument = await Client().query(
+    Prismic.Predicates.any(
+      `my.${CUSTOM_TYPES.SHOW_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
+      [tgid]
+    )
+  );
+
+  const showPageUid = showPageDocument?.results?.[0]?.uid;
+  const localisedShowPageUrl = convertUidToUrl({
+    uid: showPageUid,
+    lang: headoutLanguagecode,
+  });
+  const pageUrl = convertUidToUrl({
+    uid,
+    lang: headoutLanguagecode,
+  });
+  const pageUrlObject = new URL(pageUrl);
+  const { displayName: localisedSubCategoryName } = primarySubCategory;
+
+  const { HOME } = getEntMBLabels({
+    isLTT,
+    isBroadway,
+  });
+
+  breadcrumbs[`level_1`] = {
+    level: 1,
+    label: HOME,
+    url: convertUidToUrl({
+      uid: pageUrlObject.host,
+      lang: headoutLanguagecode,
+    }),
+  };
+
+  breadcrumbs[`level_2`] = {
+    level: 2,
+    label: localisedSubCategoryName,
+    url: convertUidToUrl({
+      uid: getShowpageBreadcrumbUid(localisedSubCategoryName, isLTT || false),
+      lang: headoutLanguagecode,
+    }),
+  };
+
+  breadcrumbs[`level_3`] = {
+    level: 3,
+    label: name,
+    url: localisedShowPageUrl,
+  };
+
+  breadcrumbs[`level_4`] = {
+    level: 4,
+    label: heading,
+    url: pageUrl,
+  };
+
+  return breadcrumbs;
+};
+
+export const getNonTgidBasedNewsPageBreadcrumbs = async (
+  doc: PrismicDocumentWithUID
+) => {
+  const { uid, lang, data } = doc;
+  const { heading, is_landing_page: isLandingPage } = data;
+
+  const isLTT = checkIfLTTMB(uid);
+  const isBroadway = checkIfBroadwayMB(uid);
+
+  if (!isLTT && !isBroadway) return {};
+
+  let breadcrumbs: TBreadcrumbs = {};
+  const headoutLanguagecode = getHeadoutLanguagecode(lang);
+
   const pageUrl = convertUidToUrl({
     uid,
     lang: headoutLanguagecode,
@@ -984,7 +1073,7 @@ export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 
   breadcrumbs[`level_3`] = {
     level: 3,
-    label: NEWS_PAGE,
+    label: heading,
     url: pageUrl,
   };
 
