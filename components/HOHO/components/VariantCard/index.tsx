@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import dynamic from 'next/dynamic';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Calendar from 'components/HOHO/components/Calendar';
@@ -14,7 +13,6 @@ import {
   SingleCardContainer,
   VariantCardWrapper,
 } from 'components/HOHO/components/VariantCard/styles';
-import { getValidityDays } from 'components/HOHO/utils';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -37,10 +35,6 @@ import {
   TRIANGLE,
 } from 'assets/SvgIcons';
 
-const Tooltip = dynamic(() => import('components/common/Tooltip/index'), {
-  ssr: false,
-});
-
 const formatVariantInfo = (
   desc: string | null,
   maxDescriptors: number,
@@ -53,28 +47,9 @@ const formatVariantInfo = (
 
   return desc?.includes('-') ? (
     <div className="desc-list">
-      {descriptorsArray?.slice(0, 1)?.map((line: string) => {
-        const validityDays = getValidityDays(line);
-        return (
-          <div className="item" key={line}>
-            <TickSvg strokeColor={COLORS.TEXT.OKAY_GREEN_3} />
-            <Tooltip
-              trigger={truncate(line, 36)}
-              heading={line}
-              triggerClassName="validity-info"
-              showHeadingForDesktop={false}
-              showCTA={true}
-              content={`${strings.formatString(
-                strings.HOHO.VALIDITY_NOTE,
-                validityDays
-              )}`}
-            />
-          </div>
-        );
-      })}
       {descriptorsArray
-        ?.slice(1, sliceIndex)
-        ?.slice(0, 5)
+        ?.slice(0, sliceIndex)
+        ?.slice(0, 6)
         ?.map((line: string) => (
           <Conditional key={line} if={line}>
             <div className="item">

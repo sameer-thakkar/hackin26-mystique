@@ -142,7 +142,8 @@ const StaticBanner = ({
     averageRating,
     ratingsCount,
   });
-  const displayAirportTransfersRating = averageRating > 0 && ratingsCount > 0;
+  const displayAirportTransfersRating =
+    ratingsAndReviewsData && averageRating > 0 && ratingsCount > 0;
 
   const showNonPoiDesign = isNonPoiMB && !shouldDisplayTrustBoosters;
 

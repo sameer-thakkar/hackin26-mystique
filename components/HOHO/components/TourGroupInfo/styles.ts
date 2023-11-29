@@ -212,7 +212,6 @@ export const TourRouteInfo = styled.div`
 
   .container {
     position: relative;
-    width: 50%;
     padding-bottom: 1rem;
   }
 

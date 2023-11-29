@@ -13,9 +13,10 @@ export const StyledReviewsContainer = styled.div<{ noMargin?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    margin: ${({ noMargin }) => (noMargin ? '2rem 0' : '4rem 0')};
+    margin: ${({ noMargin }) => (noMargin ? '2rem -1rem' : '4rem 0')};
 
     .swiper {
+      max-width: 100vw;
       margin: ${({ noMargin }) =>
         noMargin ? '1.5rem 0 0' : '1.5rem 1.5rem 0 1.5rem'};
     }

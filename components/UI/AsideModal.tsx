@@ -181,6 +181,7 @@ export const StyledAsideModal = styled.div`
         `;
         case SIDEBAR_TYPES.TOUR_GROUP_INFO:
           return `
+          position: fixed;
           left: unset;
           box-sizing: border-box;
           width: 100%;

@@ -60,7 +60,7 @@ export const Title = styled.h2<{ showNewDesign?: boolean }>`
   font-weight: unset !important;
   display: block !important;
   text-align: left;
-  padding-bottom: ${({ showNewDesign }) => (showNewDesign ? '0' : '2rem')};
+  padding: ${({ showNewDesign }) => (showNewDesign ? '0 1rem' : '0 1rem 2rem')};
   ::after {
     content: unset !important;
   }

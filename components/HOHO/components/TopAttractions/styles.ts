@@ -133,6 +133,8 @@ export const StyledSlide = styled.div`
     0px 0px 1px 0px rgba(0, 0, 0, 0.1);
 
   .attraction-name {
+    align-self: center;
+    text-align: center;
     ${expandFontToken(FONTS.HEADING_SMALL)}
   }
 
@@ -151,7 +153,7 @@ export const StyledSlide = styled.div`
     gap: 0.313rem;
     padding: 0.375rem 0.313rem 0.75rem;
     border-radius: 0.5rem;
-    margin: 0 0 0.5rem;
+    margin: 0.125rem 0 0.5rem;
 
     .image-wrap {
       width: 9.125rem;

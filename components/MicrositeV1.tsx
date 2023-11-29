@@ -62,6 +62,7 @@ import {
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
   EMAIL_SUBCRIPTION,
+  LANGUAGE_CODE_MAP,
   PAGE_TYPES,
   TEMPLATES,
   THEMES,
@@ -244,6 +245,7 @@ const MicrositeV1 = (props: any) => {
   const { template } = productCardData || {};
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
+  const currentLanguage = getLangObject(lang).code;
 
   const {
     isEligible: isHohoExpEligible,
@@ -252,7 +254,8 @@ const MicrositeV1 = (props: any) => {
   } = useABTesting({
     experimentId: 'HOHO_REVAMP_EXPERIMENT',
     noTrack: false,
-    customEligibilityCheckFn: () => isHOHO,
+    customEligibilityCheckFn: () =>
+      isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
   });
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
@@ -268,8 +271,6 @@ const MicrositeV1 = (props: any) => {
     secondaryFooterData || {};
 
   const headerCurrencies = currencies_list.filter((c: any) => c?.currency);
-
-  const currentLanguage = getLangObject(lang).code;
   const isCategorisedTours =
     Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
   const {

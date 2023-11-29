@@ -40,7 +40,7 @@ const Slider = dynamic(() => import('UI/Slider'));
 const SwiperWrapper = dynamic(() => import('components/Swiper'));
 const SWIPER_BREAKPOINTS = {
   0: {
-    slidesPerView: 1,
+    slidesPerView: 1.15,
     spaceBetween: 12,
   },
   768: {

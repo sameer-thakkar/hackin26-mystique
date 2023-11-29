@@ -249,7 +249,7 @@ export const SingleCardContainer = styled.div`
   max-width: 75rem;
   margin: 0 auto;
   width: 100%;
-  height: 12.45rem;
+  min-height: 12.45rem;
   display: grid;
   grid-template-columns: 68% 32%;
   border-radius: 1rem;

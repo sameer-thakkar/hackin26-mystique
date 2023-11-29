@@ -226,7 +226,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
         enable: false,
       },
       sidePadding: 40,
-      title: tourGroupName,
+      title: tourGroupName?.split(':')?.[0],
     });
   };
 
@@ -249,13 +249,15 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
         <div className="textinfo-container">
           <h2>{tourGroupName?.split(':')?.[0]}</h2>
           <div className="details-container">
-            <div className="timings">
-              <span>{finalTimings}</span>
-              <Conditional if={finalFrequecy}>
-                <span className="vertical-divider" />
-                <span>{finalFrequecy}</span>
-              </Conditional>
-            </div>
+            <Conditional if={finalTimings || finalFrequecy}>
+              <div className="timings">
+                <span>{finalTimings}</span>
+                <Conditional if={finalFrequecy}>
+                  <span className="vertical-divider" />
+                  <span>{finalFrequecy}</span>
+                </Conditional>
+              </div>
+            </Conditional>
             <div className="pills-container">
               <Conditional if={tgidRouteData}>
                 <DetailsPill onClick={onRouteDetailsClick}>
