@@ -1334,14 +1334,6 @@ export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '20949',
 ];
 
-/**
- * Property on Incoming Request object.
- * Wherever req is forwarded to Prismic **Client**
- *
- * Is set when PrismicClient api call gets throttled (429).
- */
-export const PRISMIC_API_CALL_THROTTLED = '__PRISMIC_API_CALL_THROTTLED';
-
 export const EXPERIENCES = {
   COLLECTION: 'Collection',
   CATEGORY: 'Category',
@@ -1359,6 +1351,8 @@ export const SETTINGS_TYPE = {
   SETTINGS_TWO: 'SettingsTwo',
   SETTINGS_THREE: 'SettingsThree',
 };
+
+export const GLOBAL_MB_ENABLED_DOMAINS = ['themeparkstickets.com'];
 
 export const PRISMIC_FIELD_ID = {
   TAGGED_COLLECTION: 'tagged_collection',
