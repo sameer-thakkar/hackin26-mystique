@@ -185,6 +185,7 @@ const pl = {
       'Ta strona nie jest oficjalną stroną internetową <attraction>. Jest prowadzona przez Headout, które współpracuje z operatorami atrakcji i wycieczek, aby zapewniać niezwykłe doświadczenia w kilku kliknięciach.',
     EMAIL_US: 'Napisz do nas',
     GET_HELP: 'Uzyskaj pomoc',
+    LEGAL: 'Informacje prawne',
     GMAPS_DISCLAIMER:
       'Wszystkie zrzuty ekranu map znajdujące się na tej stronie są pozyskiwane z Google zgodnie z zasadami dozwolonego użytku. Wszelkie prawa do takich zrzutów ekranu należą do konkretnej platformy, a ich wykorzystanie służy wyłącznie celom informacyjnym lub orientacyjnym.',
     PRIVACY_POLICY: 'Polityka prywatności',
@@ -840,6 +841,9 @@ const pl = {
     FREQUENCY: 'FREQUENCY',
     DURATION: 'DURATION',
     CALENDAR_FOOTNOTE: '* Wszystkie ceny są podane w {0}',
+  },
+  PC_EXP: {
+    SHOW_INCL: 'Zobacz, co wchodzi w cenę biletu i poznaj inne informacje',
   },
 };
 export default pl;

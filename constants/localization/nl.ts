@@ -214,7 +214,7 @@ const nl = {
   },
   MORE_DETAILS: 'Meer info',
   MORE_CURRENCIES: 'Meer valuta',
-  NEW: 'NEW',
+  NEW: 'Nieuw',
   NEW_ARRIVAL: 'Nieuw',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

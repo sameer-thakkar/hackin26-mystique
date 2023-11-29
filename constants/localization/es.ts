@@ -219,7 +219,7 @@ const es = {
   },
   MORE_DETAILS: 'Más detalles',
   MORE_CURRENCIES: 'Otras monedas',
-  NEW: 'NEW',
+  NEW: 'Nuevo',
   NEW_ARRIVAL: 'Novedades',
   NEXT_AVAILABLE: 'Próxima disponible: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

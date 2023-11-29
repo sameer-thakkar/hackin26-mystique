@@ -58,7 +58,7 @@ const Highlights = ({
 
   return (
     <Wrapper className={className} hasRegularHighlights={hasRegularHighlights}>
-      <Heading>Highlights</Heading>
+      <Heading>{strings.SHOW_PAGE.HIGHLIGHTS}</Heading>
       <div className="tab-panel">
         <Conditional if={!isLoading}>
           <RichText render={highlights} elements={richtextElements} />

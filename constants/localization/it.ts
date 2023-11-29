@@ -217,7 +217,7 @@ const it = {
   },
   MORE_DETAILS: 'Altri dettagli',
   MORE_CURRENCIES: 'Altre valute',
-  NEW: 'NEW',
+  NEW: 'Novità',
   NEW_ARRIVAL: 'Nuovi arrivi',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
