@@ -1,5 +1,6 @@
 import Prismic from 'prismic-javascript';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
+import { PRISMIC_API_CALL_THROTTLED } from 'const/index';
 // -- Prismic API endpoint
 // Determines which repository to query and fetch data from
 // Configure your site's access point here
@@ -41,5 +42,30 @@ export const Client = (req = null, parentOptions: any = {}) => {
   if (ref) apiEndpointURL.searchParams.set('ref', ref);
 
   // Connects to the given repository to facilitate data queries
-  return Prismic.client(apiEndpointURL.toString(), options);
+  return Prismic.client(apiEndpointURL.toString(), {
+    ...options,
+    requestHandler: {
+      request: async (url, callback) => {
+        const res = await fetch(url, {
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+        if (res.status === 429 && req) {
+          (req as any)[PRISMIC_API_CALL_THROTTLED] = res.status;
+        }
+        const json = await res.json();
+
+        const cacheControl = res.headers.get('cache-control');
+        const parsedCacheControl = cacheControl
+          ? /max-age=(\d+)/.exec(cacheControl)
+          : null;
+        const ttl = parsedCacheControl
+          ? parseInt(parsedCacheControl[1], 10)
+          : undefined;
+
+        callback(null, json, res, ttl);
+      },
+    },
+  });
 };
