@@ -168,6 +168,7 @@ const V2MicrositeWrapper = styled.div<{
     }
   }
   @media (max-width: 768px) {
+    overflow: hidden;
     .main-wrapper {
       padding-left: 16px;
       padding-right: 16px;

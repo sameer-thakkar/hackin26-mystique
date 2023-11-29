@@ -131,10 +131,8 @@ const HorizontalProductCard = ({
       <Image
         url={verticalImageUrl}
         alt={`${title} product image`}
-        priority
         autoCrop={true}
         className={`pinned-card-image`}
-        fetchPriority="high"
         fitCrop={true}
         height={162}
         width={108}

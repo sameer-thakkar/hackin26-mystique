@@ -1,5 +1,6 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import { TPinnedCardProps } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/interface';
 import {
@@ -8,11 +9,11 @@ import {
   ProductDetails,
   SecondaryDescriptors,
   Wrapper,
+  YourPickHeader,
 } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/style';
 import HorizontalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard';
 import { ExclusivePricesBooster } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
-import Button from 'UI/Button';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -27,6 +28,7 @@ import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -45,6 +47,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
   } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pinnedCard = useRef<HTMLDivElement>(null);
+  const [isButtonLoading, setButtonLoading] = useState(false);
 
   useEffect(() => {
     const scrollToCenter = () => {
@@ -113,7 +116,12 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
       code: key,
       name: value,
     })),
-    ...secondaryDescriptors,
+    ...secondaryDescriptors?.map(
+      ({ code, name }: { code: string; name: string }) => ({
+        code,
+        name: (strings.DESCRIPTORS as Record<string, string>)[code] ?? name,
+      })
+    ),
   ];
 
   const {
@@ -162,42 +170,76 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
       [ANALYTICS_PROPERTIES.L1_BOOSTER_SHOWN]: false,
     });
     window.open(destinationUrl, '_blank');
+    setButtonLoading(false);
   };
 
   return (
-    <Container ref={pinnedCard}>
-      <h2>{strings.LTT_LANDING_PAGE.YOUR_PICK}</h2>
+    <Container ref={pinnedCard} isVerticalImageUrlPresent={!!verticalImageUrl}>
+      <Conditional if={isMobile}>
+        <h2>{strings.LTT_LANDING_PAGE.YOUR_PICK}</h2>
+      </Conditional>
       <Conditional if={!isMobile}>
-        <Wrapper isVerticalImageUrlPresent={!!verticalImageUrl}>
-          <Image
-            url={verticalImageUrl}
-            alt={`${title} product image`}
-            autoCrop={true}
-            className={`pinned-card-image`}
-            fitCrop={true}
-            width={180}
-            height={260}
+        <Image
+          url={verticalImageUrl}
+          alt={`${title} product image`}
+          autoCrop={true}
+          className={`pinned-card-image`}
+          fitCrop={true}
+          width={180}
+          height={260}
+        />
+        <span className="image-placeholder">
+          <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+            $height={isMobile ? 162 : 260}
+            $width={isMobile ? 108 : 180}
           />
-          <span className="image-placeholder">
-            <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
-              $height={isMobile ? 162 : 260}
-              $width={isMobile ? 108 : 180}
-            />
-          </span>
+        </span>
+
+        <Wrapper onClick={onCheckavAilabilityClicked}>
+          <YourPickHeader>
+            <span className="star">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="11"
+                height="11"
+                viewBox="0 0 11 11"
+                fill="none"
+              >
+                <path
+                  d="M5.11958 0.670821C5.23932 0.302297 5.76068 0.302296 5.88042 0.67082L6.86954 3.715C6.92309 3.8798 7.07667 3.99139 7.24996 3.99139H10.4508C10.8383 3.99139 10.9994 4.48724 10.6859 4.715L8.09638 6.5964C7.95618 6.69826 7.89752 6.87881 7.95107 7.04361L8.94018 10.0878C9.05992 10.4563 8.63813 10.7628 8.32465 10.535L5.73511 8.6536C5.59492 8.55174 5.40508 8.55174 5.26489 8.6536L2.67536 10.535C2.36187 10.7628 1.94008 10.4563 2.05982 10.0878L3.04893 7.04361C3.10248 6.87881 3.04382 6.69826 2.90362 6.5964L0.314093 4.715C0.000607252 4.48724 0.161717 3.99139 0.549206 3.99139H3.75004C3.92333 3.99139 4.07691 3.87981 4.13046 3.715L5.11958 0.670821Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+            <h2>{strings.LTT_LANDING_PAGE.YOUR_PICK}</h2>
+          </YourPickHeader>
           <ProductDetails>
             <div className="left">
-              <h3>{title}</h3>
               <Ratings
                 averageRating={averageRating}
                 reviewCount={reviewCount}
                 showReviewsText={false}
               />
+              <h3>{title}</h3>
 
               <div className="primary-descriptors">
-                {descriptors.map((descriptor: string) => (
-                  <div className="descriptor" key={descriptor}>
-                    {descriptor}
-                  </div>
+                {descriptors.map((descriptor: string, index: number) => (
+                  <>
+                    <div className="descriptor" key={descriptor}>
+                      {descriptor.toUpperCase()}
+                    </div>
+                    <Conditional if={index !== descriptors?.length - 1}>
+                      <svg
+                        width="3"
+                        height="4"
+                        viewBox="0 0 3 4"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="1.5" cy="2" r="1.5" fill="#888888" />
+                      </svg>
+                    </Conditional>
+                  </>
                 ))}
               </div>
               <Conditional if={localisedOpeningDate}>
@@ -257,7 +299,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
                   </ExclusivePricesBooster>
                 </Conditional>
               </div>
-              <Button
+              {/* <Button
                 className={`banner-cta-button`}
                 fillType="fill"
                 onClick={onCheckavAilabilityClicked}
@@ -265,7 +307,25 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
                 tabIndex={0}
               >
                 {strings.CHECK_AVAIL}
-              </Button>
+              </Button> */}
+              <Button
+                tabIndex={0}
+                size="medium"
+                color="purps"
+                variant="primary"
+                isLoading={isButtonLoading}
+                disabled={!listingPrice}
+                onClick={() => {
+                  if (isButtonLoading) return;
+                  setButtonLoading(true);
+                  setTimeout(
+                    () => setButtonLoading(false),
+                    BUTTON_LOADING_DURATION
+                  );
+                  onCheckavAilabilityClicked();
+                }}
+                text={listingPrice ? strings.CHECK_AVAIL : strings.UNAVAILABLE}
+              />
             </div>
           </ProductDetails>
         </Wrapper>
@@ -279,7 +339,9 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
           />
         </div>
       </Conditional>
-      <Gradient />
+      <Conditional if={isMobile}>
+        <Gradient />
+      </Conditional>
     </Container>
   );
 };

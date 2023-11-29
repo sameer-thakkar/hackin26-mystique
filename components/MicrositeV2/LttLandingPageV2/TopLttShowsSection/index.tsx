@@ -29,7 +29,7 @@ const TopLttShowsSection = ({
 
   const [allowShowMore, setAllowShowMore] = useState(true);
   const [numberOfShowsToDisplay, setNumberOfShowsToDisplay] = useState(
-    isMobile ? 10 : 12
+    isMobile ? 10 : 24
   );
   const shows = topShows.slice(0, numberOfShowsToDisplay);
 

@@ -127,13 +127,11 @@ const VerticalProductCard = ({
         draggable={false}
         url={verticalImageUrl}
         alt={`${title} product image`}
-        priority
         autoCrop={true}
         className={`pinned-card-vertical-image`}
-        fetchPriority="high"
         fitCrop={true}
-        height={270}
-        width={180}
+        height={isMobile ? 180 : 270}
+        width={isMobile ? 120 : 180}
       />
       <span className="image-placeholder">
         <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER

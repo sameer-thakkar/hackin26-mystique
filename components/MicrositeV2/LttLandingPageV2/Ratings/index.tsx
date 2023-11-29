@@ -6,7 +6,7 @@ import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { STAR } from 'assets/SvgIcons';
 
-const RatingsWrapper = styled.div`
+export const RatingsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

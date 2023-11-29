@@ -52,8 +52,8 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
           }}
           imageAspectRatio={'21:9'}
           imageId={String(index)}
-          imageWidth={375}
-          imageHeight={232}
+          imageWidth={784}
+          imageHeight={433}
           dontLazyLoadImage={true}
           videoPosition={VIDEO_POSITIONS.BANNER}
           eventTracking={eventTracking}
@@ -68,6 +68,8 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
         <Image
           url={item.url}
           alt={item.alt}
+          fetchPriority="high"
+          priority
           height={433}
           width={784}
           autoCrop={true}
@@ -239,7 +241,9 @@ const DesktopBannerV2 = ({
       </SwiperWrapper>
       <TrustBooster hasPinnedCard={pinnedTgid} />
       <Conditional if={pinnedTgid}>
-        <PinnedCard pinnedTgidData={allTours?.[pinnedTgid]} />
+        <div className="pinned-card-wrapper">
+          <PinnedCard pinnedTgidData={allTours?.[pinnedTgid]} />
+        </div>
       </Conditional>
     </Container>
   );

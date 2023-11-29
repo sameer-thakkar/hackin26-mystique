@@ -13,6 +13,14 @@ export const Container = styled.div`
   .banner-cta-button:hover {
     box-shadow: 0px 8px 15px 0px rgba(255, 255, 255, 0.24);
   }
+
+  .pinned-card-wrapper {
+    background: linear-gradient(
+      to bottom,
+      #150029 50%,
+      ${COLORS.BRAND.WHITE} 50%
+    );
+  }
 `;
 
 export const GradientWrapper = styled.div<{
@@ -82,8 +90,8 @@ export const SwiperWrapper = styled.div`
       height: 19.25rem;
     }
     img {
-      position: relative;
-      height: 19.25rem;
+      position: relative !important;
+      height: 19.25rem !important;
       width: 65vw;
       object-fit: cover;
     }
@@ -144,9 +152,6 @@ export const SlideDescription = styled.div<{
         index === 0
           ? `
        ${expandFontToken(FONTS.DISPLAY_LARGE)};
-       font-size: 56px;
-       line-height: 64px;
-       letter-spacing: 0.9px;
       `
           : `
         ${expandFontToken(FONTS.DISPLAY_REGULAR)};

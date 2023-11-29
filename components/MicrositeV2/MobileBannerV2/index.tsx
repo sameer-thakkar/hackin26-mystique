@@ -37,7 +37,6 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
   const eventTracking = swiperParentNode?.classList?.contains(
     'swiper-slide-duplicate-active'
   );
-
   return (
     <MediaContainer ref={containerRef}>
       <LinearGradient height={33} isTopGradient={true} />
@@ -65,10 +64,16 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.mobileVideoLink)}>
         <Image
-          url={item.mobile_url}
+          url={
+            item.mobile_url || item.mobile_url?.length
+              ? item.mobile_url
+              : item.url
+          }
           alt={item.alt}
           height={189}
           width={375}
+          fetchPriority="high"
+          priority
           autoCrop={true}
           className={`banner-image-${index}`}
         />

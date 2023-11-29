@@ -322,11 +322,9 @@ const SpecialSections = ({
             'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png'
           }
           alt="right-corner-illustration"
-          priority
           height={isMobile ? 160 : 287.81}
           width={isMobile ? 375 : 798.6}
           autoCrop={true}
-          fetchPriority="high"
           fitCrop={true}
         />
       </div>

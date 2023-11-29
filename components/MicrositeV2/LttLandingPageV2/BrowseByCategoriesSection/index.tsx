@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
 import { TBrowseByCategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/interface';
 import {
   CategoriesSection,
@@ -26,15 +27,13 @@ const BrowseByCategoriesSection = forwardRef<
     ...categoriesToRender.map(({ name }) => name),
   ];
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const topShowsObserverRef = useRef<IntersectionObserver | null>(null);
   const observerResetTimeoutId = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      threshold: 0.55,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
+    const observerCallbackGenerator = (percentage: number) => (
+      entries: IntersectionObserverEntry[]
+    ) => {
       for (let i = entries.length - 1; i >= 0; i--) {
         const entry = entries[i];
         const element = entry.target as HTMLElement;
@@ -46,22 +45,37 @@ const BrowseByCategoriesSection = forwardRef<
           ((Math.min(elementBottom, viewportHeight) - Math.max(elementTop, 0)) /
             elementHeight) *
           100;
-        if (percentageVisible >= 20 && entry.isIntersecting) {
+        if (percentageVisible >= percentage && entry.isIntersecting) {
           setActiveCategoryName(entry.target.id);
           break;
         }
       }
-    }, observerOptions);
-    observerRef.current = observer;
+    };
+    const observer = new IntersectionObserver(observerCallbackGenerator(20), {
+      root: null,
+      threshold: 0.55,
+    });
+    const topShowsObserver = new IntersectionObserver(
+      observerCallbackGenerator(0),
+      {
+        root: null,
+        threshold: [0, 0.25, 0.55],
+      }
+    );
 
-    allCategoryNames.forEach((name) => {
+    observerRef.current = observer;
+    topShowsObserverRef.current = topShowsObserver;
+
+    allCategoryNames.forEach((name, index) => {
       const element = document.getElementById(name);
       if (element) {
-        observer.observe(element);
+        if (index === 0) topShowsObserver.observe(element);
+        else observer.observe(element);
       }
     });
     return () => {
       observer.disconnect();
+      topShowsObserver.disconnect();
       if (observerResetTimeoutId.current) {
         clearTimeout(observerResetTimeoutId.current);
       }
@@ -78,6 +92,9 @@ const BrowseByCategoriesSection = forwardRef<
     if (observerRef.current) {
       observerRef.current.disconnect();
     }
+    if (topShowsObserverRef.current) {
+      topShowsObserverRef.current.disconnect();
+    }
     setActiveCategoryName(name);
     trackEvent({
       eventName: ANALYTICS_EVENTS.CATEGORY_TAB_CLICKED,
@@ -92,48 +109,75 @@ const BrowseByCategoriesSection = forwardRef<
       offset: isMobile ? -90 : -188,
     });
     observerResetTimeoutId.current = setTimeout(() => {
-      allCategoryNames.forEach((name) => {
+      allCategoryNames.forEach((name, index) => {
         const element = document.getElementById(name);
         if (element) {
-          observerRef.current?.observe?.(element);
+          if (index === 0) topShowsObserverRef.current?.observe?.(element);
+          else observerRef.current?.observe?.(element);
         }
       });
     }, 1500);
   };
+  const categoryChips = categoriesToRender.map(({ name, id }, index) => {
+    const { icon } = LTT_CATEGORIES[id] ?? LTT_CATEGORIES.fallback;
+    const currentIcon =
+      icon[activeCategoryName === name && !isMobile ? 'active' : 'default'];
+    return (
+      <CategoryWrapper
+        $isActive={activeCategoryName === name && !isMobile}
+        key={index}
+        onClick={() => onCategoryClicked(name, index + 1)}
+      >
+        <span className="icon">{currentIcon}</span>
+        <span className="name">{name}</span>
+      </CategoryWrapper>
+    );
+  });
+
+  categoryChips.unshift(
+    <CategoryWrapper
+      $isActive={activeCategoryName === LTT_CATEGORIES.top.name && !isMobile}
+      onClick={() => onCategoryClicked(LTT_CATEGORIES.top.name, 0)}
+    >
+      <span className="icon">
+        {
+          LTT_CATEGORIES.top.icon[
+            activeCategoryName === LTT_CATEGORIES.top.name && !isMobile
+              ? 'active'
+              : 'default'
+          ]
+        }
+      </span>
+      <span className="name">{strings.LTT_LANDING_PAGE.TOP_SHOWS}</span>
+    </CategoryWrapper>
+  );
 
   return (
     <CategoriesSection ref={ref} id="browse-by-category-section">
+      <Conditional if={isMobile}>
+        <div className="browse-by-category-title">
+          {strings.LTT_LANDING_PAGE.BROWSE_BY_CATEGORIES}
+        </div>
+      </Conditional>
       <div className="categories">
-        <CategoryWrapper
-          $isActive={activeCategoryName === LTT_CATEGORIES.top.name}
-          onClick={() => onCategoryClicked(LTT_CATEGORIES.top.name, 0)}
-        >
-          <span className="icon">
-            {
-              LTT_CATEGORIES.top.icon[
-                activeCategoryName === LTT_CATEGORIES.top.name
-                  ? 'active'
-                  : 'default'
-              ]
-            }
-          </span>
-          <span className="name">{strings.LTT_LANDING_PAGE.TOP_SHOWS}</span>
-        </CategoryWrapper>
-        {categoriesToRender.map(({ name, id }, index) => {
-          const { icon } = LTT_CATEGORIES[id] ?? LTT_CATEGORIES.fallback;
-          const currentIcon =
-            icon[activeCategoryName === name ? 'active' : 'default'];
-          return (
-            <CategoryWrapper
-              $isActive={activeCategoryName === name}
-              key={index}
-              onClick={() => onCategoryClicked(name, index + 1)}
-            >
-              <span className="icon">{currentIcon}</span>
-              <span className="name">{name}</span>
-            </CategoryWrapper>
-          );
-        })}
+        <Conditional if={!isMobile}>
+          {categoryChips.map((category) => category)}
+        </Conditional>
+
+        <div className="row-wrapper">
+          <Conditional if={isMobile}>
+            <div className="row-one">
+              {categoryChips
+                .slice(0, Math.floor(categoriesToRender.length / 2 + 1))
+                .map((category) => category)}
+            </div>
+            <div className="row-two">
+              {categoryChips
+                .slice(Math.floor(categoriesToRender.length / 2 + 1))
+                .map((category) => category)}
+            </div>
+          </Conditional>
+        </div>
       </div>
     </CategoriesSection>
   );
