@@ -437,7 +437,6 @@ const MicrositeV1 = (props: any) => {
     read_more_text: readMoreText,
     show_less_text: showLessText,
     enable_group_booking: enableGroupBooking,
-    enable_buy_tickets: enableBuyTickets,
     blackout_start_date: blackoutStartDate,
     blackout_end_date: blackoutEndDate,
     block_n_days_group_booking: blockNDaysGroupBooking,
@@ -634,8 +633,6 @@ const MicrositeV1 = (props: any) => {
 
   const shouldDisplayProductTrustBoosters = displayProductTrustBoosters(data);
   const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
-  const finalEnableBuyTickets =
-    enableBuyTickets === null ? 'Yes' : enableBuyTickets;
 
   const showAirportTransferProducts =
     hasTours &&
@@ -687,7 +684,6 @@ const MicrositeV1 = (props: any) => {
           openGroupBookingModal={openGroupBookingModal}
           isMobile={isMobile}
           showGroupBooking={showGroupBooking}
-          enableBuyTickets={isToursAvailable ? finalEnableBuyTickets : false}
           logoRedirectionURL={logoRedirectionUrl || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}

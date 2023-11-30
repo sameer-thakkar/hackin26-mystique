@@ -27,8 +27,6 @@ import COLORS from 'const/colors';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  CTA_TYPE,
   PAGETYPE,
   THEMES,
 } from 'const/index';
@@ -484,17 +482,6 @@ const Header: FunctionComponent<HeaderProps> = ({
     setResultClicked(true);
   };
 
-  const buyTicketHandler = () => {
-    window.scrollBy({
-      top: 540,
-      behavior: 'smooth',
-    });
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.BUY_TICKETS,
-    });
-  };
-
   const allToursArray = Object?.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const groupedHeaderSlices = groupSlices(
@@ -687,16 +674,6 @@ const Header: FunctionComponent<HeaderProps> = ({
                 <a href={buyTicketsLink} className="buy-tickets global-mb">
                   {strings.BANNER_CTA}
                 </a>
-              </Conditional>
-              <Conditional if={!isGlobalMb}>
-                <div
-                  className="buy-tickets"
-                  tabIndex={0}
-                  role="button"
-                  onClick={buyTicketHandler}
-                >
-                  {strings.BANNER_CTA}
-                </div>
               </Conditional>
             </Conditional>
             <Conditional if={isMobileDevice && enableSearch}>
