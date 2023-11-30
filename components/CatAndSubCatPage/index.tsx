@@ -49,11 +49,11 @@ const CatAndSubCatPage: React.FC<CatAndSubCatPageProps> = (props) => {
   } = catAndSubCatPageData;
 
   const hasTopCollectionsCarousel =
-    !isSubCategoryPage && topCollectionsCarousel.length > 0;
-  const hasSubCategoryCarousels = subCategoryCarousels.some(
-    (subCategoryCarousel) => subCategoryCarousel.carouselData.length > 0
+    !isSubCategoryPage && topCollectionsCarousel?.length > 0;
+  const hasSubCategoryCarousels = subCategoryCarousels?.some(
+    (subCategoryCarousel) => subCategoryCarousel?.carouselData?.length > 0
   );
-  const hasSubCategoryCards = isSubCategoryPage && subCategoryCards.length > 0;
+  const hasSubCategoryCards = isSubCategoryPage && subCategoryCards?.length > 0;
 
   return (
     <CatAndSubCatPageContainer>
@@ -64,7 +64,7 @@ const CatAndSubCatPage: React.FC<CatAndSubCatPageProps> = (props) => {
         primaryCity={primaryCity}
         isMobile={isMobile}
       />
-      <Conditional if={subCategoryPills.length > 1}>
+      <Conditional if={subCategoryPills?.length > 1}>
         <SubCategoryPills
           subCategoryPills={subCategoryPills}
           subCategoryData={subCategoryData}
@@ -105,7 +105,7 @@ const CatAndSubCatPage: React.FC<CatAndSubCatPageProps> = (props) => {
         }
         placeHolderHeight={isMobile ? '24.5rem' : '32.25rem'}
       >
-        <Conditional if={cityCategoriesCarousel.length > 0}>
+        <Conditional if={cityCategoriesCarousel?.length > 0}>
           <CityCategoriesCarousel
             cityCategoriesCarousel={cityCategoriesCarousel}
             isMobile={isMobile}
