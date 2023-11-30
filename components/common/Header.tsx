@@ -147,7 +147,7 @@ const StyledLogo = styled.div<{
     img {
       height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`} !important;
       position: relative !important;
-      max-width: 100%;
+      max-width: ${isEntertainmentMB ? '10.625rem' : '100%'};
       width: unset !important;
       object-fit: contain;
       padding-top: ${isEntertainmentMB && `4.5px`};

@@ -13,10 +13,11 @@ export const BannerSection = styled.div<{
   $isNonPoi?: boolean;
 }>`
   margin: 0;
+  position: relative;
   .overlay {
     position: absolute;
     height: 5.125rem;
-    inset: 12.375rem 0 0;
+    inset: 8.75rem 0 0;
     z-index: 1;
     background: linear-gradient(
       180deg,
@@ -115,9 +116,9 @@ export const Heading = styled.h1<{
   grid-area: ${({ $isNonPoi, $displayRating, $showTrustBooster }) =>
     ($isNonPoi && $displayRating) || $showTrustBooster ? 'middle' : 'top'};
   ${expandFontToken(FONTS.HEADING_LARGE)};
-  ${({ $isNonPoi, $displayRating }) =>
+  ${({ $isNonPoi }) =>
     $isNonPoi &&
-    `margin: ${$displayRating ? '0.25rem 1.5rem 0' : '1.25rem 1.5rem 0'};
+    `margin: 0.25rem 1.5rem 0;
   `}
 
   .bold-city {
