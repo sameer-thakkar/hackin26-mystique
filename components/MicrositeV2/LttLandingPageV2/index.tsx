@@ -118,19 +118,17 @@ const LttLandingPageV2 = ({
           updateActions={setLastMinuteActions}
           totalNumberOfShows={50}
           maxNumberOfShows={20}
-          seeAllCardText="show tickets available" //TODO: localise
+          seeAllCardText="show tickets available"
           preselectedActionName={lastMinuteActions?.[0]?.actionName}
           hideSeeAll={true}
           useForcedSekeltonLoaders
         />
       </LazyComponent>
-      <LazyComponent>
-        <CategoryCarouselsSection
-          categoriesToRender={categoriesToRender}
-          allTours={allTours}
-          isMobile={isMobile}
-        />
-      </LazyComponent>
+      <CategoryCarouselsSection
+        categoriesToRender={categoriesToRender}
+        allTours={allTours}
+        isMobile={isMobile}
+      />
     </LandingPageWrapper>
   );
 };
