@@ -152,7 +152,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 
     .row {
       .subcategory-name {
-        ${expandFontToken(FONTS.SUBHEADING_XS)};
+        ${expandFontToken(FONTS.UI_LABEL_XS)};
         font-weight: 300;
       }
       .average-rating {
@@ -166,7 +166,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
       font-weight: 300;
     }
     p {
-      ${expandFontToken(FONTS.SUBHEADING_XS)};
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
       margin-top: 2px;
     }
 

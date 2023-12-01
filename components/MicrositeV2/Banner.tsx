@@ -9,7 +9,7 @@ import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { stringIdfy, withShortcodes } from 'utils/helper';
+import { checkIfLTTMB, stringIdfy, withShortcodes } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import {
@@ -84,6 +84,10 @@ const StyledBanner = styled.div<IStyledBanner>`
     }}
 
   }
+
+  .swiper-android .swiper-slide, .swiper-wrapper{
+    transform: none;
+  }
   
   .swiper-initialized {
     width: 100%;
@@ -115,6 +119,7 @@ const StyledBanner = styled.div<IStyledBanner>`
     background: rgba(34, 34, 34, 0.6);
     border-radius: 0.75rem;
     position: relative;
+    height: max-content;
 
     @media (min-width: 768px) {
       background: transparent;
@@ -141,12 +146,12 @@ const StyledBanner = styled.div<IStyledBanner>`
   }
 
   .swiper-slide {
-    transform: scale(0.9);
+    transform: scale(0.9) !important;
     transition: all 0.7s ease-in-out;
   }
 
   .swiper-slide-active {
-    transform: scale(1);
+    transform: scale(1) !important;
   }
 
   .mb-captions {
@@ -193,14 +198,14 @@ const StyledBanner = styled.div<IStyledBanner>`
     margin: ${({ bannerCount }) => (bannerCount === 1 ? '2rem 0' : '1rem 0')};
     height: 13.75rem;
     .swiper-slide {
-      transform: scale(0.95);
-      -webkit-transform: scale(0.95);
+      transform: scale(0.95) !important;
+      -webkit-transform: scale(0.95) !important;
       width: calc(100vw / 1.1);
     }
 
     .swiper-slide-active {
-      transform: scale(1);
-      -webkit-transform: scale(1);
+      transform: scale(1) !important;
+      -webkit-transform: scale(1) !important;
     }
 
     .single-slide,
@@ -258,8 +263,10 @@ const NewBanner: React.FC<any> = (props) => {
   const { bannerImages, ready, isEntertainmentMb, availableTours } = props;
   const [swiper, updateSwiper] = useState<SwiperClass>();
   const [isMounted, setMounted] = useState(false);
-  const { lang } = useContext(MBContext);
+  const { lang, uid } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
+
+  const isLtt = checkIfLTTMB(uid);
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -334,6 +341,39 @@ const NewBanner: React.FC<any> = (props) => {
         </div>
       </div>
     );
+  };
+
+  const getBannerImageUrl = (image: Record<string, any>, index: number) => {
+    const LTT_CONTROL_HARDCODED_BANNER_IMAGES_IN_ORDER = [
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/black-friday.png`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/lion-king.png`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/frozen.jpg`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/phantom-of-the-opera.jpg`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/les-miserables.jpg`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/mamma-mia.jpg`,
+      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
+        isMobile ? 'mobile' : 'desktop'
+      }/abba.jpg`,
+    ];
+    if (isLtt && index !== 0) {
+      return (
+        LTT_CONTROL_HARDCODED_BANNER_IMAGES_IN_ORDER[index - 1] ||
+        (isMobile && image.mobile_url ? image.mobile_url : image.url)
+      );
+    }
+    return isMobile && image.mobile_url ? image.mobile_url : image.url;
   };
 
   return (
@@ -431,12 +471,7 @@ const NewBanner: React.FC<any> = (props) => {
                         width={WIDTH}
                         aspectRatio={ASPECT_RATIO}
                         fill
-                        url={
-                          ready &&
-                          (isMobile && image.mobile_url
-                            ? image.mobile_url
-                            : image.url)
-                        }
+                        url={ready && getBannerImageUrl(image, index)}
                         alt={image?.alt || 'banner'}
                         priority={[
                           initialSlide,
@@ -444,7 +479,9 @@ const NewBanner: React.FC<any> = (props) => {
                         ].includes(index)}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
-                      <Conditional if={image.bannerHeading}>
+                      <Conditional
+                        if={image.bannerHeading && !(isLtt && index !== 0)}
+                      >
                         {textOverLay(image.bannerHeading)}
                       </Conditional>
                     </a>
