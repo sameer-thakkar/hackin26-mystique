@@ -71,7 +71,6 @@ import { MISC } from 'const/header';
 import {
   CATEGORY_IDS,
   CUSTOM_TYPES,
-  GLOBAL_MB_ENABLED_DOMAINS,
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
   MB_CATEGORISATION,
@@ -1266,20 +1265,9 @@ export const getPrismicDocument = async ({
   };
 }> => {
   const { host } = req.headers || window.location;
-  let promises: Array<Promise<any>> = [];
-  const isGlobalMb = GLOBAL_MB_ENABLED_DOMAINS.some((whitelistedDomain) =>
-    uid?.includes(whitelistedDomain)
-  );
-  if (isGlobalMb) {
-    promises = [
-      getGlobalHomepage({ req, lang, uid }),
-      getGlobalExperience({ req, lang, uid }),
-      getGlobalCollection({ req, lang, uid }),
-      getGlobalCity({ req, lang, uid }),
-      getGlobalCountry({ req, lang, uid }),
-    ];
-  } else {
-    promises = [
+
+  try {
+    return await Promise.any([
       getMicrositeDocument({
         req,
         host,
@@ -1301,11 +1289,12 @@ export const getPrismicDocument = async ({
         isDev,
         host,
       }),
-    ];
-  }
-
-  try {
-    return await Promise.any(promises);
+      getGlobalExperience({ req, lang, uid }),
+      getGlobalCollection({ req, lang, uid }),
+      getGlobalCity({ req, lang, uid }),
+      getGlobalCountry({ req, lang, uid }),
+      getGlobalHomepage({ req, lang, uid }),
+    ]);
   } catch (error) {
     if ((error as any).errors && Array.isArray((error as any).errors)) {
       (error as any).errors.forEach((errorInstance: any) => {
