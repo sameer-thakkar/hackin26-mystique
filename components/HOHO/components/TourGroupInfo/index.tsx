@@ -204,9 +204,6 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       width: '50vw',
       children: <TourGroupRouteDetails />,
       type: SIDEBAR_TYPES.TOUR_GROUP_INFO,
-      history: {
-        enable: false,
-      },
       title: strings.HOHO.ROUTES_SCHEDULES,
     });
   };
@@ -222,9 +219,6 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       width: '50vw',
       children: <TourGroupMoreDetails />,
       type: SIDEBAR_TYPES.TOUR_GROUP_INFO,
-      history: {
-        enable: false,
-      },
       sidePadding: 40,
       title: tourGroupName?.split(':')?.[0],
     });
