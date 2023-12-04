@@ -188,7 +188,7 @@ const Reviews: React.FC<ReviewsProps> = ({
                 </ReviewerSubtext>
               </Reviewer>
               <RatingWrapper>
-                <Rating fillColor={COLORS.BRAND.CANDY} value={rating} />
+                <Rating fillColor={COLORS.TEXT.CANDY_1} value={rating} />
                 <RatingTime>{ratingDate}</RatingTime>
               </RatingWrapper>
             </ReviewTop>

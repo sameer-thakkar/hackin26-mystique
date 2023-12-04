@@ -51,7 +51,7 @@ const StyledCard = styled.a`
     font-style: normal;
     font-weight: 400;
     line-height: 16px;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
   }
   .collection-name {
     font-size: 16px;

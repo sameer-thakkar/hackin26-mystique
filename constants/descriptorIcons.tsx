@@ -163,8 +163,8 @@ export const StarIcon = () => (
   >
     <path
       d="M9.20833 1.125L11.7833 6.34167L17.5417 7.18333L13.375 11.2417L14.3583 16.975L9.20833 14.2667L4.05833 16.975L5.04167 11.2417L0.875 7.18333L6.63333 6.34167L9.20833 1.125Z"
-      fill="#FF007A"
-      stroke="#FF007A"
+      fill="#e5006e"
+      stroke="#e5006e"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

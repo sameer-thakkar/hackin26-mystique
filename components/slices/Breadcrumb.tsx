@@ -81,7 +81,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
             {crumb.text}
           </StyledBreadcrumb>
           <Conditional if={links.length - 1 !== index}>
-            {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G4 })}
+            {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
           </Conditional>
         </React.Fragment>
       );

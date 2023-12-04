@@ -89,7 +89,7 @@ export const ScratchPriceWrapper = styled.div`
 `;
 
 export const ScratchPrice = styled.div`
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
   ${expandFontToken(FONTS.UI_LABEL_XS)};
   text-decoration-line: line-through;
   font-family: halyard-text;
@@ -170,7 +170,7 @@ export const NumericSubNumericWrapper = styled.div`
 `;
 
 export const SubNumericWrapper = styled.div`
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
   ${expandFontToken(FONTS.TABLE_SMALL)};
 `;
 

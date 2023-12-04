@@ -44,14 +44,14 @@ export const StyledPriceBlock = styled.div<{
 
   .tour-scratch-price {
     grid-column: 1 / 3;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     &:empty {
       display: none;
     }
     & .strike-through {
       text-decoration: line-through;
       color: ${({ isSportsExperiment }) =>
-        isSportsExperiment && `${COLORS.GRAY.G4}`};
+        isSportsExperiment && `${COLORS.GRAY.G3}`};
     }
   }
   @media (max-width: 768px) {

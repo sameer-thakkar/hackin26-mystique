@@ -56,10 +56,10 @@ const StyledCard = styled.div`
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
   }
   .from-price span {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     text-decoration: line-through;
   }
   .final-price {

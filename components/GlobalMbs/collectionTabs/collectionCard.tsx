@@ -63,7 +63,7 @@ const StyledCard = styled.div`
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
     }
   }
   .name {
@@ -82,7 +82,7 @@ const StyledCard = styled.div`
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
     }
     .price {
       font-size: 16px;

@@ -115,7 +115,7 @@ export const Review = styled.div`
   .show-name {
     height: 1.25rem;
     ${expandFontToken(FONTS.PARAGRAPH_SMALL)};
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     text-decoration-line: underline;
     cursor: pointer;
   }

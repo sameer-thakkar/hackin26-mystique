@@ -73,7 +73,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
       margin-top: 1px;
     }
     ${expandFontToken(FONTS.SUBHEADING_XS)};
-    color: ${({ darkTheme }) => (darkTheme ? COLORS.GRAY.G6 : COLORS.GRAY.G4)};
+    color: ${({ darkTheme }) => (darkTheme ? COLORS.GRAY.G6 : COLORS.GRAY.G3)};
     margin-bottom: 4px;
   }
 
@@ -85,7 +85,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
   .count {
     ${expandFontToken(FONTS.UI_LABEL_XS)};
     color: ${({ darkTheme }) =>
-      darkTheme ? `rgba(255,255,255,0.8)` : COLORS.GRAY.G4} !important;
+      darkTheme ? `rgba(255,255,255,0.8)` : COLORS.GRAY.G3} !important;
     margin-left: 4px;
   }
 
@@ -95,7 +95,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     & span {
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
       color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G6 : COLORS.GRAY.G4};
+        darkTheme ? COLORS.GRAY.G6 : COLORS.GRAY.G3};
     }
   }
 
@@ -113,6 +113,6 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     font-weight: 500;
     color: ${({ darkTheme }) =>
-      darkTheme ? COLORS.GRAY.G7 : COLORS.OCEAN_BLUE.TERTIARY};
+      darkTheme ? COLORS.GRAY.G7 : COLORS.TEXT.BEACH};
   }
 `;

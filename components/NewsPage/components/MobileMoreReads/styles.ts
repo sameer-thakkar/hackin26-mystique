@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
     .published-date {
       display: block;
       margin-bottom: 0.25rem;
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     }
     h4 {

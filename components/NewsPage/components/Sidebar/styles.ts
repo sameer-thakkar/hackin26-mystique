@@ -79,8 +79,8 @@ export const Card = styled.div<{
       gap: 0.25rem;
       padding-bottom: 2px;
       align-items: center;
-      color: ${COLORS.BRAND.CANDY};
-      border-bottom: 1px dotted ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
+      border-bottom: 1px dotted ${COLORS.TEXT.CANDY_1};
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
       svg {
         width: 0.736rem;
@@ -223,7 +223,7 @@ export const FeaturedNewsContainer = styled.div`
     .published-date {
       display: block;
       margin-bottom: 0.25rem;
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     }
     h4 {

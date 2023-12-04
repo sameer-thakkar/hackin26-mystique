@@ -20,7 +20,7 @@
   "dependencies": {
     "@formatjs/intl-locale": "^3.4.0",
     "@formatjs/intl-relativetimeformat": "^10.0.1",
-    "@headout/aer": "headout/aer#7c373b94a705d9452dfecd4b2b6c21f5dda11b9e",
+    "@headout/aer": "headout/aer#a8a83e573e47afe8c174e1ee68a9e950ab982c5b",
     "@newrelic/next": "^0.5.1",
     "@react-hook/window-size": "^3.0.6",
     "@rive-app/react-canvas": "^3.0.54",

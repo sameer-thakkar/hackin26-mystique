@@ -376,7 +376,7 @@ const ShowPageBanner = ({
                 <Conditional if={reviewCount > 0}>
                   <div className="ratings-reviews-wrapper">
                     <span className="ratings-wrapper">
-                      {averageRating} {STAR(COLORS.BRAND.CANDY)}{' '}
+                      {averageRating} {STAR(COLORS.TEXT.CANDY_1)}{' '}
                     </span>
                     (
                     {reviewCount > 999
@@ -464,7 +464,7 @@ const ShowPageBanner = ({
               <Conditional if={reviewCount > 0}>
                 <span>
                   <span className="ratings-wrapper">
-                    {STAR(COLORS.BRAND.CANDY)} {averageRating}
+                    {STAR(COLORS.TEXT.CANDY_1)} {averageRating}
                   </span>
                   (
                   {reviewCount > 999

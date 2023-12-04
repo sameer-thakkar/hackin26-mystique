@@ -81,7 +81,7 @@ const ProductCard = styled.div<{
     margin-top: 12px;
     .discount {
       ${expandFontToken('UI/Label Small (Heavy)')};
-      color: ${COLORS.OCEAN_BLUE.TERTIARY};
+      color: ${COLORS.TEXT.BEACH};
     }
   }
 
@@ -158,7 +158,7 @@ const ProductCard = styled.div<{
     text-decoration-line: unset;
 
     span {
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
     }
   }
 
@@ -169,7 +169,7 @@ const ProductCard = styled.div<{
     font-size: 11px;
     line-height: 11px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
   }
 
   .l1-booster-wrapper {
@@ -181,7 +181,7 @@ const ProductCard = styled.div<{
   }
 
   .l1-booster-wrapper * {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
   }
 
   .rating {
@@ -194,7 +194,7 @@ const ProductCard = styled.div<{
   .avg-rating {
     .rating-number {
       margin-right: 0.125rem;
-      color: ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
     }
   }
 
@@ -278,8 +278,8 @@ const ProductCard = styled.div<{
       height: 12px;
 
       path {
-        fill: ${COLORS.BRAND.CANDY};
-        stroke: ${COLORS.BRAND.CANDY};
+        fill: ${COLORS.TEXT.CANDY_1};
+        stroke: ${COLORS.TEXT.CANDY_1};
       }
     }
 
@@ -652,7 +652,7 @@ const Product = (props: any) => {
                 <span className="rating-number">
                   {averageRating?.toFixed?.(1)}
                 </span>
-                {STAR(COLORS.BRAND.CANDY)}
+                {STAR(COLORS.TEXT.CANDY_1)}
               </span>
             </Conditional>
             <Conditional if={reviewCount}>

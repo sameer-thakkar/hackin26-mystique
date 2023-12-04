@@ -16,7 +16,7 @@ export const RatingsWrapper = styled.div`
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
     margin-right: 3px;
   }
 
@@ -47,7 +47,7 @@ const Ratings = ({
   return (
     <RatingsWrapper>
       <div className="average-rating">{averageRating?.toPrecision(2)}</div>
-      {STAR(COLORS.BRAND.CANDY)}
+      {STAR(COLORS.TEXT.CANDY_1)}
       <Conditional if={reviewCount > 0 && showCount}>
         <div className="count">
           ({truncateNumber(reviewCount).toUpperCase()}

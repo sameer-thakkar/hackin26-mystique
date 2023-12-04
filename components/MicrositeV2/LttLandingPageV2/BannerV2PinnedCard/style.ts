@@ -184,7 +184,7 @@ export const ProductDetails = styled.div`
     .tags {
       margin-top: 0.75rem;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-      color: ${COLORS.OCEAN_BLUE.TERTIARY};
+      color: ${COLORS.TEXT.BEACH};
     }
 
     @media (max-width: 768px) {

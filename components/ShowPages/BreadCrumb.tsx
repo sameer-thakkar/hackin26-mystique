@@ -34,7 +34,7 @@ const StyledLink = styled.a`
   font-size: 14px;
   line-height: 16px;
   font-weight: normal;
-  color: ${COLORS.GRAY.G4} !important;
+  color: ${COLORS.GRAY.G3} !important;
   @media (max-width: 768px) {
     font-size: 12px;
   }

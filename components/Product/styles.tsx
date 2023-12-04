@@ -576,7 +576,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     .chevron::before,
     .chevron::after {
       top: 0.6rem;
-      background-color: ${COLORS.BRAND.CANDY};
+      background-color: ${COLORS.TEXT.CANDY_1};
     }
     @media (max-width: 768px) {
       justify-content: left;
@@ -721,7 +721,7 @@ export const BoosterTag = styled.div`
   font-size: 11px;
   font-weight: 600;
   line-height: 13px;
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   text-transform: uppercase;
   letter-spacing: 0.4px;
   background: ${COLORS.BRAND.WHITE};
@@ -810,12 +810,12 @@ export const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
   font-size: 15px;
   line-height: 21px;
   text-align: left;
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
   font-size: 1em;
   display: inline-block;
   p {
     margin: 0;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     font-size: 15px;
     strong {
       font-weight: unset;

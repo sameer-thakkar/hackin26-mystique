@@ -107,7 +107,7 @@ export const StyledBanner = styled.div<IStyledBanner>(
           .starting-from {
             font-size: 14px;
             line-height: 16px;
-            color: ${COLORS.GRAY.G4}
+            color: ${COLORS.GRAY.G3}
           }
           .price {
             font-size: 24px;

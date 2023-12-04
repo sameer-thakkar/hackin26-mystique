@@ -46,8 +46,11 @@ const StyledSearchBox = styled.div<{
     font-size: 1rem;
 
     ::placeholder {
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
+      opacity: 1;
+      ${({ isEntertainmentMb, isDarkMode }) =>
+        isEntertainmentMb && isDarkMode
+          ? `color: ${COLORS.GRAY.G5}; `
+          : `color: ${COLORS.GRAY.G3};`};
     }
 
     ${({ isDarkMode }) => isDarkMode && `color: ${COLORS.BRAND.WHITE};`}
@@ -81,7 +84,7 @@ const StyledSearchBox = styled.div<{
       stroke: ${({ isNewLTTLandingPageVisible, isDarkMode }) =>
         isNewLTTLandingPageVisible && isDarkMode
           ? COLORS.BRAND.WHITE
-          : COLORS.GRAY.G2};
+          : COLORS.GRAY.G3};
     }
   }
 

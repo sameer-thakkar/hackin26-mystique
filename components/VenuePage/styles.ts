@@ -63,10 +63,10 @@ export const VenuePageContainer = styled.div`
       border: none;
       background: none;
       padding: 0;
-      color: ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
       svg {
         path {
-          stroke: ${COLORS.BRAND.CANDY};
+          stroke: ${COLORS.TEXT.CANDY_1};
         }
         margin-left: 0.25rem;
       }

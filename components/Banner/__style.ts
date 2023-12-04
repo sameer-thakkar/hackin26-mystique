@@ -262,7 +262,7 @@ export const BannerSubtext = styled.em`
     text-align: center;
     font-style: italic;
     font-size: 0.875rem;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     margin: 0 1rem 2.75rem;
     @media (max-width: 768px) {
       font-size: 0.6875rem;

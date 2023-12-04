@@ -62,9 +62,9 @@ const COLORS = {
   TEXT: {
     HOLA_YELLOW_3: '#807400',
     PEACHY_ORANGE_3: '#a4563b',
-    OKAY_GREEN_3: '#088943',
+    OKAY_GREEN_3: '#088229',
     PURPS_3: '#6600cc',
-    JOY_MUSTARD_3: '#a46e00',
+    JOY_MUSTARD_3: '#906100',
     CANDY_1: '#e5006e',
     WARNING_RED_1: '#d60404',
     BEACH: '#03829d',

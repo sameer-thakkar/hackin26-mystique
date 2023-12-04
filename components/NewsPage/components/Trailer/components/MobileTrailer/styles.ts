@@ -102,7 +102,7 @@ export const SlideDescription = styled.div`
       .rating {
         display: flex;
         align-items: center;
-        color: ${COLORS.BRAND.CANDY};
+        color: ${COLORS.TEXT.CANDY_1};
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
         svg {
           transform: scale(0.6);

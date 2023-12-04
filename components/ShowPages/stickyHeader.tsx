@@ -120,7 +120,7 @@ const BannerContent = styled.div(
     }
     .tour-scratch-price{
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
     }
   }
 

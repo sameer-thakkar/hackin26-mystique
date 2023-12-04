@@ -81,7 +81,7 @@ const PriceWrapper = styled.div`
 
 const From = styled.div`
   text-transform: lowercase;
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
   font-size: 10px;
   line-height: 12px;
 `;

@@ -88,7 +88,7 @@ const themes = {
           justify-self: left;
           .tour-scratch-price {
             font-weight: 400;
-            color: ${COLORS.GRAY.G4};
+            color: ${COLORS.GRAY.G3};
             font-size: 12px;
             line-height: 12px;
             span {
@@ -284,7 +284,7 @@ const themes = {
           justify-self: left;
           .tour-scratch-price {
             font-weight: 400;
-            color: ${COLORS.GRAY.G4};
+            color: ${COLORS.GRAY.G3};
             font-size: 12px;
             line-height: 12px;
             span {

@@ -126,7 +126,7 @@ export const ReviewerSubtext = styled.div`
   gap: 0.25rem;
   font-size: 14px;
   line-height: 20px;
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
 `;
 
 export const ReviewerCountry = styled.div`
@@ -141,7 +141,7 @@ export const ReviewFooter = styled.div`
   }
   ${expandFontToken(FONTS.PARAGRAPH_SMALL)}
   align-self: end;
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
   text-decoration: underline;
   padding: 0 1.5rem 1.25rem;
 `;
@@ -156,7 +156,7 @@ export const RatingTime = styled.div`
   text-align: right;
   font-size: 12px;
   line-height: 16px;
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
 `;
 
 export const SwiperControls = styled.div`

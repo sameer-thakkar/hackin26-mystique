@@ -176,7 +176,7 @@ const ButtonWrapper = styled.div`
 const CTALink = styled.a`
   position: absolute;
   bottom: 0;
-  color: ${COLORS.BRAND.CANDY} !important;
+  color: ${COLORS.TEXT.CANDY_1} !important;
   ${expandFontToken('UI/Label Medium (Heavy)')}
   display: block;
   margin: 24px 0 16px 0 !important;
@@ -187,7 +187,7 @@ const CTALink = styled.a`
     width: 11px;
     path {
       stroke-width: 4px;
-      stroke: ${COLORS.BRAND.CANDY};
+      stroke: ${COLORS.TEXT.CANDY_1};
     }
   }
   @media (max-width: 768px) {

@@ -30,7 +30,7 @@ const StyledLink = styled.a`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${COLORS.GRAY.G4} !important;
+  color: ${COLORS.GRAY.G3} !important;
 `;
 const StyledChevron = styled.div`
   transform: rotate(180deg);

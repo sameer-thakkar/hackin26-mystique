@@ -250,7 +250,7 @@ export const DetailedDescriptionCard = styled.div<
   .desc-price-wrapper {
     .scratch-price {
       span {
-        color: ${COLORS.GRAY.G4};
+        color: ${COLORS.GRAY.G3};
         font-weight: 400;
         font-size: 14px;
         line-height: ${({ isEntertainmentMb }) =>

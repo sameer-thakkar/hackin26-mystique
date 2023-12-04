@@ -118,7 +118,7 @@ const ReviewSection = ({ isMobile }: IReviewSectionProps) => {
                   </div>
                   <div className="stars">
                     {Array.from({ length: review.stars }).map(() =>
-                      STAR(COLORS.BRAND.CANDY)
+                      STAR(COLORS.TEXT.CANDY_1)
                     )}
                   </div>
                 </div>

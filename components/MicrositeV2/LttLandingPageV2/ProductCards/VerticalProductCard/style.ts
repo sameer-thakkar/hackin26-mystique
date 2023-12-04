@@ -105,7 +105,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 
     .count {
       color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G5 : COLORS.GRAY.G4};
+        darkTheme ? COLORS.GRAY.G5 : COLORS.GRAY.G3};
       margin-left: 4px;
     }
   }
@@ -127,7 +127,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     & span {
       ${expandFontToken(FONTS.SUBHEADING_XS)};
       color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G4 : COLORS.GRAY.G4};
+        darkTheme ? COLORS.GRAY.G4 : COLORS.GRAY.G3};
     }
   }
 
@@ -144,7 +144,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     margin-top: 4px;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     color: ${({ darkTheme }) =>
-      darkTheme ? COLORS.GRAY.G7 : COLORS.OCEAN_BLUE.TERTIARY};
+      darkTheme ? COLORS.GRAY.G7 : COLORS.TEXT.BEACH};
   }
 
   @media (max-width: 768px) {

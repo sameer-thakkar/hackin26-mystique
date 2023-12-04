@@ -26,11 +26,11 @@ export const PinnedCardWrapper = styled.div`
       span {
         ${expandFontToken(FONTS.SUBHEADING_XS)};
         padding-right: 0.25rem;
-        color: ${COLORS.GRAY.G4};
+        color: ${COLORS.GRAY.G3};
       }
       span::after {
         content: ' •';
-        color: ${COLORS.GRAY.G4};
+        color: ${COLORS.GRAY.G3};
       }
       > :last-child::after,
       > :last-child span::after {
@@ -48,7 +48,7 @@ export const PinnedCardWrapper = styled.div`
     .avg-rating {
       .rating-number {
         margin-right: 0.125rem;
-        color: ${COLORS.BRAND.CANDY};
+        color: ${COLORS.TEXT.CANDY_1};
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
       }
     }
@@ -59,19 +59,19 @@ export const PinnedCardWrapper = styled.div`
       width: 12px;
       height: 12px;
       path {
-        fill: ${COLORS.BRAND.CANDY};
-        stroke: ${COLORS.BRAND.CANDY};
+        fill: ${COLORS.TEXT.CANDY_1};
+        stroke: ${COLORS.TEXT.CANDY_1};
       }
     }
     .total-rating {
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
     }
     .date {
       display: inline-block;
       margin-top: 0.875rem;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-      color: ${COLORS.OCEAN_BLUE.TERTIARY};
+      color: ${COLORS.TEXT.BEACH};
     }
     .descriptors-list {
       margin-top: 1rem;

@@ -3363,8 +3363,8 @@ export const CANDY_STAR = (
   >
     <path
       d="M5.5 1L6.8905 3.817L10 4.2715L7.75 6.463L8.281 9.559L5.5 8.0965L2.719 9.559L3.25 6.463L1 4.2715L4.1095 3.817L5.5 1Z"
-      fill={COLORS.BRAND.CANDY}
-      stroke={COLORS.BRAND.CANDY}
+      fill={COLORS.TEXT.CANDY_1}
+      stroke={COLORS.TEXT.CANDY_1}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -3380,16 +3380,16 @@ export const CROSS = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <circle cx="12" cy="12" r="11.5" stroke={COLORS.BRAND.CANDY} />
+    <circle cx="12" cy="12" r="11.5" stroke={COLORS.TEXT.CANDY_1} />
     <path
       d="M17 7L7 17"
-      stroke={COLORS.BRAND.CANDY}
+      stroke={COLORS.TEXT.CANDY_1}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M7 7L17 17"
-      stroke={COLORS.BRAND.CANDY}
+      stroke={COLORS.TEXT.CANDY_1}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -4136,6 +4136,7 @@ export const CHEVRON_RIGHT = ({
     height={height}
     viewBox="0 0 16 16"
     fill="none"
+    aria-hidden="true"
   >
     <path
       d="M4.66675 14.6667L11.3334 8.00004L4.66675 1.33337"
@@ -4238,6 +4239,7 @@ export const GlobeIcon = ({ stroke = COLORS.GRAY.G3 }: { stroke?: string }) => (
     fill="none"
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <g
       clipPath="url(#a)"
@@ -4494,6 +4496,7 @@ export const CASHBACK_COIN = () => (
     viewBox="0 0 16 17"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <path
       d="M8.68905 15.4683C5.39415 15.4683 1 13.247 1 8.80564C1 4.13445 4.09106 1.57282 8.68905 1.57282V15.4683Z"
@@ -4521,6 +4524,7 @@ export const TRAVEL_GUIDE_ICON = () => (
     viewBox="0 0 16 17"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <path
       d="M7.30435 3.05549L1.46087 0.611036C1.14783 0.407332 0.730435 0.509184 0.417391 0.712889C0.208696 0.916593 0 1.22215 0 1.52771V12.7315C0 13.1389 0.208696 13.5463 0.626087 13.6481L7.30435 16.5V3.05549Z"
@@ -4540,6 +4544,7 @@ export const HOME_ICON = () => (
     viewBox="0 0 54 52"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <path
       d="M8.68642 19.2237L8.68696 6.59217C8.68698 6.28762 8.80797 5.99554 9.02333 5.7802C9.2387 5.56486 9.53078 5.44388 9.83534 5.4439L14.4286 5.4441C14.7332 5.44411 15.0253 5.56511 15.2406 5.78047C15.4559 5.99583 15.5769 6.28791 15.5769 6.59247L15.5766 13.5869L8.68642 19.2237Z"
@@ -4571,6 +4576,7 @@ export const INFO_ICON_LARGE = () => (
     viewBox="0 0 56 56"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <path
       d="M28 0C12.5355 0 0 12.5355 0 28C0 43.4645 12.5355 56 28 56C43.4645 56 56 43.4645 56 28C56 12.5355 43.4645 0 28 0Z"
@@ -4629,6 +4635,7 @@ export const TRANSLUCENT_LEFT = (
     viewBox="0 0 60 60"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <g filter="url(#filter0_dd_13789_46127)">
       <g filter="url(#filter1_b_13789_46127)">
@@ -4736,6 +4743,7 @@ export const EAT_ICON = () => (
     viewBox="0 0 56 56"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <path
       d="M10.6294 51.333L11.6666 23.333H16.3332L17.3704 51.333C17.3877 51.7864 17.3133 52.2385 17.1516 52.6625C16.99 53.0864 16.7445 53.4733 16.4298 53.8001C16.1151 54.1269 15.7377 54.3868 15.3202 54.5643C14.9026 54.7418 14.4536 54.8332 13.9999 54.833C13.5462 54.8332 13.0972 54.7418 12.6796 54.5643C12.2621 54.3868 11.8847 54.1269 11.57 53.8001C11.2553 53.4733 11.0098 53.0864 10.8482 52.6625C10.6865 52.2385 10.6121 51.7864 10.6294 51.333Z"
@@ -4787,6 +4795,7 @@ export const WEATHER_ICON = () => (
     viewBox="0 0 56 56"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
     <g clipPath="url(#clip0_1127_494)">
       <path

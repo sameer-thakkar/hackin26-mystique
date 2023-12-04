@@ -231,7 +231,7 @@ const StyledMobileProductPage = styled.div`
           .total-rating {
             font-size: 10px;
             line-height: 12px;
-            color: ${COLORS.GRAY.G4}
+            color: ${COLORS.GRAY.G3}
           }
         }
         .l1-booster {
@@ -309,7 +309,7 @@ const StyledMobileProductPage = styled.div`
               margin-right: 2px;
             }
             span {
-              color: ${COLORS.GRAY.G4};
+              color: ${COLORS.GRAY.G3};
               font-size: 12px;
               line-height: 16px;
             }
@@ -431,7 +431,7 @@ const StyledMobileProductPage = styled.div`
     font-size: 11px;
     line-height: 11px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     display: none;
   }
   @media (max-width: 768px) {

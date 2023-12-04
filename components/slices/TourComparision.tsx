@@ -137,7 +137,7 @@ const StyledTourComparisionTable = styled.div`
   .old-price {
     font-size: 12px;
     font-family: ${HALYARD.FONT_STACK};
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     line-height: 16px;
     grid-row: 1;
     text-decoration: line-through;
@@ -223,7 +223,7 @@ const StyledTourComparisionTable = styled.div`
     font-family: ${HALYARD.FONT_STACK};
     line-height: 18px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     ${({
       // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
       designType,
@@ -291,7 +291,7 @@ const StyledTourComparisionTable = styled.div`
     designType == TOUR_COMPARISION_DESIGN.TYPE_2
       ? `
     a {
-      color: ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
     }
     `
       : ``}

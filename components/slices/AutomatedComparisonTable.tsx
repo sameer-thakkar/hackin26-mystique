@@ -111,7 +111,7 @@ const ComparisonTableWrapper = styled.div<{
   }
   .old-price {
     ${expandFontToken('Subheading/XS')}
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     grid-row: 1;
     text-decoration: line-through;
   }
@@ -124,7 +124,7 @@ const ComparisonTableWrapper = styled.div<{
     .tour-scratch-price {
       ${expandFontToken('Subheading/XS')}
       margin-left: 0;
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       grid-column: unset;
     }
   }
@@ -186,7 +186,7 @@ const ComparisonTableWrapper = styled.div<{
   font-size: 14px;
   line-height: 22px;
   a {
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
   }
   .free-cancellation {
     display: grid;

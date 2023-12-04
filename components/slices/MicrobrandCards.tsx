@@ -120,7 +120,7 @@ const MicrobrandCard = styled.div`
       .card-bottom .tour-scratch-price {
         font-size: 12px;
         line-height: 12px;
-        color: ${COLORS.GRAY.G4};
+        color: ${COLORS.GRAY.G3};
       }
       .card-bottom .card-price,
       .card-bottom .tour-price {

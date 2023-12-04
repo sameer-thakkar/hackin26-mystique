@@ -37,7 +37,7 @@ const CategoryCardWrapper = styled.div`
   }
 
   .tour-scratch-price {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     text-align: left;
   }

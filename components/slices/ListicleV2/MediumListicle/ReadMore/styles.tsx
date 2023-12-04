@@ -34,7 +34,7 @@ export const ReadMoreTextWrapper = styled.div<{
   isReadMore: boolean;
 }>`
   color: ${({ isReadMore }) =>
-    isReadMore ? `${COLORS.BRAND.CANDY}` : `${COLORS.GRAY.G3}`};
+    isReadMore ? `${COLORS.TEXT.CANDY_1}` : `${COLORS.GRAY.G3}`};
   ${expandFontToken(FONTS.BUTTON_MEDIUM)};
   margin-right: 0.5rem;
 `;

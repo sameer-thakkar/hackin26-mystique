@@ -109,8 +109,8 @@ export const Container = styled.div`
         align-items: center;
         gap: 0.125rem;
         cursor: pointer;
-        border-bottom: 1px dotted ${COLORS.BRAND.CANDY};
-        color: ${COLORS.BRAND.CANDY};
+        border-bottom: 1px dotted ${COLORS.TEXT.CANDY_1};
+        color: ${COLORS.TEXT.CANDY_1};
         ${expandFontToken(FONTS.HEADING_SMALL)};
       }
       .rating:hover {
@@ -120,7 +120,7 @@ export const Container = styled.div`
         }
       }
       .review-count {
-        color: ${COLORS.GRAY.G4};
+        color: ${COLORS.GRAY.G3};
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
       }
     }

@@ -76,7 +76,6 @@ export const StyledPopOverHeader = styled.header`
   width: 39.125rem;
   border-bottom: 1px solid ${COLORS.GRAY.G6};
   ${expandFontToken('Heading/XS')};
-  }
 `;
 
 export const StyleContainer = styled.div`

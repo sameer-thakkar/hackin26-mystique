@@ -122,7 +122,7 @@ const WTTDTSectionRichText = styled.div`
 `;
 
 const WTTDTToggle = styled.div`
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   cursor: pointer;
 `;
 

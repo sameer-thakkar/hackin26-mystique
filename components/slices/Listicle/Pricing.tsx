@@ -7,12 +7,12 @@ import { strings } from 'const/strings';
 const StyledPricing = styled.div`
   width: max-content;
   div {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
     font-size: 14px;
     line-height: 18px;
     margin-bottom: 4px;
     span {
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       text-decoration: line-through;
     }
   }

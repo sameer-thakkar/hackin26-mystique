@@ -61,7 +61,7 @@ const Links = styled.div`
   a {
     font-size: 12px;
     line-height: 22px;
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
     margin-bottom: 4px;
     :last-child {
       margin-top: -4px;

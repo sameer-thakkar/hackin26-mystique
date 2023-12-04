@@ -33,10 +33,10 @@ const ContactCountry = styled.div`
 
 const ContactNumber = styled.div`
   text-decoration-line: underline;
-  text-decoration-color: ${COLORS.BRAND.CANDY};
+  text-decoration-color: ${COLORS.TEXT.CANDY_1};
   text-decoration-style: solid;
   font-size: 0.875rem;
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   flex-shrink: 0;
 `;
 

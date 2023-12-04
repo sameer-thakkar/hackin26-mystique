@@ -7,5 +7,5 @@ export const StyledCopyrightContainer = styled.div`
   width: 100%;
   text-align: center;
   ${expandFontToken(FONTS.PARAGRAPH_SMALL)}
-  color: ${COLORS.GRAY.G4};
+  color: ${COLORS.GRAY.G3};
 `;

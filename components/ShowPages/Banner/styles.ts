@@ -181,7 +181,7 @@ export const BannerContent = styled.div`
       }
       ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
       margin: 0rem 0.5rem 0rem 1.5rem;
-      color: ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
     }
 
 
@@ -292,7 +292,7 @@ export const BannerContent = styled.div`
 
     .ratings-wrapper {
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
-      color: ${COLORS.BRAND.CANDY};
+      color: ${COLORS.TEXT.CANDY_1};
     }
   }
 `;

@@ -58,9 +58,9 @@ const CardTop = styled.div`
 
 const Rating = styled.div`
   margin-top: 4px;
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   span {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
   }
 `;
 
@@ -170,7 +170,7 @@ const TheatreInfo = styled.div`
 
 const StyledLink = styled.a`
   text-decoration: none;
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
 `;
 
 const ReadMore = styled(Button)`

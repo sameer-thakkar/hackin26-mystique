@@ -123,7 +123,7 @@ export const RatingAndDurationContainer = styled.div`
   }
 
   .rating {
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
     margin: 0 0.2rem;
 
     ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
@@ -277,10 +277,10 @@ export const PricingAndCTASection = styled.div`
 
 	.scratch-price {
 		${expandFontToken(FONTS.SUBHEADING_XS)}
-		color: ${COLORS.GRAY.G4};
+		color: ${COLORS.GRAY.G3};
 
 		.scratch-price-amount {
-		    color: ${COLORS.GRAY.G4};
+		    color: ${COLORS.GRAY.G3};
 			text-decoration: line-through;
 		}
 	}
@@ -498,7 +498,7 @@ export const RatingsContainer = styled.div`
   }
 
   .rating {
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
     margin: 0 0.56rem;
 
     ${expandFontToken(FONTS.HEADING_REGULAR)}
@@ -525,10 +525,10 @@ export const StyledPricingAndCTA = styled.div`
 
   .scratch-price {
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
 
     .scratch-price-amount {
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       text-decoration: line-through;
     }
   }
