@@ -151,12 +151,22 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     });
 
     const { title, refs = {} } = CMSContent?.data ?? {};
+    const { baseLangCategorisationMetadata } = CMSContent?.data?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
     const isHOHO = refs?.productCardData?.template === TEMPLATES.HOHO;
     const { isSubCategoryPage } = catAndSubCatPageData || {};
 
     let primaryCollectionId;
-    if (CMSContent?.data?.data) {
+
+    /**
+     * Clean-up seems to be missed from https://github.com/headout/mystique/pull/1712
+     * This is causing the `collectionId` field to not be present for analytics.
+     *
+     * TODO: Confirm clean-up logic and remove invalid if-else flows from below.
+     */
+    if (baseLangCategorisationMetadata?.tagged_collection) {
+      primaryCollectionId = baseLangCategorisationMetadata?.tagged_collection;
+    } else if (CMSContent?.data?.data) {
       ({ tagged_collection: primaryCollectionId } = CMSContent.data.data);
     } else if (CMSContent?.data) {
       ({ tagged_collection: primaryCollectionId } = CMSContent.data);
