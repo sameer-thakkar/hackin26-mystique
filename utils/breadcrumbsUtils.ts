@@ -55,28 +55,41 @@ export type TBreadcrumbs = Record<string, TBreadcrumbItem>;
 
 const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc;
+
   const {
     tagged_collection: taggedCollection,
     tagged_page_type: taggedPageType,
     shoulder_page_type: shoulderPageType,
   } = data?.baseLangCategorisationMetadata || {};
-  const { shoulder_page_custom_label: shoulderPageCustomLabel } = data;
+  const {
+    shoulder_page_custom_label: shoulderPageCustomLabel,
+    categoryTourListV2,
+    images,
+  } = data;
+
+  const localisedCategoryHeading = images[0]?.main_heading;
   const finalShoulderPageLabel = getShoulderPageLabel({
     shoulderPageType: shoulderPageType || '',
     shoulderPageCustomLabel: shoulderPageCustomLabel || '',
   });
+  const isCategoryPage = !!categoryTourListV2?.primary?.primary_subcategory_id;
 
-  if (!taggedCollection || !finalShoulderPageLabel) return {};
+  if (!taggedCollection || (!finalShoulderPageLabel && !isCategoryPage))
+    return {};
 
   const breadcrumbs: TBreadcrumbs = {};
 
-  if (taggedPageType === MB_CATEGORISATION.PAGE_TYPE.SHOULDER_PAGE) {
+  if (
+    taggedPageType === MB_CATEGORISATION.PAGE_TYPE.SHOULDER_PAGE ||
+    isCategoryPage
+  ) {
     const headoutLanguagecode = getHeadoutLanguagecode(lang);
     const { collection: collectionData } =
       (await fetchCollection({
         collectionId: taggedCollection,
         language: headoutLanguagecode,
       })) || {};
+
     const collectionHeading = collectionData?.heading;
 
     if (!collectionHeading) return {};
@@ -97,7 +110,7 @@ const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     };
     breadcrumbs[`level_2`] = {
       level: 2,
-      label: finalShoulderPageLabel,
+      label: isCategoryPage ? localisedCategoryHeading : finalShoulderPageLabel,
       url: pageUrl,
     };
   }

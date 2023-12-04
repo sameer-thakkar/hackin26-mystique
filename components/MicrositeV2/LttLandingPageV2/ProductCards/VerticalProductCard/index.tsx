@@ -69,7 +69,8 @@ const VerticalProductCard = ({
     cashbackValue,
   } = getBoosterValueFromListingPrice(listingPrice);
 
-  const { name: subCategoryName, id: subCategoryId } = primarySubCategory ?? {};
+  const { displayName: subCategoryName, id: subCategoryId } =
+    primarySubCategory ?? {};
 
   const { localisedOpeningDate, OPENING_ON } =
     getOpeningDate({

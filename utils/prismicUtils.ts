@@ -2007,6 +2007,7 @@ export const getPageData = async ({
             localizedStrings,
             cookies,
             MBDesign,
+            taggedCollection,
           });
           const timestampDeltaForCoralogix = Date.now() - timestampForCoralogix;
           sendLog({

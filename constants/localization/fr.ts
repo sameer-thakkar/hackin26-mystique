@@ -864,5 +864,6 @@ const fr = {
   PC_EXP: {
     SHOW_INCL: 'Inclusions et infos importantes',
   },
+  TOP: 'Le meilleur des : {0}',
 };
 export default fr;

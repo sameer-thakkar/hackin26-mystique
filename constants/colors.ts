@@ -136,6 +136,7 @@ const COLORS = {
     LIGHT_TONE_3: '#adc6ff',
   },
   LIGHT_GRAY: '#d9d9d9',
+  LTT_BANNER_BACKGROUND_COLOR: '#150029',
   EERIE_BLACK: '#180030',
   CHINESE_BLACK: '#150029',
   metadata: {

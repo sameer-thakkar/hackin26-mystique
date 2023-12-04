@@ -924,6 +924,7 @@ const en = {
   PC_EXP: {
     SHOW_INCL: 'Show inclusions & important info',
   },
+  TOP: 'Top {0}',
 };
 
 export default en;

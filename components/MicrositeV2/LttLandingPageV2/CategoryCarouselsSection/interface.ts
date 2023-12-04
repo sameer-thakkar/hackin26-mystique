@@ -2,6 +2,7 @@ export type TCategoryCarouselsSection = {
   categoriesToRender: any[];
   allTours: any;
   isMobile: boolean;
+  isCategoryPage?: boolean;
 };
 
 export type TCategoryCarouselSwiperProps = {

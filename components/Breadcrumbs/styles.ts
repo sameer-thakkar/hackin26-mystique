@@ -9,6 +9,7 @@ export const BreadcrumbsContainer = styled.div<{
   $isContentPage: boolean;
   $isShowPage: boolean;
   $isVenuePage: boolean;
+  $isCategoryPage: boolean;
   $isCatOrSubCatPage: boolean;
   $isNewsPage: boolean;
   $isDropdownOpen: boolean;
@@ -21,6 +22,7 @@ export const BreadcrumbsContainer = styled.div<{
     $isShowPage,
     $isVenuePage,
     $isCatOrSubCatPage,
+    $isCategoryPage,
     $isNewsPage,
   }) => {
     switch (true) {
@@ -28,12 +30,14 @@ export const BreadcrumbsContainer = styled.div<{
         return `margin: 2.5rem auto 3.5rem; padding: 0 5.46vw`;
       case $isShowPage:
         return 'margin: 5rem 0 0';
+      case $isCategoryPage:
+        return 'margin: 0 0 0 0';
       case $isVenuePage:
         return 'margin: 1.5rem 0 0';
       case $isCatOrSubCatPage:
         return 'margin: 0';
       case $isNewsPage:
-        return 'margin:2.625rem 0 0.5rem 0';
+        return 'margin: 2.625rem 0 0.5rem 0';
       default:
         return 'margin: 0 auto 3.5rem; padding: 0 5.46vw';
     }
@@ -52,24 +56,40 @@ export const BreadcrumbsContainer = styled.div<{
   }
 
   @media (max-width: 768px) {
-    ${({ $isShowPage, $isVenuePage, $isCatOrSubCatPage, $isNewsPage }) =>
+    ${({
+      $isShowPage,
+      $isVenuePage,
+      $isCatOrSubCatPage,
+      $isCategoryPage,
+      $isNewsPage,
+    }) =>
       !$isShowPage &&
+      !$isCategoryPage &&
       !$isVenuePage &&
       !$isCatOrSubCatPage &&
       !$isNewsPage &&
       `margin-bottom: 3.25rem; padding: 0 1rem`};
 
     ${({ $isContentPage }) => $isContentPage && `margin-left: 0;`};
+    ${({ $isCategoryPage }) => $isCategoryPage && `padding: 0; margin:0;`};
     ${({ $isShowPage }) => $isShowPage && `margin: 4rem 0 0; width: 100%`};
     ${({ $isVenuePage }) => $isVenuePage && `margin: 0; width: 100%`};
     ${({ $isNewsPage }) => $isNewsPage && `padding: 0rem`};
   }
 `;
 
-const StyledBreadcrumbCommon = css<{ $isCatOrSubCatPage: boolean }>`
+const StyledBreadcrumbCommon = css<{
+  $isCatOrSubCatPage: boolean;
+  $isCategoryPage: boolean;
+}>`
   ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-  color: ${({ $isCatOrSubCatPage }) =>
-    $isCatOrSubCatPage ? COLORS.TEXT.PURPS_3 : COLORS.GRAY.G3} !important;
+  opacity: ${({ $isCategoryPage }) => ($isCategoryPage ? 0.5 : '')};
+  color: ${({ $isCatOrSubCatPage, $isCategoryPage }) =>
+    $isCatOrSubCatPage
+      ? COLORS.TEXT.PURPS_3
+      : $isCategoryPage
+      ? `${COLORS.BRAND.WHITE}`
+      : COLORS.GRAY.G3} !important;
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
@@ -78,6 +98,7 @@ const StyledBreadcrumbCommon = css<{ $isCatOrSubCatPage: boolean }>`
 
 export const StyledBreadcrumbLink = styled.a<{
   $isCrumbCollapsed?: boolean;
+  $isCategoryPage: boolean;
   $isCatOrSubCatPage: boolean;
 }>`
   ${({ $isCrumbCollapsed }) => $isCrumbCollapsed && `display: none;`};
@@ -87,12 +108,17 @@ export const StyledBreadcrumbLink = styled.a<{
   cursor: pointer;
 
   :hover {
-    color: ${COLORS.BRAND.PURPS} !important;
+    opacity: 1;
+    color: ${({ $isCategoryPage }) =>
+      $isCategoryPage
+        ? `${COLORS.BRAND.WHITE} !important`
+        : `${COLORS.BRAND.PURPS} !important;`};
   }
 `;
 
 export const StyledBreadcrumbSpan = styled.span<{
   $isCatOrSubCatPage: boolean;
+  $isCategoryPage: boolean;
 }>`
   ${StyledBreadcrumbCommon};
 `;

@@ -3,7 +3,9 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const TopShowsWrapper = styled.div`
+export const TopShowsWrapper = styled.div<{
+  $isCategoryPage: boolean;
+}>`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -29,7 +31,7 @@ export const TopShowsWrapper = styled.div`
   }
 
   button {
-    margin: 3.25rem auto 4rem;
+    margin: 3.25rem auto 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -81,11 +83,12 @@ export const TopShowsWrapper = styled.div`
       max-width: 100%;
       padding: 0 1.5rem;
       width: auto;
+      margin: 0;
     }
     button {
       width: calc(100% - 3rem);
       max-width: 355px;
-      margin: 1.5rem auto 2rem;
+      margin: 1.5rem auto 0;
     }
   }
 `;

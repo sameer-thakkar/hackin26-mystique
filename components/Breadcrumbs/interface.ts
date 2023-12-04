@@ -11,5 +11,6 @@ export type BreadcrumbsProps = {
   isVenuePage?: boolean;
   isCatOrSubCatPage?: boolean;
   isNewsPage?: boolean;
+  isCategoryPage?: boolean;
   isMobile: boolean;
 };

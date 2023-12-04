@@ -105,8 +105,9 @@ const LttLandingPageV2 = ({
         <TopLttShowsSection
           isMobile={isMobile}
           topShows={topShows}
-          totalCount={Object.keys(allTours).length}
           categoriesToRender={categoriesToRender}
+          heading={strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}
+          showBrowseByCategories={true}
         />
       </LazyComponent>
       <LazyComponent>

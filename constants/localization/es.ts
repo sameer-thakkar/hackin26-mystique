@@ -914,5 +914,6 @@ const es = {
   PC_EXP: {
     SHOW_INCL: 'Qué incluye e información importante',
   },
+  TOP: 'Lo más destacado en: {0}',
 };
 export default es;

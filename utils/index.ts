@@ -480,6 +480,7 @@ type TGeneratePromiseForCategoryTours = {
   isCategory?: boolean;
   isSubCategory?: boolean;
   lang: string;
+  primarySubCategoryID?: string;
   cookies?: Record<string, string>;
 };
 
@@ -492,6 +493,7 @@ export const generatePromiseForCategoryTours = ({
   isSubCategory = false,
   lang,
   cookies,
+  primarySubCategoryID,
 }: TGeneratePromiseForCategoryTours) => {
   const allPromises = arr?.map(async (catId) => {
     let promise;
@@ -503,6 +505,7 @@ export const generatePromiseForCategoryTours = ({
           limit: '100',
           language: getHeadoutLanguagecode(lang),
           cookies,
+          primarySubCategoryID,
         });
         break;
       case isCategory:
@@ -515,6 +518,7 @@ export const generatePromiseForCategoryTours = ({
           limit: '100',
           language: getHeadoutLanguagecode(lang),
           cookies,
+          primarySubCategoryID,
         });
         break;
     }
@@ -942,4 +946,17 @@ export const getAnalyticsPageType = ({
     default:
       return defaultType;
   }
+};
+
+export const getPrimarySubCategoryIdData = (
+  primarySubCategoryId: string,
+  allData: Record<string, any>
+) => {
+  let finalData = {};
+  allData.forEach((item: Record<string, any>) => {
+    if (item?.subCategory?.id === primarySubCategoryId) {
+      finalData = item?.subCategory;
+    }
+  });
+  return finalData;
 };

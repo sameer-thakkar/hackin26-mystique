@@ -863,5 +863,6 @@ const pt = {
   PC_EXP: {
     SHOW_INCL: 'O que inclui e informações importantes',
   },
+  TOP: 'As melhores atrações em {0}',
 };
 export default pt;

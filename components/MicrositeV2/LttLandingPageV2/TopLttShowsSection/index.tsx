@@ -16,14 +16,19 @@ import { strings } from 'const/strings';
 interface ITopLttShowsSectionProps {
   isMobile: boolean;
   topShows: any[];
-  totalCount: number;
-  categoriesToRender: any[];
+  categoriesToRender?: any[];
+  heading: string;
+  showBrowseByCategories: boolean;
+  isCategoryPage?: boolean;
 }
 
 const TopLttShowsSection = ({
   isMobile,
   topShows,
-  categoriesToRender,
+  categoriesToRender = [],
+  heading,
+  showBrowseByCategories,
+  isCategoryPage = false,
 }: ITopLttShowsSectionProps) => {
   const numberOfShowsPerFold = isMobile ? 10 : 24;
 
@@ -68,13 +73,16 @@ const TopLttShowsSection = ({
     <TopShowsWrapper
       id={LTT_CATEGORIES.top.name}
       className="hroizontally-aligned-child"
+      $isCategoryPage={isCategoryPage}
     >
-      <div className="title">{strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}</div>
+      <div className="title">
+        {heading || strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}
+      </div>
       <div className="shows">
         {shows.map((show, index) =>
           isMobile ? (
             <>
-              <Conditional if={index === 3}>
+              <Conditional if={index === 3 && showBrowseByCategories}>
                 <BrowseByCategoriesSection
                   categoriesToRender={categoriesToRender}
                   isMobile={isMobile}
@@ -108,7 +116,6 @@ const TopLttShowsSection = ({
           )
         )}
       </div>
-
       <Button onClick={onShowMoreClicked}>
         {allowShowMore ? strings.SEE_MORE_SHOWS : 'View all shows'}
       </Button>

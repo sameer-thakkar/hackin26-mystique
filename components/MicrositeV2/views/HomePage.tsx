@@ -8,6 +8,7 @@ import React, {
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import CategoryPage from 'components/CategoryPage';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
@@ -236,6 +237,7 @@ export const HomePage = (props: any) => {
     domainConfig,
     mbDesign,
     mbType,
+    primarySubCategoryId,
     primaryCity,
     taggedCity,
     taggedCategoryName,
@@ -249,6 +251,7 @@ export const HomePage = (props: any) => {
     isCatOrSubCatPage,
     catAndSubCatPageData,
   } = props;
+
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
 
@@ -283,6 +286,7 @@ export const HomePage = (props: any) => {
   );
 
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isCategoryPage = !!primarySubCategoryId;
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -401,7 +405,8 @@ export const HomePage = (props: any) => {
         logoUrl={logoUrl}
         logoAltText={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        isNewLTTLandingPageVisible={showLttTreatment}
+        isCategoryPage={isCategoryPage}
+        isNewLTTLandingPageVisible={showLttTreatment || isCategoryPage}
         primaryCity={primaryCity}
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
@@ -474,6 +479,7 @@ export const HomePage = (props: any) => {
           heroProps.banners.length &&
           !isListicle &&
           !showLttTreatment &&
+          !isCategoryPage &&
           !isCatOrSubCatPage
         }
       >
@@ -486,7 +492,18 @@ export const HomePage = (props: any) => {
           uid={uid}
         />
       </Conditional>
-
+      <Conditional if={isCategoryPage}>
+        <CategoryPage
+          allTours={allTours}
+          heroProps={heroProps}
+          isMobile={isMobile}
+          breadcrumbs={breadcrumbs}
+          categoryProps={categoryProps}
+          categoryTourListData={categoryTourListData}
+          primarySubCategoryId={primarySubCategoryId}
+          browseByCategoriesRef={browseByCategorySectionRef}
+        />
+      </Conditional>
       <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>
@@ -522,7 +539,6 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-
       <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -535,7 +551,12 @@ export const HomePage = (props: any) => {
         </ProductsContextProvider>
       </Conditional>
       <Conditional
-        if={hasToursSection && !showLttTreatment && !isCatOrSubCatPage}
+        if={
+          hasToursSection &&
+          !showLttTreatment &&
+          !isCatOrSubCatPage &&
+          !isCategoryPage
+        }
       >
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
@@ -562,8 +583,9 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
         />
       </Conditional>
-
-      <Conditional if={automatedBreadcrumbsExists && !isCatOrSubCatPage}>
+      <Conditional
+        if={automatedBreadcrumbsExists && !isCatOrSubCatPage && !isCategoryPage}
+      >
         <LazyComponent>
           <Breadcrumbs
             breadcrumbs={breadcrumbs}
@@ -574,7 +596,6 @@ export const HomePage = (props: any) => {
           />
         </LazyComponent>
       </Conditional>
-
       <Conditional if={isCatOrSubCatPage}>
         <CatAndSubCatPage
           catAndSubCatPageData={catAndSubCatPageData}
@@ -583,7 +604,6 @@ export const HomePage = (props: any) => {
           isMobile={isMobile}
         />
       </Conditional>
-
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           <Conditional if={longFormContent && longFormSlices?.length}>
@@ -599,6 +619,7 @@ export const HomePage = (props: any) => {
                 uid,
                 isEntertainmentMb,
                 automatedBreadcrumbsExists,
+                isCategoryPage,
                 isRevampedDesign: isCatOrSubCatPage,
               }}
               hasToursSection={hasToursSection}
@@ -613,7 +634,6 @@ export const HomePage = (props: any) => {
           </StyledReviewSectionWrapper>
         </LazyComponent>
       </Conditional>
-
       <Conditional
         if={isEntertainmentMb && !showLttTreatment && !isCatOrSubCatPage}
       >
@@ -623,7 +643,6 @@ export const HomePage = (props: any) => {
           </LazyComponent>
         </div>
       </Conditional>
-
       <Conditional if={isCatOrSubCatPage}>
         <LazyComponent>
           <Mailer
@@ -638,7 +657,6 @@ export const HomePage = (props: any) => {
           />
         </LazyComponent>
       </Conditional>
-
       <LazyComponent>
         <Footer
           currentLanguage={currentLanguage}

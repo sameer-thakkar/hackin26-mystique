@@ -819,5 +819,6 @@ const nl = {
     TOUR_TIMINGS: 'Tijden',
     TOUR_FREQUENCY: 'Frequentie',
   },
+  TOP: 'Top-{0}',
 };
 export default nl;

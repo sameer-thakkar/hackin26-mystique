@@ -58,6 +58,7 @@ interface IStyledHeader {
   headerHover?: boolean;
   showLttColoredHeader: boolean;
   isTop?: boolean;
+  isCategoryPage?: boolean;
   isNewLTTLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
@@ -116,9 +117,9 @@ export const StyledHeader = styled.div<IStyledHeader>`
       top: 0;
       display: block;
       background-color: #150029;
-      height: 472px;
+      height: 380px;
       @media (max-width: 789px) {
-        height:300px;
+        height:250px;
       }
     }`}
 
@@ -147,8 +148,14 @@ export const StyledHeader = styled.div<IStyledHeader>`
         isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
-      background: ${({ showLttColoredHeader }) =>
-        showLttColoredHeader ? '#150029' : '#fff'};
+      background: ${({ showLttColoredHeader, isCategoryPage }) => {
+        switch (true) {
+          case showLttColoredHeader:
+            return isCategoryPage ? '#1A0232' : '#150029';
+          default:
+            return '#fff';
+        }
+      }};
     }
     .fixed-wrap {
       position: fixed;
@@ -166,6 +173,12 @@ export const StyledHeader = styled.div<IStyledHeader>`
     .header-links {
       display: none;
     }
+
+    ${({ showLttColoredHeader, isCategoryPage }) =>
+      showLttColoredHeader &&
+      `.fixed-offset::before {
+      background-color:${isCategoryPage ? '#1A0232' : '#150029'};
+    }`}
   }
 `;
 
@@ -202,23 +215,22 @@ const HeaderRight = styled.div<{
       primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   .mobi-search-trigger {
-    height: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
-    width: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
-    padding: ${({ isLtt }) => (isLtt ? '8px' : '0')};
+    height: 20px;
+    width: 20px;
+    padding: 6px;
 
     background-color: ${({ isDarkMode }) =>
       isDarkMode ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
     border-radius: ${({ isDarkMode }) => (isDarkMode ? `50%` : 0)};
 
     svg {
-      height: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
-      width: ${({ isLtt }) => (isLtt ? '16px' : '20px')};
+      height: 20px;
+      width: 20px;
       stroke-width: ${({ isLtt }) => (isLtt ? '1.2px' : '0.8px')};
       ${({ isDarkMode, isLtt }) =>
         isLtt &&
         `
         position: relative;
-        top:-2px;
         path {
           stroke: ${isDarkMode ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
         }
@@ -401,6 +413,7 @@ interface HeaderProps {
   isGlobalMb?: boolean;
   buyTicketsLink?: string;
   isEntertainmentMb?: boolean;
+  isCategoryPage?: boolean;
   isEntertainmentMbListicle?: boolean;
   hideCurrencySelector?: boolean;
   primaryCity?: string;
@@ -428,6 +441,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   hasLanguageSelector,
   changePage,
   isGlobalMb = false,
+  isCategoryPage,
   buyTicketsLink = '',
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
@@ -567,6 +581,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       headerHover={headerHover}
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
+      isCategoryPage={isCategoryPage}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
       showLttColoredHeader={showLttColoredHeader}
       isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
@@ -693,7 +708,10 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
             <Conditional
               if={
-                (!isMobile || isNewLTTLandingPageVisible || isNewsPage) &&
+                (!isMobile ||
+                  isNewLTTLandingPageVisible ||
+                  isNewsPage ||
+                  isCategoryPage) &&
                 (headerLanguages?.length || headerCurrencies?.length)
               }
             >

@@ -449,6 +449,7 @@ interface fetchTourGroupsByCategoryProps extends CommonApiProps {
   isSubCategory: boolean;
   city?: string;
   limit?: string;
+  primarySubCategoryID?: string;
 }
 
 export const fetchProductData = async ({
@@ -530,6 +531,7 @@ export const fetchTourGroupsByCategory = async ({
   fallbackToEnglish = false,
   currency,
   cookies,
+  primarySubCategoryID,
 }: fetchTourGroupsByCategoryProps) => {
   const params = {
     language,
@@ -541,6 +543,9 @@ export const fetchTourGroupsByCategory = async ({
       language !== 'en' && {
         'fallback-to-english': '0',
       }),
+    ...(primarySubCategoryID && {
+      'filter-by-subcategory-id': primarySubCategoryID,
+    }),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
@@ -566,6 +571,7 @@ interface FetchCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
   useSeatmapPrices?: string;
+  primarySubCategoryID?: string;
 }
 export const fetchCollection = async ({
   collectionId,
@@ -576,6 +582,7 @@ export const fetchCollection = async ({
   currency,
   useSeatmapPrices = '1',
   cookies = {},
+  primarySubCategoryID,
 }: FetchCollectionProps) => {
   const params = {
     language,
@@ -586,6 +593,9 @@ export const fetchCollection = async ({
       currency,
     }),
     ...(useSeatmapPrices && { 'use-seatmap-prices': useSeatmapPrices }),
+    ...(primarySubCategoryID && {
+      'filter-by-subcategory-id': primarySubCategoryID,
+    }),
   };
   const finalUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CollectionSections,
@@ -593,6 +603,7 @@ export const fetchCollection = async ({
     params,
     id: collectionId,
   });
+
   const headers = constructHeaders({ cookies });
   try {
     const response = await fetch(finalUrl, {

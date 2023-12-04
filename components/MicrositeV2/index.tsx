@@ -183,6 +183,7 @@ class MicrositeV2 extends Component<any, any> {
       baseLangBannerAndFooterCombinations,
       baseLangCategorisationMetadata,
     } = CMSData || {};
+
     const {
       tagged_city: taggedCity,
       tagged_category: taggedCategoryName,
@@ -247,7 +248,8 @@ class MicrositeV2 extends Component<any, any> {
       : false;
     let tourListCategorySortBy,
       tourListCategories,
-      tourListCategoryAllTours = {};
+      tourListCategoryAllTours = {},
+      primarySubCategoryId;
 
     // Category Tour List carousel
     if (hasCategoryTourList) {
@@ -255,6 +257,8 @@ class MicrositeV2 extends Component<any, any> {
         (body: any) => body.slice_type === 'tour_list_category'
       )?.reduce((acc: any, curr: any) => acc + curr);
       tourListCategorySortBy = tourListSlice?.primary?.disable_sort_selector;
+      primarySubCategoryId = tourListSlice?.primary?.primary_subcategory_id;
+
       tourListCategories = tourListSlice?.items?.map((item: any) => {
         const {
           collection,
@@ -275,7 +279,6 @@ class MicrositeV2 extends Component<any, any> {
           categoryTourListData[collection] ||
           categoryTourListData[category] ||
           categoryTourListData[sub_category];
-
         const filteredData = tgidData?.filter((product: any) => {
           const { tgid, primaryCategory, primarySubCategory, price } =
             product || {};
@@ -505,9 +508,11 @@ class MicrositeV2 extends Component<any, any> {
       contentFramework: contentFramework?.data,
       alertPopup: CMSContent?.data?.alert_popup,
       showCovid19Alert: CMSContent?.data.show_covid19_alert,
+      entertainmentPageType: CMSContent?.data?.entertainment_page_type,
       domainConfig,
       mbDesign: CMSContent?.data?.design,
       mbType: CMSContent?.data?.tagged_mb_type,
+      primarySubCategoryId,
       primaryCity,
       taggedCity,
       taggedCategoryName,

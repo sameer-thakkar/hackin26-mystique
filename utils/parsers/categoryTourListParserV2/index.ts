@@ -5,10 +5,12 @@ import {
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
 import { fetchMediaResource, fetchTourListV6 } from 'utils/apiUtils';
+import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getHostName, normaliseURL } from 'utils/helper';
 import {
   generatePromiseForCategoryTours,
   getHeadoutLanguagecode,
+  getPrimarySubCategoryIdData,
 } from 'utils/index';
 import { sendLog } from 'utils/logger';
 import {
@@ -33,13 +35,16 @@ export default async function categoryTourListParserV2({
   localizedStrings,
   cookies,
   MBDesign = '',
+  taggedCollection,
 }: TCategoryTourListParserV2) {
   let categoryIds = new Set();
   let subCategoryIds = new Set();
   let collectionIds = new Set();
 
   const { primary, items: slices } = tourListCategory || {};
+
   const city = primary?.city?.cityCode;
+  const primarySubCategoryID = primary?.primary_subcategory_id;
 
   collectionIds = slices.reduce(
     (
@@ -51,6 +56,7 @@ export default async function categoryTourListParserV2({
     },
     new Set()
   );
+
   subCategoryIds = slices.reduce(
     (
       accumulator: { add: (arg: number) => void },
@@ -99,6 +105,7 @@ export default async function categoryTourListParserV2({
     isCollection: true,
     lang,
     cookies,
+    primarySubCategoryID,
   });
 
   let categoryPromises = generatePromiseForCategoryTours({
@@ -111,16 +118,19 @@ export default async function categoryTourListParserV2({
   });
 
   let subCategoryPromises = generatePromiseForCategoryTours({
-    arr: Array.from(subCategoryIds),
+    arr: [...Array.from(subCategoryIds), primarySubCategoryID ?? []],
     hostname,
     city,
     isSubCategory: true,
     lang,
     cookies,
+    primarySubCategoryID,
   });
+
   let collectionData = Promise.all(collectionPromises);
   let categoryData = Promise.all(categoryPromises);
   let subCategoryData = Promise.all(subCategoryPromises);
+
   await Promise.all([collectionData, categoryData, subCategoryData]).then(
     (response) => {
       try {
@@ -148,7 +158,7 @@ export default async function categoryTourListParserV2({
             );
             return {
               collection,
-              items: filterTgids,
+              items: getUniqueArrayItemsBy(filterTgids, ['id']),
             };
           });
           if (updatedCollectionData?.length) {
@@ -186,6 +196,7 @@ export default async function categoryTourListParserV2({
       }
     }
   );
+
   const allData = categoriesWithProducts?.flat();
   let currencyObject;
   if (allData?.length) {
@@ -208,7 +219,10 @@ export default async function categoryTourListParserV2({
     });
 
     let verticalImagesDataMap = new Map<string, any>();
-    if (collectionIds.has(LTD_COLLECTION_ID)) {
+    if (
+      collectionIds.has(LTD_COLLECTION_ID) ||
+      (!!primarySubCategoryID && taggedCollection == LTD_COLLECTION_ID)
+    ) {
       const mediaData = await fetchMediaResource({
         language: getHeadoutLanguagecode(lang),
         resourceType: 'MB_EXPERIENCE',
@@ -417,6 +431,10 @@ export default async function categoryTourListParserV2({
           multiVariant,
           urlSlugs: getEncodedUrlSlugs(urlSlugs),
           verticalImage,
+          primarySubCategoryIdData: {
+            ...(getPrimarySubCategoryIdData(primarySubCategoryID, allData) ||
+              {}),
+          },
         };
       });
     });

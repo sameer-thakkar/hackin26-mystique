@@ -853,6 +853,7 @@ const de = {
   PC_EXP: {
     SHOW_INCL: 'Inklusivleistungen und wichtige Infos',
   },
+  TOP: 'Top-{0}',
 };
 
 export default de;

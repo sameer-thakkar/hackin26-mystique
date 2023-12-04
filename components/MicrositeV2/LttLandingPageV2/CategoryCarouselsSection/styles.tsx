@@ -3,7 +3,10 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const CategoriesSectionWrapper = styled.div`
+export const CategoriesSectionWrapper = styled.div<{
+  $isCategoryPage: boolean;
+}>`
+  margin-top: ${({ $isCategoryPage }) => ($isCategoryPage ? '4rem' : '0')};
   padding: 0;
   > * {
     &:last-child {

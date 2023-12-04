@@ -7,6 +7,7 @@ export type TCategoryTourListParserV2 = {
   localizedStrings: any;
   cookies?: { [key: string]: string };
   MBDesign?: string;
+  taggedCollection: number;
 };
 
 export interface ISet<T> {

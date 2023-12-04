@@ -184,9 +184,10 @@ const CategoryCarouselsSection = ({
   categoriesToRender,
   allTours,
   isMobile,
+  isCategoryPage = false,
 }: TCategoryCarouselsSection) => {
   return (
-    <CategoriesSectionWrapper>
+    <CategoriesSectionWrapper $isCategoryPage={isCategoryPage}>
       {categoriesToRender.map((category, categoryNumber) => {
         if (category.ranking.popularity.length === 0) return null;
         return (

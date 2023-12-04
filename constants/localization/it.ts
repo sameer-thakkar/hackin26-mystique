@@ -873,5 +873,6 @@ const it = {
   PC_EXP: {
     SHOW_INCL: 'Inclusioni e informazioni importanti',
   },
+  TOP: 'Il meglio di: {0}',
 };
 export default it;
