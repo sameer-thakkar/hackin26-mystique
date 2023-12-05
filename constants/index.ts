@@ -1743,6 +1743,42 @@ export const BANNER_DESCRIPTORS = {
 
   LUGGAGE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/luggage.svg',
+  BEVERAGE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-beverage.svg',
+  HELICOPTER:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-helicopter.svg',
+  HOURGLASS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-hourglass.svg',
+  LANDMARKS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-landmarks.svg',
+  LOTUS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-lotuus.svg',
+  LUXURY:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-luxury.svg',
+  MAP_PIN:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-map-pin.svg',
+  PAINT:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-paint.svg',
+  PAN:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-pan.svg',
+  PANAROMA:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-panaroma.svg',
+  CHARGING:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-charging.svg',
+  PUBLIC_TRANSPORT:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-public-transport.svg',
+  SEARCH:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-search.svg',
+  SKYDIVING:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-skydiving.svg',
+  SNORKELLING:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-snorkelling.svg',
+  SPEED_BOAT:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-speed-boat.svg',
+  TRANSFERS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-transfers.svg',
+  ADVENTURE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-adventure.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [

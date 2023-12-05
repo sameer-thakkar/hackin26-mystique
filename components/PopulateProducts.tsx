@@ -111,15 +111,6 @@ ${({ isTicketCard, isMobile }) =>
   }
 `;
 
-const StyledTourListSubHeading = styled.div`
-  margin-top: 8px;
-  ${expandFontToken('Paragraph/Large')}
-  color: ${COLORS.GRAY.G2};
-  @media (max-width: 768px) {
-    ${expandFontToken('Paragraph/Medium')}
-  }
-`;
-
 const ProductWrapper = styled.div`
   flex: 0 49%;
 `;
@@ -151,7 +142,6 @@ const PopulateProducts = (props: any) => {
     enableEarliestAvailability,
     isTicketCard = false,
     sectionTitle = '',
-    sectionSubtext = '',
     pageType = '',
     bannerVideo,
     isCollectionMB = false,
@@ -162,7 +152,6 @@ const PopulateProducts = (props: any) => {
     showSkeleton = false,
   } = props;
 
-  const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
   productsRef.current = [];
   const productsWrapperRef = useRef(null);
@@ -517,17 +506,6 @@ const PopulateProducts = (props: any) => {
             >
               {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
             </h2>
-          </Conditional>
-          <Conditional
-            if={
-              !isDubaiSafariPark &&
-              availableToursList?.length > 1 &&
-              (sectionSubtext || strings.TOUR_LIST_SUB_HEADING)
-            }
-          >
-            <StyledTourListSubHeading>
-              {isTicketCard ? sectionSubtext : strings.TOUR_LIST_SUB_HEADING}
-            </StyledTourListSubHeading>
           </Conditional>
         </div>
       </Conditional>

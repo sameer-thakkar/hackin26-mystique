@@ -542,6 +542,7 @@ const MicrositeV1 = (props: any) => {
   //Subcategory/category MBs will always be non-POI irrespective of the config on Prismic
   const isNonPoiMB =
     isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
+  const isNonPoiCollectionMB = isNonPoiMB && isCollectionMicrobrand;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
@@ -780,8 +781,10 @@ const MicrositeV1 = (props: any) => {
             }
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
             isNonPoiMB={isNonPoiMB}
+            isNonPoiCollectionMB={isNonPoiCollectionMB}
             bannerDescriptors={bannerDescriptors}
-            isHOHO={showHohoRevamp}
+            isHOHORevamp={showHohoRevamp}
+            isHOHO={isHOHO}
             cityName={primaryCity?.displayName}
             city={isAirportTransfersMB ? productCardData?.city?.city : null}
           />

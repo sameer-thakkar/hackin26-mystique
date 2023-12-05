@@ -14,17 +14,7 @@ export const BannerSection = styled.div<{
 }>`
   margin: 0;
   position: relative;
-  .overlay {
-    position: absolute;
-    height: 5.125rem;
-    inset: 8.75rem 0 0;
-    z-index: 1;
-    background: linear-gradient(
-      180deg,
-      rgba(247, 236, 255, 0) 1.39%,
-      #fbf4ff 85.29%
-    );
-  }
+
   ${({ $isNonPoi }) =>
     $isNonPoi &&
     `background: linear-gradient(183deg, #fff 2.24%, #f6ebff 97.71%);`}
@@ -40,6 +30,19 @@ export const BannerSection = styled.div<{
        padding: 2rem 0;
       `}
   }
+`;
+
+export const Overlay = styled.div<{ $hideBanner?: boolean }>`
+  position: absolute;
+  height: 5.125rem;
+  inset: 8.75rem 0 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 236, 255, 0) 1.39%,
+    #fbf4ff 85.29%
+  );
+  ${({ $hideBanner }) => $hideBanner && `display: none;`}
 `;
 
 export const Container = styled.div`
@@ -73,6 +76,7 @@ export const ContentContainer = styled.div`
 
 export const MediaContainer = styled.div<{
   $isNonPoi?: boolean;
+  $hideBanner?: boolean;
 }>`
   position: relative;
   border-radius: 1rem;
@@ -80,6 +84,7 @@ export const MediaContainer = styled.div<{
   height: 18.75rem;
   ${({ $isNonPoi }) =>
     !$isNonPoi && `box-shadow: 0px 12px 40px 12px rgba(0, 0, 0, 0.2);`}
+  ${({ $hideBanner }) => $hideBanner && `display: none;`}
 
   .banner-image {
     display: block;

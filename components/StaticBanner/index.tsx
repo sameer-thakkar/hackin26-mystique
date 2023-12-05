@@ -15,6 +15,7 @@ import {
   Divider,
   Heading,
   MediaContainer,
+  Overlay,
   RatingCountWrapper,
   RatingsWrapper,
 } from 'components/StaticBanner/styles';
@@ -40,20 +41,22 @@ const Swiper = dynamic(() =>
 type StaticBannerProps = {
   bannerHeading: string;
   bannerImages: Array<{ url: string; alt: string }>;
-  collectionDetails: CollectionDetails;
+  collectionDetails?: CollectionDetails;
   bannerVideo?: string | null;
   bannerSubText: string | undefined;
   isMobile: boolean;
   shouldDisplayTrustBoosters?: boolean;
   isNonPoiMB?: boolean;
+  isNonPoiCollectionMB?: boolean;
   bannerDescriptors: Array<{ icon: string; text: string }>;
   cityName?: string;
   isHOHO?: boolean;
+  isHOHORevamp?: boolean;
   ratingsAndReviewsData?: {
     averageRating: number;
     ratingsCount: number;
   };
-  city: string | null;
+  city?: string | null;
 };
 
 type CollectionVideo = {
@@ -109,9 +112,11 @@ const StaticBanner = ({
   bannerSubText,
   shouldDisplayTrustBoosters,
   isNonPoiMB = false,
+  isNonPoiCollectionMB = false,
   bannerDescriptors,
   cityName,
   isHOHO,
+  isHOHORevamp,
   ratingsAndReviewsData,
   city,
 }: StaticBannerProps) => {
@@ -119,16 +124,17 @@ const StaticBanner = ({
 
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
   const bannerHeading =
-    isHOHO && cityName
+    isHOHORevamp && cityName
       ? `<span class='bold-city'>${cityName}</span><br/>${strings.HOHO.HOHO}`
       : bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0];
+  const hideBanner = !isHOHO && isNonPoiCollectionMB && !bannerVideo;
 
-  const finalCollectionDetails = isHOHO
+  const finalCollectionDetails = isHOHORevamp
     ? { averageRating: 4.3, ratingsCount: 5193 }
     : collectionDetails;
 
-  let { averageRating, ratingsCount } = finalCollectionDetails ?? {};
+  let { averageRating = 0, ratingsCount = 0 } = finalCollectionDetails ?? {};
   const { WIDTH, HEIGHT } = isMobile
     ? BANNER_DIMENSIONS.MOBILE
     : BANNER_DIMENSIONS.DESKTOP;
@@ -156,7 +162,7 @@ const StaticBanner = ({
   }, [eventsReady, isMobile]);
 
   const onRatingsClick = () => {
-    if (!isHOHO) return;
+    if (!isHOHORevamp) return;
     const section = document.querySelector('.slice-block.reviews');
     section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -167,11 +173,10 @@ const StaticBanner = ({
     speed: 5000,
     autoplay: {
       delay: 1,
-      disableOnInteraction: true,
+      disableOnInteraction: false,
     },
     loop: true,
     slidesPerView: 'auto',
-    allowTouchMove: false,
   };
   const getBannerDescriptors = () => {
     return bannerDescriptors?.map((item: Record<string, any>) => {
@@ -193,8 +198,8 @@ const StaticBanner = ({
   return (
     <BannerSection $isNonPoi={showNonPoiDesign}>
       <Conditional if={isMobile && showNonPoiDesign}>
-        <div className="overlay" />
-        <MediaContainer $isNonPoi={showNonPoiDesign}>
+        <Overlay $hideBanner={hideBanner} />
+        <MediaContainer $isNonPoi={showNonPoiDesign} $hideBanner={hideBanner}>
           <Conditional if={!bannerVideo}>
             <Image
               url={bannerImage.url}
@@ -249,7 +254,7 @@ const StaticBanner = ({
               $isNonPoi={showNonPoiDesign}
               $showTrustBooster={shouldDisplayTrustBoosters}
               onClick={onRatingsClick}
-              $showPointer={isHOHO}
+              $showPointer={isHOHORevamp}
             >
               {STAR(showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1)}
               <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>

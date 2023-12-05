@@ -15,12 +15,18 @@ import LazyComponent from 'components/common/LazyComponent';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
 import { CategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/style';
 import sliceHandler from 'components/Slices';
+import StaticBanner from 'components/StaticBanner';
 import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
 import { MBContext } from 'contexts/MBContext';
 import { ProductsContextProvider } from 'contexts/Products';
 import useABTesting from 'hooks/useABTesting';
-import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
+import {
+  getBannerAndFooterSubtext,
+  isCategoryMB,
+  isCollectionMB,
+  isSubCategoryMB,
+} from 'utils';
 import {
   getCommonEventMetaData,
   sendVariablesToDataLayer,
@@ -29,6 +35,7 @@ import {
 import {
   checkIfCategoryHeaderExists,
   checkIfLTTMBLandingPage,
+  getBannerDescriptors,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
@@ -45,6 +52,7 @@ import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  DESIGN,
   EMAIL_SUBCRIPTION,
   THEMES,
 } from 'const/index';
@@ -286,6 +294,21 @@ export const HomePage = (props: any) => {
   );
 
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isCategoryMicrobrand = isCategoryMB(mbType);
+  const isSubCategoryMicrobrand = isSubCategoryMB(mbType);
+
+  const firstTab = Object.values(categoryTourListData)?.[0] as Array<
+    Record<string, any>
+  >;
+  const firstProduct = firstTab?.[0];
+
+  const { primarySubCategory: firstProductSubCategory } = firstProduct || {};
+  const bannerDescriptors = getBannerDescriptors({
+    taggedMbType,
+    taggedCategoryName,
+    taggedSubCategoryName,
+    firstProductSubCategory,
+  });
   const isCategoryPage = !!primarySubCategoryId;
 
   if (isListicle || isDiscountedPage) {
@@ -351,6 +374,9 @@ export const HomePage = (props: any) => {
     mbType,
   });
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
+  //Subcategory/category MBs will always be non-POI irrespective of the config on Prismic
+  const isNonPoiMB =
+    isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
 
   useEffect(() => {
     if (eventsReady) {
@@ -476,11 +502,31 @@ export const HomePage = (props: any) => {
       <Conditional
         if={
           mbTheme === THEMES.DEFAULT &&
+          !isListicle &&
+          !showLttTreatment &&
+          !isCatOrSubCatPage &&
+          !isCategoryPage &&
+          mbDesign === DESIGN.V3
+        }
+      >
+        <StaticBanner
+          bannerImages={heroProps?.banners}
+          bannerHeading={heroProps?.banners?.[0].bannerHeading}
+          bannerSubText={bannerAndFooterSubtext}
+          isMobile={isMobile}
+          isNonPoiMB={isNonPoiMB}
+          bannerDescriptors={bannerDescriptors}
+        />
+      </Conditional>
+      <Conditional
+        if={
+          mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
           !isListicle &&
           !showLttTreatment &&
+          !isCatOrSubCatPage &&
           !isCategoryPage &&
-          !isCatOrSubCatPage
+          mbDesign !== DESIGN.V3
         }
       >
         <Banner
@@ -504,6 +550,7 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
         />
       </Conditional>
+
       <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>
