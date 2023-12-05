@@ -62,7 +62,7 @@ const de = {
     VIEW_TRAVEL_GUIDE: 'Reiseführer anzeigen',
     EXPLORE: '{0} entdecken',
     GUIDE_SUBHEADING:
-      'Noch nie war es so einfach, Sehenswürdigkeiten in {0} zu erkunden! In unserem Reiseführer finden Sie alles, was Sie über {0} wissen müssen – von kulinarischen Geheimtipps bis zu Unterkünften und Anreisemöglichkeiten zu beliebten Wahrzeichen.',
+      'Noch nie war es so einfach, {0} zu erkunden! In unserem Reiseführer finden Sie alles, was Sie über {0} wissen müssen – von kulinarischen Geheimtipps bis zu Unterkünften und Anreisemöglichkeiten zu beliebten Wahrzeichen.',
     GUIDE_ITEM_HEADINGS: {
       TRAVEL_GUIDE: 'Allgemeines',
       WHERE_TO_EAT: 'Kulinarisches',
@@ -81,7 +81,7 @@ const de = {
       HEADING:
         'Inspirationen für Ihre Reise nach {0} direkt zu Ihrem Posteingang',
       SUBHEADING:
-        'Die besten Erlebnisse, Spartipps, Restaurants, Hotels, Infos zum ÖPNV und zu kulturellen Highlights finden Sie hier!',
+        'Erkunden Sie neue Städte mit ausgewählten Erlebnissen, Cashback, exklusiven Deals und wertvollen Reisetipps!',
     },
   },
   CITY_GUIDE_DESCRIPTIONS: {
@@ -400,7 +400,7 @@ const de = {
   SAVE_UPTO: 'Spare',
   SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
   SEARCH: 'Suchen',
-  SEE_ALL: 'See All',
+  SEE_ALL: 'Alle ansehen',
   SEE_MORE_SHOWS: 'Weitere Shows anzeigen',
   SELECT_CITY: 'Stadt auswählen',
   SELECT_SECTION: 'Tribüne wählen',

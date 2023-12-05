@@ -71,10 +71,17 @@ export interface ICityTopAttractions extends ICommonProps {
 }
 
 //popular categories props
+export interface IPopCatCardClick {
+  rank: number;
+  name: string;
+  mbType: string;
+  url: string;
+}
 export interface IPopularEntity {
   uid: string;
   heading: string;
   medias: Media[];
+  prismicData: Record<string, any>;
 }
 export interface IPopularCategories extends ICommonProps {
   popularEntities: IPopularEntity[];
@@ -91,6 +98,7 @@ export interface ICarouselChild {
   name: string;
   categoryId?: number;
   cardMedia?: Record<string, any>;
+  computedRank: number;
 }
 export interface IExploreCarouselEntity {
   children: ICarouselChild[];
@@ -99,12 +107,19 @@ export interface IExploreCarouselEntity {
   cityPageRank: number;
 }
 
+export interface ctaItem {
+  uid: string;
+}
 export interface ICatSubCatSectionProps
   extends ICommonProps,
-    IExploreCarouselEntity {}
+    IExploreCarouselEntity {
+  ctaData: Record<string, ctaItem>;
+}
+
 export interface IExploreSectionData {
   categoriesData: Record<string, IExploreCarouselEntity>;
   subCategoriesData: Record<string, IExploreCarouselEntity>;
+  ctaData: Record<string, ctaItem>;
 }
 export interface IExploreCity extends ICommonProps {
   mbCityDisplayName: string;

@@ -5,7 +5,7 @@ import { Container } from 'components/CityPageContainer/styles';
 import VideoBanner from 'components/CityPageContainer/VideoBanner';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
-import { EMAIL_SUBCRIPTION } from 'const/index';
+import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 
 const TopAttractions = dynamic(() =>
@@ -128,7 +128,7 @@ const CityPageContainer = ({
           isMobile={isMobile}
           heading={strings.formatString(HEADING, mbCityDisplayName)}
           subHeading={SUBHEADING}
-          eventName={EMAIL_SUBCRIPTION.CITY_PAGE_EVENT}
+          eventName={ANALYTICS_EVENTS.SUBSCRIBED_SUCCESSFULLY}
           isCatOrSubCatPage={false}
         />
       </LazyComponent>

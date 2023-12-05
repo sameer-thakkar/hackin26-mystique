@@ -14,15 +14,9 @@ import Conditional from 'components/common/Conditional';
 import Image from 'components/UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { registerEmailSubscription } from 'utils/apiUtils';
 import { validateEmail } from 'utils/helper';
 import { SECTION_NAMES } from 'const/cityPage';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  CTA_TYPE,
-  EMAIL_SUBCRIPTION,
-} from 'const/index';
+import { ANALYTICS_PROPERTIES, CTA_TYPE, EMAIL_SUBCRIPTION } from 'const/index';
 import { strings } from 'const/strings';
 import { GREEN_CHECK } from 'assets/SvgIcons';
 
@@ -59,14 +53,12 @@ const SubscriptionForm = ({
     }
     setIsErr(false);
     trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      eventName,
       [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.SIGN_UP,
       [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAMES.MAILER,
+      [ANALYTICS_PROPERTIES.USER_EMAIL]: userEmail,
     });
-
-    registerEmailSubscription({ userEmail, eventName }).then((res) => {
-      if (res.status === 'success') setIsSubscribed(true);
-    });
+    setIsSubscribed(true);
   };
 
   return (

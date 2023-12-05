@@ -507,6 +507,7 @@ export const ANALYTICS_EVENTS = {
   SEE_ALL_CLICKED: 'See All Clicked',
   PAGE_SECTION_VIEWED: 'Page Section Viewed',
   BREADCRUMBS_CLICKED: 'Navigation Breadcrumbs Clicked',
+  SUBSCRIBED_SUCCESSFULLY: 'Subscribed Successfully',
   CAT_SUBCAT_PAGE: {
     COLLECTION_CARD_CTA_CLICKED: 'Collection Card CTA Clicked',
     CATEGORY_CARD_CLICKED: 'Category Card Clicked',
@@ -521,6 +522,7 @@ export const ANALYTICS_EVENTS = {
     NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
     TRAILER_VIEWED: 'Trailer Viewed',
   },
+  MB_CARD_CLICKED: 'MB Card Clicked',
   FREE_CANCELLATION_TOOLTIP_VIEWED: 'Free Cancellation Tooltip Viewed',
   REVIEWS_SECTION_VIEWED: 'Reviews Section Viewed',
   HOHO: {
@@ -945,6 +947,8 @@ export const ANALYTICS_PROPERTIES = {
   LABEL: 'Label',
   SORTING_ORDER: 'Sorting Order',
   IS_SHOW_PLAYING: 'Is Show Playing',
+  USER_EMAIL: 'User Email',
+  CARD_MB_TYPE: 'Card MB Type',
   TITLE: 'Title',
   SELECTED_DATE: 'Selected Date',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',

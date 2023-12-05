@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
@@ -9,10 +10,6 @@ export const ExploreContainer = styled.div`
   .explore-title {
     margin-bottom: 2rem;
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
-  }
-  .entity-header {
-    ${expandFontToken(FONTS.DISPLAY_SMALL)};
-    margin-bottom: -1rem;
   }
   .entity-name {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
@@ -43,10 +40,6 @@ export const ExploreContainer = styled.div`
       margin: 0 0 1.5rem;
       ${expandFontToken(FONTS.HEADING_REGULAR)};
     }
-    .entity-header {
-      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
-      margin-bottom: 1rem;
-    }
     .entity-image-container {
       max-width: min-content;
       .entity-name {
@@ -64,5 +57,42 @@ export const ExploreContainer = styled.div`
 export const EntityContainer = styled.div`
   @media (max-width: 768px) {
     margin-top: 2rem;
+  }
+`;
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.875rem 0 -1rem;
+  .entity-header {
+    margin: 0;
+    ${expandFontToken(FONTS.DISPLAY_SMALL)};
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+    .entity-header {
+      margin: 0;
+      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+    }
+  }
+`;
+
+export const SeeAllWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  color: ${COLORS.GRAY.G2};
+  svg {
+    margin: 0.1rem 0 0 0.2rem;
+  }
+  ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+    svg {
+      margin: 0.15rem 1rem 0 0.2rem;
+      height: 0.75rem;
+      width: 0.75rem;
+    }
   }
 `;

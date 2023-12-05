@@ -4,8 +4,13 @@ import type { PrismicDocumentWithUID } from '@prismicio/types';
 import {
   getAlternateLanguageDocUid as getUidFromAltLangData,
   getHeadoutLanguagecode,
+  handleSettledPromiseResults,
 } from 'utils';
 import { fetchCategory, fetchCollectionList } from 'utils/apiUtils';
+import {
+  getCategoriesCTADocs,
+  getSubCatCTADocs,
+} from 'utils/cityPageUtils/categoriesCTA';
 import {
   ICategoryApiData,
   ICategoryEntity,
@@ -106,9 +111,15 @@ const getPopularCategoriesData = async ({
         results.forEach((item: PrismicDocumentWithUID) => {
           const uid = getUid({ doc: item, lang });
           if (uid && shouldIncludeDoc(item)) {
-            const categoryName = item.data.tagged_category;
+            const { tagged_category: categoryName, tagged_mb_type } = item.data;
             const categoryHOData = categoryNamesMap.get(categoryName);
-            categoriesFinalData.push({ uid, ...categoryHOData });
+            categoriesFinalData.push({
+              uid,
+              ...categoryHOData,
+              prismicData: {
+                tagged_mb_type,
+              },
+            });
           }
         });
       }
@@ -190,14 +201,23 @@ const getPopularSubCategoriesData = async ({
         results.forEach((item: PrismicDocumentWithUID) => {
           const uid = getUid({ doc: item, lang });
           if (uid && shouldIncludeDoc(item)) {
-            const subCategoryName = item.data.tagged_sub_category;
+            const {
+              tagged_sub_category: subCategoryName,
+              tagged_mb_type,
+            } = item.data;
             const subCategoryHOData = starredSubCategoryNamesMap.get(
               subCategoryName
             );
             if (subCategoryHOData) {
               // remove current subcategory data from current map to remove duplicates
               starredSubCategoryNamesMap.set(subCategoryName, undefined);
-              subCategoriesFinalData.push({ uid, ...subCategoryHOData });
+              subCategoriesFinalData.push({
+                uid,
+                ...subCategoryHOData,
+                prismicData: {
+                  tagged_mb_type,
+                },
+              });
             }
           }
         });
@@ -365,10 +385,12 @@ const getExploreSectionSubCategoriesData = async ({
 
     const collectionMap = new Map();
 
-    collectionDetails.forEach((collection: Record<string, any>) => {
-      const { id } = collection;
-      collectionMap.set(id, collection);
-    });
+    collectionDetails.forEach(
+      (collection: Record<string, any>, index: number) => {
+        const { id } = collection;
+        collectionMap.set(id, { ...collection, computedRank: index + 1 });
+      }
+    );
 
     results.forEach((item: PrismicDocumentWithUID) => {
       const uid = getUid({ doc: item, lang });
@@ -437,28 +459,56 @@ const getExploreSectionData = async ({
     }
   });
 
-  let categoriesData = {};
+  let categoriesDataPromise, categoriesCTAPromise;
   if (selectedCatNamesArr.length) {
-    categoriesData = await getExploreSectionCategoriesData({
+    categoriesDataPromise = getExploreSectionCategoriesData({
       selectedCatNamesArr,
       selectedCatNamesMap,
       mbCity,
       lang,
       subCategoriesMap,
     });
+    categoriesCTAPromise = getCategoriesCTADocs({
+      mbCity,
+      lang,
+      selectedCatNamesArr,
+    });
   }
 
-  let subCategoriesData = {};
+  let subCategoriesDataPromise, subcatCTAPromise;
   if (selectedSubcatNamesArr.length) {
-    subCategoriesData = await getExploreSectionSubCategoriesData({
+    subCategoriesDataPromise = getExploreSectionSubCategoriesData({
       selectedSubcatNamesArr,
       selectedSubcatNamesMap,
       mbCity,
       lang,
       cookies,
     });
+    subcatCTAPromise = getSubCatCTADocs({
+      mbCity,
+      lang,
+      selectedSubcatNamesArr,
+    });
   }
-  return { categoriesData, subCategoriesData };
+  const allResults = await Promise.allSettled([
+    categoriesDataPromise,
+    categoriesCTAPromise,
+    subCategoriesDataPromise,
+    subcatCTAPromise,
+  ]);
+
+  const [
+    categoriesData,
+    categoriesCTA,
+    subCategoriesData,
+    subcatCTA,
+  ] = handleSettledPromiseResults(allResults);
+
+  return {
+    categoriesData,
+    subCategoriesData,
+    ctaData: { ...categoriesCTA, ...subcatCTA },
+  };
 };
 
 export const getCategoriesData = async ({

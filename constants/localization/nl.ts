@@ -63,7 +63,7 @@ const nl = {
     VIEW_TRAVEL_GUIDE: 'Reisgids bekijken',
     EXPLORE: 'Ontdek {0}',
     GUIDE_SUBHEADING:
-      'Bezienswaardigheden in {0} ontdekken is nu makkelijker dan ooit! Onze {0} reisgids bevat alles wat je moet weten over de stad, van culinaire hotspots en accommodatie tot routebeschrijvingen naar populaire trekpleisters en meer!',
+      '{0} ontdekken was nog nooit zo makkelijk! Onze {0} reisgids omvat alles wat je moet weten over de stad – de hapjes die je moet proeven, bezienswaardigheden en hoe je ze bereikt, waar je kunt verblijven en nog veel meer!',
     GUIDE_ITEM_HEADINGS: {
       TRAVEL_GUIDE: 'Algemeen',
       WHERE_TO_EAT: 'Eten',
@@ -79,9 +79,9 @@ const nl = {
       ART_AND_CULTURE: 'Kunst en cultuur',
     },
     MAILER: {
-      HEADING: 'Inspiraties voor je reis naar {0} rechtstreeks in je inbox',
+      HEADING: 'Reisinspiratie voor {0} direct in je inbox',
       SUBHEADING:
-        'Topdingen om te doen, budgethacks, openbaar vervoer, beste restaurants & hotels, cultuur tips & veel meer!',
+        'Ontdek nieuwe steden met zorgvuldig samengestelde ervaringen, directe cashback, exclusieve deals en essentiële reistips!',
     },
   },
   CITY_GUIDE_DESCRIPTIONS: {
@@ -400,7 +400,7 @@ const nl = {
   SAVE_UPTO: 'Bespaar tot',
   SAVE_UPTO_PERCENT: 'Bespaar tot {0}%',
   SEARCH: 'Zoeken',
-  SEE_ALL: 'See All',
+  SEE_ALL: 'Toon alles',
   SEE_MORE_SHOWS: 'Zie meer shows',
   SELECT_CITY: 'Kies stad',
   SELECT_SECTION: 'Tribune kiezen',

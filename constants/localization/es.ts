@@ -64,7 +64,7 @@ const es = {
     VIEW_TRAVEL_GUIDE: 'Ver guía de viaje',
     EXPLORE: 'Explora {0}',
     GUIDE_SUBHEADING:
-      '¡Explorar las atracciones de {0} nunca ha sido tan fácil! Nuestra guía de viaje a {0} tiene todo lo que necesitas saber sobre la ciudad, desde qué comer, hasta dónde ir, cómo llegar, dónde alojarte y ¡mucho más!',
+      '¡Explorar {0} nunca ha sido tan fácil! Nuestra guía de viaje a {0} tiene todo lo que necesitas saber sobre la ciudad, desde qué comer y qué ver hasta cómo llegar, dónde alojarte y ¡mucho más!',
     GUIDE_ITEM_HEADINGS: {
       TRAVEL_GUIDE: 'Información general',
       WHERE_TO_EAT: 'Qué comer',
@@ -83,7 +83,7 @@ const es = {
       HEADING:
         'Inspiración para viajar a {0} directamente en tu bandeja de entrada',
       SUBHEADING:
-        'Las mejores cosas que hacer, consejor para gastar menor, transporte público, los mejores restaurantes y hoteles, recomendaciones culturales y mucho más.',
+        'Explora nuevas ciudades con experiencias seleccionadas, cashback al instante, ofertas exclusivas y consejos esenciales de viaje.',
     },
   },
   CITY_GUIDE_DESCRIPTIONS: {
@@ -454,7 +454,7 @@ const es = {
   SAVE_UPTO: 'Ahorra hasta un',
   SAVE_UPTO_PERCENT: 'Ahorra hasta un {0}%',
   SEARCH: 'Buscar',
-  SEE_ALL: 'See All',
+  SEE_ALL: 'Ver todo',
   SEE_MORE_SHOWS: 'Ver más espectáculos',
   SELECT_CITY: 'Selecciona una ciudad',
   SELECT_SECTION: 'Elegir sección',

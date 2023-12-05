@@ -55,6 +55,7 @@ const ExploreCity = ({
 }: IExploreCity) => {
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
+  const { ctaData } = exploreSectionData;
 
   useEffect(() => {
     if (isIntersecting) {
@@ -81,6 +82,7 @@ const ExploreCity = ({
           host={host}
           isDev={isDev}
           isMobile={isMobile}
+          ctaData={ctaData}
           {...catSubCatEntity}
         />
       ))}

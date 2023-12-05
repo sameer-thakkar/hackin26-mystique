@@ -58,13 +58,13 @@ const it = {
     TOP_ATTRACTIONS: 'Le attrazioni top',
     GO_BEYOND: 'Oltre {0}',
     ALL_DAY_TRIPS: 'Vedi tutte le gite di un giorno',
-    CITIES_NEARBY: 'Nelle vicinanze',
+    CITIES_NEARBY: ' Città vicine',
     POPULAR_CATEGORIES: 'Categorie popolari',
     GO_TO_GUIDE: 'Guida per andare a {0}',
     VIEW_TRAVEL_GUIDE: 'Vedi la guida di viaggio',
     EXPLORE: 'Scopri {0}',
     GUIDE_SUBHEADING:
-      "Scoprire le attrazioni di {0} non è mai stato così semplice! La nostra guida di viaggio per {0} contiene tutto quello che c'è da sapere sulla città, su cosa mangiare, dove andare, come arrivare, dove alloggiare e tanto altro!",
+      'Visitare {0} non è mai stato più facile! La nostra guida di viaggio per {0} contiene tutto ciò che devi sapere: cosa magiare, cosa vedere, come arrivare e molto altro ancora!',
     GUIDE_ITEM_HEADINGS: {
       TRAVEL_GUIDE: 'Informazioni generali',
       WHERE_TO_EAT: 'Cosa mangiare',
@@ -81,9 +81,9 @@ const it = {
     },
     MAILER: {
       HEADING:
-        'Le ispirazioni di viaggio per {0} direttamente sulla casella di posta elettronica',
+        'Consigli per un viaggio a {0}, direttamente nella tua casella di posta',
       SUBHEADING:
-        'Le migliori cose da fare, trucchi per il budget, trasporti pubblici, i migliori hotel e ristoranti, consigli culturali e tanto altro!',
+        'Scopri nuove città con esperienze selezionate, cashback istantaneo, offerte esclusive e consigli imperdibili!',
     },
   },
   CITY_GUIDE_DESCRIPTIONS: {
@@ -412,7 +412,7 @@ const it = {
   SAVE_UPTO: 'Risparmi fino al',
   SAVE_UPTO_PERCENT: 'Risparmia fino al {0}%',
   SEARCH: 'Cerca',
-  SEE_ALL: 'See All',
+  SEE_ALL: 'Vedi tutto',
   SEE_MORE_SHOWS: 'Guarda altri spettacoli',
   SELECT_CITY: 'Seleziona città',
   SELECT_SECTION: 'Seleziona tribuna',

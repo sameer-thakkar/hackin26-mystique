@@ -907,7 +907,7 @@ const MicrositeV1 = (props: any) => {
 
         <ProductsContextProvider allTours={allTours} ready={isReady}>
           <InteractionContextProvider>
-            <Conditional if={longFormContent && !isCityPageMB}>
+            <Conditional if={longFormContent}>
               <LongForm
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}

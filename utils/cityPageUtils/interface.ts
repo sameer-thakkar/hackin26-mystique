@@ -26,7 +26,9 @@ export interface IGetNearbyCities extends ICommonProps, Cookies {
   mbCountry: string;
 }
 
-export interface IGetCityListData extends Cookies {}
+export interface IGetCityListData extends Cookies {
+  mbCity: string;
+}
 
 export interface ICollectionItem {
   id: string;
@@ -91,5 +93,15 @@ export interface IGetExploreSectionCategoriesData extends ICommonProps {
   selectedCatNamesArr: string[];
   selectedCatNamesMap: Map<number, ICategoryEntity>;
   subCategoriesMap: Map<number, ISubCategoryEntity>;
+}
+export interface IGetCatCTA {
+  mbCity: string;
+  lang: string;
+  selectedCatNamesArr: string[];
+}
+export interface IGetSubCatCTA {
+  mbCity: string;
+  lang: string;
+  selectedSubcatNamesArr: string[];
 }
 // categories.ts end

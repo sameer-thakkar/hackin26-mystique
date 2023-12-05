@@ -6,7 +6,7 @@ import {
   getFinalisedBannerImages,
   handleSettledPromiseResults,
 } from 'utils';
-import { fetchCityList } from 'utils/apiUtils';
+import { fetchNearbyCityList } from 'utils/apiUtils';
 import {
   IGetCityListData,
   IGetLangBasedCitiesData,
@@ -41,8 +41,16 @@ const getLangBasedCitiesData = ({
   prismicDocs.forEach((currentDoc: PrismicDocumentWithUID) => {
     const { tagged_city, tagged_country, images } = currentDoc.data;
     const currentCityData = cityListData.get(tagged_city);
+    const { discoverable } = currentCityData || {};
+
     const uid = getUid({ doc: currentDoc, lang });
-    if (uid && tagged_city && shouldIncludeDoc(currentDoc) && currentCityData) {
+    if (
+      uid &&
+      tagged_city &&
+      shouldIncludeDoc(currentDoc) &&
+      currentCityData &&
+      discoverable
+    ) {
       const cityData = {
         uid,
         prismicData: {
@@ -55,15 +63,22 @@ const getLangBasedCitiesData = ({
       citiesPrismicData.push(cityData);
     }
   });
-  return citiesPrismicData;
+  return citiesPrismicData.sort(
+    (cityA: Record<string, any>, cityB: Record<string, any>) =>
+      cityA.cityHOData.computedRank - cityB.cityHOData.computedRank
+  );
 };
 
-const getCityListData = async ({ cookies }: IGetCityListData) => {
-  const cityListResult = await fetchCityList({ cookies, params: {} });
+const getCityListData = async ({ cookies, mbCity }: IGetCityListData) => {
+  const { cities } = await fetchNearbyCityList({
+    cookies,
+    params: {},
+    cityCode: mbCity,
+  });
   const cityDataMap = new Map();
-  cityListResult.forEach((city: Record<string, any>) => {
+  cities.forEach((city: Record<string, any>, index: number) => {
     const { cityCode } = city;
-    cityDataMap.set(cityCode, city);
+    cityDataMap.set(cityCode, { ...city, computedRank: index + 1 });
   });
 
   return cityDataMap;
@@ -87,7 +102,7 @@ export const getNearbyCities = async ({
       { pageSize: 30 }
     );
 
-    const cityListDataPromise = getCityListData({ cookies });
+    const cityListDataPromise = getCityListData({ cookies, mbCity });
     const allResult = await Promise.allSettled([
       prismicDataPromise,
       cityListDataPromise,

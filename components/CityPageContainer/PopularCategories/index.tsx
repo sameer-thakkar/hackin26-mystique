@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import {
+  IPopCatCardClick,
   IPopularCategories,
   IPopularEntity,
 } from 'components/CityPageContainer/interface';
@@ -13,9 +14,14 @@ import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'components/UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { getHeadoutLanguagecode } from 'utils';
+import { trackEvent } from 'utils/analytics';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { SECTION_NAMES } from 'const/cityPage';
-import { CAROUSEL_DIR } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CAROUSEL_DIR,
+} from 'const/index';
 import { strings } from 'const/strings';
 
 export const IMAGE_DIMENSIONS = {
@@ -27,6 +33,17 @@ export const IMAGE_DIMENSIONS = {
     HEIGHT: '208',
     WIDTH: '156',
   },
+};
+
+const handleCardClick = ({ rank, name, mbType, url }: IPopCatCardClick) => {
+  trackEvent({
+    eventName: ANALYTICS_EVENTS.MB_CARD_CLICKED,
+    [ANALYTICS_PROPERTIES.CARD_NAME]: name,
+    [ANALYTICS_PROPERTIES.RANKING]: rank,
+    [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAMES.POP_CAT,
+    [ANALYTICS_PROPERTIES.CARD_MB_TYPE]: mbType,
+  });
+  window.open(url, '_blank', 'noopener,noreferrer');
 };
 
 const PopularCategories = ({
@@ -85,8 +102,12 @@ const PopularCategories = ({
           })
         }
       >
-        {popularEntities.map((popularEntity: IPopularEntity) => {
-          const { uid, heading = '' } = popularEntity;
+        {popularEntities.map((popularEntity: IPopularEntity, index) => {
+          const {
+            uid,
+            heading = '',
+            prismicData: { tagged_mb_type },
+          } = popularEntity;
           const { imageUrl, altText } = getCatSubCatMedia(popularEntity);
 
           const entityUrl = convertUidToUrl({
@@ -97,21 +118,37 @@ const PopularCategories = ({
           });
 
           return (
-            <>
-              <div className="entity-image-container" key={uid}>
-                <a href={entityUrl} target="_blank" rel="noreferrer">
-                  <Image
-                    width={WIDTH}
-                    height={HEIGHT}
-                    url={imageUrl}
-                    alt={altText}
-                    className="entity-image"
-                    fitCrop
-                  />
-                  <div className="entity-name">{heading}</div>
-                </a>
-              </div>
-            </>
+            <div
+              role="button"
+              onClick={() =>
+                handleCardClick({
+                  rank: index + 1,
+                  name: heading,
+                  mbType: tagged_mb_type,
+                  url: entityUrl,
+                })
+              }
+              className="entity-image-container"
+              key={uid}
+              tabIndex={0}
+            >
+              <Image
+                width={WIDTH}
+                height={HEIGHT}
+                url={imageUrl}
+                alt={altText}
+                className="entity-image"
+                fitCrop
+              />
+              <a
+                onClick={(e) => e.preventDefault()}
+                href={entityUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="entity-name">{heading}</div>
+              </a>
+            </div>
           );
         })}
       </Carousel>

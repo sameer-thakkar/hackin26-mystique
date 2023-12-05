@@ -1,8 +1,7 @@
-import dayjs from 'dayjs';
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER, EMAIL_SUBCRIPTION } from 'const/index';
+import { CUSTOM_HEADER } from 'const/index';
 import { simplifySlotData } from './inventoryUtils';
 import { sendLog } from './logger';
 
@@ -83,7 +82,7 @@ export enum HeadoutEndpoints {
   ProductV6,
   Banners,
   CalendarInventoryForTourGroupList,
-  CityList,
+  NearbyCityList,
   Media,
   Variants,
   Airports,
@@ -159,8 +158,8 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.CalendarInventoryForTourGroupList:
       endpointSlug = `/api/v7/tour-groups/calendar/`;
       break;
-    case HeadoutEndpoints.CityList:
-      endpointSlug = `/api/v2/city/list/`;
+    case HeadoutEndpoints.NearbyCityList:
+      endpointSlug = `/api/v2/city/${id}/nearby-cities`;
       break;
     case HeadoutEndpoints.Media:
       endpointSlug = `/api/v1/media/`;
@@ -1008,12 +1007,18 @@ export const fetchCityTopCollections = async ({
   }
 };
 
-interface TFetchCityList extends TFetchCityTopCollections {}
-export const fetchCityList = async ({ cookies, params }: TFetchCityList) => {
+interface TFetchCityList extends TFetchCityTopCollections {
+  cityCode: string;
+}
+export const fetchNearbyCityList = async ({
+  cookies,
+  params,
+  cityCode,
+}: TFetchCityList) => {
   const apiUrl = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.CityList,
+    endpoint: HeadoutEndpoints.NearbyCityList,
     params,
-    id: null,
+    id: cityCode,
   });
   try {
     const headers = constructHeaders({ cookies });
@@ -1080,32 +1085,6 @@ export const fetchBatchedCalendarInventory = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchBatchedCalendarInventory]', error);
-  }
-};
-
-type TEmailSubscription = {
-  userEmail: string;
-  eventName: string;
-};
-
-export const registerEmailSubscription = async ({
-  userEmail,
-  eventName,
-}: TEmailSubscription) => {
-  const { ENDPOINT } = EMAIL_SUBCRIPTION;
-  try {
-    const response = await fetch(ENDPOINT, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: userEmail,
-        eventTime: dayjs().format('YYYY-MM-DDTHH:mm:ssZZ'),
-        url: window.location.href,
-        eventName: eventName,
-      }),
-    });
-    return await response.json();
-  } catch (err) {
-    sendLog({ err });
   }
 };
 

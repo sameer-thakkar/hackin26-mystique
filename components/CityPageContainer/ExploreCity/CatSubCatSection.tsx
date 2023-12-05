@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { EntityContainer } from 'components/CityPageContainer/ExploreCity/styles';
+import {
+  EntityContainer,
+  HeaderContainer,
+  SeeAllWrapper,
+} from 'components/CityPageContainer/ExploreCity/styles';
 import {
   ICarouselChild,
   ICatSubCatSectionProps,
@@ -10,15 +14,20 @@ import {
   handleCarouselControlTracking,
   handleCollectionCardTracking,
   handleSubCatCardTracking,
+  trackCTA,
   trackPageSection,
 } from 'components/CityPageContainer/utils';
+import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'components/UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { getHeadoutLanguagecode } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { CAT, SUBCAT } from 'const/cityPage';
-import { CAROUSEL_DIR } from 'const/index';
+import COLORS from 'const/colors';
+import { CAROUSEL_DIR, CTA_TYPE } from 'const/index';
+import { strings } from 'const/strings';
+import { CHEVRON_RIGHT } from 'assets/SvgIcons';
 
 const IMAGE_DIMENSIONS = {
   DESKTOP: {
@@ -92,16 +101,25 @@ const getAssetsData = (item: ICarouselChild, type: string) => {
 const CatSubCatSection = (props: ICatSubCatSectionProps) => {
   const {
     parentData: { heading, name: sectionName },
-    children,
+    children: sectionElements,
     type,
     lang,
     host,
     isDev,
     isMobile,
+    ctaData,
   } = props;
 
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
+
+  const ctaUid = ctaData[sectionName]?.uid;
+  const ctaUrl = convertUidToUrl({
+    uid: ctaUid,
+    lang: getHeadoutLanguagecode(lang),
+    hostname: host,
+    isDev,
+  });
 
   useEffect(() => {
     if (isIntersecting) {
@@ -109,8 +127,16 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
     }
   }, [isIntersecting]);
 
-  if (children.length < 3) {
+  if (sectionElements.length < 3) {
     return null;
+  }
+
+  let sortedSelectionElements = sectionElements;
+  if (type === SUBCAT) {
+    sortedSelectionElements = sectionElements.sort(
+      (itemA: ICarouselChild, itemB: ICarouselChild) =>
+        itemA.computedRank - itemB.computedRank
+    );
   }
 
   const { HEIGHT, WIDTH } = isMobile
@@ -134,7 +160,31 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
 
   return (
     <EntityContainer ref={containerRef}>
-      <h3 className="entity-header">{heading}</h3>
+      <HeaderContainer>
+        <h3 className="entity-header">{heading}</h3>
+        <Conditional if={ctaUid}>
+          <a
+            onClick={(e) =>
+              trackCTA({
+                event: e,
+                url: ctaUrl,
+                section: sectionName,
+                ctaType: CTA_TYPE.SEE_ALL,
+              })
+            }
+            href={ctaUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <SeeAllWrapper>
+              {strings.SEE_ALL}
+              {CHEVRON_RIGHT({
+                fillColor: COLORS.GRAY.G2,
+              })}
+            </SeeAllWrapper>
+          </a>
+        </Conditional>
+      </HeaderContainer>
       <Carousel
         isMobile={isMobile}
         {...swiperProps}
@@ -151,7 +201,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
           })
         }
       >
-        {children.map((item: ICarouselChild, index) => {
+        {sortedSelectionElements.map((item: ICarouselChild, index) => {
           const { uid, heading, name, id, categoryId } = item;
           const { imageUrl, altText } = getAssetsData(item, type);
           const entityUrl = convertUidToUrl({

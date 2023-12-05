@@ -2020,16 +2020,21 @@ export const getPageData = async ({
       const { tagged_city: mbCity, tagged_country: mbCountry } =
         microsite.data.baseLangCategorisationMetadata || {};
 
-      let cityPageData = {};
+      let cityPageData: Record<string, any> = {};
       let isCityPageMB = false;
       if (mbType === MB_TYPES.A1_HOMEPAGE && mbCity) {
-        isCityPageMB = true;
         cityPageData = await generateCityPageData({
           mbCity,
           mbCountry,
           lang: lang || LANGUAGE_MAP.en.locale,
           cookies,
         });
+
+        const {
+          nearbyAndCurrentCityData: { currentCityData },
+        } = cityPageData;
+        const { discoverable } = currentCityData || {};
+        isCityPageMB = !!discoverable;
       }
 
       const cityPageParams = {
