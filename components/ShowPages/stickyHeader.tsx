@@ -155,7 +155,8 @@ const BannerContent = styled.div(
 );
 
 const BannerContentWrapper = styled.div`
-  margin: 0 120px;
+  margin: 0 auto;
+  max-width: 1200px;
   height: 100%;
 `;
 

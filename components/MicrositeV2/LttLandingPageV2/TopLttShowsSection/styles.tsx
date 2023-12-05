@@ -11,6 +11,7 @@ export const TopShowsWrapper = styled.div<{
   align-items: start;
   justify-content: start;
   padding-top: 0.875rem;
+  margin-bottom: 4rem;
 
   .title {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
