@@ -12,14 +12,23 @@ export const chunkArray = (array: any[], itemsPerChunk: number): any[] => {
 export const getUniqueArrayItemsBy = (
   array: any[],
   keyProps: string[]
-): any[] =>
-  Object.values(
-    array?.reduce((uniqueMap, item) => {
-      const key = keyProps.map((k) => item[k]).join('|');
-      if (!(key in uniqueMap)) uniqueMap[key] = item;
-      return uniqueMap;
-    }, {}) || []
-  );
+): any[] => {
+  const updatedArray: any[] = [];
+  const uniqueMap: Record<string, boolean> = {};
+
+  array.forEach((item) => {
+    const key = keyProps.map((k) => item[k]).join('|');
+
+    if (uniqueMap[key]) {
+      return;
+    }
+
+    uniqueMap[key] = true;
+    updatedArray.push(item);
+  });
+
+  return updatedArray;
+};
 
 export const groupBy = (array: Record<string, any>[], key: string) => {
   return array.reduce(function (acc, obj) {
