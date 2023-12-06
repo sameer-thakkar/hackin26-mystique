@@ -260,10 +260,9 @@ export const createBookingURL = ({
       ? bookSubdomain
       : 'book';
   const hasDateQueryParam = typeof date?.startDate !== 'undefined';
-  const langRouteParam =
-    lang && lang !== LANGUAGE_MAP.en.code
-      ? '/' + LANGUAGE_MAP[lang as LanguagesUnion].code
-      : '';
+  const langRouteParam = lang
+    ? '/' + LANGUAGE_MAP[lang as LanguagesUnion].code
+    : '';
 
   const domain = redirectToHeadoutBookingFlow
     ? HEADOUT_NAKED_DOMAIN
