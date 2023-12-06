@@ -118,7 +118,9 @@ export default async function categoryTourListParserV2({
   });
 
   let subCategoryPromises = generatePromiseForCategoryTours({
-    arr: [...Array.from(subCategoryIds), primarySubCategoryID ?? []],
+    arr: primarySubCategoryID
+      ? [...Array.from(subCategoryIds), primarySubCategoryID]
+      : Array.from(subCategoryIds),
     hostname,
     city,
     isSubCategory: true,
