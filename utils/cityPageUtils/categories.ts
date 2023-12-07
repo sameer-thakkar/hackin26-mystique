@@ -498,9 +498,9 @@ const getExploreSectionData = async ({
   ]);
 
   const [
-    categoriesData,
+    categoriesData = {},
     categoriesCTA,
-    subCategoriesData,
+    subCategoriesData = {},
     subcatCTA,
   ] = handleSettledPromiseResults(allResults);
 
