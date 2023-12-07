@@ -244,6 +244,7 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
     });
     // eslint-disable-next-line no-console
     console.error('Error fetching news page document', err);
+    return Promise.reject();
   }
 };
 

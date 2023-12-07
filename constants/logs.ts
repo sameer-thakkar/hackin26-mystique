@@ -3,3 +3,7 @@ export const LOG_LEVELS = {
   ERROR: 'ERROR',
   INFO: 'INFO',
 };
+
+export const ERROR_TYPES = {
+  PRISMIC_API_FAILURE: 'PRISMIC API FAILURE',
+};

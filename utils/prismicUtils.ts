@@ -90,7 +90,7 @@ import {
   VIENNA_CONCERT_UID,
   X_CACHE_HEADER_KEY,
 } from 'const/index';
-import { LOG_LEVELS } from 'const/logs';
+import { ERROR_TYPES, LOG_LEVELS } from 'const/logs';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
@@ -754,6 +754,7 @@ export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
     });
     // eslint-disable-next-line no-console
     console.error(err);
+    return Promise.reject();
   }
 };
 
@@ -1297,10 +1298,28 @@ export const getPrismicDocument = async ({
     ]);
   } catch (error) {
     if ((error as any).errors && Array.isArray((error as any).errors)) {
+      let hasServerError: boolean = false;
       (error as any).errors.forEach((errorInstance: any) => {
+        if (errorInstance?.status >= 500 && errorInstance?.status < 600) {
+          hasServerError = true;
+          sendLog({
+            err: errorInstance,
+            message: {
+              host: req?.headers?.host,
+              url: req?.url,
+              type: ERROR_TYPES.PRISMIC_API_FAILURE,
+            },
+            level: LOG_LEVELS.ERROR,
+          });
+        }
         // eslint-disable-next-line no-console
         console.error(errorInstance);
       });
+      if (hasServerError) {
+        return {
+          statusCode: 500,
+        };
+      }
     }
     /**
      * Sentry quota due to the following line has exceeded the daily limit.
