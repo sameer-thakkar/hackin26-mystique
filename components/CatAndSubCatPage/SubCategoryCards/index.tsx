@@ -11,6 +11,7 @@ import {
   SectionHeading,
 } from 'components/CatAndSubCatPage/SubCategoryCards/styles';
 import { trackPageSection } from 'components/CityPageContainer/utils';
+import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { getCatAndSubcatPageLabel } from 'utils/helper';
@@ -77,13 +78,15 @@ const SubCategoryCards: React.FC<SubCategoryCardsProps> = (props) => {
       <CardsContainer>
         <HeadingContainer>
           <SectionHeading>{sectionHeading}</SectionHeading>
-          <span className="sort-selector">
-            <SortSelector
-              sortingOrder={sortingOrder}
-              setSortingOrder={setSortingOrder}
-              isMobile={isMobile}
-            />
-          </span>
+          <Conditional if={sortedSubCategoryCards.length > 1}>
+            <span className="sort-selector">
+              <SortSelector
+                sortingOrder={sortingOrder}
+                setSortingOrder={setSortingOrder}
+                isMobile={isMobile}
+              />
+            </span>
+          </Conditional>
         </HeadingContainer>
         <GridContainer>
           {sortedSubCategoryCards.map((subCategoryCard, index) => {
