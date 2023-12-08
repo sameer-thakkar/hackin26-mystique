@@ -5,6 +5,7 @@ export const BOOKING_FLOW_TYPE = {
   COMBO: 'COMBO',
   RESERVATION: 'RESERVE',
   AIRPORT_TRANSFER: 'AIRPORT_TRANSFER',
+  SEATMAP_IFRAME: 'SEATMAP_IFRAME',
 } as const;
 
 export const BOOKING_FLOW_STAGE = {
@@ -14,6 +15,7 @@ export const BOOKING_FLOW_STAGE = {
   SVG_SELECT: 'svg-select',
   SVG_VARIANT: 'svg-variant',
   /* SEATMAP FLOW */
+  EXTERNAL_SEATMAP: 'seatmap-iframe-select',
   SEATMAP_SELECT: 'seatmap-select',
   SEATMAP_VARIANT: 'seatmap-variant',
   SEATMAP_CHECKOUT: 'seatmap-checkout',

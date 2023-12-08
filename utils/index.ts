@@ -275,6 +275,9 @@ export const createBookingURL = ({
   bookingStageSuffix = isMobile && date ? 'select/pax' : '';
 
   switch (flowType) {
+    case BOOKING_FLOW_TYPE.SEATMAP_IFRAME:
+      bookingStageSuffix = BOOKING_FLOW_STAGE.EXTERNAL_SEATMAP;
+      break;
     case BOOKING_FLOW_TYPE.SEATMAP:
       bookingStageSuffix = hasDateQueryParam
         ? BOOKING_FLOW_STAGE.SEATMAP_VARIANT
