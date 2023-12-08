@@ -892,6 +892,7 @@ const de = {
       'Reibungslose und zuverlässige Transfers auf der ganzen Welt',
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Wählen Sie den besten Flughafentransfer für Sie',
+    HASSLE_FREE_TRANSFER: 'Reibungsloser Flughafentransfer',
   },
   PC_EXP: {
     SHOW_INCL: 'Inklusivleistungen und wichtige Infos',

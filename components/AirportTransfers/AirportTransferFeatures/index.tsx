@@ -150,7 +150,7 @@ export const AirportTransferFeatures = ({
     <StyledGradientContainer ref={sectionVisibilityTrackingRef}>
       <StyledHeaderSection>
         <StyledSectionTitle>
-          Hassle-free airport transfer experience
+          {strings.AIRPORT_TRANSFER.HASSLE_FREE_TRANSFER}
         </StyledSectionTitle>
 
         <div className="carousel-controls">
