@@ -4,7 +4,6 @@ import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import { IBannerImageProps } from 'components/MicrositeV2/DesktopBannerV2/interface';
-import PinnedCard from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard';
 import {
   IBannerProps,
   IMediaProps,
@@ -88,11 +87,7 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
   );
 };
 
-const MobileBannerV2 = ({
-  allTours,
-  pinnedTgid,
-  bannerImages,
-}: IBannerProps) => {
+const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -188,10 +183,7 @@ const MobileBannerV2 = ({
           />
         </div>
       </SwiperWrapper>
-      <TrustBooster hasPinnedCard={pinnedTgid} isMobile={true} />
-      <Conditional if={pinnedTgid}>
-        <PinnedCard pinnedTgidData={allTours?.[pinnedTgid]} isMobile={true} />
-      </Conditional>
+      <TrustBooster isMobile={true} />
     </Container>
   );
 };

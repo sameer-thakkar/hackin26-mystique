@@ -3,7 +3,7 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Container = styled.div<{ hasPinnedCard?: boolean }>`
+export const Container = styled.div`
   margin-top: 0;
   padding-top: 1rem;
   @media (max-width: 768px) {
@@ -13,37 +13,24 @@ export const Container = styled.div<{ hasPinnedCard?: boolean }>`
     height: fit-content;
     height: 5rem;
     padding: 0.5rem 0 0;
-    background: ${({ hasPinnedCard }) =>
-      hasPinnedCard
-        ? '#150328'
-        : `linear-gradient(
+    background: linear-gradient(
       180deg,
       rgba(45, 35, 64, 0) 0%,
       rgba(45, 35, 64, 0.6) 100%
-    )`};
+    );
   }
 `;
 
-export const Wrapper = styled.div<{ hasPinnedCard?: boolean }>`
+export const Wrapper = styled.div`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: 0 auto;
-  /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   padding-bottom: 1.25rem;
-  ${({ hasPinnedCard }) =>
-    hasPinnedCard &&
-    `
-    border-image: linear-gradient(to right, #ffffff20, transparent) 1;
-    border-width: 0;
-    border-bottom-width: 1px;
-    border-style: solid;
-    padding-bottom: 1.75rem;`}
 
   .trust-booster {
     .icon {

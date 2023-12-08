@@ -20,6 +20,7 @@ const LttLandingPageV2 = ({
   categoryProps,
   allTours,
   browseByCategoriesRef,
+  directTgid,
 }: TLandingPageV2Props) => {
   const { categories } = categoryProps;
   const categoriesToRender: Array<Record<string, any>> =
@@ -33,11 +34,14 @@ const LttLandingPageV2 = ({
     (category: any) => category.id === LTD_COLLECTION_ID
   )?.ranking?.popularity;
 
+  if (directTgid) {
+    topShowsTgids.unshift(directTgid);
+  }
   const duplicateTgids: Record<number, boolean> = {};
 
   const topShows: Array<Record<string, any>> = [];
   topShowsTgids.forEach((tgid: number) => {
-    if (!duplicateTgids[tgid]) {
+    if (!duplicateTgids[tgid] && allTours[tgid]) {
       topShows.push(allTours[tgid]);
       duplicateTgids[tgid] = true;
     }

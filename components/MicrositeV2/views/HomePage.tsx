@@ -486,18 +486,10 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <Conditional if={isMobile && showLttTreatment && !isCatOrSubCatPage}>
-        <MobileBannerV2
-          bannerImages={heroProps.banners}
-          allTours={allTours}
-          pinnedTgid={directTgid}
-        />
+        <MobileBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
       </Conditional>
       <Conditional if={!isMobile && showLttTreatment && !isCatOrSubCatPage}>
-        <DesktopBannerV2
-          bannerImages={heroProps.banners}
-          allTours={allTours}
-          pinnedTgid={directTgid}
-        />
+        <DesktopBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
       </Conditional>
       <Conditional
         if={
@@ -628,6 +620,7 @@ export const HomePage = (props: any) => {
           allTours={allTours}
           categoryProps={categoryProps}
           browseByCategoriesRef={browseByCategorySectionRef}
+          directTgid={directTgid}
         />
       </Conditional>
       <Conditional

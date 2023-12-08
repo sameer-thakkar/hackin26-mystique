@@ -11,7 +11,7 @@ import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const TrustBooster = ({ hasPinnedCard, isMobile }: TTrustBoosterProps) => {
+const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
   const icons = [
     {
       name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.INSTANT_TICKETS.NAME,
@@ -50,8 +50,8 @@ const TrustBooster = ({ hasPinnedCard, isMobile }: TTrustBoosterProps) => {
     autoHeight: true,
   };
   return (
-    <Container hasPinnedCard={hasPinnedCard}>
-      <Wrapper hasPinnedCard={hasPinnedCard}>
+    <Container>
+      <Wrapper>
         <Conditional if={isMobile}>
           <Swiper {...swiperParams}>
             {icons.map((item, index) => {
