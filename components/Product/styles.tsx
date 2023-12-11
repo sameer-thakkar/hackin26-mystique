@@ -637,7 +637,7 @@ const productCardPhase1ExperimentTreatmentVariantCss = css<{
       font-style: normal;
       font-weight: 600;
       line-height: 1.5rem;
-      letter-spacing: 0.2px;
+      letter-spacing: 0;
     }
   }
 
@@ -697,11 +697,11 @@ const productCardPhase1ExperimentTreatmentVariantCss = css<{
 
       .tour-price {
         .strike-through {
-          font-size: 18px;
+          font-size: 1.25rem;
           font-style: normal;
           font-weight: 600;
           line-height: 1.5rem;
-          letter-spacing: 0.6px;
+          letter-spacing: 0;
         }
       }
 

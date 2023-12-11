@@ -606,7 +606,9 @@ const Product = (props: any) => {
       [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
       [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-      [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+      [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
+        ? 'Combo Slice'
+        : 'Product List',
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -791,7 +793,7 @@ const Product = (props: any) => {
           onClick={(e) => {
             trackEvent({
               eventName: ANALYTICS_EVENTS.COMBO_CARDS_CLICKED,
-              [ANALYTICS_PROPERTIES.POSITION]: 'Combo Slice',
+              [ANALYTICS_PROPERTIES.POSITION]: position,
             });
             onMoreDetailsClick(e);
           }}

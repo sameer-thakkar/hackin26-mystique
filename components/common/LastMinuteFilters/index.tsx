@@ -145,7 +145,10 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
         clickedIndex: selectedDateTimeFilterButtonIndex,
         isUserAction: false,
       };
-      if (deSelect) clickedIndex = 0;
+      if (deSelect) {
+        if (isProductCardPhase1ExpTreatment) clickedIndex = 0;
+        else return;
+      }
 
       let hasNoFilter = clickedIndex === 0;
       const selectedDateTimeFilter = dateTimeFilters[clickedIndex];
@@ -430,7 +433,9 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
                   isSelected={index === selectedDateTimeFilterButtonIndex}
                 >
                   <span>{filter.display_name}</span>
-                  <CrossIconSvg className="cross" />
+                  <Conditional if={isProductCardPhase1ExpTreatment}>
+                    <CrossIconSvg className="cross" />
+                  </Conditional>
                 </FilterButton>
               )
             )}
