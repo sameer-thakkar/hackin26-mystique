@@ -25,6 +25,7 @@ export const ProductDescriptors = ({
   showLanguages,
   cancellationPolicy,
   cancellationPolicyHoverCallBack,
+  showIcons = true,
 }: TProductDescriptors) => {
   const [
     cancellationPolicyEventRecorded,
@@ -76,7 +77,7 @@ export const ProductDescriptors = ({
               }`}
               onMouseEnter={onCancellationPolicyHover}
             >
-              <DescriptorSVG />
+              {showIcons && <DescriptorSVG />}
               <Conditional if={item === DESCRIPTORS.DURATION}>
                 {getDuration({ minDuration, maxDuration, lang })}
               </Conditional>

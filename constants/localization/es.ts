@@ -956,6 +956,15 @@ const es = {
   },
   PC_EXP: {
     SHOW_INCL: 'Qué incluye e información importante',
+    CLEAR: 'Restablecer',
+    ALL_EXPERIENCES: 'Todas las experiencias',
+    FILTER_BY_CATEGORIES: 'Filtrar por categorías',
+    CATEGORIES: 'Categorías',
+    COMBOS: {
+      HEADING: 'Lo bueno viene por dos. Como nuestros combos de ahorro.',
+      DESCRIPTOR_1: 'Ofertas de ahorro',
+      DESCRIPTOR_2: 'Planifica mejor tu viaje',
+    },
   },
   TOP: 'Lo más destacado en: {0}',
 };

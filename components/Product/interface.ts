@@ -30,6 +30,7 @@ export type TProductDescriptors = {
   showLanguages?: boolean;
   cancellationPolicy?: string;
   cancellationPolicyHoverCallBack?: () => void;
+  showIcons?: boolean;
 };
 
 export type TProductHighlightTabs = {
@@ -90,4 +91,17 @@ export type TReviewProps = {
   children?: React.ReactNode;
   className?: string;
   isMobile?: boolean;
+};
+
+export type TRatingsContainerProps = {
+  reviewsDetails?: {
+    ratingCount?: number;
+    averageRating?: number;
+    showRatings?: boolean;
+  };
+};
+
+export type TCategoryContainerProps = {
+  primaryCategory?: any;
+  primarySubCategory?: any;
 };

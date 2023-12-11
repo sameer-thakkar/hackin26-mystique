@@ -88,10 +88,12 @@ export const getProductCommonProperties = ({
   primaryCategory,
   primaryCollection,
   primarySubCategory,
+  reviewsDetails,
 }: {
   primaryCategory: TGenericObject;
   primaryCollection: TGenericObject;
   primarySubCategory: TGenericObject;
+  reviewsDetails?: TGenericObject;
 }): Record<string, number | string> => {
   return {
     [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
@@ -100,5 +102,9 @@ export const getProductCommonProperties = ({
     [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
     [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollection?.id,
     [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollection?.displayName,
+    ...(reviewsDetails && {
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: reviewsDetails?.averageRating,
+      [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: reviewsDetails?.ratingCount,
+    }),
   };
 };

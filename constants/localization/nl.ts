@@ -841,6 +841,15 @@ const nl = {
   },
   PC_EXP: {
     SHOW_INCL: 'Inclusies en belangrijke info',
+    CLEAR: 'Terugzetten',
+    ALL_EXPERIENCES: 'Alle ervaringen',
+    FILTER_BY_CATEGORIES: 'Filter op categorieën',
+    CATEGORIES: 'Categorieën',
+    COMBOS: {
+      HEADING: "Goede dingen komen in tweeën. Zoals onze spaarcombo's.",
+      DESCRIPTOR_1: 'Voordelige deals',
+      DESCRIPTOR_2: 'Plan je reis beter',
+    },
   },
   HOHO: {
     HOHO: 'Hop-on hop-off Tickets',

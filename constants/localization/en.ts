@@ -966,6 +966,15 @@ const en = {
   },
   PC_EXP: {
     SHOW_INCL: 'Show inclusions & important info',
+    CLEAR: 'Clear',
+    ALL_EXPERIENCES: 'All experiences',
+    FILTER_BY_CATEGORIES: 'Filter by categories',
+    CATEGORIES: 'Categories',
+    COMBOS: {
+      HEADING: 'Everything good comes in pairs. Just like our saver combos.',
+      DESCRIPTOR_1: 'Money saving deals',
+      DESCRIPTOR_2: 'Plan your trip better',
+    },
   },
   TOP: 'Top {0}',
 };

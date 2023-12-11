@@ -53,6 +53,7 @@ const COLORS = {
     LIGHT_TONE_1: '#ffdad4',
   },
   HOLA_YELLOW: {
+    3: '#807400',
     SECONDARY: '#e5d200',
     TERTIARY: '#ccba00',
     LIGHT_TONE_2: '#fffbcc',
@@ -88,6 +89,7 @@ const COLORS = {
     MEDIUM_TONE: '#8329DE',
     DARK_TONE: '#330066',
     LEVEL_15: '#e6d1ff',
+    LEVEL_3: '#6600CC',
     LIGHT_TONE_2: '#b266ff',
     LIGHT_TONE_1: '#9933ff',
     LIGHT_TONE_3: '#ecd9ff',
@@ -107,6 +109,7 @@ const COLORS = {
     OKAY_GREEN: '#13bd68',
   },
   OKAY_GREEN: {
+    3: '#088943',
     TERTIARY: '#10a35a',
     DARK_TONE: '#095730',
     LIGHT_TONE_2: '#aaffd4',

@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 
-export const CarouselContainer = styled.div<{ $backgroundColor?: string }>`
+export const CarouselContainer = styled.div<{
+  $backgroundColor?: string;
+  $differentBorderRadiusForMobile?: boolean;
+}>`
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
@@ -49,7 +52,11 @@ export const CarouselContainer = styled.div<{ $backgroundColor?: string }>`
   }
 
   @media (max-width: 768px) {
-    border-radius: 0.75rem 0.75rem 0 0;
+    ${({ $differentBorderRadiusForMobile }) =>
+      $differentBorderRadiusForMobile &&
+      css`
+        border-radius: 0.75rem 0.75rem 0 0;
+      `}
   }
 `;
 

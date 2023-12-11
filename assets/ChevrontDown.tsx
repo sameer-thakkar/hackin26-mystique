@@ -1,12 +1,14 @@
+import { SVGProps } from 'react';
 import COLORS from 'const/colors';
 
-const ChevronDown = () => (
+const ChevronDown = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="16"
     height="16"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <path
       d="M1.33329 4.66675L7.99996 11.3334L14.6666 4.66675"

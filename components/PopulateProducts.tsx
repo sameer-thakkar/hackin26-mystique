@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
@@ -18,7 +18,11 @@ import {
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { getProductDescriptors } from 'utils/productUtils';
+import {
+  getCategoryMap,
+  getProductCardComboTours,
+  getProductDescriptors,
+} from 'utils/productUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import {
@@ -31,6 +35,7 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import LazyComponent from './common/LazyComponent';
+import ComboProductsContainer from './ComboProductsContainer';
 
 const Product = dynamic(() =>
   import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -90,6 +95,7 @@ const ticketCardDesktopDisplay = css`
 const ProductContainer = styled.div<{
   isTicketCard: boolean;
   isMobile: boolean;
+  $addMobileBottomMargin?: boolean;
 }>`
 ${({ isTicketCard, isMobile }) =>
   isTicketCard && !isMobile
@@ -106,8 +112,16 @@ ${({ isTicketCard, isMobile }) =>
   }
   @media (max-width: 768px) {
     margin-top: 0.5rem;
-    margin-bottom: 60px;
+    margin-bottom: ${({ $addMobileBottomMargin }) =>
+      !$addMobileBottomMargin ? 0 : 60}px;
     grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
+
+    .product-card-skeleton {
+      max-width: auto;
+      margin: 0 1.5rem;
+      height: 33.75rem;
+      border-radius: 0.75rem;
+    }
   }
 `;
 
@@ -150,6 +164,9 @@ const PopulateProducts = (props: any) => {
     isAirportTransfersMB,
     isProductCardExperimentTreatmentVariant = false,
     showSkeleton = false,
+    isProductCardPhase1ExperimentTreatmentVariant = false,
+    setCategoryInfo,
+    isTourListFiltered,
   } = props;
 
   const productsRef = useRef([]);
@@ -467,6 +484,11 @@ const PopulateProducts = (props: any) => {
   }, []);
 
   useEffect(() => {
+    if (Object.keys(productInfo)?.length)
+      setCategoryInfo?.(getCategoryMap(productInfo as any));
+  }, [productInfo]);
+
+  useEffect(() => {
     if (Object.keys(productInfo)?.length && allPromoCodes && finalPromoCodes) {
       const finalPromos = filterPromoCodes();
       setFinalPromoCodes(finalPromos);
@@ -481,17 +503,168 @@ const PopulateProducts = (props: any) => {
   const shouldShowHeading = isV1DesignSite
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
+
+  const { comboCards, nonComboCardsPart1, nonComboCardsPart2 } = useMemo(
+    () => getProductCardComboTours(availableToursList, scorpioData),
+    [availableToursList, scorpioData]
+  );
+  const showComboCardsSlice =
+    isProductCardPhase1ExperimentTreatmentVariant &&
+    comboCards.length > 0 &&
+    !isTourListFiltered &&
+    isMobile;
+  const nonComboCardsPart1Final = showComboCardsSlice
+    ? nonComboCardsPart1
+    : availableToursList;
+
+  const getProductCardFromTourAndIndex = (
+    tour: Record<string, any>,
+    index: number,
+    isSmallComboCard = false
+  ) => {
+    const {
+      tgid,
+      earliestAvailability,
+      tour_variant_id,
+      tour_title_override,
+      flowType,
+      tour_description_override,
+      product_booster,
+      short_summary,
+      tag_booster,
+      isSpecialGuidedTour,
+      ogIndex,
+    } = tour || {};
+    const {
+      collectionId,
+      primaryCategory,
+      primaryCollection,
+      primarySubCategory,
+      averageRating,
+      showRatings,
+      ratingCount,
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+    } = productInfo[tgid] ?? {};
+
+    const reviewsDetails = {
+      averageRating,
+      showRatings,
+      ratingCount,
+    };
+
+    const childProps = {
+      tgid,
+      earliestAvailability,
+      showEarliestAvailability:
+        earliestAvailability?.startDate && showEarliestAvailability,
+      showNextAvailable,
+      tid: tour_variant_id,
+      title: tour_title_override,
+      descriptors: getProductDescriptors({
+        descriptors: scorpioData?.[tgid]?.descriptors,
+        filterOut: isSpecialGuidedTour ? ['GUIDED_TOUR', 'AUDIO_GUIDE'] : null,
+      }),
+      highlights: tour_description_override,
+      scorpioData: scorpioData?.[tgid],
+      tourPrices,
+      uid,
+      currentLanguage,
+      bookNowText,
+      showLessText,
+      readMoreText,
+      productOffer,
+      hasOffer,
+      togglePopup,
+      offerId: tour.offer__free_tour?.id,
+      popupState,
+      isMobile,
+      pageUrl,
+      host,
+      ctaUrlSuffix: tour.cta_url_suffix || '',
+      isScratchPriceEnabled: legacyBooleanCheck(tour.show_scratch_price),
+      position: index + 1,
+      booster: product_booster,
+      defaultOpen: false,
+      shortSummary: short_summary,
+      boosterTag: tag_booster,
+      numberOfTours: tours.length,
+      instantCheckout,
+      indexPosition: index,
+      pageType,
+      clickedPromo,
+      setClickedPromo,
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+      finalPromoCode: finalPromoCodes[tgid],
+      onPromoClick,
+      appliedPromo,
+      collectionId,
+      primaryCategory,
+      primaryCollection,
+      primarySubCategory,
+      flowType,
+      bannerVideo,
+      isCollectionMB,
+      isSpecialGuidedTour,
+      detialsPopupShown,
+      setDetailsPopupShown,
+      isNonPoi,
+      isProductCardExperimentTreatmentVariant,
+      isProductCardPhase1ExperimentTreatmentVariant,
+      isSmallComboCard,
+      reviewsDetails,
+      originalRank: ogIndex ? ogIndex + 1 : undefined,
+    };
+
+    return (
+      <LazyComponent
+        key={tour.tgid}
+        target={index === 0 && !isSmallComboCard ? 'NONE' : 'USER'}
+      >
+        {isSmallComboCard ? (
+          <Product {...childProps} />
+        ) : (
+          <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
+            {isTicketCard ? (
+              <TicketCard {...childProps} />
+            ) : (
+              <Product {...childProps} />
+            )}
+            <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+              <HorizontalLine colorProp={COLORS.GRAY.G6} />
+            </Conditional>
+          </ProductWrapper>
+        )}
+      </LazyComponent>
+    );
+  };
+
   return (
     <StyledProductsWrapper
       isLoading={productsLoading}
       id="products-container"
       ref={productsWrapperRef}
     >
-      {productsLoading && (
-        <SpinnerWrapper>
-          <Spinner />
-        </SpinnerWrapper>
-      )}
+      {productsLoading &&
+        (isProductCardPhase1ExperimentTreatmentVariant ? (
+          <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+            <Skeleton
+              className="product-card-skeleton"
+              containerClassName="product-card-skeleton-container"
+            />
+          </ProductContainer>
+        ) : (
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
+        ))}
 
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
@@ -511,7 +684,11 @@ const PopulateProducts = (props: any) => {
       </Conditional>
 
       <Conditional if={!productsLoading}>
-        <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
+        <ProductContainer
+          isTicketCard={isTicketCard}
+          isMobile={isMobile}
+          $addMobileBottomMargin={!showComboCardsSlice}
+        >
           <Conditional if={showSkeleton}>
             <Skeleton
               className="product-card-skeleton"
@@ -526,114 +703,31 @@ const PopulateProducts = (props: any) => {
               containerClassName="product-card-skeleton-container"
             />
           </Conditional>
-          {availableToursList &&
-            availableToursList.map((tour: any, index: number) => {
-              const {
-                tgid,
-                earliestAvailability,
-                tour_variant_id,
-                tour_title_override,
-                flowType,
-                tour_description_override,
-                product_booster,
-                short_summary,
-                tag_booster,
-                isSpecialGuidedTour,
-              } = tour || {};
-              const {
-                collectionId,
-                primaryCategory,
-                primaryCollection,
-                primarySubCategory,
-                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-              } = productInfo[tgid] ?? {};
-
-              const childProps = {
-                tgid,
-                earliestAvailability,
-                showEarliestAvailability:
-                  earliestAvailability?.startDate && showEarliestAvailability,
-                showNextAvailable,
-                tid: tour_variant_id,
-                title: tour_title_override,
-                descriptors: getProductDescriptors({
-                  descriptors: scorpioData?.[tgid]?.descriptors,
-                  filterOut: isSpecialGuidedTour
-                    ? ['GUIDED_TOUR', 'AUDIO_GUIDE']
-                    : null,
-                }),
-                highlights: tour_description_override,
-                scorpioData: scorpioData?.[tgid],
-                tourPrices,
-                uid,
-                currentLanguage,
-                bookNowText,
-                showLessText,
-                readMoreText,
-                productOffer,
-                hasOffer,
-                togglePopup,
-                offerId: tour.offer__free_tour?.id,
-                popupState,
-                isMobile,
-                pageUrl,
-                host,
-                ctaUrlSuffix: tour.cta_url_suffix || '',
-                isScratchPriceEnabled: legacyBooleanCheck(
-                  tour.show_scratch_price
-                ),
-                position: index + 1,
-                booster: product_booster,
-                defaultOpen: false,
-                shortSummary: short_summary,
-                boosterTag: tag_booster,
-                numberOfTours: tours.length,
-                instantCheckout,
-                indexPosition: index,
-                pageType,
-                clickedPromo,
-                setClickedPromo,
-                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-                finalPromoCode: finalPromoCodes[tgid],
-                onPromoClick,
-                appliedPromo,
-                collectionId,
-                primaryCategory,
-                primaryCollection,
-                primarySubCategory,
-                flowType,
-                bannerVideo,
-                isCollectionMB,
-                isSpecialGuidedTour,
-                detialsPopupShown,
-                setDetailsPopupShown,
-                isNonPoi,
-                isProductCardExperimentTreatmentVariant,
-              };
-
-              return (
-                <LazyComponent
-                  key={tour.tgid}
-                  target={index === 0 ? 'NONE' : 'USER'}
-                >
-                  <ProductWrapper
-                    ref={addToRef}
-                    data-tgid={tour.tgid}
-                    key={tour.tgid}
-                  >
-                    {isTicketCard ? (
-                      <TicketCard {...childProps} />
-                    ) : (
-                      <Product {...childProps} />
-                    )}
-                    <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                      <HorizontalLine colorProp={COLORS.GRAY.G6} />
-                    </Conditional>
-                  </ProductWrapper>
-                </LazyComponent>
-              );
-            })}
+          {nonComboCardsPart1Final &&
+            nonComboCardsPart1Final.map(
+              (tour: Record<string, any>, index: number) =>
+                getProductCardFromTourAndIndex(tour, index)
+            )}
         </ProductContainer>
+        {showComboCardsSlice && (
+          <>
+            {comboCards.length && (
+              <ComboProductsContainer>
+                {comboCards.map((tour: Record<string, any>, index: number) =>
+                  getProductCardFromTourAndIndex(tour, index, true)
+                )}
+              </ComboProductsContainer>
+            )}
+            {nonComboCardsPart2.length && (
+              <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
+                {nonComboCardsPart2.map(
+                  (tour: Record<string, any>, index: number) =>
+                    getProductCardFromTourAndIndex(tour, index)
+                )}
+              </ProductContainer>
+            )}
+          </>
+        )}
       </Conditional>
     </StyledProductsWrapper>
   );

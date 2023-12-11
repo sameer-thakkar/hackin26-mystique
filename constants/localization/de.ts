@@ -896,6 +896,15 @@ const de = {
   },
   PC_EXP: {
     SHOW_INCL: 'Inklusivleistungen und wichtige Infos',
+    CLEAR: 'Zurücksetzen',
+    ALL_EXPERIENCES: 'Alle Erlebnisse',
+    FILTER_BY_CATEGORIES: 'Nach Kategorien filtern',
+    CATEGORIES: 'Kategorien',
+    COMBOS: {
+      HEADING: 'Alle guten Dinge sind zwei. Genau wie unsere Kombi-Erlebnisse.',
+      DESCRIPTOR_1: 'Super Sparangebote',
+      DESCRIPTOR_2: 'Bessere Reiseplanung',
+    },
   },
   TOP: 'Top-{0}',
 };

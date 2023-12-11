@@ -33,6 +33,7 @@ type MediaCarouselProps = {
   backgroundColor?: string;
   isMobile: boolean;
   shouldCrop?: boolean;
+  differentBorderRadiusForMobile?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -47,6 +48,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isMobile,
   backgroundColor,
   shouldCrop,
+  differentBorderRadiusForMobile = true,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -113,7 +115,11 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   const imageClassNames = `swiper-lazy ${imageId}`;
 
   return (
-    <CarouselContainer $backgroundColor={backgroundColor} ref={carouselRef}>
+    <CarouselContainer
+      $backgroundColor={backgroundColor}
+      ref={carouselRef}
+      $differentBorderRadiusForMobile={differentBorderRadiusForMobile}
+    >
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {
           return videoUrl && index === 0 ? (

@@ -906,6 +906,16 @@ const fr = {
   },
   PC_EXP: {
     SHOW_INCL: 'Inclusions et infos importantes',
+    CLEAR: 'Annuler',
+    ALL_EXPERIENCES: 'Toutes les expériences',
+    FILTER_BY_CATEGORIES: 'Filtrer par catégories',
+    CATEGORIES: 'Catégories',
+    COMBOS: {
+      HEADING:
+        'Toutes les bonnes choses vont de pair. Tout comme nos offres combinées.',
+      DESCRIPTOR_1: 'Offres avantageuses',
+      DESCRIPTOR_2: 'Meilleure préparation de votre voyage',
+    },
   },
   TOP: 'Le meilleur des : {0}',
 };

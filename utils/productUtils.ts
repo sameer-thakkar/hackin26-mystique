@@ -98,6 +98,7 @@ type TGetProductCardLayout = {
   showGuidesLabel?: boolean;
   showAvailabilityInLanguagesText?: boolean;
   isProductCardExperimentTreatmentVariant?: boolean;
+  isProductCardPhase1ExperimentTreatmentVariant?: boolean;
 };
 
 export const getProductCardLayout = ({
@@ -111,6 +112,7 @@ export const getProductCardLayout = ({
   showGuidesLabel = false,
   showAvailabilityInLanguagesText = false,
   isProductCardExperimentTreatmentVariant = false,
+  isProductCardPhase1ExperimentTreatmentVariant = false,
 }: TGetProductCardLayout) => {
   let layout: {
     desktop: Array<string | boolean | undefined | null>;
@@ -173,24 +175,46 @@ export const getProductCardLayout = ({
             'card-img . line cta-combo',
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
-        mobile: [
-          isTicketCard ? null : 'card-img card-img',
-          'title title',
-          'price-block price-block',
-          isOpenDated && 'open-dated-descriptor open-dated-descriptor',
-          !isOpenDated &&
-            !showAvailabilityInTitle &&
-            'next-available next-available',
-          showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
-          showAvailabilityInLanguagesText &&
-            'tour-available-in-languages-area tour-available-in-languages-area',
-          isTicketCard && hasPromoCode && 'promo-block promo-block',
-          hasOffer && 'offer offer',
-          'tags tags',
-          hasV1Booster && 'booster booster',
-          'body body',
-          'cta-block cta-block',
-        ],
+        mobile: isProductCardPhase1ExperimentTreatmentVariant
+          ? [
+              isTicketCard ? null : 'card-img card-img',
+              'category rating',
+              'title title',
+              isOpenDated && 'open-dated-descriptor open-dated-descriptor',
+              hasOffer && 'offer offer',
+              'tags tags',
+              !isOpenDated &&
+                !showAvailabilityInTitle &&
+                'next-available next-available',
+              'price-block price-block',
+              showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
+              showAvailabilityInLanguagesText &&
+                'tour-available-in-languages-area tour-available-in-languages-area',
+              isTicketCard && hasPromoCode && 'promo-block promo-block',
+              hasV1Booster && 'booster booster',
+              'body body',
+              'cta-block cta-block',
+            ]
+          : [
+              isTicketCard ? null : 'card-img card-img',
+              isProductCardPhase1ExperimentTreatmentVariant &&
+                'category rating',
+              'title title',
+              'price-block price-block',
+              isOpenDated && 'open-dated-descriptor open-dated-descriptor',
+              !isOpenDated &&
+                !showAvailabilityInTitle &&
+                'next-available next-available',
+              showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
+              showAvailabilityInLanguagesText &&
+                'tour-available-in-languages-area tour-available-in-languages-area',
+              isTicketCard && hasPromoCode && 'promo-block promo-block',
+              hasOffer && 'offer offer',
+              'tags tags',
+              hasV1Booster && 'booster booster',
+              'body body',
+              'cta-block cta-block',
+            ],
       };
       break;
   }
@@ -786,4 +810,106 @@ export const getUniqueRandomOutputs = ({
     selectedOutputs.push(selectedOutput);
   }
   return selectedOutputs;
+};
+
+export const getCategoryMap = (
+  tourGroupMap: {
+    id: number;
+    primaryCategory: Record<string, any>;
+    primarySubCategory: Record<string, any>;
+  }[]
+) => {
+  const mapping: Record<
+    number,
+    { categoryId?: number; subCategoryId?: number }
+  > = {};
+
+  const categoriesAndSubCategories: Record<
+    number,
+    { name: string; isCategory: boolean; nonLocalizedName: string }
+  > = {};
+
+  Object.values(tourGroupMap).forEach(
+    (tg: { id: any; primaryCategory: any; primarySubCategory: any }) => {
+      const { id, primaryCategory, primarySubCategory } = tg;
+      mapping[id] = {};
+      if (primaryCategory) {
+        const { id: categoryId, displayName, name } = primaryCategory;
+        mapping[id].categoryId = categoryId;
+        categoriesAndSubCategories[categoryId] = {
+          name: displayName,
+          isCategory: true,
+          nonLocalizedName: name,
+        };
+      }
+      if (primarySubCategory) {
+        const { id: subCategoryId, displayName, name } = primarySubCategory;
+
+        /**
+         * All subcategories under Tickets except
+         * city cards (1008) are not shown
+         */
+        if (primaryCategory?.id !== 1 || subCategoryId === 1008) {
+          mapping[id].subCategoryId = subCategoryId;
+          categoriesAndSubCategories[subCategoryId] = {
+            name: displayName,
+            isCategory: false,
+            nonLocalizedName: name,
+          };
+        }
+      }
+    }
+  );
+
+  return { mapping, categoriesAndSubCategories };
+};
+
+export const getProductCardComboTours = (
+  tours: Record<string, any>[],
+  scorpioData: Record<number, Record<string, any>>
+) => {
+  let comboCards: Array<any> = [],
+    nonComboCardsPart1: Array<any> = [],
+    nonComboCardsPart2: Array<any> = [];
+  let comboCount = 0;
+
+  const defaultOutput = {
+    comboCards: [],
+    nonComboCardsPart1: [],
+    nonComboCardsPart2: [],
+  };
+
+  if (tours.length <= 5) return defaultOutput;
+
+  for (let index = 0; index < tours.length; index++) {
+    const rank = index + 1;
+    const tour = tours[index];
+    const { tgid } = tour;
+    const { combo: isCombo } = scorpioData[tgid];
+    if (isCombo && rank >= 3) {
+      comboCount++;
+    }
+    if (!isCombo) {
+      if (comboCount !== 0) {
+        nonComboCardsPart2.push({ ...tour, ogIndex: index });
+      } else {
+        nonComboCardsPart1.push({ ...tour, ogIndex: index });
+      }
+    } else {
+      comboCards.push({ ...tour, ogIndex: index });
+    }
+  }
+
+  if (nonComboCardsPart1.length > 2) {
+    nonComboCardsPart2 = [
+      ...nonComboCardsPart1.slice(2),
+      ...nonComboCardsPart2,
+    ];
+    nonComboCardsPart1 = nonComboCardsPart1.slice(0, 2);
+  }
+
+  if (nonComboCardsPart2.length < 2 || comboCards.length > 4)
+    return defaultOutput;
+
+  return { comboCards, nonComboCardsPart1, nonComboCardsPart2 };
 };

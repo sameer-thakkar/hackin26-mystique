@@ -531,6 +531,11 @@ export const ANALYTICS_EVENTS = {
     CALENDAR_CLOSED: 'Calendar Closed',
     CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
   },
+  CATEGORY_SELECTED: 'Category Selected',
+  CATEGORY_FILTER_APPLIED: 'Category Filter Applied',
+  CATEGORY_FILTER_CLEARED: 'Category Filter Cleared',
+  FILTER_DRAWER_OPENED: 'Filter Drawer Opened',
+  COMBO_CARDS_CLICKED: 'Combo Card Clicked',
 };
 
 export const PAGE_TYPE = {
@@ -954,6 +959,7 @@ export const ANALYTICS_PROPERTIES = {
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
   PLACEMENT: 'Placement',
+  FILTER_TYPE: 'Filter Type',
 };
 
 export const PAGE_TYPES = {
@@ -1856,3 +1862,6 @@ export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/ima
 export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 
 export const X_CACHE_HEADER_KEY = 'x-cache' as const;
+
+export const ENTITY_ICONS_FOLDER_LINK =
+  'https://cdn-imgix-open.headout.com/categories';

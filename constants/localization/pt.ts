@@ -906,6 +906,15 @@ const pt = {
   },
   PC_EXP: {
     SHOW_INCL: 'O que inclui e informações importantes',
+    CLEAR: 'Limpar',
+    ALL_EXPERIENCES: 'Todas experiências',
+    FILTER_BY_CATEGORIES: 'Filtrar por categorias',
+    CATEGORIES: 'Categorias',
+    COMBOS: {
+      HEADING: 'Tudo que é bom vem em dobro. Como nossos combos econômicos.',
+      DESCRIPTOR_1: 'Ofertas para economizar',
+      DESCRIPTOR_2: 'Planeje melhor sua viagem',
+    },
   },
   TOP: 'As melhores atrações em {0}',
 };

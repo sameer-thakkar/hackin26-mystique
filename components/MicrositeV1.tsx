@@ -49,6 +49,7 @@ import {
   getLangObject,
   groupSlices,
 } from 'utils/helper';
+import { getCategoryMap } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -164,6 +165,9 @@ const MicrositeV1 = (props: any) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const [categoryInfo, setCategoryInfo] = useState<
+    ReturnType<typeof getCategoryMap>
+  >({ mapping: {}, categoriesAndSubCategories: {} });
 
   const {
     refs,
@@ -175,17 +179,6 @@ const MicrositeV1 = (props: any) => {
     alternate_languages,
     mbType,
   } = data;
-
-  const {
-    variant: productCardRevampExperimentVariant,
-    isExperimentResolving: isProductCardRevampExperimentResolving,
-    isEligible: isEligibleForProductCardRevamp,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
-    customEligibilityCheckFn: () => isA1orC1MB(mbType) && !isMobile,
-  });
-
-  const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
 
   const {
     contentFramework,
@@ -222,6 +215,31 @@ const MicrositeV1 = (props: any) => {
     baseLangCategorisationMetadata,
     topAttractionsData,
   } = micrositeData || {};
+
+  const [isTourListFiltered, setIsTourListFiltered] = useState(false);
+
+  const {
+    variant: productCardRevampExperimentVariant,
+    isExperimentResolving: isProductCardRevampExperimentResolving,
+    isEligible: isEligibleForProductCardRevamp,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      isA1orC1MB(mbType) && !isMobile && baseLangIsPoiMb,
+  });
+
+  const {
+    variant: productCardRevampExperimentP1Variant,
+    isExperimentResolving: isProductCardRevampExperimentP1Resolving,
+    isEligible: isEligibleForProductCardRevampP1,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      isA1orC1MB(mbType) && isMobile && baseLangIsPoiMb,
+  });
+
+  const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
+
   const {
     tagged_city: taggedCity,
     tagged_category: taggedCategoryName,
@@ -627,8 +645,18 @@ const MicrositeV1 = (props: any) => {
           : false
       }
       showSkeleton={
-        isEligibleForProductCardRevamp && isProductCardRevampExperimentResolving
+        (isEligibleForProductCardRevamp &&
+          isProductCardRevampExperimentResolving) ||
+        (isEligibleForProductCardRevampP1 &&
+          isProductCardRevampExperimentP1Resolving)
       }
+      isProductCardPhase1ExperimentTreatmentVariant={
+        isEligibleForProductCardRevampP1
+          ? productCardRevampExperimentP1Variant === VARIANTS.TREATMENT
+          : false
+      }
+      setCategoryInfo={setCategoryInfo}
+      isTourListFiltered={isTourListFiltered}
     />
   );
 
@@ -815,6 +843,15 @@ const MicrositeV1 = (props: any) => {
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}
             setProductsLoading={setProductsLoading}
+            categoryInfo={categoryInfo}
+            changeTourListFilterStatus={(state) => {
+              if (state !== isTourListFiltered) setIsTourListFiltered(state);
+            }}
+            isProductCardPhase1ExpTreatment={
+              isEligibleForProductCardRevampP1
+                ? productCardRevampExperimentP1Variant === VARIANTS.TREATMENT
+                : false
+            }
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>

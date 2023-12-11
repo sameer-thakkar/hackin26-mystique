@@ -27,6 +27,14 @@ export const CancellationPolicyHoverCard = styled.p`
   transition: all 0.3s;
 `;
 
+export const HLine = styled.div<{ $isDashed?: boolean }>`
+  grid-area: hline;
+  width: 100%;
+  height: 0;
+  border-bottom: ${({ $isDashed }) =>
+    `1px ${$isDashed ? 'dashed' : 'solid'} ${COLORS.GRAY.G6}`};
+`;
+
 export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
   ${expandFontToken('UI/Label Regular')}
   display: grid;
@@ -149,6 +157,7 @@ export const Container = styled.div<{
   isCardVisible?: boolean;
   isV3Design?: boolean;
   indexPosition: number;
+  isSmallComboCard?: boolean;
 }>`
   display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
 
@@ -185,12 +194,21 @@ export const Container = styled.div<{
     transform: translateY(0px);
   }
   `}
+
+  ${({ isSmallComboCard }) =>
+    isSmallComboCard &&
+    css`
+      margin: 0;
+    `}
 `;
 
 export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   MOBILE: {
     width: 400,
     bannerProductWidth: 650,
+    productcardexperimentp1: {
+      width: 500,
+    },
   },
   DESKTOP: {
     height: 320,
@@ -200,6 +218,43 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
     },
   },
 };
+
+export const TourTitleWrapper = styled.h2<{
+  isPopup?: boolean;
+  pageType?: string;
+}>`
+  ${expandFontToken(FONTS.HEADING_LARGE)}
+  margin: 0;
+  max-width: 768px;
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+  }
+`;
+
+export const TitleWrapper = styled.div<{
+  hasBorderedTitle?: boolean;
+  $isTicketCard?: boolean;
+}>`
+  grid-area: title;
+  ${({ hasBorderedTitle }) =>
+    hasBorderedTitle
+      ? `
+            border-bottom: 1px solid ${COLORS.GRAY.G6};
+            @media(max-width: 768px) {
+              border: none;
+            }
+          `
+      : ''}
+
+  ${({ $isTicketCard }) =>
+    !$isTicketCard &&
+    `
+    @media(max-width: 768px) {
+      margin-top: -0.5rem;
+      margin-bottom: -1rem;
+    }
+  `}
+`;
 
 export const cardImageStyles = css`
   .card-img {
@@ -336,6 +391,12 @@ export const ProductBody = styled.div<{
   }
 `;
 
+export const MoreDetailsBtnWrapper = styled.div`
+  width: 100%;
+  grid-area: cta-block;
+  margin-top: -1rem;
+`;
+
 export const CTAContainer = styled.div<{ pageType?: any }>`
   grid-area: cta-combo;
   display: grid;
@@ -343,6 +404,39 @@ export const CTAContainer = styled.div<{ pageType?: any }>`
   align-content: start;
   @media (max-width: 768px) {
     display: contents;
+  }
+`;
+
+export const CTABlock = styled.div<{
+  isTicketCard?: boolean;
+  isSticky: boolean;
+  shouldOffset?: boolean;
+}>`
+  a {
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
+
+    ${({ isSticky, shouldOffset }) =>
+      isSticky &&
+      `
+        position: sticky;
+        bottom: 0;
+        transform: translateX(-1rem);
+        bottom: env(safe-area-inset-bottom);
+        ${shouldOffset ? 'transform: translateY(2rem);' : ''}
+        background: ${COLORS.BRAND.WHITE};
+        z-index: 2;
+        padding: 1rem;
+        box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
+      `}
+
+    ${({ isSticky }) => ctaBlockMobileStyles(isSticky)}
+  }
+  @media (max-width: 370px) {
+    width: 100%;
   }
 `;
 
@@ -415,6 +509,8 @@ interface IStyledProductCard {
   $isSwipeSheetOpen?: boolean;
   $isProductCardExperimentTreatmentVariant?: boolean;
   $isAsideBarOverlay?: boolean;
+  $isProductCardPhase1ExperimentTreatmentVariant?: boolean;
+  $showScratchPrice?: boolean;
 }
 
 const pcExperimentStyles = css`
@@ -468,6 +564,8 @@ const asideBarExperimentStyles = css`
       margin-top: 0.75rem;
 
       .tour-tag {
+        ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+        color: ${COLORS.GRAY.G2};
         grid-column-gap: 0.25rem;
 
         ${CancellationPolicyHoverCard} {
@@ -516,6 +614,136 @@ const asideBarExperimentStyles = css`
 
   ${ProductBody} {
     padding-bottom: 6.25rem;
+  }
+`;
+
+const productCardPhase1ExperimentTreatmentVariantCss = css<{
+  isContentExpanded?: boolean;
+}>`
+  grid-row-gap: 1rem;
+  padding: 0.75rem;
+  overflow: hidden;
+
+  .card-img {
+    height: 13.125rem;
+    max-height: 13.125rem;
+  }
+
+  ${TitleWrapper} {
+    ${TourTitleWrapper} {
+      color: ${COLORS.GRAY.G1};
+      font-family: ${HALYARD.FONT_STACK};
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5rem;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  ${MoreDetailsBtnWrapper} {
+    button {
+      font-family: ${HALYARD.FONT_STACK};
+      letter-spacing: 0;
+    }
+  }
+
+  ${TourTags} {
+    margin: 1rem 0 0;
+    column-gap: 0.375rem;
+    row-gap: 0.5rem;
+
+    .tour-tag {
+      flex-grow: 0;
+      max-width: max-content;
+      grid-column-gap: 0;
+      font-family: ${HALYARD.FONT_STACK};
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1rem;
+
+      &:not(:last-child) {
+        margin: 0;
+
+        &::after {
+          content: '';
+          position: relative;
+          height: 0.25rem;
+          width: 0.25rem;
+          background-color: ${COLORS.GRAY.G6};
+          margin-left: 0.375rem;
+          border-radius: 0.625rem;
+          transform: translateY(0.125rem);
+        }
+      }
+    }
+  }
+
+  ${StyledPriceBlock} {
+    .tour-scratch-price {
+      color: ${COLORS.GRAY.G3};
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    }
+
+    .strike-through {
+      margin-right: 0.375rem;
+      font-family: ${HALYARD.FONT_STACK};
+      letter-spacing: 0;
+    }
+
+    .tour-price-container {
+      gap: 0;
+
+      .tour-price {
+        .strike-through {
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 1.5rem;
+          letter-spacing: 0.6px;
+        }
+      }
+
+      ${SavedTag} {
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+        font-family: ${HALYARD.FONT_STACK};
+        padding: 0.125rem 0.375rem;
+        color: ${COLORS.BRAND.WHITE};
+        background-color: ${COLORS.OKAY_GREEN[3]};
+        border-radius: 0.25rem;
+      }
+    }
+  }
+
+  ${CTAContainer} {
+    ${NextAvailableBlock} .available-text {
+      color: ${COLORS.GRAY.G2};
+      margin-top: 1rem;
+      font-family: ${HALYARD.FONT_STACK};
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1rem;
+    }
+
+    ${PriceContainer} {
+      ${({ isContentExpanded }) =>
+        !isContentExpanded &&
+        css`
+          margin-bottom: -0.25rem;
+        `}
+    }
+
+    ${CTABlock} {
+      margin-bottom: 0.5rem;
+      grid-column: 1/3;
+
+      button {
+        font-family: ${HALYARD.FONT_STACK};
+        letter-spacing: 0;
+      }
+    }
   }
 `;
 
@@ -663,6 +891,9 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       width: 100%;
     }
 
+      ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
+        $isProductCardPhase1ExperimentTreatmentVariant &&
+        productCardPhase1ExperimentTreatmentVariantCss}
     
     ${({ $isBannerCard }) =>
       $isBannerCard &&
@@ -678,43 +909,6 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
         }
       `}
   }
-`;
-
-export const TourTitleWrapper = styled.h2<{
-  isPopup?: boolean;
-  pageType?: string;
-}>`
-  ${expandFontToken('Heading/Large')}
-  margin: 0;
-  max-width: 768px;
-  @media (max-width: 768px) {
-    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-  }
-`;
-
-export const TitleWrapper = styled.div<{
-  hasBorderedTitle?: boolean;
-  $isTicketCard?: boolean;
-}>`
-  grid-area: title;
-  ${({ hasBorderedTitle }) =>
-    hasBorderedTitle
-      ? `
-            border-bottom: 1px solid ${COLORS.GRAY.G6};
-            @media(max-width: 768px) {
-              border: none;
-            }
-          `
-      : ''}
-
-  ${({ $isTicketCard }) =>
-    !$isTicketCard &&
-    `
-    @media(max-width: 768px) {
-      margin-top: -0.5rem;
-      margin-bottom: -1rem;
-    }
-  `}
 `;
 
 export const BoosterTag = styled.div`
@@ -735,39 +929,6 @@ export const BoosterTag = styled.div`
     margin-top: -2.125rem;
     padding: 5px;
     border-radius: 4px;
-  }
-`;
-export const CTABlock = styled.div<{
-  isTicketCard?: boolean;
-  isSticky: boolean;
-  shouldOffset?: boolean;
-}>`
-  a {
-    text-decoration: none;
-  }
-
-  @media (max-width: 768px) {
-    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
-
-    ${({ isSticky, shouldOffset }) =>
-      isSticky &&
-      `
-        position: sticky;
-        bottom: 0;
-        transform: translateX(-1rem);
-        background: #fff;
-        bottom: env(safe-area-inset-bottom);
-        ${shouldOffset ? 'transform: translateY(2rem);' : ''}
-        background: ${COLORS.BRAND.WHITE};
-        z-index: 2;
-        padding: 1rem;
-        box-shadow: 0px -2px 12px 0px rgba(84, 84, 84, 0.10);
-      `}
-
-    ${({ isSticky }) => ctaBlockMobileStyles(isSticky)}
-  }
-  @media (max-width: 370px) {
-    width: 100%;
   }
 `;
 
@@ -851,10 +1012,69 @@ export const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
   }
 `;
 
-export const MoreDetailsBtnWrapper = styled.div`
-  width: 100%;
-  grid-area: cta-block;
-  margin-top: -1rem;
+export const StyledRatingsContainer = styled.div`
+  grid-area: rating;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.125rem;
+  margin-bottom: -0.25rem;
+
+  svg {
+    height: 0.75rem;
+    width: 0.75rem;
+  }
+
+  span {
+    color: ${COLORS.BRAND.CANDY};
+
+    &.avg-rating {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+  font-family: ${HALYARD.FONT_STACK};
+    }
+
+    &.rating-count {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+  font-family: ${HALYARD.FONT_STACK};
+    }
+  }
+`;
+
+export const CategoryIcon = styled.div<{
+  $svgUrl: string;
+}>`
+  flex-shrink: 1;
+  mask: ${({ $svgUrl }) => `url("${$svgUrl}") no-repeat center / contain`};
+  height: 0.875rem;
+  width: 0.875rem;
+  mask-position: center;
+  transition: all 0.3s;
+  background: ${COLORS.BLACK};
+`;
+
+export const StyledCategoryContainer = styled.div<{
+  $background: string;
+}>`
+  grid-area: category;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: -0.25rem;
+
+  ${CategoryIcon} {
+     background: ${({ $background }) => $background};
+  }
+
+  span {
+    background: ${({ $background }) => $background};
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    font-family: ${HALYARD.FONT_STACK};
+    text-transform: uppercase;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 `;
 
 export const ModalCardContainer = styled.div`
@@ -865,8 +1085,23 @@ export const ModalCardContainer = styled.div`
     ${StyledProductCard} {
       margin: 0;
       border: none;
-      padding: 0 1rem;
-      padding-top: 24px;
+      padding: 1.5rem 1rem 3rem;
+
+      ${StyledCategoryContainer} {
+        margin-top: 0.5rem;
+      }
+
+      ${StyledRatingsContainer} {
+        margin-top: 0.5rem;
+      }
+
+      ${CTABlock} {
+        margin-bottom: 0;
+        position: fixed;
+        width: calc(100vw - 2rem);
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
     .card-img {
@@ -2077,13 +2312,6 @@ export const TourAvailableInLanguages = styled.div<{
   margin-top: -0.5rem;
 `;
 
-export const HLine = styled.div`
-  grid-area: hline;
-  width: 100%;
-  height: 1px;
-  background-color: ${COLORS.GRAY.G6};
-`;
-
 export const Wrapper = styled(HighlightTabsWrapper)`
   position: relative;
   row-gap: 0.75rem;
@@ -2108,4 +2336,58 @@ export const ViewMoreButton = styled.button`
     height: 0.675rem;
     stroke-width: .15rem;
   }
+`;
+
+export const SCPCarouselContainer = styled.div`
+  width: 14rem;
+  height: 8.75rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+`;
+
+export const SCPTitle = styled.h2`
+  color: ${COLORS.BLACK};
+  ${expandFontToken(FONTS.HEADING_XS)}
+  margin: 0;
+`;
+
+export const SCPPriceContainer = styled.div<{
+  $isScratchPriceEnabled?: boolean;
+}>`
+  ${StyledPriceBlock} {
+    grid-row-gap: 0.125rem;
+
+    .tour-scratch-price {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      color: ${COLORS.GRAY.G3};
+
+      .strike-through {
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+        color: ${COLORS.GRAY.G3};
+      }
+    }
+
+    .tour-price-container {
+        align-items: center;
+      .tour-price {
+        .strike-through {
+          ${expandFontToken(FONTS.SUBHEADING_LARGE)}
+        }
+      }
+    }
+
+    ${SavedTag} {
+        background-color: ${COLORS.OKAY_GREEN[3]};
+        padding: 0.125rem 0.375rem 0.1875rem 0.375rem;
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+        color: ${COLORS.BRAND.WHITE};
+        border-radius: 0.25rem;
+    }
+  }
+`;
+
+export const SCPContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;

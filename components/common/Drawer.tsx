@@ -8,62 +8,17 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { CloseIcon } from 'assets/SvgIcons';
 
-const DrawerContainer = styled.div`
-  position: fixed;
-  z-index: 20;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 72px);
-  display: grid;
-
-  .shadow {
-    position: fixed;
-    height: calc(100% - 56px);
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    background: rgba(0, 0, 0, 0.5);
-    animation: fade 0.4s ease;
-  }
-
-  ${({
-    // @ts-expect-error TS(2339): Property '$drawerStyles' does not exist on type 'P... Remove this comment to see the full error message
-    $drawerStyles,
-  }) => $drawerStyles}
-
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .shadow {
-      height: calc(100% - 80px);
-    }
-  }
-`;
-
-const DrawerWrapper = styled.div`
+const DrawerWrapper = styled.div<{
+  $noMargin?: boolean;
+  $hasHeading?: boolean;
+}>`
   background: ${COLORS.BRAND.WHITE};
   border-radius: 20px 20px 0px 0px;
-  padding: ${({
-    // @ts-expect-error TS(2339): Property '$noMargin' does not exist on type 'Pick<... Remove this comment to see the full error message
-    $noMargin,
-  }) => ($noMargin ? 'unset' : '0 24px')};
+  padding: ${({ $noMargin }) => ($noMargin ? 'unset' : '0 24px')};
   box-shadow: 0px -2px 12px rgba(84, 84, 84, 0.1);
   display: grid;
   margin-top: auto;
-  grid-row-gap: ${({
-    // @ts-expect-error TS(2339): Property '$hasHeading' does not exist on type 'Pic... Remove this comment to see the full error message
-    $hasHeading,
-  }) => ($hasHeading ? '24px' : '0')};
+  grid-row-gap: ${({ $hasHeading }) => ($hasHeading ? '24px' : '0')};
   z-index: 1000;
   height: 100%;
   align-content: flex-start;
@@ -92,7 +47,68 @@ const DrawerWrapper = styled.div`
   }
 `;
 
+const DrawerContainer = styled.div<{ $drawerStyles: any }>`
+  position: fixed;
+  z-index: 20;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 72px);
+  display: grid;
+
+  .shadow {
+    position: fixed;
+    height: calc(100% - 56px);
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.5);
+    animation: fade 0.4s ease;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+
+    &.coverHeader {
+      height: 100%;
+    }
+  }
+
+  ${({ $drawerStyles }) => $drawerStyles}
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .shadow {
+      height: calc(100% - 80px);
+      &.coverHeader {
+        height: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &.animate-out {
+      .shadow {
+        opacity: 0;
+      }
+
+      ${DrawerWrapper} {
+        transform: translateY(100%);
+      }
+    }
+  }
+`;
+
 const CoreDrawerText = styled.div`
+  position: relative;
   .content-wrapper {
     display: grid;
     grid-row-gap: 2.4rem;
@@ -110,12 +126,10 @@ export const Separator = styled.div`
   border-top: 1px solid ${COLORS.GRAY.G6};
 `;
 
-export const HeadingContainer = styled.div`
+export const HeadingContainer = styled.div<{ $hasHeading?: boolean }>`
   display: grid;
-  grid-template-columns: ${({
-    // @ts-expect-error TS(2339): Property '$hasHeading' does not exist on type 'Pic... Remove this comment to see the full error message
-    $hasHeading,
-  }) => ($hasHeading ? '1fr 1fr' : '1fr')};
+  grid-template-columns: ${({ $hasHeading }) =>
+    $hasHeading ? '1fr 1fr' : '1fr'};
   grid-row-gap: 1.2rem;
   align-items: center;
   ${Separator} {
@@ -128,7 +142,7 @@ export const HeadingContainer = styled.div`
   }
 `;
 
-const PanelAnchor = styled.div`
+export const PanelAnchor = styled.div`
   display: inline-block;
   height: 4px;
   width: 32px;
@@ -160,6 +174,8 @@ const Drawer = ({
   $drawerStyles,
   container = null,
   hideSeparator = false,
+  slideOutOnClose = false,
+  coverHeaderInShadow = false,
 }: {
   closeHandler?: Function;
   contents?: JSX.Element;
@@ -170,16 +186,36 @@ const Drawer = ({
   $drawerStyles?: any;
   container?: HTMLElement | null;
   hideSeparator?: boolean;
+  slideOutOnClose?: boolean;
+  coverHeaderInShadow?: boolean;
 }) => {
   const [mounted, setMounted] = useState(false);
   const drawerRef = useRef(null);
+  const [animateOut, setAnimateOut] = useState(false);
+
+  const close = (reason: string) => {
+    if (slideOutOnClose) {
+      setAnimateOut(true);
+      setTimeout(() => closeHandler?.(reason), 300);
+    } else {
+      closeHandler?.(reason);
+    }
+  };
 
   useEffect(() => {
+    const liveChatContainer = document.getElementById('chat-widget-container');
+    const liveChatZIndex = liveChatContainer?.style.zIndex;
+    if (liveChatZIndex) {
+      liveChatContainer.style.zIndex = '19';
+    }
     document.body.classList.add('scroll-lock', 'no-shadow');
     setMounted(true);
 
     return () => {
       document.body.classList.remove('scroll-lock', 'no-shadow');
+      if (liveChatZIndex) {
+        liveChatContainer.style.zIndex = liveChatZIndex;
+      }
     };
   }, []);
 
@@ -234,14 +270,15 @@ const Drawer = ({
   }
 
   return ReactDOM.createPortal(
-    // @ts-expect-error TS(2769): No overload matches this call.
-    <DrawerContainer $drawerStyles={$drawerStyles} $noMargin={noMargin}>
+    <DrawerContainer
+      $drawerStyles={$drawerStyles}
+      className={animateOut ? 'animate-out' : ''}
+    >
       <div
-        className="shadow"
+        className={`shadow ${coverHeaderInShadow ? 'coverHeader' : ''}`}
         role="button"
         tabIndex={0}
-        // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
-        onClick={() => closeHandler('Outside')}
+        onClick={() => close('Outside')}
       />
       <DrawerWrapper
         // @ts-expect-error TS(2769): No overload matches this call.
@@ -261,8 +298,7 @@ const Drawer = ({
             </Conditional>
           </Conditional>
           <CloseIcon
-            // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
-            onClick={() => closeHandler('Close Icon')}
+            onClick={() => close('Close Icon')}
             className="close-icon"
           />
         </HeadingContainer>

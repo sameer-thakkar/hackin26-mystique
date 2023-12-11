@@ -915,6 +915,16 @@ const it = {
   },
   PC_EXP: {
     SHOW_INCL: 'Inclusioni e informazioni importanti',
+    CLEAR: 'Annulla',
+    ALL_EXPERIENCES: 'Tutte le esperienze',
+    FILTER_BY_CATEGORIES: 'Filtra per categoria',
+    CATEGORIES: 'Categorie',
+    COMBOS: {
+      HEADING:
+        'Le cose belle vengono sempre in coppia. Come le nostre offerte combinate.',
+      DESCRIPTOR_1: 'Offerte convenienti',
+      DESCRIPTOR_2: 'Pianifica al meglio il tuo viaggio',
+    },
   },
   TOP: 'Il meglio di: {0}',
 };
