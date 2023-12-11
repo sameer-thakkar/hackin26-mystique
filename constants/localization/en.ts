@@ -977,6 +977,9 @@ const en = {
     },
   },
   TOP: 'Top {0}',
+  VIEW_MORE_MONTHS: 'View more months',
+  BEST_WEST_END_SHOWS_CALENDAR: 'Best west end shows calendar',
+  IN: 'in',
 };
 
 export default en;

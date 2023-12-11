@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Breadcrumbs from 'components/Breadcrumbs';
+import Conditional from 'components/common/Conditional';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import { TCategoryPageBannerProps } from 'components/MicrositeV2/CategoryPageBanner/interface';
 import {
@@ -17,6 +18,7 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
   bannerImgUrl,
   isMobile,
   breadcrumbs,
+  isMonthOnMonthPage = false,
 }) => {
   const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -37,7 +39,7 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
   }, []);
 
   return (
-    <Wrapper hasScrolled={hasScrolled}>
+    <Wrapper hasScrolled={hasScrolled} $isMonthOnMonthPage={isMonthOnMonthPage}>
       <Container>
         <Breadcrumbs
           breadcrumbs={breadcrumbs}
@@ -46,15 +48,17 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
         />
         <BannerContent>
           <h1>{heading}</h1>
-          <ImageContainer>
-            <Image
-              url={bannerImgUrl}
-              width={isMobile ? 155 : 555}
-              height={isMobile ? 56 : 156}
-              alt={`${heading} Illustration`}
-            />
-            <Gradient hasScrolled={hasScrolled} />
-          </ImageContainer>
+          <Conditional if={bannerImgUrl}>
+            <ImageContainer>
+              <Image
+                url={bannerImgUrl}
+                width={isMobile ? 155 : 555}
+                height={isMobile ? 56 : 156}
+                alt={`${heading} Illustration`}
+              />
+              <Gradient hasScrolled={hasScrolled} />
+            </ImageContainer>
+          </Conditional>
         </BannerContent>
         <Separator />
       </Container>

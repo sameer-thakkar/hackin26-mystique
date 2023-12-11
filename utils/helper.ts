@@ -4,6 +4,7 @@ import type {
   SelectField,
 } from '@prismicio/types';
 import dayjs, { Dayjs } from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import parse from 'url-parse';
@@ -32,6 +33,7 @@ import {
   F1_SPORTS_EXPERIMENT_TGIDS,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
+  MONTHS,
   PAGE_URL_STRUCTURE,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -397,16 +399,58 @@ export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
   }
 };
 
-const compareDates = (
-  startMonthDate: Dayjs,
-  endMonthDate: Dayjs,
-  startTourDate: Dayjs,
-  endTourDate: Dayjs
-) => {
-  return (
-    startTourDate.isSameOrBefore(startMonthDate, 'month') &&
-    endTourDate.isSameOrAfter(endMonthDate, 'month')
+export const getNextOccurrenceYear = (targetMonthName: string) => {
+  const currentYear = dayjs().year();
+  const currentMonthName = dayjs().format('MMMM');
+
+  const targetMonthIndex = MONTHS.findIndex(
+    (month: string) => month.toLowerCase() === targetMonthName.toLowerCase()
   );
+
+  if (targetMonthIndex === -1) {
+    // Month name not found
+    return -1;
+  }
+
+  const currentMonthIndex = MONTHS.findIndex(
+    (month: string) => month.toLowerCase() === currentMonthName.toLowerCase()
+  );
+
+  if (targetMonthIndex >= currentMonthIndex) {
+    // If the target month is ahead or the same as the current month in this year
+    return currentYear;
+  } else {
+    // If the target month is ahead in the next year
+    return currentYear + 1;
+  }
+};
+
+export const isTargetMonthInBetweenTargetDates = (
+  start: Dayjs,
+  end: Dayjs,
+  targetYear: number,
+  targetMonth: number
+) => {
+  dayjs.extend(isBetween);
+  // Get the first date of the target month
+  const firstDateOfMonth = dayjs(new Date(targetYear, targetMonth, 1));
+  // Get the last date of the target month
+  const lastDateOfMonth = dayjs(firstDateOfMonth).endOf('month');
+
+  return (
+    firstDateOfMonth.isBetween(start, end) ||
+    lastDateOfMonth.isBetween(start, end)
+  );
+};
+
+export const padSingleDigit = (number: number) => {
+  // Check if the number is less than 10
+  if (number < 10) {
+    // If the number is a single digit, add a preceding zero
+    return `0${number}`;
+  }
+  // If the number is already two digits or more, return it as is
+  return `${number}`;
 };
 
 export const getTGIDListForMonth = (
@@ -414,17 +458,7 @@ export const getTGIDListForMonth = (
   displayMonth: any
 ): Array<number> => {
   const allToursArray = Object.values(allTours);
-
-  const startMonthDate = dayjs(
-    `${displayMonth}/01/${dayjs().year()}`,
-    'MMMM/DD/YYYY'
-  );
-  const endMonthDate = startMonthDate.add(
-    startMonthDate.daysInMonth() - 1,
-    'days'
-  );
-  const startMonthNextYearDate = startMonthDate.add(1, 'years');
-  const endMonthNextYearDate = endMonthDate.add(1, 'years');
+  const targetYear = getNextOccurrenceYear(displayMonth);
 
   return allToursArray.reduce((accumulator: any[], element) => {
     const endTourDate = dayjs((element as any)['closingDate'], 'YYYY-MM-DD');
@@ -432,13 +466,17 @@ export const getTGIDListForMonth = (
       (element as any)['reopeningDate'],
       'YYYY-MM-DD'
     );
+    const targetMonthIndex = MONTHS.findIndex(
+      (month: string) => month.toLowerCase() === displayMonth.toLowerCase()
+    );
+    const paddedMonthIndex = Number(padSingleDigit(targetMonthIndex));
+
     if (
-      compareDates(startMonthDate, endMonthDate, startTourDate, endTourDate) ||
-      compareDates(
-        startMonthNextYearDate,
-        endMonthNextYearDate,
+      isTargetMonthInBetweenTargetDates(
         startTourDate,
-        endTourDate
+        endTourDate,
+        targetYear,
+        paddedMonthIndex
       )
     ) {
       return [...accumulator, element['tgid']];
@@ -454,7 +492,7 @@ export const getDiscountedProducts = (
     (acc: any[], product: Record<string, any>) => {
       const { listingPrice, tgid } = product;
       const { finalPrice, originalPrice } = listingPrice || {};
-      if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
+      if (listingPrice && finalPrice < originalPrice) {
         return [...acc, tgid];
       }
       return acc;

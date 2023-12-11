@@ -189,6 +189,7 @@ class MicrositeV2 extends Component<any, any> {
       tagged_category: taggedCategoryName,
       tagged_sub_category: taggedSubCategoryName,
       tagged_mb_type: taggedMbType,
+      tagged_collection: taggedCollection,
     } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
     const currentLanguage = getLangObject(CMSContent.lang).code;
     const languageProps = {
@@ -451,6 +452,7 @@ class MicrositeV2 extends Component<any, any> {
     } = primary || {};
 
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
+
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     let themeOverride = theme_override || THEMES.INHERIT;
     themeOverride =
@@ -518,6 +520,7 @@ class MicrositeV2 extends Component<any, any> {
       taggedCategoryName,
       taggedSubCategoryName,
       taggedMbType,
+      taggedCollection,
       categoryHeaderMenu,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,

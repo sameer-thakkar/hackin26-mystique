@@ -131,5 +131,27 @@ export const localDateToJsDate = (dateString?: string) => {
   if (!dateString) return '';
   return dayjs(dateString, 'YYYY-MM-DD').toDate();
 };
+
 export const formatDate = (date: Date, dateFormat = 'DD-MM-YYYY') =>
   dayjs(date).format(dateFormat);
+
+export const getOrderedMonthsBasedOnCurrentMonth = () => {
+  const today = dayjs();
+  const nextYear = today.add(1, 'year');
+  const monthsList = [];
+
+  let currentMonth = today;
+  while (
+    currentMonth.isBefore(nextYear.subtract(1, 'month'), 'month') ||
+    currentMonth.isSame(nextYear.subtract(1, 'month'), 'month')
+  ) {
+    monthsList.push({
+      long_format_month: currentMonth.format('MMMM'),
+      short_format_month: currentMonth.format('MMM'),
+      year: currentMonth.format('YYYY'),
+    });
+    currentMonth = currentMonth.add(1, 'month');
+  }
+
+  return monthsList;
+};

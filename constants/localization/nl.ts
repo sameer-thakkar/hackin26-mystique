@@ -872,5 +872,8 @@ const nl = {
     TOUR_FREQUENCY: 'Frequentie',
   },
   TOP: 'Top-{0}',
+  VIEW_MORE_MONTHS: 'Toon meer maanden',
+  BEST_WEST_END_SHOWS_CALENDAR: 'Kalender van de beste West End-shows',
+  IN: 'in',
 };
 export default nl;

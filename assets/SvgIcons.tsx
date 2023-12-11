@@ -6812,6 +6812,7 @@ export const AVATAR = (
     />
   </svg>
 );
+
 export const NEWS_PAGE_NEXT_ICON = (
   <svg
     width="36"
@@ -6819,6 +6820,7 @@ export const NEWS_PAGE_NEXT_ICON = (
     viewBox="0 0 36 38"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="month"
   >
     <path
       d="M35.5089 19.0386C35.5089 28.804 27.6657 36.7127 18 36.7127C8.33435 36.7127 0.491143 28.804 0.491143 19.0386C0.491143 9.27326 8.33435 1.36456 18 1.36456C27.6657 1.36456 35.5089 9.27326 35.5089 19.0386Z"
@@ -7367,6 +7369,437 @@ export const CheckMarkSvg = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+export const MONTH = ({ month, year }: { month: string; year: string }) => (
+  <svg
+    width="136"
+    height="119"
+    viewBox="0 0 136 119"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="month"
+  >
+    <g clipPath="url(#clip0_28_4291)">
+      <rect width="136" height="119" rx="8" fill="#9933FF" />
+      <rect width="136" height="37" fill="url(#paint0_radial_28_4291)" />
+      <path
+        d="M0 37H136V111C136 115.418 132.418 119 128 119H8C3.58172 119 0 115.418 0 111V37Z"
+        fill="url(#paint1_linear_28_4291)"
+      />
+      <text
+        fill="black"
+        fillOpacity="0.8"
+        xmlSpace="preserve"
+        fontFamily="Halyard Display"
+        fontSize="24"
+        letterSpacing="0.8px"
+      >
+        <tspan x="43.4109" y="84.324">
+          {month}
+        </tspan>
+      </text>
+      <text
+        fill="white"
+        xmlSpace="preserve"
+        fontFamily="Halyard Display"
+        fontSize="24"
+        letterSpacing="0.8px"
+      >
+        <tspan x="39.3352" y="29.324">
+          {year}
+        </tspan>
+      </text>
+    </g>
+    <defs>
+      <radialGradient
+        id="paint0_radial_28_4291"
+        cx="0"
+        cy="0"
+        r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(101 2.14091e-06) rotate(147.011) scale(67.9559 249.784)"
+      >
+        <stop stopColor="#9E3AFE" />
+        <stop offset="1" stopColor="#B96BFB" />
+      </radialGradient>
+      <linearGradient
+        id="paint1_linear_28_4291"
+        x1="125.5"
+        y1="42.5"
+        x2="29"
+        y2="119"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#DEBBFE" />
+        <stop offset="0.841701" stopColor="#F9E9FB" />
+      </linearGradient>
+      <clipPath id="clip0_28_4291">
+        <rect width="136" height="119" rx="8" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const HOVERED_MONTH = ({
+  month,
+  year,
+}: {
+  month: string;
+  year: string;
+}) => (
+  <svg
+    width="136"
+    height="119"
+    viewBox="0 0 136 119"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="hovered-month"
+  >
+    <g clipPath="url(#clip0_4_42)">
+      <rect width="136" height="119" rx="8" fill="#9933FF" />
+      <rect width="136" height="37" fill="url(#paint0_radial_4_42)" />
+      <path
+        d="M0 37H136V111C136 115.418 132.418 119 128 119H8C3.58172 119 0 115.418 0 111V37Z"
+        fill="url(#paint1_linear_4_42)"
+      />
+      <g filter="url(#filter0_d_4_42)">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M137 92.7183L137 92.7182L137 92.718V92.0145H136.318L136.304 92L136.289 92.0145H118C113.029 92.0145 109 96.0439 109 101.014V119.256H110.014L109.26 120L126.395 119.256H128C128.539 119.256 129.067 119.209 129.581 119.118L136.853 118.802L136.853 111.883C136.95 111.356 137 110.812 137 110.256V92.7183ZM136.853 92.862L136.853 111.883C136.181 115.565 133.269 118.464 129.581 119.118L126.395 119.256H110.014L125.272 104.204L136.853 92.862ZM136.853 92.862V92.7794L125.272 104.204L109.903 119.256L109.207 118.538L136.289 92.0145H136.318L137 92.718V92.7183L136.853 92.862Z"
+          fill="white"
+          fillOpacity="0.3"
+          shapeRendering="crispEdges"
+        />
+      </g>
+      <text
+        fill="black"
+        fillOpacity="0.8"
+        xmlSpace="preserve"
+        fontFamily="Halyard Display"
+        fontSize="24"
+        letterSpacing="0.8px"
+      >
+        <tspan x="43.4109" y="84.324">
+          {month}
+        </tspan>
+      </text>
+      <text
+        fill="white"
+        xmlSpace="preserve"
+        fontFamily="Halyard Display"
+        fontSize="24"
+        letterSpacing="0.8px"
+      >
+        <tspan x="39.3352" y="29.324">
+          {year}
+        </tspan>
+      </text>
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_4_42"
+        x="101"
+        y="84"
+        width="36.0001"
+        height="36"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dx="-4" dy="-4" />
+        <feGaussianBlur stdDeviation="2" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0.501961 0 0 0 0 0 0 0 0 0 1 0 0 0 0.04 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_4_42"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_4_42"
+          result="shape"
+        />
+      </filter>
+      <radialGradient
+        id="paint0_radial_4_42"
+        cx="0"
+        cy="0"
+        r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(101 2.14091e-06) rotate(147.011) scale(67.9559 249.784)"
+      >
+        <stop stopColor="#9E3AFE" />
+        <stop offset="1" stopColor="#B96BFB" />
+      </radialGradient>
+      <linearGradient
+        id="paint1_linear_4_42"
+        x1="136"
+        y1="43"
+        x2="-7.61549e-06"
+        y2="119"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#E8D2FF" />
+        <stop offset="1" stopColor="#FCF3FC" />
+      </linearGradient>
+      <clipPath id="clip0_4_42">
+        <rect width="136" height="119" rx="8" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const MOBILE_HOVERED_MONTH = ({
+  month,
+  year,
+}: {
+  month: string;
+  year: string;
+}) => {
+  return (
+    <svg
+      width="72"
+      height="72"
+      viewBox="0 0 72 72"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_35_56794)">
+        <rect
+          width="72"
+          height="72"
+          rx="6"
+          fill="url(#paint0_radial_35_56794)"
+        />
+        <path
+          d="M0 19H72V66C72 69.3137 69.3137 72 66 72H6C2.68629 72 0 69.3137 0 66V19Z"
+          fill="url(#paint1_radial_35_56794)"
+        />
+        <text
+          fill="black"
+          fillOpacity="0.8"
+          xmlSpace="preserve"
+          fontFamily="Halyard Display"
+          fontSize="14"
+          letterSpacing="0.522449px"
+        >
+          <tspan x="21.1006" y="49.5819">
+            {month}
+          </tspan>
+        </text>
+        <text
+          fill="white"
+          xmlSpace="preserve"
+          fontFamily="Halyard Display"
+          fontSize="12"
+          letterSpacing="0.391837px"
+        >
+          <tspan x="21.4299" y="15.111">
+            {year}
+          </tspan>
+        </text>
+        <g filter="url(#filter0_d_35_56794)">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M72.3672 58.4673L72.3673 58.4672L72.3672 58.4672V58.1087H72.0174L71.9111 57.9998L71.7992 58.1087H63.8774C60.6313 58.1087 57.9999 60.7402 57.9999 63.9863V71.9872H58.5206L58.1332 72.3667L72.2918 71.7562L72.2918 67.054C72.3414 66.7465 72.3672 66.4311 72.3672 66.1097V58.4673ZM72.2918 58.5406L72.2918 67.054C71.84 69.8511 69.4143 71.9872 66.4897 71.9872H58.5206L66.3788 64.2903L72.2918 58.5406ZM72.2918 58.5406V58.4987L66.3788 64.2903L58.4634 71.9872L58.0072 71.5199L71.7992 58.1087H72.0174L72.3672 58.4672V58.4673L72.2918 58.5406Z"
+            fill="white"
+            fillOpacity="0.3"
+            shapeRendering="crispEdges"
+          />
+        </g>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_35_56794"
+          x="52.7754"
+          y="52.7754"
+          width="19.5919"
+          height="19.5913"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dx="-2.61224" dy="-2.61224" />
+          <feGaussianBlur stdDeviation="1.30612" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.501961 0 0 0 0 0 0 0 0 0 1 0 0 0 0.04 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_35_56794"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_35_56794"
+            result="shape"
+          />
+        </filter>
+        <radialGradient
+          id="paint0_radial_35_56794"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(36 21) rotate(-145.491) scale(48.5412)"
+        >
+          <stop stopColor="#C986F9" />
+          <stop offset="1" stopColor="#9933FF" />
+        </radialGradient>
+        <radialGradient
+          id="paint1_radial_35_56794"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(36 45.5) rotate(140.371) scale(41.5482 56.4428)"
+        >
+          <stop stopColor="#FDF0FA" />
+          <stop offset="1" stopColor="#DEBBFE" />
+        </radialGradient>
+        <clipPath id="clip0_35_56794">
+          <rect width="72" height="72" rx="6" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const CALENDAR_FAB = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="26"
+    height="26"
+    viewBox="0 0 26 26"
+    fill="none"
+  >
+    <g clipPath="url(#clip0_556_16090)">
+      <g filter="url(#filter0_d_556_16090)">
+        <rect
+          x="0.170898"
+          y="0.170898"
+          width="25.6579"
+          height="25.6579"
+          rx="3.42105"
+          fill="#E8CDFD"
+        />
+      </g>
+      <path
+        d="M0.170898 3.59195C0.170898 1.70256 1.70256 0.170898 3.59195 0.170898H22.4077C24.2971 0.170898 25.8288 1.70256 25.8288 3.59195V8.72353H0.170898V3.59195Z"
+        fill="#9933FF"
+      />
+      <g filter="url(#filter1_d_556_16090)">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M26.639 18.3947L26.6837 18.351L26.4753 18.136H26.684V23.7078C26.684 23.8778 26.6685 24.0442 26.639 24.2057L26.639 18.3947ZM23.1313 21.8301L26.639 18.3697V18.3947L23.1313 21.8301ZM18.4412 26.4569L23.1313 21.8301L18.407 26.4569H18.4069L18.1944 26.2376L26.4667 18.136H26.4753L26.4711 18.1316L26.4667 18.136H20.8804C19.3621 18.136 18.1313 19.3668 18.1313 20.885V26.4569H18.4069L18.4069 26.4569L18.407 26.4569H18.4412ZM23.4463 26.4569H18.4412L18.2107 26.6843L23.4463 26.4569ZM24.4172 26.4147C25.5437 26.2154 26.4333 25.33 26.639 24.2057L26.639 26.3183L24.4172 26.4147ZM24.4172 26.4147L23.4463 26.4569H23.9349C24.0994 26.4569 24.2606 26.4424 24.4172 26.4147Z"
+          fill="white"
+          fillOpacity="0.3"
+          shapeRendering="crispEdges"
+        />
+      </g>
+      <path
+        d="M12.5728 18.7034L10.5826 19.7982C10.5235 19.8305 10.457 19.8449 10.3906 19.8398C10.3242 19.8347 10.2605 19.8104 10.2065 19.7694C10.1525 19.7285 10.1104 19.6727 10.0849 19.6081C10.0594 19.5435 10.0515 19.4728 10.0621 19.4037L10.4424 17.0842L8.83234 15.442C8.78428 15.3932 8.75026 15.3312 8.73414 15.2631C8.71803 15.195 8.72048 15.1235 8.74122 15.0568C8.76195 14.9901 8.80014 14.9308 8.85141 14.8858C8.90268 14.8408 8.96498 14.8118 9.03118 14.8022L11.2561 14.4635L12.2512 12.3537C12.281 12.2909 12.3268 12.238 12.3837 12.2011C12.4405 12.1641 12.506 12.1445 12.5728 12.1445C12.6397 12.1445 12.7052 12.1641 12.762 12.2011C12.8189 12.238 12.8647 12.2909 12.8945 12.3537L13.8896 14.4635L16.1145 14.8022C16.1805 14.8122 16.2426 14.8413 16.2936 14.8864C16.3447 14.9315 16.3827 14.9906 16.4034 15.0572C16.4241 15.1237 16.4266 15.1951 16.4107 15.2631C16.3948 15.3311 16.3611 15.393 16.3134 15.442L14.7033 17.0842L15.0827 19.4028C15.0941 19.4719 15.0868 19.543 15.0616 19.608C15.0364 19.673 14.9944 19.7293 14.9403 19.7705C14.8862 19.8117 14.8222 19.8361 14.7555 19.841C14.6888 19.8459 14.6222 19.8311 14.5631 19.7982L12.5728 18.7034Z"
+        fill="#9933FF"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_556_16090"
+        x="-10.0923"
+        y="-7.35542"
+        width="46.184"
+        height="46.1843"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dy="2.73684" />
+        <feGaussianBlur stdDeviation="5.13158" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0.5 0 0 0 0 0 0 0 0 0 1 0 0 0 0.3 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_556_16090"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_556_16090"
+          result="shape"
+        />
+      </filter>
+      <filter
+        id="filter1_d_556_16090"
+        x="15.6877"
+        y="15.688"
+        width="10.9963"
+        height="10.9963"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dx="-1.22181" dy="-1.22181" />
+        <feGaussianBlur stdDeviation="0.610903" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0.501961 0 0 0 0 0 0 0 0 0 1 0 0 0 0.04 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_556_16090"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_556_16090"
+          result="shape"
+        />
+      </filter>
+      <clipPath id="clip0_556_16090">
+        <rect width="26" height="26" rx="4.10526" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
 
 export const DiscountVerticalBanner = (props: SVGProps<SVGSVGElement>) => (
   <svg

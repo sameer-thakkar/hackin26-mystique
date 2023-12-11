@@ -531,6 +531,8 @@ export const ANALYTICS_EVENTS = {
     CALENDAR_CLOSED: 'Calendar Closed',
     CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
   },
+  MONTH_ICON_CLICKED: 'Month Icon Clicked',
+  FAB_ICON_CLICKED: 'Fab Icon Clicked',
   CATEGORY_SELECTED: 'Category Selected',
   CATEGORY_FILTER_APPLIED: 'Category Filter Applied',
   CATEGORY_FILTER_CLEARED: 'Category Filter Cleared',
@@ -959,6 +961,9 @@ export const ANALYTICS_PROPERTIES = {
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
   PLACEMENT: 'Placement',
+  MONTH_ICON: 'Month Icon',
+  MONTH_PAGE: 'Month Page',
+  ICON_TYPE: 'Icon Type',
   FILTER_TYPE: 'Filter Type',
 };
 
@@ -1857,11 +1862,31 @@ export const NEWS_PAGE_SECTIONS = {
   REVIEWS: 'Reviews',
 } as const;
 
+export const MONTH_ON_MONTH_PAGE_SECTIONS = {
+  CALENDARY_MONTH: 'Calendar Month',
+};
 export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;
 
 export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 
 export const X_CACHE_HEADER_KEY = 'x-cache' as const;
 
+export const CALENDAR_UNIT = 'calendar-unit';
+
+export const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 export const ENTITY_ICONS_FOLDER_LINK =
   'https://cdn-imgix-open.headout.com/categories';
+

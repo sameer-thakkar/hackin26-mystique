@@ -47,6 +47,7 @@ import { titleCase } from 'utils/stringUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+// import COLORS from 'const/colors';
 import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
@@ -128,6 +129,11 @@ const DesktopBannerV2 = dynamic(() =>
 );
 const Footer = dynamic(() =>
   import(/* webpackChunkName: "Footer" */ 'components/common/Footer')
+);
+const MonthOnMonthPage = dynamic(() =>
+  import(
+    /* webpackChunkName: "MonthOnMonthPage"*/ 'components/MonthOnMonthPage'
+  )
 );
 
 const V2MicrositeWrapper = styled.div<{
@@ -250,6 +256,7 @@ export const HomePage = (props: any) => {
     taggedCity,
     taggedCategoryName,
     taggedSubCategoryName,
+    taggedCollection,
     taggedMbType,
     categoryHeaderMenu,
     baseLangIsPoiMb,
@@ -287,6 +294,7 @@ export const HomePage = (props: any) => {
     lttRevampExpVariant === VARIANTS.TREATMENT && isLTTRevampExpEligible;
 
   let { categoryProps } = props;
+
   const isDiscountedPage = displayMonths === 'Discounted';
   const bannerAndFooterSubtext = getBannerAndFooterSubtext(
     baseLangIsPoiMb,
@@ -294,6 +302,11 @@ export const HomePage = (props: any) => {
   );
 
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
+  const isLttMonthOnMonthPage =
+    isEntertainmentMbListicle &&
+    !!displayMonths &&
+    heroSectionSlice[0]?.items?.[0]?.month_label !== null;
   const isCategoryMicrobrand = isCategoryMB(mbType);
   const isSubCategoryMicrobrand = isSubCategoryMB(mbType);
 
@@ -311,7 +324,7 @@ export const HomePage = (props: any) => {
   });
   const isCategoryPage = !!primarySubCategoryId;
 
-  if (isListicle || isDiscountedPage) {
+  if (!isLttMonthOnMonthPage && (isListicle || isDiscountedPage)) {
     let singleCategory = [];
     let allowedTours;
     let priceSortTours;
@@ -364,7 +377,6 @@ export const HomePage = (props: any) => {
   const { mbTheme } = useContext(MBContext);
   const coverHeading = withShortcodes(heroProps?.coverHeading);
   const allTgids = Object.keys(allTours);
-  const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   const {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
@@ -432,12 +444,29 @@ export const HomePage = (props: any) => {
         logoAltText={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
         isCategoryPage={isCategoryPage}
-        isNewLTTLandingPageVisible={showLttTreatment || isCategoryPage}
+        isMonthOnMonthPage={isLttMonthOnMonthPage}
+        isNewLTTLandingPageVisible={
+          showLttTreatment || isCategoryPage || isLttMonthOnMonthPage
+        }
         primaryCity={primaryCity}
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
         categoryHeaderMenuExists={categoryHeaderMenuExists}
       />
+      <Conditional if={isLttMonthOnMonthPage}>
+        <MonthOnMonthPage
+          heroProps={heroProps}
+          isMobile={isMobile}
+          breadcrumbs={breadcrumbs}
+          browseByCategoriesRef={browseByCategorySectionRef}
+          taggedCollection={taggedCollection}
+          categoryTourListData={categoryTourListData}
+          categoryProps={categoryProps}
+          allTours={allTours}
+          pageTabsSlice={heroSectionSlice[0]}
+          displayMonth={displayMonths}
+        />
+      </Conditional>
       <Conditional
         if={
           categoryHeaderMenuExists &&
@@ -542,8 +571,13 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
         />
       </Conditional>
-
-      <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
+      <Conditional
+        if={
+          isEntertainmentMbListicle &&
+          !isCatOrSubCatPage &&
+          !isLttMonthOnMonthPage
+        }
+      >
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>
         </ListicleHeadingWrapper>
@@ -578,7 +612,13 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional if={isEntertainmentMbListicle && !isCatOrSubCatPage}>
+      <Conditional
+        if={
+          isEntertainmentMbListicle &&
+          !isCatOrSubCatPage &&
+          !isLttMonthOnMonthPage
+        }
+      >
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             <MonthTabs
@@ -594,7 +634,8 @@ export const HomePage = (props: any) => {
           hasToursSection &&
           !showLttTreatment &&
           !isCatOrSubCatPage &&
-          !isCategoryPage
+          !isCategoryPage &&
+          !isLttMonthOnMonthPage
         }
       >
         <ProductsWrapper
@@ -623,8 +664,14 @@ export const HomePage = (props: any) => {
           directTgid={directTgid}
         />
       </Conditional>
+      {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner */}
       <Conditional
-        if={automatedBreadcrumbsExists && !isCatOrSubCatPage && !isCategoryPage}
+        if={
+          automatedBreadcrumbsExists &&
+          !isCategoryPage &&
+          isCatOrSubCatPage &&
+          !isEntertainmentMbListicle
+        }
       >
         <LazyComponent>
           <Breadcrumbs

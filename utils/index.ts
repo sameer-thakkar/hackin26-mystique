@@ -529,6 +529,29 @@ export const generatePromiseForCategoryTours = ({
   return allPromises;
 };
 
+export const generateSubcatFitleredCollectionsPromises = ({
+  subcategoryIds = [],
+  hostname,
+  lang,
+  cookies,
+  primaryCollection,
+}: any) => {
+  const allPromises = subcategoryIds?.map(async (catId: string) => {
+    let promise;
+
+    promise = await fetchCollection({
+      collectionId: primaryCollection,
+      hostname,
+      limit: '100',
+      language: getHeadoutLanguagecode(lang),
+      cookies,
+      primarySubCategoryID: catId,
+    });
+    return promise;
+  });
+  return allPromises;
+};
+
 export const getSinglePrismicSlice = ({
   sliceName,
   slices,
@@ -951,14 +974,16 @@ export const getAnalyticsPageType = ({
 };
 
 export const getPrimarySubCategoryIdData = (
-  primarySubCategoryId: string,
+  primarySubCategoryId: string | null,
   allData: Record<string, any>
 ) => {
   let finalData = {};
-  allData.forEach((item: Record<string, any>) => {
-    if (item?.subCategory?.id === primarySubCategoryId) {
-      finalData = item?.subCategory;
-    }
-  });
+  if (primarySubCategoryId) {
+    allData.forEach((item: Record<string, any>) => {
+      if (item?.subCategory?.id === primarySubCategoryId) {
+        finalData = item?.subCategory;
+      }
+    });
+  }
   return finalData;
 };

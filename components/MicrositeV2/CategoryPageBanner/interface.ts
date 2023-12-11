@@ -3,4 +3,5 @@ export type TCategoryPageBannerProps = {
   isMobile: boolean;
   bannerImgUrl: string;
   breadcrumbs: Record<string, any>;
+  isMonthOnMonthPage?: boolean;
 };

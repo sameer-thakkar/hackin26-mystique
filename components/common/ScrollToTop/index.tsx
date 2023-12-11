@@ -5,7 +5,11 @@ import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
 import ChevronDown from 'assets/ChevrontDown';
 
-const ScrollToTop = () => {
+const ScrollToTop = ({
+  $isLttMonthOnMonthPage,
+}: {
+  $isLttMonthOnMonthPage: boolean;
+}) => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -33,7 +37,10 @@ const ScrollToTop = () => {
   };
   return (
     <Conditional if={showButton}>
-      <StyledButton onClick={() => handleScroll()}>
+      <StyledButton
+        onClick={() => handleScroll()}
+        $isLttMonthOnMonthPage={$isLttMonthOnMonthPage}
+      >
         <ChevronDown />
       </StyledButton>
     </Conditional>

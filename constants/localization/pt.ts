@@ -917,5 +917,9 @@ const pt = {
     },
   },
   TOP: 'As melhores atrações em {0}',
+  VIEW_MORE_MONTHS: 'Ver mais meses',
+  BEST_WEST_END_SHOWS_CALENDAR:
+    'Calendário dos melhores espetáculos de West End',
+  IN: 'em',
 };
 export default pt;

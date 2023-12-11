@@ -918,5 +918,9 @@ const fr = {
     },
   },
   TOP: 'Le meilleur des : {0}',
+  VIEW_MORE_MONTHS: 'Afficher plus de mois',
+  BEST_WEST_END_SHOWS_CALENDAR:
+    'Calendrier des meilleurs spectacles du West End',
+  IN: 'en',
 };
 export default fr;

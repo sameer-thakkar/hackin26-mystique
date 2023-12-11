@@ -90,6 +90,7 @@ import {
   VIENNA_CONCERT_UID,
   X_CACHE_HEADER_KEY,
 } from 'const/index';
+import monthOnMonthPageParser from './parsers/monthOnMonthPageParser';
 import { ERROR_TYPES, LOG_LEVELS } from 'const/logs';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
@@ -1928,11 +1929,14 @@ export const getPageData = async ({
         theme,
         body,
         body1,
+        body4,
         allShowPages,
         localisedCategoryTourListV1,
         categoryTourListV2,
         baseLangCategorisationMetadata,
+        is_entertainment_mb: isEntertainmentMb,
       } = CMSData || {};
+
       const {
         tagged_mb_type: taggedMbType,
         tagged_category: taggedCategory,
@@ -1944,6 +1948,10 @@ export const getPageData = async ({
       const mbTheme = theme || THEMES.DEFAULT;
       const toursTabSlice = body?.[0];
       const toursTabFirstSlice = body1[0];
+      const isEntertainmentMbListicle =
+        isEntertainmentMb && categoryTourListV2?.primary?.islisticle;
+      const isLttMonthOnMonthPage =
+        isEntertainmentMbListicle && body4[0]?.items?.[0]?.month_label !== null;
 
       const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent?.data);
 
@@ -2015,6 +2023,17 @@ export const getPageData = async ({
               lang: lang ?? 'en',
             });
           }
+        } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
+          categoryTourListData = await monthOnMonthPageParser({
+            tourListCategory: categoryTourListV2,
+            hostname,
+            showpages: allShowPages,
+            lang: lang ?? 'en',
+            localizedStrings,
+            cookies,
+            MBDesign,
+            taggedCollection,
+          });
         } else {
           const timestampForCoralogix = Date.now();
           categoryTourListData = await categoryTourListParserV2({

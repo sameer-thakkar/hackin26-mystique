@@ -191,15 +191,13 @@ const CategoryCarouselsSection = ({
       {categoriesToRender.map((category, categoryNumber) => {
         if (category.ranking.popularity.length === 0) return null;
         return (
-          <>
-            <CategoryCarouselSwiper
-              key={categoryNumber}
-              category={category}
-              allTours={allTours}
-              isMobile={isMobile}
-              index={categoryNumber}
-            />
-          </>
+          <CategoryCarouselSwiper
+            key={categoryNumber}
+            category={category}
+            allTours={allTours}
+            isMobile={isMobile}
+            index={categoryNumber}
+          />
         );
       })}
     </CategoriesSectionWrapper>

@@ -6,6 +6,7 @@ import { captureException } from '@sentry/nextjs';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { TCatAndSubCatPageData } from 'components/CatAndSubCatPage/interface';
 import Clarity from 'components/common/Clarity';
+import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
@@ -102,7 +103,16 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     isGDPRCompliant,
     ContentType,
     MBDesign,
+    CMSContent,
   } = pageProps;
+
+  const { data } = CMSContent || {};
+  const { data: pageData } = data || {};
+  const { categoryTourListV2, is_entertainment_mb, body4 } = pageData || {};
+  const isEntertainmentMbListicle =
+    is_entertainment_mb && categoryTourListV2?.primary?.islisticle;
+  const isLttMonthOnMonthPage =
+    isEntertainmentMbListicle && body4[0]?.items?.[0]?.month_label !== null;
 
   const pageType = ContentType + (MBDesign || '');
 
@@ -290,8 +300,10 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       <RecoilRoot initializeState={initRecoil}>
         {getLanguageBasedGlobalStyling(langCode)}
         <Component {...pageProps} />
-        <ScrollToTop />
-        <LiveChat uid={pageProps?.uid} />
+        <ScrollToTop $isLttMonthOnMonthPage={isLttMonthOnMonthPage} />
+        <Conditional if={!isLttMonthOnMonthPage}>
+          <LiveChat uid={pageProps?.uid} />
+        </Conditional>
         <DeferredComponent delay={3_000}>
           <CookieBanner
             isMobile={isMobile}

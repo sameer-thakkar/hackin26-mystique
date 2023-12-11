@@ -65,6 +65,7 @@ const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     shoulder_page_custom_label: shoulderPageCustomLabel,
     categoryTourListV2,
     images,
+    is_entertainment_mb: isEntertainmentMb,
   } = data;
 
   const localisedCategoryHeading = images[0]?.main_heading;
@@ -73,15 +74,21 @@ const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     shoulderPageCustomLabel: shoulderPageCustomLabel || '',
   });
   const isCategoryPage = !!categoryTourListV2?.primary?.primary_subcategory_id;
+  const isEntertainmentMbListicle =
+    isEntertainmentMb && categoryTourListV2?.primary?.islisticle;
 
-  if (!taggedCollection || (!finalShoulderPageLabel && !isCategoryPage))
+  if (
+    !taggedCollection ||
+    (!finalShoulderPageLabel && !isCategoryPage && !isEntertainmentMbListicle)
+  )
     return {};
 
   const breadcrumbs: TBreadcrumbs = {};
 
   if (
     taggedPageType === MB_CATEGORISATION.PAGE_TYPE.SHOULDER_PAGE ||
-    isCategoryPage
+    isCategoryPage ||
+    isEntertainmentMbListicle
   ) {
     const headoutLanguagecode = getHeadoutLanguagecode(lang);
     const { collection: collectionData } =
@@ -110,7 +117,10 @@ const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     };
     breadcrumbs[`level_2`] = {
       level: 2,
-      label: isCategoryPage ? localisedCategoryHeading : finalShoulderPageLabel,
+      label:
+        isCategoryPage || isEntertainmentMbListicle
+          ? localisedCategoryHeading
+          : finalShoulderPageLabel,
       url: pageUrl,
     };
   }

@@ -82,7 +82,7 @@ export const CookieContainer = styled.div<{
   bottom: 1rem;
   border-radius: 0.5rem;
   border: 1px solid ${COLORS.GRAY.G6};
-  z-index: 9;
+  z-index: 10;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.12),
     0 -0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.08);
 

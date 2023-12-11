@@ -39,6 +39,52 @@ export const accumulatingCategoryAndItemsData = (
   }
 };
 
+export const accumulatingCategoryDataFromCollectionItems = (
+  filteredCollectionData: any,
+  categoriesWithProducts: any,
+  allTgids: number[][],
+  subCategoryData: Record<string, any>[]
+) => {
+  let subCategory = {};
+  const result = filteredCollectionData?.map(
+    (c: Record<string, any>, index: number) => {
+      const { sections } = c || {};
+      const filteredData = sections?.filter(
+        (curr: { tourGroups: { items: [] } }) => {
+          return curr?.tourGroups?.items?.length;
+        }
+      );
+
+      let filterTgids: [][] = [];
+
+      filteredData?.forEach(
+        (section: {
+          tourGroups: {
+            items: [];
+          };
+        }) => {
+          if (section?.tourGroups?.items) {
+            subCategory = subCategoryData[index]?.subCategory;
+            filterTgids = filterTgids.concat(section.tourGroups.items);
+          }
+        }
+      );
+      return {
+        subCategory,
+        items: filterTgids,
+      };
+    }
+  );
+
+  const tgids: number[] = extractTgidsFromCategories(result);
+  if (result?.length) {
+    categoriesWithProducts.push(result);
+  }
+  if (tgids?.length) {
+    allTgids.push(tgids);
+  }
+};
+
 export const extractFirstRichTextSliceContent = (
   CFData: Record<string, any>,
   uid: string

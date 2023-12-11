@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 
-export const StyledButton = styled.div`
+export const StyledButton = styled.div<{
+  $isLttMonthOnMonthPage: boolean;
+}>`
   display: inline-block;
   position: fixed;
   bottom: 5.938rem;
@@ -18,7 +20,8 @@ export const StyledButton = styled.div`
   }
 
   @media (max-width: 768px) {
-    bottom: 1.5rem;
+    bottom: ${({ $isLttMonthOnMonthPage }) =>
+      $isLttMonthOnMonthPage ? '6rem' : '1.5rem'};
     right: 1rem;
   }
 `;

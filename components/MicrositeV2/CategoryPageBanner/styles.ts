@@ -5,6 +5,7 @@ import { expandFontToken } from 'const/typography';
 
 export const Wrapper = styled.div<{
   hasScrolled: boolean;
+  $isMonthOnMonthPage: boolean;
 }>`
   position: relative;
   z-index: ${({ hasScrolled }) => (hasScrolled ? 0 : 16)};
@@ -26,7 +27,8 @@ export const Wrapper = styled.div<{
     background: linear-gradient(180deg, #190130, #382057);
     h1 {
       ${expandFontToken(FONTS.HEADING_LARGE)};
-      max-width: 11.25rem;
+      max-width: ${({ $isMonthOnMonthPage }) =>
+        $isMonthOnMonthPage ? '' : '11.25rem'};
     }
     margin-bottom: 1.5rem;
   }
@@ -43,6 +45,7 @@ export const Container = styled.div`
 
 export const BannerContent = styled.div`
   display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
   margin: 0.25rem 0 3.25rem 0;

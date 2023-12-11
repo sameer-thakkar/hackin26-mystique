@@ -59,6 +59,7 @@ interface IStyledHeader {
   showLttColoredHeader: boolean;
   isTop?: boolean;
   isCategoryPage?: boolean;
+  $isMonthOnMonthPage?: boolean;
   isNewLTTLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
@@ -94,7 +95,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
       check || headerHover ? 100 : 15};
     ${({ isGlobalMb }) =>
       isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
-    ${({ isEntertainmentMbListicle, $isPillBarSticky }) =>
+    ${({ isEntertainmentMbListicle, $isPillBarSticky, $isMonthOnMonthPage }) =>
+      !$isMonthOnMonthPage &&
       (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showLttColoredHeader }) =>
@@ -148,10 +150,16 @@ export const StyledHeader = styled.div<IStyledHeader>`
         isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
-      background: ${({ showLttColoredHeader, isCategoryPage }) => {
+      background: ${({
+        showLttColoredHeader,
+        isCategoryPage,
+        $isMonthOnMonthPage,
+      }) => {
         switch (true) {
           case showLttColoredHeader:
-            return isCategoryPage ? '#1A0232' : '#150029';
+            return isCategoryPage || $isMonthOnMonthPage
+              ? '#1A0232'
+              : COLORS.LTT_BANNER_BACKGROUND_COLOR;
           default:
             return '#fff';
         }
@@ -174,10 +182,14 @@ export const StyledHeader = styled.div<IStyledHeader>`
       display: none;
     }
 
-    ${({ showLttColoredHeader, isCategoryPage }) =>
+    ${({ showLttColoredHeader, isCategoryPage, $isMonthOnMonthPage }) =>
       showLttColoredHeader &&
       `.fixed-offset::before {
-      background-color:${isCategoryPage ? '#1A0232' : '#150029'};
+      background-color:${
+        isCategoryPage || $isMonthOnMonthPage
+          ? '#1A0232'
+          : COLORS.LTT_BANNER_BACKGROUND_COLOR
+      };
     }`}
   }
 `;
@@ -414,6 +426,7 @@ interface HeaderProps {
   buyTicketsLink?: string;
   isEntertainmentMb?: boolean;
   isCategoryPage?: boolean;
+  isMonthOnMonthPage?: boolean;
   isEntertainmentMbListicle?: boolean;
   hideCurrencySelector?: boolean;
   primaryCity?: string;
@@ -442,6 +455,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   changePage,
   isGlobalMb = false,
   isCategoryPage,
+  isMonthOnMonthPage = false,
   buyTicketsLink = '',
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
@@ -466,6 +480,7 @@ const Header: FunctionComponent<HeaderProps> = ({
 
   const showLttColoredHeader =
     isNewLTTLandingPageVisible && !hasScrolled && !navActive;
+
   const [scrollPos, setScrollPos] = useState(0);
 
   const handleResults = (results: any) => {
@@ -582,6 +597,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
       isCategoryPage={isCategoryPage}
+      $isMonthOnMonthPage={isMonthOnMonthPage}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
       showLttColoredHeader={showLttColoredHeader}
       isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}

@@ -907,6 +907,9 @@ const de = {
     },
   },
   TOP: 'Top-{0}',
+  VIEW_MORE_MONTHS: 'Weitere Monate anzeigen',
+  BEST_WEST_END_SHOWS_CALENDAR: 'Kalender für die besten West End Shows',
+  IN: 'im',
 };
 
 export default de;
