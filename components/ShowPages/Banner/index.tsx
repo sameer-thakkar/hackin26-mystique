@@ -37,7 +37,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BUTTON_LOADING_DURATION,
-  LANGUAGE_MAP,
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
@@ -154,7 +153,7 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
-      [ANALYTICS_PROPERTIES.MB_NAME]: getBannerTitle(),
+      [ANALYTICS_PROPERTIES.MB_NAME]: name,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -191,17 +190,6 @@ const ShowPageBanner = ({
       setButtonLoading(false);
     },
   });
-
-  const getBannerTitle = () => {
-    switch (currentLanguage) {
-      case LANGUAGE_MAP.de.code:
-        return `${name} ${strings.TICKETS}`;
-      case LANGUAGE_MAP.fr.code:
-        return `${strings.TICKETS}: ${name}`;
-      default:
-        return `${name} ${strings.TICKETS}`;
-    }
-  };
 
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
@@ -347,7 +335,7 @@ const ShowPageBanner = ({
         </div>
         <div className="heading-wrapper">
           <div>
-            <h1>{getBannerTitle()}</h1>
+            <h1>{name}</h1>
             <Conditional if={isMobile}>
               <Conditional if={theatrePageUrl}>
                 <a href={theatrePageUrl}>
