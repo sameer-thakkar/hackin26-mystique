@@ -635,9 +635,9 @@ const productCardPhase1ExperimentTreatmentVariantCss = css<{
       font-family: ${HALYARD.FONT_STACK};
       font-size: 1.125rem;
       font-style: normal;
-      font-weight: 600;
       line-height: 1.5rem;
       letter-spacing: 0;
+      font-weight: 500;
     }
   }
 
@@ -697,9 +697,9 @@ const productCardPhase1ExperimentTreatmentVariantCss = css<{
 
       .tour-price {
         .strike-through {
-          font-size: 1.25rem;
+          font-size: 1.125rem;
           font-style: normal;
-          font-weight: 600;
+          font-weight: 500;
           line-height: 1.5rem;
           letter-spacing: 0;
         }

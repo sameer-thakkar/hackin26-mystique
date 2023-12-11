@@ -908,7 +908,11 @@ export const getProductCardComboTours = (
     nonComboCardsPart1 = nonComboCardsPart1.slice(0, 2);
   }
 
-  if (nonComboCardsPart2.length < 2 || comboCards.length > 4)
+  if (
+    nonComboCardsPart2.length < 2 ||
+    comboCards.length > 4 ||
+    comboCards.length < 2
+  )
     return defaultOutput;
 
   return { comboCards, nonComboCardsPart1, nonComboCardsPart2 };
