@@ -20,9 +20,11 @@ import {
   extractAccordionsFromHighlights,
   getObject,
 } from 'components/HOHO/utils';
+import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import TabWrapper from 'components/slices/TabWrapper';
 import Image from 'UI/Image';
+import { Paginator } from 'UI/Paginator';
 import { MBContext } from 'contexts/MBContext';
 import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
@@ -35,7 +37,6 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import {
-  CHEVRON_RIGHT,
   DROPDOWN_TRIANGLE,
   LTT_CHEVRON_LEFT,
   LTT_CHEVRON_RIGHT,
@@ -56,14 +57,19 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
     isMobile,
     swipeNext,
     swipePrev,
-    activeIndex,
+    activeIndex = 0,
     totalCards,
     tgidRouteData,
     images,
     index,
+    descriptorsArray = [],
+    minDuration,
+    maxDuration,
+    isCombo,
   } = props;
 
   const {
+    lang,
     sidebarModal: { addToAside, closeAside },
   } = useContext(MBContext);
   const container = useRef(null);
@@ -220,15 +226,9 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       children: <TourGroupMoreDetails />,
       type: SIDEBAR_TYPES.TOUR_GROUP_INFO,
       sidePadding: 40,
-      title: tourGroupName?.split(':')?.[0],
+      title: tourGroupName,
     });
   };
-
-  const DROPDOWN_SVG = isMobile ? (
-    DROPDOWN_TRIANGLE
-  ) : (
-    <CHEVRON_RIGHT fillColor={COLORS.GRAY.G2} width={12} height={12} />
-  );
 
   return (
     <TourInfoContainer lessMargin={index === 0}>
@@ -241,30 +241,69 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
           fitCrop={true}
         />
         <div className="textinfo-container">
-          <h2>{tourGroupName?.split(':')?.[0]}</h2>
+          <h2>{isMobile ? tourGroupName?.split(':')?.[0] : tourGroupName}</h2>
+          <Conditional if={!isMobile}>
+            <ProductDescriptors
+              descriptorArray={descriptorsArray}
+              minDuration={minDuration}
+              maxDuration={maxDuration}
+              lang={lang}
+              isCombo={isCombo}
+              horizontal={true}
+            />
+          </Conditional>
           <div className="details-container">
-            <Conditional if={finalTimings || finalFrequecy}>
-              <div className="timings">
-                <span>{finalTimings}</span>
-                <Conditional if={finalFrequecy}>
-                  <span className="vertical-divider" />
-                  <span>{finalFrequecy}</span>
-                </Conditional>
-              </div>
-            </Conditional>
-            <div className="pills-container">
+            <Conditional if={!isMobile}>
+              <Conditional if={finalTimings}>
+                <DetailsPill>
+                  <div className="title">{strings.HOHO.TIMINGS}</div>
+                  <div className="info">{finalTimings}</div>
+                </DetailsPill>
+              </Conditional>
+              <Conditional if={finalFrequecy}>
+                <DetailsPill>
+                  <div className="title">{strings.HOHO.FREQUENCY}</div>
+                  <div className="info">{finalFrequecy}</div>
+                </DetailsPill>
+              </Conditional>
               <Conditional if={tgidRouteData}>
-                <DetailsPill onClick={onRouteDetailsClick}>
-                  {strings.HOHO.ROUTE_DETAILS} {DROPDOWN_SVG}
+                <DetailsPill onClick={onRouteDetailsClick} isClickable={true}>
+                  <div className="title">{strings.HOHO.BUS_ROUTES}</div>
+                  <div className="info">{strings.HOHO.VIEW_ROUTES}</div>
                 </DetailsPill>
               </Conditional>
               <Conditional if={finalHighlights?.length}>
-                <DetailsPill onClick={onMoreDetailsClick}>
-                  {strings.HOHO.MORE_DETAILS}
-                  {DROPDOWN_SVG}
+                <DetailsPill onClick={onMoreDetailsClick} isClickable={true}>
+                  <div className="title">{strings.HOHO.BUS_DETAILS}</div>
+                  <div className="info">{strings.HOHO.VIEW_TOUR_DETAILS}</div>
                 </DetailsPill>
               </Conditional>
-            </div>
+            </Conditional>
+
+            <Conditional if={isMobile}>
+              <Conditional if={finalTimings || finalFrequecy}>
+                <div className="timings">
+                  <span>{finalTimings}</span>
+                  <Conditional if={finalFrequecy}>
+                    <span className="vertical-divider" />
+                    <span>{finalFrequecy}</span>
+                  </Conditional>
+                </div>
+              </Conditional>
+              <div className="pills-container">
+                <Conditional if={tgidRouteData}>
+                  <DetailsPill onClick={onRouteDetailsClick}>
+                    {strings.HOHO.ROUTE_DETAILS} {DROPDOWN_TRIANGLE}
+                  </DetailsPill>
+                </Conditional>
+                <Conditional if={finalHighlights?.length}>
+                  <DetailsPill onClick={onMoreDetailsClick}>
+                    {strings.HOHO.MORE_DETAILS}
+                    {DROPDOWN_TRIANGLE}
+                  </DetailsPill>
+                </Conditional>
+              </div>
+            </Conditional>
           </div>
         </div>
       </TourInfo>
@@ -280,6 +319,21 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
             />
           </span>
         </SwiperControls>
+      </Conditional>
+      <Conditional if={isMobile && totalCards > 1}>
+        <div className="pagination">
+          <div>{strings.HOHO.SELECT_TOUR}</div>
+          <Paginator
+            tabSize={1}
+            dotSize={0.5}
+            totalCount={totalCards}
+            activeIndex={activeIndex}
+            activeColor={COLORS.BRAND.PURPS}
+            inactiveColor={COLORS.GRAY.G6}
+            activeSlideTimer={0.1}
+            margin={0.125}
+          />
+        </div>
       </Conditional>
     </TourInfoContainer>
   );

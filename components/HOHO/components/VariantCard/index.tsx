@@ -169,49 +169,54 @@ const VariantCard: React.FC<VariantCardProps> = (props) => {
         </div>
       </SingleCardContainer>
     ) : (
-      <CardContainer>
-        <Conditional if={isBestseller}>
-          <BadgeWrapper className="star">
-            {STAR(COLORS.BRAND.WHITE)}
-          </BadgeWrapper>
-          <BadgeWrapper>
-            {BADGE(strings.HOHO.BESTSELLER.toUpperCase())}
-          </BadgeWrapper>
-          <BadgeConnector> {TRIANGLE}</BadgeConnector>
-          <BadgeConnector className="right"> {TRIANGLE}</BadgeConnector>
-        </Conditional>
-        <VariantCardWrapper isSingleVariant={isSingleVariant}>
-          <Name>{truncate(variantName, 60)}</Name>
-          <Conditional if={showDummyHeading}>
-            <Name className="no-show"> &nbsp;</Name>
+      <CardContainer $isSingleVariant={isSingleVariant}>
+        <div className="card">
+          <Conditional if={isBestseller}>
+            <BadgeWrapper className="star">
+              {STAR(COLORS.BRAND.WHITE)}
+            </BadgeWrapper>
+            <BadgeWrapper>
+              {BADGE(strings.HOHO.BESTSELLER.toUpperCase())}
+            </BadgeWrapper>
+            <BadgeConnector> {TRIANGLE}</BadgeConnector>
+            <BadgeConnector className="right"> {TRIANGLE}</BadgeConnector>
           </Conditional>
-          <PriceWrapper>
-            <PriceBlock
-              isMobile={isMobile}
-              showScratchPrice
-              listingPrice={variantListingPrice}
-              lang={LANGUAGE_CODE_MAP.EN}
-              showSavings
-              prefix
-              showDummyScratchPrice={showDummyScratchPrice}
-            />
-          </PriceWrapper>
-          <div className="button-wrapper">
-            <Button
-              tabIndex={0}
-              size="medium"
-              color="purps"
-              variant="primary"
-              isLoading={isLoading}
-              onClick={onCTAClick}
-              text={strings.CHECK_AVAIL}
-            />
-          </div>
-          <Description className="inclusions">
-            {formatVariantInfo(variantInfo, maxDescriptors, lang) || ''}
-          </Description>
-          {getAttractionsAndRouteInfo(variantInfo, lang)}
-        </VariantCardWrapper>
+          <VariantCardWrapper
+            isSingleVariant={isSingleVariant}
+            onClick={onCTAClick}
+          >
+            <Name>{truncate(variantName, 60)}</Name>
+            <Conditional if={showDummyHeading}>
+              <Name className="no-show"> &nbsp;</Name>
+            </Conditional>
+            <PriceWrapper>
+              <PriceBlock
+                isMobile={isMobile}
+                showScratchPrice
+                listingPrice={variantListingPrice}
+                lang={LANGUAGE_CODE_MAP.EN}
+                showSavings
+                prefix
+                showDummyScratchPrice={showDummyScratchPrice}
+              />
+            </PriceWrapper>
+            <div className="button-wrapper">
+              <Button
+                tabIndex={0}
+                size="medium"
+                color="purps"
+                variant="primary"
+                isLoading={isLoading}
+                onClick={onCTAClick}
+                text={strings.HOHO.SELECT_DATE}
+              />
+            </div>
+            <Description className="inclusions">
+              {formatVariantInfo(variantInfo, maxDescriptors, lang) || ''}
+            </Description>
+            {getAttractionsAndRouteInfo(variantInfo, lang)}
+          </VariantCardWrapper>
+        </div>
       </CardContainer>
     );
   };

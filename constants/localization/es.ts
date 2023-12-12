@@ -912,6 +912,12 @@ const es = {
     GOT_IT: 'Vale',
     TOUR_TIMINGS: 'Horarios',
     TOUR_FREQUENCY: 'Frecuencia',
+    SELECT_DATE: 'Select a date',
+    SELECT_TOUR: 'Select Tour Type',
+    VIEW_TOUR_DETAILS: 'View tour details',
+    BUS_DETAILS: 'MORE DETAILS',
+    VIEW_ROUTES: 'View all routes',
+    BUS_ROUTES: 'BUS ROUTES',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

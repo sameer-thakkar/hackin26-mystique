@@ -811,6 +811,12 @@ const en = {
     TOUR_TIMINGS: 'Tour Timings',
     TOUR_FREQUENCY: 'Tour Frequency',
     GOT_IT: 'Got it',
+    SELECT_DATE: 'Select a date',
+    SELECT_TOUR: 'Select Tour Type',
+    VIEW_TOUR_DETAILS: 'View tour details',
+    BUS_DETAILS: 'MORE DETAILS',
+    VIEW_ROUTES: 'View all routes',
+    BUS_ROUTES: 'BUS ROUTES',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Expert Multilingual Guides',

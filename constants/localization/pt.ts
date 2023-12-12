@@ -862,6 +862,12 @@ const pt = {
     GOT_IT: 'Entendido',
     TOUR_TIMINGS: 'Horário',
     TOUR_FREQUENCY: 'Frequência',
+    SELECT_DATE: 'Select a date',
+    SELECT_TOUR: 'Select Tour Type',
+    VIEW_TOUR_DETAILS: 'View tour details',
+    BUS_DETAILS: 'MORE DETAILS',
+    VIEW_ROUTES: 'View all routes',
+    BUS_ROUTES: 'BUS ROUTES',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

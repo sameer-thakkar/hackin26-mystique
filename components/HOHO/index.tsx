@@ -38,6 +38,10 @@ const HOHOCard: React.FC<HOHOCardProps> = (props) => {
     productTitle: tourGroupName,
     images,
     highlights: tourGroupHighlights,
+    descriptors: descriptorsArray,
+    maxDuration,
+    minDuration,
+    combo: isCombo,
   } = tourGroupData || {};
   const tourGroupImage = images?.[images?.length - 1];
 
@@ -56,7 +60,7 @@ const HOHOCard: React.FC<HOHOCardProps> = (props) => {
   }, [swiper?.activeIndex]);
 
   const updateIndex = useCallback(() => {
-    if (isMobile || !swiper) return;
+    if (!swiper) return;
     setActiveIndex(swiper.realIndex);
   }, [swiper, isMobile]);
 
@@ -85,8 +89,8 @@ const HOHOCard: React.FC<HOHOCardProps> = (props) => {
   );
 
   const swiperParams: SwiperProps = {
-    slidesPerView: CAROUSEL_SLIDE_NUMBER,
-    spaceBetween: 24,
+    slidesPerView: isMobile ? 'auto' : CAROUSEL_SLIDE_NUMBER,
+    spaceBetween: isMobile ? 16 : 24,
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
     onTouchEnd: () => {},
     onSlideChange: () => updateIndex(),
@@ -98,6 +102,10 @@ const HOHOCard: React.FC<HOHOCardProps> = (props) => {
     tourGroupHighlights,
     tourGroupId,
     images,
+    descriptorsArray,
+    minDuration,
+    maxDuration,
+    isCombo,
   };
 
   const containerRef = useRef(null);
@@ -119,7 +127,7 @@ const HOHOCard: React.FC<HOHOCardProps> = (props) => {
           isMobile={isMobile}
           swipeNext={() => swipeSlide(swipeDirection.forward)}
           swipePrev={() => swipeSlide(swipeDirection.backward)}
-          activeIndex={activeIndex}
+          activeIndex={isMobile ? swiper?.realIndex : activeIndex}
           totalCards={totalCards}
           tgidRouteData={routeDetails}
           index={index}

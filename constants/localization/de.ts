@@ -852,6 +852,12 @@ const de = {
     TOUR_TIMINGS: 'Tourzeiten',
     TOUR_FREQUENCY: 'Häufigkeit',
     GOT_IT: 'Alles klar',
+    SELECT_DATE: 'Select a date',
+    SELECT_TOUR: 'Select Tour Type',
+    VIEW_TOUR_DETAILS: 'View tour details',
+    BUS_DETAILS: 'MORE DETAILS',
+    VIEW_ROUTES: 'View all routes',
+    BUS_ROUTES: 'BUS ROUTES',
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Privattransfers',

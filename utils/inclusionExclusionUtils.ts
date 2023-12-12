@@ -37,24 +37,47 @@ const removeCurrentInclusionExclusion = (
 type TAppendInclusionExclusionHighlights = {
   currentHighlights: Array<Highlight>;
   inclusionExclusionHighlights: Array<Highlight>;
+  localizedStrings: Record<string, any>;
 };
 
 export const appendInclusionExclusionHighlights = ({
   currentHighlights,
   inclusionExclusionHighlights,
+  localizedStrings,
 }: TAppendInclusionExclusionHighlights) => {
   let highlightArr = [...currentHighlights];
   let secondHighlightHeadingIndex = highlightArr.length;
-  for (let i = 1; i < highlightArr.length; i++) {
+  let tourInfoIndex = [];
+  for (let i = 0; i < highlightArr.length; i++) {
     const currHighlight = highlightArr[i];
-    const { type } = currHighlight;
+    const { type, text } = currHighlight;
     if (type === HIGHLIGHT_TYPES.H6_HEADING) {
-      secondHighlightHeadingIndex = i;
-      break;
+      if (
+        (text == localizedStrings.HOHO.TOUR_TIMINGS ||
+          text == localizedStrings.HOHO.TOUR_FREQUENCY) &&
+        tourInfoIndex.length == 0
+      ) {
+        tourInfoIndex.push(i);
+      } else if (secondHighlightHeadingIndex != highlightArr.length) {
+        secondHighlightHeadingIndex = i;
+        break;
+      } else if (
+        text != localizedStrings.HOHO.TOUR_TIMINGS &&
+        text != localizedStrings.HOHO.TOUR_FREQUENCY
+      ) {
+        tourInfoIndex.push(i);
+        secondHighlightHeadingIndex = i;
+      }
     }
   }
+  let tourInfoItems =
+    tourInfoIndex?.length === 2 ? tourInfoIndex[1] - tourInfoIndex[0] : 0;
+  if (tourInfoIndex?.length === 2) {
+    let tourHighlights = highlightArr.splice(tourInfoIndex[0], tourInfoItems);
+    highlightArr.splice(highlightArr.length, 0, ...tourHighlights);
+  }
   highlightArr.splice(
-    secondHighlightHeadingIndex,
+    secondHighlightHeadingIndex - tourInfoItems,
     0,
     ...inclusionExclusionHighlights
   );
@@ -132,6 +155,7 @@ export const appendInclusionExclusion = ({
     currentHighlights = appendInclusionExclusionHighlights({
       currentHighlights,
       inclusionExclusionHighlights,
+      localizedStrings,
     });
   }
 

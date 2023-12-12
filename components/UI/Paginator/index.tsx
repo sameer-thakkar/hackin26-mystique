@@ -15,6 +15,7 @@ interface Props {
   activeSlideTimer?: number;
   inactiveColor?: string;
   activeColor?: string;
+  margin?: number;
 }
 
 const PaginatorWrapper = styled.ul<Pick<Props, 'rtl' | 'isOverlay' | 'bottom'>>`
@@ -31,6 +32,7 @@ interface PaginatorButtonProps extends ComponentPropsWithoutRef<'li'> {
   activeSlideTimer?: number;
   inactiveColor?: string;
   activeColor?: string;
+  margin?: number;
 }
 
 const progressAnimation = keyframes`
@@ -53,7 +55,7 @@ const PaginatorDot = styled.li<PaginatorButtonProps>`
     inactiveColor || `${COLORS.BRAND.WHITE}80`};
   transition: width 0.5s ease;
   border-radius: ${({ dotSize }) => dotSize}rem;
-  margin: 0 0.3rem;
+  margin: ${({ margin }) => `0 ${margin}`}rem;
   cursor: pointer;
   span {
     display: ${(props) =>
@@ -82,6 +84,7 @@ export const Paginator = ({
   activeSlideTimer,
   inactiveColor,
   activeColor,
+  margin = 0.3,
 }: Props) => {
   if (totalCount <= 1) return null;
   return (
@@ -98,6 +101,7 @@ export const Paginator = ({
           activeSlideTimer={activeSlideTimer}
           inactiveColor={inactiveColor}
           activeColor={activeColor}
+          margin={margin}
         >
           <span aria-hidden={true} key={'active' + activeIndex} />
         </PaginatorDot>

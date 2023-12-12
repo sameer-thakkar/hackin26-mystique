@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TourTags } from 'components/Product/styles';
 import { CarouselContainer } from 'UI/MediaCarousel/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -15,8 +16,19 @@ export const TourInfoContainer = styled.div<{ lessMargin?: boolean }>`
 
   @media (max-width: 768px) {
     margin: ${({ lessMargin }) =>
-      lessMargin ? '2rem auto 1.25rem 1.5rem;' : '3rem auto 1.25rem 1.5rem;'};
+      lessMargin ? '2rem auto 0.5rem 1.5rem' : '2.5rem auto 0.5rem 1.5rem'};
     max-width: 90vw;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-self: stretch;
+      align-items: center;
+      ${expandFontToken(FONTS.HEADING_XS)}
+    }
   }
 `;
 
@@ -46,15 +58,20 @@ export const ButtonWrapper = styled.div`
 
 export const TourInfo = styled.div`
   display: grid;
-  grid-template-columns: 4.188rem 1fr;
+  grid-template-columns: 7.25rem 1fr;
   gap: 0.75rem;
-  align-items: center;
+  align-items: flex-start;
+
 
   img {
     border-radius: 8px;
     object-fit: cover;
-    height: 4.188rem;
-    width: 4.188rem;
+    height: 7.25rem;
+    width: 7.25rem;
+  }
+
+  .image-wrap {
+    height: unset;
   }
 
   .textinfo-container {
@@ -62,6 +79,21 @@ export const TourInfo = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+
+    ${TourTags} {
+      margin-top: 0;
+      .tour-tag{
+        margin-right: 0.25rem;
+      }
+      .tour-tag:not(:last-child):after{
+        content:'';
+        height:3px;
+        width:3px;
+        margin-left: 0.25rem;
+        border-radius: 50%;
+        background: ${COLORS.GRAY.G5};
+      }
+    }
   }
 
   .timings {
@@ -80,7 +112,13 @@ export const TourInfo = styled.div`
     background: ${COLORS.GRAY.G5};
   }
 
-  .details-container, .pills-container {
+  .details-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;    
+  }
+
+  .pills-container {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -93,6 +131,7 @@ export const TourInfo = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 5rem 1fr;
+    align-items: center;
 
     img {
       height: 5rem;
@@ -119,25 +158,39 @@ export const TourInfo = styled.div`
   }
  
 `;
-export const DetailsPill = styled.div`
-  ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
-  color: ${COLORS.GRAY.G3};
-  border-radius: 2rem;
-  border: 1px solid ${COLORS.GRAY.G7};
+export const DetailsPill = styled.div<{ isClickable?: boolean }>`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-radius: 0.25rem;
   background: ${COLORS.GRAY.G8};
-  padding: 0.25rem 0.75rem 0.375rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  ${({ isClickable }) => isClickable && 'cursor: pointer'};
 
-  svg {
-    margin-top: 0.125rem;
+  .title {
+    ${expandFontToken(FONTS.UI_LABEL_XS)}
+    color: ${COLORS.GRAY.G4};
+  }
+
+  .info {
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.SUBHEADING_SMALL)}
+    ${({ isClickable }) => isClickable && 'text-decoration-line: underline'};
   }
 
   @media (max-width: 768px) {
+    flex-direction: row;
     color: ${COLORS.GRAY.G2};
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    border-radius: 2rem;
+    border: 1px solid ${COLORS.GRAY.G7};
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    margin-top: 0;
     padding: 0.125rem 0.5rem 0.1875rem 0.5rem;
   }
 `;

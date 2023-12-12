@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import VariantCard from 'components/HOHO/components/VariantCard';
 import { VariantCarouselProps } from 'components/HOHO/components/VariantCarousel/interface';
-import OverflowScroll from 'UI/OverflowScroll';
 import { MBContext } from 'contexts/MBContext';
 import { LANGUAGE_CODE_MAP } from 'const/index';
 
@@ -14,7 +13,7 @@ const Swiper = dynamic(
 
 const SINGLE_LINE_CHAR_LIMIT = {
   DESKTOP: 30,
-  MOBILE: 30,
+  MOBILE: 27,
 };
 
 const VariantCarousel: React.FC<VariantCarouselProps> = (props) => {
@@ -107,9 +106,7 @@ const VariantCarousel: React.FC<VariantCarouselProps> = (props) => {
 
       <Conditional if={isMobile}>
         <Conditional if={!isSingleVariant}>
-          <OverflowScroll wrapperPadding={24} wrapperMargin={0}>
-            {VariantCards}
-          </OverflowScroll>
+          <Swiper {...swiperParams}>{VariantCards}</Swiper>
         </Conditional>
         <Conditional if={isSingleVariant}>{VariantCards}</Conditional>
       </Conditional>

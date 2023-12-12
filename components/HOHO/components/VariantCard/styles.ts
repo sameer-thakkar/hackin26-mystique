@@ -3,8 +3,19 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const CardContainer = styled.div`
-  position: relative;
+export const CardContainer = styled.div<{ $isSingleVariant?: boolean }>`
+  .card {
+    position: relative;
+  }
+  &:hover {
+    margin-top: -2px;
+  }
+  @media (max-width: 768px) {
+    ${({ $isSingleVariant }) => !$isSingleVariant && 'width: 16.875rem'};
+    &:hover {
+      margin-top: unset;
+    }
+  }
 `;
 
 export const VariantCardWrapper = styled.div<{
@@ -14,6 +25,7 @@ export const VariantCardWrapper = styled.div<{
   width: 100%;
   height: max-content;
   overflow: hidden;
+  cursor: pointer;
   background: ${COLORS.BRAND.WHITE};
   border: ${({ isSkeleton }) =>
     isSkeleton ? 'none' : `1px solid ${COLORS.GRAY.G6}`};
@@ -21,6 +33,13 @@ export const VariantCardWrapper = styled.div<{
   padding: ${({ isSkeleton }) => (isSkeleton ? '0' : '2rem 0 1.25rem')};
   box-sizing: border-box;
   margin-top: ${({ isSkeleton }) => (isSkeleton ? '0' : '0.25rem')};
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
+      0px -1px 2px 0px rgba(0, 0, 0, 0.08);
+  }
 
   p,
   ul {
@@ -49,7 +68,11 @@ export const VariantCardWrapper = styled.div<{
 
   @media (max-width: 768px) {
     padding: 1.75rem 0 1.25rem;
-    width: 18.75rem;
+    width: 16.875rem;
+    &:hover {
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1),
+        0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+    }
 
     ${({ isSingleVariant }) =>
       isSingleVariant &&
@@ -214,7 +237,21 @@ export const Description = styled.div`
     }
   }
   @media (max-width: 768px) {
-    .desc-list > .item,
+    .desc-text,
+    .trigger,
+    .booster-info {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    }
+
+    .desc-list > .item {
+      display: flex;
+      &.no-show {
+        display: block;
+        height: 1.375rem;
+        margin: 0;
+      }
+    }
+
     .booster-info {
       white-space: nowrap;
     }
@@ -223,20 +260,20 @@ export const Description = styled.div`
 
 export const BadgeWrapper = styled.div`
   position: absolute;
-  right: 0.9rem;
-  top: -0.325rem;
+  right: 0.99rem;
+  top: -0.39rem;
   z-index: 2;
 
   &.star {
-    top: -0.2rem;
-    right: 6.85rem;
+    top: -0.25rem;
+    right: 7rem;
     z-index: 3;
   }
 `;
 
 export const BadgeConnector = styled.div`
   position: absolute;
-  right: 8rem;
+  right: 8.18rem;
   top: -1.063rem;
   z-index: 1;
 

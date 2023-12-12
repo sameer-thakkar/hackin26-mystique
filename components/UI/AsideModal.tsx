@@ -283,7 +283,7 @@ const Header = styled.div`
       align-items: center;
       gap: 2.5rem;
       @media (max-width: 768px) {      
-        padding: 1.5rem;
+        padding: 1.5rem 1.5rem 1rem;
         box-shadow: none;
         border-bottom: 1px solid ${COLORS.GRAY.G6};
       }
@@ -418,7 +418,9 @@ const Title = styled.div`
       case SIDEBAR_TYPES.CONTACT_US_PANEL:
         return expandFontToken(FONTS.HEADING_SMALL);
       case SIDEBAR_TYPES.TOUR_GROUP_INFO:
-        return expandFontToken(FONTS.DISPLAY_SMALL);
+        return `${expandFontToken(FONTS.DISPLAY_SMALL)};
+        white-space: unset;
+        `;
       case SIDEBAR_TYPES.PRODUCT_CARD_EXP:
         return expandFontToken(FONTS.HEADING_XS);
       default:

@@ -4,10 +4,14 @@ export type TourGroupInfoProps = {
   tourGroupId: string | number;
   tourGroupHighlights: Array<Record<string, any>>;
   images: Array<{ url: string; altText: string }>;
+  minDuration: number;
+  maxDuration: number;
+  isCombo?: boolean;
+  descriptorsArray?: Array<string>;
   isMobile: boolean;
   swipeNext: () => void;
   swipePrev: () => void;
-  activeIndex: number;
+  activeIndex?: number;
   totalCards: number;
   index: number;
   tgidRouteData: Record<string, any>;
