@@ -53,6 +53,7 @@ import {
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
+import monthOnMonthPageParser from 'utils/parsers/monthOnMonthPageParser';
 import {
   getNewsPageData,
   getNewsPageDocument,
@@ -90,7 +91,6 @@ import {
   VIENNA_CONCERT_UID,
   X_CACHE_HEADER_KEY,
 } from 'const/index';
-import monthOnMonthPageParser from './parsers/monthOnMonthPageParser';
 import { ERROR_TYPES, LOG_LEVELS } from 'const/logs';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
@@ -1358,14 +1358,14 @@ const fetchPrismicDocument = async ({
   uid,
   lang,
   isDev,
-  invalidateApi,
+  bypassCache,
 }: {
   req: any;
   host: string;
   uid: any;
   lang: any;
   isDev: boolean;
-  invalidateApi: string;
+  bypassCache: string;
 }): Promise<{
   prismicApiResponse: {
     ContentType?: string;
@@ -1386,8 +1386,8 @@ const fetchPrismicDocument = async ({
   });
 
   // Bypass prismic api cache.
-  if (invalidateApi) {
-    params.append('invalidate-api', invalidateApi);
+  if (bypassCache) {
+    params.append('bypass-cache', bypassCache);
   }
 
   params.sort();
@@ -1419,7 +1419,7 @@ export const getPageData = async ({
   const { cookies } = req;
   const { uid, lang } = getLangUID(req, query);
   const hostname = getHostName(isStage, isDev, host);
-  const { invalidateApi } = query;
+  const { bypassCache } = query;
 
   try {
     let initial_tgids: any = [];
@@ -1432,7 +1432,7 @@ export const getPageData = async ({
       isDev,
       uid,
       lang,
-      invalidateApi,
+      bypassCache,
     });
 
     const {
