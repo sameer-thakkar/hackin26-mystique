@@ -45,6 +45,9 @@ const internalRewrites = [
 
 const withTM = moduleTranspiler(['@headout/aer']);
 
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   trailingSlash: true,
   swcMinify: false,
@@ -83,6 +86,7 @@ const nextConfig = {
   redirects: async () => {
     return internalRedirects;
   },
+  assetPrefix: process.env.NEXT_PUBLIC_ASSETS_CDN_BASE_URL,
 };
 
 module.exports = withTM(

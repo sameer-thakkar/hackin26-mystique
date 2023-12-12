@@ -118,10 +118,12 @@ jobs:
               echo "AWS_REGION=us-east-1" >> "$GITHUB_ENV"
               echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}" >> "$GITHUB_ENV"
               echo "AWS_SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> "$GITHUB_ENV"
+              echo "STATIC_FILES_BUCKET=web-static-assets-production" >> "$GITHUB_ENV"
           else
               echo "AWS_REGION=ap-south-1" >> "$GITHUB_ENV"
               echo "AWS_ACCESS_KEY=${{ secrets.AWS_HEADOUT_TEST_ACCESS_KEY }}" >> "$GITHUB_ENV"
               echo "AWS_SECRET_KEY=${{ secrets.AWS_HEADOUT_TEST_SECRET_KEY }}" >> "$GITHUB_ENV"
+              echo "STATIC_FILES_BUCKET=web-static-assets-test-1" >> "$GITHUB_ENV"
           fi
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -149,6 +151,14 @@ jobs:
               echo "APP_ENV and/or WAF_API_WHITELIST_TOKEN build-args are missing. Exiting workflow."
               exit 1
           fi
+
+      - name: Upload Assets to S3 🪣
+        run: |
+          aws s3 cp .next/static s3://$STATIC_FILES_BUCKET/mystique/_next/static --recursive
+
+      - name: Warmup Assets from S3 🪣
+        run: |
+          node ./ci/scripts/warmup-cache.js
 
       - name: Build and push
         id: docker_build
