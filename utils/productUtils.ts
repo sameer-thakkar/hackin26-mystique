@@ -879,9 +879,9 @@ export const getProductCardComboTours = (
     nonComboCardsPart2: [],
   };
 
-  if (tours.length <= 5) return defaultOutput;
+  if (tours?.length <= 5) return defaultOutput;
 
-  for (let index = 0; index < tours.length; index++) {
+  for (let index = 0; index < tours?.length; index++) {
     const rank = index + 1;
     const tour = tours[index];
     const { tgid } = tour;
