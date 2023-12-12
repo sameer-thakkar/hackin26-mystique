@@ -398,6 +398,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           url: image.image_url.url || image.image_source.url,
           alt: image.image_alt || image.image_source.alt,
           copyright: image.image_source.copyright,
+          video: image.video_url.url,
         }));
 
       return (
@@ -412,6 +413,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           link={card_link}
           linkType={card_link_type}
           isGlobalMb={props.isGlobalMb}
+          isMobile={props.isMobile}
         />
       );
     case 'horizontal_line':

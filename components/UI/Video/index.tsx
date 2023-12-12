@@ -34,6 +34,7 @@ interface VideoTypeProps {
   eventTracking?: boolean;
   showPauseIcon?: boolean;
   isMobile?: boolean;
+  onPause?: () => void;
 }
 
 const Video: React.FC<VideoTypeProps> = ({
@@ -56,6 +57,7 @@ const Video: React.FC<VideoTypeProps> = ({
   showPauseIcon = true,
   pauseOnclick = false,
   eventTracking = true,
+  onPause = () => {},
 }) => {
   const videoAutoplayInterval = useRef(null);
   const videoAutoplayTime = useRef(0);
@@ -202,6 +204,7 @@ const Video: React.FC<VideoTypeProps> = ({
     if (isVideoPaused) {
       playVideo();
     } else {
+      onPause();
       pauseVideo();
     }
   };

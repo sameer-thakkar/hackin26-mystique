@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
+import Modal from 'react-modal';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { useWindowWidth } from '@react-hook/window-size';
+// import { useWindowWidth } from '@react-hook/window-size';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
+import { modalStyles } from 'components/NewsPage/components/Trailer/components/MediaPlayer/styles';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
+import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
@@ -18,12 +21,14 @@ import {
   ANALYTICS_PROPERTIES,
   FALLBACK_IMAGE,
   FALLBACK_IMAGES,
+  VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { CHEVRON_LEFT, PLAY_ICON_FILLED } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const VideoPlayer = dynamic(() => import('components/common/VideoPlayer'));
 
 const variantStyles = {
   'full-width': {
@@ -45,6 +50,7 @@ const variantStyles = {
     },
   },
 };
+type TVariantStylesProperties = keyof typeof variantStyles;
 
 const cardImageAspectRatio = {
   5: '16:10',
@@ -156,10 +162,25 @@ const Title = styled.h3`
   margin-bottom: 8px;
 `;
 
+const ImageContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  svg {
+    cursor: pointer;
+    position: absolute;
+  }
+`;
+
 const SwiperWrapper = styled.div`
   display: flex;
   overflow: hidden;
   height: max-content;
+  .swiper {
+    width: 100%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -212,8 +233,31 @@ type CardProps = {
   linkType?: string;
   cardsInARow?: number;
   isGlobalMb?: boolean;
+  isMobile: boolean;
 };
 
+type PlayIconProps = {
+  isVideoUrl: boolean;
+  onClick: () => void;
+};
+
+type MediaProps = {
+  title: string;
+  url: string;
+  alt: string;
+  copyright: string;
+  fallbackImage: string;
+  aspectRatio: string;
+  video: string;
+  type: string;
+  modalIsOpen: boolean;
+  isMobile: boolean;
+  videoPlay: boolean;
+  setModalOpen: (a: boolean) => void;
+  closeModal: () => void;
+  setVideoPlay: (a: boolean) => void;
+  setActiveMediaIndex: () => void;
+};
 /**
  * A multi-variant card displaying an optional carousel of images and CTA along with a required title and body.
  *
@@ -261,6 +305,101 @@ const HyperLink = ({ children, data }: any) => {
   );
 };
 
+const PLAY_ICON_JSX = ({ isVideoUrl, onClick }: PlayIconProps) => (
+  <Conditional if={isVideoUrl}>
+    <PLAY_ICON_FILLED onClick={onClick} />
+  </Conditional>
+);
+
+const Media = ({
+  title,
+  url,
+  alt,
+  copyright,
+  fallbackImage,
+  aspectRatio,
+  video,
+  type,
+  setModalOpen,
+  modalIsOpen,
+  closeModal,
+  isMobile,
+  videoPlay,
+  setVideoPlay,
+  setActiveMediaIndex,
+}: MediaProps) => {
+  const handlePlayIconClick = () => {
+    setActiveMediaIndex();
+    isMobile ? setVideoPlay(true) : setModalOpen(true);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.VIDEO_PLAYER_OPENED,
+      [ANALYTICS_PROPERTIES.SECTION]: title,
+    });
+    // Triggering this at the same time because video is in autoplay.
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.YT_VIDEO_PLAYED,
+      [ANALYTICS_PROPERTIES.SECTION]: title,
+    });
+  };
+
+  return (
+    <>
+      <Conditional if={!isMobile && modalIsOpen}>
+        <Modal
+          style={modalStyles}
+          onRequestClose={closeModal}
+          isOpen={modalIsOpen}
+        >
+          <VideoPlayer
+            videoUrl={video}
+            videoTitle={''}
+            closePlayer={closeModal}
+          />
+        </Modal>
+      </Conditional>
+      <ImageContainer>
+        <Conditional if={videoPlay}>
+          <Video
+            key={url}
+            url={video}
+            fallbackImage={{
+              url: '',
+              altText: '',
+            }}
+            imageHeight={
+              variantStyles[type as TVariantStylesProperties].img.height
+            }
+            imageAspectRatio={aspectRatio}
+            dontLazyLoadImage={false}
+            videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
+            shouldVideoPlay
+            // For future devs: If anytime the autoplay is changed. Make sure to change the logic of 'YT_VIDEO_PlAYED' event.
+            shouldAutoPlay
+            pauseOnclick
+            showPlayIcon={false}
+            showPauseIcon={false}
+            isMobile
+            onPause={() => setVideoPlay(false)}
+          />
+        </Conditional>
+        <Conditional if={!videoPlay}>
+          <Image
+            url={url || fallbackImage}
+            alt={alt || ''}
+            attribution={copyright}
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+            height={variantStyles[type].img.height}
+            aspectRatio={aspectRatio}
+            autoCrop={true}
+            fill
+          />
+          <PLAY_ICON_JSX isVideoUrl={!!video} onClick={handlePlayIconClick} />
+        </Conditional>
+      </ImageContainer>
+    </>
+  );
+};
+
 const Card: React.FC<CardProps> = ({
   title,
   description,
@@ -271,38 +410,15 @@ const Card: React.FC<CardProps> = ({
   linkType = '',
   cardsInARow = 1,
   isGlobalMb,
+  isMobile,
 }) => {
-  const width = useWindowWidth();
-  const [mounted, setMounted] = useState(false);
-
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [videoPlay, setVideoPlay] = useState(false);
+  const [activeMediaIndex, setActiveMediaIndex] = useState(-1);
   const { uid } = useContext(MBContext);
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  React.useEffect(() => {
-    if (!mounted) {
-      return;
-    }
-
-    switch (type) {
-      case 'full-width':
-        setIsMobile(width <= 960);
-        break;
-      case 'large':
-        setIsMobile(width <= 760);
-        break;
-      case 'small':
-        setIsMobile(true);
-        break;
-      default:
-        break;
-    }
-  }, [type, mounted]);
-
   const swiperParams: SwiperProps = {
+    lazy: true,
     pagination: {
       type: 'bullets',
       clickable: true,
@@ -314,6 +430,10 @@ const Card: React.FC<CardProps> = ({
       eventName: ANALYTICS_EVENTS.CONTENT_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.HEADING]: title,
     });
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
@@ -348,15 +468,22 @@ const Card: React.FC<CardProps> = ({
       break;
     case 1:
       imageView = (
-        <Image
-          url={images[0].url || fallbackImage}
-          alt={images[0]?.alt || ''}
-          attribution={images[0]?.copyright}
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          height={variantStyles[type].img.height}
+        <Media
+          title={title}
+          url={images[0]?.url}
+          alt={images[0]?.alt}
+          copyright={images[0]?.copyright}
+          video={images[0]?.video}
+          type={type}
+          fallbackImage={fallbackImage}
           aspectRatio={aspectRatio}
-          autoCrop={false}
-          fill
+          setModalOpen={setModalOpen}
+          isMobile={isMobile}
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          videoPlay={videoPlay && activeMediaIndex === 0}
+          setVideoPlay={setVideoPlay}
+          setActiveMediaIndex={() => setActiveMediaIndex(0)}
         />
       );
       break;
@@ -366,16 +493,23 @@ const Card: React.FC<CardProps> = ({
           <Swiper {...swiperParams}>
             {images.map((image: any, index: number) => {
               return (
-                <Image
-                  className="swiper-slide"
-                  key={index}
-                  url={image.url || fallbackImage}
-                  attribution={image?.copyright}
-                  alt={image.alt || ''}
-                  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-                  height={variantStyles[type].img.height}
+                <Media
+                  title={title}
+                  key={index + image?.url}
+                  url={image?.url}
+                  alt={image?.alt}
+                  copyright={image?.copyright}
+                  video={image?.video}
+                  type={type}
+                  fallbackImage={fallbackImage}
                   aspectRatio={aspectRatio}
-                  autoCrop={false}
+                  setModalOpen={setModalOpen}
+                  isMobile={isMobile}
+                  modalIsOpen={modalIsOpen}
+                  closeModal={closeModal}
+                  videoPlay={videoPlay && activeMediaIndex === index}
+                  setVideoPlay={setVideoPlay}
+                  setActiveMediaIndex={() => setActiveMediaIndex(index)}
                 />
               );
             })}

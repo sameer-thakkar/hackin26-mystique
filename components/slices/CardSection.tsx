@@ -210,6 +210,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       index,
       cardsInARow: cardsInARow,
       isGlobalMb,
+      isMobile,
     });
   });
 

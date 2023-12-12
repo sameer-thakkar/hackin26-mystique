@@ -531,6 +531,7 @@ export const ANALYTICS_EVENTS = {
     CALENDAR_CLOSED: 'Calendar Closed',
     CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
   },
+  VIDEO_PLAYER_OPENED: 'Video Player Opened',
   MONTH_ICON_CLICKED: 'Month Icon Clicked',
   FAB_ICON_CLICKED: 'Fab Icon Clicked',
   CATEGORY_SELECTED: 'Category Selected',
