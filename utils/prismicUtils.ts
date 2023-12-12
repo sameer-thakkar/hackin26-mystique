@@ -84,6 +84,7 @@ import {
   PRISMIC_FIELD_ID,
   PRISMIC_LANG_TO_ROUTE_PARAM,
   RESOURCE_TYPE,
+  SHORTER_CACHE_AGE,
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
@@ -418,6 +419,8 @@ export const getMicrositeDocument = async ({
           };
 
           let allShowPages, productCardData, topAttractionsData;
+          let shouldHaveShorterTtl = false;
+
           if (isEntertainmentMb) {
             allShowPages = await fetchAllMatchingDocs({
               query: [
@@ -543,6 +546,11 @@ export const getMicrositeDocument = async ({
                 // eslint-disable-next-line no-console
                 console.log('productCard-error', e);
               }
+
+              // Have shorter TTL on cache, if product cards are empty (fetch fails or catalog team temporarily remove the cards)
+              if (!Object.keys(productCardData ?? {}).length) {
+                shouldHaveShorterTtl = true;
+              }
             }
           }
 
@@ -665,6 +673,7 @@ export const getMicrositeDocument = async ({
           return {
             CMSContent: micrositeData,
             ContentType: CUSTOM_TYPES.MICROSITE,
+            shouldHaveShorterTtl,
           };
         }
       } else {
@@ -1265,6 +1274,7 @@ export const getPrismicDocument = async ({
     url: string;
     type: number;
   };
+  shouldHaveShorterTtl?: boolean;
 }> => {
   const { host } = req.headers || window.location;
 
@@ -1375,6 +1385,7 @@ const fetchPrismicDocument = async ({
       url: string;
       type: number;
     };
+    shouldPageHaveShorterTtl?: boolean;
   };
   prismicApiCacheStatus: string | null;
 }> => {
@@ -1409,6 +1420,7 @@ const fetchPrismicDocument = async ({
 };
 
 export const getPageData = async ({
+  res,
   req,
   query,
   isDev,
@@ -1440,6 +1452,7 @@ export const getPageData = async ({
       CMSContent,
       statusCode,
       redirectInfo,
+      shouldPageHaveShorterTtl,
     } = prismicApiResponse;
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
@@ -1461,6 +1474,8 @@ export const getPageData = async ({
       return {
         statusCode,
       };
+    } else if (shouldPageHaveShorterTtl) {
+      res.setHeader('Cache-Control', `max-age=${SHORTER_CACHE_AGE}`);
     }
 
     /**

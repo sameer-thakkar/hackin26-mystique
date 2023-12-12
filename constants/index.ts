@@ -1888,3 +1888,5 @@ export const MONTHS = [
 ];
 export const ENTITY_ICONS_FOLDER_LINK =
   'https://cdn-imgix-open.headout.com/categories';
+
+export const SHORTER_CACHE_AGE = 10;
