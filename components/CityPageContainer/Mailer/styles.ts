@@ -83,7 +83,7 @@ export const SubscriptionCont = styled.div<{
   display: flex;
   .email-input {
     width: 20rem;
-    height: 4rem;
+    height: calc(4rem - 2px);
     padding: 0 1.25rem;
     border: none;
     border-radius: 12px 0 0 12px;
@@ -130,6 +130,7 @@ export const SubscriptionCont = styled.div<{
       display: block;
       height: auto;
       .email-input {
+        height: unset;
         margin-bottom: 1rem;
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
         border: 1px solid ${COLORS.GRAY.G6};

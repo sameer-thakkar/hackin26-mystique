@@ -101,10 +101,6 @@ const Mailer = ({
   eventName,
   isCatOrSubCatPage,
 }: IMailerProps) => {
-  const subcriptionImg = isCatOrSubCatPage
-    ? EMAIL_SUBCRIPTION.BANNER_URL.CAT_SUBCAT_PAGE
-    : EMAIL_SUBCRIPTION.BANNER_URL.CITY_PAGE;
-
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
 
@@ -134,7 +130,7 @@ const Mailer = ({
           <Image
             width={WIDTH}
             height={HEIGHT}
-            url={subcriptionImg}
+            url={EMAIL_SUBCRIPTION.BANNER_URL.CITY_PAGE}
             alt="Headout Email Subscription"
             className="image-wrapper"
           />

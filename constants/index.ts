@@ -1422,8 +1422,6 @@ export const EMAIL_SUBCRIPTION = {
   BANNER_URL: {
     CITY_PAGE:
       'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription.png',
-    CAT_SUBCAT_PAGE:
-      'https://cdn-imgix-open.headout.com/MB/subscription-box/subcription_cat_page.png',
   },
   ENDPOINT: 'https://vivillion.netlify.app/api/webengage',
   CITY_PAGE_EVENT: 'City Page Subscribe',
@@ -1889,4 +1887,3 @@ export const MONTHS = [
 ];
 export const ENTITY_ICONS_FOLDER_LINK =
   'https://cdn-imgix-open.headout.com/categories';
-
