@@ -177,7 +177,12 @@ export const DetailsPill = styled.div<{ isClickable?: boolean }>`
   .info {
     color: ${COLORS.GRAY.G3};
     ${expandFontToken(FONTS.SUBHEADING_SMALL)}
-    ${({ isClickable }) => isClickable && 'text-decoration-line: underline'};
+    ${({ isClickable }) =>
+      isClickable &&
+      `text-decoration-line: underline;
+    display: flex;
+    align-items: baseline;
+    gap: 0.125rem;`}
   }
 
   @media (max-width: 768px) {

@@ -793,7 +793,7 @@ const en = {
     'Level Access': 'Level Access',
   },
   HOHO: {
-    HOHO: 'Hop On Hop Off Tickets',
+    HOHO: 'Hop On Hop Off Tours',
     ROUTE_DETAILS: 'Route Details',
     MORE_DETAILS: 'More Details',
     ROUTES_SCHEDULES: 'Routes & Schedules',

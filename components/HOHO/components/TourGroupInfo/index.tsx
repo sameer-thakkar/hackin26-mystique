@@ -37,6 +37,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import {
+  CHEVRON_RIGHT,
   DROPDOWN_TRIANGLE,
   LTT_CHEVRON_LEFT,
   LTT_CHEVRON_RIGHT,
@@ -269,13 +270,29 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
               <Conditional if={tgidRouteData}>
                 <DetailsPill onClick={onRouteDetailsClick} isClickable={true}>
                   <div className="title">{strings.HOHO.BUS_ROUTES}</div>
-                  <div className="info">{strings.HOHO.VIEW_ROUTES}</div>
+                  <div className="info">
+                    {strings.HOHO.VIEW_ROUTES}
+                    {CHEVRON_RIGHT({
+                      fillColor: COLORS.GRAY.G3,
+                      height: 8,
+                      width: 8,
+                      strokeWidth: 2,
+                    })}
+                  </div>
                 </DetailsPill>
               </Conditional>
               <Conditional if={finalHighlights?.length}>
                 <DetailsPill onClick={onMoreDetailsClick} isClickable={true}>
                   <div className="title">{strings.HOHO.BUS_DETAILS}</div>
-                  <div className="info">{strings.HOHO.VIEW_TOUR_DETAILS}</div>
+                  <div className="info">
+                    {strings.HOHO.VIEW_TOUR_DETAILS}
+                    {CHEVRON_RIGHT({
+                      fillColor: COLORS.GRAY.G3,
+                      height: 8,
+                      width: 8,
+                      strokeWidth: 2,
+                    })}
+                  </div>
                 </DetailsPill>
               </Conditional>
             </Conditional>
