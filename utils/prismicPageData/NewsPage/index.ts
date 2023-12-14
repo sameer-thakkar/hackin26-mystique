@@ -31,6 +31,10 @@ import {
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
+export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
+  return media.find((item) => item?.type === 'VIDEO')?.url;
+};
+
 export const mbCategorisationData = (
   baseLangData: Record<string, any>,
   pageData: Record<string, any>,
@@ -391,7 +395,8 @@ export const getNewsPageData = async (
   });
 
   mediaData?.resourceEntityMedias?.forEach((media: any) => {
-    videoDataMap.set(media.resourceEntityId, media.medias[1]?.url);
+    const videoUrl = findVideoUrlFromMediaData(media?.medias);
+    videoDataMap.set(media.resourceEntityId, videoUrl);
   });
 
   const filteredTrailerSectionData = trailerSectionData.filter(
