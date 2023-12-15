@@ -835,20 +835,23 @@ export const getCategoryMap = (
       mapping[id] = {};
       if (primaryCategory) {
         const { id: categoryId, displayName, name } = primaryCategory;
-        mapping[id].categoryId = categoryId;
-        categoriesAndSubCategories[categoryId] = {
-          name: displayName,
-          isCategory: true,
-          nonLocalizedName: name,
-        };
-      }
-      if (primarySubCategory) {
-        const { id: subCategoryId, displayName, name } = primarySubCategory;
 
         /**
          * All subcategories under Tickets except
          * city cards (1008) are not shown
          */
+        if (primarySubCategory?.id !== 1008 && categoryId === 1) {
+          mapping[id].categoryId = categoryId;
+          categoriesAndSubCategories[categoryId] = {
+            name: displayName,
+            isCategory: true,
+            nonLocalizedName: name,
+          };
+        }
+      }
+      if (primarySubCategory) {
+        const { id: subCategoryId, displayName, name } = primarySubCategory;
+
         if (primaryCategory?.id !== 1 || subCategoryId === 1008) {
           mapping[id].subCategoryId = subCategoryId;
           categoriesAndSubCategories[subCategoryId] = {
@@ -871,7 +874,6 @@ export const getProductCardComboTours = (
   let comboCards: Array<any> = [],
     nonComboCardsPart1: Array<any> = [],
     nonComboCardsPart2: Array<any> = [];
-  let comboCount = 0;
 
   const defaultOutput = {
     comboCards: [],
@@ -886,27 +888,24 @@ export const getProductCardComboTours = (
     const tour = tours[index];
     const { tgid } = tour;
     const { combo: isCombo } = scorpioData[tgid];
-    if (isCombo && rank >= 3) {
-      comboCount++;
-    }
-    if (!isCombo) {
-      if (comboCount !== 0) {
+    if (!isCombo || rank < 3) {
+      if (comboCards.length !== 0) {
         nonComboCardsPart2.push({ ...tour, ogIndex: index });
       } else {
         nonComboCardsPart1.push({ ...tour, ogIndex: index });
       }
     } else {
-      comboCards.push({ ...tour, ogIndex: index });
+      if (rank >= 3) comboCards.push({ ...tour, ogIndex: index });
     }
   }
 
-  if (nonComboCardsPart1.length > 2) {
+  if (nonComboCardsPart1.length >= 2) {
     nonComboCardsPart2 = [
       ...nonComboCardsPart1.slice(2),
       ...nonComboCardsPart2,
     ];
     nonComboCardsPart1 = nonComboCardsPart1.slice(0, 2);
-  }
+  } else return defaultOutput;
 
   if (
     nonComboCardsPart2.length < 2 ||

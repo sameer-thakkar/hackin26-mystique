@@ -49,8 +49,6 @@ export const HorizontalCardsContainer = styled.div`
   overflow-x: auto;
 
   ::-webkit-scrollbar {
-    height: 0;
-    opacity: 0;
-    visibility: hidden;
+    display: none;
   }
 `;

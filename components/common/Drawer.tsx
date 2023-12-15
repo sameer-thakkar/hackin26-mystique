@@ -278,7 +278,10 @@ const Drawer = ({
         className={`shadow ${coverHeaderInShadow ? 'coverHeader' : ''}`}
         role="button"
         tabIndex={0}
-        onClick={() => close('Outside')}
+        onClick={(e) => {
+          e.stopPropagation();
+          close('Outside');
+        }}
       />
       <DrawerWrapper
         // @ts-expect-error TS(2769): No overload matches this call.

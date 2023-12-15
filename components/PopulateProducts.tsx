@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
@@ -18,11 +18,7 @@ import {
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import {
-  getCategoryMap,
-  getProductCardComboTours,
-  getProductDescriptors,
-} from 'utils/productUtils';
+import { getCategoryMap, getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import {
@@ -504,10 +500,16 @@ const PopulateProducts = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
 
-  const { comboCards, nonComboCardsPart1, nonComboCardsPart2 } = useMemo(
-    () => getProductCardComboTours(availableToursList, scorpioData),
-    [availableToursList, scorpioData]
-  );
+  /**
+   * Will need this for another experiment
+   */
+  // const { comboCards, nonComboCardsPart1, nonComboCardsPart2 } = useMemo(
+  //   () => getProductCardComboTours(availableToursList, scorpioData),
+  //   [availableToursList, scorpioData]
+  // );
+  const comboCards: Array<any> = [],
+    nonComboCardsPart1: Array<any> = [],
+    nonComboCardsPart2: Array<any> = [];
   const showComboCardsSlice =
     isProductCardPhase1ExperimentTreatmentVariant &&
     comboCards.length > 0 &&
@@ -712,7 +714,11 @@ const PopulateProducts = (props: any) => {
         {showComboCardsSlice && (
           <>
             {comboCards.length && (
-              <ComboProductsContainer>
+              <ComboProductsContainer
+                isProductCardPhase1ExperimentTreatmentVariant={
+                  isProductCardPhase1ExperimentTreatmentVariant
+                }
+              >
                 {comboCards.map((tour: Record<string, any>, index: number) =>
                   getProductCardFromTourAndIndex(tour, index, true)
                 )}

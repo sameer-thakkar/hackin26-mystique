@@ -13,8 +13,13 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { DiscountVerticalBanner, Sparkles } from 'assets/SvgIcons';
 
-const ComboProductsContainer = ({ children }: TComboProductsContainer) => {
-  const [viewEventRecorded, setViewEventRecorded] = useState(false);
+const ComboProductsContainer = ({
+  children,
+  isProductCardPhase1ExperimentTreatmentVariant,
+}: TComboProductsContainer) => {
+  const [viewEventRecorded, setViewEventRecorded] = useState(
+    !isProductCardPhase1ExperimentTreatmentVariant
+  );
   const ref = useRef(null);
   const isOnScreen = useOnScreen({ ref });
 
