@@ -1412,6 +1412,16 @@ const fetchPrismicDocument = async ({
   })) || { statusCode: 404 };
   const cacheHeader = response.headers.get(X_CACHE_HEADER_KEY);
   const cacheAge = response.headers.get('age');
+
+  if (response.headers.get('ho-ho')?.length) {
+    sendLog({
+      message: {
+        error: 'Production <-> Canary Invoked',
+        endpoint,
+      },
+    });
+  }
+
   const data = await response.json();
   return {
     prismicApiResponse: data,
