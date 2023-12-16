@@ -70,6 +70,7 @@ const DrawerTabHeading = styled.div`
 
 const drawerStyles = css`
   .close-icon {
+    z-index: 1;
     position: absolute;
     top: 2px;
     right: 14px;
