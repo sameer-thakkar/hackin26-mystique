@@ -265,152 +265,97 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     [controlRef]
   );
 
-  const activeImage = images[currentIndex];
-  const fullImageHeading = RichText.asText(activeImage.heading);
+  const activeImage = images?.[currentIndex];
+  const fullImageHeading = RichText.asText(activeImage?.heading || []);
 
   return (
-    <StyledImageGallery ref={imageGalleryRef} $isNewsPage={$isNewsPage}>
-      <Conditional if={heading}>
-        <h2 className="heading" id={generateSidenavId(heading)}>
-          {heading}
-        </h2>
-      </Conditional>
+    <Conditional if={images?.length}>
+      <StyledImageGallery ref={imageGalleryRef} $isNewsPage={$isNewsPage}>
+        <Conditional if={heading}>
+          <h2 className="heading" id={generateSidenavId(heading)}>
+            {heading}
+          </h2>
+        </Conditional>
 
-      <GridLayoutContainer>
-        <GridLayout $isNewspage={$isNewsPage}>
-          {images.map((image, index) => {
-            const caption = RichText.asText(image.heading);
-            const description = RichText.asText(image.content);
-            const showCaptionOverlay =
-              index === 0 && images.length > 2 && !isMobile;
-            const isImageUnderCta =
-              images.length < 5 ? index + 1 === 3 : index + 1 === 5;
+        <GridLayoutContainer>
+          <GridLayout $isNewspage={$isNewsPage}>
+            {images?.map((image, index) => {
+              const caption = RichText.asText(image?.heading);
+              const description = RichText.asText(image?.content);
+              const showCaptionOverlay =
+                index === 0 && images.length > 2 && !isMobile;
+              const isImageUnderCta =
+                images.length < 5 ? index + 1 === 3 : index + 1 === 5;
 
-            return (
-              <React.Fragment key={index}>
-                <Conditional if={showCaptionOverlay}>
-                  <CaptionedImageWrapper
-                    role="figure"
-                    aria-labelledby="title"
-                    aria-describedby="description"
-                  >
+              return (
+                <React.Fragment key={index}>
+                  <Conditional if={showCaptionOverlay}>
+                    <CaptionedImageWrapper
+                      role="figure"
+                      aria-labelledby="title"
+                      aria-describedby="description"
+                    >
+                      <Image
+                        url={
+                          image.linked_image?.url || image.uploaded_image?.url
+                        }
+                        onClick={() => handleImageClickOnDesktop(index)}
+                        alt={image.image_alt || caption}
+                        className="captioned-image"
+                      />
+                      <div className="image-overlay">
+                        <h4 id="title">{caption}</h4>
+                        <p id="description">{description}</p>
+                      </div>
+                    </CaptionedImageWrapper>
+                  </Conditional>
+                  <Conditional if={!showCaptionOverlay}>
                     <Image
                       url={image.linked_image?.url || image.uploaded_image?.url}
                       onClick={() => handleImageClickOnDesktop(index)}
                       alt={image.image_alt || caption}
-                      className="captioned-image"
+                      addDarkOverlay={isImageUnderCta}
+                      {...(isImageUnderCta && { ref: lastVisibleImageRef })}
                     />
-                    <div className="image-overlay">
-                      <h4 id="title">{caption}</h4>
-                      <p id="description">{description}</p>
-                    </div>
-                  </CaptionedImageWrapper>
-                </Conditional>
-                <Conditional if={!showCaptionOverlay}>
-                  <Image
-                    url={image.linked_image?.url || image.uploaded_image?.url}
-                    onClick={() => handleImageClickOnDesktop(index)}
-                    alt={image.image_alt || caption}
-                    addDarkOverlay={isImageUnderCta}
-                    {...(isImageUnderCta && { ref: lastVisibleImageRef })}
-                  />
-                </Conditional>
-              </React.Fragment>
-            );
-          })}
-        </GridLayout>
-        <Conditional if={images.length > 2 && !$isNewsPage}>
-          <TagContainer
-            $ctaContainerWidth={ctaContainerWidth}
-            $ctaContainerHeight={ctaContainerHeight}
-          >
-            <Tag onClick={handleTagClick}>
-              <GRID_ICON />
-              {strings.SEE_ALL_PHOTOS}
-            </Tag>
-          </TagContainer>
-        </Conditional>
-      </GridLayoutContainer>
-
-      <Conditional if={isDesktopLightboxOpen && !isMobile && !$isNewsPage}>
-        <DesktopLightBox>
-          <Swiper {...gallerySwiperParams}>
-            {images.map((image, index) => {
-              return (
-                <DesktopStyledImage key={index} ref={modalRef}>
-                  <Image
-                    url={image.linked_image?.url || image.uploaded_image?.url}
-                    alt={RichText.asText(image.heading) || ''}
-                  />
-                  <Content>
-                    <div className="content-wrapper">
-                      <DesktopLightboxHeading>
-                        <RichContent render={image.heading} />
-                      </DesktopLightboxHeading>
-                      <Description width="80%" maxWidth="39.37rem">
-                        <RichContent render={image.content} />
-                      </Description>
-                    </div>
-                  </Content>
-                </DesktopStyledImage>
+                  </Conditional>
+                </React.Fragment>
               );
             })}
-          </Swiper>
-          <SwiperControls ref={controlRef as RefObject<HTMLDivElement>}>
-            <Conditional if={currentIndex}>
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={() => handleSlideClick('prev')}
-              >
-                {CHEVRON_LEFT_CIRCLE}
-              </div>
-            </Conditional>
-            <Conditional if={currentIndex < images.length - 1}>
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={() => handleSlideClick('next')}
-              >
-                {CHEVRON_LEFT_CIRCLE}
-              </div>
-            </Conditional>
-          </SwiperControls>
+          </GridLayout>
+          <Conditional if={images.length > 2 && !$isNewsPage}>
+            <TagContainer
+              $ctaContainerWidth={ctaContainerWidth}
+              $ctaContainerHeight={ctaContainerHeight}
+            >
+              <Tag onClick={handleTagClick}>
+                <GRID_ICON />
+                {strings.SEE_ALL_PHOTOS}
+              </Tag>
+            </TagContainer>
+          </Conditional>
+        </GridLayoutContainer>
 
-          <div
-            className="close"
-            role="button"
-            tabIndex={0}
-            onClick={() => handleGalleryClose}
-          >
-            {strings.CLOSE}
-            {CLOSE_WHITE}
-          </div>
-        </DesktopLightBox>
-      </Conditional>
-
-      <Conditional if={isMobileLightboxOpen && isMobile}>
-        <Lightbox>
-          <div className="lightbox-mask" role="button" tabIndex={0} />
-          <div
-            className="close"
-            role="button"
-            tabIndex={0}
-            onClick={handleGalleryClose}
-          >
-            {CLOSE_WHITE}
-          </div>
-          <FullImage>
+        <Conditional if={isDesktopLightboxOpen && !isMobile && !$isNewsPage}>
+          <DesktopLightBox>
             <Swiper {...gallerySwiperParams}>
               {images.map((image, index) => {
                 return (
-                  <Image
-                    key={index}
-                    url={image.linked_image?.url || image.uploaded_image?.url}
-                    alt={image.image_alt || fullImageHeading}
-                  />
+                  <DesktopStyledImage key={index} ref={modalRef}>
+                    <Image
+                      url={image.linked_image?.url || image.uploaded_image?.url}
+                      alt={RichText.asText(image.heading) || ''}
+                    />
+                    <Content>
+                      <div className="content-wrapper">
+                        <DesktopLightboxHeading>
+                          <RichContent render={image.heading} />
+                        </DesktopLightboxHeading>
+                        <Description width="80%" maxWidth="39.37rem">
+                          <RichContent render={image.content} />
+                        </Description>
+                      </div>
+                    </Content>
+                  </DesktopStyledImage>
                 );
               })}
             </Swiper>
@@ -436,41 +381,100 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                 </div>
               </Conditional>
             </SwiperControls>
-          </FullImage>
-          <ContentContainer>
-            <Heading>
-              <RichContent render={activeImage.heading} />
-            </Heading>
-            <Description height="5rem">
-              <RichContent render={lightboxImages[currentIndex].content} />
-            </Description>
-            <ThumbnailSwiper>
-              <Swiper {...thumbnailSwiperParams}>
+
+            <div
+              className="close"
+              role="button"
+              tabIndex={0}
+              onClick={() => handleGalleryClose}
+            >
+              {strings.CLOSE}
+              {CLOSE_WHITE}
+            </div>
+          </DesktopLightBox>
+        </Conditional>
+
+        <Conditional if={isMobileLightboxOpen && isMobile}>
+          <Lightbox>
+            <div className="lightbox-mask" role="button" tabIndex={0} />
+            <div
+              className="close"
+              role="button"
+              tabIndex={0}
+              onClick={handleGalleryClose}
+            >
+              {CLOSE_WHITE}
+            </div>
+            <FullImage>
+              <Swiper {...gallerySwiperParams}>
                 {images.map((image, index) => {
-                  const caption = RichText.asText(image.heading);
                   return (
-                    <StyledImage key={index} title={caption}>
-                      <Image
-                        url={
-                          image.uploaded_image?.url || image.linked_image?.url
-                        }
-                        alt={image.image_alt || caption}
-                        onClick={() => handleClickOnThumbnailSwiper(index)}
-                        className={
-                          index === currentIndex
-                            ? 'active-slide'
-                            : 'non-active-slide'
-                        }
-                      />
-                    </StyledImage>
+                    <Image
+                      key={index}
+                      url={image.linked_image?.url || image.uploaded_image?.url}
+                      alt={image.image_alt || fullImageHeading}
+                    />
                   );
                 })}
               </Swiper>
-            </ThumbnailSwiper>
-          </ContentContainer>
-        </Lightbox>
-      </Conditional>
-    </StyledImageGallery>
+              <SwiperControls ref={controlRef as RefObject<HTMLDivElement>}>
+                <Conditional if={currentIndex}>
+                  <div
+                    className="prev-slide"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSlideClick('prev')}
+                  >
+                    {CHEVRON_LEFT_CIRCLE}
+                  </div>
+                </Conditional>
+                <Conditional if={currentIndex < images.length - 1}>
+                  <div
+                    className="next-slide"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSlideClick('next')}
+                  >
+                    {CHEVRON_LEFT_CIRCLE}
+                  </div>
+                </Conditional>
+              </SwiperControls>
+            </FullImage>
+            <ContentContainer>
+              <Heading>
+                <RichContent render={activeImage?.heading} />
+              </Heading>
+              <Description height="5rem">
+                <RichContent render={lightboxImages?.[currentIndex]?.content} />
+              </Description>
+              <ThumbnailSwiper>
+                <Swiper {...thumbnailSwiperParams}>
+                  {images.map((image, index) => {
+                    const caption = RichText.asText(image.heading);
+                    return (
+                      <StyledImage key={index} title={caption}>
+                        <Image
+                          url={
+                            image.uploaded_image?.url || image.linked_image?.url
+                          }
+                          alt={image.image_alt || caption}
+                          onClick={() => handleClickOnThumbnailSwiper(index)}
+                          className={
+                            index === currentIndex
+                              ? 'active-slide'
+                              : 'non-active-slide'
+                          }
+                        />
+                      </StyledImage>
+                    );
+                  })}
+                </Swiper>
+              </ThumbnailSwiper>
+            </ContentContainer>
+          </Lightbox>
+        </Conditional>
+      </StyledImageGallery>
+    </Conditional>
   );
 };
 
