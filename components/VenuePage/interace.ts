@@ -21,7 +21,7 @@ export type IVenuePageProps = {
 
 export type IAccordionSlice = {
   heading: string;
-  content: string;
+  content: RichTextField;
 };
 
 export type IVerticalCardsGrid = {

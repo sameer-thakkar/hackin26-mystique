@@ -6,7 +6,7 @@ import imageSliceHandler, {
   UrlProps,
 } from 'utils/imageSliceHandler';
 import { sendLog } from 'utils/logger';
-import { getPageData } from 'utils/prismicUtils';
+import getPageData from 'utils/prismicUtils/getPageData';
 import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
 import { CUSTOM_TYPES, DESIGN, FALLBACK_IMAGES } from 'constants/index';
 

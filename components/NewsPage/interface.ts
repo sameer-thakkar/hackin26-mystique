@@ -1,6 +1,7 @@
-import { PrismicDocumentWithUID } from '@prismicio/types';
-import { TLANGUAGELOCALE } from 'const/index';
-import { TMediaData } from './ArticlePage/interface';
+import type { PrismicDocumentWithUID } from '@prismicio/types';
+import type { ShowpageDocument } from 'types.prismic';
+import type { TLANGUAGELOCALE } from 'const/index';
+import type { TMediaData } from './ArticlePage/interface';
 
 export type TourGroupDataType = {
   name: string;
@@ -41,9 +42,7 @@ export type TNewsPageData = {
   articlesWithSameTgid: PrismicDocumentWithUID[];
   CFData: Record<string, any>;
   trailerSectionData: TourGroupDataType[];
-  showPageDocuments: {
-    results: PrismicDocumentWithUID[];
-  };
+  showPageDocuments: ShowpageDocument[];
   subCategoryData: any;
   videoData: Record<string, string>;
   mediaData: TMediaData[];

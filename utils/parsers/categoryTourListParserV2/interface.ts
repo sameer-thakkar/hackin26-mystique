@@ -1,13 +1,16 @@
+import type {
+  ContentFrameworkDocumentDataBodyCategoryCarouselSlice,
+  MicrositeDocumentDataBodyTourListCategorySlice,
+} from 'types.prismic';
+
 export type TCategoryTourListParserV2 = {
-  tourListCategory: { [key: string]: any };
+  tourListCategory: MicrositeDocumentDataBodyTourListCategorySlice;
   hostname: string;
-  showpages: any;
-  categoryCarousel?: { [key: string]: any };
+  categoryCarousel?: ContentFrameworkDocumentDataBodyCategoryCarouselSlice;
   lang: string;
   localizedStrings: any;
   cookies?: { [key: string]: string };
   MBDesign?: string;
-  taggedCollection: number;
 };
 
 export interface ISet<T> {
@@ -25,6 +28,13 @@ export interface ISet<T> {
 export type IShowPageData = {
   tgid: number;
   uid: string;
+};
+
+export type TImageObject = {
+  url: string;
+  altText: string;
+  description: string;
+  credit: string;
 };
 
 export type TProduct = {
@@ -85,4 +95,10 @@ export type TProduct = {
   microBrandsHighlight: any;
   currencies?: [];
   urlSlugs: IUrlSlugs;
+  media: {
+    productImages: Array<TImageObject>;
+    safetyImages: Array<TImageObject>;
+    safetyVideos: Array<TImageObject>;
+  };
+  flowType: 'string';
 };

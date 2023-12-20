@@ -1,11 +1,17 @@
 import Router from 'next/router';
-import { Client } from 'config/prismic-config';
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import { createClient } from 'prismicio';
+import type { AlternateLanguage, NumberField } from '@prismicio/types';
 import dayjs from 'dayjs';
+import type { IncomingHttpHeaders } from 'http';
+import { ShowpageDocument } from 'types.prismic';
 import { VideoMetaInfo } from 'components/common/Scripts';
 import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
 import type { CollectionDetails } from 'components/StaticBanner';
-import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
+import {
+  fetchCollection,
+  fetchTourGroupsByCategory,
+  fetchTourGroupsByCollection,
+} from 'utils/apiUtils';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
@@ -13,6 +19,7 @@ import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import {
   BY_HO_BRAND_SCREEN_ENABLE,
   CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
   HEADOUT_NAKED_DOMAIN,
   LANGUAGE_MAP,
   LanguagesUnion,
@@ -387,7 +394,7 @@ export const getHeadoutLanguagelocale = (prismicLangCode: string) => {
 };
 
 export const getAlternateLanguages = (
-  alternateLangsArray: Record<string, any>[],
+  alternateLangsArray: AlternateLanguage<string, string>[],
   isDev: boolean,
   host: string,
   currentDocUid = ''
@@ -482,7 +489,7 @@ type TGeneratePromiseForCategoryTours = {
   isCategory?: boolean;
   isSubCategory?: boolean;
   lang: string;
-  primarySubCategoryID?: string;
+  primarySubCategoryID?: NumberField;
   cookies?: Record<string, string>;
 };
 
@@ -501,13 +508,13 @@ export const generatePromiseForCategoryTours = ({
     let promise;
     switch (true) {
       case isCollection:
-        promise = await fetchCollection({
+        promise = await fetchTourGroupsByCollection({
           collectionId: catId,
           hostname,
           limit: '100',
           language: getHeadoutLanguagecode(lang),
           cookies,
-          primarySubCategoryID,
+          ...(primarySubCategoryID && { primarySubCategoryID }),
         });
         break;
       case isCategory:
@@ -537,9 +544,7 @@ export const generateSubcatFitleredCollectionsPromises = ({
   primaryCollection,
 }: any) => {
   const allPromises = subcategoryIds?.map(async (catId: string) => {
-    let promise;
-
-    promise = await fetchCollection({
+    const promise = await fetchCollection({
       collectionId: primaryCollection,
       hostname,
       limit: '100',
@@ -580,11 +585,13 @@ export const getTgidsFromShow = (shows: any) => {
 };
 
 export const getEnglishDocUid = (
-  prismicAlternateLanguages: Record<string, any>[]
+  prismicAlternateLanguages: AlternateLanguage[]
 ) => {
   if (prismicAlternateLanguages?.length) {
     const { uid } =
-      prismicAlternateLanguages?.find((doc) => doc.lang === 'en-us') || {};
+      prismicAlternateLanguages?.find(
+        (doc) => doc.lang === DEFAULT_PRISMIC_LANG
+      ) || {};
     return uid;
   } else {
     return null;
@@ -663,18 +670,22 @@ export const isCategoryMB = (mbType: string | null) =>
 
 export const handleSettledPromiseResults = (
   results: PromiseSettledResult<any>[]
-): Record<string, any>[] => {
-  const errors = results.map(
-    (result) => result.status === 'rejected' && result?.reason
-  );
+) => {
+  const errors = results
+    .filter((result) => result.status === 'rejected' && result?.reason)
+    // @ts-ignore
+    ?.map((res) => res?.reason);
   if (errors.length) {
     sendLog({
       err: errors,
       message: `[handleSettledPromiseResults] - ${errors}`,
     });
   }
-  return results.map(
-    (result) => result.status === 'fulfilled' && result?.value
+  return (
+    results
+      .filter((result) => result.status === 'fulfilled' && result?.value)
+      // @ts-ignore
+      ?.map((res) => res?.value)
   );
 };
 
@@ -687,7 +698,7 @@ export const isPartneredMB = (baseLangBannerAndFooterCombinations: string) => {
   );
 };
 
-export const isA1orC1MB = (mbType: string) =>
+export const isA1orC1MB = (mbType: string | null) =>
   mbType === MB_TYPES.A1_COLLECTION || mbType === MB_TYPES.C1_COLLECTION;
 
 export const getBannerAndFooterSubtext = (
@@ -750,10 +761,10 @@ export const getF1MBTrustBoosters = (
       ];
 
 export const displayBannerTrustBoosters = (data: Record<string, any>) =>
-  data?.data?.f1_banner_trust_booster;
+  data?.f1_banner_trust_booster;
 
 export const displayProductTrustBoosters = (data: Record<string, any>) =>
-  data?.data?.f1_product_trust_booster;
+  data?.f1_product_trust_booster;
 
 export const deepDeleteKeys = ({
   obj,
@@ -861,27 +872,31 @@ export const getTagPageMap = () => ({
 
 export const getCategorisationMetadata = async ({
   doc,
-  getFromLinkedMicrosite = false,
 }: {
-  doc: PrismicDocumentWithUID;
-  getFromLinkedMicrosite?: boolean;
-}): Promise<TCategorisationMetadata> => {
+  doc: ShowpageDocument;
+}) => {
   try {
-    const { uid, type, lang, alternate_languages, data } = doc || {};
+    const { lang, alternate_languages } = doc || {};
 
     const baseLangUid = getEnglishDocUid(alternate_languages);
+
+    const prismicClient = createClient();
+
     const baseLangData =
-      lang !== LANGUAGE_MAP.en.locale
-        ? await Client()
-            .getByUID(
-              getFromLinkedMicrosite ? CUSTOM_TYPES.MICROSITE : type,
-              baseLangUid || uid,
-              {
-                lang: LANGUAGE_MAP.en.locale,
-              }
-            )
-            .then((res: PrismicDocumentWithUID) => res.data)
-        : data;
+      lang !== LANGUAGE_MAP.en.locale && baseLangUid
+        ? await prismicClient.getByUID('showpage', baseLangUid, {
+            lang: LANGUAGE_MAP.en.locale,
+          })
+        : doc;
+    sendLog({
+      message: {
+        lang: LANGUAGE_MAP.en.locale,
+        uid: baseLangUid,
+        documentType: CUSTOM_TYPES.SHOW_PAGE,
+        functionality: 'baseLangData',
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const {
       tagged_category,
@@ -892,10 +907,7 @@ export const getCategorisationMetadata = async ({
       tagged_mb_type,
       tagged_page_type,
       tagged_sub_category,
-      primary_tag,
-      shoulder_page_type,
-    } = baseLangData || {};
-    const { shoulder_page_custom_label } = data;
+    } = baseLangData?.data || {};
 
     return {
       tagged_category,
@@ -906,9 +918,6 @@ export const getCategorisationMetadata = async ({
       tagged_mb_type,
       tagged_page_type,
       tagged_sub_category,
-      primary_tag,
-      shoulder_page_type,
-      shoulder_page_custom_label,
     };
   } catch (error) {
     sendLog({ err: error });
@@ -921,9 +930,6 @@ export const getCategorisationMetadata = async ({
       tagged_mb_type: null,
       tagged_page_type: null,
       tagged_sub_category: null,
-      primary_tag: null,
-      shoulder_page_type: null,
-      shoulder_page_custom_label: null,
     };
   }
 };
@@ -973,8 +979,22 @@ export const getAnalyticsPageType = ({
   }
 };
 
+export function convertHttpHeadersToRegularHeaders(
+  headers: IncomingHttpHeaders
+) {
+  const headerObject: { [key: string]: string } = {};
+
+  for (const [key, value] of Object.entries(headers)) {
+    if (typeof value === 'string' || Array.isArray(value)) {
+      headerObject[key] = value.toString();
+    }
+  }
+
+  return new Headers(headerObject);
+}
+
 export const getPrimarySubCategoryIdData = (
-  primarySubCategoryId: string | null,
+  primarySubCategoryId: NumberField | undefined,
   allData: Record<string, any>
 ) => {
   let finalData = {};

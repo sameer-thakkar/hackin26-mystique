@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Prismic from 'prismic-javascript';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
-import { Client } from 'config/prismic-config';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -19,12 +16,15 @@ import OverflowScroll from 'components/UI/OverflowScroll';
 import Spinner from 'components/UI/Spinner';
 import { getAlternateLanguages } from 'utils';
 import { groupSlices } from 'utils/helper';
+import getListicleCategories from 'utils/prismicUtils/listiclePage/getListicleCategories';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { HEADOUT_API_ENDPOINT } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+
+// [NOT IN USE]
 
 const Slider = dynamic(() => import('UI/Slider'));
 const Banner = dynamic(() => import('components/MicrositeV2/Banner'));
@@ -73,6 +73,8 @@ const ListicleCommonSummary = styled.div`
     margin-bottom: 20px;
   }
 `;
+
+// TODO: Check with Swati / Denver if this is used
 
 const CategorySlider = styled.div<{ stickCategorySlider?: boolean }>`
   ${(props) => {
@@ -328,36 +330,22 @@ const Listicle = (props: any) => {
   // Fetching all tours of the listicle categories using tags and then fetching tour data
   useEffect(() => {
     setLoading(true);
-    Client()
-      .query(Prismic.Predicates.any('document.tags', [uid]), { lang })
-      .then(async (res: any) => {
-        const tourData = await Promise.all(
-          res.results.map((tour: any) => {
-            return fetch(
-              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${
-                tour.data.tgid
-              }?fetch-variants=false&fetch-collection-svg=false&language=${
-                currentLanguage || 'en'
-              }`
-            ).then((r) => r.json());
-          })
-        );
-        setLoading(false);
-        const result = tourData.map((tour: any, index) => {
-          return {
-            ...res.results[index],
-            ...tour,
-            bookingUrl,
-          };
-        });
-        // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
-        setTours(result);
-        // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
-        setFilteredTours(result);
-      })
-      .catch((err: any) => {
-        console.log(err); //eslint-disable-line
+
+    async function getTours() {
+      const tours = await getListicleCategories({
+        uid,
+        lang: currentLanguage,
+        hostname: host,
       });
+
+      if (tours?.length) {
+        setLoading(false);
+        setTours(tours);
+        setFilteredTours(tours);
+      }
+    }
+
+    getTours();
   }, [
     uid,
     lang,
@@ -366,6 +354,7 @@ const Listicle = (props: any) => {
     setFilteredTours,
     currentLanguage,
     bookingUrl,
+    host,
   ]);
 
   const {
@@ -498,9 +487,9 @@ const Listicle = (props: any) => {
         <Content>
           <Title>{listicleCommonTitle}</Title>
           <ListicleCommonSummary>
-            <RichText
-              render={listicleCommonSummary}
-              htmlSerializer={shortCodeSerializer}
+            <PrismicRichText
+              field={listicleCommonSummary}
+              components={shortCodeSerializer}
             />
           </ListicleCommonSummary>
           {isMobile ? (
@@ -552,9 +541,9 @@ const Listicle = (props: any) => {
             </CategorySlider>
           )}
           <ListicleDescription>
-            <RichText
-              render={listicleDescription}
-              htmlSerializer={shortCodeSerializer}
+            <PrismicRichText
+              field={listicleDescription}
+              components={shortCodeSerializer}
             />
           </ListicleDescription>
           {stickElements && !isMobile ? null : <FilterElement />}

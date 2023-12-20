@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-// import { useWindowWidth } from '@react-hook/window-size';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import { modalStyles } from 'components/NewsPage/components/Trailer/components/MediaPlayer/styles';
@@ -292,10 +291,10 @@ type MediaProps = {
  *  - Will take precedence over 'Image Source' alt
  */
 
-const HyperLink = ({ children, data }: any) => {
+const HyperLink = ({ children, node }: any) => {
   return (
     <a
-      href={data.url}
+      href={node?.data?.url}
       target="_blank"
       rel="noreferrer noopener"
       onClick={(e) => e.stopPropagation()}
@@ -556,7 +555,7 @@ const Card: React.FC<CardProps> = ({
       );
   }
   const hasTextContent =
-    title?.length > 0 || RichText.asText(description || []).length > 0;
+    title?.length > 0 || asText((description as []) || []).length > 0;
 
   return (
     <StyledCard
@@ -589,11 +588,11 @@ const Card: React.FC<CardProps> = ({
               {title}
             </Title>
           </Conditional>
-          <RichText
-            elements={{
+          <PrismicRichText
+            field={description}
+            components={{
               hyperlink: HyperLink,
             }}
-            render={description}
           />
           {cta?.link?.url ? CTA : null}
         </div>

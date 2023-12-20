@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { SliceZone } from '@prismicio/react';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
@@ -18,9 +19,9 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import sliceHandler from '../Slices';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
+import { sliceComponents } from './sliceManager';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -65,10 +66,10 @@ const StyledTabWrapper = styled.div`
       .image-wrap {
         width: auto;
       }
-      .seatmap-image{
+      .seatmap-image {
         margin-right: 1.5rem;
       }
-      button{
+      button {
         margin-top: 1.5rem;
       }
     }
@@ -207,7 +208,7 @@ const SlideControls = styled.div`
 
 type TabWrapperProps = {
   heading?: string;
-  slices?: Array<any>;
+  childSlices?: Array<any>;
   sliceProps?: Object;
   description?: any[];
   tabData?: any[];
@@ -246,7 +247,7 @@ type TabWrapperProps = {
 const TabWrapper = (props: TabWrapperProps) => {
   const {
     heading,
-    slices = [],
+    childSlices: slices = [],
     sliceProps: parentSliceProps,
     description = [],
     tabData = [],
@@ -291,10 +292,10 @@ const TabWrapper = (props: TabWrapperProps) => {
   // Tab Carousel
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex((swiper as any)?.realIndex as number),
+    [swiper]
+  );
   const [isEnd, updateEnd] = useState(false);
   const [isBeginning, updateBeginning] = useState(true);
   const tabsContanier = useRef(null);
@@ -470,13 +471,12 @@ const TabWrapper = (props: TabWrapperProps) => {
           </Controls>
         </TabCarousel>
         <div className="tab-content-wrap">
-          {slices.map((slice, keyIndex) => {
-            return (
-              <React.Fragment key={keyIndex}>
-                {sliceHandler(slice, { ...sliceProps, keyIndex })}
-              </React.Fragment>
-            );
-          })}
+          <SliceZone
+            slices={slices}
+            components={sliceComponents()}
+            context={{ ...sliceProps, wrapperType: 'tab' }}
+            defaultComponent={() => null}
+          />
         </div>
       </>
     );
@@ -629,9 +629,12 @@ const TabWrapper = (props: TabWrapperProps) => {
           <div> {tabElements?.[activeTabIndex]?.children}</div>
         </Conditional>
         <Conditional if={!tabData.length}>
-          {slices.map((slice, keyIndex) => {
-            return sliceHandler(slice, { ...sliceProps, keyIndex });
-          })}
+          <SliceZone
+            slices={slices}
+            components={sliceComponents()}
+            context={{ ...sliceProps, wrapperType: 'tab' }}
+            defaultComponent={() => null}
+          />
         </Conditional>
       </div>
     </StyledTabWrapper>

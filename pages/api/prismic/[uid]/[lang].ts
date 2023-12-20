@@ -7,24 +7,24 @@ const getPrismicDocumentData = async (
   res: NextApiResponse
 ) => {
   const { query } = req;
-  const { uid, lang, isDev } = (query as unknown) as {
+  const { uid, lang, isDev } = query as unknown as {
     uid: string;
     lang: string;
     isDev: boolean;
   };
-
   const {
     CMSContent,
     ContentType,
     redirectInfo,
     statusCode,
     shouldHaveShorterTtl,
-  } = await getPrismicDocument({
-    isDev,
-    req,
-    uid,
-    lang,
-  });
+  } =
+    (await getPrismicDocument({
+      isDev,
+      req,
+      uid,
+      lang,
+    })) ?? {};
   let shouldPageHaveShorterTtl = false;
 
   if (shouldHaveShorterTtl || statusCode) {

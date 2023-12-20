@@ -10,9 +10,10 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
 - [Development](#development)
   - [Requirements](#requirements)
   - [Developing](#developing)
-  - [Contributing](#contributing)
-  - [Testing on stage](#testing-on-stage)
+  - [Generating Prismic Types](#generating-prismic-types)
   - [Building locally](#building-locally)
+  - [Testing on Ondemand Environment (ODE)](#testing-on-ondemand-environment-ode)
+  - [Contributing](#contributing)
   - [Developing for Storybook](#developing-for-storybook)
 
 ## Development
@@ -51,6 +52,50 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
 
   ```plaintext
   http://localhost:3001/?mystique_uid=www.thevaticantickets.com&lang=en-us
+  ```
+
+### Generating Prismic Types
+
+1. Add `PRISMIC_CUSTOM_TYPES_API_TOKEN` variable to local env.
+2. You can copy the token from `Prismic > Settings > API & Security`
+3. Select `Custom Types API` instead of `Content API`.
+4. Copy the code for `Mystique Typescript`.
+5. If you are not able to find the code feel free to create a new one with relevant app name.
+6. Use the following command in the root of the project
+
+```bash
+  npx prismic-ts-codegen
+```
+
+7. Above code will update `types.prismic.d.ts` with the latest types
+
+> [!WARNING]  
+> Please ensure that you are not committing PRISMIC_CUSTOM_TYPES_API_TOKEN to git
+
+### Building locally
+
+- Build the Next app:
+
+  ```bash
+  yarn build
+  ```
+
+- Start the built app:
+
+  ```bash
+  yarn start
+  ```
+
+### Testing on Ondemand Environment (ODE)
+
+- To access nimbus, go to [nimbus](https://nimbus.test-headout.com/).
+- If you don't have access, ask @platform-oncall for permission or talk to your team lead.
+- To learn how to create a test environment on ODE, watch this [loom video](https://www.loom.com/share/4e536bfc963e4d0a8a940c6b6affd0dd?sid=c0d2feff-edf0-43bb-9c49-4e733c2edcb).
+- If you're wondering what nimbus is, check out [this announcement](https://headout.slack.com/archives/C03RJMW6BDM/p1695209954862449).
+
+- Visit any microbrand using the mystique_uid and lang param in your query:
+  ```plaintext
+  https://<ode-url>/?mystique_uid=www.thevaticantickets.com&lang=en-us
   ```
 
 ### Contributing
@@ -118,39 +163,10 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
 
   - Squash and merge to `master` and create a new release. [Here's a Notion doc on how we make releases.](https://www.notion.so/headouthub/How-do-I-make-a-release-ebbc384f4d1840e59fd674bf8277172c#8114c53a14a245ea9d0d75f305328f3f)
 
-### Testing on stage
-
-- Before testing your build on stage, please ensure that you have locked `mystique-stage` in [#alert-environment-locks](https://headout.slack.com/archives/C01899K206T) channel on Slack
-
-- Once deployed on stage, microbrand types use their own subdomain - `www-stage.<domain>.com`
-
-  Example:
-
-  ```plaintext
-  https://www-stage.thevaticantickets.com
-  ```
-
-- However, not all microbrands have a subdomain. For microbrands that do not have a subdomain, go to https://stage-microbrands.headout.com/?mystique_uid=www.tickets-paris.fr.louvre-museum&lang=en-us, where `www.tickets-paris.fr.louvre-museum` is the Prismic UID of the microbrand.
-
-- Microbrands that are on a subpath (for example, www.tickets-paris.fr/louvre-museum) use a `.` as separator instead of a `/` when used in `mystique_uid` query param (see the previous example)
-
-### Building locally
-
-- Build the Next app:
-
-  ```bash
-  yarn build
-  ```
-
-- Start the built app:
-
-  ```bash
-  yarn start
-  ```
-
 ### Developing for Storybook
 
-!!! warning We currently do not support Storybook documentation/development
+> [!WARNING]  
+> We currently do not support Storybook documentation/development
 
 [Storybook documentation](https://headout.github.io/mystique/)
 

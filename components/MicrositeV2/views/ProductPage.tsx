@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { PrismicRichText } from '@prismicio/react';
 import { greyScheme } from 'style/theme';
 import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
@@ -859,9 +858,9 @@ export const MobileProductPage = (props: any) => {
             </div>
             <Conditional if={cardFooter?.length}>
               <div className="boosters">
-                <RichText
-                  render={cardFooter}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={cardFooter}
+                  components={shortCodeSerializer}
                 />
               </div>
             </Conditional>
@@ -902,18 +901,18 @@ export const MobileProductPage = (props: any) => {
           <div className="content-blocks">
             <Conditional if={description && description?.length}>
               <div className="content-block full-block tour-description">
-                <RichText
-                  render={description}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={description}
+                  components={shortCodeSerializer}
                 />
               </div>
             </Conditional>
             <div className="hr-line full-block"></div>
             <Conditional if={theater}>
               <div className="content-block full-block ">
-                <RichText
-                  render={theater}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={theater}
+                  components={shortCodeSerializer}
                 />
               </div>
             </Conditional>
@@ -937,9 +936,9 @@ export const MobileProductPage = (props: any) => {
                       <p>{content}</p>
                     </Conditional>
                     <Conditional if={!isEntertainmentMb}>
-                      <RichText
-                        render={content}
-                        htmlSerializer={shortCodeSerializer}
+                      <PrismicRichText
+                        field={content}
+                        components={shortCodeSerializer}
                       />
                     </Conditional>
                   </div>

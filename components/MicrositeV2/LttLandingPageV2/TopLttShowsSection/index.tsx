@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
 import HorizontalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard';
@@ -83,7 +83,7 @@ const TopLttShowsSection = ({
       <div className="shows">
         {shows.map((show, index) =>
           isMobile ? (
-            <>
+            <React.Fragment key={index}>
               <Conditional if={index === 3 && showBrowseByCategories}>
                 <BrowseByCategoriesSection
                   categoriesToRender={categoriesToRender}
@@ -101,9 +101,9 @@ const TopLttShowsSection = ({
                   key={show.title}
                 />
               </div>
-            </>
+            </React.Fragment>
           ) : (
-            <div className="card-wrapper">
+            <div className="card-wrapper" key={index}>
               <Conditional if={index < 12}>
                 <TopShowBadge index={index} />
               </Conditional>

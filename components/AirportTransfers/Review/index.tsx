@@ -110,7 +110,6 @@ export const AirportTransferReviews = ({ isMobile }: { isMobile: boolean }) => {
           />
         </div>
       </StyledHeaderSection>
-
       <SwiperWrapper
         onSwiper={setSwiper}
         onSlideChange={handleSlideChange}

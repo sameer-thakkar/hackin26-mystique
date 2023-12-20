@@ -9,8 +9,8 @@ import COLORS from 'const/colors';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 
-const PopulateProducts = dynamic(() =>
-  import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
+const PopulateProducts = dynamic(
+  () => import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
 );
 
 const StyledCategorySection = styled.div`
@@ -92,7 +92,7 @@ const CategorySection = (props: any) => {
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
   // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours } = toursContext;
+  const { allTours = [] } = toursContext || {};
 
   let filteredTgids: any;
   const categoryDataObj = {};

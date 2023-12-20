@@ -20,7 +20,8 @@
       "UI/*": ["components/UI/*"],
       "hooks/*": ["components/hooks/*"],
       "atoms/*": ["store/atoms"],
-      "const/*": ["constants/*"]
+      "const/*": ["constants/*"],
+      "react": ["./node_modules/@types/react"]
     },
     "incremental": true
   },

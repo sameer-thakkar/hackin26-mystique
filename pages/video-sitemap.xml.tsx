@@ -2,7 +2,7 @@ import { NextPageContext } from 'next';
 import { getHeadoutLanguagecode, isCollectionMB, reflect } from 'utils';
 import { groupSlices } from 'utils/helper';
 import imageSliceHandler from 'utils/imageSliceHandler';
-import { getPageData } from 'utils/prismicUtils';
+import getPageData from 'utils/prismicUtils/getPageData';
 import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
 import { CUSTOM_TYPES, DESIGN } from 'constants/index';
 

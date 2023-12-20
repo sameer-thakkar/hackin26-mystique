@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Client } from 'config/prismic-config';
 import { ThemeProvider } from 'styled-components';
 import { getAppTheme } from 'style/theme';
 import Footer from 'components/common/Footer';
@@ -64,20 +63,17 @@ export default class privacy extends Component<any, any> {
       logo: { logoUrl, showPoweredLogo },
       name: whiteLabelName,
     } = await fetchDomainConfig(uid);
-    let response, footerID;
+    let response = CMSContent,
+      commonFooter = {};
     switch (ContentType) {
       case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
-        response = CMSContent;
-        footerID = response.data.common_footer.id;
+        commonFooter = CMSContent?.data?.common_footer;
         break;
       case CUSTOM_TYPES.MICROSITE:
-        response = CMSContent.data;
-        footerID = response.data.footer_ref.id;
+        commonFooter = CMSContent.data?.footer_ref;
     }
-    if (footerID) {
-      const commonFooter = await Client(req).getByID(footerID);
-      response.data.commonFooter = commonFooter;
-    }
+
+    response.data.commonFooter = commonFooter;
     response.data.faviconUrl = faviconUrl;
     response.data.logoUrl = logoUrl;
     response.data.logoAltText = whiteLabelName;

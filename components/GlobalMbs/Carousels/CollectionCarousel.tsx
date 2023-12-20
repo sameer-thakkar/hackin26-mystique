@@ -1,11 +1,12 @@
 import { FunctionComponent, useContext } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { filterByCategory, filterByContinent } from 'utils/globalMBUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
@@ -123,29 +124,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
     OCEANIA: 'Oceania',
     WATERPARK: 'Waterpark',
   };
-  const filterByContinent = (arr: any[], filterByContinent: string) => {
-    const data = [...arr];
-    if (filterByContinent === 'All') {
-      return data
-        ?.filter((d) => d?.data?.rank != null)
-        ?.sort((a, b) => a?.data?.rank - b?.data?.rank);
-    }
-    return data
-      ?.filter(
-        (d) => d?.data?.continent === filterByContinent && d?.data?.rank != null
-      )
-      ?.sort((a, b) => a?.data?.rank - b?.data?.rank);
-  };
-  const filterByCategory = (arr: any[], filterByCategory: string) => {
-    const data = [...arr];
-    return data
-      ?.filter(
-        (d) =>
-          d?.data?.primary_category === filterByCategory &&
-          d?.data?.rank != null
-      )
-      ?.sort((a, b) => a?.data?.rank - b?.data?.rank);
-  };
+
   let topCollections;
   switch (carouselType) {
     case 'top-10-world':
@@ -216,7 +195,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
         <h2>{title}</h2>
       </div>
       <Conditional if={subtext?.length}>
-        <RichText render={subtext} />
+        <PrismicRichText field={subtext} components={shortCodeSerializer} />
       </Conditional>
     </HeaderWrapper>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
@@ -75,7 +75,7 @@ const Question = (props: any) => {
           <div className="state-icon">{CHEVRON_DOWN}</div>
         </div>
         <div className="answer">
-          <RichText render={answer} />
+          <PrismicRichText field={answer} components={shortCodeSerializer} />
         </div>
       </div>
       <style>{`

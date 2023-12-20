@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SliceZone } from '@prismicio/react';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { FULL_WIDTH_SLICES } from '../../constants';
-import sliceHandler from '../Slices';
+import { sliceComponents } from './sliceManager';
 
 const StyledBackground = styled.div`
   padding: 40px 0;
@@ -41,7 +41,13 @@ const StyledBackground = styled.div`
  */
 
 const Background = (props: any) => {
-  const { slices, sliceProps, color, gridCenter, textCenter } = props;
+  const {
+    childSlices: slices,
+    sliceProps,
+    color,
+    gridCenter,
+    textCenter,
+  } = props;
   const colorMap = {
     'Chalk Grey': COLORS.GRAY.G7,
     'Light Grey': COLORS.GRAY.G8,
@@ -53,16 +59,12 @@ const Background = (props: any) => {
       gridCenter={gridCenter}
       textCenter={textCenter}
     >
-      {slices.map((slice: any, index: number) => (
-        <div
-          key={index}
-          className={`${
-            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
-          } slice-block ${slice.slice_type}`}
-        >
-          {sliceHandler(slice, sliceProps)}
-        </div>
-      ))}
+      <SliceZone
+        slices={slices}
+        components={sliceComponents()}
+        context={sliceProps}
+        defaultComponent={() => null}
+      />
     </StyledBackground>
   );
 };

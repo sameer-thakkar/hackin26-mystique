@@ -1,5 +1,5 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import { getMenuUrl } from 'utils/headerUtils';
 import { getSubCategoryIconUrl } from 'utils/helper';
 import { sendLog } from 'utils/logger';
@@ -21,30 +21,44 @@ export const getCategoryLandingPage = async ({
   lang: string;
 }) => {
   try {
-    const { results: filteredMicrosites } =
-      (await Client().query([
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.at(
-          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
-          mbCategory
-        ),
-        Prismic.Predicates.at(
-          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
-          mbCity
-        ),
-        Prismic.Predicates.at(
-          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
-          MB_CATEGORISATION.MB_TYPE.A1_CATEGORY
-        ),
-        Prismic.Predicates.at(
-          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
-          MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
-        ),
-      ])) || {};
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
+        mbCategory
+      ),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+        mbCity
+      ),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
+        MB_CATEGORISATION.MB_TYPE.A1_CATEGORY
+      ),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
+        MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
+      ),
+    ];
+    const prismicClient = createClient();
+    const { results: filteredMicrosites } = await prismicClient.getByType(
+      'microsite',
+      {
+        predicates: predicatesArray,
+      }
+    );
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'filteredMicrosites',
+        queryingMultipleDocs: true,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     if (!filteredMicrosites?.[0]) return '';
 
-    const url = getMenuUrl({ docFound: filteredMicrosites[0], lang });
+    const url = getMenuUrl({ docFound: filteredMicrosites?.[0], lang });
 
     return url;
   } catch (err) {

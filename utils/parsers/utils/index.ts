@@ -1,51 +1,49 @@
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
+import type { NumberField } from '@prismicio/types';
+import { ShowpageDocument } from 'types.prismic';
 import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
 import { getHeadoutLanguagecode, getPrimarySubCategoryIdData } from 'utils';
-import { fetchMediaResource, fetchTourListV6 } from 'utils/apiUtils';
-import { getHostName, normaliseURL } from 'utils/helper';
+import { fetchMediaResource } from 'utils/apiUtils';
+import { sendLog } from 'utils/logger';
+import { allShowPagesGq } from 'utils/prismicUtils/microsite/graphQuery';
 import {
   generateDescriptor,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
-import { DESIGN } from 'const/index';
+import { CUSTOM_TYPES, DESIGN, PRISMIC_DEV_TAG } from 'const/index';
 import { TProduct } from '../categoryTourListParserV2/interface';
 
-const getProductData = async (
-  allData: [],
-  allTgids: number[][],
-  hostname: string,
-  lang: string,
-  showpageData: Record<number, string>,
-  localizedStrings: Record<string, any>,
-  MBDesign: string,
-  primarySubCategoryID: string | null
-) => {
-  let currencyObject,
-    finalObj: Record<string, any> = {},
+type TGetProductData = {
+  allData: [];
+  allTgids: number[][];
+  lang: string;
+  localizedStrings: Record<string, any>;
+  MBDesign: string;
+  primarySubCategoryID?: NumberField;
+  currencyObject?: Record<string, string | number | null>;
+};
+
+const getProductData = async ({
+  allData,
+  allTgids,
+  lang,
+  localizedStrings,
+  MBDesign,
+  primarySubCategoryID,
+  currencyObject,
+}: TGetProductData) => {
+  let finalObj: Record<string, any> = {},
     data;
 
   if (allData?.length) {
     const tgids = allTgids?.flat();
     const tgidSet = new Set(tgids);
-    const allTourGroupData: any = await fetchTourListV6({
-      hostname: getHostName(
-        hostname.includes('stage-'),
-        hostname.includes('localhost'),
-        normaliseURL(hostname)
-      ),
-      language: getHeadoutLanguagecode(lang),
-      tgids: Array.from(tgidSet),
-    }).then((data) => {
-      let formattedData: Record<number, any> = {};
-      data?.tourGroups?.forEach((tour: { id: number }) => {
-        formattedData[tour?.id] = tour;
-      });
-      return formattedData;
-    });
 
     let verticalImagesDataMap = new Map<string, any>();
     const mediaData = await fetchMediaResource({
@@ -70,9 +68,49 @@ const getProductData = async (
         );
       }
     });
-    currencyObject = allTourGroupData?.currencies?.[0];
+
+    let showpageData: Record<number, string> = {};
+    let showpages: ShowpageDocument[] | never[] = [];
+
+    try {
+      const prismicClient = createClient();
+      showpages = await prismicClient.getAllByType('showpage', {
+        pageSize: 100,
+        ...(lang && { lang }),
+        graphQuery: allShowPagesGq,
+        predicates: [
+          predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+          predicate.any('my.showpage.tgid', Array.from(tgidSet)),
+        ],
+      });
+
+      sendLog({
+        message: {
+          documentType: CUSTOM_TYPES.SHOW_PAGE,
+          functionality: 'filteredMicrosites',
+          queryingMultipleDocs: true,
+          lang,
+          msg: 'Prismic API call from Canary',
+        },
+      });
+    } catch (error) {
+      sendLog({
+        err: error,
+        message: '[categoryTourListParserV2] allShowPages fetch failed',
+      });
+    }
+
+    for (const page of showpages ?? []) {
+      const {
+        uid,
+        data: { tgid },
+      } = page || { data: {} };
+      showpageData[tgid as number] = uid;
+    }
+
     const tgidsWithShowPages = Object.keys(showpageData);
     const hasShowPageData = !!tgidsWithShowPages.length;
+
     allData?.forEach((c: any) => {
       const { collection, category, subCategory, items } = c || {};
       const { id: categoryId } = collection || category || subCategory || {};
@@ -106,6 +144,8 @@ const getProductData = async (
           combo,
           multiVariant,
           urlSlugs,
+          media,
+          flowType,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -154,9 +194,8 @@ const getProductData = async (
           localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
           localizedStrings.SHOW_PAGE.AGE_LIMIT,
         ];
-        const { listicleSchema, hasSpecialOffer } = parseShowPageData(
-          microBrandsHighlight
-        );
+        const { listicleSchema, hasSpecialOffer } =
+          parseShowPageData(microBrandsHighlight);
         let listicleShowSummary, listicleWhyWatch;
 
         for (let item of listicleSchema) {
@@ -200,7 +239,7 @@ const getProductData = async (
             ? contentBlocks?.left?.push(block)
             : contentBlocks?.right?.push(block);
         }
-        const { media, flowType } = allTourGroupData[id] || {};
+
         const { productImages } = media || {};
         const [, descriptionImage] = productImages || [];
         const verticalImage = verticalImagesDataMap.get(String(id));

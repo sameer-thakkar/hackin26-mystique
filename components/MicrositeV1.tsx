@@ -1,10 +1,9 @@
 import { ComponentType, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
 import { useWindowWidth } from '@react-hook/window-size';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
@@ -36,7 +35,6 @@ import {
   legacyBooleanCheck,
 } from 'utils';
 import { calculateAvgRatingAndTotalReviews } from 'utils/airportTransfersUtils';
-import allToursParser from 'utils/allToursParser';
 import {
   sendVariablesToDataLayer,
   sendVariableToDataLayer,
@@ -72,17 +70,21 @@ import { strings } from 'const/strings';
 import { LOCATION } from 'assets/SvgIcons';
 import { LongFormAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
-import { TTour } from './AirportTransfers/PopulateAirportTransferProducts/interfaces';
+import {
+  TCityInfo,
+  TTour,
+} from './AirportTransfers/PopulateAirportTransferProducts/interfaces';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
-const CollectionCarousel = dynamic(() =>
-  import(
-    /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
-  )
+const CollectionCarousel = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
+    )
 );
 
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -104,29 +106,32 @@ const StaticBanner = dynamic(
   }
 );
 
-const CityPageContainer = dynamic(() =>
-  import(
-    /* webpackChunkName: "CityPageContainer" */ 'components/CityPageContainer'
-  )
+const CityPageContainer = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CityPageContainer" */ 'components/CityPageContainer'
+    )
 );
 
-const Banner = dynamic(() =>
-  import(/* webpackChunkName: "Banner" */ 'components/Banner')
+const Banner = dynamic(
+  () => import(/* webpackChunkName: "Banner" */ 'components/Banner')
 );
 const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
-const CategoryHeader = dynamic(() =>
-  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(
+  () =>
+    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
-const Loader = dynamic(() =>
-  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
+const Loader = dynamic(
+  () => import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
-const CatAndSubCatPage = dynamic(() =>
-  import(
-    /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
-  )
+const CatAndSubCatPage = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
+    )
 );
 
 const CoverSlicesWrapper = styled.div`
@@ -137,7 +142,7 @@ const MicrositeV1 = (props: any) => {
   const {
     toursList: uncategorizedToursList,
     tgidToScroll,
-    data,
+    data: microsite,
     offerData,
     mbTheme,
     scorpioData: scorpioDataUncategorised,
@@ -170,24 +175,13 @@ const MicrositeV1 = (props: any) => {
   >({ mapping: {}, categoriesAndSubCategories: {} });
 
   const {
-    refs,
     uid,
     lang,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
-    data: micrositeData,
     alternate_languages,
-    mbType,
-  } = data;
-
-  const {
-    contentFramework,
-    contentFrameworkTreatment,
-    commonFooter,
-    secondaryFooter,
-    commonHeader,
-    productCardData,
-  } = refs;
+    data: micrositeData,
+  } = microsite ?? {};
 
   const {
     attraction: attractionCMS,
@@ -214,29 +208,15 @@ const MicrositeV1 = (props: any) => {
     baseLangBannerAndFooterCombinations,
     baseLangCategorisationMetadata,
     topAttractionsData,
-  } = micrositeData || {};
+    content_framework: contentFramework,
+    content_framework_treatment: contentFrameworkTreatment,
+    common_header_ref: commonHeader,
+    footer_ref: commonFooter,
+    secondary_footer: secondaryFooter,
+    localisedCategoryTourListV1,
+  } = micrositeData ?? {};
 
   const [isTourListFiltered, setIsTourListFiltered] = useState(false);
-
-  const {
-    variant: productCardRevampExperimentVariant,
-    isExperimentResolving: isProductCardRevampExperimentResolving,
-    isEligible: isEligibleForProductCardRevamp,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(mbType) && !isMobile && baseLangIsPoiMb,
-  });
-
-  const {
-    variant: productCardRevampExperimentP1Variant,
-    isExperimentResolving: isProductCardRevampExperimentP1Resolving,
-    isEligible: isEligibleForProductCardRevampP1,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(mbType) && isMobile && baseLangIsPoiMb,
-  });
 
   const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
 
@@ -246,6 +226,25 @@ const MicrositeV1 = (props: any) => {
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
+
+  const {
+    variant: productCardRevampExperimentVariant,
+    isExperimentResolving: isProductCardRevampExperimentResolving,
+    isEligible: isEligibleForProductCardRevamp,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
+    customEligibilityCheckFn: () => isA1orC1MB(taggedMbType) && !isMobile,
+  });
+
+  const {
+    variant: productCardRevampExperimentP1Variant,
+    isExperimentResolving: isProductCardRevampExperimentP1Resolving,
+    isEligible: isEligibleForProductCardRevampP1,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb,
+  });
 
   const { COVID19_ALERT, READ_MORE } = strings;
 
@@ -260,6 +259,9 @@ const MicrositeV1 = (props: any) => {
 
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
+
+  const productCardData =
+    localisedCategoryTourListV1?.primary?.product_cards?.data ?? {};
   const { template } = productCardData || {};
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
@@ -296,14 +298,14 @@ const MicrositeV1 = (props: any) => {
     orderedTours: categorizedToursList,
   } = categoryTourListData || {};
 
-  const tourRanking = uncategorizedTours[0]?.primary?.ranking;
+  const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
     ? categorizedToursList
-    : uncategorizedToursList.length > 0;
+    : uncategorizedToursList?.length > 0;
   const uncategorizedToursHeading = hasTours
     ? isCategorisedTours
       ? ''
-      : uncategorizedTours[0].primary
+      : uncategorizedTours?.[0].primary
     : '';
   const scorpioData = isCategorisedTours
     ? scorpioDataCategorised
@@ -350,9 +352,8 @@ const MicrositeV1 = (props: any) => {
         })
       : orderedUncategorizedTours;
 
-  const [orderedFilteredTours, setOrderedFilteredTours] = useState(
-    orderedTours
-  );
+  const [orderedFilteredTours, setOrderedFilteredTours] =
+    useState(orderedTours);
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -374,9 +375,8 @@ const MicrositeV1 = (props: any) => {
       });
     }
 
-    const renderedBaseLangPageTitle = renderShortCodes(
-      baseLangPageTitle
-    )?.join?.('');
+    const renderedBaseLangPageTitle =
+      renderShortCodes(baseLangPageTitle)?.join?.('');
 
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.LANGUAGE,
@@ -400,9 +400,8 @@ const MicrositeV1 = (props: any) => {
 
   useEffect(() => {
     if (!eventsReady) return;
-    const renderedBaseLangPageTitle = renderShortCodes(
-      baseLangPageTitle
-    )?.join?.('');
+    const renderedBaseLangPageTitle =
+      renderShortCodes(baseLangPageTitle)?.join?.('');
 
     sendVariablesToDataLayer({
       ...(taggedCategoryName && {
@@ -430,7 +429,7 @@ const MicrositeV1 = (props: any) => {
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
       [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
-        isA1orC1MB(mbType) && isMobile
+        isA1orC1MB(taggedMbType) && isMobile
           ? BOOLEAN_STATES['YES']
           : BOOLEAN_STATES['NO'],
     });
@@ -487,7 +486,7 @@ const MicrositeV1 = (props: any) => {
   const { results: productOffer } = offerData ? offerData : { results: [] };
   const hasOffer = productOffer.length > 0;
   const offerPopup = hasOffer ? productOffer[0] : null;
-  const disclaimerText = disclaimerTextCFoot || RichText.asText(disclaimerCMS);
+  const disclaimerText = disclaimerTextCFoot || asText(disclaimerCMS);
   let groupBookingTourTitles: any = [];
 
   let alertPopup = null;
@@ -522,12 +521,6 @@ const MicrositeV1 = (props: any) => {
   );
 
   const isReady = Object.values(scorpioData || {})?.length > 0;
-  const pricingData = {
-    isFetched: isReady,
-    cardPrices: scorpioData,
-  };
-
-  const allTours = allToursParser(micrositeData, scorpioData, pricingData);
 
   let finalBannerImages = getFinalisedBannerImages(bannerImages);
 
@@ -550,9 +543,9 @@ const MicrositeV1 = (props: any) => {
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
-  const isCollectionMicrobrand = isCollectionMB(mbType);
-  const isCategoryMicrobrand = isCategoryMB(mbType);
-  const isSubCategoryMicrobrand = isSubCategoryMB(mbType);
+  const isCollectionMicrobrand = isCollectionMB(taggedMbType);
+  const isCategoryMicrobrand = isCategoryMB(taggedMbType);
+  const isSubCategoryMicrobrand = isSubCategoryMB(taggedMbType);
   const showNewBanner =
     mbTheme !== THEMES.MIN_BLUE &&
     (isCollectionMicrobrand || isCategoryMicrobrand || isSubCategoryMicrobrand);
@@ -564,10 +557,10 @@ const MicrositeV1 = (props: any) => {
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
-    mbType,
+    mbType: taggedMbType,
   });
 
-  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs ?? {}).length > 0;
   const breadcrumbsDetails = {
     breadcrumbs,
     taggedCity,
@@ -660,8 +653,10 @@ const MicrositeV1 = (props: any) => {
     />
   );
 
-  const shouldDisplayProductTrustBoosters = displayProductTrustBoosters(data);
-  const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
+  const shouldDisplayProductTrustBoosters =
+    displayProductTrustBoosters(micrositeData);
+  const shouldDisplayBannerTrustBoosters =
+    displayBannerTrustBoosters(micrositeData);
 
   const showAirportTransferProducts =
     hasTours &&
@@ -814,7 +809,11 @@ const MicrositeV1 = (props: any) => {
             isHOHORevamp={showHohoRevamp}
             isHOHO={isHOHO}
             cityName={primaryCity?.displayName}
-            city={isAirportTransfersMB ? productCardData?.city?.city : null}
+            city={
+              isAirportTransfersMB
+                ? (productCardData?.city as TCityInfo)?.city
+                : null
+            }
           />
         </Conditional>
 
@@ -838,7 +837,7 @@ const MicrositeV1 = (props: any) => {
             );
           })}
         </Conditional>
-        <Conditional if={isA1orC1MB(mbType) && isMobile}>
+        <Conditional if={isA1orC1MB(taggedMbType) && isMobile}>
           <LastMinuteFilters
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}
@@ -895,7 +894,7 @@ const MicrositeV1 = (props: any) => {
             uncategorizedTours={orderedFilteredTours}
             isMobile={isMobile}
             scorpioData={scorpioData}
-            city={productCardData.city}
+            city={productCardData?.city as TCityInfo}
             sharedTransferProducts={tourListSection}
             uid={uid}
             currentLanguage={currentLanguage}
@@ -930,7 +929,7 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={isA1orC1MB(mbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
+          if={isA1orC1MB(taggedMbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
         >
           <LazyComponent>
             <CollectionCarousel
@@ -942,7 +941,7 @@ const MicrositeV1 = (props: any) => {
           </LazyComponent>
         </Conditional>
 
-        <ProductsContextProvider allTours={allTours} ready={isReady}>
+        <ProductsContextProvider ready={isReady}>
           <InteractionContextProvider>
             <Conditional if={longFormContent}>
               <LongForm
@@ -952,6 +951,7 @@ const MicrositeV1 = (props: any) => {
                 isRevampedDesign={isCatOrSubCatPage}
                 isMobile={isMobile}
                 isHOHORevamp={showHohoRevamp}
+                isCatAndSubCatPage={isCatOrSubCatPage}
               />
             </Conditional>
           </InteractionContextProvider>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { FAQPageJsonLd } from 'next-seo';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { asText } from '@prismicio/helpers';
 import FaqSection from 'components/CatAndSubCatPage/faqSection';
 import Conditional from 'components/common/Conditional';
 import Accordion from 'components/slices/Accordion';
@@ -70,7 +69,7 @@ const AccordionGroup = ({
     const { heading, content } = acc || {};
     return {
       questionName: heading?.replace(ESCAPE_REGEX, ESCAPE_REPLACER),
-      acceptedAnswerText: RichText.asText(content)?.replace(
+      acceptedAnswerText: asText(content as [])?.replace(
         ESCAPE_REGEX,
         ESCAPE_REPLACER
       ),

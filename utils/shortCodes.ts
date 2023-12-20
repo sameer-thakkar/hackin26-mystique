@@ -4,6 +4,7 @@ import { WrapInLazyComponent } from 'components/common/LazyComponent';
 import BestDiscount from 'components/shortcodes/BestDiscount';
 import DynamicDate from 'components/shortcodes/DynamicDate';
 import MinPrice from 'components/shortcodes/MinPrice';
+import { getRichtextElements } from 'utils/shortcodeUtils';
 import { SHORT_CODE_TYPES } from 'const/index';
 
 const InlinePrice = dynamic(() => import('components/InlinePrice'));
@@ -308,9 +309,9 @@ const propsWithUniqueKey = function (props: any, key: any) {
   return Object.assign(props || {}, { key });
 };
 
-export const shortCodeSerializer = (
+export const shortCodeSerializer: any = (
   type: any,
-  _element: any,
+  element: any,
   content: any,
   children: any,
   key: any,
@@ -327,8 +328,7 @@ export const shortCodeSerializer = (
       renderedChildrens
     );
   }
-
-  return null;
+  return getRichtextElements({ type, element, children });
 };
 
 export const shortCodeSerializerWithParentProps = (

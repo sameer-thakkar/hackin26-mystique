@@ -1,5 +1,4 @@
-// @ts-expect-error Could not find a declaration file for module 'prismic-reactjs'.
-import { RichText } from 'prismic-reactjs';
+import { asText } from '@prismicio/helpers';
 
 export const extractTgidsFromCategories = (arr: Record<string, any>[]) =>
   arr?.length > 0
@@ -19,11 +18,13 @@ export const accumulatingCategoryAndItemsData = (
 ) => {
   const result = data.reduce((accumulator: any[], currentValue: any) => {
     if (currentValue?.pageData?.items?.length) {
-      const { subCategory, category, pageData } = currentValue || {};
+      const { subCategory, category, collection, pageData } =
+        currentValue || {};
       const { items } = pageData || {};
       accumulator.push({
         ...(subCategory ? { subCategory } : {}),
         ...(category ? { category } : {}),
+        ...(collection ? { collection } : {}),
         items,
       });
     }
@@ -90,13 +91,13 @@ export const extractFirstRichTextSliceContent = (
   uid: string
 ) => {
   const data = CFData[uid]?.body;
-  let richTextData = '';
+  let richTextData: string | null = '';
 
   for (let i = 0; i < data?.length; i++) {
     if (data[i]?.slice_type === 'rich_text') {
-      richTextData = RichText.asText(data[i]?.items[0]?.text);
+      richTextData = asText(data[i]?.items[0]?.text);
       break;
     }
   }
-  return richTextData;
+  return richTextData || '';
 };

@@ -1,7 +1,6 @@
 import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
@@ -91,9 +90,9 @@ const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
           alt={card.image_alt || card.image_source.alt}
         />
         <div>
-          <RichText
-            render={card.card_description}
-            htmlSerializer={shortCodeSerializer}
+          <PrismicRichText
+            field={card.card_description}
+            components={shortCodeSerializer}
           />
         </div>
       </StyledComboCard>

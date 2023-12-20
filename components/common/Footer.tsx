@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { SliceZone, SliceZoneLike } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { getAppTheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
@@ -7,7 +8,7 @@ import ContactUS, {
   MobileCallUsPanelDrawer,
 } from 'components/common/ContactUs';
 import LazyComponent from 'components/common/LazyComponent';
-import sliceHandler from 'components/Slices';
+import { sliceComponents } from 'components/slices/sliceManager';
 import SocialLinks from 'components/UI/SocialLinks';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
@@ -402,7 +403,7 @@ type FooterProps = {
 
 type TLinkSlices = {
   linksTitle: string;
-  slices: Array<Record<string, any>>;
+  slices: SliceZoneLike;
   theme: string | null;
   className?: string;
   isCatOrSubCatPage: boolean;
@@ -437,13 +438,12 @@ const LinkSlices = ({
             </div>
           </div>
         </Conditional>
-        {slices.map((slice: any, index: number) => {
-          return (
-            <div className={`${slice.slice_type}`} key={index}>
-              {sliceHandler(slice, { index, sliceLength: slices.length })}
-            </div>
-          );
-        })}
+        <SliceZone
+          slices={slices}
+          components={sliceComponents()}
+          context={{ sliceLength: slices.length }}
+          defaultComponent={() => null}
+        />
       </div>
     </Container>
   </FooterLinksWrapper>

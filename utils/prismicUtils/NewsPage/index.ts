@@ -1,13 +1,12 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import * as Sentry from '@sentry/nextjs';
+import { ContentFrameworkDocumentData } from 'types.prismic';
 import { TourGroupDataType } from 'components/NewsPage/interface';
 import {
   getEnglishDocUid,
   getHeadoutLanguagecode,
   handleSettledPromiseResults,
-  refsArrayToObject,
 } from 'utils';
 import {
   fetchCollectionReviews,
@@ -19,7 +18,6 @@ import {
 import { getNewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { sendLog } from 'utils/logger';
-import { getRefsArrayByIds } from 'utils/prismicUtils';
 import {
   CUSTOM_TYPE_VALUES,
   CUSTOM_TYPES,
@@ -29,7 +27,7 @@ import {
   TLANGUAGELOCALE,
   TOUR_GROUP_MEDIA_RESOURCE_TYPE,
 } from 'const/index';
-import { LOG_LEVELS } from 'const/logs';
+import { newsArticlesWithCFrameworkGq, newsPageGq } from './graphQuery';
 
 export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
   return media.find((item) => item?.type === 'VIDEO')?.url;
@@ -74,57 +72,65 @@ export const filterArticlesBasedOnEntMb = (
 export const getFeaturedArticlesPromise = (
   uid: string,
   lang: TLANGUAGELOCALE
-) =>
-  Client().query(
-    [
-      Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
-      Prismic.Predicates.at(
-        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TAGS}`,
-        'Featured'
-      ),
-      Prismic.Predicates.not(
-        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`,
-        uid
-      ),
-    ],
-    { pageSize: 30, lang }
-  );
+) => {
+  const predicatesArray = [
+    predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+    predicate.at(
+      `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TAGS}`,
+      'Featured'
+    ),
+    predicate.not(`my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`, uid),
+  ];
+
+  const prismicClient = createClient();
+  return prismicClient.getByType('news_page', {
+    lang,
+    pageSize: 30,
+    predicates: predicatesArray,
+    graphQuery: newsArticlesWithCFrameworkGq,
+  });
+};
 
 export const getArticlesWithSameTgidPromise = (
   tgid: number,
   uid: string,
   lang: TLANGUAGELOCALE
 ) => {
-  return tgid
-    ? Client().query(
-        [
-          Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
-          Prismic.Predicates.at(
-            `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
-            tgid
-          ),
-          Prismic.Predicates.not(
-            `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`,
-            uid
-          ),
-        ],
-        { pageSize: 5, lang }
+  const predicatesArray = [
+    predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+    predicate.not(`my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`, uid),
+  ];
+  if (tgid) {
+    predicatesArray.push(
+      predicate.at(
+        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
+        tgid
       )
-    : Promise.resolve([]);
+    );
+  }
+
+  const prismicClient = createClient();
+  const promise = prismicClient.getByType('news_page', {
+    pageSize: 5,
+    lang,
+    predicates: predicatesArray,
+    graphQuery: newsArticlesWithCFrameworkGq,
+  });
+  return tgid ? promise : Promise.resolve({});
 };
 
 export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
-  return Client().query(
-    [
-      Prismic.Predicates.not(`document.tags`, [`${PRISMIC_DEV_TAG}`]),
-      Prismic.Predicates.at('document.type', `${CUSTOM_TYPES.NEWS_PAGE}`),
-      Prismic.Predicates.not(
-        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`,
-        uid
-      ),
-    ],
-    { pageSize: 100, lang }
-  );
+  const predicatesArray = [
+    predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+    predicate.not(`my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`, uid),
+  ];
+  const prismicClient = createClient();
+  return prismicClient.getAllByType('news_page', {
+    pageSize: 100,
+    lang,
+    predicates: predicatesArray,
+    graphQuery: newsArticlesWithCFrameworkGq,
+  });
 };
 
 export const getCollectionReviewsPromise = (
@@ -141,113 +147,92 @@ export const getCollectionReviewsPromise = (
 };
 
 export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
-  try {
-    const response = await Client(req).getByUID(CUSTOM_TYPES.NEWS_PAGE, uid, {
+  const prismicClient = createClient({
+    req,
+  });
+
+  const newsPage = await prismicClient.getByUID('news_page', uid, {
+    lang,
+    graphQuery: newsPageGq,
+  });
+
+  sendLog({
+    message: {
+      uid,
+      documentType: CUSTOM_TYPES.NEWS_PAGE,
       lang,
-    });
+      functionality: 'newsPage',
+      msg: 'Prismic API call from Canary',
+    },
+  });
 
-    if (response) {
-      const {
-        header_ref,
-        primary_footer_ref,
-        secondary_footer_ref,
-        content_framework_ref,
-      } = response.data;
+  if (newsPage && Object.keys(newsPage)?.length) {
+    const baseLangUid = getEnglishDocUid(newsPage?.alternate_languages);
+    const baseLangData =
+      lang !== SUPPORTED_LOCALE_MAP.en
+        ? await prismicClient.getByUID('news_page', baseLangUid || uid, {
+            lang: SUPPORTED_LOCALE_MAP.en,
+            graphQuery: newsPageGq,
+          })
+        : newsPage;
 
-      const linkedRefIDs = [];
-      linkedRefIDs.push(
-        header_ref.id,
-        primary_footer_ref.id,
-        secondary_footer_ref.id,
-        content_framework_ref.id
-      );
-
-      const refArray = await getRefsArrayByIds(linkedRefIDs, req);
-
-      const {
-        commonFooter,
-        commonHeader,
-        secondaryFooter,
-        contentFramework,
-      } = refsArrayToObject(refArray);
-
-      const baseLangUid = getEnglishDocUid(response?.alternate_languages);
-      const baseLangData =
-        lang !== SUPPORTED_LOCALE_MAP.en
-          ? await Client(req)
-              .getByUID(CUSTOM_TYPES.NEWS_PAGE, baseLangUid || uid, {
-                lang: SUPPORTED_LOCALE_MAP.en,
-              })
-              .then((res: any) => res)
-          : response.data;
-
-      const breadcrumbs = await getNewsPageBreadcrumbs(response);
-
-      const newsPageData = {
-        ...response,
-        data: {
-          refs: {
-            commonHeader,
-            commonFooter,
-            secondaryFooter,
-            contentFramework,
-          },
-          breadcrumbs,
-          isLandingPage: response?.data?.is_landing_page,
-          heading: response?.data?.heading,
-          authorName: response?.data?.author_name,
-          bannerImage: response?.data?.banner_image,
-          tgid: response?.data?.tgid,
-          title: response?.data?.title,
-          description: response?.data?.description,
-          keywords: response?.data?.keywords,
-          taggedCity: mbCategorisationData(
-            baseLangData?.data,
-            response?.data,
-            lang,
-            PRISMIC_FIELD_ID.TAGGED_CITY
-          ),
-          taggedCountry: mbCategorisationData(
-            baseLangData?.data,
-            response?.data,
-            lang,
-            PRISMIC_FIELD_ID.TAGGED_COUNTRY
-          ),
-          taggedCollection: mbCategorisationData(
-            baseLangData?.data,
-            response?.data,
-            lang,
-            PRISMIC_FIELD_ID.TAGGED_COLLECTION
-          ),
-          taggedCategory: mbCategorisationData(
-            baseLangData?.data,
-            response?.data,
-            lang,
-            PRISMIC_FIELD_ID.TAGGED_CATEGORY
-          ),
-          taggedMbType: mbCategorisationData(
-            baseLangData?.data,
-            response?.data,
-            lang,
-            PRISMIC_FIELD_ID.TAGGED_MB_TYPE
-          ),
+    if (lang !== SUPPORTED_LOCALE_MAP.en) {
+      sendLog({
+        message: {
+          uid,
+          documentType: CUSTOM_TYPES.NEWS_PAGE,
+          lang,
+          functionality: 'newsPage',
+          msg: 'Prismic API call from Canary',
         },
-      };
-
-      return {
-        CMSContent: newsPageData,
-        ContentType: CUSTOM_TYPES.NEWS_PAGE,
-      };
+      });
     }
-    return Promise.reject(new Error('Error fetching News Page'));
-  } catch (err) {
-    Sentry.captureException(err);
-    sendLog({
-      level: LOG_LEVELS.ERROR,
-      err,
-    });
-    // eslint-disable-next-line no-console
-    console.error('Error fetching news page document', err);
+
+    const breadcrumbs = await getNewsPageBreadcrumbs(newsPage);
+
+    const completePageData = {
+      ...newsPage,
+      data: {
+        ...newsPage?.data,
+        breadcrumbs,
+        taggedCity: mbCategorisationData(
+          baseLangData?.data,
+          newsPage?.data,
+          lang,
+          PRISMIC_FIELD_ID.TAGGED_CITY
+        ),
+        taggedCountry: mbCategorisationData(
+          baseLangData?.data,
+          newsPage?.data,
+          lang,
+          PRISMIC_FIELD_ID.TAGGED_COUNTRY
+        ),
+        taggedCollection: mbCategorisationData(
+          baseLangData?.data,
+          newsPage?.data,
+          lang,
+          PRISMIC_FIELD_ID.TAGGED_COLLECTION
+        ),
+        taggedCategory: mbCategorisationData(
+          baseLangData?.data,
+          newsPage?.data,
+          lang,
+          PRISMIC_FIELD_ID.TAGGED_CATEGORY
+        ),
+        taggedMbType: mbCategorisationData(
+          baseLangData?.data,
+          newsPage?.data,
+          lang,
+          PRISMIC_FIELD_ID.TAGGED_MB_TYPE
+        ),
+      },
+    };
+
+    return {
+      CMSContent: completePageData,
+      ContentType: CUSTOM_TYPES.NEWS_PAGE,
+    };
+  } else {
     return Promise.reject();
   }
 };
@@ -262,7 +247,6 @@ export const getNewsPageData = async (
   CMSContent: PrismicDocumentWithUID,
   ContentType: CUSTOM_TYPE_VALUES,
   isDev: boolean,
-  req: any,
   host: string,
   hostname: string,
   lang: TLANGUAGELOCALE,
@@ -270,9 +254,9 @@ export const getNewsPageData = async (
   currencyListPromise: Promise<any>,
   domainConfigPromise: Promise<any>
 ) => {
-  const { uid } = CMSContent;
-  const data = CMSContent?.data;
-  const { tgid, isLandingPage, taggedCity } = data;
+  const { uid, data } = CMSContent ?? {};
+  const { tgid, is_landing_page: isLandingPage, taggedCity } = data;
+
   const collectionDataTgids: number[] = [];
   const collectionIdFromPrismic = CMSContent?.data?.taggedCollection;
   let allArticles,
@@ -287,6 +271,7 @@ export const getNewsPageData = async (
     uid,
     lang
   );
+
   const allArticlesPromise = getAllArticlesPromise(uid, lang);
   const collectionReviewsPromise = getCollectionReviewsPromise(
     collectionIdFromPrismic,
@@ -298,18 +283,53 @@ export const getNewsPageData = async (
     featuredArticlesPromise,
     articlesWithSameTgidPromise,
     collectionReviewsPromise,
-    isLandingPage ? allArticlesPromise : [],
+    isLandingPage ? allArticlesPromise : undefined,
   ]);
 
-  [
-    featuredArticles,
-    articlesWithSameTgid,
-    collectionReviews,
-    allArticles,
-  ] = handleSettledPromiseResults(aggregatedPromise);
+  sendLog({
+    message: {
+      uid,
+      documentType: CUSTOM_TYPES.NEWS_PAGE,
+      lang,
+      functionality: 'featuredArticlesPromise',
+      msg: 'Prismic API call from Canary',
+    },
+  });
+  sendLog({
+    message: {
+      uid,
+      documentType: CUSTOM_TYPES.NEWS_PAGE,
+      lang,
+      functionality: 'articlesWithSameTgidPromise',
+      msg: 'Prismic API call from Canary',
+    },
+  });
+  sendLog({
+    message: {
+      uid,
+      documentType: CUSTOM_TYPES.NEWS_PAGE,
+      lang,
+      functionality: 'collectionReviewsPromise',
+      msg: 'Prismic API call from Canary',
+    },
+  });
+
+  if (isLandingPage) {
+    sendLog({
+      message: {
+        uid,
+        documentType: CUSTOM_TYPES.NEWS_PAGE,
+        lang,
+        functionality: 'allArticlesPromise',
+        msg: 'Prismic API call from Canary',
+      },
+    });
+  }
+
+  [featuredArticles, articlesWithSameTgid, collectionReviews, allArticles] =
+    handleSettledPromiseResults(aggregatedPromise);
 
   const uidToCFIdMap = new Map<string, any>();
-  const CFIdToDataMap = new Map<string, any>();
   const videoDataMap = new Map<string, string>();
 
   featuredArticles = filterArticlesBasedOnEntMb(featuredArticles?.results, uid);
@@ -317,11 +337,10 @@ export const getNewsPageData = async (
     articlesWithSameTgid?.results,
     uid
   );
-  allArticles = filterArticlesBasedOnEntMb(allArticles?.results, uid);
+  allArticles = filterArticlesBasedOnEntMb(allArticles, uid);
 
-  const tgidsFromCollectionReviews = getTgidFromCollectionReviews(
-    collectionReviews
-  );
+  const tgidsFromCollectionReviews =
+    getTgidFromCollectionReviews(collectionReviews);
   collectionReviewsTgid = new Set([
     tgidsFromCollectionReviews ? tgidsFromCollectionReviews : [],
   ]);
@@ -331,25 +350,15 @@ export const getNewsPageData = async (
     ...(featuredArticles ? featuredArticles : []),
     ...(articlesWithSameTgid ? articlesWithSameTgid : []),
   ];
-  const contentFrameworkIds = articles?.map((article) => {
+
+  articles?.forEach((article) => {
     if (!uidToCFIdMap.has(article.uid))
       uidToCFIdMap.set(
-        article.uid,
-        article?.data?.content_framework_ref?.id as string
+        article?.uid,
+        article?.data?.content_framework_ref
+          ?.data as ContentFrameworkDocumentData
       );
-    return article?.data?.content_framework_ref?.id;
   });
-
-  const contentFrameworkRefArray = await getRefsArrayByIds(
-    Array.from(new Set(contentFrameworkIds)),
-    req
-  );
-  contentFrameworkRefArray.forEach((article: any) =>
-    CFIdToDataMap.set(article?.id, article?.data)
-  );
-  for (const [key, value] of uidToCFIdMap) {
-    uidToCFIdMap.set(key, CFIdToDataMap.get(value));
-  }
 
   const tgidMappingData = tgid
     ? await fetchTourGroupV6({
@@ -425,7 +434,7 @@ export const getNewsPageData = async (
     };
   }
 
-  const tgidsOfShows = new Set();
+  const tgidsOfShows = new Set<number>();
   const popularShowsData = pageData?.items?.filter((e: TourGroupDataType) => {
     return e.id !== tgid;
   });
@@ -437,15 +446,20 @@ export const getNewsPageData = async (
     tgidsOfShows.add(item.id);
   });
 
+  const showpageTgids: string[] = [
+    ...tgidsOfShows,
+    ...(tgidMappingData ? [tgidMappingData.id] : []),
+  ];
+
+  const prismicClient = createClient();
+  const showpages = await prismicClient.getAllByType('showpage', {
+    predicates: [
+      predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.tgid`, showpageTgids),
+    ],
+  });
+
   const showPageDocuments =
-    Array.from(tgidsOfShows)?.length > 0
-      ? await Client().query(
-          Prismic.Predicates.any('my.showpage.tgid', [
-            ...tgidsOfShows,
-            ...(tgidMappingData ? [tgidMappingData.id] : []),
-          ])
-        )
-      : [];
+    Array.from(tgidsOfShows)?.length > 0 ? showpages : [];
 
   return {
     CMSContent: {

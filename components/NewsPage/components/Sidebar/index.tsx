@@ -84,20 +84,6 @@ const Sidecard: React.FC<TShowCardProps> = ({
     hostname: host,
   });
 
-  // const handleRatingsClick = () => {
-  //   trackEvent({
-  //     eventName: ANALYTICS_EVENTS.NEWS_PAGE.RATINGS_WIDGET_CLICKED,
-  //     [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
-  //     [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
-  //     [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
-  //     [ANALYTICS_PROPERTIES.RANKING]: 1,
-  //     [ANALYTICS_PROPERTIES.TGID]: id,
-  //     [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
-  //     [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
-  //     [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.name,
-  //   });
-  // };
-
   const handleCheckAvailabiltyClicked = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,

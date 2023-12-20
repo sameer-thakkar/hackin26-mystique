@@ -3,6 +3,6 @@ export interface IListicleSectionProps {
   title: string;
   prismicDocsForListicle: Array<any>;
   collectionsInListicles: Record<any, any>;
-  slices?: Array<any>;
+  childSlices?: Array<any>;
   settings?: string;
 }

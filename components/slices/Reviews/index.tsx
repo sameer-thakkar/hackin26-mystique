@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { asLink } from '@prismicio/helpers';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import type Swiper from 'swiper';
@@ -99,8 +100,8 @@ const Reviews: React.FC<ReviewsProps> = ({
   showNewDesign = false,
 }) => {
   const reviewSlides = reviews
-    .filter((review) => !!review.review_text?.length)
-    .map((review, index) => {
+    ?.filter((review) => !!review.review_text?.length)
+    ?.map((review, index) => {
       const n = (index % 202) + 1;
       const {
         review_text: reviewText,
@@ -122,7 +123,7 @@ const Reviews: React.FC<ReviewsProps> = ({
         reviewerCountry,
         footerText,
         imageUrl:
-          reviewer_image_url.url ||
+          asLink(reviewer_image_url) ||
           reviewer_image?.url ||
           `https://cdn-s3-open.headout.com/reviews/${n}.jpg`,
         imageAlt:
@@ -153,9 +154,9 @@ const Reviews: React.FC<ReviewsProps> = ({
   }, [isIntersecting]);
 
   const getReviewSlides = () => {
-    return reviewSlides.map(
+    return reviewSlides?.map(
       ({
-        reviewText,
+        reviewText = '',
         reviewerName,
         reviewerSubtext,
         reviewerCountry,
@@ -178,7 +179,7 @@ const Reviews: React.FC<ReviewsProps> = ({
                     <ReviewerCountry>
                       <Image
                         url={`${FLAGS_FOLDER_URL}${reviewerCountry}.svg`}
-                        alt={reviewerCountry}
+                        alt={reviewerCountry || ''}
                         height={16}
                         width={16}
                       />
@@ -192,7 +193,7 @@ const Reviews: React.FC<ReviewsProps> = ({
                 <RatingTime>{ratingDate}</RatingTime>
               </RatingWrapper>
             </ReviewTop>
-            <ReviewText>{truncate(reviewText, 300)}</ReviewText>
+            <ReviewText>{truncate(reviewText || '', 300)}</ReviewText>
           </ReviewContent>
           <Conditional if={footerText}>
             <ReviewFooter>

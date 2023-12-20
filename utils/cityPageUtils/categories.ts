@@ -1,5 +1,5 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import {
   getAlternateLanguageDocUid as getUidFromAltLangData,
@@ -24,7 +24,7 @@ import {
   ISubCategoryEntity,
 } from 'utils/cityPageUtils/interface';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
+import shouldIncludeDoc from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import { CAT, EXPLORE_CATSUBCAT, SUBCAT } from 'const/cityPage';
 import {
@@ -76,33 +76,35 @@ const getPopularCategoriesData = async ({
 
   if (categoryNamesArr.length > 3) {
     try {
-      const prismicData = await Client().query(
-        [
-          Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-          Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-            A1_CATEGORY,
-            A2_CATEGORY,
-            B1_GLOBAL,
-          ]),
-          Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-          Prismic.Predicates.at(
-            `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-            LANDING_PAGE
-          ),
-          Prismic.Predicates.any(
-            `my.${MICROSITE}.${TAGGED_CATEGORY}`,
-            categoryNamesArr
-          ),
-        ],
-        { pageSize: 30 }
-      );
+      const predicatesArray = [
+        predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+        predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+          A1_CATEGORY,
+          A2_CATEGORY,
+          B1_GLOBAL,
+        ]),
+        predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+        predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+        predicate.any(`my.${MICROSITE}.${TAGGED_CATEGORY}`, categoryNamesArr),
+      ];
+      const prismicClient = createClient();
+      const prismicData = await prismicClient.getByType('microsite', {
+        predicates: predicatesArray,
+        pageSize: 30,
+      });
 
-      const results = prismicData.results.filter(
-        (item: PrismicDocumentWithUID) => {
-          const { tagged_sub_category } = item.data;
-          return !tagged_sub_category;
-        }
-      );
+      sendLog({
+        message: {
+          documentType: CUSTOM_TYPES.MICROSITE,
+          functionality: 'prismicData',
+          queryingMultipleDocs: true,
+          msg: 'Prismic API call from Canary',
+        },
+      });
+      const results = prismicData?.results?.filter((item) => {
+        const { tagged_sub_category } = item.data;
+        return !tagged_sub_category;
+      });
 
       if (results.length > 3) {
         const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
@@ -139,9 +141,8 @@ const getPopularSubCategoriesData = async ({
   mbCity,
   lang,
 }: IGetPopularSubCategoriesData) => {
-  const {
-    starredCategoriesAndSubCategories: starredItems = [],
-  } = categoryApiData;
+  const { starredCategoriesAndSubCategories: starredItems = [] } =
+    categoryApiData;
   const { subCategoriesMap } = categorySubcategoryMap;
 
   const starredSubCategoryNamesArr: string[] = [];
@@ -164,50 +165,53 @@ const getPopularSubCategoriesData = async ({
   let subCategoriesFinalData: IFinalData[] = [];
   if (starredSubCategoryNamesArr.length > 2) {
     try {
-      const prismicData = await Client().query(
-        [
-          Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-          Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-            A1_CATEGORY,
-            A2_CATEGORY,
-            A1_SUB_CATEGORY,
-            A2_SUB_CATEGORY,
-            B1_GLOBAL,
-            C1_COLLECTION,
-          ]),
-          Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-          Prismic.Predicates.at(
-            `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-            LANDING_PAGE
-          ),
-          Prismic.Predicates.any(
-            `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
-            starredSubCategoryNamesArr
-          ),
-        ],
-        { pageSize: 30 }
-      );
-
-      const results = prismicData.results.filter(
+      const predicatesArray = [
+        predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+        predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+          A1_CATEGORY,
+          A2_CATEGORY,
+          A1_SUB_CATEGORY,
+          A2_SUB_CATEGORY,
+          B1_GLOBAL,
+          C1_COLLECTION,
+        ]),
+        predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+        predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+        predicate.any(
+          `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
+          starredSubCategoryNamesArr
+        ),
+      ];
+      const prismicClient = createClient();
+      const prismicData = await prismicClient.getByType('microsite', {
+        pageSize: 30,
+        predicates: predicatesArray,
+      });
+      sendLog({
+        message: {
+          documentType: CUSTOM_TYPES.MICROSITE,
+          functionality: 'prismicData',
+          queryingMultipleDocs: true,
+          msg: 'Prismic API call from Canary',
+        },
+      });
+      const results = prismicData?.results?.filter(
         (item: Record<string, any>) => {
           const { tagged_collection } = item.data;
           return !tagged_collection;
         }
       );
 
-      if (results.length > 3) {
+      if (results?.length > 3) {
         const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
         const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
         results.forEach((item: PrismicDocumentWithUID) => {
           const uid = getUid({ doc: item, lang });
           if (uid && shouldIncludeDoc(item)) {
-            const {
-              tagged_sub_category: subCategoryName,
-              tagged_mb_type,
-            } = item.data;
-            const subCategoryHOData = starredSubCategoryNamesMap.get(
-              subCategoryName
-            );
+            const { tagged_sub_category: subCategoryName, tagged_mb_type } =
+              item.data;
+            const subCategoryHOData =
+              starredSubCategoryNamesMap.get(subCategoryName);
             if (subCategoryHOData) {
               // remove current subcategory data from current map to remove duplicates
               starredSubCategoryNamesMap.set(subCategoryName, undefined);
@@ -271,29 +275,33 @@ const getExploreSectionCategoriesData = async ({
   const resultMap = new Map();
 
   try {
-    const prismicDocs = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-          A1_SUB_CATEGORY,
-          A2_CATEGORY,
-          B1_GLOBAL,
-          C1_COLLECTION,
-        ]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-          LANDING_PAGE
-        ),
-        Prismic.Predicates.any(
-          `my.${MICROSITE}.${TAGGED_CATEGORY}`,
-          selectedCatNamesArr
-        ),
-      ],
-      { pageSize: 100 }
-    );
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+        A1_SUB_CATEGORY,
+        A2_CATEGORY,
+        B1_GLOBAL,
+        C1_COLLECTION,
+      ]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+      predicate.any(`my.${MICROSITE}.${TAGGED_CATEGORY}`, selectedCatNamesArr),
+    ];
+    const prismicClient = createClient();
+    const prismicDocs = await prismicClient.getByType('microsite', {
+      pageSize: 100,
+      predicates: predicatesArray,
+    });
 
-    const { results } = prismicDocs;
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicDocs',
+        queryingMultipleDocs: true,
+        msg: 'Prismic API call from Canary',
+      },
+    });
+    const { results } = prismicDocs ?? {};
     const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
     const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
 
@@ -344,26 +352,34 @@ const getExploreSectionSubCategoriesData = async ({
   const resultMap = new Map();
 
   try {
-    const prismicDocs = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-          A1_COLLECTION,
-          B1_GLOBAL,
-          C1_COLLECTION,
-        ]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-          LANDING_PAGE
-        ),
-        Prismic.Predicates.any(
-          `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
-          selectedSubcatNamesArr
-        ),
-      ],
-      { pageSize: 100 }
-    );
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+        A1_COLLECTION,
+        B1_GLOBAL,
+        C1_COLLECTION,
+      ]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+      predicate.any(
+        `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
+        selectedSubcatNamesArr
+      ),
+    ];
+    const prismicClient = createClient();
+    const prismicDocs = await prismicClient.getByType('microsite', {
+      pageSize: 100,
+      predicates: predicatesArray,
+    });
+
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicDocs',
+        queryingMultipleDocs: true,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const { results } = prismicDocs;
     const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;

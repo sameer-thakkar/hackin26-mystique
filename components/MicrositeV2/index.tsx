@@ -64,11 +64,11 @@ class MicrositeV2 extends Component<any, any> {
 
   componentDidMount() {
     const isMobile = window.innerWidth <= 768;
-    const { all_tours: allTours } = this.props.data.data;
-    const allTgids = allTours.map((tour: any) => tour.primary.tgid);
-    const isLTT = checkIfLTTMB(this.props.data.uid);
-    const isBroadway = checkIfBroadwayMB(this.props.data.uid);
-    if (allTours.length > 0) {
+    const { all_tours: allTours } = this.props.data;
+    const allTgids = allTours?.map((tour: any) => tour.primary.tgid) ?? [];
+    const isLTT = checkIfLTTMB(this.props.uid);
+    const isBroadway = checkIfBroadwayMB(this.props.uid);
+    if (allTours?.length > 0) {
       fetchTourListV6({
         tgids: allTgids,
         hostname: window.location.origin,
@@ -149,29 +149,21 @@ class MicrositeV2 extends Component<any, any> {
       isCatOrSubCatPage,
       catAndSubCatPageData,
     } = this.props;
+
     const {
-      commonFooter,
-      contentFramework,
-      commonHeader,
-      secondaryFooter,
-    } = this.props.data.refs;
-    const { isDev, serverRequestStartTimestamp } = this.props;
-    const {
+      lang: docLang,
       uid,
-      data: CMSData,
+      alternate_languages,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
-      alternate_languages,
-    } = CMSContent;
+      data: CMSData,
+    } = CMSContent ?? {};
 
-    const alternateLanguages = getAlternateLanguages(
-      alternate_languages,
-      isDev,
-      host,
-      uid
-    );
-    const isServer = typeof window === 'undefined';
     const {
+      content_framework: contentFramework,
+      common_header_ref: commonHeader,
+      footer_ref: commonFooter,
+      secondary_footer: secondaryFooter,
       dropdown_menu: dropdownMenu,
       header_links,
       images: CMSImages,
@@ -182,7 +174,18 @@ class MicrositeV2 extends Component<any, any> {
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
       baseLangCategorisationMetadata,
-    } = CMSData || {};
+    } = CMSData ?? {};
+
+    const { isDev, serverRequestStartTimestamp } = this.props;
+
+    const alternateLanguages = getAlternateLanguages(
+      alternate_languages,
+      isDev,
+      host,
+      uid
+    );
+
+    const isServer = typeof window === 'undefined';
 
     const {
       tagged_city: taggedCity,
@@ -191,18 +194,19 @@ class MicrositeV2 extends Component<any, any> {
       tagged_mb_type: taggedMbType,
       tagged_collection: taggedCollection,
     } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
-    const currentLanguage = getLangObject(CMSContent.lang).code;
+    const currentLanguage = getLangObject(docLang).code;
     const languageProps = {
       uid,
       currentLanguage,
       languages: alternateLanguages,
     };
 
-    const dropdownLinksArray = dropdownMenu.reduce((acc: any, item: any) => {
-      if (item.link)
-        return [...acc, { value: item.link.url, label: item.link_text }];
-      else return acc;
-    }, []);
+    const dropdownLinksArray =
+      dropdownMenu?.reduce((acc: any, item: any) => {
+        if (item.link)
+          return [...acc, { value: item.link.url, label: item.link_text }];
+        else return acc;
+      }, []) ?? [];
 
     const headerLinks = header_links?.length
       ? header_links
@@ -235,11 +239,12 @@ class MicrositeV2 extends Component<any, any> {
 
     const groupBooking = {
       hasGroupBooking: enable_group_booking == 'Yes',
-      excludedTourIds: group_booking_excluded_tgids
-        .filter((ele: any) => ele.tgid)
-        .reduce((acc: any, tour: any) => {
-          return [...acc, tour.tgid];
-        }, []),
+      excludedTourIds:
+        group_booking_excluded_tgids
+          ?.filter((ele: any) => ele.tgid)
+          ?.reduce((acc: any, tour: any) => {
+            return [...acc, tour.tgid];
+          }, []) ?? [],
     };
 
     const hasCategoryTourList = categoryTourListData
@@ -441,9 +446,10 @@ class MicrositeV2 extends Component<any, any> {
     const {
       theme_override,
       is_entertainment_mb: isEntertainmentMb,
-    } = this.props.data.data;
+      disclaimer,
+    } = CMSData;
 
-    const [listicleContent] = this.props.data.data.body;
+    const [listicleContent] = CMSData?.body ?? [];
     const { primary } = listicleContent || {};
 
     const {
@@ -451,15 +457,13 @@ class MicrositeV2 extends Component<any, any> {
       csv_months_to_display_for_listicle: displayMonths,
     } = primary || {};
 
-    const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
-
+    const heroSectionSlice = [...CMSData?.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     let themeOverride = theme_override || THEMES.INHERIT;
     themeOverride =
       themeOverride === THEMES.INHERIT
         ? commonFooterProps?.theme_override
         : themeOverride;
-    const { disclaimer } = this.props.data.data;
 
     const heroProps = {
       banners: CMSImages.reduce((accum: any, image: any) => {
@@ -508,12 +512,12 @@ class MicrositeV2 extends Component<any, any> {
       scorpioData,
       heroSectionSlice,
       contentFramework: contentFramework?.data,
-      alertPopup: CMSContent?.data?.alert_popup,
-      showCovid19Alert: CMSContent?.data.show_covid19_alert,
-      entertainmentPageType: CMSContent?.data?.entertainment_page_type,
+      alertPopup: CMSData?.alert_popup,
+      showCovid19Alert: CMSData?.show_covid19_alert,
+      entertainmentPageType: CMSData?.entertainment_page_type,
       domainConfig,
-      mbDesign: CMSContent?.data?.design,
-      mbType: CMSContent?.data?.tagged_mb_type,
+      mbDesign: CMSData?.design,
+      mbType: CMSData?.tagged_mb_type,
       primarySubCategoryId,
       primaryCity,
       taggedCity,
@@ -530,9 +534,9 @@ class MicrositeV2 extends Component<any, any> {
       catAndSubCatPageData,
     };
 
-    const isLTT = checkIfLTTMB(this.props.data.uid);
+    const isLTT = checkIfLTTMB(uid);
     const directTgid = this.props.router.query.tgid;
-    const longFormContent = this.props.data.data.body2;
+    const longFormContent = CMSData?.body2;
     let activePage = this.state.page.name;
     const breadcrumbsDetails = {
       breadcrumbs,

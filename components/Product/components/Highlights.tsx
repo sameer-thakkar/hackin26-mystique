@@ -1,15 +1,10 @@
 import React, { useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
-import {
-  Heading,
-  richtextElements,
-  ViewMoreButton,
-  Wrapper,
-} from 'components/Product/styles';
+import { Heading, ViewMoreButton, Wrapper } from 'components/Product/styles';
 import { truncate } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { CHEVRON_RIGHT } from 'assets/SvgIcons';
@@ -61,7 +56,10 @@ const Highlights = ({
       <Heading>{strings.SHOW_PAGE.HIGHLIGHTS}</Heading>
       <div className="tab-panel">
         <Conditional if={!isLoading}>
-          <RichText render={highlights} elements={richtextElements} />
+          <PrismicRichText
+            field={highlights}
+            components={shortCodeSerializer}
+          />
         </Conditional>
         <Conditional if={isLoading}>
           <div>

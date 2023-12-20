@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import SwiperType from 'swiper';
 import type { SwiperProps } from 'swiper/react';
@@ -10,12 +9,12 @@ import Conditional from 'components/common/Conditional';
 import { TProductHighlightTabs } from 'components/Product/interface';
 import {
   HighlightTabsWrapper,
-  richtextElements,
   SwiperControls,
   Tab,
   TabPanel,
   TabsWrapper,
 } from 'components/Product/styles';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() =>
@@ -153,7 +152,10 @@ export const HighlightTabs = ({
               className="tab-panel"
             >
               <Conditional if={!isLoading}>
-                <RichText render={tab.contents} elements={richtextElements} />
+                <PrismicRichText
+                  field={tab.contents}
+                  components={shortCodeSerializer}
+                />
               </Conditional>
               <Conditional if={isLoading}>
                 <div>

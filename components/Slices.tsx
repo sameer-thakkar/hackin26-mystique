@@ -19,21 +19,22 @@ import VerticalCardsGrid from './slices/VerticalCardsGrid';
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
 const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
-const CarouselGallery = dynamic(() =>
-  import(/* webpackChunkName: "CarouselGallery" */ './slices/CarouselGallery')
+const CarouselGallery = dynamic(
+  () =>
+    import(/* webpackChunkName: "CarouselGallery" */ './slices/CarouselGallery')
 );
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./slices/TourComparision'));
-const AutomatedComparisonTable = dynamic(() =>
-  import('./slices/AutomatedComparisonTable')
+const AutomatedComparisonTable = dynamic(
+  () => import('./slices/AutomatedComparisonTable')
 );
 const ImageGrid = dynamic(() => import('./slices/ImageGrid'));
 const ImageTextGrid = dynamic(() => import('./slices/ImageTextGrid'));
-const InternalContentCard = dynamic(() =>
-  import('./slices/InternalContentCard')
+const InternalContentCard = dynamic(
+  () => import('./slices/InternalContentCard')
 );
 const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
@@ -55,18 +56,19 @@ const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
 const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
 const Listicle = dynamic(() => import('./slices/Listicle'));
 const ListicleV2 = dynamic(() => import('./slices/ListicleV2/index'));
-const ListicleSectionV2 = dynamic(() =>
-  import('./slices/ListicleSectionV2/index')
+const ListicleSectionV2 = dynamic(
+  () => import('./slices/ListicleSectionV2/index')
 );
 const Reviews = dynamic(() => import('./slices/Reviews'));
-const ExperienceCarousel = dynamic(() =>
-  import('./GlobalMbs/Carousels/ExperienceCarousel')
+const ExperienceCarousel = dynamic(
+  () => import('./GlobalMbs/Carousels/ExperienceCarousel')
 );
-const CollectionCarousel = dynamic(() =>
-  import('./GlobalMbs/Carousels/CollectionCarousel')
+const CollectionCarousel = dynamic(
+  () => import('./GlobalMbs/Carousels/CollectionCarousel')
 );
-const StructuredCard = dynamic(() =>
-  import(/* webpackChunkName: "StructuredCard" */ './slices/StructuredCard')
+const StructuredCard = dynamic(
+  () =>
+    import(/* webpackChunkName: "StructuredCard" */ './slices/StructuredCard')
 );
 
 const sliceHandler = (slice: any, props: any = {}) => {
@@ -92,7 +94,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
-      return <RichtextWithCTA slices={slice.items} />;
+      return <RichtextWithCTA childSlices={slice.items} />;
     case 'image':
     case 'image_grid':
       return (
@@ -122,7 +124,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
     case 'full_width_action_card':
       return <FWActionCard title={slice.primary.title} cards={slice.items} />;
     case 'content_box':
-      return <RichTextBox slices={slice.items} key={slice.index} />;
+      return <RichTextBox childSlices={slice.items} key={slice.index} />;
     case 'feature_box':
       return <FeatureBox blocks={slice.items} lazyLoad={true} />;
     case 'footer_column':
@@ -274,7 +276,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
     case 'tab_wrapper':
       return (
         <TabWrapper
-          slices={slice.slices}
+          childSlices={slice.slices}
           heading={slice.primary.title}
           sliceProps={props}
           description={slice.primary.description}
@@ -284,7 +286,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       return (
         <Tab
           key={props.index}
-          slices={slice.slices}
+          childSlices={slice.slices}
           title={slice.primary.title}
           isDefault={slice.primary.is_default == 'Yes'}
           sliceProps={props}
@@ -346,7 +348,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       return (
         <TableV3
           title={table_heading}
-          slices={slices}
+          childSlices={slices}
           displaySerialNum={display_serial_number}
           serialNumHeading={serial_number_heading}
         />
@@ -371,7 +373,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
 
       return (
         <CardSection
-          slices={slice.slices}
+          childSlices={slice.slices}
           title={cardSectionTitle}
           sectionType={card_section_type}
           cardsInARow={Number(cards_in_a_row) || 1}
@@ -438,7 +440,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           color={slice.primary.color}
           textCenter={slice.primary.centered}
           gridCenter={slice.primary.grid_center}
-          slices={slice.slices}
+          childSlices={slice.slices}
           sliceProps={props}
         />
       );
@@ -542,7 +544,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
         <ListicleSection
           title={section_title}
           type={listicle_type?.toLowerCase()}
-          slices={slices}
+          childSlices={slices}
         />
       );
     }
@@ -563,7 +565,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           settings={settings_type}
           title={listicle_title}
           type={listicle_type?.toLowerCase()}
-          slices={slices}
+          childSlices={slices}
           prismicDocsForListicle={prismicDocsForListicle}
           collectionsInListicles={collectionsInListicles}
         />
@@ -729,6 +731,6 @@ export const toursTabSliceHandler = (slice: any) => {
     case 'tour_list':
       return slice.items;
     default:
-    //
+      return [];
   }
 };

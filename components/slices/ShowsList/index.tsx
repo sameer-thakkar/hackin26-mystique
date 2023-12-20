@@ -68,7 +68,7 @@ const ShowsListUI = (props: IShowsListUIProps) => {
   }, []);
 
   const findUid = (tgid: string) => {
-    return allShowPageUids.reduce((acc: any, curr: any) => {
+    return allShowPageUids?.reduce((acc: any, curr: any) => {
       const result = curr[tgid] || '';
       return (acc = acc + result);
     }, '');

@@ -109,7 +109,7 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
       <Conditional if={!isMobile}>
         <h2 id="recent-news">{RECENT_NEWS}</h2>
         <Wrapper ref={recentNewsRef}>
-          {allArticles.slice(0, articlesToShow)?.map((article, index) => {
+          {allArticles?.slice(0, articlesToShow)?.map((article, index) => {
             const { data, first_publication_date, uid } = article;
             const { banner_image, heading, author_name } = data;
             const formattedPublishedDateAndTime = formatDateToString(
@@ -180,7 +180,7 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
           showAllNewsCTA={false}
           heading={NEWS_PAGE.RECENT_NEWS}
           showMoreCTAText={NEWS_PAGE.SHOW_MORE_ARTICLES}
-          numberOfArticlesToShow={allArticles.length}
+          numberOfArticlesToShow={allArticles?.length}
           initialArticlesToShow={5}
         />
       </Conditional>

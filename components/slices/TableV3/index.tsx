@@ -61,7 +61,7 @@ export const getMaxWidth = (column: number) => {
 
 const TableV3 = ({
   title,
-  slices,
+  childSlices: slices,
   displaySerialNum,
   serialNumHeading,
 }: ITableV3Props) => {

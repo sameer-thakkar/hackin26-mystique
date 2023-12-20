@@ -7,9 +7,8 @@ import React, {
   useState,
 } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
 import type { Swiper as ISwiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
@@ -45,8 +44,8 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, GRID_ICON } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 /**
@@ -172,7 +171,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
 
   /* Truncating the content till 120 characters and separating the reference from 'images' variable */
   lightboxImages?.forEach((image: any) => {
-    const isShortSummaryRequired = image.content[0]?.text?.length > 120;
+    const isShortSummaryRequired = image?.content[0]?.text?.length > 120;
     image.isShortSummaryRequired = isShortSummaryRequired;
     if (isShortSummaryRequired) {
       image.content[0].text = truncate(image.content[0].text, 120);
@@ -266,7 +265,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   );
 
   const activeImage = images?.[currentIndex];
-  const fullImageHeading = RichText.asText(activeImage?.heading || []);
+  const fullImageHeading = asText(activeImage?.heading as []);
+
 
   return (
     <Conditional if={images?.length}>
@@ -279,9 +279,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
 
         <GridLayoutContainer>
           <GridLayout $isNewspage={$isNewsPage}>
-            {images?.map((image, index) => {
-              const caption = RichText.asText(image?.heading);
-              const description = RichText.asText(image?.content);
+            {images.map((image, index) => {
+              const caption = asText(image.heading as []);
+              const description = asText(image.content as []);
               const showCaptionOverlay =
                 index === 0 && images.length > 2 && !isMobile;
               const isImageUnderCta =
@@ -343,7 +343,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                   <DesktopStyledImage key={index} ref={modalRef}>
                     <Image
                       url={image.linked_image?.url || image.uploaded_image?.url}
-                      alt={RichText.asText(image.heading) || ''}
+                      alt={asText(image.heading as []) || ''}
                     />
                     <Content>
                       <div className="content-wrapper">
@@ -450,7 +450,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               <ThumbnailSwiper>
                 <Swiper {...thumbnailSwiperParams}>
                   {images.map((image, index) => {
-                    const caption = RichText.asText(image.heading);
+                    const caption = asText(image.heading as []);
                     return (
                       <StyledImage key={index} title={caption}>
                         <Image

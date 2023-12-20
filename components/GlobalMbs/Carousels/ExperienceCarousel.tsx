@@ -9,6 +9,7 @@ import { getLocalisedPrice } from 'utils/currency';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
+import { GLOBAL_EXPERIENCE_PAGE_TYPE } from 'const/globalMb';
 import { ASPECT_RATIO } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
@@ -143,7 +144,6 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       {showSeeAll && (
         <a
           href={convertUidToUrl({
-            // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
             uid: experiencePageUid,
             isDev,
             hostname: host,
@@ -158,13 +158,13 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   let cards;
 
   switch (experienceType) {
-    case 'Attractions':
+    case GLOBAL_EXPERIENCE_PAGE_TYPE.ATTRACTIONS:
       cards = attractions?.map((a) => a);
       break;
-    case 'Rides':
+    case GLOBAL_EXPERIENCE_PAGE_TYPE.RIDES:
       cards = rides?.map((a) => a);
       break;
-    case 'Tickets':
+    case GLOBAL_EXPERIENCE_PAGE_TYPE.TICKETS:
       cards = tickets?.data ?? [];
   }
 
@@ -241,6 +241,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
               alt={altText}
               aspectRatio={globalMbAR}
               autoCrop={false}
+              height={180}
             />
             <div className="title">{name}</div>
             <Conditional if={card?.listingPrice}>

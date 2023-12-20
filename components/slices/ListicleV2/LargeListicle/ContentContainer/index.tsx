@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
@@ -21,6 +20,7 @@ import {
 import PracticalInfo from 'components/slices/ListicleV2/LargeListicle/PracticalInfo';
 import Button from 'UI/Button';
 import RichContent from 'UI/RichContent';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(
@@ -99,7 +99,10 @@ const ContentContainer = ({
         onClickMapLink={onClickMapLink}
       />
       <RichTextWrapper>
-        <RichText render={richTextData} />
+        <PrismicRichText
+          field={richTextData}
+          components={shortCodeSerializer}
+        />
       </RichTextWrapper>
       <Conditional if={!isMobile}>
         <TabContainer>

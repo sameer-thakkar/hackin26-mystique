@@ -34,8 +34,8 @@ import { STAR } from 'assets/SvgIcons';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 type StaticBannerProps = {

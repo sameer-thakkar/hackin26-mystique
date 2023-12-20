@@ -1261,16 +1261,6 @@ export const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
       : ''}
 `;
 
-export const richtextElements = {
-  hyperlink: function Anchor({ children, data }: any) {
-    return (
-      <a href={data?.url} rel="nofollow noreferrer" target="_blank">
-        {children}
-      </a>
-    );
-  },
-};
-
 const openingAnimationDesktop = keyframes`
   from {
     margin: 0;

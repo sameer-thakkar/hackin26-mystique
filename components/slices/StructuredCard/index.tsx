@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import { SECTION_NAMES } from 'components/HOHO/constants';
@@ -14,6 +13,7 @@ import Button from 'UI/Button';
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { DIAGONAL_ARROW, DURATION, FREQUENCY, TIMINGS } from 'assets/SvgIcons';
@@ -45,7 +45,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
   return (
     <StyledCard ref={containerRef}>
       <ContentWrapper>
-        <RichText render={introText} />
+        <PrismicRichText field={introText} components={shortCodeSerializer} />
         <div className="structured-content">
           <Conditional if={timings}>
             <StructuredItem>
@@ -73,7 +73,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
             </StructuredItem>
           </Conditional>
         </div>
-        <RichText render={outroText} />
+        <PrismicRichText field={outroText} components={shortCodeSerializer} />
         <Conditional if={ctaUrl?.url && ctaText}>
           <a
             href={ctaUrl?.url}

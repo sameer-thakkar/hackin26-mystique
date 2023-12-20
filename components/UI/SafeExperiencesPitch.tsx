@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { greyScheme } from 'style/theme';
+import type {
+  SafetyBannerDocumentDataOptionsItem,
+  Simplify,
+} from 'types.prismic';
 import Conditional from 'components/common/Conditional';
 import { MBContext } from 'contexts/MBContext';
 import useWindowSize from 'hooks/useWindowSize';
-import { getSafetyBannerDocument } from 'utils/prismicUtils';
+import getSafetyBannerDocument from 'utils/prismicUtils/safetyBanner';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import {
   CLUBBED_SAFETY_TAGS,
@@ -295,6 +299,10 @@ export const getSafetyDescription = async (
   }
 };
 
+export type TSetSafetyBannerData = Simplify<
+  SafetyBannerDocumentDataOptionsItem
+> | null;
+
 const SafeExperiencesPitch = ({
   allTags = [],
   generic = false,
@@ -313,7 +321,9 @@ const SafeExperiencesPitch = ({
     ],
   };
   const { lang, primaryCountry, primaryCity } = useContext(MBContext);
-  const [safetyBannerData, setSafetyBannerData] = useState(null);
+  const [safetyBannerData, setSafetyBannerData] = useState<
+    TSetSafetyBannerData
+  >(null);
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
       (data) => {
@@ -368,7 +378,10 @@ const SafeExperiencesPitch = ({
             <Section>
               <AttentionStrip>
                 {strings.SAFE_EXPERIENCE.EU_PREFIX}
-                <RichText render={(safetyBannerData as any)?.description} />
+                <PrismicRichText
+                  field={(safetyBannerData as any)?.description}
+                  components={shortCodeSerializer}
+                />
               </AttentionStrip>
             </Section>
           </Conditional>

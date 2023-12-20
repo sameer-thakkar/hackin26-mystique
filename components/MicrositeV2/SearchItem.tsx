@@ -1,6 +1,6 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import { searchQueryAtom } from 'store/atoms/searchQuery';
@@ -54,11 +54,11 @@ export const SearchItem = (props: any) => {
       </div>
       <div className="right">
         <div className="search-title">{title}</div>
-        {cardFooter && RichText.asText(cardFooter) && (
+        {cardFooter && asText(cardFooter) && (
           <div className="booster">
-            <RichText
-              render={cardFooter}
-              htmlSerializer={shortCodeSerializer}
+            <PrismicRichText
+              field={cardFooter}
+              components={shortCodeSerializer}
             />
           </div>
         )}

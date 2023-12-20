@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import RichTextCTA from 'UI/RichTextCTA';
 import { generateSidenavId } from 'utils/helper';
@@ -77,10 +76,10 @@ const RichtextWithCTA = (props: any) => {
 
   return (
     <>
-      {props.slices.map((block: any, index: number) => {
+      {props?.childSlices?.map((block: any, index: number) => {
         const { content_height: contentHeight, cta_text, text: textArray } =
           block || {};
-        const idArray = textArray.reduce(
+        const idArray = textArray?.reduce(
           (acc: Array<string>, el: TRichTextArray) => {
             if (el?.type === 'heading2') {
               acc.push(generateSidenavId(el?.text));
@@ -99,9 +98,9 @@ const RichtextWithCTA = (props: any) => {
             $hasCTA={cta_text}
           >
             <div className="rich-text" id={idArray?.[0]}>
-              <RichText
-                render={textArray}
-                htmlSerializer={shortCodeSerializer}
+              <PrismicRichText
+                field={textArray}
+                components={shortCodeSerializer}
               />
             </div>
             <Conditional if={cta_text}>

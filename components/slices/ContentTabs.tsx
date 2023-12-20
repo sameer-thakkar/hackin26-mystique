@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
 
@@ -103,7 +103,10 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
         if (content.tab_name == activeTabName)
           return (
             <StyledContent key={index}>
-              <RichText render={content.tab_content} />
+              <PrismicRichText
+                field={content.tab_content}
+                components={shortCodeSerializer}
+              />
             </StyledContent>
           );
       })}

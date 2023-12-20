@@ -18,14 +18,14 @@ import 'swiper/css/lazy';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-interface ISwiperWrapper extends SwiperProps {
+export interface ISwiperWrapper extends SwiperProps {
   children: React.ReactNode[];
   nextButton?: HTMLElement | React.ReactNode | JSX.Element;
   previousButton?: HTMLElement | React.ReactNode | JSX.Element;
   isFreeMode?: boolean;
 }
 
-const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
+const SwiperWrapper = (props: ISwiperWrapper) => {
   const showPagination = props.pagination,
     showNavigation = props.navigation,
     enableAutoplay = props.autoplay,
@@ -33,13 +33,8 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
     isLazy = props.lazy,
     enableCardsEffect = props.cardsEffect;
 
-  const {
-    nextButton,
-    previousButton,
-    children,
-    isFreeMode,
-    ...restProps
-  } = props;
+  const { nextButton, previousButton, children, isFreeMode, ...restProps } =
+    props;
   const modules = [];
 
   showPagination && modules.push(Pagination);
@@ -51,19 +46,15 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
   enableCardsEffect && modules.push(EffectCards);
 
   return (
-    <React.Fragment>
-      <Swiper {...restProps} modules={modules}>
-        {children?.map((element, index) =>
-          element ? <SwiperSlide key={index}>{element}</SwiperSlide> : null
-        )}
-        <Conditional if={nextButton && showNavigation}>
-          {nextButton}
-        </Conditional>
-        <Conditional if={previousButton && showNavigation}>
-          {previousButton}
-        </Conditional>
-      </Swiper>
-    </React.Fragment>
+    <Swiper {...restProps} modules={modules}>
+      {children?.map((element, index) =>
+        element ? <SwiperSlide key={index}>{element}</SwiperSlide> : null
+      )}
+      <Conditional if={nextButton && showNavigation}>{nextButton}</Conditional>
+      <Conditional if={previousButton && showNavigation}>
+        {previousButton}
+      </Conditional>
+    </Swiper>
   );
 };
 export default SwiperWrapper;

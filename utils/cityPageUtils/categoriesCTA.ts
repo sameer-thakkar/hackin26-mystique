@@ -1,17 +1,17 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import { getAlternateLanguageDocUid as getUidFromAltLangData } from 'utils';
 import { IGetCatCTA, IGetSubCatCTA } from 'utils/cityPageUtils/interface';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
+import shouldIncludeDoc from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import {
   CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
   MB_CATEGORISATION,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
-  SUPPORTED_LOCALE_MAP,
 } from 'const/index';
 
 const { MICROSITE } = CUSTOM_TYPES;
@@ -43,30 +43,38 @@ export const getCategoriesCTADocs = async ({
 }: IGetCatCTA) => {
   try {
     const ctaResults: Record<string, any> = {};
-    const prismicDocs = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-          A1_CATEGORY,
-          A2_CATEGORY,
-          B1_GLOBAL,
-          C1_COLLECTION,
-        ]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-          LANDING_PAGE
-        ),
-        Prismic.Predicates.any(
-          `my.${MICROSITE}.${TAGGED_CATEGORY}`,
-          selectedCatNamesArr
-        ),
-      ],
-      { pageSize: 15 }
-    );
+
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+        A1_CATEGORY,
+        A2_CATEGORY,
+        B1_GLOBAL,
+        C1_COLLECTION,
+      ]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+      predicate.any(`my.${MICROSITE}.${TAGGED_CATEGORY}`, selectedCatNamesArr),
+    ];
+
+    const prismicClient = createClient();
+    const prismicDocs = await prismicClient.getByType('microsite', {
+      pageSize: 15,
+      predicates: predicatesArray,
+      lang,
+    });
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicDocs',
+        queryingMultipleDocs: true,
+        lang,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const { results } = prismicDocs;
-    const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
+    const isBaselang = lang === DEFAULT_PRISMIC_LANG;
     const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
 
     results.forEach((doc: PrismicDocumentWithUID) => {
@@ -92,30 +100,42 @@ export const getSubCatCTADocs = async ({
 }: IGetSubCatCTA) => {
   try {
     const ctaResults: Record<string, any> = {};
-    const prismicDocs = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
-          A1_SUB_CATEGORY,
-          A2_SUB_CATEGORY,
-          B1_GLOBAL,
-          C1_COLLECTION,
-        ]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-          LANDING_PAGE
-        ),
-        Prismic.Predicates.any(
-          `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
-          selectedSubcatNamesArr
-        ),
-      ],
-      { pageSize: 15 }
-    );
+
+    const prismicClient = createClient();
+
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+        A1_SUB_CATEGORY,
+        A2_SUB_CATEGORY,
+        B1_GLOBAL,
+        C1_COLLECTION,
+      ]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+      predicate.any(
+        `my.${MICROSITE}.${TAGGED_SUB_CATEGORY}`,
+        selectedSubcatNamesArr
+      ),
+    ];
+
+    const prismicDocs = await prismicClient.getByType('microsite', {
+      lang,
+      predicates: predicatesArray,
+    });
+
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicDocs',
+        queryingMultipleDocs: true,
+        lang,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const { results } = prismicDocs;
-    const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
+    const isBaselang = lang === DEFAULT_PRISMIC_LANG;
     const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
 
     results.forEach((doc: PrismicDocumentWithUID) => {

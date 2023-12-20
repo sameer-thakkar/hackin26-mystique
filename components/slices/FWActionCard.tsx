@@ -1,7 +1,6 @@
 import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import Button from 'UI/Button';
 import { generateSidenavId } from 'utils/helper';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -86,10 +85,10 @@ const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
             <StyledProductCardHeading>
               {card.card_heading}
             </StyledProductCardHeading>
-            <RichText
+            <PrismicRichText
               key={0}
-              render={card.card_description}
-              htmlSerializer={shortCodeSerializer}
+              field={card.card_description}
+              components={shortCodeSerializer}
             />
           </StyledProductCardLeft>
           <StyledProductCardRight>

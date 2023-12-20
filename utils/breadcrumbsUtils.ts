@@ -1,6 +1,7 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
+import type { PrismicDocumentWithUID } from '@prismicio/types';
+import type { ShowpageDocument } from 'types.prismic';
 import {
   getAlternateLanguageDocUid,
   getCategorisationMetadata,
@@ -18,7 +19,6 @@ import {
   getShoulderPageLabel,
 } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
-import { getConcertCollectionDocs } from 'utils/prismicUtils';
 import { titleCase } from 'utils/stringUtils';
 import {
   convertUidToUrl,
@@ -38,12 +38,14 @@ import {
 } from 'const/breadcrumbs';
 import {
   CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
   MB_CATEGORISATION,
   PAGE_URL_STRUCTURE,
   PRISMIC_FIELD_ID,
   SEO_SUBDOMAINS,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
+import getConcertCollectionDocs from './prismicUtils/getConcertCollections';
 import { sendLog } from './logger';
 
 export type TBreadcrumbItem = {
@@ -611,17 +613,28 @@ const getCityGuideShoulderPageBreadcrumbs = async (
       };
     } else {
       try {
-        const prevSlugShoulderPageUid = `${
-          pageUrlObject.host
-        }.${pathArray.slice(0, pathArray.length - 1).join('.')}`;
+        const prevSlugShoulderPageUid = `${pageUrlObject.host}.${pathArray
+          .slice(0, pathArray.length - 1)
+          .join('.')}`;
+        const prismicClient = createClient();
         const { data } =
-          (await Client().getByUID(
-            CUSTOM_TYPES.CONTENT_PAGE,
+          (await prismicClient.getByUID(
+            'content_page',
             prevSlugShoulderPageUid,
             {
               lang,
             }
-          )) || {};
+          )) ?? {};
+        sendLog({
+          message: {
+            lang,
+            uid: prevSlugShoulderPageUid,
+            documentType: CUSTOM_TYPES.CONTENT_PAGE,
+            functionality: 'data',
+            msg: 'Prismic API call from Canary',
+          },
+        });
+
         const { shoulder_page_type, shoulder_page_custom_label } = data || {};
         const prevSlugShoulderPageLabel = getShoulderPageLabel({
           shoulderPageType: shoulder_page_type || '',
@@ -741,7 +754,7 @@ const getLTTBroadwayShowPageBreadcrumbs = async ({
   isLTT,
   isBroadway,
 }: {
-  doc: PrismicDocumentWithUID;
+  doc: ShowpageDocument;
   isLTT?: boolean;
   isBroadway?: boolean;
 }) => {
@@ -798,9 +811,7 @@ const getLTTBroadwayShowPageBreadcrumbs = async ({
   return breadcrumbs;
 };
 
-const getViennaConcertShowPageBreadcrumbs = async (
-  doc: PrismicDocumentWithUID
-) => {
+const getViennaConcertShowPageBreadcrumbs = async (doc: ShowpageDocument) => {
   const { uid, lang, data } = doc;
   const categorisationMetadata = await getCategorisationMetadata({ doc });
   const { tgid } = data || {};
@@ -860,7 +871,7 @@ const getViennaConcertShowPageBreadcrumbs = async (
   return breadcrumbs;
 };
 
-export const getShowPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
+export const getShowPageBreadcrumbs = async (doc: ShowpageDocument) => {
   const { uid } = doc;
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
@@ -928,18 +939,28 @@ export const getVenuePageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   if (isViennaConcert && lang !== SUPPORTED_LOCALE_MAP.en) {
     try {
       const baseLangDocUid = `${pageUrlObject.host}.${pathArray[0]}`;
+      const prismicClient = createClient();
       const baseLangDoc =
-        (await Client().getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangDocUid, {
-          lang: SUPPORTED_LOCALE_MAP.en,
+        (await prismicClient.getByUID('content_page', baseLangDocUid, {
+          lang: DEFAULT_PRISMIC_LANG,
         })) || {};
+
+      sendLog({
+        message: {
+          lang,
+          uid: baseLangDocUid,
+          documentType: CUSTOM_TYPES.CONTENT_PAGE,
+          functionality: 'data',
+          msg: 'Prismic API call from Canary',
+        },
+      });
       venueHomePageUid =
         getAlternateLanguageDocUid({
           doc: baseLangDoc,
           lang,
         }) || '';
     } catch (error) {
-      sendLog({ err: error });
-      return {};
+      sendLog({ err: error, message: `viennaConcert getBaseLangDoc failed` });
     }
   } else {
     venueHomePageUid = `${pageUrlObject.host}.${pathArray[0]}`;
@@ -993,12 +1014,26 @@ export const getTgidBasedNewsPageBreadcrumbs = async (
         language: headoutLanguagecode,
       })) || {}
     : {};
-  const showPageDocument = await Client().query(
-    Prismic.Predicates.any(
-      `my.${CUSTOM_TYPES.SHOW_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
-      [tgid]
-    )
-  );
+
+  const prismicClient = createClient();
+
+  const showPageDocument = await prismicClient.getByType('showpage', {
+    predicates: [
+      predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.${PRISMIC_FIELD_ID.TGID}`, [
+        tgid,
+      ]),
+    ],
+  });
+
+  sendLog({
+    message: {
+      lang,
+      uid,
+      documentType: CUSTOM_TYPES.SHOW_PAGE,
+      functionality: 'showPageDocument',
+      msg: 'Prismic API call from Canary',
+    },
+  });
 
   const showPageUid = showPageDocument?.results?.[0]?.uid;
   const localisedShowPageUrl = convertUidToUrl({

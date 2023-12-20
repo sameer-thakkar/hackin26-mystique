@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
-import { Client } from 'config/prismic-config';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
@@ -20,14 +19,12 @@ import {
   isCollectionMB,
   legacyBooleanCheck,
 } from 'utils';
-import allToursParser from 'utils/allToursParser';
 import {
   sendVariablesToDataLayer,
   sendVariableToDataLayer,
   trackEvent,
 } from 'utils/analytics';
 import { fetchTourListV6 } from 'utils/apiUtils';
-import { tourListApiParser } from 'utils/dataParsers';
 import {
   checkIfCategoryHeaderExists,
   getLangObject,
@@ -48,11 +45,12 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
-const CategoryHeader = dynamic(() =>
-  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(
+  () =>
+    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const ContentWrapper = styled.main`
@@ -98,7 +96,6 @@ const StyledContentPage = styled.div`
       margin: 0;
     }
   }
-
 
   .slice-block ul {
     ${expandFontToken('Paragraph/Large')}
@@ -184,7 +181,7 @@ const StyledContentPage = styled.div`
       width: calc(100% - 32px);
     }
     .slice-block.rich_text p + h2 {
-    margin: 1.25rem 0 0.25rem;
+      margin: 1.25rem 0 0.25rem;
     }
   }
 `;
@@ -234,44 +231,16 @@ class ContentPage extends Component<any, any> {
       });
 
     const { data } = this.props;
-    const { header_ref, microsite, baseLangPageTitle } = data;
+    const { header_ref, microsite_document_ref, baseLangPageTitle } = data;
 
     const { enable_group_booking: enableGroupBooking } = header_ref?.data || {};
 
-    const { all_tours } = microsite?.data;
-    const allTourTgids = all_tours
-      .filter((tour_slice: any) => tour_slice?.primary?.tgid)
-      .map((tour_slice: any) => tour_slice.primary.tgid);
-    this.setState({
-      ...this.state,
-      isMobile: window.innerWidth < 768,
-    });
-    if (allTourTgids.length > 0) {
-      const toursData = await fetchTourListV6({
-        tgids: allTourTgids,
-        hostname: window.location.origin,
-      });
-
-      const tourAPIData = tourListApiParser(toursData);
-
-      const currency = toursData?.currencies?.[0]?.localSymbol;
-      this.setState({
-        ...this.state,
-        tourAPIData,
-        currency,
-      });
-    }
-
     if (legacyBooleanCheck(enableGroupBooking)) {
       let groupBookingTourTitles: any = [];
-      let res = await Client().getByIDs([
-        this.props.data.microsite_document_ref.id,
-      ]);
-      const {
-        group_booking_excluded_tgids: groupBookingExcludedTgids,
-        body1,
-      } = res.results[0].data;
-      let tours = body1[0]?.items || [];
+
+      const { group_booking_excluded_tgids: groupBookingExcludedTgids, body1 } =
+        microsite_document_ref?.data;
+      let tours = body1?.[0]?.items || [];
       let filteredTours = tours.filter(function (tour: any) {
         return !groupBookingExcludedTgids.find(function (excludedTour: any) {
           return tour.tgid === excludedTour.tgid;
@@ -406,7 +375,7 @@ class ContentPage extends Component<any, any> {
     const { groupBookingTourTitles, tourAPIData } = this.state;
     const {
       alternate_languages,
-      data,
+      data: CMSData,
       categoryTourListData,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -415,7 +384,6 @@ class ContentPage extends Component<any, any> {
       serverRequestStartTimestamp,
       uid,
       host,
-      scorpioData,
       domainConfig,
       primaryCity,
       categoryHeaderMenu,
@@ -429,27 +397,27 @@ class ContentPage extends Component<any, any> {
       content_framework: contentFramework,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
-      microsite,
       body,
       microsite_document_ref,
-      secondaryFooter,
-      mbType,
+      secondary_footer: secondaryFooter,
       side_navigation: sideNavToggle,
       baseLangCategorisationMetadata,
-    } = data;
-    const { tagged_city: taggedCity, shoulder_page_type } =
-      (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
+    } = CMSData;
+
+    const { data: micrositeData } = microsite_document_ref ?? {};
+    const {
+      tagged_city: taggedCity,
+      tagged_mb_type: taggedMbType,
+      shoulder_page_type,
+    } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
     const apiReady = tourAPIData !== null;
     const slices = [
-      ...(data?.body || []),
-      ...(data?.content_framework?.data?.body || []),
+      ...(CMSData?.body || []),
+      ...(CMSData?.content_framework?.data?.body || []),
     ];
-    const allTours = allToursParser(microsite?.data, scorpioData, {
-      cardPrices: tourAPIData,
-      isFetched: apiReady,
-    });
-    const { design: mbDesign } = microsite?.data || {};
+
+    const { design: mbDesign } = micrositeData || {};
 
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
@@ -466,7 +434,7 @@ class ContentPage extends Component<any, any> {
      For new docs, we have set the default value as true, but older docs- the value comes as null. Hence the above condition. */
 
     // START Data extraction for populating head
-    const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
+    const contentPageHasOtherMetaTags = CMSData.other_meta_tags.filter(
       ({ meta_tag }: any) => meta_tag
     );
     const strKeys = [
@@ -482,7 +450,7 @@ class ContentPage extends Component<any, any> {
     const strValues = strKeys.reduce(
       (acc, elem) => ({
         ...acc,
-        [elem]: this.props.data[elem] || microsite_document_ref.data[elem],
+        [elem]: this.props.data[elem] || micrositeData[elem],
       }),
       {}
     );
@@ -491,16 +459,16 @@ class ContentPage extends Component<any, any> {
         ...acc,
         [elem]: Object.keys(this.props.data[elem]).length
           ? this.props.data[elem]
-          : microsite_document_ref.data[elem],
+          : micrositeData[elem],
       }),
       {}
     );
-    const micrositeData = {
+    const modifiedMicrositeData = {
       ...this.props.data,
       ...strValues,
       ...objValues,
     };
-    const isCollectionMicrobrand = isCollectionMB(mbType);
+    const isCollectionMicrobrand = isCollectionMB(taggedMbType);
     const bannerAndFooterSubtext = getBannerAndFooterSubtext(
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations
@@ -516,13 +484,13 @@ class ContentPage extends Component<any, any> {
     });
 
     const headProps = {
-      ...micrositeData,
+      ...modifiedMicrositeData,
       header_scripts: microsite_document_ref.data.header_scripts,
-      canonical_link: this.props.data.canonical_link || pageUrl,
+      canonical_link: CMSData.canonical_link || pageUrl,
       other_meta_tags: contentPageHasOtherMetaTags
-        ? this.props.data.other_meta_tags
+        ? CMSData.other_meta_tags
         : microsite_document_ref.other_meta_tags,
-      faq_schema: this.props.data.faq_schema,
+      faq_schema: CMSData.faq_schema,
     };
     // END Data extraction for populating head
 
@@ -550,7 +518,7 @@ class ContentPage extends Component<any, any> {
       featured_image_link,
       featured_image_alt,
       featured_title: featuredTitle,
-    } = data;
+    } = CMSData ?? {};
     const featuredImage = {
       url: featured_image_link.url || featured_image.url,
       alt: featured_image_alt || featured_image.alt,
@@ -573,9 +541,11 @@ class ContentPage extends Component<any, any> {
     });
     const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
       mbDesign,
-      mbType,
+      mbType: taggedMbType,
     });
-    const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
+
+    const automatedBreadcrumbsExists =
+      Object?.keys(breadcrumbs ?? {}).length > 0;
     const breadcrumbsDetails = {
       breadcrumbs,
       taggedCity,
@@ -701,7 +671,7 @@ class ContentPage extends Component<any, any> {
             />
           </Conditional>
           <StyledContentPage>
-            <ProductsContextProvider allTours={allTours} ready={apiReady}>
+            <ProductsContextProvider ready={apiReady}>
               <InteractionContextProvider>
                 <LongForm
                   content={[...body, ...contentFWSlices]}

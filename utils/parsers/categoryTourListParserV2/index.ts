@@ -1,83 +1,43 @@
-/* eslint-disable no-console */
 import * as Sentry from '@sentry/nextjs';
-import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
+import type { TCityInfo } from 'components/AirportTransfers/PopulateAirportTransferProducts/interfaces';
 import { generatePromiseForCategoryTours } from 'utils/index';
 import { sendLog } from 'utils/logger';
-import {
-  accumulatingCategoryAndItemsData,
-  extractTgidsFromCategories,
-} from 'utils/parser';
-import type { TCategoryTourListParserV2 } from 'utils/parsers/categoryTourListParserV2/interface';
-import getProductData from 'utils/parsers/utils/index';
+import { accumulatingCategoryAndItemsData } from 'utils/parser';
+import getProductData from '../utils';
+import type { TCategoryTourListParserV2 } from './interface';
 
 export default async function categoryTourListParserV2({
   tourListCategory,
   hostname,
-  showpages,
   categoryCarousel,
   lang,
   localizedStrings,
   cookies,
   MBDesign = '',
 }: TCategoryTourListParserV2) {
-  let categoryIds = new Set();
-  let subCategoryIds = new Set();
-  let collectionIds = new Set();
+  const { primary, items: sliceItems } = tourListCategory || {};
 
-  const { primary, items: slices } = tourListCategory || {};
-
-  const city = primary?.city?.cityCode;
+  const city = (primary?.city as TCityInfo)?.cityCode;
   const primarySubCategoryID = primary?.primary_subcategory_id;
 
-  collectionIds = slices.reduce(
-    (
-      accumulator: { add: (arg: number) => void },
-      currentValue: { collection: number }
-    ) => {
-      currentValue.collection && accumulator.add(currentValue.collection);
-      return accumulator;
-    },
-    new Set()
+  const collectionIds = new Set(
+    sliceItems.map((item) => item?.collection)?.filter(Boolean)
   );
-
-  subCategoryIds = slices.reduce(
-    (
-      accumulator: { add: (arg: number) => void },
-      currentValue: { sub_category: number }
-    ) => {
-      currentValue.sub_category && accumulator.add(currentValue.sub_category);
-      return accumulator;
-    },
-    new Set()
+  const categoryIds = new Set(
+    sliceItems.map((item) => item?.category)?.filter(Boolean)
   );
-  categoryIds = slices.reduce(
-    (
-      accumulator: { add: (arg: number) => void },
-      currentValue: { category: number }
-    ) => {
-      currentValue.category && accumulator.add(currentValue.category);
-      return accumulator;
-    },
-    new Set()
+  const subCategoryIds = new Set(
+    sliceItems.map((item) => item?.sub_category)?.filter(Boolean)
   );
 
   if (categoryCarousel?.primary?.category_id) {
     categoryIds.add(categoryCarousel.primary?.category_id);
   }
 
-  let showpageData: Record<number, string> = {};
-
-  /* showpages consists of data for all the shows in LTT and Broadway */
-  for (const page of showpages ?? []) {
-    const {
-      uid,
-      data: { tgid },
-    }: { uid: string; data: { tgid: number } } = page || { data: {} };
-    showpageData[tgid] = uid;
-  }
   let categoriesWithProducts: any = [],
     allTgids: number[][] = [],
-    primaryCity;
+    primaryCity,
+    currencyObject: Record<string, string | number | null> = {};
 
   let collectionPromises = generatePromiseForCategoryTours({
     arr: Array.from(collectionIds),
@@ -120,43 +80,18 @@ export default async function categoryTourListParserV2({
         const [collectionData, categoryData, subCategoryData] = response;
 
         if (collectionData.length) {
-          const updatedCollectionData = collectionData?.map((c) => {
-            const { collection, sections } = c || {};
-            const filteredData = sections?.filter(
-              (curr: { tourGroups: { items: [] } }) => {
-                return curr?.tourGroups?.items?.length;
-              }
-            );
-            let filterTgids: [][] = [];
-            filteredData?.forEach(
-              (section: {
-                tourGroups: {
-                  items: [];
-                };
-              }) => {
-                if (section?.tourGroups?.items) {
-                  filterTgids = filterTgids.concat(section.tourGroups.items);
-                }
-              }
-            );
-            return {
-              collection,
-              items: getUniqueArrayItemsBy(filterTgids, ['id']),
-            };
-          });
-          if (updatedCollectionData?.length) {
-            categoriesWithProducts.push(updatedCollectionData);
-            const tgids: number[] | undefined = extractTgidsFromCategories(
-              updatedCollectionData
-            );
-            if (tgids?.length) {
-              allTgids.push(tgids);
-            }
-          }
+          primaryCity = collectionData?.[0]?.city;
+          currencyObject = collectionData?.[0]?.currency;
+          accumulatingCategoryAndItemsData(
+            collectionData,
+            categoriesWithProducts,
+            allTgids
+          );
         }
 
         if (categoryData.length) {
           primaryCity = categoryData?.[0]?.city;
+          currencyObject = categoryData?.[0]?.currency;
           accumulatingCategoryAndItemsData(
             categoryData,
             categoriesWithProducts,
@@ -166,6 +101,7 @@ export default async function categoryTourListParserV2({
 
         if (subCategoryData.length) {
           primaryCity = subCategoryData?.[0]?.city;
+          currencyObject = categoryData?.[0]?.currency;
           accumulatingCategoryAndItemsData(
             subCategoryData,
             categoriesWithProducts,
@@ -173,24 +109,25 @@ export default async function categoryTourListParserV2({
           );
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(err);
         Sentry.captureException(err);
-        sendLog({ err });
+        sendLog({ err, message: `[categoryTourListParserV2]` });
       }
     }
   );
 
   const allData = categoriesWithProducts?.flat();
-  const pageData = await getProductData(
+
+  const pageData = await getProductData({
     allData,
     allTgids,
-    hostname,
     lang,
-    showpageData,
     localizedStrings,
     MBDesign,
-    primarySubCategoryID
-  );
+    primarySubCategoryID,
+    currencyObject,
+  });
 
   return {
     ...pageData,

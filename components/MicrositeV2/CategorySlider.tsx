@@ -17,11 +17,12 @@ const DetailedProductCard = dynamic(
     ssr: false,
   }
 );
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const Product = dynamic(() =>
-  import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
+const Product = dynamic(
+  () =>
+    import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
 );
 
 const StyledCategorySlider = styled.div`
@@ -128,7 +129,7 @@ const CategorySlider = (props: any) => {
   const [currentIndex, updateCurrentIndex] = useState(0);
   const productsContext = useContext(ProductsContext);
   // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours, isMobile } = productsContext;
+  const { allTours = [], isMobile } = productsContext || {};
 
   let filteredTgids;
   const categoryDataObj = {};
@@ -188,10 +189,11 @@ const CategorySlider = (props: any) => {
     }
   };
 
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
+    () => updateCurrentIndex(swiper.realIndex),
+    [swiper]
+  );
 
   useEffect(() => {
     if (swiper !== null) {

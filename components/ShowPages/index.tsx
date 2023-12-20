@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import cloneDeep from 'lodash.clonedeep';
 import Conditional from 'components/common/Conditional';
@@ -46,6 +45,7 @@ import { getDurationISO, getPrevDate } from 'utils/dateUtils';
 import { getHostName, groupSlices } from 'utils/helper';
 import { generateDescriptor } from 'utils/productUtils';
 import { getProductSchema } from 'utils/schemaUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   convertUidToUrl,
   getLogoRedirectionUrl,
@@ -64,8 +64,8 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const ShowPageWrapper = styled.div`
@@ -253,8 +253,6 @@ const ShowPage = (props: any) => {
     hasSpecialOffer,
   } = parseShowPageData(microBrandsHighlight);
 
-  const { commonFooter, allShowPagesDocuments } = CMSContent;
-
   const {
     uid,
     first_publication_date: datePublished,
@@ -262,6 +260,7 @@ const ShowPage = (props: any) => {
     data: CMSData,
     alternate_languages,
     lang,
+    allShowPagesDocuments,
   } = CMSContent;
 
   const currentLanguage = getHeadoutLanguagecode(lang);
@@ -291,9 +290,10 @@ const ShowPage = (props: any) => {
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
+    common_header: commonHeader,
+    common_footer: commonFooter,
   } = CMSData;
 
-  const { commonHeader } = CMSContent;
   const headerLinks = commonHeader?.data?.header_links || [];
   const dropdownLinksArray = commonHeader?.data?.dropdown_menu?.reduce(
     (acc: any, item: any) => {
@@ -416,9 +416,9 @@ const ShowPage = (props: any) => {
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
-    ' '
-  )[2];
+  const theatreSeatingCapacity = (
+    aboutTheatreSection as any
+  )?.tab_content[1]?.text?.split(' ')[2];
 
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
@@ -478,10 +478,12 @@ const ShowPage = (props: any) => {
           "@type": "TheaterGroup",
           "name": "${name} Cast"
         },
-        "offers": [${offerSchema?.map((
-          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
-          variant
-        ) => JSON.stringify(variant))}]
+        "offers": [${offerSchema?.map(
+          (
+            // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+            variant
+          ) => JSON.stringify(variant)
+        )}]
       }`;
     })
     ?.join(',');
@@ -557,7 +559,10 @@ const ShowPage = (props: any) => {
         </Conditional>
         <Wrapper>
           <HighlightsSectionWrapper>
-            <RichText render={(highlightsSection as any)?.tab_content} />
+            <PrismicRichText
+              field={(highlightsSection as any)?.tab_content}
+              components={shortCodeSerializer}
+            />
           </HighlightsSectionWrapper>
           {isMobile ? (
             <AccordionGroup
@@ -582,7 +587,10 @@ const ShowPage = (props: any) => {
           </Conditional>
           <SubHeading content={tabSectionHeading} />
           <AboutTheatreSectionWrapper>
-            <RichText render={(aboutTheatreSection as any)?.tab_content} />
+            <PrismicRichText
+              field={(aboutTheatreSection as any)?.tab_content}
+              components={shortCodeSerializer}
+            />
           </AboutTheatreSectionWrapper>
           <LazyComponent>
             {isMobile ? (

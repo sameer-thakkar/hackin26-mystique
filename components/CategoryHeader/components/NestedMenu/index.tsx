@@ -3,7 +3,7 @@ import { NestedMenuProps } from 'components/CategoryHeader/components/NestedMenu
 import { StyledNestedMenuContainer } from 'components/CategoryHeader/components/NestedMenu/styles';
 import NestedMenuItem from 'components/CategoryHeader/components/NestedMenuItem';
 
-const NestedMenu: React.FC<NestedMenuProps> = (props) => {
+const NestedMenu = (props: NestedMenuProps) => {
   const {
     categoryHeaderMenu,
     selectedMenu,

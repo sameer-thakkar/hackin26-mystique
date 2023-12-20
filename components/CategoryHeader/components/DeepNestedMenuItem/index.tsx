@@ -13,11 +13,11 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
   const pageMetaData = useRecoilValue(metaAtom);
 
   return (
-    <>
+    <React.Fragment>
       {Object.keys(categoryHeaderMenu).map((menuItem) => {
         const menuData = categoryHeaderMenu[menuItem].menu || {};
         return (
-          <>
+          <React.Fragment key={menuItem}>
             {Object.keys(menuData).map((nestedMenuItem, index) => {
               const nestedMenuData =
                 menuData[nestedMenuItem as keyof typeof menuData] || {};
@@ -39,9 +39,8 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
                         mbCity,
                       });
                       return (
-                        <li>
+                        <li key={index}>
                           <a
-                            key={index}
                             href={url}
                             target="_blank"
                             rel="noreferrer"
@@ -63,10 +62,10 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
                 </StyledDeepNestedMenuItem>
               );
             })}
-          </>
+          </React.Fragment>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };
 

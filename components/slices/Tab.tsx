@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SliceZone } from '@prismicio/react';
 import COLORS from 'const/colors';
-import { stringIdfy } from '../../utils/helper';
-import sliceHandler from '../Slices';
+import { sliceComponents } from './sliceManager';
 
 const StyledTabPanel = styled.div`
   position: relative;
@@ -15,32 +15,21 @@ const StyledTabPanel = styled.div`
   }
 `;
 
-const StyledTabContent = styled.div`
-  display: ${({
-    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
-    isActive,
-  }) => (isActive ? 'block' : 'none')};
+export const StyledTabContent = styled.div<{ isActive?: boolean }>`
+  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
 `;
 
 const Tab = (props: any) => {
-  const { slices, title, sliceProps } = props;
+  const { childSlices: slices, title: tabTitle, sliceProps } = props;
   const { activeTabId, keyIndex } = sliceProps || {};
   return (
     <StyledTabPanel key={keyIndex}>
-      {slices.map((slice: any, index: number) => {
-        return (
-          <StyledTabContent
-            key={index}
-            // @ts-expect-error TS(2769): No overload matches this call.
-            isActive={activeTabId == stringIdfy(title)}
-          >
-            {sliceHandler(slice, {
-              index,
-              ...sliceProps,
-            })}
-          </StyledTabContent>
-        );
-      })}
+      <SliceZone
+        slices={slices}
+        components={sliceComponents()}
+        context={{ ...sliceProps, wrapperType: 'tab', tabTitle, activeTabId }}
+        defaultComponent={() => null}
+      />
     </StyledTabPanel>
   );
 };

@@ -11,7 +11,7 @@ import DeferredComponent from 'components/common/DeferredComponent';
 import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { getAnalyticsPageType } from 'utils';
-import { sendVariablesToDataLayer } from 'utils/analytics';
+import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
 import renderShortCodes from 'utils/shortCodes';
@@ -262,6 +262,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         isAirportTransferMB,
         defaultType: pageType,
       }),
+    });
+    trackEvent({
+      eventName: 'Canary Build Viewed',
     });
     set(metaAtom, {
       city: primaryCity,

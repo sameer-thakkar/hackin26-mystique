@@ -1,5 +1,5 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import {
   getAlternateLanguageDocUid,
@@ -13,7 +13,7 @@ import {
   IGetNearbyCities,
 } from 'utils/cityPageUtils/interface';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
+import shouldIncludeDoc from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import {
   CUSTOM_TYPES,
@@ -91,16 +91,28 @@ export const getNearbyCities = async ({
   cookies,
 }: IGetNearbyCities) => {
   try {
-    const prismicDataPromise = Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, A1_HOMEPAGE),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_COUNTRY}`, mbCountry),
-        Prismic.Predicates.not(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.has(`my.${MICROSITE}.${TAGGED_CITY}`),
-      ],
-      { pageSize: 30 }
-    );
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, A1_HOMEPAGE),
+      predicate.at(`my.${MICROSITE}.${TAGGED_COUNTRY}`, mbCountry),
+      predicate.not(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.has(`my.${MICROSITE}.${TAGGED_CITY}`),
+    ];
+    const prismicClient = createClient();
+    const prismicDataPromise = prismicClient.getByType('microsite', {
+      pageSize: 30,
+      predicates: predicatesArray,
+    });
+
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicDataPromise',
+        queryingMultipleDocs: true,
+        lang,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const cityListDataPromise = getCityListData({ cookies, mbCity });
     const allResult = await Promise.allSettled([

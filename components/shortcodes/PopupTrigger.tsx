@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import { PopupDocument } from 'types.prismic';
+import getPopup from 'utils/prismicUtils/getPopup';
 import COLORS from 'const/colors';
-import { CUSTOM_TYPES } from 'const/index';
-import { Client } from '../../config/prismic-config';
 
 const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });
 
@@ -16,17 +16,21 @@ const StyledTrigger = styled.span`
 const PopupTrigger = (props: any) => {
   const { id, text, children, popupContents } = props;
   const [active, setActive] = useState(null);
-  const [data, setData] = useState(false);
+  const [data, setData] = useState<PopupDocument | null>(null);
 
   useEffect(() => {
-    Client()
-      .getByUID(CUSTOM_TYPES.POPUP, id, {
-        lang: 'en-us',
-      })
-      .then((res: any) => {
-        const { data } = res;
-        if (data) setData(data);
+    async function fetchPopup() {
+      const popup = await getPopup({
+        uid: id,
       });
+      if (popup) {
+        setData(data);
+      }
+    }
+
+    if (id) {
+      fetchPopup();
+    }
   }, [id]);
 
   return (

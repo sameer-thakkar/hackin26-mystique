@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SliceZone } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
 import { HALYARD } from 'const/ui-constants';
-import sliceHandler from '../Slices';
+import { sliceComponents } from './sliceManager';
 
 const StyledListicleSection = styled.div`
   width: 690px;
@@ -39,7 +40,7 @@ const Title = styled.h2`
 type ListicleSectionProps = {
   type: string;
   title: string;
-  slices: any[];
+  childSlices: any[];
 };
 
 /**
@@ -68,16 +69,19 @@ type ListicleSectionProps = {
 const ListicleSection: React.FC<ListicleSectionProps> = ({
   type,
   title,
-  slices,
+  childSlices: slices,
 }) => {
   return (
     <StyledListicleSection>
       <Title id={generateSidenavId(title)}>{title}</Title>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <ListicleGrid listicleType={type}>
-        {slices.map((slice, index) => {
-          return sliceHandler(slice, { type, index });
-        })}
+        <SliceZone
+          slices={slices}
+          components={sliceComponents()}
+          context={{ type, wrapperType: 'none' }}
+          defaultComponent={() => null}
+        />
       </ListicleGrid>
     </StyledListicleSection>
   );

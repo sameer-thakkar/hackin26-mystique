@@ -1,3 +1,6 @@
+import type { NumberField } from '@prismicio/types';
+import type { IncomingHttpHeaders } from 'http2';
+import { convertHttpHeadersToRegularHeaders } from 'utils';
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
@@ -28,10 +31,10 @@ export const constructHeaders = ({
   cookies = {},
   currentHeaders = {},
 }: {
-  cookies?: Record<string, string>;
-  currentHeaders?: Record<string, string>;
-} = {}) => {
-  const headers = new Headers(currentHeaders);
+  cookies?: Partial<{ [key: string]: string }>;
+  currentHeaders?: IncomingHttpHeaders;
+}) => {
+  const headers = convertHttpHeadersToRegularHeaders(currentHeaders);
 
   if (cookies)
     headers.set(
@@ -196,7 +199,7 @@ export const fetchTourList = ({
   host = '',
   ...query
 }: Record<string, any>) => {
-  const headers = constructHeaders();
+  const headers = constructHeaders({});
 
   return fetch(
     `${host ? host : ''}/api/tours/v6/tour-groups/${objectToQuery({
@@ -437,10 +440,10 @@ export const fetchCurrencyList = async () => {
   }
 };
 
-interface fetchTourGroupsByCollectionProps extends CommonApiProps {
+interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   collectionId: string | number;
-  city?: string;
   limit?: string;
+  primarySubCategoryID?: NumberField | string;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -448,7 +451,7 @@ interface fetchTourGroupsByCategoryProps extends CommonApiProps {
   isSubCategory: boolean;
   city?: string;
   limit?: string;
-  primarySubCategoryID?: string;
+  primarySubCategoryID?: NumberField;
 }
 
 export const fetchProductData = async ({
@@ -486,23 +489,25 @@ export const fetchProductData = async ({
 export const fetchTourGroupsByCollection = async ({
   collectionId,
   hostname,
-  city = '',
   language = 'en',
   limit,
   fallbackToEnglish = false,
   currency,
   cookies,
-}: fetchTourGroupsByCollectionProps) => {
+  primarySubCategoryID,
+}: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
     'use-seatmap-prices': '1',
-    ...(city && { city }),
     ...(limit && { limit }),
     ...(currency && { currency }),
     ...(!fallbackToEnglish &&
       language !== 'en' && {
         'fallback-to-english': '0',
       }),
+    ...(primarySubCategoryID && {
+      'filter-by-subcategory-id': String(primarySubCategoryID),
+    }),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
@@ -543,7 +548,7 @@ export const fetchTourGroupsByCategory = async ({
         'fallback-to-english': '0',
       }),
     ...(primarySubCategoryID && {
-      'filter-by-subcategory-id': primarySubCategoryID,
+      'filter-by-subcategory-id': String(primarySubCategoryID),
     }),
   };
   const headers = constructHeaders({ cookies });
@@ -727,7 +732,8 @@ export const fetchCategory = async ({
     ...(city && { city }),
     language,
     ...(filterCategoryActiveProductCount && {
-      'filter-category-active-product-count': filterCategoryActiveProductCount.toString(),
+      'filter-category-active-product-count':
+        filterCategoryActiveProductCount.toString(),
     }),
     ...(includeUnavailable && {
       'include-unavailable': includeUnavailable.toString(),

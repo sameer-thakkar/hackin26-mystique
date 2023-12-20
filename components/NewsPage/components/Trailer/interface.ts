@@ -1,11 +1,11 @@
-import { PrismicDocumentWithUID } from '@prismicio/types';
-import { TourGroupDataType } from 'components/NewsPage/interface';
+import type { ShowpageDocument } from 'types.prismic';
+import type { TourGroupDataType } from 'components/NewsPage/interface';
 
 export type TTrailerProps = {
   content: {
     trailerSectionData: TourGroupDataType[];
     CFData: Record<string, any>;
-    showPageDocuments: PrismicDocumentWithUID[];
+    showPageDocuments: ShowpageDocument[];
     tgid?: number;
     videoData: Record<string, string>;
   };

@@ -100,7 +100,7 @@ const TopAttractions = ({
           >
             {carouselItems.map((attraction: ICityTopCollectionsItem, index) => {
               if (!Object.keys(attraction).length) {
-                return <Card width={WIDTH} height={HEIGHT} />;
+                return <Card key={index} width={WIDTH} height={HEIGHT} />;
               }
               const {
                 id,

@@ -111,7 +111,8 @@ export const getValidUrlParams = (query: Record<string, any>) =>
     .join('&')
     .trim();
 
-export const getDomainFromUid = (uid: string) => {
+export const getDomainFromUid = (uid: string | undefined) => {
+  if (!uid) return '';
   const modUid = `${uid}.`; // add trailing . to identify end of UID
   const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
   const domain = modUid.match(regex)?.[0]?.slice(0, -1);
@@ -125,12 +126,13 @@ export const convertUidToUrl = ({
   hostname = '',
   removeLangPath = false,
 }: {
-  uid: string;
+  uid: string | undefined;
   hostname?: string;
   lang?: string;
   isDev?: boolean;
   removeLangPath?: boolean;
 }) => {
+  if (!uid) return '';
   const getUrl = (uid: string, lang: string, isStage: boolean) => {
     let url: string = '';
     const modUid = `${uid}.`; // add trailing . to identify end of UID
@@ -360,7 +362,7 @@ export const getSanitizedPathArray = (url: URL) => {
       (path) =>
         !!path &&
         !SUPPORTED_LANGUAGES.includes(
-          path as typeof SUPPORTED_LANGUAGES[number]
+          path as (typeof SUPPORTED_LANGUAGES)[number]
         )
     );
 };
@@ -369,3 +371,13 @@ export const getLttVerticalPosterLink = (tgid?: number) => {
   if (!tgid) return;
   return `https://cdn-imgix.headout.com/assets/images/ltt/vertical-product-cards/${tgid}.png`;
 };
+
+/**
+ * The function checks if a pathname has .txt, .php, .xml or any other file extensions other than .js/.css.
+ * @param {string} path - The `path` parameter is a string that represents a file path.
+ * @returns a boolean value.
+ */
+export function isAllowedPath(path: string) {
+  const regex = /^(?!.*\/$)(?!.*\.(?!js$|css$)[^.]+$).*\.(js|css)$/;
+  return !path.includes('.') || regex.test(path);
+}

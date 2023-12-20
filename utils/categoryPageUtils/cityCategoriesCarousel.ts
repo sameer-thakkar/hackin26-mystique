@@ -1,10 +1,8 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
-import {
-  getMenuUrl,
-  getRankedDocuments,
-  shouldIncludeinQueries,
-} from 'utils/headerUtils';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
+import { getMenuUrl } from 'utils/headerUtils';
+import getRankedDocuments from 'utils/headerUtils/getRankedDocuments';
+import shouldIncludeinQueries from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import {
   CUSTOM_TYPES,
@@ -23,37 +21,50 @@ const getCityCategoriesCarouselDocs = async ({
   categories: Array<string>;
 }) => {
   try {
-    const { results: filteredMicrosites } =
-      (await Client().query(
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+        mbCity
+      ),
+      predicate.at(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
+        MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
+      ),
+      predicate.any(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
         [
-          Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-          Prismic.Predicates.at(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
-            mbCity
-          ),
-          Prismic.Predicates.at(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
-            MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
-          ),
-          Prismic.Predicates.any(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
-            [
-              MB_CATEGORISATION.MB_TYPE.A1_CATEGORY,
-              MB_CATEGORISATION.MB_TYPE.A2_CATEGORY,
-              MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
-            ]
-          ),
-          Prismic.Predicates.any(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
-            categories
-          ),
-          Prismic.Predicates.not(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
-            mbCategory
-          ),
-        ],
-        { pageSize: 50 }
-      )) || {};
+          MB_CATEGORISATION.MB_TYPE.A1_CATEGORY,
+          MB_CATEGORISATION.MB_TYPE.A2_CATEGORY,
+          MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
+        ]
+      ),
+      predicate.any(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
+        categories
+      ),
+      predicate.not(
+        `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
+        mbCategory
+      ),
+    ];
+    const prismicClient = createClient();
+    const { results: filteredMicrosites } = await prismicClient.getByType(
+      'microsite',
+      {
+        pageSize: 50,
+        predicates: predicatesArray,
+      }
+    );
+
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'filteredMicrosites',
+        queryingMultipleDocs: true,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     return getRankedDocuments({
       docs: filteredMicrosites,

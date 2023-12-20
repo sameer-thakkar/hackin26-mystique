@@ -5,9 +5,8 @@ import Modal, { Styles } from 'react-modal';
 import PhoneInput from 'react-phone-input-2';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Select from 'react-select';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
@@ -801,7 +800,7 @@ export default class GroupBooking extends Component<any, any> {
               <br />
               {disclaimer && (
                 <small className="group-booking-disclaimer">
-                  <RichText render={disclaimer} />
+                  <PrismicRichText field={disclaimer} />
                 </small>
               )}
               <span

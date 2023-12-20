@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
 import parse from 'url-parse';
 import { Button } from '@headout/aer';
@@ -36,7 +36,6 @@ import {
   ProductBody,
   ProductHeader,
   ProductOfferBlock,
-  richtextElements,
   SCPCarouselContainer,
   SCPContainer,
   SCPPriceContainer,
@@ -448,6 +447,7 @@ const Product = (props: any) => {
   const boosterHasIcon =
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
+
   const currentHost = !isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
     ? currentHost.replace('stage-', '')
@@ -456,7 +456,7 @@ const Product = (props: any) => {
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
   const showScratchPrice = isScratchPriceEnabled;
-  const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
+  const finalHighlights = asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : filterFromHighlights(scorpioData.highlights);
 
@@ -544,7 +544,7 @@ const Product = (props: any) => {
   if (!listingPrice) return null;
   const finalListingPrice = listingPrice;
   const { tourId } = finalListingPrice || {};
-  const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
+  const hasV1Booster = booster && asText(booster as []).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
@@ -983,9 +983,9 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional if={hasV1Booster}>
               <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
-                <RichText
-                  render={booster}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={booster}
+                  components={shortCodeSerializer}
                 />
               </V1BoosterBlock>
             </Conditional>
@@ -999,9 +999,9 @@ const Product = (props: any) => {
                       onClick={handlePopup}
                       className="tour-offer"
                     >
-                      <RichText
-                        render={offer.data.offer_title}
-                        htmlSerializer={shortCodeSerializer}
+                      <PrismicRichText
+                        field={offer.data.offer_title}
+                        components={shortCodeSerializer}
                       />
                     </ProductOfferBlock>
                   );
@@ -1196,10 +1196,9 @@ const Product = (props: any) => {
                   />
                 </Conditional>
                 <Conditional if={hasHighlights}>
-                  <RichText
-                    render={highlights || []}
-                    htmlSerializer={shortCodeSerializer}
-                    elements={richtextElements}
+                  <PrismicRichText
+                    field={highlights || []}
+                    components={shortCodeSerializer}
                   />
                 </Conditional>
                 <Conditional if={tabs.length && !isSpecialGuidedTour}>

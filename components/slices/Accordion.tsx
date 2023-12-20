@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';

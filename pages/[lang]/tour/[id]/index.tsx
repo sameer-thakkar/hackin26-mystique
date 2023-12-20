@@ -3,11 +3,10 @@ import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import ServerCookies from 'cookies';
 import Conditional from 'components/common/Conditional';
@@ -33,7 +32,6 @@ import {
   createBookingURL,
   getHeadoutLanguagecode,
   redirectTo,
-  refsArrayToObject,
   renderError,
 } from 'utils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
@@ -47,12 +45,15 @@ import {
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getDurationISO, getPrevDate } from 'utils/dateUtils';
 import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
-import { getRefsArrayByIds, getShowPageCollections } from 'utils/prismicUtils';
+import { sendLog } from 'utils/logger';
+import getShowPageCollections from 'utils/prismicUtils/getShowPageCollections';
+import { showpageGq } from 'utils/prismicUtils/showPage/graphQuery';
 import {
   generateDescriptor,
   shouldUseDynamicShowPage,
 } from 'utils/productUtils';
 import { getProductSchema } from 'utils/schemaUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   convertUidToUrl,
   getFormattedUrlSlug,
@@ -79,8 +80,8 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 const Breadcrumb = dynamic(() => import('components/ShowPages/BreadCrumb'));
-const AccordionGroup = dynamic(() =>
-  import('components/slices/AccordionGroup')
+const AccordionGroup = dynamic(
+  () => import('components/slices/AccordionGroup')
 );
 
 const ShowPageWrapper = styled.div`
@@ -425,9 +426,9 @@ const ExperiencePage = ({
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
-    ' '
-  )[2];
+  const theatreSeatingCapacity = (
+    aboutTheatreSection as any
+  )?.tab_content[1]?.text?.split(' ')[2];
   const showBookingUrl = createBookingURL({
     nakedDomain,
     lang: currentLanguage,
@@ -493,10 +494,12 @@ const ExperiencePage = ({
           "@type": "TheaterGroup",
           "name": "${name} Cast"
         },
-        "offers": [${offerSchema?.map((
-          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
-          variant
-        ) => JSON.stringify(variant))}]
+        "offers": [${offerSchema?.map(
+          (
+            // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+            variant
+          ) => JSON.stringify(variant)
+        )}]
       }`;
     })
     ?.join(',');
@@ -566,7 +569,10 @@ const ExperiencePage = ({
         </Conditional>
         <Wrapper>
           <HighlightsSectionWrapper>
-            <RichText render={(highlightsSection as any)?.tab_content} />
+            <PrismicRichText
+              field={(highlightsSection as any)?.tab_content}
+              components={shortCodeSerializer}
+            />
           </HighlightsSectionWrapper>
           {isMobile ? (
             <AccordionGroup
@@ -594,7 +600,10 @@ const ExperiencePage = ({
           </Conditional>
           <SubHeading content={tabSectionHeading} />
           <AboutTheatreSectionWrapper>
-            <RichText render={(aboutTheatreSection as any)?.tab_content} />
+            <PrismicRichText
+              field={(aboutTheatreSection as any)?.tab_content}
+              components={shortCodeSerializer}
+            />
           </AboutTheatreSectionWrapper>
           {isMobile ? (
             <ComponentWrapper>
@@ -704,28 +713,31 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
   const domainConfig = await fetchDomainConfig(uid);
   const allDocuments = await getShowPageCollections({
     pageSize: 100,
-    page: 1,
-    prevResults: [],
     lang: prismicLang,
   });
 
   // Adding this temporarily to pull common header and footer data from Prismic
-  const page = await Client(req).getByUID(
-    CUSTOM_TYPES.SHOW_PAGE,
+  const prismicClient = createClient();
+  const page = await prismicClient.getByUID(
+    'showpage',
     DEFAULT_PRISMIC_SHOWPAGE_UID,
     {
       lang: prismicLang,
+      graphQuery: showpageGq,
     }
   );
-  const { common_footer, common_header } = page?.data || {};
-  const refArray = await getRefsArrayByIds(
-    [common_header.id, common_footer.id],
-    req
-  );
-  const { commonHeader, commonFooter } = refsArrayToObject(refArray);
+  sendLog({
+    message: {
+      uid,
+      documentType: CUSTOM_TYPES.SHOW_PAGE,
+      functionality: 'page',
+      msg: 'Prismic API call from Canary',
+    },
+  });
+
   const CMSContent = {
-    commonFooter,
-    commonHeader,
+    commonFooter: page?.data?.common_footer,
+    commonHeader: page?.data?.common_header,
     allShowPagesDocuments: allDocuments,
   };
   const inventorySlotData = await fetchTourGroupSlots({

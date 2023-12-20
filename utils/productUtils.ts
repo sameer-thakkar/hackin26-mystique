@@ -1,5 +1,5 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { asText } from '@prismicio/helpers';
+import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { createBookingURL } from 'utils';
@@ -29,11 +29,11 @@ import { convertUidToUrl, getFormattedUrlSlug } from './urlUtils';
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   let tabs: Record<string, any> = [];
   const nonTabHighlights = highlights.reduce(
-    (acc: Record<string, any>[], highlight: Record<string, any>) => {
+    (acc: Record<string, any>[], highlight: RTNode & { content: RTNode }) => {
       if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
         tabs.push({
           type: 'tab',
-          heading: RichText.asText([highlight]),
+          heading: asText([highlight]),
           contents: [],
         });
         return acc;
@@ -230,13 +230,13 @@ export const getContentBlocksMidIndex = (array: any) => {
   let totalWordCount = 0;
   let resultIndex = array.length / 2;
   array.forEach((element: any) => {
-    totalWordCount += RichText.asText(element.contents).length;
+    totalWordCount += asText(element.contents as []).length;
   });
 
   let leftWordCount = 0;
   let flag = true;
   array.forEach((element: any, index: any) => {
-    leftWordCount += RichText.asText(element.contents).length;
+    leftWordCount += asText(element.contents as []).length;
     if (leftWordCount >= totalWordCount / 2 && flag) {
       resultIndex = index;
       flag = false;

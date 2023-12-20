@@ -1,5 +1,5 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { asText } from '@prismicio/helpers';
+import { RTNode } from '@prismicio/types';
 import { HIGHLIGHT_TYPES, OBJECT_TYPES } from 'const/index';
 
 export const extractAccordionsFromHighlights = (
@@ -7,11 +7,11 @@ export const extractAccordionsFromHighlights = (
 ) => {
   let accordions: Record<string, any> = [];
   const nonTabHighlights = highlights.reduce(
-    (acc: Record<string, any>[], highlight: Record<string, any>) => {
+    (acc: Record<string, any>[], highlight: RTNode) => {
       if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
         accordions.push({
           type: HIGHLIGHT_TYPES.HEADING,
-          heading: RichText.asText([highlight]),
+          heading: asText([highlight]),
           contents: [],
         });
         return acc;

@@ -1,7 +1,6 @@
 import { useContext, useRef } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import { TourGroupInfoProps } from 'components/HOHO/components/TourGroupInfo/interface';
@@ -29,6 +28,7 @@ import { MBContext } from 'contexts/MBContext';
 import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { filterFromHighlights } from 'utils/productUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -43,8 +43,8 @@ import {
   LTT_CHEVRON_RIGHT,
 } from 'assets/SvgIcons';
 
-const MediaCarousel = dynamic(() =>
-  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(
+  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const CAROUSEL_SLIDE_NUMBER = 3;
@@ -148,7 +148,10 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       tabsArray.push({
         children: (
           <TourRouteInfo key={genUniqueId()}>
-            <RichText render={route_intro} />
+            <PrismicRichText
+              field={route_intro}
+              components={shortCodeSerializer}
+            />
             <Image
               url={route_map_image_link?.url}
               alt={route_name}
@@ -182,7 +185,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
 
     return (
       <RouteInfoContainer>
-        <RichText render={intro_text} className="intro-text" />
+        <PrismicRichText field={intro_text} components={shortCodeSerializer} />
         <TabWrapper tabElements={tabsArray} renderTabElements={true} />
         <Conditional if={isMobile}>
           <ButtonWrapper>

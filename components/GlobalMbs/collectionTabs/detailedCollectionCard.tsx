@@ -1,8 +1,8 @@
 import React, { forwardRef, Ref, useContext } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
@@ -347,7 +347,7 @@ const DetailedCollectionCard = forwardRef<
           </div>
           <Conditional if={overview}>
             <div className="description">
-              {overview ? RichText?.asText(overview) : ''}
+              {overview ? asText(overview) : ''}
             </div>
           </Conditional>
           <div className="info">
@@ -355,7 +355,7 @@ const DetailedCollectionCard = forwardRef<
               <Conditional if={location}>
                 <div>
                   <strong>Address: </strong>
-                  {location ? RichText?.asText(location) : ''}
+                  {location ? asText(location) : ''}
                 </div>
               </Conditional>
               <Conditional if={duration}>
@@ -371,9 +371,9 @@ const DetailedCollectionCard = forwardRef<
                   <strong>Timings: </strong>
                 </div>
                 <div>
-                  <RichText
-                    render={timings}
-                    htmlSerializer={shortCodeSerializer}
+                  <PrismicRichText
+                    field={timings}
+                    components={shortCodeSerializer}
                   />
                 </div>
               </Conditional>
@@ -422,5 +422,7 @@ const DetailedCollectionCard = forwardRef<
     }
   }
 );
+
+DetailedCollectionCard.displayName = 'DetailedCollectionCard';
 
 export default DetailedCollectionCard;

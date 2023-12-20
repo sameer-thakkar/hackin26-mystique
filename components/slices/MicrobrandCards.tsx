@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
@@ -329,9 +328,9 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
   return (
     <StyledMicrobandCards>
       <div className="microbrand-cards-content" id={idArray?.[0]}>
-        <RichText
-          render={cardsContent.content_above_cards}
-          htmlSerializer={shortCodeSerializer}
+        <PrismicRichText
+          field={cardsContent.content_above_cards}
+          components={shortCodeSerializer}
         />
       </div>
       <LinkCardWrapper
@@ -341,9 +340,9 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         currencySymbol={currencySymbol}
       />
       <div className="microbrand-cards-content" id={idArray?.[1]}>
-        <RichText
-          render={cardsContent.content_below_cards}
-          htmlSerializer={shortCodeSerializer}
+        <PrismicRichText
+          field={cardsContent.content_below_cards}
+          components={shortCodeSerializer}
         />
       </div>
     </StyledMicrobandCards>

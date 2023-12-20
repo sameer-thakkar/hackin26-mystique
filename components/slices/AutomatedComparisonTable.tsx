@@ -1,7 +1,6 @@
 import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error messag
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
@@ -547,9 +546,9 @@ const AutomatedTourComparisonTable = ({
                       <div className="tour-chin">
                         <div className="tour-title">{tour.name}</div>
                         <div className="tour-booster">
-                          <RichText
-                            render={tour.cardFooter}
-                            htmlSerializer={(...defaultArgs: any) =>
+                          <PrismicRichText
+                            field={tour.cardFooter}
+                            components={(...defaultArgs: any) =>
                               shortCodeSerializerWithParentProps(
                                 defaultArgs,
                                 tour

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { CUSTOM_TYPES } from 'const/index';
+import { PopupDocument } from 'types.prismic';
+import getPopup from 'utils/prismicUtils/getPopup';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { SHIELD } from 'assets/SvgIcons';
-import { Client } from '../../config/prismic-config';
 
 const Popup = dynamic(() => import('../common/Popup'), { ssr: false });
 
@@ -61,18 +61,21 @@ type AlertProps = {
 
 const Alert: React.FC<AlertProps> = ({ popupUID }) => {
   const [active, setActive] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<PopupDocument | null>(null);
 
   useEffect(() => {
-    Client()
-      .getByUID(CUSTOM_TYPES.POPUP, popupUID, {
-        lang: 'en-us',
-      })
-      .then((res: any) => {
-        if (res.data) {
-          setData(res.data);
-        }
+    async function fetchPopup() {
+      const popup = await getPopup({
+        uid: popupUID,
       });
+      if (popup) {
+        setData(data);
+      }
+    }
+
+    if (popupUID) {
+      fetchPopup();
+    }
   }, [popupUID, setData]);
 
   return (

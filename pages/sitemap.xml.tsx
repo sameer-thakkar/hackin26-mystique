@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import { NextPageContext } from 'next';
-import Prismic from 'prismic-javascript';
+import { createClient } from 'prismicio';
 import builder from 'xmlbuilder';
-import { fetchAllMatchingDocs } from 'utils/prismicUtils';
+import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { CUSTOM_TYPES } from 'constants/index';
+import { CUSTOM_TYPES, DEFAULT_PRISMIC_LANG } from 'constants/index';
 
 const createImg = (doc: any) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {
@@ -92,62 +92,68 @@ export default class SitemapXml extends Component {
       },
     };
 
-    return fetchAllMatchingDocs({
-      query: [Prismic.Predicates.at('document.tags', [uid as string])],
-      params: {
+    try {
+      const prismicClient = createClient();
+      const documents = await prismicClient.getAllByTag(uid as string, {
         pageSize: 100,
-        page: 1,
-        lang: 'en-US',
-      },
-    })
-      .then((documents: any) => {
-        documents
-          .filter((doc: any) =>
-            [
-              CUSTOM_TYPES.MICROSITE,
-              CUSTOM_TYPES.CONTENT_PAGE,
-              CUSTOM_TYPES.GLOBAL_CITY,
-              CUSTOM_TYPES.GLOBAL_COUNTRY,
-              CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-              CUSTOM_TYPES.GLOBAL_COLLECTION,
-              CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-              CUSTOM_TYPES.SHOW_PAGE,
-              CUSTOM_TYPES.VENUE_PAGE,
-              CUSTOM_TYPES.NEWS_PAGE,
-            ].includes(doc.type)
-          )
-          .reduce(
-            (accum: Record<string, any>, item: Record<string, any>) => {
-              if (item.type === CUSTOM_TYPES.MICROSITE) {
-                return [[...accum[0], item], accum[1]];
-              }
-              return [accum[0], [...accum[1], item]];
-            },
-            [[], []]
-          )
-          .reduce(
-            (accum: Record<string, any>[], item: Record<string, any>[]) => [
-              ...accum,
-              ...item,
-            ]
-          )
-          .filter(
-            (doc: Record<string, any>) =>
-              doc.data.is_excluded_from_sitemap !== 'Yes'
-          )
-          .forEach((doc: any) => {
-            if (!doc?.data?.microbrand_url) {
-              xmlDoc.urlset.url.push(...createUrlArr(doc));
-            }
-          });
-        const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
-        const xmlStr = xml.end();
-        res?.setHeader('Content-Type', 'application/xml');
-        res?.write(xmlStr);
-        res?.end();
-      })
-      .catch(() => {
-        res?.end();
+        lang: DEFAULT_PRISMIC_LANG,
       });
+
+      sendLog({
+        message: {
+          msg: 'Prismic API call from Canary',
+          uid,
+          documentType: 'sitemap',
+          functionality: 'documents',
+        },
+      });
+
+      documents
+        .filter((doc: any) =>
+          [
+            CUSTOM_TYPES.MICROSITE,
+            CUSTOM_TYPES.CONTENT_PAGE,
+            CUSTOM_TYPES.GLOBAL_CITY,
+            CUSTOM_TYPES.GLOBAL_COUNTRY,
+            CUSTOM_TYPES.GLOBAL_HOMEPAGE,
+            CUSTOM_TYPES.GLOBAL_COLLECTION,
+            CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+            CUSTOM_TYPES.SHOW_PAGE,
+          ].includes(doc.type)
+        )
+        .reduce(
+          (accum: Record<string, any>, item: Record<string, any>) => {
+            if (item.type === CUSTOM_TYPES.MICROSITE) {
+              return [[...accum[0], item], accum[1]];
+            }
+            return [accum[0], [...accum[1], item]];
+          },
+          [[], []]
+        )
+        .reduce((accum: Record<string, any>[], item: Record<string, any>[]) => [
+          ...accum,
+          ...item,
+        ])
+        .filter(
+          (doc: Record<string, any>) =>
+            doc.data.is_excluded_from_sitemap !== 'Yes'
+        )
+        .forEach((doc: any) => {
+          if (!doc?.data?.microbrand_url) {
+            xmlDoc.urlset.url.push(...createUrlArr(doc));
+          }
+        });
+      const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
+      const xmlStr = xml.end();
+      res?.setHeader('Content-Type', 'application/xml');
+      res?.write(xmlStr);
+      res?.end();
+    } catch (error) {
+      sendLog({
+        err: error,
+        message: `getAllByTag in sitemap.xml failed`,
+      });
+      res?.end();
+    }
   }
 }

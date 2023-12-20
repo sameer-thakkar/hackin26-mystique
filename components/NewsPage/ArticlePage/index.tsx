@@ -60,9 +60,14 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     videoData,
   } = CMSContent;
 
-  const { refs, heading, authorName, bannerImage, tgid, breadcrumbs } = data;
-
-  const { contentFramework } = refs;
+  const {
+    content_framework_ref: contentFramework,
+    heading,
+    author_name: authorName,
+    banner_image: bannerImage,
+    tgid,
+    breadcrumbs,
+  } = data;
 
   const currentLanguage = getLangObject(lang).code;
 
@@ -99,7 +104,7 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               content={{
                 tgidMappingData,
                 featuredArticles,
-                showPageDocuments: showPageDocuments.results,
+                showPageDocuments,
                 mediaData,
                 tgid,
               }}
@@ -145,7 +150,7 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
           content={{
             trailerSectionData,
             CFData,
-            showPageDocuments: showPageDocuments.results,
+            showPageDocuments,
             tgid,
             videoData,
           }}
@@ -159,7 +164,7 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
             <CategorySlider
               cards={subCategoryData}
               isMobile={isMobile}
-              allShowPagesDocuments={showPageDocuments.results}
+              allShowPagesDocuments={showPageDocuments}
               currentLanguage={currentLanguage}
               categoryName={tgidMappingData?.primarySubCategoryName?.name}
               isNewsPage

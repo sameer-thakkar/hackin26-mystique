@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
+import { PopupDocument } from 'types.prismic';
+import getPopup from 'utils/prismicUtils/getPopup';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { PIN } from '../../assets/SvgIcons';
-import { Client } from '../../config/prismic-config';
-import { CUSTOM_TYPES } from '../../constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Button from '../UI/Button';
 import Chevron from '../UI/Chevron';
 import Rating from '../UI/Rating';
 import Tags from '../UI/Tags';
 
+// [NOT IN USE]
 const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });
 
 const CardWrapper = styled.div`
@@ -229,7 +229,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(cardOpen || false);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [popupData, setPopupData] = useState({});
+  const [popupData, setPopupData] = useState<PopupDocument | null>(null);
   const {
     name: tourName,
     data: {
@@ -255,16 +255,12 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
   const price = `${currency?.localSymbol}${listingPrice?.originalPrice}`;
 
   useEffect(() => {
+    async function fetchPopup() {
+      const popup = await getPopup({ uid: seatingChartPopup?.uid });
+      setPopupData(popup);
+    }
     if (seatingChartPopup?.uid) {
-      Client()
-        .getByUID(CUSTOM_TYPES.POPUP, seatingChartPopup.uid, {
-          lang: 'en-us',
-        })
-        .then((res: any) => {
-          if (res.data) {
-            setPopupData(res.data);
-          }
-        });
+      fetchPopup();
     }
   }, [seatingChartPopup, setPopupData]);
 
@@ -327,9 +323,9 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
               <Tags tags={tourTags} />
             </div>
             <div className="summary">
-              <RichText
-                render={tourSummary}
-                htmlSerializer={shortCodeSerializer}
+              <PrismicRichText
+                field={tourSummary}
+                components={shortCodeSerializer}
               />
             </div>
             <div className="location">

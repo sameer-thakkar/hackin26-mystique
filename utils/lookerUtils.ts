@@ -1,5 +1,12 @@
-import Prismic from 'prismic-javascript';
+import { createClient } from 'prismicio';
 import { AlternateLanguage, PrismicDocumentWithUID } from '@prismicio/types';
+import type {
+  CommonFooterDocument,
+  ContentFrameworkDocument,
+  ContentFrameworkDocumentDataBodySlice,
+  GlobalCollectionDocument,
+  MicrositeDocument,
+} from 'types.prismic';
 import {
   checkIfMicrosite,
   getBannerAndFooterSubtext,
@@ -8,12 +15,8 @@ import {
   isCollectionMB,
 } from 'utils';
 import { groupBy } from 'utils/arrayUtils';
-import {
-  categoryTourListParserV1,
-  getToursGlobalCollection,
-} from 'utils/dataParsers';
+import { getToursGlobalCollection } from 'utils/dataParsers';
 import { getHostName } from 'utils/helper';
-import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 import { convertUidToUrl, getShowpageBreadcrumbUid } from 'utils/urlUtils';
 import {
   CUSTOM_TYPES,
@@ -25,9 +28,35 @@ import {
   SLICE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import categoryTourListParserV1 from './parsers/categoryTourListParserV1';
+import { sendLog } from './logger';
 
 export const getDocType = (type: string): string | null => {
   return DOC_TYPES[type] || null;
+};
+
+export const fetchGlobalCollectionDocument = async (id: string) => {
+  try {
+    const prismicClient = createClient();
+    const globalCollectionDoc = (await prismicClient.getByID(
+      (id as string) ?? ''
+    )) as GlobalCollectionDocument;
+
+    sendLog({
+      message: {
+        uid: id,
+        documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
+        functionality: 'globalCollectionDoc',
+        msg: 'Prismic API call from Canary',
+      },
+    });
+    return globalCollectionDoc;
+  } catch (error) {
+    sendLog({
+      err: error,
+      message: `[fetchGlobalCollectionDocument] id - ${id}`,
+    });
+  }
 };
 
 export const filterByDocType = (
@@ -64,12 +93,14 @@ const contentFrameworkSliceCheck = async ({
 }: {
   docId: string;
   sliceType: string;
-}): Promise<boolean> => {
-  const contentFrameworkDoc = await fetchAllMatchingDocs({
-    query: [Prismic.Predicates.at(`document.id`, docId)],
-  });
-  const { body }: { body: Record<string, any>[] } =
-    contentFrameworkDoc?.[0]?.data || {};
+}) => {
+  const contentFrameworkDoc = await attachedContentFrameworkData(docId);
+
+  if (!contentFrameworkDoc) return false;
+
+  const { data } = contentFrameworkDoc ?? {};
+
+  const { body } = data ?? {};
   return body?.some((slice) => slice?.slice_type === sliceType);
 };
 
@@ -81,16 +112,14 @@ const getContentFrameworkSlice = async ({
   docId: string;
   sliceType: string;
   findAll?: boolean;
-}): Promise<Record<string, any> | undefined> => {
-  const contentFrameworkDoc = await fetchAllMatchingDocs({
-    query: [Prismic.Predicates.at(`document.id`, docId)],
-  });
-  const { body }: { body: Record<string, any>[] } =
-    contentFrameworkDoc?.[0]?.data ?? {};
+}) => {
+  const contentFrameworkDoc = await attachedContentFrameworkData(docId);
+  const { data } = contentFrameworkDoc ?? {};
+  const { body } = data ?? {};
   if (findAll) {
     return body?.filter((slice) => slice?.slice_type === sliceType);
   } else {
-    return body?.find((slice) => slice?.slice_type === sliceType);
+    return [body?.find((slice) => slice?.slice_type === sliceType)];
   }
 };
 
@@ -134,32 +163,45 @@ export const getProductCardsId = ({
 
 type TgetTgidsFromProductCards = {
   productCardsDocId: string;
-  data: Record<string, any>;
   lang: string;
   hostname: string;
 };
 
 export const getTgidsFromProductCards = async ({
   productCardsDocId,
-  data,
   lang,
   hostname,
-}: TgetTgidsFromProductCards): Promise<string[]> => {
-  const productCardDocs = await fetchAllMatchingDocs({
-    query: [Prismic.Predicates.at(`document.id`, productCardsDocId)],
-  });
-  const { data: productCardDocData } = productCardDocs?.[0] || {};
-  const parsedData = await categoryTourListParserV1({
-    productCard: productCardDocData,
-    sliceObj: data?.body?.[0],
-    hostname,
-    lang,
-  });
-  let tgids: any = [];
-  tgids = tgids.concat(
-    parsedData?.orderedTours?.map((tour: any) => tour?.tgid.toString())
-  );
-  return tgids;
+}: TgetTgidsFromProductCards) => {
+  try {
+    const prismicClient = createClient({});
+    const productCardData =
+      (await prismicClient.getByID(productCardsDocId, {
+        lang,
+      })) ?? {};
+    sendLog({
+      message: {
+        uid: productCardsDocId,
+        documentType: CUSTOM_TYPES.PRODUCT_CARDS,
+        functionality: 'productCardData',
+        msg: 'Prismic API call from Canary',
+      },
+    });
+    const parsedData = await categoryTourListParserV1({
+      productCardDocument: productCardData,
+      hostname,
+      lang,
+    });
+    let tgids: string[] = [];
+    tgids = tgids.concat(
+      parsedData?.orderedTours?.map((tour: any) => tour?.tgid.toString())
+    );
+    return tgids;
+  } catch (error) {
+    sendLog({
+      message: `getProductCardData for Looker - productCardsDocId ${productCardsDocId}`,
+      err: error,
+    });
+  }
 };
 
 export const getTgids = async ({
@@ -184,7 +226,6 @@ export const getTgids = async ({
         tgids = tgids.concat(
           (await getTgidsFromProductCards({
             productCardsDocId: getProductCardsId(doc) ?? '',
-            data,
             lang,
             hostname,
           })) || []
@@ -311,12 +352,25 @@ export const getFooterDetails = async ({
 
   if (hasPrimaryFooter) {
     const { id: footerDocId } = footerDocRef || {};
-    const footerDocs = await fetchAllMatchingDocs({
-      query: [Prismic.Predicates.at(`document.id`, footerDocId)],
+
+    const prismicClient = createClient();
+    const footerDocs = (await prismicClient.getByID(
+      footerDocId
+    )) as CommonFooterDocument;
+
+    sendLog({
+      message: {
+        uid: footerDocId,
+        documentType: CUSTOM_TYPES.FOOTER,
+        functionality: 'footerDocs',
+        msg: 'Prismic API call from Canary',
+      },
     });
 
-    const { data: footerDocData } = footerDocs?.[0] || {};
-    const { footerDocDataAttraction, disclaimer_text } = footerDocData || {};
+    const { data: footerDocData } = footerDocs || {};
+
+    const { attraction: footerDocDataAttraction, disclaimer_text } =
+      footerDocData || {};
 
     return {
       hasPrimaryFooter,
@@ -485,10 +539,12 @@ export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 
     case type === CUSTOM_TYPES.GLOBAL_EXPERIENCE:
       const { collection, country, city } = data || {};
-      const globalCollectionDoc = await fetchAllMatchingDocs({
-        query: [Prismic.Predicates.at(`document.id`, collection?.id)],
-      });
-      const { country_name, city_name } = globalCollectionDoc?.[0]?.data || {};
+
+      const globalCollectionDoc = await fetchGlobalCollectionDocument(
+        (collection?.id as string) ?? ''
+      );
+
+      const { country_name, city_name } = globalCollectionDoc?.data || {};
 
       breadcrumbsDetails = {
         level_1: {
@@ -572,11 +628,11 @@ export const getHeadings = async ({
       collection_name && mainHeadings.push(collection_name);
       break;
     case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
-      const globalCollectionDoc = await fetchAllMatchingDocs({
-        query: [Prismic.Predicates.at(`document.id`, data?.collection?.id)],
-      });
+      const globalCollectionDoc = await fetchGlobalCollectionDocument(
+        data?.collection?.id ?? ''
+      );
       const { collection_name: globalCollectionName } =
-        globalCollectionDoc?.[0]?.data || {};
+        globalCollectionDoc?.data || {};
       globalCollectionName &&
         mainHeadings.push(`${globalCollectionName} ${strings.TICKETS}`);
       break;
@@ -606,8 +662,10 @@ export const getHeadings = async ({
   };
 };
 
-export const getSlicesFromContentFramework = (slices: []) => {
-  return slices.reduce(
+export const getSlicesFromContentFramework = (
+  slices: ContentFrameworkDocumentDataBodySlice[] | undefined
+) => {
+  return slices?.reduce(
     (acc: Record<string, number>, curr: { slice_type: string }) => {
       const sliceType = curr?.slice_type;
       const currentSliceCount = acc[sliceType];
@@ -629,38 +687,47 @@ export const getSlicesFromContentFramework = (slices: []) => {
 export const attachedContentFrameworkData = async (
   contentFrameworkId: string
 ) => {
-  return contentFrameworkId
-    ? await fetchAllMatchingDocs({
-        query: [Prismic.Predicates.at(`document.id`, contentFrameworkId)],
-      })
-    : null;
+  try {
+    const prismicClient = createClient();
+    const contentFrameworkDoc = (await prismicClient.getByID(
+      contentFrameworkId
+    )) as ContentFrameworkDocument;
+    sendLog({
+      message: {
+        uid: contentFrameworkId,
+        documentType: CUSTOM_TYPES.CONTENT_FRAMEWORK,
+        functionality: 'contentFrameworkDoc',
+        msg: 'Prismic API call from Canary',
+      },
+    });
+    return contentFrameworkDoc;
+  } catch (error) {
+    sendLog({
+      err: error,
+      message: `[attachedContentFrameworkData]: contentFrameworkId - ${contentFrameworkId} `,
+    });
+    return null;
+  }
 };
 
 export const baseLangMicrositeDataForContentPage = async (
   type: string,
-  baseLangData: [PrismicDocumentWithUID]
-): Promise<[PrismicDocumentWithUID]> => {
-  return type === CUSTOM_TYPES.CONTENT_PAGE &&
-    baseLangData[0]?.data?.microsite_document_ref?.id
-    ? await fetchAllMatchingDocs({
-        query: [
-          Prismic.Predicates.at(
-            `document.id`,
-            baseLangData[0]?.data?.microsite_document_ref?.id
-          ),
-        ],
-      })
-    : [];
+  baseLangData: PrismicDocumentWithUID<Record<string, any>, string, string>
+): Promise<MicrositeDocument | any> => {
+  const micrositeId = baseLangData?.data?.microsite_document_ref?.id ?? '';
+  const prismicClient = createClient();
+  return type === CUSTOM_TYPES.CONTENT_PAGE && micrositeId
+    ? ((await prismicClient.getByID(micrositeId)) as MicrositeDocument)
+    : {};
 };
 
 export const fetchBaseLangData = async (
   language: string,
   baseLangDoc: (PrismicDocumentWithUID | AlternateLanguage) | null,
   doc: PrismicDocumentWithUID
-): Promise<[PrismicDocumentWithUID]> => {
+) => {
+  const prismicClient = createClient();
   return language !== 'EN'
-    ? await fetchAllMatchingDocs({
-        query: [Prismic.Predicates.at(`document.id`, baseLangDoc!.id)],
-      })
-    : [doc];
+    ? ((await prismicClient.getByID(baseLangDoc!.id)) as PrismicDocumentWithUID)
+    : doc;
 };

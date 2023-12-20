@@ -85,7 +85,7 @@ const CTA = ({
       // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       setBlobUrl(blobUrl);
     }
-    fetchImageBlob(url);
+    if (isDownload) fetchImageBlob(url);
   }, [url]);
 
   const copyEmbedCode = () => {

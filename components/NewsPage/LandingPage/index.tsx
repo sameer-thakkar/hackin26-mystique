@@ -35,8 +35,6 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
   const { heading, breadcrumbs } = data;
   const currentLanguage = getLangObject(lang).code;
   const { HEADING, SUBHEADING } = strings.NEWS_PAGE.MAILER;
-  // const checkIfLTTMb = checkIfLTTMB(uid);
-  // const checkIfBroadwayMb = checkIfBroadwayMB(uid);
 
   return (
     <>
@@ -58,7 +56,7 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
           content={{
             trailerSectionData,
             CFData,
-            showPageDocuments: showPageDocuments.results,
+            showPageDocuments,
             videoData,
           }}
           isMobile={isMobile}
@@ -89,7 +87,7 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
           <CategorySlider
             cards={subCategoryData}
             isMobile={isMobile}
-            allShowPagesDocuments={showPageDocuments.results}
+            allShowPagesDocuments={showPageDocuments}
             currentLanguage={currentLanguage}
             categoryName={tgidMappingData?.primarySubCategoryName?.name}
             isNewsPage

@@ -314,9 +314,7 @@ export const SingleCardContainer = styled.div`
     .button-wrapper {
       width: 100%;
     }
-    
   }
-
 
   ${Name}, ${Description}, ${PriceWrapper} {
     padding: 0;

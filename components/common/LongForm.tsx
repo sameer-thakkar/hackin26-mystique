@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SliceZone } from '@prismicio/react';
+import {
+  catOrSubCatPageSliceComponents,
+  sliceComponents,
+} from 'components/slices/sliceManager';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { FULL_WIDTH_SLICES, SLICE_TYPES } from 'constants/index';
-import sliceHandler from '../Slices';
-import LazyComponent from './LazyComponent';
+import { SLICE_TYPES } from 'constants/index';
 
 export const StyledLongForm = styled.div<{
   $isRevampedDesign?: boolean;
@@ -68,7 +71,7 @@ export const StyledLongForm = styled.div<{
   .page_tabs + .rich_text .rich-text > p {
     margin-top: 1rem;
   }
-  
+
   & > p > a {
     text-decoration: none;
     color: ${COLORS.BRAND.PURPS};
@@ -88,7 +91,6 @@ export const StyledLongForm = styled.div<{
       padding: 3rem 0;
       background: ${COLORS.BACKGROUND.FLOATING_PURPS};
     `}
-  
 
   @media (max-width: 768px) {
     ${({ isVenuePage, $isNewsPage }) => {
@@ -145,19 +147,23 @@ export const StyledLongForm = styled.div<{
       `
       padding: 2rem 0;
     `}
-  
   }
 `;
 
-const LongForm = (longFormProps: {
+type TLongFormProps = {
   content: Array<any>;
   isVenuePage?: boolean;
   isContentPage?: boolean;
+  isCatAndSubCatPage?: boolean;
+  isRevampedDesign?: boolean;
   [k: string]: any;
-}) => {
-  const { content, isContentPage, ...props } = longFormProps;
+};
+
+const LongForm = (longFormProps: TLongFormProps) => {
+  const { content, isContentPage, isCatAndSubCatPage, ...props } =
+    longFormProps;
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
-  const faqSectionExists = content.some(
+  const faqSectionExists = content?.some(
     (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.ACCORDION
   );
 
@@ -169,23 +175,16 @@ const LongForm = (longFormProps: {
       isVenuePage={isVenuePage}
       $isNewsPage={isNewsPage}
     >
-      {content.map((slice: any, index: number) => {
-        const shouldLazyLoad = isContentPage ? index > 2 : true;
-        return (
-          <div
-            key={`long-form-${slice?.slice_type}-${index}`}
-            className={`${
-              !FULL_WIDTH_SLICES.includes(slice.slice_type)
-                ? 'slice-wrapper'
-                : ''
-            } slice-block ${slice.slice_type}`}
-          >
-            <LazyComponent target={shouldLazyLoad ? 'USER' : 'NONE'}>
-              {sliceHandler(slice, { ...props, sliceIndex: index })}
-            </LazyComponent>
-          </div>
-        );
-      })}
+      <SliceZone
+        slices={content}
+        components={
+          isCatAndSubCatPage
+            ? catOrSubCatPageSliceComponents()
+            : sliceComponents()
+        }
+        context={{ ...props, isContentPage }}
+        defaultComponent={() => null}
+      />
     </StyledLongForm>
   );
 };

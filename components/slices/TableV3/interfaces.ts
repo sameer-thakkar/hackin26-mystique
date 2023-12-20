@@ -1,6 +1,6 @@
 export interface ITableV3Props {
   title: string;
-  slices: Array<any>;
+  childSlices: Array<any>;
   displaySerialNum: boolean;
   serialNumHeading: string;
 }

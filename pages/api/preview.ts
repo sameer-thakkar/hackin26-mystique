@@ -1,33 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Prismic from 'prismic-javascript';
-import { apiEndpoint, linkResolver } from '../../config/prismic-config';
+import * as prismicNext from '@prismicio/next';
+import { createClient } from '../../prismicio';
 
-export default function handle(req: NextApiRequest, res: NextApiResponse) {
-  const token = req?.query?.token;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const client = createClient({ req });
 
-  Prismic.getApi(apiEndpoint, { req })
-    .then(async (api) => {
-      if (token) {
-        const redirectUri = await api.previewSession(
-          String(token),
-          linkResolver,
-          '/'
-        );
-        const masterRef = api.refs.find((ref) => {
-          return ref.isMasterRef === true;
-        });
-        const ref = masterRef?.ref;
+  prismicNext.setPreviewData({ req, res });
 
-        return {
-          redirectUri,
-          ref,
-        };
-      }
-    })
-    .then(({ redirectUri, ref }: any) => {
-      res.writeHead(302, {
-        Location: `${redirectUri}&ref=${ref}`,
-      });
-      res.end();
-    });
+  await prismicNext.redirectToPreviewURL({ req, res, client });
 }

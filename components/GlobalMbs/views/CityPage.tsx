@@ -1,5 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { asText } from '@prismicio/helpers';
 import Conditional from 'components/common/Conditional';
 import Banner from 'components/GlobalMbs/Banners/Banner/index';
 import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
@@ -26,7 +25,7 @@ const CityPage = (props: any) => {
       })
     ) || [];
 
-  const bannerSubText = subText ? RichText?.asText(subText) : '';
+  const bannerSubText = asText(subText) || '';
 
   const cityName = cityCollections?.[0]?.data?.city_name;
   const collectionTabTitle = cityName ? `Themeparks in ${cityName}` : title;

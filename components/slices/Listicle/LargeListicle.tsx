@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import Tags from 'UI/Tags';
@@ -231,9 +231,9 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           </TagWrapper>
         </ImageWrapper>
       ) : null}
-      {RichText.asText(summary).length > 0 ? (
+      {asText(summary as []).length > 0 ? (
         <Paragraph>
-          <RichText render={summary} htmlSerializer={shortCodeSerializer} />
+          <PrismicRichText field={summary} components={shortCodeSerializer} />
         </Paragraph>
       ) : null}
       {infoItems.length > 0 ? (
@@ -243,9 +243,9 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
               return (
                 <div key={index}>
                   <InfoTitle>{infoTitle}</InfoTitle>
-                  <RichText
-                    render={infoDescription}
-                    htmlSerializer={shortCodeSerializer}
+                  <PrismicRichText
+                    field={infoDescription}
+                    components={shortCodeSerializer}
                   />
                 </div>
               );
@@ -271,14 +271,14 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           ) : null}
         </InfoGrid>
       ) : null}
-      {RichText.asText(why_summary).length > 0 ? (
+      {asText(why_summary as []).length > 0 ? (
         <WTTDTSection>
           <div>{why_summary_heading || strings.WHY_TAKE_THIS_DAY_TRIP}</div>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
-            <RichText
-              render={why_summary}
-              htmlSerializer={shortCodeSerializer}
+            <PrismicRichText
+              field={why_summary}
+              components={shortCodeSerializer}
             />
           </WTTDTSectionRichText>
           <WTTDTToggle

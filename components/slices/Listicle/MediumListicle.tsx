@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import Button from 'UI/Button';
 import Chevron from 'UI/Chevron';
@@ -299,7 +298,10 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
               ) : null}
             </div>
             <div className="summary">
-              <RichText render={summary} htmlSerializer={shortCodeSerializer} />
+              <PrismicRichText
+                field={summary}
+                components={shortCodeSerializer}
+              />
             </div>
             {duration ? (
               <DurationInfo>

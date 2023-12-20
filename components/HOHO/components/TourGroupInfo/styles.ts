@@ -62,7 +62,6 @@ export const TourInfo = styled.div`
   gap: 0.75rem;
   align-items: flex-start;
 
-
   img {
     border-radius: 8px;
     object-fit: cover;
@@ -82,13 +81,13 @@ export const TourInfo = styled.div`
 
     ${TourTags} {
       margin-top: 0;
-      .tour-tag{
+      .tour-tag {
         margin-right: 0.25rem;
       }
-      .tour-tag:not(:last-child):after{
-        content:'';
-        height:3px;
-        width:3px;
+      .tour-tag:not(:last-child):after {
+        content: '';
+        height: 3px;
+        width: 3px;
         margin-left: 0.25rem;
         border-radius: 50%;
         background: ${COLORS.GRAY.G5};
@@ -115,7 +114,7 @@ export const TourInfo = styled.div`
   .details-container {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;    
+    gap: 0.75rem;
   }
 
   .pills-container {
@@ -156,7 +155,6 @@ export const TourInfo = styled.div`
       ${expandFontToken(FONTS.HEADING_REGULAR)}
     }
   }
- 
 `;
 export const DetailsPill = styled.div<{ isClickable?: boolean }>`
   display: inline-flex;

@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -21,7 +20,9 @@ import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
+import { getDomainFromUid } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
@@ -501,16 +502,16 @@ const TicketCard = (props: any) => {
 
   const cardTitle = title || tourTitle;
   let url = host || window.location.host;
-  const isDev = url.includes('localhost');
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
+  const currentHost = getDomainFromUid(uid);
+  const hostName = currentHost?.includes('stage')
     ? currentHost.replace('stage-', '')
     : currentHost;
-  let hostSplit = hostName.split('.');
-  hostSplit.shift();
-  const bookingUrl = hostSplit.join('.');
+  let hostSplit = hostName?.split('.');
+  hostSplit?.shift();
+  const bookingUrl = hostSplit?.join('.') ?? '';
+
   const showScratchPrice = isFetched && isScratchPriceEnabled;
-  const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
+  const finalHighlights = asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : tourHighlights;
   let mobileFallbackShortSummary =
@@ -543,7 +544,7 @@ const TicketCard = (props: any) => {
   if (isFetched && !listingPrice) return null;
   const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
-  const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
+  const hasV1Booster = booster && asText(booster as []).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
@@ -722,7 +723,10 @@ const TicketCard = (props: any) => {
             }
           >
             <ShortSummary>
-              <RichText render={finalShortSummary} />
+              <PrismicRichText
+                field={finalShortSummary}
+                components={shortCodeSerializer}
+              />
             </ShortSummary>
           </Conditional>
           <Descriptors

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -62,9 +61,9 @@ export default class Table extends Component<any, any> {
                 <tr key={index}>
                   {column.map((item: any, index: number) => (
                     <td key={index}>
-                      <RichText
-                        render={item.column}
-                        htmlSerializer={shortCodeSerializer}
+                      <PrismicRichText
+                        field={item.column}
+                        components={shortCodeSerializer}
                       />
                     </td>
                   ))}

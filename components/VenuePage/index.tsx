@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import { asText } from '@prismicio/helpers';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import LongForm from 'components/common/LongForm';
@@ -43,8 +42,8 @@ import {
 import { Banner, VenuePageContainer } from './styles';
 import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
 
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const VenuePage = (props: IVenuePageProps) => {
@@ -90,10 +89,12 @@ const VenuePage = (props: IVenuePageProps) => {
     theatreInfo,
     amenitiesDropdown,
     descriptionSlices,
-    refs,
     taggedCategoryName,
     taggedSubCategoryName,
     mbType,
+    header_ref: commonHeader,
+    footer_ref: commonFooter,
+    secondary_footer_ref: secondaryFooter,
   } = CMSContent;
 
   const { slots }: SimplifiedSlotsData = inventorySlotData || {};
@@ -130,7 +131,6 @@ const VenuePage = (props: IVenuePageProps) => {
 
   const { SHOW_MORE, SHOW_LESS } = strings;
 
-  const { commonHeader, commonFooter, secondaryFooter } = refs;
   const currency = useRecoilValue(currencyAtom);
 
   const {
@@ -172,11 +172,8 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   };
 
-  const {
-    nowPlayingShows,
-    upcomingShows,
-    pastShows,
-  } = getShowsBasedOnTimestamp(availableShowsData);
+  const { nowPlayingShows, upcomingShows, pastShows } =
+    getShowsBasedOnTimestamp(availableShowsData);
 
   let tgidForFirstShow;
   switch (true) {
@@ -273,7 +270,7 @@ const VenuePage = (props: IVenuePageProps) => {
       name: item.heading,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: RichText?.asText(item.content),
+        text: asText(item.content),
       },
     };
   });

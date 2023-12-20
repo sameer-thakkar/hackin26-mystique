@@ -42,11 +42,7 @@ const GlobalMB = (props: any) => {
     alternate_languages,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
-    data: CMSContent,
-    commonHeader,
-    commonFooter,
-    contentFramework,
-    globalCollection,
+    data: CMSData,
     isDev,
     serverRequestStartTimestamp,
     type,
@@ -60,6 +56,22 @@ const GlobalMB = (props: any) => {
     ticketPages,
     domainConfig,
   } = props || {};
+
+  const {
+    common_header: commonHeader,
+    common_footer: commonFooter,
+    content_framework: contentFramework,
+    collection: globalCollection,
+    supply,
+    headout_category_id: categoryId,
+    headout_collection_id: collectionId,
+    headout_tgid: tgid,
+    official_website: officialWebsite,
+    country_name: countryName,
+    city_name: cityName,
+    collection_name: collectionName,
+    microbrand_url: microbrandUrl,
+  } = CMSData ?? {};
 
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
@@ -95,18 +107,6 @@ const GlobalMB = (props: any) => {
   } = footer || {};
 
   const {
-    supply,
-    headout_category_id: categoryId,
-    headout_collection_id: collectionId,
-    headout_tgid: tgid,
-    official_website: officialWebsite,
-    country_name: countryName,
-    city_name: cityName,
-    collection_name: collectionName,
-    microbrand_url: microbrandUrl,
-  } = CMSContent || {};
-
-  const {
     faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
@@ -118,7 +118,7 @@ const GlobalMB = (props: any) => {
 
   const cityPageProps = {
     ...commonProps,
-    ...CMSContent,
+    ...CMSData,
     cityCollections: cityCollectionsData,
     ticketPages: ticketPages?.results || [],
   };
@@ -148,14 +148,14 @@ const GlobalMB = (props: any) => {
 
   const homePageProps = {
     ...commonProps,
-    ...CMSContent,
+    ...CMSData,
     collections: collectionsData,
     cityCollections: cityCollectionsData,
   };
 
   const collectionPageProps = {
     ...commonProps,
-    ...CMSContent,
+    ...CMSData,
     tickets,
     ticketsPage,
     totalCityCollections: cityCollectionsData?.length,
@@ -165,7 +165,7 @@ const GlobalMB = (props: any) => {
     body: cityPageSlices,
     images: collectionPageBanner,
     banner_images: homePageBanner,
-  } = CMSContent || {};
+  } = CMSData || {};
   const homePageBannerImages = homePageBanner?.reduce(
     (acc: any, image: any) => {
       const { image_url, alt_text } = image || {};
@@ -344,7 +344,7 @@ const GlobalMB = (props: any) => {
   const { uid: parentUid } = globalCollection || {};
 
   const countryPageProps = {
-    ...CMSContent,
+    ...CMSData,
     collections: collectionsData,
     cityCollections: cityCollectionsData,
     ticketPages: ticketPages?.results || [],
@@ -363,7 +363,7 @@ const GlobalMB = (props: any) => {
     case 'global_experience':
       pageMarkup = (
         <ExperiencePage
-          {...CMSContent}
+          {...CMSData}
           {...commonProps}
           {...globalExperienceProps}
         />
@@ -381,7 +381,7 @@ const GlobalMB = (props: any) => {
         <PopulateMeta
           {...{
             prismicData: {
-              ...CMSContent,
+              ...CMSData,
               ...header,
               canonical_link: selfCanonicalLink,
             },

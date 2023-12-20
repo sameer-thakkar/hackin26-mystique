@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import { PrismicRichText } from '@prismicio/react';
 import { greyScheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
 import {
@@ -214,9 +213,9 @@ const DetailedProductCard = (props: any) => {
             <p>{content}</p>
           </Conditional>
           <Conditional if={!hasCategoryTourList}>
-            <RichText
-              render={content}
-              htmlSerializer={(...defaultArgs: any) =>
+            <PrismicRichText
+              field={content}
+              components={(...defaultArgs: any) =>
                 shortCodeSerializerWithParentProps(defaultArgs, activeTour)
               }
             />
@@ -369,9 +368,9 @@ const DetailedProductCard = (props: any) => {
 
             <Conditional if={description && description.length}>
               <div className="content-block tour-description">
-                <RichText
-                  render={description}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={description}
+                  components={shortCodeSerializer}
                 />
               </div>
             </Conditional>
@@ -379,13 +378,19 @@ const DetailedProductCard = (props: any) => {
           <Conditional if={isListicle}>
             {listicleShowSummary && (
               <div className="show-summary-wrapper">
-                <RichText render={[listicleShowSummary.text]} />
+                <PrismicRichText
+                  field={[listicleShowSummary.text]}
+                  components={shortCodeSerializer}
+                />
               </div>
             )}
             <div>
               <h3>{strings.WHY_WATCH}</h3>
               {listicleWhyWatch && (
-                <RichText render={[listicleWhyWatch.text]} />
+                <PrismicRichText
+                  field={[listicleWhyWatch.text]}
+                  components={shortCodeSerializer}
+                />
               )}
             </div>
           </Conditional>
@@ -463,9 +468,9 @@ const DetailedProductCard = (props: any) => {
             </Conditional>
             <Conditional if={description && description.length}>
               <div className="content-block tour-description">
-                <RichText
-                  render={description}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={description}
+                  components={shortCodeSerializer}
                 />
               </div>
             </Conditional>
@@ -473,13 +478,19 @@ const DetailedProductCard = (props: any) => {
           <Conditional if={isListicle}>
             {listicleShowSummary && (
               <div className="show-summary-wrapper">
-                <RichText render={[listicleShowSummary.text]} />
+                <PrismicRichText
+                  field={[listicleShowSummary.text]}
+                  components={shortCodeSerializer}
+                />
               </div>
             )}
             <div>
               <h3>{strings.WHY_WATCH}</h3>
               {listicleWhyWatch && (
-                <RichText render={[listicleWhyWatch.text]} />
+                <PrismicRichText
+                  field={[listicleWhyWatch.text]}
+                  components={shortCodeSerializer}
+                />
               )}
             </div>
           </Conditional>

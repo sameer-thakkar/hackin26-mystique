@@ -116,7 +116,7 @@ export const SUPPORTED_LANGUAGES = [
   'ar',
 ] as const;
 
-export type LanguagesUnion = typeof SUPPORTED_LANGUAGES[number];
+export type LanguagesUnion = (typeof SUPPORTED_LANGUAGES)[number];
 
 export const SUPPORTED_LOCALE_MAP = {
   en: 'en-us',
@@ -135,7 +135,7 @@ export const SUPPORTED_LOCALE_MAP = {
   ar: 'ar-ae',
 } as const;
 
-export type TLANGUAGELOCALE = typeof SUPPORTED_LOCALE_MAP[LanguagesUnion];
+export type TLANGUAGELOCALE = (typeof SUPPORTED_LOCALE_MAP)[LanguagesUnion];
 
 type TLanguageMap = {
   displayName: string;
@@ -265,6 +265,8 @@ export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
   };
 };
 
+export const DEFAULT_PRISMIC_LANG = LANGUAGE_MAP['en'].locale;
+
 export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'en-us': 'en',
   'it-it': 'it',
@@ -353,7 +355,7 @@ export const TEMPLATES = {
 };
 
 export type CUSTOM_TYPE_KEYS = keyof typeof CUSTOM_TYPES;
-export type CUSTOM_TYPE_VALUES = typeof CUSTOM_TYPES[CUSTOM_TYPE_KEYS];
+export type CUSTOM_TYPE_VALUES = (typeof CUSTOM_TYPES)[CUSTOM_TYPE_KEYS];
 
 export const DOC_TYPES: Record<string, string> = {
   microsite: 'Microsite',
@@ -585,7 +587,7 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'show_covid19_alert',
 ].map((prop) => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
-export const MICROSITE_STRING_KEYS: string[] = [
+export const MICROSITE_STRING_KEYS = [
   'title',
   'description',
   'gtm_id',
@@ -608,7 +610,7 @@ export const DESCRIPTORS = {
   FREE_CANCELLATION: 'FREE_CANCELLATION',
 };
 
-export const MICROSITE_OBJECT_KEYS: string[] = [
+export const MICROSITE_OBJECT_KEYS = [
   'header_scripts',
   'image',
   'other_meta_tags',
@@ -1136,7 +1138,9 @@ export const SLICE_TYPES = {
   LISTICLE_SECTION_V2_START: 'listicle_section_v2',
   SHOULDER_PAGE_TICKET_CARD: 'ticket_card_shoulder_page',
   BREADCRUMBS: 'breadcrumbs',
+  // V1 product card slice
   TOUR_LIST_CATEGORY_V1: 'tour_list_category_v1',
+  // V2 product card slice
   TOUR_LIST_CATEGORY: 'tour_list_category',
   CONTENT_TYPE_TAG: 'content_type_tag',
   BANNER: 'banner',
@@ -1725,13 +1729,11 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/culinary.svg',
   DOLLAR:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/dollar.svg',
-  FnB:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/food-drink.svg',
+  FnB: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/food-drink.svg',
   GLOBE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/globe.svg',
   MAP: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/map.svg',
-  PAID:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/paid.svg',
+  PAID: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/paid.svg',
   PEACE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/peace.svg',
   ROUND_TRIP:
@@ -1740,18 +1742,15 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/route.svg',
   SIGHTSEEING:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sightseeing.svg',
-  STL:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/skip-the-line.svg',
+  STL: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/skip-the-line.svg',
   SPARKS:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sparks.svg',
-  TICK:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/tick.svg',
+  TICK: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/tick.svg',
   TICKET:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/ticket.svg',
   TRANSLATE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/translate.svg',
-  WIFI:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/wifi.svg',
+  WIFI: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/wifi.svg',
   SPARKS_NEW:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sparks-new.svg',
 
@@ -1773,8 +1772,7 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-map-pin.svg',
   PAINT:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-paint.svg',
-  PAN:
-    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-pan.svg',
+  PAN: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-pan.svg',
   PANAROMA:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-panaroma.svg',
   CHARGING:
@@ -1864,7 +1862,8 @@ export const NEWS_PAGE_SECTIONS = {
 export const MONTH_ON_MONTH_PAGE_SECTIONS = {
   CALENDARY_MONTH: 'Calendar Month',
 };
-export const TRAILER_BG_ILLUSTRATION = 'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;
+export const TRAILER_BG_ILLUSTRATION =
+  'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png' as const;
 
 export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 

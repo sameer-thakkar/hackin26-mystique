@@ -1,12 +1,9 @@
-import type {
-  NumberField,
-  PrismicDocumentWithUID,
-  SelectField,
-} from '@prismicio/types';
+import type { KeyTextField, NumberField, SelectField } from '@prismicio/types';
 import dayjs, { Dayjs } from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import { Simplify } from 'types.prismic';
 import parse from 'url-parse';
 import {
   getHeadoutLanguagecode,
@@ -52,7 +49,8 @@ export const isMobileDevice = () => {
 };
 
 export const validateEmail = (email: string) => {
-  let regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let regEx =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regEx.test(String(email).toLowerCase());
 };
 
@@ -205,7 +203,9 @@ export const docCookies = {
 
 export const getUID = (url: string) => {
   const { hostname, pathname } = parse(url, true);
-  const uid = `${hostname}${withoutTrailingSlash(pathname).replace(
+  // remove lang path
+  let modifiedPathname = pathname.replace(/^\/\w{2}(?=\/|$)/, '');
+  const uid = `${hostname}${withoutTrailingSlash(modifiedPathname).replace(
     /\//g,
     '.'
   )}`;
@@ -278,6 +278,10 @@ const autoClose = (
       sliceTracker.push(thisSliceType);
     }
   });
+  if (sliceTracker.peek()) {
+    allSlices.push(genClosingSlice(sliceTracker.peek()));
+    sliceTracker.pop();
+  }
   return allSlices;
 };
 
@@ -346,7 +350,7 @@ export const stringIdfy = (string: string) => {
   return string?.trim().replace(/\s/g, '-').toLowerCase();
 };
 
-export const csvTgidToArray = (csv: string) => {
+export const csvTgidToArray = (csv: string | KeyTextField | undefined) => {
   if (!csv) csv = '';
   return csv
     .split(',')
@@ -615,6 +619,7 @@ export const checkIfCategoryHeaderExists = ({
     MB_CATEGORISATION.MB_TYPE.A2_CATEGORY,
     MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY,
   ];
+
   return (
     isMBDesign({
       currentDesign: mbDesign || '',
@@ -647,11 +652,12 @@ export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
 };
 
-export const checkIfCatOrSubCatPage = async (
-  doc: PrismicDocumentWithUID,
+export const checkIfCatOrSubCatPage = async <T>(
+  doc: Simplify<T>,
   baseLangCategorisationMetadata?: TCategorisationMetadata
-) => {
-  const { type, data, lang, uid } = doc;
+): Promise<boolean> => {
+  // @ts-ignore
+  const { type, data, lang, uid } = doc ?? {};
 
   if (type !== CUSTOM_TYPES.MICROSITE) return false;
 
@@ -776,9 +782,8 @@ export const getBannerDescriptors = ({
   let descriptorData = [];
 
   if (isAirportTransfersMB) {
-    descriptorData = SUB_CATEGORY_BANNER()[
-      AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID
-    ];
+    descriptorData =
+      SUB_CATEGORY_BANNER()[AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID];
   } else if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
     descriptorData = SUB_CATEGORY_BANNER()[id];
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {

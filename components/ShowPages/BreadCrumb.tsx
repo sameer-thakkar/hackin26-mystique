@@ -47,7 +47,7 @@ const StyledChevron = styled.div`
   }
 `;
 
-const Breadcrumb = ({ links }: any) => {
+const Breadcrumb = ({ links }: { links: any[] }) => {
   return (
     <BreadcrumbContainer>
       {links.map((link: any, index: number) => {

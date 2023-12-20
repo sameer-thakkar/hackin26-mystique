@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
 import Button from 'components/UI/Button';
@@ -93,9 +92,9 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({
-      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
-      isMobile,
-    }) => (isMobile ? '16px' : '')};
+        // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+        isMobile,
+      }) => (isMobile ? '16px' : '')};
     grid-column-gap: 24px;
     ${({
       // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
@@ -510,13 +509,8 @@ const TourComparisonTable = (props: any) => {
   const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
-  const {
-    uid,
-    nakedDomain,
-    biLink,
-    lang,
-    redirectToHeadoutBookingFlow,
-  } = useContext(MBContext);
+  const { uid, nakedDomain, biLink, lang, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const url = envContext.windowUrl;
   const currentHost = !envContext.isDev ? url : parse(uid || '', true).pathname;
   const hostName = currentHost.includes('stage')
@@ -525,7 +519,7 @@ const TourComparisonTable = (props: any) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours } = toursContext;
+  const { allTours = [] } = toursContext || {};
   const getContentNormalizedTours = (tgidArray: any) => {
     let toursArr = tgidArray.map((tgid: any) => allTours[tgid]);
     toursArr = toursArr.reduce((acc: any, tour: any, index: number) => {
@@ -616,9 +610,9 @@ const TourComparisonTable = (props: any) => {
                     <div className="tour-chin">
                       <div className="tour-title">{tour.title}</div>
                       <div className="tour-booster">
-                        <RichText
-                          render={tour.cardFooter}
-                          htmlSerializer={(...defaultArgs: any) =>
+                        <PrismicRichText
+                          field={tour.cardFooter}
+                          components={(...defaultArgs: any) =>
                             shortCodeSerializerWithParentProps(
                               defaultArgs,
                               tour
@@ -714,11 +708,9 @@ const TourComparisonTable = (props: any) => {
                             {tour.contentBlocks[label.labelId]?.label}
                           </div>
                           <div className="block-content">
-                            <RichText
-                              render={
-                                tour.contentBlocks[label.labelId]?.content
-                              }
-                              htmlSerializer={(...defaultArgs: any) =>
+                            <PrismicRichText
+                              field={tour.contentBlocks[label.labelId]?.content}
+                              components={(...defaultArgs: any) =>
                                 shortCodeSerializerWithParentProps(
                                   defaultArgs,
                                   tour

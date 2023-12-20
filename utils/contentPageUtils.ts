@@ -1,5 +1,7 @@
-import Prismic from 'prismic-javascript';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import * as Sentry from '@sentry/nextjs';
+import { MicrositeDocument } from 'types.prismic';
 import {
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
@@ -7,9 +9,9 @@ import {
 } from 'utils';
 import { fetchCollectionList } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger/index';
-import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 import {
   CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
   SEO_SUBDOMAINS_UID,
@@ -49,26 +51,35 @@ export const getDocsForListicleSlice = async ({
     )
   ).filter(Boolean);
 
-  let docsForListicles = [];
+  let docsForListicles: MicrositeDocument[] = [];
   let collectionsInListicles = [];
   if (listicleSliceData && !isEmptyObject(listicleSliceData)) {
     try {
-      const res = await fetchAllMatchingDocs({
-        query: [
-          Prismic.Predicates.any(
+      const prismicClient = createClient();
+      const documents = await prismicClient.getAllByType('microsite', {
+        lang: DEFAULT_PRISMIC_LANG,
+        predicates: [
+          predicate.any(
             `my.${CUSTOM_TYPES.MICROSITE}.tagged_city`,
             cities as Array<string>
           ),
-          Prismic.Predicates.at(
+          predicate.at(
             `my.${CUSTOM_TYPES.MICROSITE}.tagged_page_type`,
             MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
           ),
         ],
-        params: {
-          lang: SUPPORTED_LOCALE_MAP.en,
+      });
+
+      sendLog({
+        message: {
+          lang: DEFAULT_PRISMIC_LANG,
+          documentType: CUSTOM_TYPES.MICROSITE,
+          functionality: 'listicle - documents',
+          msg: 'Prismic API call from Canary',
         },
       });
-      docsForListicles = res?.filter((doc: Record<any, any>) => {
+
+      docsForListicles = documents?.filter((doc: Record<any, any>) => {
         const { uid, data } = doc || {};
         const { canonical_link, noindex } = data || {};
 
@@ -86,7 +97,7 @@ export const getDocsForListicleSlice = async ({
       });
     } catch (e) {
       Sentry.captureException(e);
-      sendLog({ err: e });
+      sendLog({ err: e, message: `[getDocsForListicleSlice]` });
     }
   }
   if (collectionIdsInListicles?.length > 0) {

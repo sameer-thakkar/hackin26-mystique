@@ -1,5 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import PracticalInfoCalendar from 'components/slices/ListicleV2/MediumListicle/PracticalInfo/PracticalInfoCalendar';
 import PracticalInfoDistance from 'components/slices/ListicleV2/MediumListicle/PracticalInfo/PracticalInfoDistance';
@@ -12,6 +11,7 @@ import {
   RichTextContainer,
   SettingsWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { SETTINGS_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -90,7 +90,10 @@ const SettingsOne = ({
         <RichTextContainer
           isSettingsOne={settingsType === SETTINGS_TYPE.SETTINGS_ONE}
         >
-          <RichText render={richTextData} />
+          <PrismicRichText
+            field={richTextData}
+            components={shortCodeSerializer}
+          />
         </RichTextContainer>
       </Conditional>
 
@@ -122,7 +125,10 @@ const SettingsOne = ({
 
       <Conditional if={settingsType === SETTINGS_TYPE.SETTINGS_TWO}>
         <RichTextContainer isSettingsOne={false}>
-          <RichText render={richTextData} />
+          <PrismicRichText
+            field={richTextData}
+            components={shortCodeSerializer}
+          />
         </RichTextContainer>
       </Conditional>
 

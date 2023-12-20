@@ -1,7 +1,6 @@
 import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
 import COLORS from 'const/colors';
 import { shortCodeSerializer } from '../../utils/shortCodes';
@@ -89,10 +88,10 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
             ) : null}
           </div>
           <div className="content">
-            <RichText
+            <PrismicRichText
               key={index}
-              render={block.feature_description}
-              htmlSerializer={shortCodeSerializer}
+              field={block.feature_description}
+              components={shortCodeSerializer}
             />
           </div>
         </StyledFeatureBox>

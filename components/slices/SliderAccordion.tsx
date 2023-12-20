@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import type { SwiperProps } from 'swiper/react';
 import Accordion, { StyledAccordion } from 'components/slices/Accordion';
 import Image from 'UI/Image';
@@ -226,9 +225,9 @@ const SliderAccordion = (props: any) => {
             <>
               {isMobile ? SliderComponent : null}
               <div className="answer-content">
-                <RichText
-                  render={accordion.answer}
-                  htmlSerializer={shortCodeSerializer}
+                <PrismicRichText
+                  field={accordion.answer}
+                  components={shortCodeSerializer}
                 />
               </div>
             </>

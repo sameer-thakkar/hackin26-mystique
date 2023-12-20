@@ -1,8 +1,8 @@
-import { PrismicDocumentWithUID } from '@prismicio/types';
-import { TourGroupDataType } from 'components/NewsPage/interface';
+import type { ShowpageDocument } from 'types.prismic';
+import type { TourGroupDataType } from 'components/NewsPage/interface';
 
 export type TMediaPlayerProps = {
   trailerData: TourGroupDataType[];
-  showPageDocuments: PrismicDocumentWithUID[];
+  showPageDocuments: ShowpageDocument[];
   videoData: Record<string, string>;
 };

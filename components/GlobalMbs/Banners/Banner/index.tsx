@@ -1,7 +1,6 @@
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText, PrismicText } from '@prismicio/react';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import {
@@ -244,7 +243,7 @@ const Banner: FunctionComponent<IBannerProps> = ({
             <div className="info">
               <div>
                 <span className="bold">Address: </span>
-                {location && RichText.asText(location)}
+                {location && <PrismicText field={location} />}
               </div>
               <div className="">
                 <span className="bold">Duration: </span>
@@ -261,9 +260,9 @@ const Banner: FunctionComponent<IBannerProps> = ({
                   See all hours {CHEVRON_DOWN}
                 </span>
                 <Conditional if={toggleTimings}>
-                  <RichText
-                    render={timings}
-                    htmlserialize={shortCodeSerializer}
+                  <PrismicRichText
+                    field={timings}
+                    components={shortCodeSerializer}
                   />
                 </Conditional>
               </div>

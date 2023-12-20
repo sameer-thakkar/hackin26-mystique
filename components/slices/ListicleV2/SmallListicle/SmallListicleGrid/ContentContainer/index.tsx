@@ -1,5 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import ReadMore from 'components/slices/ListicleV2/SmallListicle/ReadMore/index';
 import { IContentContainerProps } from 'components/slices/ListicleV2/SmallListicle/SmallListicleGrid/ContentContainer/interface';
@@ -11,6 +10,7 @@ import {
   RichTextWrapper,
   TitleWrapper,
 } from 'components/slices/ListicleV2/SmallListicle/SmallListicleGrid/ContentContainer/styles';
+import { shortCodeSerializer } from 'utils/shortCodes';
 
 const ContentContainer = ({
   heading,
@@ -32,7 +32,10 @@ const ContentContainer = ({
         </Conditional>
       </CategoryTagsWrapper>
       <RichTextWrapper overflow={overflow}>
-        <RichText render={richTextData} />
+        <PrismicRichText
+          field={richTextData}
+          components={shortCodeSerializer}
+        />
         <Conditional if={overflow && richTextData?.length}>
           <GradientWrapper />
         </Conditional>

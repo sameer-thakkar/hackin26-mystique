@@ -17,8 +17,8 @@ import { localServerSideIsMobileCheck } from 'utils/gen';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
-import { getPageData } from 'utils/prismicUtils';
-import { removePageQuery } from 'utils/urlUtils';
+import getPageData from 'utils/prismicUtils/getPageData';
+import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import {
@@ -68,6 +68,7 @@ const Page = (props: PageProps) => {
     docsForListicles,
     collectionsInListicles,
   } = props;
+
   const { tourGroupMap, ...rawCategoryTgidMap } =
     simplifiedCategoryTourListData ?? {};
   const entityIdToursMap: { [k: string]: Array<ProductCard> } = Object.entries(
@@ -115,13 +116,11 @@ const Page = (props: PageProps) => {
     ContentType,
     statusCode,
     host,
-    MBDesign,
     isDev,
     windowUrl,
     pathname,
     serverRequestStartTimestamp,
     lang,
-    uid,
     toursList,
     isMobile,
     mbTheme = THEMES.DEFAULT,
@@ -140,7 +139,10 @@ const Page = (props: PageProps) => {
     routeDetails,
     isCatOrSubCatPage,
     catAndSubCatPageData,
+    uid,
+    MBDesign,
   } = props;
+
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
@@ -149,7 +151,8 @@ const Page = (props: PageProps) => {
     return <ErrorPage statusCode={statusCode} />;
   }
 
-  const microsite = CMSContent?.data?.microsite?.data || CMSContent?.data?.data;
+  const microsite =
+    CMSContent?.data?.microsite_document_ref?.data || CMSContent?.data;
   const redirectToHeadoutBookingFlow =
     ContentType === CUSTOM_TYPES.MICROSITE
       ? microsite?.redirect_to_headout_booking_flow
@@ -168,7 +171,7 @@ const Page = (props: PageProps) => {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V3:
         return (
           <MicrositeV2
-            data={CMSContent.data}
+            data={CMSContent}
             lang={lang}
             host={host}
             isDev={isDev}
@@ -182,6 +185,7 @@ const Page = (props: PageProps) => {
             breadcrumbs={breadcrumbs}
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
+            uid={uid}
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -217,7 +221,7 @@ const Page = (props: PageProps) => {
         return (
           <Microsite
             cityPageParams={cityPageParams}
-            data={CMSContent.data}
+            data={CMSContent}
             activeCurrency={activeCurrency}
             scorpioData={tourGroupData}
             categoryTourListData={categoryTourListData}
@@ -241,6 +245,7 @@ const Page = (props: PageProps) => {
             variantsData={variantsData}
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
+            uid={uid}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -266,6 +271,7 @@ const Page = (props: PageProps) => {
             categoryHeaderMenu={categoryHeaderMenu}
             eventsReady={eventsReady}
             breadcrumbs={breadcrumbs}
+            uid={uid}
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:
@@ -348,6 +354,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { req, query, res, resolvedUrl: asPath } = ctx;
   const [pathname] = asPath.split('?') ?? [];
   const queryParamsString = getValidUrlParams(query);
+
+  if (!isAllowedPath(pathname)) {
+    return {
+      notFound: true,
+      props: {},
+    };
+  }
 
   const lang = getLanguageFromPathname({ pathname, query }) || 'en';
   const { host }: { host?: string } = req?.headers || window?.location;
@@ -438,7 +451,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   try {
     let url =
-      props?.CMSContent?.data?.data?.redirect_url?.url ||
+      props?.CMSContent?.data?.redirect_url?.url ||
       props?.CMSContent?.data?.redirect_url?.url;
     if (url) {
       url = `${url}${queryParamsString ? `?${queryParamsString}` : ''}`;
@@ -534,7 +547,7 @@ const HeadoutSessionIdSetterComponent = () => {
       .slice(1)
       .join('.');
     if (experimentOverride)
-      Cookies.set(COOKIE.EXPERIMENT_OVERRIDE, experimentOverride, {
+      Cookies.set(COOKIE.EXPERIMENT_OVERRIDE, experimentOverride as string, {
         domain: nakedDomain,
         path: '/',
         expires: TIME.IN_MINUTES,

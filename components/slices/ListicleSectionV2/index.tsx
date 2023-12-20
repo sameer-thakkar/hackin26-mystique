@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { SliceZone } from '@prismicio/react';
 import cloneDeep from 'lodash.clonedeep';
-import sliceHandler from 'components/Slices';
 import { IListicleSectionProps } from 'components/slices/ListicleSectionV2/interfaces';
 import {
   ListicleSectionWrapper,
@@ -11,6 +11,7 @@ import { getAlternateLanguageDocUid, getHeadoutLanguagelocale } from 'utils';
 import { getExperienceType } from 'utils/listicle';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { EXPERIENCES, LANGUAGE_MAP, MB_TYPES } from 'const/index';
+import { sliceComponents } from '../sliceManager';
 
 const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
   type,
@@ -18,7 +19,7 @@ const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
   title,
   prismicDocsForListicle,
   collectionsInListicles,
-  slices = [],
+  childSlices: slices = [],
 }) => {
   const { lang } = useContext(MBContext);
   const langCode = getHeadoutLanguagelocale(lang);
@@ -185,8 +186,14 @@ const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
   return (
     <ListicleSectionWrapper>
       <Title>{title}</Title>
-      {newSlices?.length > 0 &&
-        sliceHandler(newSlices[0], { type, settings, title })}
+      {newSlices?.length > 0 && (
+        <SliceZone
+          slices={newSlices}
+          components={sliceComponents()}
+          context={{ type, settings, title, wrapperType: 'none' }}
+          defaultComponent={() => null}
+        />
+      )}
     </ListicleSectionWrapper>
   );
 };

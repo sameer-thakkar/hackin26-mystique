@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import LazyComponent from 'components/common/LazyComponent';
+import { SliceZone } from '@prismicio/react';
+import { sliceComponents } from 'components/slices/sliceManager';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { FULL_WIDTH_SLICES } from 'constants/index';
-import sliceHandler from '../Slices';
 
 const StyledLongform = styled.div<{
   noBorder: boolean;
@@ -119,16 +118,12 @@ const LongForm = (props: any) => {
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
     >
-      {slicesArray.map((slice: any, index: number) => (
-        <div
-          key={index}
-          className={`${
-            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
-          } slice-block ${slice.slice_type}`}
-        >
-          <LazyComponent>{sliceHandler(slice, sliceProps)}</LazyComponent>
-        </div>
-      ))}
+      <SliceZone
+        slices={slicesArray}
+        components={sliceComponents()}
+        context={{ ...sliceProps }}
+        defaultComponent={() => null}
+      />
     </StyledLongform>
   );
 };

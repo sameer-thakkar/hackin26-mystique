@@ -1,7 +1,6 @@
 import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import COLORS from 'const/colors';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -30,12 +29,12 @@ const StyledRichTextBox = styled.div`
 const RichTextBox = (props: any) => {
   return (
     <StyledRichTextBox>
-      {props.slices.map((block: any, index: number) => (
+      {props.childSlices.map((block: any, index: number) => (
         <div className="rich-text-box" key={index}>
-          <RichText
+          <PrismicRichText
             key={index}
-            render={block.content}
-            htmlSerializer={shortCodeSerializer}
+            field={block.content}
+            components={shortCodeSerializer}
           />
         </div>
       ))}

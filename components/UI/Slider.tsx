@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import type { SwiperOptions } from 'swiper';
 import COLORS from 'const/colors';
 
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const Swiper = dynamic(() => import('components/Swiper'), {
+  ssr: false,
+});
 
 const StyledSlider = styled.div`
   display: flex;
@@ -89,20 +91,20 @@ const Controls = styled.div`
   }
 `;
 
-const Slider: React.FC<{
-  children: React.ReactChild[];
-  sliderOptions?: SwiperOptions;
-  nextButton?: React.ReactElement;
-  prevButton?: React.ReactElement;
-  parentOverflowHidden?: boolean;
-  paginationClass?: string;
-}> = ({
+const Slider = ({
   children,
   sliderOptions,
   nextButton,
   prevButton,
   parentOverflowHidden = false,
   paginationClass,
+}: {
+  children: React.ReactNode[];
+  sliderOptions?: SwiperOptions;
+  nextButton?: HTMLElement | React.ReactNode | JSX.Element;
+  prevButton?: HTMLElement | React.ReactNode | JSX.Element;
+  parentOverflowHidden?: boolean;
+  paginationClass?: string;
 }) => {
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
@@ -125,10 +127,10 @@ const Slider: React.FC<{
     }
   };
 
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex((swiper as any)?.realIndex as number),
+    [swiper]
+  );
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
@@ -139,7 +141,7 @@ const Slider: React.FC<{
         onSwiper={updateSwiper}
         onSlideChange={updateIndex}
       >
-        {children.map((child, index) => {
+        {children?.map((child, index) => {
           return (
             <div className="swiper-slide" key={index}>
               {child}

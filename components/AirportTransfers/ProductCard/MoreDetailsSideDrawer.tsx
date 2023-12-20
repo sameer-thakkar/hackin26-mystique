@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-// @ts-expect-error - no types
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import { Button } from '@headout/aer';
-import { richtextElements, SidePanelOverlay } from 'components/Product/styles';
+import { SidePanelOverlay } from 'components/Product/styles';
 import { SavedTag } from 'UI/PriceBlock';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { StarIcon } from 'const/descriptorIcons';
@@ -96,17 +95,15 @@ export const MoreDetailsSideDrawer = ({
               isAccordionPanelOpen={i === 0}
               key={i}
               header={
-                <RichText
-                  render={[accordion.title] || []}
-                  htmlSerializer={shortCodeSerializer}
-                  elements={richtextElements}
+                <PrismicRichText
+                  field={[accordion.title] || []}
+                  components={shortCodeSerializer}
                 />
               }
             >
-              <RichText
-                render={accordion.content || []}
-                htmlSerializer={shortCodeSerializer}
-                elements={richtextElements}
+              <PrismicRichText
+                field={accordion.content || []}
+                components={shortCodeSerializer}
               />
             </Accordion>
           ))}

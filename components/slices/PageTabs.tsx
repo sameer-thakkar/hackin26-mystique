@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';

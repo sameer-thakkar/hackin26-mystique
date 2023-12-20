@@ -101,7 +101,7 @@ const CategoryCard = ({
   const { listingPrice, name, imageUrl, id } = element;
   const { isDev, host } = useContext(MBContext);
 
-  let cardDocument = allShowPagesDocuments.find(
+  let cardDocument = allShowPagesDocuments?.find(
     (element: any) => element.data.tgid === id
   );
 

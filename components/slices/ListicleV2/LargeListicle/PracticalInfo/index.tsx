@@ -1,5 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import { IPracticalInfoProps } from 'components/slices/ListicleV2/LargeListicle/PracticalInfo/intefaces';
 import {
@@ -22,6 +21,7 @@ import {
   PracticalInfoTimingsWrapper,
   PracticalInfoWrapper,
 } from 'components/slices/ListicleV2/LargeListicle/PracticalInfo/styles';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   DISTANCE,
   DOT,
@@ -136,7 +136,10 @@ const PracticalInfo = ({
           <PracticalInfoTimingsIconWrapper>
             {TIMING()}
           </PracticalInfoTimingsIconWrapper>
-          <RichText render={openingHours} />
+          <PrismicRichText
+            field={openingHours}
+            components={shortCodeSerializer}
+          />
         </PracticalInfoTimingsWrapper>
       </Conditional>
     </PracticalInfoWrapper>

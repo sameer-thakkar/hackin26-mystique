@@ -1,7 +1,6 @@
 import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
@@ -120,10 +119,10 @@ const TableV2 = (props: any) => {
               return (
                 // @ts-expect-error TS(2769): No overload matches this call.
                 <StyledColumn colCount={row.columns.length} key={colIndex}>
-                  <RichText
+                  <PrismicRichText
                     key={colIndex}
-                    render={column.content}
-                    htmlSerializer={shortCodeSerializer}
+                    field={column.content}
+                    components={shortCodeSerializer}
                   />
                 </StyledColumn>
               );

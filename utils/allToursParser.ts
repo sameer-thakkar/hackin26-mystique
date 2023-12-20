@@ -1,5 +1,5 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
+import { asText } from '@prismicio/helpers';
+import { RTNode } from '@prismicio/types';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 
@@ -49,9 +49,9 @@ const allToursParser = (
       if (!content[label.labelID]) return;
       const useGLOBAL = content[label.labelID].align == 'Global';
       const blockContentLen =
-        RichText.asText(content[label.labelID].content).trim().length ||
+        asText(content[label.labelID].content as []).trim().length ||
         content[label.labelID].content.filter((c: any) => c.type === 'image');
-      const finalContent =
+      const finalContent: [RTNode] =
         blockContentLen === 0
           ? label.globalContent
           : content[label.labelID].content;
@@ -59,7 +59,7 @@ const allToursParser = (
         label: labelIDMap[label.labelID],
         content: finalContent,
         align: useGLOBAL ? label.globalAlign : content[label.labelID].align,
-        len: RichText.asText(finalContent).length,
+        len: asText(finalContent).length,
         labelId: label.labelID,
       };
       if (block.align == 'Right') right.push(block);
@@ -81,9 +81,7 @@ const allToursParser = (
       return /theatre|theater/gi.test((block as any).label);
     });
     if (theatreBlock) {
-      tourData.theater_contentblock = RichText.asText(
-        (theatreBlock as any).content
-      );
+      tourData.theater_contentblock = asText((theatreBlock as any).content);
     }
     const currencySymbol =
       isFetched &&

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-// import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Header from 'components/MicrositeV2/Header';
@@ -39,23 +38,25 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
 
   const {
     alternate_languages,
-    data,
+    data: CMSData,
     first_publication_date,
     last_publication_date,
     tgidMappingData,
   } = CMSContent;
 
   const {
-    refs,
     tgid,
     taggedCategory,
     taggedCity,
     taggedCountry,
     taggedCollection,
     taggedMbType,
-    isLandingPage,
-  } = data;
-  const { commonHeader, commonFooter, secondaryFooter } = refs;
+    is_landing_page: isLandingPage,
+    header_ref: commonHeader,
+    primary_footer_ref: commonFooter,
+    secondary_footer_ref: secondaryFooter,
+  } = CMSData ?? {};
+
   const {
     faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
@@ -110,7 +111,7 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
       <PopulateMeta
         {...{
           prismicData: {
-            ...CMSContent.data,
+            ...CMSData,
             canonical_link: selfCanonicalLink,
           },
           datePublished: first_publication_date,

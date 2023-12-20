@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Client } from 'config/prismic-config';
-import { AlternateLanguage, PrismicDocumentWithUID } from '@prismicio/types';
+import { createClient } from 'prismicio';
+import type {
+  AlternateLanguage,
+  PrismicDocumentWithUID,
+} from '@prismicio/types';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
+import { sendLog } from 'utils/logger';
 import {
   attachedContentFrameworkData,
   baseLangMicrositeDataForContentPage,
@@ -33,13 +37,24 @@ import {
   SLICE_TYPES,
 } from 'const/index';
 
-const getUpdatedDocuments = async ({ documentIds, masterRef, req }: any) => {
-  const linkedRefsPromise = Client(req, { ref: masterRef }).getByIDs(
+const getUpdatedDocuments = async ({ documentIds, masterRef }: any) => {
+  const prismicClient = createClient();
+  const linkedRefsPromise = prismicClient.getByIDs(
     documentIds.filter((id: any) => id),
     {
       fetchLinks: 'microsite.body1',
+      ref: masterRef,
     }
   );
+
+  sendLog({
+    message: {
+      documentType: 'looker',
+      functionality: 'linkedRefsPromise',
+      msg: 'Prismic API call from Canary',
+    },
+  });
+
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
     return res.results;
   });
@@ -150,11 +165,11 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       is_poi_mb: baseLangIsPoiMb,
       banner_and_footer_combinations: baseLangBannerAndFooterCombinations,
       tagged_mb_type: baseLangMbType,
-    } = baseLangData[0]?.data || {};
+    } = baseLangData?.data || {};
 
     const slicesInsideContentFramework =
-      contentFrameworkData?.length > 0
-        ? contentFrameworkData[0]?.data?.body
+      Object.keys(contentFrameworkData ?? {})?.length > 0
+        ? contentFrameworkData?.data?.body
         : [];
     const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);

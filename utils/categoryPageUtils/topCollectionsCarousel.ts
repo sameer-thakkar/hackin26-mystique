@@ -1,8 +1,9 @@
 import { getHeadoutLanguagecode } from 'utils';
 import { fetchCollectionTop } from 'utils/apiUtils';
-import { getMenuUrl, shouldIncludeinQueries } from 'utils/headerUtils';
+import { getMenuUrl } from 'utils/headerUtils';
+import shouldIncludeinQueries from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
-import { getTopCollectionsCarouselDocs } from 'utils/prismicUtils';
+import getTopCollectionsCarouselDocs from 'utils/prismicUtils/getTopCollectionsCarouselDocs';
 import { COOKIE } from 'const/index';
 
 export const getTopCollectionsCarousel = async ({

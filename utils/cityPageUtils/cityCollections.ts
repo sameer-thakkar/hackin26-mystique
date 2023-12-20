@@ -1,10 +1,11 @@
-import Prismic from 'prismic-javascript';
-import { Client } from 'config/prismic-config';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import { PrismicDocumentWithUID } from '@prismicio/types';
+import { MicrositeDocument } from 'types.prismic';
 import { getAlternateLanguageDocUid, getHeadoutLanguagecode } from 'utils';
 import { fetchCityTopCollections } from 'utils/apiUtils';
 import { getUidFromRootLevel } from 'utils/cityPageUtils/utils';
-import { shouldIncludeinQueries as shouldIncludeDoc } from 'utils/headerUtils';
+import shouldIncludeDoc from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import {
   COOKIE,
@@ -36,7 +37,7 @@ const {
   TAGGED_CATEGORY,
 } = PRISMIC_FIELD_ID;
 
-const getPrismicCollectionMap = (prismicDocs = []) => {
+const getPrismicCollectionMap = (prismicDocs: MicrositeDocument[] = []) => {
   const collectionMap = new Map();
   const validDocs = prismicDocs.filter((doc) => shouldIncludeDoc(doc));
   validDocs.forEach((document: Record<string, any>) => {
@@ -77,59 +78,81 @@ const getCollectionDataWithPrismicInfo = async ({
   mbCity,
   lang,
 }: IGetCollectionDataWithPrismicInfo) => {
-  const topCollectionsIdArr = collectionApiData.map(
-    (item: Record<string, any>) => `${item.id}`
-  );
-
-  const prismicData = await Client().query(
-    [
-      Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-      Prismic.Predicates.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
+  try {
+    const topCollectionsIdArr = collectionApiData.map(
+      (item: Record<string, any>) => `${item.id}`
+    );
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.any(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, [
         A1_COLLECTION,
         B1_GLOBAL,
         C1_COLLECTION,
       ]),
-      Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-      Prismic.Predicates.at(
-        `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-        LANDING_PAGE
-      ),
-      Prismic.Predicates.any(
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+      predicate.any(
         `my.${MICROSITE}.${TAGGED_COLLECTION}`,
         topCollectionsIdArr
       ),
-    ],
-    { pageSize: 60 }
-  );
+    ];
 
-  const prismicCollectionMap = getPrismicCollectionMap(prismicData?.results);
-  const normalisedCollectionData = getNormalisedCollectionData({
-    prismicCollectionMap,
-    collectionApiData,
-    lang,
-  });
+    const prismicClient = createClient();
+    const prismicData = await prismicClient.getByType('microsite', {
+      predicates: predicatesArray,
+      pageSize: 60,
+    });
 
-  return normalisedCollectionData;
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicData',
+        queryingMultipleDocs: true,
+        lang,
+        msg: 'Prismic API call from Canary',
+      },
+    });
+
+    const prismicCollectionMap = getPrismicCollectionMap(prismicData?.results);
+    const normalisedCollectionData = getNormalisedCollectionData({
+      prismicCollectionMap,
+      collectionApiData,
+      lang,
+    });
+
+    return normalisedCollectionData;
+  } catch (error) {
+    sendLog({
+      err: error,
+      message: `[getCollectionDataWithPrismicInfo]`,
+    });
+  }
 };
 
 const getAllDayTripPage = async ({ mbCity, lang }: ICommonProps) => {
   try {
-    const prismicData = await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, A1_CATEGORY),
-        Prismic.Predicates.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_CATEGORY}`,
-          CATEGORY.DAY_TRIPS
-        ),
-        Prismic.Predicates.at(
-          `my.${MICROSITE}.${TAGGED_PAGE_TYPE}`,
-          LANDING_PAGE
-        ),
-      ],
-      { pageSize: 5 }
-    );
+    const prismicClient = createClient();
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.at(`my.${MICROSITE}.${TAGGED_MB_TYPE}`, A1_CATEGORY),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(`my.${MICROSITE}.${TAGGED_CATEGORY}`, CATEGORY.DAY_TRIPS),
+      predicate.at(`my.${MICROSITE}.${TAGGED_PAGE_TYPE}`, LANDING_PAGE),
+    ];
+    const prismicData = await prismicClient.getByType('microsite', {
+      predicates: predicatesArray,
+      pageSize: 5,
+    });
+
+    sendLog({
+      message: {
+        documentType: CUSTOM_TYPES.MICROSITE,
+        functionality: 'prismicData',
+        queryingMultipleDocs: true,
+        lang,
+        msg: 'Prismic API call from Canary',
+      },
+    });
 
     const prismicDoc = prismicData?.results?.filter(
       (item: PrismicDocumentWithUID) => !item.data.tagged_sub_category

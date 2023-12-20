@@ -120,7 +120,7 @@ const ExitDescription = styled.div`
 `;
 
 type CardSectionProps = {
-  slices: any[];
+  childSlices: any[];
   sectionType: string;
   cardsInARow: number;
   title?: string;
@@ -159,7 +159,7 @@ type CardSectionProps = {
  */
 
 const CardSection: React.FC<CardSectionProps> = ({
-  slices,
+  childSlices: slices,
   cardsInARow,
   sectionType,
   title,
@@ -216,10 +216,10 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex((swiper as any)?.realIndex as number),
+    [swiper]
+  );
 
   useEffect(() => {
     if (swiper !== null) {

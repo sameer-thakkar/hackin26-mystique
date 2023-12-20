@@ -8,13 +8,14 @@ import React, {
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { SliceZone } from '@prismicio/react';
 import CategoryPage from 'components/CategoryPage';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
 import { CategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/style';
-import sliceHandler from 'components/Slices';
+import { sliceComponents } from 'components/slices/sliceManager';
 import StaticBanner from 'components/StaticBanner';
 import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
@@ -301,7 +302,7 @@ export const HomePage = (props: any) => {
     baseLangBannerAndFooterCombinations
   );
 
-  const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isCollectionMicrobrand = isCollectionMB(taggedMbType);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   const isLttMonthOnMonthPage =
     isEntertainmentMbListicle &&
@@ -383,7 +384,7 @@ export const HomePage = (props: any) => {
   } = domainConfig || {};
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign,
-    mbType,
+    mbType: taggedMbType,
   });
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
   //Subcategory/category MBs will always be non-POI irrespective of the config on Prismic
@@ -425,6 +426,9 @@ export const HomePage = (props: any) => {
   }, []);
 
   if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
+  const finalSlices = heroSectionSlice.filter(
+    (slice: any) => slice?.slice_type
+  );
 
   return (
     <V2MicrositeWrapper
@@ -599,16 +603,12 @@ export const HomePage = (props: any) => {
       >
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
-            {heroSectionSlice
-              .filter((slice: any) => slice?.slice_type)
-              .map((slice: any, index: number) => (
-                <div
-                  key={`${slice?.slice_type}-${index}`}
-                  className={`slice-block ${slice.slice_type}`}
-                >
-                  {sliceHandler(slice, { isMobile })}
-                </div>
-              ))}
+            <SliceZone
+              slices={finalSlices}
+              components={sliceComponents()}
+              context={{ isMobile, wrapperType: 'v2-homepage' }}
+              defaultComponent={() => null}
+            />
           </div>
         </ProductsContextProvider>
       </Conditional>

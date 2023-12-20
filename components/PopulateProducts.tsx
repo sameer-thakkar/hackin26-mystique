@@ -4,6 +4,8 @@ import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
+import { GroupField } from '@prismicio/types';
+import { PromoCodesDocumentDataPromosItem, Simplify } from 'types.prismic';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Spinner from 'UI/Spinner';
@@ -17,7 +19,7 @@ import {
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
-import { getPromoCodesDocument } from 'utils/prismicUtils';
+import getPromoCodesDocument from 'utils/prismicUtils/promoCodes';
 import { getCategoryMap, getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -131,6 +133,8 @@ const SpinnerWrapper = styled.div`
   top: calc(50% - 27.5px);
 `;
 
+type TPromoCode = GroupField<Simplify<PromoCodesDocumentDataPromosItem>>;
+
 const PopulateProducts = (props: any) => {
   const {
     uncategorizedTours: tours,
@@ -171,7 +175,7 @@ const PopulateProducts = (props: any) => {
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
   const [appliedPromo, setAppliedPromo] = useState(null);
-  const [allPromoCodes, setAllPromoCodes] = useState([]);
+  const [allPromoCodes, setAllPromoCodes] = useState<TPromoCode>([]);
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState({});
   const [detialsPopupShown, setDetailsPopupShown] = useState(false);
@@ -430,8 +434,8 @@ const PopulateProducts = (props: any) => {
           collections,
           city_name,
         } = promo || {};
-        const tgids = csvTgidToArray(tgidsString);
-        const exclusions = csvTgidToArray(exclusionsString);
+        const tgids = csvTgidToArray(tgidsString as string);
+        const exclusions = csvTgidToArray(exclusionsString as string);
         return (
           (tgids?.includes(Number(tgid)) ||
             // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message

@@ -1,19 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { greyScheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
 import { MBContext } from 'contexts/MBContext';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
 import { Shield } from 'assets/SvgIcons';
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import InfoBanner from './InfoBanner';
-import { getSafetyDescription } from './SafeExperiencesPitch';
+import {
+  getSafetyDescription,
+  TSetSafetyBannerData,
+} from './SafeExperiencesPitch';
 import Split, { StlyedSplit } from './Split';
 
 const SafeExperiencesPitch = dynamic(() => import('./SafeExperiencesPitch'), {
@@ -71,6 +74,19 @@ const Description = styled.div`
   line-height: 20px;
 `;
 
+const GENERAL_SAFETY_NOTE = {
+  description: [
+    {
+      spans: [],
+      type: 'paragraph',
+      text: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION,
+    },
+  ],
+  heading: [
+    { spans: [], type: 'paragraph', text: strings.SAFE_EXPERIENCE.HEADING },
+  ],
+};
+
 const MultiBannerWrapper = ({
   hasSafe = false,
   // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'number'.
@@ -88,20 +104,10 @@ const MultiBannerWrapper = ({
     lang,
   } = useContext(MBContext);
 
-  const GENERAL_SAFETY_NOTE = {
-    description: [
-      {
-        spans: [],
-        type: 'paragraph',
-        text: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION,
-      },
-    ],
-    heading: [
-      { spans: [], type: 'paragraph', text: strings.SAFE_EXPERIENCE.HEADING },
-    ],
-  };
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
-  const [safetyBannerData, setSafetyBannerData] = useState(null);
+  const [safetyBannerData, setSafetyBannerData] = useState<
+    TSetSafetyBannerData
+  >(null);
   const width = useWindowWidth();
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
@@ -126,11 +132,19 @@ const MultiBannerWrapper = ({
     });
   };
 
-  const finalHeading = <RichText render={(safetyBannerData as any)?.heading} />;
+  const finalHeading = (
+    <PrismicRichText
+      field={(safetyBannerData as any)?.heading}
+      components={shortCodeSerializer}
+    />
+  );
   const showFullBanner = (primaryCountry as any)?.code === 'FR' || !isMobile;
   const description = (
     <Description>
-      <RichText render={(safetyBannerData as any)?.description} />
+      <PrismicRichText
+        field={(safetyBannerData as any)?.description}
+        components={shortCodeSerializer}
+      />
     </Description>
   );
 

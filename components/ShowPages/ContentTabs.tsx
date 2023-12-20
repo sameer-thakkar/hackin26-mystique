@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { PrismicRichText } from '@prismicio/react';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { metaAtom } from 'store/atoms/meta';
@@ -139,9 +138,9 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
             key={index}
             {...(activeTabName === content.tab_name && { active: true })}
           >
-            <RichText
-              render={content.tab_content}
-              htmlSerializer={shortCodeSerializer}
+            <PrismicRichText
+              field={content.tab_content}
+              components={shortCodeSerializer}
             />
           </StyledContent>
         );
