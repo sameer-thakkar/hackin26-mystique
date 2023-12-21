@@ -26,7 +26,6 @@ import {
   CTABlock,
   CTAContainer,
   GuidedTourLabel,
-  HLine,
   LineMoreDetailsButton,
   ModalCardContainer,
   MoreDetailsBtnWrapper,
@@ -107,7 +106,7 @@ const maxProductHeight = 395;
 const maxProductBodyHeight = 265;
 
 const Product = (props: any) => {
-  const moreDetailsRef = useRef<HTMLDivElement>(null);
+  const moreDetailsRef = useRef(null);
   const productRef = useRef<HTMLDivElement>();
   const collapsibleContentRef = useRef<HTMLDivElement>();
 
@@ -155,7 +154,7 @@ const Product = (props: any) => {
     setDetailsPopupShown = undefined,
     detialsPopupShown = false,
     isNonPoi = false,
-    isProductCardExperimentTreatmentVariant = false,
+    isModifiedProductCard = false,
     isSmallComboCard = false,
     isProductCardPhase1ExperimentTreatmentVariant = true,
     reviewsDetails,
@@ -232,25 +231,6 @@ const Product = (props: any) => {
           },
         });
       }
-    }
-    if (popup === 'details') {
-      if (!isMobile)
-        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-        addToAside({
-          width: '540px',
-          title: cardTitle,
-          sidePadding: 20,
-          children: getProductCardElements(true, isProductCardLoading, true),
-          type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
-          history: {
-            enable: true,
-            params: {
-              popup: 'details',
-              pid: tgid,
-            },
-            isQueryRestore: true,
-          },
-        });
     }
   }, [isMobile, showCard]);
 
@@ -474,7 +454,7 @@ const Product = (props: any) => {
     // kept the old truncation logic for mobile view
     const isTruncated = isMobile
       ? tab.contents.length > noOfListItems
-      : isTicketCard || isProductCardExperimentTreatmentVariant
+      : isTicketCard || isModifiedProductCard
       ? false
       : (collapsibleContentRef.current?.offsetHeight ?? 0) >=
           maxProductBodyHeight ||
@@ -564,6 +544,8 @@ const Product = (props: any) => {
         onCloseCallback: () => {
           trackedToggleContent(true);
         },
+        tgid: tgid,
+        isProductCardTracking: true,
         history: {
           enable: true,
           params: {
@@ -571,8 +553,6 @@ const Product = (props: any) => {
             popup: 'details',
           },
         },
-        tgid: tgid,
-        isProductCardTracking: true,
       });
     } else {
       trackedToggleContent(isContentOpen);
@@ -594,7 +574,7 @@ const Product = (props: any) => {
       showGuidesLabel: isSpecialGuidedTour && isMobile,
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
-      isProductCardExperimentTreatmentVariant,
+      isModifiedProductCard,
       isProductCardPhase1ExperimentTreatmentVariant,
     });
   const trackedToggleContent = (isOpen: any) => {
@@ -670,6 +650,7 @@ const Product = (props: any) => {
           />
         </SpecialGuidedTourMoreDetailsCTA>
       );
+
     return (
       <div
         ref={moreDetailsRef}
@@ -726,7 +707,7 @@ const Product = (props: any) => {
     }
   };
 
-  const getHighlightTabs = isProductCardExperimentTreatmentVariant ? (
+  const getHighlightTabs = isModifiedProductCard ? (
     <Highlights
       isLoading={isProductCardLoading}
       hasRegularHighlights={hasHighlights}
@@ -736,16 +717,11 @@ const Product = (props: any) => {
         // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
         addToAside({
           width: '540px',
-          title: cardTitle,
           sidePadding: 20,
           children: getProductCardElements(true, isProductCardLoading, true),
           type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
           history: {
-            enable: true,
-            params: {
-              popup: 'details',
-              pid: tgid,
-            },
+            enable: false,
           },
         });
       }}
@@ -837,15 +813,15 @@ const Product = (props: any) => {
         : isProductCardPhase1ExperimentTreatmentVariant
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.productcardexperimentp1.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
-      : isProductCardExperimentTreatmentVariant
-      ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.productcardexperiment.width
+      : isModifiedProductCard
+      ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
       : undefined;
 
     const mediaCarouselImageHeight =
       isMobile && !isBannerCard && !isSpecialGuidedTour
         ? undefined
-        : isProductCardExperimentTreatmentVariant
-        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.productcardexperiment.height
+        : isModifiedProductCard
+        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
     return (
@@ -859,14 +835,9 @@ const Product = (props: any) => {
           isV3Design={isV3Design}
           $isSwipeSheetOpen={expandContent}
           className="product-card"
-          collapsed={
-            (!expandContent && !isTicketCard) ||
-            isProductCardExperimentTreatmentVariant
-          }
+          collapsed={(!expandContent && !isTicketCard) || isModifiedProductCard}
           defaultOpen={defaultOpen}
-          $isProductCardExperimentTreatmentVariant={
-            isProductCardExperimentTreatmentVariant || isAsideBarOverlay
-          }
+          $isModifiedProductCard={isModifiedProductCard || isAsideBarOverlay}
           $isProductCardPhase1ExperimentTreatmentVariant={
             isProductCardPhase1ExperimentTreatmentVariant
           }
@@ -899,9 +870,7 @@ const Product = (props: any) => {
                   tgid={tgid}
                   isMobile={isMobile}
                   shouldCrop={
-                    isProductCardExperimentTreatmentVariant
-                      ? isAsideBarOverlay
-                      : shouldCropImage
+                    isModifiedProductCard ? isAsideBarOverlay : shouldCropImage
                   }
                 />
               </Conditional>
@@ -977,8 +946,6 @@ const Product = (props: any) => {
                     ? isMobile
                     : isAsideBarOverlay
                 }
-                cancellationPolicy={cancellationPolicy}
-                cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
               />
             </Conditional>
             <Conditional if={hasV1Booster}>
@@ -1138,6 +1105,9 @@ const Product = (props: any) => {
                   uid={uid}
                   horizontal={isProductCardPhase1ExperimentTreatmentVariant}
                   showIcons={!isProductCardPhase1ExperimentTreatmentVariant}
+                  cancellationPolicy={cancellationPolicy}
+                  cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
+                  isMobile={isMobile}
                 />
               </Conditional>
             </CTAContainer>
@@ -1145,22 +1115,15 @@ const Product = (props: any) => {
           <Conditional if={!isMobile && !isAsideBarOverlay}>
             <HorizontalLine colorProp={COLORS.GRAY.G6} />
           </Conditional>
-          <Conditional
-            if={isProductCardExperimentTreatmentVariant && !isAsideBarOverlay}
-          >
-            <HLine />
-          </Conditional>
           <ProductBody
             hasReadMore={
               showMoreDetailsInTabs &&
               !defaultOpen &&
               !isSpecialGuidedTour &&
-              !isProductCardExperimentTreatmentVariant
+              !isModifiedProductCard
             }
             collapsed={
-              !expandContent &&
-              !isTicketCard &&
-              !isProductCardExperimentTreatmentVariant
+              !expandContent && !isTicketCard && !isModifiedProductCard
             }
             defaultOpen={defaultOpen}
             maxHeight={maxProductBodyHeight}
@@ -1179,9 +1142,7 @@ const Product = (props: any) => {
                 id={`tour-description-${position}`}
                 // @ts-expect-error TS(2322): Type '((e: MouseEvent<HTMLDivElement, MouseEvent>)... Remove this comment to see the full error message
                 onClick={
-                  !isMobile &&
-                  !defaultOpen &&
-                  !isProductCardExperimentTreatmentVariant
+                  !isMobile && !defaultOpen && !isModifiedProductCard
                     ? (e) => {
                         e.stopPropagation();
                         toggleContentOpen(!isContentOpen);
@@ -1211,6 +1172,7 @@ const Product = (props: any) => {
                       pageType={pageType}
                       activeTabIndex={activeTabIndex}
                       showCard={showCard}
+                      controlHeight
                     />
                   ) : (
                     getHighlightTabs
@@ -1224,7 +1186,7 @@ const Product = (props: any) => {
                 !defaultOpen &&
                 !isMobile &&
                 !isSpecialGuidedTour &&
-                !isProductCardExperimentTreatmentVariant
+                !isModifiedProductCard
               }
             >
               {getMoreDetailsButton()}
@@ -1236,7 +1198,7 @@ const Product = (props: any) => {
               isMobile &&
               !expandContent &&
               !isTicketCard &&
-              !isProductCardExperimentTreatmentVariant
+              !isModifiedProductCard
             }
           >
             {getMoreDetailsButton()}

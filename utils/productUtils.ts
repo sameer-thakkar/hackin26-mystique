@@ -97,7 +97,7 @@ type TGetProductCardLayout = {
   showAvailabilityInTitle?: boolean;
   showGuidesLabel?: boolean;
   showAvailabilityInLanguagesText?: boolean;
-  isProductCardExperimentTreatmentVariant?: boolean;
+  isModifiedProductCard?: boolean;
   isProductCardPhase1ExperimentTreatmentVariant?: boolean;
 };
 
@@ -111,7 +111,7 @@ export const getProductCardLayout = ({
   showAvailabilityInTitle = false,
   showGuidesLabel = false,
   showAvailabilityInLanguagesText = false,
-  isProductCardExperimentTreatmentVariant = false,
+  isModifiedProductCard = false,
   isProductCardPhase1ExperimentTreatmentVariant = false,
 }: TGetProductCardLayout) => {
   let layout: {
@@ -161,17 +161,13 @@ export const getProductCardLayout = ({
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } booster line cta-combo`,
-          isProductCardExperimentTreatmentVariant &&
-            `${
-              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
-            } hline line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           } body line cta-combo`,
           !hasV1Booster &&
             !hasOffer &&
             !isTicketCard &&
-            !isProductCardExperimentTreatmentVariant &&
+            !isModifiedProductCard &&
             'card-img . line cta-combo',
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],

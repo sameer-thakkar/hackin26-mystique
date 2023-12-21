@@ -122,7 +122,7 @@ export const StyledAsideModal = styled.div`
       : sidebarType === SIDEBAR_TYPES.PRODUCT_CARD_EXP
       ? css`
           z-index: 9999999999;
-          padding: 0;
+          padding: 3.375rem 0;
           animation: ${simplerFadeRight('100%', '0')} 300ms ease-in-out;
           ${shouldSlideOut &&
           css`
@@ -304,11 +304,13 @@ const Header = styled.div`
         `
       : headerType === SIDEBAR_TYPES.PRODUCT_CARD_EXP
       ? css`
-          padding: 0.75rem 1.25rem 1rem;
+          padding: 0.75rem 1.25rem;
           gap: 0.75rem;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 0.063rem solid ${COLORS.GRAY.G6};
+          position: fixed;
+          border-bottom: 1px solid ${COLORS.GRAY.G6};
+          width: 28.75rem;
         `
       : ''}
   top: 0;
@@ -664,12 +666,13 @@ const AsideModal = ({
         } else {
           history.back();
         }
-        // @ts-expect-error TS(2531): Object is possibly 'null'.
-        container.current.classList.remove('scroll-lock');
-        if (isMobile) window.scrollTo(0, scrollY);
-        if (onCloseCallback) onCloseCallback();
-        closeModal();
       }
+
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
+      container.current.classList.remove('scroll-lock');
+      if (isMobile) window.scrollTo(0, scrollY);
+      if (onCloseCallback) onCloseCallback();
+      closeModal();
     };
 
     if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP) {
@@ -684,7 +687,7 @@ const AsideModal = ({
     if (isMobile) window.scrollTo(0, scrollY);
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     container.current.classList.remove('scroll-lock');
-    if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP)
+    if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP && !isMobile)
       slideOut(() => {
         resetAside();
       });
@@ -713,7 +716,7 @@ const AsideModal = ({
             <Header
               // @ts-expect-error TS(2769): No overload matches this call.
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
-              addBg={!!title}
+              addBg={!!title || type === SIDEBAR_TYPES.PRODUCT_CARD_EXP}
               headerType={type}
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}

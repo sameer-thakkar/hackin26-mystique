@@ -212,7 +212,7 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   },
   DESKTOP: {
     height: 320,
-    productcardexperiment: {
+    modified: {
       width: 460,
       height: 253,
     },
@@ -507,26 +507,30 @@ interface IStyledProductCard {
   defaultOpen?: boolean;
   $isBannerCard?: boolean;
   $isSwipeSheetOpen?: boolean;
-  $isProductCardExperimentTreatmentVariant?: boolean;
+  $isModifiedProductCard?: boolean;
   $isAsideBarOverlay?: boolean;
   $isProductCardPhase1ExperimentTreatmentVariant?: boolean;
   $showScratchPrice?: boolean;
 }
 
-const pcExperimentStyles = css`
+const modifiedProductCardStyles = css`
   grid-row-gap: 1rem;
-  grid-template-rows: auto 1px 1fr;
+  grid-template-rows: auto 1fr;
   max-height: max-content;
 
   .card-img {
     width: 18rem;
     min-height: 21.5rem;
-    height: 100%;
     max-height: 23rem;
+    height: 100%;
+  }
+
+  ${ProductBody} {
+    align-self: stretch;
   }
 `;
 
-const asideBarExperimentStyles = css`
+const asideBarStyles = css`
   max-height: none;
   padding: 1.25rem;
   border: none;
@@ -561,7 +565,8 @@ const asideBarExperimentStyles = css`
     }
 
     ${TourTags} {
-      margin-top: 0.75rem;
+      margin-top: 1rem;
+      gap: 0.75rem;
 
       .tour-tag {
         ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
@@ -578,11 +583,11 @@ const asideBarExperimentStyles = css`
           &::after {
             content: '';
             position: relative;
-            height: 0.75rem;
-            width: 1px;
-            background-color: ${COLORS.GRAY.G6};
+            height: 0.25rem;
+            width: 0.25rem;
+            background-color: ${COLORS.GRAY.G5};
             margin-left: 0.4rem;
-            border-radius: 10px;
+            border-radius: 50%;
             transform: translateY(2px);
           }
         }
@@ -613,7 +618,7 @@ const asideBarExperimentStyles = css`
   }
 
   ${ProductBody} {
-    padding-bottom: 6.25rem;
+    padding-bottom: 8rem;
   }
 `;
 
@@ -813,8 +818,6 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
   ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
-  ${({ $isProductCardExperimentTreatmentVariant }) =>
-    $isProductCardExperimentTreatmentVariant && pcExperimentStyles}
 
   grid-template-rows: min-content min-content min-content;
   grid-template-columns: ${({ isTicketCard }) =>
@@ -827,9 +830,9 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }
 
 
-  ${({ $isProductCardExperimentTreatmentVariant, $isAsideBarOverlay }) => {
-    if ($isProductCardExperimentTreatmentVariant)
-      return $isAsideBarOverlay ? asideBarExperimentStyles : pcExperimentStyles;
+  ${({ $isModifiedProductCard, $isAsideBarOverlay }) => {
+    if ($isModifiedProductCard)
+      return $isAsideBarOverlay ? asideBarStyles : modifiedProductCardStyles;
     return null;
   }}
 
@@ -1248,6 +1251,10 @@ export const Tab = styled.div`
     border-color: ${COLORS.TEXT.CANDY_1};
     padding-bottom: 0.453125rem;
   }
+`;
+
+export const HeightAnimator = styled.div`
+  transition: height 0.5s ease-in-out;
 `;
 
 export const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
@@ -2302,9 +2309,38 @@ export const TourAvailableInLanguages = styled.div<{
   margin-top: -0.5rem;
 `;
 
-export const Wrapper = styled(HighlightTabsWrapper)`
+export const CompactHighlightsWrapper = styled(HighlightTabsWrapper)`
   position: relative;
+  display: flex;
+  flex-direction: column;
   row-gap: 0.75rem;
+  grid-template-rows: auto 1fr auto;
+`;
+
+export const HighlightsPanel = styled.div<{ $isOverlay?: boolean }>`
+  max-height: 15rem;
+  overflow: hidden;
+  align-self: stretch;
+
+  .content-crawl {
+    display: none;
+  }
+
+  ${({ $isOverlay }) =>
+    $isOverlay &&
+    css`
+      ::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, white, white 10%, transparent 50%);
+        left: 0;
+        bottom: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+    `}
 `;
 
 export const Heading = styled.h3`
@@ -2312,7 +2348,7 @@ export const Heading = styled.h3`
   margin: 0;
 `;
 
-export const ViewMoreButton = styled.button`
+export const ViewMoreButton = styled.button<{ $isOverlay?: boolean }>`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
   color: ${COLORS.BRAND.CANDY};
   background: none;
@@ -2321,11 +2357,19 @@ export const ViewMoreButton = styled.button`
   margin-left: 1rem;
   width: max-content;
   cursor: pointer;
+  z-index: 0;
 
   svg {
     height: 0.675rem;
     stroke-width: .15rem;
   }
+
+  ${({ $isOverlay }) =>
+    $isOverlay &&
+    css`
+      position: absolute;
+      bottom: 0;
+    `}
 `;
 
 export const SCPCarouselContainer = styled.div`

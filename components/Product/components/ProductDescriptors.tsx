@@ -26,6 +26,7 @@ export const ProductDescriptors = ({
   cancellationPolicy,
   cancellationPolicyHoverCallBack,
   showIcons = true,
+  isMobile = false,
 }: TProductDescriptors) => {
   const [
     cancellationPolicyEventRecorded,
@@ -55,6 +56,7 @@ export const ProductDescriptors = ({
 
         const canShowCancellationPolicyHover =
           !horizontal &&
+          !isMobile &&
           cancellationPolicy &&
           item === DESCRIPTORS.FREE_CANCELLATION;
 

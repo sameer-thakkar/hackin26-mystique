@@ -228,15 +228,6 @@ const MicrositeV1 = (props: any) => {
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
   const {
-    variant: productCardRevampExperimentVariant,
-    isExperimentResolving: isProductCardRevampExperimentResolving,
-    isEligible: isEligibleForProductCardRevamp,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_PHASE_0_EXPERIMENT',
-    customEligibilityCheckFn: () => isA1orC1MB(taggedMbType) && !isMobile,
-  });
-
-  const {
     variant: productCardRevampExperimentP1Variant,
     isExperimentResolving: isProductCardRevampExperimentP1Resolving,
     isEligible: isEligibleForProductCardRevampP1,
@@ -244,6 +235,7 @@ const MicrositeV1 = (props: any) => {
     experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
     customEligibilityCheckFn: () =>
       isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb,
+    noTrack: true,
   });
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -632,16 +624,12 @@ const MicrositeV1 = (props: any) => {
       productsLoading={productsLoading}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
-      isProductCardExperimentTreatmentVariant={
-        isEligibleForProductCardRevamp
-          ? productCardRevampExperimentVariant === VARIANTS.TREATMENT
-          : false
+      isModifiedProductCard={
+        isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
       }
       showSkeleton={
-        (isEligibleForProductCardRevamp &&
-          isProductCardRevampExperimentResolving) ||
-        (isEligibleForProductCardRevampP1 &&
-          isProductCardRevampExperimentP1Resolving)
+        isEligibleForProductCardRevampP1 &&
+        isProductCardRevampExperimentP1Resolving
       }
       isProductCardPhase1ExperimentTreatmentVariant={
         isEligibleForProductCardRevampP1

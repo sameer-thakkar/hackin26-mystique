@@ -42,7 +42,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     setOrderedFilteredTours,
     setProductsLoading,
     categoryInfo,
-    isProductCardPhase1ExpTreatment = true,
+    isProductCardPhase1ExpTreatment = false,
     changeTourListFilterStatus,
   } = props;
   const [showFilters, setShowFilters] = useState<boolean | null>(null);
@@ -50,13 +50,11 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     selectedDateTimeFilterButtonIndex,
     setSelectedDateTimeFilterButtonIndex,
   ] = useState(0);
-  const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] = useState(
-    false
-  );
+  const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] =
+    useState(false);
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [categoryStates, setCategoryStates] = useState<
-    Record<number, boolean>
-  >();
+  const [categoryStates, setCategoryStates] =
+    useState<Record<number, boolean>>();
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];
@@ -204,22 +202,24 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
             : 'Automatic',
         });
 
-        if (isCategoriesClear)
-          trackEvent({
-            eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_CLEARED,
-            [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
-              categoryInfo!.categoriesAndSubCategories,
-              localCategoryStates!
-            ),
-          });
-        else
-          trackEvent({
-            eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_APPLIED,
-            [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
-              categoryInfo!.categoriesAndSubCategories,
-              localCategoryStates
-            ),
-          });
+        if (isProductCardPhase1ExpTreatment) {
+          if (isCategoriesClear)
+            trackEvent({
+              eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_CLEARED,
+              [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
+                categoryInfo!.categoriesAndSubCategories,
+                localCategoryStates!
+              ),
+            });
+          else
+            trackEvent({
+              eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_APPLIED,
+              [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
+                categoryInfo!.categoriesAndSubCategories,
+                localCategoryStates
+              ),
+            });
+        }
 
         router.replace(
           {

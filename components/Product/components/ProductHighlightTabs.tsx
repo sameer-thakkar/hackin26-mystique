@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { PrismicRichText } from '@prismicio/react';
@@ -8,6 +8,7 @@ import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import { TProductHighlightTabs } from 'components/Product/interface';
 import {
+  HeightAnimator,
   HighlightTabsWrapper,
   SwiperControls,
   Tab,
@@ -35,6 +36,7 @@ export const HighlightTabs = ({
   showCard,
   isLoading = false,
   className,
+  controlHeight,
 }: TProductHighlightTabs) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
@@ -42,6 +44,8 @@ export const HighlightTabs = ({
   const [_currentIndex, updateCurrentIndex] = useState(0);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const updateIndex = useCallback(() => {
     if (isMobile || !swiper) {
@@ -79,7 +83,28 @@ export const HighlightTabs = ({
   };
 
   useEffect(() => {
-    onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
+    onTabChange({
+      tab: tabs[0],
+      index: 0,
+      defaultSelection: true,
+    });
+
+    if (!controlHeight || !contentRef.current) return;
+
+    const contentContainer = contentRef.current.children[0];
+
+    const observer = new ResizeObserver((entries) => {
+      if (contentRef.current)
+        contentRef.current.style.height = `${entries[0].contentRect.height}px`;
+    });
+
+    if (!contentContainer) return;
+
+    observer.observe(contentContainer);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -143,8 +168,9 @@ export const HighlightTabs = ({
             </Conditional>
           </SwiperControls>
         </TabsWrapper>
-        <div>
-          {tabs.map((tab: any, index: number) => (
+        <HeightAnimator ref={contentRef}>
+          <div>
+            {tabs.map((tab: any, index: number) => (
             <TabPanel
               isActive={_currentIndex == index}
               key={index}
@@ -173,7 +199,8 @@ export const HighlightTabs = ({
               </Conditional>
             </TabPanel>
           ))}
-        </div>
+          </div>
+        </HeightAnimator>
       </HighlightTabsWrapper>
     </Conditional>
   );

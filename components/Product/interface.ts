@@ -31,6 +31,7 @@ export type TProductDescriptors = {
   cancellationPolicy?: string;
   cancellationPolicyHoverCallBack?: () => void;
   showIcons?: boolean;
+  isMobile?: boolean;
 };
 
 export type TProductHighlightTabs = {
@@ -42,6 +43,7 @@ export type TProductHighlightTabs = {
   showCard?: boolean;
   isLoading?: boolean;
   className?: string;
+  controlHeight?: boolean;
 };
 
 export type TSpecialProductType = {
