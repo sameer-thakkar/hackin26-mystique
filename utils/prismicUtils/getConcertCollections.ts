@@ -48,10 +48,8 @@ const getConcertCollectionDocs = async (mbCollection: string | null) => {
       venuePagesPromises,
     ]);
 
-    const [
-      filteredMicrosites,
-      filteredVenuePages,
-    ] = handleSettledPromiseResults(aggregatedPromise);
+    const [filteredMicrosites, filteredVenuePages] =
+      handleSettledPromiseResults(aggregatedPromise);
 
     const aggregatedDocsStore = [
       ...filteredMicrosites?.results,

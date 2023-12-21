@@ -9,6 +9,8 @@ import {
   MB_CATEGORISATION,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
+  SUBCATEGORY,
+  SUBCATEGORY_IDS,
 } from 'const/index';
 
 export const getCategoryLandingPage = async ({
@@ -102,7 +104,9 @@ export const getSubCategoryPills = async ({
   if (!isSubCategoryPage) {
     subCategoryPills = subCategories.map((subCategory: Record<string, any>) => {
       const { id, name, displayName } = subCategory || {};
-      if (!id) return;
+
+      if (!id || String(id) === SUBCATEGORY_IDS[SUBCATEGORY.CITY_CARDS]) return;
+
       const iconUrl = getSubCategoryIconUrl(id);
       return {
         id,
@@ -121,7 +125,10 @@ export const getSubCategoryPills = async ({
             (subCategory: Record<string, any>) =>
               label === subCategory?.displayName
           ) || {};
-        if (!id) return;
+
+        if (!id || String(id) === SUBCATEGORY_IDS[SUBCATEGORY.CITY_CARDS])
+          return;
+
         const iconUrl = getSubCategoryIconUrl(id);
         return {
           id,

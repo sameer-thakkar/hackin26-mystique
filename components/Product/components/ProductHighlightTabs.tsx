@@ -18,8 +18,8 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const swiperParams: SwiperProps = {
@@ -171,34 +171,34 @@ export const HighlightTabs = ({
         <HeightAnimator ref={contentRef}>
           <div>
             {tabs.map((tab: any, index: number) => (
-            <TabPanel
-              isActive={_currentIndex == index}
-              key={index}
-              pageType={pageType}
-              className="tab-panel"
-            >
-              <Conditional if={!isLoading}>
-                <PrismicRichText
-                  field={tab.contents}
-                  components={shortCodeSerializer}
-                />
-              </Conditional>
-              <Conditional if={isLoading}>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-                <div>
-                  <Skeleton height="0.9375rem" borderRadius={2} />
-                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
-                </div>
-              </Conditional>
-            </TabPanel>
-          ))}
+              <TabPanel
+                isActive={_currentIndex == index}
+                key={index}
+                pageType={pageType}
+                className="tab-panel"
+              >
+                <Conditional if={!isLoading}>
+                  <PrismicRichText
+                    field={tab.contents}
+                    components={shortCodeSerializer}
+                  />
+                </Conditional>
+                <Conditional if={isLoading}>
+                  <div>
+                    <Skeleton height="0.9375rem" borderRadius={2} />
+                    <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                  </div>
+                  <div>
+                    <Skeleton height="0.9375rem" borderRadius={2} />
+                    <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                  </div>
+                  <div>
+                    <Skeleton height="0.9375rem" borderRadius={2} />
+                    <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                  </div>
+                </Conditional>
+              </TabPanel>
+            ))}
           </div>
         </HeightAnimator>
       </HighlightTabsWrapper>

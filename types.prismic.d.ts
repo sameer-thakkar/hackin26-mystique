@@ -16,13 +16,12 @@ interface BannerDocumentData {}
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type BannerDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<BannerDocumentData>,
-  'banner',
-  Lang
->;
+export type BannerDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BannerDocumentData>,
+    'banner',
+    Lang
+  >;
 
 /**
  * Item in *Common Listicle → Header Scripts*
@@ -280,13 +279,12 @@ interface CommonDataDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type CommonDataDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<CommonDataDocumentData>,
-  'common_data',
-  Lang
->;
+export type CommonDataDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<CommonDataDocumentData>,
+    'common_data',
+    Lang
+  >;
 
 /**
  * Primary content in *Common Footer → Slice zone → Footer Column → Primary*
@@ -337,7 +335,8 @@ export type CommonFooterDocumentDataBodyFooterColumnSlice = prismic.Slice<
   Simplify<CommonFooterDocumentDataBodyFooterColumnSliceItem>
 >;
 
-type CommonFooterDocumentDataBodySlice = CommonFooterDocumentDataBodyFooterColumnSlice;
+type CommonFooterDocumentDataBodySlice =
+  CommonFooterDocumentDataBodyFooterColumnSlice;
 
 /**
  * Content for Common Footer documents
@@ -447,13 +446,12 @@ interface CommonFooterDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type CommonFooterDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<CommonFooterDocumentData>,
-  'common_footer',
-  Lang
->;
+export type CommonFooterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<CommonFooterDocumentData>,
+    'common_footer',
+    Lang
+  >;
 
 /**
  * Item in *Common Header → Dropdown Menu [V2]*
@@ -777,13 +775,12 @@ interface CommonHeaderDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type CommonHeaderDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<CommonHeaderDocumentData>,
-  'common_header',
-  Lang
->;
+export type CommonHeaderDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<CommonHeaderDocumentData>,
+    'common_header',
+    Lang
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Tab Wrapper Start → Primary*
@@ -839,11 +836,12 @@ export interface ContentFrameworkDocumentDataBodyTabWrapperStartSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyTabWrapperStartSlice = prismic.Slice<
-  'tab_wrapper___start',
-  Simplify<ContentFrameworkDocumentDataBodyTabWrapperStartSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyTabWrapperStartSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyTabWrapperStartSlice =
+  prismic.Slice<
+    'tab_wrapper___start',
+    Simplify<ContentFrameworkDocumentDataBodyTabWrapperStartSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyTabWrapperStartSliceItem>
+  >;
 
 /**
  * Slice for *Content Framework → Slice zone*
@@ -995,11 +993,12 @@ export interface ContentFrameworkDocumentDataBodyQuestionRepeatableSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyQuestionRepeatableSlice = prismic.Slice<
-  'question___repeatable',
-  Simplify<ContentFrameworkDocumentDataBodyQuestionRepeatableSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyQuestionRepeatableSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyQuestionRepeatableSlice =
+  prismic.Slice<
+    'question___repeatable',
+    Simplify<ContentFrameworkDocumentDataBodyQuestionRepeatableSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyQuestionRepeatableSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Rich Text → Primary*
@@ -1163,11 +1162,12 @@ export interface ContentFrameworkDocumentDataBodyCardSectionStartSlicePrimary {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyCardSectionStartSlice = prismic.Slice<
-  'card_section___start',
-  Simplify<ContentFrameworkDocumentDataBodyCardSectionStartSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyCardSectionStartSlice =
+  prismic.Slice<
+    'card_section___start',
+    Simplify<ContentFrameworkDocumentDataBodyCardSectionStartSlicePrimary>,
+    never
+  >;
 
 /**
  * Slice for *Content Framework → Slice zone*
@@ -1429,11 +1429,12 @@ export interface ContentFrameworkDocumentDataBodyTableRowsRepeatableSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyTableRowsRepeatableSlice = prismic.Slice<
-  'table_rows___repeatable',
-  Simplify<ContentFrameworkDocumentDataBodyTableRowsRepeatableSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyTableRowsRepeatableSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyTableRowsRepeatableSlice =
+  prismic.Slice<
+    'table_rows___repeatable',
+    Simplify<ContentFrameworkDocumentDataBodyTableRowsRepeatableSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyTableRowsRepeatableSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Background Start → Primary*
@@ -1476,11 +1477,12 @@ export interface ContentFrameworkDocumentDataBodyBackgroundStartSlicePrimary {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyBackgroundStartSlice = prismic.Slice<
-  'background___start',
-  Simplify<ContentFrameworkDocumentDataBodyBackgroundStartSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyBackgroundStartSlice =
+  prismic.Slice<
+    'background___start',
+    Simplify<ContentFrameworkDocumentDataBodyBackgroundStartSlicePrimary>,
+    never
+  >;
 
 /**
  * Slice for *Content Framework → Slice zone*
@@ -1682,11 +1684,12 @@ export interface ContentFrameworkDocumentDataBodyComparisionTableSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyComparisionTableSlice = prismic.Slice<
-  'comparision_table',
-  Simplify<ContentFrameworkDocumentDataBodyComparisionTableSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyComparisionTableSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyComparisionTableSlice =
+  prismic.Slice<
+    'comparision_table',
+    Simplify<ContentFrameworkDocumentDataBodyComparisionTableSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyComparisionTableSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Image Gallery → Primary*
@@ -1987,11 +1990,12 @@ export interface ContentFrameworkDocumentDataBodyImageLinksCarouselSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyImageLinksCarouselSlice = prismic.Slice<
-  'image_links_carousel',
-  Simplify<ContentFrameworkDocumentDataBodyImageLinksCarouselSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyImageLinksCarouselSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyImageLinksCarouselSlice =
+  prismic.Slice<
+    'image_links_carousel',
+    Simplify<ContentFrameworkDocumentDataBodyImageLinksCarouselSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyImageLinksCarouselSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Microbrand Cards → Primary*
@@ -2097,11 +2101,12 @@ export interface ContentFrameworkDocumentDataBodyMicrobrandCardsSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyMicrobrandCardsSlice = prismic.Slice<
-  'microbrand_cards',
-  Simplify<ContentFrameworkDocumentDataBodyMicrobrandCardsSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyMicrobrandCardsSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyMicrobrandCardsSlice =
+  prismic.Slice<
+    'microbrand_cards',
+    Simplify<ContentFrameworkDocumentDataBodyMicrobrandCardsSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyMicrobrandCardsSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Card Carousel → Primary*
@@ -2283,11 +2288,12 @@ export interface ContentFrameworkDocumentDataBodyCategoryCarouselSlicePrimary {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyCategoryCarouselSlice = prismic.Slice<
-  'category_carousel',
-  Simplify<ContentFrameworkDocumentDataBodyCategoryCarouselSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyCategoryCarouselSlice =
+  prismic.Slice<
+    'category_carousel',
+    Simplify<ContentFrameworkDocumentDataBodyCategoryCarouselSlicePrimary>,
+    never
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Tours Section [V2] → Primary*
@@ -2349,11 +2355,12 @@ export interface ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyCategorySectionSlice = prismic.Slice<
-  'category_section',
-  Simplify<ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyCategorySectionSlice =
+  prismic.Slice<
+    'category_section',
+    Simplify<ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary>,
+    never
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Page Tabs → Primary*
@@ -2571,11 +2578,12 @@ export interface ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyCustomLinkedToursSlice = prismic.Slice<
-  'custom_linked_tours',
-  Simplify<ContentFrameworkDocumentDataBodyCustomLinkedToursSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyCustomLinkedToursSlice =
+  prismic.Slice<
+    'custom_linked_tours',
+    Simplify<ContentFrameworkDocumentDataBodyCustomLinkedToursSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Accordion → Primary*
@@ -2713,20 +2721,18 @@ export interface ContentFrameworkDocumentDataBodyListicleSectionStartSlicePrimar
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyListicleSectionStartSlice = prismic.Slice<
-  'listicle_section___start',
-  Simplify<ContentFrameworkDocumentDataBodyListicleSectionStartSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyListicleSectionStartSlice =
+  prismic.Slice<
+    'listicle_section___start',
+    Simplify<ContentFrameworkDocumentDataBodyListicleSectionStartSlicePrimary>,
+    never
+  >;
 
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyListicleSectionEndSlice = prismic.Slice<
-  'listicle_section___end',
-  Record<string, never>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyListicleSectionEndSlice =
+  prismic.Slice<'listicle_section___end', Record<string, never>, never>;
 
 /**
  * Primary content in *Content Framework → Slice zone → Listicle → Primary*
@@ -3625,11 +3631,12 @@ export interface ContentFrameworkDocumentDataBodyGlobalExperiencesSlicePrimary {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyGlobalExperiencesSlice = prismic.Slice<
-  'global_experiences',
-  Simplify<ContentFrameworkDocumentDataBodyGlobalExperiencesSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyGlobalExperiencesSlice =
+  prismic.Slice<
+    'global_experiences',
+    Simplify<ContentFrameworkDocumentDataBodyGlobalExperiencesSlicePrimary>,
+    never
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Ticket Card for Shoulder Page → Primary*
@@ -3837,11 +3844,12 @@ export interface ContentFrameworkDocumentDataBodyTicketCardShoulderPageSliceItem
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlice = prismic.Slice<
-  'ticket_card_shoulder_page',
-  Simplify<ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyTicketCardShoulderPageSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlice =
+  prismic.Slice<
+    'ticket_card_shoulder_page',
+    Simplify<ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyTicketCardShoulderPageSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Accordion Row → Primary*
@@ -3969,13 +3977,12 @@ export interface ContentFrameworkDocumentDataBodyAutomatedComparisonTableSlicePr
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyAutomatedComparisonTableSlice = prismic.Slice<
-  'automated_comparison_table',
-  Simplify<
-    ContentFrameworkDocumentDataBodyAutomatedComparisonTableSlicePrimary
-  >,
-  never
->;
+export type ContentFrameworkDocumentDataBodyAutomatedComparisonTableSlice =
+  prismic.Slice<
+    'automated_comparison_table',
+    Simplify<ContentFrameworkDocumentDataBodyAutomatedComparisonTableSlicePrimary>,
+    never
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → UGC Carousel  → Primary*
@@ -4110,11 +4117,12 @@ export interface ContentFrameworkDocumentDataBodyCarouselGallerySliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyCarouselGallerySlice = prismic.Slice<
-  'carousel_gallery',
-  Simplify<ContentFrameworkDocumentDataBodyCarouselGallerySlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyCarouselGallerySliceItem>
->;
+export type ContentFrameworkDocumentDataBodyCarouselGallerySlice =
+  prismic.Slice<
+    'carousel_gallery',
+    Simplify<ContentFrameworkDocumentDataBodyCarouselGallerySlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyCarouselGallerySliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Audio Guide → Primary*
@@ -4724,20 +4732,18 @@ export interface ContentFrameworkDocumentDataBodyListicleSectionV2StartSlicePrim
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyListicleSectionV2StartSlice = prismic.Slice<
-  'listicle_section_v2___start',
-  Simplify<ContentFrameworkDocumentDataBodyListicleSectionV2StartSlicePrimary>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyListicleSectionV2StartSlice =
+  prismic.Slice<
+    'listicle_section_v2___start',
+    Simplify<ContentFrameworkDocumentDataBodyListicleSectionV2StartSlicePrimary>,
+    never
+  >;
 
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyListicleSectionV2EndSlice = prismic.Slice<
-  'listicle_section_v2___end',
-  Record<string, never>,
-  never
->;
+export type ContentFrameworkDocumentDataBodyListicleSectionV2EndSlice =
+  prismic.Slice<'listicle_section_v2___end', Record<string, never>, never>;
 
 /**
  * Primary content in *Content Framework → Slice zone → Table V3 Start → Primary*
@@ -5201,11 +5207,12 @@ export interface ContentFrameworkDocumentDataBodyAirportsCarouselSliceItem {
 /**
  * Slice for *Content Framework → Slice zone*
  */
-export type ContentFrameworkDocumentDataBodyAirportsCarouselSlice = prismic.Slice<
-  'airports_carousel',
-  Simplify<ContentFrameworkDocumentDataBodyAirportsCarouselSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyAirportsCarouselSliceItem>
->;
+export type ContentFrameworkDocumentDataBodyAirportsCarouselSlice =
+  prismic.Slice<
+    'airports_carousel',
+    Simplify<ContentFrameworkDocumentDataBodyAirportsCarouselSlicePrimary>,
+    Simplify<ContentFrameworkDocumentDataBodyAirportsCarouselSliceItem>
+  >;
 
 /**
  * Primary content in *Content Framework → Slice zone → Structured Card → Primary*
@@ -5423,13 +5430,12 @@ interface ContentFrameworkDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ContentFrameworkDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<ContentFrameworkDocumentData>,
-  'content_framework',
-  Lang
->;
+export type ContentFrameworkDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ContentFrameworkDocumentData>,
+    'content_framework',
+    Lang
+  >;
 
 /**
  * Item content in *Content Page → Slice zone → Page Tabs → Items*
@@ -5559,11 +5565,12 @@ export interface ContentPageDocumentDataBodyPictureCaptionGallerySliceItem {
 /**
  * Slice for *Content Page → Slice zone*
  */
-export type ContentPageDocumentDataBodyPictureCaptionGallerySlice = prismic.Slice<
-  'picture_caption_gallery',
-  Simplify<ContentPageDocumentDataBodyPictureCaptionGallerySlicePrimary>,
-  Simplify<ContentPageDocumentDataBodyPictureCaptionGallerySliceItem>
->;
+export type ContentPageDocumentDataBodyPictureCaptionGallerySlice =
+  prismic.Slice<
+    'picture_caption_gallery',
+    Simplify<ContentPageDocumentDataBodyPictureCaptionGallerySlicePrimary>,
+    Simplify<ContentPageDocumentDataBodyPictureCaptionGallerySliceItem>
+  >;
 
 /**
  * Primary content in *Content Page → Slice zone → Internal Content Card → Primary*
@@ -7514,13 +7521,12 @@ interface ContentPageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ContentPageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<ContentPageDocumentData>,
-  'content_page',
-  Lang
->;
+export type ContentPageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ContentPageDocumentData>,
+    'content_page',
+    Lang
+  >;
 
 /**
  * Item in *email → Subject*
@@ -10621,9 +10627,8 @@ interface EmailDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type EmailDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<Simplify<EmailDocumentData>, 'email', Lang>;
+export type EmailDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<EmailDocumentData>, 'email', Lang>;
 
 /**
  * Primary content in *Global City → Slice zone → Banner → Primary*
@@ -11212,13 +11217,12 @@ interface GlobalCityDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalCityDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<GlobalCityDocumentData>,
-  'global_city',
-  Lang
->;
+export type GlobalCityDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlobalCityDocumentData>,
+    'global_city',
+    Lang
+  >;
 
 /**
  * Item in *Global Collection → Secondary Categories*
@@ -12062,13 +12066,12 @@ interface GlobalCollectionDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalCollectionDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<GlobalCollectionDocumentData>,
-  'global_collection',
-  Lang
->;
+export type GlobalCollectionDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlobalCollectionDocumentData>,
+    'global_collection',
+    Lang
+  >;
 
 /**
  * Item in *Global Country → Content Type*
@@ -12574,13 +12577,12 @@ interface GlobalCountryDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalCountryDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<GlobalCountryDocumentData>,
-  'global_country',
-  Lang
->;
+export type GlobalCountryDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlobalCountryDocumentData>,
+    'global_country',
+    Lang
+  >;
 
 /**
  * Item content in *Global Experience → Slice zone → Experiences → Items*
@@ -13348,13 +13350,12 @@ interface GlobalExperienceDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalExperienceDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<GlobalExperienceDocumentData>,
-  'global_experience',
-  Lang
->;
+export type GlobalExperienceDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlobalExperienceDocumentData>,
+    'global_experience',
+    Lang
+  >;
 
 /**
  * Primary content in *Global Homepage → Slice zone → Collection Carousel → Primary*
@@ -13414,13 +13415,15 @@ export interface GlobalHomepageDocumentDataBodyCollectionCarouselSlicePrimary {
 /**
  * Slice for *Global Homepage → Slice zone*
  */
-export type GlobalHomepageDocumentDataBodyCollectionCarouselSlice = prismic.Slice<
-  'collection_carousel',
-  Simplify<GlobalHomepageDocumentDataBodyCollectionCarouselSlicePrimary>,
-  never
->;
+export type GlobalHomepageDocumentDataBodyCollectionCarouselSlice =
+  prismic.Slice<
+    'collection_carousel',
+    Simplify<GlobalHomepageDocumentDataBodyCollectionCarouselSlicePrimary>,
+    never
+  >;
 
-type GlobalHomepageDocumentDataBodySlice = GlobalHomepageDocumentDataBodyCollectionCarouselSlice;
+type GlobalHomepageDocumentDataBodySlice =
+  GlobalHomepageDocumentDataBodyCollectionCarouselSlice;
 
 /**
  * Item in *Global Homepage → Banner Images*
@@ -14006,13 +14009,12 @@ interface GlobalHomepageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalHomepageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<GlobalHomepageDocumentData>,
-  'global_homepage',
-  Lang
->;
+export type GlobalHomepageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlobalHomepageDocumentData>,
+    'global_homepage',
+    Lang
+  >;
 
 /**
  * Content for Headout Category Content documents
@@ -14182,13 +14184,12 @@ interface HoCategoryContentDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HoCategoryContentDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<HoCategoryContentDocumentData>,
-  'ho_category_content',
-  Lang
->;
+export type HoCategoryContentDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<HoCategoryContentDocumentData>,
+    'ho_category_content',
+    Lang
+  >;
 
 /**
  * Item in *HOHO Routes → Route Tab*
@@ -14298,13 +14299,12 @@ interface HohoRoutesDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HohoRoutesDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<HohoRoutesDocumentData>,
-  'hoho_routes',
-  Lang
->;
+export type HohoRoutesDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<HohoRoutesDocumentData>,
+    'hoho_routes',
+    Lang
+  >;
 
 /**
  * Content for label documents
@@ -14342,13 +14342,8 @@ interface LabelDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type LabelDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<LabelDocumentData>,
-  'label',
-  Lang
->;
+export type LabelDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<LabelDocumentData>, 'label', Lang>;
 
 /**
  * Content for Listicle Westend documents
@@ -14417,13 +14412,12 @@ interface ListicleWestendDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ListicleWestendDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<ListicleWestendDocumentData>,
-  'listicle_westend',
-  Lang
->;
+export type ListicleWestendDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ListicleWestendDocumentData>,
+    'listicle_westend',
+    Lang
+  >;
 
 /**
  * Item in *Microsite → Header Currencies List*
@@ -16715,11 +16709,12 @@ export interface MicrositeDocumentDataBody2PictureCaptionGallerySliceItem {
 /**
  * Slice for *Microsite → Slice zone*
  */
-export type MicrositeDocumentDataBody2PictureCaptionGallerySlice = prismic.Slice<
-  'picture_caption_gallery',
-  Simplify<MicrositeDocumentDataBody2PictureCaptionGallerySlicePrimary>,
-  Simplify<MicrositeDocumentDataBody2PictureCaptionGallerySliceItem>
->;
+export type MicrositeDocumentDataBody2PictureCaptionGallerySlice =
+  prismic.Slice<
+    'picture_caption_gallery',
+    Simplify<MicrositeDocumentDataBody2PictureCaptionGallerySlicePrimary>,
+    Simplify<MicrositeDocumentDataBody2PictureCaptionGallerySliceItem>
+  >;
 
 /**
  * Primary content in *Microsite → Slice zone → Picture Gallery → Primary*
@@ -17672,7 +17667,8 @@ export type MicrositeDocumentDataAllToursDetailedTourSlice = prismic.Slice<
   Simplify<MicrositeDocumentDataAllToursDetailedTourSliceItem>
 >;
 
-type MicrositeDocumentDataAllToursSlice = MicrositeDocumentDataAllToursDetailedTourSlice;
+type MicrositeDocumentDataAllToursSlice =
+  MicrositeDocumentDataAllToursDetailedTourSlice;
 
 /**
  * Item in *Microsite → Content Type*
@@ -18323,9 +18319,7 @@ interface MicrositeDocumentData {
    * - **Tab**: Description
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  content_framework_treatment: prismic.ContentRelationshipField<
-    'content_framework'
-  >;
+  content_framework_treatment: prismic.ContentRelationshipField<'content_framework'>;
 
   /**
    * Slice zone field in *Microsite*
@@ -19185,13 +19179,12 @@ interface MicrositeDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type MicrositeDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<MicrositeDocumentData>,
-  'microsite',
-  Lang
->;
+export type MicrositeDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<MicrositeDocumentData>,
+    'microsite',
+    Lang
+  >;
 
 /**
  * Item in *News Page → Other Meta tags*
@@ -19996,13 +19989,12 @@ interface NewsPageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NewsPageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<NewsPageDocumentData>,
-  'news_page',
-  Lang
->;
+export type NewsPageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<NewsPageDocumentData>,
+    'news_page',
+    Lang
+  >;
 
 interface NeyantaDocumentData {}
 
@@ -20015,13 +20007,12 @@ interface NeyantaDocumentData {}
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NeyantaDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<NeyantaDocumentData>,
-  'neyanta',
-  Lang
->;
+export type NeyantaDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NeyantaDocumentData>,
+    'neyanta',
+    Lang
+  >;
 
 /**
  * Item in *[Offer] Free Tour → Carousel Images*
@@ -20197,13 +20188,12 @@ interface OfferFreeTourDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type OfferFreeTourDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<OfferFreeTourDocumentData>,
-  'offer_free_tour',
-  Lang
->;
+export type OfferFreeTourDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<OfferFreeTourDocumentData>,
+    'offer_free_tour',
+    Lang
+  >;
 
 /**
  * Item in *Listicle → Other meta tags*
@@ -20470,9 +20460,8 @@ interface PageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, 'page', Lang>;
+export type PageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, 'page', Lang>;
 
 /**
  * Primary content in *Popup → Slice zone → Single Image CTA → Primary*
@@ -20853,9 +20842,8 @@ interface PopupDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PopupDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<Simplify<PopupDocumentData>, 'popup', Lang>;
+export type PopupDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<PopupDocumentData>, 'popup', Lang>;
 
 /**
  * Content for Product Cards documents
@@ -21004,13 +20992,12 @@ interface ProductCardsDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ProductCardsDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<ProductCardsDocumentData>,
-  'product_cards',
-  Lang
->;
+export type ProductCardsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ProductCardsDocumentData>,
+    'product_cards',
+    Lang
+  >;
 
 /**
  * Item in *Promo Codes → Promos*
@@ -21122,13 +21109,12 @@ interface PromoCodesDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PromoCodesDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<PromoCodesDocumentData>,
-  'promo_codes',
-  Lang
->;
+export type PromoCodesDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<PromoCodesDocumentData>,
+    'promo_codes',
+    Lang
+  >;
 
 /**
  * Content for Redirect documents
@@ -21167,13 +21153,12 @@ interface RedirectDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type RedirectDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<RedirectDocumentData>,
-  'redirect',
-  Lang
->;
+export type RedirectDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<RedirectDocumentData>,
+    'redirect',
+    Lang
+  >;
 
 /**
  * Item in *Safety Banner → Options*
@@ -21498,13 +21483,12 @@ interface SafetyBannerDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type SafetyBannerDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<
-  Simplify<SafetyBannerDocumentData>,
-  'safety_banner',
-  Lang
->;
+export type SafetyBannerDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SafetyBannerDocumentData>,
+    'safety_banner',
+    Lang
+  >;
 
 /**
  * Item in *Show Page → Content Type*
@@ -22023,13 +22007,12 @@ interface ShowpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ShowpageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<ShowpageDocumentData>,
-  'showpage',
-  Lang
->;
+export type ShowpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ShowpageDocumentData>,
+    'showpage',
+    Lang
+  >;
 
 /**
  * Item in *Top Attractions → Attraction List*
@@ -22105,13 +22088,12 @@ interface TopAttractionsDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type TopAttractionsDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<TopAttractionsDocumentData>,
-  'top_attractions',
-  Lang
->;
+export type TopAttractionsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<TopAttractionsDocumentData>,
+    'top_attractions',
+    Lang
+  >;
 
 /**
  * Item in *Listicle Tour → Listicle Categories*
@@ -22236,9 +22218,8 @@ interface TourDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type TourDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithoutUID<Simplify<TourDocumentData>, 'tour', Lang>;
+export type TourDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<TourDocumentData>, 'tour', Lang>;
 
 /**
  * Item in *Venue Page → Amenities dropdown*
@@ -23338,13 +23319,12 @@ interface VenuePageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type VenuePageDocument<
-  Lang extends string = string
-> = prismic.PrismicDocumentWithUID<
-  Simplify<VenuePageDocumentData>,
-  'venue_page',
-  Lang
->;
+export type VenuePageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<VenuePageDocumentData>,
+    'venue_page',
+    Lang
+  >;
 
 export type AllDocumentTypes =
   | BannerDocument

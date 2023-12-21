@@ -80,7 +80,7 @@ const ComparisonTableWrapper = styled.div<{
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(3, 1fr) ${({ $isMobile }) =>
-      $isMobile ? '16px' : ''};
+        $isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -142,9 +142,9 @@ const ComparisonTableWrapper = styled.div<{
     height: 4.125rem;
     display: flex;
     align-items: center;
-   ${({ $isTop }) =>
-     $isTop &&
-     `
+    ${({ $isTop }) =>
+      $isTop &&
+      `
       border-bottom: 1px solid ${COLORS.GRAY.G6};
     `}
   }
@@ -220,8 +220,9 @@ const ComparisonTableWrapper = styled.div<{
       max-width: 100vw;
       width: 100% !important;
       grid-column-gap: 16px;
-      grid-template-columns: 0px repeat(${({ $tourCount }) =>
-        $tourCount}, 164px) 4px;
+      grid-template-columns:
+        0px repeat(${({ $tourCount }) => $tourCount}, 164px)
+        4px;
       position: relative;
     }
     .row::before {

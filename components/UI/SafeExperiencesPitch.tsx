@@ -299,9 +299,8 @@ export const getSafetyDescription = async (
   }
 };
 
-export type TSetSafetyBannerData = Simplify<
-  SafetyBannerDocumentDataOptionsItem
-> | null;
+export type TSetSafetyBannerData =
+  Simplify<SafetyBannerDocumentDataOptionsItem> | null;
 
 const SafeExperiencesPitch = ({
   allTags = [],
@@ -321,9 +320,8 @@ const SafeExperiencesPitch = ({
     ],
   };
   const { lang, primaryCountry, primaryCity } = useContext(MBContext);
-  const [safetyBannerData, setSafetyBannerData] = useState<
-    TSetSafetyBannerData
-  >(null);
+  const [safetyBannerData, setSafetyBannerData] =
+    useState<TSetSafetyBannerData>(null);
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
       (data) => {

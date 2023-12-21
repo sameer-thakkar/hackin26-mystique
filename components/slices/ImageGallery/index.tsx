@@ -267,7 +267,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   const activeImage = images?.[currentIndex];
   const fullImageHeading = asText(activeImage?.heading as []);
 
-
   return (
     <Conditional if={images?.length}>
       <StyledImageGallery ref={imageGalleryRef} $isNewsPage={$isNewsPage}>

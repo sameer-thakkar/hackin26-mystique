@@ -1889,3 +1889,7 @@ export const ENTITY_ICONS_FOLDER_LINK =
   'https://cdn-imgix-open.headout.com/categories';
 
 export const SHORTER_CACHE_AGE = 10;
+
+export const SUBCATEGORY = {
+  CITY_CARDS: 'City Cards',
+};

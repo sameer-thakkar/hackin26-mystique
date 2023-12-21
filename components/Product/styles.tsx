@@ -829,7 +829,6 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     border-radius: 0;
   }
 
-
   ${({ $isModifiedProductCard, $isAsideBarOverlay }) => {
     if ($isModifiedProductCard)
       return $isAsideBarOverlay ? asideBarStyles : modifiedProductCardStyles;
@@ -894,10 +893,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       width: 100%;
     }
 
-      ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
-        $isProductCardPhase1ExperimentTreatmentVariant &&
-        productCardPhase1ExperimentTreatmentVariantCss}
-    
+    ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
+      $isProductCardPhase1ExperimentTreatmentVariant &&
+      productCardPhase1ExperimentTreatmentVariantCss}
+
     ${({ $isBannerCard }) =>
       $isBannerCard &&
       `
@@ -1033,12 +1032,12 @@ export const StyledRatingsContainer = styled.div`
 
     &.avg-rating {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
-  font-family: ${HALYARD.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
     }
 
     &.rating-count {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
-  font-family: ${HALYARD.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
     }
   }
 `;
@@ -1066,7 +1065,7 @@ export const StyledCategoryContainer = styled.div<{
   margin-bottom: -0.25rem;
 
   ${CategoryIcon} {
-     background: ${({ $background }) => $background};
+    background: ${({ $background }) => $background};
   }
 
   span {
@@ -1877,7 +1876,9 @@ export const SpecialGuidedTourMoreDetailsCTA = styled.div`
   gap: 0.25rem;
   align-items: center;
   cursor: pointer;
-  svg {margin-top: 0.125rem;}
+  svg {
+    margin-top: 0.125rem;
+  }
   span {
     ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
     color:${COLORS.TEXT.CANDY_1};
@@ -2203,7 +2204,8 @@ export const AnimationHeader = styled.div`
   color: ${COLORS.TEXT.PEACHY_ORANGE_3};
   text-transform: uppercase;
   margin: 5.625rem 0 0.5rem;
-  &::before, &::after {
+  &::before,
+  &::after {
     width: 1.75rem;
     height: 0.0625rem;
     position: absolute;
@@ -2212,11 +2214,19 @@ export const AnimationHeader = styled.div`
   }
   &::before {
     left: -2rem;
-    background: linear-gradient(-90deg, #A4563B -3.28%, rgba(255, 255, 255, 0.00) 100%);
+    background: linear-gradient(
+      -90deg,
+      #a4563b -3.28%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
   &::after {
     right: -2rem;
-    background: linear-gradient(90deg, #A4563B -3.28%, rgba(255, 255, 255, 0.00) 100%);
+    background: linear-gradient(
+      90deg,
+      #a4563b -3.28%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
   @media (max-width: 768px) {
     margin: 0.0625rem auto -0.4375rem;
@@ -2361,7 +2371,7 @@ export const ViewMoreButton = styled.button<{ $isOverlay?: boolean }>`
 
   svg {
     height: 0.675rem;
-    stroke-width: .15rem;
+    stroke-width: 0.15rem;
   }
 
   ${({ $isOverlay }) =>
@@ -2402,7 +2412,7 @@ export const SCPPriceContainer = styled.div<{
     }
 
     .tour-price-container {
-        align-items: center;
+      align-items: center;
       .tour-price {
         .strike-through {
           ${expandFontToken(FONTS.SUBHEADING_LARGE)}
@@ -2411,11 +2421,11 @@ export const SCPPriceContainer = styled.div<{
     }
 
     ${SavedTag} {
-        background-color: ${COLORS.OKAY_GREEN[3]};
-        padding: 0.125rem 0.375rem 0.1875rem 0.375rem;
-        ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-        color: ${COLORS.BRAND.WHITE};
-        border-radius: 0.25rem;
+      background-color: ${COLORS.OKAY_GREEN[3]};
+      padding: 0.125rem 0.375rem 0.1875rem 0.375rem;
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      color: ${COLORS.BRAND.WHITE};
+      border-radius: 0.25rem;
     }
   }
 `;

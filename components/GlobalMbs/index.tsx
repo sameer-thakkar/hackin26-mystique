@@ -20,15 +20,15 @@ import { CUSTOM_TYPES } from 'const/index';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
-const CollectionPage: ComponentType<any> = dynamic(() =>
-  import('./views/CollectionPage')
+const CollectionPage: ComponentType<any> = dynamic(
+  () => import('./views/CollectionPage')
 );
-const ExperiencePage: ComponentType<any> = dynamic(() =>
-  import('./views/ExperiencePage')
+const ExperiencePage: ComponentType<any> = dynamic(
+  () => import('./views/ExperiencePage')
 );
 const HomePage: ComponentType<any> = dynamic(() => import('./views/HomePage'));
-const LongForm: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/LongForm')
+const LongForm: ComponentType<any> = dynamic(
+  () => import('components/MicrositeV2/LongForm')
 );
 
 const GlobalMB = (props: any) => {

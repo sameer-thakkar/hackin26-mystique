@@ -32,6 +32,7 @@ import {
   MB_CATEGORISATION,
   MONTHS,
   PAGE_URL_STRUCTURE,
+  SUBCATEGORY,
 } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -729,6 +730,9 @@ export const checkIfCatOrSubCatPage = async <T>(
     const { subCategories } = categoryData;
     const { tagged_sub_category: taggedSubCategory } =
       finalBaseLangCategorisationMetadata || {};
+
+    if (taggedSubCategory === SUBCATEGORY.CITY_CARDS) return false;
+
     return subCategories?.some(
       (subCategory: Record<string, any>) =>
         subCategory.name === taggedSubCategory

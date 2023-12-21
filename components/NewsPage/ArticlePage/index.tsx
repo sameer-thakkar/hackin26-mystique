@@ -12,35 +12,41 @@ import { getLangObject } from 'utils/helper';
 import { NEWS_PAGE_DATE_FORMAT } from 'const/index';
 import { strings } from 'const/strings';
 
-const DesktopMoreReads = dynamic(() =>
-  import(
-    /*webpackChunkName: "DesktopMoreReads"*/ 'components/NewsPage/components/DesktopMoreReads'
-  )
+const DesktopMoreReads = dynamic(
+  () =>
+    import(
+      /*webpackChunkName: "DesktopMoreReads"*/ 'components/NewsPage/components/DesktopMoreReads'
+    )
 );
-const MobileMoreReads = dynamic(() =>
-  import(
-    /*webpackChunkName: "MobileMoreReads"*/ 'components/NewsPage/components/MobileMoreReads'
-  )
+const MobileMoreReads = dynamic(
+  () =>
+    import(
+      /*webpackChunkName: "MobileMoreReads"*/ 'components/NewsPage/components/MobileMoreReads'
+    )
 );
-const MobileFeaturedNews = dynamic(() =>
-  import(
-    /*webpackChunkName: "MobileFeauturedNews"*/ 'components/NewsPage/components/MobileFeaturedNews'
-  )
+const MobileFeaturedNews = dynamic(
+  () =>
+    import(
+      /*webpackChunkName: "MobileFeauturedNews"*/ 'components/NewsPage/components/MobileFeaturedNews'
+    )
 );
-const NewsPageSidebar = dynamic(() =>
-  import(
-    /* webpackChunkName: "NewsPageSidebar" */ 'components/NewsPage/components/Sidebar'
-  )
+const NewsPageSidebar = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "NewsPageSidebar" */ 'components/NewsPage/components/Sidebar'
+    )
 );
-const Trailer = dynamic(() =>
-  import(
-    /* webpackChunkName: "Trailer" */ 'components/NewsPage/components/Trailer'
-  )
+const Trailer = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "Trailer" */ 'components/NewsPage/components/Trailer'
+    )
 );
-const CategorySlider = dynamic(() =>
-  import(
-    /* webpackChunkName: "CategorySlider" */ 'components/ShowPages/CategorySlider'
-  )
+const CategorySlider = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CategorySlider" */ 'components/ShowPages/CategorySlider'
+    )
 );
 
 const ArticlePage: React.FC<TNewsPageProps> = (props) => {

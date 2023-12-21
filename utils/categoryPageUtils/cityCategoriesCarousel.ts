@@ -49,13 +49,16 @@ const getCityCategoriesCarouselDocs = async ({
       ),
     ];
     const prismicClient = createClient();
-    const { results: filteredMicrosites } = await prismicClient.getByType(
-      'microsite',
-      {
-        pageSize: 50,
-        predicates: predicatesArray,
-      }
-    );
+    const { results } = await prismicClient.getByType('microsite', {
+      pageSize: 50,
+      predicates: predicatesArray,
+    });
+
+    const filteredMicrosites = results?.filter((doc) => {
+      const { data } = doc || {};
+      const { tagged_sub_category: taggedSubCategory } = data || {};
+      return !taggedSubCategory;
+    });
 
     sendLog({
       message: {

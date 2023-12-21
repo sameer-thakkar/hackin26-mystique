@@ -79,62 +79,72 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
     /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
   ).then((mod) => mod.ProductsWrapper)
 );
-const Banner: ComponentType<any> = dynamic(() =>
-  import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
+const Banner: ComponentType<any> = dynamic(
+  () => import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
-const Loader: ComponentType<any> = dynamic(() =>
-  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
+const Loader: ComponentType<any> = dynamic(
+  () => import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
-const LongForm: ComponentType<any> = dynamic(() =>
-  import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
+const LongForm: ComponentType<any> = dynamic(
+  () =>
+    import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
 );
-const CategoryHeader = dynamic(() =>
-  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(
+  () =>
+    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
-const CatAndSubCatPage = dynamic(() =>
-  import(
-    /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
-  )
+const CatAndSubCatPage = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
+    )
 );
-const MonthTabs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/slices/MonthTabs')
+const MonthTabs = dynamic(
+  () =>
+    import(/* webpackChunkName: "Breadcrumbs" */ 'components/slices/MonthTabs')
 );
 
-const LttLandingPageV2 = dynamic(() =>
-  import(
-    /* webpackChunkName: "LttLandingPageV2" */ 'components/MicrositeV2/LttLandingPageV2'
-  )
+const LttLandingPageV2 = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "LttLandingPageV2" */ 'components/MicrositeV2/LttLandingPageV2'
+    )
 );
-const ReviewSection = dynamic(() =>
-  import(
-    /* webpackChunkName: "ReviewSection" */ 'components/MicrositeV2/LttLandingPageV2/ReviewSection'
-  )
+const ReviewSection = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ReviewSection" */ 'components/MicrositeV2/LttLandingPageV2/ReviewSection'
+    )
 );
-const MobileBannerV2 = dynamic(() =>
-  import(
-    /* webpackChunkName: "MobileBannerV2" */ 'components/MicrositeV2/MobileBannerV2'
-  )
+const MobileBannerV2 = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "MobileBannerV2" */ 'components/MicrositeV2/MobileBannerV2'
+    )
 );
-const LttFeatureCard = dynamic(() =>
-  import(
-    /* webpackChunkName: "LttFeatureCard" */ 'components/ShowPages/FeatureCard'
-  )
+const LttFeatureCard = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "LttFeatureCard" */ 'components/ShowPages/FeatureCard'
+    )
 );
-const DesktopBannerV2 = dynamic(() =>
-  import(
-    /* webpackChunkName: "DesktopBannerV2" */ 'components/MicrositeV2/DesktopBannerV2'
-  )
+const DesktopBannerV2 = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DesktopBannerV2" */ 'components/MicrositeV2/DesktopBannerV2'
+    )
 );
-const Footer = dynamic(() =>
-  import(/* webpackChunkName: "Footer" */ 'components/common/Footer')
+const Footer = dynamic(
+  () => import(/* webpackChunkName: "Footer" */ 'components/common/Footer')
 );
-const MonthOnMonthPage = dynamic(() =>
-  import(
-    /* webpackChunkName: "MonthOnMonthPage"*/ 'components/MonthOnMonthPage'
-  )
+const MonthOnMonthPage = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "MonthOnMonthPage"*/ 'components/MonthOnMonthPage'
+    )
 );
 
 const V2MicrositeWrapper = styled.div<{
@@ -274,10 +284,8 @@ export const HomePage = (props: any) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const browseByCategorySectionRef = useRef<HTMLDivElement | null>(null);
-  const [
-    isCategoriesSectionSticking,
-    setIsCategoriesSectionSticking,
-  ] = useState(false);
+  const [isCategoriesSectionSticking, setIsCategoriesSectionSticking] =
+    useState(false);
 
   const {
     isEligible: isLTTRevampExpEligible,

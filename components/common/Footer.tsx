@@ -180,19 +180,20 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
     grid-auto-flow: row;
     grid-template-rows: max-content;
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
-    a, .toggle_panel_button {
+    a,
+    .toggle_panel_button {
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
       display: block;
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};     
+        isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
     }
     .toggle_panel_button {
       background: ${({ theme }) => theme.footer.background};
-      border:none; 
-      text-align:start;
-      padding:0;
-      cursor:pointer;
+      border: none;
+      text-align: start;
+      padding: 0;
+      cursor: pointer;
     }
   }
 
@@ -305,7 +306,7 @@ const FooterLegal = styled.div<{
       .image-wrap {
         width: auto;
         margin-right: 12px;
-        
+
         span {
           position: relative !important;
         }
@@ -359,7 +360,7 @@ const FooterLegal = styled.div<{
 
     .logo-wrapper {
       width: 100%;
-      
+
       .image-wrap {
         width: 100%;
         height: 44px;

@@ -7,9 +7,10 @@ import type {
 } from 'types.prismic';
 import type { TMbType } from '../interface';
 
-export type TProductCardData = ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlice & {
-  data: ProductCardsDocumentData;
-};
+export type TProductCardData =
+  ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlice & {
+    data: ProductCardsDocumentData;
+  };
 
 export type TContentPageDocument = ContentPageDocument & {
   data: {

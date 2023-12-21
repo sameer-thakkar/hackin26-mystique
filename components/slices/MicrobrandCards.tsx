@@ -153,14 +153,8 @@ export const LinkCardWrapper = (props: any) => {
 };
 
 export const LinkCard = (props: any) => {
-  const {
-    card,
-    index,
-    isFetched,
-    cardPrices,
-    currencySymbol,
-    cardClassName,
-  } = props;
+  const { card, index, isFetched, cardPrices, currencySymbol, cardClassName } =
+    props;
   const { lang } = useContext(MBContext);
 
   const { image, title, tgid, link } = card ?? {};

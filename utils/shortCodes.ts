@@ -8,23 +8,23 @@ import { getRichtextElements } from 'utils/shortcodeUtils';
 import { SHORT_CODE_TYPES } from 'const/index';
 
 const InlinePrice = dynamic(() => import('components/InlinePrice'));
-const NextAvailable = dynamic(() =>
-  import('components/shortcodes/NextAvailable')
+const NextAvailable = dynamic(
+  () => import('components/shortcodes/NextAvailable')
 );
 const InlineInvPrice = dynamic(() => import('components/InlineInvPrice'));
 const CTA = dynamic(() => import('components/shortcodes/CTA'));
 const Booster = dynamic(() => import('components/Booster'));
-const RatingBoosterCombo = dynamic(() =>
-  import('components/shortcodes/RatingBoosterCombo')
+const RatingBoosterCombo = dynamic(
+  () => import('components/shortcodes/RatingBoosterCombo')
 );
-const PopupTrigger = dynamic(() =>
-  import('components/shortcodes/PopupTrigger')
+const PopupTrigger = dynamic(
+  () => import('components/shortcodes/PopupTrigger')
 );
 const IFrame = dynamic(() => import('components/shortcodes/IFrame'));
 const Cross = dynamic(() => import('components/shortcodes/Cross'));
 const Check = dynamic(() => import('components/shortcodes/Check'));
-const SpotifyPlayer = dynamic(() =>
-  import('components/shortcodes/SpotifyPlayer')
+const SpotifyPlayer = dynamic(
+  () => import('components/shortcodes/SpotifyPlayer')
 );
 const Notes = dynamic(() => import('components/shortcodes/Notes'));
 
@@ -167,7 +167,8 @@ const shortCodesDict: ShortCodeDictionary = {
 };
 
 const getAllAttributes = (attributesString: any) => {
-  let attributePattern = /([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
+  let attributePattern =
+    /([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
   attributesString = attributesString.replace(/[\u00a0\u200b]/g, ' ');
 
   let named = {};

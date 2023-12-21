@@ -36,14 +36,15 @@ export type TDocumentResponse<T> = {
   shouldHaveShorterTtl?: boolean;
 };
 
-export type TModifiedMicrositeDocumentDataBodyTourListCategoryV1SlicePrimary = Simplify<
-  Omit<
-    MicrositeDocumentDataBodyTourListCategoryV1SlicePrimary,
-    'product_cards'
-  > & {
-    product_cards: Simplify<ProductCardsDocument>;
-  }
->;
+export type TModifiedMicrositeDocumentDataBodyTourListCategoryV1SlicePrimary =
+  Simplify<
+    Omit<
+      MicrositeDocumentDataBodyTourListCategoryV1SlicePrimary,
+      'product_cards'
+    > & {
+      product_cards: Simplify<ProductCardsDocument>;
+    }
+  >;
 
 export type TCategoryTourListV1 = Slice<
   'tour_list_category_v1',

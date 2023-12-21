@@ -5,7 +5,7 @@ import { getMenuUrl } from 'utils/headerUtils';
 import shouldIncludeinQueries from 'utils/headerUtils/shouldIncludeInQueries';
 import { sendLog } from 'utils/logger';
 import getTopCollectionsCarouselDocs from 'utils/prismicUtils/getTopCollectionsCarouselDocs';
-import { COOKIE } from 'const/index';
+import { COOKIE, SUBCATEGORY, SUBCATEGORY_IDS } from 'const/index';
 
 const findSubCategoryPageUrl = ({
   displayName,
@@ -143,6 +143,9 @@ export const getSubCategoryCarousels = async ({
     async (subCategory: Record<string, any>) => {
       try {
         const { id, heading, name, subCategoryPageUrl } = subCategory || {};
+
+        if (String(id) === SUBCATEGORY_IDS[SUBCATEGORY.CITY_CARDS]) return;
+
         const { pageData: topCollectionsData } =
           (await fetchCollectionTop({
             city: taggedCity,
@@ -199,5 +202,5 @@ export const getSubCategoryCarousels = async ({
     settledPromiseResults
   );
 
-  return subCategoryCarouselsData || [];
+  return subCategoryCarouselsData.filter(Boolean) || [];
 };
