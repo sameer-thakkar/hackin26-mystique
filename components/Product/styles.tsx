@@ -760,7 +760,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
         overflow: hidden;
       `
       : ''}
-  background-color: white;
+  background-color: ${({ isV3Design }) =>
+    isV3Design ? 'transparent' : COLORS.BRAND.WHITE};
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile, isV3Design }) =>
@@ -896,7 +897,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
       $isProductCardPhase1ExperimentTreatmentVariant &&
       productCardPhase1ExperimentTreatmentVariantCss}
-
+      
     ${({ $isBannerCard }) =>
       $isBannerCard &&
       `

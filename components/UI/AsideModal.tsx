@@ -558,7 +558,7 @@ const AsideModal = ({
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
-  const hasBack = stack.length > 1;
+  const hasBack = stack?.length > 1;
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(active);
   const scrollRef = useRef(null);
@@ -574,11 +574,13 @@ const AsideModal = ({
   const [shouldSlideOut, setSlideOut] = useState(false);
 
   useEffect(() => {
-    scroller.scrollTo('active-element', {
-      duration: 100,
-      smooth: 'easeInOutQuart',
-      containerId: 'side-container-index',
-    });
+    if (type === SIDEBAR_TYPES.SIDE_NAV) {
+      scroller.scrollTo('active-element', {
+        duration: 100,
+        smooth: 'easeInOutQuart',
+        containerId: 'side-container-index',
+      });
+    }
     const onPopState = () => {
       onClose(null, { triggeredByPopstate: true });
     };

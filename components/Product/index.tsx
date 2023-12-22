@@ -156,7 +156,7 @@ const Product = (props: any) => {
     isNonPoi = false,
     isModifiedProductCard = false,
     isSmallComboCard = false,
-    isProductCardPhase1ExperimentTreatmentVariant = true,
+    isProductCardPhase1ExperimentTreatmentVariant = false,
     reviewsDetails,
   } = props;
   const {
@@ -200,9 +200,11 @@ const Product = (props: any) => {
     const popup = urlParams.get('popup');
     if (pid != tgid) return;
     if (detialsPopupShown) return;
-    setDetailsPopupShown?.(true);
+    if (!setDetailsPopupShown) {
+      setDetailsPopupShown?.(true);
+    }
     if (popup === 'combo') {
-      if (isMobile && isComboWithMultiVariant) {
+      if (isMobile && isComboWithMultiVariant && !isV3Design) {
         // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
         addToAside({
           width: '100vw',
@@ -232,7 +234,30 @@ const Product = (props: any) => {
         });
       }
     }
-  }, [isMobile, showCard]);
+    if (popup === 'details') {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+      addToAside({
+        width: '100vw',
+        children: (
+          <ModalCardContainer>
+            {getProductCardElements(true, false)}
+          </ModalCardContainer>
+        ),
+        onCloseCallback: () => {
+          trackedToggleContent(true);
+        },
+        type: SIDEBAR_TYPES.PRODUCT_CARD,
+        tgid: tgid,
+        history: {
+          enable: true,
+          params: {
+            pid: tgid,
+            popup: 'combo',
+          },
+        },
+      });
+    }
+  }, [isMobile]);
 
   const {
     combo: isCombo,
@@ -240,6 +265,7 @@ const Product = (props: any) => {
     minDuration,
     maxDuration,
     images,
+    imageUrl: productImage,
   } = scorpioData || {};
 
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
@@ -577,6 +603,7 @@ const Product = (props: any) => {
       isModifiedProductCard,
       isProductCardPhase1ExperimentTreatmentVariant,
     });
+
   const trackedToggleContent = (isOpen: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
@@ -845,6 +872,29 @@ const Product = (props: any) => {
           // @ts-ignore
           ref={productRef}
         >
+          <Conditional if={isMobile && isV3Design && productImage}>
+            <div className="card-img">
+              <Image
+                url={productImage}
+                imageId="card-img"
+                aspectRatio={isMobile ? '21:9' : '3:4'}
+                width={
+                  isMobile
+                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                    : undefined
+                }
+                height={
+                  isMobile
+                    ? undefined
+                    : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
+                }
+                fill={true}
+                autoCrop={false}
+                quality={80}
+                alt={cardTitle}
+              />
+            </div>
+          </Conditional>
           <Conditional if={!isTicketCard && images?.length}>
             <div className="card-img">
               <Conditional
@@ -911,6 +961,7 @@ const Product = (props: any) => {
                 currentLanguage={currentLanguage}
               />
             </Conditional>
+
             <TourTitle
               boosterTag={boosterTag}
               cardTitle={cardTitle}
