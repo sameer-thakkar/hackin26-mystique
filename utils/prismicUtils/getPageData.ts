@@ -126,6 +126,7 @@ export const getPageData = async ({
       statusCode,
       redirectInfo,
       shouldPageHaveShorterTtl,
+      prismicDocumentTypeApiCacheStatus,
     } = prismicApiResponse;
 
     const currencyListPromise = fetchCurrencyList();
@@ -251,6 +252,7 @@ export const getPageData = async ({
         domainConfig: await domainConfigPromise,
         breadcrumbs,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -329,6 +331,7 @@ export const getPageData = async ({
         ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -399,6 +402,7 @@ export const getPageData = async ({
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -415,6 +419,7 @@ export const getPageData = async ({
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -432,6 +437,7 @@ export const getPageData = async ({
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -489,6 +495,7 @@ export const getPageData = async ({
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
         prismicApiCacheStatus,
+        prismicDocumentTypeApiCacheStatus,
       };
     }
 
@@ -537,6 +544,7 @@ export const getPageData = async ({
           domainConfig: await domainConfigPromise,
           breadcrumbs,
           prismicApiCacheStatus,
+          prismicDocumentTypeApiCacheStatus,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1021,6 +1029,7 @@ export const getPageData = async ({
       minPrice,
       bestDiscount,
       prismicApiCacheStatus,
+      prismicDocumentTypeApiCacheStatus,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

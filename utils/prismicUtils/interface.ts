@@ -1,11 +1,20 @@
 import type { NextApiRequest } from 'next';
 import type { SelectField, Slice } from '@prismicio/types';
 import type {
+  AllDocumentTypes,
   MicrositeDocumentDataBodyTourListCategoryV1SliceItem,
   MicrositeDocumentDataBodyTourListCategoryV1SlicePrimary,
   ProductCardsDocument,
   Simplify,
 } from 'types.prismic';
+
+export type TGetContentType = Pick<TGetDocument, 'req' | 'uid'> & {
+  type: AllDocumentContentTypes;
+};
+
+export type AllDocumentContentTypes = {
+  [K in keyof AllDocumentTypes]: AllDocumentTypes['type'];
+}[keyof AllDocumentTypes];
 
 export type TGetDocument = {
   req: NextApiRequest;
@@ -23,6 +32,7 @@ export type TRedirectInfo = {
 
 export type TGetPrismicDocument = Omit<TGetDocument, 'host'> & {
   isDev?: boolean;
+  contentType: AllDocumentContentTypes;
 };
 
 export type TDocumentResponse<T> = {

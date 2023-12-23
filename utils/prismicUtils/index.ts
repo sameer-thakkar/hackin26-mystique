@@ -1,4 +1,3 @@
-import { handleSettledPromiseResults } from 'utils';
 import { constructHeaders } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -14,50 +13,53 @@ import getVenuePageDocument from 'utils/prismicUtils/venuePage';
 import { MICROBRANDS_URL, X_CACHE_HEADER_KEY } from 'const/index';
 import type { TDocumentResponse, TGetPrismicDocument } from './interface';
 
-type TGetPrismicDocumentResponse<T> = Promise<TDocumentResponse<T>>;
-
 export const getPrismicDocument = async ({
   req,
   isDev,
   lang,
   uid,
-}: TGetPrismicDocument): TGetPrismicDocumentResponse<any> => {
+  contentType,
+}: TGetPrismicDocument) => {
   const { host } = req.headers || window.location;
-  let promises = [
-    getGlobalHomepage({ req, lang, uid }),
-    getGlobalExperience({ req, lang, uid }),
-    getGlobalCollection({ req, lang, uid }),
-    getGlobalCity({ req, lang, uid }),
-    getMicrositeDocument({
-      req,
-      host,
-      lang,
-      uid,
-    }),
-    getNewsPageDocument({ req, lang, uid }),
-    getVenuePageDocument({ req, lang, uid }),
-    getContentPageDocument({
-      req,
-      host,
-      lang,
-      uid,
-    }),
-    getShowPage({
-      req,
-      lang,
-      uid,
-      isDev,
-      host,
-    }),
-  ];
 
   try {
-    const settledPromises = await Promise.allSettled(promises);
-    const [settledResult] = handleSettledPromiseResults(settledPromises) ?? [];
-    if (settledResult) {
-      return settledResult;
-    } else {
-      throw new Error('No document found!');
+    switch (contentType) {
+      case 'microsite':
+        return await getMicrositeDocument({
+          req,
+          host,
+          lang,
+          uid,
+        });
+      case 'content_page':
+        return await getContentPageDocument({
+          req,
+          host,
+          lang,
+          uid,
+        });
+      case 'showpage':
+        return await getShowPage({
+          req,
+          lang,
+          uid,
+          isDev,
+          host,
+        });
+      case 'news_page':
+        return await getNewsPageDocument({ req, lang, uid });
+      case 'venue_page':
+        return await getVenuePageDocument({ req, lang, uid });
+      case 'global_collection':
+        return await getGlobalCollection({ req, lang, uid });
+      case 'global_experience':
+        return await getGlobalExperience({ req, lang, uid });
+      case 'global_city':
+        return await getGlobalCity({ req, lang, uid });
+      case 'global_homepage':
+        return await getGlobalHomepage({ req, lang, uid });
+      default:
+        throw new Error('No contentType found!');
     }
   } catch (error) {
     if ((error as any).errors && Array.isArray((error as any).errors)) {
@@ -96,7 +98,10 @@ export const getPrismicDocument = async ({
   }
 };
 
-type TFetchPrismicDocument = Omit<TGetPrismicDocument, 'ref'> & {
+type TFetchPrismicDocument = Omit<
+  TGetPrismicDocument,
+  'ref' | 'contentType'
+> & {
   host: string;
   bypassCache: string;
 };
@@ -105,6 +110,7 @@ type TFetchPrismicDocumentResponse = Promise<{
   prismicApiCacheStatus: string | null;
   prismicApiResponse: Omit<TDocumentResponse<any>, 'shouldHaveShorterTtl'> & {
     shouldPageHaveShorterTtl?: boolean;
+    prismicDocumentTypeApiCacheStatus?: string;
   };
 }>;
 

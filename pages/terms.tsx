@@ -55,6 +55,9 @@ export default class TermsPage extends Component<any, any> {
     } else {
       uid = host.replace('stage-', '');
     }
+
+    // @ts-expect-error redirectInfo & shouldHaveShorterTtl is not present in all document response hence the error
+
     const { ContentType, CMSContent } = await getPrismicDocument({
       req,
       uid,

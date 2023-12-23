@@ -1890,6 +1890,8 @@ export const ENTITY_ICONS_FOLDER_LINK =
 
 export const SHORTER_CACHE_AGE = 10;
 
+export const SIXTY_DAYS_CACHE = 5552000;
+
 export const SUBCATEGORY = {
   CITY_CARDS: 'City Cards',
 };
