@@ -36,7 +36,7 @@ const TopLttShowsSection = ({
     !(topShows.length < numberOfShowsPerFold)
   );
   const [numberOfShowsToDisplay, setNumberOfShowsToDisplay] = useState(
-    isMobile ? 10 : 24
+    isMobile ? 18 : 36
   );
   const shows = topShows.slice(0, numberOfShowsToDisplay);
 

@@ -113,12 +113,6 @@ const LttLandingPageV2 = dynamic(
       /* webpackChunkName: "LttLandingPageV2" */ 'components/MicrositeV2/LttLandingPageV2'
     )
 );
-const ReviewSection = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "ReviewSection" */ 'components/MicrositeV2/LttLandingPageV2/ReviewSection'
-    )
-);
 const MobileBannerV2 = dynamic(
   () =>
     import(
@@ -225,10 +219,6 @@ const ListicleHeadingWrapper = styled.div`
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
   }
-`;
-
-const StyledReviewSectionWrapper = styled.div<{ showMargin: boolean }>`
-  margin-top: ${({ showMargin }) => (showMargin ? '4rem' : '0')};
 `;
 
 /*
@@ -723,13 +713,6 @@ export const HomePage = (props: any) => {
           </Conditional>
         </div>
       </ProductsContextProvider>
-      <Conditional if={showLttTreatment && currentLanguage === 'en'}>
-        <LazyComponent>
-          <StyledReviewSectionWrapper showMargin={!longFormContent.length}>
-            <ReviewSection isMobile={isMobile} />
-          </StyledReviewSectionWrapper>
-        </LazyComponent>
-      </Conditional>
       <Conditional
         if={isEntertainmentMb && !showLttTreatment && !isCatOrSubCatPage}
       >

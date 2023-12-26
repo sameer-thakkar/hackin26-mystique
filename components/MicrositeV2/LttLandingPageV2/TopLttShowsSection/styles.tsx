@@ -55,9 +55,7 @@ export const TopShowsWrapper = styled.div<{
     max-width: 11.25rem;
     &:hover {
       transition: ease 0.2s;
-      &:hover {
-        transform: translate3d(0, -5px, 0);
-      }
+      transform: translate3d(0, -5px, 0);
     }
   }
 
@@ -66,6 +64,9 @@ export const TopShowsWrapper = styled.div<{
 
     .card-wrapper {
       max-width: initial;
+      &:hover {
+        transform: none;
+      }
     }
 
     .title {

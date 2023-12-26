@@ -69,6 +69,11 @@ export const Wrapper = styled.div<{
   @media (max-width: 768px) {
     width: 120px;
     max-width: initial;
+
+    &:hover {
+      transform: none;
+    }
+
     .pinned-card-vertical-image {
       min-width: 120px;
       min-height: 180px;

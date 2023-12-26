@@ -48,6 +48,12 @@ export const Wrapper = styled.div<{
       height: 100%;
     }
   }
+
+  @media (max-width: 768px) {
+    &:hover {
+      transform: none;
+    }
+  }
 `;
 
 export const ProductDetails = styled.div<{ darkTheme: boolean }>`
