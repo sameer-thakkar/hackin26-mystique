@@ -42,6 +42,7 @@ export const ProductsWrapper = (props: any) => {
     isListicle,
     isDev,
     isDiscountedPage,
+    categoryHeaderMenuExists,
   } = props;
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export const ProductsWrapper = (props: any) => {
           isMobile={isMobile}
           isEntertainmentMb={isEntertainmentMb}
           isListicle={isListicle}
+          categoryHeaderMenuExists={categoryHeaderMenuExists}
         />
       </Conditional>
       <PopulateProducts

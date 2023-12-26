@@ -661,6 +661,7 @@ export const HomePage = (props: any) => {
           isDev={isDev}
           isListicle={isListicle}
           isDiscountedPage={isDiscountedPage}
+          categoryHeaderMenuExists={categoryHeaderMenuExists}
         />
       </Conditional>
       <Conditional if={showLttTreatment && !isCatOrSubCatPage}>

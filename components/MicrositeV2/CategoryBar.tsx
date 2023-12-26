@@ -15,11 +15,13 @@ import { SIZES } from 'const/ui-constants';
 const StyledCategoryBar = styled.div<{
   isMobile?: boolean;
   $isEntertainmentMb: boolean;
+  $categoryHeaderMenuExists: boolean;
 }>`
   height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
-  top: 56px;
+  top: ${({ $categoryHeaderMenuExists }) =>
+    $categoryHeaderMenuExists ? '2rem' : '56px'};
   z-index: 2;
 
   .swiper-container {
@@ -153,6 +155,7 @@ const CategoryBar = (props: any) => {
     hideSortBySelector,
     isEntertainmentMb,
     isListicle,
+    categoryHeaderMenuExists,
   } = props;
 
   const focusProductList = () =>
@@ -270,6 +273,7 @@ const CategoryBar = (props: any) => {
         ref={category_bar}
         isMobile={isMobile}
         $isEntertainmentMb={isEntertainmentMb}
+        $categoryHeaderMenuExists={categoryHeaderMenuExists}
       >
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
