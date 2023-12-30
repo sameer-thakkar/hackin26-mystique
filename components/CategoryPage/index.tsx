@@ -40,7 +40,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
         breadcrumbs={breadcrumbs}
       />
       <CategoryPageWrapper>
-        <Conditional if={!isMobile}>
+        <Conditional if={!isMobile && categoriesToRender?.length > 0}>
           <BrowseByCategoriesSection
             categoriesToRender={categoriesToRender}
             isMobile={isMobile}
@@ -48,21 +48,30 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
           />
         </Conditional>
         <div className={isMobile ? '' : 'main-wrapper'}>
-          <TopLttShowsSection
-            isMobile={isMobile}
-            topShows={Object.values(
-              primarySubCategoryId
-                ? categoryTourListData[primarySubCategoryId]
-                : []
-            )}
-            heading={`${LTT_LANDING_PAGE.TOP_SHOWS}: ${
-              categoryTourListData[primarySubCategoryId as number][0]
-                ?.primarySubCategoryIdData?.displayName
-            }`}
-            showBrowseByCategories
-            isCategoryPage
-            categoriesToRender={categoriesToRender}
-          />
+          <Conditional
+            if={categoryTourListData[primarySubCategoryId as number]}
+          >
+            <TopLttShowsSection
+              isMobile={isMobile}
+              topShows={Object?.values(
+                primarySubCategoryId
+                  ? categoryTourListData?.[primarySubCategoryId] || {}
+                  : {}
+              )}
+              heading={
+                categoryTourListData[primarySubCategoryId as number]?.[0]
+                  ?.primarySubCategoryIdData?.displayName
+                  ? `${LTT_LANDING_PAGE.TOP_SHOWS}: ${
+                      categoryTourListData[primarySubCategoryId as number]?.[0]
+                        ?.primarySubCategoryIdData?.displayName
+                    }`
+                  : ''
+              }
+              showBrowseByCategories
+              isCategoryPage
+              categoriesToRender={categoriesToRender}
+            />
+          </Conditional>
           <CategoryCarouselsSection
             categoriesToRender={categoriesToRender}
             allTours={allTours}
