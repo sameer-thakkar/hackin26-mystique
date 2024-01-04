@@ -3,7 +3,6 @@ import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import useSWR from 'swr';
-import CategoryFilterDrawer from 'components/common/CategoryFilterDrawer';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import Emoji from 'components/common/Emoji';
@@ -12,7 +11,6 @@ import {
   TOnFilterChangeParams,
 } from 'components/common/LastMinuteFilters/interface';
 import {
-  Counter,
   DrawerBody,
   drawerStyles,
   FilterButton,
@@ -26,23 +24,17 @@ import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { getCategoryMap } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import ChevronDown from 'assets/ChevrontDown';
-import { CrossIconSvg } from 'assets/SvgIcons';
-import Ticket from 'assets/ticket';
 
 const LastMinuteFilters = (props: ILastMinuteFilters) => {
   const {
     orderedTours,
     setOrderedFilteredTours,
     setProductsLoading,
-    categoryInfo,
-    isProductCardPhase1ExpTreatment = false,
     changeTourListFilterStatus,
   } = props;
   const [showFilters, setShowFilters] = useState<boolean | null>(null);
@@ -52,9 +44,6 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   ] = useState(0);
   const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] =
     useState(false);
-  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [categoryStates, setCategoryStates] =
-    useState<Record<number, boolean>>();
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];
@@ -117,61 +106,27 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   });
   let inventoryData = data?.data;
 
-  const getCurrentCategoryNames = (
-    categoriesAndSubCategories: ReturnType<
-      typeof getCategoryMap
-    >['categoriesAndSubCategories'],
-    currentCategoryStates: Record<number, boolean>
-  ) =>
-    Object.keys(categoriesAndSubCategories)
-      .filter((key) => currentCategoryStates[+key])
-      .map((id) => categoriesAndSubCategories[+id].nonLocalizedName)
-      .join(',');
-
   const onFilterChange = useCallback(
     (
-      { categoryFilter, dateTimeFilter }: TOnFilterChangeParams = {
-        categoryFilter: { categoryStates },
+      { dateTimeFilter }: TOnFilterChangeParams = {
         dateTimeFilter: {
           clickedIndex: selectedDateTimeFilterButtonIndex,
           isUserAction: false,
-          deSelect: false,
         },
       }
     ) => {
-      let { clickedIndex, isUserAction, deSelect } = dateTimeFilter ?? {
+      let { clickedIndex, isUserAction } = dateTimeFilter ?? {
         clickedIndex: selectedDateTimeFilterButtonIndex,
         isUserAction: false,
       };
-      if (deSelect) {
-        if (isProductCardPhase1ExpTreatment) clickedIndex = 0;
-        else return;
-      }
 
       let hasNoFilter = clickedIndex === 0;
       const selectedDateTimeFilter = dateTimeFilters[clickedIndex];
 
-      const { categoryStates: localCategoryStates } = categoryFilter ?? {
-        categoryStates,
-      };
-      const isCategoriesClear = !(
-        localCategoryStates && Object.values(localCategoryStates).find((v) => v)
-      );
-      hasNoFilter = hasNoFilter && isCategoriesClear;
-
       const orderedFilteredTours = orderedTours.filter(({ tgid }) => {
-        const isSelectedCategory =
-          categoryInfo?.mapping[tgid]?.categoryId &&
-          localCategoryStates?.[categoryInfo?.mapping[tgid]?.categoryId!];
-
-        const isSelectedSubCategory =
-          categoryInfo?.mapping[tgid]?.subCategoryId &&
-          localCategoryStates?.[categoryInfo?.mapping[tgid]?.subCategoryId!];
-
         return (
-          (isSelectedCategory || isSelectedSubCategory || isCategoriesClear) &&
-          (!selectedDateTimeFilter.value ||
-            inventoryData[tgid]?.dates?.[selectedDateTimeFilter.value])
+          !selectedDateTimeFilter.value ||
+          inventoryData[tgid]?.dates?.[selectedDateTimeFilter.value]
         );
       });
 
@@ -180,45 +135,22 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
         if (selectedDateTimeFilter.key === dateTimeFilters[0].key)
           delete query.selectedDate;
         else query.selectedDate = selectedDateTimeFilter.value!;
-        if (isCategoriesClear) delete query.categories;
-        else
-          query.categories = Object.keys(localCategoryStates!)
-            .filter((key) => localCategoryStates![Number(key)])
-            .join(',');
 
         setSelectedDateTimeFilterButtonIndex(clickedIndex);
-        setCategoryStates(localCategoryStates);
         changeTourListFilterStatus?.(!hasNoFilter);
         setToursWithDelay(isUserAction, orderedFilteredTours);
 
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.DATE_FILTER_APPLIED,
-          [ANALYTICS_PROPERTIES.DATE_RANGE_SELECTED]:
-            selectedDateTimeFilter.key,
-          [ANALYTICS_PROPERTIES.EXPERIENCES_AVAILABLE]:
-            orderedFilteredTours.length,
-          [ANALYTICS_PROPERTIES.TRIGGERED_BY]: isUserAction
-            ? 'User'
-            : 'Automatic',
-        });
-
-        if (isProductCardPhase1ExpTreatment) {
-          if (isCategoriesClear)
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_CLEARED,
-              [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
-                categoryInfo!.categoriesAndSubCategories,
-                localCategoryStates!
-              ),
-            });
-          else
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.CATEGORY_FILTER_APPLIED,
-              [ANALYTICS_PROPERTIES.CATEGORY]: getCurrentCategoryNames(
-                categoryInfo!.categoriesAndSubCategories,
-                localCategoryStates
-              ),
-            });
+        if (clickedIndex || isUserAction) {
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.DATE_FILTER_APPLIED,
+            [ANALYTICS_PROPERTIES.DATE_RANGE_SELECTED]:
+              selectedDateTimeFilter.key,
+            [ANALYTICS_PROPERTIES.EXPERIENCES_AVAILABLE]:
+              orderedFilteredTours.length,
+            [ANALYTICS_PROPERTIES.TRIGGERED_BY]: isUserAction
+              ? 'User'
+              : 'Automatic',
+          });
         }
 
         router.replace(
@@ -239,20 +171,11 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
         });
       }
     },
-    [
-      inventoryData,
-      selectedDateTimeFilterButtonIndex,
-      categoryStates,
-      categoryInfo,
-    ]
+    [inventoryData, selectedDateTimeFilterButtonIndex]
   );
 
   useEffect(() => {
-    if (
-      inventoryData &&
-      categoryInfo?.categoriesAndSubCategories &&
-      Object.keys(categoryInfo?.categoriesAndSubCategories).length
-    ) {
+    if (inventoryData) {
       let dateFilterParams:
         | { clickedIndex: number; isUserAction: boolean }
         | undefined = undefined;
@@ -271,23 +194,11 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
         }
       }
 
-      let categoryFilterParams:
-        | { categoryStates: Record<number, boolean> }
-        | undefined = undefined;
-      const { categories } = router.query;
-      const categoryList = categories ? (categories as string).split(',') : [];
-      const obj: Record<number, boolean> = {};
-      Object.keys(categoryInfo.categoriesAndSubCategories).forEach((key) => {
-        obj[+key] = categoryList.includes(key) || false;
-      });
-      categoryFilterParams = { categoryStates: obj };
-
       onFilterChange({
-        categoryFilter: categoryFilterParams,
         dateTimeFilter: dateFilterParams,
       });
     }
-  }, [inventoryData, categoryInfo]);
+  }, [inventoryData]);
 
   let handleScroll: any;
   const elRef = useCallback((filtersRef) => {
@@ -336,32 +247,6 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     }
   };
 
-  const isAnyCategorySelected = !!(
-    categoryStates && Object.values(categoryStates).find((v) => v)
-  );
-
-  const clearCategoryFilter = () => {
-    const obj: Record<number, boolean> = {};
-    Object.keys(categoryInfo?.categoriesAndSubCategories ?? []).forEach(
-      (key) => {
-        obj[Number(key)] = false;
-      }
-    );
-    onFilterChange({ categoryFilter: { categoryStates: obj } });
-  };
-
-  const openCategoryFilterDrawer = () => {
-    setIsCategoryDrawerOpen(true);
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.FILTER_DRAWER_OPENED,
-      [ANALYTICS_PROPERTIES.FILTER_TYPE]: 'Category',
-    });
-  };
-
-  const closeCategoryFilterDrawer = () => {
-    setIsCategoryDrawerOpen(false);
-  };
-
   if (showFilters === false || error) {
     return null;
   }
@@ -369,15 +254,6 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   else if (showFilters === null || !data) {
     return (
       <SkeletonWrapper>
-        {isProductCardPhase1ExpTreatment &&
-          categoryInfo?.categoriesAndSubCategories &&
-          categoryStates && (
-            <Skeleton
-              height="2rem"
-              width="5rem"
-              style={{ margin: '0 0.5rem 0.5rem', borderRadius: '1.5rem' }}
-            />
-          )}
         {dateTimeFilters.map((_filter, index) => (
           <Skeleton
             height="2rem"
@@ -395,50 +271,23 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       <FiltersWrapper ref={elRef}>
         {inventoryData && (
           <FiltersContainer>
-            {isProductCardPhase1ExpTreatment &&
-              categoryInfo?.categoriesAndSubCategories &&
-              categoryStates && (
-                <FilterButton
-                  key={'category-selector'}
-                  onClick={openCategoryFilterDrawer}
-                  isSelected={isAnyCategorySelected}
-                >
-                  <Ticket className="ticket" />
-                  <span>{strings.PC_EXP.CATEGORIES}</span>
-                  <Counter>
-                    <span className="counter-text">
-                      {
-                        Object.keys(categoryStates).filter(
-                          (id) => categoryStates[Number(id)]
-                        ).length
-                      }
-                    </span>
-                  </Counter>
-                  <ChevronDown className="chevron" />
-                </FilterButton>
-              )}
-            {dateTimeFilters.map((filter, index) =>
-              index === 0 && isProductCardPhase1ExpTreatment ? null : (
-                <FilterButton
-                  key={index}
-                  onClick={() =>
-                    onFilterChange({
-                      dateTimeFilter: {
-                        clickedIndex: index,
-                        isUserAction: true,
-                        deSelect: index === selectedDateTimeFilterButtonIndex,
-                      },
-                    })
-                  }
-                  isSelected={index === selectedDateTimeFilterButtonIndex}
-                >
-                  <span>{filter.display_name}</span>
-                  <Conditional if={isProductCardPhase1ExpTreatment}>
-                    <CrossIconSvg className="cross" />
-                  </Conditional>
-                </FilterButton>
-              )
-            )}
+            {dateTimeFilters.map((filter, index) => (
+              <FilterButton
+                key={index}
+                onClick={() =>
+                  onFilterChange({
+                    dateTimeFilter: {
+                      clickedIndex: index,
+                      isUserAction: true,
+                      deSelect: index === selectedDateTimeFilterButtonIndex,
+                    },
+                  })
+                }
+                isSelected={index === selectedDateTimeFilterButtonIndex}
+              >
+                <span>{filter.display_name}</span>
+              </FilterButton>
+            ))}
           </FiltersContainer>
         )}
       </FiltersWrapper>
@@ -464,17 +313,6 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
             </Button>
           </Footer>
         </Drawer>
-      </Conditional>
-      <Conditional if={isCategoryDrawerOpen && categoryInfo && categoryStates}>
-        <CategoryFilterDrawer
-          categoriesAndSubCategories={categoryInfo!.categoriesAndSubCategories}
-          categoryStates={categoryStates!}
-          onApply={(state) =>
-            onFilterChange({ categoryFilter: { categoryStates: state } })
-          }
-          onClear={clearCategoryFilter}
-          onClose={closeCategoryFilterDrawer}
-        />
       </Conditional>
     </>
   );

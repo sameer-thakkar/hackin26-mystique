@@ -8,7 +8,6 @@ import { GroupField } from '@prismicio/types';
 import { PromoCodesDocumentDataPromosItem, Simplify } from 'types.prismic';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
-import Spinner from 'UI/Spinner';
 import { MBContext } from 'contexts/MBContext';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
@@ -20,7 +19,7 @@ import {
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import getPromoCodesDocument from 'utils/prismicUtils/promoCodes';
-import { getCategoryMap, getProductDescriptors } from 'utils/productUtils';
+import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import {
@@ -33,7 +32,6 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import LazyComponent from './common/LazyComponent';
-import ComboProductsContainer from './ComboProductsContainer';
 
 const Product = dynamic(
   () => import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -95,6 +93,7 @@ const ProductContainer = styled.div<{
   isTicketCard: boolean;
   isMobile: boolean;
   $addMobileBottomMargin?: boolean;
+  isNotVisible?: boolean;
 }>`
   ${({ isTicketCard, isMobile }) =>
     isTicketCard && !isMobile
@@ -109,6 +108,13 @@ const ProductContainer = styled.div<{
   & > ${HorizontalLine}:last-child {
     display: none;
   }
+
+  transition: all 0.3s;
+
+  opacity: ${({ isNotVisible }) => (isNotVisible ? '0' : '1')};
+  visibility: ${({ isNotVisible }) => (isNotVisible ? 'hidden' : 'visible')};
+  height: ${({ isNotVisible }) => (isNotVisible ? '0' : 'auto')};
+
   @media (max-width: 768px) {
     margin-top: 0.5rem;
     margin-bottom: ${({ $addMobileBottomMargin }) =>
@@ -126,12 +132,6 @@ const ProductContainer = styled.div<{
 
 const ProductWrapper = styled.div`
   flex: 0 49%;
-`;
-
-const SpinnerWrapper = styled.div`
-  position: absolute;
-  left: calc(50% - 23.5px);
-  top: calc(50% - 27.5px);
 `;
 
 type TPromoCode = GroupField<Simplify<PromoCodesDocumentDataPromosItem>>;
@@ -164,10 +164,8 @@ const PopulateProducts = (props: any) => {
     isNonPoi,
     isAirportTransfersMB,
     isModifiedProductCard = false,
-    showSkeleton = false,
     isProductCardPhase1ExperimentTreatmentVariant = false,
-    setCategoryInfo,
-    isTourListFiltered,
+    isProductCardPhase1ExperimentResolved = true,
   } = props;
 
   const productsRef = useRef([]);
@@ -483,11 +481,6 @@ const PopulateProducts = (props: any) => {
   }, []);
 
   useEffect(() => {
-    if (Object.keys(productInfo)?.length)
-      setCategoryInfo?.(getCategoryMap(productInfo as any));
-  }, [productInfo]);
-
-  useEffect(() => {
     if (Object.keys(productInfo)?.length && allPromoCodes && finalPromoCodes) {
       const finalPromos = filterPromoCodes();
       setFinalPromoCodes(finalPromos);
@@ -502,25 +495,6 @@ const PopulateProducts = (props: any) => {
   const shouldShowHeading = isV1DesignSite
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
-
-  /**
-   * Will need this for another experiment
-   */
-  // const { comboCards, nonComboCardsPart1, nonComboCardsPart2 } = useMemo(
-  //   () => getProductCardComboTours(availableToursList, scorpioData),
-  //   [availableToursList, scorpioData]
-  // );
-  const comboCards: Array<any> = [],
-    nonComboCardsPart1: Array<any> = [],
-    nonComboCardsPart2: Array<any> = [];
-  const showComboCardsSlice =
-    isProductCardPhase1ExperimentTreatmentVariant &&
-    comboCards.length > 0 &&
-    !isTourListFiltered &&
-    isMobile;
-  const nonComboCardsPart1Final = showComboCardsSlice
-    ? nonComboCardsPart1
-    : availableToursList;
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
@@ -643,33 +617,32 @@ const PopulateProducts = (props: any) => {
     );
   };
 
+  const isLoading = productsLoading || !isProductCardPhase1ExperimentResolved;
+
   return (
     <StyledProductsWrapper
-      isLoading={productsLoading}
+      isLoading={isLoading}
       id="products-container"
       ref={productsWrapperRef}
     >
-      {productsLoading &&
-        (isProductCardPhase1ExperimentTreatmentVariant ? (
-          <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-          </ProductContainer>
-        ) : (
-          <SpinnerWrapper>
-            <Spinner />
-          </SpinnerWrapper>
-        ))}
+      <ProductContainer
+        isTicketCard={isTicketCard}
+        isMobile={isMobile}
+        isNotVisible={!isLoading}
+      >
+        <Skeleton
+          className="product-card-skeleton"
+          containerClassName="product-card-skeleton-container"
+        />
+        <Skeleton
+          className="product-card-skeleton"
+          containerClassName="product-card-skeleton-container"
+        />
+        <Skeleton
+          className="product-card-skeleton"
+          containerClassName="product-card-skeleton-container"
+        />
+      </ProductContainer>
 
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
@@ -687,57 +660,16 @@ const PopulateProducts = (props: any) => {
           </Conditional>
         </div>
       </Conditional>
-
-      <Conditional if={!productsLoading}>
-        <ProductContainer
-          isTicketCard={isTicketCard}
-          isMobile={isMobile}
-          $addMobileBottomMargin={!showComboCardsSlice}
-        >
-          <Conditional if={showSkeleton}>
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-            <Skeleton
-              className="product-card-skeleton"
-              containerClassName="product-card-skeleton-container"
-            />
-          </Conditional>
-          {nonComboCardsPart1Final &&
-            nonComboCardsPart1Final.map(
-              (tour: Record<string, any>, index: number) =>
-                getProductCardFromTourAndIndex(tour, index)
-            )}
-        </ProductContainer>
-        {showComboCardsSlice && (
-          <>
-            {comboCards.length && (
-              <ComboProductsContainer
-                isProductCardPhase1ExperimentTreatmentVariant={
-                  isProductCardPhase1ExperimentTreatmentVariant
-                }
-              >
-                {comboCards.map((tour: Record<string, any>, index: number) =>
-                  getProductCardFromTourAndIndex(tour, index, true)
-                )}
-              </ComboProductsContainer>
-            )}
-            {nonComboCardsPart2.length && (
-              <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
-                {nonComboCardsPart2.map(
-                  (tour: Record<string, any>, index: number) =>
-                    getProductCardFromTourAndIndex(tour, index)
-                )}
-              </ProductContainer>
-            )}
-          </>
-        )}
-      </Conditional>
+      <ProductContainer
+        isTicketCard={isTicketCard}
+        isMobile={isMobile}
+        isNotVisible={isLoading}
+      >
+        {availableToursList &&
+          availableToursList.map((tour: Record<string, any>, index: number) =>
+            getProductCardFromTourAndIndex(tour, index)
+          )}
+      </ProductContainer>
     </StyledProductsWrapper>
   );
 };

@@ -47,7 +47,6 @@ import {
   getLangObject,
   groupSlices,
 } from 'utils/helper';
-import { getCategoryMap } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -170,9 +169,6 @@ const MicrositeV1 = (props: any) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-  const [categoryInfo, setCategoryInfo] = useState<
-    ReturnType<typeof getCategoryMap>
-  >({ mapping: {}, categoriesAndSubCategories: {} });
 
   const {
     uid,
@@ -235,7 +231,6 @@ const MicrositeV1 = (props: any) => {
     experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
     customEligibilityCheckFn: () =>
       isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb,
-    noTrack: true,
   });
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -622,21 +617,22 @@ const MicrositeV1 = (props: any) => {
       bannerVideo={bannerVideo}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
+      isProductCardPhase1ExperimentResolved={
+        !(
+          isEligibleForProductCardRevampP1 &&
+          isProductCardRevampExperimentP1Resolving
+        )
+      }
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
-      }
-      showSkeleton={
-        isEligibleForProductCardRevampP1 &&
-        isProductCardRevampExperimentP1Resolving
       }
       isProductCardPhase1ExperimentTreatmentVariant={
         isEligibleForProductCardRevampP1
           ? productCardRevampExperimentP1Variant === VARIANTS.TREATMENT
           : false
       }
-      setCategoryInfo={setCategoryInfo}
       isTourListFiltered={isTourListFiltered}
     />
   );
@@ -830,15 +826,9 @@ const MicrositeV1 = (props: any) => {
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}
             setProductsLoading={setProductsLoading}
-            categoryInfo={categoryInfo}
             changeTourListFilterStatus={(state) => {
               if (state !== isTourListFiltered) setIsTourListFiltered(state);
             }}
-            isProductCardPhase1ExpTreatment={
-              isEligibleForProductCardRevampP1
-                ? productCardRevampExperimentP1Variant === VARIANTS.TREATMENT
-                : false
-            }
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>

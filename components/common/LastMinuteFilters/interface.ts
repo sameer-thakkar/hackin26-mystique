@@ -10,9 +10,6 @@ export interface ILastMinuteFilters {
 }
 
 export type TOnFilterChangeParams = {
-  categoryFilter?: {
-    categoryStates?: Record<number, boolean>;
-  };
   dateTimeFilter?: {
     clickedIndex: number;
     isUserAction: boolean;
