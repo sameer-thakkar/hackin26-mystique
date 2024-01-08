@@ -507,6 +507,28 @@ export const getPageData = async ({
           language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
           cookies,
         });
+        const mediaData = await fetchMediaResource({
+          entityIds: [CMSContent?.data?.tgid].join(','),
+          resourceType: 'MB_EXPERIENCE',
+        });
+        const verticalImageData =
+          mediaData?.resourceEntityMedias?.[0]?.medias?.find(
+            (media: any) => media.type === 'IMAGE'
+          );
+        const nativeShowTrailerData =
+          mediaData?.resourceEntityMedias?.[0]?.medias?.find(
+            (media: any) => media.type === 'VIDEO'
+          );
+        const verticalImage = {
+          url: verticalImageData?.url,
+          height: verticalImageData?.metadata.height,
+          width: verticalImageData?.metadata.width,
+          altText: verticalImageData?.metadata.altText,
+        };
+        const nativeShowTrailer = {
+          url: nativeShowTrailerData?.url,
+          altText: nativeShowTrailerData?.metadata?.altText,
+        };
         const tgidDataWithoutUrlSlugs = deepDeleteKeys({
           obj: tgidData,
           keys: ['urlSlugs', 'urlSlug'],
@@ -530,7 +552,11 @@ export const getPageData = async ({
 
         return {
           CMSContent,
-          tourGroupData: tgidDataWithoutUrls,
+          tourGroupData: {
+            ...tgidDataWithoutUrls,
+            verticalImage,
+            nativeShowTrailer,
+          },
           inventorySlotData,
           ContentType,
           uid,

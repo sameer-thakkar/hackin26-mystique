@@ -30,8 +30,9 @@ import {
 import { strings } from 'const/strings';
 import { RIGHT_TAIL_HEAD_ARROW } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "MobileTrailerSwiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () =>
+    import(/* webpackChunkName: "MobileTrailerSwiper" */ 'components/Swiper')
 );
 
 const MobileTrailer: React.FC<TMobileTrailerProps> = ({ content }) => {

@@ -415,6 +415,7 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
   MICROSITE_PAGE_VIEWED: 'Microsite Page Viewed',
   MICROSITE_PAGE_SECTION_VIEWED: 'Microsite Page Section Viewed',
+  SHOW_PAGE_SECTION_VIEWED: 'Show Page Section Viewed',
   MICROSITE_PAGE_TAB_CLICKED: 'Microsite Page Tab Clicked',
   CONTENT_CARD_CLICKED: 'Content Card Clicked',
   DROPDOWN_SHOWN: 'Header Dropdown Shown',
@@ -447,12 +448,14 @@ export const ANALYTICS_EVENTS = {
   },
   CHEVRON_CLICKED: 'Chevron Clicked',
   CATEGORY_TAB_CLICKED: 'Category Tab Clicked',
+  CATEGORY_TAG_CLICKED: 'Category Tag Clicked',
   MB_SORT_BY_CLICKED: 'MB Sort By Clicked',
   MB_EXPERIENCE_SORTED: 'MB Experiences Sorted',
   EXPERIENCE_CARD_EXPANDED: 'Experience Card Expanded',
   EXPERIENCE_CARD_MORE_DETAILS_CLICKED: 'Experience Card More Details Clicked',
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
   CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
+  SELECT_SEATS_CTA_CLICKED: 'Select Seat CTA Clicked',
   YT_VIDEO_PLAYED: 'Video Played',
   YT_VIDEO_VIEWED: 'Video Viewed',
   YT_VIDEO_LOADED: 'Youtube Video Section Viewed',
@@ -523,6 +526,21 @@ export const ANALYTICS_EVENTS = {
     NEWS_PAGE_SECTION_VIEWED: 'News Page Section Viewed',
     NEWS_PAGE_CTA_CLICKED: 'News Page CTA Clicked',
     TRAILER_VIEWED: 'Trailer Viewed',
+  },
+  SHOW_PAGE: {
+    RATING_WIDGET_CLICKED: 'Rating Widget Clicked',
+    EXPERIENCE_DATE_SELECTED: 'Experience Date Selected',
+    EXPERIENCE_TIME_SELECTED: 'Expereince Time Selected',
+    CALENDAR_OPEN: 'Calendar Opened',
+    CALENDAR_CLOSED: 'Calendar Closed',
+    CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
+    CALENDAR_TIME_SELECTED: 'Calendar Time Selected',
+    THEATRE_NAME_CLICKED: 'Theatre Name Clicked',
+    DATE_SELECTION_CLOSED: 'Date Selection Drawer Closed',
+    TIMESLOT_DROPDOWN_OPENED: 'Timeslot Dropdown Opened',
+    CONTENT_SECTION_LINK_CLICKED: 'Content Section Link Clicked',
+    VIDEO_CLICKED: 'Video Clicked',
+    RATINGS_HOVERED: 'Ratings Hovered',
   },
   MB_CARD_CLICKED: 'MB Card Clicked',
   FREE_CANCELLATION_TOOLTIP_VIEWED: 'Free Cancellation Tooltip Viewed',
@@ -928,6 +946,7 @@ export const ANALYTICS_PROPERTIES = {
   PINNED_CARD_PRESENT: 'Is Pinned Card Present',
   IS_PINNED_CARD: 'Is Pinned Card',
   AVERAGE_RATING: 'Average Rating',
+  RATING: 'Rating',
   NUMBER_OF_RATINGS: 'Number Of Ratings',
   IS_DISCOUNT_PRESENT: 'Is Discount Present',
   IS_OPENING_DATE_SHOWN: 'Is Opening Date Shown',
@@ -957,10 +976,15 @@ export const ANALYTICS_PROPERTIES = {
   LABEL: 'Label',
   SORTING_ORDER: 'Sorting Order',
   IS_SHOW_PLAYING: 'Is Show Playing',
+  SELECTED_DATE: 'Selected Date',
+  IS_PRICE_FADED: 'Is Price Faded',
+  IS_MIN_PRICE: 'Is Minimum Price',
+  LEAD_TIME_DAYS: 'Lead Time Days',
+  EXPERIENCE_TIME: 'Experience Time',
+  HAS_SELLING_OUT_FAST_DESCRIPTOR: 'Has Selling Out Descriptor',
   USER_EMAIL: 'User Email',
   CARD_MB_TYPE: 'Card MB Type',
   TITLE: 'Title',
-  SELECTED_DATE: 'Selected Date',
   PERCENTAGE_VIEWED: 'Pecentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
   PLACEMENT: 'Placement',
@@ -1086,6 +1110,12 @@ export const CTA_TYPE = {
   BUY_TICKETS: 'Buy Tickets',
   THEATRE_PAGE_LINK: 'Theatre Page Link',
   SEE_MORE_SHOWS: 'See More Shows',
+  SELECT_SEATS: 'Select Seats',
+  ALL_PHOTOS: 'All photos',
+  READ_MORE: 'Read More',
+  READ_DETAILED_REVIEWS: 'Read detailed reviews',
+  BIG_CTA: 'Big CTA',
+  SMALL_CTA: 'Small CTA',
   SHOW_MORE_ARTICLES: 'Show More Articles',
   VIEW_ROUTES: 'View All Routes',
 };
@@ -1585,6 +1615,8 @@ export const CATEGORY_IDS: Record<string, string> = {
 
 export const LTD_COLLECTION_ID = 167;
 
+export const HARRY_POTTER_CURSED_CHILD_TGID = '16816';
+
 export const LTT_LP_HARDCODED_REVIEWS = [
   {
     user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
@@ -1710,6 +1742,8 @@ export const HO_LOGO =
 
 export const ENTITY_ICONS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/categories';
+
+export const LANGUAGE_SORT_ORDER = ['en', 'es', 'fr', 'it', 'de', 'pt', 'nl'];
 
 export const ANALYTICS_SECTION_NAMES = {
   TOP_THINGS_TODO: 'Top things to do',

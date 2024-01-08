@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const SpotifyContainer = styled.div`
   position: relative;
-  height: 300px;
+  height: 9.5rem;
   overflow: hidden;
-  margin: 16px 0;
-  border-radius: 8px;
+  margin-top: 1.5rem;
+  border-radius: 0.5rem;
 `;
 
 const StyledIFrame = styled.iframe`
@@ -53,6 +53,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
           isPlaylist === '1' ? `playlist` : `album`
         }/${albumid}`}
         loading="lazy"
+        height={'152px'}
         {...otherProps}
       />
     </SpotifyContainer>

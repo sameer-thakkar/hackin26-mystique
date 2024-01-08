@@ -23,23 +23,27 @@ import { labels } from 'const/header';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { CHEVRON_RIGHT, HAMBURGER } from 'assets/SvgIcons';
 
-const ExpandedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "ExpandedMenu" */ 'components/CategoryHeader/components/ExpandedMenu'
-  )
+const ExpandedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ExpandedMenu" */ 'components/CategoryHeader/components/ExpandedMenu'
+    )
 );
-const NestedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "NestedMenu" */ 'components/CategoryHeader/components/NestedMenu'
-  )
+const NestedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "NestedMenu" */ 'components/CategoryHeader/components/NestedMenu'
+    )
 );
-const DeepNestedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "DeepNestedMenu" */ 'components/CategoryHeader/components/DeepNestedMenu'
-  )
+const DeepNestedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DeepNestedMenu" */ 'components/CategoryHeader/components/DeepNestedMenu'
+    )
 );
-const Copyright = dynamic(() =>
-  import(/* webpackChunkName: "Copyright" */ 'components/common/Copyright')
+const Copyright = dynamic(
+  () =>
+    import(/* webpackChunkName: "Copyright" */ 'components/common/Copyright')
 );
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {

@@ -38,6 +38,7 @@ const ScrollToTop = ({
   return (
     <Conditional if={showButton}>
       <StyledButton
+        id="scroll-to-top-button"
         onClick={() => handleScroll()}
         $isLttMonthOnMonthPage={$isLttMonthOnMonthPage}
       >

@@ -24,6 +24,7 @@ export interface IImageProps
   height?: number | string;
   imageId?: string;
   fitCrop?: boolean;
+  minFit?: boolean;
   cropMode?: TCropMode | Array<TCropMode>;
   fill?: boolean;
   blurFill?: boolean;

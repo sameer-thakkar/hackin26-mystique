@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { genUniqueId } from 'utils';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 const Content = styled.div`
   display: none;
   background: #fff;
-  border-radius: 2px;
-  padding: 4px 8px;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  ${expandFontToken(FONTS.UI_LABEL_SMALL)}
 `;
 const Trigger = styled.label`
   display: flex;
@@ -31,7 +34,7 @@ export const StyledTooltip = styled.div`
   .content {
     position: absolute;
     max-width: 200px;
-    top: calc(50% - 4px);
+    top: calc(100% + 1.5rem);
     right: 32px;
     transform: translateY(-50%);
     z-index: 1;
@@ -40,10 +43,7 @@ export const StyledTooltip = styled.div`
   }
 `;
 
-const Tooltip = ({
-  trigger,
-  content
-}: any) => {
+const Tooltip = ({ trigger, content }: any) => {
   const uniqueId = genUniqueId();
   return (
     <StyledTooltip className="tooltip">

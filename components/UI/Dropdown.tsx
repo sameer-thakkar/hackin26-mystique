@@ -8,7 +8,7 @@ const TriggerElement = styled.div`
   cursor: pointer;
 `;
 
-const DropdownOverlay = styled.div`
+export const DropdownOverlay = styled.div<{ showOverlay: boolean }>`
   position: absolute;
   cursor: pointer;
   display: ${(props) => ((props as any).showOverlay ? `grid` : `none`)};
@@ -22,12 +22,9 @@ const DropdownOverlay = styled.div`
   margin-top: 5px;
 `;
 
-const StyledDropdownItem = styled.div`
+const StyledDropdownItem = styled.div<{ active: boolean }>`
   font-size: 14px;
-  ${({
-    // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-    active,
-  }) =>
+  ${({ active }) =>
     active
       ? `
       display: grid;
@@ -47,28 +44,46 @@ export const DropdownItem: React.FC<any> = ({ active, children, ...props }) => {
     </StyledDropdownItem>
   );
 };
-const Dropdown: React.FC<any> = ({ children, triggerElement }) => {
+const Dropdown: React.FC<any> = ({
+  children,
+  triggerElement,
+  autoClose,
+  onDropdownStateChange,
+}: {
+  children: JSX.Element | JSX.Element[];
+  triggerElement: JSX.Element;
+  autoClose?: () => {};
+  onDropdownStateChange?: (open: boolean) => {};
+}) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const dropdownRef = useRef(null);
   useCaptureClickOutside(
     dropdownRef,
     () => {
       setShowOverlay(false);
+      onDropdownStateChange?.(false);
     },
     []
   );
-
+  const autoCloseOverlay = () => {
+    if (autoClose) {
+      setShowOverlay(false);
+      onDropdownStateChange?.(false);
+    }
+  };
   return (
-    <div ref={dropdownRef}>
+    <div className="dropdown-wrapper" ref={dropdownRef}>
       <TriggerElement
         onClick={() => {
+          onDropdownStateChange?.(!showOverlay);
           setShowOverlay((c) => !c);
         }}
       >
         {triggerElement}
       </TriggerElement>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
-      <DropdownOverlay showOverlay={showOverlay}>{children}</DropdownOverlay>
+      <DropdownOverlay showOverlay={showOverlay} onClick={autoCloseOverlay}>
+        {children}
+      </DropdownOverlay>
     </div>
   );
 };

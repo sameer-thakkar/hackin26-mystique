@@ -20,8 +20,8 @@ import {
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const swiperDuplicateSlideCount = 3;
@@ -82,13 +82,13 @@ const StyledBanner = styled.div<IStyledBanner>`
             ) !important;
           `;
     }}
-
   }
 
-  .swiper-android .swiper-slide, .swiper-wrapper{
+  .swiper-android .swiper-slide,
+  .swiper-wrapper {
     transform: none;
   }
-  
+
   .swiper-initialized {
     width: 100%;
   }
@@ -107,7 +107,7 @@ const StyledBanner = styled.div<IStyledBanner>`
     object-fit: cover;
     object-position: 0% 50%;
   }
-  
+
   .swiper-slide {
     max-height: 400px;
     max-width: ${SIZES.MAX_WIDTH};
@@ -221,10 +221,10 @@ const StyledBanner = styled.div<IStyledBanner>`
       margin: unset;
       align-self: end;
     }
-    
+
     .mb-captions .caption h1 {
-        ${expandFontToken('Heading/Small')}
-        margin: auto 24px 24px;
+      ${expandFontToken('Heading/Small')}
+      margin: auto 24px 24px;
     }
 
     .overlay-container {
@@ -232,8 +232,8 @@ const StyledBanner = styled.div<IStyledBanner>`
       z-index: 2;
     }
     a {
-    height: ${BANNER_PARAMS.MOBILE.HEIGHT}px;
-  }
+      height: ${BANNER_PARAMS.MOBILE.HEIGHT}px;
+    }
   }
 `;
 

@@ -9,6 +9,7 @@ import {
   getDurationInHours,
   isDateValid,
 } from 'utils/dateUtils';
+import COLORS from 'const/colors';
 import {
   DESCRIPTOR_RANKING_LOGIC,
   MAX_DESCRIPTORS_DISPLAYED,
@@ -24,6 +25,7 @@ import {
   VALIDITY_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { STAR_EMPTY_NEW, STAR_FULL_NEW, STAR_HALF_NEW } from 'assets/SvgIcons';
 import { convertUidToUrl, getFormattedUrlSlug } from './urlUtils';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
@@ -808,6 +810,18 @@ export const getUniqueRandomOutputs = ({
   return selectedOutputs;
 };
 
+export const getStars = (rating: number) => {
+  const stars = [];
+  for (let i = 0; i < Math.floor(rating); i++) {
+    stars.push(STAR_FULL_NEW({ fillColor: COLORS.BRAND.CANDY }));
+  }
+  if (rating % 1 !== 0)
+    stars.push(STAR_HALF_NEW({ fillColor: COLORS.BRAND.CANDY }));
+  for (let i = 0; i < 5 - Math.ceil(rating); i++) {
+    stars.push(STAR_EMPTY_NEW({ fillColor: COLORS.BRAND.CANDY }));
+  }
+  return stars;
+};
 export const getCategoryMap = (
   tourGroupMap: {
     id: number;

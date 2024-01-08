@@ -316,12 +316,15 @@ export const shortCodeSerializer: any = (
   content: any,
   children: any,
   key: any,
-  parentProps: any
+  parentProps: any,
+  wrapInLazyComponent = true
 ) => {
   let props = {};
   if (getShortcodesList(content).length && !children.length) {
     let renderedChildrens: any = renderShortCodes(content, parentProps);
-    renderedChildrens = WrapInLazyComponent(renderedChildrens);
+    if (wrapInLazyComponent) {
+      renderedChildrens = WrapInLazyComponent(renderedChildrens);
+    }
     return React.createElement(
       // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       tagsMap[type] || React.Fragment,

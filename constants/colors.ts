@@ -14,6 +14,7 @@ const COLORS = {
     FADED_CANDY: '#fff2f8',
     YOUNG_ORANGE: '#ffe7ce',
     SOOTHING_GREEN: '#dbfddb',
+    LTT_INDIGO: '#150029',
   },
   GRAY: {
     G1: '#222222',

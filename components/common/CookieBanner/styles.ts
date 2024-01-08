@@ -12,20 +12,20 @@ export const StyledLink = styled.a`
 `;
 
 export const TextContainer = styled.div`
-	${getFontDetailsByLabel(FONTS.SUBHEADING_REGULAR)}
-	color: ${COLORS.GRAY.G2};
-	width: max-content;
+  ${getFontDetailsByLabel(FONTS.SUBHEADING_REGULAR)}
+  color: ${COLORS.GRAY.G2};
+  width: max-content;
 
-	margin: 1rem 0;
-	padding-right: 1rem;
-	border-right: 1px solid ${COLORS.GRAY.G6};
+  margin: 1rem 0;
+  padding-right: 1rem;
+  border-right: 1px solid ${COLORS.GRAY.G6};
 
-	@media (max-width: 768px) {
-		${getFontDetailsByLabel(FONTS.SUBHEADING_XS)}
+  @media (max-width: 768px) {
+    ${getFontDetailsByLabel(FONTS.SUBHEADING_XS)}
 
-		margin: .5rem 0;
-		padding-right: 0.75rem;
-	}
+    margin: .5rem 0;
+    padding-right: 0.75rem;
+  }
 `;
 
 export const CloseButton = styled.button`

@@ -102,7 +102,7 @@ export const parseShowPageData = (data: any) => {
     DetailObjectHeading: any,
     tabSectionHeading,
     isSafetyBanner = false,
-    specialOffer = {},
+    specialOffer: Record<string, string> = {},
     specialOfferClosingDate: any,
     hasSpecialOffer = false,
     mapURL,
@@ -268,6 +268,7 @@ export const parseShowPageData = (data: any) => {
   let tabHeadingInfo: any = [];
   let highlightsSection;
   let aboutTheatreSection;
+  let criticReview: Record<string, any> = {};
 
   // @ts-expect-error TS(7006): Parameter 'element' implicitly has an 'any' type.
   tabSchema.forEach((element, index) => {
@@ -282,7 +283,17 @@ export const parseShowPageData = (data: any) => {
       });
       aboutTheatreSection = element;
     }
-
+    if (element.tab_name === strings.SHOW_PAGE.CRITIC_REVIEW) {
+      element.tab_content.forEach((data: any) => {
+        if (data.type === 'heading3') {
+          data.type = 'heading2';
+        }
+        if (data.type === 'heading4') {
+          data.type = 'heading2';
+        }
+      });
+      criticReview = element;
+    }
     if (
       TAB_ALLOWED_HIGHLIGHT.find((x) => {
         return x === element.tab_name;
@@ -342,5 +353,6 @@ export const parseShowPageData = (data: any) => {
     highlightsSection,
     listicleSchema,
     aboutTheatreSection,
+    criticReview,
   };
 };

@@ -23,8 +23,8 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 const TopAttractionsCarousel: React.FC<TopAttractionsCarouselProps> = (
   props

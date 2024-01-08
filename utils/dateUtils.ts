@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
@@ -91,6 +91,42 @@ export const formatDateToString = (
 export const addDays = (date: Date | string, nDaysToAdd: number) =>
   dayjs(date).add(nDaysToAdd, 'days').toDate();
 
+export const generateNextXDays = ({
+  numberOfDays,
+  startDate,
+  dayFormat = 'ddd',
+  dateFormat = 'YYYY-MM-DD',
+}: {
+  numberOfDays: number;
+  startDate?: string;
+  dayFormat?: string;
+  dateFormat?: string;
+}) => {
+  const days = [];
+  for (let i = 0; i < numberOfDays; i++) {
+    const day = dayjs(startDate).add(i, 'day');
+    days.push({
+      weekday: day.format(dayFormat),
+      date: day.format(dateFormat),
+    });
+  }
+  return days;
+};
+
+export const getHumanReadableTime = ({
+  formattedTime,
+  lang,
+  inputFormat,
+}: {
+  formattedTime: string;
+  lang?: string;
+  inputFormat?: string;
+}) => {
+  const format =
+    formattedTime && formattedTime?.length <= 5 ? 'HH:mm' : 'HH:mm:ss';
+  return dayjs(formattedTime, inputFormat ?? format, lang).format('h:mm A');
+};
+
 export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
   const today = dayjs().format('YYYY-MM-DD');
   const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
@@ -104,6 +140,39 @@ export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
   );
 };
 
+export const generateDaysInMonth = (currentMonth: Dayjs) => {
+  const daysInMonth = currentMonth.daysInMonth();
+  const firstWeekday = currentMonth.startOf('month').weekday();
+  const arr = [];
+
+  // Fill empty days before the first day of the month
+  for (let i = 0; i < firstWeekday; i++) {
+    arr.push(null);
+  }
+
+  // Fill actual days
+  for (let i = 1; i <= daysInMonth; i++) {
+    arr.push(i);
+  }
+
+  return arr;
+};
+
+export const generateDaysInTwoMonths = (currentMonth: Dayjs) => {
+  const firstMonth = generateDaysInMonth(currentMonth);
+  const secondMonth = generateDaysInMonth(currentMonth.add(1, 'month'));
+  return [firstMonth, secondMonth];
+};
+
+export const generateAllMonthsBetween = (start: Dayjs, end: Dayjs) => {
+  const result = [];
+  let current = start;
+  while (current <= end) {
+    result.push(current);
+    current = current.add(1, 'month');
+  }
+  return result;
+};
 export const getWeekdaysShort = (locale: string) => {
   dayjs.locale(locale || LANGUAGE_CODE_MAP.EN);
   const dayInitials = dayjs.weekdaysShort();

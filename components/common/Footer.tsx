@@ -276,7 +276,7 @@ const GmapsDisclaimer = styled.div`
   }
 `;
 
-const FooterLegal = styled.div<{
+export const FooterLegal = styled.div<{
   isEntertainmentMb: boolean;
   invertLogoColor: boolean;
 }>`

@@ -26,6 +26,9 @@ interface VideoTypeProps {
   imageId?: string;
   imageWidth?: string | number;
   imageHeight?: string | number;
+  imageFill?: boolean;
+  imageAutoCrop?: boolean;
+  imageFitCrop?: boolean;
   shouldVideoPlay?: boolean;
   dontLazyLoadImage?: boolean;
   videoPosition: string;
@@ -34,6 +37,7 @@ interface VideoTypeProps {
   eventTracking?: boolean;
   showPauseIcon?: boolean;
   isMobile?: boolean;
+  id?: string;
   onPause?: () => void;
 }
 
@@ -49,6 +53,9 @@ const Video: React.FC<VideoTypeProps> = ({
   imageWidth,
   imageHeight,
   imageQuality,
+  imageFill = true,
+  imageAutoCrop = false,
+  imageFitCrop = false,
   isMobile,
   dontLazyLoadImage = false,
   videoPosition,
@@ -57,6 +64,7 @@ const Video: React.FC<VideoTypeProps> = ({
   showPauseIcon = true,
   pauseOnclick = false,
   eventTracking = true,
+  id,
   onPause = () => {},
 }) => {
   const videoAutoplayInterval = useRef(null);
@@ -240,12 +248,13 @@ const Video: React.FC<VideoTypeProps> = ({
           height={imageHeight}
           quality={imageQuality}
           imageId={imageId}
-          autoCrop={false}
+          fitCrop={imageFitCrop}
+          autoCrop={imageAutoCrop}
           alt={imageAltText || ''}
           priority={dontLazyLoadImage}
           fetchPriority={dontLazyLoadImage ? 'high' : 'auto'}
           onClick={showPlayButton ? playVideo : () => {}}
-          fill
+          fill={imageFill}
         />
         <div ref={iconRef}>
           <Conditional if={shouldIconAppear && showPlayButton}>
@@ -272,6 +281,7 @@ const Video: React.FC<VideoTypeProps> = ({
         muted={isMuted}
         playsInline={true}
         onClick={handleOnClick}
+        id={id}
         preload="none"
       >
         <source data-src={url} type={'video/mp4'} />

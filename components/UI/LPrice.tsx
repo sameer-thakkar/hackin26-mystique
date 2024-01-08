@@ -12,6 +12,8 @@ type LocalisedPriceProps = {
   price: number;
   precision?: number;
   prefix?: string;
+  truncateIfLong?: boolean;
+  truncateAfter?: number;
 };
 
 const LocalisedPrice = ({
@@ -21,6 +23,8 @@ const LocalisedPrice = ({
   price,
   precision = 2,
   prefix,
+  truncateIfLong,
+  truncateAfter,
 }: LocalisedPriceProps) => {
   const currencyList = useRecoilValue(currencyListAtom);
   const formattedPrice = getLocalisedPrice({
@@ -29,6 +33,8 @@ const LocalisedPrice = ({
     lang,
     precision,
     currencyList,
+    truncateIfLong,
+    truncateAfter,
   });
 
   return (

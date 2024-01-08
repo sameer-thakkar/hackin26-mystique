@@ -266,58 +266,52 @@ export const MoreDetailsButton = styled.button`
 
 export const PricingAndCTASection = styled.div`
   display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: max-content max-content;
-	grid-template-rows: repeat(4, auto);
-	justify-content: space-between;
+  grid-auto-flow: column;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: repeat(4, auto);
+  justify-content: space-between;
   align-content: center;
   align-items: center;
 
-	padding: 2rem;
+  padding: 2rem;
 
-	.scratch-price {
-		${expandFontToken(FONTS.SUBHEADING_XS)}
-		color: ${COLORS.GRAY.G3};
+  .scratch-price {
+    ${expandFontToken(FONTS.SUBHEADING_XS)}
+    color: ${COLORS.GRAY.G3};
 
-		.scratch-price-amount {
-		    color: ${COLORS.GRAY.G3};
-			text-decoration: line-through;
-		}
-	}
-
-
-	.price {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        
-        color: ${COLORS.GRAY.G3};
-        ${expandFontToken(FONTS.HEADING_REGULAR)};
-	}
-
- 
-
-    button:first-child {
-        margin-top: 1.25rem;
+    .scratch-price-amount {
+      color: ${COLORS.GRAY.G3};
+      text-decoration: line-through;
     }
+  }
 
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
-    @media (max-width: 768px) {
-        padding: 1rem;
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.HEADING_REGULAR)};
+  }
 
-        .more-details {
-        margin-top: 0.5rem;
-        grid-column: span 2;
-      }
+  button:first-child {
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .more-details {
+      margin-top: 0.5rem;
+      grid-column: span 2;
     }
-    
+  }
 
-    .booking-link {
-      grid-column: 1 / span 2;
-        grid-row: 3/3;
-      display: block;
-    }
-
+  .booking-link {
+    grid-column: 1 / span 2;
+    grid-row: 3/3;
+    display: block;
+  }
 `;
 
 export const StyledCashback = styled.div`

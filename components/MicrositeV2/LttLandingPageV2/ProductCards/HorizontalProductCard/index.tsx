@@ -35,13 +35,8 @@ const HorizontalProductCard = ({
   background = 'LIGHT',
   isTopLttShow = false,
 }: THorizontalProductCardProps) => {
-  const {
-    lang,
-    nakedDomain,
-    redirectToHeadoutBookingFlow,
-    isDev,
-    host,
-  } = useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
+    useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
 
   if (!product) return null;
@@ -65,11 +60,8 @@ const HorizontalProductCard = ({
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
 
-  const {
-    percentageSaved,
-    shouldShowcashbackElement,
-    cashbackValue,
-  } = getBoosterValueFromListingPrice(listingPrice);
+  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
+    getBoosterValueFromListingPrice(listingPrice);
 
   const { localisedOpeningDate, OPENING_ON } =
     getOpeningDate({

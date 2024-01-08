@@ -52,6 +52,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     addDarkOverlay,
     onClick,
     fitCrop = false,
+    minFit = false,
     blurFill = false,
     fetchPriority = 'auto',
     fallbackImg = '',
@@ -86,7 +87,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     cropMode,
     addDarkOverlay,
     fitCrop,
-    blurFill
+    blurFill,
+    minFit
   );
 
   defaultImageSrc = generateImageImgixUrl(
@@ -101,7 +103,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     cropMode,
     addDarkOverlay,
     fitCrop,
-    blurFill
+    blurFill,
+    minFit
   );
 
   const fallbackImgUrl = generateImageImgixUrl(
@@ -116,7 +119,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     cropMode,
     addDarkOverlay,
     fitCrop,
-    blurFill
+    blurFill,
+    minFit
   );
 
   const [useFallback, setUseFallback] = useState(false);

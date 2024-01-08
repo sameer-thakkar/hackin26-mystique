@@ -26,10 +26,10 @@ const styleType = <const>['long', 'short', 'narrow'];
 interface LocalisedRelativeTimeFormat {
   locale: string;
   value: number;
-  unit: typeof rtfUnitTypes[number];
-  localeMatcher?: typeof localeMatcherType[number];
-  numeric?: typeof numericType[number];
-  style?: typeof styleType[number];
+  unit: (typeof rtfUnitTypes)[number];
+  localeMatcher?: (typeof localeMatcherType)[number];
+  numeric?: (typeof numericType)[number];
+  style?: (typeof styleType)[number];
   formatToParts?: boolean;
 }
 
@@ -134,12 +134,10 @@ export const getDuration = ({
   };
 
   if (minDuration !== maxDuration) {
-    const { hour: minHour, minute: minMinute } = convertMillisecondsToHours(
-      minDuration
-    );
-    const { hour: maxHour, minute: maxMinute } = convertMillisecondsToHours(
-      maxDuration
-    );
+    const { hour: minHour, minute: minMinute } =
+      convertMillisecondsToHours(minDuration);
+    const { hour: maxHour, minute: maxMinute } =
+      convertMillisecondsToHours(maxDuration);
     return `${formatDurationToString({
       hour: minHour,
       minute: minMinute,

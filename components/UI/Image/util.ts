@@ -12,7 +12,8 @@ export const generateImageImgixUrl = (
   cropMode: TCropMode | TCropMode[],
   addDarkOverlay: boolean,
   fitCrop: boolean,
-  blurFill: boolean
+  blurFill: boolean,
+  minFit: boolean
 ): string => {
   if (!url) {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
@@ -57,6 +58,10 @@ export const generateImageImgixUrl = (
 
   if (fitCrop) {
     imigxOptionsQueryParams.set('fit', 'crop');
+  }
+
+  if (minFit) {
+    imigxOptionsQueryParams.set('fit', 'min');
   }
 
   //TODO - revert after showpage revamp

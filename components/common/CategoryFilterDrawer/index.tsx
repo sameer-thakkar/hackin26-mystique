@@ -24,9 +24,8 @@ const CategoryFilterDrawer = ({
   onClose,
   onApply,
 }: TCategoryFilterDrawerProps) => {
-  const [currentCategoryStates, setCurrentCategoryStates] = useState<
-    TCategoryFilterDrawerProps['categoryStates']
-  >(categoryStates);
+  const [currentCategoryStates, setCurrentCategoryStates] =
+    useState<TCategoryFilterDrawerProps['categoryStates']>(categoryStates);
 
   const changeState = (id: number, isSelected = true) => {
     setCurrentCategoryStates({ ...currentCategoryStates, [id]: isSelected });

@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 export const Heading = styled.h2`
   ${expandFontToken(FONTS.HEADING_SMALL)}
-    color: ${COLORS.PURPS.DARK_TONE};
+  color: ${COLORS.PURPS.DARK_TONE};
   margin: 0 1.5rem;
 `;
 

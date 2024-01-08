@@ -49,8 +49,7 @@ export const IconWrapper = styled.div<{
   margin-left: auto;
   cursor: pointer;
   ${({ isOpen }) => isOpen && 'transform: rotate(180deg);'}
-  ${({ isFirst }) =>
-    isFirst && 'align-self:start;'}
+  ${({ isFirst }) => isFirst && 'align-self:start;'}
 	transition: transform 0.1s ease !important;
 `;
 export const ContentBlock = styled.div<{

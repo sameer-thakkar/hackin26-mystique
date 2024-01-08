@@ -30,9 +30,8 @@ export const SearchPage = (props: any) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
   const { currentLanguage } = props;
-  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
 
   const searchItemClick = (
@@ -60,7 +59,7 @@ export const SearchPage = (props: any) => {
   const defaultSearchTgids = headerProps.recommendedTours;
   const allToursArray = Object.values(allTours);
   return (
-    <div>
+    <div className="search-page">
       <div className="search-header">
         <SearchBox
           allToursArray={allToursArray}

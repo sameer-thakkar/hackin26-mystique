@@ -94,35 +94,35 @@ export const Icon = styled.div<{
 `;
 
 export const ListItem = styled.label<{ $isSelected?: boolean }>`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
   padding: 1rem 0;
-	background-color: ${COLORS.BRAND.WHITE};
-	cursor: pointer;
-	transition: all 0.3s;
+  background-color: ${COLORS.BRAND.WHITE};
+  cursor: pointer;
+  transition: all 0.3s;
 
-	.dropdown-content-title {
-		${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
-		color: ${COLORS.GRAY.G2};
-	}
+  .dropdown-content-title {
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+    color: ${COLORS.GRAY.G2};
+  }
 
-	input {
-		display: none;
-	}
+  input {
+    display: none;
+  }
 
-	&:hover {
-		${CheckBoxContainer} {
-			border: 0.0625rem solid ${COLORS.PURPS.LEVEL_3};
-        }
-	}
+  &:hover {
+    ${CheckBoxContainer} {
+      border: 0.0625rem solid ${COLORS.PURPS.LEVEL_3};
+    }
+  }
 
-&:not(:last-child) {
-  border-bottom: 1px solid ${COLORS.GRAY.G6};
-}
+  &:not(:last-child) {
+    border-bottom: 1px solid ${COLORS.GRAY.G6};
+  }
 
-	${({ $isSelected }) =>
+  ${({ $isSelected }) =>
     $isSelected &&
     css`
       ${CheckBoxContainer} {

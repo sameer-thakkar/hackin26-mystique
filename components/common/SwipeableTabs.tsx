@@ -102,13 +102,8 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
     const onSwipeEnd = debounce((e: any) => {
       swipeRef.current.touchEndX = e.changedTouches[0].screenX;
       swipeRef.current.touchEndY = e.changedTouches[0].screenY;
-      const {
-        touchEndX,
-        touchStartX,
-        activeTab,
-        touchStartY,
-        touchEndY,
-      } = swipeRef.current;
+      const { touchEndX, touchStartX, activeTab, touchStartY, touchEndY } =
+        swipeRef.current;
       const horizontalDelta = touchStartX - touchEndX;
       const verticalDelta = touchStartY - touchEndY;
       if (

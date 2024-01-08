@@ -11,10 +11,8 @@ const cn = {
   COMPARE_ALL_DETAILS: '比较所有细节',
   COVID19_ALERT: {
     KEY_TEXT: '疫情期间更新',
-    LINK:
-      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT:
-      '您是我们最在意的对象。请您在帮助中心中的灵活取消政策中查询最新资讯。 ',
+    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT: '您是我们最在意的对象。请您在帮助中心中的灵活取消政策中查询最新资讯。 ',
   },
   DURATION: '行程时长',
   EARLIEST_AVAILABILITY: '最早可预定日期',
@@ -164,8 +162,7 @@ const cn = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: '您的安全是我们最优先考虑的事项',
-    TEXT:
-      '为了提升卫生水平，我们频繁使用消毒液为表面进行了全面性的消毒，同时避免人群过度聚集。',
+    TEXT: '为了提升卫生水平，我们频繁使用消毒液为表面进行了全面性的消毒，同时避免人群过度聚集。',
   },
   SAVE_UPTO: '节省',
   SELECT_SECTION: '选择部分',

@@ -1,8 +1,13 @@
+import { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { getLocalisedPrice } from 'utils/currency';
+import { currencyAtom } from 'store/atoms/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import { searchQueryAtom } from 'store/atoms/searchQuery';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
@@ -15,15 +20,37 @@ export const SearchItem = (props: any) => {
     tgid,
     showPageUid,
     productImage,
+    imageUrl,
     title,
+    name,
     cardFooter,
-    currencySymbol,
     scratchPrice,
     price,
     onSearchResultClick,
     flowType,
+    listingPrice: { originalPrice, finalPrice },
     urlSlugs,
   } = props;
+  const currencyList = useRecoilValue(currencyListAtom);
+  const currencyCode = useRecoilValue(currencyAtom);
+  const { lang } = useContext(MBContext);
+
+  const retailPrice = getLocalisedPrice({
+    price: scratchPrice ?? originalPrice,
+    currencyCode: currencyCode ?? '',
+    lang,
+    precision: 2,
+    currencyList,
+  });
+
+  const listingPrice = getLocalisedPrice({
+    price: price ?? finalPrice,
+    currencyCode: currencyCode ?? '',
+    lang,
+    precision: 2,
+    currencyList,
+  });
+
   return (
     <div
       className="search-item"
@@ -42,7 +69,7 @@ export const SearchItem = (props: any) => {
       <div className="left">
         <div className="image">
           <Image
-            url={productImage}
+            url={productImage ?? imageUrl}
             imageId={tgid}
             format="pjpg"
             width={208}
@@ -53,7 +80,7 @@ export const SearchItem = (props: any) => {
         </div>
       </div>
       <div className="right">
-        <div className="search-title">{title}</div>
+        <div className="search-title">{title ?? name}</div>
         {cardFooter && asText(cardFooter) && (
           <div className="booster">
             <PrismicRichText
@@ -63,16 +90,8 @@ export const SearchItem = (props: any) => {
           </div>
         )}
         <div className="price-wrapper">
-          <div className="current-price">
-            {currencySymbol}
-            {price}
-          </div>
-          {scratchPrice ? (
-            <div className="old-price">
-              {currencySymbol}
-              {scratchPrice}
-            </div>
-          ) : null}
+          <div className="current-price">{listingPrice}</div>
+          {retailPrice ? <div className="old-price">{retailPrice}</div> : null}
         </div>
       </div>
       <style jsx>

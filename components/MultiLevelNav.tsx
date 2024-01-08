@@ -15,8 +15,9 @@ import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LazyComponent from './common/LazyComponent';
 import LinkResolver from './LinkResolver';
 
-const CategoryHeader = dynamic(() =>
-  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(
+  () =>
+    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
 
 const StyledMenuItem = styled.li`
@@ -339,7 +340,9 @@ const Menu = ({
 
   useEffect(() => {
     if (nestedMenuRef.current) {
-      const nestedMenuDim = (nestedMenuRef.current as any)?.getBoundingClientRect();
+      const nestedMenuDim = (
+        nestedMenuRef.current as any
+      )?.getBoundingClientRect();
       if (nestedMenuDim.width + nestedMenuDim.x > windowWidth)
         setOffScreen(true);
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NotesContainer = styled.div`
+export const NotesContainer = styled.div`
   padding: 16px;
   background: #f8f8f8;
   border-radius: 4px;

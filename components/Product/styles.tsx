@@ -897,7 +897,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
       $isProductCardPhase1ExperimentTreatmentVariant &&
       productCardPhase1ExperimentTreatmentVariantCss}
-      
+
     ${({ $isBannerCard }) =>
       $isBannerCard &&
       `

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 
-const GoogleMapWrapper = styled.div<{
+export const GoogleMapWrapper = styled.div<{
   isVenuePage?: boolean;
 }>`
   margin-bottom: 4rem;

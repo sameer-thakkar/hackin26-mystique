@@ -130,7 +130,7 @@ const StyledSearchBox = styled.div<{
 `;
 
 export const SearchBox = (props: any) => {
-  let interactionContext = useContext(InteractionContext);
+  let interactionContext: any = useContext(InteractionContext);
   const {
     handleResults,
     allToursArray,
@@ -148,8 +148,8 @@ export const SearchBox = (props: any) => {
     (str: any) => {
       setQuery(str);
       if (str.length >= 3) {
-        // @ts-expect-error TS(2531): Object is possibly 'null'.
-        if (interactionContext.activeTour.tgid) interactionContext.closeTour();
+        if (interactionContext?.activeTour?.tgid)
+          interactionContext?.closeTour?.();
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         const results = fuse.current.search(str);
         handleResults(results.slice(0, 5));
@@ -173,9 +173,11 @@ export const SearchBox = (props: any) => {
     const opts = {
       shouldSort: true,
       threshold: 0.4,
-      keys: ['title'],
+      keys: ['title', 'name'],
     };
-    const searchableTours = allToursArray.filter((tour: any) => tour.available);
+    const searchableTours = allToursArray.filter(
+      (tour: any) => tour.available || tour.listingPrice
+    );
     // @ts-expect-error TS(2322): Type 'Fuse<unknown, { shouldSort: boolean; thresho... Remove this comment to see the full error message
     fuse.current = new Fuse(searchableTours, opts);
 

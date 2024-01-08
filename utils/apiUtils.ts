@@ -74,6 +74,7 @@ export enum HeadoutEndpoints {
   TourGroupListByCategoryV6,
   TourGroupListBySubCategoryV6,
   TourGroupReviewsV2,
+  TourGroupReviewMedias,
   Collection,
   CollectionSections,
   CollectionTop,
@@ -130,6 +131,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupReviewsV2:
       endpointSlug = `/api/tours/v2/review/tour-group/id/${id}/`;
+      break;
+    case HeadoutEndpoints.TourGroupReviewMedias:
+      endpointSlug = `/api/v6/tour-groups/${id}/review-medias`;
       break;
     case HeadoutEndpoints.Collection:
       endpointSlug = `/api/tours/v1/collection/`;
@@ -397,6 +401,78 @@ export const fetchMediaResource = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchMedia]', error);
+  }
+};
+
+interface TFetchReviewMediasTypes extends CommonApiProps {
+  tgid: string | number;
+  language?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface TReviewMediasResponse {
+  items: Array<{
+    id: number;
+    nonCustomerName: string;
+    reviewerImgUrl?: string;
+    rating: number;
+    content: string;
+    reviewTime: number;
+    reviewMedias: Array<{
+      url: string;
+      fileType: string;
+      fileSize: number;
+      width: any;
+      height: any;
+      fileName: string;
+    }>;
+    translatedContent?: string;
+    useTranslatedContent: boolean;
+    nonCustomerCountryCode: any;
+    sourceLanguage: string;
+    nonCustomerCountryName: any;
+  }>;
+  nextUrl: string;
+  prevUrl: string;
+  total: number;
+  nextOffset: number;
+  prevOffset: number;
+}
+
+export const fetchReviewMedias = async ({
+  tgid,
+  language = 'EN',
+  limit,
+  hostname,
+  offset,
+  cookies = {},
+}: TFetchReviewMediasTypes) => {
+  try {
+    const params = {
+      ...(language && {
+        language,
+      }),
+      ...(limit && {
+        limit: limit.toString(),
+      }),
+      ...(offset && {
+        offset: offset.toString(),
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupReviewMedias,
+      id: tgid,
+      params,
+      hostname,
+    });
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(url, { headers });
+    const data = (await response.json()) as TReviewMediasResponse;
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('[fetchRevieMedias]', error);
   }
 };
 
@@ -763,17 +839,30 @@ export const fetchTourGroupReviews = async ({
   tgid,
   hostname,
   limit,
+  filterType,
+  offset,
   cookies,
+  language,
 }: {
   tgid: string | number;
-  hostname: string;
+  hostname?: string;
+  filterType?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL' | 'TOP';
   limit?: number;
+  offset?: number;
   cookies?: { [_key: string]: any };
+  language?: string;
 }) => {
   const params = {
     ...(limit && {
       limit: `${limit}`,
     }),
+    ...(offset && {
+      offset: `${offset}`,
+    }),
+    ...(filterType && {
+      filterType: `${filterType}`,
+    }),
+    language: language ?? 'EN',
   };
   const url = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupReviewsV2,
@@ -838,6 +927,62 @@ export const fetchInventory = async ({
       endpoint: HeadoutEndpoints.TourGroupInventoriesV6,
       id: tgid,
       hostname,
+      params,
+    });
+    const response = await fetch(url, { headers });
+
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchInventory]', error);
+  }
+};
+
+export const fetchInventoryV7 = async ({
+  tgid,
+  minPax,
+  fromDate,
+  toDate,
+  language = 'en',
+  variantId,
+  currency,
+  cookies,
+}: {
+  tgid: number | string;
+  hostname: string;
+  minPax?: number;
+  fromDate?: string;
+  toDate?: string;
+  language?: string;
+  variantId?: number;
+  currency?: string | null;
+  cookies?: { [_key: string]: any };
+}) => {
+  try {
+    const params = {
+      ...(language && {
+        language,
+      }),
+      ...(minPax && {
+        'min-pax': `${minPax}`,
+      }),
+      ...(fromDate && {
+        'from-date': fromDate,
+      }),
+      ...(toDate && {
+        'to-date': toDate,
+      }),
+      ...(variantId && {
+        variantId: `${variantId}`,
+      }),
+      ...(currency && {
+        currency,
+      }),
+    };
+    const headers = constructHeaders({ cookies });
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupInventoriesV7,
+      id: tgid,
       params,
     });
     const response = await fetch(url, { headers });
@@ -935,6 +1080,7 @@ export const fetchCalendarInventory = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchCalendarInventory]', error);
+    throw error;
   }
 };
 

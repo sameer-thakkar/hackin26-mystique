@@ -28,6 +28,8 @@ export type TGetLocalisedPrice = Omit<
   price: number;
   precision?: number;
   currencyList: Array<TCurrencyObj>;
+  truncateIfLong?: boolean;
+  truncateAfter?: number;
   hideCurrency?: boolean;
 };
 
@@ -61,12 +63,26 @@ export const getLocalisedPrice = ({
   lang = 'en',
   precision = 2,
   currencyList,
+  truncateIfLong,
+  truncateAfter,
   hideCurrency = false,
 }: TGetLocalisedPrice) => {
   try {
     if ((!price && !isNaN(price)) || !currencyCode) return '';
 
     const isInteger = Number.isInteger(price);
+
+    const compactFormattingOptions: {
+      notation: 'compact' | 'engineering' | 'standard';
+      compactDisplay: 'long' | 'short';
+      maximumFractionDigits: number;
+    } = {
+      notation: 'compact',
+      compactDisplay: 'short',
+      maximumFractionDigits: 1,
+    };
+    const shouldTruncate =
+      truncateIfLong && truncateAfter && price.toString().length > 3;
 
     const formatOptions: Intl.NumberFormatOptions = {
       style: 'currency',
@@ -75,6 +91,7 @@ export const getLocalisedPrice = ({
       useGrouping: true,
       minimumFractionDigits: 0,
       maximumFractionDigits: isInteger ? 0 : precision,
+      ...(shouldTruncate && compactFormattingOptions),
     };
 
     const formatter = new Intl.NumberFormat(lang, formatOptions);

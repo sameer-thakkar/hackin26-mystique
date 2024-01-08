@@ -33,7 +33,6 @@ export const SectionHeading = styled.div`
       margin-left: 0.5rem;
       ${expandFontToken(FONTS.HEADING_SMALL)}
     }
-    
   }
 `;
 

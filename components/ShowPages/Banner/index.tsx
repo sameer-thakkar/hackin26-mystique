@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import * as Sentry from '@sentry/nextjs';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
@@ -28,6 +29,7 @@ import {
 } from 'utils/analytics';
 import { fetchCalendarInventory } from 'utils/apiUtils';
 import { dateToString } from 'utils/dateUtils';
+import { sendLog } from 'utils/logger';
 import { getTagPageLink } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
@@ -170,14 +172,19 @@ const ShowPageBanner = ({
   }, []);
   useEffect(() => {
     const fetchReopeningDate = async () => {
-      const { sortedInventoryDates } =
-        (await fetchCalendarInventory({
-          tgid: parseInt(tgid),
-          currency,
-        })) ?? {};
+      try {
+        const { sortedInventoryDates } =
+          (await fetchCalendarInventory({
+            tgid: parseInt(tgid),
+            currency,
+          })) ?? {};
 
-      const [firstAvailableDate] = sortedInventoryDates ?? [];
-      setNextAvailable(dateToString(firstAvailableDate));
+        const [firstAvailableDate] = sortedInventoryDates ?? [];
+        setNextAvailable(dateToString(firstAvailableDate));
+      } catch (e) {
+        Sentry.captureException(e);
+        sendLog({ err: e });
+      }
     };
     if (isTourAvailable) {
       fetchReopeningDate();

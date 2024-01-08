@@ -10,10 +10,12 @@ import Cookies from 'js-cookie';
 import { getAppTheme } from 'style/theme';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
+import useABTesting from 'hooks/useABTesting';
 import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
+import { checkIfLTTMB } from 'utils/helper';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
@@ -21,6 +23,7 @@ import getPageData from 'utils/prismicUtils/getPageData';
 import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
+import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_PROPERTIES,
   COOKIE,
@@ -31,12 +34,16 @@ import {
   TIME,
 } from 'const/index';
 import { strings } from 'const/strings';
+import Loader from './common/Loader';
 import Analytics from './Analytics';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
+const LttShowPageV2 = dynamic(
+  () => import('components/MicrositeV2/LttShowPageV2')
+);
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
 const NewsPage = dynamic(() => import('components/NewsPage'));
@@ -142,6 +149,23 @@ const Page = (props: PageProps) => {
     uid,
     MBDesign,
   } = props;
+
+  const isLTT = checkIfLTTMB(uid);
+
+  const {
+    isEligible: isLTTSpRevampExpEligible,
+    variant: lttSpRevampExpVariant,
+    isExperimentResolving: isLTTSpRevampExpResolving,
+  } = useABTesting({
+    experimentId: 'LTT_SHOW_PAGE_REVAMP_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => {
+      return isLTT;
+    },
+  });
+
+  const showLttSpTreatment =
+    lttSpRevampExpVariant === VARIANTS.TREATMENT && isLTTSpRevampExpEligible;
 
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -275,7 +299,23 @@ const Page = (props: PageProps) => {
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:
-        return (
+        if (isLTTSpRevampExpResolving && isLTTSpRevampExpEligible)
+          return <Loader />;
+
+        return showLttSpTreatment ? (
+          <LttShowPageV2
+            CMSContent={CMSContent}
+            tourGroupData={tourGroupData}
+            inventorySlotData={inventorySlotData}
+            isDev={isDev}
+            isMobile={isMobile}
+            host={host}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+            domainConfig={domainConfig}
+            primaryCity={primaryCity}
+            categoryHeaderMenu={categoryHeaderMenu}
+          />
+        ) : (
           <ShowPage
             CMSContent={CMSContent}
             tourGroupData={tourGroupData}

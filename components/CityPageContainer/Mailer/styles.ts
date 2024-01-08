@@ -78,40 +78,40 @@ export const SubscriptionCont = styled.div<{
   isErr: boolean;
   $isCatOrSubCatPage: boolean;
 }>`
-.input-form {
-  width: 100%;
-  display: flex;
-  .email-input {
-    width: 20rem;
-    height: calc(4rem - 2px);
-    padding: 0 1.25rem;
-    border: none;
-    border-radius: 12px 0 0 12px;
-    ${expandFontToken(FONTS.UI_LABEL_LARGE)};
-    border: 1px solid ${COLORS.GRAY.G6};
-    border-right: none; 
-    ${({ isErr }) =>
-      isErr &&
-      `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; border-right: none;`}
+  .input-form {
+    width: 100%;
+    display: flex;
+    .email-input {
+      width: 20rem;
+      height: calc(4rem - 2px);
+      padding: 0 1.25rem;
+      border: none;
+      border-radius: 12px 0 0 12px;
+      ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+      border: 1px solid ${COLORS.GRAY.G6};
+      border-right: none;
+      ${({ isErr }) =>
+        isErr &&
+        `border: 1px solid ${COLORS.TEXT.WARNING_RED_1}; border-right: none;`}
+    }
+    .err-msg {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+      color: ${COLORS.TEXT.WARNING_RED_1};
+      margin-top: 0.4rem;
+    }
+    .signup-btn {
+      width: 11.75rem;
+      color: ${({ $isCatOrSubCatPage }) =>
+        $isCatOrSubCatPage ? COLORS.BRAND.PURPS : COLORS.BRAND.WHITE};
+      background-color: ${({ $isCatOrSubCatPage }) =>
+        $isCatOrSubCatPage ? COLORS.PURPS.LIGHT_TONE_4 : COLORS.BRAND.PURPS};
+      border: none;
+      border-radius: 0 12px 12px 0;
+      cursor: pointer;
+      height: 4rem;
+      ${expandFontToken(FONTS.BUTTON_BIG)}
+    }
   }
-  .err-msg {
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-    color: ${COLORS.TEXT.WARNING_RED_1};
-    margin-top: 0.4rem;
-  }
-  .signup-btn {
-    width: 11.75rem;
-    color: ${({ $isCatOrSubCatPage }) =>
-      $isCatOrSubCatPage ? COLORS.BRAND.PURPS : COLORS.BRAND.WHITE};
-    background-color: ${({ $isCatOrSubCatPage }) =>
-      $isCatOrSubCatPage ? COLORS.PURPS.LIGHT_TONE_4 : COLORS.BRAND.PURPS};
-    border: none;
-    border-radius: 0 12px 12px 0;
-    cursor: pointer;
-    height: 4rem;
-    ${expandFontToken(FONTS.BUTTON_BIG)}
-  }
-}
   .subcription-msg {
     display: flex;
     align-items: center;

@@ -60,10 +60,8 @@ const ko = {
   COMPARE_ALL_DETAILS: '전체 세부 정보 비교',
   COVID19_ALERT: {
     KEY_TEXT: '코로나19 관련 소식 업데이트',
-    LINK:
-      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT:
-      '여러분의 안전이 가장 중요합니다. 도움말 페이지에서 탄력적 취소 정책에 관한 최신 업데이트를 확인해 주십시오.',
+    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT: '여러분의 안전이 가장 중요합니다. 도움말 페이지에서 탄력적 취소 정책에 관한 최신 업데이트를 확인해 주십시오.',
   },
   CURRENCY: '통화',
   CUSTOMER_REVIEW_HEADING: '고객 리뷰',
@@ -290,29 +288,25 @@ const ko = {
     AT_DESCRIPTION: {
       CTA_URL:
         'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
-      TEXT:
-        '2G 규정 적용: 숙박시설, 문화시설, 식당 및 바는 백신 접종을 완전히 마쳤음을 증명하거나, 회복증명을 지닌 분만 이용하실 수 있습니다. 코로나19 검사 음성 결과는 더 이상 적용되지 않습니다.',
+      TEXT: '2G 규정 적용: 숙박시설, 문화시설, 식당 및 바는 백신 접종을 완전히 마쳤음을 증명하거나, 회복증명을 지닌 분만 이용하실 수 있습니다. 코로나19 검사 음성 결과는 더 이상 적용되지 않습니다.',
     },
     AU_DESCRIPTION: {
       CTA_URL:
         'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
-      TEXT:
-        '만 16세 이상의 방문객은 코로나19 예방접종 또는 의료 면제 서류를 제시해야 합니다. ',
+      TEXT: '만 16세 이상의 방문객은 코로나19 예방접종 또는 의료 면제 서류를 제시해야 합니다. ',
     },
     BANNER_CTA: '더 알아보기',
     BERLIN_DESCRIPTION: {
       CTA_URL:
         'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
-      TEXT:
-        '2G 규정 적용: 백신 접종을 완전히 마쳤음을 증명하거나, 회복증명을 지닌 분만 이용하실 수 있습니다. 만 18세 미만이나 의료상의 이유로 예방접종을 하지 못하신 분은 입구에서 코로나바이러스 검사 음성 결과를 제시해야 합니다. 의료상의 이유로 예방접종을 하지 못하신 분 역시 입구에서 예방접종을 할 수 없음을 증명하는 진단서를 제출해야 합니다.',
+      TEXT: '2G 규정 적용: 백신 접종을 완전히 마쳤음을 증명하거나, 회복증명을 지닌 분만 이용하실 수 있습니다. 만 18세 미만이나 의료상의 이유로 예방접종을 하지 못하신 분은 입구에서 코로나바이러스 검사 음성 결과를 제시해야 합니다. 의료상의 이유로 예방접종을 하지 못하신 분 역시 입구에서 예방접종을 할 수 없음을 증명하는 진단서를 제출해야 합니다.',
     },
     CTA_TEXT: '안전 관련 세부 정보',
     DESCRIPTION_CTA: '더 알아보세요.',
     EU_DESCRIPTION: {
       CTA_URL:
         'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
-      TEXT:
-        '2021년 7월 21일부터 12세 이상의 모든 방문객은 EU에서 발행하는 코로나19 인증서를 제시해야 합니다. ',
+      TEXT: '2021년 7월 21일부터 12세 이상의 모든 방문객은 EU에서 발행하는 코로나19 인증서를 제시해야 합니다. ',
     },
     EU_HEADING: 'EU 코로나19 인증서 필수',
     EU_PREFIX: '알림: ',
@@ -324,8 +318,7 @@ const ko = {
     HEADING: '최고급 안전 기준',
     IT_DESCRIPTION: {
       CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
-      TEXT:
-        '2021년 8월 6일부터 11세 이상의 모든 방문객은 그린 패스(Green Pass) 또는 EU에서 발행하는 코로나19 인증서를 제시해야 합니다. ',
+      TEXT: '2021년 8월 6일부터 11세 이상의 모든 방문객은 그린 패스(Green Pass) 또는 EU에서 발행하는 코로나19 인증서를 제시해야 합니다. ',
     },
     IT_PREFIX: '알림: ',
     MOBILE_HEADING: '안전 여행지',
@@ -430,13 +423,11 @@ const ko = {
     NL_DESCRIPTION: {
       CTA_URL:
         'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
-      TEXT:
-        '13세 이상의 관람객은 예방접종 완료 증명, 검사 음성 결과 또는 코로나19에서 회복되었음을 증명하는 코로나바이러스 관련 인증서를 디지털 또는 인쇄본 형식으로 소지해야 합니다. 반드시 마스크를 착용해 주세요. ',
+      TEXT: '13세 이상의 관람객은 예방접종 완료 증명, 검사 음성 결과 또는 코로나19에서 회복되었음을 증명하는 코로나바이러스 관련 인증서를 디지털 또는 인쇄본 형식으로 소지해야 합니다. 반드시 마스크를 착용해 주세요. ',
     },
     SG_DESCRIPTION: {
       CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
-      TEXT:
-        '2021년 10월 13일부터는 백신 접종을 마친 방문객만 2인 1조 형식으로 입장할 수 있습니다. 방문객은 입국 전에 예방접종 상태 증명, 최신 코로나19 검사 음성 결과 및 모든 회복증명 관련 문서를 제출해야 합니다. ',
+      TEXT: '2021년 10월 13일부터는 백신 접종을 마친 방문객만 2인 1조 형식으로 입장할 수 있습니다. 방문객은 입국 전에 예방접종 상태 증명, 최신 코로나19 검사 음성 결과 및 모든 회복증명 관련 문서를 제출해야 합니다. ',
     },
     SHORT_HEADING: '최고급 안전 기준 제공',
   },
@@ -481,8 +472,7 @@ const ko = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: '저희는 여러분의 안전을 가장 먼저 생각합니다.',
-    TEXT:
-      '주기적으로 소독과 청소를 실시하여 깨끗한 환경을 유지하고 여러분의 건강을 지키는 데 최선을 다하고 있습니다. 또한 많은 인파가 몰리지 않도록 인원 통제 작업도 실시하고 있습니다.',
+    TEXT: '주기적으로 소독과 청소를 실시하여 깨끗한 환경을 유지하고 여러분의 건강을 지키는 데 최선을 다하고 있습니다. 또한 많은 인파가 몰리지 않도록 인원 통제 작업도 실시하고 있습니다.',
   },
   SAVE: '{0}% 할인',
   SAVE_PERCENT: '{0}% 할인',

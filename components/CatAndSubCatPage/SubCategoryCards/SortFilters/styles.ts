@@ -18,7 +18,7 @@ export const FilterItem = styled.div<{ $isActive: boolean }>`
     $isActive &&
     `   pointer-events: none;
         background: ${COLORS.GRAY.G7};
-    `} 
+    `}
 
   span {
     white-space: nowrap;
@@ -27,5 +27,4 @@ export const FilterItem = styled.div<{ $isActive: boolean }>`
   :hover {
     background: ${COLORS.GRAY.G7};
   }
-    
 `;
