@@ -60,15 +60,6 @@ const getCityCategoriesCarouselDocs = async ({
       return !taggedSubCategory;
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'filteredMicrosites',
-        queryingMultipleDocs: true,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     return getRankedDocuments({
       docs: filteredMicrosites,
       ranking: [

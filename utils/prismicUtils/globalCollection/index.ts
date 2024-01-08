@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
-import { sendLog } from 'utils/logger';
 import { GLOBAL_EXPERIENCE_PAGE_TYPE } from 'const/globalMb';
 import { CUSTOM_TYPES, PRISMIC_DEV_TAG } from 'const/index';
 import { globalCollectionGq } from './graphQuery';
@@ -19,15 +18,6 @@ const getGlobalCollection = async ({ req, uid, lang }: any) => {
       graphQuery: globalCollectionGq,
     }
   );
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
-      lang,
-      functionality: 'globalCollection',
-      msg: 'Prismic API call from Canary',
-    },
-  });
 
   if (globalCollection && Object.keys(globalCollection)?.length) {
     const { id: docID, data: globalCollectionData } = globalCollection;
@@ -46,17 +36,6 @@ const getGlobalCollection = async ({ req, uid, lang }: any) => {
         predicate.at(`my.${CUSTOM_TYPES.GLOBAL_EXPERIENCE}.collection`, docID),
       ],
     });
-
-    sendLog({
-      message: {
-        uid,
-        documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
-        lang,
-        functionality: 'subPagesPromise',
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const cityCollectionsPromise = cityDocID
       ? prismicClient.getByType('global_collection', {
           pageSize: 100,
@@ -70,18 +49,6 @@ const getGlobalCollection = async ({ req, uid, lang }: any) => {
         })
       : undefined;
 
-    if (cityDocID) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
-          lang,
-          functionality: 'cityCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
-
     const countryCollectionsPromise = countryDocID
       ? prismicClient.getByType('global_collection', {
           pageSize: 100,
@@ -94,18 +61,6 @@ const getGlobalCollection = async ({ req, uid, lang }: any) => {
           ],
         })
       : undefined;
-
-    if (countryDocID) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
-          lang,
-          functionality: 'countryCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
 
     const allSettledResults = await Promise.allSettled([
       subPagesPromise,

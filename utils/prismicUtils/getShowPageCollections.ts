@@ -20,16 +20,6 @@ const getShowPageCollections = async ({
       graphQuery: showpageTgidsGq,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.SHOW_PAGE,
-        functionality: 'showpageDocs',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     return showpageDocs;
   } catch (error) {
     sendLog({
@@ -64,16 +54,6 @@ export const getShowPageCollectionsByTgid = async ({
         }),
       }
     );
-
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.SHOW_PAGE,
-        functionality: 'showpageDocs',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     return showpageDocs;
   } catch (error) {

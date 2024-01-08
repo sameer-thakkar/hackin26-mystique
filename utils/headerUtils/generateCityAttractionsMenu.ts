@@ -79,16 +79,6 @@ const generateCityAttractionsMenu = async ({
       pageSize: 100,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'filteredMicrosites',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const docsStore = getRankedDocuments({ docs: filteredMicrosites });
 
     const menu = topCollectionsData?.items?.reduce(

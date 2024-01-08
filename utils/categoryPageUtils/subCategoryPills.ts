@@ -49,14 +49,6 @@ export const getCategoryLandingPage = async ({
         predicates: predicatesArray,
       }
     );
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'filteredMicrosites',
-        queryingMultipleDocs: true,
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     if (!filteredMicrosites?.[0]) return '';
 

@@ -16,15 +16,6 @@ export default function handle(req: NextApiRequest, res: NextApiResponse) {
         lang: String(lang),
         ref: String(ref),
       });
-      sendLog({
-        message: {
-          lang,
-          uid,
-          documentType: type,
-          functionality: 'pageData',
-          msg: 'Prismic API call from Canary',
-        },
-      });
 
       const pageUrl = convertUidToUrl({
         uid: String(uid),

@@ -99,15 +99,6 @@ export default class SitemapXml extends Component {
         lang: DEFAULT_PRISMIC_LANG,
       });
 
-      sendLog({
-        message: {
-          msg: 'Prismic API call from Canary',
-          uid,
-          documentType: 'sitemap',
-          functionality: 'documents',
-        },
-      });
-
       documents
         .filter((doc: any) =>
           [

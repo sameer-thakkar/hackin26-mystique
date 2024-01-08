@@ -6,7 +6,6 @@ import type {
 } from '@prismicio/types';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
-import { sendLog } from 'utils/logger';
 import {
   attachedContentFrameworkData,
   baseLangMicrositeDataForContentPage,
@@ -45,14 +44,6 @@ const getUpdatedDocuments = async ({ documentIds }: any) => {
       fetchLinks: 'microsite.body1',
     }
   );
-
-  sendLog({
-    message: {
-      documentType: 'looker',
-      functionality: 'linkedRefsPromise',
-      msg: 'Prismic API call from Canary',
-    },
-  });
 
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
     return res.results;

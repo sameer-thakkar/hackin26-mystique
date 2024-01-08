@@ -17,7 +17,6 @@ import {
 } from 'utils/apiUtils';
 import { getNewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
-import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPE_VALUES,
@@ -161,16 +160,6 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
     graphQuery: newsPageGq,
   });
 
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.NEWS_PAGE,
-      lang,
-      functionality: 'newsPage',
-      msg: 'Prismic API call from Canary',
-    },
-  });
-
   if (newsPage && Object.keys(newsPage)?.length) {
     const baseLangUid = getEnglishDocUid(newsPage?.alternate_languages);
     const baseLangData =
@@ -180,18 +169,6 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
             graphQuery: newsPageGq,
           })
         : newsPage;
-
-    if (lang !== SUPPORTED_LOCALE_MAP.en) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.NEWS_PAGE,
-          lang,
-          functionality: 'newsPage',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
 
     const breadcrumbs = await getNewsPageBreadcrumbs(newsPage);
 
@@ -326,46 +303,6 @@ export const getNewsPageData = async (
     isLandingPage ? Promise.resolve([]) : newsLandingPagePromise,
     isLandingPage ? allArticlesPromise : Promise.resolve([]),
   ]);
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.NEWS_PAGE,
-      lang,
-      functionality: 'featuredArticlesPromise',
-      msg: 'Prismic API call from Canary',
-    },
-  });
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.NEWS_PAGE,
-      lang,
-      functionality: 'articlesWithSameTgidPromise',
-      msg: 'Prismic API call from Canary',
-    },
-  });
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.NEWS_PAGE,
-      lang,
-      functionality: 'collectionReviewsPromise',
-      msg: 'Prismic API call from Canary',
-    },
-  });
-
-  if (isLandingPage) {
-    sendLog({
-      message: {
-        uid,
-        documentType: CUSTOM_TYPES.NEWS_PAGE,
-        lang,
-        functionality: 'allArticlesPromise',
-        msg: 'Prismic API call from Canary',
-      },
-    });
-  }
 
   [
     featuredArticles,

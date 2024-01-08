@@ -70,15 +70,6 @@ export const getDocsForListicleSlice = async ({
         ],
       });
 
-      sendLog({
-        message: {
-          lang: DEFAULT_PRISMIC_LANG,
-          documentType: CUSTOM_TYPES.MICROSITE,
-          functionality: 'listicle - documents',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-
       docsForListicles = documents?.filter((doc: Record<any, any>) => {
         const { uid, data } = doc || {};
         const { canonical_link, noindex } = data || {};

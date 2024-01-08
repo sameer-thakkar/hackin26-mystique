@@ -103,16 +103,6 @@ const getCollectionDataWithPrismicInfo = async ({
       pageSize: 60,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicData',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const prismicCollectionMap = getPrismicCollectionMap(prismicData?.results);
     const normalisedCollectionData = getNormalisedCollectionData({
       prismicCollectionMap,
@@ -142,16 +132,6 @@ const getAllDayTripPage = async ({ mbCity, lang }: ICommonProps) => {
     const prismicData = await prismicClient.getByType('microsite', {
       predicates: predicatesArray,
       pageSize: 5,
-    });
-
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicData',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
     });
 
     const prismicDoc = prismicData?.results?.filter(

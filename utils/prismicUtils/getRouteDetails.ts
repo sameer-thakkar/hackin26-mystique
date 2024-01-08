@@ -26,13 +26,6 @@ const getRouteDetailsDoc = async ({
         ],
         lang,
       })) ?? {};
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.HOHO_ROUTES,
-        functionality: 'results',
-        msg: 'Prismic API call from Canary',
-      },
-    });
     const routeData = results?.reduce(
       (acc: Record<string, any>, elem: Record<string, any>) => {
         return {

@@ -28,15 +28,6 @@ const getContentPageDocument = async ({
   });
 
   // remove this log after SDK 100%
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.CONTENT_PAGE,
-      lang,
-      functionality: 'contentPage',
-      msg: 'Prismic API call from Canary',
-    },
-  });
 
   const {
     uid: currentPageUid,
@@ -97,27 +88,6 @@ const getContentPageDocument = async ({
           }
         )
       : contentPage?.data?.microsite_document_ref;
-
-    if (isLocalizedLang) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.CONTENT_PAGE,
-          lang,
-          functionality: 'baseLangMicrositeData',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.CONTENT_PAGE,
-          lang,
-          functionality: 'baseLangData',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
 
     const {
       tagged_city,

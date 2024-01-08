@@ -63,15 +63,6 @@ export const getCategoriesCTADocs = async ({
       predicates: predicatesArray,
       lang,
     });
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicDocs',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     const { results } = prismicDocs;
     const isBaselang = lang === DEFAULT_PRISMIC_LANG;
@@ -122,16 +113,6 @@ export const getSubCatCTADocs = async ({
     const prismicDocs = await prismicClient.getByType('microsite', {
       lang,
       predicates: predicatesArray,
-    });
-
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicDocs',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
     });
 
     const { results } = prismicDocs;

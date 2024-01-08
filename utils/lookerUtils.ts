@@ -42,14 +42,6 @@ export const fetchGlobalCollectionDocument = async (id: string) => {
       (id as string) ?? ''
     )) as GlobalCollectionDocument;
 
-    sendLog({
-      message: {
-        uid: id,
-        documentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
-        functionality: 'globalCollectionDoc',
-        msg: 'Prismic API call from Canary',
-      },
-    });
     return globalCollectionDoc;
   } catch (error) {
     sendLog({
@@ -178,14 +170,6 @@ export const getTgidsFromProductCards = async ({
       (await prismicClient.getByID(productCardsDocId, {
         lang,
       })) ?? {};
-    sendLog({
-      message: {
-        uid: productCardsDocId,
-        documentType: CUSTOM_TYPES.PRODUCT_CARDS,
-        functionality: 'productCardData',
-        msg: 'Prismic API call from Canary',
-      },
-    });
     const parsedData = await categoryTourListParserV1({
       productCardDocument: productCardData,
       hostname,
@@ -358,15 +342,6 @@ export const getFooterDetails = async ({
     const footerDocs = (await prismicClient.getByID(
       footerDocId
     )) as CommonFooterDocument;
-
-    sendLog({
-      message: {
-        uid: footerDocId,
-        documentType: CUSTOM_TYPES.FOOTER,
-        functionality: 'footerDocs',
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     const { data: footerDocData } = footerDocs || {};
 
@@ -693,14 +668,7 @@ export const attachedContentFrameworkData = async (
     const contentFrameworkDoc = (await prismicClient.getByID(
       contentFrameworkId
     )) as ContentFrameworkDocument;
-    sendLog({
-      message: {
-        uid: contentFrameworkId,
-        documentType: CUSTOM_TYPES.CONTENT_FRAMEWORK,
-        functionality: 'contentFrameworkDoc',
-        msg: 'Prismic API call from Canary',
-      },
-    });
+
     return contentFrameworkDoc;
   } catch (error) {
     sendLog({

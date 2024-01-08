@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
-import { sendLog } from 'utils/logger';
 import { CUSTOM_TYPES, PRISMIC_DEV_TAG } from 'const/index';
 import { globalExperienceGq } from './graphQuery';
 
@@ -15,16 +14,6 @@ const getGlobalExperience = async ({ req, uid, lang }: any) => {
       graphQuery: globalExperienceGq,
     }
   );
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-      lang,
-      functionality: 'globalExperience',
-      msg: 'Prismic API call from Canary',
-    },
-  });
 
   if (globalExperience && Object.keys(globalExperience).length) {
     const { data: globalExperienceData } = globalExperience ?? {};
@@ -49,18 +38,6 @@ const getGlobalExperience = async ({ req, uid, lang }: any) => {
         })
       : undefined;
 
-    if (cityDocID) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-          lang,
-          functionality: 'cityCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
-
     const countryCollectionsPromise = countryDocID
       ? prismicClient.getByType('global_collection', {
           pageSize: 100,
@@ -73,18 +50,6 @@ const getGlobalExperience = async ({ req, uid, lang }: any) => {
           ],
         })
       : undefined;
-
-    if (countryDocID) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-          lang,
-          functionality: 'countryCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
 
     const allSettledResults = await Promise.allSettled([
       cityCollectionsPromise,

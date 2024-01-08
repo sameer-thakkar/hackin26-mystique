@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
-import { sendLog } from 'utils/logger';
 import { CUSTOM_TYPES, PRISMIC_DEV_TAG } from 'const/index';
 import {
   globalCityHomepageGq,
@@ -17,16 +16,6 @@ const getGlobalHomepage = async ({ req, uid, lang }: any) => {
   const globalHomepage = await prismicClient.getByUID('global_homepage', uid, {
     lang,
     graphQuery: globalHomepageGq,
-  });
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-      lang,
-      functionality: 'globalHomepage',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   if (globalHomepage && Object.keys(globalHomepage)?.length) {
@@ -45,16 +34,6 @@ const getGlobalHomepage = async ({ req, uid, lang }: any) => {
       graphQuery: globalCityHomepageGq,
     });
 
-    sendLog({
-      message: {
-        uid,
-        documentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-        lang,
-        functionality: 'cityCollectionsPromise',
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const globalCollectionsPromise = prismicClient.getByType(
       'global_collection',
       {
@@ -69,16 +48,6 @@ const getGlobalHomepage = async ({ req, uid, lang }: any) => {
         graphQuery: globalCollectionsHomepageGq,
       }
     );
-
-    sendLog({
-      message: {
-        uid,
-        documentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-        lang,
-        functionality: 'globalCollectionsPromise',
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     const settledPromiseResults = await Promise.allSettled([
       mb_type ? cityCollectionsPromise : undefined,

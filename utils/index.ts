@@ -888,15 +888,6 @@ export const getCategorisationMetadata = async ({
             lang: LANGUAGE_MAP.en.locale,
           })
         : doc;
-    sendLog({
-      message: {
-        lang: LANGUAGE_MAP.en.locale,
-        uid: baseLangUid,
-        documentType: CUSTOM_TYPES.SHOW_PAGE,
-        functionality: 'baseLangData',
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     const {
       tagged_category,

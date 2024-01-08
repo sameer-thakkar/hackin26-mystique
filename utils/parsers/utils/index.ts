@@ -16,7 +16,7 @@ import {
 } from 'utils/productUtils';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
-import { CUSTOM_TYPES, DESIGN, PRISMIC_DEV_TAG } from 'const/index';
+import { DESIGN, PRISMIC_DEV_TAG } from 'const/index';
 import { TProduct } from '../categoryTourListParserV2/interface';
 
 type TGetProductData = {
@@ -82,16 +82,6 @@ const getProductData = async ({
           predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
           predicate.any('my.showpage.tgid', Array.from(tgidSet)),
         ],
-      });
-
-      sendLog({
-        message: {
-          documentType: CUSTOM_TYPES.SHOW_PAGE,
-          functionality: 'filteredMicrosites',
-          queryingMultipleDocs: true,
-          lang,
-          msg: 'Prismic API call from Canary',
-        },
       });
     } catch (error) {
       sendLog({

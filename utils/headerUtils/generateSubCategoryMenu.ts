@@ -85,16 +85,6 @@ const generateSubCategoryMenu = async ({
       predicates: predicatesArray,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'filteredMicrosites',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const docsStore = getRankedDocuments({ docs: filteredMicrosites });
 
     const menu = Object.keys(subCategories).reduce((acc, subcat) => {

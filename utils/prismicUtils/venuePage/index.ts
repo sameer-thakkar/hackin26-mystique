@@ -1,5 +1,4 @@
 import { createClient } from 'prismicio';
-import { sendLog } from 'utils/logger';
 import { CUSTOM_TYPES } from 'const/index';
 import { venuePageGq } from './graphQuery';
 
@@ -8,16 +7,6 @@ const getVenuePageDocument = async ({ req, uid, lang }: any) => {
   const venuePage = await prismicClient.getByUID('venue_page', uid, {
     lang,
     graphQuery: venuePageGq,
-  });
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.VENUE_PAGE,
-      lang,
-      functionality: 'venuePage',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   if (venuePage && Object.keys(venuePage)) {

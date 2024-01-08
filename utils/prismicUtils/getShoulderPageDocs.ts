@@ -2,7 +2,6 @@ import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
 import getRankedDocuments from 'utils/headerUtils/getRankedDocuments';
-import { sendLog } from 'utils/logger';
 import { MISC } from 'const/header';
 import { PRISMIC_DEV_TAG, PRISMIC_FIELD_ID } from 'const/index';
 
@@ -72,15 +71,6 @@ const getShoulderPageClientQueryPromise = ({
     predicates: predicatesArray,
   });
 
-  sendLog({
-    message: {
-      documentType: docType,
-      functionality: 'promise',
-      queryingMultipleDocs: true,
-      lang,
-      msg: 'Prismic API call from Canary',
-    },
-  });
   return promise;
 };
 

@@ -93,14 +93,6 @@ const getPopularCategoriesData = async ({
         pageSize: 30,
       });
 
-      sendLog({
-        message: {
-          documentType: CUSTOM_TYPES.MICROSITE,
-          functionality: 'prismicData',
-          queryingMultipleDocs: true,
-          msg: 'Prismic API call from Canary',
-        },
-      });
       const results = prismicData?.results?.filter((item) => {
         const { tagged_sub_category } = item.data;
         return !tagged_sub_category;
@@ -186,14 +178,6 @@ const getPopularSubCategoriesData = async ({
       const prismicData = await prismicClient.getByType('microsite', {
         pageSize: 30,
         predicates: predicatesArray,
-      });
-      sendLog({
-        message: {
-          documentType: CUSTOM_TYPES.MICROSITE,
-          functionality: 'prismicData',
-          queryingMultipleDocs: true,
-          msg: 'Prismic API call from Canary',
-        },
       });
       const results = prismicData?.results?.filter(
         (item: Record<string, any>) => {
@@ -293,14 +277,6 @@ const getExploreSectionCategoriesData = async ({
       predicates: predicatesArray,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicDocs',
-        queryingMultipleDocs: true,
-        msg: 'Prismic API call from Canary',
-      },
-    });
     const { results } = prismicDocs ?? {};
     const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
     const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
@@ -370,15 +346,6 @@ const getExploreSectionSubCategoriesData = async ({
     const prismicDocs = await prismicClient.getByType('microsite', {
       pageSize: 100,
       predicates: predicatesArray,
-    });
-
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicDocs',
-        queryingMultipleDocs: true,
-        msg: 'Prismic API call from Canary',
-      },
     });
 
     const { results } = prismicDocs;

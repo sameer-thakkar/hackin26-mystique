@@ -1,6 +1,5 @@
 import { createClient } from 'prismicio';
 import { documentUidUpdateRedirectHandler } from 'utils';
-import { sendLog } from 'utils/logger';
 import getShowPageCollections from 'utils/prismicUtils/getShowPageCollections';
 import { CUSTOM_TYPES } from 'const/index';
 import { showpageGq } from './graphQuery';
@@ -10,16 +9,6 @@ const getShowPage = async ({ req, lang, uid, isDev, host }: any) => {
   const showpage = await prismicClient.getByUID('showpage', uid, {
     lang,
     graphQuery: showpageGq,
-  });
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.SHOW_PAGE,
-      lang,
-      functionality: 'showpage',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   const { uid: currentPageUid } = showpage ?? {};

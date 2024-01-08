@@ -46,15 +46,6 @@ const getTopCollectionsCarouselDocs = async ({
       ],
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'showpageDocs',
-        queryingMultipleDocs: true,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     return getRankedDocuments({
       docs: micrositeData,
       ranking: [

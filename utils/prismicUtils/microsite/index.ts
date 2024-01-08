@@ -51,16 +51,6 @@ const getMicrositeDocument = async ({
     graphQuery: micrositeGq,
   });
 
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.MICROSITE,
-      lang,
-      functionality: 'micrositeData',
-      msg: 'Prismic API call from Canary',
-    },
-  });
-
   const {
     uid: currentPageUid,
     lang: currentPageLang,
@@ -97,18 +87,6 @@ const getMicrositeDocument = async ({
                 graphQuery: micrositeDefaultLangGq,
               })
             : micrositeData;
-
-        if (isLocalizedLang && baseLangUid) {
-          sendLog({
-            message: {
-              uid,
-              documentType: CUSTOM_TYPES.MICROSITE,
-              lang,
-              functionality: 'micrositeData',
-              msg: 'Prismic API call from Canary',
-            },
-          });
-        }
 
         const { data: baseLangPageData } = baseLangMicrositeData ?? {};
         const {

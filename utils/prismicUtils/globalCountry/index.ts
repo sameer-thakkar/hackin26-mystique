@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
-import { sendLog } from 'utils/logger';
 import { CUSTOM_TYPES, PRISMIC_DEV_TAG } from 'const/index';
 import { globalCountryGq } from './graphQuery';
 
@@ -14,16 +13,6 @@ const getGlobalCountry = async ({ req, uid, lang }: any) => {
   const globalCountry = await prismicClient.getByUID('global_country', uid, {
     lang,
     graphQuery: globalCountryGq,
-  });
-
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
-      lang,
-      functionality: 'globalCountry',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   if (globalCountry && Object.keys(globalCountry)?.length) {
@@ -67,36 +56,6 @@ const getGlobalCountry = async ({ req, uid, lang }: any) => {
           pageSize: 100,
         })
       : undefined;
-
-    if (countryDocID) {
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
-          lang,
-          functionality: 'allCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
-          lang,
-          functionality: 'cityCollectionsPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-      sendLog({
-        message: {
-          uid,
-          documentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
-          lang,
-          functionality: 'ticketPagesPromise',
-          msg: 'Prismic API call from Canary',
-        },
-      });
-    }
 
     const allSettledResults = await Promise.allSettled([
       allCollectionsPromise,

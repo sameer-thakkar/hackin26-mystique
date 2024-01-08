@@ -625,15 +625,6 @@ const getCityGuideShoulderPageBreadcrumbs = async (
               lang,
             }
           )) ?? {};
-        sendLog({
-          message: {
-            lang,
-            uid: prevSlugShoulderPageUid,
-            documentType: CUSTOM_TYPES.CONTENT_PAGE,
-            functionality: 'data',
-            msg: 'Prismic API call from Canary',
-          },
-        });
 
         const { shoulder_page_type, shoulder_page_custom_label } = data || {};
         const prevSlugShoulderPageLabel = getShoulderPageLabel({
@@ -945,15 +936,6 @@ export const getVenuePageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
           lang: DEFAULT_PRISMIC_LANG,
         })) || {};
 
-      sendLog({
-        message: {
-          lang,
-          uid: baseLangDocUid,
-          documentType: CUSTOM_TYPES.CONTENT_PAGE,
-          functionality: 'data',
-          msg: 'Prismic API call from Canary',
-        },
-      });
       venueHomePageUid =
         getAlternateLanguageDocUid({
           doc: baseLangDoc,
@@ -1023,16 +1005,6 @@ export const getTgidBasedNewsPageBreadcrumbs = async (
         tgid,
       ]),
     ],
-  });
-
-  sendLog({
-    message: {
-      lang,
-      uid,
-      documentType: CUSTOM_TYPES.SHOW_PAGE,
-      functionality: 'showPageDocument',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   const showPageUid = showPageDocument?.results?.[0]?.uid;

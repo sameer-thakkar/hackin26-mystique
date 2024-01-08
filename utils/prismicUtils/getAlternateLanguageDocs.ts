@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import { sendLog } from 'utils/logger';
-import { CUSTOM_TYPES } from 'const/index';
 
 const getAlternateLanguageDocs = async ({
   baseLangDocs,
@@ -28,16 +27,6 @@ const getAlternateLanguageDocs = async ({
         lang,
       }
     );
-
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.SHOW_PAGE,
-        functionality: 'alternateLangDocs',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
 
     return alternateLangDocs as PrismicDocumentWithUID[];
   } catch (error) {

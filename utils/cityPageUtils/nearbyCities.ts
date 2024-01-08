@@ -104,16 +104,6 @@ export const getNearbyCities = async ({
       predicates: predicatesArray,
     });
 
-    sendLog({
-      message: {
-        documentType: CUSTOM_TYPES.MICROSITE,
-        functionality: 'prismicDataPromise',
-        queryingMultipleDocs: true,
-        lang,
-        msg: 'Prismic API call from Canary',
-      },
-    });
-
     const cityListDataPromise = getCityListData({ cookies, mbCity });
     const allResult = await Promise.allSettled([
       prismicDataPromise,

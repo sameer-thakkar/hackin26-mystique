@@ -2,7 +2,6 @@ import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { handleSettledPromiseResults } from 'utils';
 import getRankedDocuments from 'utils/headerUtils/getRankedDocuments';
-import { sendLog } from 'utils/logger';
 import {
   MB_CATEGORISATION,
   PRISMIC_DEV_TAG,
@@ -34,14 +33,6 @@ const getCityGuideClientQueryPromise = ({
   const promise = prismicClient.getAllByType(docType, {
     pageSize: 10,
     predicates: predicatesArray,
-  });
-
-  sendLog({
-    message: {
-      documentType: docType,
-      functionality: 'promise',
-      msg: 'Prismic API call from Canary',
-    },
   });
 
   return promise;

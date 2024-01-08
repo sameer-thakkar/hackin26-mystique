@@ -45,7 +45,6 @@ import {
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getDurationISO, getPrevDate } from 'utils/dateUtils';
 import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
-import { sendLog } from 'utils/logger';
 import getShowPageCollections from 'utils/prismicUtils/getShowPageCollections';
 import { showpageGq } from 'utils/prismicUtils/showPage/graphQuery';
 import {
@@ -69,7 +68,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
-  CUSTOM_TYPES,
   DEFAULT_PRISMIC_SHOWPAGE_UID,
   DEFAULT_SHOWPAGE_HOSTNAME,
   FAVICON_LONDON_THEATRE_TICKETS,
@@ -726,14 +724,6 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
       graphQuery: showpageGq,
     }
   );
-  sendLog({
-    message: {
-      uid,
-      documentType: CUSTOM_TYPES.SHOW_PAGE,
-      functionality: 'page',
-      msg: 'Prismic API call from Canary',
-    },
-  });
 
   const CMSContent = {
     commonFooter: page?.data?.common_footer,
