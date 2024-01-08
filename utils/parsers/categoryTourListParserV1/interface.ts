@@ -12,4 +12,5 @@ export type TCategoryTourListParserV1 = {
   lang: string;
   cookies?: Record<string, any>;
   localizedStrings?: Record<string, any>;
+  isLookerWebhookCall?: boolean;
 };

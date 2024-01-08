@@ -28,8 +28,9 @@ const categoryTourListParserV1 = async ({
   lang,
   cookies = {},
   localizedStrings,
+  isLookerWebhookCall = false,
+  productCardDocument,
 }: TCategoryTourListParserV1) => {
-  // TODO: handle looker product
   let tourData = [],
     currency: any;
   const { primary: slicePrimary, items: sliceItems } =
@@ -43,7 +44,8 @@ const categoryTourListParserV1 = async ({
   } = slicePrimary || spSlicePrimary || {};
   const { sp_experience_limit: shoulderPageLimit } = spSlicePrimary || {};
   // @ts-expect-error
-  const { data: productCardData } = productCards ?? {};
+  const { data: productCardData } =
+    (isLookerWebhookCall ? productCardDocument : productCards) ?? {};
 
   const {
     collection,
@@ -287,120 +289,122 @@ const categoryTourListParserV1 = async ({
 
     let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
     let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
-
-    const scorpioData = finalTours?.reduce((acc, tour) => {
-      const {
-        id,
-        allTags,
-        averageRating,
-        callToAction,
-        highlights,
-        listingPrice,
-        imageUrl,
-        media,
-        descriptors,
-        minDuration,
-        maxDuration,
-        name,
-        reviewCount,
-        combo,
-        multiVariant,
-        primaryCollection,
-        primaryCategory,
-        primarySubCategory,
-        cancellationPolicy,
-        cancellationPolicyV2,
-        reschedulePolicy,
-        ticketValidity,
-        flowType,
-        allVariantOpenDated,
-        inclusionsRichText,
-        exclusionsRichText,
-        ratingCount,
-      } = tour ?? {};
-
-      minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
-      bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
-
-      const { productImages, safetyImages } = media || {};
-      const updatedDescriptors = generateDescriptor({
-        descriptors,
-        lang: language,
-      });
-      let {
-        microBrandsHighlight,
-      }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
-
-      const {
-        urlSlugs: _primaryCategoryUrlSlugs,
-        ...primaryCategoryWithoutSlugs
-      } = primaryCategory ?? {};
-      const {
-        urlSlugs: _primarySubCategoryUrlSlugs,
-        ...primarySubCategoryWithoutSlugs
-      } = primarySubCategory ?? {};
-
-      microBrandsHighlight = standardizeCancellationPolicy({
-        highlights: microBrandsHighlight,
-        cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
-        reschedulePolicy,
-        ticketValidity,
-        lang: getHeadoutLanguagecode(lang),
-        localizedStrings,
-      });
-
-      const isMBHighlightsExist = microBrandsHighlight?.length > 0;
-      const combinedHighlights = appendInclusionExclusion({
-        highlightArr: microBrandsHighlight,
-        inclusions: inclusionsRichText,
-        exclusions: exclusionsRichText,
-        localizedStrings: localizedStrings || {},
-      });
-
-      const { variants } =
-        tgidVariantData?.find((item: any) => item.id === id) || {};
-      const [variantId] =
-        getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
-      const { listingPrice: variantListingPrice } =
-        variants?.find((variant: any) => variant?.id === Number(variantId)) ||
-        {};
-      const finalListingPrice = variantListingPrice
-        ? variantListingPrice
-        : listingPrice;
-      return {
-        ...acc,
-        [id]: {
+    let scorpioData = {};
+    if (!isLookerWebhookCall) {
+      scorpioData = finalTours?.reduce((acc, tour) => {
+        const {
+          id,
           allTags,
-          available: !(listingPrice === null),
           averageRating,
-          ctaBooster: callToAction,
-          descriptors: updatedDescriptors,
-          highlights: combinedHighlights,
-          isMBHighlightsExist,
+          callToAction,
+          highlights,
+          listingPrice,
           imageUrl,
-          images: productImages,
-          listingPrice: {
-            ...finalListingPrice,
-            ...currency,
-          },
-          productHighlights: highlights,
-          productTitle: name,
-          reviewCount,
-          safetyImages,
-          title: name,
-          combo,
-          multiVariant,
+          media,
+          descriptors,
           minDuration,
           maxDuration,
+          name,
+          reviewCount,
+          combo,
+          multiVariant,
           primaryCollection,
-          primaryCategory: primaryCategoryWithoutSlugs,
-          primarySubCategory: primarySubCategoryWithoutSlugs,
+          primaryCategory,
+          primarySubCategory,
+          cancellationPolicy,
+          cancellationPolicyV2,
+          reschedulePolicy,
+          ticketValidity,
           flowType,
           allVariantOpenDated,
+          inclusionsRichText,
+          exclusionsRichText,
           ratingCount,
-        },
-      };
-    }, {});
+        } = tour ?? {};
+
+        minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
+        bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
+
+        const { productImages, safetyImages } = media || {};
+        const updatedDescriptors = generateDescriptor({
+          descriptors,
+          lang: language,
+        });
+        let {
+          microBrandsHighlight,
+        }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
+
+        const {
+          urlSlugs: _primaryCategoryUrlSlugs,
+          ...primaryCategoryWithoutSlugs
+        } = primaryCategory ?? {};
+        const {
+          urlSlugs: _primarySubCategoryUrlSlugs,
+          ...primarySubCategoryWithoutSlugs
+        } = primarySubCategory ?? {};
+
+        microBrandsHighlight = standardizeCancellationPolicy({
+          highlights: microBrandsHighlight,
+          cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
+          reschedulePolicy,
+          ticketValidity,
+          lang: getHeadoutLanguagecode(lang),
+          localizedStrings,
+        });
+
+        const isMBHighlightsExist = microBrandsHighlight?.length > 0;
+        const combinedHighlights = appendInclusionExclusion({
+          highlightArr: microBrandsHighlight,
+          inclusions: inclusionsRichText,
+          exclusions: exclusionsRichText,
+          localizedStrings: localizedStrings || {},
+        });
+
+        const { variants } =
+          tgidVariantData?.find((item: any) => item.id === id) || {};
+        const [variantId] =
+          getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+        const { listingPrice: variantListingPrice } =
+          variants?.find((variant: any) => variant?.id === Number(variantId)) ||
+          {};
+        const finalListingPrice = variantListingPrice
+          ? variantListingPrice
+          : listingPrice;
+        return {
+          ...acc,
+          [id]: {
+            allTags,
+            available: !(listingPrice === null),
+            averageRating,
+            ctaBooster: callToAction,
+            descriptors: updatedDescriptors,
+            highlights: combinedHighlights,
+            isMBHighlightsExist,
+            imageUrl,
+            images: productImages,
+            listingPrice: {
+              ...finalListingPrice,
+              ...currency,
+            },
+            productHighlights: highlights,
+            productTitle: name,
+            reviewCount,
+            safetyImages,
+            title: name,
+            combo,
+            multiVariant,
+            minDuration,
+            maxDuration,
+            primaryCollection,
+            primaryCategory: primaryCategoryWithoutSlugs,
+            primarySubCategory: primarySubCategoryWithoutSlugs,
+            flowType,
+            allVariantOpenDated,
+            ratingCount,
+          },
+        };
+      }, {});
+    }
     const finalTgids = finalTours?.map((el) => el?.id);
 
     if (minPrice == Infinity) minPrice = 0;

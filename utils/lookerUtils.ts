@@ -190,6 +190,7 @@ export const getTgidsFromProductCards = async ({
       productCardDocument: productCardData,
       hostname,
       lang,
+      isLookerWebhookCall: true,
     });
     let tgids: string[] = [];
     tgids = tgids.concat(

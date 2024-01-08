@@ -37,13 +37,12 @@ import {
   SLICE_TYPES,
 } from 'const/index';
 
-const getUpdatedDocuments = async ({ documentIds, masterRef }: any) => {
+const getUpdatedDocuments = async ({ documentIds }: any) => {
   const prismicClient = createClient();
   const linkedRefsPromise = prismicClient.getByIDs(
     documentIds.filter((id: any) => id),
     {
       fetchLinks: 'microsite.body1',
-      ref: masterRef,
     }
   );
 
@@ -412,8 +411,7 @@ const createStitchPostRequest = ({
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { documents: updatedDocumentIds = [], masterRef = null } =
-    req?.body || {};
+  const { documents: updatedDocumentIds = [] } = req?.body || {};
 
   const { stageMode } = req.query;
   const isStageMode = stageMode ? stageMode?.length > 0 : false;
@@ -428,7 +426,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const documents = await getUpdatedDocuments({
     documentIds: updatedDocumentIds,
-    masterRef,
     req,
   });
 
@@ -462,7 +459,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (baseLangDocId) {
     const baseLangDocuments = await getUpdatedDocuments({
       documentIds: [baseLangDocId],
-      masterRef,
       req,
     });
     const { pageDocs } = await parseDocuments({
