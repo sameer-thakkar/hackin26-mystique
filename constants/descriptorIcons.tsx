@@ -155,19 +155,19 @@ export const StartIcon = () => {
 
 export const StarIcon = () => (
   <svg
-    width="19"
+    width="18"
     height="18"
-    viewBox="0 0 19 18"
+    viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path
-      d="M9.20833 1.125L11.7833 6.34167L17.5417 7.18333L13.375 11.2417L14.3583 16.975L9.20833 14.2667L4.05833 16.975L5.04167 11.2417L0.875 7.18333L6.63333 6.34167L9.20833 1.125Z"
-      fill="#e5006e"
-      stroke="#e5006e"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <g>
+      <path
+        id="Vector"
+        d="M9.1875 1.91235L11.505 6.60735L16.6875 7.36485L12.9375 11.0174L13.8225 16.1774L9.1875 13.7399L4.5525 16.1774L5.4375 11.0174L1.6875 7.36485L6.87 6.60735L9.1875 1.91235Z"
+        fill="#FE3394"
+      />
+    </g>
   </svg>
 );
 

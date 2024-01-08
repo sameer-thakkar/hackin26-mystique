@@ -1388,6 +1388,7 @@ export const PRISMIC_FIELD_ID = {
   TGID: 'tgid',
   TAGS: 'tags',
   UID: 'uid',
+  IS_LANDING_PAGE: 'is_landing_page',
 };
 
 export const PRISMIC_DEV_TAG = '[DEV]';

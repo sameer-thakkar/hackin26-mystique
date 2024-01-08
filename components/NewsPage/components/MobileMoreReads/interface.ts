@@ -11,4 +11,5 @@ export type TMobileMoreReadsProps = {
   showMoreCTAText: string;
   numberOfArticlesToShow: number;
   initialArticlesToShow: number;
+  newsLandingPageUrl?: string;
 };

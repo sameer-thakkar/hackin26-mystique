@@ -5,6 +5,7 @@ export type TDesktopMoreReadsProps = {
     uniqueArticlesWithSameTgidData: PrismicDocumentWithUID[];
     featuredArticles: PrismicDocumentWithUID[];
     CFData: Record<string, any>;
+    newsLandingPageUrl: string;
   };
 };
 

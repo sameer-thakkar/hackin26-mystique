@@ -41,8 +41,8 @@ import {
   RIGHT_TAIL_HEAD_ARROW,
 } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')
 );
 
 const MediaPlayer: React.FC<TMediaPlayerProps> = ({
@@ -192,7 +192,7 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
           </Navigation>
         </TitleBar>
         <Slider>
-          <Swiper {...swiperOptions}>
+          <Swiper {...swiperOptions} className="media-player-swiper">
             {trailerData?.map((trailer, index: number) => {
               const {
                 primarySubCategory,

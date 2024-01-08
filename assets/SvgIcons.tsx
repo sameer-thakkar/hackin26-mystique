@@ -6125,7 +6125,7 @@ export const LTT_CHEVRON_LEFT = ({
   onClick,
   disabled,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }) => (
   <svg
@@ -6160,7 +6160,7 @@ export const LTT_CHEVRON_RIGHT = ({
   onClick,
   disabled,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }) => (
   <svg

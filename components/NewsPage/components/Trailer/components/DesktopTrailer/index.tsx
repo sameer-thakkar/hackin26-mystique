@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import dynamic from 'next/dynamic';
 import { EffectFade } from 'swiper';
 import { SwiperProps } from 'swiper/react';
@@ -74,10 +81,8 @@ const Media: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
 const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [mainSwiper, setMainSwiperInstance] = useState<TSwiper | null>(null);
-  const [
-    thumbnailSwiper,
-    setThumbnailSwiperInstance,
-  ] = useState<TSwiper | null>(null);
+  const [thumbnailSwiper, setThumbnailSwiperInstance] =
+    useState<TSwiper | null>(null);
   const { host, isDev, lang } = useContext(MBContext);
   const trailerRef = useRef(null);
   const isTrailerSectionVisible = useOnScreen({
@@ -94,6 +99,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
   const { trailerData, showPageDocuments, tgid, videoData } = content;
   const { NEWS_PAGE, BUY_TICKETS_CTA } = strings;
   const { TRAILERS } = NEWS_PAGE;
+  const isVideoPresentForTgid = useMemo(() => tgid! in videoData, []);
 
   useEffect(() => {
     if (!thumbnailSwiper || thumbnailSwiper?.destroyed) return;
@@ -172,7 +178,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
   return (
     <Conditional if={trailerData?.length > 0}>
       <Wrapper ref={trailerRef}>
-        <Conditional if={!tgid}>
+        <Conditional if={!isVideoPresentForTgid}>
           <Image
             url={TRAILER_BG_ILLUSTRATION}
             alt="Illustration"
@@ -187,7 +193,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
             videoData={videoData}
           />
         </Conditional>
-        <Conditional if={!!tgid}>
+        <Conditional if={isVideoPresentForTgid}>
           <Container>
             <TrailerHeading>{TRAILERS}</TrailerHeading>
           </Container>

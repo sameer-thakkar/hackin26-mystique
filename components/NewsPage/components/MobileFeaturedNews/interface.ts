@@ -5,4 +5,5 @@ export type TMobileFeaturedNewsProps = {
     content: PrismicDocumentWithUID[];
     CFData: Record<string, any>;
   };
+  newsLandingPageUrl: string;
 };

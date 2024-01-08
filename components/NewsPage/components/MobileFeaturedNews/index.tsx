@@ -17,21 +17,22 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
-  // CTA_TYPE,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 
 const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
   featuredNewsContent,
+  newsLandingPageUrl,
 }) => {
   const [_, setActiveSlideIdx] = useState<number>(0);
   const [swiper, setSwiperInstance] = useState<TSwiper>();
   const { host, lang, isDev } = useContext(MBContext);
 
   const { content, CFData } = featuredNewsContent;
-  const { FEATURED_NEWS } = strings.NEWS_PAGE;
+  const { FEATURED_NEWS, ALL_NEWS } = strings.NEWS_PAGE;
 
   useEffect(() => {
     if (!swiper) return;
@@ -45,14 +46,14 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
     onSlideChange: () => setActiveSlideIdx(swiper?.activeIndex!),
   };
 
-  // const handleCTAClick = () => {
-  //   trackEvent({
-  //     eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
-  //     [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
-  //     [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.FEATURED_NEWS,
-  //   });
-  //   return;
-  // };
+  const handleCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.FEATURED_NEWS,
+    });
+    return;
+  };
 
   const handleArticleClick = (index: number) => {
     trackEvent({
@@ -68,7 +69,9 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
       <Wrapper>
         <div className="heading-wrapper">
           <h2>{FEATURED_NEWS}</h2>
-          {/* <Button onClick={handleCTAClick}>{ALL_NEWS}</Button> */}
+          <a href={newsLandingPageUrl} onClick={handleCTAClick}>
+            {ALL_NEWS}
+          </a>
         </div>
 
         <Swiper {...swiperParams}>

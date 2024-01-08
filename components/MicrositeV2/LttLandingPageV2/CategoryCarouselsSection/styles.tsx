@@ -23,6 +23,13 @@ export const CategoryCarousel = styled.div`
   padding: 0;
   margin-bottom: 4rem;
   overflow: hidden;
+  svg.disabled:hover {
+    cursor: not-allowed;
+    fill: none;
+  }
+  svg:hover {
+    fill: ${COLORS.GRAY.G8};
+  }
 
   @media (max-width: 768px) {
     margin-bottom: 2.25rem;

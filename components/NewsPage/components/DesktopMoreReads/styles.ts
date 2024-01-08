@@ -11,11 +11,28 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .navigation {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      a {
+        ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+        text-decoration: underline;
+        color: ${COLORS.GRAY.G2};
+      }
+      a:hover {
+        color: ${COLORS.BRAND.BLACK};
+      }
+    }
     .icons {
       display: flex;
       gap: 0.5rem;
       > * {
         cursor: pointer;
+      }
+      svg.disabled:hover {
+        cursor: not-allowed;
+        fill: none;
       }
       svg:hover {
         fill: ${COLORS.GRAY.G8};
@@ -49,6 +66,11 @@ export const Wrapper = styled.div<{
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
   }
   h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
     margin-top: 0.375rem;
@@ -75,6 +97,9 @@ export const Wrapper = styled.div<{
   .image-wrapper {
     background-color: ${COLORS.GRAY.G6};
     border-radius: 8px;
+    img {
+      object-fit: cover;
+    }
   }
 
   ${({ $noOfArticles }) => {

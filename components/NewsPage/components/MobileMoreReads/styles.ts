@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     h2 {
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
-    button {
+    a {
       border-radius: 4px;
       padding: 0.44rem 0.75rem;
       border: 1px solid ${COLORS.GRAY.G2};

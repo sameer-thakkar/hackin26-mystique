@@ -6,22 +6,20 @@ import Reviews from 'components/common/Reviews';
 import LandingPageBanner from 'components/NewsPage/components/LPBanner';
 import RecentNews from 'components/NewsPage/components/RecentNews';
 import Trailer from 'components/NewsPage/components/Trailer';
+import VerticalProductCardSlide from 'components/NewsPage/components/VerticalProductCardSlide';
 import { TNewsPageProps } from 'components/NewsPage/interface';
 import {
   Container,
   Heading,
   SliderContainer,
 } from 'components/NewsPage/LandingPage/styles';
-import CategorySlider from 'components/ShowPages/CategorySlider';
-import { getLangObject } from 'utils/helper';
 import { EMAIL_SUBCRIPTION } from 'const/index';
 import { strings } from 'const/strings';
 
 const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
-  const { lang, data: CMSContent, isMobile } = props;
+  const { data: CMSContent, isMobile } = props;
   const {
     data,
-    tgidMappingData,
     allArticles,
     featuredArticles,
     collectionReviews,
@@ -33,7 +31,6 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
     mediaData,
   } = CMSContent;
   const { heading, breadcrumbs } = data;
-  const currentLanguage = getLangObject(lang).code;
   const { HEADING, SUBHEADING } = strings.NEWS_PAGE.MAILER;
 
   return (
@@ -83,14 +80,11 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
           />
         </LazyComponent>
         <SliderContainer>
-          <h2>{strings.NEWS_PAGE.POPULAR_SHOWS}</h2>
-          <CategorySlider
+          <VerticalProductCardSlide
             cards={subCategoryData}
             isMobile={isMobile}
-            allShowPagesDocuments={showPageDocuments}
-            currentLanguage={currentLanguage}
-            categoryName={tgidMappingData?.primarySubCategoryName?.name}
-            isNewsPage
+            mediaData={mediaData}
+            showPageDocuments={showPageDocuments}
           />
         </SliderContainer>
       </Conditional>

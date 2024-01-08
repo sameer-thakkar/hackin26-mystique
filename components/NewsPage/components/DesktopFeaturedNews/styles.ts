@@ -8,11 +8,12 @@ export const FeaturedNewsContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    u {
-      cursor: pointer;
+    a {
       ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+      text-decoration: underline;
+      color: ${COLORS.GRAY.G2};
     }
-    u:hover {
+    a:hover {
       color: ${COLORS.BRAND.BLACK};
     }
   }

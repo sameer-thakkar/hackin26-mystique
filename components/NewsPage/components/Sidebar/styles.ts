@@ -7,6 +7,8 @@ export const Container = styled.section`
   flex: 1;
   flex-shrink: 2;
   border-radius: 8px;
+  position: sticky;
+  top: 100px;
 `;
 
 export const BookNowCTA = styled.div`
@@ -14,7 +16,7 @@ export const BookNowCTA = styled.div`
     display: flex;
     align-items: center;
     svg {
-      margin-left: 0.5rem;
+      margin-left: 0.25rem;
     }
   }
   margin-bottom: 1rem;
@@ -80,7 +82,6 @@ export const Card = styled.div<{
       padding-bottom: 2px;
       align-items: center;
       color: ${COLORS.TEXT.CANDY_1};
-      border-bottom: 1px dotted ${COLORS.TEXT.CANDY_1};
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
       svg {
         width: 0.736rem;
@@ -110,6 +111,7 @@ export const Card = styled.div<{
 
       span {
         ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+        border-bottom: 1px dotted ${COLORS.GRAY.G3};
       }
       svg {
         transform: translateY(2px);

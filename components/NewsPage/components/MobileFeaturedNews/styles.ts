@@ -12,12 +12,12 @@ export const Wrapper = styled.div`
     h2 {
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
-    button {
+    a {
       border-radius: 4px;
       padding: 0.44rem 0.75rem;
       border: 1px solid ${COLORS.GRAY.G2};
       color: ${COLORS.GRAY.G2};
-      ${expandFontToken(FONTS.BUTTON_SMALL)};
+      ${expandFontToken(FONTS.BUTTON_SMALL)}
     }
     margin-bottom: 1.5rem;
   }
@@ -38,6 +38,7 @@ export const Wrapper = styled.div`
     top: 0;
     bottom: 0;
     img {
+      object-fit: cover;
       border-radius: 8px;
     }
   }

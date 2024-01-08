@@ -18,6 +18,7 @@ import {
 import { getNewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { sendLog } from 'utils/logger';
+import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPE_VALUES,
   CUSTOM_TYPES,
@@ -27,7 +28,11 @@ import {
   TLANGUAGELOCALE,
   TOUR_GROUP_MEDIA_RESOURCE_TYPE,
 } from 'const/index';
-import { newsArticlesWithCFrameworkGq, newsPageGq } from './graphQuery';
+import {
+  newsArticlesWithCFrameworkGq,
+  newsLandingPageGq,
+  newsPageGq,
+} from './graphQuery';
 
 export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
   return media.find((item) => item?.type === 'VIDEO')?.url;
@@ -237,9 +242,41 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
   }
 };
 
+export const getNewsLandingPage = async () => {
+  const predicatesArray = [
+    predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+    predicate.at(
+      `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.IS_LANDING_PAGE}`,
+      true
+    ),
+  ];
+
+  const prismicClient = createClient();
+  return prismicClient.getByType('news_page', {
+    predicates: predicatesArray,
+    graphQuery: newsLandingPageGq,
+  });
+};
+
 export const getTgidFromCollectionReviews = (reviews: any) => {
-  return reviews?.items?.map((review: any) => {
-    return review?.tourGroup?.id;
+  return reviews?.items?.map((review: any) => review?.tourGroup?.id);
+};
+
+export const getNewsLandingPageUrl = (
+  data: PrismicDocumentWithUID[],
+  currentNewsPageUid: string,
+  lang: string,
+  hostname: string
+) => {
+  const newsLandingPageUid = data?.find(
+    (doc: PrismicDocumentWithUID) =>
+      doc?.uid?.split('.')[1] === currentNewsPageUid?.split('.')[1]
+  )?.uid;
+
+  return convertUidToUrl({
+    uid: newsLandingPageUid,
+    hostname,
+    lang,
   });
 };
 
@@ -256,6 +293,7 @@ export const getNewsPageData = async (
 ) => {
   const { uid, data } = CMSContent ?? {};
   const { tgid, is_landing_page: isLandingPage, taggedCity } = data;
+  const langCode = getHeadoutLanguagecode(lang);
 
   const collectionDataTgids: number[] = [];
   const collectionIdFromPrismic = CMSContent?.data?.taggedCollection;
@@ -263,8 +301,10 @@ export const getNewsPageData = async (
     featuredArticles,
     articlesWithSameTgid,
     collectionReviews,
-    collectionReviewsTgid;
+    collectionReviewsTgid,
+    newsLandingPageData;
 
+  const newsLandingPagePromise = getNewsLandingPage();
   const featuredArticlesPromise = getFeaturedArticlesPromise(uid, lang);
   const articlesWithSameTgidPromise = getArticlesWithSameTgidPromise(
     tgid,
@@ -283,7 +323,8 @@ export const getNewsPageData = async (
     featuredArticlesPromise,
     articlesWithSameTgidPromise,
     collectionReviewsPromise,
-    isLandingPage ? allArticlesPromise : undefined,
+    isLandingPage ? Promise.resolve([]) : newsLandingPagePromise,
+    isLandingPage ? allArticlesPromise : Promise.resolve([]),
   ]);
 
   sendLog({
@@ -326,8 +367,13 @@ export const getNewsPageData = async (
     });
   }
 
-  [featuredArticles, articlesWithSameTgid, collectionReviews, allArticles] =
-    handleSettledPromiseResults(aggregatedPromise);
+  [
+    featuredArticles,
+    articlesWithSameTgid,
+    collectionReviews,
+    newsLandingPageData,
+    allArticles,
+  ] = handleSettledPromiseResults(aggregatedPromise);
 
   const uidToCFIdMap = new Map<string, any>();
   const videoDataMap = new Map<string, string>();
@@ -396,24 +442,6 @@ export const getNewsPageData = async (
     collectionDataTgids.push(item?.id);
   });
 
-  const mediaData = await fetchTourGroupMedia({
-    hostname,
-    tgids: [...collectionDataTgids, ...Array.from(collectionReviewsTgid)],
-    cookies,
-    resourceType: TOUR_GROUP_MEDIA_RESOURCE_TYPE.MB_EXPERIENCE,
-  });
-
-  mediaData?.resourceEntityMedias?.forEach((media: any) => {
-    const videoUrl = findVideoUrlFromMediaData(media?.medias);
-    videoDataMap.set(media.resourceEntityId, videoUrl);
-  });
-
-  const filteredTrailerSectionData = trailerSectionData.filter(
-    (trailerData) => {
-      return videoDataMap.get(String(trailerData.id));
-    }
-  );
-
   const { primarySubCategory } = tgidMappingData || {};
 
   let { pageData = {} } = primarySubCategory
@@ -451,6 +479,28 @@ export const getNewsPageData = async (
     ...(tgidMappingData ? [tgidMappingData.id] : []),
   ];
 
+  const mediaData = await fetchTourGroupMedia({
+    hostname,
+    tgids: [
+      ...collectionDataTgids,
+      ...showpageTgids,
+      ...Array.from(collectionReviewsTgid),
+    ],
+    cookies,
+    resourceType: TOUR_GROUP_MEDIA_RESOURCE_TYPE.MB_EXPERIENCE,
+  });
+
+  mediaData?.resourceEntityMedias?.forEach((media: any) => {
+    const videoUrl = findVideoUrlFromMediaData(media?.medias);
+    videoDataMap.set(media.resourceEntityId, videoUrl);
+  });
+
+  const filteredTrailerSectionData = trailerSectionData.filter(
+    (trailerData) => {
+      return videoDataMap.get(String(trailerData.id));
+    }
+  );
+
   const prismicClient = createClient();
   const showpages = await prismicClient.getAllByType('showpage', {
     predicates: [
@@ -460,6 +510,12 @@ export const getNewsPageData = async (
 
   const showPageDocuments =
     Array.from(tgidsOfShows)?.length > 0 ? showpages : [];
+  const newsLandingPageUrl = getNewsLandingPageUrl(
+    newsLandingPageData?.results,
+    uid,
+    langCode,
+    hostname
+  );
 
   return {
     CMSContent: {
@@ -475,6 +531,7 @@ export const getNewsPageData = async (
       subCategoryData: popularShowsData,
       mediaData: mediaData.resourceEntityMedias as [],
       collectionReviews,
+      newsLandingPageUrl,
     },
     uid,
     host,

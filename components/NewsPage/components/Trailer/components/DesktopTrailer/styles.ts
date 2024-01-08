@@ -108,17 +108,15 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         gap: 0.125rem;
-        cursor: pointer;
-        border-bottom: 1px dotted ${COLORS.TEXT.CANDY_1};
         color: ${COLORS.TEXT.CANDY_1};
         ${expandFontToken(FONTS.HEADING_SMALL)};
       }
-      .rating:hover {
+      /* .rating:hover {
         color: ${COLORS.TEXT.CANDY_1};
         path {
           fill: ${COLORS.TEXT.CANDY_1};
         }
-      }
+      } */
       .review-count {
         color: ${COLORS.GRAY.G3};
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};

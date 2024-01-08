@@ -24,7 +24,7 @@ const Swiper = dynamic(
   { ssr: false }
 );
 
-const CategoryCarouselSwiper = ({
+export const CategoryCarouselSwiper = ({
   category,
   isMobile,
   allTours,
@@ -35,9 +35,6 @@ const CategoryCarouselSwiper = ({
     : category.ranking.popularity;
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
-  const [hasIntersectingEventFired, sethasIntersectingEventFired] = useState(
-    false
-  );
   const [slidesPerView, setSlidesPerView] = useState(6);
   const {
     ctaUrl: { link_type, url: seeAllUrl },
@@ -55,8 +52,7 @@ const CategoryCarouselSwiper = ({
   }, [swiper?.activeIndex]);
 
   useEffect(() => {
-    if (isSectionIntersecting && !hasIntersectingEventFired) {
-      sethasIntersectingEventFired(true);
+    if (isSectionIntersecting) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.PAGE_SECTION_VIEWED,
         Category: category.name,

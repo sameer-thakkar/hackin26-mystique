@@ -10,7 +10,7 @@ import {
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { debounce, throttle } from 'utils/gen';
+import { debounce } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { PauseSvg, PlaySvg } from 'assets/SvgIcons';
@@ -62,6 +62,9 @@ const Video: React.FC<VideoTypeProps> = ({
   const videoAutoplayInterval = useRef(null);
   const videoAutoplayTime = useRef(0);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
   const { isDuplicate: isDuplicateSlide } = useSwiperSlide() ?? {};
 
   const { isPageLoaded } = useRecoilValue(appAtom);
@@ -170,27 +173,32 @@ const Video: React.FC<VideoTypeProps> = ({
     }
   }, [isMuted]);
 
-  useEffect(() => {
-    videoRef.current?.addEventListener(
-      'mousemove',
-      throttle(() => setIconAppear(true), 2000)
-    );
+  const handleMouseMove = () => {
+    setIconAppear(true);
+    clearTimeout(timer.current!);
 
-    videoRef.current?.addEventListener(
-      'mouseleave',
-      throttle(() => setIconAppear(false), 2000)
-    );
-    return () => {
-      videoRef.current?.removeEventListener(
-        'mousemove',
-        throttle(() => setIconAppear(true), 2000)
-      );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      videoRef.current?.removeEventListener(
-        'mouseleave',
-        throttle(() => setIconAppear(false), 2000)
-      );
-    };
+    timer.current = setTimeout(() => {
+      setIconAppear(false);
+    }, 2000);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(timer.current!);
+    setIconAppear(false);
+  };
+
+  useEffect(() => {
+    const videoElement = videoContainerRef.current;
+
+    if (videoElement) {
+      videoElement.addEventListener('mousemove', handleMouseMove);
+      videoElement.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        videoElement.removeEventListener('mousemove', handleMouseMove);
+        videoElement.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }
   }, []);
 
   const { url: fallbackImageUrl, altText: imageAltText } = fallbackImage;
@@ -201,6 +209,12 @@ const Video: React.FC<VideoTypeProps> = ({
   const handleOnClick = () => {
     if (!pauseOnclick || !videoRef || !videoRef.current) return;
     setIconAppear(true);
+    clearTimeout(timer.current!);
+
+    timer.current = setTimeout(() => {
+      setIconAppear(false);
+    }, 3000);
+
     if (isVideoPaused) {
       playVideo();
     } else {
@@ -210,7 +224,11 @@ const Video: React.FC<VideoTypeProps> = ({
   };
 
   return (
-    <VideoContainer className={'video-container'} $fadeInVideo={!isVideoPaused}>
+    <VideoContainer
+      className="video-container"
+      $fadeInVideo={!isVideoPaused}
+      ref={videoContainerRef}
+    >
       {children}
       <Conditional if={fallbackImage}>
         {/* Using a custom img component instead of video's poster attribute 
@@ -229,21 +247,23 @@ const Video: React.FC<VideoTypeProps> = ({
           onClick={showPlayButton ? playVideo : () => {}}
           fill
         />
-        <Conditional if={shouldIconAppear && showPlayButton}>
-          <VideoIcon onClick={handleOnClick}>
-            <Conditional if={isVideoPaused}>
-              <PlaySvg />
-            </Conditional>
-          </VideoIcon>
-        </Conditional>
-        {/* Want to show pauseIcon only along with playIcon. */}
-        <Conditional if={shouldIconAppear && showPlayIcon && showPauseButton}>
-          <VideoIcon onClick={handleOnClick}>
-            <Conditional if={!isVideoPaused}>
-              <PauseSvg />
-            </Conditional>
-          </VideoIcon>
-        </Conditional>
+        <div ref={iconRef}>
+          <Conditional if={shouldIconAppear && showPlayButton}>
+            <VideoIcon onClick={handleOnClick}>
+              <Conditional if={isVideoPaused}>
+                <PlaySvg />
+              </Conditional>
+            </VideoIcon>
+          </Conditional>
+          {/* Want to show pauseIcon only along with playIcon. */}
+          <Conditional if={shouldIconAppear && showPlayIcon && showPauseButton}>
+            <VideoIcon onClick={handleOnClick}>
+              <Conditional if={!isVideoPaused}>
+                <PauseSvg />
+              </Conditional>
+            </VideoIcon>
+          </Conditional>
+        </div>
       </Conditional>
       <StyledVideoContainer
         ref={videoRef}

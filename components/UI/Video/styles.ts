@@ -45,7 +45,7 @@ export const VideoIcon = styled.button`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 90;
+  z-index: 99;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;

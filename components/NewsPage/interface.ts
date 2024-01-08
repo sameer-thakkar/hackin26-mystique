@@ -49,6 +49,7 @@ export type TNewsPageData = {
   collectionReviews: {
     items: Record<string, any>[];
   };
+  newsLandingPageUrl: string;
 };
 
 export type TNewsPageProps = {

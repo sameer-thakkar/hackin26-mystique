@@ -27,6 +27,7 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   showMoreCTAText,
   numberOfArticlesToShow, // This higlights the total number of articles to show in component
   initialArticlesToShow,
+  newsLandingPageUrl,
 }) => {
   const { host, lang, isDev } = useContext(MBContext);
   const [articlesToShow, setArticlesToShow] = useState(initialArticlesToShow);
@@ -37,10 +38,8 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   });
 
   const { ALL_NEWS } = strings.NEWS_PAGE;
-  const {
-    uniqueArticlesWithSameTgidData = [],
-    featuredArticles = [],
-  } = content;
+  const { uniqueArticlesWithSameTgidData = [], featuredArticles = [] } =
+    content;
 
   const moreReadsData = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
@@ -81,7 +80,9 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
         <div className="heading-wrapper">
           <h2>{heading}</h2>
           <Conditional if={showAllNewsCTA}>
-            <Button onClick={handleCTAClick}>{ALL_NEWS}</Button>
+            <a href={newsLandingPageUrl} onClick={handleCTAClick}>
+              {ALL_NEWS}
+            </a>
           </Conditional>
         </div>
         <div className="articles">
@@ -106,14 +107,14 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
               });
 
               return (
-                <a
-                  href={redirectionUrl}
-                  key={article.uid}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleArticleClick(index, heading)}
-                >
-                  <article className="news-article">
+                <article className="news-article" key={heading}>
+                  <a
+                    href={redirectionUrl}
+                    key={article.uid}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => handleArticleClick(index, heading)}
+                  >
                     <div className="article-image">
                       <Image
                         url={banner_image?.url}
@@ -123,22 +124,30 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
                         fetchPriority="low"
                       />
                     </div>
-                    <div className="article-info">
+                  </a>
+                  <div className="article-info">
+                    <a
+                      href={redirectionUrl}
+                      key={article.uid}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => handleArticleClick(index, heading)}
+                    >
                       <span className="published-date">
                         {formattedPublishedDateAndTime}
                       </span>
                       <h4>{heading}</h4>
-                      <Conditional if={author_name}>
-                        <div className="author-details">
-                          <span>
-                            {AVATAR}
-                            {author_name}
-                          </span>
-                        </div>
-                      </Conditional>
-                    </div>
-                  </article>
-                </a>
+                    </a>
+                    <Conditional if={author_name}>
+                      <div className="author-details">
+                        <span>
+                          {AVATAR}
+                          {author_name}
+                        </span>
+                      </div>
+                    </Conditional>
+                  </div>
+                </article>
               );
             })}
           <Conditional if={articlesToShow < moreReadsData.length}>

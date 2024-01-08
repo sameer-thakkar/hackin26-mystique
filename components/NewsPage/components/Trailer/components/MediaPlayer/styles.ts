@@ -133,6 +133,9 @@ export const CardContainer = styled.div`
       }
     }
   }
+  button:hover {
+    background-color: ${COLORS.PURPS.LEVEL_15};
+  }
 `;
 
 export const ImageContainer = styled.div`

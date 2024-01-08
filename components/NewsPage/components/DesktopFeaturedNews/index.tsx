@@ -12,8 +12,8 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
-  // CTA_TYPE,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -21,10 +21,11 @@ import { AVATAR } from 'assets/SvgIcons';
 
 const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
   featuredNewsData,
+  newsLandingPageUrl,
 }) => {
   const { lang, isDev, host } = useContext(MBContext);
   const { prismicContent } = featuredNewsData;
-  const { FEATURED_NEWS } = strings.NEWS_PAGE;
+  const { FEATURED_NEWS, ALL_NEWS } = strings.NEWS_PAGE;
 
   const handleArticleClick = (index: number) => {
     trackEvent({
@@ -35,27 +36,34 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
     return;
   };
 
-  // const handleCTAClick = () => {
-  //   trackEvent({
-  //     eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
-  //     [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
-  //     [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.FEATURED_NEWS,
-  //   });
-  //   return;
-  // };
+  const handleCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.FEATURED_NEWS,
+    });
+    return;
+  };
 
   return (
     <Conditional if={prismicContent?.length > 0}>
       <FeaturedNewsContainer>
         <div className="title-wrapper">
           <h2>{FEATURED_NEWS}</h2>
-          {/* <u onClick={handleCTAClick} role="button" tabIndex={0}>
+          <a
+            href={newsLandingPageUrl}
+            onClick={handleCTAClick}
+            role="button"
+            tabIndex={0}
+            target="_blank"
+            rel="noreferrer"
+          >
             {ALL_NEWS}
-          </u> */}
+          </a>
         </div>
         <div className="articles">
           {prismicContent
-            ?.slice(0, 4)
+            ?.slice(0, 3)
             .map((article: PrismicDocumentWithUID, index: number) => {
               const { data, first_publication_date } = article;
               let { heading, banner_image, author_name } = data;
@@ -75,14 +83,14 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
               });
 
               return (
-                <a
-                  href={redirectionUrl}
-                  key={index}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleArticleClick(index)}
-                >
-                  <article className="news-article">
+                <article className="news-article" key={heading}>
+                  <a
+                    href={redirectionUrl}
+                    key={index}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => handleArticleClick(index)}
+                  >
                     <div className="article-image">
                       <Image
                         url={banner_image?.url}
@@ -93,20 +101,28 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
                         loading="eager"
                       />
                     </div>
-                    <div className="article-info">
+                  </a>
+                  <div className="article-info">
+                    <a
+                      href={redirectionUrl}
+                      key={index}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => handleArticleClick(index)}
+                    >
                       <span className="published-date">
                         {formattedPublishedDateAndTime}
                       </span>
                       <h4>{heading}</h4>
-                      <Conditional if={author_name}>
-                        <div className="author-details">
-                          {AVATAR}
-                          <span>{author_name}</span>
-                        </div>
-                      </Conditional>
-                    </div>
-                  </article>
-                </a>
+                    </a>
+                    <Conditional if={author_name}>
+                      <div className="author-details">
+                        {AVATAR}
+                        <span>{author_name}</span>
+                      </div>
+                    </Conditional>
+                  </div>
+                </article>
               );
             })}
         </div>

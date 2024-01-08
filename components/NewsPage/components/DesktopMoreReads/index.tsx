@@ -23,6 +23,7 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
@@ -53,7 +54,7 @@ const PARAGRAPH_LENGTH = {
   0: 70,
   1: 150,
   2: 180,
-  3: 80,
+  3: 70,
 } as const;
 
 const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
@@ -65,12 +66,17 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
     ref: moreReadsRef,
     unobserve: true,
   });
-  const { uniqueArticlesWithSameTgidData, featuredArticles, CFData } = content;
-  const { MORE_READS } = strings.NEWS_PAGE;
+  const {
+    uniqueArticlesWithSameTgidData,
+    featuredArticles,
+    CFData,
+    newsLandingPageUrl,
+  } = content;
+  const { MORE_READS, ALL_NEWS } = strings.NEWS_PAGE;
 
   const finalContentForMoreReads = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
-    ...(featuredArticles ? featuredArticles.slice(4) : []),
+    ...(featuredArticles ? featuredArticles.slice(3) : []),
   ];
 
   useEffect(() => {
@@ -98,6 +104,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
   };
 
   const swiperParams: SwiperProps = {
+    className: '.more-reads-swiper',
     spaceBetween: 24,
     slidesPerView:
       finalContentForMoreReads.length < 4
@@ -116,28 +123,54 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
     return;
   };
 
+  const disableLimit =
+    finalContentForMoreReads?.length <= 10
+      ? finalContentForMoreReads?.length
+      : 10;
+
+  const handleCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+    });
+    return;
+  };
+
   return (
     <Conditional if={finalContentForMoreReads?.length > 0}>
       <Container ref={moreReadsRef}>
         <div className="title-wrapper">
           <h2>{MORE_READS}</h2>
-          <Conditional if={finalContentForMoreReads?.length > 4}>
-            <div className="icons">
-              <LTT_CHEVRON_LEFT
-                onClick={() => changeSlide(-1)}
-                disabled={activeSlideIdx <= 0}
-              />
-              <LTT_CHEVRON_RIGHT
-                onClick={() => changeSlide(1)}
-                disabled={activeSlideIdx + 4 >= finalContentForMoreReads.length}
-              />
-            </div>
-          </Conditional>
+          <div className="navigation">
+            <a
+              href={newsLandingPageUrl}
+              onClick={handleCTAClick}
+              role="button"
+              tabIndex={0}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {ALL_NEWS}
+            </a>
+            <Conditional if={finalContentForMoreReads?.length > 4}>
+              <div className="icons">
+                <LTT_CHEVRON_LEFT
+                  onClick={() => changeSlide(-1)}
+                  disabled={activeSlideIdx <= 0}
+                />
+                <LTT_CHEVRON_RIGHT
+                  onClick={() => changeSlide(1)}
+                  disabled={activeSlideIdx + 4 >= disableLimit}
+                />
+              </div>
+            </Conditional>
+          </div>
         </div>
 
         <Wrapper $noOfArticles={finalContentForMoreReads.length}>
-          <Swiper {...swiperParams}>
-            {finalContentForMoreReads.map((article, index) => {
+          <Swiper {...swiperParams} className="more-reads-swiper">
+            {finalContentForMoreReads.slice(0, 10).map((article, index) => {
               const { first_publication_date, uid } = article;
               let { heading, author_name, banner_image } = article.data;
 
@@ -165,14 +198,14 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
               );
 
               return (
-                <a
-                  href={redirectionUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleArticleClick(index)}
-                  key={genUniqueId()}
-                >
-                  <div className="article-wrapper" key={index}>
+                <div className="article-wrapper" key={index}>
+                  <a
+                    href={redirectionUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => handleArticleClick(index)}
+                    key={genUniqueId()}
+                  >
                     <div className="image-wrapper">
                       <Image
                         url={banner_image.url}
@@ -196,15 +229,15 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
                       <time>{formattedPublishedDateAndTime}</time>
                       <h3>{heading}</h3>
                       <div className="article-content">{truncatedContent}</div>
-                      <Conditional if={author_name}>
-                        <span className="author-name">
-                          {AVATAR}
-                          {author_name}
-                        </span>
-                      </Conditional>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                  <Conditional if={author_name}>
+                    <span className="author-name">
+                      {AVATAR}
+                      {author_name}
+                    </span>
+                  </Conditional>
+                </div>
               );
             })}
           </Swiper>

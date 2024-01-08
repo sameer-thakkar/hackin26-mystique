@@ -38,3 +38,11 @@ export const newsArticlesWithCFrameworkGq = `
         }
     }
 `;
+
+export const newsLandingPageGq = `
+    {
+        news_page {
+            uid
+        }
+    }
+`;

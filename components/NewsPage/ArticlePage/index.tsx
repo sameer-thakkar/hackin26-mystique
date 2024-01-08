@@ -2,13 +2,17 @@ import dynamic from 'next/dynamic';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
-import { Container, MainContent } from 'components/NewsPage/ArticlePage/styles';
+import {
+  Container,
+  MainContent,
+  VerticalProductCardContainer,
+} from 'components/NewsPage/ArticlePage/styles';
 import PageContent from 'components/NewsPage/components/Content';
 import NewsMeta from 'components/NewsPage/components/NewsMeta';
+import VerticalProductCardSlide from 'components/NewsPage/components/VerticalProductCardSlide';
 import { TNewsPageProps } from 'components/NewsPage/interface';
 import { uniqueArticlesWithoutRepetition } from 'components/NewsPage/utils';
 import { formatDateToString } from 'utils/dateUtils';
-import { getLangObject } from 'utils/helper';
 import { NEWS_PAGE_DATE_FORMAT } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -42,15 +46,9 @@ const Trailer = dynamic(
       /* webpackChunkName: "Trailer" */ 'components/NewsPage/components/Trailer'
     )
 );
-const CategorySlider = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CategorySlider" */ 'components/ShowPages/CategorySlider'
-    )
-);
 
 const ArticlePage: React.FC<TNewsPageProps> = (props) => {
-  const { lang, data: CMSContent, isMobile } = props;
+  const { data: CMSContent, isMobile } = props;
 
   const {
     data,
@@ -64,6 +62,7 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     subCategoryData,
     mediaData,
     videoData,
+    newsLandingPageUrl,
   } = CMSContent;
 
   const {
@@ -74,8 +73,6 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     tgid,
     breadcrumbs,
   } = data;
-
-  const currentLanguage = getLangObject(lang).code;
 
   const formattedPublishedDateAndTime = formatDateToString(
     new Date(first_publication_date),
@@ -105,17 +102,16 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               contentFrameworkSlices: contentFramework?.data?.body,
             }}
           />
-          <LazyComponent>
-            <NewsPageSidebar
-              content={{
-                tgidMappingData,
-                featuredArticles,
-                showPageDocuments,
-                mediaData,
-                tgid,
-              }}
-            />
-          </LazyComponent>
+          <NewsPageSidebar
+            content={{
+              tgidMappingData,
+              featuredArticles,
+              showPageDocuments,
+              mediaData,
+              tgid,
+              newsLandingPageUrl,
+            }}
+          />
         </MainContent>
         <Conditional if={!isMobile}>
           <LazyComponent>
@@ -124,6 +120,7 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
                 uniqueArticlesWithSameTgidData,
                 featuredArticles,
                 CFData,
+                newsLandingPageUrl,
               }}
             />
           </LazyComponent>
@@ -137,16 +134,18 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
                 CFData,
               }}
               heading={strings.NEWS_PAGE.MORE_READS}
-              showAllNewsCTA={false}
+              showAllNewsCTA
               showMoreCTAText={strings.NEWS_PAGE.LOAD_MORE}
               numberOfArticlesToShow={10}
               initialArticlesToShow={3}
+              newsLandingPageUrl={newsLandingPageUrl}
             />
             <MobileFeaturedNews
               featuredNewsContent={{
                 content: featuredArticles,
                 CFData,
               }}
+              newsLandingPageUrl={newsLandingPageUrl}
             />
           </LazyComponent>
         </Conditional>
@@ -165,17 +164,14 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
       </LazyComponent>
       <Conditional if={subCategoryData?.length > 0}>
         <LazyComponent>
-          <Container>
-            <h2>{strings.NEWS_PAGE.POPULAR_SHOWS}</h2>
-            <CategorySlider
+          <VerticalProductCardContainer>
+            <VerticalProductCardSlide
               cards={subCategoryData}
               isMobile={isMobile}
-              allShowPagesDocuments={showPageDocuments}
-              currentLanguage={currentLanguage}
-              categoryName={tgidMappingData?.primarySubCategoryName?.name}
-              isNewsPage
+              mediaData={mediaData}
+              showPageDocuments={showPageDocuments}
             />
-          </Container>
+          </VerticalProductCardContainer>
         </LazyComponent>
       </Conditional>
     </>

@@ -16,5 +16,6 @@ export type TSideBarProps = {
     showPageDocuments: ShowpageDocument[];
     mediaData: TMediaData[];
     tgid: number;
+    newsLandingPageUrl: string;
   };
 };

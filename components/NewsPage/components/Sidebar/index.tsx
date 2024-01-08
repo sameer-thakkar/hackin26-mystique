@@ -96,8 +96,6 @@ const Sidecard: React.FC<TShowCardProps> = ({
       [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.name,
     });
-
-    window.open(showPageUrl, '_blank');
   };
 
   const handleTheatreCTAClick = () => {
@@ -168,16 +166,18 @@ const Sidecard: React.FC<TShowCardProps> = ({
                 />
               </div>
             </Conditional>
-            <Button
-              fillType="fill"
-              widthProp="100%"
-              borderWidth="8px"
-              onClick={handleCheckAvailabiltyClicked}
-            >
-              {listingPrice?.finalPrice
-                ? strings.CHECK_AVAIL
-                : strings.MORE_DETAILS}
-            </Button>
+            <a href={showPageUrl} target="_blank" rel="noreferrer">
+              <Button
+                fillType="fill"
+                widthProp="100%"
+                borderWidth="8px"
+                onClick={handleCheckAvailabiltyClicked}
+              >
+                {listingPrice?.finalPrice
+                  ? strings.CHECK_AVAIL
+                  : strings.MORE_DETAILS}
+              </Button>
+            </a>
           </div>
         </div>
       </Card>
@@ -193,6 +193,7 @@ const NewsPageSidebar: React.FC<TSideBarProps> = ({ content }) => {
     showPageDocuments,
     mediaData,
     tgid,
+    newsLandingPageUrl,
   } = content;
 
   const showPageUid = showPageDocuments?.reduce(
@@ -218,6 +219,7 @@ const NewsPageSidebar: React.FC<TSideBarProps> = ({ content }) => {
           featuredNewsData={{
             prismicContent: featuredArticles,
           }}
+          newsLandingPageUrl={newsLandingPageUrl}
         />
       </Conditional>
     </Container>

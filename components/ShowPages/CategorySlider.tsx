@@ -7,12 +7,32 @@ import Conditional from 'components/common/Conditional';
 import CategoryCard from 'components/ShowPages/CategoryCard';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
+import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
   margin: auto;
+
+  .icons {
+    z-index: 99;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    height: 1.5rem;
+    .chevron-left,
+    .chevron-right {
+      position: absolute;
+      cursor: pointer;
+    }
+    .chevron-left {
+      left: -44px;
+    }
+    .chevron-right {
+      right: -44px;
+    }
+  }
 
   .swiper-initialized {
     margin: 0px;
@@ -184,7 +204,13 @@ export default class CategorySlider extends Component<
       spaceBetween: 24,
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
-      navigation: !isMobile,
+      loop: true,
+      navigation: !isMobile
+        ? {
+            prevEl: '.chevron-left',
+            nextEl: '.chevron-right',
+          }
+        : false,
     };
 
     const handleShowMoreCTAClick = () => {
@@ -223,21 +249,27 @@ export default class CategorySlider extends Component<
             </Conditional>
           </>
         ) : (
-          <Swiper {...params}>
-            {cards.map((element, index) => {
-              return (
-                <div key={index} className="swiper-slide">
-                  <CategoryCard
-                    allShowPagesDocuments={allShowPagesDocuments}
-                    element={element}
-                    currentLanguage={currentLanguage}
-                    categoryName={categoryName}
-                    isMobile={isMobile}
-                  />
-                </div>
-              );
-            })}
-          </Swiper>
+          <>
+            <Swiper {...params}>
+              {cards.map((element, index) => {
+                return (
+                  <div key={index} className="swiper-slide">
+                    <CategoryCard
+                      allShowPagesDocuments={allShowPagesDocuments}
+                      element={element}
+                      currentLanguage={currentLanguage}
+                      categoryName={categoryName}
+                      isMobile={isMobile}
+                    />
+                  </div>
+                );
+              })}
+            </Swiper>
+            <div className="icons">
+              <LTT_CHEVRON_LEFT />
+              <LTT_CHEVRON_RIGHT />
+            </div>
+          </>
         )}
       </>
     );

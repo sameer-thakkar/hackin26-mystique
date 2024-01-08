@@ -30,43 +30,47 @@ export const Container = styled.main`
   margin: 2rem auto 0 auto;
 
   .news-meta {
-    margin-bottom: 1.5rem;
     height: 100%;
     max-width: 49.5rem;
-      ${expandFontToken(FONTS.DISPLAY_LARGE)};
-      margin: 0.5rem 0 1rem 0;
+    ${expandFontToken(FONTS.DISPLAY_LARGE)};
+    margin: 0.5rem 0 1.5rem 0;
+  }
+  .author-meta {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    .author-name {
+      margin-right: 0.25rem;
     }
-    .author-meta {
-      display: flex;
-      align-items: center;
-      .author-name {
-        margin-right: 0.25rem;
-      }
-      svg {
-        height: 2rem;
-        width: 2rem;
-        margin-right: 0.5rem;
-      }
-      span,
-      time {
-        ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-      }
-      span {
-        color: ${COLORS.GRAY.G2};
-      }
-      time::before {
-        content: '• ';
-        font-family: serif; // Overwritten because of • appearing as square in Halyard Text font
-      }
-      time {
-        color: ${COLORS.GRAY.G3};
-      }
+    svg {
+      height: 2rem;
+      width: 2rem;
+      margin-right: 0.5rem;
     }
+    span,
+    time {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+    }
+    span {
+      color: ${COLORS.GRAY.G2};
+    }
+    time::before {
+      content: '• ';
+      font-family: serif; // Overwritten because of • appearing as square in Halyard Text font
+    }
+    time {
+      transform: translateY(0.5px);
+      color: ${COLORS.GRAY.G3};
+    }
+  }
+  .category-slider-heading {
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)}
   }
 
   @media (max-width: 768px) {
-    h2 {
-      ${expandFontToken(FONTS.HEADING_REGULAR)};
+    h2,
+    .category-slider-heading {
+      ${expandFontToken(FONTS.HEADING_LARGE)};
     }
     .news-meta {
       margin-bottom: 1rem;
@@ -86,6 +90,15 @@ export const Container = styled.main`
         ${expandFontToken(FONTS.UI_LABEL_SMALL)};
       }
     }
+  }
+`;
+
+export const VerticalProductCardContainer = styled.div`
+  width: calc(100vw - (5.46vw * 2));
+  max-width: ${SIZES.MAX_WIDTH};
+  margin: 4rem auto 0 auto;
+  @media (max-width: 768px) {
+    margin-top: 2rem;
   }
 `;
 
