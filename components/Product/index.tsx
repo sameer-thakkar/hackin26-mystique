@@ -153,6 +153,8 @@ const Product = (props: any) => {
     isProductCardLoading = false,
     setDetailsPopupShown = undefined,
     detialsPopupShown = false,
+    isShortcodePopup,
+    handleShortcodeDrawer,
     isNonPoi = false,
     isModifiedProductCard = false,
     isSmallComboCard = false,
@@ -545,6 +547,12 @@ const Product = (props: any) => {
     earliestAvailability?.startDate,
   ]);
 
+  useEffect(() => {
+    if (isShortcodePopup && isMobile) {
+      onMoreDetailsClick();
+    }
+  }, [isShortcodePopup]);
+
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
   if (!listingPrice) return null;
@@ -554,7 +562,7 @@ const Product = (props: any) => {
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
-  const onMoreDetailsClick = (e: any) => {
+  const onMoreDetailsClick = (e?: any) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
@@ -569,6 +577,9 @@ const Product = (props: any) => {
         type: SIDEBAR_TYPES.PRODUCT_CARD,
         onCloseCallback: () => {
           trackedToggleContent(true);
+          if (isShortcodePopup) {
+            handleShortcodeDrawer(false);
+          }
         },
         tgid: tgid,
         isProductCardTracking: true,
@@ -719,6 +730,9 @@ const Product = (props: any) => {
   const onSidePanelClose = () => {
     trackedToggleContent(true);
     toggleContentOpen(false);
+    if (isShortcodePopup) {
+      handleShortcodeDrawer(false);
+    }
   };
 
   const getBookNowButtonText = (): string => {
@@ -1296,10 +1310,10 @@ const Product = (props: any) => {
     </Container>
   );
 
-  if (isSpecialGuidedTour)
+  if (isSpecialGuidedTour || isShortcodePopup)
     return (
       <>
-        <Conditional if={!isMobile && isContentOpen}>
+        <Conditional if={!isMobile && (isContentOpen || isShortcodePopup)}>
           <SpecialGuidedTourSidePanel
             images={images}
             tgid={tgid}
@@ -1323,9 +1337,12 @@ const Product = (props: any) => {
             productBookingUrl={productBookingUrl}
             ctaText={getBookNowButtonText()}
             uid={uid}
+            isShortcodePopup={isShortcodePopup}
           />
         </Conditional>
-        <SpecialGuidedTour Product={ProductCard} isMobile={isMobile} />
+        <Conditional if={!isShortcodePopup}>
+          <SpecialGuidedTour Product={ProductCard} isMobile={isMobile} />
+        </Conditional>
       </>
     );
 

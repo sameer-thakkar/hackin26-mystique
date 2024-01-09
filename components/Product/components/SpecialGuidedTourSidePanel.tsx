@@ -47,6 +47,7 @@ const SpecialGuidedTourSidePanel = ({
   earliestAvailability,
   productBookingUrl,
   uid,
+  isShortcodePopup = false,
 }: TSpecialGuidedTourSidePanelProps) => {
   const [closed, setClosed] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -83,9 +84,11 @@ const SpecialGuidedTourSidePanel = ({
         >
           <CloseIcon />
         </CloseIconWrapper>
-        <div className="guided-tour-label">
-          {strings.DESCRIPTORS.GUIDED_TOUR}
-        </div>
+        <Conditional if={!isShortcodePopup}>
+          <div className="guided-tour-label">
+            {strings.DESCRIPTORS.GUIDED_TOUR}
+          </div>
+        </Conditional>
         <div className="tour-title">{tourTitle}</div>
       </SidePanelStickyHeader>
       <SidePanel
@@ -95,10 +98,12 @@ const SpecialGuidedTourSidePanel = ({
         }}
       >
         <SidePanelImageContainer>
-          <GuidedTourLabel ref={wrapperRef}>
-            <GuidedTourLabelBackground isMobile={false} />
-            {strings.DESCRIPTORS.GUIDED_TOUR}
-          </GuidedTourLabel>
+          <Conditional if={!isShortcodePopup}>
+            <GuidedTourLabel ref={wrapperRef}>
+              <GuidedTourLabelBackground isMobile={false} />
+              {strings.DESCRIPTORS.GUIDED_TOUR}
+            </GuidedTourLabel>
+          </Conditional>
           <MediaCarousel
             imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
             tgid={tgid}
@@ -120,9 +125,11 @@ const SpecialGuidedTourSidePanel = ({
             currentLanguage={lang}
           />
         </Conditional>
-        <GuidesLabelWrapper>
-          <GuidesBanner />
-        </GuidesLabelWrapper>
+        <Conditional if={!isShortcodePopup}>
+          <GuidesLabelWrapper>
+            <GuidesBanner />
+          </GuidesLabelWrapper>
+        </Conditional>
         <ProductDescriptorsWrapper>
           <ProductDescriptors
             descriptorArray={descriptorsList}
@@ -130,7 +137,7 @@ const SpecialGuidedTourSidePanel = ({
             maxDuration={maxDuration}
             lang={lang}
             horizontal
-            showLanguages
+            showLanguages={!isShortcodePopup}
             uid={uid}
           />
         </ProductDescriptorsWrapper>

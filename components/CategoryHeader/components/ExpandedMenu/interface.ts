@@ -11,4 +11,5 @@ export type ExpandedMenuProps = {
 export type TMenu = {
   label: string;
   url: string;
+  collectionId?: number;
 };

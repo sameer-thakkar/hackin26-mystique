@@ -3,12 +3,15 @@ import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { createBookingURL } from 'utils';
+import { TCurrencyObj } from 'utils/currency';
 import {
   dateToString,
   getDurationInDays,
   getDurationInHours,
   isDateValid,
 } from 'utils/dateUtils';
+import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
+import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import {
   DESCRIPTOR_RANKING_LOGIC,
@@ -26,11 +29,10 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { STAR_EMPTY_NEW, STAR_FULL_NEW, STAR_HALF_NEW } from 'assets/SvgIcons';
-import { convertUidToUrl, getFormattedUrlSlug } from './urlUtils';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   let tabs: Record<string, any> = [];
-  const nonTabHighlights = highlights.reduce(
+  const nonTabHighlights = highlights?.reduce(
     (acc: Record<string, any>[], highlight: RTNode & { content: RTNode }) => {
       if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
         tabs.push({
@@ -749,6 +751,140 @@ export const getProductCardDestination = ({
   const showPageExists = !destinationUrl.includes('/book');
 
   return { destinationUrl, showPageExists };
+};
+
+export const getScorpioData = ({
+  finalTours,
+  currency,
+  language,
+  localizedStrings,
+  tgidVariantData,
+}: {
+  finalTours: Record<string, any>;
+  currency: TCurrencyObj | undefined;
+  language: string;
+  localizedStrings?: any;
+  tgidVariantData?: any;
+}) => {
+  let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
+  let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
+  const scorpioData = finalTours?.reduce(
+    (acc: Record<string, any>, tour: any) => {
+      const {
+        id,
+        allTags,
+        averageRating,
+        callToAction,
+        highlights,
+        listingPrice,
+        imageUrl,
+        media,
+        descriptors,
+        minDuration,
+        maxDuration,
+        name,
+        reviewCount,
+        combo,
+        multiVariant,
+        primaryCollection,
+        primaryCategory,
+        primarySubCategory,
+        cancellationPolicy,
+        cancellationPolicyV2,
+        reschedulePolicy,
+        ticketValidity,
+        flowType,
+        allVariantOpenDated,
+        inclusionsRichText,
+        exclusionsRichText,
+        ratingCount,
+      } = tour ?? {};
+
+      minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
+      bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
+
+      const { productImages, safetyImages } = media || {};
+      const updatedDescriptors = generateDescriptor({
+        descriptors,
+        lang: language,
+      });
+      let {
+        microBrandsHighlight,
+      }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
+
+      const {
+        urlSlugs: _primaryCategoryUrlSlugs,
+        ...primaryCategoryWithoutSlugs
+      } = primaryCategory ?? {};
+      const {
+        urlSlugs: _primarySubCategoryUrlSlugs,
+        ...primarySubCategoryWithoutSlugs
+      } = primarySubCategory ?? {};
+
+      microBrandsHighlight = standardizeCancellationPolicy({
+        highlights: microBrandsHighlight,
+        cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
+        reschedulePolicy,
+        ticketValidity,
+        lang: language,
+        localizedStrings,
+      });
+
+      const isMBHighlightsExist = microBrandsHighlight?.length > 0;
+      const combinedHighlights = appendInclusionExclusion({
+        highlightArr: microBrandsHighlight,
+        inclusions: inclusionsRichText,
+        exclusions: exclusionsRichText,
+        localizedStrings: localizedStrings || {},
+      });
+
+      const { variants } =
+        tgidVariantData?.find((item: any) => item.id === id) || {};
+      const [variantId] =
+        getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+      const { listingPrice: variantListingPrice } =
+        variants?.find((variant: any) => variant?.id === Number(variantId)) ||
+        {};
+      const finalListingPrice = variantListingPrice
+        ? variantListingPrice
+        : listingPrice;
+      return {
+        ...acc,
+        [id]: {
+          allTags,
+          available: !(listingPrice === null),
+          averageRating,
+          ctaBooster: callToAction,
+          descriptors: updatedDescriptors,
+          highlights: combinedHighlights,
+          isMBHighlightsExist,
+          imageUrl,
+          images: productImages,
+          listingPrice: {
+            ...finalListingPrice,
+            ...currency,
+          },
+          productHighlights: highlights,
+          productTitle: name,
+          reviewCount,
+          safetyImages,
+          title: name,
+          combo,
+          multiVariant,
+          minDuration,
+          maxDuration,
+          primaryCollection,
+          primaryCategory: primaryCategoryWithoutSlugs,
+          primarySubCategory: primarySubCategoryWithoutSlugs,
+          flowType,
+          allVariantOpenDated,
+          ratingCount,
+        },
+      };
+    },
+    {}
+  );
+  return scorpioData;
 };
 
 export const getMaxListItemsToShow = (

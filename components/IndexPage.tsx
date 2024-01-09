@@ -379,6 +379,7 @@ const Page = (props: PageProps) => {
             primaryCountry={primaryCountry}
             primaryCity={primaryCity}
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
+            categoryHeaderMenu={categoryHeaderMenu}
           >
             {Component}
             {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}

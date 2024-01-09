@@ -8,6 +8,18 @@ import { getRichtextElements } from 'utils/shortcodeUtils';
 import { SHORT_CODE_TYPES } from 'const/index';
 
 const InlinePrice = dynamic(() => import('components/InlinePrice'));
+const PriceShortcode = dynamic(
+  () => import('components/shortcodes/PriceShortcode')
+);
+const ExperienceShortcode = dynamic(
+  () => import('components/shortcodes/ExperienceShortcode')
+);
+const JumplinkShortcode = dynamic(
+  () => import('components/shortcodes/JumplinkShortcode')
+);
+const CollectionMBShortcode = dynamic(
+  () => import('components/shortcodes/CollectionMBShortcode')
+);
 const NextAvailable = dynamic(
   () => import('components/shortcodes/NextAvailable')
 );
@@ -163,6 +175,18 @@ const shortCodesDict: ShortCodeDictionary = {
   },
   duration: {
     component: Timings,
+  },
+  'price-block': {
+    component: PriceShortcode,
+  },
+  experience: {
+    component: ExperienceShortcode,
+  },
+  jumplink: {
+    component: JumplinkShortcode,
+  },
+  collection: {
+    component: CollectionMBShortcode,
   },
 };
 

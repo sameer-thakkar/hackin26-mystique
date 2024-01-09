@@ -69,6 +69,7 @@ export type TSpecialGuidedTourSidePanelProps = {
   earliestAvailability?: any;
   productBookingUrl?: string;
   uid?: string;
+  isShortcodePopup?: boolean;
 };
 
 export type TTourTittleProps = {

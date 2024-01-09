@@ -34,6 +34,7 @@ export const MBContext = createContext({
   primaryCountry: null,
   primaryCity: null,
   redirectToHeadoutBookingFlow: false,
+  categoryHeaderMenu: {},
 });
 
 export const MBContextProvider = (props: any) => {
@@ -55,6 +56,7 @@ export const MBContextProvider = (props: any) => {
     primaryCountry,
     primaryCity,
     redirectToHeadoutBookingFlow,
+    categoryHeaderMenu,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
   const router = useRouter();
@@ -162,6 +164,7 @@ export const MBContextProvider = (props: any) => {
         primaryCountry,
         primaryCity,
         redirectToHeadoutBookingFlow,
+        categoryHeaderMenu,
       }}
     >
       {props.children}

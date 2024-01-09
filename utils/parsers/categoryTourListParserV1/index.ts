@@ -12,13 +12,8 @@ import {
   fetchTourListV6,
 } from 'utils/apiUtils';
 import { csvTgidToArray } from 'utils/helper';
-import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { sendLog } from 'utils/logger';
-import {
-  generateDescriptor,
-  getSingleAriesTag,
-  standardizeCancellationPolicy,
-} from 'utils/productUtils';
+import { getScorpioData, getSingleAriesTag } from 'utils/productUtils';
 import type { TCategoryTourListParserV1 } from './interface';
 
 const categoryTourListParserV1 = async ({
@@ -289,121 +284,16 @@ const categoryTourListParserV1 = async ({
 
     let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
     let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
+
     let scorpioData = {};
     if (!isLookerWebhookCall) {
-      scorpioData = finalTours?.reduce((acc, tour) => {
-        const {
-          id,
-          allTags,
-          averageRating,
-          callToAction,
-          highlights,
-          listingPrice,
-          imageUrl,
-          media,
-          descriptors,
-          minDuration,
-          maxDuration,
-          name,
-          reviewCount,
-          combo,
-          multiVariant,
-          primaryCollection,
-          primaryCategory,
-          primarySubCategory,
-          cancellationPolicy,
-          cancellationPolicyV2,
-          reschedulePolicy,
-          ticketValidity,
-          flowType,
-          allVariantOpenDated,
-          inclusionsRichText,
-          exclusionsRichText,
-          ratingCount,
-        } = tour ?? {};
-
-        minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
-        bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
-
-        const { productImages, safetyImages } = media || {};
-        const updatedDescriptors = generateDescriptor({
-          descriptors,
-          lang: language,
-        });
-        let {
-          microBrandsHighlight,
-        }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
-
-        const {
-          urlSlugs: _primaryCategoryUrlSlugs,
-          ...primaryCategoryWithoutSlugs
-        } = primaryCategory ?? {};
-        const {
-          urlSlugs: _primarySubCategoryUrlSlugs,
-          ...primarySubCategoryWithoutSlugs
-        } = primarySubCategory ?? {};
-
-        microBrandsHighlight = standardizeCancellationPolicy({
-          highlights: microBrandsHighlight,
-          cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
-          reschedulePolicy,
-          ticketValidity,
-          lang: getHeadoutLanguagecode(lang),
-          localizedStrings,
-        });
-
-        const isMBHighlightsExist = microBrandsHighlight?.length > 0;
-        const combinedHighlights = appendInclusionExclusion({
-          highlightArr: microBrandsHighlight,
-          inclusions: inclusionsRichText,
-          exclusions: exclusionsRichText,
-          localizedStrings: localizedStrings || {},
-        });
-
-        const { variants } =
-          tgidVariantData?.find((item: any) => item.id === id) || {};
-        const [variantId] =
-          getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
-        const { listingPrice: variantListingPrice } =
-          variants?.find((variant: any) => variant?.id === Number(variantId)) ||
-          {};
-        const finalListingPrice = variantListingPrice
-          ? variantListingPrice
-          : listingPrice;
-        return {
-          ...acc,
-          [id]: {
-            allTags,
-            available: !(listingPrice === null),
-            averageRating,
-            ctaBooster: callToAction,
-            descriptors: updatedDescriptors,
-            highlights: combinedHighlights,
-            isMBHighlightsExist,
-            imageUrl,
-            images: productImages,
-            listingPrice: {
-              ...finalListingPrice,
-              ...currency,
-            },
-            productHighlights: highlights,
-            productTitle: name,
-            reviewCount,
-            safetyImages,
-            title: name,
-            combo,
-            multiVariant,
-            minDuration,
-            maxDuration,
-            primaryCollection,
-            primaryCategory: primaryCategoryWithoutSlugs,
-            primarySubCategory: primarySubCategoryWithoutSlugs,
-            flowType,
-            allVariantOpenDated,
-            ratingCount,
-          },
-        };
-      }, {});
+      scorpioData = getScorpioData({
+        finalTours,
+        currency,
+        language,
+        localizedStrings,
+        tgidVariantData,
+      });
     }
     const finalTgids = finalTours?.map((el) => el?.id);
 

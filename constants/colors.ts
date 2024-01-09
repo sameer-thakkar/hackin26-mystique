@@ -118,6 +118,7 @@ const COLORS = {
     LIGHT_TONE_3: '#deffee',
   },
   CANDY: {
+    PRIMARY: '#ff007c',
     TERTIARY: '#cc0062',
     DARK_TONE: '#660031',
     LIGHT_TONE_2: '#ff66af',
