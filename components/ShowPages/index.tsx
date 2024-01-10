@@ -369,6 +369,7 @@ const ShowPage = (props: any) => {
         tgid,
         hostname,
         limit: 5,
+        language: currentLanguage,
       });
 
       const tourGroupReviews = data?.items?.map((review: any) => ({

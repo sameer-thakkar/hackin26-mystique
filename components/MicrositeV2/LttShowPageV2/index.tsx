@@ -76,10 +76,8 @@ const LttShowPageV2 = ({
   const [allTours, setAllTours] = useState([]);
   const [activePage, setActivePage] = useState(null);
 
-  const [
-    mwebDateSelectorPopupActive,
-    setMwebdateSelectorPopupActive,
-  ] = useState(false);
+  const [mwebDateSelectorPopupActive, setMwebdateSelectorPopupActive] =
+    useState(false);
 
   const changePage = (page: any) => {
     setActivePage(page.name);
@@ -169,12 +167,8 @@ const LttShowPageV2 = ({
       .FREQUENTLY_ASKED_QUESTIONS_ABOUT,
     name
   )}`;
-  const {
-    originalPrice,
-    finalPrice,
-    cashbackValue,
-    cashbackType,
-  } = listingPrice;
+  const { originalPrice, finalPrice, cashbackValue, cashbackType } =
+    listingPrice;
   const totalDiscount = Number(
     (((originalPrice - finalPrice) / originalPrice) * 100).toFixed(2)
   );

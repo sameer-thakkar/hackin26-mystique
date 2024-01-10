@@ -842,7 +842,7 @@ export const fetchTourGroupReviews = async ({
   filterType,
   offset,
   cookies,
-  language,
+  language = 'en',
 }: {
   tgid: string | number;
   hostname?: string;
@@ -853,6 +853,7 @@ export const fetchTourGroupReviews = async ({
   language?: string;
 }) => {
   const params = {
+    language,
     ...(limit && {
       limit: `${limit}`,
     }),
@@ -862,7 +863,6 @@ export const fetchTourGroupReviews = async ({
     ...(filterType && {
       filterType: `${filterType}`,
     }),
-    language: language ?? 'EN',
   };
   const url = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupReviewsV2,

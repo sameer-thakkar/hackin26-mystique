@@ -230,7 +230,8 @@ class ContentPage extends Component<any, any> {
         }
       });
 
-    const { data } = this.props;
+    const { data, lang } = this.props;
+
     const { header_ref, microsite_document_ref, baseLangPageTitle } = data;
 
     const { enable_group_booking: enableGroupBooking } = header_ref?.data || {};
@@ -249,6 +250,7 @@ class ContentPage extends Component<any, any> {
       const toursData = await fetchTourListV6({
         tgids: filteredTours.map((t: any) => t.tgid),
         hostname: window.location.origin,
+        language: getHeadoutLanguagecode(lang),
       });
 
       const groupBookingTourData = toursData?.tourGroups?.reduce(

@@ -28,6 +28,7 @@ export interface IGetNearbyCities extends ICommonProps, Cookies {
 
 export interface IGetCityListData extends Cookies {
   mbCity: string;
+  lang: string;
 }
 
 export interface ICollectionItem {

@@ -342,6 +342,7 @@ const ExperiencePage = ({
         tgid: id,
         hostname,
         limit: 5,
+        language: currentLanguage,
       });
 
       const tourGroupReviews = data?.items?.map((review: any) => ({

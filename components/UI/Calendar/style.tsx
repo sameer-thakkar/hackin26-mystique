@@ -49,7 +49,6 @@ bottom: 0;
       bottom: -1000px;
     `}
  */
-
   }
 `;
 
@@ -247,7 +246,7 @@ export const Day = styled.div<{
   ${expandFontToken(FONTS.TABLE_MEDIUM_HEAVY)};
   color: ${COLORS.GRAY.G3};
   text-align: center;
-  
+
   cursor: ${({ $isBeforeToday, $isAvailable }) =>
     $isBeforeToday || !$isAvailable ? 'default' : 'pointer'};
   &:hover {
@@ -259,7 +258,7 @@ export const Day = styled.div<{
         color: ${COLORS.BRAND.PURPS};
         background-color: ${COLORS.BACKGROUND.FLOATING_PURPS};
     `}
-  
+
     ${PriceForDay} {
       ${({ $isBeforeToday, $isAvailable, $isDiscounted }) =>
         !$isBeforeToday &&
@@ -271,7 +270,7 @@ export const Day = styled.div<{
         };
     `}
     }
-}
+  }
 
   ${({ $isBeforeToday, $isAvailable }) =>
     ($isBeforeToday || !$isAvailable) &&
@@ -291,17 +290,15 @@ export const Day = styled.div<{
 	 `}
 
 ${PriceForDay} {
-
-  ${({ $isSelected, $isDiscounted }) =>
-    $isSelected &&
-    `
+    ${({ $isSelected, $isDiscounted }) =>
+      $isSelected &&
+      `
 		color: ${COLORS.BRAND.PURPS};	
 		background-color: ${
       $isDiscounted ? COLORS.BRAND.WHITE : COLORS.BACKGROUND.FLOATING_PURPS
     };
 	 `}
-
-}
+  }
 
   @media (max-width: 768px) {
     width: 3rem;

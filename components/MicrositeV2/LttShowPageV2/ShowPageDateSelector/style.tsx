@@ -232,13 +232,12 @@ export const ShowPageDateSelectorWrapper = styled.div<{
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
 
   ${HeaderDate}, ${CalendarButton}, ${TimeSlotCard} {
-     ${({ $isRedirecting }) =>
-       $isRedirecting &&
-       `
+    ${({ $isRedirecting }) =>
+      $isRedirecting &&
+      `
       cursor: not-allowed !important;
     `};
   }
-
 
   @media (max-width: 768px) {
     box-shadow: none;

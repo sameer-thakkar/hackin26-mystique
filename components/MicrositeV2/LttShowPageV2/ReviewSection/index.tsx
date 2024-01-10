@@ -39,8 +39,8 @@ import {
 import { strings } from 'const/strings';
 import { STAR_FULL_NEW } from 'assets/SvgIcons';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 export const getTranslateButtonText = (

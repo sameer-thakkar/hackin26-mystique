@@ -311,6 +311,7 @@ const PopulateProducts = (props: any) => {
               currency: `${currency}`,
             }),
             hostname,
+            language: currentLanguage,
           })
       );
       const variants: Array<any> = await Promise.all([...fetchVariantPrices]);

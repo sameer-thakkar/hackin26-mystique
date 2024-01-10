@@ -75,18 +75,15 @@ const ShowPageSeoComponents = ({
     'startDate',
     'startTime',
   ]);
-  const {
-    tabSchemaHighlight,
-    detailsObjects,
-    aboutTheatreSection,
-  } = parseShowPageData(microBrandsHighlight);
+  const { tabSchemaHighlight, detailsObjects, aboutTheatreSection } =
+    parseShowPageData(microBrandsHighlight);
   const productImages = imageUploads?.map((image: any) => image?.url);
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
-    ' '
-  )[2];
+  const theatreSeatingCapacity = (
+    aboutTheatreSection as any
+  )?.tab_content[1]?.text?.split(' ')[2];
   const pageUrl = convertUidToUrl({
     uid,
     lang: currentLanguage,
@@ -133,10 +130,12 @@ const ShowPageSeoComponents = ({
         "@type": "TheaterGroup",
         "name": "${name} Cast"
       },
-      "offers": [${offerSchema?.map((
-        // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
-        variant
-      ) => JSON.stringify(variant))}]
+      "offers": [${offerSchema?.map(
+        (
+          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+          variant
+        ) => JSON.stringify(variant)
+      )}]
     }`;
     })
     ?.join(',');

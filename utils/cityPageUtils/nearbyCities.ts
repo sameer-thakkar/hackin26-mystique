@@ -4,6 +4,7 @@ import type { PrismicDocumentWithUID } from '@prismicio/types';
 import {
   getAlternateLanguageDocUid,
   getFinalisedBannerImages,
+  getHeadoutLanguagecode,
   handleSettledPromiseResults,
 } from 'utils';
 import { fetchNearbyCityList } from 'utils/apiUtils';
@@ -69,10 +70,10 @@ const getLangBasedCitiesData = ({
   );
 };
 
-const getCityListData = async ({ cookies, mbCity }: IGetCityListData) => {
+const getCityListData = async ({ cookies, mbCity, lang }: IGetCityListData) => {
   const { cities } = await fetchNearbyCityList({
     cookies,
-    params: {},
+    params: { ...(lang && { language: getHeadoutLanguagecode(lang) }) },
     cityCode: mbCity,
   });
   const cityDataMap = new Map();
@@ -104,7 +105,7 @@ export const getNearbyCities = async ({
       predicates: predicatesArray,
     });
 
-    const cityListDataPromise = getCityListData({ cookies, mbCity });
+    const cityListDataPromise = getCityListData({ cookies, mbCity, lang });
     const allResult = await Promise.allSettled([
       prismicDataPromise,
       cityListDataPromise,

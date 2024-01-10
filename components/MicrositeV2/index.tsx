@@ -64,14 +64,18 @@ class MicrositeV2 extends Component<any, any> {
 
   componentDidMount() {
     const isMobile = window.innerWidth <= 768;
+    const { data: CMSContent } = this.props;
     const { all_tours: allTours } = this.props.data;
     const allTgids = allTours?.map((tour: any) => tour.primary.tgid) ?? [];
     const isLTT = checkIfLTTMB(this.props.uid);
     const isBroadway = checkIfBroadwayMB(this.props.uid);
+    const language = getLangObject(CMSContent.lang).code;
+
     if (allTours?.length > 0) {
       fetchTourListV6({
         tgids: allTgids,
         hostname: window.location.origin,
+        language,
       }).then((jsonTours) => {
         const cardPrices = tourListApiParser(jsonTours);
         this.setState({

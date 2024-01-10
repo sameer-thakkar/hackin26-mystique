@@ -175,6 +175,7 @@ export const getToursGlobalCollection = async ({
         collectionId: collection,
         hostname,
         cookies,
+        language: lang,
       });
       currency = collectionData?.city?.country?.currency;
       primaryCity = collectionData?.city;
@@ -212,6 +213,7 @@ export const getToursGlobalCollection = async ({
         isSubCategory: true,
         city: cityName,
         cookies,
+        language: lang,
       });
       primaryCity = subCategoryData?.city;
       currency = subCategoryData?.currency;
