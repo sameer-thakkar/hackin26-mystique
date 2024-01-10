@@ -283,11 +283,12 @@ const ContentSections = ({
                 {STORY}{' '}
                 {strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS.STORYLINE}
               </h2>
-
-              <PrismicRichText
-                field={theStory}
-                components={shortCodeSerializer}
-              />
+              <div className="storyline-content">
+                <PrismicRichText
+                  field={theStory}
+                  components={shortCodeSerializer}
+                />
+              </div>
             </Conditional>
 
             <Conditional if={showTimings?.length}>
@@ -338,7 +339,7 @@ const ContentSections = ({
             </Conditional>
           </Content>
 
-          <Content>
+          <Content id="theatre-section">
             <h2 id="Theatre" className="theatre-name">
               <span>
                 {LOCATION} {theatreName}
@@ -360,10 +361,12 @@ const ContentSections = ({
               </a>
             </h2>
             <Conditional if={(aboutTheatreSection as any)?.tab_content?.length}>
-              <PrismicRichText
-                field={(aboutTheatreSection as any)?.tab_content}
-                components={shortCodeSerializer}
-              />
+              <div className="theatre-description">
+                <PrismicRichText
+                  field={(aboutTheatreSection as any)?.tab_content}
+                  components={shortCodeSerializer}
+                />
+              </div>
             </Conditional>
 
             <Conditional if={gettingThere?.tab_content?.length}>
@@ -446,9 +449,21 @@ const ContentSections = ({
                 </h2>
 
                 <CriticReview
-                  rating={criticReview?.tab_content?.[0].text?.length}
-                  reviewContent={criticReview?.tab_content?.[1]}
-                  criticName={criticReview?.tab_content?.[2]}
+                  rating={
+                    criticReview?.tab_content?.[
+                      criticReview?.tab_content?.length - 3
+                    ]?.text?.length
+                  }
+                  reviewContent={
+                    criticReview?.tab_content?.[
+                      criticReview?.tab_content?.length - 2
+                    ]
+                  }
+                  criticName={
+                    criticReview?.tab_content?.[
+                      criticReview?.tab_content?.length - 1
+                    ]
+                  }
                 />
               </Conditional>
 

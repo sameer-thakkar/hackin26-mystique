@@ -6786,6 +6786,13 @@ export const RIGHT_ARROW_POINTED = ({
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+    <path
+      d="M6 1.5L10.5 6L6 10.5"
+      stroke={fillColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 export const CAST_AND_CREW = (

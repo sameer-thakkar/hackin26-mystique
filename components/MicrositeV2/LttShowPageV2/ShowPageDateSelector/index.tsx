@@ -48,6 +48,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { CALENDAR, CHEVRON_UP, SAND_CLOCK } from 'assets/SvgIcons';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const ShowPageDateSelector = ({
   tourGroupData,

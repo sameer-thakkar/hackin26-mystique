@@ -168,7 +168,7 @@ const LttShowPageV2 = ({
     name
   )}`;
   const { originalPrice, finalPrice, cashbackValue, cashbackType } =
-    listingPrice;
+    listingPrice ?? {};
   const totalDiscount = Number(
     (((originalPrice - finalPrice) / originalPrice) * 100).toFixed(2)
   );
@@ -316,6 +316,7 @@ const LttShowPageV2 = ({
         <ShowPageDescriptorSection
           microBrandsHighlight={microBrandsHighlight}
           isMobile={isMobile}
+          tgid={tgid}
         />
 
         <DateSelectorWrapper

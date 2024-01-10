@@ -125,7 +125,7 @@ export const ReviewHeader = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.1rem;
         .name {
           ${expandFontToken(FONTS.HEADING_SMALL)};
           color: ${COLORS.GRAY.G2};
@@ -139,10 +139,16 @@ export const ReviewHeader = styled.div`
   }
 
   .rating {
+    display: flex;
+    align-items: center;
     svg {
       width: 1rem;
       height: 1rem;
       margin-right: 0.12rem;
+    }
+    .rating-count {
+      margin-left: 0.25rem;
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
     }
   }
 

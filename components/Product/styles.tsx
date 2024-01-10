@@ -807,10 +807,13 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     justify-content: start;
     grid-gap: 8px;
 
-    .chevron::before,
-    .chevron::after {
-      top: 0.6rem;
-      background-color: ${COLORS.TEXT.CANDY_1};
+    .chevron {
+      top: 0.15rem;
+      svg {
+        path {
+          stroke: ${COLORS.TEXT.CANDY_1};
+        }
+      }
     }
     @media (max-width: 768px) {
       justify-content: left;

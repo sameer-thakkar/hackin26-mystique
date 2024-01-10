@@ -25,8 +25,8 @@ import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
 import { strings } from 'const/strings';
 import { CloseIcon, GuidedTourLabelBackground } from 'assets/SvgIcons';
 
-const MediaCarousel = dynamic(() =>
-  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(
+  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const SpecialGuidedTourSidePanel = ({

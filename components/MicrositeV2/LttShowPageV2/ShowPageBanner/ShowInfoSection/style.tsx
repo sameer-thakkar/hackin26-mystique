@@ -93,7 +93,6 @@ export const Hero = styled.div<{ $isImageAvailable: boolean }>`
 `;
 
 export const InfoSectionWrapper = styled.div`
-  max-width: 219px;
   @media (max-width: 768px) {
     max-width: none;
     width: -webkit-fill-available;
@@ -378,6 +377,9 @@ export const ReviewPopover = styled.div`
         width: 2.3125rem;
         border-radius: 2.3125rem;
         margin-right: 0.625rem;
+        img {
+          border-radius: 2.3125rem;
+        }
       }
 
       .user-details {

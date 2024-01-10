@@ -9,12 +9,17 @@ import {
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import { trackEvent } from 'utils/analytics';
 import { descriptorIcons } from 'const/descriptorIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  LTT_PERMANENT_SHOWS_TGIDS,
+} from 'const/index';
 import { strings } from 'const/strings';
 
 const ShowPageDescriptorSection = ({
   microBrandsHighlight,
   isMobile,
+  tgid,
 }: TShowPageDescriptorSectionProps) => {
   const { detailsObjects, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
@@ -64,6 +69,8 @@ const ShowPageDescriptorSection = ({
         {Object.keys(descriptors).map((key) => {
           const { content, icon: Icon } = descriptors[key];
           if (!content) return null;
+          if (key === 'dates' && LTT_PERMANENT_SHOWS_TGIDS.includes(tgid))
+            return null;
           return (
             <div className="descriptor" key={key}>
               <div className="icon">

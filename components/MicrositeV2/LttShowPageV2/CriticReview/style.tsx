@@ -30,6 +30,10 @@ export const CriticReviewWrapper = styled.div`
       right: 0.87rem;
     }
   }
+
+  @media (max-width: 370px) {
+    padding-top: 1.5rem;
+  }
 `;
 
 export const ReviewContent = styled.div`

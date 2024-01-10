@@ -17,7 +17,6 @@ export const ShowPageDescriptorSectionWrapper = styled.div`
 export const DescriptorsWrapper = styled.div`
   display: flex;
 
-  width: 44.625rem;
   gap: 1.5rem;
 
   .descriptor {

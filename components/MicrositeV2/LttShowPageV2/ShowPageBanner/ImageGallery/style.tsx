@@ -13,11 +13,11 @@ export const ImageGalleryWrapper = styled.div`
     top: 8.5rem;
     height: fit-content;
   }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
     right: calc((50vw - 25.5rem));
   }
 
-  @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     right: calc((50vw - 30.5rem));
   }
 `;

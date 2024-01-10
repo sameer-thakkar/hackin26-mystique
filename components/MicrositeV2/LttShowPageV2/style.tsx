@@ -47,7 +47,7 @@ export const ShowPageWrapper = styled.div`
     }
   }
 
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) {
+  @media only screen and (min-width: 768px) and (max-width: 1366px) {
     ${FooterLegal} {
       grid-column-gap: 28px;
     }
@@ -64,16 +64,19 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
   @media (max-width: 768px) {
     z-index: 16;
   }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
     right: calc((50vw - 25.5rem));
     ${ShowPageDateSelectorWrapper} {
-      width: 20rem;
+      width: 22rem;
       margin-left: 8rem;
     }
   }
 
-  @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     right: calc((50vw - 30.5rem));
+    ${ShowPageDateSelectorWrapper} {
+      width: auto;
+    }
   }
   ${ShowPageDateSelectorWrapper} {
     position: sticky;
@@ -88,7 +91,7 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
     left: 0;
     position: fixed;
     width: 100%;
-    transition: bottom 0.3s ease;
+    transition: bottom 0.3s ease-in;
 
     ${OverlayWrapper} {
       ${({ $visible }) =>
@@ -212,4 +215,13 @@ export const FaqWrapper = styled.div`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: auto;
+
+  h2 {
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)};
+  }
+  @media (max-width: 768px) {
+    h2 {
+      ${expandFontToken(FONTS.HEADING_LARGE)};
+    }
+  }
 `;

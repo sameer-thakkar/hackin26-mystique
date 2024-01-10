@@ -215,7 +215,10 @@ const ReviewElement = ({
               </span>
               <span className="date">{datePublished}</span>
             </div>
-            <div className="rating">{getStars(rating)}</div>
+            <div className="rating">
+              {getStars(rating)}
+              <span className="rating-count">{rating}/5</span>
+            </div>
           </div>
         </div>
       </ReviewHeader>

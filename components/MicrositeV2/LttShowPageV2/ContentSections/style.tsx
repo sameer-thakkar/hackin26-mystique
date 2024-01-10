@@ -19,14 +19,25 @@ export const ContentSectionsWrapper = styled.div`
 export const ContentWrapper = styled.div`
   width: 44.625rem;
 
+  .show-description p,
+  .storyline-content p {
+    :not(:last-of-type) {
+      margin-bottom: 0.75rem !important;
+    }
+  }
+  .theatre-description p {
+    :first-of-type {
+      margin-bottom: 0.75rem !important;
+    }
+  }
   @media (max-width: 768px) {
     width: 100%;
   }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
     width: 25.5rem;
   }
 
-  @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     width: 30.5rem;
   }
 `;
@@ -36,7 +47,9 @@ export const Content = styled.div`
   width: 100%;
   > p,
   li,
-  .show-description > p {
+  .show-description > p,
+  .storyline-content > p,
+  .theatre-description > p {
     ${expandFontToken(FONTS.PARAGRAPH_LARGE)};
     color: ${COLORS.GRAY.G2};
     margin: 0;
@@ -109,6 +122,8 @@ export const Content = styled.div`
     }
 
     .show-description p,
+    .storyline-content p,
+    .theatre-description p,
     p,
     li {
       ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
