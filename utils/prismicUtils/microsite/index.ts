@@ -167,12 +167,27 @@ const getMicrositeDocument = async ({
           Object.keys(baseLangCategoryTourListV1)?.length &&
           !isCatOrSubCatPage
         ) {
+          const {
+            locale_ranking,
+            locale_exclusions,
+            sub_category_filter,
+            category_filter,
+          } = baseLangCategoryTourListV1?.primary || {};
+          const {
+            locale_ranking: localisedRanking,
+            locale_exclusions: localisedExclusions,
+            sub_category_filter: localisedSubCatFilter,
+            category_filter: localisedCategoryFilter,
+          } = currentPageCategoryTourListV1?.primary || {};
+
           baseLangCategoryTourListV1.primary.locale_ranking =
-            currentPageCategoryTourListV1?.primary?.locale_ranking ||
-            baseLangCategoryTourListV1?.primary?.locale_ranking;
+            localisedRanking || locale_ranking;
           baseLangCategoryTourListV1.primary.locale_exclusions =
-            currentPageCategoryTourListV1?.primary?.locale_exclusions ||
-            baseLangCategoryTourListV1?.primary?.locale_exclusions;
+            localisedExclusions || locale_exclusions;
+          baseLangCategoryTourListV1.primary.sub_category_filter =
+            localisedSubCatFilter || sub_category_filter;
+          baseLangCategoryTourListV1.primary.category_filter =
+            localisedCategoryFilter || category_filter;
         }
 
         const categoryTourListV1Primary = isLocalizedLang

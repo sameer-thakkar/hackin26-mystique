@@ -36,6 +36,8 @@ const categoryTourListParserV1 = async ({
     product_cards: productCards,
     locale_ranking: sliceLocaleRanking,
     locale_exclusions: sliceLocaleExclusions,
+    sub_category_filter,
+    category_filter,
   } = slicePrimary || spSlicePrimary || {};
   const { sp_experience_limit: shoulderPageLimit } = spSlicePrimary || {};
   // @ts-expect-error
@@ -60,7 +62,8 @@ const categoryTourListParserV1 = async ({
   const finalExclusions = csvTgidToArray(
     sliceLocaleExclusions || commonExclusions
   );
-  const finalLimit = shoulderPageLimit || limit;
+  const isSubCatFilter = sub_category_filter || category_filter;
+  const finalLimit = isSubCatFilter ? 50 : shoulderPageLimit || limit || 10;
 
   const language = getHeadoutLanguagecode(lang);
   let primaryCity;
@@ -84,9 +87,22 @@ const categoryTourListParserV1 = async ({
         pageData,
       } = collectionTourGroups;
 
+      let filteredData = pageData?.items;
+      if (sub_category_filter) {
+        filteredData = pageData?.items?.filter(
+          (el: Record<string, any>) =>
+            el?.primarySubCategory?.id === sub_category_filter
+        );
+      } else if (category_filter && !sub_category_filter) {
+        filteredData = pageData?.items?.filter(
+          (el: Record<string, any>) =>
+            el?.primaryCategory?.id === category_filter
+        );
+      }
+
       primaryCity = city;
       currency = currentCurrency;
-      tourData.push(...pageData?.items);
+      tourData.push(...filteredData);
 
       const collectionData = await fetchCollectionList({
         collectionIds: [collection],
@@ -241,11 +257,7 @@ const categoryTourListParserV1 = async ({
       (tour) => !finalExclusions.includes(tour.id)
     );
 
-    const sliceIndex = finalLimit
-      ? finalLimit
-      : finalTours.length >= 10
-      ? 10
-      : finalTours.length;
+    const sliceIndex = shoulderPageLimit || limit || 10;
 
     const repeatableObj = finalTours
       ?.slice(0, sliceIndex)
