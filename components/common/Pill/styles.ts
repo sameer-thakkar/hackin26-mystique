@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -37,20 +37,31 @@ export const PillContainer = styled.div<{
   }
 `;
 
-export const PillIcon = styled.span<{
-  $iconUrl: string | null;
-  $isHighlighted: boolean;
-}>`
+const CommonIconStyles = css`
   width: 1.25rem;
   height: 1.25rem;
-  mask: ${({ $iconUrl }) => `url("${$iconUrl}") no-repeat center / contain`};
-  background: ${({ $isHighlighted }) =>
-    $isHighlighted ? COLORS.BRAND.PURPS : COLORS.GRAY.G2};
 
   @media (max-width: 768px) {
     width: 0.875rem;
     height: 0.875rem;
   }
+`;
+
+export const AllIcon = styled.span`
+  ${CommonIconStyles}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PillIcon = styled.span<{
+  $iconUrl: string | null;
+  $isHighlighted: boolean;
+}>`
+  ${CommonIconStyles}
+  mask: ${({ $iconUrl }) => `url("${$iconUrl}") no-repeat center / contain`};
+  background: ${({ $isHighlighted }) =>
+    $isHighlighted ? COLORS.BRAND.PURPS : COLORS.GRAY.G2};
 `;
 
 export const PillLabel = styled.span`

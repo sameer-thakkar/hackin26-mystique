@@ -6605,36 +6605,32 @@ export const TOP_RATED_ICON = (
 export const GRID_ICON = ({ fillColor = COLORS.GRAY.G2 }: TCommonSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
     fill="none"
   >
     <path
-      d="M6.66667 2L2 2L2 6.66667L6.66667 6.66667L6.66667 2Z"
+      d="M8.33333 2.5H2.5V8.33333H8.33333V2.5Z"
       stroke={fillColor}
-      strokeWidth="1.33333"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M13.9997 2L9.33301 2V6.66667L13.9997 6.66667V2Z"
+      d="M17.5013 2.5H11.668V8.33333H17.5013V2.5Z"
       stroke={fillColor}
-      strokeWidth="1.33333"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M13.9997 9.3335H9.33301V14.0002H13.9997V9.3335Z"
+      d="M17.5013 11.6667H11.668V17.5H17.5013V11.6667Z"
       stroke={fillColor}
-      strokeWidth="1.33333"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M6.66667 9.3335H2L2 14.0002H6.66667L6.66667 9.3335Z"
+      d="M8.33333 11.6667H2.5V17.5H8.33333V11.6667Z"
       stroke={fillColor}
-      strokeWidth="1.33333"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

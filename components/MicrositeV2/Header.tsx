@@ -466,7 +466,6 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
-  isNewsPage = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -723,13 +722,7 @@ const Header: FunctionComponent<HeaderProps> = ({
               </div>
             </Conditional>
             <Conditional
-              if={
-                (!isMobile ||
-                  isNewLTTLandingPageVisible ||
-                  isNewsPage ||
-                  isCategoryPage) &&
-                (headerLanguages?.length || headerCurrencies?.length)
-              }
+              if={headerLanguages?.length || headerCurrencies?.length}
             >
               <LocaleSelector
                 languages={headerLanguages}
