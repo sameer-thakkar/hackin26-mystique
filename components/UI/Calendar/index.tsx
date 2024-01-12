@@ -243,18 +243,29 @@ const Calendar = ({
     }
   }, [sortedInventoryDates]);
 
-  const onTimeSlotClick = (selectedTime: string, index: number) => {
+  const onTimeSlotClick = (
+    selectedTime: string,
+    index: number,
+    hasSellingOutFastBooster: boolean,
+    singleTimeSlot: boolean = false
+  ) => {
     const leadTimeInDays = dayjs(selectedDate).diff(
       dayjs().startOf('day'),
       'days'
     );
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.SHOW_PAGE.CALENDAR_TIME_SELECTED,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_TIME]: selectedTime,
-      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
-      [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
-    });
+
+    if (!singleTimeSlot) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.SHOW_PAGE.EXPERIENCE_TIME_SELECTED,
+        [ANALYTICS_PROPERTIES.EXPERIENCE_TIME]: selectedTime,
+        [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+        [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
+        [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
+        [ANALYTICS_PROPERTIES.PLACEMENT]: 'Calendar',
+        [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
+          hasSellingOutFastBooster ? 'Yes' : 'No',
+      });
+    }
 
     const bookingUrl = createBookingURL({
       nakedDomain: nakedDomain || getNakedDomain(hostname),
@@ -269,6 +280,7 @@ const Calendar = ({
         startTime: selectedTime,
       },
     });
+
     window.open(bookingUrl, '_self', 'noopener, noreferrer');
   };
 
@@ -458,7 +470,13 @@ const Calendar = ({
                         return (
                           <TimeSlotCard
                             key={`${selectedDate}-${startTime}-slot`}
-                            onClick={() => onTimeSlotClick(startTime, index)}
+                            onClick={() =>
+                              onTimeSlotClick(
+                                startTime,
+                                index,
+                                hasSellingOutFastBooster
+                              )
+                            }
                           >
                             <TimingSection>
                               <TimeSlot>
@@ -545,12 +563,33 @@ const Calendar = ({
                     onClick={() => {
                       if (isButtonLoading) return;
                       if (!selectedDate) return;
+
+                      const availability = timeSlots?.[0];
+                      const { paxAvailability } = availability ?? {};
+                      const hasSellingOutFastBooster =
+                        paxAvailability?.[0]?.availability === 'LIMITED';
+                      const { listingPrice, retailPrice } =
+                        availability?.priceProfile?.persons?.[0] ?? {};
+
+                      trackEvent({
+                        eventName: ANALYTICS_EVENTS.SELECT_SEATS_CTA_CLICKED,
+                        [ANALYTICS_PROPERTIES.DISCOUNT]:
+                          retailPrice > listingPrice,
+                        [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: listingPrice,
+                        [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currency,
+                      });
+
                       setButtonLoading(true);
                       setTimeout(
                         () => setButtonLoading(false),
                         BUTTON_LOADING_DURATION
                       );
-                      onTimeSlotClick(timeSlots?.[0]?.startTime, 0);
+                      onTimeSlotClick(
+                        timeSlots?.[0]?.startTime,
+                        0,
+                        hasSellingOutFastBooster,
+                        true
+                      );
                     }}
                     text={strings.LTT_SHOW_PAGE.SELECT_SEATS}
                   />

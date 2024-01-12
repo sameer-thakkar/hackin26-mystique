@@ -190,7 +190,7 @@ const ShowPageDateSelector = ({
         trackEvent({
           eventName: ANALYTICS_EVENTS.SHOW_PAGE.EXPERIENCE_TIME_SELECTED,
           [ANALYTICS_PROPERTIES.EXPERIENCE_TIME]: timeSlots[0].startTime,
-          [ANALYTICS_PROPERTIES.RANKING]: 0,
+          [ANALYTICS_PROPERTIES.RANKING]: 1,
           [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
           [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'Automatic',
           [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
@@ -310,7 +310,7 @@ const ShowPageDateSelector = ({
       trackEvent({
         eventName: ANALYTICS_EVENTS.SHOW_PAGE.EXPERIENCE_TIME_SELECTED,
         [ANALYTICS_PROPERTIES.EXPERIENCE_TIME]: selectedTime,
-        [ANALYTICS_PROPERTIES.RANKING]: 0,
+        [ANALYTICS_PROPERTIES.RANKING]: 1,
         [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
         [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'Automatic',
         [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
@@ -612,6 +612,7 @@ const ShowPageDateSelector = ({
           eventName: ANALYTICS_EVENTS.SELECT_SEATS_CTA_CLICKED,
           [ANALYTICS_PROPERTIES.DISCOUNT]: retailPrice > listingPrice,
           [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: listingPrice,
+          [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currency,
         });
 
         setButtonLoading(true);
@@ -643,17 +644,17 @@ const ShowPageDateSelector = ({
     const inventoryForDate = calendarInventory?.dates?.[date] ?? {};
     const { listingPrice } = inventoryForDate;
 
-    onDateSelected({
-      date,
-      isAvailable,
-      shiftHeaderStartDate: true,
-    });
     trackEvent({
       eventName: ANALYTICS_EVENTS.SHOW_PAGE.CALENDAR_DATE_SELECTED,
       [ANALYTICS_PROPERTIES.SELECTED_DATE]: date,
       [ANALYTICS_PROPERTIES.IS_PRICE_FADED]: false,
       [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
       [ANALYTICS_PROPERTIES.IS_MIN_PRICE]: listingPrice <= medianPrice,
+    });
+    onDateSelected({
+      date,
+      isAvailable,
+      shiftHeaderStartDate: true,
     });
   };
 
