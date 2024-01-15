@@ -96,8 +96,8 @@ const SpecialGuidedTourSidePanel = dynamic(
   )
 );
 
-const MediaCarousel = dynamic(
-  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(() =>
+  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
@@ -933,9 +933,7 @@ const Product = (props: any) => {
                   isFirstProduct={isFirstProduct}
                   tgid={tgid}
                   isMobile={isMobile}
-                  shouldCrop={
-                    isModifiedProductCard ? isAsideBarOverlay : shouldCropImage
-                  }
+                  shouldCrop={shouldCropImage}
                 />
               </Conditional>
               <Conditional if={isLoading}>
