@@ -54,6 +54,10 @@ export const generateImageImgixUrl = (
       Array.isArray(cropMode) ? cropMode.join(',') : cropMode
     );
     imigxOptionsQueryParams.delete('fit');
+    if (cropMode.includes('focalpoint')) {
+      imigxOptionsQueryParams.set('fp-x', '0.5');
+      imigxOptionsQueryParams.set('fp-y', '0.5');
+    }
   }
 
   if (fitCrop) {
