@@ -656,10 +656,10 @@ export const getPageData = async ({
           });
           minPrice = categoryTourListData.minPrice;
           bestDiscount = categoryTourListData.bestDiscount;
-          const [firstTGID]: Record<string, any>[] = Object.values(
-            categoryTourListData.scorpioData || {}
-          );
-          const subCatId = firstTGID?.primarySubCategory?.id;
+          const [firstTGID] = categoryTourListData?.finalTgids || [];
+          const { primarySubCategory: firstProductSubCategory } =
+            categoryTourListData.scorpioData?.[firstTGID] || {};
+          const subCatId = firstProductSubCategory?.id;
           const categoryId = CATEGORY_IDS?.[taggedCategory];
 
           const productCardsData =
