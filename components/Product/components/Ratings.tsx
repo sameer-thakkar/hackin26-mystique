@@ -1,3 +1,4 @@
+import { truncateNumber } from 'utils';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { STAR_FULL } from 'assets/SvgIcons';
@@ -17,7 +18,11 @@ const Ratings = ({ reviewsDetails }: TRatingsContainerProps) => {
       <span className="avg-rating">
         {showRatings ? averageRating : strings.NEW}
       </span>
-      {showRatings && <span className="rating-count">({ratingCount})</span>}
+      {showRatings && (
+        <span className="rating-count">
+          ({truncateNumber(ratingCount).toUpperCase()})
+        </span>
+      )}
     </StyledRatingsContainer>
   );
 };

@@ -22,6 +22,7 @@ import { SpecialGuidedTour } from 'components/Product/components/SpecialGuidedTo
 import SpecialGuidedTourSummary from 'components/Product/components/SpecialGuidedTourSummary';
 import { TourTitle } from 'components/Product/components/TourTitle';
 import {
+  CategoryAndRatingContainer,
   Container,
   CTABlock,
   CTAContainer,
@@ -160,6 +161,7 @@ const Product = (props: any) => {
     isSmallComboCard = false,
     isProductCardPhase1ExperimentTreatmentVariant = false,
     reviewsDetails,
+    showCategoryAndRatingsDweb = false,
   } = props;
   const {
     mbTheme,
@@ -613,6 +615,7 @@ const Product = (props: any) => {
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
       isProductCardPhase1ExperimentTreatmentVariant,
+      showCategoryAndRatingsDweb,
     });
 
   const trackedToggleContent = (isOpen: any) => {
@@ -753,6 +756,7 @@ const Product = (props: any) => {
       isLoading={isProductCardLoading}
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
+      moreContent={!showCategoryAndRatingsDweb}
       onClick={() => {
         trackedToggleContent(true);
         // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
@@ -883,6 +887,7 @@ const Product = (props: any) => {
             isProductCardPhase1ExperimentTreatmentVariant
           }
           $isAsideBarOverlay={isAsideBarOverlay}
+          $showCategoryAndRatings={showCategoryAndRatingsDweb}
           // @ts-ignore
           ref={productRef}
         >
@@ -943,35 +948,23 @@ const Product = (props: any) => {
           </Conditional>
 
           <ProductHeader>
-            <Conditional if={isProductCardPhase1ExperimentTreatmentVariant}>
-              <>
-                <Category
-                  primaryCategory={primaryCategory}
-                  primarySubCategory={primarySubCategory}
-                />
-                <Ratings reviewsDetails={reviewsDetails} />
-              </>
-            </Conditional>
             <Conditional
               if={
-                showNextAvailable &&
-                showEarliestAvailability &&
-                !isOpenDated &&
-                !(isMobile
-                  ? showAvailabilityInTitleMobile
-                  : showAvailabilityInTitle) &&
-                isAsideBarOverlay
+                isProductCardPhase1ExperimentTreatmentVariant ||
+                (isModifiedProductCard && showCategoryAndRatingsDweb)
               }
             >
-              <NextAvailable
-                showSkeleton={
-                  !showEarliestAvailability &&
-                  !earliestAvailability &&
-                  !earliestAvailability?.startDate
-                }
-                earliestAvailability={earliestAvailability}
-                currentLanguage={currentLanguage}
-              />
+              <CategoryAndRatingContainer>
+                <Category
+                  primaryCategory={
+                    scorpioData.primaryCategory ?? primaryCategory
+                  }
+                  primarySubCategory={
+                    scorpioData.primarySubCategory ?? primarySubCategory
+                  }
+                />
+                <Ratings reviewsDetails={reviewsDetails} />
+              </CategoryAndRatingContainer>
             </Conditional>
 
             <TourTitle
@@ -994,6 +987,29 @@ const Product = (props: any) => {
               earliestAvailability={earliestAvailability}
               currentLanguage={currentLanguage}
             />
+
+            <Conditional
+              if={
+                showNextAvailable &&
+                showEarliestAvailability &&
+                !isOpenDated &&
+                !(isMobile
+                  ? showAvailabilityInTitleMobile
+                  : showAvailabilityInTitle) &&
+                isAsideBarOverlay
+              }
+            >
+              <NextAvailable
+                showSkeleton={
+                  !showEarliestAvailability &&
+                  !earliestAvailability &&
+                  !earliestAvailability?.startDate
+                }
+                earliestAvailability={earliestAvailability}
+                currentLanguage={currentLanguage}
+              />
+            </Conditional>
+
             <Conditional if={mbTheme === THEMES.MIN_BLUE || isAsideBarOverlay}>
               <ProductDescriptors
                 isLoading={isLoading}

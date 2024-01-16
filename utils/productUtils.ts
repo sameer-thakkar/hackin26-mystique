@@ -103,6 +103,7 @@ type TGetProductCardLayout = {
   showAvailabilityInLanguagesText?: boolean;
   isModifiedProductCard?: boolean;
   isProductCardPhase1ExperimentTreatmentVariant?: boolean;
+  showCategoryAndRatingsDweb?: boolean;
 };
 
 export const getProductCardLayout = ({
@@ -117,6 +118,7 @@ export const getProductCardLayout = ({
   showAvailabilityInLanguagesText = false,
   isModifiedProductCard = false,
   isProductCardPhase1ExperimentTreatmentVariant = false,
+  showCategoryAndRatingsDweb = false,
 }: TGetProductCardLayout) => {
   let layout: {
     desktop: Array<string | boolean | undefined | null>;
@@ -154,6 +156,9 @@ export const getProductCardLayout = ({
     default:
       layout = {
         desktop: [
+          isModifiedProductCard &&
+            showCategoryAndRatingsDweb &&
+            `${PRODUCT_CARD_DESKTOP_IMG_GRID_AREA}category-and-rating line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
@@ -177,43 +182,37 @@ export const getProductCardLayout = ({
         ],
         mobile: isProductCardPhase1ExperimentTreatmentVariant
           ? [
-              isTicketCard ? null : 'card-img card-img',
-              'category rating',
-              'title title',
-              isOpenDated && 'open-dated-descriptor open-dated-descriptor',
-              hasOffer && 'offer offer',
-              'tags tags',
-              !isOpenDated &&
-                !showAvailabilityInTitle &&
-                'next-available next-available',
-              'price-block price-block',
-              showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
+              isTicketCard ? null : 'card-img',
+              'category-and-rating',
+              'title',
+              isOpenDated && 'open-dated-descriptor',
+              hasOffer && 'offer',
+              'tags',
+              !isOpenDated && !showAvailabilityInTitle && 'next-available',
+              'price-block',
+              showGuidesLabel && 'guides-banner-wrapper',
               showAvailabilityInLanguagesText &&
-                'tour-available-in-languages-area tour-available-in-languages-area',
-              isTicketCard && hasPromoCode && 'promo-block promo-block',
-              hasV1Booster && 'booster booster',
-              'body body',
-              'cta-block cta-block',
+                'tour-available-in-languages-area',
+              isTicketCard && hasPromoCode && 'promo-block',
+              hasV1Booster && 'booster',
+              'body',
+              'cta-block',
             ]
           : [
-              isTicketCard ? null : 'card-img card-img',
-              isProductCardPhase1ExperimentTreatmentVariant &&
-                'category rating',
-              'title title',
-              'price-block price-block',
-              isOpenDated && 'open-dated-descriptor open-dated-descriptor',
-              !isOpenDated &&
-                !showAvailabilityInTitle &&
-                'next-available next-available',
-              showGuidesLabel && 'guides-banner-wrapper guides-banner-wrapper',
+              isTicketCard ? null : 'card-img',
+              'title',
+              'price-block',
+              isOpenDated && 'open-dated-descriptor',
+              !isOpenDated && !showAvailabilityInTitle && 'next-available',
+              showGuidesLabel && 'guides-banner-wrapper',
               showAvailabilityInLanguagesText &&
-                'tour-available-in-languages-area tour-available-in-languages-area',
-              isTicketCard && hasPromoCode && 'promo-block promo-block',
-              hasOffer && 'offer offer',
-              'tags tags',
-              hasV1Booster && 'booster booster',
-              'body body',
-              'cta-block cta-block',
+                'tour-available-in-languages-area',
+              isTicketCard && hasPromoCode && 'promo-block',
+              hasOffer && 'offer',
+              'tags',
+              hasV1Booster && 'booster',
+              'body',
+              'cta-block',
             ],
       };
       break;

@@ -214,7 +214,7 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
     height: 320,
     modified: {
       width: 460,
-      height: 253,
+      height: 344,
     },
   },
 };
@@ -511,11 +511,15 @@ interface IStyledProductCard {
   $isAsideBarOverlay?: boolean;
   $isProductCardPhase1ExperimentTreatmentVariant?: boolean;
   $showScratchPrice?: boolean;
+  $showCategoryAndRatings?: boolean;
 }
 
-const modifiedProductCardStyles = css`
-  grid-row-gap: 1rem;
-  grid-template-rows: auto 1fr;
+const modifiedProductCardStyles = css<{
+  $showCategoryAndRatings?: IStyledProductCard['$showCategoryAndRatings'];
+}>`
+  grid-row-gap: 0.5rem;
+  grid-template-rows: ${({ $showCategoryAndRatings }) =>
+    $showCategoryAndRatings ? 'auto auto 1fr' : 'auto 1fr'};
   max-height: max-content;
 
   .card-img {
@@ -525,9 +529,23 @@ const modifiedProductCardStyles = css`
     height: 100%;
   }
 
+  ${TitleWrapper} {
+    margin-bottom: 0.5rem;
+  }
+
   ${ProductBody} {
     align-self: stretch;
   }
+`;
+
+export const CategoryAndRatingContainer = styled.div`
+  grid-area: category-and-rating;
+  display: grid;
+  grid-template-areas: 'category rating';
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: -0.25rem;
 `;
 
 const asideBarStyles = css`
@@ -552,8 +570,12 @@ const asideBarStyles = css`
     gap: 0;
     margin-bottom: 0.75rem;
 
-    ${NextAvailableBlock} {
+    ${CategoryAndRatingContainer} {
       margin-bottom: 0.25rem;
+    }
+
+    ${NextAvailableBlock} {
+      margin-top: 0.5rem;
 
       // text type not given on figma
       font-size: 0.75rem;
@@ -1024,7 +1046,6 @@ export const StyledRatingsContainer = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 0.125rem;
-  margin-bottom: -0.25rem;
 
   svg {
     height: 0.75rem;
@@ -1042,6 +1063,20 @@ export const StyledRatingsContainer = styled.div`
     &.rating-count {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
       font-family: ${HALYARD.FONT_STACK};
+    }
+  }
+
+  @media (min-width: 768px) {
+    gap: 0.25rem;
+
+    span {
+      &.avg-rating {
+        ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+      }
+
+      &.rating-count {
+        ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+      }
     }
   }
 `;
@@ -1066,7 +1101,6 @@ export const StyledCategoryContainer = styled.div<{
   flex-direction: row;
   align-items: center;
   gap: 0.25rem;
-  margin-bottom: -0.25rem;
 
   ${CategoryIcon} {
     background: ${({ $background }) => $background};
@@ -1080,6 +1114,17 @@ export const StyledCategoryContainer = styled.div<{
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    span {
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+    }
+
+    ${CategoryIcon} {
+      height: 0.9375rem;
+      width: 0.9375rem;
+    }
   }
 `;
 
@@ -2331,8 +2376,11 @@ export const CompactHighlightsWrapper = styled(HighlightTabsWrapper)`
   grid-template-rows: auto 1fr auto;
 `;
 
-export const HighlightsPanel = styled.div<{ $isOverlay?: boolean }>`
-  max-height: 15rem;
+export const HighlightsPanel = styled.div<{
+  $isOverlay?: boolean;
+  $moreContent?: boolean;
+}>`
+  max-height: ${({ $moreContent }) => ($moreContent ? 17.5 : 15)}rem;
   overflow: hidden;
   align-self: stretch;
 

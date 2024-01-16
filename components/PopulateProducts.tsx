@@ -166,6 +166,8 @@ const PopulateProducts = (props: any) => {
     isModifiedProductCard = false,
     isProductCardPhase1ExperimentTreatmentVariant = false,
     isProductCardPhase1ExperimentResolved = true,
+    showCategoryAndRatingsDweb = false,
+    isCategoryAndRatingsDwebExperimentResolved = true,
   } = props;
 
   const productsRef = useRef([]);
@@ -593,6 +595,7 @@ const PopulateProducts = (props: any) => {
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
+      showCategoryAndRatingsDweb,
     };
 
     return (
@@ -618,7 +621,10 @@ const PopulateProducts = (props: any) => {
     );
   };
 
-  const isLoading = productsLoading || !isProductCardPhase1ExperimentResolved;
+  const isLoading =
+    productsLoading ||
+    !isProductCardPhase1ExperimentResolved ||
+    !isCategoryAndRatingsDwebExperimentResolved;
 
   return (
     <StyledProductsWrapper

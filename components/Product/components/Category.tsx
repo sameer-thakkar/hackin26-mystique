@@ -27,7 +27,7 @@ const Category = ({
   primaryCategory,
   primarySubCategory,
 }: TCategoryContainerProps) => {
-  if (!primaryCategory && !primarySubCategory) return null;
+  if (!primaryCategory?.id && !primarySubCategory?.id) return null;
 
   const isCategory =
     primaryCategory &&
