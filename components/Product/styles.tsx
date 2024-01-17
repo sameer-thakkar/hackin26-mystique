@@ -206,7 +206,7 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   MOBILE: {
     width: 400,
     bannerProductWidth: 650,
-    productcardexperimentp1: {
+    modified: {
       width: 500,
     },
   },
@@ -509,7 +509,7 @@ interface IStyledProductCard {
   $isSwipeSheetOpen?: boolean;
   $isModifiedProductCard?: boolean;
   $isAsideBarOverlay?: boolean;
-  $isProductCardPhase1ExperimentTreatmentVariant?: boolean;
+  $isPoiMwebCard?: boolean;
   $showScratchPrice?: boolean;
   $showCategoryAndRatings?: boolean;
 }
@@ -644,7 +644,7 @@ const asideBarStyles = css`
   }
 `;
 
-const productCardPhase1ExperimentTreatmentVariantCss = css<{
+const modifiedProductCardMwebCss = css<{
   isContentExpanded?: boolean;
 }>`
   grid-row-gap: 1rem;
@@ -919,9 +919,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       width: 100%;
     }
 
-    ${({ $isProductCardPhase1ExperimentTreatmentVariant }) =>
-      $isProductCardPhase1ExperimentTreatmentVariant &&
-      productCardPhase1ExperimentTreatmentVariantCss}
+    ${({ $isPoiMwebCard }) => $isPoiMwebCard && modifiedProductCardMwebCss}
 
     ${({ $isBannerCard }) =>
       $isBannerCard &&
@@ -1202,7 +1200,7 @@ export const OpenDatedDescriptor = styled.div`
 
   @media (max-width: 768px) {
     grid-area: open-dated-descriptor;
-    margin: -0.5rem 0 0.25rem;
+    margin: 0.5rem 0 -1rem;
     ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
   }
 `;

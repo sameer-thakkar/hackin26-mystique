@@ -92,7 +92,6 @@ const ticketCardDesktopDisplay = css`
 const ProductContainer = styled.div<{
   isTicketCard: boolean;
   isMobile: boolean;
-  $addMobileBottomMargin?: boolean;
   isNotVisible?: boolean;
 }>`
   ${({ isTicketCard, isMobile }) =>
@@ -116,9 +115,8 @@ const ProductContainer = styled.div<{
   height: ${({ isNotVisible }) => (isNotVisible ? '0' : 'auto')};
 
   @media (max-width: 768px) {
-    margin-top: 0.5rem;
-    margin-bottom: ${({ $addMobileBottomMargin }) =>
-      !$addMobileBottomMargin ? 0 : 60}px;
+    margin-top: ${({ isNotVisible }) => (isNotVisible ? 0 : 0.5)}rem;
+    margin-bottom: ${({ isNotVisible }) => (isNotVisible ? 0 : 1.75)}rem;
     grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
 
     .product-card-skeleton {
@@ -164,8 +162,7 @@ const PopulateProducts = (props: any) => {
     isNonPoi,
     isAirportTransfersMB,
     isModifiedProductCard = false,
-    isProductCardPhase1ExperimentTreatmentVariant = false,
-    isProductCardPhase1ExperimentResolved = true,
+    isPoiMwebCard = false,
     showCategoryAndRatingsDweb = false,
     isCategoryAndRatingsDwebExperimentResolved = true,
   } = props;
@@ -591,7 +588,7 @@ const PopulateProducts = (props: any) => {
       setDetailsPopupShown,
       isNonPoi,
       isModifiedProductCard,
-      isProductCardPhase1ExperimentTreatmentVariant,
+      isPoiMwebCard,
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
@@ -621,9 +618,7 @@ const PopulateProducts = (props: any) => {
     );
   };
 
-  const isLoading =
-    productsLoading ||
-    !isProductCardPhase1ExperimentResolved ||
+  const isLoading = productsLoading ||
     !isCategoryAndRatingsDwebExperimentResolved;
 
   return (

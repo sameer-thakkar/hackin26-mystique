@@ -223,15 +223,7 @@ const MicrositeV1 = (props: any) => {
     tagged_mb_type: taggedMbType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
-  const {
-    variant: productCardRevampExperimentP1Variant,
-    isExperimentResolving: isProductCardRevampExperimentP1Resolving,
-    isEligible: isEligibleForProductCardRevampP1,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_PHASE_1_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb,
-  });
+  const isPoiMwebCard = isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb;
 
   const {
     variant: categoryAndRatingsDwebExperimentVariant,
@@ -627,21 +619,11 @@ const MicrositeV1 = (props: any) => {
       bannerVideo={bannerVideo}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
-      isProductCardPhase1ExperimentResolved={
-        !(
-          isEligibleForProductCardRevampP1 &&
-          isProductCardRevampExperimentP1Resolving
-        )
-      }
+      isPoiMwebCard={isPoiMwebCard}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
-      }
-      isProductCardPhase1ExperimentTreatmentVariant={
-        isEligibleForProductCardRevampP1
-          ? productCardRevampExperimentP1Variant === VARIANTS.TREATMENT
-          : false
       }
       isTourListFiltered={isTourListFiltered}
       showCategoryAndRatingsDweb={

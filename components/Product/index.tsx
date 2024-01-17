@@ -159,7 +159,7 @@ const Product = (props: any) => {
     isNonPoi = false,
     isModifiedProductCard = false,
     isSmallComboCard = false,
-    isProductCardPhase1ExperimentTreatmentVariant = false,
+    isPoiMwebCard = false,
     reviewsDetails,
     showCategoryAndRatingsDweb = false,
   } = props;
@@ -614,7 +614,7 @@ const Product = (props: any) => {
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
-      isProductCardPhase1ExperimentTreatmentVariant,
+      isPoiMwebCard,
       showCategoryAndRatingsDweb,
     });
 
@@ -855,8 +855,8 @@ const Product = (props: any) => {
     const mediaCarouselImageWidth = isMobile
       ? isBannerCard
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
-        : isProductCardPhase1ExperimentTreatmentVariant
-        ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.productcardexperimentp1.width
+        : isPoiMwebCard
+        ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.modified.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
       : isModifiedProductCard
       ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
@@ -883,9 +883,7 @@ const Product = (props: any) => {
           collapsed={(!expandContent && !isTicketCard) || isModifiedProductCard}
           defaultOpen={defaultOpen}
           $isModifiedProductCard={isModifiedProductCard || isAsideBarOverlay}
-          $isProductCardPhase1ExperimentTreatmentVariant={
-            isProductCardPhase1ExperimentTreatmentVariant
-          }
+          $isPoiMwebCard={isPoiMwebCard}
           $isAsideBarOverlay={isAsideBarOverlay}
           $showCategoryAndRatings={showCategoryAndRatingsDweb}
           // @ts-ignore
@@ -899,7 +897,9 @@ const Product = (props: any) => {
                 aspectRatio={isMobile ? '21:9' : '3:4'}
                 width={
                   isMobile
-                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                    ? isPoiMwebCard
+                      ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.modified.width
+                      : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
                     : undefined
                 }
                 height={
@@ -950,7 +950,7 @@ const Product = (props: any) => {
           <ProductHeader>
             <Conditional
               if={
-                isProductCardPhase1ExperimentTreatmentVariant ||
+                isPoiMwebCard ||
                 (isModifiedProductCard && showCategoryAndRatingsDweb)
               }
             >
@@ -1020,11 +1020,7 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isCombo={isCombo}
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
-                horizontal={
-                  isProductCardPhase1ExperimentTreatmentVariant
-                    ? isMobile
-                    : isAsideBarOverlay
-                }
+                horizontal={isPoiMwebCard ? isMobile : isAsideBarOverlay}
               />
             </Conditional>
             <Conditional if={hasV1Booster}>
@@ -1182,8 +1178,8 @@ const Product = (props: any) => {
                     (!isMobile || expandContent) && isSpecialGuidedTour
                   }
                   uid={uid}
-                  horizontal={isProductCardPhase1ExperimentTreatmentVariant}
-                  showIcons={!isProductCardPhase1ExperimentTreatmentVariant}
+                  horizontal={isPoiMwebCard}
+                  showIcons={!isPoiMwebCard}
                   cancellationPolicy={cancellationPolicy}
                   cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
                   isMobile={isMobile}

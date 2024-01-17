@@ -102,7 +102,7 @@ type TGetProductCardLayout = {
   showGuidesLabel?: boolean;
   showAvailabilityInLanguagesText?: boolean;
   isModifiedProductCard?: boolean;
-  isProductCardPhase1ExperimentTreatmentVariant?: boolean;
+  isPoiMwebCard?: boolean;
   showCategoryAndRatingsDweb?: boolean;
 };
 
@@ -117,7 +117,7 @@ export const getProductCardLayout = ({
   showGuidesLabel = false,
   showAvailabilityInLanguagesText = false,
   isModifiedProductCard = false,
-  isProductCardPhase1ExperimentTreatmentVariant = false,
+  isPoiMwebCard = false,
   showCategoryAndRatingsDweb = false,
 }: TGetProductCardLayout) => {
   let layout: {
@@ -180,7 +180,7 @@ export const getProductCardLayout = ({
             'card-img . line cta-combo',
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
-        mobile: isProductCardPhase1ExperimentTreatmentVariant
+        mobile: isPoiMwebCard
           ? [
               isTicketCard ? null : 'card-img',
               'category-and-rating',
