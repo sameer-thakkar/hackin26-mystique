@@ -129,7 +129,7 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   }, []);
 
-  const { SHOW_MORE, SHOW_LESS } = strings;
+  const { SHOW_MORE, SHOW_LESS, SEATS } = strings;
 
   const currency = useRecoilValue(currencyAtom);
 
@@ -425,7 +425,7 @@ const VenuePage = (props: IVenuePageProps) => {
           <Conditional if={seatingCapacity}>
             <div className="amenity">
               {amenitiesIcons['Seating Capacity']}
-              <p>{seatingCapacity} seats</p>
+              <p>{`${seatingCapacity} ${SEATS}`}</p>
             </div>
           </Conditional>
           <Amenities

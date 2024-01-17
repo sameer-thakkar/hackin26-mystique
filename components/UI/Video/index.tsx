@@ -256,23 +256,27 @@ const Video: React.FC<VideoTypeProps> = ({
           onClick={showPlayButton ? playVideo : () => {}}
           fill={imageFill}
         />
-        <div ref={iconRef}>
-          <Conditional if={shouldIconAppear && showPlayButton}>
-            <VideoIcon onClick={handleOnClick}>
-              <Conditional if={isVideoPaused}>
-                <PlaySvg />
-              </Conditional>
-            </VideoIcon>
-          </Conditional>
-          {/* Want to show pauseIcon only along with playIcon. */}
-          <Conditional if={shouldIconAppear && showPlayIcon && showPauseButton}>
-            <VideoIcon onClick={handleOnClick}>
-              <Conditional if={!isVideoPaused}>
-                <PauseSvg />
-              </Conditional>
-            </VideoIcon>
-          </Conditional>
-        </div>
+        <Conditional if={showPlayButton || showPauseButton}>
+          <div ref={iconRef}>
+            <Conditional if={shouldIconAppear && showPlayButton}>
+              <VideoIcon onClick={handleOnClick}>
+                <Conditional if={isVideoPaused}>
+                  <PlaySvg />
+                </Conditional>
+              </VideoIcon>
+            </Conditional>
+            {/* Want to show pauseIcon only along with playIcon. */}
+            <Conditional
+              if={shouldIconAppear && showPlayIcon && showPauseButton}
+            >
+              <VideoIcon onClick={handleOnClick}>
+                <Conditional if={!isVideoPaused}>
+                  <PauseSvg />
+                </Conditional>
+              </VideoIcon>
+            </Conditional>
+          </div>
+        </Conditional>
       </Conditional>
       <StyledVideoContainer
         ref={videoRef}

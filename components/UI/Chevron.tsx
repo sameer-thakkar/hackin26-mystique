@@ -15,7 +15,6 @@ const StyledChevron = styled.div<TChevron>`
   height: ${({ height = '1.25rem' }) => height};
   display: inline-block;
   position: relative;
-
   svg {
     transition: transform 0.3s ease;
     transform-origin: center;

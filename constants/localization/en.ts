@@ -1031,6 +1031,7 @@ const en = {
   VIEW_MORE_MONTHS: 'View more months',
   BEST_WEST_END_SHOWS_CALENDAR: 'Best west end shows calendar',
   IN: 'in',
+  SEATS: 'Seats',
 };
 
 export default en;

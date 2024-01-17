@@ -972,5 +972,6 @@ const pt = {
   BEST_WEST_END_SHOWS_CALENDAR:
     'Calendário dos melhores espetáculos de West End',
   IN: 'em',
+  SEATS: 'Assentos',
 };
 export default pt;

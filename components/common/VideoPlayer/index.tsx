@@ -24,9 +24,9 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
     if (!ref.current || plyr.current) return;
 
     const player = new Plyr(ref.current, {
-      fullscreen: { fallback: true, iosNative: false },
+      fullscreen: { fallback: false, iosNative: false },
       autoplay: true,
-      muted: true,
+      muted: false,
       controls: [
         'play',
         'play-large',

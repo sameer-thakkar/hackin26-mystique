@@ -636,7 +636,7 @@ const de = {
     CHRISTMAS: 'Weihnachten',
     CIRCUS: 'Zirkus',
     CLASSIC: 'Klassiker',
-    COMEDY: 'Comedy',
+    COMEDY: 'Komödie',
     COMING_SOON: 'Demnächst verfügbar',
     CRITICS_CHOICE: "Critics' Choice",
     DANCE: 'Tanz',
@@ -961,6 +961,7 @@ const de = {
   VIEW_MORE_MONTHS: 'Weitere Monate anzeigen',
   BEST_WEST_END_SHOWS_CALENDAR: 'Kalender für die besten West End Shows',
   IN: 'im',
+  SEATS: 'Plätze',
 };
 
 export default de;
