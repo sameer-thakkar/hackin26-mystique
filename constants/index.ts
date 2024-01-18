@@ -985,7 +985,7 @@ export const ANALYTICS_PROPERTIES = {
   USER_EMAIL: 'User Email',
   CARD_MB_TYPE: 'Card MB Type',
   TITLE: 'Title',
-  PERCENTAGE_VIEWED: 'Pecentage Viewed',
+  PERCENTAGE_VIEWED: 'Percentage Viewed',
   IS_DATE_FILTER: 'Is Date Filter',
   PLACEMENT: 'Placement',
   MONTH_ICON: 'Month Icon',
