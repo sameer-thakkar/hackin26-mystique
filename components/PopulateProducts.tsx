@@ -618,8 +618,8 @@ const PopulateProducts = (props: any) => {
     );
   };
 
-  const isLoading = productsLoading ||
-    !isCategoryAndRatingsDwebExperimentResolved;
+  const isLoading =
+    productsLoading || !isCategoryAndRatingsDwebExperimentResolved;
 
   return (
     <StyledProductsWrapper

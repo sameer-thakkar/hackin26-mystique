@@ -91,7 +91,9 @@ export const SearchItem = (props: any) => {
         )}
         <div className="price-wrapper">
           <div className="current-price">{listingPrice}</div>
-          {retailPrice ? <div className="old-price">{retailPrice}</div> : null}
+          {retailPrice && retailPrice > listingPrice ? (
+            <div className="old-price">{retailPrice}</div>
+          ) : null}
         </div>
       </div>
       <style jsx>
