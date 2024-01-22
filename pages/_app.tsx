@@ -107,8 +107,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
   } = pageProps;
 
   const { data } = CMSContent || {};
-  const { data: pageData } = data || {};
-  const { categoryTourListV2, is_entertainment_mb, body4 } = pageData || {};
+  const { categoryTourListV2, is_entertainment_mb, body4 } = data || {};
   const isEntertainmentMbListicle =
     is_entertainment_mb && categoryTourListV2?.primary?.islisticle;
   const isLttMonthOnMonthPage =
