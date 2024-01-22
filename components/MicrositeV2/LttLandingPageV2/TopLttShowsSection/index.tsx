@@ -32,13 +32,14 @@ const TopLttShowsSection = ({
 }: ITopLttShowsSectionProps) => {
   const numberOfShowsPerFold = isMobile ? 10 : 24;
 
-  const [allowShowMore, setAllowShowMore] = useState(
-    !(topShows.length < numberOfShowsPerFold)
-  );
   const [numberOfShowsToDisplay, setNumberOfShowsToDisplay] = useState(
     isMobile ? 18 : 36
   );
   const shows = topShows.slice(0, numberOfShowsToDisplay);
+
+  const [allowShowMore, setAllowShowMore] = useState(
+    topShows.length > numberOfShowsToDisplay
+  );
 
   const onShowMoreClicked = () => {
     if (!allowShowMore) {
@@ -119,9 +120,7 @@ const TopLttShowsSection = ({
         )}
       </div>
       <Conditional if={allowShowMore}>
-        <Button onClick={onShowMoreClicked}>
-          {allowShowMore ? strings.SEE_MORE_SHOWS : 'View all shows'}
-        </Button>
+        <Button onClick={onShowMoreClicked}>{strings.SEE_MORE_SHOWS}</Button>
       </Conditional>
     </TopShowsWrapper>
   );

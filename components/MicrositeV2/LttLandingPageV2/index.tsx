@@ -105,15 +105,13 @@ const LttLandingPageV2 = ({
           ref={browseByCategoriesRef}
         />
       </Conditional>
-      <LazyComponent>
-        <TopLttShowsSection
-          isMobile={isMobile}
-          topShows={topShows}
-          categoriesToRender={categoriesToRender}
-          heading={strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}
-          showBrowseByCategories={true}
-        />
-      </LazyComponent>
+      <TopLttShowsSection
+        isMobile={isMobile}
+        topShows={topShows}
+        categoriesToRender={categoriesToRender}
+        heading={strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}
+        showBrowseByCategories={true}
+      />
       <LazyComponent>
         <SpecialSections
           allTours={allTours}
