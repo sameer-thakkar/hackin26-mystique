@@ -12,4 +12,5 @@ export type TMenu = {
   label: string;
   url: string;
   collectionId?: number;
+  collectionData?: Record<string, any>;
 };

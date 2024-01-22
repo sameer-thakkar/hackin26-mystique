@@ -249,6 +249,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
                     <NestedMenu
                       categoryHeaderMenu={categoryHeaderMenu}
                       selectedMenu={selectedMainMenu.label}
+                      currentMenu={label}
                       mbCity={mbCity}
                       isMobile={isMobile}
                     />

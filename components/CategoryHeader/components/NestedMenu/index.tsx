@@ -7,6 +7,7 @@ const NestedMenu = (props: NestedMenuProps) => {
   const {
     categoryHeaderMenu,
     selectedMenu,
+    currentMenu,
     handleSettingNestedMenu,
     handleUnsettingNestedMenu,
     mbCity,
@@ -16,6 +17,8 @@ const NestedMenu = (props: NestedMenuProps) => {
   return (
     <>
       {Object.keys(categoryHeaderMenu).map((menuItem) => {
+        if (isMobile && menuItem !== currentMenu) return null;
+
         const menuData = categoryHeaderMenu[menuItem].menu || {};
         return (
           <StyledNestedMenuContainer

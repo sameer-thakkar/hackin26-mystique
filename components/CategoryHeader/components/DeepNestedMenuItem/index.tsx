@@ -21,8 +21,13 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
             {Object.keys(menuData).map((nestedMenuItem, index) => {
               const nestedMenuData =
                 menuData[nestedMenuItem as keyof typeof menuData] || {};
+              const {
+                collectionData: _collectionData,
+                ...menuWithoutCollectionData
+              } = nestedMenuData;
 
-              if (getObjectNestingCount(nestedMenuData) < 2) return null;
+              if (getObjectNestingCount(menuWithoutCollectionData) < 2)
+                return null;
               return (
                 <StyledDeepNestedMenuItem
                   key={index}
