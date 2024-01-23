@@ -23,6 +23,7 @@ import { CATEGORY_BANNER, SUB_CATEGORY_BANNER } from 'const/bannerDescriptors';
 import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
+  BANNER_API_PARAMS,
   CATEGORY_IDS,
   CUSTOM_TYPES,
   DESIGN,
@@ -870,4 +871,9 @@ export const getScrollPercentage = (percentage: number) => {
   }
 
   return scrollPercentage;
+};
+
+export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
+  return media?.find((item) => item?.type === BANNER_API_PARAMS.ELM_TYPE.VIDEO)
+    ?.url;
 };

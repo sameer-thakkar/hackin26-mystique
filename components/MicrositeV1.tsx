@@ -43,6 +43,7 @@ import {
 import {
   checkIfCategoryHeaderExists,
   csvTgidToArray,
+  findVideoUrlFromMediaData,
   getBannerDescriptors,
   getLangObject,
   groupSlices,
@@ -591,8 +592,9 @@ const MicrositeV1 = (props: any) => {
 
   const isToursAvailable = availableTours?.length > 0;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
-  const bannerVideo: string | undefined =
-    bannerImageData?.resourceEntityMedias?.[0]?.medias?.[0]?.url;
+  const bannerVideo = findVideoUrlFromMediaData(
+    bannerImageData?.resourceEntityMedias?.[0]?.medias
+  );
 
   const tourListSection = (
     <PopulateProducts

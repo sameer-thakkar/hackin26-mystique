@@ -16,7 +16,11 @@ import {
   fetchTourGroupV6,
 } from 'utils/apiUtils';
 import { getNewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
-import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
+import {
+  checkIfBroadwayMB,
+  checkIfLTTMB,
+  findVideoUrlFromMediaData,
+} from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPE_VALUES,
@@ -32,10 +36,6 @@ import {
   newsLandingPageGq,
   newsPageGq,
 } from './graphQuery';
-
-export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
-  return media.find((item) => item?.type === 'VIDEO')?.url;
-};
 
 export const mbCategorisationData = (
   baseLangData: Record<string, any>,
