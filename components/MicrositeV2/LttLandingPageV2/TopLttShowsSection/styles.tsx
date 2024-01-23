@@ -24,7 +24,7 @@ export const TopShowsWrapper = styled.div<{
 
   .shows {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 0fr));
     grid-column-gap: 24px;
     grid-row-gap: 56px;
     margin: 0 auto;
