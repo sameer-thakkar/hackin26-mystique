@@ -742,6 +742,13 @@ export const getPageData = async ({
           lang: lang || LANGUAGE_MAP.en.locale,
           cookies,
         });
+
+        const {
+          nearbyAndCurrentCityData: { currentCityData },
+        } = cityPageData as Record<string, any>;
+        const { discoverable } = currentCityData || {};
+
+        isCityPageMB = !!discoverable;
       }
 
       const cityPageParams = {

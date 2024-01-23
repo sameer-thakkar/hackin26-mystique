@@ -70,6 +70,7 @@ export function convertMillisecondsToHours(milliseconds: number | null) {
     Math.round((milliseconds / 1000 / 60 / 60 - hour) * 60),
     5
   );
+
   return {
     hour,
     minute,
