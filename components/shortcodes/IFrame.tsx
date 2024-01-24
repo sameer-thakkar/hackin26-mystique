@@ -82,7 +82,8 @@ const IFrame: React.FC<IFrameProps> = ({
   }
 
   const isYoutube = src.startsWith('https://www.youtube.com');
-  const videoId = src?.split('embed/')?.[1];
+  const videoIdIncludingParams = src?.split('embed/')?.[1];
+  const videoId = videoIdIncludingParams?.split('?')[0];
 
   const checkVideoProgress = (e: any) => {
     const currentTime = e.target.getCurrentTime();
