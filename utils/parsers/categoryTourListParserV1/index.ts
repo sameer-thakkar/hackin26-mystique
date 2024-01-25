@@ -294,9 +294,6 @@ const categoryTourListParserV1 = async ({
       )
     );
 
-    let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
-    let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
-
     let scorpioData = {};
     if (!isLookerWebhookCall) {
       scorpioData = getScorpioData({
@@ -308,8 +305,8 @@ const categoryTourListParserV1 = async ({
       });
     }
     const finalTgids = finalTours?.map((el) => el?.id);
-
-    if (minPrice == Infinity) minPrice = 0;
+    // @ts-ignore
+    const { minPrice, bestDiscount } = scorpioData;
     return {
       scorpioData,
       primaryCountry: primaryCity?.country ?? {

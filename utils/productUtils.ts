@@ -883,7 +883,13 @@ export const getScorpioData = ({
     },
     {}
   );
-  return scorpioData;
+  if (minPrice == Infinity) minPrice = 0;
+
+  return {
+    ...scorpioData,
+    minPrice,
+    bestDiscount,
+  };
 };
 
 export const getMaxListItemsToShow = (
