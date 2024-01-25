@@ -38,10 +38,12 @@ const ShowPageDescriptorSection = ({
       content: duration,
       icon: descriptorIcons['DURATION'],
     },
-    dates: {
-      content: closingDate,
-      icon: descriptorIcons['EXTENDED_VALIDITY'],
-    },
+    ...(!LTT_PERMANENT_SHOWS_TGIDS.includes(tgid) && {
+      dates: {
+        content: closingDate,
+        icon: descriptorIcons['EXTENDED_VALIDITY'],
+      },
+    }),
     age: {
       content: ageLimit,
       icon: descriptorIcons['USER'],
@@ -67,12 +69,10 @@ const ShowPageDescriptorSection = ({
 
   return (
     <ShowPageDescriptorSectionWrapper>
-      <DescriptorsWrapper>
+      <DescriptorsWrapper numberOfDescriptors={Object.keys(descriptors).length}>
         {Object.keys(descriptors).map((key) => {
           const { content, icon: Icon } = descriptors[key];
           if (!content) return null;
-          if (key === 'dates' && LTT_PERMANENT_SHOWS_TGIDS.includes(tgid))
-            return null;
           return (
             <div className="descriptor" key={key}>
               <div className="icon">

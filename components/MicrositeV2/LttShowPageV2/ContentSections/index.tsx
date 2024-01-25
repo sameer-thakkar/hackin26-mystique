@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { JSXFunctionSerializer, PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import { TContentSectionsProps } from 'components/MicrositeV2/LttShowPageV2/ContentSections/interface';
@@ -12,10 +12,16 @@ import ReviewSection from 'components/MicrositeV2/LttShowPageV2/ReviewSection';
 import GoogleMap from 'components/ShowPages/GoogleMap';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import ScrollableTabs from 'UI/ScrollableTabs';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CTA_TYPE,
+  LANGUAGE_CODE_MAP,
+} from 'const/index';
 import { strings } from 'const/strings';
 import {
   ADDITIONAL_INFO,
@@ -40,6 +46,8 @@ const ContentSections = ({
   isMobile,
 }: TContentSectionsProps) => {
   const contentSectionsRef = useRef<HTMLDivElement>(null);
+  const { lang } = useContext(MBContext);
+
   const { microBrandsHighlight, id, reviewsDetails } = tourGroupData;
   const { ratingsCount } = reviewsDetails ?? {};
   const TABS = [
@@ -151,6 +159,8 @@ const ContentSections = ({
   );
 
   const convertToSentenceCase = (header: string): string => {
+    if (lang !== 'en') return header;
+
     const words = header.split(' ');
     for (let i = 1; i < words.length; i++) {
       words[i] = words[i].toLowerCase();
@@ -249,6 +259,12 @@ const ContentSections = ({
       parentProps,
       false
     );
+
+  const getWhyWatchSectionHeader = () => {
+    if (lang === LANGUAGE_CODE_MAP.DE) return name;
+    else return `${convertToSentenceCase(strings.WHY_WATCH)} ${name}?`;
+  };
+
   return (
     <ContentSectionsWrapper>
       <ContentWrapper ref={contentSectionsRef}>
@@ -260,8 +276,8 @@ const ContentSections = ({
           <Content>
             <Conditional if={(highlightsSection as any)?.tab_content?.length}>
               <h2 id="Why watch">
-                {WHY_WATCH} {convertToSentenceCase(strings.WHY_WATCH)}{' '}
-                {` ${name}?`}
+                {WHY_WATCH}
+                {getWhyWatchSectionHeader()}
               </h2>
 
               <PrismicRichText
@@ -344,21 +360,23 @@ const ContentSections = ({
               <span>
                 {LOCATION} {theatreName}
               </span>
-              <a
-                href={theatrePageUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="read-more"
-                onClick={() => {
-                  trackEvent({
-                    eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
-                    [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.READ_MORE,
-                    [ANALYTICS_PROPERTIES.SECTION]: 'Theatre',
-                  });
-                }}
-              >
-                {strings.LTT_SHOW_PAGE.READ_MORE}
-              </a>
+              <Conditional if={theatrePageUrl}>
+                <a
+                  href={theatrePageUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="read-more"
+                  onClick={() => {
+                    trackEvent({
+                      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+                      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.READ_MORE,
+                      [ANALYTICS_PROPERTIES.SECTION]: 'Theatre',
+                    });
+                  }}
+                >
+                  {strings.LTT_SHOW_PAGE.READ_MORE}
+                </a>
+              </Conditional>
             </h2>
             <Conditional if={(aboutTheatreSection as any)?.tab_content?.length}>
               <div className="theatre-description">

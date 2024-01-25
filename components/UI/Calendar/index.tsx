@@ -9,7 +9,6 @@ import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import Loader from 'components/common/Loader';
-import { HarryPotterTwoPartTimeSlot } from 'components/MicrositeV2/LttShowPageV2/ShowPageDateSelector';
 import { TCalendarProps } from 'components/UI/Calendar/interface';
 import {
   BaseCalendarContainer,
@@ -32,6 +31,7 @@ import {
   TimeSlot,
   TimeSlotCard,
   TimingSection,
+  TwoPartTimeSlot,
   UrgencyBooster,
   WeekDay,
   WeekdaysWrapper,
@@ -60,7 +60,12 @@ import {
   HARRY_POTTER_CURSED_CHILD_TGID,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { BackArrow, CHEVRON_LEFT, CHEVRON_RIGHT } from 'assets/SvgIcons';
+import {
+  BackArrow,
+  CHEVRON_LEFT,
+  CHEVRON_RIGHT,
+  SAND_CLOCK,
+} from 'assets/SvgIcons';
 
 dayjs.extend(weekdayPlugin);
 dayjs.extend(objectPlugin);
@@ -606,6 +611,55 @@ const Calendar = ({
           </FootNote>
         </BaseCalendarContainer>
       </CalendarPopup>
+    </>
+  );
+};
+
+export const hpPartTwoTime = (startTime: string) =>
+  startTime === '14:00:00' ? '19:00:00' : '18:00:00';
+
+export const HarryPotterTwoPartTimeSlot = ({
+  timeSlot,
+}: {
+  timeSlot: Record<string, any>;
+}) => {
+  const { lang } = useContext(MBContext);
+  const { startTime } = timeSlot ?? {};
+  const partTwoTime = hpPartTwoTime(startTime);
+  return (
+    <>
+      <TwoPartTimeSlot>
+        <div className="time">
+          <div className="time-index">1</div>
+          <div className="show-details">
+            {getHumanReadableTime({
+              formattedTime: startTime,
+              lang,
+            })}
+            <div className="duration">
+              {SAND_CLOCK}
+              <p>{strings.DURATION}: 2hr 40min</p>
+            </div>
+          </div>
+        </div>
+        <div className="gap">
+          <div className="spacer" />
+          {strings.LTT_SHOW_PAGE.INTERVAL}: 1hr 20 min
+        </div>
+        <div className="time">
+          <div className="time-index">2</div>
+          <div className="show-details">
+            {getHumanReadableTime({
+              formattedTime: partTwoTime,
+              lang,
+            })}
+            <div className="duration">
+              {SAND_CLOCK}
+              <p>{strings.DURATION}: 2hr 35min</p>
+            </div>
+          </div>
+        </div>
+      </TwoPartTimeSlot>
     </>
   );
 };

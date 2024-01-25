@@ -14,7 +14,7 @@ export const ShowPageDescriptorSectionWrapper = styled.div`
   }
 `;
 
-export const DescriptorsWrapper = styled.div`
+export const DescriptorsWrapper = styled.div<{ numberOfDescriptors: number }>`
   display: flex;
 
   gap: 1.5rem;
@@ -52,7 +52,8 @@ export const DescriptorsWrapper = styled.div`
       }
 
       .value {
-        max-width: 10.875rem;
+        width: ${({ numberOfDescriptors }) =>
+          numberOfDescriptors > 2 ? '10.875rem' : '18.875rem'};
         color: ${COLORS.GRAY.G2};
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
         font-weight: 500;

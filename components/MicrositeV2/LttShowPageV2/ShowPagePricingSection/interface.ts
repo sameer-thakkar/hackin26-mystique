@@ -1,6 +1,5 @@
-export type TShowPageDateSelectorProps = {
+export type TShowPagePricingSectionProps = {
   tourGroupData: Record<string, any>;
   flowType: string;
-  isMobile: boolean;
   onClose?: () => void;
 };

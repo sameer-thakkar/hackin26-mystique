@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { LoaderWrapper } from 'components/common/Loader';
-import { TwoPartTimeSlot } from 'components/MicrositeV2/LttShowPageV2/ShowPageDateSelector/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -345,6 +344,77 @@ export const TimeSlotCard = styled.div`
     background: ${COLORS.GRAY.G8};
   }
 `;
+
+export const TwoPartTimeSlot = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 0;
+  margin-top: 0.75rem;
+
+  .time {
+    display: flex;
+    gap: 0.75rem;
+    .time-index {
+      ${expandFontToken(FONTS.HEADING_XS)};
+      width: 1.375rem;
+      height: 2.5rem;
+      color: ${COLORS.BRAND.WHITE};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: ${COLORS.TEXT.PEACHY_ORANGE_3};
+      border-radius: 0.125rem;
+    }
+    .show-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      color: ${COLORS.TEXT.PEACHY_ORANGE_3};
+      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+      @media (max-width: 768px) {
+        ${expandFontToken(FONTS.HEADING_XS)};
+      }
+      .duration {
+        display: flex;
+        gap: 0.3rem;
+        align-items: baseline;
+        p {
+          ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+          color: ${COLORS.TEXT.PEACHY_ORANGE_3};
+          margin: 0;
+          @media (max-width: 768px) {
+            ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+          }
+        }
+        svg {
+          path {
+            fill: ${COLORS.TEXT.PEACHY_ORANGE_3};
+          }
+          line {
+            stroke: ${COLORS.TEXT.PEACHY_ORANGE_3};
+          }
+        }
+      }
+    }
+  }
+  .gap {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    color: ${COLORS.TEXT.PEACHY_ORANGE_3};
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+    .spacer {
+      width: 1.375rem;
+      height: 3rem;
+      background-color: ${COLORS.BACKGROUND.FADED_PALE};
+    }
+    @media (max-width: 768px) {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    }
+  }
+`;
+
 export const CalendarTimeSlotSection = styled.div`
   padding: 1rem 2rem;
   display: flex;

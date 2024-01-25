@@ -1,14 +1,15 @@
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';
 import ContentSections from 'components/MicrositeV2/LttShowPageV2/ContentSections';
 import { TShowPageV2Props } from 'components/MicrositeV2/LttShowPageV2/interface';
 import LttShowPageBanner from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner';
-import ShowPageDateSelector from 'components/MicrositeV2/LttShowPageV2/ShowPageDateSelector';
 import ShowPageDescriptorSection from 'components/MicrositeV2/LttShowPageV2/ShowPageDescriptorSection';
+import ShowPagePricingSection from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection';
 import ShowPageSeoComponents from 'components/MicrositeV2/LttShowPageV2/ShowPageSeoComponents';
 import SimilarShows from 'components/MicrositeV2/LttShowPageV2/SimilarShows';
 import {
@@ -20,16 +21,22 @@ import {
 } from 'components/MicrositeV2/LttShowPageV2/style';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import AccordionGroup from 'components/slices/AccordionGroup';
-import Button from 'UI/Button';
 import LocalisedPrice from 'UI/LPrice';
-import { getAlternateLanguages, getHeadoutLanguagecode } from 'utils';
+import { MBContext } from 'contexts/MBContext';
+import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
+import {
+  createBookingURL,
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  getNakedDomain,
+} from 'utils';
 import {
   getCommonEventMetaData,
   sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
 import { fetchTourGroupsByCollection } from 'utils/apiUtils';
-import { checkIfCategoryHeaderExists } from 'utils/helper';
+import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
@@ -37,16 +44,14 @@ import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
   LTD_COLLECTION_ID,
   PAGETYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  SavePercentElement,
-  TimeSlotPricing,
-} from './ShowPageDateSelector/style';
+import { Pricing, SavePercentElement } from './ShowPagePricingSection/style';
 
 const SearchPage: ComponentType<any> = dynamic(
   () =>
@@ -60,9 +65,7 @@ const LttShowPageV2 = ({
   CMSContent,
   tourGroupData,
   inventorySlotData,
-  isDev,
   isMobile,
-  host,
   serverRequestStartTimestamp,
   domainConfig,
   primaryCity,
@@ -75,11 +78,23 @@ const LttShowPageV2 = ({
 
   const [allTours, setAllTours] = useState([]);
   const [activePage, setActivePage] = useState(null);
+  const [isButtonLoading, setButtonLoading] = useState(false);
 
   const [
     mwebDateSelectorPopupActive,
     setMwebdateSelectorPopupActive,
   ] = useState(false);
+
+  const {
+    lang: language,
+    isDev,
+    host,
+    isStage,
+    nakedDomain,
+    biLink,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
+  const hostname = getHostName(isStage, isDev, host);
 
   const changePage = (page: any) => {
     setActivePage(page.name);
@@ -171,6 +186,7 @@ const LttShowPageV2 = ({
   )}`;
   const { originalPrice, finalPrice, cashbackValue, cashbackType } =
     listingPrice ?? {};
+
   const totalDiscount = Number(
     (((originalPrice - finalPrice) / originalPrice) * 100).toFixed(2)
   );
@@ -266,15 +282,37 @@ const LttShowPageV2 = ({
   }, [eventsReady]);
 
   const checkAvailabilityClicked = () => {
+    const bookingUrl = createBookingURL({
+      nakedDomain: nakedDomain || getNakedDomain(hostname),
+      lang: language,
+      tgid,
+      biLink: biLink,
+      redirectToHeadoutBookingFlow,
+      currency,
+      flowType,
+    });
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: id,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currency,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
       [ANALYTICS_PROPERTIES.CTA_TYPE]: hasDiscountElement
         ? CTA_TYPE.BIG_CTA
         : CTA_TYPE.SMALL_CTA,
     });
-    setMwebdateSelectorPopupActive(true);
+
+    setButtonLoading(true);
+    setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
+    window.open(bookingUrl, '_self', 'noopener, noreferrer');
   };
+
+  useHistoryTraversal({
+    action: () => {
+      setButtonLoading(false);
+    },
+  });
 
   return (
     <ShowPageWrapper>
@@ -324,10 +362,9 @@ const LttShowPageV2 = ({
         <DateSelectorWrapper
           $visible={!isMobile || mwebDateSelectorPopupActive}
         >
-          <ShowPageDateSelector
+          <ShowPagePricingSection
             tourGroupData={tourGroupData}
             flowType={flowType}
-            isMobile={isMobile}
             onClose={() => {
               trackEvent({
                 eventName: ANALYTICS_EVENTS.SHOW_PAGE.DATE_SELECTION_CLOSED,
@@ -374,10 +411,10 @@ const LttShowPageV2 = ({
       <Conditional if={isMobile}>
         <BuyButtonWrapper
           hasDiscount={hasDiscountElement}
-          longCtaContent={strings.CHECK_AVAIL.length > 22}
+          longCtaContent={strings.CHECK_AVAIL.length > 25}
         >
           <div id="mweb-buy-button-pricing">
-            <TimeSlotPricing atRootLevel={true}>
+            <Pricing>
               <div className="pricing">
                 <span className="scratch-price">
                   <span className="price-starting-from">
@@ -420,11 +457,17 @@ const LttShowPageV2 = ({
                   </Conditional>
                 </span>
               </div>
-            </TimeSlotPricing>
+            </Pricing>
           </div>
-          <Button fillType="fill" onClick={checkAvailabilityClicked}>
-            {strings.CHECK_AVAIL}
-          </Button>
+          <Button
+            tabIndex={0}
+            size="medium"
+            color="purps"
+            variant="primary"
+            isLoading={isButtonLoading}
+            onClick={checkAvailabilityClicked}
+            text={strings.CHECK_AVAIL}
+          />
         </BuyButtonWrapper>
       </Conditional>
 

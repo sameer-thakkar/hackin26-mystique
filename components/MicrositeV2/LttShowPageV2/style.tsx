@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { FooterLegal } from 'components/common/Footer';
 import { StyledHeader } from 'components/MicrositeV2/Header';
 import {
-  OverlayWrapper,
   SavePercentElement,
   ShowPageDateSelectorWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPageDateSelector/style';
+} from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -93,16 +92,6 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
     width: 100%;
     transition: bottom 0.3s ease-in;
 
-    ${OverlayWrapper} {
-      ${({ $visible }) =>
-        $visible
-          ? `
-        display: block;
-    `
-          : `
-        display: none;  
-    `}
-    }
     ${({ $visible }) =>
       $visible
         ? `
@@ -143,20 +132,13 @@ export const BuyButtonWrapper = styled.div<{
   box-sizing: border-box;
   z-index: 2;
   button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    svg {
-      margin-right: 0.25rem;
-    }
+    margin-top: 1rem;
   }
 
   #mweb-buy-button-pricing {
     display: none;
     @media (max-width: 768px) {
       display: flex;
-      margin-bottom: 1rem;
       .pricing {
         display: flex;
         flex-direction: column;
@@ -167,11 +149,10 @@ export const BuyButtonWrapper = styled.div<{
         .price {
           display: flex;
           align-items: center;
-          .strike-through {
-            ${expandFontToken(FONTS.HEADING_SMALL)};
-            color: ${COLORS.GRAY.G2};
-            margin-right: 0.5rem;
-          }
+          margin-top: 0.125rem;
+          ${expandFontToken(FONTS.HEADING_SMALL)};
+          color: ${COLORS.GRAY.G2};
+          margin-right: 0.5rem;
           ${SavePercentElement} {
             ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
             height: 1.25rem;
@@ -192,9 +173,9 @@ export const BuyButtonWrapper = styled.div<{
     }
 
     button {
-      width: auto;
-      max-width: 182px;
+      width: 13.3125rem;
       padding: 0.75rem 1rem;
+      margin: 0;
     }
   `};
 
@@ -203,10 +184,12 @@ export const BuyButtonWrapper = styled.div<{
     longCtaContent &&
     `
     button {
+      width: 13.3125rem;  
       padding: 0.5rem 0.75rem;
       font-size: 14px;
       line-height: 16px;
-      word-spacing: 5px;
+      word-spacing: 1rem;
+      margin: 0;
     }
   `};
 `;
