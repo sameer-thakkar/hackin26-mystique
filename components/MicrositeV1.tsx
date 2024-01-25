@@ -80,11 +80,10 @@ const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
-const CollectionCarousel = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
-    )
+const CollectionCarousel = dynamic(() =>
+  import(
+    /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
+  )
 );
 
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -106,32 +105,29 @@ const StaticBanner = dynamic(
   }
 );
 
-const CityPageContainer = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CityPageContainer" */ 'components/CityPageContainer'
-    )
+const CityPageContainer = dynamic(() =>
+  import(
+    /* webpackChunkName: "CityPageContainer" */ 'components/CityPageContainer'
+  )
 );
 
-const Banner = dynamic(
-  () => import(/* webpackChunkName: "Banner" */ 'components/Banner')
+const Banner = dynamic(() =>
+  import(/* webpackChunkName: "Banner" */ 'components/Banner')
 );
 const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
-const CategoryHeader = dynamic(
-  () =>
-    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
-const Loader = dynamic(
-  () => import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
+const Loader = dynamic(() =>
+  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
-const CatAndSubCatPage = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
-    )
+const CatAndSubCatPage = dynamic(() =>
+  import(
+    /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
+  )
 );
 
 const CoverSlicesWrapper = styled.div`
@@ -342,8 +338,9 @@ const MicrositeV1 = (props: any) => {
         })
       : orderedUncategorizedTours;
 
-  const [orderedFilteredTours, setOrderedFilteredTours] =
-    useState(orderedTours);
+  const [orderedFilteredTours, setOrderedFilteredTours] = useState(
+    orderedTours
+  );
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -365,8 +362,9 @@ const MicrositeV1 = (props: any) => {
       });
     }
 
-    const renderedBaseLangPageTitle =
-      renderShortCodes(baseLangPageTitle)?.join?.('');
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
 
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.LANGUAGE,
@@ -390,8 +388,9 @@ const MicrositeV1 = (props: any) => {
 
   useEffect(() => {
     if (!eventsReady) return;
-    const renderedBaseLangPageTitle =
-      renderShortCodes(baseLangPageTitle)?.join?.('');
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
 
     sendVariablesToDataLayer({
       ...(taggedCategoryName && {
@@ -642,10 +641,12 @@ const MicrositeV1 = (props: any) => {
     />
   );
 
-  const shouldDisplayProductTrustBoosters =
-    displayProductTrustBoosters(micrositeData);
-  const shouldDisplayBannerTrustBoosters =
-    displayBannerTrustBoosters(micrositeData);
+  const shouldDisplayProductTrustBoosters = displayProductTrustBoosters(
+    micrositeData
+  );
+  const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(
+    micrositeData
+  );
 
   const showAirportTransferProducts =
     hasTours &&

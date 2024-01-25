@@ -35,13 +35,17 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
   { ssr: false }
 );
-const OverflowScroll = dynamic(
-  () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
+const OverflowScroll = dynamic(() =>
+  import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
 const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
-  const { subCategoryPills, subCategoryData, isSubCategoryPage, isMobile } =
-    props;
+  const {
+    subCategoryPills,
+    subCategoryData,
+    isSubCategoryPage,
+    isMobile,
+  } = props;
   const { id: subCategoryId } = subCategoryData || {};
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -132,8 +136,8 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
     const scrollHandler = () => {
       if (!pillsSectionRef.current) return;
 
-      const pillsRowScrollPos =
-        pillsSectionRef.current.getBoundingClientRect().top;
+      const pillsRowScrollPos = pillsSectionRef.current.getBoundingClientRect()
+        .top;
       const SCROLL_CUTOFF = isMobile ? 56 : 44;
       if (isSectionAtTop && pillsRowScrollPos > SCROLL_CUTOFF) {
         setIsSectionAtTop(false);

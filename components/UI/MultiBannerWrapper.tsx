@@ -105,8 +105,9 @@ const MultiBannerWrapper = ({
   } = useContext(MBContext);
 
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
-  const [safetyBannerData, setSafetyBannerData] =
-    useState<TSetSafetyBannerData>(null);
+  const [safetyBannerData, setSafetyBannerData] = useState<
+    TSetSafetyBannerData
+  >(null);
   const width = useWindowWidth();
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(

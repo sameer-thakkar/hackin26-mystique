@@ -92,9 +92,9 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({
-        // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
-        isMobile,
-      }) => (isMobile ? '16px' : '')};
+      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+      isMobile,
+    }) => (isMobile ? '16px' : '')};
     grid-column-gap: 24px;
     ${({
       // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
@@ -509,8 +509,13 @@ const TourComparisonTable = (props: any) => {
   const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
-  const { uid, nakedDomain, biLink, lang, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const {
+    uid,
+    nakedDomain,
+    biLink,
+    lang,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
   const url = envContext.windowUrl;
   const currentHost = !envContext.isDev ? url : parse(uid || '', true).pathname;
   const hostName = currentHost.includes('stage')

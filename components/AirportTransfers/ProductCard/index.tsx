@@ -58,16 +58,27 @@ export const PrivateAirportTranferProductCard = ({
   cityCode,
   index,
 }: TPrivateAirportTransferProductCardProps) => {
-  const [isMoreDetailsSidebarOpen, setIsMoreDetailsSidebarOpen] =
-    useState(false);
+  const [isMoreDetailsSidebarOpen, setIsMoreDetailsSidebarOpen] = useState(
+    false
+  );
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const { title, averageRating, ratingCount, images, listingPrice } =
-    scorpioData;
+  const {
+    title,
+    averageRating,
+    ratingCount,
+    images,
+    listingPrice,
+  } = scorpioData;
 
-  const { biLink, bookSubdomain, isDev, host, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const {
+    biLink,
+    bookSubdomain,
+    isDev,
+    host,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
 
   const currency = useRecoilValue(currencyAtom);
 

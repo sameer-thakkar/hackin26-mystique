@@ -76,8 +76,10 @@ const LttShowPageV2 = ({
   const [allTours, setAllTours] = useState([]);
   const [activePage, setActivePage] = useState(null);
 
-  const [mwebDateSelectorPopupActive, setMwebdateSelectorPopupActive] =
-    useState(false);
+  const [
+    mwebDateSelectorPopupActive,
+    setMwebdateSelectorPopupActive,
+  ] = useState(false);
 
   const changePage = (page: any) => {
     setActivePage(page.name);

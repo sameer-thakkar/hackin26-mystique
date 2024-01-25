@@ -36,8 +36,13 @@ const VerticalProductCard = ({
   isMobile,
   isTopLttShow = false,
 }: TVerticalProductCardProps) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
-    useContext(MBContext);
+  const {
+    lang,
+    nakedDomain,
+    redirectToHeadoutBookingFlow,
+    isDev,
+    host,
+  } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
 
   if (!product) return null;
@@ -59,8 +64,11 @@ const VerticalProductCard = ({
   } = product;
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
-  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
-    getBoosterValueFromListingPrice(listingPrice);
+  const {
+    percentageSaved,
+    shouldShowcashbackElement,
+    cashbackValue,
+  } = getBoosterValueFromListingPrice(listingPrice);
 
   const { displayName: subCategoryName, id: subCategoryId } =
     primarySubCategory ?? {};

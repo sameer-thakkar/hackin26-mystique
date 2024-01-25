@@ -1,15 +1,59 @@
 import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import type { ProductCardsDocument } from 'types.prismic';
 import {
+  getAlternateLanguageDocUid,
   getEnglishDocUid,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
+  handleSettledPromiseResults,
 } from 'utils';
+import { fetchShoulderPoiInfo } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { CUSTOM_TYPES, DEFAULT_PRISMIC_LANG, SLICE_TYPES } from 'const/index';
+import {
+  CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
+  MB_CATEGORISATION,
+  PRISMIC_DEV_TAG,
+  PRISMIC_FIELD_ID,
+  SHOULDER_PAGE_TYPES,
+  SLICE_TYPES,
+  SUPPORTED_LOCALE_MAP,
+} from 'const/index';
 import type { TGetDocument } from '../interface';
 import { contentPageGq } from './graphQuery';
+
+const { CONTENT_PAGE } = CUSTOM_TYPES;
+
+const {
+  TAGGED_COLLECTION,
+  TAGGED_CITY,
+  TAGGED_PAGE_TYPE,
+  SHOULDER_PAGE_TYPE,
+} = PRISMIC_FIELD_ID;
+
+const getPrismicContentPageRelatedDocs = (
+  mbCity: string,
+  collectionId: string,
+  excludedShoulderTypes: string[]
+) => {
+  const prismicClient = createClient();
+  return prismicClient.get({
+    predicates: [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.at(`my.${CONTENT_PAGE}.${TAGGED_COLLECTION}`, collectionId),
+      predicate.at(`my.${CONTENT_PAGE}.${TAGGED_CITY}`, mbCity),
+      predicate.at(
+        `my.${CONTENT_PAGE}.${TAGGED_PAGE_TYPE}`,
+        MB_CATEGORISATION.PAGE_TYPE.SHOULDER_PAGE
+      ),
+      ...excludedShoulderTypes.map((type) =>
+        predicate.not(`my.${CONTENT_PAGE}.${SHOULDER_PAGE_TYPE}`, type)
+      ),
+    ],
+  });
+};
 
 const getContentPageDocument = async ({
   req,
@@ -136,8 +180,13 @@ const getContentPageDocument = async ({
     const hasTicketsCardSlice = Object.keys(baseLangTicketsCardsSlice)?.length;
 
     if (hasTicketsCardSlice) {
-      const { id, slice_type, slice_label, primary, items } =
-        baseLangTicketsCardsSlice;
+      const {
+        id,
+        slice_type,
+        slice_label,
+        primary,
+        items,
+      } = baseLangTicketsCardsSlice;
       const { product_cards } = primary || {};
       const { id: productCardsId } = product_cards || {};
 
@@ -168,6 +217,49 @@ const getContentPageDocument = async ({
       }
     }
 
+    let relatedContentPages = [];
+    const excludedShoulderTypes: string[] = [
+      SHOULDER_PAGE_TYPES.Architecture,
+      SHOULDER_PAGE_TYPES.SUB_ATTRACTIONS,
+      SHOULDER_PAGE_TYPES.SKIP_THE_LINE,
+      SHOULDER_PAGE_TYPES.INSIDE,
+      SHOULDER_PAGE_TYPES.TIPS,
+      SHOULDER_PAGE_TYPES.GUIDED_TOURS,
+      SHOULDER_PAGE_TYPES.MISC,
+      SHOULDER_PAGE_TYPES.HISTORY,
+      SHOULDER_PAGE_TYPES.RESTAURANTS,
+      shoulder_page_type as string,
+    ];
+    let poiInfo = {};
+    // We Currently only want this in About pages
+    if (shoulder_page_type == SHOULDER_PAGE_TYPES.ABOUT) {
+      const settledPromises = await Promise.allSettled([
+        getPrismicContentPageRelatedDocs(
+          tagged_city ?? '',
+          tagged_collection ?? '',
+          excludedShoulderTypes
+        ),
+        fetchShoulderPoiInfo({
+          language: lang,
+          collectionId: tagged_collection,
+        }),
+      ]);
+      const [prismicRelatedDocs, fetchedPoiInfo] = handleSettledPromiseResults(
+        settledPromises
+      );
+      // @ts-ignore
+      relatedContentPages = prismicRelatedDocs?.results?.map(
+        (doc: Record<string, any>) => ({
+          ...doc,
+          uid:
+            lang === SUPPORTED_LOCALE_MAP.en
+              ? doc.uid
+              : getAlternateLanguageDocUid({ doc, lang: lang || 'en-us' }),
+        })
+      );
+      // @ts-ignore
+      poiInfo = fetchedPoiInfo;
+    }
     let completePage = {
       ...contentPage,
       data: {
@@ -190,6 +282,8 @@ const getContentPageDocument = async ({
         baseLangMicrositeData,
         baseLangCategorisationMetadata,
         productCardData,
+        relatedContentPages,
+        poiInfo,
       },
     };
 

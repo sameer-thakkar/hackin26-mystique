@@ -7,12 +7,8 @@ export const sliceWrapper = (children: React.ReactNode, props: any) => {
   const { slice, index, context } = props;
   if (slice?.primary?.hide_slice) return null;
 
-  const {
-    isContentPage,
-    wrapperType,
-    activeTabId = '',
-    tabTitle = '',
-  } = context || {};
+  const { isContentPage, wrapperType, activeTabId = '', tabTitle = '' } =
+    context || {};
 
   const shouldLazyLoad = isContentPage ? index > 2 : true;
   switch (wrapperType) {

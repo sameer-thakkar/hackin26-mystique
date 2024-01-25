@@ -322,8 +322,9 @@ export const getNewsPageData = async (
   );
   allArticles = filterArticlesBasedOnEntMb(allArticles, uid);
 
-  const tgidsFromCollectionReviews =
-    getTgidFromCollectionReviews(collectionReviews);
+  const tgidsFromCollectionReviews = getTgidFromCollectionReviews(
+    collectionReviews
+  );
   collectionReviewsTgid = new Set([
     tgidsFromCollectionReviews ? tgidsFromCollectionReviews : [],
   ]);

@@ -77,11 +77,8 @@ const RichtextWithCTA = (props: any) => {
   return (
     <>
       {props?.childSlices?.map((block: any, index: number) => {
-        const {
-          content_height: contentHeight,
-          cta_text,
-          text: textArray,
-        } = block || {};
+        const { content_height: contentHeight, cta_text, text: textArray } =
+          block || {};
         const idArray = textArray?.reduce(
           (acc: Array<string>, el: TRichTextArray) => {
             if (el?.type === 'heading2') {

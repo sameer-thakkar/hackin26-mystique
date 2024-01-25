@@ -64,11 +64,9 @@ export default class TermsPage extends Component<any, any> {
       lang: 'en-us',
       isDev,
     });
-    const {
-      faviconUrl,
-      logo,
-      name: whiteLabelName,
-    } = await fetchDomainConfig(uid);
+    const { faviconUrl, logo, name: whiteLabelName } = await fetchDomainConfig(
+      uid
+    );
     const { logoUrl, showPoweredLogo } = logo || {};
     let response = CMSContent,
       commonFooter = {};

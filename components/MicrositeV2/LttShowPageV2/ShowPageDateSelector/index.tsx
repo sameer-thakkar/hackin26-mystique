@@ -193,8 +193,9 @@ const ShowPageDateSelector = ({
           [ANALYTICS_PROPERTIES.RANKING]: 1,
           [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
           [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'Automatic',
-          [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
-            hasSellingOutFastBooster ? 'Yes' : 'No',
+          [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]: hasSellingOutFastBooster
+            ? 'Yes'
+            : 'No',
         });
       }
       setInventoriesMap({
@@ -313,8 +314,9 @@ const ShowPageDateSelector = ({
         [ANALYTICS_PROPERTIES.RANKING]: 1,
         [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
         [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'Automatic',
-        [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
-          hasSellingOutFastBooster ? 'Yes' : 'No',
+        [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]: hasSellingOutFastBooster
+          ? 'Yes'
+          : 'No',
       });
     } else if (timeSlots.length && timeSlots.length >= 3) {
       setSelectedTime(null);
@@ -342,8 +344,9 @@ const ShowPageDateSelector = ({
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
       [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
       [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
-      [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
-        hasSellingOutFastBooster ? 'Yes' : 'No',
+      [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]: hasSellingOutFastBooster
+        ? 'Yes'
+        : 'No',
     });
     setSelectedTime(selectedTime);
   };
@@ -515,8 +518,11 @@ const ShowPageDateSelector = ({
   ) => {
     if (!availability?.priceProfile?.persons?.[0]) return;
 
-    const { listingPrice, retailPrice, discount } =
-      availability?.priceProfile?.persons?.[0];
+    const {
+      listingPrice,
+      retailPrice,
+      discount,
+    } = availability?.priceProfile?.persons?.[0];
 
     const totalDiscount = (
       ((retailPrice - listingPrice) / listingPrice) * 100 +

@@ -36,8 +36,8 @@ import {
   NEWS_PAGE_PREV_ICON,
 } from 'assets/SvgIcons';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "LandingPageSwiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "LandingPageSwiper" */ 'components/Swiper')
 );
 
 const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {

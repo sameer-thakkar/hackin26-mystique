@@ -133,8 +133,9 @@ const SpecialSections = ({
     preselectedActionName ?? actions[0]?.actionName
   );
   const [currentShowList, setCurrentShowList] = useState<any[]>([]);
-  const [hasIntersectingEventFired, sethasIntersectingEventFired] =
-    useState(false);
+  const [hasIntersectingEventFired, sethasIntersectingEventFired] = useState(
+    false
+  );
   const [forceShowSkeletonLoader, setForceShowSkeletonLoader] = useState(false);
   const [slidesPerView, setSlidesPerView] = useState(6);
 

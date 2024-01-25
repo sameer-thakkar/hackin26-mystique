@@ -64,8 +64,8 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const ShowPageWrapper = styled.div`
@@ -417,9 +417,9 @@ const ShowPage = (props: any) => {
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = (
-    aboutTheatreSection as any
-  )?.tab_content[1]?.text?.split(' ')[2];
+  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
+    ' '
+  )[2];
 
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
@@ -479,12 +479,10 @@ const ShowPage = (props: any) => {
           "@type": "TheaterGroup",
           "name": "${name} Cast"
         },
-        "offers": [${offerSchema?.map(
-          (
-            // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
-            variant
-          ) => JSON.stringify(variant)
-        )}]
+        "offers": [${offerSchema?.map((
+          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+          variant
+        ) => JSON.stringify(variant))}]
       }`;
     })
     ?.join(',');

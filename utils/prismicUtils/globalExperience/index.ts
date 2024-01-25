@@ -56,8 +56,9 @@ const getGlobalExperience = async ({ req, uid, lang }: any) => {
       countryCollectionsPromise,
     ]);
 
-    const [cityCollections, countryCollections] =
-      handleSettledPromiseResults(allSettledResults);
+    const [cityCollections, countryCollections] = handleSettledPromiseResults(
+      allSettledResults
+    );
 
     return {
       CMSContent: {

@@ -38,8 +38,10 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   });
 
   const { ALL_NEWS } = strings.NEWS_PAGE;
-  const { uniqueArticlesWithSameTgidData = [], featuredArticles = [] } =
-    content;
+  const {
+    uniqueArticlesWithSameTgidData = [],
+    featuredArticles = [],
+  } = content;
 
   const moreReadsData = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),

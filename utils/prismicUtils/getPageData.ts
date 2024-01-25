@@ -110,15 +110,17 @@ export const getPageData = async ({
 
   try {
     let initial_tgids: any = [];
-    const { prismicApiResponse, prismicApiCacheStatus } =
-      await fetchPrismicDocument({
-        req,
-        host,
-        isDev,
-        uid,
-        lang,
-        bypassCache,
-      });
+    const {
+      prismicApiResponse,
+      prismicApiCacheStatus,
+    } = await fetchPrismicDocument({
+      req,
+      host,
+      isDev,
+      uid,
+      lang,
+      bypassCache,
+    });
 
     const {
       ContentType,
@@ -263,13 +265,15 @@ export const getPageData = async ({
       const { data: contentFrameworkData } = contentFramework || {};
       const { body: slices } = contentFrameworkData || {};
 
-      const [collectionsInListicles, docsForListicles] =
-        await getDocsForListicleSlice({
-          slices,
-          hostname,
-          lang: lang as string,
-          cookies,
-        });
+      const [
+        collectionsInListicles,
+        docsForListicles,
+      ] = await getDocsForListicleSlice({
+        slices,
+        hostname,
+        lang: lang as string,
+        cookies,
+      });
 
       const { design, theme, body1 } = CMSData || {};
       const MBDesign = design || '';
@@ -511,14 +515,12 @@ export const getPageData = async ({
           entityIds: [CMSContent?.data?.tgid].join(','),
           resourceType: 'MB_EXPERIENCE',
         });
-        const verticalImageData =
-          mediaData?.resourceEntityMedias?.[0]?.medias?.find(
-            (media: any) => media.type === 'IMAGE'
-          );
-        const nativeShowTrailerData =
-          mediaData?.resourceEntityMedias?.[0]?.medias?.find(
-            (media: any) => media.type === 'VIDEO'
-          );
+        const verticalImageData = mediaData?.resourceEntityMedias?.[0]?.medias?.find(
+          (media: any) => media.type === 'IMAGE'
+        );
+        const nativeShowTrailerData = mediaData?.resourceEntityMedias?.[0]?.medias?.find(
+          (media: any) => media.type === 'VIDEO'
+        );
         const verticalImage = {
           url: verticalImageData?.url,
           height: verticalImageData?.metadata.height,
@@ -533,8 +535,10 @@ export const getPageData = async ({
           obj: tgidData,
           keys: ['urlSlugs', 'urlSlug'],
         });
-        const { url: _tgidDataUrl, ...tgidDataWithoutUrls } =
-          tgidDataWithoutUrlSlugs;
+        const {
+          url: _tgidDataUrl,
+          ...tgidDataWithoutUrls
+        } = tgidDataWithoutUrlSlugs;
 
         const inventorySlotData = await fetchTourGroupSlots({
           tgid: CMSContent?.data?.tgid,
@@ -635,9 +639,8 @@ export const getPageData = async ({
       let categoryTourListData: Record<string, any> = {};
       let variantsData: Array<Record<string, any>> = [];
       let bannerImageData, routeDetails;
-      const hasCategoryTourListV1 = Object.keys(
-        localisedCategoryTourListV1
-      )?.length;
+      const hasCategoryTourListV1 = Object.keys(localisedCategoryTourListV1)
+        ?.length;
       const hasCategoryTourListV2 = Object.keys(categoryTourListV2)?.length;
 
       const hasCategoryTourList =
@@ -806,20 +809,19 @@ export const getPageData = async ({
             }>(
               (simpleCategoryData: any, [categoryId, productGroups]: any) => {
                 const tgids: Array<number> = [];
-                const productGroupMap: TGIDProductCardMap =
-                  productGroups?.reduce(
-                    (map: TGIDProductCardMap, productGroup: ProductCard) => {
-                      if (productGroup.showPageUid) {
-                        delete productGroup.highlights;
-                      }
-                      tgids.push(productGroup.tgid);
-                      return {
-                        ...map,
-                        [productGroup.tgid]: productGroup,
-                      };
-                    },
-                    {}
-                  );
+                const productGroupMap: TGIDProductCardMap = productGroups?.reduce(
+                  (map: TGIDProductCardMap, productGroup: ProductCard) => {
+                    if (productGroup.showPageUid) {
+                      delete productGroup.highlights;
+                    }
+                    tgids.push(productGroup.tgid);
+                    return {
+                      ...map,
+                      [productGroup.tgid]: productGroup,
+                    };
+                  },
+                  {}
+                );
 
                 return {
                   ...simpleCategoryData,
@@ -1033,8 +1035,9 @@ export const getPageData = async ({
       breadcrumbsPromise,
     ]);
 
-    const [categoryHeaderMenu, breadcrumbs] =
-      handleSettledPromiseResults(aggregatedPromise);
+    const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
+      aggregatedPromise
+    );
 
     const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent);
     const catAndSubCatPageData = isCatOrSubCatPage

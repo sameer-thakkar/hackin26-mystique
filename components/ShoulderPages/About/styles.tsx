@@ -1,0 +1,16 @@
+import styled from 'styled-components';
+
+export const PageContainer = styled.main`
+  width: 88.56vw;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  .slice-wrapper {
+    padding: 0.5rem 0;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 32px);
+  }
+`;

@@ -104,3 +104,25 @@ export const getDocsForListicleSlice = async ({
   }
   return [collectionsInListicles, docsForListicles];
 };
+
+export const getRelatedContentPagesUrl = ({
+  relatedContentPages,
+  type,
+  lang,
+}: {
+  relatedContentPages?: Record<string, any>[];
+  type: string;
+  lang?: string;
+}) => {
+  const uid = relatedContentPages?.find(
+    (page: any) =>
+      page.data?.shoulder_page_type?.toLowerCase?.() === type.toLowerCase()
+  )?.uid;
+  return (
+    uid &&
+    convertUidToUrl({
+      uid: uid,
+      lang: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+    })
+  );
+};

@@ -123,8 +123,10 @@ const es = {
   COMPARE_ALL_DETAILS: 'Compara los detalles',
   COVID19_ALERT: {
     KEY_TEXT: 'Aviso COVID-19',
-    LINK: 'https://medium.com/headout/epidemia-de-coronavirus-pol%C3%ADtica-de-cancelaci%C3%B3n-e577f63d5553',
-    TEXT: 'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para conocer las últimas actualizaciones sobre las políticas de cancelación.',
+    LINK:
+      'https://medium.com/headout/epidemia-de-coronavirus-pol%C3%ADtica-de-cancelaci%C3%B3n-e577f63d5553',
+    TEXT:
+      'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para conocer las últimas actualizaciones sobre las políticas de cancelación.',
   },
   CURRENCY: 'Monedas',
   CUSTOMER_REVIEW_HEADING: 'Reseñas de los clientes',
@@ -256,19 +258,23 @@ const es = {
   REOPENS: 'Reabre',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT: 'Se aplican las normas ""2G"": el acceso al alojamiento, a las instituciones culturales y a los restaurantes/bares, entre otros, solo es posible con una prueba de vacunación completa o prueba de recuperación de la enfermedad. Una prueba COVID-19 negativa ya no es suficiente.',
+      TEXT:
+        'Se aplican las normas ""2G"": el acceso al alojamiento, a las instituciones culturales y a los restaurantes/bares, entre otros, solo es posible con una prueba de vacunación completa o prueba de recuperación de la enfermedad. Una prueba COVID-19 negativa ya no es suficiente.',
     },
     AU_DESCRIPTION: {
-      TEXT: 'Los visitantes mayores de 16 años deben presentar una prueba de vacunación contra el COVID-19 o una exención médica.',
+      TEXT:
+        'Los visitantes mayores de 16 años deben presentar una prueba de vacunación contra el COVID-19 o una exención médica.',
     },
     BANNER_CTA: 'Leer más',
     BERLIN_DESCRIPTION: {
-      TEXT: 'Se aplican las normas "2G": solo se permitirá el acceso a los visitantes totalmente vacunados y a los visitantes con prueba de recuperación de la enfermedad. Las personas menores de 18 años o las que no puedan vacunarse por razones médicas deberán presentar a la entrada un resultado negativo de la prueba COVID. En el caso de las personas que no puedan vacunarse por motivos médicos, deberán también presentar a la entrada un certificado médico que demuestre su imposibilidad de vacunarse.',
+      TEXT:
+        'Se aplican las normas "2G": solo se permitirá el acceso a los visitantes totalmente vacunados y a los visitantes con prueba de recuperación de la enfermedad. Las personas menores de 18 años o las que no puedan vacunarse por razones médicas deberán presentar a la entrada un resultado negativo de la prueba COVID. En el caso de las personas que no puedan vacunarse por motivos médicos, deberán también presentar a la entrada un certificado médico que demuestre su imposibilidad de vacunarse.',
     },
     CTA_TEXT: 'Estándares de Seguridad',
     DESCRIPTION_CTA: 'Más información.',
     EU_DESCRIPTION: {
-      TEXT: 'A partir del 21 de julio de 2021, todos los visitantes mayores de 12 años deben presentar un certificado COVID de la UE.',
+      TEXT:
+        'A partir del 21 de julio de 2021, todos los visitantes mayores de 12 años deben presentar un certificado COVID de la UE.',
     },
     EU_HEADING: 'Se requiere el certificado COVID de la UE',
     EU_PREFIX: 'Atención: ',
@@ -279,7 +285,8 @@ const es = {
       'Cualquier experiencia con esta insignia ha sido verificada y cumple con los más estrictos estándares de seguridad impuestos por las autoridades sanitarias locales.',
     HEADING: 'Estándares de Seguridad',
     IT_DESCRIPTION: {
-      TEXT: 'A partir del 6 de agosto de 2021, todos los visitantes mayores de 11 años deben presentar un pase verde o un certificado COVID de la UE.',
+      TEXT:
+        'A partir del 6 de agosto de 2021, todos los visitantes mayores de 11 años deben presentar un pase verde o un certificado COVID de la UE.',
     },
     IT_PREFIX: 'Importante : ',
     MOBILE_HEADING: 'Experiencias Seguras',
@@ -388,10 +395,12 @@ const es = {
         'Trabajamos de cerca con nuestros socios locales para cumplir con los mejores estándares de higiene y seguridad, según las directrices de la OMS. Todas las medidas implementadas durante tu visita han sido verificadas y a continuación te las presentamos. Es hora de volver a disfrutar del mundo que nos rodea.',
     },
     NL_DESCRIPTION: {
-      TEXT: 'Los visitantes mayores de 13 años deben presentar un certificado COVID (digital o impreso) que demuestre que han sido vacunados, o bien una prueba con un resultado negativo o prueba de recuperación reciente de COVID-19. Es obligatorio llevar una mascarilla facial.',
+      TEXT:
+        'Los visitantes mayores de 13 años deben presentar un certificado COVID (digital o impreso) que demuestre que han sido vacunados, o bien una prueba con un resultado negativo o prueba de recuperación reciente de COVID-19. Es obligatorio llevar una mascarilla facial.',
     },
     SG_DESCRIPTION: {
-      TEXT: 'A partir del 13 de octubre de 2021, solo podrán entrar visitantes totalmente vacunados en grupos de 2. Tendrás que mostrar una prueba de vacunación, un resultado negativo reciente de la prueba COVID-19 y/o certificado de recuperación antes de la entrada.',
+      TEXT:
+        'A partir del 13 de octubre de 2021, solo podrán entrar visitantes totalmente vacunados en grupos de 2. Tendrás que mostrar una prueba de vacunación, un resultado negativo reciente de la prueba COVID-19 y/o certificado de recuperación antes de la entrada.',
     },
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
   },
@@ -437,7 +446,8 @@ const es = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Tu seguridad es nuestra prioridad',
-    TEXT: 'Hemos tomado las medidas de higiene necesarias para limpiar con frecuencia el lugar mediante el uso de desinfectantes y productos de limpieza profesional. Se han implementado medidas para controlar el ingreso de visitantes y evitar aglomeraciones.',
+    TEXT:
+      'Hemos tomado las medidas de higiene necesarias para limpiar con frecuencia el lugar mediante el uso de desinfectantes y productos de limpieza profesional. Se han implementado medidas para controlar el ingreso de visitantes y evitar aglomeraciones.',
   },
   SAVE: 'Ahorra {0}%',
   SAVE_PERCENT: 'Ahorra {0}%',
@@ -1023,5 +1033,32 @@ const es = {
     'Calendario de los mejores espectáculos del West End ',
   IN: 'en',
   SEATS: 'Asientos',
+  CONTENT_PAGE: {
+    CONTENT_GUIDE: 'Guía de contenido',
+    QUICK_INFORMATION: 'En breve',
+    PEAK: 'horas punta',
+    OFF_PEAK: 'fuera de horas punta',
+    ADDRESS: 'DIRECCIÓN',
+    RECOMMENDED_DURATION: 'DURACIÓN RECOMENDADA',
+    VISITORS_PER_YEAR: 'VISITANTES AL AÑO',
+    NUMBER_OF_ENTRANCES: 'NÚMERO DE ACCESOS',
+    EXPECTED_WAIT_TIME_STANDARD: 'TIEMPO DE ESPERA PREVISTO - ESTÁNDAR',
+    EXPECTED_WAIT_TIME_SKIP_THE_LINE:
+      'TIEMPO DE ESPERA PREVISTO - ACCESO SIN COLAS',
+    UNESCO_YEAR: 'AÑO DE INSCRIPCIÓN A LA UNESCO',
+    ARCHITECTURE_STYLE: 'ESTILO ARQUITECTÓNICO',
+    TIMINGS: 'HORARIOS',
+    SIZE_HEIGHT: 'TAMAÑO/ALTURA',
+    TICKETS: 'ENTRADAS',
+    FUN_FACTS: 'Datos curiosos',
+    DID_YOU_KNOW: '¿Lo sabías?',
+    MORE_INTERESTING_FACTS: 'Más datos de interés',
+    PLAN_YOUR_VISIT: 'Planifica tu visita',
+    ALSO_KNOWN_AS: 'También conocido como',
+    FOUNDED_ON: 'Fundado en',
+    FOUNDED_BY: 'Fundado por',
+    FROM: 'Desde',
+    CLOSED_TODAY: 'Cerrado hoy',
+  },
 };
 export default es;

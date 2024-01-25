@@ -101,7 +101,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
       (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showLttColoredHeader }) =>
-      showLttColoredHeader ? '#150029' : '#fff'};
+        showLttColoredHeader ? '#150029' : '#fff'};
   }
   .fixed-offset::after {
     content: '';
@@ -467,8 +467,9 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
   const [results, setResults] = useState([]);

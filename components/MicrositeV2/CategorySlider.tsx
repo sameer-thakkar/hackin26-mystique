@@ -17,12 +17,11 @@ const DetailedProductCard = dynamic(
     ssr: false,
   }
 );
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const Product = dynamic(
-  () =>
-    import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
+const Product = dynamic(() =>
+  import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
 );
 
 const StyledCategorySlider = styled.div`

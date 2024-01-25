@@ -395,8 +395,13 @@ const Product = (props: any) => {
     showPageUid: showPageUidForVenuePage,
   } = props;
   const currency = useRecoilValue(currencyAtom);
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, uid } =
-    useContext(MBContext);
+  const {
+    lang,
+    nakedDomain,
+    redirectToHeadoutBookingFlow,
+    isDev,
+    uid,
+  } = useContext(MBContext);
 
   // @ts-expect-error TS(2339): Property 'sliceData' does not exist on type '{}'.
   const { sliceData } = useContext(InteractionContext) || {};

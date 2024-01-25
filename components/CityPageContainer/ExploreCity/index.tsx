@@ -63,8 +63,9 @@ const ExploreCity = ({
     }
   }, [isIntersecting]);
 
-  const { carouselSections, carouselsCount } =
-    getFinalCarouselData(exploreSectionData);
+  const { carouselSections, carouselsCount } = getFinalCarouselData(
+    exploreSectionData
+  );
 
   return (
     <ExploreContainer ref={containerRef}>

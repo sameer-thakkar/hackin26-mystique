@@ -1,6 +1,9 @@
 import type { NumberField } from '@prismicio/types';
 import type { IncomingHttpHeaders } from 'http2';
-import { convertHttpHeadersToRegularHeaders } from 'utils';
+import {
+  convertHttpHeadersToRegularHeaders,
+  getHeadoutLanguagecode,
+} from 'utils';
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
@@ -90,6 +93,7 @@ export enum HeadoutEndpoints {
   Media,
   Variants,
   Airports,
+  Poi,
 }
 
 export const getHeadoutApiUrl = ({
@@ -179,6 +183,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.Airports:
       endpointSlug = '/api/v1/airport-transfers/fetch-airports';
+      break;
+    case HeadoutEndpoints.Poi:
+      endpointSlug = `/api/v1/poi/`;
       break;
   }
 
@@ -808,8 +815,7 @@ export const fetchCategory = async ({
     ...(city && { city }),
     language,
     ...(filterCategoryActiveProductCount && {
-      'filter-category-active-product-count':
-        filterCategoryActiveProductCount.toString(),
+      'filter-category-active-product-count': filterCategoryActiveProductCount.toString(),
     }),
     ...(includeUnavailable && {
       'include-unavailable': includeUnavailable.toString(),
@@ -1275,5 +1281,37 @@ export const fetchBatchedVariants = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchBatchedVariants]', error);
+  }
+};
+
+export const fetchShoulderPoiInfo = async ({
+  collectionId,
+  language,
+  cookies = {},
+}: any) => {
+  try {
+    const params = {
+      language: getHeadoutLanguagecode(language),
+      operatingSchedules: 'true',
+      content: 'true',
+      location: 'true',
+      collectionId: String(collectionId),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.Poi,
+      params,
+      id: null,
+    });
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(apiUrl, { headers });
+
+    const data = await res.json();
+    return data?.[0];
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCurrencyList]', error);
+    sendLog({
+      err: error,
+    });
   }
 };

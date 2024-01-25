@@ -79,8 +79,9 @@ const ShowPageBanner = ({
     : null;
   const isShowPoster = imageUploads?.length === 1; //TODO - revert after showpage revamp
 
-  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain || getNakedDomain(hostname),

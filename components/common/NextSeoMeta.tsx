@@ -297,12 +297,8 @@ export default function PopulateMeta({
   const collectionVideoMeta = getCollectionVideoMeta(collectionDetails);
   const { averageRating, ratingsCount } = collectionDetails || {};
 
-  const {
-    breadcrumbs = {},
-    taggedCity,
-    primaryCity,
-    showName = '',
-  } = breadcrumbsDetails || {};
+  const { breadcrumbs = {}, taggedCity, primaryCity, showName = '' } =
+    breadcrumbsDetails || {};
   const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
 
   return (

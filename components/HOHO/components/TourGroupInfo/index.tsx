@@ -43,8 +43,8 @@ import {
   LTT_CHEVRON_RIGHT,
 } from 'assets/SvgIcons';
 
-const MediaCarousel = dynamic(
-  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(() =>
+  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const CAROUSEL_SLIDE_NUMBER = 3;

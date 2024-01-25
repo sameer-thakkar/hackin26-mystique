@@ -42,8 +42,8 @@ import {
 import { Banner, VenuePageContainer } from './styles';
 import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
 
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const VenuePage = (props: IVenuePageProps) => {
@@ -172,8 +172,11 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   };
 
-  const { nowPlayingShows, upcomingShows, pastShows } =
-    getShowsBasedOnTimestamp(availableShowsData);
+  const {
+    nowPlayingShows,
+    upcomingShows,
+    pastShows,
+  } = getShowsBasedOnTimestamp(availableShowsData);
 
   let tgidForFirstShow;
   switch (true) {

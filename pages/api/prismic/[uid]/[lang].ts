@@ -12,7 +12,7 @@ const getPrismicDocumentData = async (
 ) => {
   const { query, headers } = req;
   const { host } = headers ?? window.location;
-  const { uid, lang, isDev } = query as unknown as {
+  const { uid, lang, isDev } = (query as unknown) as {
     uid: string;
     lang: string;
     isDev: boolean;

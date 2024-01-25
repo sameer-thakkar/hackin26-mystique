@@ -133,8 +133,9 @@ const getPopularSubCategoriesData = async ({
   mbCity,
   lang,
 }: IGetPopularSubCategoriesData) => {
-  const { starredCategoriesAndSubCategories: starredItems = [] } =
-    categoryApiData;
+  const {
+    starredCategoriesAndSubCategories: starredItems = [],
+  } = categoryApiData;
   const { subCategoriesMap } = categorySubcategoryMap;
 
   const starredSubCategoryNamesArr: string[] = [];
@@ -192,10 +193,13 @@ const getPopularSubCategoriesData = async ({
         results.forEach((item: PrismicDocumentWithUID) => {
           const uid = getUid({ doc: item, lang });
           if (uid && shouldIncludeDoc(item)) {
-            const { tagged_sub_category: subCategoryName, tagged_mb_type } =
-              item.data;
-            const subCategoryHOData =
-              starredSubCategoryNamesMap.get(subCategoryName);
+            const {
+              tagged_sub_category: subCategoryName,
+              tagged_mb_type,
+            } = item.data;
+            const subCategoryHOData = starredSubCategoryNamesMap.get(
+              subCategoryName
+            );
             if (subCategoryHOData) {
               // remove current subcategory data from current map to remove duplicates
               starredSubCategoryNamesMap.set(subCategoryName, undefined);

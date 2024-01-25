@@ -38,8 +38,9 @@ const getGlobalCity = async ({ req, uid, lang }: any) => {
       ticketPagesPromise,
     ]);
 
-    const [cityCollections, ticketPages] =
-      handleSettledPromiseResults(allSettledResults);
+    const [cityCollections, ticketPages] = handleSettledPromiseResults(
+      allSettledResults
+    );
 
     return {
       CMSContent: {

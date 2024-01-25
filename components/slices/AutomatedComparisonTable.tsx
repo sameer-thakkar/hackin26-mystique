@@ -80,7 +80,7 @@ const ComparisonTableWrapper = styled.div<{
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(3, 1fr) ${({ $isMobile }) =>
-        $isMobile ? '16px' : ''};
+      $isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;

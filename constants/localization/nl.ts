@@ -121,8 +121,10 @@ const nl = {
   COMPARE_ALL_DETAILS: 'Vergelijk Alle details',
   COVID19_ALERT: {
     KEY_TEXT: 'Update over COVID-19',
-    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT: 'Jij bent onze prioriteit. Raadpleeg onze hulppagina voor de laatste updates over ons flexibele annuleringsbeleid',
+    LINK:
+      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT:
+      'Jij bent onze prioriteit. Raadpleeg onze hulppagina voor de laatste updates over ons flexibele annuleringsbeleid',
   },
   CURRENCY: 'Valuta',
   CUSTOMER_REVIEW_HEADING: 'Beoordelingen',
@@ -251,19 +253,23 @@ const nl = {
   REOPENS: 'Heropent',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT: 'De 2G voorschriften zijn van toepassing: toegang tot accommodaties, culturele instellingen, restaurants/bars en andere plekken is alleen mogelijk met een bewijs van volledige vaccinatie of eerdere besmetting. Een negatieve Covid-19 test is niet langer voldoende.',
+      TEXT:
+        'De 2G voorschriften zijn van toepassing: toegang tot accommodaties, culturele instellingen, restaurants/bars en andere plekken is alleen mogelijk met een bewijs van volledige vaccinatie of eerdere besmetting. Een negatieve Covid-19 test is niet langer voldoende.',
     },
     AU_DESCRIPTION: {
-      TEXT: 'Bezoekers van 16 jaar en ouder moeten een COVID-19 vaccinatiebewijs of medische vrijstelling kunnen tonen.',
+      TEXT:
+        'Bezoekers van 16 jaar en ouder moeten een COVID-19 vaccinatiebewijs of medische vrijstelling kunnen tonen.',
     },
     BANNER_CTA: 'Lees meer',
     BERLIN_DESCRIPTION: {
-      TEXT: 'Het 2G-reglement is van toepassing: alleen volledig gevaccineerde en herstelde bezoekers met een bewijs van genezing krijgen toegang. Bezoekers jonger dan 18 jaar of zij die om medische redenen niet gevaccineerd kunnen worden, dienen bij de ingang een negatief resultaat van de COVID-test te overleggen. Personen die om medische redenen niet gevaccineerd kunnen worden, moeten bij de ingang tevens hun onmogelijkheid tot vaccinatie aantonen aan de hand van een medisch certificaat.',
+      TEXT:
+        'Het 2G-reglement is van toepassing: alleen volledig gevaccineerde en herstelde bezoekers met een bewijs van genezing krijgen toegang. Bezoekers jonger dan 18 jaar of zij die om medische redenen niet gevaccineerd kunnen worden, dienen bij de ingang een negatief resultaat van de COVID-test te overleggen. Personen die om medische redenen niet gevaccineerd kunnen worden, moeten bij de ingang tevens hun onmogelijkheid tot vaccinatie aantonen aan de hand van een medisch certificaat.',
     },
     CTA_TEXT: 'Details omtrent veiligheid',
     DESCRIPTION_CTA: 'Meer weten.',
     EU_DESCRIPTION: {
-      TEXT: 'Vanaf 21 juli 2021 moeten alle bezoekers van 12 jaar en ouder een EU COVID Certificaat kunnen tonen.',
+      TEXT:
+        'Vanaf 21 juli 2021 moeten alle bezoekers van 12 jaar en ouder een EU COVID Certificaat kunnen tonen.',
     },
     EU_HEADING: 'EU Covid-certificaat vereist',
     EU_PREFIX: 'Opmerking: ',
@@ -274,7 +280,8 @@ const nl = {
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
     HEADING: 'Beste veiligheidsnormen',
     IT_DESCRIPTION: {
-      TEXT: 'Vanaf 6 augustus 2021 moeten alle bezoekers van 11 jaar en ouder een Green Pass of EU COVID Certificaat kunnen tonen.',
+      TEXT:
+        'Vanaf 6 augustus 2021 moeten alle bezoekers van 11 jaar en ouder een Green Pass of EU COVID Certificaat kunnen tonen.',
     },
     IT_PREFIX: 'Opmerking: ',
     MOBILE_HEADING: 'Veilige ervaringen',
@@ -374,16 +381,19 @@ const nl = {
         'We werken samen met onze partners over de hele wereld om de beste veiligheidsnormen te implementeren volgens de WHO-richtlijnen. Alle huidige maatregelen zijn geverifieerd en hier weergegeven. Het is tijd om weer te genieten van de wereld om ons heen.',
     },
     NL_DESCRIPTION: {
-      TEXT: 'Bezoekers van 13 jaar en ouder zijn verplicht een COVID Certificaat (digitaal of geprint) te tonen waaruit blijkt dat je gevaccineerd, negatief getest, of onlangs hersteld bent van COVID-19. Het dragen van een gezichtsmasker is verplicht.',
+      TEXT:
+        'Bezoekers van 13 jaar en ouder zijn verplicht een COVID Certificaat (digitaal of geprint) te tonen waaruit blijkt dat je gevaccineerd, negatief getest, of onlangs hersteld bent van COVID-19. Het dragen van een gezichtsmasker is verplicht.',
     },
     SG_DESCRIPTION: {
-      TEXT: 'Vanaf 13 oktober 2021 mogen alleen volledig gevaccineerde bezoekers in groepen van 2 naar binnen. Je moet voor binnenkomst een bewijs van vaccinatiestatus, een recent negatief COVID-19 testresultaat, en/of een documenten ter bewijs van herstel laten zien.',
+      TEXT:
+        'Vanaf 13 oktober 2021 mogen alleen volledig gevaccineerde bezoekers in groepen van 2 naar binnen. Je moet voor binnenkomst een bewijs van vaccinatiestatus, een recent negatief COVID-19 testresultaat, en/of een documenten ter bewijs van herstel laten zien.',
     },
     SHORT_HEADING: 'Beste veiligheidsnormen',
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Jouw veiligheid is onze prioriteit',
-    TEXT: 'We hebben belangrijke stappen genomen om de hygiëne te verbeteren met behulp van ontsmettingsmiddelen en uitgebreide en regelmatige oppervlaktereiniging. Groepen worden ook gecontroleerd om opstoppingen te voorkomen.',
+    TEXT:
+      'We hebben belangrijke stappen genomen om de hygiëne te verbeteren met behulp van ontsmettingsmiddelen en uitgebreide en regelmatige oppervlaktereiniging. Groepen worden ook gecontroleerd om opstoppingen te voorkomen.',
   },
   SAVE: 'Bespaar {0}%',
   SAVE_PERCENT: 'Bespaar {0}%',
@@ -926,5 +936,31 @@ const nl = {
   BEST_WEST_END_SHOWS_CALENDAR: 'Kalender van de beste West End-shows',
   IN: 'in',
   SEATS: 'Zitplaatsen',
+  CONTENT_PAGE: {
+    CONTENT_GUIDE: 'Inhoudstafel',
+    QUICK_INFORMATION: 'Snelle informatie',
+    PEAK: 'piekuren',
+    OFF_PEAK: 'buiten piekuren',
+    ADDRESS: 'ADRES',
+    RECOMMENDED_DURATION: 'AANBEVOLEN DUUR',
+    VISITORS_PER_YEAR: 'BEZOEKERS PER JAAR',
+    NUMBER_OF_ENTRANCES: 'AANTAL INGANGEN',
+    EXPECTED_WAIT_TIME_STANDARD: 'VERWACHTE WACHTTIJD - STANDAARD',
+    EXPECTED_WAIT_TIME_SKIP_THE_LINE: 'VERWACHTE WACHTTIJD - VERSNELDE TOEGANG',
+    UNESCO_YEAR: 'UNESCO JAAR',
+    ARCHITECTURE_STYLE: 'ARCHITECTUURSTIJL',
+    TIMINGS: 'TIJDEN',
+    SIZE_HEIGHT: 'GROOTTE/HOOGTE',
+    TICKETS: 'KAARTJES',
+    FUN_FACTS: 'Leuke weetjes',
+    DID_YOU_KNOW: 'Wist je dat?',
+    MORE_INTERESTING_FACTS: 'Meer interessante feiten',
+    PLAN_YOUR_VISIT: 'Plan je bezoek',
+    ALSO_KNOWN_AS: 'Ook gekend als',
+    FOUNDED_ON: 'Opgericht op',
+    FOUNDED_BY: 'Opgericht door',
+    FROM: 'Vanaf',
+    CLOSED_TODAY: 'Vandaag gesloten',
+  },
 };
 export default nl;

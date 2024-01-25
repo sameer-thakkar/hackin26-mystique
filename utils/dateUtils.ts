@@ -224,3 +224,70 @@ export const getOrderedMonthsBasedOnCurrentMonth = () => {
 
   return monthsList;
 };
+
+export const formatOperatingDayTimings = (
+  operatingDay: {
+    openingTime: string;
+    closingTime: string;
+    lastEntryTime: string;
+  },
+  lang: string
+): { hours: string; lastAdmission?: string } => {
+  const formattedOpeningTime = getHumanReadableTime({
+    formattedTime: operatingDay.openingTime,
+    lang,
+  });
+  const formattedClosingTime = getHumanReadableTime({
+    formattedTime: operatingDay.closingTime,
+    lang,
+  });
+  const formattedLastEntryTime =
+    operatingDay.lastEntryTime &&
+    getHumanReadableTime({
+      formattedTime: operatingDay.lastEntryTime,
+      lang,
+    });
+
+  return {
+    hours: `${formattedOpeningTime} - ${formattedClosingTime}`,
+    lastAdmission: formattedLastEntryTime,
+  };
+};
+
+export const getCurrentOperatingHours = (
+  operatingSchedules: Record<string, any>[],
+  lang: string
+) => {
+  try {
+    const currentDate = new Date();
+    for (const schedule of operatingSchedules) {
+      const startDate = new Date(schedule?.startDate);
+      const endDate = new Date(schedule?.endDate);
+
+      if (currentDate >= startDate && currentDate <= endDate) {
+        const dayOfWeek = currentDate
+          .toLocaleString('en-US', { weekday: 'long' })
+          .toUpperCase();
+        const operatingDay = schedule?.operatingDaySchedules.find(
+          (day: any) => day?.dayOfWeek === dayOfWeek
+        );
+
+        if (
+          !operatingDay?.closed &&
+          operatingDay?.openingTime &&
+          operatingDay?.closingTime
+        ) {
+          return formatOperatingDayTimings(operatingDay, lang);
+        }
+
+        return {
+          hours: strings.CONTENT_PAGE.CLOSED_TODAY,
+          lastAdmission: null,
+        };
+      }
+    }
+    return {};
+  } catch {
+    return {};
+  }
+};

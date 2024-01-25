@@ -30,8 +30,9 @@ export const SearchPage = (props: any) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
   const { currentLanguage } = props;
-  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
   const currency = useRecoilValue(currencyAtom);
 
   const searchItemClick = (

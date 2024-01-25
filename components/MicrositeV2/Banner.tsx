@@ -20,8 +20,8 @@ import {
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const swiperDuplicateSlideCount = 3;

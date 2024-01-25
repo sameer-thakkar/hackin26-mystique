@@ -69,12 +69,10 @@ const StyledColumn = styled.div`
     &:nth-of-type(2n) {
       background: ${COLORS.GRAY.G8};
     }
-    &:nth-of-type(
-        ${({
-            // @ts-expect-error TS(2339): Property 'colCount' does not exist on type 'Pick<D... Remove this comment to see the full error message
-            colCount,
-          }) => colCount + 1}
-      ) {
+    &:nth-of-type(${({
+          // @ts-expect-error TS(2339): Property 'colCount' does not exist on type 'Pick<D... Remove this comment to see the full error message
+          colCount,
+        }) => colCount + 1}) {
       grid-column: 1 / 3;
       grid-row: 1;
       font-size: 18px;

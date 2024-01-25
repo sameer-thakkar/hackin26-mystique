@@ -123,8 +123,10 @@ const pl = {
   COMPARE_ALL_DETAILS: 'Porównaj wszystkie szczegóły',
   COVID19_ALERT: {
     KEY_TEXT: 'Aktualności dotyczące COVID-19',
-    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT: 'Jesteś naszym priorytetem. Zapoznaj się z naszą stroną pomocy, aby znaleźć najnowsze informacje na temat naszych elastycznych zasad anulowania rezerwacji',
+    LINK:
+      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT:
+      'Jesteś naszym priorytetem. Zapoznaj się z naszą stroną pomocy, aby znaleźć najnowsze informacje na temat naszych elastycznych zasad anulowania rezerwacji',
   },
   CURRENCY: 'Waluta',
   CUSTOMER_REVIEW_HEADING: 'Opinie klientów',
@@ -268,25 +270,29 @@ const pl = {
     AT_DESCRIPTION: {
       CTA_URL:
         'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
-      TEXT: 'Obowiązują przepisy dotyczące 2G: dostęp do zakwaterowania, instytucji kultury, restauracji/barów jest możliwy tylko z dowodem pełnego zaszczepienia lub przeszłego zakażenia. Ujemny wynik testu na obecność COVID-19 nie jest już wystarczający.',
+      TEXT:
+        'Obowiązują przepisy dotyczące 2G: dostęp do zakwaterowania, instytucji kultury, restauracji/barów jest możliwy tylko z dowodem pełnego zaszczepienia lub przeszłego zakażenia. Ujemny wynik testu na obecność COVID-19 nie jest już wystarczający.',
     },
     AU_DESCRIPTION: {
       CTA_URL:
         'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
-      TEXT: 'Odwiedzający w wieku 16 lat i starsi muszą zaprezentować dowód szczepienia przeciw COVID-19 lub zwolnienie ze szczepienia. ',
+      TEXT:
+        'Odwiedzający w wieku 16 lat i starsi muszą zaprezentować dowód szczepienia przeciw COVID-19 lub zwolnienie ze szczepienia. ',
     },
     BANNER_CTA: 'Dowiedz się więcej',
     BERLIN_DESCRIPTION: {
       CTA_URL:
         'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
-      TEXT: 'Obowiązują zasady 2G: wstęp mają jedynie w pełni zaszczepieni odwiedzający i ozdrowieńcy, którzy przedstawią odpowiednie certyfikaty. Odwiedzający poniżej 18 roku życia lub ci, którzy nie mogą być zaszczepieni z powodów medycznych, muszą przedstawić przy wejściu negatywny wynik testu na COVID. Ci, którzy z powodów medycznych nie mogą się zaszczepić, również powinni to udowodnić, prezentując odpowiednie zwolnienie ze szczepienia przed wejściem.',
+      TEXT:
+        'Obowiązują zasady 2G: wstęp mają jedynie w pełni zaszczepieni odwiedzający i ozdrowieńcy, którzy przedstawią odpowiednie certyfikaty. Odwiedzający poniżej 18 roku życia lub ci, którzy nie mogą być zaszczepieni z powodów medycznych, muszą przedstawić przy wejściu negatywny wynik testu na COVID. Ci, którzy z powodów medycznych nie mogą się zaszczepić, również powinni to udowodnić, prezentując odpowiednie zwolnienie ze szczepienia przed wejściem.',
     },
     CTA_TEXT: 'Szczegóły bezpieczeństwa',
     DESCRIPTION_CTA: 'Dowiedz się więcej.',
     EU_DESCRIPTION: {
       CTA_URL:
         'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
-      TEXT: 'Od 21 lipca 2021 r. wszyscy odwiedzający w wieku 12 lat i starsi muszą zaprezentować unijny certyfikat COVID. ',
+      TEXT:
+        'Od 21 lipca 2021 r. wszyscy odwiedzający w wieku 12 lat i starsi muszą zaprezentować unijny certyfikat COVID. ',
     },
     EU_HEADING: 'Wymagany unijny certyfikat COVID',
     EU_PREFIX: 'Uwaga: ',
@@ -298,7 +304,8 @@ const pl = {
     HEADING: 'Najwyższe standardy bezpieczeństwa',
     IT_DESCRIPTION: {
       CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
-      TEXT: 'Od 6 sierpnia 2021 r. wszyscy odwiedzający w wieku 11 lat i starsi muszą zaprezentować unijny certyfikat COVID, czyli tak zwany paszport covidowy. ',
+      TEXT:
+        'Od 6 sierpnia 2021 r. wszyscy odwiedzający w wieku 11 lat i starsi muszą zaprezentować unijny certyfikat COVID, czyli tak zwany paszport covidowy. ',
     },
     IT_PREFIX: 'Uwaga: ',
     MOBILE_HEADING: 'Bezpieczne aktywności',
@@ -399,11 +406,13 @@ const pl = {
     NL_DESCRIPTION: {
       CTA_URL:
         'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
-      TEXT: 'Odwiedzający w wieku 13 lat i starsi muszą mieć (cyfrowy lub wydrukowany) certyfikat COVID, który potwierdza szczepienie, negatywny wynik niedawno zrobionego testu lub ważny certyfikat ozdrowieńca. Noszenie maseczki jest obowiązkowe. ',
+      TEXT:
+        'Odwiedzający w wieku 13 lat i starsi muszą mieć (cyfrowy lub wydrukowany) certyfikat COVID, który potwierdza szczepienie, negatywny wynik niedawno zrobionego testu lub ważny certyfikat ozdrowieńca. Noszenie maseczki jest obowiązkowe. ',
     },
     SG_DESCRIPTION: {
       CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
-      TEXT: 'Od 13 października 2021 r. tylko w pełni zaszczepieni odwiedzający mogą wchodzić w dwuosobowych grupach. Przed wejściem konieczne będzie zaprezentowanie dowodu szczepienia, negatywnego wyniku niedawno zrobionego testu przeciwko COVID-19 i/lub certyfikatu ozdrowieńca. ',
+      TEXT:
+        'Od 13 października 2021 r. tylko w pełni zaszczepieni odwiedzający mogą wchodzić w dwuosobowych grupach. Przed wejściem konieczne będzie zaprezentowanie dowodu szczepienia, negatywnego wyniku niedawno zrobionego testu przeciwko COVID-19 i/lub certyfikatu ozdrowieńca. ',
     },
     SHORT_HEADING: 'Obowiązują najwyższe standardy bezpieczeństwa',
   },
@@ -450,7 +459,8 @@ const pl = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Twoje bezpieczeństwo jest naszym priorytetem',
-    TEXT: 'Podjęliśmy istotne kroki w celu poprawy czystości i stosujemy środki dezynfekcyjne podczas kompleksowego i częstego czyszczenia powierzchni. Zapobiegamy też tłumom, kontrolując liczbę ludzi.',
+    TEXT:
+      'Podjęliśmy istotne kroki w celu poprawy czystości i stosujemy środki dezynfekcyjne podczas kompleksowego i częstego czyszczenia powierzchni. Zapobiegamy też tłumom, kontrolując liczbę ludzi.',
   },
   SAVE: 'Zaoszczędź {0}%',
   SAVE_PERCENT: 'Zaoszczędź {0}%',

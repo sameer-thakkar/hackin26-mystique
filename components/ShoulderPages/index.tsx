@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LongForm from 'components/common/LongForm';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import Masthead from 'components/Masthead';
-import Alert from 'components/UI/Alert';
 import DismissAlert from 'components/UI/DismissAlert';
 import SideNavModal from 'UI/SideNav';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -33,158 +30,27 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import sideNavHandler from 'utils/sideNavUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
-import COLORS from 'const/colors';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DROPDOWN_ELEMENT,
   SHOULDER_PAGE_TYPES,
+  SLICE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
+import { StyledContentPage } from './styles';
 
-const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
-const CategoryHeader = dynamic(
-  () =>
-    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const GeneralContentPage = dynamic(() =>
+  import(/* webpackChunkName: "GeneralShoulderPage" */ './General')
 );
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const AboutPage = dynamic(() =>
+  import(/* webpackChunkName: "AboutShoulderPage" */ './About')
 );
-
-const ContentWrapper = styled.main`
-  margin-top: 0;
-`;
-
-const StyledContentPage = styled.div`
-  display: grid;
-  grid-row-gap: 4rem;
-  margin-top: 0;
-  margin-bottom: 72px;
-
-  .page_tabs + div {
-    margin-top: -64px;
-  }
-
-  .slice-block h2 {
-    margin: 0.2em 0;
-    position: relative;
-    color: ${COLORS.GRAY.G2};
-    ${expandFontToken('Heading/Large')}
-  }
-  .slice-block h3 {
-    position: relative;
-    color: ${COLORS.GRAY.G2};
-    ${expandFontToken('Heading/Small')}
-  }
-
-  .slice-block > h2 {
-    margin-bottom: 20px;
-  }
-
-  .slice-block p {
-    ${expandFontToken('Paragraph/Large')}
-    color: ${COLORS.GRAY.G2};
-    margin-bottom: 1rem;
-  }
-
-  .slice-block.breadcrumbs + .slice-block {
-    margin-top: -2rem;
-
-    p {
-      margin: 0;
-    }
-  }
-
-  .slice-block ul {
-    ${expandFontToken('Paragraph/Large')}
-    padding-left: 20px;
-  }
-
-  .product .product-left p {
-    margin: 0;
-  }
-  .product .product-left {
-    width: 75%;
-    display: grid;
-    grid-row-gap: 10px;
-  }
-
-  .product {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px solid ${COLORS.GRAY.G6};
-    /*box-shadow: 0 1px 2px rgba(0,0,0,.18);*/
-    margin-bottom: 40px;
-    border-radius: 5px;
-    padding: 20px 40px;
-  }
-
-  .products:last-child {
-    margin-bottom: 70px;
-  }
-
-  .products .product .product-left .product-heading {
-    color: ${COLORS.GRAY.G2};
-    margin: 0;
-  }
-
-  .slice-wrapper.slice-block {
-    width: 100%;
-  }
-
-  .slice-wrapper .block-img img {
-    max-width: 100%;
-  }
-
-  .ticket_card_shoulder_page {
-    margin: 0 auto;
-    padding: 0;
-  }
-
-  .slice-block.rich_text p + h2 {
-    margin: 1.5rem 0 0.25rem;
-  }
-
-  @media (max-width: 768px) {
-    grid-row-gap: 3rem;
-    .page_tabs + div {
-      margin-top: -48px;
-    }
-    .slice-block h2 {
-      ${expandFontToken('Heading/Regular')}
-    }
-    .product .product-left {
-      width: 100%;
-    }
-    .slice-block p,
-    .slice-block .more-reads-text-text {
-      ${expandFontToken('Paragraph/Medium')}
-    }
-
-    .slice-block ul {
-      ${expandFontToken('Paragraph/Medium')}
-    }
-    .slice-block h3,
-    .slice-block .more-reads-text-heading,
-    .products .product .product-left .product-heading {
-      ${expandFontToken('Heading/XS')}
-    }
-    .product {
-      display: block;
-      padding: 0 20px;
-    }
-    .slice-wrapper.slice-block {
-      padding: 0 16px;
-      width: calc(100% - 32px);
-    }
-    .slice-block.rich_text p + h2 {
-      margin: 1.25rem 0 0.25rem;
-    }
-  }
-`;
+const GroupBooking = dynamic(() => import('../GroupBooking'), { ssr: false });
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+);
 
 class ContentPage extends Component<any, any> {
   constructor(props: any) {
@@ -239,8 +105,10 @@ class ContentPage extends Component<any, any> {
     if (legacyBooleanCheck(enableGroupBooking)) {
       let groupBookingTourTitles: any = [];
 
-      const { group_booking_excluded_tgids: groupBookingExcludedTgids, body1 } =
-        microsite_document_ref?.data;
+      const {
+        group_booking_excluded_tgids: groupBookingExcludedTgids,
+        body1,
+      } = microsite_document_ref?.data;
       let tours = body1?.[0]?.items || [];
       let filteredTours = tours.filter(function (tour: any) {
         return !groupBookingExcludedTgids.find(function (excludedTour: any) {
@@ -378,7 +246,6 @@ class ContentPage extends Component<any, any> {
     const {
       alternate_languages,
       data: CMSData,
-      categoryTourListData,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
@@ -392,34 +259,30 @@ class ContentPage extends Component<any, any> {
       breadcrumbs,
       prismicDocsForListicle,
       collectionsInListicles,
+      categoryTourListData,
     } = this.props;
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,
-      content_framework: contentFramework,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
-      body,
       microsite_document_ref,
-      secondary_footer: secondaryFooter,
-      side_navigation: sideNavToggle,
       baseLangCategorisationMetadata,
+      relatedContentPages,
+      poiInfo,
+      body,
+      content_framework: contentFramework,
+      secondary_footer: secondaryFooter,
     } = CMSData;
-
     const { data: micrositeData } = microsite_document_ref ?? {};
     const {
       tagged_city: taggedCity,
       tagged_mb_type: taggedMbType,
       shoulder_page_type,
     } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
+    const { design: mbDesign } = micrositeData || {};
 
     const apiReady = tourAPIData !== null;
-    const slices = [
-      ...(CMSData?.body || []),
-      ...(CMSData?.content_framework?.data?.body || []),
-    ];
-
-    const { design: mbDesign } = micrositeData || {};
 
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
@@ -430,10 +293,6 @@ class ContentPage extends Component<any, any> {
       host,
       uid
     );
-    const sidenavItems = sideNavHandler(slices);
-    const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
-    /* Using the condition sideNavToggle !== false because we want to keep side nav enabled by default for all content pages.
-     For new docs, we have set the default value as true, but older docs- the value comes as null. Hence the above condition. */
 
     // START Data extraction for populating head
     const contentPageHasOtherMetaTags = CMSData.other_meta_tags.filter(
@@ -515,19 +374,13 @@ class ContentPage extends Component<any, any> {
       show_covid19_alert: showCovid19Alert,
     } = microsite_document_ref.data;
 
-    const {
-      featured_image,
-      featured_image_link,
-      featured_image_alt,
-      featured_title: featuredTitle,
-    } = CMSData ?? {};
+    const { featured_image, featured_image_link, featured_image_alt } =
+      CMSData ?? {};
     const featuredImage = {
       url: featured_image_link.url || featured_image.url,
       alt: featured_image_alt || featured_image.alt,
     };
-    const { collectionDetails } = categoryTourListData || {};
-    const { id: collectionId, displayName: collectionName } =
-      collectionDetails || {};
+
     const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const currentLanguage = getLangObject(lang).code;
     const {
@@ -545,14 +398,46 @@ class ContentPage extends Component<any, any> {
       mbDesign,
       mbType: taggedMbType,
     });
-
-    const automatedBreadcrumbsExists =
-      Object?.keys(breadcrumbs ?? {}).length > 0;
     const breadcrumbsDetails = {
       breadcrumbs,
       taggedCity,
       primaryCity,
     };
+
+    const automatedBreadcrumbsExists =
+      Object.keys(breadcrumbs ?? {}).length > 0;
+    const isNotGeneralPage = [SHOULDER_PAGE_TYPES.ABOUT].includes(
+      shoulder_page_type || ''
+    );
+    const breadcrumbsSliceIndex = contentFWSlices.findIndex(
+      ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
+    );
+    const extractedPrismicBreadcrumbs =
+      isNotGeneralPage &&
+      !automatedBreadcrumbsExists &&
+      breadcrumbsSliceIndex >= 0 &&
+      contentFWSlices?.splice?.(breadcrumbsSliceIndex, 1);
+
+    const {
+      side_navigation: sideNavToggle,
+      featured_title: featuredTitle,
+    } = CMSData;
+
+    const slices = [
+      ...(CMSData?.body || []),
+      ...(CMSData?.content_framework?.data?.body || []),
+    ];
+    const extraSideNavItems = [];
+    if (shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT) {
+      extraSideNavItems.push(strings.CONTENT_PAGE.QUICK_INFORMATION);
+    }
+    const sidenavItems = sideNavHandler(slices);
+    const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
+
+    const { collectionDetails } = categoryTourListData || {};
+
+    const { id: collectionId, displayName: collectionName } =
+      collectionDetails || {};
 
     return (
       <div className="page-wrapper">
@@ -584,7 +469,6 @@ class ContentPage extends Component<any, any> {
             breadcrumbsDetails,
           }}
         />
-
         <Header
           languages={alternateLanguages}
           headerLinks={headerLinks}
@@ -640,53 +524,60 @@ class ContentPage extends Component<any, any> {
             handleClose={this.handleClose}
           />
         </Conditional>
-
-        <ContentWrapper>
-          <Masthead
-            title={featuredTitle}
-            image={featuredImage?.url ? featuredImage : null}
-            isMobile={this.state.isMobile}
+        <Conditional if={showSideNav}>
+          <SideNavModal
+            items={[...extraSideNavItems, ...sidenavItems]}
+            isMobile={!!this.state.isMobile}
+            collectionId={collectionId}
+            collectionName={collectionName}
+            pageTitle={featuredTitle}
+            visibleHeading={this.state.selectedHeading || null}
           />
-          <Conditional if={alertPopup}>
-            <Alert
-              popupUID={alertPopup?.uid}
-              currentLanguage={currentLanguage}
-            />
-          </Conditional>
-          <Conditional if={showSideNav}>
-            <SideNavModal
-              items={sidenavItems}
-              isMobile={this.props.isMobile}
-              collectionId={collectionId}
-              collectionName={collectionName}
-              pageTitle={featuredTitle}
-              visibleHeading={this.state.selectedHeading}
-            />
-          </Conditional>
-          <Conditional if={automatedBreadcrumbsExists}>
-            <Breadcrumbs
-              breadcrumbs={breadcrumbs}
-              taggedCity={taggedCity}
-              primaryCity={primaryCity}
-              isContentPage={true}
-              isMobile={this.state.isMobile}
-            />
-          </Conditional>
-          <StyledContentPage>
-            <ProductsContextProvider ready={apiReady}>
-              <InteractionContextProvider>
-                <LongForm
-                  content={[...body, ...contentFWSlices]}
-                  prismicDocsForListicle={prismicDocsForListicle}
-                  collectionsInListicles={collectionsInListicles}
-                  automatedBreadcrumbsExists={automatedBreadcrumbsExists}
-                  isContentPage
-                  {...this.props}
-                />
-              </InteractionContextProvider>
-            </ProductsContextProvider>
-          </StyledContentPage>
-        </ContentWrapper>
+        </Conditional>
+        <Conditional if={!isNotGeneralPage}>
+          <GeneralContentPage
+            alertPopup={alertPopup}
+            featuredImage={featuredImage}
+            currentLanguage={currentLanguage}
+            breadcrumbs={breadcrumbs}
+            taggedCity={taggedCity}
+            primaryCity={primaryCity}
+            isMobile={this.state.isMobile}
+            data={CMSData}
+            automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+          />
+        </Conditional>
+        <Conditional if={shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT}>
+          <AboutPage
+            featuredImage={featured_image_link?.url && featuredImage}
+            data={CMSData}
+            parentProps={this.props}
+            breadcrumbs={breadcrumbs}
+            taggedCity={taggedCity}
+            primaryCity={primaryCity}
+            isMobile={this.state.isMobile}
+            relatedContentPages={relatedContentPages}
+            poiInfo={poiInfo}
+            automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+            categoryTourListData={categoryTourListData}
+            // @ts-ignore
+            extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
+          />
+        </Conditional>
+        <StyledContentPage>
+          <ProductsContextProvider ready={apiReady}>
+            <InteractionContextProvider>
+              <LongForm
+                content={[...body, ...contentFWSlices]}
+                prismicDocsForListicle={prismicDocsForListicle}
+                collectionsInListicles={collectionsInListicles}
+                automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+                isContentPage
+                {...this.props}
+              />
+            </InteractionContextProvider>
+          </ProductsContextProvider>
+        </StyledContentPage>
         <Footer
           currentLanguage={currentLanguage}
           attraction={commonFooter?.data?.attraction || 'attraction'}

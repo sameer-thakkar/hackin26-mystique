@@ -123,8 +123,10 @@ const it = {
   COMPARE_ALL_DETAILS: 'Confronta tutti i dettagli',
   COVID19_ALERT: {
     KEY_TEXT: 'Aggiornamento riguardo COVID-19',
-    LINK: 'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
-    TEXT: 'La nostra priorità sei tu. Consulta la nostra pagina di aiuto per trovare gli ultimi aggiornamenti sulle nostre politiche di cancellazione flessibili.',
+    LINK:
+      'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
+    TEXT:
+      'La nostra priorità sei tu. Consulta la nostra pagina di aiuto per trovare gli ultimi aggiornamenti sulle nostre politiche di cancellazione flessibili.',
   },
   CURRENCY: 'Valuta',
   CUSTOMER_REVIEW_HEADING: 'Recensioni dei clienti',
@@ -255,19 +257,23 @@ const it = {
   REOPENS: 'Riapre',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT: "Si applicano i regolamenti 2G: l'accesso agli alloggi, alle istituzioni culturali, ai ristoranti/bar e altri ritrovi pubblici è possibile solo se si esibisce la prova di completata vaccinazione o di guarigione da infezione pregressa. Mostrare un test Covid-19 dall'esito negativo non è più sufficiente.",
+      TEXT:
+        "Si applicano i regolamenti 2G: l'accesso agli alloggi, alle istituzioni culturali, ai ristoranti/bar e altri ritrovi pubblici è possibile solo se si esibisce la prova di completata vaccinazione o di guarigione da infezione pregressa. Mostrare un test Covid-19 dall'esito negativo non è più sufficiente.",
     },
     AU_DESCRIPTION: {
-      TEXT: "I visitatori dai 16 anni in su devono mostrare una prova di avvenuta vaccinazione COVID-19 o un'esenzione medica.",
+      TEXT:
+        "I visitatori dai 16 anni in su devono mostrare una prova di avvenuta vaccinazione COVID-19 o un'esenzione medica.",
     },
     BANNER_CTA: 'Leggi tutto',
     BERLIN_DESCRIPTION: {
-      TEXT: "Si applica il regolamento 2G: potranno accedere solo gli ospiti completamente vaccinati o guariti e dotati di certificato comprovante lo stato di guarigione o avvenuta vaccinazione. Gli ospiti sotto i 18 anni o coloro che non possono essere vaccinati per motivi medici devono presentare all'ingresso un risultato negativo del test per COVID. Coloro che non possono essere vaccinati per ragioni mediche devono dimostrare all'ingresso la loro impossibilità di essere vaccinati per mezzo di un certificato medico.",
+      TEXT:
+        "Si applica il regolamento 2G: potranno accedere solo gli ospiti completamente vaccinati o guariti e dotati di certificato comprovante lo stato di guarigione o avvenuta vaccinazione. Gli ospiti sotto i 18 anni o coloro che non possono essere vaccinati per motivi medici devono presentare all'ingresso un risultato negativo del test per COVID. Coloro che non possono essere vaccinati per ragioni mediche devono dimostrare all'ingresso la loro impossibilità di essere vaccinati per mezzo di un certificato medico.",
     },
     CTA_TEXT: 'Dettagli Sulla Sicurezza',
     DESCRIPTION_CTA: 'Per saperne di più.',
     EU_DESCRIPTION: {
-      TEXT: 'Dal 21 luglio 2021 tutti i visitatori dai 12 anni in su devono presentare un certificato EU COVID.',
+      TEXT:
+        'Dal 21 luglio 2021 tutti i visitatori dai 12 anni in su devono presentare un certificato EU COVID.',
     },
     EU_HEADING: "Certificato COVID dell'UE richiesto",
     EU_PREFIX: 'Nota bene: ',
@@ -278,7 +284,8 @@ const it = {
       'Ogni esperienza contrassegnata da questo stemma è conforme ai migliori standard di sicurezza imposti dalle direttive sanitarie del governo locale.',
     HEADING: 'I più alti standard di sicurezza',
     IT_DESCRIPTION: {
-      TEXT: 'Dal 6 agosto 2021, tutti i visitatori dagli 11 anni in su dovranno presentare un Green Pass o un certificato EU COVID.',
+      TEXT:
+        'Dal 6 agosto 2021, tutti i visitatori dagli 11 anni in su dovranno presentare un Green Pass o un certificato EU COVID.',
     },
     IT_PREFIX: 'Avviso : ',
     MOBILE_HEADING: 'Esperienze Sicure',
@@ -386,16 +393,19 @@ const it = {
         "Stiamo lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
     },
     NL_DESCRIPTION: {
-      TEXT: "I visitatori dai 13 anni in su devono presentarsi con un certificato COVID (copia digitale o stampata) che dimostri l'avvenuta vaccinazione oppure un risultato negativo del test antigenico o un documento che certifichi l'avvenuta guarigione da COVID-19. Indossare una maschera facciale è obbligatorio.",
+      TEXT:
+        "I visitatori dai 13 anni in su devono presentarsi con un certificato COVID (copia digitale o stampata) che dimostri l'avvenuta vaccinazione oppure un risultato negativo del test antigenico o un documento che certifichi l'avvenuta guarigione da COVID-19. Indossare una maschera facciale è obbligatorio.",
     },
     SG_DESCRIPTION: {
-      TEXT: 'Dal 13 ottobre 2021 solo i visitatori completamente vaccinati potranno entrare in gruppi di 2. Dovrai mostrare la prova dello stato di avvenuta vaccinazione, un risultato negativo recente del test antigenico COVID-19, e/o qualsiasi documentazione per lo stato di avvenuta guarigione prima di entrare.',
+      TEXT:
+        'Dal 13 ottobre 2021 solo i visitatori completamente vaccinati potranno entrare in gruppi di 2. Dovrai mostrare la prova dello stato di avvenuta vaccinazione, un risultato negativo recente del test antigenico COVID-19, e/o qualsiasi documentazione per lo stato di avvenuta guarigione prima di entrare.',
     },
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'La tua sicurezza è la nostra priorità',
-    TEXT: 'Abbiamo implementato misure di sicurezza per migliorare la pulizia degli ambienti utilizzando disinfettanti tramite pulizie frequenti di tutye le superfici che entrano in contatto col pubblico. Inoltre, il numero di accessi giornaliero è ora regolamentato per evitare assembramenti.',
+    TEXT:
+      'Abbiamo implementato misure di sicurezza per migliorare la pulizia degli ambienti utilizzando disinfettanti tramite pulizie frequenti di tutye le superfici che entrano in contatto col pubblico. Inoltre, il numero di accessi giornaliero è ora regolamentato per evitare assembramenti.',
   },
   SAVE: 'Risparmi il  {0}%',
   SAVE_PERCENT: 'Risparmia il {0}%',
@@ -981,5 +991,32 @@ const it = {
     'Calendario dei migliori spettacoli al West End',
   IN: 'en',
   SEATS: 'Posti',
+  CONTENT_PAGE: {
+    CONTENT_GUIDE: 'Guida ai contenuti',
+    QUICK_INFORMATION: 'Informazioni rapide',
+    PEAK: 'di punta',
+    OFF_PEAK: 'non di punta',
+    ADDRESS: 'INDIRIZZO',
+    RECOMMENDED_DURATION: 'DURATA CONSIGLIATA',
+    VISITORS_PER_YEAR: "VISITATORI ALL'ANNO",
+    NUMBER_OF_ENTRANCES: 'NUMERO DI INGRESSI',
+    EXPECTED_WAIT_TIME_STANDARD: 'TEMPO DI ATTESA PREVISTO - STANDARD',
+    EXPECTED_WAIT_TIME_SKIP_THE_LINE:
+      'TEMPO DI ATTESA PREVISTO - SALTA LA CODA',
+    UNESCO_YEAR: "ENTRATA NELL'UNESCO",
+    ARCHITECTURE_STYLE: 'STILE ARCHITETTONICO',
+    TIMINGS: 'ORARI',
+    SIZE_HEIGHT: 'DIMENSIONE/ALTEZZA',
+    TICKETS: 'BIGLIETTI',
+    FUN_FACTS: 'Curiosità divertenti',
+    DID_YOU_KNOW: 'Lo sapevi?',
+    MORE_INTERESTING_FACTS: 'Altri fatti interessanti',
+    PLAN_YOUR_VISIT: 'Pianifica la tua visita',
+    ALSO_KNOWN_AS: 'Conosciuto anche come',
+    FOUNDED_ON: 'Fondato nel',
+    FOUNDED_BY: 'Trovato da',
+    FROM: 'A partire da',
+    CLOSED_TODAY: 'Chiuso oggi',
+  },
 };
 export default it;

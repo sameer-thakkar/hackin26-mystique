@@ -4,8 +4,13 @@ import MobileTrailer from 'components/NewsPage/components/Trailer/components/Mob
 import { TTrailerProps } from 'components/NewsPage/components/Trailer/interface';
 
 const Trailer: React.FC<TTrailerProps> = ({ content, isMobile }) => {
-  const { trailerSectionData, CFData, showPageDocuments, tgid, videoData } =
-    content;
+  const {
+    trailerSectionData,
+    CFData,
+    showPageDocuments,
+    tgid,
+    videoData,
+  } = content;
 
   return (
     <>

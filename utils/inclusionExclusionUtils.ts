@@ -134,8 +134,9 @@ export const appendInclusionExclusion = ({
           spans: [],
         },
       });
-      inclusionExclusionHighlights =
-        inclusionExclusionHighlights.concat(inclusions);
+      inclusionExclusionHighlights = inclusionExclusionHighlights.concat(
+        inclusions
+      );
     }
     if (exclusionsItems) {
       inclusionExclusionHighlights.push({
@@ -147,8 +148,9 @@ export const appendInclusionExclusion = ({
           spans: [],
         },
       });
-      inclusionExclusionHighlights =
-        inclusionExclusionHighlights.concat(exclusions);
+      inclusionExclusionHighlights = inclusionExclusionHighlights.concat(
+        exclusions
+      );
     }
     currentHighlights = appendInclusionExclusionHighlights({
       currentHighlights,

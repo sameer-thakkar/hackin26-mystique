@@ -5,8 +5,8 @@ import Conditional from 'components/common/Conditional';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
 import InteractionContext, { uniqueTgids } from 'contexts/Interaction';
 
-const PopulateProducts = dynamic(
-  () => import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
+const PopulateProducts = dynamic(() =>
+  import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
 );
 
 const StyledProductWrapper = styled.div<{ isEntertainmentMb: boolean }>`

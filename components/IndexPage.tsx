@@ -38,11 +38,11 @@ import Loader from './common/Loader';
 import Analytics from './Analytics';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
-const ContentPage = dynamic(() => import('components/ContentPage'));
+const ContentPage = dynamic(() => import('components/ShoulderPages'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
-const LttShowPageV2 = dynamic(
-  () => import('components/MicrositeV2/LttShowPageV2')
+const LttShowPageV2 = dynamic(() =>
+  import('components/MicrositeV2/LttShowPageV2')
 );
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const VenuePage = dynamic(() => import('components/VenuePage'));

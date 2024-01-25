@@ -19,16 +19,16 @@ import VerticalCardsGrid from './VerticalCardsGrid';
 // // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./CustomLinkedTours'));
 const ImageGallery = dynamic(() => import('./ImageGallery'));
-const CarouselGallery = dynamic(
-  () => import(/* webpackChunkName: "CarouselGallery" */ './CarouselGallery')
+const CarouselGallery = dynamic(() =>
+  import(/* webpackChunkName: "CarouselGallery" */ './CarouselGallery')
 );
 const TicketCards = dynamic(() => import('./TicketCards'));
 const ImageLinksCarousel = dynamic(() => import('./ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./TourComparision'));
-const AutomatedComparisonTable = dynamic(
-  () => import('./AutomatedComparisonTable')
+const AutomatedComparisonTable = dynamic(() =>
+  import('./AutomatedComparisonTable')
 );
 const ImageGrid = dynamic(() => import('./ImageGrid'));
 const ImageTextGrid = dynamic(() => import('./ImageTextGrid'));
@@ -36,11 +36,11 @@ const InternalContentCard = dynamic(() => import('./InternalContentCard'));
 const FWActionCard = dynamic(() => import('./FWActionCard'));
 const FeatureBox = dynamic(() => import('./FeatureBox'));
 const CardCarousel = dynamic(() => import('./CardCarousel'));
-const CategorySection = dynamic(
-  () => import('components/MicrositeV2/CategorySection')
+const CategorySection = dynamic(() =>
+  import('components/MicrositeV2/CategorySection')
 );
-const CategorySlider = dynamic(
-  () => import('components/MicrositeV2/CategorySlider')
+const CategorySlider = dynamic(() =>
+  import('components/MicrositeV2/CategorySlider')
 );
 const MicrobrandCards = dynamic(() => import('./MicrobrandCards'));
 const TabWrapper = dynamic(() => import('./TabWrapper'));
@@ -58,14 +58,14 @@ const ListicleSection = dynamic(() => import('./ListicleSection'));
 const Listicle = dynamic(() => import('./Listicle'));
 const ListicleV2 = dynamic(() => import('./ListicleV2/index'));
 const ListicleSectionV2 = dynamic(() => import('./ListicleSectionV2/index'));
-const ExperienceCarousel = dynamic(
-  () => import('components/GlobalMbs/Carousels/ExperienceCarousel')
+const ExperienceCarousel = dynamic(() =>
+  import('components/GlobalMbs/Carousels/ExperienceCarousel')
 );
-const CollectionCarousel = dynamic(
-  () => import('components/GlobalMbs/Carousels/CollectionCarousel')
+const CollectionCarousel = dynamic(() =>
+  import('components/GlobalMbs/Carousels/CollectionCarousel')
 );
-const StructuredCard = dynamic(
-  () => import(/* webpackChunkName: "StructuredCard" */ './StructuredCard')
+const StructuredCard = dynamic(() =>
+  import(/* webpackChunkName: "StructuredCard" */ './StructuredCard')
 );
 
 const Reviews = dynamic(() => import('./Reviews'));
@@ -763,8 +763,13 @@ export const sliceComponents = () => {
     },
     global_experiences: (props: any) => {
       const { slice, context } = props || {};
-      const { cards_in_a_row, experience_type, mb_type, show_see_all, title } =
-        slice?.primary;
+      const {
+        cards_in_a_row,
+        experience_type,
+        mb_type,
+        show_see_all,
+        title,
+      } = slice?.primary;
 
       const experienceCarouselTitle =
         context?.isGlobalCollection && experience_type === 'Tickets'

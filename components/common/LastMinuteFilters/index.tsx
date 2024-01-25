@@ -42,8 +42,9 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     selectedDateTimeFilterButtonIndex,
     setSelectedDateTimeFilterButtonIndex,
   ] = useState(0);
-  const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] =
-    useState(false);
+  const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] = useState(
+    false
+  );
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];

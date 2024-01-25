@@ -18,8 +18,8 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const swiperParams: SwiperProps = {

@@ -81,8 +81,10 @@ const Media: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
 const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [mainSwiper, setMainSwiperInstance] = useState<TSwiper | null>(null);
-  const [thumbnailSwiper, setThumbnailSwiperInstance] =
-    useState<TSwiper | null>(null);
+  const [
+    thumbnailSwiper,
+    setThumbnailSwiperInstance,
+  ] = useState<TSwiper | null>(null);
   const { host, isDev, lang } = useContext(MBContext);
   const trailerRef = useRef(null);
   const isTrailerSectionVisible = useOnScreen({

@@ -13,9 +13,12 @@ export const BreadcrumbsContainer = styled.div<{
   $isCatOrSubCatPage: boolean;
   $isNewsPage: boolean;
   $isDropdownOpen: boolean;
+  $isRevampedShoulderPage: boolean;
 }>`
-  width: calc(100% - (5.46vw * 2));
-  max-width: ${SIZES.MAX_WIDTH};
+  ${({ $isRevampedShoulderPage }) =>
+    !$isRevampedShoulderPage &&
+    `width: calc(100% - (5.46vw * 2));
+    max-width: ${SIZES.MAX_WIDTH};`}
 
   ${({
     $isV2MB,
@@ -24,8 +27,11 @@ export const BreadcrumbsContainer = styled.div<{
     $isCatOrSubCatPage,
     $isCategoryPage,
     $isNewsPage,
+    $isRevampedShoulderPage,
   }) => {
     switch (true) {
+      case $isRevampedShoulderPage:
+        return 'padding: 0.5rem 0';
       case $isV2MB:
         return `margin: 2.5rem auto 3.5rem; padding: 0 5.46vw`;
       case $isShowPage:
@@ -62,12 +68,14 @@ export const BreadcrumbsContainer = styled.div<{
       $isCatOrSubCatPage,
       $isCategoryPage,
       $isNewsPage,
+      $isRevampedShoulderPage,
     }) =>
       !$isShowPage &&
       !$isCategoryPage &&
       !$isVenuePage &&
       !$isCatOrSubCatPage &&
       !$isNewsPage &&
+      !$isRevampedShoulderPage &&
       `margin-bottom: 3.25rem; padding: 0 1rem`};
 
     ${({ $isContentPage }) => $isContentPage && `margin-left: 0;`};

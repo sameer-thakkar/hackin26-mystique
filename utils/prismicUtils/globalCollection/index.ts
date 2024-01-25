@@ -68,8 +68,11 @@ const getGlobalCollection = async ({ req, uid, lang }: any) => {
       countryCollectionsPromise,
     ]);
 
-    const [subPages, cityCollections, countryCollections] =
-      handleSettledPromiseResults(allSettledResults);
+    const [
+      subPages,
+      cityCollections,
+      countryCollections,
+    ] = handleSettledPromiseResults(allSettledResults);
 
     let ticketsPage, attractionsPage;
     if (subPages?.results?.length) {

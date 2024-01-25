@@ -121,8 +121,10 @@ const en = {
   COMPARE_ALL_DETAILS: 'Compare All Details',
   COVID19_ALERT: {
     KEY_TEXT: 'Update on COVID-19',
-    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT: 'You are our priority. Please check our help page to find the latest updates on our flexible cancellation policies',
+    LINK:
+      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT:
+      'You are our priority. Please check our help page to find the latest updates on our flexible cancellation policies',
   },
   CURRENCY: 'Currency',
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
@@ -264,25 +266,29 @@ const en = {
     AT_DESCRIPTION: {
       CTA_URL:
         'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
-      TEXT: '2G regulations apply: access to accommodation, cultural institutions, and restaurants/bars, among others is only possible with proof of full vaccination or past infection. A negative Covid-19 test is no longer sufficient.',
+      TEXT:
+        '2G regulations apply: access to accommodation, cultural institutions, and restaurants/bars, among others is only possible with proof of full vaccination or past infection. A negative Covid-19 test is no longer sufficient.',
     },
     AU_DESCRIPTION: {
       CTA_URL:
         'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
-      TEXT: 'Visitors aged 16 and above must show proof of COVID-19 vaccination or medical exemption. ',
+      TEXT:
+        'Visitors aged 16 and above must show proof of COVID-19 vaccination or medical exemption. ',
     },
     BANNER_CTA: 'Know More',
     BERLIN_DESCRIPTION: {
       CTA_URL:
         'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
-      TEXT: '2G regulations apply: only fully-vaccinated and recovered guests with proof of the same will be granted access. Guests under 18 or those who cannot be vaccinated for medical reasons must present a negative COVID test result at the entrance. Those who cannot be vaccinated for medical reasons should also prove their inability to be vaccinated by means of a medical certificate at the entrance.',
+      TEXT:
+        '2G regulations apply: only fully-vaccinated and recovered guests with proof of the same will be granted access. Guests under 18 or those who cannot be vaccinated for medical reasons must present a negative COVID test result at the entrance. Those who cannot be vaccinated for medical reasons should also prove their inability to be vaccinated by means of a medical certificate at the entrance.',
     },
     CTA_TEXT: 'Safety Details',
     DESCRIPTION_CTA: 'Know more.',
     EU_DESCRIPTION: {
       CTA_URL:
         'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
-      TEXT: 'From 21 July 2021, all visitors aged 12 and above must present an EU COVID Certificate. ',
+      TEXT:
+        'From 21 July 2021, all visitors aged 12 and above must present an EU COVID Certificate. ',
     },
     EU_HEADING: 'EU Covid Certificate Required',
     EU_PREFIX: 'Note: ',
@@ -294,7 +300,8 @@ const en = {
     HEADING: 'Best Safety Standards',
     IT_DESCRIPTION: {
       CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
-      TEXT: 'From 6 August 2021, all visitors aged 11 and above must present a Green Pass or EU COVID Certificate. ',
+      TEXT:
+        'From 6 August 2021, all visitors aged 11 and above must present a Green Pass or EU COVID Certificate. ',
     },
     IT_PREFIX: 'Note: ',
     MOBILE_HEADING: 'Safe Experiences',
@@ -395,11 +402,13 @@ const en = {
     NL_DESCRIPTION: {
       CTA_URL:
         'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
-      TEXT: 'Visitors aged 13 and above must have (digital or printed copy of) a COVID Certificate that shows that you have been vaccinated, received a negative test result, or have recently recovered from COVID-19. Wearing a face mask is mandatory. ',
+      TEXT:
+        'Visitors aged 13 and above must have (digital or printed copy of) a COVID Certificate that shows that you have been vaccinated, received a negative test result, or have recently recovered from COVID-19. Wearing a face mask is mandatory. ',
     },
     SG_DESCRIPTION: {
       CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
-      TEXT: 'From 13 October 2021, only fully vaccinated visitors can enter in groups of 2. You will have to show proof of vaccination status, a recent negative COVID-19 test result, and/or any recovery documentation before entry. ',
+      TEXT:
+        'From 13 October 2021, only fully vaccinated visitors can enter in groups of 2. You will have to show proof of vaccination status, a recent negative COVID-19 test result, and/or any recovery documentation before entry. ',
     },
     SHORT_HEADING: 'Best safety standards in place',
   },
@@ -450,7 +459,8 @@ const en = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Your safety is our priority',
-    TEXT: "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
   },
   SAVE: 'Save {0}%',
   SAVE_PERCENT: 'Save {0}%',
@@ -1032,6 +1042,32 @@ const en = {
   BEST_WEST_END_SHOWS_CALENDAR: 'Best west end shows calendar',
   IN: 'in',
   SEATS: 'Seats',
+  CONTENT_PAGE: {
+    CONTENT_GUIDE: 'Content Guide',
+    QUICK_INFORMATION: 'Quick information',
+    PEAK: 'Peak',
+    OFF_PEAK: 'Off Peak',
+    ADDRESS: 'ADDRESS',
+    RECOMMENDED_DURATION: 'RECOMMENDED DURATION',
+    VISITORS_PER_YEAR: 'VISITORS PER YEAR',
+    NUMBER_OF_ENTRANCES: 'NUMBER OF ENTRANCES',
+    EXPECTED_WAIT_TIME_STANDARD: 'EXPECTED WAIT TIME - STANDARD',
+    EXPECTED_WAIT_TIME_SKIP_THE_LINE: 'EXPECTED WAIT TIME - SKIP THE LINE',
+    UNESCO_YEAR: 'UNESCO YEAR',
+    ARCHITECTURE_STYLE: 'ARCHITECTURE STYLE',
+    TIMINGS: 'TIMINGS',
+    SIZE_HEIGHT: 'SIZE/HEIGHT',
+    TICKETS: 'TICKETS',
+    FUN_FACTS: 'Fun facts',
+    DID_YOU_KNOW: 'Did you know?',
+    MORE_INTERESTING_FACTS: 'More interesting facts',
+    PLAN_YOUR_VISIT: 'Plan your visit',
+    ALSO_KNOWN_AS: 'Also Known As',
+    FOUNDED_ON: 'Founded On',
+    FOUNDED_BY: 'Founded By',
+    FROM: 'From',
+    CLOSED_TODAY: 'Closed today',
+  },
 };
 
 export default en;

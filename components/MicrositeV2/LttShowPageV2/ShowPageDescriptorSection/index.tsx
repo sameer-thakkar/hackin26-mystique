@@ -21,8 +21,9 @@ const ShowPageDescriptorSection = ({
   isMobile,
   tgid,
 }: TShowPageDescriptorSectionProps) => {
-  const { detailsObjects, hasSpecialOffer, specialOffer } =
-    parseShowPageData(microBrandsHighlight);
+  const { detailsObjects, hasSpecialOffer, specialOffer } = parseShowPageData(
+    microBrandsHighlight
+  );
   const ageSuitabilitySection = document.getElementById(`Age & content guide`);
   const { offerHeading, offerText } = specialOffer ?? {};
 
@@ -48,8 +49,9 @@ const ShowPageDescriptorSection = ({
   };
 
   const jumpToAgeSuitability = () => {
-    const ageSuitabilitySection =
-      document.getElementById(`Age & content guide`);
+    const ageSuitabilitySection = document.getElementById(
+      `Age & content guide`
+    );
     if (!ageSuitabilitySection) return;
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,

@@ -87,8 +87,9 @@ const Calendar = ({
   tgid,
 }: TCalendarProps) => {
   const { sortedInventoryDates = [], dates } = calendarInventory ?? {};
-  const [isCalendarInTwoMonthsMode, setIsCalendarInTwoMonthsMode] =
-    useState(showTwoMonths);
+  const [isCalendarInTwoMonthsMode, setIsCalendarInTwoMonthsMode] = useState(
+    showTwoMonths
+  );
   const [selectedDate, setSelectedDate] = useState<string | null>(
     preSelectedDate
   );

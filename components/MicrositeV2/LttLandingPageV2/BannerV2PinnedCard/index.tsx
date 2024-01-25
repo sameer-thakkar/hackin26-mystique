@@ -38,8 +38,13 @@ import {
 } from 'assets/SvgIcons';
 
 const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
-    useContext(MBContext);
+  const {
+    lang,
+    nakedDomain,
+    redirectToHeadoutBookingFlow,
+    isDev,
+    host,
+  } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pinnedCard = useRef<HTMLDivElement>(null);
   const [isButtonLoading, setButtonLoading] = useState(false);
@@ -119,8 +124,11 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
     ),
   ];
 
-  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
-    getBoosterValueFromListingPrice(listingPrice);
+  const {
+    percentageSaved,
+    shouldShowcashbackElement,
+    cashbackValue,
+  } = getBoosterValueFromListingPrice(listingPrice);
 
   const { localisedOpeningDate, OPENING_ON } =
     getOpeningDate({

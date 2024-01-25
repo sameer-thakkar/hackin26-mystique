@@ -4,7 +4,9 @@ import { StlyedSplit } from 'UI/Split';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
 
-export const DetailedDescriptionCard = styled.div<IDetailedDescriptionCardProps>`
+export const DetailedDescriptionCard = styled.div<
+  IDetailedDescriptionCardProps
+>`
   grid-column: 1 / 5;
   display: ${({ showDescCard }) => (showDescCard ? 'grid' : 'none')};
   grid-template-columns: 1fr 0.9fr;

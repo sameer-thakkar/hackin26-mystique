@@ -97,8 +97,8 @@ const SpecialGuidedTourSidePanel = dynamic(
   )
 );
 
-const MediaCarousel = dynamic(
-  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(() =>
+  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;

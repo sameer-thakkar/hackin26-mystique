@@ -21,11 +21,11 @@ import { CAROUSEL_DIR, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const OverflowScroll = dynamic(
-  () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
+const OverflowScroll = dynamic(() =>
+  import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
 const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {

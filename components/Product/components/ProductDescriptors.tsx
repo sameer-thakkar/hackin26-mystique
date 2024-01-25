@@ -28,8 +28,10 @@ export const ProductDescriptors = ({
   showIcons = true,
   isMobile = false,
 }: TProductDescriptors) => {
-  const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
-    useState(false);
+  const [
+    cancellationPolicyEventRecorded,
+    setCancellationPolicyEventRecorded,
+  ] = useState(false);
 
   if (isLoading)
     return (

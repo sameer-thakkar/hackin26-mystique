@@ -78,8 +78,8 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 const Breadcrumb = dynamic(() => import('components/ShowPages/BreadCrumb'));
-const AccordionGroup = dynamic(
-  () => import('components/slices/AccordionGroup')
+const AccordionGroup = dynamic(() =>
+  import('components/slices/AccordionGroup')
 );
 
 const ShowPageWrapper = styled.div`
@@ -425,9 +425,9 @@ const ExperiencePage = ({
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = (
-    aboutTheatreSection as any
-  )?.tab_content[1]?.text?.split(' ')[2];
+  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
+    ' '
+  )[2];
   const showBookingUrl = createBookingURL({
     nakedDomain,
     lang: currentLanguage,
@@ -493,12 +493,10 @@ const ExperiencePage = ({
           "@type": "TheaterGroup",
           "name": "${name} Cast"
         },
-        "offers": [${offerSchema?.map(
-          (
-            // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
-            variant
-          ) => JSON.stringify(variant)
-        )}]
+        "offers": [${offerSchema?.map((
+          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+          variant
+        ) => JSON.stringify(variant))}]
       }`;
     })
     ?.join(',');

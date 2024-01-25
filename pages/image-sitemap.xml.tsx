@@ -221,8 +221,9 @@ ImageSitemapXml.getInitialProps = async ({
       });
 
       if (payload?.CMSContent?.cityCollections) {
-        const { results: cityCollectionsData } =
-          payload.CMSContent.cityCollections;
+        const {
+          results: cityCollectionsData,
+        } = payload.CMSContent.cityCollections;
 
         const finalCities = cityCollectionsData?.filter(
           (destination: { data: { city_name: string; body: Array<any> } }) =>

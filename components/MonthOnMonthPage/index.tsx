@@ -26,10 +26,10 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
   pageTabsSlice,
   displayMonth,
 }) => {
-  const allowedTgids = useMemo(
-    () => getAllowedTgids(displayMonth, allTours),
-    [allTours, displayMonth]
-  );
+  const allowedTgids = useMemo(() => getAllowedTgids(displayMonth, allTours), [
+    allTours,
+    displayMonth,
+  ]);
 
   const topShowsAllowedTgids = useMemo(
     () =>
