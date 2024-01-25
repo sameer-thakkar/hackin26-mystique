@@ -12,7 +12,7 @@ const CollectionMBShortcode = ({ id, text }: TCollectionMBShortcode) => {
   const { CITY_ATTRACTIONS } = categoryHeaderMenu;
   const { menu: cityAttractionItems } = CITY_ATTRACTIONS || {};
   const microbrandCollection = Object.values(
-    cityAttractionItems as Record<string, any>
+    (cityAttractionItems ?? {}) as Record<string, any>
   )?.find((item: any) => item?.collectionId === +id);
   const { url: MBLink } = microbrandCollection || {};
 

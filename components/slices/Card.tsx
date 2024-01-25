@@ -13,6 +13,7 @@ import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import {
@@ -290,19 +291,6 @@ type MediaProps = {
  *  - 'alt' field for Image URL
  *  - Will take precedence over 'Image Source' alt
  */
-
-const HyperLink = ({ children, node }: any) => {
-  return (
-    <a
-      href={node?.data?.url}
-      target="_blank"
-      rel="noreferrer noopener"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {children}
-    </a>
-  );
-};
 
 const PLAY_ICON_JSX = ({ isVideoUrl, onClick }: PlayIconProps) => (
   <Conditional if={isVideoUrl}>
@@ -590,9 +578,7 @@ const Card: React.FC<CardProps> = ({
           </Conditional>
           <PrismicRichText
             field={description}
-            components={{
-              hyperlink: HyperLink,
-            }}
+            components={shortCodeSerializer}
           />
           {cta?.link?.url ? CTA : null}
         </div>
