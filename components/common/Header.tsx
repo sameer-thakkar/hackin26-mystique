@@ -16,7 +16,7 @@ import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
@@ -407,7 +407,16 @@ const Header: React.FC<any> = (props) => {
             </span>
           </Conditional>
           <Conditional if={showTicketMenu}>
-            <StyledMenuItem as="a" href={showTicketRedirectionURL}>
+            <StyledMenuItem
+              as="a"
+              href={showTicketRedirectionURL}
+              onClick={() =>
+                trackEvent({
+                  eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+                  [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.TICKETS,
+                })
+              }
+            >
               {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
