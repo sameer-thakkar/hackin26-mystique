@@ -1,0 +1,146 @@
+import { GetServerSidePropsContext } from 'next';
+import { createClient } from 'prismicio';
+import * as Sentry from '@sentry/nextjs';
+import { fetchDomainConfig } from 'utils/apiUtils';
+import { sendLog } from 'utils/logger';
+import { traceError } from 'utils/logutils';
+import { getDomainFromUid, getLangUID } from 'utils/urlUtils';
+import {
+  CUSTOM_TYPES,
+  DEFAULT_PRISMIC_LANG,
+  MICROBRANDS_URL,
+} from 'const/index';
+import { globalHomepagStaticPageGq, micrositeStaticPageGq } from './graphQuery';
+
+export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
+  try {
+    const prismicClient = createClient();
+    const micrositeData = await prismicClient.getByUID('microsite', uid, {
+      lang: DEFAULT_PRISMIC_LANG,
+      graphQuery: micrositeStaticPageGq,
+    });
+    const {
+      faviconUrl,
+      logo: { logoUrl, showPoweredLogo },
+      name: whiteLabelName,
+    } = (await fetchDomainConfig(uid ?? '')) ?? {};
+
+    if (micrositeData) {
+      return {
+        CMSContent: {
+          ...micrositeData.data,
+          commonFooter: micrositeData.data.footer_ref,
+          faviconUrl,
+          logoUrl,
+          logoAltText: whiteLabelName,
+          hasPoweredByHeadoutLogo: showPoweredLogo ?? true,
+        },
+        ContentType: CUSTOM_TYPES.MICROSITE,
+      };
+    } else {
+      return Promise.reject();
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+    sendLog({
+      err: error,
+    });
+    // eslint-disable-next-line no-console
+    console.log(`${CUSTOM_TYPES.MICROSITE}`, error);
+  }
+};
+
+export const getStaticPageGlobalMB = async ({ uid }: { uid: string }) => {
+  try {
+    const prismicClient = createClient();
+    const globalHomepageData = await prismicClient.getByUID(
+      'global_homepage',
+      uid,
+      {
+        lang: DEFAULT_PRISMIC_LANG,
+        graphQuery: globalHomepagStaticPageGq,
+      }
+    );
+    const {
+      faviconUrl,
+      logo: { logoUrl, showPoweredLogo },
+      name: whiteLabelName,
+    } = await fetchDomainConfig(uid ?? '');
+    if (globalHomepageData) {
+      return {
+        CMSContent: {
+          ...globalHomepageData.data,
+          commonFooter: globalHomepageData.data.common_footer,
+          faviconUrl,
+          logoUrl,
+          logoAltText: whiteLabelName,
+          hasPoweredByHeadoutLogo: showPoweredLogo ?? true,
+        },
+        ContentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
+      };
+    } else {
+      return Promise.reject();
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+    sendLog({
+      err: error,
+    });
+    // eslint-disable-next-line no-console
+    console.log(`${CUSTOM_TYPES.MICROSITE}`, error);
+  }
+};
+
+type TStaticMicrosite = Awaited<ReturnType<typeof getStaticPageMicrosite>>;
+type TStaticGlobalHomepage = Awaited<ReturnType<typeof getStaticPageGlobalMB>>;
+
+const getLegalPageData = async ({ req, query }: GetServerSidePropsContext) => {
+  try {
+    const isDev = req
+      ? !!query.mystique_uid
+      : window.location.search.includes('mystique_uid');
+
+    const { host } = req ? req.headers : window.location;
+
+    const { uid: prodUid, lang } = getLangUID(req, query);
+
+    const uid = isDev
+      ? (query.mystique_uid as string)
+      : (getDomainFromUid(prodUid) as string);
+
+    const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+    const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
+
+    const contentType = await fetch(endpoint).then((res) => res.json());
+
+    let response:
+      | TStaticMicrosite
+      | TStaticGlobalHomepage
+      | Record<string, any> = {};
+
+    switch (contentType.type) {
+      case CUSTOM_TYPES.MICROSITE:
+        response = await getStaticPageMicrosite({ uid });
+        break;
+      case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+        response = await getStaticPageGlobalMB({ uid });
+        break;
+    }
+    return {
+      props: {
+        ...response,
+        host,
+        uid,
+        lang,
+        isDev,
+      },
+    };
+  } catch (error) {
+    traceError({ error, host: req?.headers?.host, url: req?.url });
+    return {
+      props: {},
+    };
+  }
+};
+
+export default getLegalPageData;

@@ -183,7 +183,7 @@ const LocaleSelector = ({
     const orderedCurrencies = Array.from(
       new Set([activeCurrency, ...finalTopCurrencies, ...CURRENCY_CODES_ORDER])
     );
-    const currenciesShallowClone = [...currencies];
+    const currenciesShallowClone = currencies ? [...currencies] : [];
     return currenciesShallowClone.sort((cA, cB) => {
       return (
         orderedCurrencies.indexOf(cA.code) - orderedCurrencies.indexOf(cB.code)
