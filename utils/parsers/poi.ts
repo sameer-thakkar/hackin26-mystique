@@ -4,19 +4,16 @@ import { getCurrentOperatingHours } from 'utils/dateUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { LANGUAGE_MAP, SHOULDER_PAGE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  ADDRESS,
-  ARCHITECTURE_STYLE,
-  DOOR_ENTRANCE,
-  // HEIGHT,
-  TICKET,
-  TIMER,
-  TIMING,
-  UNESCO_STATUS,
-  USERS,
-  WAIT_TIME,
-  WAIT_TIME_FAST,
-} from 'assets/SvgIcons';
+import Address from 'assets/address';
+import ArchitectureStyle from 'assets/architectureStyle';
+import DoorEntrance from 'assets/doorEntrance';
+import Ticket from 'assets/ticket';
+import Timer from 'assets/timer';
+import Timing from 'assets/timing';
+import UnescoStatus from 'assets/unescoStatus';
+import Users from 'assets/users';
+import WaitTime from 'assets/waitTime';
+import WaitTimeFast from 'assets/waitTimeFast';
 
 export const getPoiQuickInfo = (
   data: Record<string, any> = {},
@@ -43,7 +40,7 @@ export const getPoiQuickInfo = (
   const mappings = {
     ADDRESS: {
       value: location?.address,
-      Icon: ADDRESS,
+      Icon: Address,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
         type: SHOULDER_PAGE_TYPES.DIRECTIONS,
@@ -52,11 +49,11 @@ export const getPoiQuickInfo = (
     },
     RECOMMENDED_DURATION: {
       value: recommendedDuration,
-      Icon: TIMER,
+      Icon: Timer,
     },
     TIMINGS: {
       value: getCurrentOperatingHours(operatingSchedules, lang ?? 'en').hours,
-      Icon: TIMING,
+      Icon: Timing,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
         type: SHOULDER_PAGE_TYPES.TIMINGS,
@@ -65,7 +62,7 @@ export const getPoiQuickInfo = (
     },
     VISITORS_PER_YEAR: {
       value: visitorsPerYear,
-      Icon: USERS,
+      Icon: Users,
     },
     // SIZE_HEIGHT: {
     //   value: '[ignored for now]',
@@ -73,7 +70,7 @@ export const getPoiQuickInfo = (
     // },
     TICKETS: {
       value: minPrice && `${strings.CONTENT_PAGE.FROM} ${minPrice}`,
-      Icon: TICKET,
+      Icon: Ticket,
       url: `${convertUidToUrl({
         uid: ticketsUID,
         lang: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
@@ -81,7 +78,7 @@ export const getPoiQuickInfo = (
     },
     NUMBER_OF_ENTRANCES: {
       value: entrances?.length > 1 ? entrances?.length : null,
-      Icon: DOOR_ENTRANCE,
+      Icon: DoorEntrance,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
         type: SHOULDER_PAGE_TYPES.ENTRANCES,
@@ -92,22 +89,22 @@ export const getPoiQuickInfo = (
       value:
         (standardTickets?.PEAK_SEASON || standardTickets?.OFF_PEAK_SEASON) &&
         `${standardTickets?.PEAK_SEASON} (${strings.CONTENT_PAGE.PEAK}), ${standardTickets?.OFF_PEAK_SEASON} (${strings.CONTENT_PAGE.OFF_PEAK})`,
-      Icon: WAIT_TIME,
+      Icon: WaitTime,
     },
     EXPECTED_WAIT_TIME_SKIP_THE_LINE: {
       value:
         (skipTheLineTickets?.PEAK_SEASON ||
           skipTheLineTickets?.OFF_PEAK_SEASON) &&
         `${skipTheLineTickets?.PEAK_SEASON} (${strings.CONTENT_PAGE.PEAK}), ${skipTheLineTickets?.OFF_PEAK_SEASON} (${strings.CONTENT_PAGE.OFF_PEAK})`,
-      Icon: WAIT_TIME_FAST,
+      Icon: WaitTimeFast,
     },
     UNESCO_YEAR: {
       value: unescoYear,
-      Icon: UNESCO_STATUS,
+      Icon: UnescoStatus,
     },
     ARCHITECTURE_STYLE: {
       value: architecturalStyle,
-      Icon: ARCHITECTURE_STYLE,
+      Icon: ArchitectureStyle,
     },
   };
 

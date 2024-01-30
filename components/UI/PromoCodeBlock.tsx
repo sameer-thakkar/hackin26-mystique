@@ -11,7 +11,8 @@ import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CROSS_ICON_TICKET_CARD, INFO_ICON_TICKET_CARD } from 'assets/SvgIcons';
+import CrossIconTicketCard from 'assets/crossIconTicketCard';
+import InfoIconTicketCard from 'assets/infoIconTicketCard';
 
 const CTABlock = styled.div<{ isTicketCardDetailPopup?: boolean }>`
   display: flex;
@@ -197,7 +198,7 @@ const PromoCodeBlock = ({
   const TooltipElm = () => {
     return (
       <TooltipContainer>
-        <INFO_ICON_TICKET_CARD />
+        <InfoIconTicketCard />
         <span className="tooltip-text">
           {strings.PROMO_CODES.TOOL_TIP_INFO}
         </span>
@@ -209,7 +210,7 @@ const PromoCodeBlock = ({
     return (
       <CodeAppliedContainer>
         <span className="code-applied-text">{strings.PROMO_CODES.APPLIED}</span>
-        <CROSS_ICON_TICKET_CARD />
+        <CrossIconTicketCard />
       </CodeAppliedContainer>
     );
   };

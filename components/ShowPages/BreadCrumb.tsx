@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const BreadcrumbContainer = styled.div`
   display: grid;
@@ -56,7 +56,7 @@ const Breadcrumb = ({ links }: { links: any[] }) => {
           <StyledBreadcrumb key={index}>
             <StyledLink href={url}>{text}</StyledLink>
             {links.length - 1 !== index && (
-              <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
+              <StyledChevron>{ChevronLeft}</StyledChevron>
             )}
           </StyledBreadcrumb>
         );

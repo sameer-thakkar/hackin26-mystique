@@ -4,7 +4,7 @@ import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
 import COLORS from 'const/colors';
 import { CTA_TYPE } from 'const/index';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 interface StyledCTAWrapperProps {
   $isButtonCTA?: boolean;
@@ -43,7 +43,7 @@ const RichTextCTA = (block: any) => {
             {cta_text}
           </Button>
         </Conditional>
-        {CHEVRON_LEFT}
+        {ChevronLeft}
       </a>
     </CTAWrapper>
   );

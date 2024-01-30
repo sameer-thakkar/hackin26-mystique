@@ -6,7 +6,7 @@ import Conditional from 'components/common/Conditional';
 import ProductsContext from 'contexts/Products';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const DetailedProductCard = dynamic(
   () =>
@@ -17,11 +17,12 @@ const DetailedProductCard = dynamic(
     ssr: false,
   }
 );
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const Product = dynamic(() =>
-  import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
+const Product = dynamic(
+  () =>
+    import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
 );
 
 const StyledCategorySlider = styled.div`
@@ -277,7 +278,7 @@ const CategorySlider = (props: any) => {
               tabIndex={0}
               onClick={goPrev}
             >
-              {CHEVRON_LEFT}
+              {ChevronLeft}
             </div>
           ) : null}
           {swiper && !(swiper as any).isEnd ? (
@@ -287,7 +288,7 @@ const CategorySlider = (props: any) => {
               tabIndex={0}
               role="button"
             >
-              {CHEVRON_LEFT}
+              {ChevronLeft}
             </div>
           ) : null}
         </div>

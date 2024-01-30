@@ -60,12 +60,10 @@ import {
   HARRY_POTTER_CURSED_CHILD_TGID,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  BackArrow,
-  CHEVRON_LEFT,
-  CHEVRON_RIGHT,
-  SAND_CLOCK,
-} from 'assets/SvgIcons';
+import BackArrow from 'assets/backArrow';
+import ChevronLeft from 'assets/chevronLeft';
+import ChevronRight from 'assets/chevronRight';
+import SandClock from 'assets/sandClock';
 
 dayjs.extend(weekdayPlugin);
 dayjs.extend(objectPlugin);
@@ -92,9 +90,8 @@ const Calendar = ({
   tgid,
 }: TCalendarProps) => {
   const { sortedInventoryDates = [], dates } = calendarInventory ?? {};
-  const [isCalendarInTwoMonthsMode, setIsCalendarInTwoMonthsMode] = useState(
-    showTwoMonths
-  );
+  const [isCalendarInTwoMonthsMode, setIsCalendarInTwoMonthsMode] =
+    useState(showTwoMonths);
   const [selectedDate, setSelectedDate] = useState<string | null>(
     preSelectedDate
   );
@@ -321,7 +318,7 @@ const Calendar = ({
                     role="button"
                     tabIndex={0}
                   >
-                    {BackArrow}
+                    <BackArrow />
                   </div>
                   {strings.CALENDAR.PICK_DATE}
                 </PickDate>
@@ -350,7 +347,7 @@ const Calendar = ({
                           $hide={currentMonth.startOf('month') <= firstMonth}
                           onClick={handlePrevClick}
                         >
-                          {CHEVRON_LEFT}
+                          {ChevronLeft}
                         </MonthSwitcherButton>
                       </Conditional>
                       <MonthTitle $isSecondMonth={isSecondMonth}>
@@ -367,7 +364,7 @@ const Calendar = ({
                           $hide={currentMonth.endOf('month') >= lastMonth}
                           onClick={handleNextClick}
                         >
-                          {CHEVRON_LEFT}
+                          {ChevronLeft}
                         </MonthSwitcherButton>
                       </Conditional>
                     </MonthSwitcher>
@@ -529,7 +526,7 @@ const Calendar = ({
                                   </Cashback>
                                 </Conditional>
                               </div>
-                              {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G2 })}
+                              <ChevronRight fillColor={COLORS.GRAY.G2} />
                             </PricingSection>
                           </TimeSlotCard>
                         );
@@ -637,7 +634,7 @@ export const HarryPotterTwoPartTimeSlot = ({
               lang,
             })}
             <div className="duration">
-              {SAND_CLOCK}
+              {SandClock}
               <p>{strings.DURATION}: 2hr 40min</p>
             </div>
           </div>
@@ -654,7 +651,7 @@ export const HarryPotterTwoPartTimeSlot = ({
               lang,
             })}
             <div className="duration">
-              {SAND_CLOCK}
+              {SandClock}
               <p>{strings.DURATION}: 2hr 35min</p>
             </div>
           </div>

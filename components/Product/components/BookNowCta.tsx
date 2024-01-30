@@ -4,7 +4,7 @@ import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { BUTTON_LOADING_DURATION, THEMES } from 'const/index';
-import { BackArrow } from 'assets/SvgIcons';
+import BackArrow from 'assets/backArrow';
 
 export const BookNowCta = ({
   clickHandler,
@@ -39,7 +39,7 @@ export const BookNowCta = ({
         onClick={handleButtonClick}
         tabIndex={0}
         text={ctaText}
-        icon={mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+        icon={mbTheme === THEMES.MIN_BLUE ? <BackArrow /> : null}
         iconPosition="back"
       />
     </ButtonContainer>

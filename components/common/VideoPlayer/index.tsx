@@ -3,7 +3,7 @@ import Plyr from 'plyr';
 import { TVideoPlayerProps } from 'components/common/VideoPlayer/interface';
 import { TitleBar, VideoContainer } from 'components/common/VideoPlayer/styles';
 import Button from 'UI/Button';
-import { WHITE_CROSS_ARROW } from 'assets/SvgIcons';
+import WhiteCrossArrow from 'assets/whiteCrossArrow';
 import 'plyr/dist/plyr.css';
 
 const VideoPlayer: React.FC<TVideoPlayerProps> = ({
@@ -88,7 +88,7 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
     <VideoContainer>
       <TitleBar>
         <h3>{videoTitle}</h3>
-        <Button onClick={closePlayer}>{WHITE_CROSS_ARROW}</Button>
+        <Button onClick={closePlayer}>{WhiteCrossArrow}</Button>
       </TitleBar>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video ref={ref} />

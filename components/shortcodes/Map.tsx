@@ -1,8 +1,8 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { MAP } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import MapIcon from 'assets/map';
 
 const Map = () => {
-  return <TrainWrapper>{MAP}</TrainWrapper>;
+  return <ShortcodeIconWrapper>{MapIcon}</ShortcodeIconWrapper>;
 };
 
 export default Map;

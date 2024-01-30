@@ -4,7 +4,7 @@ import { TReviewProps } from 'components/Product/interface';
 import { ReviewCardWrapper } from 'components/Product/styles';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { DoubleQuotesIcon } from 'assets/SvgIcons';
+import DoubleQuotesIcon from 'assets/doubleQuotesIcon';
 
 const Reviews = ({ reviewText, className, children }: TReviewProps) => {
   const trackClick = () => {

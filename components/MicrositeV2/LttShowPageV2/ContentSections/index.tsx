@@ -23,22 +23,20 @@ import {
   LANGUAGE_CODE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  ADDITIONAL_INFO,
-  AGE_SUITABILITY,
-  CANCELLATION_AND_REFUNDS,
-  CAST_AND_CREW,
-  CRITIC_REVIEW,
-  FACILITIES,
-  GETTING_THERE,
-  LOCATION,
-  SHOW_TIMMINGS,
-  STAR_EMPTY_NEW,
-  STORY,
-  TICKETS_REDEMPTION,
-  TOP_SONGS,
-  WHY_WATCH,
-} from 'assets/SvgIcons';
+import AdditionalInfo from 'assets/additionalInfo';
+import AgeSuitability from 'assets/ageSuitability';
+import CancellationAndRefunds from 'assets/cancellationAndRefunds';
+import CastAndCrew from 'assets/castAndCrew';
+import CriticReviewIcon from 'assets/criticReview';
+import Facilities from 'assets/facilities';
+import GettingThere from 'assets/gettingThere';
+import Location from 'assets/location';
+import ShowTimings from 'assets/showTimings';
+import StarEmptyNew from 'assets/starEmptyNew';
+import Story from 'assets/story';
+import TicketsRedemption from 'assets/ticketsRedemption';
+import TopSongs from 'assets/topSongs';
+import WhyWatch from 'assets/whyWatch';
 
 const ContentSections = ({
   tourGroupData,
@@ -276,7 +274,7 @@ const ContentSections = ({
           <Content>
             <Conditional if={(highlightsSection as any)?.tab_content?.length}>
               <h2 id="Why watch">
-                {WHY_WATCH}
+                <WhyWatch />
                 {getWhyWatchSectionHeader()}
               </h2>
 
@@ -296,7 +294,7 @@ const ContentSections = ({
 
             <Conditional if={theStoryIndex > 0}>
               <h2 id="Storyline">
-                {STORY}{' '}
+                <Story />{' '}
                 {strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS.STORYLINE}
               </h2>
               <div className="storyline-content">
@@ -309,7 +307,7 @@ const ContentSections = ({
 
             <Conditional if={showTimings?.length}>
               <h2 id="Show Timings">
-                {SHOW_TIMMINGS}{' '}
+                <ShowTimings />{' '}
                 {convertToSentenceCase(strings.SHOW_PAGE.SHOW_TIMINGS)}
               </h2>
               <PrismicRichText
@@ -320,7 +318,7 @@ const ContentSections = ({
 
             <Conditional if={castAndCrewIndex > 0}>
               <h2 id="Cast & Crew">
-                {CAST_AND_CREW}{' '}
+                <CastAndCrew />{' '}
                 {convertToSentenceCase(strings.SHOW_PAGE.CAST_AND_CREW)}
               </h2>
               <PrismicRichText
@@ -331,7 +329,8 @@ const ContentSections = ({
 
             <Conditional if={topSongs?.tab_content?.length}>
               <h2 id="Top songs">
-                {TOP_SONGS} {convertToSentenceCase(strings.SHOW_PAGE.TOP_SONGS)}
+                <TopSongs />{' '}
+                {convertToSentenceCase(strings.SHOW_PAGE.TOP_SONGS)}
               </h2>
               <PrismicRichText
                 field={topSongs?.tab_content}
@@ -342,7 +341,7 @@ const ContentSections = ({
             <Conditional if={ageSuitability?.tab_content?.length}>
               <h2 id="Age & content guide">
                 {' '}
-                {AGE_SUITABILITY}{' '}
+                <AgeSuitability />{' '}
                 {
                   strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
                     .AGE_SUITABILITY_AND_GUIDELINES
@@ -358,7 +357,7 @@ const ContentSections = ({
           <Content id="theatre-section">
             <h2 id="Theatre" className="theatre-name">
               <span>
-                {LOCATION} {theatreName}
+                {Location} {theatreName}
               </span>
               <Conditional if={theatrePageUrl}>
                 <a
@@ -389,7 +388,7 @@ const ContentSections = ({
 
             <Conditional if={gettingThere?.tab_content?.length}>
               <h2 id="Getting there">
-                {GETTING_THERE}{' '}
+                <GettingThere />{' '}
                 {convertToSentenceCase(strings.SHOW_PAGE.GETTING_THERE)}
               </h2>
               <PrismicRichText
@@ -401,7 +400,7 @@ const ContentSections = ({
 
             <Conditional if={facilities?.tab_content?.length}>
               <h2 id="Facilities & accessibility">
-                {FACILITIES}{' '}
+                <Facilities />{' '}
                 {convertToSentenceCase(
                   strings.SHOW_PAGE.FACILITIES_AND_ACCESSIBILITY
                 )}
@@ -415,7 +414,7 @@ const ContentSections = ({
 
             <Conditional if={additionalInfo?.tab_content?.length}>
               <h2 id="Additional information">
-                {ADDITIONAL_INFO}{' '}
+                <AdditionalInfo />{' '}
                 {convertToSentenceCase(
                   strings.SHOW_PAGE.ADDITIONAL_INFORMATION
                 )}
@@ -430,7 +429,7 @@ const ContentSections = ({
 
           <Content>
             <h2 id="Tickets redemption">
-              {TICKETS_REDEMPTION}
+              <TicketsRedemption />
               {convertToSentenceCase(strings.SHOW_PAGE.TICKETS_REDEMPTION)}
             </h2>
             <PrismicRichText
@@ -440,7 +439,7 @@ const ContentSections = ({
 
             <Conditional if={cancellationAndRefunds.length}>
               <h2 id="Cancellation & refunds">
-                {CANCELLATION_AND_REFUNDS}{' '}
+                <CancellationAndRefunds />{' '}
                 {convertToSentenceCase(
                   strings.SHOW_PAGE.CANCELLATION_AND_REFUNDS
                 )}
@@ -459,7 +458,7 @@ const ContentSections = ({
             <Content>
               <Conditional if={criticReview?.tab_content?.length}>
                 <h2 id="What the critics think">
-                  {CRITIC_REVIEW}
+                  <CriticReviewIcon />
                   {
                     strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
                       .WHAT_CRITICS_THINK
@@ -486,7 +485,7 @@ const ContentSections = ({
               </Conditional>
 
               <h2 id="Ratings & reviews">
-                {STAR_EMPTY_NEW({ fillColor: COLORS.BRAND.BLACK })}
+                <StarEmptyNew fillColor={COLORS.BRAND.BLACK} />
                 {convertToSentenceCase(
                   strings.LTT_SHOW_PAGE.RATINGS_AND_REVIEWS
                 )}

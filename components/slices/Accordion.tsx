@@ -13,7 +13,7 @@ import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { DOWN_CHEVRON } from 'assets/SvgIcons';
+import DownChevron from 'assets/downChevron';
 
 export const StyledAccordion = styled.div<{
   isOpen: boolean;
@@ -279,7 +279,7 @@ const Accordion = ({
               width="1.4rem"
             />
           </Conditional>
-          <Conditional if={isSideModal}>{DOWN_CHEVRON(2)}</Conditional>
+          <Conditional if={isSideModal}>{DownChevron(2)}</Conditional>
         </div>
       </Title>
       <ContentBlock

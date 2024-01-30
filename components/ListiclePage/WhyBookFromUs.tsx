@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CIRCLE_TICK } from '../../assets/SvgIcons';
+import CircleTick from 'assets/circleTick';
 
 const WhyBookFromUsWrapper = styled.div`
   width: 384px;
@@ -44,7 +44,7 @@ const WhyBookFromUs: React.FC<{
       {data.map(({ text_line: textLine }, index) => {
         return (
           <TextLine key={index}>
-            {CIRCLE_TICK}
+            {CircleTick}
             {textLine.substring(0, 80)}
           </TextLine>
         );

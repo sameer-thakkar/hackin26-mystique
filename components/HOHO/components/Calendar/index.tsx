@@ -36,7 +36,7 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
 const Calendar: React.FC<CalendarProps> = (props) => {
   const {
@@ -201,7 +201,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           tabIndex={0}
           aria-label="Previous Month"
         >
-          {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+          {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
         </div>
       ) : null;
 
@@ -214,7 +214,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           tabIndex={0}
           aria-label="Next Month"
         >
-          {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+          {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
         </div>
       ) : null;
 

@@ -1,5 +1,3 @@
-import { SVGProps } from 'react';
-
 export const CircleSVG = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -243,7 +241,7 @@ export const PhoneSVG = () => (
   </svg>
 );
 
-export const ArrowCircleRight = (props: SVGProps<SVGSVGElement>) => (
+export const ArrowCircleRight = (props: any) => (
   <svg
     width="37"
     height="36"

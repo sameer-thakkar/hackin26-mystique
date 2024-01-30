@@ -3,26 +3,24 @@ import SpecialProductDetailLabel from 'components/Product/components/SpecialProd
 import { SpecialProductDetailsWrapper } from 'components/Product/styles';
 import SwiperWrapper from 'components/Swiper';
 import { strings } from 'const/strings';
-import {
-  ENGAGING_STORIES_ICON,
-  LOCAL_GUIDE_ICON,
-  TOP_RATED_ICON,
-} from 'assets/SvgIcons';
+import EngagingStoriesIcon from 'assets/engagingStoriesIcon';
+import LocalGuideIcon from 'assets/localGuideIcon';
+import TopRatedIcon from 'assets/topRatedIcon';
 
 const SpecialProductDetailLabelListDesktop = () => (
   <div className="special-product-details-labels">
     <SpecialProductDetailLabel
-      icon={LOCAL_GUIDE_ICON}
+      icon={LocalGuideIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.LOCAL_GUIDES}
     />
     <div className="special-product-details-separator" />
     <SpecialProductDetailLabel
-      icon={ENGAGING_STORIES_ICON}
+      icon={EngagingStoriesIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.ENGAGING_STORIES}
     />
     <div className="special-product-details-separator" />
     <SpecialProductDetailLabel
-      icon={TOP_RATED_ICON}
+      icon={TopRatedIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.TOP_RATED}
     />
   </div>
@@ -45,17 +43,17 @@ const swiperConfig: SwiperProps = {
 const SpecialProductDetailLabelListMobile = () => (
   <SwiperWrapper className="special-product-details-labels" {...swiperConfig}>
     <SpecialProductDetailLabel
-      icon={LOCAL_GUIDE_ICON}
+      icon={LocalGuideIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.LOCAL_GUIDES}
     />
     <div className="special-product-details-separator" />
     <SpecialProductDetailLabel
-      icon={ENGAGING_STORIES_ICON}
+      icon={EngagingStoriesIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.ENGAGING_STORIES}
     />
     <div className="special-product-details-separator" />
     <SpecialProductDetailLabel
-      icon={TOP_RATED_ICON}
+      icon={TopRatedIcon}
       detail={strings.SPECIAL_PRODUCT_DESCRIPTORS.TOP_RATED}
     />
     <div className="special-product-details-separator" />

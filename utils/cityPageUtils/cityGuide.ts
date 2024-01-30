@@ -20,12 +20,8 @@ const {
   PAGE_TYPE: { LANDING_PAGE },
 } = MB_CATEGORISATION;
 
-const {
-  TAGGED_MB_TYPE,
-  TAGGED_CITY,
-  TAGGED_PAGE_TYPE,
-  PRIMARY_TAG,
-} = PRISMIC_FIELD_ID;
+const { TAGGED_MB_TYPE, TAGGED_CITY, TAGGED_PAGE_TYPE, PRIMARY_TAG } =
+  PRISMIC_FIELD_ID;
 
 const getLangBasedGuideData = ({ prismicDocs, lang }: IGetLangBasedData) => {
   const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
@@ -85,10 +81,8 @@ export const getCityGuideData = async ({ mbCity, lang }: ICommonProps) => {
       micrositeDocPromise,
     ]);
 
-    const [
-      contentDocResults,
-      micrositeDocResults,
-    ] = handleSettledPromiseResults(settledPromises);
+    const [contentDocResults, micrositeDocResults] =
+      handleSettledPromiseResults(settledPromises);
 
     const results = [
       ...contentDocResults?.results,

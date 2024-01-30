@@ -13,12 +13,13 @@ import { getBreadcrumbLabel } from 'utils/helper';
 import { titleCase } from 'utils/stringUtils';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS } from 'const/index';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
-const BreadcrumbsDropdown = dynamic(() =>
-  import(
-    /* webpackChunkName: "BreadcrumbsPopup" */ 'components/Breadcrumbs/components/BreadcrumbsDropdown'
-  )
+const BreadcrumbsDropdown = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "BreadcrumbsPopup" */ 'components/Breadcrumbs/components/BreadcrumbsDropdown'
+    )
 );
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
@@ -128,7 +129,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 </Conditional>
               </Conditional>
               <Conditional if={!isCrumbCollapsed || index !== 2}>
-                {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+                {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
               </Conditional>
             </Conditional>
             <Conditional if={array.length - 1 === index}>

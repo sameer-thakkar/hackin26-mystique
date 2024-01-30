@@ -19,8 +19,6 @@ export const StyledSidebar = styled.div`
     ${expandFontToken(FONTS.HEADING_SMALL)}
     color: ${COLORS.GRAY.G2};
   }
-
-  
 `;
 
 export const SidebarLink = styled.a<{ isActive?: boolean }>`

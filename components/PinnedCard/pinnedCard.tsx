@@ -17,7 +17,7 @@ import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { STAR } from 'assets/SvgIcons';
+import Star from 'assets/star';
 
 const DescriptorList = (props: IFilteredDescriptorProps) => {
   const { filteredDescriptor } = props;
@@ -148,7 +148,7 @@ const PinnedCard = (props: any) => {
               <span className="rating-number">
                 {productInfo.averageRating.toFixed?.(1)}
               </span>
-              {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+              <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
             </span>
             <Conditional if={productInfo?.reviewCount}>
               <span className="total-rating">

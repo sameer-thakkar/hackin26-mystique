@@ -89,7 +89,8 @@ import {
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT, GuidedTourLabelBackground } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
+import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 
 const SpecialGuidedTourSidePanel = dynamic(
   import(
@@ -97,8 +98,8 @@ const SpecialGuidedTourSidePanel = dynamic(
   )
 );
 
-const MediaCarousel = dynamic(() =>
-  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(
+  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
@@ -683,7 +684,7 @@ const Product = (props: any) => {
           tabIndex={0}
         >
           <span>{strings.MORE_DETAILS}</span>
-          <CHEVRON_RIGHT
+          <ChevronRight
             fillColor={COLORS.TEXT.CANDY_1}
             width={12}
             height={12}

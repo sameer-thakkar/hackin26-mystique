@@ -7,7 +7,8 @@ import Image, { Wrapper } from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import { ANALYTICS_PROPERTIES } from 'const/index';
-import { ALL_PHOTOS, BLACK_CROSS } from 'assets/SvgIcons';
+import AllPhotos from 'assets/allPhotos';
+import BlackCross from 'assets/blackCross';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -377,7 +378,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
             })}
           </Swiper>
           <CrossWrapper onClick={() => popupCloser()}>
-            {BLACK_CROSS}
+            {BlackCross}
           </CrossWrapper>
         </GalleryPopUpContentWrapper>
       </GalleryPopUpWrapper>
@@ -440,7 +441,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
             setActiveIndexGalleryPopUp(0);
           }}
         >
-          {ALL_PHOTOS}
+          {AllPhotos}
         </AllPhotoWrapper>
       </GalleryWrapper>
     </>

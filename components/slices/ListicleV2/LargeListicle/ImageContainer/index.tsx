@@ -8,7 +8,8 @@ import {
   SvgWrapper,
 } from 'components/slices/ListicleV2/LargeListicle/ImageContainer/styles';
 import Image from 'UI/Image';
-import { RECT, RIBBON } from 'assets/SvgIcons';
+import Rect from 'assets/rect';
+import Ribbon from 'assets/ribbon';
 
 const ImageContainer = ({
   imageUrl,
@@ -27,8 +28,8 @@ const ImageContainer = ({
           className="listicle-card-image"
         />
         <Conditional if={!isMobile}>
-          <IndexRibbonWrapper>{RIBBON(index + 1)}</IndexRibbonWrapper>
-          <SvgWrapper>{RECT()}</SvgWrapper>
+          <IndexRibbonWrapper>{Ribbon(index + 1)}</IndexRibbonWrapper>
+          <SvgWrapper>{Rect()}</SvgWrapper>
         </Conditional>
         <Conditional if={isMobile}>
           <IndexWrapper>

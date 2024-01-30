@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { RAIN } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import RainIcon from 'assets/rain';
 
 const Rain = () => {
-  return <TrainWrapper>{RAIN()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <RainIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Rain;

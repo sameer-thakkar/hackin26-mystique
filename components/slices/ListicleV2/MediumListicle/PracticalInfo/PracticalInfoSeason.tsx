@@ -4,13 +4,13 @@ import {
   PracticalInfoSeasonIconWrapper,
   PracticalInfoSeasonWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
-import { SEASON } from 'assets/SvgIcons';
+import Season from 'assets/season';
 
 const PracticalInfoSeason = ({ season }: IPracticalInfoProps) => {
   return (
     <PracticalInfoSeasonWrapper>
       <PracticalInfoSeasonIconWrapper>
-        {SEASON()}
+        <Season />
       </PracticalInfoSeasonIconWrapper>
       <PracticalInfoSeasonContentWrapper>
         {season}

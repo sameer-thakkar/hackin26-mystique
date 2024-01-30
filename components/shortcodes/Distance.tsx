@@ -1,8 +1,8 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { DISTANCE } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import DistanceIcon from 'assets/distance';
 
 const Distance = () => {
-  return <TrainWrapper>{DISTANCE()}</TrainWrapper>;
+  return <ShortcodeIconWrapper>{DistanceIcon()}</ShortcodeIconWrapper>;
 };
 
 export default Distance;

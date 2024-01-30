@@ -17,11 +17,9 @@ import { FONTS } from 'const/fonts';
 import { SIDEBAR_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import {
-  OUTLINED_INFO_ICON,
-  POWERED_BY_HEADOUT,
-  WHITE_BLIP,
-} from 'assets/SvgIcons';
+import OutlinedInfoIcon from 'assets/outlinedInfoIcon';
+import PoweredByHeadout from 'assets/poweredByHeadout';
+import WhiteBlip from 'assets/whiteBlip';
 
 const StyledFooter = styled.footer<{
   isEntertainmentMb: boolean;
@@ -538,7 +536,7 @@ const Footer: React.FC<FooterProps> = ({
                 <Conditional if={showGmapsDisclaimer}>
                   <GmapsDisclaimer>
                     <div className="row">
-                      {OUTLINED_INFO_ICON}
+                      {OutlinedInfoIcon}
                       <p>{strings.FOOTER.INFORMATION}</p>
                     </div>
                     <p>{strings.FOOTER.GMAPS_DISCLAIMER}</p>
@@ -568,7 +566,7 @@ const Footer: React.FC<FooterProps> = ({
                           finalThemeName !== THEMES.MIN_BLUE
                         }
                       >
-                        {POWERED_BY_HEADOUT}
+                        {PoweredByHeadout}
                       </Conditional>
                     </div>
                     <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
@@ -663,7 +661,7 @@ const Footer: React.FC<FooterProps> = ({
                     <div className="white-line" />
                     <div className="super-brand-logo">
                       <Conditional if={!isEntertainmentMb}>
-                        {WHITE_BLIP}
+                        {WhiteBlip}
                       </Conditional>
                       <span>
                         {isEntertainmentMb

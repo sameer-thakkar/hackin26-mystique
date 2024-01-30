@@ -41,8 +41,8 @@ const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ShoulderPages'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
-const LttShowPageV2 = dynamic(() =>
-  import('components/MicrositeV2/LttShowPageV2')
+const LttShowPageV2 = dynamic(
+  () => import('components/MicrositeV2/LttShowPageV2')
 );
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
@@ -440,7 +440,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? !!query.mystique_uid
     : window.location.search.includes('mystique_uid');
 
-  if (host?.includes('localhost') || host?.includes('test-headout')) {
+  if (host?.includes('localhost') || host?.includes('mystique.test-headout')) {
     isMobile = localServerSideIsMobileCheck(req);
   }
 

@@ -1,7 +1,7 @@
-import { CROSS } from '../../assets/SvgIcons';
+import CrossIcon from 'assets/cross';
 
 const Cross = () => {
-  return <>{CROSS}</>;
+  return <>{CrossIcon}</>;
 };
 
 export default Cross;

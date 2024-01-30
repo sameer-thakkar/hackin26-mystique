@@ -7,7 +7,8 @@ import {
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CASHBACK_COIN, INFO_ICON_WRAPPED } from 'assets/SvgIcons';
+import CashbackIcon from 'assets/cashbackCoin';
+import InfoIconWrapped from 'assets/infoIconWrapped';
 
 const Tooltip = dynamic(() => import('components/common/Tooltip/index'), {
   ssr: false,
@@ -30,12 +31,12 @@ const CashbackComponent = ({
 
   return (
     <CashbackWrapper isSportsExperiment={isSportsExperiment}>
-      <CASHBACK_COIN />
+      <CashbackIcon />
       <CashbackLabel>
         {strings.formatString(strings.GET_CASHBACK, `${cashbackAmount}`)}
         {!isSportsExperiment && (
           <Tooltip
-            trigger={INFO_ICON_WRAPPED}
+            trigger={InfoIconWrapped}
             onHover={trackHover}
             content={`${strings.formatString(
               strings.CASHBACK_INFO,

@@ -15,7 +15,7 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
+import BlackColorClose from 'assets/blackColorClose';
 
 const PopupWrapper = styled.div`
   z-index: 16;
@@ -291,7 +291,7 @@ const ComboPopup = ({
         </ProductCard>
         <Conditional if={!isMobile}>
           <CloseIconWrapper onClick={closeHandler}>
-            {BLACK_COLOR_CLOSE}
+            {BlackColorClose}
           </CloseIconWrapper>
         </Conditional>
       </PopupContentWrapper>

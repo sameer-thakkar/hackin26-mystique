@@ -8,7 +8,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
 
 const Wrapper = styled.div<{
   $isExpanded: boolean;
@@ -77,8 +77,11 @@ const RichtextWithCTA = (props: any) => {
   return (
     <>
       {props?.childSlices?.map((block: any, index: number) => {
-        const { content_height: contentHeight, cta_text, text: textArray } =
-          block || {};
+        const {
+          content_height: contentHeight,
+          cta_text,
+          text: textArray,
+        } = block || {};
         const idArray = textArray?.reduce(
           (acc: Array<string>, el: TRichTextArray) => {
             if (el?.type === 'heading2') {
@@ -111,7 +114,7 @@ const RichtextWithCTA = (props: any) => {
               <span className="toggle">
                 <button onClick={handleClick} className="view-more">
                   {isExpanded ? strings.SHOW_LESS_TEXT : strings.VIEW_MORE}
-                  {CHEVRON_DOWN}
+                  <ChevronDown />
                 </button>
               </span>
             </Conditional>

@@ -12,7 +12,8 @@ export type TDatalayerValue = any;
 
 export type TDatalayerObject = Record<string, TDatalayerValue>;
 
-export type TAnalyticsEvents = typeof ANALYTICS_EVENTS[keyof typeof ANALYTICS_EVENTS];
+export type TAnalyticsEvents =
+  (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
 
 export type TTrackEvent = {
   eventName: string;

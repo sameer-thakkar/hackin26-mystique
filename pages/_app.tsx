@@ -12,9 +12,11 @@ import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
+import { dynamicPolyfillIntlLocale } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
 import renderShortCodes from 'utils/shortCodes';
+import { dynamicPolyfillIntlRelativeTime } from 'utils/timeUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
@@ -117,6 +119,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
 
   const langCode = getLangObject(locale).code;
   if (langCode !== 'en') initDayJSLocale(langCode);
+  dynamicPolyfillIntlRelativeTime(langCode);
+  dynamicPolyfillIntlLocale();
 
   const getLanguageBasedGlobalStyling = (lang: any) => {
     switch (lang) {

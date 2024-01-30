@@ -21,7 +21,7 @@ import PracticalInfo from 'components/slices/ListicleV2/LargeListicle/PracticalI
 import Button from 'UI/Button';
 import RichContent from 'UI/RichContent';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import ChevronRightCircle from 'assets/chevronRightCircle';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -135,7 +135,7 @@ const ContentContainer = ({
                     tabIndex={0}
                     onClick={goPrev}
                   >
-                    {CHEVRON_RIGHT_CIRCLE}
+                    {ChevronRightCircle}
                   </div>
                 </Conditional>
                 <Conditional if={!isEnd}>
@@ -145,7 +145,7 @@ const ContentContainer = ({
                     tabIndex={0}
                     onClick={goNext}
                   >
-                    {CHEVRON_RIGHT_CIRCLE}
+                    {ChevronRightCircle}
                   </div>
                 </Conditional>
               </SwiperControls>

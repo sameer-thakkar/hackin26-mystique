@@ -30,12 +30,12 @@ import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
 import { strings } from 'const/strings';
-import { STAR } from 'assets/SvgIcons';
+import Star from 'assets/star';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 type StaticBannerProps = {
@@ -256,7 +256,9 @@ const StaticBanner = ({
               onClick={onRatingsClick}
               $showPointer={isHOHORevamp}
             >
-              {STAR(showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1)}
+              <Star
+                color={showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1}
+              />
               <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
                 {averageRating?.toPrecision(2)}
               </AverageRatingWrapper>

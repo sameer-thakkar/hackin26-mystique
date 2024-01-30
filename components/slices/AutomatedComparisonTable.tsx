@@ -25,7 +25,9 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHECK, CHEVRON_DOWN, CROSS } from 'assets/SvgIcons';
+import Check from 'assets/check';
+import ChevronDown from 'assets/chevronDown';
+import Cross from 'assets/cross';
 
 const ComparisonTableWrapper = styled.div<{
   $isMobile: boolean;
@@ -80,7 +82,7 @@ const ComparisonTableWrapper = styled.div<{
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(3, 1fr) ${({ $isMobile }) =>
-      $isMobile ? '16px' : ''};
+        $isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -470,7 +472,7 @@ const AutomatedTourComparisonTable = ({
         title: strings.CANCELLATION_POLICY_HEADING,
         content: (
           <div className="free-cancellation block-content-wrapper">
-            <div className="icon">{cancellable ? CHECK : CROSS}</div>
+            <div className="icon">{cancellable ? Check : Cross}</div>
             <p>{cancellationPolicyString}</p>
           </div>
         ),
@@ -725,7 +727,7 @@ const AutomatedTourComparisonTable = ({
             id="compare-all-details-button"
           >
             <div className="start-compare-icon">
-              {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
+              {strings.COMPARE_ALL_DETAILS} <ChevronDown />
             </div>
           </UIButton>
         </Conditional>

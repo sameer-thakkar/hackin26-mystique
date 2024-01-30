@@ -6,7 +6,7 @@ import { trackHeaderMenuItemClicked } from 'utils/headerUtils';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
 const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
   const {
@@ -63,7 +63,7 @@ const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
                     label: menuName,
                     mbCity,
                   })}
-                  {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+                  {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
                 </div>
               </li>
               {/* 

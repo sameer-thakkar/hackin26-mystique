@@ -12,11 +12,9 @@ import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  ALL_PHOTOS_ICON,
-  CHEVRON_LEFT_CIRCLE,
-  SWEIPESHEET_CROSS,
-} from 'assets/SvgIcons';
+import AllPhotos from 'assets/allPhotos';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
+import SweipesheetCross from 'assets/sweipesheetCross';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
@@ -110,7 +108,7 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
   return (
     <ImageGalleryWrapper>
       <AllPhotosCta onClick={openPopup}>
-        {ALL_PHOTOS_ICON} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
+        {AllPhotos} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
       </AllPhotosCta>
 
       <GalleryPopup isPopupActive={isPopupActive}>
@@ -128,7 +126,7 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
             role="button"
             tabIndex={0}
           >
-            {SWEIPESHEET_CROSS}
+            {SweipesheetCross}
           </div>
         </div>
         <div className="main-content">
@@ -141,7 +139,7 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
                 activeIndex <= 0 ? 'inactive' : ''
               }`}
             >
-              {CHEVRON_LEFT_CIRCLE}
+              {ChevronLeftCircle}
             </div>
             <div
               onClick={goNext}
@@ -151,7 +149,7 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
                 activeIndex >= imageUploads.length - 2 ? 'inactive' : ''
               }`}
             >
-              {CHEVRON_LEFT_CIRCLE}
+              {ChevronLeftCircle}
             </div>
 
             <Swiper {...swiperParams} onSlideChange={onSlideChange}>

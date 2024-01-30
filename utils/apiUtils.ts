@@ -815,7 +815,8 @@ export const fetchCategory = async ({
     ...(city && { city }),
     language,
     ...(filterCategoryActiveProductCount && {
-      'filter-category-active-product-count': filterCategoryActiveProductCount.toString(),
+      'filter-category-active-product-count':
+        filterCategoryActiveProductCount.toString(),
     }),
     ...(includeUnavailable && {
       'include-unavailable': includeUnavailable.toString(),

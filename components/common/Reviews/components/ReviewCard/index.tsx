@@ -6,7 +6,7 @@ import { MBContext } from 'contexts/MBContext';
 import { formatDateToString } from 'utils/dateUtils';
 import { StarIcon } from 'const/descriptorIcons';
 // import { strings } from 'const/strings';
-import { AVATAR } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
 import {
   // Gradient,
   ImageWrapper,
@@ -50,7 +50,7 @@ const ReviewContent = (props: any) => {
       />
       <Review>
         <ReviewHeader>
-          <ImageWrapper>{AVATAR}</ImageWrapper>
+          <ImageWrapper>{Avatar}</ImageWrapper>
           <MetaInfo>
             <h5>{nonCustomerName}</h5>
             <ReviewStars />

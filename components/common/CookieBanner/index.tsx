@@ -10,7 +10,8 @@ import {
 import { CookieBannerProps } from 'components/common/CookieBanner/types';
 import { COOKIE_BANNER_KEY } from 'const/index';
 import { strings } from 'const/strings';
-import { Cookie, CrossIconSvg } from 'assets/SvgIcons';
+import Cookie from 'assets/cookie';
+import CrossIconSvg from 'assets/crossiconSvg';
 
 const CookieBanner = ({
   isMobile,

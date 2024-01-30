@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { FACEBOOK, INSTAGRAM, TWITTER } from 'assets/SvgIcons';
+import Facebook from 'assets/facebook';
+import Instagram from 'assets/instagram';
+import Twitter from 'assets/twitter';
 
 const StyledSocialLinks = styled.div`
   display: grid;
@@ -54,19 +56,19 @@ const SocialLinks = (props: any) => {
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={FB_URL} target="_blank" rel="noreferrer noopener">
-          {FACEBOOK}
+          {Facebook}
         </a>
       </SocialIcon>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={TWITTER_URL} target="_blank" rel="noreferrer noopener">
-          {TWITTER}
+          {Twitter}
         </a>
       </SocialIcon>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={getInstagramLink()} target="_blank" rel="noreferrer noopener">
-          {INSTAGRAM}
+          {Instagram}
         </a>
       </SocialIcon>
     </StyledSocialLinks>

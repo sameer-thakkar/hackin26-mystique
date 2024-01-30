@@ -1,10 +1,11 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import type { Swiper as SwiperClass } from 'swiper';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
 import { HALYARD, SIZES } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
@@ -95,12 +96,12 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   isMobile,
   breakpoints = {},
 }) => {
-  const [swiper, updateSwiper] = useState(null);
-  const [_currentIndex, updateCurrentIndex] = useState(0);
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const [swiper, updateSwiper] = useState<SwiperClass | null>(null);
+  const [_currentIndex, updateCurrentIndex] = useState<number | undefined>(0);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex(swiper?.realIndex),
+    [swiper]
+  );
 
   useEffect(() => {
     if (isMobile) return;
@@ -154,7 +155,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
             <Conditional if={!(swiper as any)?.isEnd}>
@@ -164,7 +165,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
           </Controls>

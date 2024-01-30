@@ -19,13 +19,14 @@ import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { CAROUSEL_DIR, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevrontLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const OverflowScroll = dynamic(() =>
-  import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
+const OverflowScroll = dynamic(
+  () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
 const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
@@ -120,7 +121,7 @@ const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
         <Conditional if={(!swiper?.isBeginning || !swiper?.isEnd) && !isMobile}>
           <CarouselControls>
             <span className="prev-pill">
-              <LTT_CHEVRON_LEFT
+              <LttChevrontLeft
                 onClick={goPrev}
                 disabled={swiper?.isBeginning}
                 aria-label={`See previous`}
@@ -128,7 +129,7 @@ const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
               />
             </span>
             <span className="next-pill">
-              <LTT_CHEVRON_RIGHT
+              <LttChevronRight
                 onClick={goNext}
                 disabled={swiper?.isEnd}
                 aria-label={`See more`}

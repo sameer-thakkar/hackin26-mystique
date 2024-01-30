@@ -1,5 +1,5 @@
 import { TNewsMetaProps } from 'components/NewsPage/components/NewsMeta/interface';
-import { AVATAR } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
 
 const NewsMeta: React.FC<TNewsMetaProps> = ({ metaContent }) => {
   const { heading, authorName, formattedPublishedDateAndTime } = metaContent;
@@ -7,7 +7,7 @@ const NewsMeta: React.FC<TNewsMetaProps> = ({ metaContent }) => {
     <div className="news-meta">
       <h1>{heading}</h1>
       <div className="author-meta">
-        {AVATAR}
+        {Avatar}
         <span className="author-name">{authorName}</span>
         <time dateTime={formattedPublishedDateAndTime}>
           {formattedPublishedDateAndTime}

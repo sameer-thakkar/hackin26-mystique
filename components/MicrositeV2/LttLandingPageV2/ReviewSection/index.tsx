@@ -16,7 +16,9 @@ import {
   LTT_LP_HARDCODED_REVIEWS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT, STAR } from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
+import Star from 'assets/star';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -84,8 +86,8 @@ const ReviewSection = ({ isMobile }: IReviewSectionProps) => {
         </div>
         <Conditional if={!isMobile}>
           <div className="controls">
-            <LTT_CHEVRON_LEFT onClick={goPrev} disabled={activeSlideIdx <= 0} />
-            <LTT_CHEVRON_RIGHT
+            <LttChevronLeft onClick={goPrev} disabled={activeSlideIdx <= 0} />
+            <LttChevronRight
               onClick={goNext}
               disabled={activeSlideIdx + 3 >= LTT_LP_HARDCODED_REVIEWS.length}
             />
@@ -117,9 +119,9 @@ const ReviewSection = ({ isMobile }: IReviewSectionProps) => {
                     <span className="country">{review.country}</span>
                   </div>
                   <div className="stars">
-                    {Array.from({ length: review.stars }).map(() =>
-                      STAR(COLORS.TEXT.CANDY_1)
-                    )}
+                    {Array.from({ length: review.stars }).map((_, index) => (
+                      <Star color={COLORS.TEXT.CANDY_1} key={`star_${index}`} />
+                    ))}
                   </div>
                 </div>
               </div>

@@ -63,11 +63,8 @@ const getGlobalCountry = async ({ req, uid, lang }: any) => {
       ticketPagesPromise,
     ]);
 
-    const [
-      allCollections,
-      cityCollections,
-      ticketPages,
-    ] = handleSettledPromiseResults(allSettledResults);
+    const [allCollections, cityCollections, ticketPages] =
+      handleSettledPromiseResults(allSettledResults);
 
     return {
       CMSContent: {

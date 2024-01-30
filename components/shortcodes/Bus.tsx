@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { BUS } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import BusIcon from 'assets/bus';
 
 const Bus = () => {
-  return <TrainWrapper>{BUS()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <BusIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Bus;

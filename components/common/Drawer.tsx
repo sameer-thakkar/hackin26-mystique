@@ -6,7 +6,7 @@ import { throttle } from 'utils/gen';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { CloseIcon } from 'assets/SvgIcons';
+import CloseIcon from 'assets/closeIcon';
 
 const DrawerWrapper = styled.div<{
   $noMargin?: boolean;

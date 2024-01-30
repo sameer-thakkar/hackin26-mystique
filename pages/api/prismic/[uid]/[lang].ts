@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { constructHeaders } from 'utils/apiUtils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import {
   MICROBRANDS_URL,
@@ -12,11 +13,12 @@ const getPrismicDocumentData = async (
 ) => {
   const { query, headers } = req;
   const { host } = headers ?? window.location;
-  const { uid, lang, isDev } = (query as unknown) as {
+  const { uid, lang, isDev } = query as unknown as {
     uid: string;
     lang: string;
     isDev: boolean;
   };
+  const requestHeaders = constructHeaders({});
 
   const params = new URLSearchParams({
     isDev: String(isDev),
@@ -27,7 +29,9 @@ const getPrismicDocumentData = async (
   const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
   const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
 
-  const contentTypeResponse = await fetch(endpoint);
+  const contentTypeResponse = await fetch(endpoint, {
+    headers: requestHeaders,
+  });
 
   if (!contentTypeResponse.ok) {
     res

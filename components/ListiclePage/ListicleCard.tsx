@@ -7,7 +7,7 @@ import getPopup from 'utils/prismicUtils/getPopup';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { PIN } from '../../assets/SvgIcons';
+import Pin from 'assets/pin';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Button from '../UI/Button';
 import Chevron from '../UI/Chevron';
@@ -329,7 +329,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
               />
             </div>
             <div className="location">
-              {PIN}
+              {Pin}
               <div>
                 <div className="location-text">
                   {city.displayName}, {city.country.displayName}

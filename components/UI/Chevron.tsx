@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
 
 export type TChevron = {
   isActive?: boolean | Boolean;
@@ -32,7 +32,11 @@ const StyledChevron = styled.div<TChevron>`
 `;
 
 const Chevron = (props: TChevron) => {
-  return <StyledChevron {...props}>{CHEVRON_DOWN}</StyledChevron>;
+  return (
+    <StyledChevron {...props}>
+      <ChevronDown />
+    </StyledChevron>
+  );
 };
 
 export default Chevron;

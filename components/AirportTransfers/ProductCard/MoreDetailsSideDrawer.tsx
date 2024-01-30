@@ -6,7 +6,7 @@ import { SavedTag } from 'UI/PriceBlock';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { StarIcon } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
-import { CloseIcon } from 'assets/SvgIcons';
+import CloseIcon from 'assets/closeIcon';
 import Accordion from '../Accordion';
 import { TScorpioDataHighlight } from '../PopulateAirportTransferProducts/interfaces';
 import {

@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { SEASON } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import Season from 'assets/season';
 
 const Weather = () => {
-  return <TrainWrapper>{SEASON()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <Season />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Weather;

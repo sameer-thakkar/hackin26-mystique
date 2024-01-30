@@ -17,14 +17,12 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import {
-  BLACK_COLOR_CLOSE,
-  CHEVRON_LEFT_CIRCLE,
-  CHEVRON_RIGHT_CIRCLE,
-  INSTAGRAM,
-  PLAY_BUTTON,
-  VIDEO_ICON,
-} from 'assets/SvgIcons';
+import BlackColorClose from 'assets/blackColorClose';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
+import ChevronRightCircle from 'assets/chevronRightCircle';
+import Instagram from 'assets/instagram';
+import PlayButtonIcon from 'assets/playButton';
+import VideoIcon from 'assets/videoIcon';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
@@ -600,7 +598,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                 </a>
               </div>
               <CloseIconWrapper onClick={() => popupCloser(index)}>
-                {BLACK_COLOR_CLOSE}
+                {BlackColorClose}
               </CloseIconWrapper>
             </WrapperHeader>
             <MediaWrapper>
@@ -614,7 +612,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                       trackRedirectToIG(index, postType);
                     }}
                   >
-                    {PLAY_BUTTON}
+                    {PlayButtonIcon}
                   </a>
                 </PlayButton>
               </Conditional>
@@ -658,7 +656,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               tabIndex={0}
               onClick={(e) => changePopup(e, 'prev')}
             >
-              {CHEVRON_RIGHT_CIRCLE}
+              {ChevronRightCircle}
             </div>
             <div
               className="next-slide"
@@ -666,7 +664,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               tabIndex={0}
               onClick={(e) => changePopup(e, 'next')}
             >
-              {CHEVRON_RIGHT_CIRCLE}
+              {ChevronRightCircle}
             </div>
           </SwiperControls>
         </Conditional>
@@ -714,9 +712,9 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                     format="jpg"
                     className={'image-wrapper'}
                   />
-                  <div className="img-icon">{INSTAGRAM}</div>
+                  <div className="img-icon">{Instagram}</div>
                   <Conditional if={card?.instagram_posts?.postType === 'Video'}>
-                    <div className="img-icon right">{VIDEO_ICON}</div>
+                    <div className="img-icon right">{VideoIcon}</div>
                   </Conditional>
                   <div className="img-icon bottom">
                     @{card?.instagram_posts?.username}
@@ -734,7 +732,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   tabIndex={0}
                   onClick={slidePrev}
                 >
-                  {CHEVRON_LEFT_CIRCLE}
+                  {ChevronLeftCircle}
                 </div>
               </Conditional>
               <Conditional if={!(swiper as any)?.isEnd}>
@@ -744,7 +742,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   tabIndex={0}
                   onClick={slideNext}
                 >
-                  {CHEVRON_LEFT_CIRCLE}
+                  {ChevronLeftCircle}
                 </div>
               </Conditional>
             </Controls>

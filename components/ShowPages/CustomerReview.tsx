@@ -5,7 +5,7 @@ import type { SwiperProps } from 'swiper/react';
 import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { BLUE_QUOTES } from '../../assets/SvgIcons';
+import BlueQuotes from 'assets/blueQuotes';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -244,7 +244,7 @@ export default class CustomerReview extends Component<CardCarouselProps> {
           return (
             <div key={index}>
               <div className="content-wrapper-review">
-                <div className="quote-wrapper">{BLUE_QUOTES}</div>
+                <div className="quote-wrapper">{BlueQuotes}</div>
                 <div className="review-content">
                   <div className="review">{element.content}</div>
                   <div className="reviewer-name">{element.name}</div>

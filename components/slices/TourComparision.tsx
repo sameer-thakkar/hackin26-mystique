@@ -20,9 +20,14 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
 
-const StyledTourComparisionTable = styled.div`
+const StyledTourComparisionTable = styled.div<{
+  tourCount: number;
+  designType: string;
+  showImage: boolean;
+  isMobile: boolean;
+}>`
   width: auto;
   display: grid;
   line-height: 1.3;
@@ -72,10 +77,7 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-    }) =>
+    ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       grid-row-gap: 16px;
@@ -91,17 +93,10 @@ const StyledTourComparisionTable = styled.div`
     width: calc(100% - (5.46vw * 2));
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(4, 1fr) ${({
-      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
-      isMobile,
-    }) => (isMobile ? '16px' : '')};
+    grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
+        isMobile ? '16px' : ''};
     grid-column-gap: 24px;
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-      // @ts-expect-error TS(2339): Property 'showImage' does not exist on type 'Pick... Remove this comment to see the full error message
-      showImage,
-    }) =>
+    ${({ designType, showImage }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       border-bottom: 1px solid ${COLORS.GRAY.G6};
@@ -171,10 +166,7 @@ const StyledTourComparisionTable = styled.div`
     background: ${COLORS.BRAND.WHITE};
     z-index: 15;
     padding-bottom: 8px;
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-    }) =>
+    ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       margin-bottom: -8px;
@@ -195,10 +187,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .tour-image {
     margin-bottom: -32px;
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-    }) =>
+    ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       margin-bottom: -8px;
@@ -223,10 +212,7 @@ const StyledTourComparisionTable = styled.div`
     line-height: 18px;
     letter-spacing: 0.5px;
     color: ${COLORS.GRAY.G3};
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-    }) =>
+    ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       color: ${COLORS.GRAY.G3};
@@ -242,10 +228,7 @@ const StyledTourComparisionTable = styled.div`
     font-family: ${HALYARD.FONT_STACK};
     font-weight: 400;
     color: ${COLORS.GRAY.G2};
-    ${({
-      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-      designType,
-    }) =>
+    ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       font-size: 14px;
@@ -283,10 +266,7 @@ const StyledTourComparisionTable = styled.div`
   color: ${COLORS.GRAY.G3};
   font-size: 14px;
   line-height: 22px;
-  ${({
-    // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-    designType,
-  }) =>
+  ${({ designType }) =>
     designType == TOUR_COMPARISION_DESIGN.TYPE_2
       ? `
     a {
@@ -316,19 +296,14 @@ const StyledTourComparisionTable = styled.div`
     .row {
       max-width: 100vw;
       grid-column-gap: 12px;
-      ${({
-        // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
-        designType,
-      }) =>
+      ${({ designType }) =>
         designType == TOUR_COMPARISION_DESIGN.TYPE_2
           ? `
       grid-column-gap: 16px;
       `
           : ``}
-      grid-template-columns: 0px repeat(${({
-        // @ts-expect-error TS(2339): Property 'tourCount' does not exist on type 'Pick<... Remove this comment to see the full error message
-        tourCount,
-      }) => tourCount}, 164px) 4px;
+      grid-template-columns: 0px repeat(${({ tourCount }) =>
+        tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -509,13 +484,8 @@ const TourComparisonTable = (props: any) => {
   const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
-  const {
-    uid,
-    nakedDomain,
-    biLink,
-    lang,
-    redirectToHeadoutBookingFlow,
-  } = useContext(MBContext);
+  const { uid, nakedDomain, biLink, lang, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const url = envContext.windowUrl;
   const currentHost = !envContext.isDev ? url : parse(uid || '', true).pathname;
   const hostName = currentHost.includes('stage')
@@ -790,7 +760,7 @@ const TourComparisonTable = (props: any) => {
       <Conditional if={isMobile && !isExpanded}>
         <Button onClick={() => setExpand(true)} id="compare-all-details-button">
           <div className="start-compare-icon">
-            {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
+            {strings.COMPARE_ALL_DETAILS} <ChevronDown />
           </div>
         </Button>
       </Conditional>

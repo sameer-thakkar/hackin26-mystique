@@ -1,7 +1,7 @@
-import { CHECK } from '../../assets/SvgIcons';
+import CheckIcon from 'assets/check';
 
 const Check = () => {
-  return <>{CHECK}</>;
+  return <>{CheckIcon}</>;
 };
 
 export default Check;

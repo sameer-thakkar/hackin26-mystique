@@ -4,7 +4,7 @@ import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { RadioIcon } from 'assets/SvgIcons';
+import RadioIcon from 'assets/radioicon';
 
 const RadioListContainer = styled.div<{ $isCatOrSubCatPage: boolean }>`
   ${({ $isCatOrSubCatPage }) =>

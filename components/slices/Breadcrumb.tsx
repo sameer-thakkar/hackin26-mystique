@@ -4,7 +4,7 @@ import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
 type BreadcrumbProps = {
   orderedLinks: any[];
@@ -81,7 +81,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
             {crumb.text}
           </StyledBreadcrumb>
           <Conditional if={links.length - 1 !== index}>
-            {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+            {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
           </Conditional>
         </React.Fragment>
       );

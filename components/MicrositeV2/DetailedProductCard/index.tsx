@@ -30,7 +30,8 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { metaAtom } from 'store/atoms/meta';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
+import CloseWhite from 'assets/closeWhite';
+import Shield from 'assets/shield';
 
 const SafeExperiencesPitch = dynamic(
   () =>
@@ -298,7 +299,7 @@ const DetailedProductCard = (props: any) => {
             tabIndex={0}
             className="close-button"
           >
-            {CLOSE_WHITE}
+            {CloseWhite}
           </div>
           <div className="v2-desc-columns heading-price-bar">
             <div className="v2-desc-left">
@@ -549,7 +550,7 @@ const DetailedProductCard = (props: any) => {
             tabIndex={0}
             className="close-button"
           >
-            {CLOSE_WHITE}
+            {CloseWhite}
           </div>
         </div>
       </Conditional>

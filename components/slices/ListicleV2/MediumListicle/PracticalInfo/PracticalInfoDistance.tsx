@@ -6,18 +6,19 @@ import {
   PracticalInfoDotIconWrapper,
   PracticalInfoTimeContentWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
-import { DISTANCE, DOT } from 'assets/SvgIcons';
+import Distance from 'assets/distance';
+import Dot from 'assets/dot';
 
 const PracticalInfoDistance = ({ distance, duration }: IPracticalInfoProps) => {
   return (
     <PracticalInfoDistanceAndTimeWrapper>
       <PracticalInfoDistanceIconWrapper>
-        {DISTANCE()}
+        {Distance()}
       </PracticalInfoDistanceIconWrapper>
       <PracticalInfoDistanceContentWrapper>
         {distance}
       </PracticalInfoDistanceContentWrapper>
-      <PracticalInfoDotIconWrapper>{DOT()}</PracticalInfoDotIconWrapper>
+      <PracticalInfoDotIconWrapper>{Dot()}</PracticalInfoDotIconWrapper>
       <PracticalInfoTimeContentWrapper>
         {duration}
       </PracticalInfoTimeContentWrapper>

@@ -3,7 +3,7 @@ import Conditional from 'components/common/Conditional';
 import { StyledButton } from 'components/common/ScrollToTop/styles';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
-import ChevronDown from 'assets/ChevrontDown';
+import ChevronDown from 'assets/chevronDown';
 
 const ScrollToTop = ({
   $isLttMonthOnMonthPage,

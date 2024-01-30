@@ -28,12 +28,10 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import {
-  BorderedShield,
-  CHEVRON_LEFT,
-  CLOSE_WHITE,
-  STAR,
-} from 'assets/SvgIcons';
+import BorderedShield from 'assets/borderedShield';
+import ChevronLeft from 'assets/chevronLeft';
+import CloseWhite from 'assets/closeWhite';
+import Star from 'assets/star';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -747,7 +745,7 @@ export const MobileProductPage = (props: any) => {
           role="button"
           tabIndex={0}
         >
-          {isEntertainmentMb ? CLOSE_WHITE : CHEVRON_LEFT}
+          {isEntertainmentMb ? CloseWhite : ChevronLeft}
         </div>
       </header>
       <main className="content">
@@ -805,7 +803,7 @@ export const MobileProductPage = (props: any) => {
                   <Conditional if={!isNew && averageRating}>
                     <span className="avg-rating">
                       {averageRating?.toFixed(1)}
-                      {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                      <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
                     </span>
                   </Conditional>
                   <Conditional if={!isNew && reviewCount}>

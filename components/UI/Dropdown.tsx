@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { PURPS_TICK_MARK } from 'assets/SvgIcons';
+import PurpsTickMark from 'assets/purpsRightArrow';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 
 const TriggerElement = styled.div`
@@ -40,7 +40,7 @@ export const DropdownItem: React.FC<any> = ({ active, children, ...props }) => {
   return (
     <StyledDropdownItem active={active} {...props}>
       {children}
-      {active ? PURPS_TICK_MARK : null}
+      {active ? PurpsTickMark : null}
     </StyledDropdownItem>
   );
 };

@@ -11,13 +11,11 @@ import {
   SpecialGuidedTourWrapper,
 } from 'components/Product/styles';
 import { strings } from 'const/strings';
-import {
-  ENGAGING_STORIES_ICON,
-  LeafDesktop,
-  LeafMobile,
-  LOCAL_GUIDE_ICON,
-  TOP_RATED_ICON,
-} from 'assets/SvgIcons';
+import EngagingStoriesIcon from 'assets/engagingStoriesIcon';
+import LeafDesktop from 'assets/leafdesktop';
+import LeafMobile from 'assets/leafmobile';
+import LocalGuideIcon from 'assets/localGuideIcon';
+import TopRatedIcon from 'assets/topRatedIcon';
 
 export const SpecialGuidedTour = ({
   Product,
@@ -38,21 +36,21 @@ export const SpecialGuidedTour = ({
         </SpecialGuidedTourHeader>
         <SpecialGuidedTourDetailsWrapper>
           <SpecialGuidedTourDetail>
-            <div className="icon-container">{LOCAL_GUIDE_ICON}</div>
+            <div className="icon-container">{LocalGuideIcon}</div>
             <div className="detail-label">
               {strings.SPECIAL_PRODUCT_DESCRIPTORS.LOCAL_GUIDES}
             </div>
           </SpecialGuidedTourDetail>
           <SpecialGuidedTourDetailSeparator />
           <SpecialGuidedTourDetail>
-            <div className="icon-container">{TOP_RATED_ICON}</div>
+            <div className="icon-container">{TopRatedIcon}</div>
             <div className="detail-label">
               {strings.SPECIAL_PRODUCT_DESCRIPTORS.TOP_RATED}
             </div>
           </SpecialGuidedTourDetail>
           <SpecialGuidedTourDetailSeparator />
           <SpecialGuidedTourDetail>
-            <div className="icon-container">{ENGAGING_STORIES_ICON}</div>
+            <div className="icon-container">{EngagingStoriesIcon}</div>
             <div className="detail-label">
               {strings.SPECIAL_PRODUCT_DESCRIPTORS.ENGAGING_STORIES}
             </div>

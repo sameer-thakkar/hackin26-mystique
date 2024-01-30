@@ -13,7 +13,7 @@ import { GLOBAL_EXPERIENCE_PAGE_TYPE } from 'const/globalMb';
 import { ASPECT_RATIO } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const StyledCard = styled.div`
   font-family: ${HALYARD.FONT_STACK};
@@ -149,7 +149,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
             hostname: host,
           })}
         >
-          {strings.SEE_ALL} {CHEVRON_LEFT}
+          {strings.SEE_ALL} {ChevronLeft}
         </a>
       )}
     </HeaderWrapper>

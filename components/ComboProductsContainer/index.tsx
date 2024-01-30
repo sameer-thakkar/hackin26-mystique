@@ -11,7 +11,8 @@ import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { DiscountVerticalBanner, Sparkles } from 'assets/SvgIcons';
+import DiscountVerticalBanner from 'assets/discountverticalbanner';
+import Sparkles from 'assets/sparkles';
 
 const ComboProductsContainer = ({
   children,

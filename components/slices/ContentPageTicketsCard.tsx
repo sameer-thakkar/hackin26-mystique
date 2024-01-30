@@ -37,7 +37,9 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { BackArrow, BLACK_COLOR_CLOSE, CALENDAR } from 'assets/SvgIcons';
+import BackArrow from 'assets/backArrow';
+import BlackColorClose from 'assets/blackColorClose';
+import Calendar from 'assets/calendar';
 
 dayjs.extend(advancedFormat);
 
@@ -653,7 +655,7 @@ const TicketCard = (props: any) => {
               tabIndex={0}
             >
               {strings.CHECK_AVAIL}
-              {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+              {mbTheme === THEMES.MIN_BLUE ? <BackArrow /> : null}
             </Button>
           </a>
         </Conditional>
@@ -668,7 +670,7 @@ const TicketCard = (props: any) => {
             tabIndex={0}
           >
             {strings.CHECK_AVAIL}
-            {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+            {mbTheme === THEMES.MIN_BLUE ? <BackArrow /> : null}
           </Button>
         </Conditional>
       </CTABlock>
@@ -677,7 +679,7 @@ const TicketCard = (props: any) => {
       >
         <NextAvailableBlock>
           <div className="icon">
-            <CALENDAR />
+            <Calendar />
           </div>
           <div className="available-text">
             {`${strings.NEXT_AVAILABLE}`}
@@ -696,7 +698,7 @@ const TicketCard = (props: any) => {
           <Conditional if={!isMobile}>
             <Product {...props} isTicketCard={isTicketCard} />
             <CloseIconWrapper onClick={() => popupCloser()}>
-              {BLACK_COLOR_CLOSE}
+              {BlackColorClose}
             </CloseIconWrapper>
           </Conditional>
         </WrapperPopupProductCard>

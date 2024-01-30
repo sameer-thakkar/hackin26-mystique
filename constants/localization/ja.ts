@@ -11,10 +11,8 @@ const ja = {
   COMPARE_ALL_DETAILS: '詳細を比べる',
   COVID19_ALERT: {
     KEY_TEXT: 'COVID-19更新',
-    LINK:
-      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT:
-      'お客様は私たちの優先事項です。 ヘルプページを確認して、キャンセルポリシーの最新情報を確認してください',
+    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT: 'お客様は私たちの優先事項です。 ヘルプページを確認して、キャンセルポリシーの最新情報を確認してください',
   },
   DURATION: '期間',
   EARLIEST_AVAILABILITY: '最も早い予約可能日',
@@ -172,8 +170,7 @@ const ja = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'お客様の安全は私たちの優先事項です',
-    TEXT:
-      '衛生水準を高めるために,消毒液を頻繁に使用して表面に全面消毒を行う。そして人が集まるのを避けます.',
+    TEXT: '衛生水準を高めるために,消毒液を頻繁に使用して表面に全面消毒を行う。そして人が集まるのを避けます.',
   },
   SAVE_PERCENT: '{0}%割引',
   SAVE_UPTO: '最大 節約',

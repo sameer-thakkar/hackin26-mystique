@@ -4,7 +4,7 @@ import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import { THEMES } from 'const/index';
 import { expandFontToken } from 'const/typography';
-import { TickSvg } from 'assets/SvgIcons';
+import TickSvg from 'assets/tickSvg';
 
 const StyledSelector = styled.div`
   margin-left: 16px;

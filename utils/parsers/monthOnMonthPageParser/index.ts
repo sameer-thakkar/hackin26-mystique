@@ -73,11 +73,8 @@ export default async function monthOnMonthPageParser({
     subCategoryData,
   ]).then((response) => {
     try {
-      const [
-        collectionData,
-        filteredCollectionData,
-        subCategoryData,
-      ] = response;
+      const [collectionData, filteredCollectionData, subCategoryData] =
+        response;
 
       if (collectionData.length) {
         primaryCity = collectionData?.[0]?.city;

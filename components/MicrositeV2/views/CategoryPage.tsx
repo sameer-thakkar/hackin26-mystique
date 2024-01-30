@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { PAGETYPE } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT, SEARCH_ICON } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
+import SearchIcon from 'assets/searchIcon';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { SortSelector } from '../SortSelector';
 
@@ -43,7 +44,7 @@ export const CategoryPage = (props: any) => {
           }}
           className="icon"
         >
-          {CHEVRON_LEFT}
+          {ChevronLeft}
         </span>
 
         <span
@@ -52,7 +53,7 @@ export const CategoryPage = (props: any) => {
           tabIndex={0}
           className="search-trigger icon"
         >
-          {SEARCH_ICON}
+          {SearchIcon}
         </span>
       </div>
       <div className="category-wrapper">

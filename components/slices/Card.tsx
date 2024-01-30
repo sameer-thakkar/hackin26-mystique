@@ -25,7 +25,8 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_LEFT, PLAY_ICON_FILLED } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
+import PlayIconFilled from 'assets/playIconFilled';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const VideoPlayer = dynamic(() => import('components/common/VideoPlayer'));
@@ -294,7 +295,7 @@ type MediaProps = {
 
 const PLAY_ICON_JSX = ({ isVideoUrl, onClick }: PlayIconProps) => (
   <Conditional if={isVideoUrl}>
-    <PLAY_ICON_FILLED onClick={onClick} />
+    <PlayIconFilled onClick={onClick} />
   </Conditional>
 );
 
@@ -538,7 +539,7 @@ const Card: React.FC<CardProps> = ({
           }}
         >
           {cta.text || strings.BOOK_NOW_CTA}
-          {CHEVRON_LEFT}
+          {ChevronLeft}
         </CTALink>
       );
   }

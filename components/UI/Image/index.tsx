@@ -7,7 +7,7 @@ import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
 import { appAtom } from 'store/atoms/app';
-import { INFO_ICON } from 'assets/SvgIcons';
+import InfoIcon from 'assets/infoIcon';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -160,7 +160,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         }}
       />
       <Conditional if={!!attribution}>
-        <Tooltip content={attribution} trigger={INFO_ICON} />
+        <Tooltip content={attribution} trigger={InfoIcon} />
       </Conditional>
     </Wrapper>
   );

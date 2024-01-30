@@ -7,7 +7,7 @@ import {
   PillIcon,
   PillLabel,
 } from 'components/common/Pill/styles';
-import { GRID_ICON } from 'assets/SvgIcons';
+import GridIcon from 'assets/gridIcon';
 
 const Pill: React.FC<PillProps> = (props) => {
   const {
@@ -29,7 +29,7 @@ const Pill: React.FC<PillProps> = (props) => {
       </Conditional>
       <Conditional if={!iconUrl && isSubCategoryPage}>
         <AllIcon>
-          <GRID_ICON />
+          <GridIcon />
         </AllIcon>
       </Conditional>
       <PillLabel>{label}</PillLabel>

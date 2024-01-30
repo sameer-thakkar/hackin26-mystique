@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { FONTS } from 'const/fonts';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { GOLDEN_STAR, HAPPY_EMOJI, HEADPHONE, VERIFIED } from 'assets/SvgIcons';
+import GoldenStar from 'assets/goldenStar';
+import HappyEmoji from 'assets/happyEmoji';
+import Headphone from 'assets/headphone';
+import Verified from 'assets/verified';
 
 const FeatureCardWrapper = styled.div`
   display: grid;
@@ -47,26 +50,26 @@ const FeatureCard = () => {
   return (
     <FeatureCardWrapper>
       <div>
-        <div>{HAPPY_EMOJI}</div>
+        <div>{HappyEmoji}</div>
         <div className="feature-card-heading">
           {FEATURE_CARD.HEADING_CUSTOMER}
         </div>
         <p>{FEATURE_CARD.SUB_HEADING_CUSTOMER}</p>
       </div>
       <div>
-        <div>{GOLDEN_STAR}</div>
+        <div>{GoldenStar}</div>
         <div className="feature-card-heading">
           {FEATURE_CARD.HEADING_RATING}
         </div>
         <p>{FEATURE_CARD.SUB_HEADING_RATING}</p>
       </div>
       <div>
-        <div>{VERIFIED}</div>
+        <div>{Verified}</div>
         <div className="feature-card-heading">{FEATURE_CARD.HEADING_SAFE}</div>
         <p>{FEATURE_CARD.SUB_HEADING_SAFE}</p>
       </div>
       <div>
-        <div>{HEADPHONE}</div>
+        <div>{Headphone}</div>
         <div className="feature-card-heading">
           {FEATURE_CARD.HEADING_SUPPORT}
         </div>

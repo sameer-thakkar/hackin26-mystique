@@ -6,7 +6,7 @@ import { getProductCardDestination } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { PAGETYPE } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
+import CloseWhite from 'assets/closeWhite';
 import PopulateProducts from '../PopulateProducts';
 
 const SearchBox: ComponentType<any> = dynamic(
@@ -30,9 +30,8 @@ export const SearchPage = (props: any) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
   const { currentLanguage } = props;
-  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
 
   const searchItemClick = (
@@ -73,7 +72,7 @@ export const SearchPage = (props: any) => {
           tabIndex={0}
           className="icon"
         >
-          {CLOSE_WHITE}
+          {CloseWhite}
         </span>
       </div>
       {!searchStarted && defaultSearchTgids.length ? (

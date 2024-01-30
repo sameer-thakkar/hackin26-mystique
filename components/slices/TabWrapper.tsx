@@ -18,7 +18,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { sliceComponents } from './sliceManager';
@@ -455,7 +455,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             ) : null}
             {!isEnd ? (
@@ -465,7 +465,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             ) : null}
           </Controls>
@@ -575,7 +575,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={() => scrollTab('left')}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
             <Conditional if={!isAtEnd}>
@@ -585,7 +585,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={() => scrollTab('right')}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
           </SlideControls>

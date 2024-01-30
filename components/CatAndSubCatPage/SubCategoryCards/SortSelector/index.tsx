@@ -21,7 +21,8 @@ import { trackEvent } from 'utils/analytics';
 import { PRICING } from 'const/catAndSubcatPage';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_DOWN, REVERSIBLE_ARROW } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
+import ReversibleArrow from 'assets/reversibleArrow';
 
 const SortSelector: React.FC<SortSelectorProps> = (props) => {
   const { sortingOrder, setSortingOrder, isMobile } = props;
@@ -67,7 +68,7 @@ const SortSelector: React.FC<SortSelectorProps> = (props) => {
         $isDropdownOpen={isDropdownOpen}
       >
         <span className="arrow-icon">
-          <REVERSIBLE_ARROW />
+          <ReversibleArrow />
         </span>
         <Conditional if={!isMobile}>
           {`${strings.SORT_BY}: `}
@@ -76,7 +77,9 @@ const SortSelector: React.FC<SortSelectorProps> = (props) => {
             : sortingOrder === 'ascending'
             ? strings.CAT_SUBCAT_PAGE.PRICE_LOW_HIGH
             : strings.CAT_SUBCAT_PAGE.PRICE_HIGH_LOW}
-          <span className="chevron-icon">{CHEVRON_DOWN}</span>
+          <span className="chevron-icon">
+            <ChevronDown />
+          </span>
         </Conditional>
       </SelectorFilter>
       <Conditional if={isDropdownOpen && !isMobile}>

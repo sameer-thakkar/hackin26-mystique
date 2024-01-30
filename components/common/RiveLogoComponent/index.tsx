@@ -3,7 +3,7 @@ import { useRive } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { StyledRizLogoWrapper } from 'components/common/RiveLogoComponent/styles';
 import { RIV_LOGO } from 'const/index';
-import { POWERED_BY_HEADOUT_NO_BORDER } from 'assets/SvgIcons';
+import PoweredByHeadoutNoBorder from 'assets/poweredByHeadout';
 
 const RiveLogoComponent = () => {
   const [useFallbackLogo, setUseFallbackLogo] = useState(false);
@@ -24,7 +24,7 @@ const RiveLogoComponent = () => {
         <RiveComponent width={'100%'} height={'100%'} />
       </Conditional>
       <Conditional if={useFallbackLogo}>
-        <POWERED_BY_HEADOUT_NO_BORDER />
+        <PoweredByHeadoutNoBorder />
       </Conditional>
     </StyledRizLogoWrapper>
   );

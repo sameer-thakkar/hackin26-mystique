@@ -7,7 +7,7 @@ import {
   CALENDAR_UNIT,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { CALENDAR_FAB } from 'assets/SvgIcons';
+import CalendarFab from 'assets/calendarFab';
 
 const FabIcon = ({ displayMonth }: { displayMonth: string }) => {
   const { VIEW_MORE_MONTHS } = strings;
@@ -26,7 +26,7 @@ const FabIcon = ({ displayMonth }: { displayMonth: string }) => {
 
   return (
     <FabWrapper onClick={handleFabIconClick}>
-      <CALENDAR_FAB />
+      <CalendarFab />
       <p>{VIEW_MORE_MONTHS}</p>
     </FabWrapper>
   );

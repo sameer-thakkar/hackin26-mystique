@@ -23,10 +23,11 @@ import PriceBlock from 'UI/PriceBlock';
 import useOnScreen from 'hooks/useOnScreen';
 import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
 import { strings } from 'const/strings';
-import { CloseIcon, GuidedTourLabelBackground } from 'assets/SvgIcons';
+import CloseIcon from 'assets/closeIcon';
+import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 
-const MediaCarousel = dynamic(() =>
-  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(
+  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const SpecialGuidedTourSidePanel = ({

@@ -49,7 +49,8 @@ import {
   POPULAR_CURRENCIES,
 } from 'const/localeSelectorConstants';
 import { strings } from 'const/strings';
-import { GLOBE, GlobeIcon } from 'assets/SvgIcons';
+import Globe from 'assets/globe';
+import GlobeIcon from 'assets/globeIcon';
 
 function PopOver(props: IPopover) {
   const {
@@ -151,7 +152,7 @@ function PopOver(props: IPopover) {
     activeLabel:
       currentLanguage === code ? (
         <>
-          {mbTheme !== THEMES.MIN_BLUE ? GLOBE : null}
+          {mbTheme !== THEMES.MIN_BLUE ? Globe : null}
           {LANGUAGE_MAP[currentLanguage].code.toUpperCase()}
         </>
       ) : null,

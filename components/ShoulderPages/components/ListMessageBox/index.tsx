@@ -4,10 +4,8 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import en from 'const/localization/en';
 import { strings } from 'const/strings';
-import {
-  CHEVRON_RIGHT as ChevronRightIcon,
-  LIST_STAR as StarIcon,
-} from 'assets/SvgIcons';
+import ChevronRightIcon from 'assets/chevronRight';
+import StarIcon from 'assets/listStar';
 import { IMessageBoxProps } from '../../interface';
 import { Container, CTA, List } from './styles';
 

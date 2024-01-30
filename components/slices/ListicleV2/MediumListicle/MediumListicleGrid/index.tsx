@@ -17,7 +17,8 @@ import {
 } from 'utils/listicle';
 import { LISTICLE_TYPE, SETTINGS_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { ARROW_DOWN, LISTICLE_CHEVRON_UP } from 'assets/SvgIcons';
+import ArrowDown from 'assets/arrowDown';
+import ListicleChevronUp from 'assets/listicleChevronUp';
 
 const MediumListicleGrid = ({
   settingsType,
@@ -39,7 +40,7 @@ const MediumListicleGrid = ({
   const [width] = useWindowSize();
   const isMobile = width <= 768;
   const [overFlowContent, setOverflowContent] = useState(!isMobile);
-  const [icon, setIcon] = useState(ARROW_DOWN);
+  const [icon, setIcon] = useState(ArrowDown);
 
   const onClickReadMore = () => {
     if (readMoreText === strings.READ_MORE) {
@@ -56,9 +57,7 @@ const MediumListicleGrid = ({
     setReadMoreText((prev) =>
       prev === strings.READ_MORE ? strings.READ_LESS : strings.READ_MORE
     );
-    setIcon(
-      readMoreText === strings.READ_MORE ? LISTICLE_CHEVRON_UP : ARROW_DOWN
-    );
+    setIcon(readMoreText === strings.READ_MORE ? ListicleChevronUp : ArrowDown);
     setOverflowContent((prev) => !prev);
   };
 

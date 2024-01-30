@@ -29,7 +29,8 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { TRANSLUCENT_LEFT, TRANSLUCENT_RIGHT } from 'assets/SvgIcons';
+import TranslucentLeft from 'assets/translucentLeft';
+import TranslucentRight from 'assets/translucentRight';
 import { IBannerImageProps } from './interface';
 
 const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
@@ -221,7 +222,7 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
               tabIndex={0}
               onClick={onPrev}
             >
-              {TRANSLUCENT_LEFT}
+              {TranslucentLeft}
             </div>
             <div
               className="next-slide"
@@ -229,7 +230,7 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
               tabIndex={0}
               onClick={onNext}
             >
-              {TRANSLUCENT_RIGHT}
+              {TranslucentRight}
             </div>
           </div>
         </SwiperControls>

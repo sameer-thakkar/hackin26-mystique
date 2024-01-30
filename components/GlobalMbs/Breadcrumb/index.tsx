@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd } from 'next-seo';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 import { IBreadcrumb } from './interface';
 
 const BreadcrumbContainer = styled.div`
@@ -59,7 +59,7 @@ const Breadcrumb: React.FC<IBreadcrumb> = ({ links }) => {
             <StyledBreadcrumb key={index}>
               <StyledLink href={url}>{text}</StyledLink>
               {links.length - 1 !== index && (
-                <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
+                <StyledChevron>{ChevronLeft}</StyledChevron>
               )}
             </StyledBreadcrumb>
           );

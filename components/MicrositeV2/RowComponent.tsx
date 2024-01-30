@@ -11,13 +11,14 @@ import { MBContext } from 'contexts/MBContext';
 import { addUrlParams } from 'utils/urlUtils';
 import { DESCRIPTORS, DESIGN, PAGETYPE } from 'const/index';
 
-const DetailedProductCard = dynamic(() =>
-  import(
-    /* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard/index'
-  )
+const DetailedProductCard = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard/index'
+    )
 );
-const V3DetailedProductCard = dynamic(() =>
-  import(/* webpackChunkName: "V3DetailedProductCard" */ '../Product')
+const V3DetailedProductCard = dynamic(
+  () => import(/* webpackChunkName: "V3DetailedProductCard" */ '../Product')
 );
 
 const Product = dynamic(
@@ -63,8 +64,11 @@ export const RowComponent = (props: any) => {
   // For Mobile each section has 4 cards, so only 1 section can be in viewport. on dweb at max two rows can be on viewport on load.
   const shouldLazyLoad = isMobile ? sectionIndex >= 1 : sectionIndex >= 2;
 
-  const { tgid: activeTgid, section: activeSection, autoScroll } =
-    activeTour || {};
+  const {
+    tgid: activeTgid,
+    section: activeSection,
+    autoScroll,
+  } = activeTour || {};
 
   const totalPreviousCardRendered =
     sectionIndex *

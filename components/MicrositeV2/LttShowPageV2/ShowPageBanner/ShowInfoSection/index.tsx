@@ -32,12 +32,10 @@ import {
   REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  COLORED_CALENDAR,
-  LOCATION,
-  STAR,
-  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
-} from 'assets/SvgIcons';
+import ColoredCalendar from 'assets/coloredCalendar';
+import Location from 'assets/location';
+import Star from 'assets/star';
+import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 
 const ShowInfoSection = ({
   tourGroupData,
@@ -193,7 +191,7 @@ const ShowInfoSection = ({
             fitCrop={true}
           />
           <span className="image-placeholder">
-            <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+            <VerticalProductImagePlaceholder
               $height={isMobile ? 172 : 258}
               $width={isMobile ? 120 : 178}
             />
@@ -214,7 +212,7 @@ const ShowInfoSection = ({
                 >
                   <span className="rating">
                     {averageRating}
-                    {STAR(COLORS.BRAND.CANDY)}
+                    <Star color={COLORS.BRAND.CANDY} />
                   </span>
                   <Conditional if={ratingsCount > 0}>
                     <span className="review-count">
@@ -226,7 +224,7 @@ const ShowInfoSection = ({
                   <ReviewPopover id="review-popover">
                     <div className="header">
                       {averageRating}
-                      {STAR(COLORS.BRAND.CANDY)}
+                      <Star color={COLORS.BRAND.CANDY} />
                     </div>
                     <div className="review">
                       <div className="review-header">
@@ -298,7 +296,7 @@ const ShowInfoSection = ({
 
             <Conditional if={!isOpeningDateInThePast && reopeningDate}>
               <p className="reopening">
-                {COLORED_CALENDAR}
+                <ColoredCalendar />
                 {OPENING_ON} {localisedOpeningDate}
               </p>
             </Conditional>
@@ -345,7 +343,7 @@ const ShowInfoSection = ({
             </Conditional>
           </TagSection>
           <TheatreSection>
-            {LOCATION}
+            {Location}
             <a
               href={theatrePageUrl}
               className="theatre-name"

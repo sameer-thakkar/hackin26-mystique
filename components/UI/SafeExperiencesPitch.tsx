@@ -22,7 +22,8 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
+import Shield from 'assets/shield';
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import Image from './Image';
 
@@ -299,9 +300,8 @@ export const getSafetyDescription = async (
   }
 };
 
-export type TSetSafetyBannerData = Simplify<
-  SafetyBannerDocumentDataOptionsItem
-> | null;
+export type TSetSafetyBannerData =
+  Simplify<SafetyBannerDocumentDataOptionsItem> | null;
 
 const SafeExperiencesPitch = ({
   allTags = [],
@@ -321,9 +321,8 @@ const SafeExperiencesPitch = ({
     ],
   };
   const { lang, primaryCountry, primaryCity } = useContext(MBContext);
-  const [safetyBannerData, setSafetyBannerData] = useState<
-    TSetSafetyBannerData
-  >(null);
+  const [safetyBannerData, setSafetyBannerData] =
+    useState<TSetSafetyBannerData>(null);
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
       (data) => {
@@ -405,8 +404,8 @@ const SafeExperiencesPitch = ({
         <SliderSection>
           <Slider
             paginationClass={'safe-pagination'}
-            nextButton={CHEVRON_LEFT_CIRCLE}
-            prevButton={CHEVRON_LEFT_CIRCLE}
+            nextButton={ChevronLeftCircle}
+            prevButton={ChevronLeftCircle}
             sliderOptions={{
               pagination: false,
             }}

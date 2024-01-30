@@ -10,7 +10,7 @@ import TitleTextCombo from 'UI/TitleTextCombo';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
 import { SIZES } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
@@ -276,7 +276,7 @@ const CardSection: React.FC<CardSectionProps> = ({
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
             <Conditional if={!(swiper as any)?.isEnd}>
@@ -286,7 +286,7 @@ const CardSection: React.FC<CardSectionProps> = ({
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
           </Controls>

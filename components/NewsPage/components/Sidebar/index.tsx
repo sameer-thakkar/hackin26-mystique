@@ -27,7 +27,8 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { LOCATION, MUSIC_ICON } from 'assets/SvgIcons';
+import Location from 'assets/location';
+import MusicIcon from 'assets/musicIcon';
 
 export const Ratings = (props: {
   averageRating: number;
@@ -112,7 +113,7 @@ const Sidecard: React.FC<TShowCardProps> = ({
         <BookNowCTA>
           <h2>
             {strings.BOOK_NOW_CTA}
-            {MUSIC_ICON}
+            {MusicIcon}
           </h2>
         </BookNowCTA>
       </Conditional>
@@ -142,7 +143,7 @@ const Sidecard: React.FC<TShowCardProps> = ({
             </div>
             <h3>{name}</h3>
             <div className="location" role="button" tabIndex={0}>
-              {LOCATION}
+              {Location}
               <a href={theatrePageUrl} onClick={handleTheatreCTAClick}>
                 <span>{theatreName}</span>
               </a>

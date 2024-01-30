@@ -1,8 +1,14 @@
+import { shouldPolyfill } from '@formatjs/intl-locale/should-polyfill';
 import {
   CURRENCY_SYMBOL_OVERRIDES,
   LESSER_KNOWN_CURRENCY_CODES,
 } from 'const/currency';
-import '@formatjs/intl-locale/polyfill';
+
+export const dynamicPolyfillIntlLocale = async () => {
+  if (shouldPolyfill()) {
+    await import('@formatjs/intl-locale/polyfill');
+  }
+};
 
 export type CurrencyDisplayType = 'symbol' | 'code';
 

@@ -17,7 +17,7 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { GUIDE_MAP, SECTION_NAMES, TAGS } from 'const/cityPage';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { TRAVEL_GUIDE_ICON } from 'assets/SvgIcons';
+import TravelGuideIcon from 'assets/travelGuideIcon';
 
 const getTravelGuideDetails = (cityGuideData: Array<CityGuideObject>) => {
   const filteredData = cityGuideData.filter(
@@ -91,7 +91,7 @@ const CityGuide = ({
               rel="noreferrer"
             >
               <div className="travel-guide-link">
-                <TRAVEL_GUIDE_ICON />
+                <TravelGuideIcon />
                 <div className="travel-guide-text">
                   {strings.CITY_PAGE.VIEW_TRAVEL_GUIDE}
                 </div>

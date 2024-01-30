@@ -8,7 +8,7 @@ import {
   PracticalInfoLocationWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
 import { strings } from 'const/strings';
-import { LOCATION } from 'assets/SvgIcons';
+import Location from 'assets/location';
 
 const PracticalInfoLocation = ({
   location,
@@ -18,7 +18,7 @@ const PracticalInfoLocation = ({
   return (
     <PracticalInfoLocationWrapper>
       <PracticalInfoLocationIconWrapper>
-        {LOCATION}
+        {Location}
       </PracticalInfoLocationIconWrapper>
       <PracticalInfoLocationContentWrapper>
         <PracticalInfoLocationNameWrapper>

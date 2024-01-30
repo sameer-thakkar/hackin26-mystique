@@ -34,15 +34,13 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  LTT_CHEVRON_LEFT,
-  LTT_CHEVRON_RIGHT,
-  PLAY_ICON_FILLED,
-  RIGHT_TAIL_HEAD_ARROW,
-} from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
+import PlayIconFilled from 'assets/playIconFilled';
+import RightTailHeadArrow from 'assets/rightTailHeadArrow';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')
 );
 
 const MediaPlayer: React.FC<TMediaPlayerProps> = ({
@@ -186,8 +184,8 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
               <u>{SEE_ALL}</u>
             </a> */}
             <NavigationButtons>
-              <LTT_CHEVRON_LEFT onClick={onPrev} />
-              <LTT_CHEVRON_RIGHT onClick={onNext} />
+              <LttChevronLeft onClick={onPrev} />
+              <LttChevronRight onClick={onNext} />
             </NavigationButtons>
           </Navigation>
         </TitleBar>
@@ -225,7 +223,7 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
                         className="show-image"
                         alt="Show Image"
                       />
-                      <PLAY_ICON_FILLED
+                      <PlayIconFilled
                         onClick={() =>
                           handlePlayIconClick(
                             index,
@@ -259,7 +257,7 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
                     >
                       <Button widthProp="100%">
                         {BUY_TICKETS_CTA}
-                        {RIGHT_TAIL_HEAD_ARROW}
+                        {RightTailHeadArrow}
                       </Button>
                     </a>
                     <BackgroundCircle

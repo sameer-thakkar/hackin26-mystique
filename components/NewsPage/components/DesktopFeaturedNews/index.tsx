@@ -17,7 +17,7 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { AVATAR } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
 
 const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
   featuredNewsData,
@@ -114,13 +114,13 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
                         {formattedPublishedDateAndTime}
                       </span>
                       <h4>{heading}</h4>
+                      <Conditional if={author_name}>
+                        <div className="author-details">
+                          {Avatar}
+                          <span>{author_name}</span>
+                        </div>
+                      </Conditional>
                     </a>
-                    <Conditional if={author_name}>
-                      <div className="author-details">
-                        {AVATAR}
-                        <span>{author_name}</span>
-                      </div>
-                    </Conditional>
                   </div>
                 </article>
               );

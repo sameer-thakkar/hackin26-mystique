@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { PRACTICAL_INFO_CALENDAR } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import PracticalInfoCalendar from 'assets/practicalInfoCalendar';
 
 const Calendar = () => {
-  return <TrainWrapper>{PRACTICAL_INFO_CALENDAR()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <PracticalInfoCalendar />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Calendar;

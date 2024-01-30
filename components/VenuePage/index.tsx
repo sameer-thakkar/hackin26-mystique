@@ -32,7 +32,9 @@ import {
   SLICE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_DOWN, CHEVRON_UP, LocationSvg } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
+import ChevronUp from 'assets/chevronUp';
+import LocationSvg from 'assets/locationSvg';
 import {
   IAccordionSlice,
   IAmenity,
@@ -42,8 +44,8 @@ import {
 import { Banner, VenuePageContainer } from './styles';
 import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
 
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const VenuePage = (props: IVenuePageProps) => {
@@ -172,11 +174,8 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   };
 
-  const {
-    nowPlayingShows,
-    upcomingShows,
-    pastShows,
-  } = getShowsBasedOnTimestamp(availableShowsData);
+  const { nowPlayingShows, upcomingShows, pastShows } =
+    getShowsBasedOnTimestamp(availableShowsData);
 
   let tgidForFirstShow;
   switch (true) {
@@ -442,7 +441,7 @@ const VenuePage = (props: IVenuePageProps) => {
             <button onClick={handleShowMoreClick}>
               <>
                 {isExpanded ? SHOW_LESS : SHOW_MORE}
-                {isExpanded ? CHEVRON_UP : CHEVRON_DOWN}
+                {isExpanded ? ChevronUp : <ChevronDown />}
               </>
             </button>
           </div>

@@ -1,13 +1,18 @@
+import { shouldPolyfill } from '@formatjs/intl-relativetimeformat/should-polyfill';
 import { strings } from 'const/strings';
-import '@formatjs/intl-locale/polyfill';
-import '@formatjs/intl-relativetimeformat/polyfill';
-import '@formatjs/intl-relativetimeformat/locale-data/en';
-import '@formatjs/intl-relativetimeformat/locale-data/it';
-import '@formatjs/intl-relativetimeformat/locale-data/es';
-import '@formatjs/intl-relativetimeformat/locale-data/fr';
-import '@formatjs/intl-relativetimeformat/locale-data/de';
-import '@formatjs/intl-relativetimeformat/locale-data/nl';
-import '@formatjs/intl-relativetimeformat/locale-data/pt';
+
+export async function dynamicPolyfillIntlRelativeTime(locale: string) {
+  const unsupportedLocale = shouldPolyfill(locale);
+  // This locale is supported
+  if (!unsupportedLocale) {
+    return;
+  }
+  // Load the polyfill 1st BEFORE loading data
+  await import('@formatjs/intl-relativetimeformat/polyfill-force');
+  await import(
+    `@formatjs/intl-relativetimeformat/locale-data/${unsupportedLocale}`
+  );
+}
 
 const rtfUnitTypes = <const>[
   'year',
@@ -26,10 +31,10 @@ const styleType = <const>['long', 'short', 'narrow'];
 interface LocalisedRelativeTimeFormat {
   locale: string;
   value: number;
-  unit: typeof rtfUnitTypes[number];
-  localeMatcher?: typeof localeMatcherType[number];
-  numeric?: typeof numericType[number];
-  style?: typeof styleType[number];
+  unit: (typeof rtfUnitTypes)[number];
+  localeMatcher?: (typeof localeMatcherType)[number];
+  numeric?: (typeof numericType)[number];
+  style?: (typeof styleType)[number];
   formatToParts?: boolean;
 }
 
@@ -135,12 +140,10 @@ export const getDuration = ({
   };
 
   if (minDuration !== maxDuration) {
-    const { hour: minHour, minute: minMinute } = convertMillisecondsToHours(
-      minDuration
-    );
-    const { hour: maxHour, minute: maxMinute } = convertMillisecondsToHours(
-      maxDuration
-    );
+    const { hour: minHour, minute: minMinute } =
+      convertMillisecondsToHours(minDuration);
+    const { hour: maxHour, minute: maxMinute } =
+      convertMillisecondsToHours(maxDuration);
     return `${formatDurationToString({
       hour: minHour,
       minute: minMinute,

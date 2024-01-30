@@ -27,7 +27,7 @@ import { CAT, SUBCAT } from 'const/cityPage';
 import COLORS from 'const/colors';
 import { CAROUSEL_DIR, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
 const IMAGE_DIMENSIONS = {
   DESKTOP: {
@@ -178,7 +178,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
           >
             <SeeAllWrapper>
               {strings.SEE_ALL}
-              {CHEVRON_RIGHT({
+              {ChevronRight({
                 fillColor: COLORS.GRAY.G2,
               })}
             </SeeAllWrapper>

@@ -26,14 +26,12 @@ import {
   LANGUAGE_CODE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  BADGE,
-  LANDMARK_GRADIENT,
-  MAP_GRADIENT,
-  STAR,
-  TickSvg,
-  TRIANGLE,
-} from 'assets/SvgIcons';
+import Badge from 'assets/badge';
+import LandmarkGradient from 'assets/landmarkGradient';
+import MapGradient from 'assets/mapGradient';
+import Star from 'assets/star';
+import TickSvg from 'assets/tickSvg';
+import Triangle from 'assets/triangle';
 
 const formatVariantInfo = (
   desc: string | null,
@@ -84,11 +82,11 @@ const getAttractionsAndRouteInfo = (desc: string | null, lang: string) => {
         />
         <Description className="boosters">
           <div className="booster-info">
-            {LANDMARK_GRADIENT}
+            {LandmarkGradient}
             {truncate(lastDescriptors?.[0] || '', 36)}
           </div>
           <div className="booster-info">
-            {MAP_GRADIENT}
+            {MapGradient}
             {truncate(lastDescriptors?.[1] || '', 36)}
           </div>
         </Description>
@@ -173,13 +171,13 @@ const VariantCard: React.FC<VariantCardProps> = (props) => {
         <div className="card">
           <Conditional if={isBestseller}>
             <BadgeWrapper className="star">
-              {STAR(COLORS.BRAND.WHITE)}
+              <Star color={COLORS.BRAND.WHITE} />
             </BadgeWrapper>
             <BadgeWrapper>
-              {BADGE(strings.HOHO.BESTSELLER.toUpperCase())}
+              {Badge(strings.HOHO.BESTSELLER.toUpperCase())}
             </BadgeWrapper>
-            <BadgeConnector> {TRIANGLE}</BadgeConnector>
-            <BadgeConnector className="right"> {TRIANGLE}</BadgeConnector>
+            <BadgeConnector> {Triangle}</BadgeConnector>
+            <BadgeConnector className="right"> {Triangle}</BadgeConnector>
           </Conditional>
           <VariantCardWrapper
             isSingleVariant={isSingleVariant}

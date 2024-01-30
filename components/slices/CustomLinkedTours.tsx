@@ -14,7 +14,7 @@ import { generateSidenavId, getHostName } from 'utils/helper';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { STAR_FULL } from 'assets/SvgIcons';
+import StarFull from 'assets/starFull';
 
 const Tour = styled.a`
   display: grid;
@@ -207,7 +207,7 @@ const CustomLinkedTours = ({
                 </TitlePriceCombo>
                 <Conditional if={averageRating}>
                   <Booster>
-                    <STAR_FULL />{' '}
+                    <StarFull />{' '}
                     <span>
                       {averageRating}{' '}
                       {reviewCount ? `| ${reviewCount} reviews` : ''}

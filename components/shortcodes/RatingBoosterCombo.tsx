@@ -8,7 +8,7 @@ import { getHostName } from 'utils/helper';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { STAR } from 'assets/SvgIcons';
+import Star from 'assets/star';
 
 const BoosterContainer = styled.span`
   display: grid;
@@ -62,7 +62,7 @@ const RatingBoosterCombo = (props: any) => {
         <BoosterContainer>
           <Conditional if={rating}>
             <span className="booster-rating">
-              {STAR('#FFBB58')}
+              <Star color={'#FFBB58'} />
               {rating}
             </span>
           </Conditional>

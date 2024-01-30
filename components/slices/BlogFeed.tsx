@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Image from 'UI/Image';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const FeedContainer = styled.div`
   display: grid;
@@ -127,7 +127,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }: any) => {
                 rel="noreferrer noopener"
               >
                 <span>Read More</span>
-                {CHEVRON_LEFT}
+                {ChevronLeft}
               </IconLink>
             </Content>
           </Card>

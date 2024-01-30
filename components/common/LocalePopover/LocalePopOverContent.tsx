@@ -3,7 +3,7 @@ import Conditional from 'components/common/Conditional';
 import { ILocalePopOverContent } from 'components/common/LocalePopover/interface';
 import { StyledContentValue } from 'components/common/LocalePopover/styles';
 import COLORS from 'const/colors';
-import { TickSvg } from 'assets/SvgIcons';
+import TickSvg from 'assets/tickSvg';
 
 function LocalePopOverContent({ section }: ILocalePopOverContent) {
   return (

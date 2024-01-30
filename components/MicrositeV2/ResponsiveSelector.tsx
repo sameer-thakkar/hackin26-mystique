@@ -6,7 +6,8 @@ import { isSameURL } from 'utils/helper';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
+import PurpsTickMark from 'assets/purpsTickMark';
 
 interface IResponsiveSelectWrapper {
   hasIcon?: boolean;
@@ -244,7 +245,7 @@ export const ResponsiveSelector = (props: any) => {
         ) : null}
         {toggleIcon ? (
           <div className={'toggle-icon ' + (toggleActive ? 'active' : '')}>
-            {CHEVRON_DOWN}
+            <ChevronDown />
           </div>
         ) : null}
       </div>
@@ -267,7 +268,7 @@ export const ResponsiveSelector = (props: any) => {
                 onClick={() => selectionChangeHandler(index)}
               >
                 <span>{option.label}</span>
-                {current == index ? PURPS_TICK_MARK : null}
+                {current == index ? PurpsTickMark : null}
               </div>
             );
           })}

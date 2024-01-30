@@ -23,10 +23,11 @@ import {
   // NEWS_PAGE_SECTIONS,
 } from 'const/index';
 // import { strings } from 'const/strings';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevrontLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const Reviews: React.FC<TReviewsProp> = (props) => {
@@ -131,11 +132,11 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
               {SEE_ALL}
             </u> */}
             <NavigationButtons>
-              <LTT_CHEVRON_LEFT
+              <LttChevrontLeft
                 onClick={onPrev}
                 disabled={swiper?.activeIndex === 0}
               />
-              <LTT_CHEVRON_RIGHT
+              <LttChevronRight
                 onClick={onNext}
                 disabled={
                   Number(swiper?.activeIndex) +

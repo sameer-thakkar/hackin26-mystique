@@ -31,26 +31,26 @@ const BrowseByCategoriesSection = forwardRef<
   const observerResetTimeoutId = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    const observerCallbackGenerator = (percentage: number) => (
-      entries: IntersectionObserverEntry[]
-    ) => {
-      for (let i = entries.length - 1; i >= 0; i--) {
-        const entry = entries[i];
-        const element = entry.target as HTMLElement;
-        const elementHeight = element.offsetHeight;
-        const viewportHeight = window.innerHeight;
-        const elementTop = entry.boundingClientRect.top;
-        const elementBottom = entry.boundingClientRect.bottom;
-        const percentageVisible =
-          ((Math.min(elementBottom, viewportHeight) - Math.max(elementTop, 0)) /
-            elementHeight) *
-          100;
-        if (percentageVisible >= percentage && entry.isIntersecting) {
-          setActiveCategoryName(entry.target.id);
-          break;
+    const observerCallbackGenerator =
+      (percentage: number) => (entries: IntersectionObserverEntry[]) => {
+        for (let i = entries.length - 1; i >= 0; i--) {
+          const entry = entries[i];
+          const element = entry.target as HTMLElement;
+          const elementHeight = element.offsetHeight;
+          const viewportHeight = window.innerHeight;
+          const elementTop = entry.boundingClientRect.top;
+          const elementBottom = entry.boundingClientRect.bottom;
+          const percentageVisible =
+            ((Math.min(elementBottom, viewportHeight) -
+              Math.max(elementTop, 0)) /
+              elementHeight) *
+            100;
+          if (percentageVisible >= percentage && entry.isIntersecting) {
+            setActiveCategoryName(entry.target.id);
+            break;
+          }
         }
-      }
-    };
+      };
     const observer = new IntersectionObserver(observerCallbackGenerator(20), {
       root: null,
       threshold: 0.55,

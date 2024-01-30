@@ -13,7 +13,8 @@ import { trackEvent } from 'utils/analytics';
 import { debounce } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { PauseSvg, PlaySvg } from 'assets/SvgIcons';
+import PauseSvg from 'assets/pauseSvg';
+import PlaySvg from 'assets/playSvg';
 
 interface VideoTypeProps {
   url: string;

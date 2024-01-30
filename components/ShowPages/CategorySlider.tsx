@@ -7,7 +7,8 @@ import Conditional from 'components/common/Conditional';
 import CategoryCard from 'components/ShowPages/CategoryCard';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -266,8 +267,8 @@ export default class CategorySlider extends Component<
               })}
             </Swiper>
             <div className="icons">
-              <LTT_CHEVRON_LEFT />
-              <LTT_CHEVRON_RIGHT />
+              <LttChevronLeft />
+              <LttChevronRight />
             </div>
           </>
         )}

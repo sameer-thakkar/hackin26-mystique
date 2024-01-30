@@ -42,10 +42,12 @@ import { generateSidenavId, truncate } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, GRID_ICON } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
+import CloseWhite from 'assets/closeWhite';
+import GridIcon from 'assets/gridIcon';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 /**
@@ -327,7 +329,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               $ctaContainerHeight={ctaContainerHeight}
             >
               <Tag onClick={handleTagClick}>
-                <GRID_ICON />
+                <GridIcon />
                 {strings.SEE_ALL_PHOTOS}
               </Tag>
             </TagContainer>
@@ -366,7 +368,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                   tabIndex={0}
                   onClick={() => handleSlideClick('prev')}
                 >
-                  {CHEVRON_LEFT_CIRCLE}
+                  {ChevronLeftCircle}
                 </div>
               </Conditional>
               <Conditional if={currentIndex < images.length - 1}>
@@ -376,7 +378,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                   tabIndex={0}
                   onClick={() => handleSlideClick('next')}
                 >
-                  {CHEVRON_LEFT_CIRCLE}
+                  {ChevronLeftCircle}
                 </div>
               </Conditional>
             </SwiperControls>
@@ -388,7 +390,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               onClick={() => handleGalleryClose}
             >
               {strings.CLOSE}
-              {CLOSE_WHITE}
+              {CloseWhite}
             </div>
           </DesktopLightBox>
         </Conditional>
@@ -402,7 +404,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               tabIndex={0}
               onClick={handleGalleryClose}
             >
-              {CLOSE_WHITE}
+              {CloseWhite}
             </div>
             <FullImage>
               <Swiper {...gallerySwiperParams}>
@@ -424,7 +426,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                     tabIndex={0}
                     onClick={() => handleSlideClick('prev')}
                   >
-                    {CHEVRON_LEFT_CIRCLE}
+                    {ChevronLeftCircle}
                   </div>
                 </Conditional>
                 <Conditional if={currentIndex < images.length - 1}>
@@ -434,7 +436,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                     tabIndex={0}
                     onClick={() => handleSlideClick('next')}
                   >
-                    {CHEVRON_LEFT_CIRCLE}
+                    {ChevronLeftCircle}
                   </div>
                 </Conditional>
               </SwiperControls>

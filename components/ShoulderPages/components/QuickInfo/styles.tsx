@@ -51,7 +51,7 @@ export const Container = styled.main`
         .label {
           ${expandFontToken(FONTS.MISC_BOOSTER)}
           color: ${COLORS.GRAY.G4};
-        } 
+        }
 
         p {
           ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
@@ -67,7 +67,8 @@ export const Container = styled.main`
           display: flex;
           align-items: center;
 
-          &:hover p, &:focus p {
+          &:hover p,
+          &:focus p {
             color: ${COLORS.TEXT.PURPS_3} !important;
             text-decoration: underline;
           }
@@ -76,13 +77,13 @@ export const Container = styled.main`
         svg {
           margin-left: 0.2rem;
         }
-        
-        :hover .arrow, :focus .arrow {
+
+        :hover .arrow,
+        :focus .arrow {
           right: 1px;
           top: 1px;
         }
       }
-
     }
     @media (max-width: 768px) {
       grid-template-columns: 1fr;

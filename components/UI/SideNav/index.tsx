@@ -22,7 +22,9 @@ import {
   SIDEBAR_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { DOUBLE_CHEVRON, LIST_ICON, TickSvg } from 'assets/SvgIcons';
+import DoubleChevron from 'assets/doubleChevron';
+import ListIcon from 'assets/listIcon';
+import TickSvg from 'assets/tickSvg';
 
 const SideNavModal: React.FC<ISideNavModalProps> = ({
   items = [],
@@ -123,11 +125,11 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
   return (
     <SideNavButton onClick={onSideNavClick}>
       <Conditional if={isMobile}>
-        <StyledIcon className="list-icon">{LIST_ICON}</StyledIcon>
+        <StyledIcon className="list-icon">{ListIcon}</StyledIcon>
       </Conditional>
       {strings.TABLE_OF_CONTENTS}
       <Conditional if={!isMobile}>
-        <StyledIcon className="double-chevron">{DOUBLE_CHEVRON}</StyledIcon>
+        <StyledIcon className="double-chevron">{DoubleChevron}</StyledIcon>
       </Conditional>
     </SideNavButton>
   );

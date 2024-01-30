@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { SHIP } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import ShipIcon from 'assets/ship';
 
 const Ship = () => {
-  return <TrainWrapper>{SHIP()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <ShipIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Ship;

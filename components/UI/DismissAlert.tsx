@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
-import { CLOSE_YELLOW } from '../../assets/SvgIcons';
+import CloseYellow from 'assets/closeYellow';
 
 const StyledAlert = styled.div`
   font-family: ${HALYARD.FONT_STACK};
@@ -85,7 +85,7 @@ const DismissAlert: React.FC<{
           {readMore}
         </StyledReadMore>
         <div className="close" role="button" tabIndex={0} onClick={handleClose}>
-          {CLOSE_YELLOW}
+          {CloseYellow}
         </div>
       </StyledContent>
     </StyledAlert>

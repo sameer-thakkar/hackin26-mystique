@@ -18,7 +18,7 @@ import { validateEmail } from 'utils/helper';
 import { SECTION_NAMES } from 'const/cityPage';
 import { ANALYTICS_PROPERTIES, CTA_TYPE, EMAIL_SUBCRIPTION } from 'const/index';
 import { strings } from 'const/strings';
-import { GREEN_CHECK } from 'assets/SvgIcons';
+import GreenCheck from 'assets/greenCheck';
 
 export const IMAGE_DIMENSIONS = {
   DESKTOP: {
@@ -65,7 +65,7 @@ const SubscriptionForm = ({
     <SubscriptionCont isErr={isErr} $isCatOrSubCatPage={isCatOrSubCatPage}>
       {isSubscribed ? (
         <div className="subcription-msg">
-          {GREEN_CHECK}
+          {GreenCheck}
           <div className="subscription-text">
             <p>{THANK_YOU}</p>
             <p>{SUBSCRIBED_MSG}</p>

@@ -28,7 +28,9 @@ import {
   VALIDITY_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { STAR_EMPTY_NEW, STAR_FULL_NEW, STAR_HALF_NEW } from 'assets/SvgIcons';
+import StarEmptyNew from 'assets/starEmptyNew';
+import StarFullNew from 'assets/starFullNew';
+import StarHalfNew from 'assets/starHalfNew';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   let tabs: Record<string, any> = [];
@@ -954,12 +956,12 @@ export const getUniqueRandomOutputs = ({
 export const getStars = (rating: number) => {
   const stars = [];
   for (let i = 0; i < Math.floor(rating); i++) {
-    stars.push(STAR_FULL_NEW({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarFullNew({ fillColor: COLORS.BRAND.CANDY }));
   }
   if (rating % 1 !== 0)
-    stars.push(STAR_HALF_NEW({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarHalfNew({ fillColor: COLORS.BRAND.CANDY }));
   for (let i = 0; i < 5 - Math.ceil(rating); i++) {
-    stars.push(STAR_EMPTY_NEW({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarEmptyNew({ fillColor: COLORS.BRAND.CANDY }));
   }
   return stars;
 };

@@ -29,7 +29,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { GlobeIcon } from 'assets/SvgIcons';
+import GlobeIcon from 'assets/globeIcon';
 import { ButtonLoader } from './LocalePopover/ButtonLoader';
 
 const StyledLocaleWrapper = styled.div<{

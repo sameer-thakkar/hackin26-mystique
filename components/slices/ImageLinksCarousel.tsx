@@ -11,7 +11,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -328,7 +328,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT}
+                {ChevronLeft}
               </div>
             ) : null}
             {swiper && !(swiper as any).isEnd ? (
@@ -338,7 +338,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT}
+                {ChevronLeft}
               </div>
             ) : null}
           </div>

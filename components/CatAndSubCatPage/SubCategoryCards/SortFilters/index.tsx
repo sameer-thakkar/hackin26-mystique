@@ -6,7 +6,7 @@ import {
 } from 'components/CatAndSubCatPage/SubCategoryCards/SortFilters/styles';
 import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
-import { TickSvg } from 'assets/SvgIcons';
+import TickSvg from 'assets/tickSvg';
 
 const SortFilters: React.FC<SortFiltersProps> = (props) => {
   const { filters, onChange, currentValue } = props;

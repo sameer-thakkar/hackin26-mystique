@@ -25,10 +25,8 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
-  WALLET_SVG,
-} from 'assets/SvgIcons';
+import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import WalletSvg from 'assets/walletSvg';
 
 const VerticalProductCard = ({
   product,
@@ -36,13 +34,8 @@ const VerticalProductCard = ({
   isMobile,
   isTopLttShow = false,
 }: TVerticalProductCardProps) => {
-  const {
-    lang,
-    nakedDomain,
-    redirectToHeadoutBookingFlow,
-    isDev,
-    host,
-  } = useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
+    useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
 
   if (!product) return null;
@@ -64,11 +57,8 @@ const VerticalProductCard = ({
   } = product;
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
-  const {
-    percentageSaved,
-    shouldShowcashbackElement,
-    cashbackValue,
-  } = getBoosterValueFromListingPrice(listingPrice);
+  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
+    getBoosterValueFromListingPrice(listingPrice);
 
   const { displayName: subCategoryName, id: subCategoryId } =
     primarySubCategory ?? {};
@@ -136,7 +126,7 @@ const VerticalProductCard = ({
         width={isMobile ? 120 : 180}
       />
       <span className="image-placeholder">
-        <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+        <VerticalProductImagePlaceholder
           $width={isMobile ? 120 : 180}
           $height={isMobile ? 180 : 270}
         />
@@ -176,7 +166,7 @@ const VerticalProductCard = ({
         />
         <Conditional if={percentageSaved > 0 || shouldShowcashbackElement}>
           <ExclusivePricesBooster>
-            {WALLET_SVG}
+            {WalletSvg}
             <div className="booster-text">
               <Conditional if={percentageSaved > 0}>
                 {strings.formatString(

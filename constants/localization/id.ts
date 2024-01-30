@@ -57,10 +57,8 @@ const id = {
   COMPARE_ALL_DETAILS: 'Bandingkan Semua Detail',
   COVID19_ALERT: {
     KEY_TEXT: 'Informasi terkini tentang COVID-19',
-    LINK:
-      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
-    TEXT:
-      'Anda adalah prioritas kami. Silakan kunjungi halaman bantuan kami untuk menemukan informasi terkini tentang kebijakan pembatalan fleksibel kami',
+    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT: 'Anda adalah prioritas kami. Silakan kunjungi halaman bantuan kami untuk menemukan informasi terkini tentang kebijakan pembatalan fleksibel kami',
   },
   CURRENCY: 'Mata Uang',
   CUSTOMER_REVIEW_HEADING: 'Ulasan Pelanggan',
@@ -274,29 +272,25 @@ const id = {
     AT_DESCRIPTION: {
       CTA_URL:
         'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
-      TEXT:
-        'Peraturan 2G berlaku: akses ke tempat tertentu, antara lain penginapan, institusi budaya, dan restoran/bar, hanya dimungkinkan dengan bukti vaksinasi lengkap atau surat keterangan infeksi sebelumnya. Hasil Tes Covid-19 negatif tidaklah cukup.',
+      TEXT: 'Peraturan 2G berlaku: akses ke tempat tertentu, antara lain penginapan, institusi budaya, dan restoran/bar, hanya dimungkinkan dengan bukti vaksinasi lengkap atau surat keterangan infeksi sebelumnya. Hasil Tes Covid-19 negatif tidaklah cukup.',
     },
     AU_DESCRIPTION: {
       CTA_URL:
         'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
-      TEXT:
-        'Pengunjung berusia 16 tahun ke atas harus menunjukkan bukti vaksinasi COVID-19 atau dispensasi medis. ',
+      TEXT: 'Pengunjung berusia 16 tahun ke atas harus menunjukkan bukti vaksinasi COVID-19 atau dispensasi medis. ',
     },
     BANNER_CTA: 'Pelajari Selengkapnya',
     BERLIN_DESCRIPTION: {
       CTA_URL:
         'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
-      TEXT:
-        'Peraturan 2G berlaku: hanya tamu yang sudah divaksinasi lengkap dan sudah sembuh berdasarkan surat keterangan yang membuktikan hal tersebut yang bisa masuk. Tamu berusia di bawah 18 tahun atau yang tidak dapat divaksinasi karena alasan medis tertentu harus menunjukkan hasil tes COVID negatif di pintu masuk. Tamu yang tidak dapat divaksinasi karena alasan medis juga harus memberikan surat keterangan medis bahwa dia tidak bisa menerima vaksinasi di pintu masuk.',
+      TEXT: 'Peraturan 2G berlaku: hanya tamu yang sudah divaksinasi lengkap dan sudah sembuh berdasarkan surat keterangan yang membuktikan hal tersebut yang bisa masuk. Tamu berusia di bawah 18 tahun atau yang tidak dapat divaksinasi karena alasan medis tertentu harus menunjukkan hasil tes COVID negatif di pintu masuk. Tamu yang tidak dapat divaksinasi karena alasan medis juga harus memberikan surat keterangan medis bahwa dia tidak bisa menerima vaksinasi di pintu masuk.',
     },
     CTA_TEXT: 'Detail Keselamatan',
     DESCRIPTION_CTA: 'Pelajari Selengkapnya.',
     EU_DESCRIPTION: {
       CTA_URL:
         'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
-      TEXT:
-        'Mulai 21 Juli 2021, semua pengunjung berusia 12 tahun ke atas harus menunjukkan Sertifikat COVID Uni Eropa.',
+      TEXT: 'Mulai 21 Juli 2021, semua pengunjung berusia 12 tahun ke atas harus menunjukkan Sertifikat COVID Uni Eropa.',
     },
     EU_HEADING: 'Diperlukan Sertifikat Covid Uni Eropa',
     EU_PREFIX: 'Catatan: ',
@@ -308,8 +302,7 @@ const id = {
     HEADING: 'Standar Keselamatan Terbaik',
     IT_DESCRIPTION: {
       CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
-      TEXT:
-        'Mulai 6 Agustus 2021, semua pengunjung berusia 11 tahun ke atas harus menunjukkan Green Pass atau Sertifikat COVID Uni Eropa.',
+      TEXT: 'Mulai 6 Agustus 2021, semua pengunjung berusia 11 tahun ke atas harus menunjukkan Green Pass atau Sertifikat COVID Uni Eropa.',
     },
     IT_PREFIX: 'Catatan: ',
     MOBILE_HEADING: 'Pengalaman yang Aman',
@@ -420,13 +413,11 @@ const id = {
     NL_DESCRIPTION: {
       CTA_URL:
         'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
-      TEXT:
-        'Pengunjung berusia 13 tahun ke atas harus memiliki Sertifikat COVID (salinan digital atau cetak) yang menunjukkan bahwa Anda telah divaksinasi, menerima hasil tes negatif, atau baru saja sembuh dari COVID-19. Wajib memakai masker. ',
+      TEXT: 'Pengunjung berusia 13 tahun ke atas harus memiliki Sertifikat COVID (salinan digital atau cetak) yang menunjukkan bahwa Anda telah divaksinasi, menerima hasil tes negatif, atau baru saja sembuh dari COVID-19. Wajib memakai masker. ',
     },
     SG_DESCRIPTION: {
       CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
-      TEXT:
-        'Mulai 13 Oktober 2021, hanya pengunjung yang sudah divaksinasi lengkap yang dapat masuk dalam kelompok 2 orang. Anda harus menunjukkan bukti status vaksinasi, hasil tes COVID-19 negatif terbaru, dan/atau dokumen keterangan sembuh sebelum masuk. ',
+      TEXT: 'Mulai 13 Oktober 2021, hanya pengunjung yang sudah divaksinasi lengkap yang dapat masuk dalam kelompok 2 orang. Anda harus menunjukkan bukti status vaksinasi, hasil tes COVID-19 negatif terbaru, dan/atau dokumen keterangan sembuh sebelum masuk. ',
     },
     SHORT_HEADING: 'Standar keamanan terbaik sudah diterapkan',
   },
@@ -472,8 +463,7 @@ const id = {
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Keselamatan Anda adalah prioritas kami',
-    TEXT:
-      'Kami telah mengambil langkah signifikan untuk meningkatkan kebersihan dengan sering menggunakan disinfektan secara menyeluruh pada permukaan. Kerumunan juga diatur guna mencegah kemacetan.',
+    TEXT: 'Kami telah mengambil langkah signifikan untuk meningkatkan kebersihan dengan sering menggunakan disinfektan secara menyeluruh pada permukaan. Kerumunan juga diatur guna mencegah kemacetan.',
   },
   SAVE: 'Hemat {0}%',
   SAVE_PERCENT: 'Hemat {0}%',

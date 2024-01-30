@@ -5,7 +5,8 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
+import PurpsTickMark from 'assets/purpsTickMark';
 
 const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
   margin: 0;
@@ -122,7 +123,7 @@ export const SortSelector = (props: any) => {
         </span>
         <Conditional if={!isEntertainmentMb}>
           <div className={'icon ' + (dropdownActive ? 'active' : '')}>
-            {CHEVRON_DOWN}
+            <ChevronDown />
           </div>
         </Conditional>
       </div>
@@ -143,7 +144,7 @@ export const SortSelector = (props: any) => {
                 <div className="filter">
                   <span className="filter-name">
                     {filter.name}
-                    <Conditional if={isActive}>{PURPS_TICK_MARK}</Conditional>
+                    <Conditional if={isActive}>{PurpsTickMark}</Conditional>
                   </span>
                 </div>
               </div>

@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { DRIZZLE } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import DrizzleIcon from 'assets/drizzle';
 
 const Drizzle = () => {
-  return <TrainWrapper>{DRIZZLE()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <DrizzleIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Drizzle;

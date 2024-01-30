@@ -5,7 +5,7 @@ import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_DOWN } from '../../assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
@@ -72,7 +72,9 @@ const Question = (props: any) => {
           }}
         >
           <div className="question-text">{question}</div>
-          <div className="state-icon">{CHEVRON_DOWN}</div>
+          <div className="state-icon">
+            <ChevronDown />
+          </div>
         </div>
         <div className="answer">
           <PrismicRichText field={answer} components={shortCodeSerializer} />

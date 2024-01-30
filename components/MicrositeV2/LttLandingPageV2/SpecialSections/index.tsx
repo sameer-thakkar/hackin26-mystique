@@ -16,7 +16,7 @@ import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { VERTICAL_PRODUCT_IMAGE_PLACEHOLDER } from 'assets/SvgIcons';
+import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -133,9 +133,8 @@ const SpecialSections = ({
     preselectedActionName ?? actions[0]?.actionName
   );
   const [currentShowList, setCurrentShowList] = useState<any[]>([]);
-  const [hasIntersectingEventFired, sethasIntersectingEventFired] = useState(
-    false
-  );
+  const [hasIntersectingEventFired, sethasIntersectingEventFired] =
+    useState(false);
   const [forceShowSkeletonLoader, setForceShowSkeletonLoader] = useState(false);
   const [slidesPerView, setSlidesPerView] = useState(6);
 
@@ -244,7 +243,7 @@ const SpecialSections = ({
       <Conditional if={forceShowSkeletonLoader}>
         <div key={index}>
           <div className="skeleton-placeholder-image">
-            <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+            <VerticalProductImagePlaceholder
               $width={isMobile ? 120 : 180}
               $height={isMobile ? 184 : 274}
             />

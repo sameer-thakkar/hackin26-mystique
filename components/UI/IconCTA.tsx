@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -97,7 +97,7 @@ const IconCTA = ({
       {ctaOnClick ? (
         // @ts-expect-error TS(2769): No overload matches this call.
         <Chevron className="chevron" colorScheme={colorScheme}>
-          {CHEVRON_LEFT}
+          {ChevronLeft}
         </Chevron>
       ) : null}
     </StyledIconCTA>

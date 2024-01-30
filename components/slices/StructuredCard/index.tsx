@@ -16,7 +16,10 @@ import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { DIAGONAL_ARROW, DURATION, FREQUENCY, TIMINGS } from 'assets/SvgIcons';
+import DiagonalArrow from 'assets/diagonalArrow';
+import Duration from 'assets/duration';
+import Frequency from 'assets/frequency';
+import Timings from 'assets/timings';
 
 const StructuredCard: React.FC<StructuredCardProps> = (props) => {
   const {
@@ -50,7 +53,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
           <Conditional if={timings}>
             <StructuredItem>
               <div className="label">
-                {TIMINGS} {strings.HOHO.TIMINGS}
+                {Timings} {strings.HOHO.TIMINGS}
               </div>
               <div className="info">{timings}</div>
             </StructuredItem>
@@ -58,7 +61,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
           <Conditional if={frequency}>
             <StructuredItem>
               <div className="label">
-                {FREQUENCY}
+                {Frequency}
                 {strings.HOHO.FREQUENCY}
               </div>
               <div className="info">{frequency}</div>
@@ -67,7 +70,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
           <Conditional if={duration}>
             <StructuredItem>
               <div className="label">
-                {DURATION} {strings.HOHO.DURATION}
+                {Duration} {strings.HOHO.DURATION}
               </div>
               <div className="info">{duration}</div>
             </StructuredItem>
@@ -89,7 +92,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
             className={`${outroText?.[0]?.text ? '' : 'no-margin'}`}
           >
             <Button fillType="blackBordered" paddingSides="1rem">
-              {ctaText} {DIAGONAL_ARROW}
+              {ctaText} {DiagonalArrow}
             </Button>
           </a>
         </Conditional>

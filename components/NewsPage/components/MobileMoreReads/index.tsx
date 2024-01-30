@@ -18,7 +18,7 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { AVATAR } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
 
 const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   content,
@@ -38,10 +38,8 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   });
 
   const { ALL_NEWS } = strings.NEWS_PAGE;
-  const {
-    uniqueArticlesWithSameTgidData = [],
-    featuredArticles = [],
-  } = content;
+  const { uniqueArticlesWithSameTgidData = [], featuredArticles = [] } =
+    content;
 
   const moreReadsData = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
@@ -143,7 +141,7 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
                     <Conditional if={author_name}>
                       <div className="author-details">
                         <span>
-                          {AVATAR}
+                          {Avatar}
                           {author_name}
                         </span>
                       </div>

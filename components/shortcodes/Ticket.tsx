@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { TICKET } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import TicketIcon from 'assets/ticket';
 
 const Ticket = () => {
-  return <TrainWrapper>{TICKET()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <TicketIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Ticket;

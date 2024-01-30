@@ -10,12 +10,12 @@ import {
 import Image from 'UI/Image';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { CRITIC_REVIEW_QUOTATION } from 'assets/SvgIcons';
+import CriticReviewQuotation from 'assets/criticReviewQuotation';
 
 const CriticReview = ({ reviewContent, criticName }: TCriticReviewProps) => {
   return (
     <CriticReviewWrapper>
-      {CRITIC_REVIEW_QUOTATION}
+      <CriticReviewQuotation />
       <ReviewContent>
         <PrismicRichText
           field={[reviewContent]}

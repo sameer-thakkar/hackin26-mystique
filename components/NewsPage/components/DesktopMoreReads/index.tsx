@@ -28,7 +28,9 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { AVATAR, LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
 /* IMAGE_DIMENSIONS specifies dimension of images based on total number of images (property in this object) in carousel */
 const IMAGE_DIMENSIONS = {
@@ -155,11 +157,11 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
             </a>
             <Conditional if={finalContentForMoreReads?.length > 4}>
               <div className="icons">
-                <LTT_CHEVRON_LEFT
+                <LttChevronLeft
                   onClick={() => changeSlide(-1)}
                   disabled={activeSlideIdx <= 0}
                 />
-                <LTT_CHEVRON_RIGHT
+                <LttChevronRight
                   onClick={() => changeSlide(1)}
                   disabled={activeSlideIdx + 4 >= disableLimit}
                 />
@@ -233,7 +235,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
                   </a>
                   <Conditional if={author_name}>
                     <span className="author-name">
-                      {AVATAR}
+                      {Avatar}
                       {author_name}
                     </span>
                   </Conditional>

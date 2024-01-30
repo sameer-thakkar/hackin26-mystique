@@ -37,10 +37,10 @@ import {
   LANGUAGE_SORT_ORDER,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { STAR_FULL_NEW } from 'assets/SvgIcons';
+import StarFullNew from 'assets/starFullNew';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 export const getTranslateButtonText = (
@@ -109,7 +109,7 @@ const ReviewSection = ({
       <RatingsDetailsSection>
         <RatingsCountSection>
           <Ratings>
-            {averageRating} {STAR_FULL_NEW({ fillColor: COLORS.BRAND.CANDY })}
+            {averageRating} <StarFullNew fillColor={COLORS.BRAND.CANDY} />
           </Ratings>
           <RatingsCount>
             {strings.formatString(strings.RATINGS, shortenedRatingsCount)}

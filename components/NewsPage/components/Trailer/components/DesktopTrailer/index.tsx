@@ -40,11 +40,9 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  RIGHT_TAIL_HEAD_ARROW,
-  TRANSLUCENT_LEFT,
-  TRANSLUCENT_RIGHT,
-} from 'assets/SvgIcons';
+import RightTailHeadArrow from 'assets/rightTailHeadArrow';
+import TranslucentLeft from 'assets/translucentLeft';
+import TranslucentRight from 'assets/translucentRight';
 
 const MediaPlayer = dynamic(
   () => import('components/NewsPage/components/Trailer/components/MediaPlayer'),
@@ -81,10 +79,8 @@ const Media: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
 const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [mainSwiper, setMainSwiperInstance] = useState<TSwiper | null>(null);
-  const [
-    thumbnailSwiper,
-    setThumbnailSwiperInstance,
-  ] = useState<TSwiper | null>(null);
+  const [thumbnailSwiper, setThumbnailSwiperInstance] =
+    useState<TSwiper | null>(null);
   const { host, isDev, lang } = useContext(MBContext);
   const trailerRef = useRef(null);
   const isTrailerSectionVisible = useOnScreen({
@@ -238,7 +234,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
                       onClick={() => getYourTicketsCTAClicked(showPageUrl)}
                     >
                       {BUY_TICKETS_CTA}
-                      {RIGHT_TAIL_HEAD_ARROW}
+                      {RightTailHeadArrow}
                     </Button>
                   </div>
                 </Container>
@@ -281,7 +277,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
                     tabIndex={0}
                     onClick={onPrev}
                   >
-                    {TRANSLUCENT_LEFT}
+                    {TranslucentLeft}
                   </div>
                   <div
                     className="next-slide"
@@ -289,7 +285,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
                     tabIndex={0}
                     onClick={onNext}
                   >
-                    {TRANSLUCENT_RIGHT}
+                    {TranslucentRight}
                   </div>
                 </SwiperControls>
               </Conditional>

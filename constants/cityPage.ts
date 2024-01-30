@@ -1,18 +1,16 @@
 import { strings } from 'const/strings';
-import {
-  ART_AND_CULTURE_ICON,
-  COMMUNITY_ICON,
-  EAT_ICON,
-  HOME_ICON,
-  INFO_ICON_LARGE,
-  KIDS_ICON,
-  SHOPPING_ICON,
-  TIPS_ICON,
-  TO_DO_ICON,
-  TRANSAPORTATION_ICON,
-  TRAVEL_PLAN_ICON,
-  WEATHER_ICON,
-} from 'assets/SvgIcons';
+import ArtAndCultureIcon from 'assets/artAndCultureIcon';
+import CommunityIcon from 'assets/communityIcon';
+import EatIcon from 'assets/eatIcon';
+import HomeIcon from 'assets/homeIcon';
+import InfoIconLarge from 'assets/infoIconLarge';
+import KidsIcon from 'assets/kidsIcon';
+import ShoppingIcon from 'assets/shoppingIcon';
+import TipsIcon from 'assets/tipsIcon';
+import ToDoIcon from 'assets/toDoIcon';
+import TransportationIcon from 'assets/transportationIcon';
+import TravelPlanIcon from 'assets/travelPlanIcon';
+import WeatherIcon from 'assets/weatherIcon';
 
 export const TAGS = {
   TRAVEL_GUIDE: 'Travel Guide',
@@ -32,62 +30,62 @@ export const TAGS = {
 export const GUIDE_MAP = () => {
   return {
     [TAGS.TRAVEL_GUIDE]: {
-      IconSvg: INFO_ICON_LARGE,
+      IconSvg: InfoIconLarge,
       description: strings.CITY_GUIDE_DESCRIPTIONS.TRAVEL_GUIDE,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.TRAVEL_GUIDE,
     },
     [TAGS.WHERE_TO_EAT]: {
-      IconSvg: EAT_ICON,
+      IconSvg: EatIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.WHERE_TO_EAT,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.WHERE_TO_EAT,
     },
     [TAGS.WHERE_TO_STAY]: {
-      IconSvg: HOME_ICON,
+      IconSvg: HomeIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.WHERE_TO_STAY,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.WHERE_TO_STAY,
     },
     [TAGS.THINGS_TO_DO]: {
-      IconSvg: TO_DO_ICON,
+      IconSvg: ToDoIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.THINGS_TO_DO,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.THINGS_TO_DO,
     },
     [TAGS.TRANSPORTATION]: {
-      IconSvg: TRANSAPORTATION_ICON,
+      IconSvg: TransportationIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.TRANSPORTATION,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.TRANSPORTATION,
     },
     [TAGS.WEATHER]: {
-      IconSvg: WEATHER_ICON,
+      IconSvg: WeatherIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.WEATHER,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.WEATHER,
     },
     [TAGS.NEIGHBOURHOODS]: {
-      IconSvg: COMMUNITY_ICON,
+      IconSvg: CommunityIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.NEIGHBOURHOODS,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.NEIGHBOURHOODS,
     },
     [TAGS.TRIP_PLANNER]: {
-      IconSvg: TRAVEL_PLAN_ICON,
+      IconSvg: TravelPlanIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.TRIP_PLANNER,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.TRIP_PLANNER,
     },
     [TAGS.FAMILY_TRAVEL]: {
-      IconSvg: KIDS_ICON,
+      IconSvg: KidsIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.FAMILY_TRAVEL,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.FAMILY_TRAVEL,
     },
     [TAGS.TRAVEL_TIPS]: {
-      IconSvg: TIPS_ICON,
+      IconSvg: TipsIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.TRAVEL_TIPS,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.TRAVEL_TIPS,
     },
     [TAGS.SHOPPING]: {
-      IconSvg: SHOPPING_ICON,
+      IconSvg: ShoppingIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.SHOPPING,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.SHOPPING,
     },
     [TAGS.ART_AND_CULTURE]: {
-      IconSvg: ART_AND_CULTURE_ICON,
+      IconSvg: ArtAndCultureIcon,
       description: strings.CITY_GUIDE_DESCRIPTIONS.ART_AND_CULTURE,
       displayName: strings.CITY_PAGE.GUIDE_ITEM_HEADINGS.ART_AND_CULTURE,
     },

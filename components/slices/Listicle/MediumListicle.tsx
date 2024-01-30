@@ -10,7 +10,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { CANDY_STAR } from 'assets/SvgIcons';
+import CandyStar from 'assets/candyStar';
 import Pricing from './Pricing';
 
 const CardWrapper = styled.div`
@@ -243,7 +243,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
               <div className="title-section">
                 <CardTitle>{title || tourData?.name}</CardTitle>
                 <Rating>
-                  {ratings.avg} {CANDY_STAR} <span>({ratings.count})</span>
+                  {ratings.avg} {CandyStar} <span>({ratings.count})</span>
                 </Rating>
               </div>
               {tourData?.listingPrice && show_price ? (
@@ -263,7 +263,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
               <div className="title-section">
                 <CardTitle>{title || tourData?.name}</CardTitle>
                 <Rating>
-                  {ratings.avg} {CANDY_STAR} <span>({ratings.count})</span>
+                  {ratings.avg} {CandyStar} <span>({ratings.count})</span>
                 </Rating>
               </div>
               <Tags

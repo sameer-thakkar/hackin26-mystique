@@ -32,19 +32,12 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  VERTICAL_PRODUCT_IMAGE_PLACEHOLDER,
-  WALLET_SVG,
-} from 'assets/SvgIcons';
+import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import WalletSvg from 'assets/walletSvg';
 
 const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
-  const {
-    lang,
-    nakedDomain,
-    redirectToHeadoutBookingFlow,
-    isDev,
-    host,
-  } = useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
+    useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pinnedCard = useRef<HTMLDivElement>(null);
   const [isButtonLoading, setButtonLoading] = useState(false);
@@ -124,11 +117,8 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
     ),
   ];
 
-  const {
-    percentageSaved,
-    shouldShowcashbackElement,
-    cashbackValue,
-  } = getBoosterValueFromListingPrice(listingPrice);
+  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
+    getBoosterValueFromListingPrice(listingPrice);
 
   const { localisedOpeningDate, OPENING_ON } =
     getOpeningDate({
@@ -189,7 +179,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
           height={260}
         />
         <span className="image-placeholder">
-          <VERTICAL_PRODUCT_IMAGE_PLACEHOLDER
+          <VerticalProductImagePlaceholder
             $height={isMobile ? 162 : 260}
             $width={isMobile ? 108 : 180}
           />
@@ -279,7 +269,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
                   if={percentageSaved > 0 || shouldShowcashbackElement}
                 >
                   <ExclusivePricesBooster className="booster">
-                    {WALLET_SVG}
+                    {WalletSvg}
                     <div className="booster-text">
                       <Conditional if={percentageSaved > 0}>
                         {strings.formatString(

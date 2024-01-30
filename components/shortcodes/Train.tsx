@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { TRAIN } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import TrainIcon from 'assets/train';
 
 const Train = () => {
-  return <TrainWrapper>{TRAIN()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <TrainIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Train;

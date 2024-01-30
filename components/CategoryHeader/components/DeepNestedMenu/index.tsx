@@ -5,7 +5,7 @@ import DeepNestedMenuItem from 'components/CategoryHeader/components/DeepNestedM
 import Conditional from 'components/common/Conditional';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { strings } from 'const/strings';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import ChevronLeft from 'assets/chevronLeft';
 
 const DeepNestedMenu: React.FC<DeepNestedMenuProps> = (props) => {
   const {
@@ -31,7 +31,7 @@ const DeepNestedMenu: React.FC<DeepNestedMenuProps> = (props) => {
           </span>
         </li>
         <li className="back-to-main-menu">
-          {CHEVRON_LEFT}{' '}
+          {ChevronLeft}{' '}
           {getCategoryHeaderMenuLabel({ label: selectedNestedMenu, mbCity })}
         </li>
       </Conditional>

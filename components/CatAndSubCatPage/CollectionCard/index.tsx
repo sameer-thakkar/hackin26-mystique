@@ -26,7 +26,8 @@ import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-import { RIGHT_ARROW_POINTED, STAR } from 'assets/SvgIcons';
+import RightArrowPointed from 'assets/rightArrowPointed';
+import Star from 'assets/star';
 
 const CollectionCard: React.FC<CollectionCardProps> = (props) => {
   const {
@@ -89,7 +90,7 @@ const CollectionCard: React.FC<CollectionCardProps> = (props) => {
           <Conditional if={!listingPrice}>{strings.READ_MORE}</Conditional>
         </a>
       </span>
-      <RIGHT_ARROW_POINTED fillColor={COLORS.BRAND.WHITE} />
+      <RightArrowPointed fillColor={COLORS.BRAND.WHITE} />
     </CTAContentWrapper>
   );
 
@@ -118,7 +119,7 @@ const CollectionCard: React.FC<CollectionCardProps> = (props) => {
         >
           <RatingsWrapper>
             <span className="average-rating">
-              {STAR(COLORS.BRAND.CANDY)}
+              <Star color={COLORS.BRAND.CANDY} />
               {averageRating?.toPrecision(2)}
             </span>
             <span className="ratings-count">

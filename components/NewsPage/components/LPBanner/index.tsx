@@ -30,14 +30,12 @@ import {
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  AVATAR,
-  NEWS_PAGE_NEXT_ICON,
-  NEWS_PAGE_PREV_ICON,
-} from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
+import NewsPageNextIcon from 'assets/newsPageNextIcon';
+import NewsPagePrevIcon from 'assets/newsPagePrevIcon';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "LandingPageSwiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "LandingPageSwiper" */ 'components/Swiper')
 );
 
 const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
@@ -157,7 +155,7 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
                     <u>{READ_MORE}</u>
                   </Content>
                   <MetaInfo>
-                    {AVATAR}
+                    {Avatar}
                     <span className="author-name">{author_name}</span>
                     <time dateTime={formattedPublishedDateAndTime}>
                       {formattedPublishedDateAndTime}
@@ -174,7 +172,7 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
           role="button"
           tabIndex={0}
         >
-          {NEWS_PAGE_PREV_ICON}
+          {NewsPagePrevIcon}
         </div>
         <div
           className="next-button"
@@ -182,7 +180,7 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
           role="button"
           tabIndex={0}
         >
-          {NEWS_PAGE_NEXT_ICON}
+          {NewsPageNextIcon}
         </div>
       </Wrapper>
       <PaginatorContainer>

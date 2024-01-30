@@ -19,7 +19,7 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
+import PoweredByHeadout from 'assets/poweredByHeadout';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -367,7 +367,7 @@ const Header: React.FC<any> = (props) => {
               <RiveLogoComponent />
             </Conditional>
             <Conditional if={hasPoweredByHeadoutLogo && isEntertainmentMB}>
-              {POWERED_BY_HEADOUT}
+              {PoweredByHeadout}
             </Conditional>
           </StyledLogo>
         </a>

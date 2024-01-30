@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { PLANE } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import PlaneIcon from 'assets/plane';
 
 const Plane = () => {
-  return <TrainWrapper>{PLANE()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <PlaneIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Plane;

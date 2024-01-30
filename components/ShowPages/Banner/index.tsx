@@ -42,7 +42,9 @@ import {
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
-import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
+import Location from 'assets/location';
+import PlayCircle from 'assets/playCircle';
+import Star from 'assets/star';
 
 const ShowPageBanner = ({
   detailsObjects,
@@ -79,9 +81,8 @@ const ShowPageBanner = ({
     : null;
   const isShowPoster = imageUploads?.length === 1; //TODO - revert after showpage revamp
 
-  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain || getNakedDomain(hostname),
@@ -321,7 +322,7 @@ const ShowPageBanner = ({
                   role="button"
                   tabIndex={0}
                 >
-                  {PLAY_CIRCLE}
+                  {PlayCircle}
                 </div>
               </Conditional>
             </div>
@@ -347,13 +348,13 @@ const ShowPageBanner = ({
               <Conditional if={theatrePageUrl}>
                 <a href={theatrePageUrl}>
                   <div className="theater-wrapper">
-                    {LOCATION} {theatreName}
+                    {Location} {theatreName}
                   </div>
                 </a>
               </Conditional>
               <Conditional if={!theatrePageUrl}>
                 <div className="theater-wrapper">
-                  {LOCATION} {theatreName}
+                  {Location} {theatreName}
                 </div>
               </Conditional>
 
@@ -371,7 +372,7 @@ const ShowPageBanner = ({
                 <Conditional if={reviewCount > 0}>
                   <div className="ratings-reviews-wrapper">
                     <span className="ratings-wrapper">
-                      {averageRating} {STAR(COLORS.TEXT.CANDY_1)}{' '}
+                      {averageRating} <Star color={COLORS.TEXT.CANDY_1} />{' '}
                     </span>
                     (
                     {reviewCount > 999
@@ -448,19 +449,19 @@ const ShowPageBanner = ({
               <Conditional if={theatrePageUrl}>
                 <a href={theatrePageUrl}>
                   <span>
-                    {LOCATION} {theatreName}
+                    {Location} {theatreName}
                   </span>
                 </a>
               </Conditional>
               <Conditional if={!theatrePageUrl}>
                 <span>
-                  {LOCATION} {theatreName}
+                  {Location} {theatreName}
                 </span>
               </Conditional>
               <Conditional if={reviewCount > 0}>
                 <span>
                   <span className="ratings-wrapper">
-                    {STAR(COLORS.TEXT.CANDY_1)} {averageRating}
+                    <Star color={COLORS.TEXT.CANDY_1} /> {averageRating}
                   </span>
                   (
                   {reviewCount > 999

@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { SNOW } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import SnowIcon from 'assets/snow';
 
 const Snow = () => {
-  return <TrainWrapper>{SNOW()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <SnowIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Snow;

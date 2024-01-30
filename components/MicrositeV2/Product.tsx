@@ -29,7 +29,7 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
-import { STAR } from 'assets/SvgIcons';
+import Star from 'assets/star';
 
 const ProductCard = styled.div<{
   $isV3Design?: boolean;
@@ -395,13 +395,8 @@ const Product = (props: any) => {
     showPageUid: showPageUidForVenuePage,
   } = props;
   const currency = useRecoilValue(currencyAtom);
-  const {
-    lang,
-    nakedDomain,
-    redirectToHeadoutBookingFlow,
-    isDev,
-    uid,
-  } = useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, uid } =
+    useContext(MBContext);
 
   // @ts-expect-error TS(2339): Property 'sliceData' does not exist on type '{}'.
   const { sliceData } = useContext(InteractionContext) || {};
@@ -652,7 +647,7 @@ const Product = (props: any) => {
                 <span className="rating-number">
                   {averageRating?.toFixed?.(1)}
                 </span>
-                {STAR(COLORS.TEXT.CANDY_1)}
+                <Star color={COLORS.TEXT.CANDY_1} />
               </span>
             </Conditional>
             <Conditional if={reviewCount}>
@@ -779,7 +774,7 @@ const Product = (props: any) => {
                       <span className="rating-number">
                         {averageRating.toFixed?.(1)}
                       </span>
-                      {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                      <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
                     </span>
                   </Conditional>
                   <Conditional if={reviewCount}>

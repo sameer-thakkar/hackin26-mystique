@@ -17,7 +17,9 @@ import {
   MONTH_ON_MONTH_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { HOVERED_MONTH, MOBILE_HOVERED_MONTH, MONTH } from 'assets/SvgIcons';
+import HoveredMonth from 'assets/hoveredMonth';
+import MobileHoveredMonth from 'assets/mobileHoveredMonth';
+import Month from 'assets/month';
 
 const CalendarUnit: React.FC<TCalendarUnitProps> = ({
   pageTabsSlice,
@@ -115,15 +117,15 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
                 >
                   <Conditional if={activeHoveredIndex !== index}>
                     <Conditional if={isMobile}>
-                      <MOBILE_HOVERED_MONTH month={month} year={year} />
+                      <MobileHoveredMonth month={month} year={year} />
                     </Conditional>
                     <Conditional if={!isMobile}>
-                      <MONTH month={month} year={year} />
+                      <Month month={month} year={year} />
                     </Conditional>
                   </Conditional>
                   <Conditional if={!isMobile}>
                     <Conditional if={activeHoveredIndex === index}>
-                      <HOVERED_MONTH month={month} year={year} />
+                      <HoveredMonth month={month} year={year} />
                     </Conditional>
                   </Conditional>
                 </Calendar>

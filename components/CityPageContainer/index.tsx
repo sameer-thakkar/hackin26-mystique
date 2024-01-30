@@ -8,35 +8,41 @@ import LazyComponent from 'components/common/LazyComponent';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 
-const TopAttractions = dynamic(() =>
-  import(
-    /* webpackChunkName: "TopAttractions" */ 'components/CityPageContainer/TopAttractions'
-  )
+const TopAttractions = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "TopAttractions" */ 'components/CityPageContainer/TopAttractions'
+    )
 );
-const NearbyCities = dynamic(() =>
-  import(
-    /* webpackChunkName: "NearbyCities" */ 'components/CityPageContainer/NearbyCities'
-  )
+const NearbyCities = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "NearbyCities" */ 'components/CityPageContainer/NearbyCities'
+    )
 );
-const CityGuide = dynamic(() =>
-  import(
-    /* webpackChunkName: "CityGuide" */ 'components/CityPageContainer/CityGuide'
-  )
+const CityGuide = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CityGuide" */ 'components/CityPageContainer/CityGuide'
+    )
 );
-const BeyondCity = dynamic(() =>
-  import(
-    /* webpackChunkName: "BeyondCity" */ 'components/CityPageContainer/BeyondCity'
-  )
+const BeyondCity = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "BeyondCity" */ 'components/CityPageContainer/BeyondCity'
+    )
 );
-const PopularCategories = dynamic(() =>
-  import(
-    /* webpackChunkName: "PopularCategories" */ 'components/CityPageContainer/PopularCategories'
-  )
+const PopularCategories = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "PopularCategories" */ 'components/CityPageContainer/PopularCategories'
+    )
 );
-const ExploreCity = dynamic(() =>
-  import(
-    /* webpackChunkName: "ExploreCity" */ 'components/CityPageContainer/ExploreCity'
-  )
+const ExploreCity = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ExploreCity" */ 'components/CityPageContainer/ExploreCity'
+    )
 );
 
 const CityPageContainer = ({

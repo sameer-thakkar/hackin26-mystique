@@ -1,0 +1,41 @@
+const Hamburger = ({ fillColor }: any) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line
+      x1="1.6"
+      y1="5.40027"
+      x2="14.4"
+      y2="5.40027"
+      stroke={fillColor}
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <line
+      x1="1.6"
+      y1="9.40027"
+      x2="14.4"
+      y2="9.40027"
+      stroke={fillColor}
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <line
+      x1="1.6"
+      y1="13.4003"
+      x2="14.4"
+      y2="13.4003"
+      stroke={fillColor}
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+export default Hamburger;

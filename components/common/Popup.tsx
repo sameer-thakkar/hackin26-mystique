@@ -5,7 +5,7 @@ import { SliceZone } from '@prismicio/react';
 import { sliceComponents } from 'components/slices/sliceManager';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import { CLOSE_BLACK } from '../../assets/SvgIcons';
+import CloseBlack from 'assets/closeBlack';
 
 const StyledPopupWrapper = styled.div<{ $alert: boolean }>`
   position: fixed;
@@ -149,7 +149,7 @@ const Popup = (props: any) => {
               togglePopup(false);
             }}
           >
-            {CLOSE_BLACK}
+            {CloseBlack}
           </div>
         </div>
         <div className="popup-slices">

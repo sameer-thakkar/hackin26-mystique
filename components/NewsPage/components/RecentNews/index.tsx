@@ -30,7 +30,7 @@ import {
   QUERY_PARAMS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { AVATAR } from 'assets/SvgIcons';
+import Avatar from 'assets/avatar';
 
 const RecentNews: React.FC<TRecentNewsProps> = (props) => {
   const { lang, isDev, host } = useContext(MBContext);
@@ -152,7 +152,7 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
                     <p>{truncatedContent}</p>
                   </Content>
                   <Meta>
-                    {AVATAR}
+                    {Avatar}
                     <span>{author_name}</span>
                   </Meta>
                 </Cell>

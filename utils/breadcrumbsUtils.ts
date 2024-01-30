@@ -613,9 +613,9 @@ const getCityGuideShoulderPageBreadcrumbs = async (
       };
     } else {
       try {
-        const prevSlugShoulderPageUid = `${
-          pageUrlObject.host
-        }.${pathArray.slice(0, pathArray.length - 1).join('.')}`;
+        const prevSlugShoulderPageUid = `${pageUrlObject.host}.${pathArray
+          .slice(0, pathArray.length - 1)
+          .join('.')}`;
         const prismicClient = createClient();
         const { data } =
           (await prismicClient.getByUID(

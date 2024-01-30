@@ -5,7 +5,7 @@ import { PopupDocument } from 'types.prismic';
 import getPopup from 'utils/prismicUtils/getPopup';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { SHIELD } from 'assets/SvgIcons';
+import Shield from 'assets/shield';
 
 const Popup = dynamic(() => import('../common/Popup'), { ssr: false });
 
@@ -81,7 +81,7 @@ const Alert: React.FC<AlertProps> = ({ popupUID }) => {
   return (
     <StyledAlert>
       {active ? <Popup togglePopup={setActive} data={data} alert /> : null}
-      <StyledShield>{SHIELD}</StyledShield>
+      <StyledShield>{Shield}</StyledShield>
       <StyledTitle>
         {(data as any)?.body[0]?.primary.alert_title ||
           strings.SANITARY_ALERT.KEY_TEXT}

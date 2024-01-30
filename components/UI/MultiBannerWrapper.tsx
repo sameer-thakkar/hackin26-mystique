@@ -10,7 +10,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
-import { Shield } from 'assets/SvgIcons';
+import Shield from 'assets/shield';
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import InfoBanner from './InfoBanner';
 import {
@@ -105,9 +105,8 @@ const MultiBannerWrapper = ({
   } = useContext(MBContext);
 
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
-  const [safetyBannerData, setSafetyBannerData] = useState<
-    TSetSafetyBannerData
-  >(null);
+  const [safetyBannerData, setSafetyBannerData] =
+    useState<TSetSafetyBannerData>(null);
   const width = useWindowWidth();
   useEffect(() => {
     getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(

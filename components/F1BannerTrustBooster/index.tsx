@@ -8,7 +8,7 @@ import {
   F1TrustBoosterProp,
   F1TrustBoostersProp,
 } from 'components/F1TrustBoosters/interface';
-import { HORIZONTAL_LINE } from 'assets/SvgIcons';
+import HorizontalLine from 'assets/horizontalLine';
 
 const F1BannerTrustBoosters = ({
   f1TrustBooster,
@@ -24,7 +24,7 @@ const F1BannerTrustBoosters = ({
                 {item.boosterHeading}
               </BannerTrustBoosterHeadingBox>
             </BannerTrustBoosterTextBox>
-            {HORIZONTAL_LINE()}
+            {HorizontalLine()}
           </BannerTrustBoosterBox>
         );
       })}

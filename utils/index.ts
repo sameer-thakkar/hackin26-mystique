@@ -33,13 +33,11 @@ import {
   UNIT_ABBREVIATIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  AUTHORISED_BOOSTER,
-  AUTHORIZED_RESELLER_BOOSTER,
-  FREE_CANCELLATION_BOOSTER,
-  HELP_CENTER_BOOSTER,
-  SIMILE_BOOSTER,
-} from 'assets/SvgIcons';
+import AuthorisedBooster from 'assets/authorisedBooster';
+import AuthorizedResellerBooster from 'assets/authorizedResellerBooster';
+import FreeCancellationBooster from 'assets/freeCancellationBooster';
+import HelpCenterBooster from 'assets/helpCenterBooster';
+import SimileBooster from 'assets/simileBooster';
 
 export const shouldDisplayCollectionRatings = ({
   averageRating,
@@ -734,29 +732,29 @@ export const getF1MBTrustBoosters = (
         {
           boosterHeading: strings.AUTHORISED_AND_TRUSTED_PARTNER,
           boosterSubtext: '',
-          svgIcon: AUTHORISED_BOOSTER(),
+          svgIcon: AuthorisedBooster(),
         },
       ]
     : [
         {
           boosterHeading: strings.HAPPY_CUSTOMER.MAIN_TEXT,
           boosterSubtext: strings.HAPPY_CUSTOMER.SUB_TEXT,
-          svgIcon: SIMILE_BOOSTER(),
+          svgIcon: SimileBooster(),
         },
         {
           boosterHeading: strings.HELP_CENTER.MAIN_TEXT,
           boosterSubtext: strings.HELP_CENTER.SUB_TEXT,
-          svgIcon: HELP_CENTER_BOOSTER(),
+          svgIcon: HelpCenterBooster(),
         },
         {
           boosterHeading: strings.AUTHORISED_RESELLER.MAIN_TEXT,
           boosterSubtext: strings.AUTHORISED_RESELLER.SUB_TEXT,
-          svgIcon: AUTHORIZED_RESELLER_BOOSTER(),
+          svgIcon: AuthorizedResellerBooster(),
         },
         {
           boosterHeading: strings.FREE_CANCELLATION,
           boosterSubtext: strings.FREE_CANCELLATION_SUBTEXT,
-          svgIcon: FREE_CANCELLATION_BOOSTER(),
+          svgIcon: FreeCancellationBooster(),
         },
       ];
 

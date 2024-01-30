@@ -58,10 +58,8 @@ const getCityGuideDocs = async (
     contentPagesPromises,
   ]);
 
-  const [
-    filteredMicrosites,
-    filteredContentPages,
-  ] = handleSettledPromiseResults(aggregatedPromise);
+  const [filteredMicrosites, filteredContentPages] =
+    handleSettledPromiseResults(aggregatedPromise);
 
   const aggregatedDocsStore = [...filteredMicrosites, ...filteredContentPages];
 

@@ -13,7 +13,7 @@ import {
 } from 'components/common/Tooltip/styles';
 import { isMobile } from 'utils/helper';
 import { strings } from 'const/strings';
-import { SWEIPESHEET_CROSS } from 'assets/SvgIcons';
+import SwipesheetCross from 'assets/sweipesheetCross';
 
 const Tooltip = ({
   trigger,
@@ -46,7 +46,7 @@ const Tooltip = ({
             <hr />
           </Conditional>
           <Conditional if={showClose}>
-            <CloseIcon onClick={handleClose}>{SWEIPESHEET_CROSS}</CloseIcon>
+            <CloseIcon onClick={handleClose}>{SwipesheetCross}</CloseIcon>
           </Conditional>
           <div
             className="swipe-sheet-content"

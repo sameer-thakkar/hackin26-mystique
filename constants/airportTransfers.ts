@@ -17,36 +17,31 @@ export const AIRPORT_TRANSFER_REVIEWS = [
     name: 'Mark Wilson',
     rating: 5,
     vehicleType: 'Airport Bus',
-    text:
-      'Departure point was easy to locate and it was a short wait for the bus. Only had to open the email on my phone for the conductor to scan. Best way to travel to the airport. Thank you!',
+    text: 'Departure point was easy to locate and it was a short wait for the bus. Only had to open the email on my phone for the conductor to scan. Best way to travel to the airport. Thank you!',
   },
   {
     name: 'Anna Meritt',
     rating: 5,
     vehicleType: 'Private Cab',
-    text:
-      'Our cab was very easy to find due to the clear meeting point instructions that were shared with us beforehand. Entire process from booking online to getting dropped at our hotel was seamless!',
+    text: 'Our cab was very easy to find due to the clear meeting point instructions that were shared with us beforehand. Entire process from booking online to getting dropped at our hotel was seamless!',
   },
   {
     name: 'James Campbell',
     rating: 4,
     vehicleType: 'Shared Shuttle',
-    text:
-      "I'm almost 80 yrs old and booking online for anything gets me a bit tense. But there was no hitch booking a ticket with your shuttle service. The driver was very cheerful and polite.",
+    text: "I'm almost 80 yrs old and booking online for anything gets me a bit tense. But there was no hitch booking a ticket with your shuttle service. The driver was very cheerful and polite.",
   },
   {
     name: 'Gemma Bradford',
     rating: 5,
     vehicleType: 'Airport Train',
-    text:
-      'Everything was perfect. Train was on time and we had a smooth ride. This was definitely a much better way to get to the city without any traffic hassles.',
+    text: 'Everything was perfect. Train was on time and we had a smooth ride. This was definitely a much better way to get to the city without any traffic hassles.',
   },
   {
     name: 'Abner Gutierrez',
     rating: 4,
     vehicleType: 'Private Cab',
-    text:
-      'The cab was very clean, the driver was very polite and helpful. He even helped us with our luggage! The cab arrived at our hotel very early and we were able to reach the airport on time.',
+    text: 'The cab was very clean, the driver was very polite and helpful. He even helped us with our luggage! The cab arrived at our hotel very early and we were able to reach the airport on time.',
   },
 ];
 

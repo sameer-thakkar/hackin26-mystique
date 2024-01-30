@@ -4,23 +4,21 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import en from 'const/localization/en';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT as ChevronRightIcon } from 'assets/SvgIcons';
+import ChevronRightIcon from 'assets/chevronRight';
 import { IQuickInfoProps } from '../../interface';
 import RedirectionIcon from '../RedirectIcon';
 import { Container, CTA } from './styles';
 
 const QuickInfo = ({ info = {}, CTALink, id }: IQuickInfoProps) => {
-  const onCtaClick = (
-    key: keyof typeof en.CONTENT_PAGE,
-    ctaType?: string
-  ) => () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.SHOULDER_PAGE_CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.SECTION]: 'Quick Information',
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: ctaType || CTA_TYPE.BUTTON,
-      [ANALYTICS_PROPERTIES.LABEL]: en.CONTENT_PAGE[key],
-    });
-  };
+  const onCtaClick =
+    (key: keyof typeof en.CONTENT_PAGE, ctaType?: string) => () => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.SHOULDER_PAGE_CTA_CLICKED,
+        [ANALYTICS_PROPERTIES.SECTION]: 'Quick Information',
+        [ANALYTICS_PROPERTIES.CTA_TYPE]: ctaType || CTA_TYPE.BUTTON,
+        [ANALYTICS_PROPERTIES.LABEL]: en.CONTENT_PAGE[key],
+      });
+    };
 
   return (
     <Container id={id}>

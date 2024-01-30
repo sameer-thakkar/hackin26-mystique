@@ -21,13 +21,14 @@ import { getCatAndSubcatPageLabel } from 'utils/helper';
 import { SECTIONS } from 'const/catAndSubcatPage';
 import { CAROUSEL_DIR, MB_CATEGORISATION } from 'const/index';
 import { strings } from 'const/strings';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const OverflowScroll = dynamic(() =>
-  import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
+const OverflowScroll = dynamic(
+  () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
 const TopCollectionsCarousel: React.FC<TopCollectionsCarouselProps> = (
@@ -121,7 +122,7 @@ const TopCollectionsCarousel: React.FC<TopCollectionsCarouselProps> = (
           >
             <CarouselControls>
               <span className="prev-pill">
-                <LTT_CHEVRON_LEFT
+                <LttChevronLeft
                   onClick={goPrev}
                   disabled={swiper?.isBeginning}
                   aria-label={`See previous ${sectionHeading?.toLowerCase()}`}
@@ -129,7 +130,7 @@ const TopCollectionsCarousel: React.FC<TopCollectionsCarouselProps> = (
                 />
               </span>
               <span className="next-pill">
-                <LTT_CHEVRON_RIGHT
+                <LttChevronRight
                   onClick={goNext}
                   disabled={swiper?.isEnd}
                   aria-label={`See more ${sectionHeading?.toLowerCase()}`}

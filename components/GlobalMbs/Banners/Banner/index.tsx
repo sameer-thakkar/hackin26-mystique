@@ -24,7 +24,7 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import ChevronDown from 'assets/chevronDown';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -257,7 +257,7 @@ const Banner: FunctionComponent<IBannerProps> = ({
                   role="button"
                   tabIndex={0}
                 >
-                  See all hours {CHEVRON_DOWN}
+                  See all hours <ChevronDown />
                 </span>
                 <Conditional if={toggleTimings}>
                   <PrismicRichText

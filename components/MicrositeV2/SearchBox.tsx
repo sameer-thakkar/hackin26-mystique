@@ -10,7 +10,8 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CLOSE_WHITE, SEARCH_ICON } from 'assets/SvgIcons';
+import CloseWhite from 'assets/closeWhite';
+import SearchIcon from 'assets/searchIcon';
 
 const StyledSearchBox = styled.div<{
   isEntertainmentMb?: boolean;
@@ -212,7 +213,7 @@ export const SearchBox = (props: any) => {
           });
         }}
       />
-      <div className="input-icon">{SEARCH_ICON}</div>
+      <div className="input-icon">{SearchIcon}</div>
       <Conditional if={query.length > 0}>
         <div
           className="close-icon"
@@ -222,7 +223,7 @@ export const SearchBox = (props: any) => {
             handleClearSearch();
           }}
         >
-          {CLOSE_WHITE}
+          {CloseWhite}
         </div>
       </Conditional>
     </StyledSearchBox>

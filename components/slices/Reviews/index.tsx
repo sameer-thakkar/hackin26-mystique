@@ -35,7 +35,7 @@ import { generateSidenavId, truncate } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FLAGS_FOLDER_URL } from 'const/index';
 import { ArrowCircleRight } from 'assets/airportTransfers';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 const Slider = dynamic(() => import('UI/Slider'));
 const SwiperWrapper = dynamic(() => import('components/Swiper'));
@@ -244,8 +244,8 @@ const Reviews: React.FC<ReviewsProps> = ({
           slidesPerView: isMobile ? 1 : 3,
           freeMode: isMobile,
         }}
-        nextButton={!isMobile ? CHEVRON_LEFT_CIRCLE : undefined}
-        prevButton={!isMobile ? CHEVRON_LEFT_CIRCLE : undefined}
+        nextButton={!isMobile ? ChevronLeftCircle : undefined}
+        prevButton={!isMobile ? ChevronLeftCircle : undefined}
       >
         {getReviewSlides()}
       </Slider>

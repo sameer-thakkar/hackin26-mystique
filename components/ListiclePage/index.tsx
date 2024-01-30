@@ -22,7 +22,7 @@ import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { HEADOUT_API_ENDPOINT } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 // [NOT IN USE]
 
@@ -517,8 +517,8 @@ const Listicle = (props: any) => {
             <CategorySlider stickCategorySlider={stickElements}>
               <Slider
                 sliderOptions={{ slidesPerView: 'auto', spaceBetween: 24 }}
-                nextButton={CHEVRON_LEFT_CIRCLE}
-                prevButton={CHEVRON_LEFT_CIRCLE}
+                nextButton={ChevronLeftCircle}
+                prevButton={ChevronLeftCircle}
               >
                 {listicleCategories.map((category: any, index: number) => {
                   return (

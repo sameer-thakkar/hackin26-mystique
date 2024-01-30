@@ -10,7 +10,7 @@ import { getDuration } from 'utils/timeUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { DESCRIPTORS } from 'const/index';
 import { strings } from 'const/strings';
-import { GLOBE } from 'assets/SvgIcons';
+import Globe from 'assets/globe';
 
 export const ProductDescriptors = ({
   descriptorArray,
@@ -28,10 +28,8 @@ export const ProductDescriptors = ({
   showIcons = true,
   isMobile = false,
 }: TProductDescriptors) => {
-  const [
-    cancellationPolicyEventRecorded,
-    setCancellationPolicyEventRecorded,
-  ] = useState(false);
+  const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
+    useState(false);
 
   if (isLoading)
     return (
@@ -97,7 +95,7 @@ export const ProductDescriptors = ({
       })}
       <Conditional if={showLanguages}>
         <div key="descriptor-language" className="tour-tag language-descriptor">
-          {GLOBE}
+          {Globe}
           <Conditional if={horizontal}>
             {/*
             TODO: add language labels from scorpio or prismic

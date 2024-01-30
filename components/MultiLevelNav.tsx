@@ -11,12 +11,13 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { CHEVRON_DOWN } from '../assets/SvgIcons';
+import ChevronDown from '../assets/chevronDown';
 import LazyComponent from './common/LazyComponent';
 import LinkResolver from './LinkResolver';
 
-const CategoryHeader = dynamic(() =>
-  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(
+  () =>
+    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
 
 const StyledMenuItem = styled.li`
@@ -339,7 +340,9 @@ const Menu = ({
 
   useEffect(() => {
     if (nestedMenuRef.current) {
-      const nestedMenuDim = (nestedMenuRef.current as any)?.getBoundingClientRect();
+      const nestedMenuDim = (
+        nestedMenuRef.current as any
+      )?.getBoundingClientRect();
       if (nestedMenuDim.width + nestedMenuDim.x > windowWidth)
         setOffScreen(true);
     }
@@ -433,7 +436,9 @@ const MenuItem = (props: any) => {
             >
               <span className="label">{label}</span>
               <Conditional if={isNested}>
-                <span className="nest-icon">{CHEVRON_DOWN}</span>
+                <span className="nest-icon">
+                  <ChevronDown />
+                </span>
               </Conditional>
             </div>
           </LinkResolver>
@@ -508,7 +513,7 @@ const HeaderSliceHandler = (slice: any, props: any) => {
         >
           {slice.label}
           <span className="nest-icon" id={`nest-icon-${index}`}>
-            {CHEVRON_DOWN}
+            <ChevronDown />
           </span>
         </HeadingMenu>
       );

@@ -33,13 +33,8 @@ const SwiperWrapper = (props: ISwiperWrapper) => {
     isLazy = props.lazy,
     enableCardsEffect = props.cardsEffect;
 
-  const {
-    nextButton,
-    previousButton,
-    children,
-    isFreeMode,
-    ...restProps
-  } = props;
+  const { nextButton, previousButton, children, isFreeMode, ...restProps } =
+    props;
   const modules = [];
 
   showPagination && modules.push(Pagination);

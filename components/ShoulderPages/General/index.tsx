@@ -5,8 +5,8 @@ import Alert from 'components/UI/Alert';
 import { IGeneralContentPageProps } from '../interface';
 import { ContentWrapper } from './styles';
 
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const GeneralContentPage = ({

@@ -1,7 +1,7 @@
 import { truncateNumber } from 'utils';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
-import { STAR_FULL } from 'assets/SvgIcons';
+import StarFull from 'assets/starFull';
 import { TRatingsContainerProps } from '../interface';
 import { StyledRatingsContainer } from '../styles';
 
@@ -14,7 +14,7 @@ const Ratings = ({ reviewsDetails }: TRatingsContainerProps) => {
 
   return (
     <StyledRatingsContainer>
-      {showRatings && <STAR_FULL fillColor={COLORS.BRAND.CANDY} />}
+      {showRatings && <StarFull fillColor={COLORS.BRAND.CANDY} />}
       <span className="avg-rating">
         {showRatings ? averageRating : strings.NEW}
       </span>

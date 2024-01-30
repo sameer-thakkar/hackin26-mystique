@@ -4,7 +4,7 @@ import {
   PracticalInfoCalendarIconWrapper,
   PracticalInfoCalendarWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
-import { PRACTICAL_INFO_CALENDAR } from 'assets/SvgIcons';
+import PracticalInfoCalendarIcon from 'assets/practicalInfoCalendar';
 
 const PracticalInfoCalendar = ({
   calendar,
@@ -13,7 +13,7 @@ const PracticalInfoCalendar = ({
   return (
     <PracticalInfoCalendarWrapper isSettingsOne={isSettingsOne}>
       <PracticalInfoCalendarIconWrapper>
-        {PRACTICAL_INFO_CALENDAR()}
+        <PracticalInfoCalendarIcon />
       </PracticalInfoCalendarIconWrapper>
       <PracticalInfoCalendarContentWrapper>
         {calendar}

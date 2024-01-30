@@ -13,7 +13,7 @@ import {
   MapSVG,
   PhoneSVG,
 } from 'assets/airportTransfers';
-import { TICKET } from 'assets/SvgIcons';
+import Ticket from 'assets/ticket';
 import {
   StyledCardContainer,
   StyledGradientContainer,
@@ -24,12 +24,8 @@ import {
 const SwiperWrapper = dynamic(() => import('components/Swiper'));
 
 const getCards = (localisedStrings: typeof strings) => {
-  const {
-    BOOK_ONLINE,
-    CONVENIENT_PICKUP,
-    DROP_OFF,
-    INSTANT_CONFIRMATION,
-  } = localisedStrings.AIRPORT_TRANSFER.BOOKING_STEPS;
+  const { BOOK_ONLINE, CONVENIENT_PICKUP, DROP_OFF, INSTANT_CONFIRMATION } =
+    localisedStrings.AIRPORT_TRANSFER.BOOKING_STEPS;
   return [
     {
       icon: <PhoneSVG />,
@@ -37,7 +33,7 @@ const getCards = (localisedStrings: typeof strings) => {
       description: BOOK_ONLINE.DESCRIPTION,
     },
     {
-      icon: <TICKET />,
+      icon: <Ticket />,
       title: INSTANT_CONFIRMATION.TITLE,
       description: INSTANT_CONFIRMATION.DESCRIPTION,
     },

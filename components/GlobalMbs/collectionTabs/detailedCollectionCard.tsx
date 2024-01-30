@@ -13,7 +13,7 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
+import CloseWhite from 'assets/closeWhite';
 
 const Wrapper = styled.div<{ isMobile: boolean }>`
   display: grid;
@@ -397,7 +397,7 @@ const DetailedCollectionCard = forwardRef<
                   clickHandler && clickHandler(e);
                 }}
               >
-                {CLOSE_WHITE}
+                {CloseWhite}
               </CloseButton>
             </Conditional>
           </div>

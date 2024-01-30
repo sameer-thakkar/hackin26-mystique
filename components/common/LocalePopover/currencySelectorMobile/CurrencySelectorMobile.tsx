@@ -17,7 +17,7 @@ import {
   POPULAR_CURRENCIES,
 } from 'const/localeSelectorConstants';
 import { strings } from 'const/strings';
-import { SEARCH_ICON } from 'assets/SvgIcons';
+import SearchIcon from 'assets/searchIcon';
 
 function CurrencySelectorMobile({
   onCurrencyChange,
@@ -69,7 +69,7 @@ function CurrencySelectorMobile({
             setSearchQuery(e.currentTarget.value);
           }}
         />
-        <div className="input-icon">{SEARCH_ICON}</div>
+        <div className="input-icon">{SearchIcon}</div>
       </StyledSearchBox>
       <Conditional if={isCurrenciesEmpty}>
         <StyledNoValues>{`${strings.NO_RESULT_FOUND}`}</StyledNoValues>

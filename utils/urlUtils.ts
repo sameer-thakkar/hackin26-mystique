@@ -362,7 +362,7 @@ export const getSanitizedPathArray = (url: URL) => {
       (path) =>
         !!path &&
         !SUPPORTED_LANGUAGES.includes(
-          path as typeof SUPPORTED_LANGUAGES[number]
+          path as (typeof SUPPORTED_LANGUAGES)[number]
         )
     );
 };

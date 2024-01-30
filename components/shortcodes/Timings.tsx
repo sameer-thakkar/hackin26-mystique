@@ -1,8 +1,12 @@
-import { TrainWrapper } from 'components/shortcodes/styles';
-import { TIMING } from 'assets/SvgIcons';
+import { ShortcodeIconWrapper } from 'components/shortcodes/styles';
+import TimingIcon from 'assets/timing';
 
 const Timings = () => {
-  return <TrainWrapper>{TIMING()}</TrainWrapper>;
+  return (
+    <ShortcodeIconWrapper>
+      <TimingIcon />
+    </ShortcodeIconWrapper>
+  );
 };
 
 export default Timings;

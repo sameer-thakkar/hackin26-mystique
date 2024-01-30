@@ -10,7 +10,7 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
 
 type Props = {
   hasRegularHighlights?: boolean;
@@ -85,7 +85,7 @@ const Highlights = ({
       </HighlightsPanel>
       <ViewMoreButton onClick={onClick} $isOverlay={showViewMoreAsOverlay}>
         {`${strings.PC_EXP.SHOW_INCL} `}
-        <CHEVRON_RIGHT fillColor={COLORS.BRAND.CANDY} />
+        <ChevronRight fillColor={COLORS.BRAND.CANDY} />
       </ViewMoreButton>
     </CompactHighlightsWrapper>
   );

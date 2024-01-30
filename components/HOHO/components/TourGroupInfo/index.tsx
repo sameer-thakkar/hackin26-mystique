@@ -36,15 +36,13 @@ import {
   SIDEBAR_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  CHEVRON_RIGHT,
-  DROPDOWN_TRIANGLE,
-  LTT_CHEVRON_LEFT,
-  LTT_CHEVRON_RIGHT,
-} from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
+import DropdownTriangle from 'assets/dropdownTriangle';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
-const MediaCarousel = dynamic(() =>
-  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+const MediaCarousel = dynamic(
+  () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
 const CAROUSEL_SLIDE_NUMBER = 3;
@@ -275,7 +273,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
                   <div className="title">{strings.HOHO.BUS_ROUTES}</div>
                   <div className="info">
                     {strings.HOHO.VIEW_ROUTES}
-                    {CHEVRON_RIGHT({
+                    {ChevronRight({
                       fillColor: COLORS.GRAY.G3,
                       height: 8,
                       width: 8,
@@ -289,7 +287,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
                   <div className="title">{strings.HOHO.BUS_DETAILS}</div>
                   <div className="info">
                     {strings.HOHO.VIEW_TOUR_DETAILS}
-                    {CHEVRON_RIGHT({
+                    {ChevronRight({
                       fillColor: COLORS.GRAY.G3,
                       height: 8,
                       width: 8,
@@ -313,13 +311,13 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
               <div className="pills-container">
                 <Conditional if={tgidRouteData}>
                   <DetailsPill onClick={onRouteDetailsClick}>
-                    {strings.HOHO.ROUTE_DETAILS} {DROPDOWN_TRIANGLE}
+                    {strings.HOHO.ROUTE_DETAILS} {DropdownTriangle}
                   </DetailsPill>
                 </Conditional>
                 <Conditional if={finalHighlights?.length}>
                   <DetailsPill onClick={onMoreDetailsClick}>
                     {strings.HOHO.MORE_DETAILS}
-                    {DROPDOWN_TRIANGLE}
+                    {DropdownTriangle}
                   </DetailsPill>
                 </Conditional>
               </div>
@@ -330,10 +328,10 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       <Conditional if={!isMobile && totalCards > CAROUSEL_SLIDE_NUMBER}>
         <SwiperControls>
           <span className="prev-pill">
-            <LTT_CHEVRON_LEFT onClick={swipePrev} disabled={activeIndex <= 0} />
+            <LttChevronLeft onClick={swipePrev} disabled={activeIndex <= 0} />
           </span>
           <span className="next-pill">
-            <LTT_CHEVRON_RIGHT
+            <LttChevronRight
               onClick={swipeNext}
               disabled={activeIndex + CAROUSEL_SLIDE_NUMBER >= totalCards}
             />

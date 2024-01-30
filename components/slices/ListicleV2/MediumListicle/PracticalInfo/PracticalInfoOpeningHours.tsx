@@ -6,13 +6,13 @@ import {
   PracticalInfoTimingsWrapper,
 } from 'components/slices/ListicleV2/MediumListicle/SettingsContainer/styles';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { TIMING } from 'assets/SvgIcons';
+import Timing from 'assets/timing';
 
 const PracticalInfoOpeningHours = ({ openingHours }: IPracticalInfoProps) => {
   return (
     <PracticalInfoTimingsWrapper>
       <PracticalInfoTimingsIconWrapper>
-        {TIMING()}
+        <Timing />
       </PracticalInfoTimingsIconWrapper>
       <PracticalInfoTimingsContentWrapper>
         <PrismicRichText

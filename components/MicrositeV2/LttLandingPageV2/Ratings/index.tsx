@@ -4,7 +4,7 @@ import { truncateNumber } from 'utils/index';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { STAR } from 'assets/SvgIcons';
+import Star from 'assets/star';
 
 export const RatingsWrapper = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ const Ratings = ({
   return (
     <RatingsWrapper>
       <div className="average-rating">{averageRating?.toPrecision(2)}</div>
-      {STAR(COLORS.TEXT.CANDY_1)}
+      <Star color={COLORS.TEXT.CANDY_1} />
       <Conditional if={reviewCount > 0 && showCount}>
         <div className="count">
           ({truncateNumber(reviewCount).toUpperCase()}

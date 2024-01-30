@@ -6,30 +6,35 @@ import { CatAndSubCatPageContainer } from 'components/CatAndSubCatPage/styles';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
 
-const SubCategoryPills = dynamic(() =>
-  import(
-    /* webpackChunkName: "SubCategoryPills" */ 'components/CatAndSubCatPage/SubCategoryPills'
-  )
+const SubCategoryPills = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SubCategoryPills" */ 'components/CatAndSubCatPage/SubCategoryPills'
+    )
 );
-const TopCollectionsCarousel = dynamic(() =>
-  import(
-    /* webpackChunkName: "TopCollectionsCarousel" */ 'components/CatAndSubCatPage/TopCollectionsCarousel'
-  )
+const TopCollectionsCarousel = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "TopCollectionsCarousel" */ 'components/CatAndSubCatPage/TopCollectionsCarousel'
+    )
 );
-const SubCategoryCards = dynamic(() =>
-  import(
-    /* webpackChunkName: "SubCategoryCards" */ 'components/CatAndSubCatPage/SubCategoryCards'
-  )
+const SubCategoryCards = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SubCategoryCards" */ 'components/CatAndSubCatPage/SubCategoryCards'
+    )
 );
-const SubCategoryCarousels = dynamic(() =>
-  import(
-    /* webpackChunkName: "SubCategoryCarousels" */ 'components/CatAndSubCatPage/SubCategoryCarousels'
-  )
+const SubCategoryCarousels = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SubCategoryCarousels" */ 'components/CatAndSubCatPage/SubCategoryCarousels'
+    )
 );
-const CityCategoriesCarousel = dynamic(() =>
-  import(
-    /* webpackChunkName: "CityCategoriesCarousel" */ 'components/CatAndSubCatPage/CityCategoriesCarousel'
-  )
+const CityCategoriesCarousel = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CityCategoriesCarousel" */ 'components/CatAndSubCatPage/CityCategoriesCarousel'
+    )
 );
 
 const CatAndSubCatPage: React.FC<CatAndSubCatPageProps> = (props) => {

@@ -16,10 +16,10 @@ import {
   TabsWrapper,
 } from 'components/Product/styles';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import ChevronRightCircle from 'assets/chevronRightCircle';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 const swiperParams: SwiperProps = {
@@ -153,7 +153,7 @@ export const HighlightTabs = ({
                 onClick={goPrev}
                 role="button"
               >
-                {CHEVRON_RIGHT_CIRCLE}
+                {ChevronRightCircle}
               </div>
             </Conditional>
             <Conditional if={!isEnd}>
@@ -163,7 +163,7 @@ export const HighlightTabs = ({
                 onClick={goNext}
                 role="button"
               >
-                {CHEVRON_RIGHT_CIRCLE}
+                {ChevronRightCircle}
               </div>
             </Conditional>
           </SwiperControls>

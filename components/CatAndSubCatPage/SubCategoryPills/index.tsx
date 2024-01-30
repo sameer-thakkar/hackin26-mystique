@@ -29,23 +29,20 @@ import {
   ANALYTICS_PROPERTIES,
   CAROUSEL_DIR,
 } from 'const/index';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
   { ssr: false }
 );
-const OverflowScroll = dynamic(() =>
-  import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
+const OverflowScroll = dynamic(
+  () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
 const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
-  const {
-    subCategoryPills,
-    subCategoryData,
-    isSubCategoryPage,
-    isMobile,
-  } = props;
+  const { subCategoryPills, subCategoryData, isSubCategoryPage, isMobile } =
+    props;
   const { id: subCategoryId } = subCategoryData || {};
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -136,8 +133,8 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
     const scrollHandler = () => {
       if (!pillsSectionRef.current) return;
 
-      const pillsRowScrollPos = pillsSectionRef.current.getBoundingClientRect()
-        .top;
+      const pillsRowScrollPos =
+        pillsSectionRef.current.getBoundingClientRect().top;
       const SCROLL_CUTOFF = isMobile ? 56 : 44;
       if (isSectionAtTop && pillsRowScrollPos > SCROLL_CUTOFF) {
         setIsSectionAtTop(false);
@@ -201,12 +198,12 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
           <SwiperControls $isBeginning={isBeginning} $isEnd={isEnd}>
             <Conditional if={!isBeginning}>
               <span className="prev-pill">
-                <LTT_CHEVRON_LEFT onClick={goPrev} />
+                <LttChevronLeft onClick={goPrev} />
               </span>
             </Conditional>
             <Conditional if={!isEnd}>
               <span className="next-pill">
-                <LTT_CHEVRON_RIGHT onClick={goNext} />
+                <LttChevronRight onClick={goNext} />
               </span>
             </Conditional>
           </SwiperControls>

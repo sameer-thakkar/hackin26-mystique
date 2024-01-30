@@ -7,7 +7,7 @@ import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
 import { strings } from 'const/strings';
-import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import ChevronRightCircle from 'assets/chevronRightCircle';
 import { CarouselGalleryProps } from '../CarouselGallery/interface';
 import {
   CarouselContainer,
@@ -17,8 +17,8 @@ import {
   ImageGallery,
 } from '../CarouselGallery/styles';
 
-const SwiperCarousel = dynamic(() =>
-  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+const SwiperCarousel = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
 /**
@@ -118,7 +118,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 tabIndex={0}
                 onClick={onPrev}
               >
-                {CHEVRON_RIGHT_CIRCLE}
+                {ChevronRightCircle}
               </div>
             </Conditional>
             <Conditional if={swiper && !swiper.isEnd}>
@@ -128,7 +128,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 tabIndex={0}
                 onClick={onNext}
               >
-                {CHEVRON_RIGHT_CIRCLE}
+                {ChevronRightCircle}
               </div>
             </Conditional>
           </div>

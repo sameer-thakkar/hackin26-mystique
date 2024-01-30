@@ -17,7 +17,8 @@ import { fetchMediaResource, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { LTT_CHEVRON_LEFT, LTT_CHEVRON_RIGHT } from 'assets/SvgIcons';
+import LttChevronLeft from 'assets/lttChevronLeft';
+import LttChevronRight from 'assets/lttChevronRight';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -173,11 +174,8 @@ const SimilarShows = ({
             <Conditional
               if={!isMobile && similarProductData.length > slidesPerView}
             >
-              <LTT_CHEVRON_LEFT
-                onClick={goPrev}
-                disabled={activeSlideIdx <= 0}
-              />
-              <LTT_CHEVRON_RIGHT
+              <LttChevronLeft onClick={goPrev} disabled={activeSlideIdx <= 0} />
+              <LttChevronRight
                 onClick={goNext}
                 disabled={
                   activeSlideIdx + slidesPerView >= similarProductData.length

@@ -28,10 +28,11 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { RIGHT_TAIL_HEAD_ARROW } from 'assets/SvgIcons';
+import RightTailHeadArrow from 'assets/rightTailHeadArrow';
 
-const Swiper = dynamic(() =>
-  import(/* webpackChunkName: "MobileTrailerSwiper" */ 'components/Swiper')
+const Swiper = dynamic(
+  () =>
+    import(/* webpackChunkName: "MobileTrailerSwiper" */ 'components/Swiper')
 );
 
 const MobileTrailer: React.FC<TMobileTrailerProps> = ({ content }) => {
@@ -154,7 +155,7 @@ const MobileTrailer: React.FC<TMobileTrailerProps> = ({ content }) => {
                       }
                     >
                       {BUY_TICKETS_CTA}
-                      {RIGHT_TAIL_HEAD_ARROW}
+                      {RightTailHeadArrow}
                     </Button>
                   </SlideDescription>
                 </Container>

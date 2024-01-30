@@ -51,7 +51,8 @@ export const isMobileDevice = () => {
 };
 
 export const validateEmail = (email: string) => {
-  let regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let regEx =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regEx.test(String(email).toLowerCase());
 };
 
@@ -786,9 +787,8 @@ export const getBannerDescriptors = ({
   let descriptorData = [];
 
   if (isAirportTransfersMB) {
-    descriptorData = SUB_CATEGORY_BANNER()[
-      AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID
-    ];
+    descriptorData =
+      SUB_CATEGORY_BANNER()[AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID];
   } else if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
     descriptorData = SUB_CATEGORY_BANNER()[id];
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {

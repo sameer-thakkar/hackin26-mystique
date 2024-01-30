@@ -21,25 +21,30 @@ import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { labels } from 'const/header';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { CHEVRON_RIGHT, HAMBURGER } from 'assets/SvgIcons';
+import ChevronRight from 'assets/chevronRight';
+import Hamburger from 'assets/hamburger';
 
-const ExpandedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "ExpandedMenu" */ 'components/CategoryHeader/components/ExpandedMenu'
-  )
+const ExpandedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ExpandedMenu" */ 'components/CategoryHeader/components/ExpandedMenu'
+    )
 );
-const NestedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "NestedMenu" */ 'components/CategoryHeader/components/NestedMenu'
-  )
+const NestedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "NestedMenu" */ 'components/CategoryHeader/components/NestedMenu'
+    )
 );
-const DeepNestedMenu = dynamic(() =>
-  import(
-    /* webpackChunkName: "DeepNestedMenu" */ 'components/CategoryHeader/components/DeepNestedMenu'
-  )
+const DeepNestedMenu = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DeepNestedMenu" */ 'components/CategoryHeader/components/DeepNestedMenu'
+    )
 );
-const Copyright = dynamic(() =>
-  import(/* webpackChunkName: "Copyright" */ 'components/common/Copyright')
+const Copyright = dynamic(
+  () =>
+    import(/* webpackChunkName: "Copyright" */ 'components/common/Copyright')
 );
 
 const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
@@ -226,14 +231,14 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
                   $isMobile={isMobile}
                 >
                   <Conditional if={index === 0 && !isMobile}>
-                    {HAMBURGER({ fillColor: COLORS.GRAY.G3 })}
+                    {Hamburger({ fillColor: COLORS.GRAY.G3 })}
                   </Conditional>
                   {getCategoryHeaderMenuLabel({
                     label,
                     mbCity,
                   })}
                   <Conditional if={isMobile}>
-                    {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G3 })}
+                    {ChevronRight({ fillColor: COLORS.GRAY.G3 })}
                   </Conditional>
                 </StyledMainMenuItems>
                 <Conditional if={isMobile}>

@@ -160,12 +160,8 @@ type TLongFormProps = {
 };
 
 const LongForm = (longFormProps: TLongFormProps) => {
-  const {
-    content,
-    isContentPage,
-    isCatAndSubCatPage,
-    ...props
-  } = longFormProps;
+  const { content, isContentPage, isCatAndSubCatPage, ...props } =
+    longFormProps;
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
   const faqSectionExists = content?.some(
     (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.ACCORDION

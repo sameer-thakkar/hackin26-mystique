@@ -32,7 +32,8 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { POWERED_BY_HEADOUT, SEARCH_ICON } from 'assets/SvgIcons';
+import PoweredByHeadout from 'assets/poweredByHeadout';
+import SearchIcon from 'assets/searchIcon';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -101,7 +102,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
       (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showLttColoredHeader }) =>
-        showLttColoredHeader ? '#150029' : '#fff'};
+      showLttColoredHeader ? '#150029' : '#fff'};
   }
   .fixed-offset::after {
     content: '';
@@ -467,9 +468,8 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
   const [results, setResults] = useState([]);
@@ -627,7 +627,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                   className="center"
                 />
                 <Conditional if={hasPoweredByHeadoutLogo}>
-                  <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
+                  <span className="poweredBy">{PoweredByHeadout}</span>
                 </Conditional>
               </div>
             </a>
@@ -719,7 +719,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                   loadSearchPage();
                 }}
               >
-                {SEARCH_ICON}
+                {SearchIcon}
               </div>
             </Conditional>
             <Conditional

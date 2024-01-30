@@ -15,7 +15,7 @@ import { trackEvent } from 'utils/analytics';
 import { getCategoryIconUrl } from 'utils/image';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CheckMarkSvg } from 'assets/SvgIcons';
+import CheckMarkSvg from 'assets/checkmarkSvg';
 
 const CategoryFilterDrawer = ({
   categoriesAndSubCategories,
@@ -24,9 +24,8 @@ const CategoryFilterDrawer = ({
   onClose,
   onApply,
 }: TCategoryFilterDrawerProps) => {
-  const [currentCategoryStates, setCurrentCategoryStates] = useState<
-    TCategoryFilterDrawerProps['categoryStates']
-  >(categoryStates);
+  const [currentCategoryStates, setCurrentCategoryStates] =
+    useState<TCategoryFilterDrawerProps['categoryStates']>(categoryStates);
 
   const changeState = (id: number, isSelected = true) => {
     setCurrentCategoryStates({ ...currentCategoryStates, [id]: isSelected });

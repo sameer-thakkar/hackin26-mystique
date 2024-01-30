@@ -80,10 +80,8 @@ const LttShowPageV2 = ({
   const [activePage, setActivePage] = useState(null);
   const [isButtonLoading, setButtonLoading] = useState(false);
 
-  const [
-    mwebDateSelectorPopupActive,
-    setMwebdateSelectorPopupActive,
-  ] = useState(false);
+  const [mwebDateSelectorPopupActive, setMwebdateSelectorPopupActive] =
+    useState(false);
 
   const {
     lang: language,

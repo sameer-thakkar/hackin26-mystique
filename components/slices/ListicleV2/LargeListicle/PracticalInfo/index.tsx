@@ -22,14 +22,12 @@ import {
   PracticalInfoWrapper,
 } from 'components/slices/ListicleV2/LargeListicle/PracticalInfo/styles';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import {
-  DISTANCE,
-  DOT,
-  LOCATION,
-  PRACTICAL_INFO_CALENDAR,
-  SEASON,
-  TIMING,
-} from 'assets/SvgIcons';
+import Distance from 'assets/distance';
+import Dot from 'assets/dot';
+import Location from 'assets/location';
+import PracticalInfoCalendar from 'assets/practicalInfoCalendar';
+import Season from 'assets/season';
+import Timing from 'assets/timing';
 
 const PracticalInfo = ({
   practicalInfo,
@@ -50,7 +48,7 @@ const PracticalInfo = ({
       <Conditional if={calendar}>
         <PracticalInfoCalendarWrapper className="practical-info">
           <PracticalInfoCalendarIconWrapper>
-            {PRACTICAL_INFO_CALENDAR()}
+            {PracticalInfoCalendar()}
           </PracticalInfoCalendarIconWrapper>
           <PracticalInfoCalendarContentWrapper>
             {calendar}
@@ -62,7 +60,7 @@ const PracticalInfo = ({
         <PracticalInfoTimeAndDurationWrapper>
           <Conditional if={duration}>
             <PracticalInfoTimeWrapper>
-              <PracticalInfoDotIconWrapper>{DOT()}</PracticalInfoDotIconWrapper>
+              <PracticalInfoDotIconWrapper>{Dot()}</PracticalInfoDotIconWrapper>
               <div>{duration}</div>
             </PracticalInfoTimeWrapper>
           </Conditional>
@@ -70,7 +68,7 @@ const PracticalInfo = ({
           <Conditional if={distance}>
             <PracticalInfoDistanceWrapper>
               <PracticalInfoDistanceIconWrapper>
-                {DISTANCE()}
+                {Distance()}
               </PracticalInfoDistanceIconWrapper>
               <PracticalInfoDistanceContentWrapper>
                 {distance}
@@ -83,7 +81,7 @@ const PracticalInfo = ({
       <Conditional if={!isMobile}>
         <Conditional if={duration}>
           <PracticalInfoTimeWrapper className="practical-info">
-            <PracticalInfoDotIconWrapper>{DOT()}</PracticalInfoDotIconWrapper>
+            <PracticalInfoDotIconWrapper>{Dot()}</PracticalInfoDotIconWrapper>
             <div>{duration}</div>
           </PracticalInfoTimeWrapper>
         </Conditional>
@@ -91,7 +89,7 @@ const PracticalInfo = ({
         <Conditional if={distance}>
           <PracticalInfoDistanceWrapper className="practical-info">
             <PracticalInfoDistanceIconWrapper>
-              {DISTANCE()}
+              {Distance()}
             </PracticalInfoDistanceIconWrapper>
             <PracticalInfoDistanceContentWrapper>
               {distance}
@@ -103,7 +101,7 @@ const PracticalInfo = ({
       <Conditional if={season}>
         <PracticalInfoSeasonWrapper className="practical-info">
           <PracticalInfoSeasonIconWrapper>
-            {SEASON()}
+            {Season()}
           </PracticalInfoSeasonIconWrapper>
           <PracticalInfoSeasonContentWrapper>
             {season}
@@ -114,7 +112,7 @@ const PracticalInfo = ({
       <Conditional if={location && findItOnMap}>
         <PracticalInfoLocationWrapper className="practical-info">
           <PracticalInfoLocationIconWrapper>
-            {LOCATION}
+            {Location}
           </PracticalInfoLocationIconWrapper>
           <PracticalInfoLocationContentWrapper>
             <div>
@@ -134,7 +132,7 @@ const PracticalInfo = ({
       <Conditional if={openingHours.length > 0}>
         <PracticalInfoTimingsWrapper className="practical-info">
           <PracticalInfoTimingsIconWrapper>
-            {TIMING()}
+            {Timing()}
           </PracticalInfoTimingsIconWrapper>
           <PrismicRichText
             field={openingHours}

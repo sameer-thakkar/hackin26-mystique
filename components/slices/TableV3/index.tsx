@@ -41,9 +41,9 @@ import {
   BOOSTER_BACKGROUND_COLOR_CODE_MAPPING,
   TABLE_V3_COLUMN_TYPE,
   TABLE_V3_SVG_ICONS,
-  TABLE_V3_SVG_MAPPING,
   TABLE_V3_TEXT_TYPE,
 } from 'const/index';
+import { TABLE_V3_SVG_MAPPING } from 'const/tableV3IconMap';
 
 export const getMaxWidth = (column: number) => {
   switch (column) {

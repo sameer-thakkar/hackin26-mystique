@@ -19,12 +19,10 @@ import {
   THRESHOLD,
 } from 'const/index';
 import { expandFontToken } from 'const/typography';
-import {
-  BackArrow,
-  CLOSE_WHITE,
-  DOUBLE_CHEVRON,
-  LIST_ICON,
-} from 'assets/SvgIcons';
+import BackArrow from 'assets/backArrow';
+import CloseWhite from 'assets/closeWhite';
+import DoubleChevron from 'assets/doubleChevron';
+import ListIcon from 'assets/listIcon';
 
 const fadeRight = (from: string, to: string) => keyframes`
 from {
@@ -724,7 +722,7 @@ const AsideModal = ({
               isGlobalMb={isGlobalMb}
             >
               <Conditional if={type === SIDEBAR_TYPES.SIDE_NAV && isMobile}>
-                <StyledIcon>{LIST_ICON}</StyledIcon>
+                <StyledIcon>{ListIcon}</StyledIcon>
               </Conditional>
               <Title sidebarType={type}>{title}</Title>
               {hasBack && type !== SIDEBAR_TYPES.CONTACT_US_PANEL ? (
@@ -732,7 +730,7 @@ const AsideModal = ({
                   // @ts-expect-error TS(2769): No overload matches this call.
                   onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
                 >
-                  {BackArrow}
+                  <BackArrow />
                 </BackIcon>
               ) : (
                 <CloseIcon
@@ -750,8 +748,8 @@ const AsideModal = ({
                   sidebarType={type}
                 >
                   {type === SIDEBAR_TYPES.SIDE_NAV && !isMobile
-                    ? DOUBLE_CHEVRON
-                    : CLOSE_WHITE}
+                    ? DoubleChevron
+                    : CloseWhite}
                 </CloseIcon>
               )}
             </Header>

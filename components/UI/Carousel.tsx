@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
+import type { Swiper as SwiperClass } from 'swiper';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
 import COLORS from 'const/colors';
 import { SIZES } from 'const/ui-constants';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -79,12 +80,12 @@ const Carousel = ({
 }: CarouselProps) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
-  const [swiper, updateSwiper] = useState(null);
-  const [_currentIndex, updateCurrentIndex] = useState(0);
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const [swiper, updateSwiper] = useState<SwiperClass | null>(null);
+  const [_currentIndex, updateCurrentIndex] = useState<number | undefined>(0);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex(swiper?.realIndex),
+    [swiper]
+  );
 
   // isMobile effect
   useEffect(() => {
@@ -131,7 +132,9 @@ const Carousel = ({
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledSwiper columnGap={columnGap} marginBottom={marginBottom}>
             {/* @ts-expect-error TS(2322): Type '{ children: any; slidesPerView: number; spac... Remove this comment to see the full error message */}
-            <Swiper {...swiperParams}>{children}</Swiper>
+            <Swiper onSwiper={(s) => s} {...swiperParams}>
+              {children}
+            </Swiper>
           </StyledSwiper>
           <Controls>
             <Conditional if={swiper && !(swiper as any)?.isBeginning}>
@@ -141,7 +144,7 @@ const Carousel = ({
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
             <Conditional if={swiper && !(swiper as any)?.isEnd}>
@@ -151,7 +154,7 @@ const Carousel = ({
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {ChevronLeftCircle}
               </div>
             </Conditional>
           </Controls>
