@@ -16,7 +16,6 @@ export const ImageGalleryWrapper = styled.div`
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     right: calc((50vw - 25.5rem));
   }
-
   @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     right: calc((50vw - 30.5rem));
   }

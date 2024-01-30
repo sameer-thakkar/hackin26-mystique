@@ -36,7 +36,6 @@ export const ContentWrapper = styled.div`
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     width: 25.5rem;
   }
-
   @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     width: 30.5rem;
   }

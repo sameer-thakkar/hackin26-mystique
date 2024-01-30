@@ -46,7 +46,7 @@ export const ShowPageWrapper = styled.div`
     }
   }
 
-  @media only screen and (min-width: 768px) and (max-width: 1366px) {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
     ${FooterLegal} {
       grid-column-gap: 28px;
     }
@@ -70,13 +70,13 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
       margin-left: 8rem;
     }
   }
-
   @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     right: calc((50vw - 30.5rem));
     ${ShowPageDateSelectorWrapper} {
-      width: auto;
+      width: 22rem;
     }
   }
+
   ${ShowPageDateSelectorWrapper} {
     position: sticky;
     top: 6.5rem;

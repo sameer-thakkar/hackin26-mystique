@@ -627,7 +627,9 @@ const Header: FunctionComponent<HeaderProps> = ({
                   className="center"
                 />
                 <Conditional if={hasPoweredByHeadoutLogo}>
-                  <span className="poweredBy">{PoweredByHeadout}</span>
+                  <span className="poweredBy">
+                    <PoweredByHeadout />
+                  </span>
                 </Conditional>
               </div>
             </a>

@@ -66,7 +66,7 @@ export const DescriptorsWrapper = styled.div<{ numberOfDescriptors: number }>`
     }
   }
 
-  @media (max-width: 1366px) {
+  @media (max-width: 1024px) {
     width: 100%;
     flex-direction: column;
     gap: initial;
