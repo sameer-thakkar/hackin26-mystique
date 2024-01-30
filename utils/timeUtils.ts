@@ -64,17 +64,21 @@ export const localisedRelativeTimeFormat = ({
 export function roundOffTo(num: number, roundingFactor: number) {
   return Math.round(num / roundingFactor) * roundingFactor;
 }
-export function convertMillisecondsToHours(milliseconds: number | null) {
+export function convertMillisecondsToHours(
+  milliseconds: number | null,
+  enableRoundOff: boolean = true
+) {
   if (!milliseconds)
     return {
       hour: null,
       minute: null,
     };
   const hour = Math.floor(milliseconds / 1000 / 60 / 60);
-  const minute = roundOffTo(
-    Math.round((milliseconds / 1000 / 60 / 60 - hour) * 60),
-    5
-  );
+  let minute = Math.floor((milliseconds / 1000 / 60 / 60 - hour) * 60);
+
+  if (enableRoundOff) {
+    minute = roundOffTo(Math.round(minute), 5);
+  }
 
   return {
     hour,
@@ -149,7 +153,7 @@ export const getDuration = ({
       minute: minMinute,
     })} - ${formatDurationToString({ hour: maxHour, minute: maxMinute })}`;
   } else {
-    const { hour, minute } = convertMillisecondsToHours(maxDuration);
+    const { hour, minute } = convertMillisecondsToHours(maxDuration, false);
     return formatDurationToString({ hour, minute });
   }
 };
