@@ -2,7 +2,7 @@ import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import UIButton from 'components/UI/Button';
 import Image from 'UI/Image';

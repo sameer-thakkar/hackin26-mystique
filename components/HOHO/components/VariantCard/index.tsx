@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Calendar from 'components/HOHO/components/Calendar';
 import { VariantCardProps } from 'components/HOHO/components/VariantCard/interface';

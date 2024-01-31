@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import { TShowPagePricingSectionProps } from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection/interface';
 import {

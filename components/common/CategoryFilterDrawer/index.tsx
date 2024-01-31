@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import { TCategoryFilterDrawerProps } from 'components/common/CategoryFilterDrawer/interface';
 import {
   categoryDrawerStyles,

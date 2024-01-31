@@ -1,7 +1,7 @@
 import { useContext, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { PrismicRichText } from '@prismicio/react';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import { TourGroupInfoProps } from 'components/HOHO/components/TourGroupInfo/interface';
 import {

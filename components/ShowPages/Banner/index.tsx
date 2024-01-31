@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import * as Sentry from '@sentry/nextjs';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import LinkResolver from 'components/LinkResolver';

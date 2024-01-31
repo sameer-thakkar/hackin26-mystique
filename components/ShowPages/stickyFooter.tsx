@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';

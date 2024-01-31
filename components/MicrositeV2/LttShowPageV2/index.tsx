@@ -1,7 +1,7 @@
 import { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { getFontDetailsByLabel } from '@headout/aer';
+import getFontDetailsByLabel from '@headout/aer/src/tokens/typography';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { CUSTOM_TYPES } from 'const/index';

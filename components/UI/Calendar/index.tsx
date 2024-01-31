@@ -5,7 +5,7 @@ import locale from 'dayjs/locale/en';
 import isTodayPlugin from 'dayjs/plugin/isToday';
 import objectPlugin from 'dayjs/plugin/toObject';
 import weekdayPlugin from 'dayjs/plugin/weekday';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import Loader from 'components/common/Loader';

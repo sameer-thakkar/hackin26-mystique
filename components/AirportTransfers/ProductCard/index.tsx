@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import parse from 'url-parse';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';

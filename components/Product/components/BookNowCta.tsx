@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';

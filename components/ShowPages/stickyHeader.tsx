@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';

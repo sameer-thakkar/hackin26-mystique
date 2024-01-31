@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PrismicRichText } from '@prismicio/react';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import { SidePanelOverlay } from 'components/Product/styles';
 import { SavedTag } from 'UI/PriceBlock';
 import { shortCodeSerializer } from 'utils/shortCodes';

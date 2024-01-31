@@ -7,7 +7,7 @@ import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
 import parse from 'url-parse';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';

@@ -20,7 +20,7 @@
   "dependencies": {
     "@formatjs/intl-locale": "^3.4.0",
     "@formatjs/intl-relativetimeformat": "^10.0.1",
-    "@headout/aer": "headout/aer#a8a83e573e47afe8c174e1ee68a9e950ab982c5b",
+    "@headout/aer": "headout/aer#1586dfa1cf8f5ee875ade12a7bdc5da4456329fb",
     "@newrelic/next": "^0.5.1",
     "@prismicio/client": "^6.7.1",
     "@prismicio/helpers": "^2.3.5",

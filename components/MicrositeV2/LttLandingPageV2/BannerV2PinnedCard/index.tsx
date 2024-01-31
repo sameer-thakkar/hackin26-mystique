@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import { TPinnedCardProps } from 'components/MicrositeV2/LttLandingPageV2/BannerV2PinnedCard/interface';
 import {

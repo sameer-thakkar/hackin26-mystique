@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { Button } from '@headout/aer';
+import Button from '@headout/aer/src/atoms/Button';
 import { CollectionCardProps } from 'components/CatAndSubCatPage/CollectionCard/interface';
 import {
   CardContainer,
