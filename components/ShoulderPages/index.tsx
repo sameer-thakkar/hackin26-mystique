@@ -22,6 +22,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { fetchTourListV6 } from 'utils/apiUtils';
+import { extractSliceByType } from 'utils/contentPageUtils';
 import {
   checkIfCategoryHeaderExists,
   getLangObject,
@@ -284,7 +285,7 @@ class ContentPage extends Component<any, any> {
     const apiReady = tourAPIData !== null;
 
     const CFWBody = contentFramework?.data?.body;
-    const contentFWSlices = groupSlices(CFWBody || []);
+    const contentFWSlices: Record<string, any>[] = groupSlices(CFWBody || []);
 
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
@@ -408,17 +409,25 @@ class ContentPage extends Component<any, any> {
     const isNotGeneralPage = [SHOULDER_PAGE_TYPES.ABOUT].includes(
       shoulder_page_type || ''
     );
-    const breadcrumbsSliceIndex = contentFWSlices.findIndex(
-      ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
-    );
-    const extractedPrismicBreadcrumbs =
-      isNotGeneralPage &&
-      !automatedBreadcrumbsExists &&
-      breadcrumbsSliceIndex >= 0 &&
-      contentFWSlices?.splice?.(breadcrumbsSliceIndex, 1);
 
-    const { side_navigation: sideNavToggle, featured_title: featuredTitle } =
-      CMSData;
+    let extractedBreadcrumbsSlice: Record<string, any>[] = [],
+      extractedProductCardsSlice: Record<string, any>[] = [];
+    if (isNotGeneralPage) {
+      extractedProductCardsSlice = extractSliceByType({
+        slices: contentFWSlices,
+        sliceType: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
+      });
+      extractedBreadcrumbsSlice = !automatedBreadcrumbsExists
+        ? extractSliceByType({
+            slices: contentFWSlices,
+            sliceType: SLICE_TYPES.BREADCRUMBS as keyof typeof SLICE_TYPES,
+          })
+        : [];
+    }
+    const {
+      side_navigation: sideNavToggle,
+      featured_title: featuredTitle,
+    } = CMSData;
 
     const slices = [
       ...(CMSData?.body || []),
@@ -426,7 +435,17 @@ class ContentPage extends Component<any, any> {
     ];
     const extraSideNavItems = [];
     if (shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT) {
-      extraSideNavItems.push(strings.CONTENT_PAGE.QUICK_INFORMATION);
+      // as we're reordering the product cards, reorder its title in the sidebar
+      const productCardSlice = extractSliceByType({
+        slices,
+        sliceType: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
+      });
+      extraSideNavItems.push(
+        ...[
+          strings.CONTENT_PAGE.QUICK_INFORMATION,
+          productCardSlice?.[0]?.primary?.title,
+        ].filter(Boolean)
+      );
     }
     const sidenavItems = sideNavHandler(slices);
     const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
@@ -557,8 +576,8 @@ class ContentPage extends Component<any, any> {
             poiInfo={poiInfo}
             automatedBreadcrumbsExists={automatedBreadcrumbsExists}
             categoryTourListData={categoryTourListData}
-            // @ts-ignore
-            extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
+            extractedBreadcrumbsSlice={extractedBreadcrumbsSlice}
+            extractedProductCardsSlice={extractedProductCardsSlice}
           />
         </Conditional>
         <StyledContentPage>

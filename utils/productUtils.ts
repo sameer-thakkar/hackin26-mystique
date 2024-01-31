@@ -190,7 +190,10 @@ export const getProductCardLayout = ({
               isOpenDated && 'open-dated-descriptor',
               hasOffer && 'offer',
               'tags',
-              !isOpenDated && !showAvailabilityInTitle && 'next-available',
+              !isTicketCard &&
+                !isOpenDated &&
+                !showAvailabilityInTitle &&
+                'next-available',
               'price-block',
               showGuidesLabel && 'guides-banner-wrapper',
               showAvailabilityInLanguagesText &&
@@ -205,7 +208,10 @@ export const getProductCardLayout = ({
               'title',
               'price-block',
               isOpenDated && 'open-dated-descriptor',
-              !isOpenDated && !showAvailabilityInTitle && 'next-available',
+              !isTicketCard &&
+                !isOpenDated &&
+                !showAvailabilityInTitle &&
+                'next-available',
               showGuidesLabel && 'guides-banner-wrapper',
               showAvailabilityInLanguagesText &&
                 'tour-available-in-languages-area',

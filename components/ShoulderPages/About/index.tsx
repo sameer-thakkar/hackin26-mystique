@@ -29,8 +29,10 @@ const AboutPage = ({
   relatedContentPages,
   poiInfo,
   automatedBreadcrumbsExists,
-  extractedPrismicBreadcrumbs,
+  extractedBreadcrumbsSlice,
+  extractedProductCardsSlice,
   categoryTourListData,
+  parentProps,
 }: IAboutPageProps) => {
   const { featured_title: featuredTitle } = data;
   const { poi } = poiInfo || { poi: {} };
@@ -90,8 +92,8 @@ const AboutPage = ({
             isRevampedShoulderPage
           />
         </Conditional>
-        <Conditional if={extractedPrismicBreadcrumbs?.length}>
-          <LongForm content={extractedPrismicBreadcrumbs || []} />
+        <Conditional if={extractedBreadcrumbsSlice?.length}>
+          <LongForm content={extractedBreadcrumbsSlice || []} />
         </Conditional>
         <Conditional if={Object.keys(quickInfo).length}>
           <QuickInfo
@@ -107,6 +109,9 @@ const AboutPage = ({
           />
         </Conditional>
       </PageContainer>
+      <Conditional if={extractedProductCardsSlice?.length}>
+        <LongForm content={extractedProductCardsSlice || []} {...parentProps} />
+      </Conditional>
     </>
   );
 };

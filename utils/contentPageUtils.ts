@@ -126,3 +126,29 @@ export const getRelatedContentPagesUrl = ({
     })
   );
 };
+
+export type TExtractSliceByTypeParams = {
+  slices: {
+    slices?: {
+      slice_type: string;
+    }[];
+    slice_type?: string;
+  }[];
+  sliceType: keyof typeof SLICE_TYPES;
+};
+// Extracts a prismic slice from a given list of slices based on a given slice type
+// Even if the slice is nested inside a slice
+export const extractSliceByType = ({
+  slices,
+  sliceType,
+}: TExtractSliceByTypeParams): Record<string, any>[] => {
+  const sliceIndex = slices.findIndex(
+    ({ slice_type, slices: childrenSlices }) =>
+      slice_type === sliceType ||
+      childrenSlices?.some?.(
+        ({ slice_type: child_slice_type }: { slice_type: string }) =>
+          child_slice_type === sliceType
+      )
+  );
+  return sliceIndex >= 0 ? slices?.splice?.(sliceIndex, 1) : [];
+};

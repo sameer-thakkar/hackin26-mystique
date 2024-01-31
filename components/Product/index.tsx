@@ -1273,7 +1273,6 @@ const Product = (props: any) => {
               !defaultOpen &&
               isMobile &&
               !expandContent &&
-              !isTicketCard &&
               !isModifiedProductCard
             }
           >

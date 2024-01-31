@@ -36,8 +36,10 @@ export interface IAboutPageProps {
   relatedContentPages?: Record<string, any>[];
   poiInfo?: Record<string, any>;
   automatedBreadcrumbsExists?: boolean;
-  extractedPrismicBreadcrumbs?: [];
+  extractedBreadcrumbsSlice?: Record<string, any>[];
+  extractedProductCardsSlice?: Record<string, any>[];
   categoryTourListData?: Record<string, any>;
+  parentProps: any;
 }
 
 export interface IGeneralContentPageProps {
