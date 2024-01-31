@@ -32,5 +32,5 @@ const InfoIconTicketCard = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default InfoIconTicketCard;

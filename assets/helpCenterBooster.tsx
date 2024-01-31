@@ -12,5 +12,5 @@ const HelpCenterBooster = () => (
       fill="#FF007A"
     />
   </svg>
-)
+);
 export default HelpCenterBooster;

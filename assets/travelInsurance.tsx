@@ -19,5 +19,5 @@ const TravelInsurance = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default TravelInsurance;

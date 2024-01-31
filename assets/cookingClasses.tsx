@@ -36,5 +36,5 @@ const CookingClasses = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default CookingClasses;

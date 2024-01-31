@@ -55,5 +55,5 @@ const InfoIconLarge = () => (
       </linearGradient>
     </defs>
   </svg>
-)
+);
 export default InfoIconLarge;

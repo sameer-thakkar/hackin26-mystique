@@ -16,5 +16,5 @@ const Shopping = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default Shopping;

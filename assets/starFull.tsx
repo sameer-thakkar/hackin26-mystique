@@ -1,4 +1,4 @@
-import COLORS from "const/colors";
+import COLORS from 'const/colors';
 
 const StarFull = ({ fillColor = COLORS.PRIMARY.JOY_MUSTARD }) => (
   <svg id="star-full" viewBox="0 0 475.075 475.075">
@@ -12,5 +12,5 @@ const StarFull = ({ fillColor = COLORS.PRIMARY.JOY_MUSTARD }) => (
         c0-2.471-0.096-4.374-0.287-5.712l-24.555-142.749l103.637-101.068C472.604,195.33,475.075,190.76,475.075,186.573z"
     />
   </svg>
-)
+);
 export default StarFull;

@@ -20,5 +20,5 @@ const ChevronRight = ({
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default ChevronRight;

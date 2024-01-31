@@ -26,5 +26,5 @@ const ArrowDown = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default ArrowDown;

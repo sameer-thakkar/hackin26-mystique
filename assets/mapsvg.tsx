@@ -1,4 +1,4 @@
-import COLORS from "const/colors";
+import COLORS from 'const/colors';
 
 const Mapsvg = () => {
   return (
@@ -29,5 +29,5 @@ const Mapsvg = () => {
       />
     </svg>
   );
-}
+};
 export default Mapsvg;

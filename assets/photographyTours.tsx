@@ -19,5 +19,5 @@ const PhotographyTours = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default PhotographyTours;

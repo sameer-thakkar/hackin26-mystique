@@ -13,5 +13,5 @@ const Bus = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Bus;

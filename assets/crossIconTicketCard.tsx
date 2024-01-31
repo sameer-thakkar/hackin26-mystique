@@ -25,5 +25,5 @@ const CrossIconTicketCard = () => (
       mask="url(#path-1-inside-1_8365_52848)"
     />
   </svg>
-)
+);
 export default CrossIconTicketCard;

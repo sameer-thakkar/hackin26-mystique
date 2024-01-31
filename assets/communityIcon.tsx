@@ -19,5 +19,5 @@ const CommunityIcon = () => (
       fill="#ED7064"
     />
   </svg>
-)
+);
 export default CommunityIcon;

@@ -17,5 +17,5 @@ const StarHalfNew = ({ fillColor }: any) => (
       clipRule="evenodd"
     ></path>
   </svg>
-)
+);
 export default StarHalfNew;

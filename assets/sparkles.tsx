@@ -19,5 +19,5 @@ const Sparkles = (props: any) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Sparkles;

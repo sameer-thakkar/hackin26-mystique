@@ -37,5 +37,5 @@ const CruiseTickets = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default CruiseTickets;

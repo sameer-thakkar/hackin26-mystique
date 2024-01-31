@@ -19,5 +19,5 @@ const WifiAndSimCards = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default WifiAndSimCards;

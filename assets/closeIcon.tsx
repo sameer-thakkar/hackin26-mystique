@@ -21,4 +21,4 @@ const CloseIcon = (props: any) => (
   </svg>
 );
 
-export default CloseIcon
+export default CloseIcon;

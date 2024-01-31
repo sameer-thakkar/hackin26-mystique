@@ -39,7 +39,6 @@ export const SearchItem = (props: any) => {
     price: scratchPrice ?? originalPrice,
     currencyCode: currencyCode ?? '',
     lang,
-    precision: 2,
     currencyList,
   });
 
@@ -47,7 +46,6 @@ export const SearchItem = (props: any) => {
     price: price ?? finalPrice,
     currencyCode: currencyCode ?? '',
     lang,
-    precision: 2,
     currencyList,
   });
 

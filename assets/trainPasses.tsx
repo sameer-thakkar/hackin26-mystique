@@ -47,5 +47,5 @@ const TrainPasses = () => (
     />
     <line x1="4.5" y1="3" x2="4.5" y2="13" stroke="#444444" />
   </svg>
-)
+);
 export default TrainPasses;

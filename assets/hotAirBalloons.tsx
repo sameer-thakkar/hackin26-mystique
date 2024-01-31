@@ -27,5 +27,5 @@ const HotAirBalloons = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default HotAirBalloons;

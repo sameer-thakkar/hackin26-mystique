@@ -25,5 +25,5 @@ const CableCar = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default CableCar;

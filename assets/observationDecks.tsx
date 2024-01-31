@@ -28,5 +28,5 @@ const ObservationDecks = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default ObservationDecks;

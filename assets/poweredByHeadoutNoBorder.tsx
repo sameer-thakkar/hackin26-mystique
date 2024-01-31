@@ -56,5 +56,5 @@ const PoweredByHeadoutNoBorder = () => {
       </defs>
     </svg>
   );
-}
+};
 export default PoweredByHeadoutNoBorder;

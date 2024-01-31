@@ -50,5 +50,5 @@ const Opera = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default Opera;

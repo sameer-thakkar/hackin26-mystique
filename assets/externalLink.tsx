@@ -11,5 +11,5 @@ const ExternalLink = () => (
       fill="#114CD6"
     />
   </svg>
-)
+);
 export default ExternalLink;

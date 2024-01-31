@@ -25,5 +25,5 @@ const Musicals = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Musicals;

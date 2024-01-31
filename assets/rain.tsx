@@ -42,5 +42,5 @@ const Rain = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Rain;

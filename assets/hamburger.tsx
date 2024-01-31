@@ -37,5 +37,5 @@ const Hamburger = ({ fillColor }: any) => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Hamburger;

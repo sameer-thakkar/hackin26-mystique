@@ -17,5 +17,5 @@ const FoodAndDrink = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default FoodAndDrink;

@@ -5,5 +5,5 @@ const Distance = () => (
       d="M2.5 10h15M15 7.5l2.5 2.5-2.5 2.5M5 12.5 2.5 10 5 7.5"
     />
   </svg>
-)
+);
 export default Distance;

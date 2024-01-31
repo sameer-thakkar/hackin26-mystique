@@ -13,5 +13,5 @@ const Audioguideicon = () => (
       fill="#A4563B"
     />
   </svg>
-)
+);
 export default Audioguideicon;

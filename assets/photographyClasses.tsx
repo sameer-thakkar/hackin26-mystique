@@ -19,5 +19,5 @@ const PhotographyClasses = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default PhotographyClasses;

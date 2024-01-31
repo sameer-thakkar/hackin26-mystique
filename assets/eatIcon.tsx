@@ -24,5 +24,5 @@ const EatIcon = () => (
       fill="#C6C6C6"
     />
   </svg>
-)
+);
 export default EatIcon;

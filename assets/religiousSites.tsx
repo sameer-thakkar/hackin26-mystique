@@ -33,5 +33,5 @@ const ReligiousSites = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default ReligiousSites;

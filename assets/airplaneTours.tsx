@@ -42,5 +42,5 @@ const AirplaneTours = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default AirplaneTours;

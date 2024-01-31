@@ -22,5 +22,5 @@ const Sandboarding = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Sandboarding;

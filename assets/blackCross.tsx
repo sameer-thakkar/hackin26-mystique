@@ -75,5 +75,5 @@ const BlackCross = (props: any) => (
       </filter>
     </defs>
   </svg>
-)
+);
 export default BlackCross;

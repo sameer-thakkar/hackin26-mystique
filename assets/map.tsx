@@ -32,5 +32,5 @@ const Map = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Map;

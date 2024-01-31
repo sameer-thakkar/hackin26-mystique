@@ -24,5 +24,5 @@ const Snorkeling = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default Snorkeling;

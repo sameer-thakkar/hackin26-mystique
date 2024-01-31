@@ -1,4 +1,4 @@
-import COLORS from "const/colors";
+import COLORS from 'const/colors';
 
 const Cross = (props: any) => (
   <svg
@@ -23,5 +23,5 @@ const Cross = (props: any) => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Cross;

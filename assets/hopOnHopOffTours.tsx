@@ -34,5 +34,5 @@ const HopOnHopOffTours = () => (
     <circle cx="5.5" cy="10.5" r="0.5" fill="#444444" />
     <circle cx="10.5" cy="10.5" r="0.5" fill="#444444" />
   </svg>
-)
+);
 export default HopOnHopOffTours;

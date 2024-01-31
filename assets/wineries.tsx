@@ -18,5 +18,5 @@ const Wineries = () => (
       strokeLinecap="square"
     />
   </svg>
-)
+);
 export default Wineries;

@@ -45,5 +45,5 @@ const Quadbking = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Quadbking;

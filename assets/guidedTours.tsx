@@ -27,5 +27,5 @@ const GuidedTours = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default GuidedTours;

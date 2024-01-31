@@ -14,5 +14,5 @@ const Discountverticalbanner = (props: any) => (
       fill="#330066"
     />
   </svg>
-)
+);
 export default Discountverticalbanner;

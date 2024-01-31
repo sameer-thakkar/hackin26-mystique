@@ -27,5 +27,5 @@ const HorizontalLine = () => (
       </linearGradient>
     </defs>
   </svg>
-)
+);
 export default HorizontalLine;

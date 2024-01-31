@@ -29,5 +29,5 @@ const City = () => (
     />
     <path d="M10.5 6V3" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default City;

@@ -40,5 +40,5 @@ const VerticalProductImagePlaceholder = ({
       />
     </defs>
   </svg>
-)
+);
 export default VerticalProductImagePlaceholder;

@@ -122,5 +122,5 @@ const MobileHoveredMonth = ({
       </defs>
     </svg>
   );
-}
+};
 export default MobileHoveredMonth;

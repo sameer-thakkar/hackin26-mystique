@@ -54,5 +54,5 @@ const NationalParks = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default NationalParks;

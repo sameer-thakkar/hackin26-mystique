@@ -8,5 +8,5 @@ const Dot = () => (
   >
     <circle cx="1" cy="1" r="1" fill="#444444" />
   </svg>
-)
+);
 export default Dot;

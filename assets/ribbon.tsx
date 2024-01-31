@@ -27,5 +27,5 @@ const Ribbon = (index: number) => (
       </linearGradient>
     </defs>
   </svg>
-)
+);
 export default Ribbon;

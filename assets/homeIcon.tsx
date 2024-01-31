@@ -28,5 +28,5 @@ const HomeIcon = () => (
       fill="#3AACE9"
     />
   </svg>
-)
+);
 export default HomeIcon;

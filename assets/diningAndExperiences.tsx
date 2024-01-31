@@ -29,5 +29,5 @@ const DiningAndExperiences = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default DiningAndExperiences;

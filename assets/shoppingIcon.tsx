@@ -19,5 +19,5 @@ const ShoppingIcon = () => (
       fill="#C94F49"
     />
   </svg>
-)
+);
 export default ShoppingIcon;

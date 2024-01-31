@@ -42,5 +42,5 @@ const Plane = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Plane;

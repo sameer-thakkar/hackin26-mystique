@@ -1,4 +1,4 @@
-import COLORS from "const/colors";
+import COLORS from 'const/colors';
 
 const DownChevron = (strokeWidth = 1) => (
   <svg
@@ -16,5 +16,5 @@ const DownChevron = (strokeWidth = 1) => (
       strokeWidth={strokeWidth}
     />
   </svg>
-)
+);
 export default DownChevron;

@@ -19,5 +19,5 @@ const ComingSoon = () => (
     />
     <path d="M13.5 13H12L13.5 12V13Z" fill="#444444" />
   </svg>
-)
+);
 export default ComingSoon;

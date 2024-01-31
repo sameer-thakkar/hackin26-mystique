@@ -24,5 +24,5 @@ const ZooAndAquarium = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default ZooAndAquarium;

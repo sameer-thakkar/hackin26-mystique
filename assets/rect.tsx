@@ -8,5 +8,5 @@ const Rect = () => (
   >
     <path d="M0 6.00001L21 0V6.00001H0Z" fill="#E5006E" />
   </svg>
-)
+);
 export default Rect;

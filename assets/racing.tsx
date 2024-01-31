@@ -83,5 +83,5 @@ const Racing = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Racing;

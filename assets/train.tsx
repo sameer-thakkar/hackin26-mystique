@@ -48,5 +48,5 @@ const Train = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Train;

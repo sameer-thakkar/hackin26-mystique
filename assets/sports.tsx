@@ -22,5 +22,5 @@ const Sports = () => (
     />
     <path d="M7.50001 12L5.50001 14.5" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default Sports;

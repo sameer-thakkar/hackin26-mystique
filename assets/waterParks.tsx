@@ -35,5 +35,5 @@ const WaterParks = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default WaterParks;

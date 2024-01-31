@@ -26,5 +26,5 @@ const HelicopterTours = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default HelicopterTours;

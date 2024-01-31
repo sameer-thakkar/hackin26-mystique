@@ -14,5 +14,5 @@ const ListicleChevronUp = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default ListicleChevronUp;

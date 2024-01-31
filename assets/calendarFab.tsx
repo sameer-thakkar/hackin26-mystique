@@ -111,5 +111,5 @@ const CalendarFab = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default CalendarFab;

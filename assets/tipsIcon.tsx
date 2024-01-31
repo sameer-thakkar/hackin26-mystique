@@ -19,5 +19,5 @@ const TipsIcon = () => (
       fill="white"
     />
   </svg>
-)
+);
 export default TipsIcon;

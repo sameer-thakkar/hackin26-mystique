@@ -27,5 +27,5 @@ const PubCrawls = () => (
     />
     <path d="M2.5 5.5H11.5" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default PubCrawls;

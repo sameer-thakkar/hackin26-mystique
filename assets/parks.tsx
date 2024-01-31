@@ -16,5 +16,5 @@ const Parks = () => (
     <path d="M7 12H14.5" stroke="#444444" strokeLinecap="round" />
     <path d="M7 10H14.5" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default Parks;

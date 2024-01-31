@@ -25,5 +25,5 @@ const Car = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Car;

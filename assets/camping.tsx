@@ -34,5 +34,5 @@ const Camping = () => (
     />
     <path d="M4 8L7 14" stroke="#444444" />
   </svg>
-)
+);
 export default Camping;

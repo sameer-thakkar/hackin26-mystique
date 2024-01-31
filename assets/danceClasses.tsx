@@ -80,5 +80,5 @@ const DanceClasses = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default DanceClasses;

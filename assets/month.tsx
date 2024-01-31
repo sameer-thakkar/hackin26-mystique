@@ -66,5 +66,5 @@ const Month = ({ month, year }: { month: string; year: string }) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Month;

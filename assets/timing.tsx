@@ -6,5 +6,5 @@ const Timing = () => (
     />
     <path stroke="#444" d="M9.375 5v5l5 2.5" />
   </svg>
-)
+);
 export default Timing;

@@ -16,5 +16,5 @@ const Landmarks = () => (
     <path d="M9.5 12.5V8" stroke="#444444" strokeLinecap="round" />
     <path d="M3.5 12.5V8" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default Landmarks;

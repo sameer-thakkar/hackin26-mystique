@@ -56,5 +56,5 @@ const Snow = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Snow;

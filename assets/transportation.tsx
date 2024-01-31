@@ -34,5 +34,5 @@ const Transportation = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default Transportation;

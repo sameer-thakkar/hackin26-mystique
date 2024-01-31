@@ -37,5 +37,5 @@ const Ship = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default Ship;

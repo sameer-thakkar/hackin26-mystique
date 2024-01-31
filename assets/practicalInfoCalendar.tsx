@@ -31,5 +31,5 @@ const PracticalInfoCalendar = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default PracticalInfoCalendar;

@@ -1,10 +1,4 @@
-const HoveredMonth = ({
-  month,
-  year,
-}: {
-  month: string;
-  year: string;
-}) => (
+const HoveredMonth = ({ month, year }: { month: string; year: string }) => (
   <svg
     width="136"
     height="119"
@@ -117,5 +111,5 @@ const HoveredMonth = ({
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default HoveredMonth;

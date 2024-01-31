@@ -33,5 +33,5 @@ const MultiDayTours = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default MultiDayTours;

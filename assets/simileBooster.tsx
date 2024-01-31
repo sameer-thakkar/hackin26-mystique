@@ -12,5 +12,5 @@ const SimileBooster = () => (
       d="M22 10a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm-6 10.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 8.5a4 4 0 0 1-4-4h2a2 2 0 0 0 4 0h2a4 4 0 0 1-4 4Zm4.5-7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"
     />
   </svg>
-)
+);
 export default SimileBooster;

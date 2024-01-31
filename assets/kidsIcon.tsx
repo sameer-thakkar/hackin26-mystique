@@ -39,5 +39,5 @@ const KidsIcon = () => (
       fill="#FA645A"
     />
   </svg>
-)
+);
 export default KidsIcon;

@@ -20,7 +20,9 @@ module.exports = function (file, api) {
         const camelCaseIconName = toCamelCase(iconName);
 
         // Ensure the first character is uppercase
-        const camelCaseIconNameUppercaseFirst = camelCaseIconName.charAt(0).toUpperCase() + camelCaseIconName.slice(1);
+        const camelCaseIconNameUppercaseFirst =
+          camelCaseIconName.charAt(0).toUpperCase() +
+          camelCaseIconName.slice(1);
 
         // Determine the new file path based on the source file
         const sourceFilePath = file.path;
@@ -28,7 +30,9 @@ module.exports = function (file, api) {
         const iconFilePath = join(dir, `${camelCaseIconName}.tsx`);
 
         // Create a new file for each icon
-        const newSource = `const ${camelCaseIconNameUppercaseFirst} = ${j(declaration.init).toSource()}\nexport default ${camelCaseIconNameUppercaseFirst};\n`;
+        const newSource = `const ${camelCaseIconNameUppercaseFirst} = ${j(
+          declaration.init
+        ).toSource()}\nexport default ${camelCaseIconNameUppercaseFirst};\n`;
         writeFileSync(iconFilePath, newSource);
       });
     }

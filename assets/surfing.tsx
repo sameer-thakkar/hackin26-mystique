@@ -30,5 +30,5 @@ const Surfing = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Surfing;

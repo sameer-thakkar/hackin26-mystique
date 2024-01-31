@@ -16,5 +16,5 @@ const TravelGuideIcon = () => (
       fill="#444444"
     />
   </svg>
-)
+);
 export default TravelGuideIcon;

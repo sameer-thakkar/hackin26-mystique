@@ -13,5 +13,5 @@ const Plus = () => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default Plus;

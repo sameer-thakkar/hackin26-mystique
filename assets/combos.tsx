@@ -32,5 +32,5 @@ const Combos = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Combos;

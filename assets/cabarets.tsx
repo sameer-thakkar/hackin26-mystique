@@ -20,5 +20,5 @@ const Cabarets = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default Cabarets;

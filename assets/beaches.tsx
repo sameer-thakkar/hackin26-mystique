@@ -26,5 +26,5 @@ const Beaches = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default Beaches;

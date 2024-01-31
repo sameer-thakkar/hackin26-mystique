@@ -25,5 +25,5 @@ const FoodTours = () => (
       strokeWidth="0.8"
     />
   </svg>
-)
+);
 export default FoodTours;

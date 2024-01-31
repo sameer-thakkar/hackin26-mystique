@@ -24,5 +24,5 @@ const BikesAndSegway = () => (
     <circle cx="12.5" cy="10" r="2.5" stroke="#444444" />
     <circle cx="3.5" cy="10" r="2.5" stroke="#444444" />
   </svg>
-)
+);
 export default BikesAndSegway;

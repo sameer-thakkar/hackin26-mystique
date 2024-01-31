@@ -30,5 +30,5 @@ const Badge = (children: any) => (
       </linearGradient>
     </defs>
   </svg>
-)
+);
 export default Badge;

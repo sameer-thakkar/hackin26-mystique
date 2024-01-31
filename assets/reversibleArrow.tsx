@@ -1,8 +1,6 @@
-import COLORS from "const/colors";
+import COLORS from 'const/colors';
 
-const ReversibleArrow = ({
-  fillColor = COLORS.GRAY.G2,
-}: any) => (
+const ReversibleArrow = ({ fillColor = COLORS.GRAY.G2 }: any) => (
   <svg
     width="16"
     height="16"
@@ -35,5 +33,5 @@ const ReversibleArrow = ({
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 export default ReversibleArrow;

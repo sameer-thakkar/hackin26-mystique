@@ -24,5 +24,5 @@ const CashbackCoin = () => (
       fill="#E29700"
     />
   </svg>
-)
+);
 export default CashbackCoin;

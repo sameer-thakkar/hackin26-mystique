@@ -19,5 +19,5 @@ const PrivateTours = () => (
     <path d="M9 7H13" stroke="#444444" strokeLinecap="round" />
     <path d="M9 9H12.5" stroke="#444444" strokeLinecap="round" />
   </svg>
-)
+);
 export default PrivateTours;

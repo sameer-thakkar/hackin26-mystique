@@ -35,5 +35,5 @@ const CoffeeAndTea = () => (
       stroke="#444444"
     />
   </svg>
-)
+);
 export default CoffeeAndTea;

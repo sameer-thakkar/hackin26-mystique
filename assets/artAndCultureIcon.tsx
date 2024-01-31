@@ -22,5 +22,5 @@ const ArtAndCultureIcon = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default ArtAndCultureIcon;

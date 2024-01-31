@@ -144,5 +144,5 @@ const TravelPlanIcon = () => (
       </linearGradient>
     </defs>
   </svg>
-)
+);
 export default TravelPlanIcon;

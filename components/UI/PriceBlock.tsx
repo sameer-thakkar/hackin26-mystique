@@ -180,7 +180,6 @@ const PriceBlock = ({
     originalPrice,
     finalPrice,
     currencyCode,
-    precision,
     bestDiscount,
     otherPricesExist,
     cashbackType,
@@ -257,7 +256,6 @@ const PriceBlock = ({
               currencyCode={currencyCode}
               lang={lang}
               price={originalPrice}
-              precision={precision}
             />
           </Conditional>
         </span>
@@ -267,7 +265,6 @@ const PriceBlock = ({
             currencyCode={currencyCode}
             lang={lang}
             price={finalPrice}
-            precision={precision}
           />
           <Conditional if={isLTT && showSavings && save && save > 0}>
             <SavedTag className="savedtag-block">

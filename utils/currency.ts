@@ -27,18 +27,6 @@ export type TGetLocalisedCurrencySymbol = {
   currencyDisplay: CurrencyDisplayType;
 };
 
-export type TGetLocalisedPrice = Omit<
-  TGetLocalisedCurrencySymbol,
-  'currencyDisplay'
-> & {
-  price: number;
-  precision?: number;
-  currencyList: Array<TCurrencyObj>;
-  truncateIfLong?: boolean;
-  truncateAfter?: number;
-  hideCurrency?: boolean;
-};
-
 export const getCurrencyObject = (
   currencyList: Array<TCurrencyObj>,
   currencyCode: string
@@ -60,6 +48,16 @@ function getCurrencySymbol(
   }
 }
 
+export type TGetLocalisedPrice = Omit<
+  TGetLocalisedCurrencySymbol,
+  'currencyDisplay'
+> & {
+  price: number;
+  currencyList: Array<TCurrencyObj>;
+  truncateIfLong?: boolean;
+  truncateAfter?: number;
+  hideCurrency?: boolean;
+};
 /**
  * The `getLocalisedPrice` function formats a price value with the specified currency code and language, using the Intl.NumberFormat API.
  */
@@ -67,7 +65,6 @@ export const getLocalisedPrice = ({
   price,
   currencyCode,
   lang = 'en',
-  precision = 2,
   currencyList,
   truncateIfLong,
   truncateAfter,
@@ -78,25 +75,29 @@ export const getLocalisedPrice = ({
 
     const isInteger = Number.isInteger(price);
 
-    const compactFormattingOptions: {
-      notation: 'compact' | 'engineering' | 'standard';
-      compactDisplay: 'long' | 'short';
-      maximumFractionDigits: number;
-    } = {
+    const compactFormattingOptions: Intl.NumberFormatOptions = {
       notation: 'compact',
       compactDisplay: 'short',
+      minimumFractionDigits: 0,
       maximumFractionDigits: 1,
     };
+
     const shouldTruncate =
       truncateIfLong && truncateAfter && price.toString().length > 3;
 
+    /*
+     * RangeError: maximumFractionDigits value is out of range.
+     * This error happens if minimumFractionDigits > maximumFractionDigits
+     */
+
+    const fractionDigits = isInteger ? 0 : 2;
     const formatOptions: Intl.NumberFormatOptions = {
       style: 'currency',
       currency: currencyCode,
       currencyDisplay: 'code',
       useGrouping: true,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: isInteger ? 0 : precision,
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits,
       ...(shouldTruncate && compactFormattingOptions),
     };
 

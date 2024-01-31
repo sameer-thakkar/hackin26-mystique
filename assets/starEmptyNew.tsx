@@ -13,5 +13,5 @@ const StarEmptyNew = ({ fillColor }: any) => (
       clipRule="evenodd"
     ></path>
   </svg>
-)
+);
 export default StarEmptyNew;

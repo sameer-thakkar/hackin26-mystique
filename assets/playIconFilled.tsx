@@ -16,5 +16,5 @@ const PlayIconFilled = ({ onClick }: { onClick: () => void }) => (
       fill="black"
     />
   </svg>
-)
+);
 export default PlayIconFilled;

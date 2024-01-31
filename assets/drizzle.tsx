@@ -56,5 +56,5 @@ const Drizzle = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default Drizzle;

@@ -30,5 +30,5 @@ const Plays = () => (
       strokeLinecap="round"
     />
   </svg>
-)
+);
 export default Plays;

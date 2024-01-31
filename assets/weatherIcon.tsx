@@ -39,5 +39,5 @@ const WeatherIcon = () => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default WeatherIcon;

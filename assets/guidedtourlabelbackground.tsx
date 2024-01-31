@@ -1,8 +1,4 @@
-const Guidedtourlabelbackground = ({
-  isMobile,
-}: {
-  isMobile: boolean;
-}) => {
+const Guidedtourlabelbackground = ({ isMobile }: { isMobile: boolean }) => {
   if (isMobile)
     return (
       <svg
@@ -32,5 +28,5 @@ const Guidedtourlabelbackground = ({
       />
     </svg>
   );
-}
+};
 export default Guidedtourlabelbackground;

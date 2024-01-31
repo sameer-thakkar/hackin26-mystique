@@ -13,5 +13,5 @@ const AuthorisedBooster = () => (
       fill="black"
     />
   </svg>
-)
+);
 export default AuthorisedBooster;
