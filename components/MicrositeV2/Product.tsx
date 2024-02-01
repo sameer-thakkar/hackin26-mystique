@@ -29,6 +29,7 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
+import HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER from 'assets/horizontalProductImagePlaceholder';
 import Star from 'assets/star';
 
 const ProductCard = styled.div<{
@@ -316,11 +317,13 @@ const ProductImage = styled.div<{
   categoryFontNameStyles?: string;
   productCardHeight?: number;
   $isV3Design: boolean;
+  $isHorizontalImageUrlPresent: boolean;
 }>`
   display: block;
   position: relative;
 
-  img {
+  img,
+  .image-placeholder {
     height: auto;
     max-width: 100%;
     max-height: 100%;
@@ -354,7 +357,8 @@ const ProductImage = styled.div<{
   }
 
   @media (max-width: 768px) {
-    img {
+    img,
+    .image-placeholder {
       height: ${({ $isV3Design, productCardHeight, singleCard }) =>
         singleCard
           ? `${productCardHeight}px`
@@ -363,6 +367,17 @@ const ProductImage = styled.div<{
           : '102px'};
       border-radius: 4px;
     }
+  }
+
+  .image-placeholder {
+    ${({ $isHorizontalImageUrlPresent }) =>
+      $isHorizontalImageUrlPresent &&
+      `
+    position: absolute;
+    `}
+    top: 0;
+    z-index: -1;
+    height: calc(100% - 2rem);
   }
 `;
 
@@ -617,6 +632,7 @@ const Product = (props: any) => {
         $isV3Design={isV3Design}
         singleCard={!!singleCard}
         productCardHeight={productCardHeight}
+        $isHorizontalImageUrlPresent={!!productImage}
       >
         <Image
           url={productImage}
@@ -633,6 +649,11 @@ const Product = (props: any) => {
           fitCrop={shouldCropImage}
           {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
         />
+        <Conditional if={isEntertainmentMb}>
+          <span className="image-placeholder">
+            {HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER}
+          </span>
+        </Conditional>
         {getBooster()}
       </ProductImage>
       <div className="product-v2-bottom">
@@ -744,6 +765,7 @@ const Product = (props: any) => {
               $isV3Design={isV3Design}
               singleCard={!!singleCard}
               productCardHeight={productCardHeight}
+              $isHorizontalImageUrlPresent={!!productImage}
             >
               <Image
                 url={productImage}
@@ -760,6 +782,9 @@ const Product = (props: any) => {
                 fitCrop={shouldCropImage}
                 {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
               />
+              <span className="image-placeholder">
+                {HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER}
+              </span>
               {getBooster()}
             </ProductImage>
             <div className="product-v2-bottom">
