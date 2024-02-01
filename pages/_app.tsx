@@ -164,7 +164,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     });
 
     const { title, refs = {} } = CMSContent?.data ?? {};
-    const { baseLangCategorisationMetadata } = CMSContent?.data?.data ?? {};
+    const { baseLangCategorisationMetadata } = CMSContent?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
     const isHOHO = refs?.productCardData?.template === TEMPLATES.HOHO;
     const { isSubCategoryPage } = catAndSubCatPageData || {};
