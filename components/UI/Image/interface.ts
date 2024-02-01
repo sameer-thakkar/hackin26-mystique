@@ -9,6 +9,7 @@ export type TCropMode =
   | 'focalpoint'
   | 'edges'
   | 'entropy'
+  | 'center'
   | '';
 
 export interface IImageProps

@@ -147,7 +147,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               autoCrop={false}
               fitCrop={shouldCrop}
               {...(shouldCrop && {
-                cropMode: ['faces', 'edges', 'focalpoint'],
+                cropMode: ['faces', 'center'],
               })}
               width={imageWidth}
               height={imageHeight}
