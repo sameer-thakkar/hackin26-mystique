@@ -2398,9 +2398,9 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@headout/aer@headout/aer#1586dfa1cf8f5ee875ade12a7bdc5da4456329fb":
+"@headout/aer@headout/aer#695185f852bbc639d7bee08ea4afdd0307299bb4":
   version "0.1.7"
-  resolved "git+ssh://git@github.com/headout/aer.git#1586dfa1cf8f5ee875ade12a7bdc5da4456329fb"
+  resolved "git+ssh://git@github.com/headout/aer.git#695185f852bbc639d7bee08ea4afdd0307299bb4"
   dependencies:
     classnames "^2.3.1"
     country-telephone-data "^0.6.3"
