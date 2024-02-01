@@ -68,9 +68,9 @@ const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     categoryTourListV2,
     images,
     is_entertainment_mb: isEntertainmentMb,
-  } = data;
+  } = data || {};
 
-  const localisedCategoryHeading = images[0]?.main_heading;
+  const localisedCategoryHeading = images?.[0]?.main_heading;
   const finalShoulderPageLabel = getShoulderPageLabel({
     shoulderPageType: shoulderPageType || '',
     shoulderPageCustomLabel: shoulderPageCustomLabel || '',
