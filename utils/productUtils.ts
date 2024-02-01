@@ -105,7 +105,6 @@ type TGetProductCardLayout = {
   showAvailabilityInLanguagesText?: boolean;
   isModifiedProductCard?: boolean;
   isPoiMwebCard?: boolean;
-  showCategoryAndRatingsDweb?: boolean;
 };
 
 export const getProductCardLayout = ({
@@ -120,7 +119,6 @@ export const getProductCardLayout = ({
   showAvailabilityInLanguagesText = false,
   isModifiedProductCard = false,
   isPoiMwebCard = false,
-  showCategoryAndRatingsDweb = false,
 }: TGetProductCardLayout) => {
   let layout: {
     desktop: Array<string | boolean | undefined | null>;
@@ -159,7 +157,6 @@ export const getProductCardLayout = ({
       layout = {
         desktop: [
           isModifiedProductCard &&
-            showCategoryAndRatingsDweb &&
             `${PRODUCT_CARD_DESKTOP_IMG_GRID_AREA}category-and-rating line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA

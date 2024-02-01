@@ -163,8 +163,6 @@ const PopulateProducts = (props: any) => {
     isAirportTransfersMB,
     isModifiedProductCard = false,
     isPoiMwebCard = false,
-    showCategoryAndRatingsDweb = false,
-    isCategoryAndRatingsDwebExperimentResolved = true,
   } = props;
 
   const productsRef = useRef([]);
@@ -592,7 +590,6 @@ const PopulateProducts = (props: any) => {
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
-      showCategoryAndRatingsDweb,
     };
 
     return (
@@ -618,19 +615,16 @@ const PopulateProducts = (props: any) => {
     );
   };
 
-  const isLoading =
-    productsLoading || !isCategoryAndRatingsDwebExperimentResolved;
-
   return (
     <StyledProductsWrapper
-      isLoading={isLoading}
+      isLoading={productsLoading}
       id="products-container"
       ref={productsWrapperRef}
     >
       <ProductContainer
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNotVisible={!isLoading}
+        isNotVisible={!productsLoading}
       >
         <Skeleton
           className="product-card-skeleton"
@@ -665,7 +659,7 @@ const PopulateProducts = (props: any) => {
       <ProductContainer
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNotVisible={isLoading}
+        isNotVisible={productsLoading}
       >
         {availableToursList &&
           availableToursList.map((tour: Record<string, any>, index: number) =>

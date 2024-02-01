@@ -18,7 +18,6 @@ type Props = {
   isLoading?: boolean;
   tabs?: any;
   onClick?: () => void;
-  moreContent?: boolean;
 };
 
 const Highlights = ({
@@ -27,7 +26,6 @@ const Highlights = ({
   tabs,
   isLoading,
   onClick,
-  moreContent,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
@@ -35,8 +33,7 @@ const Highlights = ({
   useEffect(() => {
     if (contentRef.current) {
       setShowViewMoreAsOverlay(
-        contentRef.current.querySelector('ul')!.offsetHeight >
-          (moreContent ? 280 : 240)
+        contentRef.current.querySelector('ul')!.offsetHeight > 240
       );
     }
   }, []);
@@ -46,11 +43,7 @@ const Highlights = ({
       className={className}
       hasRegularHighlights={hasRegularHighlights}
     >
-      <HighlightsPanel
-        ref={contentRef}
-        $isOverlay={showViewMoreAsOverlay}
-        $moreContent={moreContent}
-      >
+      <HighlightsPanel ref={contentRef} $isOverlay={showViewMoreAsOverlay}>
         <Conditional if={!isLoading}>
           <>
             <PrismicRichText

@@ -226,16 +226,6 @@ const MicrositeV1 = (props: any) => {
 
   const isPoiMwebCard = isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb;
 
-  const {
-    variant: categoryAndRatingsDwebExperimentVariant,
-    isExperimentResolving: isCategoryAndRatingsDwebExperimentResolving,
-    isEligible: isEligibleForCategoryAndRatingsDweb,
-  } = useABTesting({
-    experimentId: 'CATEGORY_AND_RATING_DWEB',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb,
-  });
-
   const { COVID19_ALERT, READ_MORE } = strings;
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
@@ -628,17 +618,6 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
       }
       isTourListFiltered={isTourListFiltered}
-      showCategoryAndRatingsDweb={
-        isEligibleForCategoryAndRatingsDweb
-          ? categoryAndRatingsDwebExperimentVariant === VARIANTS.TREATMENT
-          : false
-      }
-      isCategoryAndRatingsDwebExperimentResolved={
-        !(
-          isEligibleForCategoryAndRatingsDweb &&
-          isCategoryAndRatingsDwebExperimentResolving
-        )
-      }
     />
   );
 

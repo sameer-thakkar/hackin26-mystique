@@ -511,15 +511,11 @@ interface IStyledProductCard {
   $isAsideBarOverlay?: boolean;
   $isPoiMwebCard?: boolean;
   $showScratchPrice?: boolean;
-  $showCategoryAndRatings?: boolean;
 }
 
-const modifiedProductCardStyles = css<{
-  $showCategoryAndRatings?: IStyledProductCard['$showCategoryAndRatings'];
-}>`
+const modifiedProductCardStyles = css`
   grid-row-gap: 0.5rem;
-  grid-template-rows: ${({ $showCategoryAndRatings }) =>
-    $showCategoryAndRatings ? 'auto auto 1fr' : 'auto 1fr'};
+  grid-template-rows: auto auto 1fr;
   max-height: max-content;
 
   .card-img {
@@ -2376,9 +2372,8 @@ export const CompactHighlightsWrapper = styled(HighlightTabsWrapper)`
 
 export const HighlightsPanel = styled.div<{
   $isOverlay?: boolean;
-  $moreContent?: boolean;
 }>`
-  max-height: ${({ $moreContent }) => ($moreContent ? 17.5 : 15)}rem;
+  max-height: 15rem;
   overflow: hidden;
   align-self: stretch;
 

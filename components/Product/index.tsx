@@ -162,7 +162,6 @@ const Product = (props: any) => {
     isSmallComboCard = false,
     isPoiMwebCard = false,
     reviewsDetails,
-    showCategoryAndRatingsDweb = false,
   } = props;
   const {
     mbTheme,
@@ -616,7 +615,6 @@ const Product = (props: any) => {
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
       isPoiMwebCard,
-      showCategoryAndRatingsDweb,
     });
 
   const trackedToggleContent = (isOpen: any) => {
@@ -757,7 +755,6 @@ const Product = (props: any) => {
       isLoading={isProductCardLoading}
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
-      moreContent={!showCategoryAndRatingsDweb}
       onClick={() => {
         trackedToggleContent(true);
         // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
@@ -886,7 +883,6 @@ const Product = (props: any) => {
           $isModifiedProductCard={isModifiedProductCard || isAsideBarOverlay}
           $isPoiMwebCard={isPoiMwebCard}
           $isAsideBarOverlay={isAsideBarOverlay}
-          $showCategoryAndRatings={showCategoryAndRatingsDweb}
           // @ts-ignore
           ref={productRef}
         >
@@ -949,12 +945,7 @@ const Product = (props: any) => {
           </Conditional>
 
           <ProductHeader>
-            <Conditional
-              if={
-                isPoiMwebCard ||
-                (isModifiedProductCard && showCategoryAndRatingsDweb)
-              }
-            >
+            <Conditional if={isPoiMwebCard || isModifiedProductCard}>
               <CategoryAndRatingContainer>
                 <Category
                   primaryCategory={
