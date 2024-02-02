@@ -216,7 +216,12 @@ const ShowInfoSection = ({
                   </span>
                   <Conditional if={ratingsCount > 0}>
                     <span className="review-count">
-                      ({shortenedRatingsCount} ratings)
+                      (
+                      {strings.formatString(
+                        strings.RATINGS,
+                        shortenedRatingsCount
+                      )}
+                      )
                     </span>
                   </Conditional>
                 </div>

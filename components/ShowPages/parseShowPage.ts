@@ -194,7 +194,8 @@ export const parseShowPageData = (data: any) => {
           isSafetyBanner = true;
         }
         if (
-          DetailObjectHeading === strings.SHOW_PAGE.CLOSING_DATE_SPECIAL_OFFER
+          DetailObjectHeading.toLowerCase() ===
+          strings.SHOW_PAGE.CLOSING_DATE_SPECIAL_OFFER.toLowerCase()
         ) {
           specialOfferClosingDate = dayjs(element.content.text, 'YYYY-MM-DD');
         }

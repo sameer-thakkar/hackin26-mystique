@@ -244,7 +244,7 @@ const it = {
     },
     REMOVE: 'RIMUOVI',
   },
-  RATINGS: '{0} Giudizi',
+  RATINGS: '{0} Recensioni',
   READ_MORE: 'Leggi tutto',
   READ_MORE_TEXT: 'Leggi tutto',
   READ_LESS: 'Leggi meno',
