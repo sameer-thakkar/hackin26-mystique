@@ -367,7 +367,7 @@ const Header: React.FC<any> = (props) => {
               <RiveLogoComponent />
             </Conditional>
             <Conditional if={hasPoweredByHeadoutLogo && isEntertainmentMB}>
-              {PoweredByHeadout}
+              <PoweredByHeadout />
             </Conditional>
           </StyledLogo>
         </a>
