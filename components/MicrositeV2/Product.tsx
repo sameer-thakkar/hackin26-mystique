@@ -649,7 +649,7 @@ const Product = (props: any) => {
           fitCrop={shouldCropImage}
           {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
         />
-        <Conditional if={isEntertainmentMb}>
+        <Conditional if={isEntertainmentMb && !productImage}>
           <span className="image-placeholder">
             {HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER}
           </span>
@@ -782,9 +782,11 @@ const Product = (props: any) => {
                 fitCrop={shouldCropImage}
                 {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
               />
-              <span className="image-placeholder">
-                {HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER}
-              </span>
+              <Conditional if={!productImage}>
+                <span className="image-placeholder">
+                  {HORIZONTAL_PRODUCT_IMAGE_PLACEHOLDER}
+                </span>
+              </Conditional>
               {getBooster()}
             </ProductImage>
             <div className="product-v2-bottom">
