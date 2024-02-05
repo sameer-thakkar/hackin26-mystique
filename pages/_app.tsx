@@ -70,6 +70,7 @@ type PageProps = {
   isGDPRCompliant: boolean;
   bestDiscount?: number;
   minPrice?: number;
+  domainConfig?: Record<string, any>;
 };
 
 interface IGetCurrencyCode {
@@ -106,6 +107,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     ContentType,
     MBDesign,
     CMSContent,
+    domainConfig,
   } = pageProps;
 
   const { data } = CMSContent || {};
@@ -317,7 +319,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
             pageType={pageType}
           />
         </DeferredComponent>
-        <Clarity host={host} />
+        <Conditional if={!!domainConfig?.clarityProjectId}>
+          <Clarity host={host} projectId={domainConfig?.clarityProjectId} />
+        </Conditional>
       </RecoilRoot>
     </StyleSheetManager>
   );

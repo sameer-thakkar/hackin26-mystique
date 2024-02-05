@@ -1,18 +1,28 @@
 import { useEffect } from 'react';
-import { initClarity, isClarityRequired } from 'utils/clarityUtils';
+import { initClarity } from 'utils/clarityUtils';
+import { isProduction } from 'utils/gen';
 
 interface IClarityProps {
   host: string;
+  projectId: string;
 }
 
-const Clarity = ({ host }: IClarityProps) => {
+const Clarity = ({ host, projectId }: IClarityProps) => {
   useEffect(() => {
-    if (isClarityRequired(host)) {
-      setTimeout(() => {
-        initClarity(host);
+    try {
+      if (!isProduction()) return;
+      const timer = setTimeout(() => {
+        initClarity({ host, projectId });
       }, 2000);
+
+      return () => {
+        if (!isProduction()) return;
+        clearTimeout(timer);
+      };
+    } catch (e) {
+      //
     }
-  }, [host]);
+  }, [host, projectId]);
 
   return null;
 };

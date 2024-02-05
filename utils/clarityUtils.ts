@@ -1,10 +1,6 @@
 import Cookies from 'js-cookie';
-import { isProduction } from 'utils/gen';
-import {
-  CLARITY_PROJECT_ID,
-  CLARITY_SUPPORTED_DOMAINS,
-} from 'const/clarityConstants';
-import { COOKIE, DOMAIN_INITIALS } from 'const/index';
+import { getNakedDomain } from 'utils';
+import { COOKIE } from 'const/index';
 
 export const initializeClarity = (key: string) => {
   (function (
@@ -29,25 +25,19 @@ export const initializeClarity = (key: string) => {
   })(window, document, 'clarity', 'script', key);
 };
 
-export const initClarityProjectId = (host: string) => {
-  Cookies.set(COOKIE.CLARITY_PROJECT_ID, CLARITY_PROJECT_ID, {
-    domain: host.replace(DOMAIN_INITIALS, ''),
-    path: '',
-  });
+export const initClarity = ({
+  host,
+  projectId,
+}: {
+  host: string;
+  projectId: string;
+}) => {
+  // persist clarity session on booking flow.
+  if (!Cookies.get(COOKIE.CLARITY_PROJECT_ID)?.length)
+    Cookies.set(COOKIE.CLARITY_PROJECT_ID, projectId, {
+      domain: getNakedDomain(host),
+      path: '',
+    });
 
-  return CLARITY_PROJECT_ID;
-};
-
-export const initClarity = (host: string) => {
-  let clarityProjectId = Cookies.get(COOKIE.CLARITY_PROJECT_ID);
-
-  if (!clarityProjectId?.length) {
-    clarityProjectId = initClarityProjectId(host);
-  }
-
-  initializeClarity(clarityProjectId);
-};
-
-export const isClarityRequired = (host: string) => {
-  return CLARITY_SUPPORTED_DOMAINS.indexOf(host) !== -1 && isProduction();
+  initializeClarity(projectId);
 };
