@@ -41,7 +41,7 @@ const HorizontalProductCard = ({
 
   const {
     title,
-    reviewCount,
+    ratingCount,
     averageRating,
     descriptors: descriptorsFromProduct,
     listingPrice,
@@ -159,12 +159,12 @@ const HorizontalProductCard = ({
         <Conditional
           if={shouldDisplayCollectionRatings({
             averageRating,
-            ratingsCount: reviewCount,
+            ratingsCount: ratingCount,
           })}
         >
           <Ratings
             averageRating={averageRating}
-            reviewCount={reviewCount}
+            reviewCount={ratingCount}
             showReviewsText={true}
           />
         </Conditional>

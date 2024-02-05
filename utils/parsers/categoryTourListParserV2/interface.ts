@@ -58,6 +58,7 @@ export type TProduct = {
   id: number;
   averageRating: number;
   reviewCount: number;
+  ratingCount: number;
   primaryCollection: {
     displayName: string;
     id: number;

@@ -43,7 +43,7 @@ const VerticalProductCard = ({
   const {
     title,
     name,
-    reviewCount,
+    ratingCount,
     averageRating,
     listingPrice,
     showPageUid,
@@ -139,12 +139,12 @@ const VerticalProductCard = ({
           <Conditional
             if={shouldDisplayCollectionRatings({
               averageRating,
-              ratingsCount: reviewCount,
+              ratingsCount: ratingCount,
             })}
           >
             <Ratings
               averageRating={averageRating}
-              reviewCount={reviewCount}
+              reviewCount={ratingCount}
               showReviewsText={false}
               showCount={!isMobile}
             />
