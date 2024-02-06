@@ -45,6 +45,7 @@ const TicketCard = dynamic(
 
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
+  isTicketCard?: boolean;
 }>`
   margin: 0 auto;
   position: relative;
@@ -67,7 +68,7 @@ const StyledProductsWrapper = styled.div<{
     margin: 0 auto;
     width: 100%;
     @media (max-width: 768px) {
-      margin: 0 1rem;
+      margin: ${({ isTicketCard }) => (isTicketCard ? '0 auto' : '0 1rem')};
       width: auto;
     }
     h2 {
@@ -99,8 +100,7 @@ const ProductContainer = styled.div<{
       ? ` ${ticketCardDesktopDisplay} `
       : `display: grid;`}
   grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
-  margin-top: 2.25rem;
-  margin-bottom: 2.25rem;
+  margin: ${({ isNotVisible }) => (isNotVisible ? '0' : '2.25rem 0')};
   & > ${HorizontalLine} {
     border-bottom-style: dashed;
   }
@@ -618,6 +618,7 @@ const PopulateProducts = (props: any) => {
   return (
     <StyledProductsWrapper
       isLoading={productsLoading}
+      isTicketCard={isTicketCard}
       id="products-container"
       ref={productsWrapperRef}
     >

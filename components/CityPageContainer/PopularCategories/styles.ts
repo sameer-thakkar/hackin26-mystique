@@ -23,6 +23,7 @@ export const PopularCategoriesContainer = styled.div`
   .entity-image-container {
     position: relative;
     border-radius: 10px;
+    cursor: pointer;
     background: linear-gradient(
       184.23deg,
       rgba(0, 0, 0, 0) 66.76%,
