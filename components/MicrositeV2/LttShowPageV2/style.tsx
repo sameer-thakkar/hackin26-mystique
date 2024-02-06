@@ -174,7 +174,6 @@ export const BuyButtonWrapper = styled.div<{
 
     button {
       width: 13.3125rem;
-      padding: 0.75rem 1rem;
       margin: 0;
     }
   `};
@@ -185,7 +184,6 @@ export const BuyButtonWrapper = styled.div<{
     `
     button {
       width: 13.3125rem;  
-      padding: 0.5rem 0.75rem;
       font-size: 14px;
       line-height: 16px;
       word-spacing: 1rem;
