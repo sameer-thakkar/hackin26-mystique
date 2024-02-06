@@ -140,6 +140,7 @@ export const SearchBox = (props: any) => {
     isMobile,
     isNewLTTLandingPageVisible,
     isDarkMode,
+    onEscapePress,
   } = props || {};
   const [query, setQuery] = useRecoilState(searchQueryAtom);
   const fuse = useRef(null);
@@ -206,6 +207,13 @@ export const SearchBox = (props: any) => {
         value={query}
         onChange={(e) => {
           search(e.currentTarget.value);
+        }}
+        onKeyDown={(event) => {
+          if (!onEscapePress || event.key !== 'Escape') {
+            return;
+          }
+
+          onEscapePress();
         }}
         onFocus={() => {
           trackEvent({

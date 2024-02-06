@@ -1,8 +1,10 @@
 import React, {
   ComponentType,
+  FocusEvent,
   FunctionComponent,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import dynamic from 'next/dynamic';
@@ -472,11 +474,16 @@ const Header: FunctionComponent<HeaderProps> = ({
     useContext(MBContext);
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
+  const resultSectionRef = useRef<HTMLDivElement>(null);
+
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [displaySearchResults, setDisplaySearchResults] = useState(
+    results.length > 0
+  );
 
   const showLttColoredHeader =
     isNewLTTLandingPageVisible && !hasScrolled && !navActive;
@@ -485,8 +492,26 @@ const Header: FunctionComponent<HeaderProps> = ({
 
   const handleResults = (results: any) => {
     setResults(results);
+    setDisplaySearchResults(results.length > 0);
     setResultClicked(false);
   };
+
+  const onEscapePress = () => {
+    setDisplaySearchResults(false);
+  };
+
+  const onSearchWrapperBlur = (event: FocusEvent) => {
+    const isSearchItemClick = resultSectionRef?.current?.contains(
+      event.relatedTarget
+    );
+
+    if (isSearchItemClick) {
+      return;
+    }
+
+    setDisplaySearchResults(false);
+  };
+
   const loadSearchPage = () => {
     changePage({ name: PAGETYPE.SEARCH });
   };
@@ -645,8 +670,12 @@ const Header: FunctionComponent<HeaderProps> = ({
               </div>
             </Conditional>
             <Conditional if={!isMobileDevice && enableSearch}>
-              <SearchWrapper showLttColoredHeader={showLttColoredHeader}>
+              <SearchWrapper
+                showLttColoredHeader={showLttColoredHeader}
+                onBlur={onSearchWrapperBlur}
+              >
                 <SearchBox
+                  onEscapePress={onEscapePress}
                   isMobile={isMobileDevice}
                   handleResults={handleResults}
                   allToursArray={allToursArray}
@@ -655,9 +684,9 @@ const Header: FunctionComponent<HeaderProps> = ({
                   isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
                   isDarkMode={showLttColoredHeader}
                 />
-                <Conditional if={results.length}>
+                <Conditional if={displaySearchResults}>
                   <div>
-                    <div className="results">
+                    <div className="results" ref={resultSectionRef}>
                       {results.map(
                         ({ item }: { item: Record<string, any> }) => {
                           return (
