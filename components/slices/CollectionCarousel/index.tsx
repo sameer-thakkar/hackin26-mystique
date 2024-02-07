@@ -92,7 +92,7 @@ const CollectionCarousel: React.FC<ICollectionCarousel> = ({
     }
   }, [isIntersecting]);
 
-  const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
+  const mbCity = titleCase(primaryCity?.displayName || taggedCity || '');
 
   return (
     <CardContainer ref={containerRef}>

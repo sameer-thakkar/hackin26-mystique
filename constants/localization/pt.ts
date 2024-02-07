@@ -449,6 +449,7 @@ const pt = {
   THEATRE_PAGE: {
     NEARBY_THEATRES: 'Teatros próximos',
     NOW_PLAYING: 'Em cartaz agora',
+    UPCOMING_SHOWS: 'Próximos espetáculos',
     PAST_SHOWS: 'Espetáculos passados',
     FIND_BEST_SEATS: 'Encontre os melhores lugares',
   },

@@ -79,6 +79,8 @@ export const DescriptorsWrapper = styled.div<{ numberOfDescriptors: number }>`
         margin-bottom: 1.25rem;
       }
       .icon {
+        min-width: 2rem;
+        min-height: 2rem;
         width: 2rem;
         height: 2rem;
         padding: 0.4rem;

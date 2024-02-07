@@ -446,6 +446,7 @@ const nl = {
   THEATRE_PAGE: {
     NEARBY_THEATRES: 'Theaters in de buurt',
     NOW_PLAYING: 'Huidige shows',
+    UPCOMING_SHOWS: 'Aankomende shows',
     PAST_SHOWS: 'Afgelopen shows',
     FIND_BEST_SEATS: 'Vind de beste plaatsen',
   },

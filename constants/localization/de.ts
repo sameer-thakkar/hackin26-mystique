@@ -445,6 +445,7 @@ const de = {
   THEATRE_PAGE: {
     NEARBY_THEATRES: 'Theater in der Nähe',
     NOW_PLAYING: 'Aktuelle Shows',
+    UPCOMING_SHOWS: 'Kommende Shows',
     PAST_SHOWS: 'Vergangene Shows',
     FIND_BEST_SEATS: 'Bestplätze finden',
   },

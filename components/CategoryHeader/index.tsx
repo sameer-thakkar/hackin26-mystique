@@ -74,7 +74,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
     mainMenu = [exploreMenu, ...mainMenu];
   }
 
-  const mbCity = titleCase(taggedCity || primaryCity?.displayName || '');
+  const mbCity = titleCase(primaryCity?.displayName || taggedCity || '');
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
     : [{ code: currentLanguage }];
