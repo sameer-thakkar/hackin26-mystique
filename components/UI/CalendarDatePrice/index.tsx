@@ -15,6 +15,7 @@ const CalendarDatePrice = ({
   lang = 'en',
   price,
   className = '',
+  hideCurrency = true,
 }: CalendarDatePriceProps) => {
   const currencyList = useRecoilValue(currencyListAtom);
   const formattedPrice = getLocalisedPrice({
@@ -22,7 +23,7 @@ const CalendarDatePrice = ({
     currencyCode,
     lang,
     currencyList,
-    hideCurrency: true,
+    hideCurrency,
   });
 
   return (

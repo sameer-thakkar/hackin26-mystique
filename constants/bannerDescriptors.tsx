@@ -104,16 +104,16 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     ],
     '1011': [
       {
-        icon: BANNER_DESCRIPTORS.MAP,
-        text: strings.BANNER_DESCRIPTORS.TOP_ATTRACTIONS,
-      },
-      {
-        icon: BANNER_DESCRIPTORS.TRANSLATE,
-        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GT,
+        icon: BANNER_DESCRIPTORS.MAP_HEART_PIN,
+        text: strings.BANNER_DESCRIPTORS.ALL_TOP_ATTRACTIONS_COVERED,
       },
       {
         icon: BANNER_DESCRIPTORS.CLOCK,
-        text: strings.BANNER_DESCRIPTORS.FREQ_DEP_MULTI_ROUTE,
+        text: strings.BANNER_DESCRIPTORS.REG_SCHEDULE_UNLIMITED_RIDES,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.TICKET,
+        text: strings.BANNER_DESCRIPTORS.LAST_MIN_AVAIL_INSTANT_CONFIRMATION,
       },
     ],
     '1019': [

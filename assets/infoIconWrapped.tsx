@@ -1,3 +1,5 @@
+import { cloneElement, SVGProps } from 'react';
+
 const InfoIconWrapped = (
   <svg
     width="12"
@@ -33,4 +35,7 @@ const InfoIconWrapped = (
     </defs>
   </svg>
 );
+
+export const InfoIconWrapperComponent = (props: SVGProps<SVGSVGElement>) =>
+  cloneElement(InfoIconWrapped, props);
 export default InfoIconWrapped;

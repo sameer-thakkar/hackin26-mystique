@@ -31,7 +31,6 @@ export const DateWrapper = styled.div`
   &.unavailable {
     pointer-events: none;
     cursor: auto;
-
     .date-label {
       color: ${COLORS.GRAY.G4A};
     }
@@ -55,6 +54,14 @@ export const DateWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
+    .date-label {
+      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
+    }
+    &.unavailable {
+      .date-label {
+        color: ${COLORS.GRAY.G5};
+      }
+    }
     &:hover {
       border-radius: 0.4rem;
       background-color: ${COLORS.PURPS.LIGHT_TONE_4};
@@ -82,11 +89,21 @@ export const DateWrapper = styled.div`
 `;
 
 export const PriceWrapper = styled.div`
-  ${expandFontToken(FONTS.MISC_TAG_REGULAR)}
   width: 100%;
   margin-bottom: 0.813rem;
-
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0.006em;
+  text-align: center;
   .price {
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.GRAY.G3};
+  }
+
+  @media (max-width: 768px) {
+    .price {
+      color: ${COLORS.GRAY.G4};
+    }
+    ${expandFontToken(FONTS.MISC_TAG_REGULAR)}
   }
 `;

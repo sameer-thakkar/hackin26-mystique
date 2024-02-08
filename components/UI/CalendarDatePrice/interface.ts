@@ -4,4 +4,5 @@ export type CalendarDatePriceProps = {
   currencyCode: string;
   lang?: string;
   className?: string;
+  hideCurrency?: boolean;
 };

@@ -16,7 +16,7 @@ export const TourInfoContainer = styled.div<{ lessMargin?: boolean }>`
 
   @media (max-width: 768px) {
     margin: ${({ lessMargin }) =>
-      lessMargin ? '2rem auto 0.5rem 1.5rem' : '2.5rem auto 0.5rem 1.5rem'};
+      lessMargin ? '2rem 1.5rem 0.5rem 1.5rem' : '2.5rem 1.5rem 0.5rem 1.5rem'};
     max-width: 90vw;
     flex-direction: column;
     align-items: flex-start;
@@ -99,16 +99,9 @@ export const TourInfo = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    ${expandFontToken(FONTS.UI_LABEL_LARGE)}
-    color: ${COLORS.GRAY.G3}
+    ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+    color: ${COLORS.GRAY.G3};
     margin: 0;
-  }
-
-  .vertical-divider {
-    width: 0.063rem;
-    height: 1rem;
-    align-self: end;
-    background: ${COLORS.GRAY.G5};
   }
 
   .details-container {
@@ -129,30 +122,71 @@ export const TourInfo = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 5rem 1fr;
-    align-items: center;
+    grid-template-columns: 5.375rem 1fr;
+    grid-template-rows: auto 2.5rem;
+    align-items: flex-start;
+    width: 100%;
 
     img {
-      height: 5rem;
-      width: 5rem;
+      height: 5.375rem;
+      width: 5.375rem;
+      margin-top: 5px;
     }
 
     .textinfo-container {
       gap: 0.25rem;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      overflow: hidden;
     }
     .details-container {
       flex-direction: column;
       gap: 0.5rem;
       align-items: start;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
     }
     .pills-container {
       flex-direction: row;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      gap: 0;
+      height: 40px;
+      .details-pill {
+        width: 100%;
+        height: 40px;
+        justify-content: center;
+        gap: 0.25rem;
+        &.first {
+          border-radius: 8px 0 0 8px;
+        }
+        &.second {
+          border-radius: 0 8px 8px 0;
+        }
+      }
     }
     .timings {
-      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      color: ${COLORS.GRAY.G2};
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+      span {
+        white-space: nowrap;
+      }
+      .dot-separator {
+        width: 3px;
+        height: 3px;
+        background-color: ${COLORS.GRAY.G4A};
+        flex: none;
+        flex-grow: 0;
+        border-radius: 50%;
+      }
     }
     h2 {
-      ${expandFontToken(FONTS.HEADING_REGULAR)}
+      ${expandFontToken(FONTS.HEADING_SMALL)};
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
     }
   }
 `;
@@ -163,8 +197,7 @@ export const DetailsPill = styled.div<{ isClickable?: boolean }>`
   gap: 4px;
   border-radius: 0.25rem;
   background: ${COLORS.GRAY.G8};
-  padding: 0.5rem;
-  margin-top: 0.25rem;
+  padding: 0.75rem;
   ${({ isClickable }) => isClickable && 'cursor: pointer'};
 
   .title {
@@ -186,15 +219,23 @@ export const DetailsPill = styled.div<{ isClickable?: boolean }>`
   @media (max-width: 768px) {
     flex-direction: row;
     color: ${COLORS.GRAY.G2};
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
     border-radius: 2rem;
     border: 1px solid ${COLORS.GRAY.G7};
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.25rem;
     cursor: pointer;
     margin-top: 0;
     padding: 0.125rem 0.5rem 0.1875rem 0.5rem;
+    svg {
+      margin-left: 0.25rem;
+      padding-top: 0.125rem;
+    }
+    svg.pill-icon {
+      margin-left: 0;
+      padding-top: 0.2rem;
+    }
   }
 `;
 

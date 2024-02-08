@@ -793,6 +793,10 @@ const it = {
     CULINARY_EXPERTS: 'Incontra gli esperti di cucina',
     SIGHTSEEING: 'Visite e intrattenimento a bordo',
     MULTILINGUAL_GT: 'Visite guidate multilingue',
+    ALL_TOP_ATTRACTIONS_COVERED: 'Tutte le attrazioni principali',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Partenze regolari. Viaggi illimitati',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      ' Disponibilità Last Minute. Conferma immediata',
     MULTI_ROUTES: 'Itinerari multipli',
     HASSLE_FREE: 'Prenotazione semplice',
     FREQUENT_DEPARTURES: 'Partenze frequenti',
@@ -897,8 +901,8 @@ const it = {
   },
   HOHO: {
     HOHO: 'Biglietti Hop On Hop Off',
-    ROUTE_DETAILS: 'Percorso',
-    MORE_DETAILS: 'Altri dettagli',
+    BUS_ROUTES_DETAILS: 'Itinerari',
+    TOUR_DETAILS: 'Dettagli del tour',
     ROUTES_SCHEDULES: 'Percorsi e orari',
     VALIDITY: 'Valido per 1 giorno',
     VALIDITY_NOTE:

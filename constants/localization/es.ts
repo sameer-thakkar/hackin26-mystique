@@ -837,6 +837,10 @@ const es = {
     CULINARY_EXPERTS: 'Conoce a los expertos culinarios',
     SIGHTSEEING: 'Puntos de interés y entretenimiento a bordo',
     MULTILINGUAL_GT: 'Tours guiados multilingües',
+    ALL_TOP_ATTRACTIONS_COVERED: 'Cubre todas las atracciones principales',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Salidas frecuentes. Viajes ilimitados',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      'Disponibilidad de última hora. Confirmación instantánea',
     MULTI_ROUTES: 'Múltiples opciones de ruta',
     HASSLE_FREE: 'Reserva sin complicaciones',
     FREQUENT_DEPARTURES: 'Salidas frecuentes',
@@ -941,8 +945,8 @@ const es = {
   },
   HOHO: {
     HOHO: 'Billetes de autobús turístico',
-    ROUTE_DETAILS: 'Ruta',
-    MORE_DETAILS: 'Otra información',
+    BUS_ROUTES_DETAILS: 'Rutas',
+    TOUR_DETAILS: 'Detalles del tour',
     ROUTES_SCHEDULES: 'Rutas y horarios',
     VALIDITY: 'Válido durante 1 día',
     VALIDITY_NOTE:

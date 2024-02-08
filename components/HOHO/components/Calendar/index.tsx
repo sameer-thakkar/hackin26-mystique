@@ -305,6 +305,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
                     ? 'min-price'
                     : ''
                 }
+                hideCurrency={isMobile}
               />
             </DateEl>
           );

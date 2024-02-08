@@ -783,6 +783,10 @@ const nl = {
     CULINARY_EXPERTS: 'Ontmoet de culinaire experts',
     SIGHTSEEING: 'Sightseeing & amusement aan boord',
     MULTILINGUAL_GT: 'Meertalige rondleidingen',
+    ALL_TOP_ATTRACTIONS_COVERED: 'Met alle topbezienswaardigheden',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Regelmatige vertrektijden. Onbeperkt reizen',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      'Lastminute beschikbaarheid. Directe bevestiging',
     MULTI_ROUTES: 'Meerdere routeopties',
     HASSLE_FREE: 'Probleemloos boeken',
     FREQUENT_DEPARTURES: 'Regelmatig vertrek',
@@ -898,8 +902,8 @@ const nl = {
   },
   HOHO: {
     HOHO: 'Hop-on hop-off Tickets',
-    ROUTE_DETAILS: ' Details route ',
-    MORE_DETAILS: 'Meer informatie',
+    BUS_ROUTES_DETAILS: 'Routes',
+    TOUR_DETAILS: 'Tourdetails',
     ROUTES_SCHEDULES: 'Routes en dienstregelingen',
     VALIDITY: 'Geldig voor 1 dag',
     VALIDITY_NOTE:

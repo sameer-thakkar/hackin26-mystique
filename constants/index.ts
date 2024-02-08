@@ -1721,6 +1721,8 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-transfers.svg',
   ADVENTURE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-adventure.svg',
+  MAP_HEART_PIN:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-heart-map-pin.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [

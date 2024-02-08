@@ -38,8 +38,10 @@ import {
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import DropdownTriangle from 'assets/dropdownTriangle';
+import { InfoIconWrapperComponent } from 'assets/infoIconWrapped';
 import LttChevronLeft from 'assets/lttChevronLeft';
 import LttChevronRight from 'assets/lttChevronRight';
+import Map from 'assets/map';
 
 const MediaCarousel = dynamic(
   () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
@@ -243,7 +245,7 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
           fitCrop={true}
         />
         <div className="textinfo-container">
-          <h2>{isMobile ? tourGroupName?.split(':')?.[0] : tourGroupName}</h2>
+          <h2>{tourGroupName}</h2>
           <Conditional if={!isMobile}>
             <ProductDescriptors
               descriptorArray={descriptorsArray}
@@ -303,27 +305,39 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
                 <div className="timings">
                   <span>{finalTimings}</span>
                   <Conditional if={finalFrequecy}>
-                    <span className="vertical-divider" />
+                    <span className="dot-separator" />
                     <span>{finalFrequecy}</span>
                   </Conditional>
                 </div>
               </Conditional>
-              <div className="pills-container">
-                <Conditional if={tgidRouteData}>
-                  <DetailsPill onClick={onRouteDetailsClick}>
-                    {strings.HOHO.ROUTE_DETAILS} {DropdownTriangle}
-                  </DetailsPill>
-                </Conditional>
-                <Conditional if={finalHighlights?.length}>
-                  <DetailsPill onClick={onMoreDetailsClick}>
-                    {strings.HOHO.MORE_DETAILS}
-                    {DropdownTriangle}
-                  </DetailsPill>
-                </Conditional>
-              </div>
             </Conditional>
           </div>
         </div>
+        <Conditional if={isMobile}>
+          <div className="pills-container">
+            <Conditional if={tgidRouteData}>
+              <DetailsPill
+                className="details-pill first"
+                onClick={onRouteDetailsClick}
+              >
+                <Map className="pill-icon" width={12} height={12} />
+                {strings.HOHO.BUS_ROUTES_DETAILS}
+
+                {DropdownTriangle}
+              </DetailsPill>
+            </Conditional>
+            <Conditional if={finalHighlights?.length}>
+              <DetailsPill
+                className="details-pill second"
+                onClick={onMoreDetailsClick}
+              >
+                <InfoIconWrapperComponent className="pill-icon" />
+                {strings.HOHO.TOUR_DETAILS}
+                {DropdownTriangle}
+              </DetailsPill>
+            </Conditional>
+          </div>
+        </Conditional>
       </TourInfo>
       <Conditional if={!isMobile && totalCards > CAROUSEL_SLIDE_NUMBER}>
         <SwiperControls>

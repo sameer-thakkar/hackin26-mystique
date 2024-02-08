@@ -787,6 +787,10 @@ const pt = {
     CULINARY_EXPERTS: 'Conheça especialistas culinários',
     SIGHTSEEING: 'Passeio turístico e entretenimento a bordo',
     MULTILINGUAL_GT: 'Visitas guiadas multilíngues',
+    ALL_TOP_ATTRACTIONS_COVERED: 'All top attractions covered',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Regular schedule. Unlimited rides',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      'Last minute availability. Instant confirmation',
     MULTI_ROUTES: 'Diversas opções de rotas',
     HASSLE_FREE: 'Reserva sem complicações',
     FREQUENT_DEPARTURES: 'Partidas frequentes',
@@ -891,8 +895,8 @@ const pt = {
   },
   HOHO: {
     HOHO: 'Bilhetes hop-on hop-off',
-    ROUTE_DETAILS: 'Detalhes da rota',
-    MORE_DETAILS: 'Mais detalhes',
+    BUS_ROUTES_DETAILS: 'Rotas',
+    TOUR_DETAILS: 'Detalhes do tour',
     ROUTES_SCHEDULES: 'Rotas e horários',
     VALIDITY: 'Válido por 1 dia',
     VALIDITY_NOTE:

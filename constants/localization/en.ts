@@ -839,8 +839,8 @@ const en = {
   },
   HOHO: {
     HOHO: 'Hop On Hop Off Tours',
-    ROUTE_DETAILS: 'Route Details',
-    MORE_DETAILS: 'More Details',
+    BUS_ROUTES_DETAILS: 'Bus routes',
+    TOUR_DETAILS: 'Tour details',
     ROUTES_SCHEDULES: 'Routes & Schedules',
     VALIDITY: 'Valid for 1 day',
     VALIDITY_NOTE:
@@ -872,6 +872,10 @@ const en = {
     CULINARY_EXPERTS: 'Culinary Experts',
     SIGHTSEEING: 'Sightseeing & Onboard Entertainment',
     MULTILINGUAL_GT: 'Multilingual Guided Tours',
+    ALL_TOP_ATTRACTIONS_COVERED: 'All top attractions covered',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Regular schedule. Unlimited rides',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      'Last minute availability. Instant confirmation',
     MULTI_ROUTES: 'Multiple Route Options',
     HASSLE_FREE: 'Hassle-free Booking',
     FREQUENT_DEPARTURES: 'Frequent Departures',
