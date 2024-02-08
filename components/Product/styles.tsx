@@ -565,6 +565,7 @@ const asideBarStyles = css`
     flex-direction: column;
     gap: 0;
     margin-bottom: 0.75rem;
+    width: 100%;
 
     ${CategoryAndRatingContainer} {
       margin-bottom: 0.25rem;
