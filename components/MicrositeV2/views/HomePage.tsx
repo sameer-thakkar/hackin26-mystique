@@ -267,7 +267,6 @@ export const HomePage = (props: any) => {
     isCatOrSubCatPage,
     catAndSubCatPageData,
   } = props;
-
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
 
@@ -714,7 +713,12 @@ export const HomePage = (props: any) => {
         </div>
       </ProductsContextProvider>
       <Conditional
-        if={isEntertainmentMb && !showLttTreatment && !isCatOrSubCatPage}
+        if={
+          isEntertainmentMb &&
+          !showLttTreatment &&
+          !isCatOrSubCatPage &&
+          !isCategoryPage
+        }
       >
         <div className="main-wrapper">
           <LazyComponent>
