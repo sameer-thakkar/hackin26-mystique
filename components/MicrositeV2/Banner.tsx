@@ -347,9 +347,6 @@ const NewBanner: React.FC<any> = (props) => {
     const LTT_CONTROL_HARDCODED_BANNER_IMAGES_IN_ORDER = [
       `https://cdn-imgix-open.headout.com/ltt-control-banners/${
         isMobile ? 'mobile' : 'desktop'
-      }/black-friday.png`,
-      `https://cdn-imgix-open.headout.com/ltt-control-banners/${
-        isMobile ? 'mobile' : 'desktop'
       }/lion-king.png`,
       `https://cdn-imgix-open.headout.com/ltt-control-banners/${
         isMobile ? 'mobile' : 'desktop'
