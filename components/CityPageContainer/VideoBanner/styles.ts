@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 19.125rem;
   position: relative;
   @media (min-width: 768px) {
-    height: 33rem;
+    height: 37.5rem;
     overflow: hidden;
   }
 
