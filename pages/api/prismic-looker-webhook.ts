@@ -42,6 +42,7 @@ const getUpdatedDocuments = async ({ documentIds }: any) => {
     documentIds.filter((id: any) => id),
     {
       fetchLinks: 'microsite.body1',
+      lang: '*',
     }
   );
 
@@ -143,7 +144,8 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
 
     /* Data for content framework attached in Microsite or Content Page doc */
     const contentFrameworkData = await attachedContentFrameworkData(
-      contentFrameworkId
+      contentFrameworkId,
+      lang
     );
     let baseLangData = await fetchBaseLangData(language, baseLangDoc, doc);
     baseLangData =

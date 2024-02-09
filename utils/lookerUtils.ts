@@ -82,11 +82,13 @@ export const getStructure = (url: URL): string | null => {
 const contentFrameworkSliceCheck = async ({
   docId,
   sliceType,
+  lang,
 }: {
   docId: string;
   sliceType: string;
+  lang: string;
 }) => {
-  const contentFrameworkDoc = await attachedContentFrameworkData(docId);
+  const contentFrameworkDoc = await attachedContentFrameworkData(docId, lang);
 
   if (!contentFrameworkDoc) return false;
 
@@ -100,12 +102,14 @@ const getContentFrameworkSlice = async ({
   docId,
   sliceType,
   findAll = false,
+  lang,
 }: {
   docId: string;
   sliceType: string;
+  lang: string;
   findAll?: boolean;
 }) => {
-  const contentFrameworkDoc = await attachedContentFrameworkData(docId);
+  const contentFrameworkDoc = await attachedContentFrameworkData(docId, lang);
   const { data } = contentFrameworkDoc ?? {};
   const { body } = data ?? {};
   if (findAll) {
@@ -118,12 +122,14 @@ const getContentFrameworkSlice = async ({
 export const shoulderPageTicketsCheck = async ({
   type,
   data,
+  lang,
 }: PrismicDocumentWithUID): Promise<boolean> => {
   const contentFrameworkId = data?.content_framework?.id;
   if (type === CUSTOM_TYPES.CONTENT_PAGE && contentFrameworkId) {
     return await contentFrameworkSliceCheck({
       docId: contentFrameworkId,
       sliceType: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD,
+      lang,
     });
   }
 
@@ -319,6 +325,7 @@ type FooterDetailsType = {
 
 export const getFooterDetails = async ({
   type,
+  lang,
   data,
 }: PrismicDocumentWithUID): Promise<FooterDetailsType | undefined> => {
   const isMicrosite = checkIfMicrosite({ type });
@@ -339,9 +346,9 @@ export const getFooterDetails = async ({
     const { id: footerDocId } = footerDocRef || {};
 
     const prismicClient = createClient();
-    const footerDocs = (await prismicClient.getByID(
-      footerDocId
-    )) as CommonFooterDocument;
+    const footerDocs = (await prismicClient.getByID(footerDocId, {
+      lang,
+    })) as CommonFooterDocument;
 
     const { data: footerDocData } = footerDocs || {};
 
@@ -453,6 +460,7 @@ export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
           (await getContentFrameworkSlice({
             docId: data.content_framework.id,
             sliceType: SLICE_TYPES.BREADCRUMBS,
+            lang: lang,
           })));
 
       if (breadcrumbsSlice) {
@@ -552,6 +560,7 @@ export const getHeadoutPageDetails = (uid: string): Record<string, string> => {
 
 export const getHeadings = async ({
   type,
+  lang,
   data,
 }: PrismicDocumentWithUID): Promise<Record<string, string[]>> => {
   let mainHeadings = [],
@@ -620,6 +629,7 @@ export const getHeadings = async ({
     const richTextSlices = await getContentFrameworkSlice({
       docId: contentFrameworkId,
       sliceType: SLICE_TYPES.RICH_TEXT,
+      lang: lang,
       findAll: true,
     });
     richTextSlices?.forEach((slice: any) => {
@@ -661,12 +671,14 @@ export const getSlicesFromContentFramework = (
 };
 
 export const attachedContentFrameworkData = async (
-  contentFrameworkId: string
+  contentFrameworkId: string,
+  lang: string
 ) => {
   try {
     const prismicClient = createClient();
     const contentFrameworkDoc = (await prismicClient.getByID(
-      contentFrameworkId
+      contentFrameworkId,
+      { lang }
     )) as ContentFrameworkDocument;
 
     return contentFrameworkDoc;
