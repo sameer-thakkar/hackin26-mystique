@@ -8,17 +8,23 @@ export function calculateAvgRatingAndTotalReviews(
   let sumOfAvgRatings = 0;
   let totalRatingsCount = 0;
 
+  let tgidsWithRatings = 0;
+
   for (const item of scorpioDataArray) {
     if (item.averageRating && item.ratingCount) {
       sumOfAvgRatings += item.averageRating;
       totalRatingsCount += item.ratingCount;
+      tgidsWithRatings++;
     }
   }
 
-  const averageOfAverageRatings = sumOfAvgRatings / scorpioDataArray.length;
+  const averageOfAverageRatings = sumOfAvgRatings / tgidsWithRatings;
 
   return {
-    averageRating: isNaN(averageOfAverageRatings) ? 0 : averageOfAverageRatings,
+    averageRating:
+      isNaN(averageOfAverageRatings) || !isFinite(averageOfAverageRatings)
+        ? 0
+        : averageOfAverageRatings,
     ratingsCount: totalRatingsCount,
   };
 }
