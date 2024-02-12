@@ -702,6 +702,7 @@ export const getPageData = async ({
           }
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
           categoryTourListData = await monthOnMonthPageParser({
+            uid,
             tourListCategory: categoryTourListV2,
             hostname,
             lang: lang ?? 'en',
@@ -1071,6 +1072,10 @@ export const getPageData = async ({
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });
+    sendLog({
+      err: error,
+      message: `[getPageData] Error fetching Prismic data for URL: ${req?.url}`,
+    });
     return {
       statusCode: 500,
     };

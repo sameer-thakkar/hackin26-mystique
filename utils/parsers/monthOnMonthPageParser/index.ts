@@ -13,6 +13,7 @@ import getProductData from '../utils';
 import { TMomPageParser } from './interface';
 
 export default async function monthOnMonthPageParser({
+  uid,
   tourListCategory,
   hostname,
   lang,
@@ -67,41 +68,50 @@ export default async function monthOnMonthPageParser({
   let filteredCollectionData = Promise.all(filteredCollectionPromises);
   let subCategoryData = Promise.all(subCategoryPromises);
 
-  await Promise.all([
-    collectionData,
-    filteredCollectionData,
-    subCategoryData,
-  ]).then((response) => {
-    try {
-      const [collectionData, filteredCollectionData, subCategoryData] =
-        response;
+  await Promise.all([collectionData, filteredCollectionData, subCategoryData])
+    .then((response) => {
+      try {
+        const [collectionData, filteredCollectionData, subCategoryData] =
+          response;
 
-      if (collectionData.length) {
-        primaryCity = collectionData?.[0]?.city;
-        currencyObject = collectionData?.[0]?.currency;
-        accumulatingCategoryAndItemsData(
-          collectionData,
-          categoriesWithProducts,
-          allTgids
-        );
-      }
+        if (collectionData.length) {
+          primaryCity = collectionData?.[0]?.city;
+          currencyObject = collectionData?.[0]?.currency;
+          accumulatingCategoryAndItemsData(
+            collectionData,
+            categoriesWithProducts,
+            allTgids
+          );
+        }
 
-      if (filteredCollectionData.length) {
-        primaryCity = filteredCollectionData?.[0]?.city;
-        accumulatingCategoryDataFromCollectionItems(
-          filteredCollectionData,
-          categoriesWithProducts,
-          allTgids,
-          subCategoryData
-        );
+        if (filteredCollectionData.length) {
+          primaryCity = filteredCollectionData?.[0]?.city;
+          accumulatingCategoryDataFromCollectionItems(
+            filteredCollectionData,
+            categoriesWithProducts,
+            allTgids,
+            subCategoryData
+          );
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        Sentry.captureException(err);
+        sendLog({
+          err,
+          message: `[monthOnMonthPageParser] uid - ${uid}`,
+        });
       }
-    } catch (err) {
+    })
+    .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(err);
       Sentry.captureException(err);
-      sendLog({ err, message: `[monthOnMonthPageParser]` });
-    }
-  });
+      sendLog({
+        err,
+        message: `[monthOnMonthPageParser] uid - ${uid}`,
+      });
+    });
 
   const allData = categoriesWithProducts?.flat();
   const pageData = await getProductData({
