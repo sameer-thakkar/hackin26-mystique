@@ -142,7 +142,7 @@ export default class SitemapXml extends Component {
     } catch (error) {
       sendLog({
         err: error,
-        message: `getAllByTag in sitemap.xml failed`,
+        message: `[SitemapXml.getInitialProps] - ${uid}`,
       });
       res?.end();
     }

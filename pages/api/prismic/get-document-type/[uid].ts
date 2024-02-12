@@ -33,7 +33,8 @@ const getPrismicDocumentType = async (
       })
     );
 
-    const [settledResult] = handleSettledPromiseResults(settledPromises) ?? [];
+    const [settledResult] =
+      handleSettledPromiseResults(settledPromises, uid) ?? [];
     if (settledResult) {
       res.setHeader('Cache-Control', `max-age=${SIXTY_DAYS_CACHE}`);
       res.status(200).json({

@@ -44,6 +44,7 @@ export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
     Sentry.captureException(error);
     sendLog({
       err: error,
+      message: `[getStaticPageMicrosite] - ${uid}`,
     });
     // eslint-disable-next-line no-console
     console.log(`${CUSTOM_TYPES.MICROSITE}`, error);
@@ -85,6 +86,7 @@ export const getStaticPageGlobalMB = async ({ uid }: { uid: string }) => {
     Sentry.captureException(error);
     sendLog({
       err: error,
+      message: `[getStaticPageGlobalMB] - ${uid}`,
     });
     // eslint-disable-next-line no-console
     console.log(`${CUSTOM_TYPES.MICROSITE}`, error);

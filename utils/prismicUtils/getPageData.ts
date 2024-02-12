@@ -724,7 +724,7 @@ export const getPageData = async ({
           const timestampDeltaForCoralogix = Date.now() - timestampForCoralogix;
           sendLog({
             level: LOG_LEVELS.INFO,
-            message: String(timestampDeltaForCoralogix),
+            message: `[categoryTourListParserV2] Time taken: ${timestampDeltaForCoralogix}ms`,
           });
         }
       }
@@ -879,7 +879,10 @@ export const getPageData = async ({
     }).catch((error) => {
       Sentry.captureException(error);
       traceError({ error, host: req?.headers?.host, url: req?.url });
-      sendLog({ err: error });
+      sendLog({
+        err: error,
+        message: `[getPageData] fetchTourListV6 failed for tgids: ${tgidsArray}`,
+      });
 
       // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
       return {
@@ -1033,8 +1036,10 @@ export const getPageData = async ({
       breadcrumbsPromise,
     ]);
 
-    const [categoryHeaderMenu, breadcrumbs] =
-      handleSettledPromiseResults(aggregatedPromise);
+    const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
+      aggregatedPromise,
+      uid
+    );
 
     const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent);
     const catAndSubCatPageData = isCatOrSubCatPage

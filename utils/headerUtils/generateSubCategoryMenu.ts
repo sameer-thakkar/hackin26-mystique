@@ -118,7 +118,7 @@ const generateSubCategoryMenu = async ({
     return { [menuName]: menu };
   } catch (error) {
     sendLog({
-      message: `generateSubCategoryMenu failed`,
+      message: `[generateSubCategoryMenu] failed`,
       err: error,
     });
   }

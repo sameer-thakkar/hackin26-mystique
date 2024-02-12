@@ -310,7 +310,7 @@ export const getNewsPageData = async (
     collectionReviews,
     newsLandingPageData,
     allArticles,
-  ] = handleSettledPromiseResults(aggregatedPromise);
+  ] = handleSettledPromiseResults(aggregatedPromise, uid);
 
   const uidToCFIdMap = new Map<string, any>();
   const videoDataMap = new Map<string, string>();

@@ -34,7 +34,7 @@ export default function handle(req: NextApiRequest, res: NextApiResponse) {
   } catch (error) {
     sendLog({
       err: error,
-      message: `[resolve.api] getByUid failed !!`,
+      message: `[resolve.api] getByUid failed! - ${uid} - ${lang}`,
     });
     res.end();
   }

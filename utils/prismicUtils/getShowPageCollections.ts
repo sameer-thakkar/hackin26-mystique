@@ -23,7 +23,7 @@ const getShowPageCollections = async ({
     return showpageDocs;
   } catch (error) {
     sendLog({
-      message: `getShowPageCollections failed`,
+      message: `[getShowPageCollections] failed`,
       err: error,
     });
   }

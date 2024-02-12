@@ -667,7 +667,8 @@ export const isCategoryMB = (mbType: string | null) =>
   mbType === MB_TYPES.A1_CATEGORY || mbType === MB_TYPES.A2_CATEGORY;
 
 export const handleSettledPromiseResults = (
-  results: PromiseSettledResult<any>[]
+  results: PromiseSettledResult<any>[],
+  uid?: string
 ) => {
   const errors = results
     .filter((result) => result.status === 'rejected' && result?.reason)
@@ -676,7 +677,8 @@ export const handleSettledPromiseResults = (
   if (errors.length) {
     sendLog({
       err: errors,
-      message: `[handleSettledPromiseResults] - ${errors}`,
+      message: `[handleSettledPromiseResults] 
+      uid - ${uid} - errors - ${errors}`,
     });
   }
   return (
@@ -873,13 +875,11 @@ export const getCategorisationMetadata = async ({
 }: {
   doc: ShowpageDocument;
 }) => {
+  const { lang, alternate_languages } = doc || {};
+  const baseLangUid = getEnglishDocUid(alternate_languages);
+
   try {
-    const { lang, alternate_languages } = doc || {};
-
-    const baseLangUid = getEnglishDocUid(alternate_languages);
-
     const prismicClient = createClient();
-
     const baseLangData =
       lang !== LANGUAGE_MAP.en.locale && baseLangUid
         ? await prismicClient.getByUID('showpage', baseLangUid, {
@@ -909,7 +909,10 @@ export const getCategorisationMetadata = async ({
       tagged_sub_category,
     };
   } catch (error) {
-    sendLog({ err: error });
+    sendLog({
+      err: error,
+      message: `[getCategorisationMetadata] baseLangUid - ${baseLangUid}`,
+    });
     return {
       tagged_category: null,
       tagged_city: null,

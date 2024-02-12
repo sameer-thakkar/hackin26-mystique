@@ -222,6 +222,7 @@ const getMicrositeDocument = async ({
             Sentry.captureException(error);
             sendLog({
               err: error,
+              message: `[getMicrositeDocument] getTopAttractionsDoc for HOHO template - ${uid}`,
             });
             // eslint-disable-next-line no-console
             console.log('top-attractions-data-hoho', error);
@@ -310,6 +311,7 @@ const getMicrositeDocument = async ({
         Sentry.captureException(error);
         sendLog({
           err: error,
+          message: `[getMicrositeDocument] getMicrositeDocument - ${uid}`,
         });
         // eslint-disable-next-line no-console
         console.log(`${CUSTOM_TYPES.MICROSITE} baselang document`, error);

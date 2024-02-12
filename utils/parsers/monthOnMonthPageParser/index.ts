@@ -99,7 +99,7 @@ export default async function monthOnMonthPageParser({
       // eslint-disable-next-line no-console
       console.error(err);
       Sentry.captureException(err);
-      sendLog({ err });
+      sendLog({ err, message: `[monthOnMonthPageParser]` });
     }
   });
 

@@ -139,7 +139,10 @@ const categoryTourListParserV1 = async ({
       };
     } catch (err) {
       captureException(err);
-      sendLog({ err });
+      sendLog({
+        err,
+        message: `[categoryTourListParserV1] - collection - ${collection}`,
+      });
       // eslint-disable-next-line no-console
       console.error(err);
     }
@@ -161,7 +164,10 @@ const categoryTourListParserV1 = async ({
       primaryCity = categoryData?.city;
     } catch (err) {
       captureException(err);
-      sendLog({ err });
+      sendLog({
+        err,
+        message: `[categoryTourListParserV1] - category - ${category}`,
+      });
       // eslint-disable-next-line no-console
       console.error(err);
     }
@@ -184,7 +190,10 @@ const categoryTourListParserV1 = async ({
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
       captureException(err);
-      sendLog({ err });
+      sendLog({
+        err,
+        message: `[categoryTourListParserV1] - sub_category - ${sub_category}`,
+      });
       // eslint-disable-next-line no-console
       console.error(err);
     }
@@ -208,7 +217,10 @@ const categoryTourListParserV1 = async ({
       tourData.push(...additionalSubCategoryData?.pageData?.items);
     } catch (err) {
       captureException(err);
-      sendLog({ err });
+      sendLog({
+        err,
+        message: `[categoryTourListParserV1] - additionalSubCategoryIds - ${additionalSubCategoryIds}`,
+      });
       // eslint-disable-next-line no-console
       console.error(err);
     }

@@ -267,7 +267,10 @@ ImageSitemapXml.getInitialProps = async ({
     res?.write(sitemap);
     res?.end();
   } catch (e) {
-    sendLog({ err: JSON.stringify(e) });
+    sendLog({
+      err: JSON.stringify(e),
+      message: `[ImageSitemapXml.getInitialProps] - ${uid} - ${lang}`,
+    });
     res?.end();
   }
 };

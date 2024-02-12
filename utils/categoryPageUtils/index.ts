@@ -147,7 +147,7 @@ export const getCatAndSubCatPageData = async ({
     subCategoryCarousels,
     subCategoryCardsData,
     cityCategoriesCarousel,
-  ] = handleSettledPromiseResults(settledPromiseResults);
+  ] = handleSettledPromiseResults(settledPromiseResults, uid);
 
   const filteredSubCategoryPills = subCategoryPills.filter(
     (subCategoryPill: Record<string, any>) => {

@@ -203,7 +203,7 @@ const getContentPageDocument = async ({
       } catch (error) {
         sendLog({
           err: error,
-          message: `[productCardsDocument]`,
+          message: `[getContentPageDocument] - ${uid}`,
         });
       }
     }
@@ -235,8 +235,10 @@ const getContentPageDocument = async ({
           collectionId: tagged_collection,
         }),
       ]);
-      const [prismicRelatedDocs, fetchedPoiInfo] =
-        handleSettledPromiseResults(settledPromises);
+      const [prismicRelatedDocs, fetchedPoiInfo] = handleSettledPromiseResults(
+        settledPromises,
+        uid
+      );
       // @ts-ignore
       relatedContentPages = prismicRelatedDocs?.results?.map(
         (doc: Record<string, any>) => ({

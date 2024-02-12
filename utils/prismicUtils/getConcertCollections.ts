@@ -58,7 +58,10 @@ const getConcertCollectionDocs = async (mbCollection: string | null) => {
 
     return aggregatedDocsStore;
   } catch (error) {
-    sendLog({ err: error });
+    sendLog({
+      err: error,
+      message: `[getConcertCollectionDocs] Collection: ${mbCollection}`,
+    });
     return [];
   }
 };

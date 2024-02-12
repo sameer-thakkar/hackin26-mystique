@@ -32,7 +32,7 @@ const getAlternateLanguageDocs = async ({
   } catch (error) {
     sendLog({
       err: error,
-      message: `getAlternateLanguageDocs`,
+      message: `[getAlternateLanguageDocs]`,
     });
     return [];
   }
