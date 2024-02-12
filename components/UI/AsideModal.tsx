@@ -647,9 +647,9 @@ const AsideModal = ({
       (e as any).stopPropagation();
     }
 
-    const close = () => {
+    const close = (popHistory = false) => {
       setIsOpen(!active);
-      if (!options.triggeredByPopstate) {
+      if (popHistory) {
         if (isQueryRestore) {
           //go to landing page
           const {
@@ -678,7 +678,7 @@ const AsideModal = ({
     if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP) {
       slideOut(close);
     } else {
-      close();
+      close(!options.triggeredByPopstate);
     }
   };
 

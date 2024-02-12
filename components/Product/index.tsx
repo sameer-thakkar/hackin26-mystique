@@ -763,9 +763,6 @@ const Product = (props: any) => {
           sidePadding: 20,
           children: getProductCardElements(true, isProductCardLoading, true),
           type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
-          history: {
-            enable: false,
-          },
         });
       }}
     />
