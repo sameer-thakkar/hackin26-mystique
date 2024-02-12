@@ -299,5 +299,10 @@ export const Descriptor = styled.div`
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
     margin-bottom: 0.75rem;
+    gap: 0.25rem;
+    .image-wrap img {
+      width: 1rem;
+      height: 1rem;
+    }
   }
 `;

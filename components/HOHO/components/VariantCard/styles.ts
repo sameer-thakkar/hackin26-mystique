@@ -286,13 +286,23 @@ export const SingleCardContainer = styled.div`
   max-width: 75rem;
   margin: 0 auto;
   width: 100%;
-  min-height: 12.45rem;
+  min-height: 10.375rem;
   display: grid;
   grid-template-columns: 68% 32%;
   border-radius: 1rem;
   border: 1px solid ${COLORS.GRAY.G6};
   padding: 1.5rem 2.25rem 1.25rem 1.25rem;
   box-sizing: border-box;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
+      0px -1px 2px 0px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
 
   .horizontal-line {
     padding-top: 1rem;

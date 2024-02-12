@@ -52,7 +52,7 @@ const formatVariantInfo = (
           <Conditional key={line} if={line}>
             <div className="item">
               <TickSvg strokeColor={COLORS.TEXT.OKAY_GREEN_3} />
-              <span className="desc-text">{truncate(line, 36)}</span>
+              <span className="desc-text">{truncate(line, 38)}</span>
             </div>
           </Conditional>
         ))}
@@ -132,7 +132,7 @@ const VariantCard: React.FC<VariantCardProps> = (props) => {
 
   const getCardLayout = () => {
     return isSingleVariant && !isMobile ? (
-      <SingleCardContainer>
+      <SingleCardContainer onClick={onCTAClick}>
         <div className="info-wrapper">
           <Name>{truncate(variantName, 60)}</Name>
           <Description className="inclusions">
@@ -161,7 +161,7 @@ const VariantCard: React.FC<VariantCardProps> = (props) => {
               variant="primary"
               isLoading={isLoading}
               onClick={onCTAClick}
-              text={strings.CHECK_AVAIL}
+              text={strings.HOHO.SELECT_DATE}
             />
           </div>
         </div>

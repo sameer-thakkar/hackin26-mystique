@@ -108,7 +108,9 @@ const VariantCarousel: React.FC<VariantCarouselProps> = (props) => {
         <Conditional if={!isSingleVariant}>
           <Swiper {...swiperParams}>{VariantCards}</Swiper>
         </Conditional>
-        <Conditional if={isSingleVariant}>{VariantCards}</Conditional>
+        <Conditional if={isSingleVariant}>
+          <div className="pt-2">{VariantCards}</div>
+        </Conditional>
       </Conditional>
     </>
   );

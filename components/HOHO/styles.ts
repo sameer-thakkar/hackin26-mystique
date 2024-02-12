@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   max-width: 75rem;
   margin: auto;
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
 
   .swiper {
     margin: -0.5rem;
@@ -21,6 +21,9 @@ export const Container = styled.div`
 
     .swiper-slide {
       width: 16.875rem;
+    }
+    .pt-2 {
+      padding-top: 0.5rem;
     }
   }
 `;
