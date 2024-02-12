@@ -9,7 +9,11 @@ import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { checkIfLTTMB, stringIdfy, withShortcodes } from 'utils/helper';
+import {
+  checkIfLTTMBLandingPage,
+  stringIdfy,
+  withShortcodes,
+} from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import {
@@ -266,7 +270,7 @@ const NewBanner: React.FC<any> = (props) => {
   const { lang, uid } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
 
-  const isLtt = checkIfLTTMB(uid);
+  const isLtt = checkIfLTTMBLandingPage(uid);
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
