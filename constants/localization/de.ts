@@ -994,6 +994,7 @@ const de = {
     FROM: 'Ab',
     CLOSED_TODAY: 'Heute geschlossen',
   },
+  OFF_PERCENT: '{0} % Rabatt',
 };
 
 export default de;

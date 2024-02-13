@@ -957,5 +957,6 @@ const nl = {
     FROM: 'Vanaf',
     CLOSED_TODAY: 'Vandaag gesloten',
   },
+  OFF_PERCENT: '{0}% korting',
 };
 export default nl;

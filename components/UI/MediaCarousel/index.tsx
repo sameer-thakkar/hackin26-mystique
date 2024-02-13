@@ -34,6 +34,7 @@ type MediaCarouselProps = {
   isMobile: boolean;
   shouldCrop?: boolean;
   differentBorderRadiusForMobile?: boolean;
+  showOverlay?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -49,6 +50,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   backgroundColor,
   shouldCrop,
   differentBorderRadiusForMobile = true,
+  showOverlay = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -119,6 +121,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
       $backgroundColor={backgroundColor}
       ref={carouselRef}
       $differentBorderRadiusForMobile={differentBorderRadiusForMobile}
+      $showOverlay={showOverlay}
     >
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {

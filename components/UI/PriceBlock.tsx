@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import CashbackComponent from 'components/common/CashbackComponent';
 import Conditional from 'components/common/Conditional';
+import DiscountTag from 'components/Product/components/DiscountTag';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import { checkIfLTTMB } from 'utils/helper';
@@ -154,6 +155,7 @@ type PriceBlockProps = {
   wrapperRef?: any;
   isMobile?: boolean;
   showDummyScratchPrice?: boolean;
+  showNewDiscountTagDesign?: boolean;
 };
 
 const PriceBlock = ({
@@ -172,6 +174,7 @@ const PriceBlock = ({
   isMobile = false,
   wrapperRef,
   showDummyScratchPrice = false,
+  showNewDiscountTagDesign = false,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -194,16 +197,19 @@ const PriceBlock = ({
     cashbackValue > 0 &&
     cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
-  const savingsElementsArray = [];
+  let discountText = '';
 
   if (!listingPrice) {
     return null;
   }
 
   if (bestDiscount > 0) {
-    savingsElementsArray.push(
-      strings.formatString(strings.SAVE, `${bestDiscount}`)
+    const contents = strings.formatString<string>(
+      showNewDiscountTagDesign ? strings.OFF_PERCENT : strings.SAVE,
+      bestDiscount
     );
+    if (Array.isArray(contents)) discountText = contents.join(' + ');
+    else discountText = contents;
   }
 
   if (isLoading)
@@ -287,16 +293,18 @@ const PriceBlock = ({
             </SavedTag>
           </Conditional>
           <Conditional
-            if={
-              showSavings && showScratchPrice && !!savingsElementsArray.length
-            }
+            if={showSavings && showScratchPrice && !!discountText.length}
           >
-            <SavedTag
-              className="savedtag-block"
-              isSportsExperiment={isSportsExperiment}
-            >
-              {savingsElementsArray.join(' + ')}
-            </SavedTag>
+            {showNewDiscountTagDesign ? (
+              <DiscountTag discount={discountText} />
+            ) : (
+              <SavedTag
+                className="savedtag-block"
+                isSportsExperiment={isSportsExperiment}
+              >
+                {discountText}
+              </SavedTag>
+            )}
           </Conditional>
         </div>
       </StyledPriceBlock>

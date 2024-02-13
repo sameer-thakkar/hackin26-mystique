@@ -1013,5 +1013,6 @@ const it = {
     FROM: 'A partire da',
     CLOSED_TODAY: 'Chiuso oggi',
   },
+  OFF_PERCENT: '{0}% di sconto',
 };
 export default it;

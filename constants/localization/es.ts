@@ -1055,5 +1055,6 @@ const es = {
     FROM: 'Desde',
     CLOSED_TODAY: 'Cerrado hoy',
   },
+  OFF_PERCENT: '{0} % de descuento',
 };
 export default es;

@@ -1062,6 +1062,7 @@ const en = {
     FROM: 'From',
     CLOSED_TODAY: 'Closed today',
   },
+  OFF_PERCENT: '{0}% off',
 };
 
 export default en;

@@ -933,6 +933,7 @@ const Product = (props: any) => {
                   tgid={tgid}
                   isMobile={isMobile}
                   shouldCrop={shouldCropImage}
+                  showOverlay
                 />
               </Conditional>
               <Conditional if={isLoading}>
@@ -1052,6 +1053,9 @@ const Product = (props: any) => {
                   prefix
                   key={'price-block'}
                   wrapperRef={priceBlockWrapperRef}
+                  showNewDiscountTagDesign={
+                    isModifiedProductCard || isPoiMwebCard
+                  }
                 />
               </PriceContainer>
               <Conditional if={isTicketCard && promo_code}>

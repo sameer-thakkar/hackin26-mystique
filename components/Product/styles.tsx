@@ -534,6 +534,53 @@ const modifiedProductCardStyles = css`
   }
 `;
 
+export const CategoryIcon = styled.div<{
+  $svgUrl: string;
+}>`
+  flex-shrink: 1;
+  mask: ${({ $svgUrl }) => `url("${$svgUrl}") no-repeat center / contain`};
+  height: 0.875rem;
+  width: 0.875rem;
+  mask-position: center;
+  transition: all 0.3s;
+  background: ${COLORS.BLACK};
+`;
+
+export const StyledCategoryContainer = styled.div<{
+  $background: string;
+}>`
+  grid-area: category;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+
+  ${CategoryIcon} {
+    background: ${({ $background }) => $background};
+  }
+
+  span {
+    background: ${({ $background }) => $background};
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    font-family: ${HALYARD.FONT_STACK};
+    text-transform: uppercase;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    span {
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+    }
+
+    ${CategoryIcon} {
+      height: 0.9375rem;
+      width: 0.9375rem;
+    }
+  }
+`;
+
 export const CategoryAndRatingContainer = styled.div`
   grid-area: category-and-rating;
   display: grid;
@@ -542,6 +589,26 @@ export const CategoryAndRatingContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: -0.25rem;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+    gap: 1rem;
+
+    ${StyledCategoryContainer} {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 0.25rem;
+        width: 0.25rem;
+        background-color: ${COLORS.GRAY.G5};
+        border-radius: 50px;
+        right: -0.5rem;
+        transform: translate(50%, 25%);
+      }
+    }
+  }
 `;
 
 const asideBarStyles = css`
@@ -654,6 +721,8 @@ const modifiedProductCardMwebCss = css<{
   }
 
   ${TitleWrapper} {
+    margin-top: -0.25rem;
+    margin-bottom: -1.25rem;
     ${TourTitleWrapper} {
       color: ${COLORS.GRAY.G1};
       font-family: ${HALYARD.FONT_STACK};
@@ -673,7 +742,7 @@ const modifiedProductCardMwebCss = css<{
   }
 
   ${TourTags} {
-    margin: 1rem 0 0;
+    margin: 1rem 0 -0.25rem;
     column-gap: 0.375rem;
     row-gap: 0.5rem;
 
@@ -705,15 +774,18 @@ const modifiedProductCardMwebCss = css<{
   }
 
   ${StyledPriceBlock} {
+    grid-row-gap: 0;
+
     .tour-scratch-price {
       color: ${COLORS.GRAY.G3};
-      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+      ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
     }
 
     .strike-through {
       margin-right: 0.375rem;
       font-family: ${HALYARD.FONT_STACK};
       letter-spacing: 0;
+      color: ${COLORS.GRAY.G3};
     }
 
     .tour-price-container {
@@ -726,6 +798,7 @@ const modifiedProductCardMwebCss = css<{
           font-weight: 500;
           line-height: 1.5rem;
           letter-spacing: 0;
+          color: ${COLORS.GRAY.G2};
         }
       }
 
@@ -742,13 +815,9 @@ const modifiedProductCardMwebCss = css<{
 
   ${CTAContainer} {
     ${NextAvailableBlock} .available-text {
-      color: ${COLORS.GRAY.G2};
       margin-top: 1rem;
-      font-family: ${HALYARD.FONT_STACK};
-      font-size: 0.875rem;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 1rem;
+      color: ${COLORS.TEXT.BEACH};
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
     }
 
     ${PriceContainer} {
@@ -1056,8 +1125,12 @@ export const StyledRatingsContainer = styled.div`
     }
 
     &.rating-count {
-      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
       font-family: ${HALYARD.FONT_STACK};
+      font-size: 0.75rem;
+      font-weight: 300;
+      line-height: 0.9375rem;
+      letter-spacing: 0em;
+      text-align: left;
     }
   }
 
@@ -1071,54 +1144,8 @@ export const StyledRatingsContainer = styled.div`
 
       &.rating-count {
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+        margin-top: 1px;
       }
-    }
-  }
-`;
-
-export const CategoryIcon = styled.div<{
-  $svgUrl: string;
-}>`
-  flex-shrink: 1;
-  mask: ${({ $svgUrl }) => `url("${$svgUrl}") no-repeat center / contain`};
-  height: 0.875rem;
-  width: 0.875rem;
-  mask-position: center;
-  transition: all 0.3s;
-  background: ${COLORS.BLACK};
-`;
-
-export const StyledCategoryContainer = styled.div<{
-  $background: string;
-}>`
-  grid-area: category;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.25rem;
-
-  ${CategoryIcon} {
-    background: ${({ $background }) => $background};
-  }
-
-  span {
-    background: ${({ $background }) => $background};
-    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
-    font-family: ${HALYARD.FONT_STACK};
-    text-transform: uppercase;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  @media (min-width: 768px) {
-    span {
-      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
-    }
-
-    ${CategoryIcon} {
-      height: 0.9375rem;
-      width: 0.9375rem;
     }
   }
 `;

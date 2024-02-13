@@ -1,25 +1,20 @@
-import { TCategoryContainerProps } from 'components/Product/interface';
-import {
-  CategoryIcon,
-  StyledCategoryContainer,
-} from 'components/Product/styles';
-import { getCategoryIconUrl } from 'utils/image';
-import COLORS from 'const/colors';
+import type { TCategoryContainerProps } from 'components/Product/interface';
+import { StyledCategoryContainer } from 'components/Product/styles';
 
 const getCategoryIconColor = (categoryId?: number, subCategoryId?: number) => {
   switch (true) {
     case categoryId === 1:
-      return '#9E6A00';
+      return '#906100';
     case categoryId === 2:
-      return COLORS.HOLA_YELLOW[3];
+      return '#8d2b79';
     case categoryId === 3:
-      return COLORS.OKAY_GREEN[3];
+      return '#4545c2';
     case categoryId === 18:
-      return '#03748C';
+      return '#0b5f6a';
     case subCategoryId === 1080:
       return 'linear-gradient(90deg, #4A00E0 0%, #8E2DE2 100%)';
     default:
-      return '#0F43BD';
+      return '#a4563b';
   }
 };
 
@@ -34,9 +29,7 @@ const Category = ({
     (!primarySubCategory ||
       (primaryCategory.id === 1 && primarySubCategory.id !== 1008));
 
-  const { displayName, id } = isCategory ? primaryCategory : primarySubCategory;
-
-  const iconURL = getCategoryIconUrl({ isCategory, entityId: id });
+  const { displayName } = isCategory ? primaryCategory : primarySubCategory;
 
   return (
     <StyledCategoryContainer
@@ -45,7 +38,6 @@ const Category = ({
         primarySubCategory?.id
       )}
     >
-      <CategoryIcon $svgUrl={iconURL} />
       <span>{displayName}</span>
     </StyledCategoryContainer>
   );

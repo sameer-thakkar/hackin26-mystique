@@ -1005,5 +1005,6 @@ const pt = {
     FROM: 'A partir de',
     CLOSED_TODAY: 'Fechado hoje',
   },
+  OFF_PERCENT: '{0}% de desconto',
 };
 export default pt;

@@ -1007,5 +1007,6 @@ const fr = {
     FROM: 'À partir de',
     CLOSED_TODAY: "Fermé aujourd'hui",
   },
+  OFF_PERCENT: '{0} % de réduction',
 };
 export default fr;

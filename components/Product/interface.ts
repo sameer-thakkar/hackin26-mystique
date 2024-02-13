@@ -108,3 +108,7 @@ export type TCategoryContainerProps = {
   primaryCategory?: any;
   primarySubCategory?: any;
 };
+
+export type TDiscountTagProps = {
+  discount: string | number;
+};

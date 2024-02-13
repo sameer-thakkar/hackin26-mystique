@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const CarouselContainer = styled.div<{
   $backgroundColor?: string;
   $differentBorderRadiusForMobile?: boolean;
+  $showOverlay?: boolean;
 }>`
   width: 100%;
   height: 100%;
@@ -20,6 +21,27 @@ export const CarouselContainer = styled.div<{
   .swiper,
   .swiper-initialized {
     height: 100%;
+
+    ${({ $showOverlay }) =>
+      $showOverlay &&
+      css`
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 2;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 80%,
+            rgba(0, 0, 0, 0.6) 100%
+          );
+          touch-action: none;
+          pointer-events: none;
+        }
+      `}
   }
 
   /* pagination styles */
@@ -29,6 +51,7 @@ export const CarouselContainer = styled.div<{
     justify-content: center;
     grid-gap: 0.25rem;
     width: 100%;
+    z-index: 3;
 
     .swiper-pagination-bullet {
       margin: 0;

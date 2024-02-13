@@ -873,5 +873,6 @@ const pl = {
   PC_EXP: {
     SHOW_INCL: 'Zobacz, co wchodzi w cenę biletu i poznaj inne informacje',
   },
+  OFF_PERCENT: '{0}% zniżki',
 };
 export default pl;
