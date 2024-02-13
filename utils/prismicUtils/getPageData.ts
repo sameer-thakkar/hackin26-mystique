@@ -146,6 +146,10 @@ export const getPageData = async ({
         },
       };
     } else if (statusCode) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[getPageData] - ${JSON.stringify(prismicApiResponse)}`,
+      });
       return {
         statusCode,
       };

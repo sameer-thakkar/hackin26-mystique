@@ -19,13 +19,11 @@ export const sendLog = async ({
     text = err.stack;
   }
   if (typeof window === 'undefined' && shouldSendLogs()) {
-    const [
-      { getCoralogixLoggerInstance, getCoralogixSeverity },
-      { Log },
-    ] = await Promise.all([
-      import(/* webpackChunkName: 'coralogix-module' */ './coralogix'),
-      import(/* webpackChunkName: 'coralogix-logger' */ 'coralogix-logger'),
-    ]);
+    const [{ getCoralogixLoggerInstance, getCoralogixSeverity }, { Log }] =
+      await Promise.all([
+        import(/* webpackChunkName: 'coralogix-module' */ './coralogix'),
+        import(/* webpackChunkName: 'coralogix-logger' */ 'coralogix-logger'),
+      ]);
 
     const log = new Log({
       severity: getCoralogixSeverity(level),

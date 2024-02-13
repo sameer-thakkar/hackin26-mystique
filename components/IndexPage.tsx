@@ -17,6 +17,7 @@ import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { checkIfLTTMB } from 'utils/helper';
 import { getLocalizationLabels } from 'utils/localizationUtils';
+import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
@@ -33,6 +34,7 @@ import {
   THEMES,
   TIME,
 } from 'const/index';
+import { LOG_LEVELS } from 'const/logs';
 import { strings } from 'const/strings';
 import Loader from './common/Loader';
 import Analytics from './Analytics';
@@ -521,6 +523,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       (window as any).prismic.setupEditButton();
     if (res) {
       if (props?.statusCode) {
+        sendLog({
+          level: LOG_LEVELS.ERROR,
+          message: `[getServerSideProps] - props - ${JSON.stringify(props)}`,
+        });
         res.statusCode = props.statusCode;
       }
     }
