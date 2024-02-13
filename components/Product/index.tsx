@@ -67,6 +67,7 @@ import {
   isF1SportsExperiment,
 } from 'utils/helper';
 import {
+  checkForBooster,
   extractCancellationPolicyFromHighlights,
   extractTabsFromHighlights,
   filterFromHighlights,
@@ -91,6 +92,13 @@ import {
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
+import { BoosterType } from './interface';
+
+const Booster = dynamic(
+  import(
+    /* webpackChunkName: "Booster" */ 'components/Product/components/Booster'
+  )
+);
 
 const SpecialGuidedTourSidePanel = dynamic(
   import(
@@ -162,6 +170,7 @@ const Product = (props: any) => {
     isSmallComboCard = false,
     isPoiMwebCard = false,
     reviewsDetails,
+    showBoosters = false,
   } = props;
   const {
     mbTheme,
@@ -184,6 +193,9 @@ const Product = (props: any) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const [showAvailabilityInTitle, setShowAvailabilityInTitle] = useState(false);
+  const [boosterType, setBoosterType] = useState<
+    keyof typeof BoosterType | null
+  >(null);
   const priceBlockWrapperRef = useRef<HTMLDivElement>();
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
@@ -321,6 +333,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     });
     const { listingPrice } = tourPrices[tgid] ?? {};
@@ -345,6 +358,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     });
   };
@@ -555,6 +569,12 @@ const Product = (props: any) => {
     }
   }, [isShortcodePopup]);
 
+  const boosterTypeIfShown = useMemo(() => {
+    const boosterInfo = showBoosters && checkForBooster(uid, tgid);
+    if (boosterInfo) setBoosterType(boosterInfo);
+    return boosterInfo;
+  }, [tgid, showBoosters]);
+
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
   if (!listingPrice) return null;
@@ -634,6 +654,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     });
   };
@@ -883,6 +904,13 @@ const Product = (props: any) => {
           // @ts-ignore
           ref={productRef}
         >
+          <Conditional if={boosterTypeIfShown}>
+            <Booster
+              type={BoosterType[boosterTypeIfShown as keyof typeof BoosterType]}
+              rank={indexPosition + 1}
+              isOverlay={isMobile ? expandContent : isAsideBarOverlay}
+            />
+          </Conditional>
           <Conditional if={isMobile && isV3Design && productImage}>
             <div className="card-img">
               <Image

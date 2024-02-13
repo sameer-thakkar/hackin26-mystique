@@ -1,3 +1,4 @@
+import { BoosterType } from 'components/Product/interface';
 import { strings } from './strings';
 
 export const IP_INFO_TOKEN = '108f1155413636';
@@ -500,6 +501,10 @@ export const ANALYTICS_EVENTS = {
   FILTER_DRAWER_OPENED: 'Filter Drawer Opened',
   COMBO_CARDS_CLICKED: 'Combo Card Clicked',
   SHOULDER_PAGE_CTA_CLICKED: 'Shoulder Page CTA Clicked',
+  BOOSTERS: {
+    PRESENT: 'Booster Present',
+    VIEWED: 'Product Booster Viewed',
+  },
 };
 
 export const PAGE_TYPE = {
@@ -933,6 +938,7 @@ export const ANALYTICS_PROPERTIES = {
   MONTH_PAGE: 'Month Page',
   ICON_TYPE: 'Icon Type',
   FILTER_TYPE: 'Filter Type',
+  BOOSTER_NAME: 'Booster Name',
 };
 
 export const PAGE_TYPES = {
@@ -1832,6 +1838,49 @@ export const LTT_PERMANENT_SHOWS_TGIDS = [
   16818, 16816, 22293, 3031, 19737, 20045, 17432, 18161, 13402, 9858, 2863,
   9162, 9723, 3023, 3027, 3032, 3026, 3028, 3037, 2843, 18551,
 ];
+
+export const BOOSTER_EXPERIMENT_UIDS = {
+  'www.thevaticantickets.com': {
+    [BoosterType.SELLING_OUT_FAST]: [6732],
+  },
+  'www.kennedyspacecenter-tickets.com': {
+    [BoosterType.BESTSELLER]: [1647],
+    [BoosterType.SELLING_OUT_FAST]: [14667],
+  },
+  'www.pradomuseumtickets.com': {
+    [BoosterType.SELLING_OUT_FAST]: [14667],
+  },
+  'www.colosseum-rome-tickets.com': {
+    [BoosterType.SELLING_OUT_FAST]: [7148],
+  },
+  'www.versailles-palace-tickets.com': {
+    [BoosterType.SELLING_OUT_FAST]: [7654],
+  },
+  'www.tickets-paris.fr.louvre-museum': {
+    [BoosterType.SELLING_OUT_FAST]: [3909],
+  },
+  'www.accademia-tickets.com': {
+    [BoosterType.SELLING_OUT_FAST]: [7600],
+  },
+  'www.miraclegardentickets.com': {
+    [BoosterType.BESTSELLER]: [14133],
+  },
+  'www.dubai-tickets.co.burj-khalifa': {
+    [BoosterType.BESTSELLER]: [1866],
+  },
+  'www.dubai-tickets.co.dubai-global-village-tickets': {
+    [BoosterType.BESTSELLER]: [2449],
+  },
+  'www.parkguell-tickets.com': {
+    [BoosterType.BESTSELLER]: [7563],
+  },
+  'www.tickets-paris.fr.disneyland-paris': {
+    [BoosterType.BESTSELLER]: [10209],
+  },
+  'www.singapore-tickets.com.gardens-by-the-bay-tickets': {
+    [BoosterType.BESTSELLER]: [7358],
+  },
+};
 
 export const NEWRELIC_RUM_CONFIG = {
   ACCOUNT_ID: '1433779',

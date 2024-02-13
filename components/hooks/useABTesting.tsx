@@ -12,7 +12,7 @@ const DEFAULT_VARIANT = 'DEFAULT_VARIANT';
 type TUseABTestingProps<T> = {
   experimentId: T;
   noTrack?: boolean;
-  additionalEventProps?: any;
+  additionalEventProps?: Record<string, any> | (() => Record<string, any>);
   customEligibilityCheckFn?: () => boolean;
 };
 const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
@@ -43,11 +43,16 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
     if (!sandboxId || variant !== DEFAULT_VARIANT || isHsidSetFail || isBot)
       return;
 
+    const eventProperties =
+      additionalEventProps instanceof Function
+        ? additionalEventProps()
+        : additionalEventProps;
+
     const abTestingVariant = getABTestingVariant({
       expName: EXPERIMENT_NAMES[experimentNameKey],
       hsid: sandboxId,
       noTrack: !shouldTrack.current,
-      eventProperties: additionalEventProps,
+      eventProperties,
     });
 
     // Ensure you avoid tracking on any re-render. (failsafe, ideally should not be required)

@@ -1,3 +1,4 @@
+import { BoosterType } from 'components/Product/interface';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 declare global {
@@ -89,11 +90,13 @@ export const getProductCommonProperties = ({
   primaryCollection,
   primarySubCategory,
   reviewsDetails,
+  boosterType,
 }: {
   primaryCategory: TGenericObject;
   primaryCollection: TGenericObject;
   primarySubCategory: TGenericObject;
   reviewsDetails?: TGenericObject;
+  boosterType?: keyof typeof BoosterType | null;
 }): Record<string, number | string> => {
   return {
     [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
@@ -105,6 +108,9 @@ export const getProductCommonProperties = ({
     ...(reviewsDetails && {
       [ANALYTICS_PROPERTIES.AVERAGE_RATING]: reviewsDetails?.averageRating,
       [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: reviewsDetails?.ratingCount,
+    }),
+    ...(boosterType && {
+      [ANALYTICS_PROPERTIES.BOOSTER_NAME]: BoosterType[boosterType],
     }),
   };
 };

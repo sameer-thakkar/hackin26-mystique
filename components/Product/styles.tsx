@@ -517,6 +517,7 @@ const modifiedProductCardStyles = css`
   grid-row-gap: 0.5rem;
   grid-template-rows: auto auto 1fr;
   max-height: max-content;
+  position: relative;
 
   .card-img {
     width: 18rem;
@@ -714,6 +715,7 @@ const modifiedProductCardMwebCss = css<{
   grid-row-gap: 1rem;
   padding: 0.75rem;
   overflow: hidden;
+  position: relative;
 
   .card-img {
     height: 13.125rem;
@@ -2507,4 +2509,71 @@ export const SCPContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
+
+export const BoosterText = styled.p<{
+  $theme: string;
+  $transform: string;
+  $borderTheme: string;
+  $iconHeight: number;
+}>`
+  background-color: ${({ $theme }) => $theme};
+  position: relative;
+  font-family: ${HALYARD.FONT_STACK};
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: ${COLORS.BRAND.WHITE};
+  margin: 0;
+
+  padding: 0.125rem 0.375rem 0.125rem 0.5rem;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(100% + 0.25rem);
+    width: calc(100% + 0.25rem);
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    z-index: -1;
+    transform: translate(-0.125rem, -0.125rem);
+    background: ${({ $borderTheme }) => $borderTheme};
+  }
+
+  svg {
+    position: absolute;
+    height: ${({ $iconHeight }) => `${$iconHeight / 16}rem`};
+    left: 0;
+    top: 0;
+    transform: ${({ $transform }) => $transform};
+  }
+`;
+
+export const BoosterContainer = styled.div<{
+  $mobileLeft: number;
+  $isOverlay?: boolean;
+}>`
+  position: absolute;
+  z-index: 1;
+  box-shadow: 0px 0.125rem 0.75rem 0px #00000033;
+  transform: rotate(-4deg);
+  top: ${({ $isOverlay }) => ($isOverlay ? 4 : 0.75)}rem;
+  left: ${({ $isOverlay }) => ($isOverlay ? 2 : 1.8)}rem;
+
+  @media (max-width: 768px) {
+    transform: rotate(0);
+    left: ${({ $mobileLeft }) => `${$mobileLeft / 16}rem`};
+    ${({ $isOverlay }) =>
+      $isOverlay &&
+      css`
+        top: 0.75rem;
+        left: 2rem;
+      `}
+  }
 `;

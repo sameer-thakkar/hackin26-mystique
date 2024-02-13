@@ -163,6 +163,7 @@ const PopulateProducts = (props: any) => {
     isAirportTransfersMB,
     isModifiedProductCard = false,
     isPoiMwebCard = false,
+    showBoosters = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -590,6 +591,7 @@ const PopulateProducts = (props: any) => {
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
+      showBoosters,
     };
 
     return (
