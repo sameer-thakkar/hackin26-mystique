@@ -1882,6 +1882,9 @@ export const BOOSTER_EXPERIMENT_UIDS = {
   },
 };
 
+export const BOOSTER_RIVE_LOCATION =
+  'https://cdn-imgix.headout.com/mb/boosters_4.riv';
+
 export const NEWRELIC_RUM_CONFIG = {
   ACCOUNT_ID: '1433779',
   TRUST_KEY: '1433779',

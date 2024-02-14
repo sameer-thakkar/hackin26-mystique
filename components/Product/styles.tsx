@@ -2,6 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { StlyedSplit } from 'UI/Split';
+import { pxToRem } from 'utils/cssUtils';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { CUSTOM_TYPES, THEMES } from 'const/index';
@@ -2511,6 +2512,18 @@ export const SCPContainer = styled.div`
   gap: 0.5rem;
 `;
 
+export const RiveContainer = styled.div<{
+  $transform: string;
+  $iconWidth: number;
+}>`
+  position: absolute;
+  width: ${({ $iconWidth }) => `${$iconWidth / 16}rem`};
+  height: ${({ $iconWidth }) => `${$iconWidth / 16}rem`};
+  left: 0;
+  top: 0;
+  transform: ${({ $transform }) => $transform};
+`;
+
 export const BoosterText = styled.p<{
   $theme: string;
   $transform: string;
@@ -2548,7 +2561,7 @@ export const BoosterText = styled.p<{
 
   svg {
     position: absolute;
-    height: ${({ $iconHeight }) => `${$iconHeight / 16}rem`};
+    height: ${({ $iconHeight }) => `${pxToRem($iconHeight)}rem`};
     left: 0;
     top: 0;
     transform: ${({ $transform }) => $transform};
@@ -2568,7 +2581,7 @@ export const BoosterContainer = styled.div<{
 
   @media (max-width: 768px) {
     transform: rotate(0);
-    left: ${({ $mobileLeft }) => `${$mobileLeft / 16}rem`};
+    left: ${({ $mobileLeft }) => `${pxToRem($mobileLeft)}rem`};
     ${({ $isOverlay }) =>
       $isOverlay &&
       css`

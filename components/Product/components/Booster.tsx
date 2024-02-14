@@ -1,38 +1,50 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRive } from '@rive-app/react-canvas';
+import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, BOOSTER_RIVE_LOCATION } from 'const/index';
 import { strings } from 'const/strings';
 import { Diamond, Spark } from 'assets/boosters';
 import { BoosterType, TBoosterProps } from '../interface';
-import { BoosterContainer, BoosterText } from '../styles';
+import { BoosterContainer, BoosterText, RiveContainer } from '../styles';
 
 const BOOSTER_INFO = {
   [BoosterType.BESTSELLER]: {
     title: strings.HOHO.BESTSELLER,
     icon: <Diamond />,
     theme: '#6321AE',
-    transform: 'translate(-68%,-10%)',
+    transform: 'translate(-70%,-10%)',
     borderTheme:
       'linear-gradient(90deg, #B283E7 -3.09%, rgba(178, 131, 231, 0.7) 100%)',
     iconHeight: 32,
     mobileLeft: 32,
+    artboard: 'bestSellers',
   },
   [BoosterType.SELLING_OUT_FAST]: {
     title: strings.LTT_SHOW_PAGE.SELLING_OUT_FAST,
     icon: <Spark />,
     theme: '#CE007C',
-    transform: 'translate(-64%,-11%)',
+    transform: 'translate(-64%,-12%)',
     borderTheme:
       'linear-gradient(90deg, #fdb0d5 0%, rgba(253, 176, 213, 0.7) 100%)',
-    iconHeight: 35,
+    iconHeight: 33.6,
     mobileLeft: 28,
+    artboard: 'sellingFast',
   },
 };
 
 const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
-  const { icon, title, theme, transform, borderTheme, iconHeight, mobileLeft } =
-    BOOSTER_INFO[type];
+  const {
+    icon,
+    title,
+    theme,
+    transform,
+    borderTheme,
+    iconHeight,
+    mobileLeft,
+    artboard,
+  } = BOOSTER_INFO[type];
 
   const ref = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({ ref, unobserve: true });
@@ -48,6 +60,22 @@ const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
     setEventRecorded(true);
   }, [isOnScreen, eventRecorded]);
 
+  const [useFallbackLogo, setUseFallbackLogo] = useState(true);
+
+  const { RiveComponent } = useRive({
+    src: BOOSTER_RIVE_LOCATION,
+    stateMachines: 'stateMachine',
+    artboard,
+    autoplay: true,
+    animations: 'Timeline 1',
+    onLoadError: () => {
+      setUseFallbackLogo(true);
+    },
+    onLoad: () => {
+      setUseFallbackLogo(false);
+    },
+  });
+
   return (
     <BoosterContainer $mobileLeft={mobileLeft} $isOverlay={isOverlay} ref={ref}>
       <BoosterText
@@ -57,7 +85,10 @@ const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
         $borderTheme={borderTheme}
         $iconHeight={iconHeight}
       >
-        {icon}
+        <RiveContainer $transform={transform} $iconWidth={iconHeight}>
+          <RiveComponent width={'100%'} height={'100%'} />
+        </RiveContainer>
+        <Conditional if={useFallbackLogo}>{icon}</Conditional>
         {title}
       </BoosterText>
     </BoosterContainer>
