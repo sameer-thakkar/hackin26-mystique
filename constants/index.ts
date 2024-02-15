@@ -1871,7 +1871,7 @@ export const BOOSTER_EXPERIMENT_UIDS = {
   'www.dubai-tickets.co.dubai-global-village-tickets': {
     [BoosterType.BESTSELLER]: [2449],
   },
-  'www.parkguell-tickets.com': {
+  'www.barcelona-tickets.com.park-guell': {
     [BoosterType.BESTSELLER]: [7563],
   },
   'www.tickets-paris.fr.disneyland-paris': {
