@@ -17,6 +17,7 @@ import MultiLevelNav from 'components/MultiLevelNav';
 import Hamburger from 'components/UI/Hamburger';
 import Image from 'components/UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { createBookingURL } from 'utils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { throttle } from 'utils/gen';
@@ -475,6 +476,8 @@ const Header: FunctionComponent<HeaderProps> = ({
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
   const resultSectionRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLDivElement>(null);
+  const multiNavRef = useRef<HTMLDivElement>(null);
 
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
@@ -615,6 +618,14 @@ const Header: FunctionComponent<HeaderProps> = ({
     });
   };
 
+  useCaptureClickOutside(
+    hamburgerRef,
+    () => {
+      toggleNav(false);
+    },
+    [multiNavRef]
+  );
+
   return (
     <StyledHeader
       overlayActive={navActive}
@@ -719,17 +730,19 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
 
             <Conditional if={groupedHeaderSlices.length}>
-              <MultiLevelNav
-                isActive={navActive}
-                isMobile={isMobileDevice}
-                slice={groupedHeaderSlices || []}
-                oldMenuItems={convertedRegularMenuItems}
-                isGlobalMb={isGlobalMb}
-                primaryCity={primaryCity}
-                taggedCity={taggedCity}
-                categoryHeaderMenu={categoryHeaderMenu}
-                categoryHeaderMenuExists={categoryHeaderMenuExists}
-              />
+              <div ref={multiNavRef}>
+                <MultiLevelNav
+                  isActive={navActive}
+                  isMobile={isMobileDevice}
+                  slice={groupedHeaderSlices || []}
+                  oldMenuItems={convertedRegularMenuItems}
+                  isGlobalMb={isGlobalMb}
+                  primaryCity={primaryCity}
+                  taggedCity={taggedCity}
+                  categoryHeaderMenu={categoryHeaderMenu}
+                  categoryHeaderMenuExists={categoryHeaderMenuExists}
+                />
+              </div>
             </Conditional>
             <Conditional if={enableBuyTickets}>
               <Conditional if={isGlobalMb && showBuyTickets}>
@@ -767,14 +780,16 @@ const Header: FunctionComponent<HeaderProps> = ({
               />
             </Conditional>
             <Conditional if={isMobileDevice && hamburgerIconCheck}>
-              <Hamburger
-                className={'hamburger'}
-                isActive={navActive}
-                onClickFn={handleHamburgerClick}
-                isGlobalMb={isGlobalMb}
-                isLtt={isNewLTTLandingPageVisible}
-                isDarkMode={showLttColoredHeader}
-              />
+              <div ref={hamburgerRef}>
+                <Hamburger
+                  className={'hamburger'}
+                  isActive={navActive}
+                  onClickFn={handleHamburgerClick}
+                  isGlobalMb={isGlobalMb}
+                  isLtt={isNewLTTLandingPageVisible}
+                  isDarkMode={showLttColoredHeader}
+                />
+              </div>
             </Conditional>
           </HeaderRight>
         </header>
