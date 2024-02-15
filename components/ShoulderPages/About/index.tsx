@@ -15,8 +15,8 @@ import QuickInfo from '../components/QuickInfo';
 import { IAboutPageProps } from '../interface';
 import { PageContainer } from './styles';
 
-const Breadcrumbs = dynamic(
-  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(() =>
+  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const AboutPage = ({
@@ -69,6 +69,8 @@ const AboutPage = ({
     lang,
   });
 
+  const PRODUCT_CARDS_LIMIT = 4;
+
   return (
     <>
       <Banner
@@ -110,7 +112,14 @@ const AboutPage = ({
         </Conditional>
       </PageContainer>
       <Conditional if={extractedProductCardsSlice?.length}>
-        <LongForm content={extractedProductCardsSlice || []} {...parentProps} />
+        <LongForm
+          content={extractedProductCardsSlice || []}
+          {...parentProps}
+          categoryTourListData={{
+            ...categoryTourListData,
+            productCardsLimit: PRODUCT_CARDS_LIMIT,
+          }}
+        />
       </Conditional>
     </>
   );

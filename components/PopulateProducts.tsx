@@ -33,14 +33,13 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import LazyComponent from './common/LazyComponent';
 
-const Product = dynamic(
-  () => import(/* webpackChunkName: "Product" */ 'components/Product')
+const Product = dynamic(() =>
+  import(/* webpackChunkName: "Product" */ 'components/Product')
 );
-const TicketCard = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
-    )
+const TicketCard = dynamic(() =>
+  import(
+    /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
+  )
 );
 
 const StyledProductsWrapper = styled.div<{
@@ -163,6 +162,7 @@ const PopulateProducts = (props: any) => {
     isAirportTransfersMB,
     isModifiedProductCard = false,
     isPoiMwebCard = false,
+    productCardsLimit = Infinity,
     showBoosters = false,
   } = props;
 
@@ -180,8 +180,9 @@ const PopulateProducts = (props: any) => {
   const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
     {}
   );
-  const [showEarliestAvailability, setShowEarliestAvailability] =
-    useState(false);
+  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
+    false
+  );
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
@@ -363,14 +364,17 @@ const PopulateProducts = (props: any) => {
         }))
       : tours;
 
-  const availableToursList = uncategorizedTours?.filter((tour: any) => {
-    const checkIfScorpioHighlightsExist =
-      scorpioData[tour.tgid]?.isMBHighlightsExist;
-    return (
-      !!scorpioData[tour.tgid]?.available &&
-      (checkIfScorpioHighlightsExist || tour?.tour_description_override?.length)
-    );
-  });
+  const availableToursList = uncategorizedTours
+    ?.filter((tour: any) => {
+      const checkIfScorpioHighlightsExist =
+        scorpioData[tour.tgid]?.isMBHighlightsExist;
+      return (
+        !!scorpioData[tour.tgid]?.available &&
+        (checkIfScorpioHighlightsExist ||
+          tour?.tour_description_override?.length)
+      );
+    })
+    .slice(0, productCardsLimit);
 
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
@@ -390,8 +394,9 @@ const PopulateProducts = (props: any) => {
                 [ANALYTICS_PROPERTIES.POSITION]:
                   availableToursList?.findIndex((t: any) => t.tgid === tgid) +
                   1,
-                [ANALYTICS_PROPERTIES.IS_TRUNCATED]:
-                  !!entry.target?.querySelector?.('.more-details'),
+                [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
+                  '.more-details'
+                ),
               });
             }
           }

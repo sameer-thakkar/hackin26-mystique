@@ -1,3 +1,4 @@
+import { TQuickInfo } from 'components/ShoulderPages/interface';
 import { getHeadoutLanguagecode } from 'utils';
 import { getRelatedContentPagesUrl } from 'utils/contentPageUtils';
 import { getCurrentOperatingHours } from 'utils/dateUtils';
@@ -19,7 +20,7 @@ export const getPoiQuickInfo = (
   data: Record<string, any> = {},
   relatedContentPages?: Record<string, any>[],
   lang?: string
-) => {
+): TQuickInfo => {
   const {
     location,
     recommendedDuration,
@@ -111,5 +112,5 @@ export const getPoiQuickInfo = (
   // filter out empty values
   return Object.fromEntries(
     Object.entries(mappings).filter((child) => child[1].value)
-  );
+  ) as TQuickInfo;
 };

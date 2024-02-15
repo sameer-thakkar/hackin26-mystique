@@ -42,16 +42,15 @@ import {
 import { strings } from 'const/strings';
 import { StyledContentPage } from './styles';
 
-const GeneralContentPage = dynamic(
-  () => import(/* webpackChunkName: "GeneralShoulderPage" */ './General')
+const GeneralContentPage = dynamic(() =>
+  import(/* webpackChunkName: "GeneralShoulderPage" */ './General')
 );
-const AboutPage = dynamic(
-  () => import(/* webpackChunkName: "AboutShoulderPage" */ './About')
+const AboutPage = dynamic(() =>
+  import(/* webpackChunkName: "AboutShoulderPage" */ './About')
 );
 const GroupBooking = dynamic(() => import('../GroupBooking'), { ssr: false });
-const CategoryHeader = dynamic(
-  () =>
-    import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
 
 class ContentPage extends Component<any, any> {
@@ -107,8 +106,10 @@ class ContentPage extends Component<any, any> {
     if (legacyBooleanCheck(enableGroupBooking)) {
       let groupBookingTourTitles: any = [];
 
-      const { group_booking_excluded_tgids: groupBookingExcludedTgids, body1 } =
-        microsite_document_ref?.data;
+      const {
+        group_booking_excluded_tgids: groupBookingExcludedTgids,
+        body1,
+      } = microsite_document_ref?.data;
       let tours = body1?.[0]?.items || [];
       let filteredTours = tours.filter(function (tour: any) {
         return !groupBookingExcludedTgids.find(function (excludedTour: any) {
@@ -436,14 +437,10 @@ class ContentPage extends Component<any, any> {
     const extraSideNavItems = [];
     if (shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT) {
       // as we're reordering the product cards, reorder its title in the sidebar
-      const productCardSlice = extractSliceByType({
-        slices,
-        sliceType: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
-      });
       extraSideNavItems.push(
         ...[
           strings.CONTENT_PAGE.QUICK_INFORMATION,
-          productCardSlice?.[0]?.primary?.title,
+          extractedProductCardsSlice?.[0]?.primary?.title,
         ].filter(Boolean)
       );
     }

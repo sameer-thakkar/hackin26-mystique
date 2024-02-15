@@ -15,15 +15,17 @@ export interface IMessageBoxProps {
   CTALink?: string;
 }
 
+export type TQuickInfo = {
+  [key: string]: {
+    value?: string;
+    Icon: () => JSX.Element;
+    url?: string;
+  };
+};
+
 export interface IQuickInfoProps {
   id: string;
-  info?: {
-    [key: string]: {
-      value?: string;
-      Icon: () => JSX.Element;
-      url?: string;
-    };
-  };
+  info: TQuickInfo;
   CTALink?: string;
 }
 export interface IAboutPageProps {

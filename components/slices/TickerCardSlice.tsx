@@ -29,6 +29,7 @@ const TicketCard = (props: any) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const currency = useRecoilValue(currencyAtom);
   const {
+    productCardsLimit,
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
   } = categoryTourListData || {};
@@ -136,6 +137,7 @@ const TicketCard = (props: any) => {
   }, [windowWidth]);
   return (
     <PopulateProducts
+      productCardsLimit={productCardsLimit}
       currency={currency}
       uncategorizedTours={orderedTours}
       scorpioData={scorpioData}
