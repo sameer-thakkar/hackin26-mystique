@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -337,6 +343,10 @@ const TabWrapper = (props: TabWrapperProps) => {
     };
   }, [isMobile, swiper, updateIndex]);
 
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   const onTabClick = ({
     tabId,
     index,
@@ -473,7 +483,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         <div className="tab-content-wrap">
           <SliceZone
             slices={slices}
-            components={sliceComponents()}
+            components={components}
             context={{ ...sliceProps, wrapperType: 'tab' }}
             defaultComponent={() => null}
           />

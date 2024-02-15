@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { SliceZone } from '@prismicio/react';
 import {
   catOrSubCatPageSliceComponents,
   sliceComponents,
 } from 'components/slices/sliceManager';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 import { SLICE_TYPES } from 'constants/index';
@@ -163,9 +165,17 @@ const LongForm = (longFormProps: TLongFormProps) => {
   const { content, isContentPage, isCatAndSubCatPage, ...props } =
     longFormProps;
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
+
   const faqSectionExists = content?.some(
     (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.ACCORDION
   );
+  const { isMobile } = useRecoilValue(appAtom);
+
+  const components = useMemo(() => {
+    return isCatAndSubCatPage
+      ? catOrSubCatPageSliceComponents()
+      : sliceComponents();
+  }, []);
 
   return (
     <StyledLongForm
@@ -177,12 +187,8 @@ const LongForm = (longFormProps: TLongFormProps) => {
     >
       <SliceZone
         slices={content}
-        components={
-          isCatAndSubCatPage
-            ? catOrSubCatPageSliceComponents()
-            : sliceComponents()
-        }
-        context={{ ...props, isContentPage }}
+        components={components}
+        context={{ ...props, isMobile, isContentPage }}
         defaultComponent={() => null}
       />
     </StyledLongForm>

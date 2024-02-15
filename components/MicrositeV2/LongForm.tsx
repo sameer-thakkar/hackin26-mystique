@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
 import { sliceComponents } from 'components/slices/sliceManager';
@@ -112,6 +113,11 @@ const LongForm = (props: any) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
+
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <StyledLongform
       noBorder={!hasToursSection}
@@ -120,7 +126,7 @@ const LongForm = (props: any) => {
     >
       <SliceZone
         slices={slicesArray}
-        components={sliceComponents()}
+        components={components}
         context={{ ...sliceProps }}
         defaultComponent={() => null}
       />

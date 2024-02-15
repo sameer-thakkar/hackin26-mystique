@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
 import COLORS from 'const/colors';
@@ -48,10 +48,16 @@ const Background = (props: any) => {
     gridCenter,
     textCenter,
   } = props;
+
   const colorMap = {
     'Chalk Grey': COLORS.GRAY.G7,
     'Light Grey': COLORS.GRAY.G8,
   };
+
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <StyledBackground
       // @ts-expect-error TS(2769): No overload matches this call.
@@ -61,7 +67,7 @@ const Background = (props: any) => {
     >
       <SliceZone
         slices={slices}
-        components={sliceComponents()}
+        components={components}
         context={sliceProps}
         defaultComponent={() => null}
       />

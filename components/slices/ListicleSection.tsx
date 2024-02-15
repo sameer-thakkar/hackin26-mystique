@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
@@ -71,6 +71,10 @@ const ListicleSection: React.FC<ListicleSectionProps> = ({
   title,
   childSlices: slices,
 }) => {
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <StyledListicleSection>
       <Title id={generateSidenavId(title)}>{title}</Title>
@@ -78,7 +82,7 @@ const ListicleSection: React.FC<ListicleSectionProps> = ({
       <ListicleGrid listicleType={type}>
         <SliceZone
           slices={slices}
-          components={sliceComponents()}
+          components={components}
           context={{ type, wrapperType: 'none' }}
           defaultComponent={() => null}
         />

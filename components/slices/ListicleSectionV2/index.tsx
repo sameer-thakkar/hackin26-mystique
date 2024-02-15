@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { SliceZone } from '@prismicio/react';
 import cloneDeep from 'lodash.clonedeep';
 import { IListicleSectionProps } from 'components/slices/ListicleSectionV2/interfaces';
@@ -183,13 +183,17 @@ const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
     }
   }, []);
 
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <ListicleSectionWrapper>
       <Title>{title}</Title>
       {newSlices?.length > 0 && (
         <SliceZone
           slices={newSlices}
-          components={sliceComponents()}
+          components={components}
           context={{ type, settings, title, wrapperType: 'none' }}
           defaultComponent={() => null}
         />

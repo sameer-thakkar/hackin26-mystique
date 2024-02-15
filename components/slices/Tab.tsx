@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
 import COLORS from 'const/colors';
@@ -22,11 +22,16 @@ export const StyledTabContent = styled.div<{ isActive?: boolean }>`
 const Tab = (props: any) => {
   const { childSlices: slices, title: tabTitle, sliceProps } = props;
   const { activeTabId, keyIndex } = sliceProps || {};
+
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <StyledTabPanel key={keyIndex}>
       <SliceZone
         slices={slices}
-        components={sliceComponents()}
+        components={components}
         context={{ ...sliceProps, wrapperType: 'tab', tabTitle, activeTabId }}
         defaultComponent={() => null}
       />

@@ -53,7 +53,10 @@ const ProductsSection = (props: any) => {
   const windowWidth = useWindowWidth();
 
   useEffect(() => {
-    setIsMobile(windowWidth < 768);
+    const currentIsMobile = windowWidth < 768;
+    if (isMobile !== currentIsMobile) {
+      setIsMobile(currentIsMobile);
+    }
   }, [windowWidth]);
 
   const currentLanguage = getLangObject(lang).code;

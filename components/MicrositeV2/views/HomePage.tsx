@@ -2,6 +2,7 @@ import React, {
   ComponentType,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -422,10 +423,15 @@ export const HomePage = (props: any) => {
     return () => window.removeEventListener('scroll', observeCategoriesSection);
   }, []);
 
-  if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
   const finalSlices = heroSectionSlice.filter(
     (slice: any) => slice?.slice_type
   );
+
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
+  if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
 
   return (
     <V2MicrositeWrapper
@@ -602,7 +608,7 @@ export const HomePage = (props: any) => {
           <div className="main-wrapper hero-slice-section">
             <SliceZone
               slices={finalSlices}
-              components={sliceComponents()}
+              components={components}
               context={{ isMobile, wrapperType: 'v2-homepage' }}
               defaultComponent={() => null}
             />

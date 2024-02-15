@@ -369,7 +369,10 @@ const MicrositeV1 = (props: any) => {
     : [];
 
   useEffect(() => {
-    setIsMobile(windowWidth < 768);
+    const currentIsMobile = windowWidth < 768;
+    if (isMobile !== currentIsMobile) {
+      setIsMobile(currentIsMobile);
+    }
   }, [windowWidth]);
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { SliceZone } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import Banner from 'components/GlobalMbs/Banners/HomePageBanner';
@@ -20,6 +21,10 @@ const HomePage = (props: any) => {
     url: image?.image_url?.url,
     altText: image?.alt_text,
   }));
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return (
     <>
       <Banner
@@ -33,7 +38,7 @@ const HomePage = (props: any) => {
       </Conditional>
       <SliceZone
         slices={slices}
-        components={sliceComponents()}
+        components={components}
         context={{ collections, isDev, wrapperType: 'none' }}
         defaultComponent={() => null}
       />

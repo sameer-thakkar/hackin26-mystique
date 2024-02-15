@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { SliceZone, SliceZoneLike } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -414,39 +414,45 @@ const LinkSlices = ({
   theme,
   className = '',
   isCatOrSubCatPage,
-}: TLinkSlices) => (
-  <FooterLinksWrapper
-    className={className}
-    $isCatOrSubCatPage={isCatOrSubCatPage}
-  >
-    <Container>
-      <Conditional if={theme !== THEMES.MIN_BLUE}>
-        <div
-          className={`quick-links-title ${
-            linksTitle ? 'has-custom-title' : ''
-          }`}
-        >
-          {linksTitle || strings.FOOTER.QUICK_LINKS}
-        </div>
-      </Conditional>
-      <div className="quick-links">
-        <Conditional if={theme === THEMES.MIN_BLUE}>
-          <div className={`quick-links-heading`}>
-            <div className="quick-links-title">
-              {linksTitle || strings.FOOTER.QUICK_LINKS}
-            </div>
+}: TLinkSlices) => {
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
+  return (
+    <FooterLinksWrapper
+      className={className}
+      $isCatOrSubCatPage={isCatOrSubCatPage}
+    >
+      <Container>
+        <Conditional if={theme !== THEMES.MIN_BLUE}>
+          <div
+            className={`quick-links-title ${
+              linksTitle ? 'has-custom-title' : ''
+            }`}
+          >
+            {linksTitle || strings.FOOTER.QUICK_LINKS}
           </div>
         </Conditional>
-        <SliceZone
-          slices={slices}
-          components={sliceComponents()}
-          context={{ sliceLength: slices.length }}
-          defaultComponent={() => null}
-        />
-      </div>
-    </Container>
-  </FooterLinksWrapper>
-);
+        <div className="quick-links">
+          <Conditional if={theme === THEMES.MIN_BLUE}>
+            <div className={`quick-links-heading`}>
+              <div className="quick-links-title">
+                {linksTitle || strings.FOOTER.QUICK_LINKS}
+              </div>
+            </div>
+          </Conditional>
+          <SliceZone
+            slices={slices}
+            components={components}
+            context={{ sliceLength: slices.length }}
+            defaultComponent={() => null}
+          />
+        </div>
+      </Container>
+    </FooterLinksWrapper>
+  );
+};
 
 const Footer: React.FC<FooterProps> = ({
   logoURL,
