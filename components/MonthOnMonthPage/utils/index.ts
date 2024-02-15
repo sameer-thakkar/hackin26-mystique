@@ -6,7 +6,7 @@ export const getFilteredObject = (
 ) => {
   let allowedTours: Record<string, any> = [];
 
-  allTours.forEach((experience: Record<string, any>) => {
+  allTours?.forEach((experience: Record<string, any>) => {
     if (allowedTgids.includes(Number(experience?.tgid))) {
       allowedTours.push(experience);
     }
@@ -32,7 +32,7 @@ export const getAllowedTgids = (
 
 export const getTgidAsKey = (shows: any[]) => {
   const result: Record<string, any> = {};
-  shows.forEach((show) => {
+  shows?.forEach((show) => {
     const tgid = show?.tgid;
     result[tgid] = show;
   });

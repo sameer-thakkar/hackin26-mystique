@@ -329,7 +329,7 @@ export const groupSlices = (
     });
     return groups.slices;
   } catch (error) {
-    sendLog({ err: error });
+    sendLog({ err: error, message: '[groupSlices]' });
     return groups.slices;
   }
 };

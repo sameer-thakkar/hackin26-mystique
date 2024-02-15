@@ -13,6 +13,7 @@ import {
   getFilteredObject,
   getTgidAsKey,
 } from 'components/MonthOnMonthPage/utils/index';
+import { sendLog } from 'utils/logger';
 
 const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
   heroProps,
@@ -26,19 +27,28 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
   pageTabsSlice,
   displayMonth,
 }) => {
-  const allowedTgids = useMemo(
-    () => getAllowedTgids(displayMonth, allTours),
-    [allTours, displayMonth]
-  );
+  const allowedTgids = useMemo(() => {
+    const result = getAllowedTgids(displayMonth, allTours);
+    if (result?.length === 0 || !result) {
+      sendLog({
+        message: 'Allowed tgids empty',
+      });
+    }
+    return result ?? [];
+  }, [allTours, displayMonth]);
 
-  const topShowsAllowedTgids = useMemo(
-    () =>
-      getAllowedTgids(
-        displayMonth,
-        getTgidAsKey(categoryTourListData[taggedCollection])
-      ),
-    [displayMonth]
-  );
+  const topShowsAllowedTgids = useMemo(() => {
+    const result = getAllowedTgids(
+      displayMonth,
+      getTgidAsKey(categoryTourListData[taggedCollection])
+    );
+    if (result?.length === 0 || !result) {
+      sendLog({
+        message: 'Top shows allowed tgids empty',
+      });
+    }
+    return result ?? [];
+  }, [displayMonth]);
 
   const { categories } = categoryProps;
 
