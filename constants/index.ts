@@ -1848,7 +1848,7 @@ export const BOOSTER_EXPERIMENT_UIDS = {
     [BoosterType.SELLING_OUT_FAST]: [14667],
   },
   'www.pradomuseumtickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [14667],
+    [BoosterType.SELLING_OUT_FAST]: [4082],
   },
   'www.colosseum-rome-tickets.com': {
     [BoosterType.SELLING_OUT_FAST]: [7148],
