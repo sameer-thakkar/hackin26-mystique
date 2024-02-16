@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { TCalendarUnitProps } from 'components/CalendarUnit/interface';
 import {
   Calendar,
@@ -10,6 +11,8 @@ import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { getOrderedMonthsBasedOnCurrentMonth } from 'utils/dateUtils';
+import { sendLog } from 'utils/logger';
+import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -26,6 +29,7 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
   displayMonth,
   isMobile,
 }) => {
+  const { uid } = useRecoilValue(appAtom);
   const calendarUnitRef = useRef(null);
   const isIntersecting = useOnScreen({
     ref: calendarUnitRef,
@@ -36,6 +40,7 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
     () => getOrderedMonthsBasedOnCurrentMonth(),
     []
   );
+
   const { BEST_WEST_END_SHOWS_CALENDAR } = strings;
 
   const { items } = pageTabsSlice;
@@ -95,9 +100,16 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
       <CalendarGrid>
         {orderedMonths.map(
           ({ short_format_month, long_format_month, year }, index) => {
-            const month = sliceDataMap
-              .get(long_format_month)
-              .title.toUpperCase();
+            const monthDetails = sliceDataMap.get(long_format_month);
+
+            if (!monthDetails) {
+              sendLog({
+                message: `[CalendarUnit]: Month ${long_format_month} not found in slice data map, UID: ${uid}`,
+              });
+              return null;
+            }
+
+            const month = monthDetails.title.toUpperCase();
             const hrefAttribute =
               long_format_month !== displayMonth
                 ? { href: getHref(long_format_month) }
