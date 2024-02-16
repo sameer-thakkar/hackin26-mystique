@@ -440,6 +440,7 @@ interface HeaderProps {
   categoryHeaderMenu?: Record<string, any>;
   isNewLTTLandingPageVisible?: boolean;
   isNewsPage?: boolean;
+  uid?: string;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -470,6 +471,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
+  uid,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -543,7 +545,8 @@ const Header: FunctionComponent<HeaderProps> = ({
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
-    ALLOW_IMMEDIATE_NESTING
+    ALLOW_IMMEDIATE_NESTING,
+    uid
   );
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);

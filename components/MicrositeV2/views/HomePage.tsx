@@ -366,7 +366,7 @@ export const HomePage = (props: any) => {
     window.location.href = option.value;
   };
   const slices = contentFramework?.body;
-  const contentFWSlices = (slices && groupSlices(slices)) || [];
+  const contentFWSlices = (slices && groupSlices(slices, undefined, uid)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const hasLanguageSelector = languages?.length > 0;
   const hasToursSection = categoryProps?.categories?.length > 0;
@@ -459,6 +459,7 @@ export const HomePage = (props: any) => {
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
         categoryHeaderMenuExists={categoryHeaderMenuExists}
+        uid={uid}
       />
       <Conditional if={isLttMonthOnMonthPage}>
         <MonthOnMonthPage

@@ -244,61 +244,70 @@ const isClosingSlice = (slice_type: string) => /___end/.exec(slice_type);
 
 const autoClose = (
   slices: Record<string, any>[],
-  allowImmediateNesting: boolean
+  allowImmediateNesting: boolean,
+  uid?: string
 ) => {
-  const allSlices: Record<string, any>[] = [];
-  const sliceTracker = new Stack();
-  slices.forEach((slice) => {
-    const thisSliceType = slice.slice_type;
-    if (sliceTracker.peek() && !allowImmediateNesting) {
-      if (thisSliceType === sliceTracker.peek()) {
-        allSlices.push(genClosingSlice(sliceTracker.peek()));
-        sliceTracker.pop();
-      }
-    }
-    if (isClosingSlice(thisSliceType)) {
-      if (thisSliceType === genClosingSlice(sliceTracker.peek()).slice_type)
-        sliceTracker.pop();
-      else {
-        while (
-          sliceTracker.peek() &&
-          sliceTracker.indexOf(getOpeningSlice(thisSliceType).slice_type) >
-            -1 &&
-          thisSliceType !== genClosingSlice(sliceTracker.peek()).slice_type
-        ) {
-          allSlices.push({
-            ...genClosingSlice(sliceTracker.peek()),
-            by: 'loop',
-          });
+  try {
+    const allSlices: Record<string, any>[] = [];
+    const sliceTracker = new Stack();
+    slices?.forEach((slice) => {
+      const thisSliceType = slice.slice_type;
+      if (sliceTracker.peek() && !allowImmediateNesting) {
+        if (thisSliceType === sliceTracker.peek()) {
+          allSlices.push(genClosingSlice(sliceTracker.peek()));
           sliceTracker.pop();
         }
-        sliceTracker.pop();
       }
+      if (isClosingSlice(thisSliceType)) {
+        if (thisSliceType === genClosingSlice(sliceTracker.peek()).slice_type)
+          sliceTracker.pop();
+        else {
+          while (
+            sliceTracker.peek() &&
+            sliceTracker.indexOf(getOpeningSlice(thisSliceType).slice_type) >
+              -1 &&
+            thisSliceType !== genClosingSlice(sliceTracker.peek()).slice_type
+          ) {
+            allSlices.push({
+              ...genClosingSlice(sliceTracker.peek()),
+              by: 'loop',
+            });
+            sliceTracker.pop();
+          }
+          sliceTracker.pop();
+        }
+      }
+      allSlices.push(slice);
+      if (/___start$/.exec(thisSliceType)) {
+        sliceTracker.push(thisSliceType);
+      }
+    });
+    if (sliceTracker.peek()) {
+      allSlices.push(genClosingSlice(sliceTracker.peek()));
+      sliceTracker.pop();
     }
-    allSlices.push(slice);
-    if (/___start$/.exec(thisSliceType)) {
-      sliceTracker.push(thisSliceType);
-    }
-  });
-  if (sliceTracker.peek()) {
-    allSlices.push(genClosingSlice(sliceTracker.peek()));
-    sliceTracker.pop();
+    return allSlices;
+  } catch (err) {
+    sendLog({
+      err,
+      message: `[autoClose] - ${uid}`,
+    });
   }
-  return allSlices;
 };
 
 export const groupSlices = (
   slices: Record<string, any>[],
-  allowImmediateNesting = false
+  allowImmediateNesting = false,
+  uid?: string
 ) => {
   const groups = { slices: [] };
   try {
     let ref: any = groups;
-    const autoClosedSlices = autoClose(slices, allowImmediateNesting);
+    const autoClosedSlices = autoClose(slices, allowImmediateNesting, uid);
     let repeatables: Record<string, any> = {
       items: [],
     };
-    autoClosedSlices.forEach((slice) => {
+    autoClosedSlices?.forEach((slice) => {
       if (/___repeatable$/.exec(slice.slice_type)) {
         repeatables.slice_type = slice.slice_type.replace(/___repeatable$/, '');
         repeatables.items = [...repeatables.items, { ...slice }];
