@@ -31,7 +31,6 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import LazyComponent from './common/LazyComponent';
 
 const Product = dynamic(() =>
   import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -599,26 +598,19 @@ const PopulateProducts = (props: any) => {
       showBoosters,
     };
 
-    return (
-      <LazyComponent
-        key={tour.tgid}
-        target={index === 0 && !isSmallComboCard ? 'NONE' : 'USER'}
-      >
-        {isSmallComboCard ? (
-          <Product {...childProps} />
+    return isSmallComboCard ? (
+      <Product {...childProps} />
+    ) : (
+      <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
+        {isTicketCard ? (
+          <TicketCard {...childProps} />
         ) : (
-          <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
-            {isTicketCard ? (
-              <TicketCard {...childProps} />
-            ) : (
-              <Product {...childProps} />
-            )}
-            <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-              <HorizontalLine colorProp={COLORS.GRAY.G6} />
-            </Conditional>
-          </ProductWrapper>
+          <Product {...childProps} />
         )}
-      </LazyComponent>
+        <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+          <HorizontalLine colorProp={COLORS.GRAY.G6} />
+        </Conditional>
+      </ProductWrapper>
     );
   };
 

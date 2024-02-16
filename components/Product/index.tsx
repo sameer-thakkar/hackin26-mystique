@@ -268,7 +268,7 @@ const Product = (props: any) => {
           enable: true,
           params: {
             pid: tgid,
-            popup: 'combo',
+            popup: 'details',
           },
         },
       });

@@ -269,10 +269,15 @@ export const addUrlParams = ({
   historyState: any;
   replace: boolean;
 }) => {
+  const { slug, ...restUrlParams } = urlParams;
+  let finalSlug;
+  if (Array.isArray(slug)) finalSlug = slug.join('/');
+  else finalSlug = slug;
+
   const asPath =
-    '/' +
+    (finalSlug ? `/${finalSlug}/` : '/') +
     addToSearchParams('', {
-      ...urlParams,
+      ...restUrlParams,
     });
   if (replace) window.history.replaceState(historyState, '', asPath);
   else window.history.pushState(historyState, '', asPath);
