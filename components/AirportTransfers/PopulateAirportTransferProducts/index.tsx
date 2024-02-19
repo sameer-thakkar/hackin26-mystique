@@ -27,6 +27,8 @@ const TAB_ORDER_MAP = {
   shared: ['shared', 'private'],
 } as const;
 
+let isFirstLoad = true;
+
 export const PopulateAirportTransfersProducts = ({
   isMobile,
   uncategorizedTours,
@@ -109,27 +111,42 @@ export const PopulateAirportTransfersProducts = ({
     )
       return;
 
-    if (tab === 'private') {
+    const targetRef =
+      tab === 'private'
+        ? privateTransfersHeadingRef
+        : sharedTransfersHeadingRef;
+
+    if (!targetRef?.current) return;
+
+    const isSecondTab = tabOrder.indexOf(tab) === 1;
+
+    const scrollToTarget = (offset = 90) => {
       window.scrollTo({
-        top: privateTransfersHeadingRef?.current?.offsetTop - 100,
+        top: targetRef?.current?.offsetTop! - offset,
         behavior: 'smooth',
       });
+    };
 
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_TAB_CLICKED,
-        Label: en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS,
+    // Some components are not loaded on first render (lazy), so we need to scroll again after they are loaded
+    if (isFirstLoad && isSecondTab) {
+      scrollToTarget(-100);
+
+      window.addEventListener('scrollend', () => scrollToTarget(75), {
+        once: true,
       });
+
+      isFirstLoad = false;
     } else {
-      window.scrollTo({
-        top: sharedTransfersHeadingRef?.current?.offsetTop - 120,
-        behavior: 'smooth',
-      });
-
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_TAB_CLICKED,
-        Label: en.AIRPORT_TRANSFER.SHARED_TRANSFERS,
-      });
+      scrollToTarget();
     }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_TAB_CLICKED,
+      Label:
+        tab === 'private'
+          ? en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS
+          : en.AIRPORT_TRANSFER.SHARED_TRANSFERS,
+    });
   };
 
   const sharedTransfersVisibilityTrackingRef = useRef(null);
