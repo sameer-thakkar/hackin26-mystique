@@ -42,7 +42,7 @@ import {
 } from 'utils/apiUtils';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getDurationISO, getPrevDate } from 'utils/dateUtils';
-import { getHostName, groupSlices } from 'utils/helper';
+import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
 import { generateDescriptor } from 'utils/productUtils';
 import { getProductSchema } from 'utils/schemaUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -268,6 +268,7 @@ const ShowPage = (props: any) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const selfCanonicalLink = convertUidToUrl({ uid, lang: currentLanguage });
+  const isLTT = checkIfLTTMB(uid);
 
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor,
@@ -666,6 +667,7 @@ const ShowPage = (props: any) => {
             attraction={commonFooter?.data?.attraction || 'attraction'}
             primaryHeading={commonFooter?.data?.footer_heading}
             isEntertainmentMb={true}
+            isLTT={isLTT}
           />
         </LazyComponent>
       </ShowPageWrapper>

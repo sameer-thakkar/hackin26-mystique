@@ -659,6 +659,7 @@ const ExperiencePage = ({
           attraction={commonFooter?.data?.attraction || 'attraction'}
           primaryHeading={commonFooter?.data?.footer_heading}
           isEntertainmentMb={true}
+          isLTT={isLTT}
         />
       </ShowPageWrapper>
     </>
