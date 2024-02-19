@@ -601,6 +601,7 @@ export const getPageData = async ({
         design,
         theme,
         localisedCategoryTourListV1,
+        currentPageCategoryTourListV1,
         categoryTourListV2,
         baseLangCategorisationMetadata,
         is_entertainment_mb: isEntertainmentMb,
@@ -653,6 +654,8 @@ export const getPageData = async ({
         if (hasCategoryTourListV1) {
           categoryTourListData = await categoryTourListParserV1({
             micrositeProductCardSliceWithData: localisedCategoryTourListV1,
+            cuurentMicrositeProductCardSliceWithData:
+              currentPageCategoryTourListV1,
             hostname,
             lang: lang ?? 'en',
             cookies,

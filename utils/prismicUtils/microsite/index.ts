@@ -287,6 +287,7 @@ const getMicrositeDocument = async ({
             localisedCategoryTourListV1: isLocalizedLang
               ? baseLangCategoryTourListV1
               : currentPageCategoryTourListV1,
+            currentPageCategoryTourListV1,
             categoryTourListV2,
             topAttractionsData,
             baseLangPageTitle: isLocalizedLang

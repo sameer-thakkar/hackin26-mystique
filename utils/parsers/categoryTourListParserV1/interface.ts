@@ -6,6 +6,7 @@ import type { TCategoryTourListV1 } from 'utils/prismicUtils/interface';
 
 export type TCategoryTourListParserV1 = {
   micrositeProductCardSliceWithData?: TCategoryTourListV1;
+  cuurentMicrositeProductCardSliceWithData?: TCategoryTourListV1;
   shoulderPageTicketsCard?: ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlice;
   productCardDocument?: AllDocumentTypes;
   hostname: string;

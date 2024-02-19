@@ -14,10 +14,12 @@ import {
 import { csvTgidToArray } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { getScorpioData, getSingleAriesTag } from 'utils/productUtils';
+import { DEFAULT_PRISMIC_LANG } from 'const/index';
 import type { TCategoryTourListParserV1 } from './interface';
 
 const categoryTourListParserV1 = async ({
   micrositeProductCardSliceWithData,
+  cuurentMicrositeProductCardSliceWithData,
   shoulderPageTicketsCard,
   hostname,
   lang,
@@ -30,6 +32,8 @@ const categoryTourListParserV1 = async ({
     currency: any;
   const { primary: slicePrimary, items: sliceItems } =
     micrositeProductCardSliceWithData || {};
+  const { items: localisedSliceItems } =
+    cuurentMicrositeProductCardSliceWithData || {};
 
   const { primary: spSlicePrimary } = shoulderPageTicketsCard ?? {};
   const {
@@ -275,7 +279,9 @@ const categoryTourListParserV1 = async ({
       ?.slice(0, sliceIndex)
       ?.reduce((acc, tour) => {
         const { id, allTags, flowType } = tour || {};
-        const tourObj = sliceItems?.find((item: any) => item.tgid === id);
+        const tourObj = sliceItems?.find((item: any) => item.tgid === id) || {};
+        const localisedTourObj =
+          localisedSliceItems?.find((item: any) => item.tgid === id) || {};
         const [variantId] =
           getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
         const finalObj = {
@@ -293,6 +299,9 @@ const categoryTourListParserV1 = async ({
           variantId,
           flowType,
           ...tourObj,
+          ...(lang !== DEFAULT_PRISMIC_LANG && {
+            ...localisedTourObj,
+          }),
         };
         return [...acc, finalObj];
       }, []);

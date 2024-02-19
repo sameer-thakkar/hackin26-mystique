@@ -27,6 +27,7 @@ export type TCategorisationMetadata = Pick<
 export type TMicrositeDocument = MicrositeDocument & {
   data: {
     localisedCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
+    currentPageCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
     categoryTourListV2?: MicrositeDocumentDataBodyTourListCategorySlice;
     topAttractionsData?: Simplify<TopAttractionsDocumentData>;
     baseLangPageTitle: KeyTextField;
