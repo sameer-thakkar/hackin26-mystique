@@ -107,6 +107,7 @@ export const getCityCategoriesCarousel = async ({
   const carouselData = categories.reduce(
     (acc: Record<string, any>[], category) => {
       const { id, name, displayName, medias } = category || {};
+
       const docFound = docsStore?.find(
         (doc) =>
           name === doc?.data?.tagged_category && shouldIncludeinQueries(doc)
@@ -120,7 +121,10 @@ export const getCityCategoriesCarousel = async ({
             id,
             name,
             displayName,
-            media: medias?.[0] || {},
+            media:
+              medias?.find(
+                (media: Record<string, any>) => media.type === 'IMAGE'
+              ) || {},
             url,
           },
         ];

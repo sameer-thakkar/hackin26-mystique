@@ -472,7 +472,7 @@ const AutomatedTourComparisonTable = ({
         title: strings.CANCELLATION_POLICY_HEADING,
         content: (
           <div className="free-cancellation block-content-wrapper">
-            <div className="icon">{cancellable ? Check : Cross}</div>
+            <div className="icon">{cancellable ? Check() : Cross()}</div>
             <p>{cancellationPolicyString}</p>
           </div>
         ),

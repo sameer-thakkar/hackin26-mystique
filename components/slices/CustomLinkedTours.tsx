@@ -24,7 +24,6 @@ const Tour = styled.a`
     width: 100%;
     border-radius: 4px;
     object-fit: cover;
-    height: auto;
   }
   @media (max-width: 768px) {
     border-radius: 2px;

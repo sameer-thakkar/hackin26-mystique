@@ -1,6 +1,7 @@
+import type { SVGProps } from 'react';
 import COLORS from 'const/colors';
 
-const Cross = (props: any) => (
+const Cross = (props?: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
