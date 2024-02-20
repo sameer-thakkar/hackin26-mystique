@@ -83,7 +83,7 @@ export const getSubCategoryPills = async ({
   categoryLandingPageUrl: string;
   isSubCategoryPage: boolean;
 }) => {
-  const { subCategories } = categoryData || [];
+  const { subCategories } = categoryData || {};
   const mergedHeaderMenu = {
     ...attractionsHeaderMenu,
     ...themesHeaderMenu,

@@ -732,12 +732,14 @@ export const checkIfCatOrSubCatPage = async <T>(
     (category: Record<string, any>) => category.name === taggedCategory
   );
 
+  if (!categoryData) return false;
+
   if (taggedMbType === MB_CATEGORISATION.MB_TYPE.A1_CATEGORY && categoryData) {
     return true;
   }
 
   if (taggedMbType === MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY) {
-    const { subCategories } = categoryData;
+    const { subCategories } = categoryData || {};
     const { tagged_sub_category: taggedSubCategory } =
       finalBaseLangCategorisationMetadata || {};
 

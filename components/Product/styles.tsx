@@ -584,12 +584,10 @@ export const StyledCategoryContainer = styled.div<{
 `;
 
 export const CategoryAndRatingContainer = styled.div`
-  grid-area: category-and-rating;
-  display: grid;
-  grid-template-areas: 'category rating';
-  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
   margin-bottom: -0.25rem;
 
   @media (min-width: 768px) {

@@ -23,7 +23,7 @@ export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
     $isActive &&
     `
       background-color: ${COLORS.PURPS.LIGHT_TONE_4};
-      border: ${COLORS.PURPS.LEVEL_15};
+      border: 1px solid ${COLORS.PURPS.LEVEL_15};
     `}
 
   .icon {

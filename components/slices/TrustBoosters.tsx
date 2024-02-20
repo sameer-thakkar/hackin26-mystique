@@ -12,7 +12,7 @@ const StyledTrustBoosters = styled.div`
   justify-content: space-between;
   grid-gap: 32px;
   margin-top: 32px;
-  margin-bottom: 59px;
+  margin-bottom: 0.5rem;
   .trust-booster {
     display: grid;
     grid-template-columns: auto auto;

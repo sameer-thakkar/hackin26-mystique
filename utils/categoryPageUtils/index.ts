@@ -65,7 +65,7 @@ export const getCatAndSubCatPageData = async ({
     categories?.find(
       (category: Record<string, any>) => category.name === taggedCategory
     ) || {};
-  const { subCategories } = categoryData;
+  const { subCategories } = categoryData || {};
   const subCategoryData =
     subCategories?.find(
       (subCategory: Record<string, any>) =>

@@ -53,12 +53,12 @@ const allToursParser = (
         content[label.labelID].content.filter((c: any) => c.type === 'image');
       const finalContent: [RTNode] =
         blockContentLen === 0
-          ? label.globalContent
+          ? label?.globalContent
           : content[label.labelID].content;
       let block = {
-        label: labelIDMap[label.labelID],
+        label: labelIDMap?.[label.labelID],
         content: finalContent,
-        align: useGLOBAL ? label.globalAlign : content[label.labelID].align,
+        align: useGLOBAL ? label?.globalAlign : content[label.labelID].align,
         len: asText(finalContent).length,
         labelId: label.labelID,
       };

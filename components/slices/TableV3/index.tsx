@@ -147,8 +147,9 @@ const TableV3 = ({
 
       case TABLE_V3_COLUMN_TYPE.BOOSTER_TEXT: {
         const background =
-          // @ts-expect-error TS(2339)
-          BOOSTER_BACKGROUND_COLOR_CODE_MAPPING[booster_background_color];
+          BOOSTER_BACKGROUND_COLOR_CODE_MAPPING[
+            booster_background_color as keyof typeof BOOSTER_BACKGROUND_COLOR_CODE_MAPPING
+          ];
         return (
           <BoosterTextColumnWrapper>
             <BoosterTextWrapper>{text}</BoosterTextWrapper>
@@ -318,6 +319,8 @@ const TableV3 = ({
                 className={rowIndex === 0 ? 'table-heading' : ''}
               >
                 {row.map((item, colIndex: number) => {
+                  if (!item) return null;
+
                   return (
                     <StyledColumn
                       key={colIndex}
@@ -342,12 +345,19 @@ const TableV3 = ({
                       <Conditional if={colIndex === 0 && displaySerialNum}>
                         {item}
                       </Conditional>
-                      <Conditional if={rowIndex === 0 && colIndex > 0}>
+                      <Conditional
+                        if={
+                          rowIndex === 0 && colIndex > 0 && item?.column_heading
+                        }
+                      >
                         {item?.column_heading}
                       </Conditional>
                       <Conditional
                         if={
-                          rowIndex === 0 && colIndex === 0 && !displaySerialNum
+                          rowIndex === 0 &&
+                          colIndex === 0 &&
+                          !displaySerialNum &&
+                          item?.column_heading
                         }
                       >
                         {item?.column_heading}

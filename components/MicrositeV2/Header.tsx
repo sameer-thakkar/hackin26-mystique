@@ -70,6 +70,7 @@ interface IStyledHeader {
 }
 
 export const StyledHeader = styled.div<IStyledHeader>`
+  min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
   .main-wrapper {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -148,6 +149,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
       showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3};
   }
   @media (max-width: 768px) {
+    min-height: ${({ isGlobalMb }) => (isGlobalMb ? '3rem' : '3.5rem')};
     .main-wrapper {
       margin: unset;
       width: calc(100% - (16px * 2));
