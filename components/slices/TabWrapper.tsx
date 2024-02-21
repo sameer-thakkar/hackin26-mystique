@@ -641,7 +641,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         <Conditional if={!tabData.length}>
           <SliceZone
             slices={slices}
-            components={sliceComponents()}
+            components={components}
             context={{ ...sliceProps, wrapperType: 'tab' }}
             defaultComponent={() => null}
           />

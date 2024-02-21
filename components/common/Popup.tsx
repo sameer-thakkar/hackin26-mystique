@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
@@ -129,6 +129,10 @@ const Popup = (props: any) => {
   }, []);
   const { body } = data;
 
+  const components = useMemo(() => {
+    return sliceComponents();
+  }, []);
+
   return ReactDOM.createPortal(
     <StyledPopupWrapper $alert={props.alert}>
       <div
@@ -159,7 +163,7 @@ const Popup = (props: any) => {
             <div className={`popup-slice ${body[0].slice_type}`}>
               <SliceZone
                 slices={body}
-                components={sliceComponents()}
+                components={components}
                 context={isMobile}
                 defaultComponent={() => null}
               />
