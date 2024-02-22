@@ -7,6 +7,7 @@ export const ATTRACTIONS = 'ATTRACTIONS';
 export const LONDON_THEATRE_NEWS = 'LONDON_THEATRE_NEWS';
 export const BROADWAY_SHOW_NEWS = 'BROADWAY_SHOW_NEWS';
 export const NEWS_PAGE = 'NEWS_PAGE';
+export const REVIEWS_PAGE_BANNER_HEADING = 'REVIEWS_PAGE_BANNER_HEADING';
 
 export const getEntMBLabels = ({
   isLTT = false,

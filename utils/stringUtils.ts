@@ -40,3 +40,9 @@ export const characterLimitStrings = (str: string, limit: number) => {
   if (str.length <= limit) return str;
   return str.slice(0, limit - 3).concat('...');
 };
+
+export const sentenceCase = (inputString: string = '') => {
+  return inputString
+    ? inputString.charAt(0).toUpperCase() + inputString.slice(1).toLowerCase()
+    : '';
+};

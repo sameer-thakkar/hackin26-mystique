@@ -23,7 +23,6 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
@@ -59,7 +58,11 @@ const PARAGRAPH_LENGTH = {
   3: 70,
 } as const;
 
-const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
+const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
+  content,
+  handleCtaClick,
+  trackingObject,
+}) => {
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
   const moreReadsRef = useRef(null);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
@@ -71,7 +74,6 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
   const {
     uniqueArticlesWithSameTgidData,
     featuredArticles,
-    CFData,
     newsLandingPageUrl,
   } = content;
   const { MORE_READS, ALL_NEWS } = strings.NEWS_PAGE;
@@ -88,10 +90,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
 
   useEffect(() => {
     if (isMoreReadsSectionVisible) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_SECTION_VIEWED,
-        [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
-      });
+      trackEvent(trackingObject);
     }
   }, [isMoreReadsSectionVisible]);
 
@@ -101,6 +100,12 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
       const newIndex = currIdx + noOfSlide;
       swiper.slideTo(newIndex);
       setActiveSlideIdx(newIndex);
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
+        [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+        [ANALYTICS_PROPERTIES.DIRECTION]:
+          noOfSlide > 0 ? 'Forward' : 'Backward',
+      });
     }
     return;
   };
@@ -130,15 +135,6 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
       ? finalContentForMoreReads?.length
       : 10;
 
-  const handleCTAClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
-      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
-    });
-    return;
-  };
-
   return (
     <Conditional if={finalContentForMoreReads?.length > 0}>
       <Container ref={moreReadsRef}>
@@ -147,7 +143,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
           <div className="navigation">
             <a
               href={newsLandingPageUrl}
-              onClick={handleCTAClick}
+              onClick={handleCtaClick}
               role="button"
               tabIndex={0}
               target="_blank"
@@ -174,7 +170,12 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
           <Swiper {...swiperParams} className="more-reads-swiper">
             {finalContentForMoreReads.slice(0, 10).map((article, index) => {
               const { first_publication_date, uid } = article;
-              let { heading, author_name, banner_image } = article.data;
+              let {
+                heading,
+                author_name,
+                banner_image,
+                content_framework_ref,
+              } = article.data;
 
               heading = truncate(heading, 50);
               const formattedPublishedDateAndTime = formatDateToString(
@@ -191,7 +192,9 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({ content }) => {
               });
 
               const truncatedContent = truncate(
-                extractFirstRichTextSliceContent(CFData, uid),
+                extractFirstRichTextSliceContent(
+                  content_framework_ref?.data?.body
+                ),
                 PARAGRAPH_LENGTH[
                   (finalContentForMoreReads.length < 4
                     ? finalContentForMoreReads.length % 4

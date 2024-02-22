@@ -13,8 +13,9 @@ import {
   Heading,
   SliderContainer,
 } from 'components/NewsPage/LandingPage/styles';
-import { EMAIL_SUBCRIPTION } from 'const/index';
+import { EMAIL_SUBCRIPTION, NEWS_PAGE_SECTIONS } from 'const/index';
 import { strings } from 'const/strings';
+import { getTrackingObject } from '../utils';
 
 const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
   const { data: CMSContent, isMobile } = props;
@@ -23,7 +24,6 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
     allArticles,
     featuredArticles,
     collectionReviews,
-    CFData,
     trailerSectionData,
     showPageDocuments,
     subCategoryData,
@@ -33,26 +33,20 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
   const { heading, breadcrumbs } = data;
   const { HEADING, SUBHEADING } = strings.NEWS_PAGE.MAILER;
 
+  const reviewsTrackingObject = getTrackingObject(NEWS_PAGE_SECTIONS.REVIEWS);
+
   return (
     <>
       <Container>
         <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} isNewsPage />
         <Heading>{heading}</Heading>
-        <LandingPageBanner
-          featuredArticles={featuredArticles}
-          CFData={CFData}
-        />
-        <RecentNews
-          allArticles={allArticles}
-          CFData={CFData}
-          isMobile={isMobile}
-        />
+        <LandingPageBanner featuredArticles={featuredArticles} />
+        <RecentNews allArticles={allArticles} isMobile={isMobile} />
       </Container>
       <LazyComponent>
         <Trailer
           content={{
             trailerSectionData,
-            CFData,
             showPageDocuments,
             videoData,
           }}
@@ -64,9 +58,10 @@ const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
           <LazyComponent>
             <Reviews
               heading={strings.NEWS_PAGE.REVIEWS}
-              reviews={collectionReviews?.items}
+              reviews={collectionReviews}
               isMobile={isMobile}
               mediaData={mediaData}
+              trackingObject={reviewsTrackingObject}
             />
           </LazyComponent>
         </Container>

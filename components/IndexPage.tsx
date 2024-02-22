@@ -47,6 +47,7 @@ const LttShowPageV2 = dynamic(
   () => import('components/MicrositeV2/LttShowPageV2')
 );
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
+const ReviewsPage = dynamic(() => import('components/ReviewsPage'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
 const NewsPage = dynamic(() => import('components/NewsPage'));
 
@@ -227,6 +228,21 @@ const Page = (props: PageProps) => {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
+
+      case CUSTOM_TYPES.REVIEWS_PAGE:
+        return (
+          <ReviewsPage
+            data={CMSContent}
+            isMobile={isMobile}
+            host={host}
+            lang={lang}
+            uid={uid}
+            isDev={isDev}
+            domainConfig={domainConfig}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
+
       case CUSTOM_TYPES.VENUE_PAGE:
         return (
           <VenuePage

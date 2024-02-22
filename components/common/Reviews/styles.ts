@@ -5,7 +5,7 @@ import { expandFontToken } from 'const/typography';
 
 export const Wrapper = styled.div`
   position: relative;
-  margin: 4rem 0;
+  margin: 3rem 0;
   z-index: 0;
   overflow-y: hidden;
 
@@ -48,8 +48,14 @@ export const TitleHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 2rem;
   align-items: center;
+  h2 {
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)}
+  }
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
+    h2 {
+      ${expandFontToken(FONTS.HEADING_LARGE)}
+    }
   }
 `;
 

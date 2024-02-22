@@ -1,14 +1,14 @@
 import { useContext } from 'react';
-// import Conditional from 'components/common/Conditional';
-// import Button from 'UI/Button';
+import Conditional from 'components/common/Conditional';
+import { RatingStars } from 'components/ReviewsPage/components/ReviewCount';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { formatDateToString } from 'utils/dateUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 import { StarIcon } from 'const/descriptorIcons';
-// import { strings } from 'const/strings';
+import { strings } from 'const/strings';
 import Avatar from 'assets/avatar';
 import {
-  // Gradient,
   ImageWrapper,
   MetaInfo,
   Review,
@@ -19,7 +19,7 @@ import {
   Wrapper,
 } from './styles';
 
-const ReviewStars = () => {
+export const ReviewStars = () => {
   const numberOfStars = [0, 1, 2, 3, 4];
   return (
     <>
@@ -35,7 +35,8 @@ const ReviewStars = () => {
 const ReviewContent = (props: any) => {
   const { lang } = useContext(MBContext);
 
-  const { reviewImageUrl, nonCustomerName, content, reviewTime } = props;
+  const { reviewImageUrl, nonCustomerName, content, reviewTime, rating } =
+    props;
 
   const formattedTime = formatDateToString(reviewTime, 'EN', 'MMM, YYYY');
 
@@ -53,7 +54,7 @@ const ReviewContent = (props: any) => {
           <ImageWrapper>{Avatar}</ImageWrapper>
           <MetaInfo>
             <h5>{nonCustomerName}</h5>
-            <ReviewStars />
+            <RatingStars averageRating={rating} />
           </MetaInfo>
         </ReviewHeader>
         <div className="content" lang={lang}>
@@ -66,17 +67,25 @@ const ReviewContent = (props: any) => {
 };
 
 const ReviewCard = (props: any) => {
+  const { lang, host } = useContext(MBContext);
   const {
     tourGroupName,
+    tourGroupId,
     reviewMedia,
     customerName,
     rating,
     content,
     reviewTime,
-    // isMobile,
+    tgidToReviewsPageUidMapping,
   } = props;
-  // const { NEWS_PAGE } = strings;
-  // const { SHOW_ALL_REVIEWS } = NEWS_PAGE;
+  const { NEWS_PAGE } = strings;
+  const { SHOW_ALL_REVIEWS } = NEWS_PAGE;
+
+  const reviewsPageUrl = convertUidToUrl({
+    uid: tgidToReviewsPageUidMapping[tourGroupId] ?? '',
+    lang,
+    hostname: host,
+  });
 
   return (
     <>
@@ -90,13 +99,12 @@ const ReviewCard = (props: any) => {
           content={content}
           reviewTime={reviewTime}
         />
-        {/* <Conditional if={!isMobile}>
-          <Button widthProp="100%" className="show-all-reviews">
+        <Conditional if={reviewsPageUrl}>
+          <a href={reviewsPageUrl} className="show-all-reviews">
             {SHOW_ALL_REVIEWS}
-          </Button>
-        </Conditional> */}
+          </a>
+        </Conditional>
       </Wrapper>
-      {/* <Gradient /> */}
     </>
   );
 };

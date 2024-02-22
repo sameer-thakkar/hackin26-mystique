@@ -1322,6 +1322,16 @@ export interface ContentFrameworkDocumentDataBodyCardSliceItem {
   image_url: prismic.LinkField;
 
   /**
+   * Video URL (DEV) field in *Content Framework → Slice zone → Card → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the video link
+   * - **API ID Path**: content_framework.body[].card.items.video_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  video_url: prismic.LinkField;
+
+  /**
    * Image Alt * field in *Content Framework → Slice zone → Card → Items*
    *
    * - **Field Type**: Text
@@ -2361,78 +2371,6 @@ export type ContentFrameworkDocumentDataBodyCategorySectionSlice =
     Simplify<ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary>,
     never
   >;
-
-/**
- * Primary content in *Content Framework → Slice zone → Page Tabs → Primary*
- */
-export interface ContentFrameworkDocumentDataBodyPageTabsSlicePrimary {
-  /**
-   * Tab Alignment field in *Content Framework → Slice zone → Page Tabs → Primary*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: left
-   * - **API ID Path**: content_framework.body[].page_tabs.primary.tab_alignment
-   * - **Documentation**: https://prismic.io/docs/field#select
-   */
-  tab_alignment: prismic.SelectField<'left' | 'center' | 'right', 'filled'>;
-
-  /**
-   * Hide slice field in *Content Framework → Slice zone → Page Tabs → Primary*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: content_framework.body[].page_tabs.primary.hide_slice
-   * - **Documentation**: https://prismic.io/docs/field#boolean
-   */
-  hide_slice: prismic.BooleanField;
-}
-
-/**
- * Item content in *Content Framework → Slice zone → Page Tabs → Items*
- */
-export interface ContentFrameworkDocumentDataBodyPageTabsSliceItem {
-  /**
-   * Title field in *Content Framework → Slice zone → Page Tabs → Items*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Tab Title
-   * - **API ID Path**: content_framework.body[].page_tabs.items.title
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Tab Link field in *Content Framework → Slice zone → Page Tabs → Items*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: Link to Content Page
-   * - **API ID Path**: content_framework.body[].page_tabs.items.tab_link
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
-   */
-  tab_link: prismic.LinkField;
-
-  /**
-   * Is Selected Link field in *Content Framework → Slice zone → Page Tabs → Items*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: Only one option should be "Yes"
-   * - **Default Value**: No
-   * - **API ID Path**: content_framework.body[].page_tabs.items.is_selected_link
-   * - **Documentation**: https://prismic.io/docs/field#select
-   */
-  is_selected_link: prismic.SelectField<'No' | 'Yes', 'filled'>;
-}
-
-/**
- * Slice for *Content Framework → Slice zone*
- */
-export type ContentFrameworkDocumentDataBodyPageTabsSlice = prismic.Slice<
-  'page_tabs',
-  Simplify<ContentFrameworkDocumentDataBodyPageTabsSlicePrimary>,
-  Simplify<ContentFrameworkDocumentDataBodyPageTabsSliceItem>
->;
 
 /**
  * Primary content in *Content Framework → Slice zone → Anchor Point → Primary*
@@ -3673,7 +3611,7 @@ export interface ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlicePrim
   product_cards: prismic.ContentRelationshipField<'product_cards'>;
 
   /**
-   * Sub-category Filter [UNDER-DEV] field in *Content Framework → Slice zone → Ticket Card for Shoulder Page → Primary*
+   * Sub-category Filter field in *Content Framework → Slice zone → Ticket Card for Shoulder Page → Primary*
    *
    * - **Field Type**: Number
    * - **Placeholder**: sub-cat ID to filter by
@@ -3683,7 +3621,7 @@ export interface ContentFrameworkDocumentDataBodyTicketCardShoulderPageSlicePrim
   sub_category_filter: prismic.NumberField;
 
   /**
-   * Category Filter [UNDER-DEV] field in *Content Framework → Slice zone → Ticket Card for Shoulder Page → Primary*
+   * Category Filter field in *Content Framework → Slice zone → Ticket Card for Shoulder Page → Primary*
    *
    * - **Field Type**: Number
    * - **Placeholder**: Category ID to filter by
@@ -5318,6 +5256,178 @@ export type ContentFrameworkDocumentDataBodyStructuredCardSlice = prismic.Slice<
   never
 >;
 
+/**
+ * Primary content in *Content Framework → Slice zone → Review Chips → Primary*
+ */
+export interface ContentFrameworkDocumentDataBodyReviewChipsSlicePrimary {
+  /**
+   * heading field in *Content Framework → Slice zone → Review Chips → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) Enter the heading
+   * - **API ID Path**: content_framework.body[].review_chips.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *Content Framework → Slice zone → Review Chips → Items*
+ */
+export interface ContentFrameworkDocumentDataBodyReviewChipsSliceItem {
+  /**
+   * chips field in *Content Framework → Slice zone → Review Chips → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Short concise review information. Enter double quotes if necessary.
+   * - **API ID Path**: content_framework.body[].review_chips.items.chips
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  chips: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *Content Framework → Slice zone*
+ */
+export type ContentFrameworkDocumentDataBodyReviewChipsSlice = prismic.Slice<
+  'review_chips',
+  Simplify<ContentFrameworkDocumentDataBodyReviewChipsSlicePrimary>,
+  Simplify<ContentFrameworkDocumentDataBodyReviewChipsSliceItem>
+>;
+
+/**
+ * Primary content in *Content Framework → Slice zone → Detailed Review → Primary*
+ */
+export interface ContentFrameworkDocumentDataBodyDetailedReviewSlicePrimary {
+  /**
+   * Heading field in *Content Framework → Slice zone → Detailed Review → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the heading for the section
+   * - **API ID Path**: content_framework.body[].detailed_review.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * description field in *Content Framework → Slice zone → Detailed Review → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter review description
+   * - **API ID Path**: content_framework.body[].detailed_review.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Item content in *Content Framework → Slice zone → Detailed Review → Items*
+ */
+export interface ContentFrameworkDocumentDataBodyDetailedReviewSliceItem {
+  /**
+   * subheading field in *Content Framework → Slice zone → Detailed Review → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter subheading
+   * - **API ID Path**: content_framework.body[].detailed_review.items.subheading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subheading: prismic.KeyTextField;
+
+  /**
+   * subdescription field in *Content Framework → Slice zone → Detailed Review → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter subdescription.
+   * - **API ID Path**: content_framework.body[].detailed_review.items.subdescription
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  subdescription: prismic.RichTextField;
+}
+
+/**
+ * Slice for *Content Framework → Slice zone*
+ */
+export type ContentFrameworkDocumentDataBodyDetailedReviewSlice = prismic.Slice<
+  'detailed_review',
+  Simplify<ContentFrameworkDocumentDataBodyDetailedReviewSlicePrimary>,
+  Simplify<ContentFrameworkDocumentDataBodyDetailedReviewSliceItem>
+>;
+
+/**
+ * Item content in *Content Framework → Slice zone → Critics Review → Items*
+ */
+export interface ContentFrameworkDocumentDataBodyCriticsReviewSliceItem {
+  /**
+   * author name field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the author name for the review
+   * - **API ID Path**: content_framework.body[].critics_review.items.author_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  author_name: prismic.KeyTextField;
+
+  /**
+   * origin website field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the name of the website where the review was present.
+   * - **API ID Path**: content_framework.body[].critics_review.items.origin_website
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  origin_website: prismic.KeyTextField;
+
+  /**
+   * origin website link field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the link of the website where the review was present.
+   * - **API ID Path**: content_framework.body[].critics_review.items.origin_website_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  origin_website_link: prismic.LinkField;
+
+  /**
+   * rating field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Enter the rating
+   * - **API ID Path**: content_framework.body[].critics_review.items.rating
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  rating: prismic.SelectField<'1' | '2' | '3' | '4' | '5'>;
+
+  /**
+   * review field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter the critic review here.
+   * - **API ID Path**: content_framework.body[].critics_review.items.review
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  review: prismic.RichTextField;
+
+  /**
+   * review date field in *Content Framework → Slice zone → Critics Review → Items*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: Select the date for the review.
+   * - **API ID Path**: content_framework.body[].critics_review.items.review_date
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  review_date: prismic.DateField;
+}
+
+/**
+ * Slice for *Content Framework → Slice zone*
+ */
+export type ContentFrameworkDocumentDataBodyCriticsReviewSlice = prismic.Slice<
+  'critics_review',
+  Record<string, never>,
+  Simplify<ContentFrameworkDocumentDataBodyCriticsReviewSliceItem>
+>;
+
 type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyTabWrapperStartSlice
   | ContentFrameworkDocumentDataBodyTabWrapperEndSlice
@@ -5342,7 +5452,6 @@ type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyCardCarouselSlice
   | ContentFrameworkDocumentDataBodyCategoryCarouselSlice
   | ContentFrameworkDocumentDataBodyCategorySectionSlice
-  | ContentFrameworkDocumentDataBodyPageTabsSlice
   | ContentFrameworkDocumentDataBodyAnchorPointSlice
   | ContentFrameworkDocumentDataBodyBlogFeedSlice
   | ContentFrameworkDocumentDataBodyCustomLinkedToursSlice
@@ -5370,7 +5479,10 @@ type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyTableV3ColumnSlice
   | ContentFrameworkDocumentDataBodyCarsCarouselSlice
   | ContentFrameworkDocumentDataBodyAirportsCarouselSlice
-  | ContentFrameworkDocumentDataBodyStructuredCardSlice;
+  | ContentFrameworkDocumentDataBodyStructuredCardSlice
+  | ContentFrameworkDocumentDataBodyReviewChipsSlice
+  | ContentFrameworkDocumentDataBodyDetailedReviewSlice
+  | ContentFrameworkDocumentDataBodyCriticsReviewSlice;
 
 /**
  * Content for Content Framework documents
@@ -7037,6 +7149,7 @@ interface ContentPageDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -7049,6 +7162,7 @@ interface ContentPageDocumentData {
     | 'Natasha'
     | 'Nruthya'
     | 'Palak'
+    | 'Rajashree'
     | 'Raavya'
     | 'Rianna'
     | 'Ritu'
@@ -10347,6 +10461,123 @@ export type EmailDocumentDataBodyAdvancedBookingCardsSlice = prismic.Slice<
   never
 >;
 
+/**
+ * Primary content in *email → Slice zone → Image Banner Conditional → Primary*
+ */
+export interface EmailDocumentDataBodyImageBannerConditionalSlicePrimary {
+  /**
+   * Banner Image Height field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select banner image height
+   * - **Default Value**: 726
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.banner_image_height
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_image_height: prismic.SelectField<'726' | '408' | 'Auto', 'filled'>;
+
+  /**
+   * Banner Image Upload field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.banner_image_uploaded
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  banner_image_uploaded: prismic.ImageField<never>;
+
+  /**
+   * Banner Image Url field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: If already uploaded on S3
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.banner_image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_image_url: prismic.LinkField;
+
+  /**
+   * Banner Image ALT field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the Banner Image
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.banner_image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_image_alt: prismic.KeyTextField;
+
+  /**
+   * Banner Link field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.banner_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add only if ADD_UTM is set to true.
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+
+  /**
+   * Specific Cities field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter comma separated city names if you want the product cards to appear for those specific cities. Leave empty if common product cards. Example: ABU_DHABI,DUBAI,PARIS
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.cities
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cities: prismic.KeyTextField;
+
+  /**
+   * Specific countries field in *email → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Comma separated country names if product cards are meant for specific countries. Leave empty if common for all. Ex: INDIA,FRANCE
+   * - **API ID Path**: email.body[].image_banner_conditional.primary.countries
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  countries: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *email → Slice zone*
+ */
+export type EmailDocumentDataBodyImageBannerConditionalSlice = prismic.Slice<
+  'image_banner_conditional',
+  Simplify<EmailDocumentDataBodyImageBannerConditionalSlicePrimary>,
+  never
+>;
+
 type EmailDocumentDataBodySlice =
   | EmailDocumentDataBodyBannerSlice
   | EmailDocumentDataBodyTextBannerSlice
@@ -10382,7 +10613,8 @@ type EmailDocumentDataBodySlice =
   | EmailDocumentDataBodyDealOfTheDaySlice
   | EmailDocumentDataBodyCartAbandonCardSlice
   | EmailDocumentDataBodyStandaloneDealOfTheDaySlice
-  | EmailDocumentDataBodyAdvancedBookingCardsSlice;
+  | EmailDocumentDataBodyAdvancedBookingCardsSlice
+  | EmailDocumentDataBodyImageBannerConditionalSlice;
 
 /**
  * Content for email documents
@@ -10878,6 +11110,7 @@ interface GlobalCityDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -10890,6 +11123,7 @@ interface GlobalCityDocumentData {
     | 'Natasha'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -11727,6 +11961,7 @@ interface GlobalCollectionDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -11739,6 +11974,7 @@ interface GlobalCollectionDocumentData {
     | 'Natasha'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -12238,6 +12474,7 @@ interface GlobalCountryDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -12250,6 +12487,7 @@ interface GlobalCountryDocumentData {
     | 'Natasha'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -13011,6 +13249,7 @@ interface GlobalExperienceDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -13023,6 +13262,7 @@ interface GlobalExperienceDocumentData {
     | 'Natasha'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -13670,6 +13910,7 @@ interface GlobalHomepageDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -13682,6 +13923,7 @@ interface GlobalHomepageDocumentData {
     | 'Natasha'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -15379,7 +15621,7 @@ export interface MicrositeDocumentDataBodyTourListCategorySlicePrimary {
   >;
 
   /**
-   * Primary Sub Category ID [DEV] field in *Microsite → Slice zone → Tour List Category → Primary*
+   * Primary Sub Category ID field in *Microsite → Slice zone → Tour List Category → Primary*
    *
    * - **Field Type**: Number
    * - **Placeholder**: Enter primary subcategory id for the category page
@@ -15488,17 +15730,17 @@ export interface MicrositeDocumentDataBodyTourListCategoryV1SlicePrimary {
   product_cards: prismic.ContentRelationshipField<'product_cards'>;
 
   /**
-   * Sub-category Filter [UNDER-DEV] field in *Microsite → Slice zone → Tour List Category V1 → Primary*
+   * Sub-category Filter field in *Microsite → Slice zone → Tour List Category V1 → Primary*
    *
    * - **Field Type**: Number
-   * - **Placeholder**: sub-category ID to filter bt
+   * - **Placeholder**: sub-category ID to filter by
    * - **API ID Path**: microsite.body[].tour_list_category_v1.primary.sub_category_filter
    * - **Documentation**: https://prismic.io/docs/field#number
    */
   sub_category_filter: prismic.NumberField;
 
   /**
-   * Category Filter [UNDER-DEV] field in *Microsite → Slice zone → Tour List Category V1 → Primary*
+   * Category Filter field in *Microsite → Slice zone → Tour List Category V1 → Primary*
    *
    * - **Field Type**: Number
    * - **Placeholder**: category ID to filter by
@@ -18695,6 +18937,7 @@ interface MicrositeDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -18708,6 +18951,7 @@ interface MicrositeDocumentData {
     | 'Nruthya'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -19505,6 +19749,7 @@ interface NewsPageDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -19518,6 +19763,7 @@ interface NewsPageDocumentData {
     | 'Nruthya'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -21161,6 +21407,775 @@ export type RedirectDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Reviews Page → Other Meta tags*
+ */
+export interface ReviewsPageDocumentDataOtherMetaTagsItem {
+  /**
+   * meta tag field in *Reviews Page → Other Meta tags*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.other_meta_tags[].meta_tag
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_tag: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Reviews Page → FAQ Schema*
+ */
+export interface ReviewsPageDocumentDataFaqSchemaItem {
+  /**
+   * Question field in *Reviews Page → FAQ Schema*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.faq_schema[].question
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  question: prismic.KeyTextField;
+
+  /**
+   * Answer field in *Reviews Page → FAQ Schema*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.faq_schema[].answer
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  answer: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Reviews Page → Content Type*
+ */
+export interface ReviewsPageDocumentDataTaggedContentTypeItem {
+  /**
+   * Content Type Tag field in *Reviews Page → Content Type*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select MB tags
+   * - **API ID Path**: reviews_page.tagged_content_type[].content_type_tag
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  content_type_tag: prismic.SelectField<
+    | 'City Home Page'
+    | 'Travel Guide'
+    | 'Itinerary'
+    | 'Things to do'
+    | 'Stay'
+    | 'Shopping'
+    | 'Art & Culture'
+    | 'Non Headout POI'
+    | 'Best Time to Visit'
+    | 'City Essentials'
+    | 'Top Collections'
+    | 'Events'
+    | 'New Year'
+    | 'Food'
+    | 'Holiday'
+  >;
+}
+
+/**
+ * Content for Reviews Page documents
+ */
+interface ReviewsPageDocumentData {
+  /**
+   * tgid field in *Reviews Page*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Enter tgid of the experience for which the reviews page is about
+   * - **API ID Path**: reviews_page.tgid
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  tgid: prismic.NumberField;
+  /**
+   * Header Ref field in *Reviews Page*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Enter common header ref
+   * - **API ID Path**: reviews_page.header_ref
+   * - **Tab**: Header
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  header_ref: prismic.ContentRelationshipField<'common_header'>;
+  /**
+   * content_framework field in *Reviews Page*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Select a content framework
+   * - **API ID Path**: reviews_page.content_framework
+   * - **Tab**: Content
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  content_framework: prismic.ContentRelationshipField<'content_framework'>;
+  /**
+   * Primary Footer Ref field in *Reviews Page*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Choose Primary Footer
+   * - **API ID Path**: reviews_page.primary_footer_ref
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  primary_footer_ref: prismic.ContentRelationshipField<'common_footer'>;
+
+  /**
+   * Secondary Footer Ref field in *Reviews Page*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Choose Secondary Footer
+   * - **API ID Path**: reviews_page.secondary_footer_ref
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  secondary_footer_ref: prismic.ContentRelationshipField<'common_footer'>;
+  /**
+   * title * field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.title
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * description * field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.description
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Focus Keyword field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter focus keyword
+   * - **API ID Path**: reviews_page.focus_keyword
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  focus_keyword: prismic.KeyTextField;
+
+  /**
+   * image field in *Reviews Page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.image
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image URL* (DEV) field in *Reviews Page*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the Image URL
+   * - **API ID Path**: reviews_page.image_url
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Image ALT* (DEV) field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for Image
+   * - **API ID Path**: reviews_page.image_alt
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
+
+  /**
+   * SEO Keywords field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter Comma Separated list of keywords
+   * - **API ID Path**: reviews_page.seo_keywords
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  seo_keywords: prismic.KeyTextField;
+
+  /**
+   * Canonical Link field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.canonical_link
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  canonical_link: prismic.KeyTextField;
+
+  /**
+   * noindex field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: False
+   * - **API ID Path**: reviews_page.noindex
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  noindex: prismic.SelectField<'False' | 'True', 'filled'>;
+
+  /**
+   * Other Meta tags field in *Reviews Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.other_meta_tags[]
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  other_meta_tags: prismic.GroupField<
+    Simplify<ReviewsPageDocumentDataOtherMetaTagsItem>
+  >;
+
+  /**
+   * FAQ Schema field in *Reviews Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.faq_schema[]
+   * - **Tab**: Meta
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  faq_schema: prismic.GroupField<
+    Simplify<ReviewsPageDocumentDataFaqSchemaItem>
+  >;
+  /**
+   * Author Name field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select author
+   * - **API ID Path**: reviews_page.author_name
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  author_name: prismic.SelectField<
+    | 'Aashica'
+    | 'Abhay'
+    | 'Aditya'
+    | 'Anjali'
+    | 'Ansh'
+    | 'Ayush'
+    | 'Chirantani'
+    | 'Dhruti'
+    | 'Ganesh'
+    | 'Hannah'
+    | 'Harshitha'
+    | 'Hrishita'
+    | 'Ishita'
+    | 'Jagruti'
+    | 'Jamie'
+    | 'Jenifer'
+    | 'Kalyani'
+    | 'Khushboo'
+    | 'Kritika'
+    | 'Krupa'
+    | 'Kubra'
+    | 'Madhushree'
+    | 'Malavika'
+    | 'Maria'
+    | 'Namrata'
+    | 'Natasha'
+    | 'Nruthya'
+    | 'Palak'
+    | 'Raavya'
+    | 'Rajashree'
+    | 'Rianna'
+    | 'Ritu'
+    | 'Saika'
+    | 'Samyukta'
+    | 'Saurodeep'
+    | 'Shaina'
+    | 'Shaona'
+    | 'Shikha'
+    | 'Shraddha'
+    | 'Shravan'
+    | 'Shubhangi'
+    | 'Shubhra'
+    | 'Sruthi'
+    | 'Suneeti'
+    | 'Tanmay'
+    | 'Tanya'
+    | 'Tom'
+    | 'Vandana'
+    | 'Yashna'
+  >;
+
+  /**
+   * Freelancer Content field in *Reviews Page*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: reviews_page.is_freelancer
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  is_freelancer: prismic.BooleanField;
+
+  /**
+   * Collection ID field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the collection ID (number)
+   * - **API ID Path**: reviews_page.tagged_collection
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tagged_collection: prismic.KeyTextField;
+
+  /**
+   * Category Name field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select the category name
+   * - **API ID Path**: reviews_page.tagged_category
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  tagged_category: prismic.SelectField<
+    | 'Tickets'
+    | 'Tours'
+    | 'Transportation'
+    | 'Travel Services'
+    | 'Cruises'
+    | 'Food & Drink'
+    | 'Entertainment'
+    | 'Adventure'
+    | 'Aerial Sightseeing'
+    | 'Water Sports'
+    | 'Nature & Wildlife'
+    | 'Wellness'
+    | 'Classes'
+    | 'Specials'
+    | 'Staycations'
+    | 'Sports'
+  >;
+
+  /**
+   * Sub Category Name field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select the sub-category name
+   * - **API ID Path**: reviews_page.tagged_sub_category
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  tagged_sub_category: prismic.SelectField<
+    | 'Theme Parks'
+    | 'Museums'
+    | 'Zoos'
+    | 'Parks'
+    | 'Water Parks'
+    | 'Religious Sites'
+    | 'Landmarks'
+    | 'City Cards'
+    | 'Observation Decks'
+    | 'Aquariums'
+    | 'Walking Tours'
+    | 'Guided Tours'
+    | 'HOHO'
+    | 'City Tours'
+    | 'Private Tours'
+    | 'Bikes & Segway'
+    | 'Shopping'
+    | 'Multi-Day Tours'
+    | 'Photography Tours'
+    | 'Port of Call Tours (Cruise Visitors)'
+    | 'Day Trips'
+    | 'Airport Transfers'
+    | 'Car Rentals'
+    | 'Attraction Transfers'
+    | 'Public Transport'
+    | 'Ferry Tickets'
+    | 'Train Tickets'
+    | 'Train Passes'
+    | 'Private Airport Transfers'
+    | 'Shared Airport Transfers'
+    | 'Wifi & SIM Cards'
+    | 'Lounge Services'
+    | 'Sightseeing Cruises'
+    | 'Dinner Cruises'
+    | 'Lunch Cruises'
+    | 'Evening Cruises'
+    | 'Yacht Tours'
+    | 'Nature Cruises'
+    | 'Dining Experiences'
+    | 'Food Tours'
+    | 'Cooking Classes'
+    | 'Wineries'
+    | 'Coffee & Tea'
+    | 'Pub Crawls'
+    | 'Food Passes'
+    | 'Musicals'
+    | 'Plays'
+    | 'Opera'
+    | 'Cinema'
+    | 'Classical Concerts'
+    | 'Comedy Shows'
+    | 'Sports'
+    | 'Cabarets'
+    | 'Ballet'
+    | 'Shows Opening Soon'
+    | 'New Arrivals'
+    | "Kids' Shows"
+    | 'Shows Reopening'
+    | 'Pantomimes'
+    | 'See it in Style'
+    | 'Dance'
+    | 'Magic Shows'
+    | 'Immersive Theater'
+    | 'Circus Shows'
+    | 'Fantasy Shows'
+    | 'Drama Shows'
+    | 'Theatrical Concerts'
+    | 'Church Concerts'
+    | 'Flamenco Shows'
+    | 'Skydiving'
+    | 'Skiing'
+    | 'Bungee Jumping'
+    | 'Ziplining'
+    | 'Climbing'
+    | 'Racing'
+    | 'Indoor Adventure'
+    | 'Desert Safari'
+    | 'Outdoor Activities'
+    | 'Mountain Excursions'
+    | 'Go Karting'
+    | 'Helicopter Tours'
+    | 'Hot Air Balloon'
+    | 'Airplane Tours'
+    | 'Cable Car Tours'
+    | 'Scuba Diving'
+    | 'Surfing'
+    | 'Jet Skiing'
+    | 'Kayaking'
+    | 'Rafting'
+    | 'Boat Rentals'
+    | 'Speed Boat Tours'
+    | 'Snorkeling'
+    | 'Marine walk'
+    | 'Paddle Sport'
+    | 'Safari'
+    | 'Hiking & Trails'
+    | 'Spa'
+    | 'Bath'
+    | 'Workshops'
+    | 'Combos'
+    | "Valentine's Day"
+    | 'Coming Soon'
+    | 'Digital Experiences'
+    | 'Beaches'
+    | 'Mountains'
+    | 'Wildlife'
+    | 'National Parks'
+    | 'Formula 1'
+    | 'Muay thai'
+  >;
+
+  /**
+   * City Code field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the city code (example - NEW_YORK, LONDON)
+   * - **API ID Path**: reviews_page.tagged_city
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tagged_city: prismic.KeyTextField;
+
+  /**
+   * Country field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select country
+   * - **API ID Path**: reviews_page.tagged_country
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  tagged_country: prismic.SelectField<
+    | 'United States'
+    | 'United Kingdom'
+    | 'United Arab Emirates'
+    | 'Italy'
+    | 'Singapore'
+    | 'France'
+    | 'Spain'
+    | 'Netherlands'
+    | 'Thailand'
+    | 'Australia'
+    | 'Hong Kong'
+    | 'Hungary'
+    | 'Germany'
+    | 'South Korea'
+    | 'Austria'
+    | 'Belgium'
+    | 'Canada'
+    | 'Switzerland'
+    | 'China'
+    | 'Czech Republic'
+    | 'Denmark'
+    | 'Egypt'
+    | 'Finland'
+    | 'Greece'
+    | 'Croatia'
+    | 'Indonesia'
+    | 'Ireland'
+    | 'Iceland'
+    | 'Japan'
+    | 'Cambodia'
+    | 'Morocco'
+    | 'Macao'
+    | 'Mexico'
+    | 'Peru'
+    | 'Malaysia'
+    | 'Norway'
+    | 'New Zealand'
+    | 'Poland'
+    | 'Portugal'
+    | 'Romania'
+    | 'Russia'
+    | 'Sweden'
+    | 'Turkey'
+    | 'Taiwan'
+    | 'Vietnam'
+    | 'South Africa'
+    | 'Online'
+    | 'Andorra'
+    | 'Montenegro'
+    | 'Oman'
+    | 'Puerto Rico'
+    | 'Qatar'
+    | 'Mauritius'
+    | 'Saudi Arabia'
+    | 'Monaco'
+    | 'Bahrain'
+    | 'Azerbaijan'
+    | 'Brazil'
+    | 'Colombia'
+    | 'Malta'
+    | 'Lebanon'
+    | 'Panama'
+    | 'Serbia'
+    | 'Slovenia'
+    | 'Albania'
+    | 'Lithuania'
+    | 'India'
+  >;
+
+  /**
+   * MB Type field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select MB type
+   * - **API ID Path**: reviews_page.tagged_mb_type
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  tagged_mb_type: prismic.SelectField<
+    | 'A1 - Collection MB'
+    | 'A1 - City Guide'
+    | 'A1 - Home Page'
+    | 'A1 - Sub Category MB'
+    | 'A1 - Category MB'
+    | 'A2 - Sub Category MB'
+    | 'A2 - Category MB'
+    | 'B1 - Global MB'
+    | 'B1 - Global Home Page'
+    | 'C1 - Collection MB'
+  >;
+
+  /**
+   * Page Type field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select page type
+   * - **Default Value**: Shoulder Page
+   * - **API ID Path**: reviews_page.tagged_page_type
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  tagged_page_type: prismic.SelectField<
+    'Shoulder Page' | 'Landing Page',
+    'filled'
+  >;
+
+  /**
+   * Shoulder Page Type field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select shoulder page type
+   * - **API ID Path**: reviews_page.shoulder_page_type
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  shoulder_page_type: prismic.SelectField<
+    | 'Misc'
+    | 'Sub-attractions'
+    | 'About'
+    | 'History'
+    | 'Architecture'
+    | 'Design'
+    | 'Inside'
+    | 'Collections'
+    | 'Paintings'
+    | 'Animals & Exhibits'
+    | 'Habitats'
+    | 'Conservation'
+    | 'Programmes'
+    | 'A2 - Sightseeing Cruises'
+    | 'A2 - Dinner Cruises'
+    | 'A2 - Evening Cruises'
+    | 'A2 - Lunch Cruises'
+    | 'A2 - Yacht Tours'
+    | 'Plan Your Visit'
+    | 'Skip the Line'
+    | 'Guided Tours'
+    | 'Night Tours'
+    | 'Food Tours'
+    | 'Timings'
+    | 'Directions'
+    | 'Parking'
+    | 'Routes'
+    | 'Requirements'
+    | 'Rules'
+    | 'FAQs'
+    | 'Entrances'
+    | 'Restaurants'
+    | 'Facts'
+    | 'Tips'
+    | 'Map'
+    | 'Things to do'
+    | 'Rides'
+    | 'Shows'
+    | 'Dining'
+    | 'Shopping'
+    | 'Events'
+    | 'Halloween'
+    | 'Christmas'
+    | "New Year's Eve"
+  >;
+
+  /**
+   * Shoulder Page Custom Label field in *Reviews Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Label used for header menu if shoulder page type is misc/sub-attraction
+   * - **API ID Path**: reviews_page.shoulder_page_custom_label
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  shoulder_page_custom_label: prismic.KeyTextField;
+
+  /**
+   * MIsc Shoulder Page Mapping field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Header menu where misc page will be mapped
+   * - **API ID Path**: reviews_page.misc_page_mapping
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  misc_page_mapping: prismic.SelectField<
+    | 'ABOUT'
+    | 'VISIT'
+    | 'THINGS_TO_DO'
+    | 'CITY_ATTRACTIONS'
+    | 'TOP_THINGS_TO_DO'
+    | 'CITY_TOURS'
+    | 'CITY_GUIDE'
+    | 'TRIP_PLANNER'
+    | 'WEATHER'
+    | 'ATTRACTIONS'
+    | 'CRUISES'
+  >;
+
+  /**
+   * Primary Tag field in *Reviews Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Used for generating the 'City Guide' menu
+   * - **API ID Path**: reviews_page.primary_tag
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  primary_tag: prismic.SelectField<
+    | 'Travel Guide'
+    | 'Things to do'
+    | 'Trip Planner'
+    | 'Itinerary'
+    | 'Travel Tips'
+    | 'Weather'
+    | 'Best Time to Visit'
+    | 'January'
+    | 'February'
+    | 'March'
+    | 'April'
+    | 'May'
+    | 'June'
+    | 'July'
+    | 'August'
+    | 'September'
+    | 'October'
+    | 'November'
+    | 'December'
+    | 'Where to eat'
+    | 'Where to stay'
+    | 'Neighbourhoods'
+    | 'Family Travel'
+    | 'Transportation'
+    | 'Shopping'
+    | 'Festivals and Events'
+  >;
+
+  /**
+   * Content Type field in *Reviews Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_page.tagged_content_type[]
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  tagged_content_type: prismic.GroupField<
+    Simplify<ReviewsPageDocumentDataTaggedContentTypeItem>
+  >;
+}
+
+/**
+ * Reviews Page document from Prismic
+ *
+ * - **API ID**: `reviews_page`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ReviewsPageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ReviewsPageDocumentData>,
+    'reviews_page',
+    Lang
+  >;
+
+/**
  * Item in *Safety Banner → Options*
  */
 export interface SafetyBannerDocumentDataOptionsItem {
@@ -21655,6 +22670,7 @@ interface ShowpageDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -21668,6 +22684,7 @@ interface ShowpageDocumentData {
     | 'Nruthya'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -22963,6 +23980,7 @@ interface VenuePageDocumentData {
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -22976,6 +23994,7 @@ interface VenuePageDocumentData {
     | 'Nruthya'
     | 'Palak'
     | 'Raavya'
+    | 'Rajashree'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -23352,6 +24371,7 @@ export type AllDocumentTypes =
   | ProductCardsDocument
   | PromoCodesDocument
   | RedirectDocument
+  | ReviewsPageDocument
   | SafetyBannerDocument
   | ShowpageDocument
   | TopAttractionsDocument
@@ -23419,8 +24439,11 @@ declare module '@prismicio/client' {
       ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary,
       ContentFrameworkDocumentDataBodyComparisionTableSliceItem,
       ContentFrameworkDocumentDataBodyComparisionTableSlicePrimary,
+      ContentFrameworkDocumentDataBodyCriticsReviewSliceItem,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSlicePrimary,
+      ContentFrameworkDocumentDataBodyDetailedReviewSliceItem,
+      ContentFrameworkDocumentDataBodyDetailedReviewSlicePrimary,
       ContentFrameworkDocumentDataBodyFaqRowSliceItem,
       ContentFrameworkDocumentDataBodyFaqRowSlicePrimary,
       ContentFrameworkDocumentDataBodyGlobalExperiencesSlicePrimary,
@@ -23438,10 +24461,10 @@ declare module '@prismicio/client' {
       ContentFrameworkDocumentDataBodyListicleV2SlicePrimary,
       ContentFrameworkDocumentDataBodyMicrobrandCardsSliceItem,
       ContentFrameworkDocumentDataBodyMicrobrandCardsSlicePrimary,
-      ContentFrameworkDocumentDataBodyPageTabsSliceItem,
-      ContentFrameworkDocumentDataBodyPageTabsSlicePrimary,
       ContentFrameworkDocumentDataBodyQuestionRepeatableSliceItem,
       ContentFrameworkDocumentDataBodyQuestionRepeatableSlicePrimary,
+      ContentFrameworkDocumentDataBodyReviewChipsSliceItem,
+      ContentFrameworkDocumentDataBodyReviewChipsSlicePrimary,
       ContentFrameworkDocumentDataBodyReviewsSliceItem,
       ContentFrameworkDocumentDataBodyReviewsSlicePrimary,
       ContentFrameworkDocumentDataBodyRichTextSliceItem,
@@ -23527,6 +24550,7 @@ declare module '@prismicio/client' {
       EmailDocumentDataBodyFaqsSlicePrimary,
       EmailDocumentDataBodyHelpSectionSliceItem,
       EmailDocumentDataBodyHelpSectionSlicePrimary,
+      EmailDocumentDataBodyImageBannerConditionalSlicePrimary,
       EmailDocumentDataBodyInstagramFeedSliceItem,
       EmailDocumentDataBodyInstagramFeedSlicePrimary,
       EmailDocumentDataBodyNewsletterBannerSlicePrimary,
@@ -23702,6 +24726,11 @@ declare module '@prismicio/client' {
       PromoCodesDocumentDataPromosItem,
       RedirectDocument,
       RedirectDocumentData,
+      ReviewsPageDocument,
+      ReviewsPageDocumentData,
+      ReviewsPageDocumentDataFaqSchemaItem,
+      ReviewsPageDocumentDataOtherMetaTagsItem,
+      ReviewsPageDocumentDataTaggedContentTypeItem,
       SafetyBannerDocument,
       SafetyBannerDocumentData,
       SafetyBannerDocumentDataOptionsItem,

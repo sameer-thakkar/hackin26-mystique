@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
   padding: 1rem;
   border: 1px solid ${COLORS.GRAY.G7};
   /* height: 17.62rem; */
-  margin: 1px;
   border-radius: 8px;
 
   h4 {
@@ -21,11 +20,17 @@ export const Wrapper = styled.div`
     text-overflow: ellipsis;
   }
   .show-all-reviews {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     ${expandFontToken(FONTS.BUTTON_SMALL)};
     border-radius: 4px;
     background: ${COLORS.PURPS.LIGHT_TONE_4};
     border: 0;
     margin-top: 1rem;
+    padding: 0.5rem 0;
+    color: ${COLORS.BRAND.PURPS};
   }
   @media (max-width: 768px) {
     height: auto;
@@ -95,7 +100,6 @@ export const ReviewHeader = styled.div`
   gap: 0.625rem;
   justify-content: flex-start;
   width: 100%;
-  margin-bottom: 0.75rem;
 `;
 
 export const ImageWrapper = styled.div`
@@ -105,15 +109,15 @@ export const ImageWrapper = styled.div`
   height: 35px;
   width: 35px;
   svg {
-    height: 35px;
-    width: 35px;
+    height: 2.25rem;
+    width: 2.25rem;
   }
 `;
 
 export const MetaInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.25rem;
   h5 {
     color: ${COLORS.GRAY.G3};
     display: -webkit-box;
@@ -122,16 +126,23 @@ export const MetaInfo = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-    line-height: normal;
+    line-height: 1.2;
   }
-  svg {
-    height: 0.875rem;
+  && {
+    svg {
+      height: 0.875rem;
+      width: 0.875rem;
+    }
   }
 `;
 
 export const ReviewStarsWrapper = styled.div`
   display: flex;
-  svg path {
+  gap: 0.1875rem;
+  svg,
+  path {
+    height: 1rem;
+    width: 1rem;
     fill: ${COLORS.BRAND.CANDY};
   }
 `;

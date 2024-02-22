@@ -137,7 +137,7 @@ export const CategoryCarouselSwiper = ({
       key={category.id}
       ref={sectionRef}
     >
-      <TitleRow>
+      <TitleRow className="title-row">
         <h2 className="title" id={category.name}>
           {category.name}
         </h2>

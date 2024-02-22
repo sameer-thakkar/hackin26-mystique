@@ -8,6 +8,7 @@ const VerticalProductCardSlide = ({
   isMobile,
   mediaData,
   showPageDocuments,
+  seeAllUrl,
 }: TVerticalProductCardSlideProps) => {
   const productData = JSON.parse(JSON.stringify(cards));
   const { NEWS_PAGE } = strings;
@@ -15,7 +16,10 @@ const VerticalProductCardSlide = ({
     ranking: {
       popularity: Object.keys(cards),
     },
-    ctaUrl: {},
+    ctaUrl: {
+      link_type: 'Web',
+      url: seeAllUrl,
+    },
     name: NEWS_PAGE.POPULAR_SHOWS,
   };
 

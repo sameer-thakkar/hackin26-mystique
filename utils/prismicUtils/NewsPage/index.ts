@@ -1,7 +1,6 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import { ContentFrameworkDocumentData } from 'types.prismic';
 import { TourGroupDataType } from 'components/NewsPage/interface';
 import {
   getEnglishDocUid,
@@ -9,7 +8,6 @@ import {
   handleSettledPromiseResults,
 } from 'utils';
 import {
-  fetchCollectionReviews,
   fetchTourGroupMedia,
   fetchTourGroupsByCategory,
   fetchTourGroupsByCollection,
@@ -31,6 +29,7 @@ import {
   TLANGUAGELOCALE,
   TOUR_GROUP_MEDIA_RESOURCE_TYPE,
 } from 'const/index';
+import { getCollectionReviewsPromise } from '../reviewsPage/utils';
 import {
   newsArticlesWithCFrameworkGq,
   newsLandingPageGq,
@@ -134,19 +133,6 @@ export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
     lang,
     predicates: predicatesArray,
     graphQuery: newsArticlesWithCFrameworkGq,
-  });
-};
-
-export const getCollectionReviewsPromise = (
-  collectionId: number,
-  cookies: any,
-  lang: TLANGUAGELOCALE
-) => {
-  return fetchCollectionReviews({
-    collectionId,
-    cookies,
-    limit: '9',
-    language: getHeadoutLanguagecode(lang),
   });
 };
 
@@ -278,7 +264,6 @@ export const getNewsPageData = async (
     featuredArticles,
     articlesWithSameTgid,
     collectionReviews,
-    collectionReviewsTgid,
     newsLandingPageData;
 
   const newsLandingPagePromise = getNewsLandingPage();
@@ -293,7 +278,8 @@ export const getNewsPageData = async (
   const collectionReviewsPromise = getCollectionReviewsPromise(
     collectionIdFromPrismic,
     cookies,
-    lang
+    lang,
+    host
   );
 
   const aggregatedPromise = await Promise.allSettled([
@@ -312,7 +298,6 @@ export const getNewsPageData = async (
     allArticles,
   ] = handleSettledPromiseResults(aggregatedPromise, uid);
 
-  const uidToCFIdMap = new Map<string, any>();
   const videoDataMap = new Map<string, string>();
 
   featuredArticles = filterArticlesBasedOnEntMb(featuredArticles?.results, uid);
@@ -321,27 +306,6 @@ export const getNewsPageData = async (
     uid
   );
   allArticles = filterArticlesBasedOnEntMb(allArticles, uid);
-
-  const tgidsFromCollectionReviews =
-    getTgidFromCollectionReviews(collectionReviews);
-  collectionReviewsTgid = new Set([
-    tgidsFromCollectionReviews ? tgidsFromCollectionReviews : [],
-  ]);
-
-  const articles = [
-    ...(allArticles ? allArticles : []),
-    ...(featuredArticles ? featuredArticles : []),
-    ...(articlesWithSameTgid ? articlesWithSameTgid : []),
-  ];
-
-  articles?.forEach((article) => {
-    if (!uidToCFIdMap.has(article.uid))
-      uidToCFIdMap.set(
-        article?.uid,
-        article?.data?.content_framework_ref
-          ?.data as ContentFrameworkDocumentData
-      );
-  });
 
   const tgidMappingData = tgid
     ? await fetchTourGroupV6({
@@ -418,11 +382,7 @@ export const getNewsPageData = async (
 
   const mediaData = await fetchTourGroupMedia({
     hostname,
-    tgids: [
-      ...collectionDataTgids,
-      ...showpageTgids,
-      ...Array.from(collectionReviewsTgid),
-    ],
+    tgids: [...collectionDataTgids, ...showpageTgids],
     cookies,
     resourceType: TOUR_GROUP_MEDIA_RESOURCE_TYPE.MB_EXPERIENCE,
   });
@@ -439,11 +399,13 @@ export const getNewsPageData = async (
   );
 
   const prismicClient = createClient();
-  const showpages = await prismicClient.getAllByType('showpage', {
-    predicates: [
-      predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.tgid`, showpageTgids),
-    ],
-  });
+  const showpages = showpageTgids?.length
+    ? await prismicClient.getAllByType('showpage', {
+        predicates: [
+          predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.tgid`, showpageTgids),
+        ],
+      })
+    : [];
 
   const showPageDocuments =
     Array.from(tgidsOfShows)?.length > 0 ? showpages : [];
@@ -463,7 +425,6 @@ export const getNewsPageData = async (
       articlesWithSameTgid,
       trailerSectionData: filteredTrailerSectionData,
       videoData: Object.fromEntries(videoDataMap),
-      CFData: Object.fromEntries(uidToCFIdMap),
       showPageDocuments,
       subCategoryData: popularShowsData,
       mediaData: mediaData.resourceEntityMedias as [],

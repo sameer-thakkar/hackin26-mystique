@@ -442,6 +442,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                       key={index}
                       // @ts-expect-error TS(2769): No overload matches this call.
                       isActive={activeTabId == tabId}
+                      className="tab-heading"
                       onClick={() =>
                         onTabClick({
                           tabId,
@@ -495,12 +496,12 @@ const TabWrapper = (props: TabWrapperProps) => {
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
     <StyledTabWrapper isGlobalMb={isGlobalMb}>
-      <TitleTextCombo noMargin={true}>
-        <Conditional if={heading?.length}>
+      <Conditional if={heading?.length}>
+        <TitleTextCombo noMargin={true}>
           <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
-        </Conditional>
-        {description ? <RichContent render={description} /> : null}
-      </TitleTextCombo>
+          {description ? <RichContent render={description} /> : null}
+        </TitleTextCombo>
+      </Conditional>
       <div ref={tabsContanier} className="tabs">
         <Conditional if={tabData.length}>
           {tabData.map((tab, index) => {

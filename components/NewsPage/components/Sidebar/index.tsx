@@ -10,6 +10,8 @@ import {
   BookNowCTA,
   Card,
   Container,
+  RatingsWrapper,
+  Separator,
 } from 'components/NewsPage/components/Sidebar/styles';
 import { getObject } from 'components/ShowPages/parseShowPage';
 import Button from 'UI/Button';
@@ -19,7 +21,7 @@ import { MBContext } from 'contexts/MBContext';
 import useWindowSize from 'hooks/useWindowSize';
 import { trackEvent } from 'utils/analytics';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { StarIcon } from 'const/descriptorIcons';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -29,6 +31,7 @@ import {
 import { strings } from 'const/strings';
 import Location from 'assets/location';
 import MusicIcon from 'assets/musicIcon';
+import StarFullNew from 'assets/starFullNew';
 
 export const Ratings = (props: {
   averageRating: number;
@@ -36,11 +39,11 @@ export const Ratings = (props: {
 }) => {
   const { averageRating, reviewCount } = props;
   return (
-    <>
+    <RatingsWrapper>
       <Conditional if={averageRating > 0}>
         <span className="rating">
           {averageRating}
-          <StarIcon />
+          <StarFullNew fillColor={COLORS.BRAND.CANDY} />
         </span>
       </Conditional>
       <Conditional if={averageRating > 0 && reviewCount > 0}>
@@ -52,14 +55,15 @@ export const Ratings = (props: {
           )
         </span>
       </Conditional>
-    </>
+    </RatingsWrapper>
   );
 };
 
-const Sidecard: React.FC<TShowCardProps> = ({
+export const Sidecard: React.FC<TShowCardProps> = ({
   showData,
   showPageUid,
   verticalPoster,
+  showBookNowHeading = true,
 }) => {
   const { host, lang, isDev } = useContext(MBContext);
 
@@ -109,7 +113,7 @@ const Sidecard: React.FC<TShowCardProps> = ({
 
   return (
     <Conditional if={!!id}>
-      <Conditional if={!!listingPrice?.finalPrice}>
+      <Conditional if={!!listingPrice?.finalPrice && showBookNowHeading}>
         <BookNowCTA>
           <h2>
             {strings.BOOK_NOW_CTA}
@@ -118,68 +122,66 @@ const Sidecard: React.FC<TShowCardProps> = ({
         </BookNowCTA>
       </Conditional>
       <Card isShowAvailable={!!listingPrice?.finalPrice}>
-        <div className="card-content">
-          <div className="card-image">
-            <Image
-              url={verticalPoster}
-              alt={name}
-              height="203"
-              width="150"
-              fill
-              fetchPriority="high"
-              loading="eager"
-            />
-          </div>
-          <div className="card-info">
-            <div className="category-and-ratings">
-              <div>{primarySubCategory?.name?.toUpperCase()}</div>
-              <div className="ratings-and-reviews">
-                {/* <a href="/" onClick={handleRatingsClick}> */}
-                <Ratings
-                  averageRating={averageRating}
-                  reviewCount={reviewCount}
-                />
-              </div>
+        <div className="card">
+          <div className="card-content">
+            <div className="card-image">
+              <Image
+                url={verticalPoster}
+                alt={name}
+                height="153"
+                width="150"
+                fill
+                fetchPriority="high"
+                loading="eager"
+              />
             </div>
-            <h3>{name}</h3>
-            <div className="location" role="button" tabIndex={0}>
-              {Location}
-              <a href={theatrePageUrl} onClick={handleTheatreCTAClick}>
-                <span>{theatreName}</span>
-              </a>
-            </div>
-            <Conditional if={!listingPrice?.finalPrice}>
-              <span className="show-unavailable-warning">
-                {strings.SHOW_UNAVAILABLE}
-              </span>
-            </Conditional>
-            <Conditional if={listingPrice?.finalPrice}>
-              <div className="price-block">
-                <PriceBlock
-                  showScratchPrice={true}
-                  showCashback
-                  listingPrice={listingPrice}
-                  lang={lang}
-                  showSavings
-                  id={id}
-                  prefix
-                  key={'price-block'}
-                />
+            <div className="card-info">
+              <div className="category-and-ratings">
+                <div>{primarySubCategory?.displayName?.toUpperCase()}</div>
+                <div className="ratings-and-reviews">
+                  {/* <a href="/" onClick={handleRatingsClick}> */}
+                  <Ratings
+                    averageRating={averageRating}
+                    reviewCount={reviewCount}
+                  />
+                </div>
               </div>
-            </Conditional>
-            <a href={showPageUrl} target="_blank" rel="noreferrer">
-              <Button
-                fillType="fill"
-                widthProp="100%"
-                borderWidth="8px"
-                onClick={handleCheckAvailabiltyClicked}
-              >
-                {listingPrice?.finalPrice
-                  ? strings.CHECK_AVAIL
-                  : strings.MORE_DETAILS}
-              </Button>
-            </a>
+              <h3>{name}</h3>
+              <div className="location" role="button" tabIndex={0}>
+                {Location}
+                <a href={theatrePageUrl} onClick={handleTheatreCTAClick}>
+                  <span>{theatreName}</span>
+                </a>
+              </div>
+              <Separator />
+              <Conditional if={!listingPrice?.finalPrice}>
+                <span className="show-unavailable-warning">
+                  {strings.SHOW_UNAVAILABLE}
+                </span>
+              </Conditional>
+              <Conditional if={listingPrice?.finalPrice}>
+                <div className="price-block">
+                  <PriceBlock
+                    showScratchPrice={true}
+                    showCashback
+                    listingPrice={listingPrice}
+                    lang={lang}
+                    showSavings
+                    id={id}
+                    prefix
+                    key={'price-block'}
+                  />
+                </div>
+              </Conditional>
+            </div>
           </div>
+          <a href={showPageUrl} target="_blank" rel="noreferrer">
+            <Button widthProp="100%" onClick={handleCheckAvailabiltyClicked}>
+              {listingPrice?.finalPrice
+                ? strings.CHECK_AVAIL
+                : strings.MORE_DETAILS}
+            </Button>
+          </a>
         </div>
       </Card>
     </Conditional>

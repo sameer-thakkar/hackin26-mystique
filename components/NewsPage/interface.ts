@@ -33,6 +33,7 @@ export type TourGroupDataType = {
     productImages: Record<string, any>[];
   };
   id: number;
+  reviewsDetails: Record<string, any>;
 };
 
 export type TNewsPageData = {
@@ -40,7 +41,6 @@ export type TNewsPageData = {
   allArticles: PrismicDocumentWithUID[];
   featuredArticles: PrismicDocumentWithUID[];
   articlesWithSameTgid: PrismicDocumentWithUID[];
-  CFData: Record<string, any>;
   trailerSectionData: TourGroupDataType[];
   showPageDocuments: ShowpageDocument[];
   subCategoryData: any;

@@ -20,7 +20,11 @@ import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID } from 'const/airportTransfers';
 import { CATEGORY_BANNER, SUB_CATEGORY_BANNER } from 'const/bannerDescriptors';
-import { A2_SHOULDER_PAGE_TYPES, SHOW_NAME_TICKETS } from 'const/breadcrumbs';
+import {
+  A2_SHOULDER_PAGE_TYPES,
+  REVIEWS_PAGE_BANNER_HEADING,
+  SHOW_NAME_TICKETS,
+} from 'const/breadcrumbs';
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
   BANNER_API_PARAMS,
@@ -33,6 +37,7 @@ import {
   MB_CATEGORISATION,
   MONTHS,
   PAGE_URL_STRUCTURE,
+  RESOURCE_ASSET_TYPE,
   SUBCATEGORY,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -846,7 +851,7 @@ export const getBreadcrumbLabel = ({
 }) => {
   let formattedLabel;
 
-  if (label === SHOW_NAME_TICKETS) {
+  if (label === SHOW_NAME_TICKETS || label === REVIEWS_PAGE_BANNER_HEADING) {
     formattedLabel = strings.formatString(
       strings.BREADCRUMBS[label as keyof typeof strings.BREADCRUMBS],
       showName
@@ -885,6 +890,10 @@ export const getScrollPercentage = (percentage: number) => {
   }
 
   return scrollPercentage;
+};
+
+export const findImageUrlFromMediaData = (media: Record<string, any>[]) => {
+  return media?.find((item) => item?.type === RESOURCE_ASSET_TYPE.IMAGE)?.url;
 };
 
 export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {

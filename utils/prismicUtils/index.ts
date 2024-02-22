@@ -12,6 +12,7 @@ import getShowPage from 'utils/prismicUtils/showPage';
 import getVenuePageDocument from 'utils/prismicUtils/venuePage';
 import { MICROBRANDS_URL, X_CACHE_HEADER_KEY } from 'const/index';
 import type { TDocumentResponse, TGetPrismicDocument } from './interface';
+import { getReviewsPageDocument } from './reviewsPage';
 
 export const getPrismicDocument = async ({
   req,
@@ -50,6 +51,8 @@ export const getPrismicDocument = async ({
         return await getNewsPageDocument({ req, lang, uid });
       case 'venue_page':
         return await getVenuePageDocument({ req, lang, uid });
+      case 'reviews_page':
+        return await getReviewsPageDocument({ req, lang, uid });
       case 'global_collection':
         return await getGlobalCollection({ req, lang, uid });
       case 'global_experience':

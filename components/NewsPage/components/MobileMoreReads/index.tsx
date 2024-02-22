@@ -13,7 +13,6 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  CTA_TYPE,
   NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
@@ -28,6 +27,8 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   numberOfArticlesToShow, // This higlights the total number of articles to show in component
   initialArticlesToShow,
   newsLandingPageUrl,
+  handleCtaClick,
+  trackingObject,
 }) => {
   const { host, lang, isDev } = useContext(MBContext);
   const [articlesToShow, setArticlesToShow] = useState(initialArticlesToShow);
@@ -56,21 +57,9 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
     return;
   };
 
-  const handleCTAClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
-      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
-    });
-    return;
-  };
-
   useEffect(() => {
-    if (isMoreReadsSectionVisible) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_SECTION_VIEWED,
-        [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
-      });
+    if (isMoreReadsSectionVisible && trackingObject) {
+      trackEvent(trackingObject);
     }
   }, [isMoreReadsSectionVisible]);
 
@@ -80,7 +69,7 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
         <div className="heading-wrapper">
           <h2>{heading}</h2>
           <Conditional if={showAllNewsCTA}>
-            <a href={newsLandingPageUrl} onClick={handleCTAClick}>
+            <a href={newsLandingPageUrl} onClick={handleCtaClick}>
               {ALL_NEWS}
             </a>
           </Conditional>

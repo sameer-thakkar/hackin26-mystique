@@ -7,6 +7,7 @@ export type TShowCardProps = {
   showData: TourGroupDataType;
   showPageUid: string;
   verticalPoster: string;
+  showBookNowHeading?: boolean;
 };
 
 export type TSideBarProps = {

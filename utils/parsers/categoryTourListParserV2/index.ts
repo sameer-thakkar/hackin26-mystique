@@ -78,7 +78,6 @@ export default async function categoryTourListParserV2({
     (response) => {
       try {
         const [collectionData, categoryData, subCategoryData] = response;
-
         if (collectionData.length) {
           primaryCity = collectionData?.[0]?.city;
           currencyObject = collectionData?.[0]?.currency;

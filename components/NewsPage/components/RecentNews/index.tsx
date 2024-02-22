@@ -45,7 +45,7 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
     16 + (page as number) * 8
   );
 
-  const { allArticles, CFData, isMobile } = props;
+  const { allArticles, isMobile } = props;
 
   const { NEWS_PAGE } = strings;
   const { RECENT_NEWS, SHOW_MORE_ARTICLES, COLLAPSE_ALL } = NEWS_PAGE;
@@ -111,14 +111,21 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
         <Wrapper ref={recentNewsRef}>
           {allArticles?.slice(0, articlesToShow)?.map((article, index) => {
             const { data, first_publication_date, uid } = article;
-            const { banner_image, heading, author_name } = data;
+            const {
+              banner_image,
+              heading,
+              author_name,
+              content_framework_ref,
+            } = data;
             const formattedPublishedDateAndTime = formatDateToString(
               new Date(first_publication_date),
               'en',
               NEWS_PAGE_DATE_FORMAT
             );
             const truncatedContent = truncate(
-              extractFirstRichTextSliceContent(CFData, uid),
+              extractFirstRichTextSliceContent(
+                content_framework_ref?.data?.body
+              ),
               75
             );
             const articleUrl = convertUidToUrl({
@@ -175,7 +182,6 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
           content={{
             uniqueArticlesWithSameTgidData: allArticles,
             featuredArticles: [],
-            CFData: {},
           }}
           showAllNewsCTA={false}
           heading={NEWS_PAGE.RECENT_NEWS}

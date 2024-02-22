@@ -11,9 +11,19 @@ import PageContent from 'components/NewsPage/components/Content';
 import NewsMeta from 'components/NewsPage/components/NewsMeta';
 import VerticalProductCardSlide from 'components/NewsPage/components/VerticalProductCardSlide';
 import { TNewsPageProps } from 'components/NewsPage/interface';
-import { uniqueArticlesWithoutRepetition } from 'components/NewsPage/utils';
+import {
+  getTrackingObject,
+  uniqueArticlesWithoutRepetition,
+} from 'components/NewsPage/utils';
+import { trackEvent } from 'utils/analytics';
 import { formatDateToString } from 'utils/dateUtils';
-import { NEWS_PAGE_DATE_FORMAT } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CTA_TYPE,
+  NEWS_PAGE_DATE_FORMAT,
+  NEWS_PAGE_SECTIONS,
+} from 'const/index';
 import { strings } from 'const/strings';
 
 const DesktopMoreReads = dynamic(
@@ -56,7 +66,6 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     tgidMappingData,
     featuredArticles,
     articlesWithSameTgid,
-    CFData,
     trailerSectionData,
     showPageDocuments,
     subCategoryData,
@@ -82,6 +91,17 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
   const uniqueArticlesWithSameTgidData = uniqueArticlesWithoutRepetition(
     featuredArticles,
     articlesWithSameTgid
+  );
+  const moreReadsSectionCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+    });
+  };
+
+  const moreReadsTrackingObject = getTrackingObject(
+    NEWS_PAGE_SECTIONS.MORE_READS
   );
 
   return (
@@ -119,9 +139,10 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               content={{
                 uniqueArticlesWithSameTgidData,
                 featuredArticles,
-                CFData,
                 newsLandingPageUrl,
               }}
+              handleCtaClick={moreReadsSectionCTAClick}
+              trackingObject={moreReadsTrackingObject}
             />
           </LazyComponent>
         </Conditional>
@@ -131,7 +152,6 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               content={{
                 uniqueArticlesWithSameTgidData,
                 featuredArticles,
-                CFData,
               }}
               heading={strings.NEWS_PAGE.MORE_READS}
               showAllNewsCTA
@@ -139,11 +159,12 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
               numberOfArticlesToShow={10}
               initialArticlesToShow={3}
               newsLandingPageUrl={newsLandingPageUrl}
+              handleCtaClick={moreReadsSectionCTAClick}
+              trackingObject={moreReadsTrackingObject}
             />
             <MobileFeaturedNews
               featuredNewsContent={{
                 content: featuredArticles,
-                CFData,
               }}
               newsLandingPageUrl={newsLandingPageUrl}
             />
@@ -154,7 +175,6 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
         <Trailer
           content={{
             trailerSectionData,
-            CFData,
             showPageDocuments,
             tgid,
             videoData,

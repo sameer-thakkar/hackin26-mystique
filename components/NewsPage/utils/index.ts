@@ -1,5 +1,6 @@
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import { RESOURCE_ASSET_TYPE } from 'const/index';
+import { findImageUrlFromMediaData } from 'utils/helper';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 /* Removes the repeated featuredArticles from same tgid articles */
 export const uniqueArticlesWithoutRepetition = (
@@ -21,13 +22,9 @@ export const getVerticalImageUrl = (
   mediaData: Record<string, any>[],
   tgid: number
 ) => {
-  const media = mediaData.find((media) => media.resourceEntityId == tgid);
+  const media = mediaData?.find((media) => media.resourceEntityId == tgid);
 
   return findImageUrlFromMediaData(media?.medias);
-};
-
-export const findImageUrlFromMediaData = (media: Record<string, any>[]) => {
-  return media?.find((item) => item?.type === RESOURCE_ASSET_TYPE.IMAGE)?.url;
 };
 
 export const getShowPageUid = (
@@ -35,4 +32,11 @@ export const getShowPageUid = (
   tgid: number
 ) => {
   return showPageDocuments.find((showPage) => showPage.data.tgid == tgid)?.uid;
+};
+
+export const getTrackingObject = (section: string) => {
+  return {
+    eventName: ANALYTICS_EVENTS.NEWS_PAGE.NEWS_PAGE_SECTION_VIEWED,
+    [ANALYTICS_PROPERTIES.SECTION]: section,
+  };
 };

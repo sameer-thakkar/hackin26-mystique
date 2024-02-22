@@ -64,6 +64,7 @@ interface IStyledHeader {
   isTop?: boolean;
   isCategoryPage?: boolean;
   $isMonthOnMonthPage?: boolean;
+  $isReviewsPage?: boolean;
   isNewLTTLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
@@ -98,7 +99,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
-      check || headerHover ? 100 : 15};
+      check || headerHover ? 100 : 19};
     ${({ isGlobalMb }) =>
       isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
     ${({ isEntertainmentMbListicle, $isPillBarSticky, $isMonthOnMonthPage }) =>
@@ -125,9 +126,9 @@ export const StyledHeader = styled.div<IStyledHeader>`
       top: 0;
       display: block;
       background-color: #150029;
-      height: 380px;
+      height: 320px;
       @media (max-width: 789px) {
-        height:250px;
+        height:200px;
       }
     }`}
 
@@ -161,10 +162,11 @@ export const StyledHeader = styled.div<IStyledHeader>`
         showLttColoredHeader,
         isCategoryPage,
         $isMonthOnMonthPage,
+        $isReviewsPage,
       }) => {
         switch (true) {
           case showLttColoredHeader:
-            return isCategoryPage || $isMonthOnMonthPage
+            return isCategoryPage || $isMonthOnMonthPage || $isReviewsPage
               ? '#1A0232'
               : COLORS.LTT_BANNER_BACKGROUND_COLOR;
           default:
@@ -442,6 +444,7 @@ interface HeaderProps {
   categoryHeaderMenu?: Record<string, any>;
   isNewLTTLandingPageVisible?: boolean;
   isNewsPage?: boolean;
+  isReviewsPage?: boolean;
   uid?: string;
 }
 
@@ -473,6 +476,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
   isNewLTTLandingPageVisible = false,
+  isReviewsPage = false,
   uid,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
@@ -639,6 +643,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isEntertainmentMb={isEntertainmentMb}
       isCategoryPage={isCategoryPage}
       $isMonthOnMonthPage={isMonthOnMonthPage}
+      $isReviewsPage={isReviewsPage}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
       showLttColoredHeader={showLttColoredHeader}
       isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}

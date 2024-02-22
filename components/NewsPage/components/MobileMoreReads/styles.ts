@@ -23,6 +23,9 @@ export const Wrapper = styled.div`
   }
   .articles {
     margin-top: 1rem;
+    @media (max-width: 768px) {
+      margin-top: 1.5rem;
+    }
   }
 
   .news-article {

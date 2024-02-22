@@ -238,7 +238,7 @@ interface TourListProps extends CommonApiProps {
 }
 
 interface TourListMediaProps extends CommonApiProps {
-  tgids: string[] | number[];
+  tgids: string[] | number[] | (string | number)[];
   resourceType: string;
 }
 interface CollectionReviewsProps extends CommonApiProps {
@@ -847,6 +847,8 @@ export const fetchTourGroupReviews = async ({
   hostname,
   limit,
   filterType,
+  sortType,
+  sortOrder,
   offset,
   cookies,
   language = 'en',
@@ -854,6 +856,8 @@ export const fetchTourGroupReviews = async ({
   tgid: string | number;
   hostname?: string;
   filterType?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL' | 'TOP';
+  sortType?: 'RATING' | 'HELPFULNESS' | 'CHRONOLOGICAL' | 'CONTENT_LENGTH';
+  sortOrder?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
   cookies?: { [_key: string]: any };
@@ -868,7 +872,13 @@ export const fetchTourGroupReviews = async ({
       offset: `${offset}`,
     }),
     ...(filterType && {
-      filterType: `${filterType}`,
+      'filter-type': filterType,
+    }),
+    ...(sortType && {
+      'sort-type': sortType,
+    }),
+    ...(sortOrder && {
+      'sort-order': sortOrder,
     }),
   };
   const url = getHeadoutApiUrl({
@@ -877,6 +887,7 @@ export const fetchTourGroupReviews = async ({
     hostname,
     params,
   });
+
   try {
     const headers = constructHeaders({ cookies });
     const res = await fetch(url, { headers });

@@ -277,6 +277,7 @@ const ShowPage = (props: any) => {
   });
 
   const tagsArray = [primarySubCategoryName, ...updatedDescriptors];
+
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,

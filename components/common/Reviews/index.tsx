@@ -13,6 +13,7 @@ import {
   TitleHeader,
   Wrapper,
 } from 'components/common/Reviews/styles';
+import { getVerticalImageUrl } from 'components/NewsPage/utils';
 // import Button from 'UI/Button';
 import { Paginator } from 'UI/Paginator';
 import useOnScreen from 'hooks/useOnScreen';
@@ -39,7 +40,8 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
     unobserve: true,
   });
 
-  const { heading, reviews, isMobile, mediaData } = props;
+  const { heading, reviews, isMobile, trackingObject } = props;
+  const { reviewsData, mediaData, tgidToReviewsPageUidMapping } = reviews;
 
   // const { SEE_ALL } = strings;
 
@@ -115,10 +117,7 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
 
   useEffect(() => {
     if (isReviewsSectionVisible) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.REVIEWS_SECTION_VIEWED,
-        [ANALYTICS_PROPERTIES.SECTION]: 'Reviews Section',
-      });
+      trackEvent(trackingObject);
     }
   }, [isReviewsSectionVisible]);
 
@@ -141,7 +140,7 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
                 disabled={
                   Number(swiper?.activeIndex) +
                     Number(swiper?.params?.slidesPerView) >=
-                  reviews?.length
+                  reviewsData?.items?.length
                 }
               />
             </NavigationButtons>
@@ -154,42 +153,46 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
         </Controls>
       </TitleHeader>
       <Swiper {...swiperOptions}>
-        {reviews?.map((review, index) => {
-          const {
-            tourGroup,
-            nonCustomerName,
-            rating,
-            content,
-            reviewTime,
-            translatedContent,
-          } = review;
+        {reviewsData.items?.map(
+          (review: Record<string, any>, index: number) => {
+            const {
+              tourGroup,
+              nonCustomerName,
+              rating,
+              content,
+              reviewTime,
+              translatedContent,
+            } = review;
 
-          const verticalPoster = mediaData?.filter((media: any) => {
-            return +media.resourceEntityId == tourGroup?.id;
-          });
-          const verticalPosterUrl = verticalPoster[0]?.medias[0]?.url;
+            const verticalPosterUrl = getVerticalImageUrl(
+              mediaData?.resourceEntityMedias,
+              tourGroup?.id
+            );
 
-          return (
-            <ReviewCard
-              key={index}
-              tourGroupName={tourGroup?.name}
-              reviewMedia={verticalPosterUrl}
-              reviewerImgUrl={review?.reviewerImgUrl}
-              customerName={nonCustomerName}
-              rating={rating}
-              content={translatedContent ?? content}
-              reviewTime={reviewTime}
-              isMobile={isMobile}
-            />
-          );
-        })}
+            return (
+              <ReviewCard
+                key={index}
+                tourGroupName={tourGroup?.name}
+                tourGroupId={tourGroup?.id}
+                reviewMedia={verticalPosterUrl}
+                reviewerImgUrl={review?.reviewerImgUrl}
+                tgidToReviewsPageUidMapping={tgidToReviewsPageUidMapping}
+                customerName={nonCustomerName}
+                rating={rating}
+                content={translatedContent ?? content}
+                reviewTime={reviewTime}
+                isMobile={isMobile}
+              />
+            );
+          }
+        )}
       </Swiper>
       <Conditional if={isMobile}>
         <div className="paginator">
           <Paginator
             tabSize={0.9375}
             dotSize={0.25}
-            totalCount={reviews?.length}
+            totalCount={reviewsData?.items?.length}
             activeIndex={Number(swiper?.realIndex)}
           />
         </div>

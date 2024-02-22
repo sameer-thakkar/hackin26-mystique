@@ -49,7 +49,7 @@ export const Wrapper = styled.div<{
   $noOfArticles: number;
 }>`
   display: grid;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   .swiper {
     max-width: ${SIZES.MAX_WIDTH};
     width: calc(100vw - 5.46vw * 2);

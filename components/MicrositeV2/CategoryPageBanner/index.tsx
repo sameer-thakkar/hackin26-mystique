@@ -17,8 +17,9 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
   heading,
   bannerImgUrl,
   isMobile,
-  breadcrumbs,
+  breadcrumbs = {},
   isMonthOnMonthPage = false,
+  showTrustBoosters = true,
 }) => {
   const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -41,11 +42,13 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
   return (
     <Wrapper hasScrolled={hasScrolled} $isMonthOnMonthPage={isMonthOnMonthPage}>
       <Container>
-        <Breadcrumbs
-          breadcrumbs={breadcrumbs}
-          isMobile={isMobile}
-          isCategoryPage
-        />
+        <Conditional if={Object.keys(breadcrumbs).length}>
+          <Breadcrumbs
+            breadcrumbs={breadcrumbs}
+            isMobile={isMobile}
+            isCategoryPage
+          />
+        </Conditional>
         <BannerContent>
           <h1>{heading}</h1>
           <Conditional if={bannerImgUrl}>
@@ -62,7 +65,9 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
         </BannerContent>
         <Separator />
       </Container>
-      <TrustBooster isMobile={isMobile} />
+      <Conditional if={showTrustBoosters}>
+        <TrustBooster isMobile={isMobile} />
+      </Conditional>
     </Wrapper>
   );
 };

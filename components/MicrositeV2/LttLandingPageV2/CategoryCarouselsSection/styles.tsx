@@ -76,11 +76,6 @@ export const TitleRow = styled.div`
 
     svg {
       cursor: pointer;
-      :not(.disabled):hover {
-        circle {
-          stroke: ${COLORS.GRAY.G4};
-        }
-      }
     }
     .chevron-left {
       margin-right: 0.5rem;

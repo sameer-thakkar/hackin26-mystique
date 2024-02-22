@@ -50,7 +50,7 @@ export const BannerContent = styled.div`
   align-items: center;
   margin: 0.25rem 0 3.25rem 0;
   @media (max-width: 768px) {
-    margin: 1.5rem 0;
+    margin: 1rem 0;
   }
 `;
 export const Separator = styled.div`
@@ -77,11 +77,11 @@ export const Gradient = styled.div<{
   hasScrolled: boolean;
 }>`
   position: absolute;
-  bottom: -30px;
+  bottom: -80px;
   right: 50px;
   z-index: ${({ hasScrolled }) => (hasScrolled ? 0 : 16)};
   width: 18.125rem;
-  height: 11.125rem;
+  height: 5.125rem;
   border-radius: 50%;
   opacity: 0.2;
   filter: blur(117px);

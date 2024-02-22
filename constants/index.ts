@@ -288,6 +288,7 @@ export const CUSTOM_TYPES = {
   HEADOUT_CATEGORY_CONTENT: 'ho_category_content',
   HOHO_ROUTES: 'hoho_routes',
   TOP_ATTRACTIONS: 'top_attractions',
+  REVIEWS_PAGE: 'reviews_page',
 };
 
 export const TEMPLATES = {
@@ -501,6 +502,9 @@ export const ANALYTICS_EVENTS = {
   FILTER_DRAWER_OPENED: 'Filter Drawer Opened',
   COMBO_CARDS_CLICKED: 'Combo Card Clicked',
   SHOULDER_PAGE_CTA_CLICKED: 'Shoulder Page CTA Clicked',
+  REVIEWS_PAGE_CTA_CLICKED: 'Reviews Page CTA Clicked',
+  RATING_WIDGET_CLICKED: 'Rating Widget Clicked',
+  REVIEWS_PAGE_SECTION_VIEWED: 'Reviews Page Section Viewed',
   BOOSTERS: {
     PRESENT: 'Booster Present',
     VIEWED: 'Product Booster Viewed',
@@ -952,6 +956,7 @@ export const PAGE_TYPES = {
   NEWS_PAGE: 'News Page',
   HOHO: 'Hop-On Hop-Off',
   AIRPORT_TRANSFERS: 'Airport Transfers',
+  REVIEWS_PAGE: 'Reviews Page',
 };
 
 export const SHOULDER_PAGE_TYPES = {
@@ -1020,6 +1025,7 @@ export const QUERY_PARAMS = {
   LIMIT: 'limit',
   OFFSET: 'offset',
   PAGE: 'page',
+  FILTER_REVIEWS: 'filter-reviews',
 };
 
 export const LOCALE_ORDER = [
@@ -1080,6 +1086,7 @@ export const CTA_TYPE = {
   SHOW_MORE_ARTICLES: 'Show More Articles',
   VIEW_ROUTES: 'View All Routes',
   TICKETS: 'Tickets',
+  LOAD_MORE: 'Load More',
 };
 
 export const HIGHLIGHT_TYPES = {
@@ -1174,6 +1181,11 @@ export const SLICE_TYPES = {
   STRUCTURED_CARD: 'structured_card',
   // Airport Transfer
   CARS_CAROUSEL: 'cars_carousel',
+  //Reviews Page
+  DETAILED_REVIEW: 'detailed_review',
+  REVIEW_CHIPS: 'review_chips',
+  CRITICS_REVIEWS: 'critics_review',
+  CONTRIBUTORS_REVIEW: 'contributors_review',
 };
 
 export const CASHBACK_TYPES = {
@@ -1399,6 +1411,7 @@ export const BANNER_API_PARAMS = {
   },
   ELM_TYPE: {
     VIDEO: 'VIDEO',
+    IMAGE: 'IMAGE',
   },
 };
 
@@ -1834,10 +1847,59 @@ export const SUBCATEGORY = {
   CITY_CARDS: 'City Cards',
 };
 
+export const REVIEWS_PAGE_BANNER_ILLUSTRATION =
+  'https://cdn-imgix.headout.com/media/images/ec1dfb688ac20d1222e805405e66e86a-reviews-dweb.png';
+
+export const REVIEW_CHIPS_BACKGROUND_ILLUSTRATION =
+  'https://cdn-imgix.headout.com/media/images/86ce0621f7a25d709e3ed8133b068ccf-adobestock_652508416.jpeg';
+
 export const LTT_PERMANENT_SHOWS_TGIDS = [
   16818, 16816, 22293, 3031, 19737, 20045, 17432, 18161, 13402, 9858, 2863,
   9162, 9723, 3023, 3027, 3032, 3026, 3028, 3037, 2843, 18551,
 ];
+
+export const RATINGS_ORDER = [5, 4, 3, 2, 1];
+
+export const FILTER_RATING_TO_API_PARAM_MAPPING: TFilterRating = {
+  'most-relevant': {
+    'filter-type': 'TOP',
+    'sort-type': 'HELPFULNESS',
+    'sort-order': 'DESC',
+    value: 'most-relevant',
+    default: true,
+    label: strings.REVIEWS_PAGE.MOST_RELEVANT,
+  },
+  'high-to-low': {
+    'filter-type': 'TOP',
+    'sort-type': 'RATING',
+    'sort-order': 'DESC',
+    value: 'high-to-low',
+    label: strings.REVIEWS_PAGE.RATING_HIGH_TO_LOW,
+  },
+  'low-to-high': {
+    'filter-type': 'TOP',
+    'sort-type': 'RATING',
+    'sort-order': 'ASC',
+    value: 'low-to-high',
+    label: strings.REVIEWS_PAGE.RATING_LOW_TO_HIGH,
+  },
+};
+
+export type TFilterRating = {
+  [key: string]: Record<string, any>;
+};
+
+export type TFilterRatingKeys = keyof typeof FILTER_RATING_TO_API_PARAM_MAPPING;
+
+export const REVIEWS_PAGE_SECTIONS = {
+  DETAILED_REVIEW: 'Detailed Reviews',
+  CRITIC_REVIEWS: 'Critic Reviews',
+  USER_REVIEWS: 'User Reviews',
+  CONTRIBUTOR_REVIEW: 'Contributor Review',
+  MORE_READS: 'More Reads',
+  CRITICS_USER_REVIEWS: 'Critics/User Reviews',
+  REVIEWS: 'Reviews',
+};
 
 export const BOOSTER_EXPERIMENT_UIDS = {
   'www.thevaticantickets.com': {

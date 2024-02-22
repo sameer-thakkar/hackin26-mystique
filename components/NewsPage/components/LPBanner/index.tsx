@@ -50,7 +50,7 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
     }
   }, [swiper]);
 
-  const { featuredArticles, CFData } = props;
+  const { featuredArticles } = props;
   const { READ_MORE, NEWS_PAGE } = strings;
   const { FEATURED } = NEWS_PAGE;
 
@@ -112,9 +112,16 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
         <Swiper {...swiperOptions}>
           {featuredArticles.slice(0, 5)?.map((article, index) => {
             const { data, first_publication_date, uid } = article;
-            const { banner_image, heading, author_name } = data;
+            const {
+              banner_image,
+              heading,
+              author_name,
+              content_framework_ref,
+            } = data;
             const truncatedContent = truncate(
-              extractFirstRichTextSliceContent(CFData, article.uid),
+              extractFirstRichTextSliceContent(
+                content_framework_ref?.data?.body
+              ),
               isMobile ? 160 : 200
             );
             const formattedPublishedDateAndTime = formatDateToString(

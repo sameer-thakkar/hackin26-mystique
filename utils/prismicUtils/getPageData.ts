@@ -71,6 +71,7 @@ import {
 import { LOG_LEVELS } from 'const/logs';
 import getRouteDetailsDoc from './getRouteDetails';
 import { getShowPageCollectionsByTgid } from './getShowPageCollections';
+import { getReviewsPageData } from './reviewsPage';
 import { fetchPrismicDocument } from '.';
 
 function getQueryparams(req: NextApiRequest) {
@@ -174,6 +175,21 @@ export const getPageData = async ({
         isDev,
         host,
         hostname,
+        lang as TLANGUAGELOCALE,
+        cookies,
+        currencyListPromise,
+        domainConfigPromise
+      );
+    }
+
+    if (ContentType === CUSTOM_TYPES.REVIEWS_PAGE) {
+      return await getReviewsPageData(
+        CMSContent,
+        ContentType,
+        isDev,
+        host,
+        hostname,
+        query,
         lang as TLANGUAGELOCALE,
         cookies,
         currencyListPromise,

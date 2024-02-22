@@ -3,4 +3,5 @@ export type TVerticalProductCardSlideProps = {
   isMobile: boolean;
   mediaData: Record<string, any>[];
   showPageDocuments: Record<string, any>[];
+  seeAllUrl?: string;
 };

@@ -29,6 +29,12 @@ export const RatingsWrapper = styled.div`
     color: ${COLORS.GRAY.G6};
     margin-left: 4px;
   }
+  @media (max-width: 768px) {
+    svg {
+      height: 0.5rem;
+      width: 0.5rem;
+    }
+  }
 `;
 
 interface IRatingProps {

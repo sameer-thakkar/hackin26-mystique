@@ -90,6 +90,10 @@ export const Container = styled.main`
         ${expandFontToken(FONTS.UI_LABEL_SMALL)};
       }
     }
+
+    .title-row {
+      padding: 0;
+    }
   }
 `;
 

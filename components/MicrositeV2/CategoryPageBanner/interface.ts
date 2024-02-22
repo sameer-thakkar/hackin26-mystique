@@ -4,4 +4,5 @@ export type TCategoryPageBannerProps = {
   bannerImgUrl: string;
   breadcrumbs: Record<string, any>;
   isMonthOnMonthPage?: boolean;
+  showTrustBoosters?: boolean;
 };

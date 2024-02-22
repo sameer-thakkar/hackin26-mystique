@@ -31,7 +31,7 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
   const [swiper, setSwiperInstance] = useState<TSwiper>();
   const { host, lang, isDev } = useContext(MBContext);
 
-  const { content, CFData } = featuredNewsContent;
+  const { content } = featuredNewsContent;
   const { FEATURED_NEWS, ALL_NEWS } = strings.NEWS_PAGE;
 
   useEffect(() => {
@@ -77,6 +77,7 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
         <Swiper {...swiperParams}>
           {content?.slice(0, 4).map((article, index: number) => {
             const { data, first_publication_date } = article;
+            const { content_framework_ref } = data;
             let { heading, banner_image } = data;
             heading = truncate(heading, 55);
 
@@ -93,7 +94,9 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
               hostname: host,
             });
             const truncatedContent = truncate(
-              extractFirstRichTextSliceContent(CFData, article.uid),
+              extractFirstRichTextSliceContent(
+                content_framework_ref?.data?.body
+              ),
               70
             );
 

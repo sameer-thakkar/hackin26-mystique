@@ -15,6 +15,7 @@ const contentTypes: AllDocumentContentTypes[] = [
   'global_experience',
   'global_city',
   'global_homepage',
+  'reviews_page',
 ];
 
 const getPrismicDocumentType = async (

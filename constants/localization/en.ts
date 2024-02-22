@@ -784,6 +784,7 @@ const en = {
     LONDON_THEATRE_NEWS: 'London Theatre News',
     BROADWAY_SHOW_NEWS: 'Broadway Show News',
     NEWS_PAGE: 'News Page',
+    REVIEWS_PAGE_BANNER_HEADING: '{0} reviews',
   },
   AMENITIES: {
     Restaurant: 'Restaurant',
@@ -1006,6 +1007,23 @@ const en = {
       HEADING: 'Best theatre deals & news straight to your inbox',
       SUBHEADING: `Join our mailing list to get the latest news & hottest deals on theatre shows.`,
     },
+  },
+  REVIEWS_PAGE: {
+    BANNER_HEADING: '{0} reviews',
+    REVIEWS_COUNT: '{0} Reviews',
+    AWESOME: 'Awesome',
+    GOOD: 'Good',
+    AVERAGE: 'Average',
+    POOR: 'Poor',
+    TERRIBLE: 'Terrible',
+    REVIEW_BY_HEADOUT: 'Here’s what we think: Review by Headout',
+    WHAT_PEOPLE_ARE_SAYING: 'What people are saying',
+    MOST_RELEVANT: 'Most relevant',
+    RATING_HIGH_TO_LOW: 'Rating: High to Low',
+    RATING_LOW_TO_HIGH: 'Rating: Low to High',
+    CRITIC_REVIEWS: 'Critic reviews',
+    USER_REVIEWS: 'User reviews',
+    CONTRIBUTORS_REVIEW: 'Contributor’s review',
   },
 
   AIRPORT_TRANSFER: {

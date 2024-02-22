@@ -86,11 +86,7 @@ export const accumulatingCategoryDataFromCollectionItems = (
   }
 };
 
-export const extractFirstRichTextSliceContent = (
-  CFData: Record<string, any>,
-  uid: string
-) => {
-  const data = CFData[uid]?.body;
+export const extractFirstRichTextSliceContent = (data: Record<string, any>) => {
   let richTextData: string | null = '';
 
   for (let i = 0; i < data?.length; i++) {
