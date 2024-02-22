@@ -13,6 +13,7 @@ export const getUniqueArrayItemsBy = (
   array: any[],
   keyProps: string[]
 ): any[] => {
+  if (!array) return [];
   const updatedArray: any[] = [];
   const uniqueMap: Record<string, boolean> = {};
 

@@ -358,7 +358,10 @@ export const attachQueryParam = (
 };
 
 export const stringIdfy = (string: string) => {
-  return string?.trim().replace(/[\s&]/g, '-').toLowerCase();
+  return string
+    ?.trim()
+    .replace(/[^a-zA-Z0-9]/g, '-')
+    .toLowerCase();
 };
 
 export const csvTgidToArray = (csv: string | KeyTextField | undefined) => {
