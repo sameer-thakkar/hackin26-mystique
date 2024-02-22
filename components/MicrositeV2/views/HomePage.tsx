@@ -36,7 +36,6 @@ import {
 } from 'utils/analytics';
 import {
   checkIfCategoryHeaderExists,
-  checkIfLTTMB,
   checkIfLTTMBLandingPage,
   getBannerDescriptors,
   getDiscountedProducts,
@@ -271,7 +270,6 @@ export const HomePage = (props: any) => {
   } = props;
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
-  const isLTT = checkIfLTTMB(uid);
 
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -768,7 +766,6 @@ export const HomePage = (props: any) => {
           primaryHeading={footer?.footer_heading}
           isEntertainmentMb={isEntertainmentMb}
           isCatOrSubCatPage={isCatOrSubCatPage}
-          isLTT={isLTT}
         />
       </LazyComponent>
     </V2MicrositeWrapper>

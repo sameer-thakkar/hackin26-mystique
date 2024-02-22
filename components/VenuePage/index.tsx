@@ -19,7 +19,7 @@ import {
 } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
-import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { getLangObject } from 'utils/helper';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -100,7 +100,6 @@ const VenuePage = (props: IVenuePageProps) => {
   } = CMSContent;
 
   const { slots }: SimplifiedSlotsData = inventorySlotData || {};
-  const isLTT = checkIfLTTMB(uid);
 
   useEffect(() => {
     sendVariablesToDataLayer({
@@ -483,7 +482,6 @@ const VenuePage = (props: IVenuePageProps) => {
         secondarySlices={secondaryFooter?.data?.body || []}
         primaryHeading={commonFooter?.data?.footer_heading}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
-        isLTT={isLTT}
       />
     </>
   );

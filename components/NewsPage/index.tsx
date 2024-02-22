@@ -7,7 +7,7 @@ import Header from 'components/MicrositeV2/Header';
 import ArticlePage from 'components/NewsPage/ArticlePage';
 import { getAlternateLanguages, getHeadoutLanguagecode } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
-import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { getLangObject } from 'utils/helper';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -79,7 +79,6 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
-  const isLTT = checkIfLTTMB(uid);
 
   useEffect(() => {
     if (!eventsReady) return;
@@ -165,7 +164,6 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
         secondarySlices={secondaryFooter?.data?.body || []}
         primaryHeading={commonFooter?.data?.footer_heading}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
-        isLTT={isLTT}
       />
     </>
   );

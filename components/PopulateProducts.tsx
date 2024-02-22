@@ -32,14 +32,13 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
-const Product = dynamic(
-  () => import(/* webpackChunkName: "Product" */ 'components/Product')
+const Product = dynamic(() =>
+  import(/* webpackChunkName: "Product" */ 'components/Product')
 );
-const TicketCard = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
-    )
+const TicketCard = dynamic(() =>
+  import(
+    /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
+  )
 );
 
 const StyledProductsWrapper = styled.div<{
@@ -180,8 +179,9 @@ const PopulateProducts = (props: any) => {
   const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
     {}
   );
-  const [showEarliestAvailability, setShowEarliestAvailability] =
-    useState(false);
+  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
+    false
+  );
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
@@ -393,8 +393,9 @@ const PopulateProducts = (props: any) => {
                 [ANALYTICS_PROPERTIES.POSITION]:
                   availableToursList?.findIndex((t: any) => t.tgid === tgid) +
                   1,
-                [ANALYTICS_PROPERTIES.IS_TRUNCATED]:
-                  !!entry.target?.querySelector?.('.more-details'),
+                [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
+                  '.more-details'
+                ),
               });
             }
           }
