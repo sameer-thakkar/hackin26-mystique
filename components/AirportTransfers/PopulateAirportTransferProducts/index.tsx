@@ -54,7 +54,7 @@ export const PopulateAirportTransfersProducts = ({
 
   const privateTransfersProductsList =
     availableToursList?.filter(
-      (tour) => tour?.flowType === BOOKING_FLOW_TYPE.AIRPORT_TRANSFER
+      (tour) => tour?.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
     ) ?? [];
 
   const hasSharedTransferProducts =

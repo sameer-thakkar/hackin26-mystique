@@ -620,7 +620,8 @@ const MicrositeV1 = (props: any) => {
     <PopulateProducts
       currency={currency}
       uncategorizedTours={orderedFilteredTours.filter(
-        (tour: TTour) => tour.flowType !== BOOKING_FLOW_TYPE.AIRPORT_TRANSFER
+        (tour: TTour) =>
+          tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
       )}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
