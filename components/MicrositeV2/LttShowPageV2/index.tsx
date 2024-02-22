@@ -102,8 +102,6 @@ const LttShowPageV2 = ({
     data: CMSData,
     alternate_languages,
     lang,
-    commonHeader,
-    commonFooter,
     allShowPagesDocuments,
   } = CMSContent;
   const {
@@ -114,6 +112,8 @@ const LttShowPageV2 = ({
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
+    common_header: commonHeader,
+    common_footer: commonFooter,
   } = CMSData;
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign,
