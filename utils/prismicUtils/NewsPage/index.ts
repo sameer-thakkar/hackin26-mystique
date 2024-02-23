@@ -91,6 +91,9 @@ export const getFeaturedArticlesPromise = (
     pageSize: 30,
     predicates: predicatesArray,
     graphQuery: newsArticlesWithCFrameworkGq,
+    orderings: {
+      field: 'document.first_publication_date desc',
+    },
   });
 };
 
@@ -133,6 +136,9 @@ export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
     lang,
     predicates: predicatesArray,
     graphQuery: newsArticlesWithCFrameworkGq,
+    orderings: {
+      field: 'document.first_publication_date desc',
+    },
   });
 };
 
