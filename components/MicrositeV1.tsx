@@ -48,7 +48,6 @@ import {
   getLangObject,
   groupSlices,
 } from 'utils/helper';
-import { getTotalBoosters } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -61,7 +60,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
-  BOOSTER_EXPERIMENT_UIDS,
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
   PAGE_TYPES,
@@ -261,31 +259,6 @@ const MicrositeV1 = (props: any) => {
   });
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
-
-  const {
-    isEligible: isBoosterExpEligible,
-    variant: boosterExperimentVariant,
-  } = useABTesting({
-    experimentId: 'BOOSTERS_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () =>
-      Object.keys(BOOSTER_EXPERIMENT_UIDS).includes(uid),
-    additionalEventProps: () => {
-      const {
-        total,
-        distribution: {
-          BESTSELLER: bestSellerBoosterCount,
-          SELLING_OUT_FAST: sellingOutFastBoosterCount,
-        },
-      } = getTotalBoosters(uid);
-
-      return {
-        'Number of Booster': total,
-        'Is Best Selling Present': bestSellerBoosterCount ? 'YES' : 'NO',
-        'Is Selling Fast Present': sellingOutFastBoosterCount ? 'YES' : 'NO',
-      };
-    },
-  });
 
   const {
     attraction: attractionCFoot,
@@ -649,9 +622,6 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
       }
       isTourListFiltered={isTourListFiltered}
-      showBoosters={
-        isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
-      }
     />
   );
 
