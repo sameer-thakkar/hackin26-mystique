@@ -818,6 +818,9 @@ const Product = (props: any) => {
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
+  const showGuidedTourDescriptor =
+    (scorpioData.primarySubCategory ?? primarySubCategory)?.id !== 1010;
+
   const getProductCardElements = (
     expandContent: any,
     isLoading?: boolean,
@@ -1039,6 +1042,7 @@ const Product = (props: any) => {
                 isCombo={isCombo}
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
                 horizontal={isPoiMwebCard ? isMobile : isAsideBarOverlay}
+                showGuidedTourDescriptor={showGuidedTourDescriptor}
               />
             </Conditional>
             <Conditional if={hasV1Booster}>
@@ -1204,6 +1208,7 @@ const Product = (props: any) => {
                   cancellationPolicy={cancellationPolicy}
                   cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
                   isMobile={isMobile}
+                  showGuidedTourDescriptor={showGuidedTourDescriptor}
                 />
               </Conditional>
             </CTAContainer>

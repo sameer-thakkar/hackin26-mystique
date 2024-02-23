@@ -27,6 +27,7 @@ export const ProductDescriptors = ({
   cancellationPolicyHoverCallBack,
   showIcons = true,
   isMobile = false,
+  showGuidedTourDescriptor = true,
 }: TProductDescriptors) => {
   const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
     useState(false);
@@ -50,6 +51,9 @@ export const ProductDescriptors = ({
       {descriptorArray.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
+          return null;
+
+        if (item === DESCRIPTORS.GUIDED_TOUR && !showGuidedTourDescriptor)
           return null;
 
         const canShowCancellationPolicyHover =

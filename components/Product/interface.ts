@@ -32,6 +32,7 @@ export type TProductDescriptors = {
   cancellationPolicyHoverCallBack?: () => void;
   showIcons?: boolean;
   isMobile?: boolean;
+  showGuidedTourDescriptor?: boolean;
 };
 
 export type TProductHighlightTabs = {
