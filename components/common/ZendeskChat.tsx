@@ -17,15 +17,23 @@ const ZendeskChat: React.FC<IZendeskChat> = (props) => {
   const isMobile = useWindowSize()?.width < 768;
   const isChatInitializedRef = React.useRef(false);
   const shouldHideZenchatWidget = React.useMemo(() => {
-    const cookieBannerShown =
-      typeof window !== 'undefined' &&
-      Boolean(window?.localStorage?.getItem(COOKIE_BANNER_KEY));
+    let hideStatus =
+      (isMobile && !checkIfGpMotorTicketsMB(uid)) || isLttMonthOnMonthPage;
+    const cookieKeyExists = !!window.localStorage.getItem(COOKIE_BANNER_KEY);
+    if (cookieKeyExists) {
+      return hideStatus;
+    } else {
+      const cookieBannerState = window.localStorage.getItem(COOKIE_BANNER_KEY);
+      const cookieBannerShown =
+        cookieBannerState &&
+        ['shown', 'not compliant'].includes(cookieBannerState);
 
-    return (
-      (isMobile && !checkIfGpMotorTicketsMB(uid)) ||
-      !cookieBannerShown ||
-      isLttMonthOnMonthPage
-    );
+      if (cookieBannerShown) {
+        return hideStatus;
+      }
+    }
+
+    return false;
   }, [isMobile, uid, isLttMonthOnMonthPage]);
 
   /**
