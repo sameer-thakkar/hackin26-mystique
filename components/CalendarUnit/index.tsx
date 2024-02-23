@@ -18,6 +18,7 @@ import {
   ANALYTICS_PROPERTIES,
   CALENDAR_UNIT,
   MONTH_ON_MONTH_PAGE_SECTIONS,
+  TLANGUAGELOCALE,
 } from 'const/index';
 import { strings } from 'const/strings';
 import HoveredMonth from 'assets/hoveredMonth';
@@ -29,7 +30,7 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
   displayMonth,
   isMobile,
 }) => {
-  const { uid } = useRecoilValue(appAtom);
+  const { uid, language } = useRecoilValue(appAtom);
   const calendarUnitRef = useRef(null);
   const isIntersecting = useOnScreen({
     ref: calendarUnitRef,
@@ -37,8 +38,8 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
   });
   const [activeHoveredIndex, setActiveHoveredIndex] = useState(-1);
   const orderedMonths = useMemo(
-    () => getOrderedMonthsBasedOnCurrentMonth(),
-    []
+    () => getOrderedMonthsBasedOnCurrentMonth(language as TLANGUAGELOCALE),
+    [language]
   );
 
   const { BEST_WEST_END_SHOWS_CALENDAR } = strings;

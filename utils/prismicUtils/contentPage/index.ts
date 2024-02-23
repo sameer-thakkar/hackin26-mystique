@@ -26,8 +26,12 @@ import { contentPageGq } from './graphQuery';
 
 const { CONTENT_PAGE } = CUSTOM_TYPES;
 
-const { TAGGED_COLLECTION, TAGGED_CITY, TAGGED_PAGE_TYPE, SHOULDER_PAGE_TYPE } =
-  PRISMIC_FIELD_ID;
+const {
+  TAGGED_COLLECTION,
+  TAGGED_CITY,
+  TAGGED_PAGE_TYPE,
+  SHOULDER_PAGE_TYPE,
+} = PRISMIC_FIELD_ID;
 
 const getPrismicContentPageRelatedDocs = (
   mbCity: string,
@@ -100,7 +104,7 @@ const getContentPageDocument = async ({
       // @ts-expect-error Incomplete prismic type
       contentPage.data?.redirect_url?.url ||
       // @ts-expect-error Incomplete prismic type
-      contentPage.data.microsite_document_ref?.data.redirect_url?.url;
+      contentPage.data.microsite_document_ref?.data?.redirect_url?.url;
     if (redirectUrl) {
       return {
         redirectInfo: {
@@ -176,8 +180,13 @@ const getContentPageDocument = async ({
     const hasTicketsCardSlice = Object.keys(baseLangTicketsCardsSlice)?.length;
 
     if (hasTicketsCardSlice) {
-      const { id, slice_type, slice_label, primary, items } =
-        baseLangTicketsCardsSlice;
+      const {
+        id,
+        slice_type,
+        slice_label,
+        primary,
+        items,
+      } = baseLangTicketsCardsSlice;
       const { product_cards } = primary || {};
       const { id: productCardsId } = product_cards || {};
 

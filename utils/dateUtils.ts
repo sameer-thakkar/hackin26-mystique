@@ -3,7 +3,11 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 import localeData from 'dayjs/plugin/localeData';
-import { LANGUAGE_CODE_MAP, LOCALISED_DATE_FORMATS } from 'const/index';
+import {
+  LANGUAGE_CODE_MAP,
+  LOCALISED_DATE_FORMATS,
+  TLANGUAGELOCALE,
+} from 'const/index';
 import { strings } from 'const/strings';
 
 dayjs.extend(advancedFormat);
@@ -204,8 +208,10 @@ export const localDateToJsDate = (dateString?: string) => {
 export const formatDate = (date: Date, dateFormat = 'DD-MM-YYYY') =>
   dayjs(date).format(dateFormat);
 
-export const getOrderedMonthsBasedOnCurrentMonth = () => {
-  const today = dayjs();
+export const getOrderedMonthsBasedOnCurrentMonth = (
+  locale: TLANGUAGELOCALE
+) => {
+  const today = dayjs().locale(locale);
   const nextYear = today.add(1, 'year');
   const monthsList = [];
 
