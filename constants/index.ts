@@ -1130,6 +1130,11 @@ export const LIVE_CHAT = {
   SALES_TRACKER_ID: 'xKAt5wZBBFuxqR7H2oMHEdeZksNqY2VL',
 };
 
+export const ZENDESK_CHAT = {
+  DELAY: 5000,
+  LICENSE_KEY: '5791c268-bf5b-4545-a4c1-521271954710',
+};
+
 export const SLICE_TYPES = {
   LISTICLE_SECTION: 'listicle_section',
   LISTICLE: 'listicle',

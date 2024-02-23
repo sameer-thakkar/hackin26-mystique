@@ -8,7 +8,6 @@ import { TCatAndSubCatPageData } from 'components/CatAndSubCatPage/interface';
 import Clarity from 'components/common/Clarity';
 import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
-import LiveChat from 'components/common/LiveChat';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
@@ -40,6 +39,14 @@ const CookieBanner = dynamic(
   () =>
     import(
       /* webpackChunkName: "CollectionCarousel" */ 'components/common/CookieBanner'
+    ),
+  { ssr: false }
+);
+
+const ZendeskChat = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ZendeskChat" */ 'components/common/ZendeskChat'
     ),
   { ssr: false }
 );
@@ -310,7 +317,10 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         <Component {...pageProps} />
         <ScrollToTop $isLttMonthOnMonthPage={isLttMonthOnMonthPage} />
         <Conditional if={!isLttMonthOnMonthPage}>
-          <LiveChat uid={pageProps?.uid} />
+          <ZendeskChat
+            uid={pageProps?.uid}
+            isLttMonthOnMonthPage={isLttMonthOnMonthPage}
+          />
         </Conditional>
         <DeferredComponent delay={3_000}>
           <CookieBanner

@@ -593,7 +593,7 @@ const Footer: React.FC<FooterProps> = ({
                         <div className="links">
                           <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                             <a
-                              href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
+                              href="https://static.zdassets.com/web_widget/latest/liveChat.html?v=10#key=headout.zendesk.com"
                               target="_blank"
                               rel="noreferrer noopener"
                             >
