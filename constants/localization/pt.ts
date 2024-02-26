@@ -608,21 +608,21 @@ const pt = {
   FIND_ON_MAP: 'Ver no mapa',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Ingressos instantâneos',
-        DESCRIPTION: 'Confirmação direta da bilheteria.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Ingressos da bilheteria',
+        DESCRIPTION: 'Confirmação imediata no seu celular',
       },
-      PRICES_LOVE: {
-        NAME: `Preços que você vai amar`,
-        DESCRIPTION: 'Preços imbatíveis para espetáculos imperdíveis.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Escolha seus assentos`,
+        DESCRIPTION: 'Sempre com a visão que quiser',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Escolha seu assento',
-        DESCRIPTION: 'Tenha os melhores assentos em todos os espetáculos.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Ofertas e descontos exclusivos',
+        DESCRIPTION: `Economize nos melhores espetáculos`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Ingressos oficiais do London Theatre',
-        DESCRIPTION: 'Reserve com rapidez e segurança conosco.',
+      BOOK_AND_RELAX: {
+        NAME: 'Reserve com tranquilidade',
+        DESCRIPTION: '22 milhões de clientes satisfeitos',
       },
     },
     YOUR_PICK: 'Sua escolha',

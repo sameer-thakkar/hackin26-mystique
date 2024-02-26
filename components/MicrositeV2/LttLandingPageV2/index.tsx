@@ -1,19 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { SwiperOptions } from 'swiper';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
-import LazyComponent from 'components/common/LazyComponent';
+import Reviews from 'components/common/Reviews';
 import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
 import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
 import { TLandingPageV2Props } from 'components/MicrositeV2/LttLandingPageV2/interface';
 import SpecialSections from 'components/MicrositeV2/LttLandingPageV2/SpecialSections';
-import { LandingPageWrapper } from 'components/MicrositeV2/LttLandingPageV2/style';
+import {
+  LandingPageWrapper,
+  ReviewSectionWrapper,
+} from 'components/MicrositeV2/LttLandingPageV2/style';
 import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
+import { TMediaData } from 'components/NewsPage/ArticlePage/interface';
+import { MBContext } from 'contexts/MBContext';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
+import { sendLog } from 'utils/logger';
 import { currencyAtom } from 'store/atoms/currency';
-import { LTD_COLLECTION_ID } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  LTD_COLLECTION_ID,
+  RESOURCE_ASSET_TYPE,
+} from 'const/index';
 import { strings } from 'const/strings';
+
+const NUMBER_OF_CATEGORIES_BEFORE_REVIEWS = 3;
+const NUMBER_OF_REVIEWS_TO_FETCH = 9;
 
 const LttLandingPageV2 = ({
   isMobile,
@@ -22,6 +37,8 @@ const LttLandingPageV2 = ({
   browseByCategoriesRef,
   directTgid,
 }: TLandingPageV2Props) => {
+  const { lang } = useContext(MBContext);
+
   const { categories } = categoryProps;
   const categoriesToRender: Array<Record<string, any>> =
     categories?.filter(
@@ -69,10 +86,29 @@ const LttLandingPageV2 = ({
     id: '',
   });
 
+  const collectionReviewsApiEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CollectionReviews,
+    params: {
+      limit: NUMBER_OF_REVIEWS_TO_FETCH.toString(),
+      language: lang,
+    },
+    id: LTD_COLLECTION_ID,
+  });
+
+  let { data: collectionReviews, error: collectionReviewsError } = useSWR<{
+    items: Record<string, any>[];
+  }>(collectionReviewsApiEndpoint, {
+    fetcher: swrFetcher,
+  });
+
   let { data } = useSWR(inventoryEndpoint, {
     fetcher: swrFetcher,
   });
+
   const [lastMinuteActions, setLastMinuteActions] = useState<any>([]);
+  const [mediaData, setMediaData] = useState<{
+    resourceEntityMedias: TMediaData[];
+  }>({ resourceEntityMedias: [] });
 
   useEffect(() => {
     const inventoryData = data?.data;
@@ -96,39 +132,109 @@ const LttLandingPageV2 = ({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!collectionReviews) return;
+
+    const resourceEntityMedias = collectionReviews.items.map(
+      (review: Record<string, any>) => ({
+        resourceEntityId: review.tourGroup.id,
+        medias: [
+          {
+            url: allTours?.[review.tourGroup.id]?.verticalImage?.url,
+            type: RESOURCE_ASSET_TYPE.IMAGE,
+          },
+        ],
+      })
+    );
+    const mediaData = { resourceEntityMedias };
+    setMediaData(mediaData);
+  }, [collectionReviews]);
+
+  useEffect(() => {
+    if (collectionReviewsError) {
+      sendLog({
+        message: `[CollectionReviewsApi] - collection reviews api failed for collection id ${LTD_COLLECTION_ID}`,
+        err: collectionReviewsError,
+      });
+    }
+  }, [collectionReviewsError]);
+
+  const swiperParams: SwiperOptions = {
+    spaceBetween: isMobile ? 0 : 24,
+    preventInteractionOnTransition: true,
+    cssMode: !isMobile,
+
+    ...(isMobile && {
+      slideToClickedSlide: true,
+      loop: isMobile,
+      loopedSlides: NUMBER_OF_REVIEWS_TO_FETCH,
+      slidesPerView: 'auto',
+      autoplay: {
+        disableOnInteraction: false,
+        delay: 8000,
+      },
+      centeredSlides: true,
+    }),
+  };
+
+  const reviewSectionViewedTrackingObject = {
+    eventName: ANALYTICS_EVENTS.PAGE_SECTION_VIEWED,
+    [ANALYTICS_PROPERTIES.SECTION]: 'Reviews',
+  };
+
   return (
     <LandingPageWrapper>
-      <Conditional if={!isMobile}>
-        <BrowseByCategoriesSection
-          categoriesToRender={categoriesToRender}
-          isMobile={isMobile}
-          ref={browseByCategoriesRef}
-        />
-      </Conditional>
+      <BrowseByCategoriesSection
+        categoriesToRender={categoriesToRender}
+        isMobile={isMobile}
+        showGridUI={false}
+        ref={browseByCategoriesRef}
+      />
       <TopLttShowsSection
         isMobile={isMobile}
         topShows={topShows}
-        categoriesToRender={categoriesToRender}
         heading={strings.LTT_LANDING_PAGE.TOP_WEST_END_SHOWS}
-        showBrowseByCategories={true}
+        directTgid={directTgid}
+        showBrowseByCategories={false}
       />
-      <LazyComponent>
-        <SpecialSections
-          allTours={allTours}
-          isMobile={isMobile}
-          title={strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
-          actions={lastMinuteActions}
-          updateActions={setLastMinuteActions}
-          totalNumberOfShows={50}
-          maxNumberOfShows={20}
-          seeAllCardText="show tickets available"
-          preselectedActionName={lastMinuteActions?.[0]?.actionName}
-          hideSeeAll={true}
-          useForcedSekeltonLoaders
-        />
-      </LazyComponent>
+      <SpecialSections
+        allTours={allTours}
+        isMobile={isMobile}
+        title={strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
+        actions={lastMinuteActions}
+        updateActions={setLastMinuteActions}
+        totalNumberOfShows={50}
+        maxNumberOfShows={20}
+        seeAllCardText="show tickets available"
+        preselectedActionName={lastMinuteActions?.[0]?.actionName}
+        hideSeeAll={true}
+        useForcedSekeltonLoaders
+        id="Last minute"
+      />
       <CategoryCarouselsSection
-        categoriesToRender={categoriesToRender}
+        categoriesToRender={categoriesToRender.slice(
+          0,
+          NUMBER_OF_CATEGORIES_BEFORE_REVIEWS
+        )}
+        allTours={allTours}
+        isMobile={isMobile}
+      />
+      <Conditional if={!collectionReviewsError}>
+        <ReviewSectionWrapper id="review-section-wrapper">
+          <Reviews
+            heading={strings.LTT_LANDING_PAGE.LOVED_BY_MILLIONS}
+            reviews={{ reviewsData: collectionReviews, mediaData }}
+            isMobile={isMobile}
+            mediaData={[]}
+            overrideSwiperProps={swiperParams}
+            trackingObject={reviewSectionViewedTrackingObject}
+          />
+        </ReviewSectionWrapper>
+      </Conditional>
+      <CategoryCarouselsSection
+        categoriesToRender={categoriesToRender.slice(
+          NUMBER_OF_CATEGORIES_BEFORE_REVIEWS
+        )}
         allTours={allTours}
         isMobile={isMobile}
       />

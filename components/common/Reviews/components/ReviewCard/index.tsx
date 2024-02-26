@@ -82,7 +82,7 @@ const ReviewCard = (props: any) => {
   const { SHOW_ALL_REVIEWS } = NEWS_PAGE;
 
   const reviewsPageUrl = convertUidToUrl({
-    uid: tgidToReviewsPageUidMapping[tourGroupId] ?? '',
+    uid: tgidToReviewsPageUidMapping?.[tourGroupId] ?? '',
     lang,
     hostname: host,
   });

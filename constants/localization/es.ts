@@ -658,26 +658,28 @@ const es = {
   FIND_ON_MAP: 'Ver en el mapa',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Entradas instantáneas',
-        DESCRIPTION: 'Confirmación directa de la taquilla.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Entradas de taquilla',
+        DESCRIPTION: 'Confirmación instantánea al móvil',
       },
-      PRICES_LOVE: {
-        NAME: `Precios que te encantarán`,
-        DESCRIPTION: 'Precios inigualables para espectáculos imperdibles.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Elige tus asientos`,
+        DESCRIPTION: 'Siempre la vista que quieras',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Escoge tus asientos',
-        DESCRIPTION: 'Consigue los mejores asientos para cada espectáculo.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Ofertas y descuentos exclusivos',
+        DESCRIPTION: `Los mejores espectáculos al mejor precio`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Entradas oficiales para el teatro de Londres',
-        DESCRIPTION: 'Reserva de forma rápida y segura con nosotros.',
+      BOOK_AND_RELAX: {
+        NAME: 'Reserva sencilla',
+        DESCRIPTION: '22 millones de clientes satisfechos',
       },
     },
     YOUR_PICK: 'Tu elección',
     BROWSE_BY_CATEGORIES: 'Buscar por categorías',
     TOP_WEST_END_SHOWS: 'Los mejores espectáculos del West End',
+    TOP_SHOWS: 'Destacados',
+    SEE_MORE_SHOWS: 'Ver {0} espectáculos más',
     LAST_MINUTE_TICKETS: 'Entradas de última hora',
     LOVED_BY_MILLIONS: 'A millones les encanta',
     TODAY: 'Hoy',

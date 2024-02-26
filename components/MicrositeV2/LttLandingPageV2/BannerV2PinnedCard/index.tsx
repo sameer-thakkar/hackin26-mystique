@@ -207,7 +207,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
             <div className="left">
               <Ratings
                 averageRating={averageRating}
-                reviewCount={reviewCount}
+                ratingCount={reviewCount}
                 showReviewsText={false}
               />
               <h3>{title}</h3>

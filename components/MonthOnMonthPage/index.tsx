@@ -101,6 +101,7 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
             categoriesToRender={getUpdatedCategoriesToRender(categories)}
             isMobile={isMobile}
             ref={browseByCategoriesRef}
+            showGridUI={isMobile}
           />
         </Conditional>
         <div className={isMobile ? '' : 'main-wrapper'}>

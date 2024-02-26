@@ -169,15 +169,15 @@ const V2MicrositeWrapper = styled.div<{
     margin-left: auto;
     margin-right: auto;
   }
-  @media (min-width: 768px) {
-    ${CategoriesSection} {
-      ${({ $isCategoriesSectionSticking }) =>
-        $isCategoriesSectionSticking &&
-        `
-        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10), 0px 0px 1px 0px rgba(0, 0, 0, 0.10);
-        `};
-    }
 
+  ${CategoriesSection} {
+    ${({ $isCategoriesSectionSticking }) =>
+      $isCategoriesSectionSticking &&
+      `
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10), 0px 0px 1px 0px rgba(0, 0, 0, 0.10);
+      `};
+  }
+  @media (min-width: 768px) {
     ${StyledHeader} {
       .fixed-wrap {
         ${({ $isCategoriesSectionSticking }) =>
@@ -189,7 +189,9 @@ const V2MicrositeWrapper = styled.div<{
     }
   }
   @media (max-width: 768px) {
-    overflow: hidden;
+    .fixed-wrap {
+      height: inherit;
+    }
     .main-wrapper {
       padding-left: 16px;
       padding-right: 16px;
@@ -416,7 +418,7 @@ export const HomePage = (props: any) => {
     const observeCategoriesSection = () => {
       const top =
         browseByCategorySectionRef.current?.getBoundingClientRect?.()?.top ?? 0;
-      setIsCategoriesSectionSticking(top === 80);
+      setIsCategoriesSectionSticking(top === (isMobile ? 61 : 80));
     };
     window.addEventListener('scroll', observeCategoriesSection);
 

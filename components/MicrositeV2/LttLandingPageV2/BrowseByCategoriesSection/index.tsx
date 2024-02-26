@@ -13,28 +13,56 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { LTT_CATEGORIES } from 'const/lttCategories';
 import { strings } from 'const/strings';
 
+const calculateAutoScrollOffset = (
+  categoryName: string,
+  isMobile: boolean,
+  isGridUI: boolean
+) => {
+  let offset = isMobile ? 125 : 164;
+  if (isGridUI) offset = 90;
+  if (
+    ![LTT_CATEGORIES.lastMinuteTickets.name, LTT_CATEGORIES.top.name].includes(
+      categoryName
+    )
+  ) {
+    if (isGridUI) return offset;
+    offset += isMobile ? 20 : 32;
+  }
+
+  return offset;
+};
+
 const BrowseByCategoriesSection = forwardRef<
   HTMLDivElement,
   TBrowseByCategoriesSection
->(({ categoriesToRender, isMobile }, ref) => {
+>(({ categoriesToRender, isMobile, showGridUI = true }, ref) => {
   const pageMetaData = useRecoilValue(metaAtom);
 
   const [activeCategoryName, setActiveCategoryName] = useState(
     LTT_CATEGORIES.top.name
   );
-  const allCategoryNames = [
-    LTT_CATEGORIES.top.name,
-    ...categoriesToRender.map(({ name }) => name),
-  ];
+
   const observerRef = useRef<IntersectionObserver | null>(null);
   const topShowsObserverRef = useRef<IntersectionObserver | null>(null);
   const observerResetTimeoutId = useRef<NodeJS.Timeout>();
+  const categoryPillRowRef = useRef<HTMLDivElement>(null);
+
+  const allCategoryNames = [
+    ...categoriesToRender.map(({ name }) => name),
+    LTT_CATEGORIES.top.name,
+  ];
+  const categoryChipsToAddAtTheStart = [LTT_CATEGORIES.top];
+
+  if (!showGridUI) {
+    allCategoryNames.unshift(LTT_CATEGORIES.lastMinuteTickets.name);
+    categoryChipsToAddAtTheStart.push(LTT_CATEGORIES.lastMinuteTickets);
+  }
 
   useEffect(() => {
     const observerCallbackGenerator =
       (percentage: number) => (entries: IntersectionObserverEntry[]) => {
         for (let i = entries.length - 1; i >= 0; i--) {
-          const entry = entries[i];
+          const entry = entries[isMobile ? entries.length - i - 1 : i];
           const element = entry.target as HTMLElement;
           const elementHeight = element.offsetHeight;
           const viewportHeight = window.innerHeight;
@@ -53,13 +81,17 @@ const BrowseByCategoriesSection = forwardRef<
       };
     const observer = new IntersectionObserver(observerCallbackGenerator(20), {
       root: null,
-      threshold: 0.55,
+      threshold: isMobile ? 1 : 0.55,
     });
+    /* 
+        Separate observer for top shows section because we need different thresholds
+        because of its height
+    */
     const topShowsObserver = new IntersectionObserver(
-      observerCallbackGenerator(0),
+      observerCallbackGenerator(3),
       {
         root: null,
-        threshold: [0, 0.25, 0.55],
+        threshold: [0.03, 0.25, 0.55],
       }
     );
 
@@ -69,7 +101,8 @@ const BrowseByCategoriesSection = forwardRef<
     allCategoryNames.forEach((name, index) => {
       const element = document.getElementById(name);
       if (element) {
-        if (index === 0) topShowsObserver.observe(element);
+        if (index === allCategoryNames.length - 1)
+          topShowsObserver.observe(element);
         else observer.observe(element);
       }
     });
@@ -81,6 +114,17 @@ const BrowseByCategoriesSection = forwardRef<
       }
     };
   }, [allCategoryNames.length]);
+
+  useEffect(() => {
+    const pill = document.getElementById(`pill-${activeCategoryName}`);
+    if (!(pill && categoryPillRowRef.current)) return;
+
+    categoryPillRowRef.current.scrollBy({
+      left:
+        pill?.getBoundingClientRect().x -
+        categoryPillRowRef.current.clientWidth / 2,
+    });
+  }, [activeCategoryName]);
 
   const onCategoryClicked = (name: string, ranking: number) => {
     if (observerResetTimeoutId.current) {
@@ -95,7 +139,9 @@ const BrowseByCategoriesSection = forwardRef<
     if (topShowsObserverRef.current) {
       topShowsObserverRef.current.disconnect();
     }
+
     setActiveCategoryName(name);
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.CATEGORY_TAB_CLICKED,
       ...getCommonEventMetaData(pageMetaData),
@@ -103,30 +149,37 @@ const BrowseByCategoriesSection = forwardRef<
       [ANALYTICS_PROPERTIES.HEADING]: name,
     });
 
+    const offset = calculateAutoScrollOffset(name, isMobile, showGridUI);
     scroller.scrollTo(name, {
       duration: 800,
       smooth: 'easeInOutQuart',
-      offset: isMobile ? -90 : -188,
+      offset: -offset,
     });
     observerResetTimeoutId.current = setTimeout(() => {
       allCategoryNames.forEach((name, index) => {
         const element = document.getElementById(name);
         if (element) {
-          if (index === 0) topShowsObserverRef.current?.observe?.(element);
+          if (index === allCategoryNames.length - 1)
+            topShowsObserverRef.current?.observe?.(element);
           else observerRef.current?.observe?.(element);
         }
       });
     }, 1500);
   };
+
   const categoryChips = categoriesToRender.map(({ name, id }, index) => {
     const { icon } = LTT_CATEGORIES[id] ?? LTT_CATEGORIES.fallback;
     const currentIcon =
-      icon[activeCategoryName === name && !isMobile ? 'active' : 'default'];
+      icon[activeCategoryName === name && !showGridUI ? 'active' : 'default'];
     return (
       <CategoryWrapper
-        $isActive={activeCategoryName === name && !isMobile}
+        $isActive={activeCategoryName === name && !showGridUI}
+        $showGridUI={showGridUI}
         key={index}
-        onClick={() => onCategoryClicked(name, index + 1)}
+        onClick={() =>
+          onCategoryClicked(name, categoryChipsToAddAtTheStart.length + index)
+        }
+        id={`pill-${name}`}
       >
         <span className="icon">{currentIcon}</span>
         <span className="name">{name}</span>
@@ -135,50 +188,63 @@ const BrowseByCategoriesSection = forwardRef<
   });
 
   categoryChips.unshift(
-    <CategoryWrapper
-      $isActive={activeCategoryName === LTT_CATEGORIES.top.name && !isMobile}
-      onClick={() => onCategoryClicked(LTT_CATEGORIES.top.name, 0)}
-    >
-      <span className="icon">
-        {
-          LTT_CATEGORIES.top.icon[
-            activeCategoryName === LTT_CATEGORIES.top.name && !isMobile
-              ? 'active'
-              : 'default'
-          ]
-        }
-      </span>
-      <span className="name">{strings.LTT_LANDING_PAGE.TOP_SHOWS}</span>
-    </CategoryWrapper>
+    ...categoryChipsToAddAtTheStart.map((category, index) => (
+      <CategoryWrapper
+        key={category.name}
+        $isActive={activeCategoryName === category.name && !showGridUI}
+        $showGridUI={showGridUI}
+        onClick={() => onCategoryClicked(category.name, index)}
+        id={`pill-${category.name}`}
+      >
+        <span className="icon">
+          {
+            category.icon[
+              activeCategoryName === category.name && !showGridUI
+                ? 'active'
+                : 'default'
+            ]
+          }
+        </span>
+        <span className="name">
+          {index === 0
+            ? strings.LTT_LANDING_PAGE.TOP_SHOWS
+            : strings.LTT_LANDING_PAGE.LAST_MINUTE_TICKETS}
+        </span>
+      </CategoryWrapper>
+    ))
   );
 
   return (
-    <CategoriesSection ref={ref} id="browse-by-category-section">
-      <Conditional if={isMobile}>
+    <CategoriesSection
+      ref={ref}
+      id="browse-by-category-section"
+      $showGridUI={showGridUI}
+    >
+      <Conditional if={showGridUI}>
         <div className="browse-by-category-title">
           {strings.LTT_LANDING_PAGE.BROWSE_BY_CATEGORIES}
         </div>
       </Conditional>
-      <div className="categories">
-        <Conditional if={!isMobile}>
+      <Conditional if={!showGridUI}>
+        <div ref={categoryPillRowRef} className="categories">
           {categoryChips.map((category) => category)}
-        </Conditional>
-
-        <div className="row-wrapper">
-          <Conditional if={isMobile}>
-            <div className="row-one">
-              {categoryChips
-                .slice(0, Math.floor(categoriesToRender.length / 2 + 1))
-                .map((category) => category)}
-            </div>
-            <div className="row-two">
-              {categoryChips
-                .slice(Math.floor(categoriesToRender.length / 2 + 1))
-                .map((category) => category)}
-            </div>
-          </Conditional>
         </div>
-      </div>
+      </Conditional>
+
+      <Conditional if={showGridUI}>
+        <div className="row-wrapper">
+          <div className="row-one">
+            {categoryChips
+              .slice(0, Math.floor(categoriesToRender.length / 2 + 1))
+              .map((category) => category)}
+          </div>
+          <div className="row-two">
+            {categoryChips
+              .slice(Math.floor(categoriesToRender.length / 2 + 1))
+              .map((category) => category)}
+          </div>
+        </div>
+      </Conditional>
     </CategoriesSection>
   );
 });

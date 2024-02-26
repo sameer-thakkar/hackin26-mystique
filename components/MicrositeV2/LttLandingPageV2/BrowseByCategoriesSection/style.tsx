@@ -1,16 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
+export const CategoryWrapper = styled.div<{
+  $isActive: boolean;
+  $showGridUI: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: auto;
-  height: 3.25rem;
-  padding: 0.625rem 0.875rem 0.625rem 0.625rem;
+  height: min-content;
+  padding: 0.38rem 0.75rem 0.44rem 0.5rem;
   border: 1px solid ${COLORS.GRAY.G6};
   box-sizing: border-box;
   border-radius: 0.5rem;
@@ -23,20 +26,20 @@ export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
     $isActive &&
     `
       background-color: ${COLORS.PURPS.LIGHT_TONE_4};
-      border: 1px solid ${COLORS.PURPS.LEVEL_15};
+      border-color: ${COLORS.PURPS.LEVEL_15};
     `}
 
   .icon {
-    width: 2rem;
-    height: 2rem;
+    width: 1.75rem;
+    height: 1.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: ease 0.4s;
     margin-right: 0.25rem;
     svg {
-      width: 1.33331rem;
-      height: 1.33331rem;
+      width: 1.16669rem;
+      height: 1.16669rem;
     }
   }
   .name {
@@ -59,10 +62,8 @@ export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
       &:hover {
         background-color: #fafafa;
         .icon {
-          svg {
-            height: 1.375rem;
-            width: 1.375rem;
-
+          &, svg {
+            transform: scale(1.0357)
           }
         }
       }
@@ -70,24 +71,53 @@ export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
   }
 
   @media (max-width: 768px) {
-    border: none;
+    ${({ $showGridUI }) =>
+      $showGridUI
+        ? `
+      border: none;
+      height: 2.75rem;
+      width: max-content;
+      padding: 0.625rem 0.875rem 0.625rem 0.625rem;
+      margin: 0;
+      background: ${COLORS.BRAND.WHITE};
+      .icon,
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+      .icon {
+        margin-right: 0.375rem;
+      }
+      border: 1px solid ${COLORS.PURPS.LIGHT_TONE_4};
+    `
+        : `
+     width: min-content;
+     padding: 0.38rem 0.75rem 0.38rem 0.5rem;
+     margin: 0 0 0 0.75rem;
+     
+     &:first-of-type {
+       margin-left: 1.5rem;
+     }
+     &:last-of-type {
+       margin-right: 1.5rem;
+     }
+     .icon {
+       height: 1.5rem;
+       width: 1.5rem;
+       margin-right: 0.12rem;
+       svg {
+         height: 1rem;
+         width: 1rem;
+       }
+     }
+     .name {
+       width: max-content;
+     }
+    `}
     flex-direction: row;
     align-items: center;
-    height: 2.75rem;
-    width: max-content;
-    border-radius: 0.25rem;
-    border: 1px solid ${COLORS.PURPS.LIGHT_TONE_4};
-    padding: 0.625rem 0.875rem 0.625rem 0.625rem;
-    margin: 0;
-    background: ${COLORS.BRAND.WHITE};
-    .icon,
-    svg {
-      height: 24px;
-      width: 24px;
-    }
-    .icon {
-      margin-right: 6px;
-    }
+    border-radius: 0.375rem;
+
     .name {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
       margin-top: 0;
@@ -95,18 +125,81 @@ export const CategoryWrapper = styled.div<{ $isActive: boolean }>`
   }
 `;
 
-export const CategoriesSection = styled.div`
+const gridUiCategoriesSectionCss = css`
+  position: relative;
+  border-radius: 4px;
+  background-color: #f8f6ff;
+  padding: 1.5rem 0 1.75rem 1.5rem;
+
+  p {
+    ${expandFontToken(FONTS.HEADING_SMALL)};
+    margin-bottom: 0.75rem;
+  }
+  display: flex;
+  flex-direction: column;
+  .row-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 1.5rem);
+    scrollbar-width: none;
+    overflow: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    .row-one,
+    .row-two {
+      display: flex;
+      flex-direction: row;
+      grid-column-gap: 0.75rem;
+      width: max-content;
+      ${CategoryWrapper} {
+        .name {
+          width: max-content;
+        }
+      }
+    }
+    .row-one {
+      margin-bottom: 0.75rem;
+    }
+  }
+`;
+
+const nonGridUiCategoriesSection = css`
+  position: sticky;
+  top: 3.8125rem;
+  z-index: 12;
+  padding: 0.75rem 0rem;
+  background: ${COLORS.BRAND.WHITE};
+
+  .categories {
+    width: 100%;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`;
+
+export const CategoriesSection = styled.div<{ $showGridUI: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  padding: 1.125rem 0;
+  padding: 1.25rem 0;
 
-  .browse-by-category-title {
-    color: ${COLORS.GRAY.G2};
-    ${expandFontToken(FONTS.HEADING_SMALL)};
-    margin-bottom: 0.75rem;
-  }
+  ${({ $showGridUI }) =>
+    $showGridUI &&
+    `
+      .browse-by-category-title {
+        color: ${COLORS.GRAY.G2};
+        ${expandFontToken(FONTS.HEADING_SMALL)};
+        margin-bottom: 0.75rem;
+      }
+    `}
 
   p {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
@@ -137,48 +230,7 @@ export const CategoriesSection = styled.div`
   }
 
   @media (max-width: 768px) {
-    position: relative;
-    border-radius: 4px;
-    background-color: #f8f6ff;
-    padding: 1.5rem 0 1.75rem 1.5rem;
-    margin-left: -1.5rem !important;
-
-    p {
-      ${expandFontToken(FONTS.HEADING_SMALL)};
-      margin-bottom: 0.75rem;
-    }
-
-    .categories {
-      display: flex;
-      flex-direction: column;
-      .row-wrapper {
-        display: flex;
-        flex-direction: column;
-
-        width: calc(100vw - 1.5rem);
-        scrollbar-width: none;
-        overflow: scroll;
-        ::-webkit-scrollbar {
-          display: none;
-        }
-        -ms-overflow-style: none;
-
-        .row-one,
-        .row-two {
-          display: flex;
-          flex-direction: row;
-          grid-column-gap: 0.75rem;
-          width: max-content;
-          ${CategoryWrapper} {
-            .name {
-              width: max-content;
-            }
-          }
-        }
-        .row-one {
-          margin-bottom: 0.75rem;
-        }
-      }
-    }
+    ${({ $showGridUI }) =>
+      $showGridUI ? gridUiCategoriesSectionCss : nonGridUiCategoriesSection}
   }
 `;

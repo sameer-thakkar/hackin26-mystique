@@ -607,26 +607,28 @@ const fr = {
   FIND_ON_MAP: 'Trouver sur la carte',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Vos billets immédiatement',
-        DESCRIPTION: 'Confirmation directe de la billetterie.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Billets de guichet',
+        DESCRIPTION: 'Confirmation directe sur votre téléphone',
       },
-      PRICES_LOVE: {
-        NAME: `Les meilleurs prix garantis`,
-        DESCRIPTION: 'Prix imbattables pour des spectacles incontournables.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Choisissez vos sièges`,
+        DESCRIPTION: 'Profitez de la vue que vous désirez',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Le choix de vos sièges',
-        DESCRIPTION: 'Obtenez les meilleures places pour tous les spectacles.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Offres et réductions exclusives',
+        DESCRIPTION: `Les meilleurs spectacles à petit prix`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Les billets officiels des théâtres de Londres',
-        DESCRIPTION: 'Réservez rapidement et en toute sécurité avec nous.',
+      BOOK_AND_RELAX: {
+        NAME: 'Réservez en toute simplicité',
+        DESCRIPTION: '22 millions de spectateurs satisfaits',
       },
     },
     YOUR_PICK: 'Votre choix',
     BROWSE_BY_CATEGORIES: 'Explorer par catégories',
     TOP_WEST_END_SHOWS: 'Les meilleurs spectacles de West End',
+    TOP_SHOWS: 'Meilleurs spectacles',
+    SEE_MORE_SHOWS: 'Voir {0} spectacles en plus',
     LAST_MINUTE_TICKETS: 'Billets de dernières minutes',
     LOVED_BY_MILLIONS: 'Aimés par des millions de personnes',
     TODAY: `Aujourd'hui`,

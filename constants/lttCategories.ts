@@ -1,29 +1,55 @@
-import LlCategoryChristmas from 'assets/llCategoryChristmas';
-import LlCategoryChristmasActive from 'assets/llCategoryChristmasActive';
-import LttCategoryComedy from 'assets/lttCategoryComedy';
-import LttCategoryComedyActive from 'assets/lttCategoryComedyActive';
-import LttCategoryDiscount from 'assets/lttCategoryDiscount';
-import LttCategoryDiscountActive from 'assets/lttCategoryDiscountActive';
-import LttCategoryFallback from 'assets/lttCategoryFallback';
-import LttCategoryFallbackActive from 'assets/lttCategoryFallbackActive';
-import LttCategoryKids from 'assets/lttCategoryKids';
-import LttCategoryKidsActive from 'assets/lttCategoryKidsActive';
-import LttCategoryMusicals from 'assets/lttCategoryMusicals';
-import LttCategoryMusicalsActive from 'assets/lttCategoryMusicalsActive';
-import LttCategoryNewArrivals from 'assets/lttCategoryNewArrivals';
-import LttCategoryNewArrivalsActive from 'assets/lttCategoryNewArrivalsActive';
-import LttCategoryPlays from 'assets/lttCategoryPlays';
-import LttCategoryPlaysActive from 'assets/lttCategoryPlaysActive';
-import LttCategoryTopShows from 'assets/lttCategoryTopShows';
-import LttCategoryTopShowsActive from 'assets/lttCategoryTopShowsActive';
+import {
+  LlCategoryChristmas,
+  LlCategoryChristmasActive,
+} from 'assets/lttCategoryChristmas';
+import {
+  LttCategoryComedy,
+  LttCategoryComedyActive,
+} from 'assets/lttCategoryComedy';
+import {
+  LttCategoryDiscount,
+  LttCategoryDiscountActive,
+} from 'assets/lttCategoryDiscount';
+import {
+  LttCategoryFallback,
+  LttCategoryFallbackActive,
+} from 'assets/lttCategoryFallback';
+import { LttCategoryKids, LttCategoryKidsActive } from 'assets/lttCategoryKids';
+import {
+  LttCategoryLastMinute,
+  LttCategoryLastMinuteActive,
+} from 'assets/lttCategoryLastMinute';
+import {
+  LttCategoryMusicals,
+  LttCategoryMusicalsActive,
+} from 'assets/lttCategoryMusicals';
+import {
+  LttCategoryNewArrivals,
+  LttCategoryNewArrivalsActive,
+} from 'assets/lttCategoryNewArrivals';
+import {
+  LttCategoryPlays,
+  LttCategoryPlaysActive,
+} from 'assets/lttCategoryPlays';
+import {
+  LttCategoryTopShows,
+  LttCategoryTopShowsActive,
+} from 'assets/lttCategoryTopShows';
 
-export const LTT_CATEGORIES: Record<string, any> = {
+export const LTT_CATEGORIES: Record<string | number, any> = {
   top: {
     icon: {
       default: LttCategoryTopShows,
       active: LttCategoryTopShowsActive,
     },
     name: 'Top Shows',
+  },
+  lastMinuteTickets: {
+    icon: {
+      default: LttCategoryLastMinute,
+      active: LttCategoryLastMinuteActive,
+    },
+    name: 'Last minute',
   },
   4009: {
     icon: {

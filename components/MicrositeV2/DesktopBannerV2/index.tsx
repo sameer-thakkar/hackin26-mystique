@@ -1,13 +1,23 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  type MouseEventHandler,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import {
+  BannerSlide,
   Container,
   GradientWrapper,
   MediaContainer,
   SlideDescription,
+  SlideImageWrapper,
   SwiperControls,
   SwiperWrapper,
 } from 'components/MicrositeV2/DesktopBannerV2/styles';
@@ -15,7 +25,6 @@ import {
   IBannerProps,
   IMediaProps,
 } from 'components/MicrositeV2/MobileBannerV2/interface';
-import Swiper from 'components/Swiper';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { Paginator } from 'UI/Paginator';
@@ -29,9 +38,16 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import TranslucentLeft from 'assets/translucentLeft';
-import TranslucentRight from 'assets/translucentRight';
+import ChevronLeft from 'assets/chevronLeft';
+import ChevronRight from 'assets/chevronRight';
 import { IBannerImageProps } from './interface';
+
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
+
+const FIRST_SLIDE_DURATION = 12000;
+const SLIDE_DURATION = 2400;
 
 const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,6 +70,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
           imageId={String(index)}
           imageWidth={784}
           imageHeight={433}
+          imageFill={false}
           dontLazyLoadImage={true}
           videoPosition={VIDEO_POSITIONS.BANNER}
           eventTracking={eventTracking}
@@ -65,16 +82,18 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
         />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.desktopVideoLink)}>
-        <Image
-          url={item.url}
-          alt={item.alt}
-          fetchPriority="high"
-          priority
-          height={433}
-          width={784}
-          autoCrop={true}
-          className={`banner-image-${index} ${className}`}
-        />
+        <SlideImageWrapper>
+          <Image
+            url={item.url}
+            alt={item.alt}
+            fetchPriority="high"
+            priority
+            height={433}
+            width={784}
+            autoCrop
+            className={`banner-image-${index} ${className}`}
+          />
+        </SlideImageWrapper>
       </Conditional>
     </MediaContainer>
   );
@@ -110,7 +129,8 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
     };
   }, [swiper, updateIndex, activeSlideIndex]);
 
-  const onPrev = () => {
+  const onPrev: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
     if (swiper !== null) {
       swiper.slidePrev();
     }
@@ -120,7 +140,8 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
     });
   };
 
-  const onNext = () => {
+  const onNext: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
     if (swiper !== null) {
       swiper.slideNext();
     }
@@ -136,8 +157,15 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     cssMode: false,
     initialSlide: 0,
+    autoplay: {
+      delay: !swiper?.realIndex ? FIRST_SLIDE_DURATION : SLIDE_DURATION,
+      disableOnInteraction: false,
+    },
   };
-  const onGrabTicketsClicked = (showPageUrl: string) => {
+
+  const onBannerClicked = (showPageUrl: string) => {
+    if (!showPageUrl) return;
+
     if (swiper) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
@@ -148,15 +176,30 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
     window.open(showPageUrl, '_blank');
   };
 
+  const onSwiperWrapperClicked = () => {
+    if (!swiper) return;
+    onBannerClicked(bannerImages[swiper.realIndex]?.showPageUrl?.url);
+  };
+
+  const onPaginatorClicked = (index: number, event: React.MouseEvent) => {
+    if (!swiper) return;
+    event.stopPropagation();
+    swiper.slideTo(index + 1);
+    setActiveSlideIndex(index);
+  };
+
   return (
     <Container>
-      <SwiperWrapper>
-        <GradientWrapper position={'top'} />
+      <SwiperWrapper
+        onClick={onSwiperWrapperClicked}
+        className={`${swiper?.realIndex !== 0 ? 'clickable' : ''}`}
+      >
         <Swiper {...swiperParams} className="swiper-no-swiping">
           {bannerImages?.map((item: IBannerImageProps, index: number) => {
             return (
-              <>
+              <BannerSlide key={index}>
                 <Media fallbackImage={item?.url} item={item} index={index} />
+
                 <SlideDescription index={index}>
                   <div className="container">
                     <Conditional if={item?.bannerHeading}>
@@ -183,9 +226,7 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
                           className={`banner-cta-button`}
                           fillType="fill"
                           onClick={() =>
-                            onGrabTicketsClicked(
-                              item?.showPageUrl ? item?.showPageUrl?.url : ''
-                            )
+                            onBannerClicked(item?.showPageUrl?.url ?? '')
                           }
                           role="button"
                           tabIndex={0}
@@ -196,21 +237,29 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
                     </Conditional>
                   </div>
                 </SlideDescription>
-              </>
+
+                <Conditional if={index === 0}>
+                  <GradientWrapper position={'top'} />
+                  <GradientWrapper position={'bottom'} />
+                  <GradientWrapper position={'right'} />
+                </Conditional>
+              </BannerSlide>
             );
           })}
         </Swiper>
 
-        <GradientWrapper position={'bottom'} />
-        <GradientWrapper position={'right'} />
         <div className="paginator">
           <div className="paginator-container">
             <Paginator
-              tabSize={1.25}
+              tabSize={2}
               dotSize={0.5}
               totalCount={bannerImages?.length}
               activeIndex={activeSlideIndex}
-              activeSlideTimer={0.1}
+              activeSlideTimer={
+                swiper?.realIndex === 0 ? FIRST_SLIDE_DURATION : SLIDE_DURATION
+              }
+              margin={0.1875}
+              onDotClick={onPaginatorClicked}
             />
           </div>
         </div>
@@ -222,7 +271,7 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
               tabIndex={0}
               onClick={onPrev}
             >
-              {TranslucentLeft}
+              {ChevronLeft}
             </div>
             <div
               className="next-slide"
@@ -230,7 +279,7 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
               tabIndex={0}
               onClick={onNext}
             >
-              {TranslucentRight}
+              <ChevronRight />
             </div>
           </div>
         </SwiperControls>

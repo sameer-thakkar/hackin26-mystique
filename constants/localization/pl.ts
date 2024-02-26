@@ -586,26 +586,28 @@ const pl = {
   FIND_ON_MAP: 'Znajdź na mapie',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Bilety natychmiastowe',
-        DESCRIPTION: 'Potwierdzenie prosto z kasy biletowej.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Bilety z kas',
+        DESCRIPTION: 'Natychmiastowe potwierdzenie na telefon',
       },
-      PRICES_LOVE: {
-        NAME: 'Ceny, które pokochasz',
-        DESCRIPTION: 'Bezkonkurencyjne ceny popularnych spektakli.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Wybór miejsc`,
+        DESCRIPTION: 'Widok, na jakim Ci zależy, zawsze',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Wybierz miejsca',
-        DESCRIPTION: 'Zdobądź najlepsze miejsca na każdy spektakl.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Wyjątkowe oferty i zniżki',
+        DESCRIPTION: `Londyńskie teatry w najlepszych cenach`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Oficjalne bilety do teatru w Londynie',
-        DESCRIPTION: 'Rezerwuj z nami szybko i bezpiecznie.',
+      BOOK_AND_RELAX: {
+        NAME: 'Prosta rezerwacja',
+        DESCRIPTION: 'Zaufało nam już ponad 22 miliony gości',
       },
     },
     YOUR_PICK: 'Twój wybór',
     BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
     TOP_WEST_END_SHOWS: 'Popularne spektakle na West Endzie',
+    TOP_SHOWS: 'Melhores espetáculos',
+    SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     LAST_MINUTE_TICKETS: 'Bilety last minute',
     LOVED_BY_MILLIONS: 'Uwielbiane przez miliony',
     TODAY: 'Dzisiaj',

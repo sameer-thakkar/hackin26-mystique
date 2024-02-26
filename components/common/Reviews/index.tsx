@@ -40,7 +40,13 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
     unobserve: true,
   });
 
-  const { heading, reviews, isMobile, trackingObject } = props;
+  const {
+    heading,
+    reviews,
+    isMobile,
+    trackingObject,
+    overrideSwiperProps = {},
+  } = props;
   const { reviewsData, mediaData, tgidToReviewsPageUidMapping } = reviews;
 
   // const { SEE_ALL } = strings;
@@ -84,6 +90,7 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
         },
       }),
     },
+    ...overrideSwiperProps,
   };
 
   const onPrev = () => {
@@ -153,7 +160,7 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
         </Controls>
       </TitleHeader>
       <Swiper {...swiperOptions}>
-        {reviewsData.items?.map(
+        {reviewsData?.items?.map(
           (review: Record<string, any>, index: number) => {
             const {
               tourGroup,

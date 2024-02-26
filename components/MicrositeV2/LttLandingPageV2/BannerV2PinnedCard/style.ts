@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { RatingsWrapper } from 'components/MicrositeV2/LttLandingPageV2/Ratings/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { RatingsWrapper } from '../Ratings';
 
 export const Wrapper = styled.div`
   display: flex;

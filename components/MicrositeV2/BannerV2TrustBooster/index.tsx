@@ -11,36 +11,36 @@ import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
-  const icons = [
-    {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.INSTANT_TICKETS.NAME,
-      icon: lttTrustBoostersIcons['INSTANT_TICKET'],
-      description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.INSTANT_TICKETS.DESCRIPTION,
-    },
-    {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.PRICES_LOVE.NAME,
-      icon: lttTrustBoostersIcons['PRICES'],
-      description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.PRICES_LOVE.DESCRIPTION,
-    },
-    {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_SEATS.NAME,
-      icon: lttTrustBoostersIcons['SEATS'],
-      description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_SEATS.DESCRIPTION,
-    },
-    {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.OFFICIAL_LTT.NAME,
-      icon: lttTrustBoostersIcons['OFFICIAL_TICKET'],
-      description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.OFFICIAL_LTT.DESCRIPTION,
-    },
-  ];
+const ICONS = [
+  {
+    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.NAME,
+    icon: lttTrustBoostersIcons['BOX_OFFICE_TICKETS'],
+    description:
+      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.DESCRIPTION,
+  },
+  {
+    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.NAME,
+    icon: lttTrustBoostersIcons['CHOOSE_YOUR_SEATS'],
+    description:
+      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.DESCRIPTION,
+  },
+  {
+    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.NAME,
+    icon: lttTrustBoostersIcons['EXCLUSIVE_DEALS'],
+    description:
+      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.DESCRIPTION,
+  },
+  {
+    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.NAME,
+    icon: lttTrustBoostersIcons['BOOK_AND_RELAX'],
+    description:
+      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.DESCRIPTION,
+  },
+];
 
+const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
   const swiperParams: SwiperOptions = {
-    slidesPerView: isMobile ? 1 : icons.length,
+    slidesPerView: isMobile ? 1 : ICONS.length,
     spaceBetween: 20,
     loop: isMobile,
     autoplay: {
@@ -54,7 +54,7 @@ const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
       <Wrapper>
         <Conditional if={isMobile}>
           <Swiper {...swiperParams}>
-            {icons.map((item, index) => {
+            {ICONS.map((item, index) => {
               return (
                 <div className="trust-booster" key={index}>
                   <div className="icon">{item.icon}</div>
@@ -68,7 +68,7 @@ const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
           </Swiper>
         </Conditional>
         <Conditional if={!isMobile}>
-          {icons.map((item, index) => {
+          {ICONS.map((item, index) => {
             return (
               <div className="trust-booster" key={index}>
                 <div className="icon">{item.icon}</div>

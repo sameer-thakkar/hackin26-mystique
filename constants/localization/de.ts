@@ -604,26 +604,28 @@ const de = {
   FIND_ON_MAP: 'Auf der Karte anzeigen',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Sofortige Tickets',
-        DESCRIPTION: 'Buchungsbestätigung direkt von der Theaterkasse.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Tickets von der Theaterkasse',
+        DESCRIPTION: 'Sofortige Bestätigung aufs Handy',
       },
-      PRICES_LOVE: {
-        NAME: `Bestpreisgarantie`,
-        DESCRIPTION: 'Unschlagbare Preise für die besten Shows.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Beste Platzwahl`,
+        DESCRIPTION: 'Immer die gewünschte Sicht',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Platzwahl',
-        DESCRIPTION: 'Sichern Sie sich die besten Plätze für jede Show.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Exklusive Deals und Rabatte',
+        DESCRIPTION: `Die größten Shows zum kleinsten Preis`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Offizielle London Theater Tickets',
-        DESCRIPTION: 'Bei uns sicher und schnell buchen.',
+      BOOK_AND_RELAX: {
+        NAME: 'Einfache Buchung',
+        DESCRIPTION: '22 Millionen zufriedene Gäste',
       },
     },
     YOUR_PICK: 'Ihre Auswahl',
     BROWSE_BY_CATEGORIES: 'Kategorien durchstöbern',
     TOP_WEST_END_SHOWS: 'Die besten West End Shows',
+    TOP_SHOWS: 'Top-Shows',
+    SEE_MORE_SHOWS: '{0} weitere Shows anzeigen',
     LAST_MINUTE_TICKETS: 'Last-Minute Tickets',
     LOVED_BY_MILLIONS: 'Millionen zufriedene Kunden',
     TODAY: 'Heute',

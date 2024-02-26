@@ -8,6 +8,7 @@ import {
 import { THorizontalProductCardProps } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard/interface';
 import { ExclusivePricesBooster } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
+import DiscountTag from 'components/Product/components/DiscountTag';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -15,6 +16,7 @@ import { shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import {
   getBoosterValueFromListingPrice,
+  getEntertainmentMbProductCardDiscountTagString,
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
@@ -24,9 +26,7 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
 } from 'const/index';
-import { strings } from 'const/strings';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
-import WalletSvg from 'assets/walletSvg';
 
 const HorizontalProductCard = ({
   product,
@@ -43,7 +43,6 @@ const HorizontalProductCard = ({
     title,
     ratingCount,
     averageRating,
-    descriptors: descriptorsFromProduct,
     listingPrice,
     urlSlugs,
     primarySubCategory,
@@ -58,8 +57,12 @@ const HorizontalProductCard = ({
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
 
-  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
-    getBoosterValueFromListingPrice(listingPrice);
+  const {
+    percentageSaved,
+    shouldShowcashbackElement,
+    cashbackValue,
+    bestDiscount,
+  } = getBoosterValueFromListingPrice(listingPrice);
 
   const { localisedOpeningDate, OPENING_ON } =
     getOpeningDate({
@@ -68,11 +71,6 @@ const HorizontalProductCard = ({
       reopeningDate,
     }) ?? {};
 
-  let descriptors: string[] =
-    descriptorsFromProduct.length === 1
-      ? descriptorsFromProduct[0].split('\n')
-      : descriptorsFromProduct;
-  descriptors = [primarySubCategoryName, ...descriptors];
   const onProductCardClick = () => {
     const { destinationUrl, showPageExists } = getProductCardDestination({
       nakedDomain,
@@ -121,41 +119,18 @@ const HorizontalProductCard = ({
       <Image
         url={verticalImageUrl}
         alt={`${title} product image`}
-        autoCrop={true}
         className={`pinned-card-image`}
-        fitCrop={true}
-        height={162}
-        width={108}
+        height={140}
+        width={88}
+        fitCrop
+        autoCrop
       />
       <div className="image-placeholder">
-        <VerticalProductImagePlaceholder $width={108} $height={162} />
+        <VerticalProductImagePlaceholder $width={88} $height={131} />
       </div>
       <ProductDetails darkTheme={background === 'DARK'}>
+        <div className="descriptors">{primarySubCategoryName}</div>
         <p className="show-title">{title}</p>
-        <Conditional if={descriptors && descriptors.length > 0}>
-          <div className="descriptors">
-            {descriptors
-              .slice(0, 3)
-              .map((descriptor: string, index: number) => (
-                <>
-                  {descriptor}
-                  <Conditional
-                    if={index < 2 && index !== descriptors.length - 1}
-                  >
-                    <svg
-                      width="3"
-                      height="4"
-                      viewBox="0 0 3 4"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="1.5" cy="2" r="1.5" fill="#888888" />
-                    </svg>
-                  </Conditional>
-                </>
-              ))}
-          </div>
-        </Conditional>
         <Conditional
           if={shouldDisplayCollectionRatings({
             averageRating,
@@ -164,41 +139,38 @@ const HorizontalProductCard = ({
         >
           <Ratings
             averageRating={averageRating}
-            reviewCount={ratingCount}
+            ratingCount={ratingCount}
             showReviewsText={true}
           />
         </Conditional>
-        <Conditional if={reopeningDate}>
+        <Conditional if={localisedOpeningDate}>
           <div className="tags">
             <Conditional if={localisedOpeningDate}>
               {OPENING_ON} {localisedOpeningDate}
             </Conditional>
           </div>
         </Conditional>
-        <PriceBlock
-          listingPrice={listingPrice}
-          lang="en"
-          showScratchPrice={true}
-          prefix={true}
-        />
-        <Conditional if={percentageSaved > 0 || shouldShowcashbackElement}>
-          <ExclusivePricesBooster>
-            {WalletSvg}
-            <div className="booster-text">
-              <Conditional if={percentageSaved > 0}>
-                {strings.formatString(
-                  strings.SAVE_UPTO_PERCENT,
-                  `${percentageSaved}`
-                )}
-              </Conditional>
-              <Conditional
-                if={percentageSaved <= 0 && shouldShowcashbackElement}
-              >
-                {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
-              </Conditional>
-            </div>
-          </ExclusivePricesBooster>
-        </Conditional>
+        <div className="price-wrapper">
+          <PriceBlock
+            listingPrice={listingPrice}
+            lang="en"
+            showScratchPrice={true}
+            prefix={true}
+          />
+          <Conditional if={bestDiscount > 0 || shouldShowcashbackElement}>
+            <ExclusivePricesBooster>
+              <div className="booster-text">
+                <DiscountTag
+                  discount={getEntertainmentMbProductCardDiscountTagString({
+                    bestDiscount,
+                    shouldShowcashbackElement,
+                    cashbackValue,
+                  })}
+                />
+              </div>
+            </ExclusivePricesBooster>
+          </Conditional>
+        </div>
       </ProductDetails>
     </Wrapper>
   );

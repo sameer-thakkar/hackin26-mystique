@@ -7,16 +7,17 @@ export const Container = styled.div`
   margin-top: 0;
   padding-top: 1rem;
   @media (max-width: 768px) {
-    height: 4.5rem;
+    height: 2.5625rem;
     margin-top: 0;
     width: 100%;
-    height: fit-content;
-    height: 5rem;
-    padding: 0.5rem 0 0;
+    display: flex;
+
+    margin: 1.5rem 0 0 0;
+    padding: 0 0 1.1875rem 0;
     background: linear-gradient(
       180deg,
-      rgba(45, 35, 64, 0) 0%,
-      rgba(45, 35, 64, 0.6) 100%
+      rgba(80, 64, 111, 0) 0%,
+      rgba(70, 56, 96, 0.6) 100%
     );
   }
 `;
@@ -55,21 +56,30 @@ export const Wrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    height: 5rem;
     width: calc(100% - (1.5rem * 2));
     max-width: 1200px;
     box-sizing: border-box;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
     overflow: hidden;
-    height: 3.8125rem;
+    display: flex;
+    align-items: center;
+    padding: 0;
 
+    .swiper {
+      margin: 0;
+    }
     .trust-booster {
       height: 2.5625rem;
       margin: 0px;
       z-index: -1;
+      display: flex;
+      align-items: center;
       .icon {
         margin-right: 0.5rem;
+        &,
+        svg {
+          height: 2.25rem;
+          width: 2.25rem;
+        }
       }
     }
     .swiper-slide {

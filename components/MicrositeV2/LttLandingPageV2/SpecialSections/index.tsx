@@ -5,6 +5,7 @@ import SwiperType from 'swiper';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import VerticalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard';
+import { ISpecialSections } from 'components/MicrositeV2/LttLandingPageV2/SpecialSections/interface';
 import {
   SeeAllShowsCard,
   SpecialSectionWrapper,
@@ -16,101 +17,13 @@ import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
+import ChevronLeft from 'assets/chevronLeft';
+import ChevronRight from 'assets/chevronRight';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
   { ssr: false }
-);
-
-interface ISpecialSections {
-  allTours: any;
-  isMobile: boolean;
-  title: string;
-  actions: {
-    actionName: string;
-    onClick: () => any[] | Promise<any[]>;
-  }[];
-  updateActions?: (actions: any) => void;
-  totalNumberOfShows: number;
-  seeAllCardText: string;
-  preselectedActionName?: string;
-  maxNumberOfShows?: number;
-  hideSeeAll?: boolean;
-  showSeeAll?: boolean;
-  useForcedSekeltonLoaders?: boolean;
-  handleSeaAllClicked?: () => void;
-}
-
-const CHEVRON_LEFT = ({
-  onClick,
-  disabled,
-}: {
-  onClick: () => void;
-  disabled: boolean;
-}) => (
-  <svg
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="chevron-left"
-    onClick={onClick}
-  >
-    <circle
-      cx="18"
-      cy="18"
-      r="17.5089"
-      transform="matrix(-1 0 0 1 36 0)"
-      stroke={disabled ? '#79797930' : '#79797960'}
-      strokeOpacity="0.6"
-      strokeWidth="0.982287"
-    />
-    <path
-      d="M21.334 11.3337L14.6673 18.0003L21.334 24.667"
-      stroke={disabled ? '#ffffff60' : '#ffffff'}
-      strokeWidth="1.47343"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const CHEVRON_RIGHT = ({
-  onClick,
-  disabled,
-  strokeColor,
-}: {
-  onClick: () => void;
-  disabled?: boolean;
-  strokeColor?: string;
-}) => (
-  <svg
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    onClick={onClick}
-    className="chevron-right"
-  >
-    <circle
-      cx="18"
-      cy="18"
-      r="17.5089"
-      stroke={strokeColor ?? (disabled ? '#79797930' : '#79797960')}
-      strokeOpacity="0.6"
-      strokeWidth="0.982287"
-    />
-    <path
-      d="M14.666 11.3337L21.3327 18.0003L14.666 24.667"
-      stroke={disabled ? '#ffffff60' : '#ffffff'}
-      strokeWidth="1.47343"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
 );
 
 const SpecialSections = ({
@@ -126,6 +39,7 @@ const SpecialSections = ({
   showSeeAll,
   useForcedSekeltonLoaders,
   handleSeaAllClicked,
+  id,
 }: ISpecialSections) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
@@ -286,7 +200,18 @@ const SpecialSections = ({
         <span className="see-all-text">
           {seeAllCardText} {selectedActionName?.toLocaleLowerCase()}
         </span>
-        <CHEVRON_RIGHT strokeColor={COLORS.BRAND.WHITE} onClick={() => {}} />
+        <div
+          onClick={goNext}
+          className={`chevron-right ${
+            activeSlideIdx + slidesPerView >= swiperSlides.length
+              ? 'disabled'
+              : ''
+          }`}
+          tabIndex={0}
+          role="button"
+        >
+          <ChevronRight />
+        </div>
       </SeeAllShowsCard>
     );
   }
@@ -314,7 +239,7 @@ const SpecialSections = ({
   };
 
   return (
-    <SpecialSectionWrapper ref={sectionRef}>
+    <SpecialSectionWrapper ref={sectionRef} id={id}>
       <div className="right-corner-illustration">
         <Image
           url={
@@ -354,11 +279,28 @@ const SpecialSections = ({
               </span>
             </Conditional>
             <Conditional if={!isMobile && swiperSlides.length > slidesPerView}>
-              <CHEVRON_LEFT onClick={goPrev} disabled={activeSlideIdx <= 0} />
-              <CHEVRON_RIGHT
+              <div
+                onClick={goPrev}
+                className={`chevron-left ${
+                  activeSlideIdx <= 0 ? 'disabled' : ''
+                }`}
+                tabIndex={0}
+                role="button"
+              >
+                {ChevronLeft}
+              </div>
+              <div
                 onClick={goNext}
-                disabled={activeSlideIdx + slidesPerView >= swiperSlides.length}
-              />
+                className={`chevron-right ${
+                  activeSlideIdx + slidesPerView >= swiperSlides.length
+                    ? 'disabled'
+                    : ''
+                }`}
+                tabIndex={0}
+                role="button"
+              >
+                <ChevronRight />
+              </div>
             </Conditional>
           </div>
         </TitleRow>

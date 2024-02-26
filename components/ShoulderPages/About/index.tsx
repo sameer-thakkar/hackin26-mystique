@@ -15,8 +15,8 @@ import QuickInfo from '../components/QuickInfo';
 import { IAboutPageProps } from '../interface';
 import { PageContainer } from './styles';
 
-const Breadcrumbs = dynamic(() =>
-  import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
+const Breadcrumbs = dynamic(
+  () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
 
 const AboutPage = ({

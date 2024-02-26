@@ -11,7 +11,7 @@ interface Props {
   isOverlay?: boolean;
   bottom?: number;
   currentIndexTime?: number;
-  onDotClick?: (index: number) => void;
+  onDotClick?: (index: number, e: React.MouseEvent) => void;
   activeSlideTimer?: number;
   inactiveColor?: string;
   activeColor?: string;
@@ -97,7 +97,7 @@ export const Paginator = ({
           key={`dot` + i}
           data-num={i}
           data-active={i === activeIndex}
-          onClick={() => onDotClick?.(i)}
+          onClick={(e) => onDotClick?.(i, e)}
           activeSlideTimer={activeSlideTimer}
           inactiveColor={inactiveColor}
           activeColor={activeColor}

@@ -1,4 +1,5 @@
-import { useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
@@ -15,8 +16,6 @@ import {
   SlideDescription,
   SwiperWrapper,
 } from 'components/MicrositeV2/MobileBannerV2/styles';
-import Swiper from 'components/Swiper';
-import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { Paginator } from 'UI/Paginator';
 import Video from 'UI/Video';
@@ -28,9 +27,12 @@ import {
   PAGE_TYPES,
   VIDEO_POSITIONS,
 } from 'const/index';
-import { strings } from 'const/strings';
 
-const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
+
+const Media = ({ index, item, fallbackImage }: IMediaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const swiperParentNode = containerRef.current?.parentNode as HTMLDivElement;
   const eventTracking = swiperParentNode?.classList?.contains(
@@ -38,8 +40,6 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
   );
   return (
     <MediaContainer ref={containerRef}>
-      <LinearGradient height={33} isTopGradient={true} />
-      <LinearGradient height={33} isTopGradient={true} />
       <Conditional if={index === 0 && item?.mobileVideoLink}>
         <Video
           key={item.mobileVideoLink}
@@ -49,9 +49,9 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
             altText: item.alt,
           }}
           imageAspectRatio={'21:9'}
-          imageId={String(index)}
-          imageWidth={375}
-          imageHeight={232}
+          imageId="banner-video-fallback-image"
+          imageWidth={327}
+          imageHeight={200}
           dontLazyLoadImage={true}
           shouldVideoPlay={true}
           videoPosition={VIDEO_POSITIONS.BANNER}
@@ -60,6 +60,7 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
           showPauseIcon={false}
           showPlayIcon={false}
         />
+        <LinearGradient />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.mobileVideoLink)}>
         <Image
@@ -77,12 +78,6 @@ const Media = ({ index, item, fallbackImage, hasSubText }: IMediaProps) => {
           className={`banner-image-${index}`}
         />
       </Conditional>
-      <LinearGradient
-        height={57}
-        isTopGradient={false}
-        index={index}
-        hasSubText={hasSubText}
-      />
     </MediaContainer>
   );
 };
@@ -92,10 +87,38 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
 
+  const updateIndex = useCallback(() => {
+    if (swiper !== null) {
+      const slideIndex = swiper.realIndex;
+      setActiveSlideIndex(slideIndex);
+    }
+  }, [swiper]);
+
+  useEffect(() => {
+    if (!swiper || swiper?.destroyed) return;
+
+    swiper.on('slideChange', updateIndex);
+
+    return () => {
+      if (swiper && !swiper.destroyed) {
+        swiper.off('slideChange', updateIndex);
+      }
+    };
+  }, [swiper, updateIndex, activeSlideIndex]);
+
   const swiperParams: SwiperProps = {
+    loop: true,
     preventInteractionOnTransition: true,
     slideToClickedSlide: true,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    loopedSlides: bannerImages.length,
+    autoplay: {
+      delay: swiper?.realIndex === 0 || !swiper?.realIndex ? 12000 : 2400,
+      disableOnInteraction: false,
+    },
+    watchSlidesProgress: true,
   };
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -103,11 +126,9 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
     [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map((tgid) => tgid),
   };
 
-  const handleSlideChange = (swiperInstance: any) => {
-    setActiveSlideIndex(swiperInstance.activeIndex);
-  };
+  const onBannerClicked = (showPageUrl: string) => {
+    if (!showPageUrl) return;
 
-  const onGrabTicketsClicked = (showPageUrl: string) => {
     if (swiper) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
@@ -122,10 +143,15 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   return (
     <Container>
       <SwiperWrapper>
-        <Swiper {...swiperParams} onSlideChange={handleSlideChange}>
+        <Swiper {...swiperParams}>
           {bannerImages.map((item: IBannerImageProps, index: number) => {
             return (
-              <>
+              <div
+                key={index}
+                onClick={() => onBannerClicked(item?.showPageUrl?.url ?? '')}
+                role="button"
+                tabIndex={0}
+              >
                 <Media
                   index={index}
                   item={item}
@@ -134,52 +160,28 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
                 />
                 <SlideDescription index={index}>
                   <div className="container">
-                    <Conditional if={item?.bannerHeading}>
-                      {index === 0 ? (
-                        <h1
-                          className="banner-header"
-                          dangerouslySetInnerHTML={{
-                            __html: item?.bannerHeading,
-                          }}
-                        />
-                      ) : (
-                        <h2
-                          className="banner-header"
-                          dangerouslySetInnerHTML={{
-                            __html: item?.bannerHeading,
-                          }}
-                        />
-                      )}
-                    </Conditional>
-                    <Conditional if={index > 0}>
-                      <p>{item?.bannerSubText}</p>
-                      <Conditional if={item?.showPageUrl}>
-                        <Button
-                          className={`tour-book-now-cta`}
-                          fillType="fill"
-                          onClick={() =>
-                            onGrabTicketsClicked(item?.showPageUrl?.url || '')
-                          }
-                          role="button"
-                          tabIndex={0}
-                        >
-                          {strings.LTT_LANDING_PAGE.GRAB_YOUR_TICKETS}
-                        </Button>
-                      </Conditional>
+                    <Conditional if={item?.bannerHeading && index === 0}>
+                      <h1
+                        className="banner-header"
+                        dangerouslySetInnerHTML={{
+                          __html: item?.bannerHeading,
+                        }}
+                      />
                     </Conditional>
                   </div>
                 </SlideDescription>
-              </>
+              </div>
             );
           })}
         </Swiper>
         <div className="paginator">
           <Paginator
-            tabSize={0.9375}
+            tabSize={1.25}
             dotSize={0.375}
+            margin={0.125}
             totalCount={bannerImages.length}
             activeIndex={activeSlideIndex}
-            activeSlideTimer={0.1}
+            activeSlideTimer={swiper?.realIndex === 0 ? 12000 : 2400}
           />
         </div>
       </SwiperWrapper>

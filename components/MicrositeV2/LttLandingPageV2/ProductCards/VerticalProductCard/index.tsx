@@ -8,6 +8,7 @@ import {
   Wrapper,
 } from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/LttLandingPageV2/Ratings';
+import DiscountTag from 'components/Product/components/DiscountTag';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -15,6 +16,7 @@ import { shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import {
   getBoosterValueFromListingPrice,
+  getEntertainmentMbProductCardDiscountTagString,
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
@@ -24,9 +26,7 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
 } from 'const/index';
-import { strings } from 'const/strings';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
-import WalletSvg from 'assets/walletSvg';
 
 const VerticalProductCard = ({
   product,
@@ -57,8 +57,12 @@ const VerticalProductCard = ({
   } = product;
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
-  const { percentageSaved, shouldShowcashbackElement, cashbackValue } =
-    getBoosterValueFromListingPrice(listingPrice);
+  const {
+    percentageSaved,
+    shouldShowcashbackElement,
+    cashbackValue,
+    bestDiscount,
+  } = getBoosterValueFromListingPrice(listingPrice);
 
   const { displayName: subCategoryName, id: subCategoryId } =
     primarySubCategory ?? {};
@@ -144,7 +148,7 @@ const VerticalProductCard = ({
           >
             <Ratings
               averageRating={averageRating}
-              reviewCount={ratingCount}
+              ratingCount={ratingCount}
               showReviewsText={false}
               showCount={!isMobile}
             />
@@ -152,11 +156,11 @@ const VerticalProductCard = ({
         </div>
         <p>{title ?? name}</p>
         <Conditional if={reopeningDate}>
-          <div className="tags">
-            <Conditional if={localisedOpeningDate}>
+          <Conditional if={localisedOpeningDate}>
+            <div className="tags">
               {OPENING_ON} {localisedOpeningDate}
-            </Conditional>
-          </div>
+            </div>
+          </Conditional>
         </Conditional>
         <PriceBlock
           listingPrice={listingPrice}
@@ -164,21 +168,16 @@ const VerticalProductCard = ({
           showScratchPrice={true}
           prefix={true}
         />
-        <Conditional if={percentageSaved > 0 || shouldShowcashbackElement}>
+        <Conditional if={bestDiscount > 0 || shouldShowcashbackElement}>
           <ExclusivePricesBooster>
-            {WalletSvg}
             <div className="booster-text">
-              <Conditional if={percentageSaved > 0}>
-                {strings.formatString(
-                  strings.SAVE_UPTO_PERCENT,
-                  `${percentageSaved}`
-                )}
-              </Conditional>
-              <Conditional
-                if={percentageSaved <= 0 && shouldShowcashbackElement}
-              >
-                {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
-              </Conditional>
+              <DiscountTag
+                discount={getEntertainmentMbProductCardDiscountTagString({
+                  bestDiscount,
+                  shouldShowcashbackElement,
+                  cashbackValue,
+                })}
+              />
             </div>
           </ExclusivePricesBooster>
         </Conditional>

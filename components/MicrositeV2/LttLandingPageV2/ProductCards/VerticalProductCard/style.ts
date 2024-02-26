@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { HALYARD } from 'const/ui-constants';
 
 export const Wrapper = styled.div<{
   darkTheme: boolean;
@@ -13,17 +12,25 @@ export const Wrapper = styled.div<{
   flex-direction: column;
   display: relative;
   margin: 0;
+  -webkit-user-select: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
   cursor: pointer;
   max-width: 11.25rem;
+  transition: ease-in-out 150ms;
 
   ${({ hoverEffect }) =>
     hoverEffect &&
-    `transition: ease 0.2s;
+    `
       &:hover {
         transform: translate3d(0, -5px, 0);
       }`}
 
+  :active {
+    transition: ease-in-out 150ms;
+    transform: scale(0.98);
+  }
   .pinned-card-image {
     width: auto;
     margin-right: 0.75rem;
@@ -33,16 +40,21 @@ export const Wrapper = styled.div<{
     ${({ isVerticalImageUrlPresent }) =>
       isVerticalImageUrlPresent &&
       `
-    position: absolute;
+        position: absolute;
     `}
     top: 0;
     z-index: -1;
+    &,
+    svg {
+      border-radius: 0.5rem;
+    }
   }
 
   .pinned-card-vertical-image {
     z-index: 0;
     min-width: 180px;
     min-height: 270px;
+
     ${({ darkTheme }) =>
       darkTheme &&
       `&::after {
@@ -54,10 +66,12 @@ export const Wrapper = styled.div<{
         width: 184px;
         height: 274px;
         content: '';
-        border-radius: 4px;
+        border-radius: 0.5rem;
       }`}
     img {
-      border-radius: 4px;
+      border-radius: 0.5rem;
+      box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
+        0px -1px 2px 0px rgba(0, 0, 0, 0.08);
       text-indent: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -73,7 +87,10 @@ export const Wrapper = styled.div<{
     &:hover {
       transform: none;
     }
-
+    :active {
+      transition: ease-in-out 150ms;
+      transform: scale(0.98);
+    }
     .pinned-card-vertical-image {
       min-width: 120px;
       min-height: 180px;
@@ -102,25 +119,29 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
       font-weight: 300;
 
       color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G5 : COLORS.GRAY.G3};
-    }
-    .average-rating {
-      margin-right: 3px;
+        darkTheme ? `${COLORS.BRAND.WHITE}BF` : COLORS.GRAY.G3};
     }
 
-    .count {
-      color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G5 : COLORS.GRAY.G3};
-      margin-left: 4px;
-    }
+    ${({ darkTheme }) =>
+      darkTheme &&
+      `
+      .count, .average-rating {
+        color: ${COLORS.CANDY.LIGHT_TONE_1}
+      }
+      svg {
+        path {
+          stroke:${COLORS.CANDY.LIGHT_TONE_1};
+          fill:${COLORS.CANDY.LIGHT_TONE_1};
+        }
+      }
+      
+      `};
   }
 
   p {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
-    font-weight: 300;
     color: ${({ darkTheme }) =>
       darkTheme ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
-    font-weight: 300;
     letter-spacing: 0.6;
     margin: 0;
     margin-top: 4px;
@@ -132,7 +153,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     & span {
       ${expandFontToken(FONTS.SUBHEADING_XS)};
       color: ${({ darkTheme }) =>
-        darkTheme ? COLORS.GRAY.G4 : COLORS.GRAY.G3};
+        darkTheme ? `${COLORS.BRAND.WHITE}99` : COLORS.GRAY.G4};
     }
   }
 
@@ -147,7 +168,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 
   .tags {
     margin-top: 4px;
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
     color: ${({ darkTheme }) =>
       darkTheme ? COLORS.GRAY.G7 : COLORS.TEXT.BEACH};
   }
@@ -168,7 +189,6 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     .tags {
       margin-top: 2px;
       ${expandFontToken(FONTS.PARAGRAPH_XS)};
-      font-weight: 300;
     }
     p {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
@@ -180,6 +200,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
       &,
       & span {
         ${expandFontToken(FONTS.UI_LABEL_XS)};
+        font-weight: 300;
       }
     }
 
@@ -193,24 +214,14 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 `;
 
 export const ExclusivePricesBooster = styled.div`
-  margin-top: 0.375rem;
-  padding: 0.125rem 0.25rem;
-  background: ${COLORS.BACKGROUND.SOOTHING_GREEN};
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  max-width: fit-content;
-  border-radius: 4px;
-  .booster-text {
-    font-family: ${HALYARD.FONT_STACK};
-    color: ${COLORS.TEXT.OKAY_GREEN_3};
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 17px;
-    letter-spacing: 0.006em;
-    text-align: left;
-  }
+  margin-top: 0.34rem;
+
   @media (max-width: 768px) {
-    border-radius: 2px;
+    margin-top: 0.59rem;
+    .booster-text {
+      & svg {
+        margin-right: -0.0625rem;
+      }
+    }
   }
 `;

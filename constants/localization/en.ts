@@ -585,27 +585,28 @@ const en = {
   FIND_ON_MAP: 'Find On Map',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Instant tickets',
-        DESCRIPTION: 'Confirmation straight from the box office.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Box office tickets',
+        DESCRIPTION: 'Instantly confirmed to your phone',
       },
-      PRICES_LOVE: {
-        NAME: `Prices you'll love`,
-        DESCRIPTION: 'Unbeatable prices for must-see shows.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Choose your seats`,
+        DESCRIPTION: 'The view you want, every time',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Choose your seats',
-        DESCRIPTION: 'Get the best seats for every show.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Exclusive deals & discounts',
+        DESCRIPTION: `Save big on London's best shows`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Official London theatre tickets',
-        DESCRIPTION: 'Book swiftly and securely with us.',
+      BOOK_AND_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by 22 million guests and counting',
       },
     },
     YOUR_PICK: 'Your pick',
     BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
     TOP_SHOWS: 'Top Shows',
+    SEE_MORE_SHOWS: 'See {0} more shows',
     LAST_MINUTE_TICKETS: 'Last minute tickets',
     LOVED_BY_MILLIONS: 'Loved by millions',
     TODAY: 'Today',

@@ -87,7 +87,7 @@ export const TitleRow = styled.div`
       min-width: 90px;
       height: 36px;
       border: 1px solid #e2e2e2;
-      border-radius: 4px;
+      border-radius: 0.375rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -129,8 +129,37 @@ export const TitleRow = styled.div`
       user-select: none;
     }
 
-    svg {
+    .chevron-left,
+    .chevron-right {
       cursor: pointer;
+      border: solid 1px ${COLORS.BRAND.WHITE}66;
+      height: 2.25rem;
+      width: 2.25rem;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      :not(.disabled) {
+        :hover {
+          border-color: ${COLORS.BRAND.WHITE}80;
+        }
+
+        :active {
+          border-color: ${COLORS.BRAND.WHITE}A6;
+        }
+      }
+      svg {
+        height: 1rem;
+        width: 1rem;
+        path {
+          stroke: ${COLORS.BRAND.WHITE};
+        }
+      }
+      &.disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
     }
     .chevron-left {
       margin-right: 0.5rem;
@@ -153,7 +182,7 @@ export const TitleRow = styled.div`
         padding: 6px 12px;
         margin: 0;
         border: 1px solid #888888;
-        border-radius: 4px;
+        border-radius: 0.375rem;
         text-decoration-line: none;
         width: 67px;
         height: 28px;
@@ -169,13 +198,21 @@ export const TitleRow = styled.div`
         display: none;
       }
       .action {
-        min-width: 61px;
-        height: 32px;
+        min-width: 3.8125rem;
+        height: 2rem;
         ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+        border-radius: 0.375rem;
+
+        :active {
+          transform: scale(0.98);
+        }
       }
 
       .selected {
         font-weight: 300px;
+        background-color: ${COLORS.PURPS.LIGHT_TONE_4};
+        ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+        color: ${COLORS.PURPS.LEVEL_3};
       }
     }
   }

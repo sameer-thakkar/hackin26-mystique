@@ -705,8 +705,13 @@ export const getOpeningDate = ({
     return { localisedOpeningDate, openingDate, OPENING_ON };
 };
 export const getBoosterValueFromListingPrice = (listingPrice: any) => {
-  const { originalPrice, finalPrice, cashbackType, cashbackValue } =
-    listingPrice ?? {};
+  const {
+    originalPrice,
+    finalPrice,
+    cashbackType,
+    cashbackValue,
+    bestDiscount,
+  } = listingPrice ?? {};
   const percentageSaved = Math.round(
     ((originalPrice - finalPrice) / originalPrice) * 100
   );
@@ -717,7 +722,29 @@ export const getBoosterValueFromListingPrice = (listingPrice: any) => {
     percentageSaved,
     shouldShowcashbackElement,
     cashbackValue,
+    bestDiscount,
   };
+};
+
+export const getEntertainmentMbProductCardDiscountTagString = ({
+  bestDiscount,
+  cashbackValue,
+  shouldShowcashbackElement,
+}: {
+  bestDiscount: number;
+  cashbackValue: number;
+  shouldShowcashbackElement: boolean;
+}) => {
+  if (bestDiscount > 0) {
+    return strings.formatString(
+      strings.SAVE_PERCENT,
+      `${bestDiscount}`
+    ) as string;
+  } else if (shouldShowcashbackElement) {
+    return strings.formatString(strings.CASHBACK, `${cashbackValue}`) as string;
+  }
+
+  return '';
 };
 
 export const getProductCardDestination = ({

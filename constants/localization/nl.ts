@@ -605,26 +605,28 @@ const nl = {
   FIND_ON_MAP: 'Kaart',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
-      INSTANT_TICKETS: {
-        NAME: 'Instant tickets',
-        DESCRIPTION: 'Bevestiging rechtstreeks van de kassa.',
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Tickets aan de kassa',
+        DESCRIPTION: 'Direct bevestigd op je telefoon',
       },
-      PRICES_LOVE: {
-        NAME: `Geweldige prijzen`,
-        DESCRIPTION: 'Scherpe prijzen voor niet te missen shows.',
+      CHOOSE_YOUR_SEATS: {
+        NAME: `Kies je zitplaatsen`,
+        DESCRIPTION: 'Altijd de gewenste zitjes',
       },
-      CHOOSE_SEATS: {
-        NAME: 'Kies je plaatsen',
-        DESCRIPTION: 'Vind de beste plaatsen voor elke show.',
+      EXCLUSIVE_DEALS: {
+        NAME: 'Exclusieve deals en kortingen',
+        DESCRIPTION: `De beste shows aan lage prijzen`,
       },
-      OFFICIAL_LTT: {
-        NAME: 'Officiële London Theatre Tickets',
-        DESCRIPTION: 'Boek snel en veilig bij ons.',
+      BOOK_AND_RELAX: {
+        NAME: 'Eenvoudig boeken',
+        DESCRIPTION: '22 miljoen tevreden klanten',
       },
     },
     YOUR_PICK: 'Jouw keuze',
     BROWSE_BY_CATEGORIES: 'Zoek per categorie',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    TOP_SHOWS: 'Topshows',
+    SEE_MORE_SHOWS: 'Toon {0} meer shows',
     LAST_MINUTE_TICKETS: 'Last-minutetickets',
     LOVED_BY_MILLIONS: 'Geliefd door miljoenen',
     TODAY: 'Vandaag',
