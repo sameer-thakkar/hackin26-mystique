@@ -26,12 +26,8 @@ import { contentPageGq } from './graphQuery';
 
 const { CONTENT_PAGE } = CUSTOM_TYPES;
 
-const {
-  TAGGED_COLLECTION,
-  TAGGED_CITY,
-  TAGGED_PAGE_TYPE,
-  SHOULDER_PAGE_TYPE,
-} = PRISMIC_FIELD_ID;
+const { TAGGED_COLLECTION, TAGGED_CITY, TAGGED_PAGE_TYPE, SHOULDER_PAGE_TYPE } =
+  PRISMIC_FIELD_ID;
 
 const getPrismicContentPageRelatedDocs = (
   mbCity: string,
@@ -180,13 +176,8 @@ const getContentPageDocument = async ({
     const hasTicketsCardSlice = Object.keys(baseLangTicketsCardsSlice)?.length;
 
     if (hasTicketsCardSlice) {
-      const {
-        id,
-        slice_type,
-        slice_label,
-        primary,
-        items,
-      } = baseLangTicketsCardsSlice;
+      const { id, slice_type, slice_label, primary, items } =
+        baseLangTicketsCardsSlice;
       const { product_cards } = primary || {};
       const { id: productCardsId } = product_cards || {};
 

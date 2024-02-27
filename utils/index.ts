@@ -352,8 +352,9 @@ export const createBookingURL = ({
 };
 
 export const getNakedDomain = (host: string) => {
+  const sliceCount = host.includes('mystique.test-headout') ? 2 : 1;
   return !host?.includes('localhost')
-    ? host?.replace('stage-', '').split('.').slice(1).join('.')
+    ? host?.replace('stage-', '').split('.').slice(sliceCount).join('.')
     : HEADOUT_NAKED_DOMAIN;
 };
 

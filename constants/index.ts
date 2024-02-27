@@ -22,6 +22,7 @@ export const COOKIE = {
   EXPERIMENT_OVERRIDE: 'experimentOverride',
   CLARITY_PROJECT_ID: 'clarity-pid',
   IS_LAZY: 'is-lazy',
+  CONSENT_POLICY_STATE: 'consent-state',
 };
 
 export const TIME = {

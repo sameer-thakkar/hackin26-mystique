@@ -111,6 +111,34 @@ const nl = {
       'Verken de rijke kunst- en cultuurscène van {0} - van fascinerende musea tot levendige festivals.',
   },
   CLOSE: 'Sluit',
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'We gebruiken cookies en soortgelijke technologieën voor een aantal doeleinden, waaronder het verbeteren van je ervaring op onze site en voor advertenties,.',
+    MANAGE_PREFERENCES: 'Voorkeuren beheren',
+    ACCEPT: 'Oké',
+    ALLOW_ALL: 'Alles toestaan',
+    DENY_ALL: 'Alles weigeren',
+    COOKIES: 'Cookies',
+    HEADING: 'We hechten altijd waarde aan uw privacy',
+    DESCRIPTION: `*   Cookies zijn kleine bestanden die door een website/platform op Uw computer, mobiele apparaat of een ander apparaat worden geplaatst en die onder andere de details van Uw surfgeschiedenis bevatten.
+*   Wij gebruiken verschillende soorten cookies om Uw gebruik van Ons Platform bij te houden en bepaalde informatie op te slaan die ons verder helpt om U meer gepersonaliseerde diensten aan te bieden. Bepaalde cookies kunnen op Uw Apparaat worden geplaatst vanwege Uw gebruik van diensten die beschikbaar zijn op Ons Platform.
+*   In grote lijnen gebruiken we hiervoor twee verschillende soorten technologieën:
+    *   **Cookies of Browser Cookies.** het is een klein bestand dat automatisch op Uw Apparaat wordt geplaatst wanneer U toegang krijgt tot Ons Platform. U kunt Uw browser opdracht geven om alle Cookies te weigeren. In het geval dat U onze Cookies niet accepteert, is het mogelijk dat U sommige delen van Ons Platform niet kunt gebruiken.
+    *   **Webbakens.** Ook wel clear gifs, pixeltags en single-pixel gifs genoemd, die worden toegevoegd aan verschillende onderdelen van Ons Platform en Onze e-mails, zodat we de activiteiten van Gebruikers kunnen volgen en begrijpen.
+*   Deze Cookies die zijn opgeslagen op Uw Apparaat kunnen "permanente" of "sessiecookies" zijn. Permanente Cookies blijven op Uw Apparaat staan, zelfs wanneer U offline gaat, terwijl Sessiecookies automatisch worden verwijderd zodra U Uw webbrowser afsluit.
+*   We gebruiken zowel sessiecookies als permanente cookies voor de hieronder beschreven doeleinden:
+    *   Noodzakelijke / essentiële cookies
+        *   _Type:_ Sessiecookies
+        *   _Doel:_ Deze cookies zijn essentieel voor U om toegang te krijgen tot verschillende secties van het Platform en als deze niet toegestaan zijn, kan het zijn dat U geen toegang krijgt tot de diensten die beschikbaar zijn op het Platform. Deze cookies helpen ons verder om de Gebruikers te verifiëren en elke vorm van frauduleuze activiteiten op het Platform te voorkomen.
+    *   Cookiesbeleid / Kennisgeving Acceptatie Cookies
+        *   _Type:_ Persistente cookies
+        *   _Doel:_ Deze cookies identificeren of gebruikers het gebruik van cookies hebben geaccepteerd.
+    *   Functionaliteit Cookies
+        *   _Type:_ Persistente cookies
+        *   _Doel:_ Deze Cookies laten ons toe om keuzes te onthouden die U maakt wanneer U het Platform gebruikt, zoals het onthouden van Uw inloggegevens of taalvoorkeur. Het grotere doel van deze Cookies is om U een meer gepersonaliseerde ervaring te bieden telkens U het Platform gebruikt.
+
+_Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worden gedefinieerd in het Privacybeleid. Raadpleeg voor een gedetailleerd begrip_ [_het Privacybeleid_](/privacy-policy/)`,
+  },
   COLLECTION_SLICE_HEADING: 'Topervaringen in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',

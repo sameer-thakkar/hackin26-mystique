@@ -124,6 +124,34 @@ const de = {
     LINK: 'https://medium.com/headout/coronavirus-ausbruch-stornierungsbedingungen-cec74ac7641b',
     TEXT: 'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
   },
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'Wir nutzen Cookies und ähnliche Technologien für viele Zwecke, u. a. zur Verbesserung der Website und für Werbung.',
+    MANAGE_PREFERENCES: 'Einstellungen verwalten',
+    ACCEPT: 'Ok',
+    ALLOW_ALL: 'Alle akzeptieren',
+    DENY_ALL: 'Alle ablehnen',
+    HEADING: 'Wir schätzen Ihre Privatsphäre immer',
+    COOKIES: 'Kekse:',
+    DESCRIPTION: `*   Cookies sind kleine Dateien, die von einer Website/Plattform auf Ihrem Computer, Ihrem Mobilgerät oder einem anderen Gerät platziert werden und unter anderem Einzelheiten zu Ihrem Browserverlauf enthalten.
+*   Wir verwenden verschiedene Arten von Cookies, um Ihre Nutzung unserer Plattform zu verfolgen und bestimmte Informationen zu speichern, die uns dabei helfen, Ihnen personalisierte Dienste anzubieten. Bestimmte Cookies können auf Ihrem Gerät platziert werden, wenn Sie die auf unserer Plattform verfügbaren Dienste nutzen.
+*   Im Großen und Ganzen setzen wir in diesem Bereich zwei verschiedene Arten von Technologien ein:
+    *   **Cookies oder Browser-Cookies.** Es handelt sich um eine kleine Datei, die automatisch auf Ihrem Gerät gespeichert wird, wenn Sie auf unsere Plattform zugreifen. Sie können Ihren Browser anweisen, alle Cookies abzulehnen. Wenn Sie unsere Cookies nicht akzeptieren, können Sie möglicherweise einige Teile unserer Plattform nicht nutzen.
+    *   **Web-Beacons.** Auch als Clear Gifs, Pixel-Tags und Single-Pixel-Gifs bezeichnet, die in verschiedenen Bereichen unserer Plattform und unseren E-Mails angebracht sind und uns erlauben, die Aktivitäten der Nutzer zu überwachen und zu verstehen.
+*   Bei diesen auf Ihrem Gerät gespeicherten Cookies kann es sich um "permanente" oder "Sitzungs"-Cookies handeln. Dauerhafte Cookies verbleiben auf Ihrem Gerät, auch wenn Sie offline gehen, während Sitzungscookies automatisch gelöscht werden, sobald Sie Ihren Webbrowser schließen.
+*   Wir verwenden sowohl Sitzungscookies als auch dauerhafte Cookies für die unten genannten Zwecke:
+    *   Notwendige / essentielle Cookies
+        *   _Typ:_ Session-Cookies
+        *   _Zweck:_ Diese Cookies sind unerlässlich, damit Sie auf verschiedene Bereiche der Plattform zugreifen können, und wenn diese nicht erlaubt sind, können Sie möglicherweise nicht auf die auf der Plattform verfügbaren Dienste zugreifen. Diese Cookies helfen uns außerdem dabei, die Nutzer zu authentifizieren und jegliche Art von betrügerischen Aktivitäten auf der Plattform zu verhindern.
+    *   Cookies Politik / Hinweis Akzeptanz Cookies
+        *   _Typ:_ Dauerhafte Cookies
+        *   _Zweck:_ Diese Cookies identifizieren, ob der Benutzer die Verwendung von Cookies akzeptiert hat.
+    *   Funktionalität Cookies
+        *   _Typ:_ Dauerhafte Cookies
+        *   _Zweck:_ Diese Cookies ermöglichen es uns, die von Ihnen bei der Nutzung der Plattform getroffenen Entscheidungen zu speichern, z. B. Ihre Anmeldedaten oder Ihre Spracheinstellung. Der Hauptzweck dieser Cookies besteht darin, Ihnen jedes Mal, wenn Sie die Plattform nutzen, ein personalisiertes Erlebnis zu bieten.
+
+_Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrichtlinie definiert. Für ein detailliertes Verständnis lesen Sie bitte die_ [_Datenschutzrichtlinie_](/privacy-policy/)`,
+  },
   CURRENCY: 'Währung',
   CUSTOMER_REVIEW_HEADING: 'Zuschauerbewertungen',
   DESCRIPTORS: {

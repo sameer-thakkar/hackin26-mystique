@@ -9,6 +9,7 @@ import Clarity from 'components/common/Clarity';
 import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
 import ScrollToTop from 'components/common/ScrollToTop';
+import { ToastProvider } from 'contexts/toastContext';
 import { getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { dynamicPolyfillIntlLocale } from 'utils/currency';
@@ -35,11 +36,9 @@ import {
 } from 'const/index';
 import 'public/global.css';
 
-const CookieBanner = dynamic(
+const ConsentBanner = dynamic(
   () =>
-    import(
-      /* webpackChunkName: "CollectionCarousel" */ 'components/common/CookieBanner'
-    ),
+    import(/* webpackChunkName: "ConsentBanner" */ 'components/common/Consent'),
   { ssr: false }
 );
 
@@ -123,8 +122,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     is_entertainment_mb && categoryTourListV2?.primary?.islisticle;
   const isLttMonthOnMonthPage =
     isEntertainmentMbListicle && body4[0]?.items?.[0]?.month_label !== null;
-
-  const pageType = ContentType + (MBDesign || '');
 
   const langCode = getLangObject(locale).code;
   if (langCode !== 'en') initDayJSLocale(langCode);
@@ -305,7 +302,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     set(currencyAtom, ssrCurrencyCode);
     set(localeLoaderAtom, false);
   };
-
+  const pageType = ContentType + (MBDesign || '');
   const { host } = pageProps;
   return (
     <StyleSheetManager
@@ -313,25 +310,27 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       stylisPlugins={RTL_LANGUAGE_CODES.includes(langCode) ? [rtlPlugin] : []}
     >
       <RecoilRoot initializeState={initRecoil}>
-        {getLanguageBasedGlobalStyling(langCode)}
-        <Component {...pageProps} />
-        <ScrollToTop $isLttMonthOnMonthPage={isLttMonthOnMonthPage} />
-        <Conditional if={!isLttMonthOnMonthPage}>
-          <ZendeskChat
-            uid={pageProps?.uid}
-            isLttMonthOnMonthPage={isLttMonthOnMonthPage}
-          />
-        </Conditional>
-        <DeferredComponent delay={3_000}>
-          <CookieBanner
-            isMobile={isMobile}
-            isGDPRCompliant={isGDPRCompliant}
-            pageType={pageType}
-          />
-        </DeferredComponent>
-        <Conditional if={!!domainConfig?.clarityProjectId}>
-          <Clarity host={host} projectId={domainConfig?.clarityProjectId} />
-        </Conditional>
+        <ToastProvider>
+          {getLanguageBasedGlobalStyling(langCode)}
+          <Component {...pageProps} />
+          <ScrollToTop $isLttMonthOnMonthPage={isLttMonthOnMonthPage} />
+          <Conditional if={!isLttMonthOnMonthPage}>
+            <ZendeskChat
+              uid={pageProps?.uid}
+              isLttMonthOnMonthPage={isLttMonthOnMonthPage}
+            />
+          </Conditional>
+          <Conditional if={!!domainConfig?.clarityProjectId}>
+            <Clarity host={host} projectId={domainConfig?.clarityProjectId} />
+          </Conditional>
+          <DeferredComponent delay={3_000}>
+            <ConsentBanner
+              isMobile={isMobile}
+              isGDPRCompliant={isGDPRCompliant}
+              pageType={pageType}
+            />
+          </DeferredComponent>
+        </ToastProvider>
       </RecoilRoot>
     </StyleSheetManager>
   );

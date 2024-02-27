@@ -113,6 +113,14 @@ const it = {
       'Immergiti nella ricca scena artistica e culturale, fatta di affascinanti musei e vivaci festival che mettono in mostra il patrimonio di {0}.',
   },
   CLOSE: 'Chiudi',
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'Usiamo cookie e tecnologie simili per molti scopi, tra cui migliorare la tua esperienza sul nostro sito e annunci pubblicitari. ',
+    MANAGE_PREFERENCES: 'Gestisci le preferenze',
+    ACCEPT: 'Accetta',
+    ALLOW_ALL: 'Consenti tutti',
+    DENY_ALL: 'Rifiuta tutti',
+  },
   COLLECTION_SLICE_HEADING: 'Le migliori cose da fare a {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleziona',

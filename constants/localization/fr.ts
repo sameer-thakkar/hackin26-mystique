@@ -112,6 +112,34 @@ const fr = {
       'Découvrez une scène artistique et culturelle exceptionnelle, des musées fascinants aux festivals animés célébrant le patrimoine de {0}.',
   },
   CLOSE: 'Fermer',
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'Nous utilisons des cookies et des technologies similaires à de nombreuses fins, notamment pour améliorer votre expérience sur notre site et pour les publicités.',
+    MANAGE_PREFERENCES: 'Gérer les préférences',
+    ACCEPT: 'Ok',
+    ALLOW_ALL: 'Autoriser tout',
+    DENY_ALL: 'Refuser tout',
+    HEADING: `Nous accordons toujours de l'importance à votre vie privée`,
+    COOKIES: 'Cookies :',
+    DESCRIPTION: `*   Les cookies sont de petits fichiers placés sur votre ordinateur, votre appareil mobile ou tout autre appareil par le site Web/la plate-forme, contenant les détails de votre historique de navigation parmi ses nombreuses utilisations.
+*   Nous utilisons différents types de cookies pour suivre votre utilisation de notre Plateforme et stocker certaines informations qui nous aident à vous fournir des services plus personnalisés. Certains cookies peuvent être placés sur votre appareil en raison de votre utilisation des services disponibles sur notre plate-forme.
+*   D'une manière générale, nous utilisons deux ensembles différents de technologies dans ce cadre :
+    *   Il s'agit d'un petit fichier qui est automatiquement placé sur votre appareil lorsque vous accédez à notre plate-forme. Vous pouvez configurer votre navigateur pour qu'il refuse tous les cookies. Dans ce cas, si Vous n'acceptez pas Nos Cookies, Il se peut que Vous ne puissiez pas utiliser certaines parties de Notre Plateforme.
+    *   **Balises Web.** Également appelés " pixels invisibles ", " pixel tags " et " single-pixel gifs ", ils sont attachés à diverses sections de notre plate-forme et de nos courriels, ce qui nous permet de surveiller et de comprendre l'activité des utilisateurs.
+*   Ces cookies stockés sur votre appareil peuvent être des cookies "persistants" ou des cookies "de session". Les cookies persistants sont ceux qui restent sur votre appareil même lorsque vous êtes hors ligne, tandis que les cookies de session sont automatiquement supprimés dès que vous fermez votre navigateur web.
+*   Nous utilisons des cookies de session et des cookies persistants aux fins décrites ci-dessous :
+    *   Cookies nécessaires / essentiels
+        *   _Type :_ Cookies de session
+        *   _Objectif :_ Ces cookies sont essentiels pour vous permettre d'accéder aux différentes sections de la plate-forme et, s'ils ne sont pas autorisés, vous risquez de ne pas pouvoir accéder aux services disponibles sur la plate-forme. Ces cookies nous aident également à authentifier les utilisateurs et à prévenir toute activité frauduleuse sur la plate-forme.
+    *   Politique en matière de cookies / Avis Acceptation des cookies
+        *   _Type :_ Cookies persistants
+        *   _Objectif :_ ces cookies permettent de déterminer si les utilisateurs ont accepté l'utilisation de cookies.
+    *   Cookies de fonctionnalité
+        *   _Type :_ Cookies persistants
+        *   _Objectif :_ Ces cookies nous permettent de nous souvenir des choix que vous faites lorsque vous utilisez la plate-forme, par exemple de vos données de connexion ou de vos préférences linguistiques. L'objectif principal de ces cookies est de vous offrir une expérience plus personnalisée à chaque fois que vous utilisez la plate-forme.
+
+_Tous les termes en majuscules utilisés ci-dessus sont définis dans la politique de confidentialité. Pour une compréhension détaillée, veuillez vous référer à la politique de_ [_confidentialité._](/privacy-policy/)`,
+  },
   COLLECTION_SLICE_HEADING: 'Meilleures choses à faire à {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Sélectionner',

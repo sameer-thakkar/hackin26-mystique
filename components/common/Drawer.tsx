@@ -176,6 +176,7 @@ const Drawer = ({
   hideSeparator = false,
   slideOutOnClose = false,
   coverHeaderInShadow = false,
+  hideCrossIcon = false,
 }: {
   closeHandler?: Function;
   contents?: JSX.Element;
@@ -188,6 +189,7 @@ const Drawer = ({
   hideSeparator?: boolean;
   slideOutOnClose?: boolean;
   coverHeaderInShadow?: boolean;
+  hideCrossIcon?: boolean;
 }) => {
   const [mounted, setMounted] = useState(false);
   const drawerRef = useRef(null);
@@ -292,7 +294,9 @@ const Drawer = ({
       >
         {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <HeadingContainer $hasHeading={heading?.length}>
-          <PanelAnchor />
+          <Conditional if={!hideCrossIcon}>
+            <PanelAnchor />
+          </Conditional>
           <Conditional if={heading}>
             <HeadingText>{heading}</HeadingText>
 
@@ -300,10 +304,12 @@ const Drawer = ({
               <Separator />
             </Conditional>
           </Conditional>
-          <CloseIcon
-            onClick={() => close('Close Icon')}
-            className="close-icon"
-          />
+          <Conditional if={!hideCrossIcon}>
+            <CloseIcon
+              onClick={() => close('Close Icon')}
+              className="close-icon"
+            />
+          </Conditional>
         </HeadingContainer>
         <CoreDrawerText>{contents || children}</CoreDrawerText>
       </DrawerWrapper>

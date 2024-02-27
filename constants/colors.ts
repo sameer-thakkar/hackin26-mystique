@@ -90,6 +90,7 @@ const COLORS = {
     MEDIUM_TONE: '#8329DE',
     DARK_TONE: '#330066',
     LEVEL_15: '#e6d1ff',
+    LEVEL_10: '#f3e9ff',
     LEVEL_3: '#6600CC',
     LIGHT_TONE_2: '#b266ff',
     LIGHT_TONE_1: '#9933ff',

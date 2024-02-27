@@ -31,11 +31,14 @@ export const getUniqueArrayItemsBy = (
   return updatedArray;
 };
 
-export const groupBy = (array: Record<string, any>[], key: string) => {
+export const groupBy = <T extends Record<string, any>, K extends keyof T>(
+  array: T[],
+  key: K
+): Record<T[K], T[]> => {
   return array.reduce(function (acc, obj) {
     (acc[obj[key]] = acc[obj[key]] || []).push(obj);
     return acc;
-  }, {});
+  }, {} as Record<T[K], T[]>);
 };
 
 export const arrayMedian = (arr: Array<any>) => {

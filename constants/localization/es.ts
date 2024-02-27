@@ -113,6 +113,34 @@ const es = {
       'Sumérgete en la escena artística y cultural, desde cautivadores museos a vibrantes festivales que resaltan el patrimonio de {0}.',
   },
   CLOSE: 'Cerrar',
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'Utilizamos cookies y tecnologías similares para muchos propósitos, entre ellos mejorar tu experiencia en nuestra página web y personalizar nuestros anuncios.',
+    MANAGE_PREFERENCES: 'Gestionar preferencias',
+    ACCEPT: 'Aceptar',
+    ALLOW_ALL: 'Permitir todo',
+    DENY_ALL: 'Denegar todo',
+    COOKIES: 'Galletas:',
+    HEADING: 'Siempre valoramos su privacidad',
+    DESCRIPTION: `*   Las cookies son pequeños archivos colocados en su ordenador, dispositivo móvil o cualquier otro dispositivo por el sitio web/plataforma, que contienen los detalles de su historial de navegación entre sus muchos usos.
+*   Utilizamos diferentes tipos de cookies para hacer un seguimiento de su uso de nuestra plataforma y almacenar cierta información que nos ayuda a ofrecerle servicios más personalizados. Algunas cookies pueden instalarse en su dispositivo debido a su uso de los servicios disponibles en nuestra plataforma.
+*   A grandes rasgos, utilizamos dos conjuntos diferentes de tecnologías bajo este epígrafe:
+    *   **Cookies o Cookies de Navegador.** Es un pequeño archivo que se coloca automáticamente en Su Dispositivo cuando Usted accede a Nuestra Plataforma. Puede indicar a su navegador que rechace todas las Cookies. En caso de que no acepte nuestras cookies, es posible que no pueda utilizar algunas partes de nuestra plataforma.
+    *   **Balizas web.** También denominados gifs transparentes, etiquetas de píxel y gifs de píxel único que se adjuntan en varias secciones de nuestra plataforma y nuestros correos electrónicos y que nos permiten supervisar y comprender la actividad de los usuarios.
+*   Estas Cookies almacenadas en su dispositivo pueden ser "persistentes" o "de sesión". Las Cookies persistentes son las que permanecen en su dispositivo incluso cuando se desconecta, mientras que las Cookies de sesión se eliminan automáticamente en cuanto cierra su navegador web.
+*   Utilizamos tanto cookies de sesión como cookies persistentes para los fines que se indican a continuación:
+    *   Cookies necesarias / esenciales
+        *   _Tipo:_ Cookies de sesión
+        *   _Finalidad:_ Estas Cookies son esenciales para que Usted pueda acceder a diferentes secciones de la Plataforma y, si no se permiten, es posible que no pueda acceder a los servicios disponibles en la Plataforma. Además, estas cookies nos ayudan a autenticar a los Usuarios y a evitar cualquier tipo de actividad fraudulenta en la Plataforma.
+    *   Política de Cookies / Aviso Aceptación Cookies
+        *   _Tipo:_ Cookies persistentes
+        *   _Finalidad:_ Estas Cookies identifican si los Usuarios han aceptado el uso de Cookies.
+    *   Cookies de funcionalidad
+        *   _Tipo:_ Cookies persistentes
+        *   _Finalidad:_ Estas Cookies nos permiten recordar las elecciones que realiza cuando utiliza la Plataforma, como recordar sus datos de inicio de sesión o su preferencia de idioma. El objetivo principal de estas Cookies es proporcionarle una experiencia más personalizada cada vez que utilice la Plataforma.
+
+_Todos los términos utilizados en mayúsculas se definen en la Política de privacidad. Para más información, consulte_ [_la Política de privacidad_](/privacy-policy/)`,
+  },
   COLLECTION_SLICE_HEADING: 'Las mejores cosas que hacer en {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleccionar',

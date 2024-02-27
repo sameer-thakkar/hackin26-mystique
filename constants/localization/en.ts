@@ -84,6 +84,36 @@ const en = {
         'Explore new cities with curated experiences, instant cashback, exclusive deals and essential travel tips!',
     },
   },
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'We use cookies and similar technologies for many purposes, including to improve your experience on our site and for ads.',
+    MANAGE_PREFERENCES: 'Manage preferences',
+    PREFERNCES_SAVED: 'Your preferences have been saved',
+    COOKIES: 'Cookies:',
+    ACCEPT: 'Ok',
+    ALLOW_ALL: 'Allow all',
+    DENY_ALL: 'Deny all',
+    HEADING: 'We value your privacy, always',
+    DESCRIPTION: `*   Cookies are small files placed on Your computer, mobile device, or any other device by Website/Platform, containing the details of Your browsing history among its many uses.
+*   We use different types of cookies to track Your usage of Our Platform and store certain information that further helps us to provide You with more personalized services. Certain cookies may get placed on Your Device because of Your usage of any services available on Our Platform.
+*   Broadly, We use two different sets of technologies under this head:
+    *   **Cookies or Browser Cookies.** it is a small file that automatically gets placed on Your Device when You access Our Platform. You can instruct Your browser to refuse all Cookies. In case, if You do not accept Our Cookies, You may not be able to use some parts of Our Platform.
+    *   **Web Beacons.** Also referred to as clear gifs, pixel tags, and single-pixel gifs that are attached in various sections of Our Platform and Our emails that permit us to monitor and understand the activity of Users.
+*   These Cookies stored on Your Device can be "Persistent" or "Session" Cookies. Persistent Cookies are the ones that remain on Your Device even when You go offline, whereas, Session Cookies are automatically deleted as soon as You close Your web browser.
+*   We use both Session and Persistent Cookies for the purposes set out below:
+    *   Necessary / Essential Cookies
+        *   _Type:_ Session Cookies
+        *   _Purpose:_ These Cookies are essential for You to access different sections of the Platform and if these are not allowed You may not be able to access the services available on the Platform. These cookies further help us to authenticate the Users and prevent any sort of fraudulent activity on the Platform.
+    *   Cookies Policy / Notice Acceptance Cookies
+        *   _Type:_ Persistent Cookies
+        *   _Purpose:_ These Cookies identify if Users have accepted the use of Cookies.
+    *   Functionality Cookies
+        *   _Type:_ Persistent Cookies
+        *   _Purpose:_ These Cookies allow us to remember choices You make when You use the Platform, such as remembering Your login details or language preference. The larger purpose of these Cookies is to provide You with a more personalized experience every time You use the Platform.
+
+All capitalized terms used above are defined in the Privacy Policy. For a detailed understanding please refer [Privacy Policy](/privacy-policy/)
+`,
+  },
   CITY_GUIDE_DESCRIPTIONS: {
     TRAVEL_GUIDE:
       'Learn about visa requirements, currency exchange, time zone differences, and more to ensure a smooth arrival and enjoyable stay.',
