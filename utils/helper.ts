@@ -109,7 +109,10 @@ export const createGroupBooking = (url: string, data: Record<string, any>) => {
     .catch((error) => `Error: ${error}`);
 };
 
-export const isMobile = () => document?.documentElement.clientWidth < 768;
+export const isMobile = () =>
+  typeof document === 'undefined'
+    ? false
+    : document.documentElement.clientWidth < 768;
 
 export const docCookies = {
   getItem: function (sKey: string | number | boolean) {
