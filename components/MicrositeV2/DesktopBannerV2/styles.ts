@@ -5,7 +5,7 @@ import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
   position: relative;
-  height: auto;
+  min-height: 25rem;
   background: #150029;
   -webkit-transform: translate3d(0, 0, 0);
   margin-bottom: 0.5rem;
@@ -61,6 +61,7 @@ export const SwiperWrapper = styled.div`
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
+  min-height: 21rem;
 
   &.clickable {
     cursor: pointer;

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { ComponentType, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import HorizontalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/HorizontalProductCard';
 import VerticalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard';
@@ -9,9 +10,15 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { LTT_CATEGORIES } from 'const/lttCategories';
 import { strings } from 'const/strings';
 import { YourPickBackground, YourPickStar } from 'assets/yourPickBackground';
-import BrowseByCategoriesSection from '../BrowseByCategoriesSection';
 
-interface ITopLttShowsSectionProps {
+const BrowseByCategoriesSection: ComponentType<any> = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "BrowseByCategoriesSection" */ 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection'
+    )
+);
+
+export interface ITopLttShowsSectionProps {
   isMobile: boolean;
   topShows: any[];
   categoriesToRender?: any[];

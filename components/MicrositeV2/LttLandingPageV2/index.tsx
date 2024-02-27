@@ -1,18 +1,18 @@
-import { useContext, useEffect, useState } from 'react';
+import { ComponentType, useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { SwiperOptions } from 'swiper';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Reviews from 'components/common/Reviews';
-import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
-import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
+import { TCategoryCarouselsSection } from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection/interface';
 import { TLandingPageV2Props } from 'components/MicrositeV2/LttLandingPageV2/interface';
-import SpecialSections from 'components/MicrositeV2/LttLandingPageV2/SpecialSections';
+import { ISpecialSections } from 'components/MicrositeV2/LttLandingPageV2/SpecialSections/interface';
 import {
   LandingPageWrapper,
   ReviewSectionWrapper,
 } from 'components/MicrositeV2/LttLandingPageV2/style';
-import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
+import { ITopLttShowsSectionProps } from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
 import { TMediaData } from 'components/NewsPage/ArticlePage/interface';
 import { MBContext } from 'contexts/MBContext';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
@@ -26,6 +26,35 @@ import {
   RESOURCE_ASSET_TYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
+
+const BrowseByCategoriesSection: ComponentType<any> = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "BrowseByCategoriesSection" */ 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection'
+    )
+);
+
+const CategoryCarouselsSection: ComponentType<TCategoryCarouselsSection> =
+  dynamic(
+    () =>
+      import(
+        /* webpackChunkName: "CategoryCarouselsSection" */ 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection'
+      )
+  );
+
+const SpecialSections: ComponentType<ISpecialSections> = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SpecialSections" */ 'components/MicrositeV2/LttLandingPageV2/SpecialSections'
+    )
+);
+
+const TopLttShowsSection: ComponentType<ITopLttShowsSectionProps> = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "TopLttShowsSection" */ 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection'
+    )
+);
 
 const NUMBER_OF_CATEGORIES_BEFORE_REVIEWS = 3;
 const NUMBER_OF_REVIEWS_TO_FETCH = 9;

@@ -11,34 +11,34 @@ import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const ICONS = [
-  {
-    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.NAME,
-    icon: lttTrustBoostersIcons['BOX_OFFICE_TICKETS'],
-    description:
-      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.DESCRIPTION,
-  },
-  {
-    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.NAME,
-    icon: lttTrustBoostersIcons['CHOOSE_YOUR_SEATS'],
-    description:
-      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.DESCRIPTION,
-  },
-  {
-    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.NAME,
-    icon: lttTrustBoostersIcons['EXCLUSIVE_DEALS'],
-    description:
-      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.DESCRIPTION,
-  },
-  {
-    name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.NAME,
-    icon: lttTrustBoostersIcons['BOOK_AND_RELAX'],
-    description:
-      strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.DESCRIPTION,
-  },
-];
-
 const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
+  const ICONS = [
+    {
+      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.NAME,
+      icon: lttTrustBoostersIcons['BOX_OFFICE_TICKETS'],
+      description:
+        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.DESCRIPTION,
+    },
+    {
+      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.NAME,
+      icon: lttTrustBoostersIcons['CHOOSE_YOUR_SEATS'],
+      description:
+        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.DESCRIPTION,
+    },
+    {
+      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.NAME,
+      icon: lttTrustBoostersIcons['EXCLUSIVE_DEALS'],
+      description:
+        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.DESCRIPTION,
+    },
+    {
+      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.NAME,
+      icon: lttTrustBoostersIcons['BOOK_AND_RELAX'],
+      description:
+        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.DESCRIPTION,
+    },
+  ];
+
   const swiperParams: SwiperOptions = {
     slidesPerView: isMobile ? 1 : ICONS.length,
     spaceBetween: 20,
