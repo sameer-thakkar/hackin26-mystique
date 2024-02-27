@@ -45,6 +45,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
             categoriesToRender={categoriesToRender}
             isMobile={isMobile}
             ref={browseByCategoriesRef}
+            showGridUI={isMobile}
           />
         </Conditional>
         <div className={isMobile ? '' : 'main-wrapper'}>

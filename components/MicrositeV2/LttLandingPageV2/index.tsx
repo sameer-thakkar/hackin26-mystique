@@ -217,6 +217,7 @@ const LttLandingPageV2 = ({
         categoriesToRender={categoriesToRender}
         isMobile={isMobile}
         showGridUI={false}
+        isLandingPage
         ref={browseByCategoriesRef}
       />
       <TopLttShowsSection
