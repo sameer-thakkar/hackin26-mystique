@@ -36,7 +36,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DROPDOWN_ELEMENT,
-  SHOULDER_PAGE_TYPES,
+  MB_CATEGORISATION,
   SLICE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -47,6 +47,9 @@ const GeneralContentPage = dynamic(
 );
 const AboutPage = dynamic(
   () => import(/* webpackChunkName: "AboutShoulderPage" */ './About')
+);
+const TimingsPage = dynamic(
+  () => import(/* webpackChunkName: "TimingsShoulderPage" */ './Timings')
 );
 const GroupBooking = dynamic(() => import('../GroupBooking'), { ssr: false });
 const CategoryHeader = dynamic(
@@ -260,6 +263,7 @@ class ContentPage extends Component<any, any> {
       prismicDocsForListicle,
       collectionsInListicles,
       categoryTourListData,
+      collectionData,
     } = this.props;
     const {
       footer_ref: commonFooter,
@@ -274,6 +278,8 @@ class ContentPage extends Component<any, any> {
       content_framework: contentFramework,
       secondary_footer: secondaryFooter,
     } = CMSData;
+
+    const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
     const { data: micrositeData } = microsite_document_ref ?? {};
     const {
       tagged_city: taggedCity,
@@ -283,9 +289,6 @@ class ContentPage extends Component<any, any> {
     const { design: mbDesign } = micrositeData || {};
 
     const apiReady = tourAPIData !== null;
-
-    const CFWBody = contentFramework?.data?.body;
-    const contentFWSlices: Record<string, any>[] = groupSlices(CFWBody || []);
 
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
@@ -311,7 +314,7 @@ class ContentPage extends Component<any, any> {
     const strValues = strKeys.reduce(
       (acc, elem) => ({
         ...acc,
-        [elem]: this.props.data[elem] || micrositeData[elem],
+        [elem]: this.props.data?.[elem] || micrositeData?.[elem],
       }),
       {}
     );
@@ -346,7 +349,7 @@ class ContentPage extends Component<any, any> {
 
     const headProps = {
       ...modifiedMicrositeData,
-      header_scripts: microsite_document_ref.data.header_scripts,
+      header_scripts: microsite_document_ref.data?.header_scripts,
       canonical_link: CMSData.canonical_link || pageUrl,
       other_meta_tags: contentPageHasOtherMetaTags
         ? CMSData.other_meta_tags
@@ -372,7 +375,7 @@ class ContentPage extends Component<any, any> {
       group_form_blocked_days: blockedDays,
       alert_popup: alertPopup,
       show_covid19_alert: showCovid19Alert,
-    } = microsite_document_ref.data;
+    } = microsite_document_ref.data ?? {};
 
     const { featured_image, featured_image_link, featured_image_alt } =
       CMSData ?? {};
@@ -406,13 +409,36 @@ class ContentPage extends Component<any, any> {
 
     const automatedBreadcrumbsExists =
       Object.keys(breadcrumbs ?? {}).length > 0;
-    const isNotGeneralPage = [SHOULDER_PAGE_TYPES.ABOUT].includes(
-      shoulder_page_type || ''
+    const CFWBody: Record<string, any>[] = contentFramework?.data?.body || [];
+    const contentFWSlices: Record<string, any>[] = groupSlices(CFWBody);
+    const isRevampedPage =
+      [SHOULDER_PAGE_TYPE.ABOUT, SHOULDER_PAGE_TYPE.TIMINGS].includes(
+        shoulder_page_type || ''
+      ) &&
+      !(
+        shoulder_page_type == SHOULDER_PAGE_TYPE.TIMINGS &&
+        !poiInfo?.poi?.operatingSchedules?.length
+      );
+    const breadcrumbsSliceIndex = CFWBody.findIndex(
+      ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
     );
+    const extractedPrismicBreadcrumbs =
+      isRevampedPage &&
+      !automatedBreadcrumbsExists &&
+      breadcrumbsSliceIndex >= 0 &&
+      CFWBody?.splice?.(breadcrumbsSliceIndex, 1);
 
     let extractedBreadcrumbsSlice: Record<string, any>[] = [],
       extractedProductCardsSlice: Record<string, any>[] = [];
-    if (isNotGeneralPage) {
+    const { side_navigation: sideNavToggle, featured_title: featuredTitle } =
+      CMSData;
+    const slices = [
+      ...(CMSData?.body || []),
+      ...(CMSData?.content_framework?.data?.body || []),
+    ];
+    const extraSideNavItems = [];
+
+    if (isRevampedPage) {
       extractedProductCardsSlice = extractSliceByType({
         slices: contentFWSlices,
         sliceType:
@@ -424,31 +450,62 @@ class ContentPage extends Component<any, any> {
             sliceType: SLICE_TYPES.BREADCRUMBS as keyof typeof SLICE_TYPES,
           })
         : [];
-    }
-    const { side_navigation: sideNavToggle, featured_title: featuredTitle } =
-      CMSData;
 
-    const slices = [
-      ...(CMSData?.body || []),
-      ...(CMSData?.content_framework?.data?.body || []),
-    ];
-    const extraSideNavItems = [];
-    if (shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT) {
-      // as we're reordering the product cards, reorder its title in the sidebar
-      extraSideNavItems.push(
-        ...[
-          strings.CONTENT_PAGE.QUICK_INFORMATION,
-          extractedProductCardsSlice?.[0]?.primary?.title,
-        ].filter(Boolean)
+      // TEMP TODO CHECK besides reordering in the sidebar, also remove from the longform slices
+      [SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD, SLICE_TYPES.BREADCRUMBS].forEach(
+        (sliceType) =>
+          extractSliceByType({
+            slices,
+            sliceType: sliceType as keyof typeof SLICE_TYPES,
+          })
       );
+
+      // as we're reordering the product cards, reorder its title in the sidebar
+      const productCardsSliceTitle =
+        extractedProductCardsSlice?.[0]?.primary?.title ||
+        extractedProductCardsSlice?.[0]?.slices?.[0]?.primary?.title;
+      if (shoulder_page_type === SHOULDER_PAGE_TYPE.ABOUT) {
+        extraSideNavItems.push(
+          ...[
+            strings.CONTENT_PAGE.QUICK_INFORMATION,
+            productCardsSliceTitle,
+          ].filter(Boolean)
+        );
+      } else if (shoulder_page_type === SHOULDER_PAGE_TYPE.TIMINGS) {
+        const weekInfoExists = Object.keys(
+          poiInfo?.poi?.bestTimeToVisit?.week || {}
+        ).length;
+        const yearInfoExists = Object.keys(
+          poiInfo?.poi?.bestTimeToVisit?.year || {}
+        ).length;
+        extraSideNavItems.push(
+          ...[
+            poiInfo?.poi?.name &&
+              `${poiInfo?.poi?.name} ${strings.CONTENT_PAGE.TIMINGS}`,
+            productCardsSliceTitle,
+            (weekInfoExists || yearInfoExists) &&
+              poiInfo?.poi?.name &&
+              `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiInfo?.poi?.name}`,
+          ].filter(Boolean)
+        );
+      }
     }
+
     const sidenavItems = sideNavHandler(slices);
     const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
 
     const { collectionDetails } = categoryTourListData || {};
-
     const { id: collectionId, displayName: collectionName } =
       collectionDetails || {};
+
+    const collectionFeaturedImage = {
+      url:
+        featured_image.url ||
+        featured_image_link.url ||
+        collectionData?.collection?.heroImageUrl,
+      alt:
+        collectionData?.displayName || featured_image.alt || featured_image_alt,
+    };
 
     return (
       <div className="page-wrapper">
@@ -545,7 +602,7 @@ class ContentPage extends Component<any, any> {
             visibleHeading={this.state.selectedHeading || null}
           />
         </Conditional>
-        <Conditional if={!isNotGeneralPage}>
+        <Conditional if={!isRevampedPage}>
           <GeneralContentPage
             alertPopup={alertPopup}
             featuredImage={featuredImage}
@@ -558,7 +615,9 @@ class ContentPage extends Component<any, any> {
             automatedBreadcrumbsExists={automatedBreadcrumbsExists}
           />
         </Conditional>
-        <Conditional if={shoulder_page_type === SHOULDER_PAGE_TYPES.ABOUT}>
+        <Conditional
+          if={isRevampedPage && shoulder_page_type === SHOULDER_PAGE_TYPE.ABOUT}
+        >
           <AboutPage
             featuredImage={featured_image_link?.url && featuredImage}
             data={CMSData}
@@ -573,6 +632,28 @@ class ContentPage extends Component<any, any> {
             categoryTourListData={categoryTourListData}
             extractedBreadcrumbsSlice={extractedBreadcrumbsSlice}
             extractedProductCardsSlice={extractedProductCardsSlice}
+          />
+        </Conditional>
+        <Conditional
+          if={
+            isRevampedPage && shoulder_page_type === SHOULDER_PAGE_TYPE.TIMINGS
+          }
+        >
+          <TimingsPage
+            data={CMSData}
+            featuredImage={collectionFeaturedImage}
+            parentProps={this.props}
+            breadcrumbs={breadcrumbs}
+            taggedCity={taggedCity}
+            primaryCity={primaryCity}
+            isMobile={this.state.isMobile}
+            relatedContentPages={relatedContentPages}
+            poiInfo={poiInfo}
+            automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+            categoryTourListData={categoryTourListData}
+            extractedProductCardsSlice={extractedProductCardsSlice}
+            // @ts-ignore
+            extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
           />
         </Conditional>
         <StyledContentPage>
@@ -605,8 +686,8 @@ class ContentPage extends Component<any, any> {
           primaryHeading={commonFooter?.data?.footer_heading}
           secondaryHeading={secondaryFooter?.data?.footer_heading}
           showGmapsDisclaimer={
-            shoulder_page_type === SHOULDER_PAGE_TYPES.DIRECTIONS ||
-            shoulder_page_type === SHOULDER_PAGE_TYPES.PLAN_YOUR_VISIT
+            shoulder_page_type === SHOULDER_PAGE_TYPE.DIRECTIONS ||
+            shoulder_page_type === SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT
           }
         />
       </div>

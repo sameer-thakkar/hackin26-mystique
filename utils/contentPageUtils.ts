@@ -15,9 +15,19 @@ import {
   LANGUAGE_MAP,
   MB_CATEGORISATION,
   SEO_SUBDOMAINS_UID,
+  SHOULDER_TIMINGS_SCALE_ICONS,
   SLICE_TYPES,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
+import {
+  Closed,
+  Crowded,
+  ModerateSeason,
+  OffSeason,
+  PeakSeason,
+  PleasantCrowd,
+  VeryCrowded,
+} from 'assets/timingsLegend';
 import { convertUidToUrl } from './urlUtils';
 
 export type TListicleData = {
@@ -127,6 +137,18 @@ export const getRelatedContentPagesUrl = ({
   );
 };
 
+export const SHOULDER_TIMINGS_SCALE_ICONS_VALUES: Record<
+  SHOULDER_TIMINGS_SCALE_ICONS,
+  () => JSX.Element
+> = {
+  PLEASANT: PleasantCrowd,
+  CROWDED: Crowded,
+  VERY_CROWDED: VeryCrowded,
+  CLOSED: Closed,
+  LOW_SEASON: OffSeason,
+  MID_SEASON: ModerateSeason,
+  PEAK_SEASON: PeakSeason,
+};
 export type TExtractSliceByTypeParams = {
   slices: {
     slices?: {
@@ -136,8 +158,12 @@ export type TExtractSliceByTypeParams = {
   }[];
   sliceType: keyof typeof SLICE_TYPES;
 };
-// Extracts a prismic slice from a given list of slices based on a given slice type
-// Even if the slice is nested inside a slice
+
+/*
+ * Extracts a prismic slice from a given list of slices based on a given slice type
+ * Even if the slice is nested inside a slice
+ * Note: This mutates the given slices array
+ */
 export const extractSliceByType = ({
   slices,
   sliceType,
@@ -150,5 +176,6 @@ export const extractSliceByType = ({
           child_slice_type === sliceType
       )
   );
-  return sliceIndex >= 0 ? slices?.splice?.(sliceIndex, 1) : [];
+  const splicedSlice = sliceIndex >= 0 ? slices?.splice?.(sliceIndex, 1) : [];
+  return splicedSlice;
 };

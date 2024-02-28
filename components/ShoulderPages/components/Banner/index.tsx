@@ -18,11 +18,13 @@ const Banner = ({
   return (
     <Container>
       <ContentContainer>
-        <TextContainer>
+        <TextContainer $fullWidth={!imageSrc}>
           <h1>{title}</h1>
-          <div
-            dangerouslySetInnerHTML={{ __html: description as TrustedHTML }}
-          />
+          <Conditional if={description}>
+            <div
+              dangerouslySetInnerHTML={{ __html: description as TrustedHTML }}
+            />
+          </Conditional>
           <Conditional if={Object.values(poiInfo).filter((val) => val).length}>
             <Divider />
             <InfoContainer>

@@ -961,25 +961,6 @@ export const PAGE_TYPES = {
   REVIEWS_PAGE: 'Reviews Page',
 };
 
-export const SHOULDER_PAGE_TYPES = {
-  DIRECTIONS: 'Directions',
-  PLAN_YOUR_VISIT: 'Plan your visit',
-  ABOUT: 'About',
-  TIMINGS: 'Timings',
-  GETTING_THERE: 'Getting there',
-  FACTS: 'Facts',
-  ENTRANCES: 'Entrances',
-  Architecture: 'Architecture',
-  SUB_ATTRACTIONS: 'Sub-attractions',
-  SKIP_THE_LINE: 'Skip the Line',
-  INSIDE: 'Inside',
-  TIPS: 'Tips',
-  GUIDED_TOURS: 'Guided Tours',
-  MISC: 'Misc',
-  HISTORY: 'History',
-  RESTAURANTS: 'Restaurants',
-};
-
 export const BOOLEAN_STATES = {
   YES: 'Yes',
   NO: 'No',
@@ -1317,6 +1298,24 @@ export const MB_CATEGORISATION = {
   PRIMARY_TAG: {
     TRAVEL_GUIDE: 'Travel Guide',
     THINGS_TO_DO: 'Things to do',
+  },
+  SHOULDER_PAGE_TYPE: {
+    DIRECTIONS: 'Directions',
+    PLAN_YOUR_VISIT: 'Plan your visit',
+    ABOUT: 'About',
+    TIMINGS: 'Timings',
+    GETTING_THERE: 'Getting there',
+    FACTS: 'Facts',
+    ENTRANCES: 'Entrances',
+    Architecture: 'Architecture',
+    SUB_ATTRACTIONS: 'Sub-attractions',
+    SKIP_THE_LINE: 'Skip the Line',
+    INSIDE: 'Inside',
+    TIPS: 'Tips',
+    GUIDED_TOURS: 'Guided Tours',
+    MISC: 'Misc',
+    HISTORY: 'History',
+    RESTAURANTS: 'Restaurants',
   },
 };
 export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
@@ -1864,6 +1863,35 @@ export const LTT_PERMANENT_SHOWS_TGIDS = [
   16818, 16816, 22293, 3031, 19737, 20045, 17432, 18161, 13402, 9858, 2863,
   9162, 9723, 3023, 3027, 3032, 3026, 3028, 3037, 2843, 18551,
 ];
+
+export enum SHOULDER_TIMINGS_SCALE_ICONS {
+  PLEASANT = 'PLEASANT',
+  CROWDED = 'CROWDED',
+  VERY_CROWDED = 'VERY_CROWDED',
+  CLOSED = 'CLOSED',
+  LOW_SEASON = 'LOW_SEASON',
+  MID_SEASON = 'MID_SEASON',
+  PEAK_SEASON = 'PEAK_SEASON',
+}
+
+export enum SHOULDER_TIMINGS_SCALE_TYPES {
+  week = 'week',
+  year = 'year',
+}
+
+export const SHOULDER_TIMINGS_SCALE_LEGENDS = {
+  [SHOULDER_TIMINGS_SCALE_TYPES.week]: [
+    SHOULDER_TIMINGS_SCALE_ICONS.PLEASANT,
+    SHOULDER_TIMINGS_SCALE_ICONS.CROWDED,
+    SHOULDER_TIMINGS_SCALE_ICONS.VERY_CROWDED,
+    SHOULDER_TIMINGS_SCALE_ICONS.CLOSED,
+  ],
+  [SHOULDER_TIMINGS_SCALE_TYPES.year]: [
+    SHOULDER_TIMINGS_SCALE_ICONS.LOW_SEASON,
+    SHOULDER_TIMINGS_SCALE_ICONS.MID_SEASON,
+    SHOULDER_TIMINGS_SCALE_ICONS.PEAK_SEASON,
+  ],
+};
 
 export const RATINGS_ORDER = [5, 4, 3, 2, 1];
 

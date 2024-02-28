@@ -13,7 +13,7 @@ export const Container = styled.main`
   .pairs-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem 5rem;
+    gap: 1.25rem 5rem;
     margin-bottom: 1rem;
 
     p {

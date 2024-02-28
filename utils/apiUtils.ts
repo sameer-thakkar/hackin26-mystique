@@ -696,7 +696,6 @@ export const fetchCollection = async ({
     const response = await fetch(finalUrl, {
       headers,
     });
-
     return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -1311,6 +1310,7 @@ export const fetchShoulderPoiInfo = async ({
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.Poi,
+      // hostname: 'https://api.test-headout.com',
       params,
       id: null,
     });

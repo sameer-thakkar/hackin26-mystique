@@ -289,11 +289,7 @@ const MicrositeV1 = (props: any) => {
   const hasTours = isCategorisedTours
     ? categorizedToursList
     : uncategorizedToursList?.length > 0;
-  const uncategorizedToursHeading = hasTours
-    ? isCategorisedTours
-      ? ''
-      : uncategorizedTours?.[0].primary
-    : '';
+
   const scorpioData = isCategorisedTours
     ? scorpioDataCategorised
     : scorpioDataUncategorised;
@@ -424,6 +420,13 @@ const MicrositeV1 = (props: any) => {
           : BOOLEAN_STATES['NO'],
     });
   }, [eventsReady]);
+
+  const uncategorizedToursHeading = hasTours
+    ? isCategorisedTours
+      ? ''
+      : uncategorizedTours?.[0].primary
+    : '';
+
   const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
   let footerThemeOverride = themeOverrideCFoot || THEMES.INHERIT;
   footerThemeOverride = themeOverrideCMS || THEMES.INHERIT;

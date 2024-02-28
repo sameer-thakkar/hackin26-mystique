@@ -1,4 +1,8 @@
 import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+import {
+  SHOULDER_TIMINGS_SCALE_ICONS,
+  SHOULDER_TIMINGS_SCALE_TYPES,
+} from 'const/index';
 
 export interface IShoulderBannerProps {
   imageSrc?: {
@@ -44,6 +48,25 @@ export interface IAboutPageProps {
   parentProps: any;
 }
 
+export interface ITimingsPageProps {
+  data: Record<string, any>;
+  breadcrumbs?: TBreadcrumbs;
+  taggedCity?: string | null;
+  primaryCity?: Record<string, any>;
+  isMobile: boolean;
+  relatedContentPages?: Record<string, any>[];
+  poiInfo?: Record<string, any>;
+  automatedBreadcrumbsExists?: boolean;
+  extractedPrismicBreadcrumbs?: Record<string, any>[];
+  extractedProductCardsSlice?: Record<string, any>[];
+  categoryTourListData?: Record<string, any>;
+  parentProps: any;
+  featuredImage?: {
+    alt: string;
+    url: string;
+  };
+}
+
 export interface IGeneralContentPageProps {
   featuredImage?: {
     url: string;
@@ -59,4 +82,22 @@ export interface IGeneralContentPageProps {
   isMobile?: boolean;
   automatedBreadcrumbsExists?: boolean;
   parentProps?: Record<string, any>;
+}
+
+export interface ITimingsTableProps {
+  rows: {
+    isActive?: boolean;
+    [key: string]: any;
+  }[];
+  columns: {
+    key: string;
+    label: string;
+  }[];
+  isMobile: boolean;
+}
+
+export interface IIconScaleType {
+  values?: Record<string, SHOULDER_TIMINGS_SCALE_ICONS>;
+  type: SHOULDER_TIMINGS_SCALE_TYPES;
+  lang?: string;
 }

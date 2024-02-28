@@ -43,6 +43,7 @@ import {
   checkIfCategoryHeaderExists,
   checkIfCatOrSubCatPage,
   getHostName,
+  getLangObject,
 } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -166,6 +167,7 @@ export const getPageData = async ({
     let tgidsArray: any = [];
     let minPrice = 0;
     let bestDiscount = 0;
+    let collectionData = {};
     const queryParams = getQueryparams(req);
 
     if (ContentType === CUSTOM_TYPES.NEWS_PAGE) {
@@ -290,6 +292,19 @@ export const getPageData = async ({
           lang: lang as string,
           cookies,
         });
+
+      const collectionId =
+        CMSData?.baseLangCategorisationMetadata?.tagged_collection;
+      if (collectionId) {
+        const languageCode = getLangObject(lang!).code;
+        collectionData = await fetchCollection({
+          collectionId,
+          hostname,
+          language: languageCode,
+          currency: 'USD',
+          cookies,
+        });
+      }
 
       const { design, theme, body1 } = CMSData || {};
       const MBDesign = design || '';
@@ -1074,7 +1089,6 @@ export const getPageData = async ({
           cookies,
         })
       : {};
-
     return {
       ...scorpioAllTourGroupData,
       ...(activeCurrency && { activeCurrency }),
@@ -1092,6 +1106,7 @@ export const getPageData = async ({
       bestDiscount,
       prismicApiCacheStatus,
       prismicDocumentTypeApiCacheStatus,
+      collectionData,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

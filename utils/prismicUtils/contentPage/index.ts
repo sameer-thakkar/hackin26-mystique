@@ -17,7 +17,6 @@ import {
   MB_CATEGORISATION,
   PRISMIC_DEV_TAG,
   PRISMIC_FIELD_ID,
-  SHOULDER_PAGE_TYPES,
   SLICE_TYPES,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
@@ -28,6 +27,8 @@ const { CONTENT_PAGE } = CUSTOM_TYPES;
 
 const { TAGGED_COLLECTION, TAGGED_CITY, TAGGED_PAGE_TYPE, SHOULDER_PAGE_TYPE } =
   PRISMIC_FIELD_ID;
+
+const { SHOULDER_PAGE_TYPE: SHOULDER_PAGE_TYPES } = MB_CATEGORISATION;
 
 const getPrismicContentPageRelatedDocs = (
   mbCity: string,
@@ -222,8 +223,12 @@ const getContentPageDocument = async ({
       shoulder_page_type as string,
     ];
     let poiInfo = {};
-    // We Currently only want this in About pages
-    if (shoulder_page_type == SHOULDER_PAGE_TYPES.ABOUT) {
+    // We Currently only want this in the Revamped pages
+    if (
+      [SHOULDER_PAGE_TYPES.ABOUT, SHOULDER_PAGE_TYPES.TIMINGS].includes(
+        shoulder_page_type || ''
+      )
+    ) {
       const settledPromises = await Promise.allSettled([
         getPrismicContentPageRelatedDocs(
           tagged_city ?? '',

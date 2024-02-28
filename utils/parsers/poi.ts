@@ -1,9 +1,13 @@
 import { TQuickInfo } from 'components/ShoulderPages/interface';
 import { getHeadoutLanguagecode } from 'utils';
 import { getRelatedContentPagesUrl } from 'utils/contentPageUtils';
-import { getCurrentOperatingHours } from 'utils/dateUtils';
+import {
+  formatOperatingDayTimings,
+  getCurrentOperatingHours,
+  localizeDay,
+} from 'utils/dateUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { LANGUAGE_MAP, SHOULDER_PAGE_TYPES } from 'const/index';
+import { LANGUAGE_MAP, MB_CATEGORISATION } from 'const/index';
 import { strings } from 'const/strings';
 import Address from 'assets/address';
 import ArchitectureStyle from 'assets/architectureStyle';
@@ -15,6 +19,64 @@ import UnescoStatus from 'assets/unescoStatus';
 import Users from 'assets/users';
 import WaitTime from 'assets/waitTime';
 import WaitTimeFast from 'assets/waitTimeFast';
+
+export const getPoiTimingsInfo = (
+  data: Record<string, any> = {},
+  lang: string
+) => {
+  const { operatingSchedules } = data;
+
+  const currentOperatingHours = getCurrentOperatingHours(
+    operatingSchedules,
+    lang
+  );
+
+  const today = new Date()
+    .toLocaleString('en-US', { weekday: 'long' })
+    .toUpperCase();
+  const timingTablesData = operatingSchedules?.map?.((schedule: any) => {
+    const startMonth = new Date(schedule.startDate).toLocaleString(lang, {
+      day: 'numeric',
+      month: 'short',
+    });
+    const endMonth = new Date(schedule.endDate).toLocaleString(lang, {
+      day: 'numeric',
+      month: 'short',
+    });
+    return {
+      columns: [
+        {
+          label: `${strings.CONTENT_PAGE.DAYS} (${startMonth} ${strings.CONTENT_PAGE.TO} ${endMonth})`,
+          key: 'day',
+        },
+        { label: strings.CONTENT_PAGE.TIMINGS.toUpperCase(), key: 'timing' },
+        { label: strings.CONTENT_PAGE.LAST_ADMISSION, key: 'lastAdmission' },
+      ],
+      rows: schedule.operatingDaySchedules
+        ?.map?.((day: any) => {
+          if (day.closed) return;
+          const isActive = day.dayOfWeek === today;
+          const formattedDay = formatOperatingDayTimings({ day, lang });
+          return {
+            isActive,
+            day: localizeDay(day.dayOfWeek, lang),
+            lastAdmission: formattedDay.lastAdmission,
+            timing: formattedDay.hours,
+          };
+        })
+        .filter(Boolean),
+    };
+  });
+  return {
+    today: currentOperatingHours.hours
+      ? currentOperatingHours.hours == strings.CONTENT_PAGE.CLOSED_TODAY
+        ? strings.CONTENT_PAGE.CLOSED
+        : `${strings.CONTENT_PAGE.OPEN} ${currentOperatingHours.hours}`
+      : null,
+    lastAdmission: currentOperatingHours.lastAdmission,
+    timingTablesData,
+  };
+};
 
 export const getPoiQuickInfo = (
   data: Record<string, any> = {},
@@ -33,6 +95,8 @@ export const getPoiQuickInfo = (
     minPrice,
     ticketsUID,
   } = data;
+  const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
+
   const { entrances } = content?.data || {};
 
   const { standard: standardTickets, stl_tickets: skipTheLineTickets } =
@@ -44,7 +108,7 @@ export const getPoiQuickInfo = (
       Icon: Address,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
-        type: SHOULDER_PAGE_TYPES.DIRECTIONS,
+        type: SHOULDER_PAGE_TYPE.DIRECTIONS,
         lang,
       }),
     },
@@ -57,7 +121,7 @@ export const getPoiQuickInfo = (
       Icon: Timing,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
-        type: SHOULDER_PAGE_TYPES.TIMINGS,
+        type: SHOULDER_PAGE_TYPE.TIMINGS,
         lang,
       }),
     },
@@ -82,7 +146,7 @@ export const getPoiQuickInfo = (
       Icon: DoorEntrance,
       url: getRelatedContentPagesUrl({
         relatedContentPages,
-        type: SHOULDER_PAGE_TYPES.ENTRANCES,
+        type: SHOULDER_PAGE_TYPE.ENTRANCES,
         lang,
       }),
     },

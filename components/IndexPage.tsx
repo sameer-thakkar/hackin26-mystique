@@ -151,6 +151,7 @@ const Page = (props: PageProps) => {
     catAndSubCatPageData,
     uid,
     MBDesign,
+    collectionData,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -314,6 +315,7 @@ const Page = (props: PageProps) => {
             eventsReady={eventsReady}
             breadcrumbs={breadcrumbs}
             uid={uid}
+            collectionData={collectionData}
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:

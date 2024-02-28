@@ -121,14 +121,20 @@ export const getHumanReadableTime = ({
   formattedTime,
   lang,
   inputFormat,
+  removeTrailingZeros = false,
 }: {
   formattedTime: string;
   lang?: string;
   inputFormat?: string;
+  removeTrailingZeros?: boolean;
 }) => {
   const format =
     formattedTime && formattedTime?.length <= 5 ? 'HH:mm' : 'HH:mm:ss';
-  return dayjs(formattedTime, inputFormat ?? format, lang).format('h:mm A');
+  const parsedTime = dayjs(formattedTime, inputFormat ?? format, lang);
+  if (removeTrailingZeros && parsedTime.minute() === 0) {
+    return (formattedTime = parsedTime.format('h A'));
+  }
+  return parsedTime.format('h:mm A');
 };
 
 export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
@@ -231,33 +237,93 @@ export const getOrderedMonthsBasedOnCurrentMonth = (
   return monthsList;
 };
 
-export const formatOperatingDayTimings = (
-  operatingDay: {
+export const formatOperatingDayTimings = ({
+  day,
+  lang,
+  removeTrailingZeros,
+}: {
+  day: {
     openingTime: string;
     closingTime: string;
     lastEntryTime: string;
-  },
-  lang: string
-): { hours: string; lastAdmission?: string } => {
+  };
+  lang: string;
+  removeTrailingZeros?: boolean;
+}): { hours: string; lastAdmission?: string } => {
   const formattedOpeningTime = getHumanReadableTime({
-    formattedTime: operatingDay.openingTime,
+    formattedTime: day.openingTime,
     lang,
+    removeTrailingZeros,
   });
   const formattedClosingTime = getHumanReadableTime({
-    formattedTime: operatingDay.closingTime,
+    formattedTime: day.closingTime,
     lang,
+    removeTrailingZeros,
   });
   const formattedLastEntryTime =
-    operatingDay.lastEntryTime &&
+    day.lastEntryTime &&
     getHumanReadableTime({
-      formattedTime: operatingDay.lastEntryTime,
+      formattedTime: day.lastEntryTime,
       lang,
+      removeTrailingZeros,
     });
 
   return {
     hours: `${formattedOpeningTime} - ${formattedClosingTime}`,
     lastAdmission: formattedLastEntryTime,
   };
+};
+
+/* 
+  January to Jan
+  localized
+*/
+export const longMonthtoShort = ({
+  fullMonth,
+  lang = 'en-US',
+}: {
+  fullMonth: string;
+  lang?: string;
+}) => {
+  const monthIndex = new Date(Date.parse(`${fullMonth} 1, 2000`)).getMonth();
+
+  if (!isNaN(monthIndex)) {
+    const shortMonthName = new Intl.DateTimeFormat(lang, {
+      month: 'short',
+    }).format(new Date(2000, monthIndex, 1));
+    return shortMonthName;
+  }
+  return null;
+};
+
+/* 
+  Monday to Mon
+  localized
+  Note: the input day is expected to be in english
+*/
+export const longDaytoShort = ({
+  fullWeekday,
+  lang = 'en-US',
+}: {
+  fullWeekday: string;
+  lang?: string;
+}) => {
+  const normalizedInput = fullWeekday.toLowerCase();
+  const weekdays = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(2000, 0, index + 1);
+    return new Intl.DateTimeFormat('en-US', { weekday: 'long' })
+      .format(date)
+      .toLowerCase();
+  });
+  const weekdayIndex = weekdays.indexOf(normalizedInput);
+
+  if (weekdayIndex !== -1) {
+    const shortWeekdayName = new Intl.DateTimeFormat(lang, {
+      weekday: 'short',
+    }).format(new Date(2000, 0, weekdayIndex + 1));
+    return shortWeekdayName;
+  }
+  return null;
 };
 
 export const getCurrentOperatingHours = (
@@ -283,7 +349,11 @@ export const getCurrentOperatingHours = (
           operatingDay?.openingTime &&
           operatingDay?.closingTime
         ) {
-          return formatOperatingDayTimings(operatingDay, lang);
+          return formatOperatingDayTimings({
+            day: operatingDay,
+            lang,
+            removeTrailingZeros: true,
+          });
         }
 
         return {
@@ -296,4 +366,23 @@ export const getCurrentOperatingHours = (
   } catch {
     return {};
   }
+};
+
+export const localizeDay = (day: string, locale: string): string => {
+  const date = new Date();
+  const dayIndex = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ].indexOf(day.toLowerCase());
+  date.setDate(date.getDate() - date.getDay() + dayIndex); // Get the date of the given day
+
+  const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
+  const formatter = new Intl.DateTimeFormat(locale, options);
+
+  return formatter.format(date);
 };

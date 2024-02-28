@@ -7,7 +7,7 @@ import { getLocalisedPrice } from 'utils/currency';
 import { generateSidenavId } from 'utils/helper';
 import { getPoiQuickInfo } from 'utils/parsers/poi';
 import { currencyListAtom } from 'store/atoms/currencyList';
-import { SHOULDER_PAGE_TYPES } from 'const/index';
+import { MB_CATEGORISATION } from 'const/index';
 import { strings } from 'const/strings';
 import Banner from '../components/Banner';
 import ListMessageBox from '../components/ListMessageBox';
@@ -36,7 +36,8 @@ const AboutPage = ({
 }: IAboutPageProps) => {
   const { featured_title: featuredTitle } = data;
   const { poi } = poiInfo || { poi: {} };
-  const lang = data?.microsite_document_ref?.lang;
+  const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
+  const lang = data?.content_framework?.lang;
 
   poi.minPrice = getLocalisedPrice({
     price: categoryTourListData?.minPrice,
@@ -60,12 +61,12 @@ const AboutPage = ({
 
   const factsCtaLink = getRelatedContentPagesUrl({
     relatedContentPages,
-    type: SHOULDER_PAGE_TYPES.FACTS,
+    type: SHOULDER_PAGE_TYPE.FACTS,
     lang,
   });
   const quickInfoCtaLink = getRelatedContentPagesUrl({
     relatedContentPages,
-    type: SHOULDER_PAGE_TYPES.PLAN_YOUR_VISIT,
+    type: SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT,
     lang,
   });
 

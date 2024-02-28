@@ -15,7 +15,7 @@ export const Container = styled.div`
   background: linear-gradient(
       180deg,
       rgba(233, 238, 255, 0) 0%,
-      rgba(219, 189, 255, 0.5) 100%
+      rgba(235, 218, 255, 0.5) 100%
     ),
     #fff;
 
@@ -63,8 +63,12 @@ export const InfoContainer = styled.div`
     margin-bottom: 0.2rem;
   }
   p:last-child {
-    color: ${COLORS.TEXT.PURPS_3};
+    color: #222222;
     ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -74,6 +78,7 @@ export const ContentContainer = styled.div`
   padding: 2rem 0;
   width: 88.56vw;
   margin: 0 auto;
+  min-height: 200px;
   max-width: 1200px;
   flex-direction: row;
   flex-wrap: wrap;
@@ -84,17 +89,22 @@ export const ContentContainer = styled.div`
   @media (max-width: 768px) {
     width: calc(100vw - 2.5rem);
     padding: 1rem 0 1.5rem;
+    min-height: 180px;
   }
 `;
 
-export const TextContainer = styled.div`
+export const TextContainer = styled.div<{ $fullWidth?: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  min-width: 40%;
-  max-width: 50%;
+  ${({ $fullWidth }) =>
+    !$fullWidth &&
+    `
+    min-width: 40%;
+    max-width: 50%;
+  `}
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -105,7 +115,7 @@ export const TextContainer = styled.div`
     margin: 0;
 
     @media (max-width: 768px) {
-      font-size: 28px;
+      font-size: 24px;
       line-height: 36px;
     }
   }
