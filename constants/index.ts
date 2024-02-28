@@ -1961,3 +1961,20 @@ export const NEWRELIC_RUM_CONFIG = {
   LICENSE_KEY: 'NRBR-4c8cf2306e045aad2bd',
   APPLICATION_ID: '1120273956',
 };
+
+export const RANKING_EXPERIMENT_UIDS: Array<string> = [
+  'www.dubai-tickets.co.burj-khalifa',
+  'burj-khalifa.dubai-tickets.co',
+  'www.acropolis-tickets.com',
+  'www.thevaticantickets.com',
+  'www.colosseum-rome-tickets.com',
+  'www.billetseiffel.fr',
+  'www.eiffeltickets.com',
+  'disneyland-paris.tickets-paris.fr',
+  'www.tickets-paris.fr.disneyland-paris',
+  'www.london-tickets.co.uk.london-eye-tickets',
+  'www.miraclegardentickets.com',
+  'www.kennedyspacecenter-tickets.com',
+  'www.new-york-tickets.com.the-edge-nyc',
+  'the-edge-nyc.new-york-tickets.com',
+];

@@ -63,6 +63,7 @@ import {
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
   PAGE_TYPES,
+  RANKING_EXPERIMENT_UIDS,
   TEMPLATES,
   THEMES,
 } from 'const/index';
@@ -257,6 +258,12 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
   });
+
+  useABTesting({
+    experimentId: 'RANKING_EXPERIMENT_AA',
+    customEligibilityCheckFn: () => RANKING_EXPERIMENT_UIDS.includes(uid),
+  });
+
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
 

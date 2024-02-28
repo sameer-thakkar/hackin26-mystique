@@ -5,6 +5,8 @@ export const VARIANTS = {
   CHECKOUT_REDIRECT: 'LP to booking page',
   CONTROL: 'Control',
   TREATMENT: 'Treatment',
+  CONTROL1: 'Control 1',
+  CONTROL2: 'Control 2',
 };
 
 export const EXPERIMENT_NAMES = {
@@ -15,6 +17,7 @@ export const EXPERIMENT_NAMES = {
   HOHO_REVAMP_EXPERIMENT: 'HOHO Revamp Experiment',
   CONSENT_BANNER_EXPERIMENT: 'Consent Banner Experiment',
   BOOSTERS_EXPERIMENT: 'POI Card Booster Experiment',
+  RANKING_EXPERIMENT_AA: 'Product Rankings A/A',
 };
 
 /**
@@ -50,6 +53,11 @@ export const EXPERIMENTS = {
   [EXPERIMENT_NAMES.BOOSTERS_EXPERIMENT]: new Experiment(
     EXPERIMENT_NAMES.BOOSTERS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
+  ),
+  [EXPERIMENT_NAMES.RANKING_EXPERIMENT_AA]: new Experiment(
+    EXPERIMENT_NAMES.RANKING_EXPERIMENT_AA,
+    [VARIANTS.CONTROL1, VARIANTS.CONTROL2],
     [50, 50]
   ),
   [EXPERIMENT_NAMES.CONSENT_BANNER_EXPERIMENT]: new Experiment(
