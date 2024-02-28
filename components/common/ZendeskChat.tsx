@@ -2,7 +2,7 @@ import React from 'react';
 import useWindowSize from 'hooks/useWindowSize';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
 import { initializeZenchat, ZendeskApi } from 'utils/zenchatUtils';
-import { COOKIE_BANNER_KEY, ZENDESK_CHAT } from 'const/index';
+import { ZENDESK_CHAT } from 'const/index';
 
 interface IZendeskChat {
   uid?: string;
@@ -17,23 +17,7 @@ const ZendeskChat: React.FC<IZendeskChat> = (props) => {
   const isMobile = useWindowSize()?.width < 768;
   const isChatInitializedRef = React.useRef(false);
   const shouldHideZenchatWidget = React.useMemo(() => {
-    let hideStatus =
-      (isMobile && !checkIfGpMotorTicketsMB(uid)) || isLttMonthOnMonthPage;
-    const cookieKeyExists = !!window.localStorage.getItem(COOKIE_BANNER_KEY);
-    if (cookieKeyExists) {
-      return hideStatus;
-    } else {
-      const cookieBannerState = window.localStorage.getItem(COOKIE_BANNER_KEY);
-      const cookieBannerShown =
-        cookieBannerState &&
-        ['shown', 'not compliant'].includes(cookieBannerState);
-
-      if (cookieBannerShown) {
-        return hideStatus;
-      }
-    }
-
-    return false;
+    return (isMobile && !checkIfGpMotorTicketsMB(uid)) || isLttMonthOnMonthPage;
   }, [isMobile, uid, isLttMonthOnMonthPage]);
 
   /**
