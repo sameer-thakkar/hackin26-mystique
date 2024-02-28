@@ -16,7 +16,7 @@ export const sendLog = async ({
 }: ILogData) => {
   let text = message;
   if (err instanceof Error) {
-    text = err.stack;
+    text = [message, err.name, err.message, err.stack].join('\n');
   }
   if (typeof window === 'undefined' && shouldSendLogs()) {
     const [{ getCoralogixLoggerInstance, getCoralogixSeverity }, { Log }] =

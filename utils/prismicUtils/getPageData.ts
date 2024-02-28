@@ -150,10 +150,14 @@ export const getPageData = async ({
     } else if (statusCode) {
       sendLog({
         level: LOG_LEVELS.ERROR,
-        message: `[getPageData] - ${JSON.stringify(prismicApiResponse)}`,
+        message: `[getPageData] - ${uid} (${lang}) ${JSON.stringify(
+          prismicApiResponse
+        )}`,
       });
       return {
         statusCode,
+        uid,
+        lang,
       };
     } else if (shouldPageHaveShorterTtl) {
       res.setHeader('Cache-Control', `max-age=${SHORTER_CACHE_AGE}`);
@@ -763,7 +767,7 @@ export const getPageData = async ({
           const timestampDeltaForCoralogix = Date.now() - timestampForCoralogix;
           sendLog({
             level: LOG_LEVELS.INFO,
-            message: `[categoryTourListParserV2] Time taken: ${timestampDeltaForCoralogix}ms`,
+            message: `[categoryTourListParserV2] ${uid} (${lang}) Time taken: ${timestampDeltaForCoralogix}ms`,
           });
         }
       }
@@ -1109,13 +1113,19 @@ export const getPageData = async ({
       collectionData,
     };
   } catch (error) {
+    const { uid, lang } = getLangUID(req, query);
+
     traceError({ error, host: req?.headers?.host, url: req?.url });
     sendLog({
       err: error,
-      message: `[getPageData] Error fetching Prismic data for URL: ${req?.url}`,
+      message: `[getPageData] Error fetching Prismic data for ${uid} (${lang}) URL: ${req?.url}`,
     });
+
     return {
       statusCode: 500,
+      url: req?.url,
+      uid,
+      lang,
     };
   }
 };
