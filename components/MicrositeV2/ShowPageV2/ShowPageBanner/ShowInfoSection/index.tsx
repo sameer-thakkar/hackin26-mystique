@@ -1,10 +1,10 @@
 import { useContext, useRef, useState } from 'react';
+import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
-import { getTranslateButtonText } from 'components/MicrositeV2/LttShowPageV2/ReviewSection';
-import { TShowInfoSectionProps } from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ShowInfoSection/interface';
+import { getTranslateButtonText } from 'components/MicrositeV2/ShowPageV2/ReviewSection';
+import { TShowInfoSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ShowInfoSection/interface';
 import {
-  Breadcrumbs,
   Hero,
   InfoSection,
   InfoSectionWrapper,
@@ -13,7 +13,7 @@ import {
   TagSection,
   TheatreSection,
   ViewTranslatedContentButton,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ShowInfoSection/style';
+} from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ShowInfoSection/style';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import Image from 'UI/Image';
 import Tooltip from 'UI/Tooltip';
@@ -23,7 +23,7 @@ import { trackEvent } from 'utils/analytics';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { generateDescriptor, getStars } from 'utils/productUtils';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
-import { getLogoRedirectionUrl, getTagPageLink } from 'utils/urlUtils';
+import { getTagPageLink } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -41,8 +41,10 @@ const ShowInfoSection = ({
   tourGroupData,
   isMobile,
   isDev,
+  breadcrumbs,
+  taggedCity,
 }: TShowInfoSectionProps) => {
-  const { host, lang, uid } = useContext(MBContext);
+  const { lang, uid } = useContext(MBContext);
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
   const [mwebShowMoreTagsClicked, setmwebShowMoreTagsClicked] = useState(false);
   const {
@@ -54,10 +56,10 @@ const ShowInfoSection = ({
     topReviews,
     verticalImage,
     primaryCategory,
+    primaryCity,
   } = tourGroupData ?? {};
 
   const { url: verticalImageUrl, alt: verticalImageAlt } = verticalImage;
-  const { name: subCategoryName } = primarySubCategory;
   const { averageRating, ratingsCount } = reviewsDetails;
   const {
     content: topReviewContent,
@@ -69,14 +71,6 @@ const ShowInfoSection = ({
   } = topReviews?.[0] ?? {};
 
   const numberOfTagsToShow = isMobile ? 2 : 5;
-
-  const landingPageUrl =
-    getLogoRedirectionUrl({
-      uid: uid ?? '',
-      lang,
-      isDev,
-      host,
-    }) ?? '/';
 
   const LTT_TAG_PAGE_MAP = getTagPageMap();
   const getTagUrl = (name: string) =>
@@ -97,8 +91,8 @@ const ShowInfoSection = ({
   });
 
   const { detailsObjects } = parseShowPageData(microBrandsHighlight);
-
   const tagsArray = [primarySubCategory.displayName, ...updatedDescriptors];
+
   const {
     [strings.SHOW_PAGE.THEATRE_NAME]: theatreName,
     theatrePageUrl,
@@ -159,22 +153,16 @@ const ShowInfoSection = ({
       eventName: ANALYTICS_EVENTS.SHOW_PAGE.VIDEO_CLICKED,
     });
   };
-
   return (
     <ShowInfoSectionWrapper onClick={trackVideoAreaClicked}>
       <Conditional if={!isMobile}>
-        <Breadcrumbs>
-          <LinkResolver url={landingPageUrl}>
-            London Theatre Tickets
-          </LinkResolver>
-          <Conditional if={getTagUrl(subCategoryName)}>
-            /
-            <LinkResolver url={getTagUrl(subCategoryName)}>
-              {subCategoryName}
-            </LinkResolver>
-          </Conditional>
-          /<span>{name}</span>
-        </Breadcrumbs>
+        <Breadcrumbs
+          breadcrumbs={breadcrumbs}
+          taggedCity={taggedCity}
+          primaryCity={primaryCity}
+          isMobile={isMobile}
+          showName={name}
+        />
       </Conditional>
       <Hero $isImageAvailable={!!verticalImageUrl}>
         <div ref={imageContainerRef} className="image-section">
@@ -328,7 +316,11 @@ const ShowInfoSection = ({
                   >
                     {tag}
                   </LinkResolver>
-                ) : null
+                ) : (
+                  <span className="tag" key={tag}>
+                    {tag}
+                  </span>
+                )
               )}
             <Conditional
               if={

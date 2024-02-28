@@ -1,12 +1,12 @@
 import React from 'react';
 import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
-import { TCriticReviewProps } from 'components/MicrositeV2/LttShowPageV2/CriticReview/interface';
+import { TCriticReviewProps } from 'components/MicrositeV2/ShowPageV2/CriticReview/interface';
 import {
   CriticReviewWrapper,
   ReviewContent,
   ReviewerDetails,
-} from 'components/MicrositeV2/LttShowPageV2/CriticReview/style';
+} from 'components/MicrositeV2/ShowPageV2/CriticReview/style';
 import Image from 'UI/Image';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';

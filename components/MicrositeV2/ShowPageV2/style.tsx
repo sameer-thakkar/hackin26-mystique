@@ -4,7 +4,7 @@ import { StyledHeader } from 'components/MicrositeV2/Header';
 import {
   SavePercentElement,
   ShowPageDateSelectorWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection/style';
+} from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';

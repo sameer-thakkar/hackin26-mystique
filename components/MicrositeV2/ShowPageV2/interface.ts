@@ -1,3 +1,5 @@
+import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+
 export type TShowPageV2Props = {
   CMSContent: any;
   tourGroupData: any;
@@ -9,4 +11,5 @@ export type TShowPageV2Props = {
   domainConfig: any;
   primaryCity: any;
   categoryHeaderMenu: any;
+  breadcrumbs: TBreadcrumbs;
 };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
-import { TReviewSectionProps } from 'components/MicrositeV2/LttShowPageV2/ReviewSection/interface';
+import { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
   AllReviewsButton,
   RatingBarAmount,
@@ -21,7 +21,7 @@ import {
   ShowMoreReviewsButton,
   StarCount,
   ViewTranslatedContentButton,
-} from 'components/MicrositeV2/LttShowPageV2/ReviewSection/style';
+} from 'components/MicrositeV2/ShowPageV2/ReviewSection/style';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';

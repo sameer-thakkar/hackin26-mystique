@@ -1,26 +1,13 @@
 import styled from 'styled-components';
+import {
+  BreadcrumbsContainer,
+  StyledBreadcrumbLink,
+  StyledBreadcrumbSpan,
+} from 'components/Breadcrumbs/styles';
 import { StyledTooltip } from 'UI/Tooltip';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-
-export const ShowInfoSectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - (5.46vw * 2));
-  max-width: 1200px;
-  margin: 1.5rem auto 3.56rem;
-  z-index: 0;
-
-  @media (max-width: 768px) {
-    margin: 0 0 1.75rem 1.5rem;
-    margin-top: -2rem;
-    z-index: 1;
-    width: -webkit-fill-available;
-    width: -moz-available;
-    width: fill-available;
-  }
-`;
 
 export const Breadcrumbs = styled.p`
   margin: 0;
@@ -43,6 +30,49 @@ export const Breadcrumbs = styled.p`
     &:hover {
       text-decoration-line: none;
     }
+  }
+`;
+export const ShowInfoSectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - (5.46vw * 2));
+  max-width: 1200px;
+  margin: 1.5rem auto 3.56rem;
+  z-index: 0;
+
+  ${BreadcrumbsContainer} {
+    margin: 0;
+    padding: 0;
+
+    ${StyledBreadcrumbLink},${StyledBreadcrumbSpan} {
+      color: ${COLORS.BRAND.WHITE}80 !important;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+      text-decoration-line: none;
+    }
+
+    ${StyledBreadcrumbLink} {
+      :hover {
+        color: ${COLORS.BRAND.WHITE}CC !important;
+        opacity: 1;
+        text-decoration-line: underline;
+      }
+    }
+
+    svg {
+      margin: 0 0.25rem;
+      path {
+        stroke: ${COLORS.BRAND.WHITE}66;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 0 1.75rem 1.5rem;
+    margin-top: -2rem;
+    z-index: 1;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: fill-available;
   }
 `;
 

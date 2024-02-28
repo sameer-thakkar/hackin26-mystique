@@ -1,21 +1,23 @@
 import Conditional from 'components/common/Conditional';
-import ImageGallery from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ImageGallery';
-import { TShowPageBannerProps } from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/interface';
-import ShowInfoSection from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ShowInfoSection';
+import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
+import { TShowPageBannerProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/interface';
+import ShowInfoSection from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ShowInfoSection';
 import {
   BannerBackground,
   GradientWrapper,
   ShowPageBannerWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/style';
+} from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/style';
 import Image from 'UI/Image';
 import Video from 'UI/Video';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
 
-const LttShowPageBanner = ({
+const ShowPageV2Banner = ({
   tourGroupData,
   isMobile,
   isDev,
+  breadcrumbs,
+  taggedCity,
 }: TShowPageBannerProps) => {
   const { imageUploads, nativeShowTrailer } = tourGroupData ?? {};
   const { url: trailerUrl } = nativeShowTrailer ?? {};
@@ -27,6 +29,8 @@ const LttShowPageBanner = ({
         tourGroupData={tourGroupData}
         isMobile={isMobile}
         isDev={isDev}
+        breadcrumbs={breadcrumbs}
+        taggedCity={taggedCity}
       />
       <Conditional if={imageUploads.length || trailerUrl}>
         <BannerBackground
@@ -83,4 +87,4 @@ const LttShowPageBanner = ({
   );
 };
 
-export default LttShowPageBanner;
+export default ShowPageV2Banner;

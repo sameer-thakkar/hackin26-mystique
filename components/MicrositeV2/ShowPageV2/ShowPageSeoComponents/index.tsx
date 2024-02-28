@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
 import { useRecoilValue } from 'recoil';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import { TShowPageV2Props } from 'components/MicrositeV2/LttShowPageV2/ShowPageSeoComponents/interface';
+import { TShowPageV2Props } from 'components/MicrositeV2/ShowPageV2/ShowPageSeoComponents/interface';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import { getAlternateLanguages, getHeadoutLanguagecode } from 'utils';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';

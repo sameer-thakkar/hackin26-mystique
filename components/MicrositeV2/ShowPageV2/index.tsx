@@ -5,20 +5,20 @@ import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';
-import ContentSections from 'components/MicrositeV2/LttShowPageV2/ContentSections';
-import { TShowPageV2Props } from 'components/MicrositeV2/LttShowPageV2/interface';
-import LttShowPageBanner from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner';
-import ShowPageDescriptorSection from 'components/MicrositeV2/LttShowPageV2/ShowPageDescriptorSection';
-import ShowPagePricingSection from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection';
-import ShowPageSeoComponents from 'components/MicrositeV2/LttShowPageV2/ShowPageSeoComponents';
-import SimilarShows from 'components/MicrositeV2/LttShowPageV2/SimilarShows';
+import ContentSections from 'components/MicrositeV2/ShowPageV2/ContentSections';
+import { TShowPageV2Props } from 'components/MicrositeV2/ShowPageV2/interface';
+import ShowPageV2Banner from 'components/MicrositeV2/ShowPageV2/ShowPageBanner';
+import ShowPageDescriptorSection from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection';
+import ShowPagePricingSection from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection';
+import ShowPageSeoComponents from 'components/MicrositeV2/ShowPageV2/ShowPageSeoComponents';
+import SimilarShows from 'components/MicrositeV2/ShowPageV2/SimilarShows';
 import {
   BuyButtonWrapper,
   DateSelectorContainer,
   DateSelectorWrapper,
   FaqWrapper,
   ShowPageWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/style';
+} from 'components/MicrositeV2/ShowPageV2/style';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import LocalisedPrice from 'UI/LPrice';
@@ -47,7 +47,6 @@ import {
   BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
-  LTD_COLLECTION_ID,
   PAGETYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -70,6 +69,7 @@ const LttShowPageV2 = ({
   domainConfig,
   primaryCity,
   categoryHeaderMenu,
+  breadcrumbs,
 }: TShowPageV2Props) => {
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -196,7 +196,7 @@ const LttShowPageV2 = ({
     const fetchCollection = async () => {
       const response =
         (await fetchTourGroupsByCollection({
-          collectionId: LTD_COLLECTION_ID,
+          collectionId: collectionId!,
           limit: String(allShowPagesDocuments?.length ?? '600'),
           currency: currency ?? '',
         })) ?? {};
@@ -345,10 +345,12 @@ const LttShowPageV2 = ({
           changePage={changePage}
         />
 
-        <LttShowPageBanner
+        <ShowPageV2Banner
           tourGroupData={tourGroupData}
           isMobile={isMobile}
           isDev={isDev}
+          breadcrumbs={breadcrumbs}
+          taggedCity={taggedCity}
         />
 
         <ShowPageDescriptorSection

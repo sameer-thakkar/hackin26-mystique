@@ -5,11 +5,11 @@ import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import VerticalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard';
-import { TSimilarShowsProps } from 'components/MicrositeV2/LttShowPageV2/SimilarShows/interface';
+import { TSimilarShowsProps } from 'components/MicrositeV2/ShowPageV2/SimilarShows/interface';
 import {
   SimilarShowsWrapper,
   TitleRow,
-} from 'components/MicrositeV2/LttShowPageV2/SimilarShows/style';
+} from 'components/MicrositeV2/ShowPageV2/SimilarShows/style';
 import { MBContext } from 'contexts/MBContext';
 import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';

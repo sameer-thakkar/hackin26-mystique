@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { JSXFunctionSerializer, PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
-import { TContentSectionsProps } from 'components/MicrositeV2/LttShowPageV2/ContentSections/interface';
+import { TContentSectionsProps } from 'components/MicrositeV2/ShowPageV2/ContentSections/interface';
 import {
   Content,
   ContentSectionsWrapper,
   ContentWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ContentSections/style';
-import CriticReview from 'components/MicrositeV2/LttShowPageV2/CriticReview';
-import ReviewSection from 'components/MicrositeV2/LttShowPageV2/ReviewSection';
+} from 'components/MicrositeV2/ShowPageV2/ContentSections/style';
+import CriticReview from 'components/MicrositeV2/ShowPageV2/CriticReview';
+import ReviewSection from 'components/MicrositeV2/ShowPageV2/ReviewSection';
 import GoogleMap from 'components/ShowPages/GoogleMap';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import ScrollableTabs from 'UI/ScrollableTabs';

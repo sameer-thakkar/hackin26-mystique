@@ -15,7 +15,7 @@ import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
-import { checkIfLTTMB } from 'utils/helper';
+import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -43,9 +43,7 @@ const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ShoulderPages'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
-const LttShowPageV2 = dynamic(
-  () => import('components/MicrositeV2/LttShowPageV2')
-);
+const ShowPageV2 = dynamic(() => import('components/MicrositeV2/ShowPageV2'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const ReviewsPage = dynamic(() => import('components/ReviewsPage'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
@@ -155,6 +153,7 @@ const Page = (props: PageProps) => {
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
+  const isBroadway = checkIfBroadwayMB(uid);
 
   const {
     isEligible: isLTTSpRevampExpEligible,
@@ -164,7 +163,7 @@ const Page = (props: PageProps) => {
     experimentId: 'LTT_SHOW_PAGE_REVAMP_EXPERIMENT',
     noTrack: false,
     customEligibilityCheckFn: () => {
-      return isLTT;
+      return isLTT || isBroadway;
     },
   });
 
@@ -323,7 +322,7 @@ const Page = (props: PageProps) => {
           return <Loader />;
 
         return showLttSpTreatment ? (
-          <LttShowPageV2
+          <ShowPageV2
             CMSContent={CMSContent}
             tourGroupData={tourGroupData}
             inventorySlotData={inventorySlotData}
@@ -334,6 +333,7 @@ const Page = (props: PageProps) => {
             domainConfig={domainConfig}
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
+            breadcrumbs={breadcrumbs}
           />
         ) : (
           <ShowPage

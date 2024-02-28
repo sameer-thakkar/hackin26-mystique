@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import Conditional from 'components/common/Conditional';
-import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/LttShowPageV2/ShowPageDescriptorSection/interface';
+import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/interface';
 import {
   DescriptorsWrapper,
   ShowPageDescriptorSectionWrapper,
   SpecialOfferBanner,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPageDescriptorSection/stlye';
+} from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/stlye';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import { trackEvent } from 'utils/analytics';
 import { descriptorIcons } from 'const/descriptorIcons';

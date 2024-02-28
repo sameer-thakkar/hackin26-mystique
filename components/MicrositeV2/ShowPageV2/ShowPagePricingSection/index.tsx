@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
-import { TShowPagePricingSectionProps } from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection/interface';
+import { TShowPagePricingSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/interface';
 import {
   BuyButtonWrapper,
   Pricing,
   PricingSection,
   SavePercentElement,
   ShowPageDateSelectorWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPagePricingSection/style';
+} from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/style';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';

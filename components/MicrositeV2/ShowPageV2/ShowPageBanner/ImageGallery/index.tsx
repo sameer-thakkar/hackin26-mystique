@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import { TImageGalleryProps } from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ImageGallery/interface';
+import { TImageGalleryProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import {
   AllPhotosCta,
   GalleryPopup,
   ImageGalleryWrapper,
-} from 'components/MicrositeV2/LttShowPageV2/ShowPageBanner/ImageGallery/style';
+} from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
