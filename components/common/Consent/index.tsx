@@ -47,7 +47,7 @@ const ConsentBanner = ({
   isMobile: boolean;
   isGDPRCompliant: boolean;
 }) => {
-  const { isEligible, variant } = useABTesting({
+  const { isEligible, variant, isExperimentResolving } = useABTesting({
     experimentId: 'CONSENT_BANNER_EXPERIMENT',
     noTrack: true,
   });
@@ -92,16 +92,14 @@ const ConsentBanner = ({
       COOKIE.CONSENT_POLICY_STATE
     ) as TConsentState;
     if (isPrivacyPage) return;
-    if (typeof cookieState === 'undefined') {
+    if (
+      typeof cookieState === 'undefined' &&
+      !isExperimentResolving &&
+      isGDPRCompliant
+    ) {
       setVisibility(true);
     }
-    if (cookieState === 'granted') {
-      onConsentUpdate({ state: 'granted', actor: 'Logic' });
-    }
-    if (cookieState === 'denied') {
-      onConsentUpdate({ state: 'denied', actor: 'Logic' });
-    }
-  }, [isPrivacyPage]);
+  }, [isPrivacyPage, isExperimentResolving, isGDPRCompliant]);
 
   useEffect(() => {
     if (showModal) document.body.classList.add('scroll-lock');
