@@ -32,6 +32,7 @@ import { strings } from 'const/strings';
 import Location from 'assets/location';
 import MusicIcon from 'assets/musicIcon';
 import StarFullNew from 'assets/starFullNew';
+import { findImageUrlFromMediaData } from '../../../../utils/helper';
 
 export const Ratings = (props: {
   averageRating: number;
@@ -205,10 +206,14 @@ const NewsPageSidebar: React.FC<TSideBarProps> = ({ content }) => {
     },
     ''
   );
-  const verticalPoster = mediaData.filter((media) => {
-    return +media.resourceEntityId == tgid;
-  });
-  const verticalPosterUrl = verticalPoster[0]?.medias[0]?.url;
+  const verticalPoster = mediaData?.find(
+    (media) => +media.resourceEntityId == tgid
+  );
+  const imageMediaItemUrl = findImageUrlFromMediaData(
+    verticalPoster?.medias || []
+  );
+
+  const verticalPosterUrl = imageMediaItemUrl ?? verticalPoster?.medias[0]?.url;
 
   return (
     <Container>
