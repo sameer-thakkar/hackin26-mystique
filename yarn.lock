@@ -3203,22 +3203,27 @@
     compare-func "^2.0.0"
     q "^1.5.1"
 
-"@rive-app/canvas@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@rive-app/canvas/-/canvas-1.2.4.tgz#54db7239888fb9e2af0653bf425d5d4df1bd79f2"
-  integrity sha512-TfkTM0D+JMKTmkg3WhdoFaarLohMyrLeSLwwPLa9GiHNU9odFPptS0j5iprN/WygrTWsb5WoyXgCXVZpZIKAQg==
+"@rive-app/canvas-lite@2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@rive-app/canvas-lite/-/canvas-lite-2.10.2.tgz#446ab695de83c3d4d17796373ad19eed7df59174"
+  integrity sha512-mhB/wY8vSoXS2mrSC3nDa4HMrNZpQPze4EeWIadxG8f9queAamT0xAKr+fbGlrCgGHXg4mCHHQiVrjtHo+SSbg==
 
-"@rive-app/react-canvas@^3.0.54":
-  version "3.0.57"
-  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas/-/react-canvas-3.0.57.tgz#ee3ff2491aaa94bca44d655c2823de19f14a932a"
-  integrity sha512-igjVzjYueOlKi2Tn4lyresbhHinz8mKg5Gt9z29bcN2O2SAErCYb6PNUdUJ1gMIQinKV1VHMvDdsvJbYkh9kwQ==
+"@rive-app/canvas@2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@rive-app/canvas/-/canvas-2.10.2.tgz#8037f1274e4664723808c1f29ee2942ee9f65375"
+  integrity sha512-Jyj7eKa3InPV29rW7W0G4xha9OO1xwLx3cmnKOrzlyrws/aDhOQK7APEdwrNseHuymG0ZFEEq0zamTMX6hrGgA==
+
+"@rive-app/react-canvas@^4.8.2":
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas/-/react-canvas-4.8.2.tgz#6ca13f7a093faee4496fdb49f25b3b1ae3642579"
+  integrity sha512-2MA/kG5rJPtWUIwZmmGCnqdrsvA5NBmXtI4xFX+X1qIFnNDS666+czIzU7JBV7MkDdAg09ODxSWw5K0uV020XA==
   dependencies:
-    "@rive-app/canvas" "1.2.4"
+    "@rive-app/canvas" "2.10.2"
 
-"@rive-app/webgl@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@rive-app/webgl/-/webgl-1.2.4.tgz#c8ebd0aa80d0aab3abfecdf966c82df96834497d"
-  integrity sha512-JJxsJv0Sz0e07EO7puX4WXm0ZaNeSXGrhvVUoW1pyBsSYjCejecWM0p2DG9DVIP2aXBlu4MTTrLRRjq7PaON8g==
+"@rive-app/webgl@2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@rive-app/webgl/-/webgl-2.10.2.tgz#a7dd717c0e9d415c1f7637e9f7bbde3ef5db9f70"
+  integrity sha512-c4tpNi7PJs6lRzakBNNdcDHFDk/hvY2u1iGfR9dNP45XWUFInU8oVc8jWn4BNdTj1cUDtmzUAcz4Ez9wcJZOng==
 
 "@rollup/plugin-sucrase@4.0.4":
   version "4.0.4"
@@ -16114,13 +16119,14 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rive-react@^3.0.54:
-  version "3.0.57"
-  resolved "https://registry.yarnpkg.com/rive-react/-/rive-react-3.0.57.tgz#5d9891e3caeac2180953a053d5cd73177b0bc7a3"
-  integrity sha512-cRIhT6ucHf0CdcNiB58DWGEfB+TwxZdb9ekeYF2fGurelP9kX6D8KMAda9S+kawZDu6dH7rRWZbYUdq5ZwRN0w==
+rive-react@^4.8.2:
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/rive-react/-/rive-react-4.8.2.tgz#593723577bed91f7e5dd45f8cdedeaca3b5acb12"
+  integrity sha512-sQMEO93dO3+/zLl8+Z0ppKu8yPb9LWmwZjxLexTqc8vPV3/rEIu/0KNmy75I11+uI0aWDJPORqunlYshHD2PHw==
   dependencies:
-    "@rive-app/canvas" "1.2.4"
-    "@rive-app/webgl" "1.2.4"
+    "@rive-app/canvas" "2.10.2"
+    "@rive-app/canvas-lite" "2.10.2"
+    "@rive-app/webgl" "2.10.2"
 
 rollup@2.78.0:
   version "2.78.0"
