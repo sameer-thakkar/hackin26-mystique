@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { constructHeaders } from 'utils/apiUtils';
+import { sendLog } from 'utils/logger';
+import { traceError } from 'utils/logutils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import {
   MICROBRANDS_URL,
@@ -29,9 +31,26 @@ const getPrismicDocumentData = async (
   const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
   const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
 
-  const contentTypeResponse = await fetch(endpoint, {
-    headers: requestHeaders,
-  });
+  let contentTypeResponse: Response;
+
+  try {
+    contentTypeResponse = await fetch(endpoint, {
+      headers: requestHeaders,
+    });
+  } catch (err) {
+    traceError({ error: err, uid, lang });
+
+    sendLog({
+      message: `[getPrismicDocumentData] Error fetching document-type for ${uid} (${lang})`,
+      err,
+    });
+
+    res
+      .status(500)
+      .json({ statusCode: 500, message: 'Something went wrong', error: err });
+
+    return;
+  }
 
   if (!contentTypeResponse.ok) {
     res
