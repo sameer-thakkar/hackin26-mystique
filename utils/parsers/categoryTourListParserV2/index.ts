@@ -14,6 +14,7 @@ export default async function categoryTourListParserV2({
   localizedStrings,
   cookies,
   MBDesign = '',
+  isLookerWebhookCall = false,
 }: TCategoryTourListParserV2) {
   const { primary, items: sliceItems } = tourListCategory || {};
 
@@ -118,22 +119,26 @@ export default async function categoryTourListParserV2({
 
   const allData = categoriesWithProducts?.flat();
 
-  const pageData = await getProductData({
-    allData,
-    allTgids,
-    lang,
-    localizedStrings,
-    MBDesign,
-    primarySubCategoryID,
-    currencyObject,
-  });
-
-  return {
-    ...pageData,
-    primaryCountry: {
-      ...(primary?.city || {}),
-    },
-    primaryCity,
-    isCategoryV2: true,
-  };
+  let pageData;
+  if (!isLookerWebhookCall) {
+    pageData = await getProductData({
+      allData,
+      allTgids,
+      lang,
+      localizedStrings,
+      MBDesign,
+      primarySubCategoryID,
+      currencyObject,
+    });
+    return {
+      ...pageData,
+      primaryCountry: {
+        ...(primary?.city || {}),
+      },
+      primaryCity,
+      isCategoryV2: true,
+    };
+  } else {
+    return { allTgids };
+  }
 }

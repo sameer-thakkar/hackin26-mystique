@@ -8,9 +8,10 @@ export type TCategoryTourListParserV2 = {
   hostname: string;
   categoryCarousel?: ContentFrameworkDocumentDataBodyCategoryCarouselSlice;
   lang: string;
-  localizedStrings: any;
+  localizedStrings?: any;
   cookies?: { [key: string]: string };
   MBDesign?: string;
+  isLookerWebhookCall?: boolean;
 };
 
 export interface ISet<T> {

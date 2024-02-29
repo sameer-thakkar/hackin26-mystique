@@ -29,6 +29,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import categoryTourListParserV1 from './parsers/categoryTourListParserV1';
+import categoryTourListParserV2 from './parsers/categoryTourListParserV2';
 import { sendLog } from './logger';
 
 export const getDocType = (type: string): string | null => {
@@ -147,44 +148,59 @@ export const getPageUrl = ({ uid, lang }: PrismicDocumentWithUID) => {
 export const getProductCardsId = ({
   type,
   data,
-}: PrismicDocumentWithUID): string | null => {
-  if (type === CUSTOM_TYPES.MICROSITE) {
-    const categorySlice = getSinglePrismicSlice({
-      sliceName: SLICE_TYPES.TOUR_LIST_CATEGORY_V1,
-      slices: data?.body,
-    });
-    return categorySlice?.primary?.product_cards?.id;
-  }
+}: PrismicDocumentWithUID | ContentFrameworkDocument): string | null => {
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+      const categorySlice = getSinglePrismicSlice({
+        sliceName: SLICE_TYPES.TOUR_LIST_CATEGORY_V1,
+        slices: data?.body,
+      });
+      return categorySlice?.primary?.product_cards?.id;
 
-  return null;
+    case CUSTOM_TYPES.CONTENT_FRAMEWORK:
+      const ticketCardSlice = getSinglePrismicSlice({
+        sliceName: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD,
+        slices: data?.body,
+      });
+      return ticketCardSlice?.primary?.product_cards?.id;
+
+    default:
+      return null;
+  }
 };
 
 type TgetTgidsFromProductCards = {
+  doc: PrismicDocumentWithUID;
   productCardsDocId: string;
   lang: string;
   hostname: string;
 };
 
 export const getTgidsFromProductCards = async ({
+  doc,
   productCardsDocId,
   lang,
   hostname,
 }: TgetTgidsFromProductCards) => {
   try {
+    let localisedCategoryTourListV1 = getTourListCategorySlice(doc);
     const prismicClient = createClient({});
     const productCardData =
       (await prismicClient.getByID(productCardsDocId, {
-        lang,
+        lang: '*',
       })) ?? {};
+    localisedCategoryTourListV1.primary.product_cards.data =
+      productCardData?.data;
+
     const parsedData = await categoryTourListParserV1({
-      productCardDocument: productCardData,
+      micrositeProductCardSliceWithData: localisedCategoryTourListV1,
       hostname,
       lang,
       isLookerWebhookCall: true,
     });
     let tgids: string[] = [];
     tgids = tgids.concat(
-      parsedData?.orderedTours?.map((tour: any) => tour?.tgid.toString())
+      parsedData?.finalTgids?.map((id) => id.toString()) || []
     );
     return tgids;
   } catch (error) {
@@ -196,27 +212,30 @@ export const getTgidsFromProductCards = async ({
 };
 
 export const getTgids = async ({
-  doc,
+  localisedDoc,
+  baseLangDoc,
   host,
   isStageMode,
 }: {
-  doc: PrismicDocumentWithUID;
+  localisedDoc: PrismicDocumentWithUID;
+  baseLangDoc: PrismicDocumentWithUID;
   host: string;
   isStageMode: boolean;
 }): Promise<string[]> => {
   let tgids: any[] = [];
-  const { type, lang, data } = doc || {};
+  const { type, lang, data } = localisedDoc || {};
 
   const isDev = host.includes('localhost');
   const hostname = getHostName(isStageMode, isDev, host);
 
   if (type === CUSTOM_TYPES.MICROSITE) {
     switch (true) {
-      case data?.design === DESIGN.V1 && !!getProductCardsId(doc):
+      case data?.design === DESIGN.V1 && !!getProductCardsId(baseLangDoc):
         //categorised V1 MB
         tgids = tgids.concat(
           (await getTgidsFromProductCards({
-            productCardsDocId: getProductCardsId(doc) ?? '',
+            doc: localisedDoc,
+            productCardsDocId: getProductCardsId(baseLangDoc) ?? '',
             lang,
             hostname,
           })) || []
@@ -229,6 +248,17 @@ export const getTgids = async ({
             ?.filter((tour: any) => tour?.primary?.tgid)
             ?.map((tour: any) => tour?.primary?.tgid) || []
         );
+        break;
+      case data?.design === DESIGN.V3:
+        //categorized v3 MBs
+        const { allTgids } = await categoryTourListParserV2({
+          tourListCategory: getTourListCategorySlice(localisedDoc),
+          hostname,
+          lang: lang,
+          MBDesign: DESIGN.V3,
+          isLookerWebhookCall: true,
+        });
+        tgids = allTgids?.[0] || [];
         break;
       default:
         //uncategorised MB
@@ -711,4 +741,8 @@ export const fetchBaseLangData = async (
   return language !== 'EN'
     ? ((await prismicClient.getByID(baseLangDoc!.id)) as PrismicDocumentWithUID)
     : doc;
+};
+
+const getTourListCategorySlice = (doc: PrismicDocumentWithUID) => {
+  return doc?.data?.body?.[0];
 };

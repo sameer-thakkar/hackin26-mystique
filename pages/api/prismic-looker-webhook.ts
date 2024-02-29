@@ -244,10 +244,19 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       available_languages: getAvailableLanguages({ doc, language }),
       has_longform: !!content_framework?.id,
       linked_content_framework_id: content_framework?.id || null,
-      tgids: await getTgids({ doc, host, isStageMode }),
+      tgids: await getTgids({
+        localisedDoc: doc,
+        baseLangDoc: baseLangData,
+        host,
+        isStageMode,
+      }),
       parent_domain: pageUrl ? getParentDomain(new URL(pageUrl)) : null,
       language,
-      product_cards_id: getProductCardsId(doc),
+      product_cards_id: getProductCardsId(
+        type === CUSTOM_TYPES.CONTENT_PAGE && !!contentFrameworkData
+          ? contentFrameworkData
+          : baseLangData
+      ),
       tags,
       slices_in_url: getSlicesFromContentFramework(
         slicesInsideContentFramework
@@ -479,6 +488,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       pageDoc.content_type = baseLangPageDoc?.content_type;
       pageDoc.banner_subtext =
         pageDoc.banner_sub_text || baseLangPageDoc?.banner_subtext;
+      pageDoc.product_cards_id = baseLangPageDoc?.product_cards_id;
     });
   }
 

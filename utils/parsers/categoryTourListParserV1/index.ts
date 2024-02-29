@@ -19,21 +19,20 @@ import type { TCategoryTourListParserV1 } from './interface';
 
 const categoryTourListParserV1 = async ({
   micrositeProductCardSliceWithData,
-  cuurentMicrositeProductCardSliceWithData,
+  currentMicrositeProductCardSliceWithData,
   shoulderPageTicketsCard,
   hostname,
   lang,
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
-  productCardDocument,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
   const { primary: slicePrimary, items: sliceItems } =
     micrositeProductCardSliceWithData || {};
   const { items: localisedSliceItems } =
-    cuurentMicrositeProductCardSliceWithData || {};
+    currentMicrositeProductCardSliceWithData || {};
 
   const { primary: spSlicePrimary } = shoulderPageTicketsCard ?? {};
   const {
@@ -45,8 +44,7 @@ const categoryTourListParserV1 = async ({
   } = slicePrimary || spSlicePrimary || {};
   const { sp_experience_limit: shoulderPageLimit } = spSlicePrimary || {};
   // @ts-expect-error
-  const { data: productCardData } =
-    (isLookerWebhookCall ? productCardDocument : productCards) ?? {};
+  const { data: productCardData } = productCards ?? {};
 
   const {
     collection,

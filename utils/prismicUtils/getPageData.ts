@@ -689,7 +689,7 @@ export const getPageData = async ({
         if (hasCategoryTourListV1) {
           categoryTourListData = await categoryTourListParserV1({
             micrositeProductCardSliceWithData: localisedCategoryTourListV1,
-            cuurentMicrositeProductCardSliceWithData:
+            currentMicrositeProductCardSliceWithData:
               currentPageCategoryTourListV1,
             hostname,
             lang: lang ?? 'en',
