@@ -726,7 +726,8 @@ export const HomePage = (props: any) => {
           isEntertainmentMb &&
           !showLttTreatment &&
           !isCatOrSubCatPage &&
-          !isCategoryPage
+          !isCategoryPage &&
+          !isLttMonthOnMonthPage
         }
       >
         <div className="main-wrapper">
