@@ -117,6 +117,7 @@ const es = {
     BASIC_DESCRIPTION:
       'Utilizamos cookies y tecnologías similares para muchos propósitos, entre ellos mejorar tu experiencia en nuestra página web y personalizar nuestros anuncios.',
     MANAGE_PREFERENCES: 'Gestionar preferencias',
+    PREFERNCES_SAVED: 'Se han guardado tus preferencias',
     ACCEPT: 'Aceptar',
     ALLOW_ALL: 'Permitir todo',
     DENY_ALL: 'Denegar todo',

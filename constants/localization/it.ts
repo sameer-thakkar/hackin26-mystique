@@ -117,6 +117,7 @@ const it = {
     BASIC_DESCRIPTION:
       'Usiamo cookie e tecnologie simili per molti scopi, tra cui migliorare la tua esperienza sul nostro sito e annunci pubblicitari. ',
     MANAGE_PREFERENCES: 'Gestisci le preferenze',
+    PREFERNCES_SAVED: 'Le tue preferenze sono state salvate.',
     ACCEPT: 'Accetta',
     ALLOW_ALL: 'Consenti tutti',
     DENY_ALL: 'Rifiuta tutti',

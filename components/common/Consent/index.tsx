@@ -76,7 +76,7 @@ const ConsentBanner = ({
     if (actor === 'User') {
       Cookies.set(COOKIE.CONSENT_POLICY_STATE, state, {
         domain: getNakedDomain(host),
-        path: '',
+        path: '/',
         expires: 30,
       });
       addToast({
