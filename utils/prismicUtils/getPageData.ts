@@ -15,6 +15,7 @@ import {
   isSubCategoryMB,
 } from 'utils';
 import {
+  constructHeaders,
   fetchCollection,
   fetchCollectionList,
   fetchCurrencyList,
@@ -1115,7 +1116,21 @@ export const getPageData = async ({
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);
 
-    traceError({ error, host: req?.headers?.host, url: req?.url });
+    const { headers, cookies } = req;
+    const requestHeaders = constructHeaders({
+      cookies,
+      currentHeaders: headers,
+    });
+    const requestHeadersObject = Object.fromEntries(requestHeaders);
+
+    traceError({
+      error,
+      host: req?.headers?.host,
+      url: req?.url,
+      uid,
+      lang,
+      requestHeadersObject,
+    });
     sendLog({
       err: error,
       message: `[getPageData] Error fetching Prismic data for ${uid} (${lang}) URL: ${req?.url}`,
