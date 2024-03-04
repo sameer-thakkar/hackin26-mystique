@@ -1190,14 +1190,6 @@ export const ModalCardContainer = styled.div`
       aspect-ratio: 16/10;
     }
 
-    .video-container {
-      height: 11.25rem;
-
-      video {
-        height: 11.25rem;
-      }
-    }
-
     ${TitleWrapper} {
       max-width: calc(100% - 24px);
     }
