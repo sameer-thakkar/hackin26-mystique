@@ -919,7 +919,7 @@ const Product = (props: any) => {
               <Image
                 url={productImage}
                 imageId="card-img"
-                aspectRatio={isMobile ? '21:9' : '3:4'}
+                aspectRatio={isMobile ? '16:10' : '3:4'}
                 width={
                   isMobile
                     ? isPoiMwebCard
@@ -955,7 +955,13 @@ const Product = (props: any) => {
                   videoUrl={isMobile && isBannerCard ? bannerVideo : null}
                   imageId="card-img"
                   imageAspectRatio={
-                    isMobile ? '21:9' : isAsideBarOverlay ? '16:9' : '3:4'
+                    isMobile
+                      ? '16:10'
+                      : isAsideBarOverlay
+                      ? '16:10'
+                      : isModifiedProductCard
+                      ? '3:4'
+                      : '5:6'
                   }
                   backgroundColor={COLORS.GRAY.G7}
                   imageWidth={mediaCarouselImageWidth}

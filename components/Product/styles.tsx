@@ -260,7 +260,7 @@ export const TitleWrapper = styled.div<{
 export const cardImageStyles = css`
   .card-img {
     grid-area: card-img;
-    width: 258px;
+    width: 288px;
     height: 344px;
     border-radius: 0.5rem;
     position: relative;
@@ -277,7 +277,7 @@ export const cardImageStyles = css`
       width: calc(100% + 2rem);
       height: 11.25rem;
       max-height: 11.25rem;
-      margin: -22px -16px -0.5rem;
+      margin: -1.375rem -1rem -0.5rem;
       border-radius: 0.5rem 0.5rem 0 0;
 
       img {
@@ -622,9 +622,9 @@ const asideBarStyles = css`
 
   .card-img {
     width: 28.75rem;
-    height: 15.8125rem;
-    max-height: 15.8125rem;
-    min-height: 15.8125rem;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 16/10;
   }
 
   ${ProductHeader} {
@@ -717,8 +717,10 @@ const modifiedProductCardMwebCss = css<{
   position: relative;
 
   .card-img {
-    height: 13.125rem;
-    max-height: 13.125rem;
+    height: initial;
+    max-height: initial;
+    aspect-ratio: 16/10;
+    margin: -0.75rem -1rem -0.5rem;
   }
 
   ${TitleWrapper} {
@@ -976,6 +978,9 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
     .card-img {
       width: calc(100% + 2rem);
+      height: auto;
+      max-height: none;
+      aspect-ratio: 16/10;
 
       img {
         border-radius: 0;
@@ -990,13 +995,12 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
     ${({ $isBannerCard }) =>
       $isBannerCard &&
-      `
+      css`
         .card-img {
-          height: 22.5rem;
-          max-height: 22.5rem;
-        
-          .video-container, img {
-            height: 22.5rem;
+          aspect-ratio: 16/12;
+
+          .video-container,
+          img {
             width: 100%;
           }
         }
@@ -1181,7 +1185,9 @@ export const ModalCardContainer = styled.div`
     .card-img {
       width: calc(100% + 2.5rem);
       margin: -1.5rem -1.5rem -0.5rem;
-      max-height: 175px;
+      max-height: none;
+      height: auto;
+      aspect-ratio: 16/10;
     }
 
     .video-container {

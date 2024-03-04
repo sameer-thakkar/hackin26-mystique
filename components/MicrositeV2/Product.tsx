@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
@@ -208,10 +208,10 @@ const ProductCard = styled.div<{
 
   @media (max-width: 768px) {
     grid-template-rows: ${({ $isV3Design, productCardHeight, singleCard }) =>
-        singleCard
+        $isV3Design
+          ? ''
+          : singleCard
           ? `${productCardHeight}px`
-          : $isV3Design
-          ? '204px'
           : '102px'} auto;
     transform: unset;
     transition: unset;
@@ -360,12 +360,14 @@ const ProductImage = styled.div<{
     img,
     .image-placeholder {
       height: ${({ $isV3Design, productCardHeight, singleCard }) =>
-        singleCard
-          ? `${productCardHeight}px`
-          : $isV3Design
-          ? '204px'
-          : '102px'};
+        singleCard ? `${productCardHeight}px` : $isV3Design ? 'auto' : '102px'};
       border-radius: 4px;
+      ${({ $isV3Design }) =>
+        $isV3Design &&
+        css`
+          aspect-ratio: 16/10;
+          max-height: none;
+        `}
     }
   }
 
