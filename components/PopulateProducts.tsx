@@ -31,6 +31,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 
 const Product = dynamic(
   () => import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -164,6 +165,7 @@ const PopulateProducts = (props: any) => {
     isPoiMwebCard = false,
     productCardsLimit = Infinity,
     showBoosters = false,
+    trackProductCardsViewed = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -380,13 +382,26 @@ const PopulateProducts = (props: any) => {
     if (!productsRef.current) return;
 
     try {
+      let didTrackProductCardsSliceViewed = false;
       const observerCallback = (entries: any, observer: any) => {
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: any, index: number) => {
           if (entry.isIntersecting) {
             observer.unobserve(entry.target);
             const { tgid: stringTgid } = entry.target?.dataset;
             const tgid = parseInt(stringTgid);
             if (tgid) {
+              if (
+                trackProductCardsViewed &&
+                !didTrackProductCardsSliceViewed &&
+                index == 0
+              ) {
+                didTrackProductCardsSliceViewed = true;
+                trackEvent({
+                  eventName: ANALYTICS_EVENTS.SHOULDER_PAGE_SECTION_VIEWED,
+                  [ANALYTICS_PROPERTIES.SECTION]:
+                    SHOULDER_PAGE_SECTIONS.PRODUCT_CARDS_SLICE,
+                });
+              }
               trackEvent({
                 eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
                 [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -419,7 +434,7 @@ const PopulateProducts = (props: any) => {
     } catch (e) {
       //
     }
-  }, [productsRef, selectedDate]);
+  }, [productsRef, selectedDate, trackProductCardsViewed]);
   const allTgids = availableToursList?.map((el: any) => el?.tgid);
   const filterPromoCodes = () => {
     let filteredPromoCodes = {};

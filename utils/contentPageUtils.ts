@@ -90,10 +90,10 @@ export const getDocsForListicleSlice = async ({
           noindex === 'False' &&
           (!canonical_link ||
             canonical_link ===
-              convertUidToUrl({
-                uid,
-                lang: LANGUAGE_MAP.en.code,
-              }))
+            convertUidToUrl({
+              uid,
+              lang: LANGUAGE_MAP.en.code,
+            }))
         );
       });
     } catch (e) {

@@ -156,6 +156,7 @@ type TLongFormProps = {
   content: Array<any>;
   isVenuePage?: boolean;
   isContentPage?: boolean;
+  trackProductCardsViewed?: boolean;
   isCatAndSubCatPage?: boolean;
   isRevampedDesign?: boolean;
   [k: string]: any;
@@ -165,6 +166,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
   const {
     content,
     isContentPage,
+    trackProductCardsViewed,
     isCatAndSubCatPage,
     ...props
   } = longFormProps;
@@ -192,7 +194,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
       <SliceZone
         slices={content}
         components={components}
-        context={{ ...props, isMobile, isContentPage }}
+        context={{ ...props, isMobile, isContentPage, trackProductCardsViewed }}
         defaultComponent={() => null}
       />
     </StyledLongForm>

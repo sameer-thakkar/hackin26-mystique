@@ -23,6 +23,7 @@ const TicketCard = (props: any) => {
     uid,
     title,
     subtext,
+    trackProductCardsViewed,
   } = props;
 
   const { body1: uncategorizedTours } = micrositeData || {};
@@ -159,6 +160,7 @@ const TicketCard = (props: any) => {
       isTicketCard
       sectionTitle={title}
       sectionSubtext={subtext}
+      trackProductCardsViewed={trackProductCardsViewed}
     />
   );
 };

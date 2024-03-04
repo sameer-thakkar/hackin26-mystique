@@ -358,6 +358,7 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
   MICROSITE_PAGE_VIEWED: 'Microsite Page Viewed',
   MICROSITE_PAGE_SECTION_VIEWED: 'Microsite Page Section Viewed',
+  SHOULDER_PAGE_SECTION_VIEWED: 'Shoulder Page Section Viewed',
   SHOW_PAGE_SECTION_VIEWED: 'Show Page Section Viewed',
   MICROSITE_PAGE_TAB_CLICKED: 'Microsite Page Tab Clicked',
   CONTENT_CARD_CLICKED: 'Content Card Clicked',

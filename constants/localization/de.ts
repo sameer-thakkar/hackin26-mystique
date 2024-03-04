@@ -121,8 +121,10 @@ const de = {
   COMPARE_ALL_DETAILS: 'Alle vergleichen',
   COVID19_ALERT: {
     KEY_TEXT: 'Corona-Update',
-    LINK: 'https://medium.com/headout/coronavirus-ausbruch-stornierungsbedingungen-cec74ac7641b',
-    TEXT: 'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
+    LINK:
+      'https://medium.com/headout/coronavirus-ausbruch-stornierungsbedingungen-cec74ac7641b',
+    TEXT:
+      'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
   },
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
@@ -281,19 +283,23 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   REOPENS: 'Endlich wieder ab',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT: 'Es gilt die 2G-Regel: Der Zugang zu Unterkünften, Kultureinrichtungen, Restaurants, Bars usw. ist nur mit einem Impf- oder Genesungsnachweis möglich. Ein negativer Covid-19-Test ist nicht mehr ausreichend.',
+      TEXT:
+        'Es gilt die 2G-Regel: Der Zugang zu Unterkünften, Kultureinrichtungen, Restaurants, Bars usw. ist nur mit einem Impf- oder Genesungsnachweis möglich. Ein negativer Covid-19-Test ist nicht mehr ausreichend.',
     },
     AU_DESCRIPTION: {
-      TEXT: 'Besucher ab 16 Jahren müssen eine COVID-19-Impfung oder eine medizinische Ausnahmegenehmigung vorweisen.',
+      TEXT:
+        'Besucher ab 16 Jahren müssen eine COVID-19-Impfung oder eine medizinische Ausnahmegenehmigung vorweisen.',
     },
     BANNER_CTA: 'Weitere Infos',
     BERLIN_DESCRIPTION: {
-      TEXT: 'Es gilt die 2G-Regel: Nur vollständig geimpfte und genesene Besucher mit entsprechendem Nachweis haben Zutritt. Personen unter 18 Jahren oder solche, die aus medizinischen Gründen nicht geimpft werden können, müssen am Eingang ein negatives COVID-Testergebnis sowie einen medizinischen Nachweis über die Impfunfähigkeit vorlegen.',
+      TEXT:
+        'Es gilt die 2G-Regel: Nur vollständig geimpfte und genesene Besucher mit entsprechendem Nachweis haben Zutritt. Personen unter 18 Jahren oder solche, die aus medizinischen Gründen nicht geimpft werden können, müssen am Eingang ein negatives COVID-Testergebnis sowie einen medizinischen Nachweis über die Impfunfähigkeit vorlegen.',
     },
     CTA_TEXT: 'Sicherheitsvorkehrungen',
     DESCRIPTION_CTA: 'Weitere Infos.',
     EU_DESCRIPTION: {
-      TEXT: 'Ab dem 21. Juli müssen alle Besucher ab 12 Jahren ein COVID-Zertifikat der EU vorlegen.',
+      TEXT:
+        'Ab dem 21. Juli müssen alle Besucher ab 12 Jahren ein COVID-Zertifikat der EU vorlegen.',
     },
     EU_HEADING: 'COVID-Zertifikat der EU erforderlich',
     EU_PREFIX: 'Hinweis: ',
@@ -304,7 +310,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       'Erlebnisse mit diesem Abzeichen halten nachweislich die besten Sicherheitsstandards gemäß den Gesundheitsrichtlinien der örtlichen Regierung ein.',
     HEADING: 'Beste Sicherheitsstandards',
     IT_DESCRIPTION: {
-      TEXT: 'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen',
+      TEXT:
+        'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen',
     },
     IT_PREFIX: 'Hinweis: ',
     MOBILE_HEADING: 'Sichere Erlebnisse',
@@ -403,16 +410,19 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
         'Wir arbeiten mit unseren Partnern auf der ganzen Welt zusammen, um die besten Sicherheitsstandards gemäß den WHO-Richtlinien umzusetzen. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
     },
     NL_DESCRIPTION: {
-      TEXT: 'Besucher ab 13 Jahren müssen ein COVID-Zertifikat (in digitaler oder gedruckter Form) vorlegen, aus der hervorgeht, dass sie geimpft wurden, ein negatives Testergebnis erhalten haben oder genesen sind. Zudem gilt die Maskenpflicht.',
+      TEXT:
+        'Besucher ab 13 Jahren müssen ein COVID-Zertifikat (in digitaler oder gedruckter Form) vorlegen, aus der hervorgeht, dass sie geimpft wurden, ein negatives Testergebnis erhalten haben oder genesen sind. Zudem gilt die Maskenpflicht.',
     },
     SG_DESCRIPTION: {
-      TEXT: 'Seit dem 13. Oktober 2021 können nur noch vollständig geimpfte Besucher in 2er-Gruppen eintreten. Vor dem Einlass muss ein Impf- oder Genesungsnachweis bzw. ein negatives COVID-19-Testergebnis vorgelegt werden.',
+      TEXT:
+        'Seit dem 13. Oktober 2021 können nur noch vollständig geimpfte Besucher in 2er-Gruppen eintreten. Vor dem Einlass muss ein Impf- oder Genesungsnachweis bzw. ein negatives COVID-19-Testergebnis vorgelegt werden.',
     },
     SHORT_HEADING: 'Beste Sicherheitsstandards vor Ort',
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Your safety is our priority',
-    TEXT: "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
   },
   SAVE: '{0} % Rabatt',
   SAVE_PERCENT: '{0} % Rabatt',
