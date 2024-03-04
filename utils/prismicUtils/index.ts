@@ -125,8 +125,8 @@ export const fetchPrismicDocument = async ({
   isDev,
   bypassCache,
 }: TFetchPrismicDocument): TFetchPrismicDocumentResponse => {
-  const { headers, cookies } = req;
-  const requestHeaders = constructHeaders({ cookies, currentHeaders: headers });
+  const { cookies } = req;
+  const requestHeaders = constructHeaders({ cookies });
 
   const params = new URLSearchParams({
     isDev: String(isDev),

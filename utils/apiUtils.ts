@@ -49,9 +49,12 @@ export const constructHeaders = ({
     );
   /**
    * Added to whitelist API calls originating from server on WAF.
+   *
+   * TODO: Maintain a list of allowed headers if the following works out :wink.
    */
   if (isServer()) {
     headers.set('x-api-key', process.env?.WAF_API_WHITELIST_TOKEN || '');
+    headers.delete('content-length');
   }
 
   return headers;
