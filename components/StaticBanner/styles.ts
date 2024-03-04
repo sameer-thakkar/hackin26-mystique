@@ -259,12 +259,14 @@ export const RatingCountWrapper = styled.span<{
   }
 `;
 
-export const Divider = styled.div`
+export const Divider = styled.div<{ isVisible: boolean }>`
   background: ${COLORS.PURPS.LEVEL_15};
-  height: 0.063rem;
+  height: ${({ isVisible }) => (isVisible ? '0.063rem' : 0)};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   margin: 1rem 1.5rem 0.75rem;
   grid-area: 'bottom';
   opacity: 0.5;
+
   @media (min-width: 768px) {
     margin: 1rem 0 1.25rem;
     opacity: 0.3;

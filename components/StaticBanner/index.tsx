@@ -273,7 +273,7 @@ const StaticBanner = ({
             </RatingsWrapper>
           </Conditional>
           <Conditional if={showNonPoiDesign}>
-            <Divider />
+            <Divider isVisible={!isMobile || !!bannerDescriptors?.length} />
             <DescriptorWrapper>
               {isMobile && bannerDescriptors?.length ? (
                 <Swiper {...swiperParams}>{getBannerDescriptors()}</Swiper>
