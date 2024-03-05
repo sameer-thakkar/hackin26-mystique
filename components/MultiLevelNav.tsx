@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import type { Slice } from '@prismicio/types';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
@@ -138,7 +139,7 @@ const StyledMenuItem = styled.li`
   }
 `;
 
-const NestedMenu = styled.ul`
+const NestedMenu = styled.ul<{ preventVerticalOverflow: boolean }>`
   display: grid;
   visibility: hidden;
   margin: 0;
@@ -147,7 +148,8 @@ const NestedMenu = styled.ul`
   top: 24px;
   left: 0;
   max-height: 25rem;
-  overflow-y: scroll;
+  overflow-y: ${({ preventVerticalOverflow }) =>
+    preventVerticalOverflow ? 'initial' : 'scroll'};
   z-index: 11;
   width: max-content;
   background-color: ${({ theme: { primaryBackground } }) =>
@@ -338,6 +340,18 @@ const Menu = ({
   const [isOffScreen, setOffScreen] = useState(false);
   const pageMetaData = useRecoilValue(metaAtom);
 
+  /**
+   * If a menu has items that are nested menu, prevent overflow-y since it causes horizontal scrollbar
+   */
+  const preventVerticalOverflow = useMemo(
+    () =>
+      !isMobile &&
+      !!(slices as Slice[])?.find(
+        (slice) => slice?.slice_type === 'nested_menu' && !!slice?.items?.length
+      ),
+    [slices]
+  );
+
   useEffect(() => {
     if (nestedMenuRef.current) {
       const nestedMenuDim = (
@@ -372,6 +386,7 @@ const Menu = ({
         <NestedMenu
           ref={nestedMenuRef}
           className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
+          preventVerticalOverflow={preventVerticalOverflow}
         >
           {slices?.map((slice: any, index: number) =>
             HeaderSliceHandler(slice, {
