@@ -76,13 +76,9 @@ export const Gradient = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 14rem;
+  height: 100%;
   z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 9, 11, 0) 11.16%,
-    rgba(6, 6, 7, 0.7) 90.92%
-  );
+  background: #00000033;
   @media (max-width: 768px) {
     height: 10rem;
     background: linear-gradient(
