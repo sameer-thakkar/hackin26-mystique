@@ -161,7 +161,7 @@ const Page = (props: PageProps) => {
     isExperimentResolving: isLTTSpRevampExpResolving,
   } = useABTesting({
     experimentId: 'LTT_SHOW_PAGE_REVAMP_EXPERIMENT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () => {
       return isLTT || isBroadway;
     },

@@ -285,7 +285,7 @@ export const HomePage = (props: any) => {
     isExperimentResolving: isLTTRevampExpResolving,
   } = useABTesting({
     experimentId: 'LTT_LP_REVAMP_EXPERIMENT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () => {
       return checkIfLTTMBLandingPage(uid);
     },
