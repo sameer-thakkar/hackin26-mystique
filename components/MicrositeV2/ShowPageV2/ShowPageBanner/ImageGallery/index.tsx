@@ -99,11 +99,13 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
       block: 'center',
     });
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.IMAGE_GALLERY.IMAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.RANKING]: activeIndex + 1,
-    });
-  }, [activeIndex]);
+    if (isPopupActive) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.IMAGE_GALLERY.IMAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.RANKING]: activeIndex + 1,
+      });
+    }
+  }, [activeIndex, isPopupActive]);
 
   return (
     <ImageGalleryWrapper>
