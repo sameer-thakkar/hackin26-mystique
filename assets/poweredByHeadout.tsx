@@ -1,7 +1,7 @@
-const PoweredByHeadout = (props: any) => (
+const PoweredByHeadout = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102.15 40" {...props}>
     <defs>
-      <style>{'.cls-1{fill:#6914ef}'}</style>
+      <style>{'.cls-1{fill:#8000ff}'}</style>
     </defs>
     <g>
       <path

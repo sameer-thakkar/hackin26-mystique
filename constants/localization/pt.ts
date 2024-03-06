@@ -151,10 +151,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   COMPARE_ALL_DETAILS: 'Compare os detalhes',
   COVID19_ALERT: {
     KEY_TEXT: 'Atualização sobre a COVID-19',
-    LINK:
-      'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
-    TEXT:
-      'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
+    LINK: 'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
+    TEXT: 'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
   },
   CURRENCY: 'Moeda',
   CUSTOMER_REVIEW_HEADING: 'Avaliações',
@@ -205,7 +203,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   FLEXIBLE: 'Flexível',
   FOOTER: {
     CALL_US: 'Telefone',
-    CHAT_WITH_US: 'Chat',
+    CHAT_WITH_US: 'Fale conosco',
     COMPANY_DETAILS: 'Sobre a empresa',
     INFORMATION: 'Informações',
     GMAPS_DISCLAIMER:
@@ -221,6 +219,16 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     COPYRIGHT: '© Headout Inc.',
     MADE_WITH: 'Feito com ',
     ALL_OVER_THE: ' para todo o ',
+    TERMS_OF_USAGE: 'Termos de Uso',
+    LANGUAGE_CODE: 'pt',
+    GET_HELP_24_7: 'ASSISTÊNCIA 24 H',
+    HELP_CENTER: 'Central de atendimento',
+    COMPANY: 'Empresa',
+    WE_ACCEPT: 'Métodos de pagamento',
+    DOWNLOAD_HEADOUT: 'Baixe o aplicativo da Headout',
+    SCAN_CODES: 'Faça a leitura do código',
+    STAR_VERIFIED: 'Clique para verificar afiliação à S.T.A.R.',
+    OFFICIAL_TICKET_RETAILER: 'Distribuidor Oficial de Ingressos',
   },
   FREE_CANCELLATION: 'Cancelamento gratuito',
   FREE_CANCELLATION_SUBTEXT:
@@ -287,23 +295,19 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   REOPENS: 'Reabre',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT:
-        'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
+      TEXT: 'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
     },
     AU_DESCRIPTION: {
-      TEXT:
-        'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
+      TEXT: 'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
     },
     BANNER_CTA: 'Saiba mais',
     BERLIN_DESCRIPTION: {
-      TEXT:
-        'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
+      TEXT: 'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
     },
     CTA_TEXT: 'Detalhes das medidas',
     DESCRIPTION_CTA: 'Saiba mais.',
     EU_DESCRIPTION: {
-      TEXT:
-        'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
+      TEXT: 'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
     },
     EU_HEADING: 'Certificado Covid da UE necessário',
     EU_PREFIX: 'Atenção: ',
@@ -314,8 +318,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
     HEADING: 'Melhores medidas de segurança',
     IT_DESCRIPTION: {
-      TEXT:
-        'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
+      TEXT: 'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
     },
     IT_PREFIX: 'Atenção: ',
     MOBILE_HEADING: 'Experiências seguras',
@@ -414,19 +417,16 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         'Estamos trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta!',
     },
     NL_DESCRIPTION: {
-      TEXT:
-        'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
+      TEXT: 'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
     },
     SG_DESCRIPTION: {
-      TEXT:
-        'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
+      TEXT: 'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
     },
     SHORT_HEADING: 'As melhores medidas de segurança em vigor',
   },
   SANITARY_ALERT: {
     KEY_TEXT: 'Sua segurança é nossa prioridade',
-    TEXT:
-      'Tomamos medidas significativas para melhorar a limpeza utilizando desinfetantes com uma limpeza frequente das superfícies. O volume de pessoas também está sendo controlado para evitar aglomerações.',
+    TEXT: 'Tomamos medidas significativas para melhorar a limpeza utilizando desinfetantes com uma limpeza frequente das superfícies. O volume de pessoas também está sendo controlado para evitar aglomerações.',
   },
   SAVE: 'Economize  {0}%',
   SAVE_PERCENT: 'Economize {0}%',

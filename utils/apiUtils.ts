@@ -18,10 +18,10 @@ const objectToQuery = (query: any) => {
   const params = Object.entries(query);
   return params.length
     ? '?' +
-    Object.entries(query)
-      .filter(([, val]) => !!val)
-      .map(([key, val]) => `${key}=${val}`)
-      .join('&')
+        Object.entries(query)
+          .filter(([, val]) => !!val)
+          .map(([key, val]) => `${key}=${val}`)
+          .join('&')
     : '';
 };
 
@@ -331,8 +331,8 @@ export const fetchTourListV6 = async ({
       ...(useTest && { useTest: 'true' }),
       ...(!fallbackToEnglish &&
         language !== 'en' && {
-        'fallback-to-english': '0',
-      }),
+          'fallback-to-english': '0',
+        }),
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.TourGroupsV6,
@@ -589,8 +589,8 @@ export const fetchTourGroupsByCollection = async ({
     ...(currency && { currency }),
     ...(!fallbackToEnglish &&
       language !== 'en' && {
-      'fallback-to-english': '0',
-    }),
+        'fallback-to-english': '0',
+      }),
     ...(primarySubCategoryID && {
       'filter-by-subcategory-id': String(primarySubCategoryID),
     }),
@@ -631,8 +631,8 @@ export const fetchTourGroupsByCategory = async ({
     ...(currency && { currency }),
     ...(!fallbackToEnglish &&
       language !== 'en' && {
-      'fallback-to-english': '0',
-    }),
+        'fallback-to-english': '0',
+      }),
     ...(primarySubCategoryID && {
       'filter-by-subcategory-id': String(primarySubCategoryID),
     }),

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { FooterLegal } from 'components/common/Footer';
 import { StyledHeader } from 'components/MicrositeV2/Header';
 import {
   SavePercentElement,
   ShowPageDateSelectorWrapper,
 } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/style';
+import { FooterLegal } from 'UI/Footer/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';

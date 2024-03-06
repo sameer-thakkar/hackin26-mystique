@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import { SliceZone, SliceZoneLike } from '@prismicio/react';
+import React, { useContext, useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { getAppTheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
@@ -8,457 +7,54 @@ import ContactUS, {
   MobileCallUsPanelDrawer,
 } from 'components/common/ContactUs';
 import LazyComponent from 'components/common/LazyComponent';
-import { sliceComponents } from 'components/slices/sliceManager';
-import SocialLinks from 'components/UI/SocialLinks';
+import { FooterProps } from 'UI/Footer/interface';
+import { LinkSlices } from 'UI/Footer/LinkSlices';
+import { PaymentMethods } from 'UI/Footer/PaymentMethods';
+import SocialLinks from 'UI/Footer/SocialLinks';
+import {
+  Container,
+  FooterHeading,
+  FooterLegal,
+  FooterLegalWrapper,
+  FooterListItem,
+  GmapsDisclaimer,
+  LinkSlicesWrapper,
+  LinksWrapper,
+  StoreLinks,
+  StyledFooter,
+} from 'UI/Footer/style';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
+import {
+  COMPANY_DETAILS_LINK,
+  DOWNLOAD_APP_QR,
+  DOWNLOAD_APP_QR_DIM,
+  FOOTER_LOGO_HEIGHT,
+  FOOTER_LOGO_WIDTH,
+  HEADOUT_ADDRESS,
+  HEADOUT_MAIL_REDIRECT,
+  HEADOUT_SUPPORT_MAIL,
+  LIVE_CHAT_LINK,
+  PRIVACY_POLICY_LINK,
+  STAR_LOGO_DARK,
+  STAR_LOGO_LIGHT,
+  STAR_VERIFICATION_LINK,
+  TERMS_LINK,
+} from 'const/footer';
 import { SIDEBAR_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
+import MailIcon from 'assets/footerMail';
+import MessageIcon from 'assets/footerMessage';
+import PhoneIcon from 'assets/footerPhone';
 import OutlinedInfoIcon from 'assets/outlinedInfoIcon';
 import PoweredByHeadout from 'assets/poweredByHeadout';
 import WhiteBlip from 'assets/whiteBlip';
-
-const StyledFooter = styled.footer<{
-  isEntertainmentMb: boolean;
-  $isCatOrSubCatPage: boolean;
-}>`
-  width: 100%;
-  display: grid;
-  ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 40px;`}
-  border-top: 1px solid ${COLORS.GRAY.G8};
-`;
-
-const FooterLinksWrapper = styled.div<{
-  $isCatOrSubCatPage: boolean;
-}>`
-  padding-bottom: 32px;
-  &.primary-footer {
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  .quick-links-title {
-    ${expandFontToken(FONTS.HEADING_SMALL)}
-    color: ${COLORS.GRAY.G2};
-    margin-bottom: 1.5rem;
-  }
-  &.primary-footer + .secondary-footer .quick-links-title {
-    display: none;
-  }
-  &.primary-footer + .secondary-footer .quick-links-title.has-custom-title {
-    display: block;
-  }
-  &.secondary-footer {
-    ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 3.25rem;`}
-    padding-bottom: 0;
-    @media (max-width: 768px) {
-      ${({ $isCatOrSubCatPage }) =>
-        !$isCatOrSubCatPage && `margin-top: 1.5rem;`}
-    }
-  }
-  .quick-links {
-    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-    display: flex;
-    flex-wrap: wrap;
-    .footer_column {
-      display: contents;
-    }
-  }
-`;
-
-const FooterLegalWrapper = styled.div`
-  color: ${({ theme }) => theme.footer.color};
-  background: ${({ theme }) => theme.footer.background};
-  margin: 0 auto;
-  width: 100%;
-  .footer-chin {
-    display: grid;
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-    margin-bottom: ${({
-      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-      isEntertainmentMb,
-    }) => (isEntertainmentMb ? '72px' : '56px')};
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
-    grid-row-gap: ${({
-      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-      isEntertainmentMb,
-    }) => (isEntertainmentMb ? '18px' : '24px')};
-    .white-line {
-      grid-area: white-line;
-      width: 100%;
-      height: 0;
-      border: 0.5px solid
-        ${({
-          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-          isEntertainmentMb,
-        }) => (isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE)};
-    }
-    .super-brand-logo {
-      grid-area: super-brand-logo;
-      display: grid;
-      grid-template-columns: auto auto;
-      grid-column-gap: 12px;
-      align-items: center;
-      justify-items: left;
-      span {
-        color: ${({
-          theme,
-          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-          isEntertainmentMb,
-        }) => (isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color)};
-      }
-      svg {
-        height: 16px;
-      }
-    }
-    .social-links {
-      grid-area: social-links;
-    }
-
-    @media (max-width: 768px) {
-      .super-brand-logo {
-        grid-template-columns: max-content max-content;
-        svg {
-          height: 12px;
-        }
-      }
-      grid-template-columns: ${({
-        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-        isEntertainmentMb,
-      }) => (isEntertainmentMb ? `1fr 1fr` : `1fr`)};
-      grid-template-areas: ${({
-        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-        isEntertainmentMb,
-      }) =>
-        isEntertainmentMb
-          ? `
-          'white-line white-line'
-          'super-brand-logo social-links'`
-          : `
-          'social-links'
-          'white-line'
-          'super-brand-logo'`};
-      grid-row-gap: 24px;
-      .social-links {
-        ${({
-          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
-          isEntertainmentMb,
-        }) => isEntertainmentMb && `justify-content: end;`}
-      }
-    }
-  }
-`;
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  width: calc(100vw - 5.6vw * 2);
-
-  @media (max-width: 768px) {
-    width: auto;
-    padding: 0 16px;
-  }
-`;
-
-const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
-  display: grid;
-  grid-template-rows: repeat(2, max-content);
-  row-gap: 16px;
-  .header {
-    ${expandFontToken(FONTS.HEADING_SMALL)}
-    color: ${({ theme, isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GRAY.G7 : theme.footer.headingColor};
-  }
-  .links {
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-rows: max-content;
-    row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
-    a,
-    .toggle_panel_button {
-      ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-      display: block;
-      text-decoration: none;
-      color: ${({ theme, isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-    }
-    .toggle_panel_button {
-      background: ${({ theme }) => theme.footer.background};
-      border: none;
-      text-align: start;
-      padding: 0;
-      cursor: pointer;
-    }
-  }
-
-  @media (max-width: 768px) {
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 20px;`}
-    .header {
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `font-size:15px;line-height:20px;`};
-    }
-    .links {
-      ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
-      a, .toggle_panel_button {
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb &&
-          `
-        font-size: 14px;
-        line-height: 16px;`}
-      }
-    }
-  }
-`;
-
-const LinkSlicesWrapper = styled.div<{
-  isEntertainmentMb: boolean;
-  slicesLength: number;
-  $isCatOrSubCatPage: boolean;
-}>`
-  display: grid;
-  padding: ${({ slicesLength, $isCatOrSubCatPage }) => {
-    switch (true) {
-      case !slicesLength:
-        return 'none';
-      case $isCatOrSubCatPage:
-        return '3.125rem 0';
-      default:
-        return '4rem 0';
-    }
-  }};
-  background-color: ${COLORS.GRAY.G8};
-  margin-bottom: 0;
-
-  @media (max-width: 768px) {
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
-    padding: ${({ slicesLength, $isCatOrSubCatPage }) => {
-      switch (true) {
-        case !slicesLength:
-          return 'none';
-        case $isCatOrSubCatPage:
-          return '1.5rem 0';
-        default:
-          return '2.25rem 0';
-      }
-    }};
-    margin-bottom: 0;
-  }
-`;
-
-const GmapsDisclaimer = styled.div`
-  padding: 1rem 1.3rem;
-  align-items: flex-start;
-  border-radius: 8px;
-  border: 1px solid rgba(164, 110, 0, 0.2);
-  background: #fff8ef;
-  margin-top: 2.5rem;
-  ${expandFontToken(FONTS.PARAGRAPH_REGULAR)}
-
-  p {
-    margin: 0.5rem 0 0 0;
-  }
-
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    p {
-      margin: 0;
-      ${expandFontToken(FONTS.HEADING_XS)}
-    }
-  }
-`;
-
-export const FooterLegal = styled.div<{
-  isEntertainmentMb: boolean;
-  invertLogoColor: boolean;
-}>`
-  display: grid;
-  align-items: start;
-  ${({ theme }) => {
-    return theme.theme !== THEMES.MIN_BLUE
-      ? `
-        grid-template-areas: 'logo-disclaimer footer-links';
-        grid-template-columns: minmax(400px, max-content) max-content;
-        grid-column-gap: 120px;
-      `
-      : `
-        grid-template-areas: 'logo-disclaimer . footer-links';
-        grid-template-columns: minmax(400px, max-content) 1fr 1fr;
-      `;
-  }}
-  margin: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '72px 0 56px 0' : '40px 0 64px 0'};
-  padding-bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '0' : '40px'};
-  line-height: 20px;
-  .logo-disclaimer {
-    grid-area: logo-disclaimer;
-    .logo-wrapper {
-      display: flex;
-      .image-wrap {
-        width: auto;
-        margin-right: 12px;
-
-        span {
-          position: relative !important;
-        }
-      }
-      img {
-        position: relative !important;
-        height: 40px !important;
-        max-width: 100%;
-        width: unset !important;
-        ${({ invertLogoColor }) =>
-          invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
-      }
-      svg {
-        height: 40px;
-        width: 100.5px;
-        path {
-          fill: ${({ isEntertainmentMb }) =>
-            isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
-        }
-      }
-    }
-  }
-  .footer-links {
-    grid-area: footer-links;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    column-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '48px' : '120px'};
-  }
-  .disclaimer-text {
-    color: ${({ isEntertainmentMb, theme }) =>
-      isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-    margin-top: 32px;
-    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-    max-width: 500px;
-  }
-  @media (min-width: 800px) and (max-width: 1200px) {
-    grid-column-gap: 64px;
-  }
-  @media (max-width: 768px) {
-    grid-template-areas: 'logo-disclaimer logo-disclaimer' 'footer-links footer-links';
-    grid-template-columns: 1fr 1fr;
-    grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '48px' : '64px'};
-    grid-column-gap: unset;
-    margin: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '52px 0 48px 0' : '40px 0 64px 0'};
-    padding-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '24px'};
-
-    .logo-wrapper {
-      width: 100%;
-
-      .image-wrap {
-        width: 100%;
-        height: 44px;
-      }
-    }
-
-    .footer-links {
-      column-gap: 0;
-      grid-auto-columns: 1fr;
-    }
-
-    .disclaimer-text {
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `margin-top: 28px;font-size:10px;line-height:16px;`}
-    }
-
-    .hide-mobile {
-      display: none;
-    }
-  }
-`;
-
-type FooterProps = {
-  linksTitle?: string;
-  currentLanguage?: string;
-  attraction?: string;
-  logoURL: string;
-  logoAlt: string;
-  hasPoweredByHeadoutLogo: boolean;
-  disclaimerText: string;
-  slices?: Array<any>;
-  themeOverride?: string;
-  secondarySlices?: Array<any>;
-  secondaryHeading?: string;
-  primaryHeading?: string;
-  isEntertainmentMb?: boolean;
-  isCatOrSubCatPage?: boolean;
-  showGmapsDisclaimer?: boolean;
-};
-
-type TLinkSlices = {
-  linksTitle: string;
-  slices: SliceZoneLike;
-  theme: string | null;
-  className?: string;
-  isCatOrSubCatPage: boolean;
-};
-
-const LinkSlices = ({
-  linksTitle,
-  slices,
-  theme,
-  className = '',
-  isCatOrSubCatPage,
-}: TLinkSlices) => {
-  const components = useMemo(() => {
-    return sliceComponents();
-  }, []);
-
-  return (
-    <FooterLinksWrapper
-      className={className}
-      $isCatOrSubCatPage={isCatOrSubCatPage}
-    >
-      <Container>
-        <Conditional if={theme !== THEMES.MIN_BLUE}>
-          <div
-            className={`quick-links-title ${
-              linksTitle ? 'has-custom-title' : ''
-            }`}
-          >
-            {linksTitle || strings.FOOTER.QUICK_LINKS}
-          </div>
-        </Conditional>
-        <div className="quick-links">
-          <Conditional if={theme === THEMES.MIN_BLUE}>
-            <div className={`quick-links-heading`}>
-              <div className="quick-links-title">
-                {linksTitle || strings.FOOTER.QUICK_LINKS}
-              </div>
-            </div>
-          </Conditional>
-          <SliceZone
-            slices={slices}
-            components={components}
-            context={{ sliceLength: slices.length }}
-            defaultComponent={() => null}
-          />
-        </div>
-      </Container>
-    </FooterLinksWrapper>
-  );
-};
 
 const Footer: React.FC<FooterProps> = ({
   logoURL,
   logoAlt,
   disclaimerText = '',
-  hasPoweredByHeadoutLogo,
+  hasPoweredByHeadoutLogo = true,
   slices = [],
   themeOverride = THEMES.DEFAULT,
   secondarySlices = [],
@@ -467,11 +63,16 @@ const Footer: React.FC<FooterProps> = ({
   isEntertainmentMb = false,
   isCatOrSubCatPage = false,
   showGmapsDisclaimer = false,
+  isDark = false,
+  isLTT = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
+  let isLight = !isLTT;
+
+  if (!isLTT && isDark) isLight = false;
 
   const onToggleMobileCallUsDrawer = () => {
     setIsMobileCallUsDrawer((isMobileCallUsDrawer) => !isMobileCallUsDrawer);
@@ -504,6 +105,14 @@ const Footer: React.FC<FooterProps> = ({
         type: SIDEBAR_TYPES.CONTACT_US_PANEL,
       });
     }
+  };
+
+  const verifyStar = () => {
+    window.open(
+      STAR_VERIFICATION_LINK,
+      '_blank',
+      'toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=560,height=490'
+    );
   };
 
   return (
@@ -550,12 +159,19 @@ const Footer: React.FC<FooterProps> = ({
                 </Conditional>
               </Container>
             </LinkSlicesWrapper>
-            {/* @ts-expect-error TS(2769): No overload matches this call. */}
-            <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
+            <FooterLegalWrapper
+              isEntertainmentMb={isEntertainmentMb}
+              isLight={isLight}
+              isLTT={isLTT}
+            >
               <Container>
                 <FooterLegal
-                  invertLogoColor={finalThemeName !== THEMES.MIN_BLUE}
+                  invertLogoColor={
+                    !isLight && finalThemeName !== THEMES.MIN_BLUE
+                  }
                   isEntertainmentMb={isEntertainmentMb}
+                  isLight={isLight}
+                  isLTT={isLTT}
                 >
                   <div className="logo-disclaimer">
                     <div className="logo-wrapper">
@@ -563,8 +179,8 @@ const Footer: React.FC<FooterProps> = ({
                         fill
                         url={logoURL}
                         alt={logoAlt}
-                        height="44"
-                        width="144"
+                        height={FOOTER_LOGO_HEIGHT}
+                        width={FOOTER_LOGO_WIDTH}
                       />
                       <Conditional
                         if={
@@ -572,90 +188,137 @@ const Footer: React.FC<FooterProps> = ({
                           finalThemeName !== THEMES.MIN_BLUE
                         }
                       >
-                        {PoweredByHeadout}
+                        <PoweredByHeadout />
                       </Conditional>
                     </div>
-                    <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                      <div className="disclaimer-text">{disclaimerText}</div>
-                    </Conditional>
-                    <Conditional
-                      if={finalThemeName === THEMES.MIN_BLUE && !isMobile}
-                    >
-                      <div className={'disclaimer-text copyright'}>
-                        {`© Copyright ${new Date().getFullYear()}`}
+                  </div>
+                  <div className="white-line" />
+                  <div className="footer-links">
+                    <Conditional if={!isLTT}>
+                      <div className="download hide-mobile">
+                        <StoreLinks isLight={isLight} isLTT={isLTT}>
+                          <Image
+                            url={DOWNLOAD_APP_QR}
+                            width={DOWNLOAD_APP_QR_DIM}
+                            height={DOWNLOAD_APP_QR_DIM}
+                            alt={strings.FOOTER.SCAN_CODES}
+                          />{' '}
+                          <span>{strings.FOOTER.DOWNLOAD_HEADOUT}</span>
+                        </StoreLinks>
                       </div>
                     </Conditional>
-                  </div>
-                  <div className="footer-links">
                     <div className="help">
-                      <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                        <div className="header">{strings.FOOTER.GET_HELP}</div>
-                        <div className="links">
-                          <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                      <LinksWrapper
+                        isEntertainmentMb={isEntertainmentMb}
+                        isLight={isLight}
+                        isLTT={isLTT}
+                      >
+                        <FooterHeading isLight={isLight}>
+                          <span>{strings.FOOTER.GET_HELP_24_7}</span>
+                        </FooterHeading>
+                        <ul className="links">
+                          <FooterListItem isLight={isLight}>
+                            {MessageIcon}
                             <a
-                              href="https://static.zdassets.com/web_widget/latest/liveChat.html?v=10#key=headout.zendesk.com"
-                              target="_blank"
+                              href={LIVE_CHAT_LINK}
                               rel="noreferrer noopener"
+                              target="_blank"
                             >
                               {strings.FOOTER.CHAT_WITH_US}
                             </a>
-                          </Conditional>
-                          <button
-                            className="toggle_panel_button"
-                            onClick={toggleCallUsPanel}
-                          >
-                            {`${strings.FOOTER.CALL_US} `}
-                          </button>
-                          <a
-                            href={`mailto:${
-                              finalThemeName !== THEMES.MIN_BLUE
-                                ? 'support@headout.com'
-                                : 'support@online-tickets.co'
-                            }`}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {strings.FOOTER.EMAIL_US}
-                          </a>
-                        </div>
+                          </FooterListItem>
+                          <FooterListItem isLight={isLight}>
+                            {PhoneIcon}
+                            <button
+                              className="toggle_panel_button"
+                              onClick={toggleCallUsPanel}
+                            >
+                              {strings.FOOTER.CALL_US}
+                            </button>
+                          </FooterListItem>
+                          <FooterListItem isLight={isLight}>
+                            {MailIcon}
+                            <a
+                              href={HEADOUT_MAIL_REDIRECT}
+                              rel="noreferrer noopener"
+                              target="_blank"
+                            >
+                              {HEADOUT_SUPPORT_MAIL}
+                            </a>
+                          </FooterListItem>
+                        </ul>
                       </LinksWrapper>
                     </div>
-                    <div className="legal">
-                      <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                        <div className="header">{strings.FOOTER.LEGAL}</div>
-                        <div className="links">
-                          <a
-                            href="/terms/"
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {strings.FOOTER.TERMS_AND_CONDITIONS}
-                          </a>
-                          <a
-                            href="/privacy-policy/"
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {strings.FOOTER.PRIVACY_POLICY}
-                          </a>
-                          <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                    <div className="company">
+                      <LinksWrapper
+                        isEntertainmentMb={isEntertainmentMb}
+                        isLight={isLight}
+                        isLTT={isLTT}
+                      >
+                        <FooterHeading isLight={isLight}>
+                          <span>{strings.HEADOUT}</span>
+                        </FooterHeading>
+                        <ul className="links">
+                          <FooterListItem isLight={isLight}>
                             <a
-                              href="/company-details/"
-                              target="_blank"
+                              href={COMPANY_DETAILS_LINK}
                               rel="noreferrer noopener"
+                              target="_blank"
                             >
                               {strings.FOOTER.COMPANY_DETAILS}
                             </a>
-                          </Conditional>
-                        </div>
+                          </FooterListItem>
+                          <FooterListItem isLight={isLight}>
+                            <a
+                              href={PRIVACY_POLICY_LINK}
+                              rel="noreferrer noopener"
+                              target="_blank"
+                            >
+                              {strings.FOOTER.PRIVACY_POLICY}
+                            </a>
+                          </FooterListItem>
+                          <FooterListItem isLight={isLight}>
+                            <a
+                              href={TERMS_LINK}
+                              rel="noreferrer noopener"
+                              target="_blank"
+                            >
+                              {strings.FOOTER.TERMS_OF_USAGE}
+                            </a>
+                          </FooterListItem>
+                        </ul>
                       </LinksWrapper>
                     </div>
+                    <div className="payment">
+                      <LinksWrapper
+                        isEntertainmentMb={isEntertainmentMb}
+                        isLight={isLight}
+                        isLTT={isLTT}
+                      >
+                        <FooterHeading isLight={isLight}>
+                          <span>{strings.FOOTER.WE_ACCEPT}</span>
+                        </FooterHeading>
+                        <PaymentMethods />
+                      </LinksWrapper>
+                    </div>
+                    <Conditional if={isLTT}>
+                      <div className="star-verifier">
+                        <FooterHeading isLight={isLight}>
+                          <span>{strings.FOOTER.OFFICIAL_TICKET_RETAILER}</span>
+                        </FooterHeading>
+                        <Image
+                          url={isLight ? STAR_LOGO_LIGHT : STAR_LOGO_DARK}
+                          alt={strings.FOOTER.STAR_VERIFIED}
+                          onClick={verifyStar}
+                        />
+                      </div>
+                    </Conditional>
                   </div>
 
                   <Conditional
                     if={finalThemeName === THEMES.MIN_BLUE && isMobile}
                   >
-                    <div className="chin" style={{ marginTop: '-64px' }}>
+                    <div className="chin" style={{ marginTop: '-4.267rem' }}>
                       <div className={'disclaimer-text copyright'}>
                         {`© Copyright ${new Date().getFullYear()}`}
                       </div>
@@ -666,19 +329,19 @@ const Footer: React.FC<FooterProps> = ({
                   <div className="footer-chin">
                     <div className="white-line" />
                     <div className="super-brand-logo">
-                      <Conditional if={!isEntertainmentMb}>
-                        {WhiteBlip}
-                      </Conditional>
-                      <span>
-                        {isEntertainmentMb
-                          ? `© Headout ${new Date().getFullYear()}`
-                          : `© ${new Date().getFullYear()} Headout`}
-                      </span>
+                      {WhiteBlip}
+                      <span className="address">{HEADOUT_ADDRESS}</span>
                     </div>
                     <SocialLinks
                       className="social-links"
                       isEntertainmentMb={isEntertainmentMb}
+                      isLight={isLight}
                     />
+                    <Conditional if={disclaimerText}>
+                      <div className="disclaimer-text-area">
+                        {disclaimerText}
+                      </div>
+                    </Conditional>
                   </div>
                 </Conditional>
               </Container>

@@ -218,6 +218,16 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     COPYRIGHT: '© Headout Inc.',
     MADE_WITH: 'Made with ',
     ALL_OVER_THE: ' all over the ',
+    TERMS_OF_USAGE: 'Terms of Usage',
+    LANGUAGE_CODE: 'en',
+    GET_HELP_24_7: 'Get Help 24/7',
+    HELP_CENTER: 'Help Center',
+    COMPANY: 'Company',
+    WE_ACCEPT: 'We Accept',
+    DOWNLOAD_HEADOUT: 'Download the Headout app',
+    SCAN_CODES: 'Scan code',
+    STAR_VERIFIED: 'click to verify S.T.A.R membership',
+    OFFICIAL_TICKET_RETAILER: 'Official Ticket Retailer',
   },
   FREE_CANCELLATION: 'Free Cancellation',
   FREE_CANCELLATION_SUBTEXT:
@@ -230,6 +240,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },
+  HEADOUT: 'Headout',
   HELP_CENTER: {
     MAIN_TEXT: '24x7 help center',
     SUB_TEXT:

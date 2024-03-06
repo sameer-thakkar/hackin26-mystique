@@ -265,9 +265,8 @@ const Calendar = ({
         [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: leadTimeInDays,
         [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
         [ANALYTICS_PROPERTIES.PLACEMENT]: 'Calendar',
-        [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]: hasSellingOutFastBooster
-          ? 'Yes'
-          : 'No',
+        [ANALYTICS_PROPERTIES.HAS_SELLING_OUT_FAST_DESCRIPTOR]:
+          hasSellingOutFastBooster ? 'Yes' : 'No',
       });
     }
 

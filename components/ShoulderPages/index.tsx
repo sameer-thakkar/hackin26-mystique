@@ -27,6 +27,7 @@ import { fetchTourListV6 } from 'utils/apiUtils';
 import { extractSliceByType } from 'utils/contentPageUtils';
 import {
   checkIfCategoryHeaderExists,
+  checkIfLTTMB,
   getLangObject,
   groupSlices,
 } from 'utils/helper';
@@ -318,6 +319,8 @@ const ContentPage = (props: any) => {
     uid: microsite_document_ref.uid,
     lang: getHeadoutLanguagecode(microsite_document_ref.lang),
   });
+
+  const isLTT = checkIfLTTMB(uid);
 
   const headProps = {
     ...modifiedMicrositeData,
@@ -720,6 +723,7 @@ const ContentPage = (props: any) => {
           shoulder_page_type === SHOULDER_PAGE_TYPE.DIRECTIONS ||
           shoulder_page_type === SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT
         }
+        isLTT={isLTT}
       />
     </div>
   );

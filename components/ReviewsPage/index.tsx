@@ -98,7 +98,8 @@ const ReviewsPage: React.FC<TReviewsPageProps> = (props) => {
   const productImageUrl = media?.productImages[0]?.url ?? '';
   const { REVIEWS_PAGE } = strings;
   const { BANNER_HEADING } = REVIEWS_PAGE;
-  const organisationName = checkIfLTTMB(uid)
+  const isLTT = checkIfLTTMB(uid);
+  const organisationName = isLTT
     ? 'London Theatre Tickets'
     : 'Broadway Show Tickets';
 
@@ -389,6 +390,7 @@ const ReviewsPage: React.FC<TReviewsPageProps> = (props) => {
         primaryHeading={commonFooter?.data?.footer_heading}
         secondarySlices={secondaryFooter?.data?.body || []}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
+        isLTT={isLTT}
       />
     </>
   );
