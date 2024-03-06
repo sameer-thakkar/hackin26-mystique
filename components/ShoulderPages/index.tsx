@@ -286,7 +286,7 @@ const ContentPage = (props: any) => {
   const strValues = META_STR_KEYS.reduce(
     (acc, elem) => ({
       ...acc,
-      [elem]: props.data[elem] || micrositeData[elem],
+      [elem]: props.data[elem] || micrositeData?.[elem],
     }),
     {}
   );
@@ -295,7 +295,7 @@ const ContentPage = (props: any) => {
       ...acc,
       [elem]: Object.keys(props.data[elem]).length
         ? props.data[elem]
-        : micrositeData[elem],
+        : micrositeData?.[elem],
     }),
     {}
   );
@@ -321,7 +321,7 @@ const ContentPage = (props: any) => {
 
   const headProps = {
     ...modifiedMicrositeData,
-    header_scripts: microsite_document_ref.data.header_scripts,
+    header_scripts: microsite_document_ref?.data?.header_scripts,
     canonical_link: CMSData.canonical_link || pageUrl,
     other_meta_tags: contentPageHasOtherMetaTags
       ? CMSData.other_meta_tags
@@ -347,7 +347,7 @@ const ContentPage = (props: any) => {
     group_form_blocked_days: blockedDays,
     alert_popup: alertPopup,
     show_covid19_alert: showCovid19Alert,
-  } = microsite_document_ref.data;
+  } = microsite_document_ref?.data || {};
 
   const { featured_image, featured_image_link, featured_image_alt } =
     CMSData ?? {};
