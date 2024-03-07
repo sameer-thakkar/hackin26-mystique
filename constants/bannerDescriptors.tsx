@@ -244,16 +244,16 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     ],
     '1057': [
       {
-        icon: BANNER_DESCRIPTORS.CANCELLATION,
-        text: strings.BANNER_DESCRIPTORS.CERTIFIED_OP,
+        icon: BANNER_DESCRIPTORS.PANAROMA,
+        text: strings.BANNER_DESCRIPTORS.BEST_AERIAL_VIEWS,
       },
       {
-        icon: BANNER_DESCRIPTORS.HELICOPTER,
+        icon: BANNER_DESCRIPTORS.CAMERA,
         text: strings.BANNER_DESCRIPTORS.PHOTO_OP,
       },
       {
-        icon: BANNER_DESCRIPTORS.TRANSLATE,
-        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GUIDES,
+        icon: BANNER_DESCRIPTORS.CANCELLATION,
+        text: strings.BANNER_DESCRIPTORS.SAFE_CERT_OP,
       },
     ],
     '1012': [
@@ -445,16 +445,16 @@ export const CATEGORY_BANNER: BannerMap = () => {
     ],
     '6': [
       {
-        icon: BANNER_DESCRIPTORS.ROUND_TRIP,
-        text: strings.BANNER_DESCRIPTORS.ROUND_TRIP,
+        icon: BANNER_DESCRIPTORS.DIAMOND,
+        text: strings.BANNER_DESCRIPTORS.HANDPICKED,
       },
       {
-        icon: BANNER_DESCRIPTORS.TRANSLATE,
-        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GUIDES,
+        icon: BANNER_DESCRIPTORS.PLANNING,
+        text: strings.BANNER_DESCRIPTORS.EFFORTLESS,
       },
       {
-        icon: BANNER_DESCRIPTORS.PEACE,
-        text: strings.BANNER_DESCRIPTORS.CULTURAL_EXPERIENCE,
+        icon: BANNER_DESCRIPTORS.INSIGHTS,
+        text: strings.BANNER_DESCRIPTORS.EXPERT_GUIDES,
       },
     ],
   };

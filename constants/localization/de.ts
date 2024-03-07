@@ -889,6 +889,11 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     EQUIPMENT: 'Inklusive Ausrüstung',
     SCENIC_FLYOVERS: 'Sorgenfreie Überführung',
     LIVE_COMMENTARY: 'Live-Kommentar',
+    BEST_AERIAL_VIEWS: 'Die besten Flugaussichten',
+    SAFE_CERT_OP: 'Sicherer, zertifizierter Betrieb',
+    HANDPICKED: 'Erlesene Touroptionen',
+    EFFORTLESS: 'Einfache Planung',
+    EXPERT_GUIDES: 'Einzigartige Einblicke durch Experten',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alle',

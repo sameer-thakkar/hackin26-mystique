@@ -171,6 +171,7 @@ export const getProductCardsId = ({
 
 type TgetTgidsFromProductCards = {
   doc: PrismicDocumentWithUID;
+  baseLangDoc: PrismicDocumentWithUID;
   productCardsDocId: string;
   lang: string;
   hostname: string;
@@ -178,17 +179,22 @@ type TgetTgidsFromProductCards = {
 
 export const getTgidsFromProductCards = async ({
   doc,
+  baseLangDoc,
   productCardsDocId,
   lang,
   hostname,
 }: TgetTgidsFromProductCards) => {
   try {
-    let localisedCategoryTourListV1 = getTourListCategorySlice(doc);
+    let localisedCategoryTourListV1 = getTourListCategorySlice(
+      doc,
+      baseLangDoc
+    );
     const prismicClient = createClient({});
     const productCardData =
       (await prismicClient.getByID(productCardsDocId, {
         lang: '*',
       })) ?? {};
+
     localisedCategoryTourListV1.primary.product_cards.data =
       productCardData?.data;
 
@@ -235,6 +241,7 @@ export const getTgids = async ({
         tgids = tgids.concat(
           (await getTgidsFromProductCards({
             doc: localisedDoc,
+            baseLangDoc,
             productCardsDocId: getProductCardsId(baseLangDoc) ?? '',
             lang,
             hostname,
@@ -252,7 +259,7 @@ export const getTgids = async ({
       case data?.design === DESIGN.V3:
         //categorized v3 MBs
         const { allTgids } = await categoryTourListParserV2({
-          tourListCategory: getTourListCategorySlice(localisedDoc),
+          tourListCategory: getTourListCategorySlice(localisedDoc, baseLangDoc),
           hostname,
           lang: lang,
           MBDesign: DESIGN.V3,
@@ -743,6 +750,9 @@ export const fetchBaseLangData = async (
     : doc;
 };
 
-const getTourListCategorySlice = (doc: PrismicDocumentWithUID) => {
-  return doc?.data?.body?.[0];
+const getTourListCategorySlice = (
+  doc: PrismicDocumentWithUID,
+  baseLangDoc: PrismicDocumentWithUID
+) => {
+  return doc?.data?.body?.[0] ?? baseLangDoc?.data?.body?.[0];
 };

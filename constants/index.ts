@@ -1750,6 +1750,14 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-adventure.svg',
   MAP_HEART_PIN:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-heart-map-pin.svg',
+  DIAMOND:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-diamond.svg',
+  PLANNING:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-planning.svg',
+  INSIGHTS:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-insights.svg',
+  CAMERA:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-camera.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [
