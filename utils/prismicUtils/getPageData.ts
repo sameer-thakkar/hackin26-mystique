@@ -103,6 +103,7 @@ export const getPageData = async ({
   query,
   isDev,
   localizedStrings,
+  runRankingExperiment = false,
 }: any) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
@@ -331,6 +332,7 @@ export const getPageData = async ({
           lang: lang ?? LANGUAGE_MAP.en.code,
           cookies,
           localizedStrings,
+          runRankingExperiment,
         });
         minPrice = categoryTourListData.minPrice;
         bestDiscount = categoryTourListData.bestDiscount;
@@ -696,6 +698,7 @@ export const getPageData = async ({
             lang: lang ?? 'en',
             cookies,
             localizedStrings,
+            runRankingExperiment,
           });
           minPrice = categoryTourListData.minPrice;
           bestDiscount = categoryTourListData.bestDiscount;

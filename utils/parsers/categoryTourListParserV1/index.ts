@@ -26,6 +26,7 @@ const categoryTourListParserV1 = async ({
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
+  runRankingExperiment = false,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
@@ -82,6 +83,7 @@ const categoryTourListParserV1 = async ({
           limit: String(finalLimit),
         }),
         cookies,
+        runRankingExperiment,
       });
       const {
         city,

@@ -530,6 +530,7 @@ interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
   primarySubCategoryID?: NumberField | string;
+  runRankingExperiment?: boolean;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -581,6 +582,7 @@ export const fetchTourGroupsByCollection = async ({
   currency,
   cookies,
   primarySubCategoryID,
+  runRankingExperiment = false,
 }: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
@@ -594,6 +596,7 @@ export const fetchTourGroupsByCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-id': String(primarySubCategoryID),
     }),
+    'apply-ranking-experiment': String(runRankingExperiment),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({

@@ -151,6 +151,7 @@ const MicrositeV1 = (props: any) => {
     isDev,
     serverRequestStartTimestamp,
     categoryTourListData,
+    categoryTourListDataRandomized,
     domainConfig,
     collectionDetails,
     bannerImageData,
@@ -259,9 +260,13 @@ const MicrositeV1 = (props: any) => {
       isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
   });
 
-  useABTesting({
-    experimentId: 'RANKING_EXPERIMENT_AA',
-    customEligibilityCheckFn: () => RANKING_EXPERIMENT_UIDS.includes(uid),
+  const {
+    isExperimentResolving: isRankingExperimentResolving,
+    variant: rankingExperimentVariant,
+  } = useABTesting({
+    experimentId: 'RANKING_EXPERIMENT_AB',
+    customEligibilityCheckFn: () =>
+      RANKING_EXPERIMENT_UIDS.includes(uid) && categoryTourListDataRandomized,
   });
 
   const showHohoRevamp =
@@ -283,7 +288,10 @@ const MicrositeV1 = (props: any) => {
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
-  } = categoryTourListData || {};
+  } =
+    (rankingExperimentVariant === VARIANTS.TREATMENT
+      ? categoryTourListDataRandomized
+      : categoryTourListData) || {};
 
   const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -337,6 +345,10 @@ const MicrositeV1 = (props: any) => {
 
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
+
+  useEffect(() => {
+    setOrderedFilteredTours(orderedTours);
+  }, [orderedTours]);
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -606,7 +618,11 @@ const MicrositeV1 = (props: any) => {
         (tour: TTour) =>
           tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
       )}
-      scorpioData={scorpioData}
+      scorpioData={
+        rankingExperimentVariant === VARIANTS.TREATMENT
+          ? categoryTourListDataRandomized?.scorpioData
+          : scorpioData
+      }
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
       currentLanguage={currentLanguage}
@@ -632,6 +648,7 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
       }
       isTourListFiltered={isTourListFiltered}
+      isRankingExperimentResolving={isRankingExperimentResolving}
     />
   );
 

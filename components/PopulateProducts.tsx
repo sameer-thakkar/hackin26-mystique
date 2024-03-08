@@ -111,7 +111,7 @@ const ProductContainer = styled.div<{
     display: none;
   }
 
-  transition: all 0.3s;
+  transition: opacity 0.3s;
   overflow: hidden;
 
   opacity: ${({ isNotVisible }) => (isNotVisible ? '0' : '1')};
@@ -170,6 +170,7 @@ const PopulateProducts = (props: any) => {
     productCardsLimit = Infinity,
     showBoosters = false,
     trackProductCardsViewed = false,
+    isRankingExperimentResolving = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -390,7 +391,7 @@ const PopulateProducts = (props: any) => {
 
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
-    if (!productsRef.current) return;
+    if (!productsRef.current || isExperimentResolving) return;
 
     try {
       let didTrackProductCardsSliceViewed = false;
@@ -413,6 +414,7 @@ const PopulateProducts = (props: any) => {
                     SHOULDER_PAGE_SECTIONS.PRODUCT_CARDS_SLICE,
                 });
               }
+
               trackEvent({
                 eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
                 [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -445,7 +447,13 @@ const PopulateProducts = (props: any) => {
     } catch (e) {
       //
     }
-  }, [productsRef, selectedDate, trackProductCardsViewed]);
+  }, [
+    productsRef,
+    selectedDate,
+    trackProductCardsViewed,
+    isExperimentResolving,
+    availableToursList,
+  ]);
   const allTgids = availableToursList?.map((el: any) => el?.tgid);
   const filterPromoCodes = () => {
     let filteredPromoCodes = {};
@@ -523,6 +531,9 @@ const PopulateProducts = (props: any) => {
   const shouldShowHeading = isV1DesignSite
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
+
+  const showLoader =
+    productsLoading || isRankingExperimentResolving || isExperimentResolving;
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
@@ -647,7 +658,7 @@ const PopulateProducts = (props: any) => {
 
   return (
     <StyledProductsWrapper
-      isLoading={productsLoading}
+      isLoading={showLoader}
       isTicketCard={isTicketCard}
       id="products-container"
       ref={productsWrapperRef}
@@ -655,7 +666,7 @@ const PopulateProducts = (props: any) => {
       <ProductContainer
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNotVisible={!productsLoading && !isExperimentResolving}
+        isNotVisible={!showLoader}
       >
         <Skeleton
           className="product-card-skeleton"
@@ -690,7 +701,7 @@ const PopulateProducts = (props: any) => {
       <ProductContainer
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNotVisible={productsLoading}
+        isNotVisible={showLoader}
       >
         {availableToursList &&
           availableToursList.map((tour: Record<string, any>, index: number) =>
