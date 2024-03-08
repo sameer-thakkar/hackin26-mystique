@@ -9,6 +9,7 @@ import { PromoCodesDocumentDataPromosItem, Simplify } from 'types.prismic';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { MBContext } from 'contexts/MBContext';
+import useABTesting from 'hooks/useABTesting';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import {
@@ -21,6 +22,7 @@ import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import getPromoCodesDocument from 'utils/prismicUtils/promoCodes';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -29,6 +31,7 @@ import {
   PROMO_CODES,
   THEMES,
 } from 'const/index';
+import { DISABLE_POI_EXPERIMENT_COLLECTIONS } from 'const/poiCardExperiment';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
@@ -109,6 +112,7 @@ const ProductContainer = styled.div<{
   }
 
   transition: all 0.3s;
+  overflow: hidden;
 
   opacity: ${({ isNotVisible }) => (isNotVisible ? '0' : '1')};
   visibility: ${({ isNotVisible }) => (isNotVisible ? 'hidden' : 'visible')};
@@ -117,7 +121,7 @@ const ProductContainer = styled.div<{
   @media (max-width: 768px) {
     margin-top: ${({ isNotVisible }) => (isNotVisible ? 0 : 0.5)}rem;
     margin-bottom: ${({ isNotVisible }) => (isNotVisible ? 0 : 1.75)}rem;
-    grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
+    grid-row-gap: 2rem;
 
     .product-card-skeleton {
       max-width: auto;
@@ -189,6 +193,13 @@ const PopulateProducts = (props: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
     el && productsRef.current.push(el);
   };
+
+  const { isEligible, variant, isExperimentResolving } = useABTesting({
+    experimentId: 'POI_CARD_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () =>
+      isPoiMwebCard && !DISABLE_POI_EXPERIMENT_COLLECTIONS.includes(pageUrl),
+  });
 
   const { isStage, isDev, host, design } = useContext(MBContext);
 
@@ -613,13 +624,19 @@ const PopulateProducts = (props: any) => {
     };
 
     return isSmallComboCard ? (
-      <Product {...childProps} />
+      <Product
+        {...childProps}
+        showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+      />
     ) : (
       <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
         {isTicketCard ? (
           <TicketCard {...childProps} />
         ) : (
-          <Product {...childProps} />
+          <Product
+            {...childProps}
+            showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+          />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
           <HorizontalLine colorProp={COLORS.GRAY.G6} />
@@ -638,7 +655,7 @@ const PopulateProducts = (props: any) => {
       <ProductContainer
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNotVisible={!productsLoading}
+        isNotVisible={!productsLoading && !isExperimentResolving}
       >
         <Skeleton
           className="product-card-skeleton"

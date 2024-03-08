@@ -115,13 +115,14 @@ export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
   }
 `;
 
-export const NextAvailableBlock = styled.div`
+export const NextAvailableBlock = styled.div<{ $isExperimentalCard?: boolean }>`
   ${({ theme }) => theme.productCards?.nextAvailable?.desktop};
   color: ${COLORS.GRAY.G3};
 
   @media (max-width: 768px) {
     grid-area: next-available;
-    margin-top: -1rem;
+    margin-top: ${({ $isExperimentalCard }) =>
+      $isExperimentalCard ? '-0.65rem' : '-1rem'};
     color: ${COLORS.GRAY.G3};
   }
 `;
@@ -223,10 +224,13 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
 export const TourTitleWrapper = styled.h2<{
   isPopup?: boolean;
   pageType?: string;
+  isNonPoi?: boolean;
 }>`
   ${expandFontToken(FONTS.HEADING_LARGE)}
   margin: 0;
   max-width: 768px;
+  ${({ isNonPoi }) => isNonPoi && `margin-top: -1.5rem; margin-bottom: 1rem;`}
+
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
   }
@@ -235,8 +239,11 @@ export const TourTitleWrapper = styled.h2<{
 export const TitleWrapper = styled.div<{
   hasBorderedTitle?: boolean;
   $isTicketCard?: boolean;
+  $isExperimentalCard?: boolean;
+  $isDrawer?: boolean;
 }>`
   grid-area: title;
+
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
       ? `
@@ -247,12 +254,13 @@ export const TitleWrapper = styled.div<{
           `
       : ''}
 
-  ${({ $isTicketCard }) =>
+  ${({ $isTicketCard, $isExperimentalCard, $isDrawer }) =>
     !$isTicketCard &&
     `
     @media(max-width: 768px) {
       margin-top: -0.5rem;
       margin-bottom: -1rem;
+      ${$isExperimentalCard && !$isDrawer && 'margin-top: -8px'} !important;
     }
   `}
 `;
@@ -443,6 +451,7 @@ export const CTABlock = styled.div<{
 
 export const PriceContainer = styled.div<{
   $hasScratchPrice?: boolean;
+  $isExperimentalCard?: boolean;
   pageType?: string;
 }>`
   justify-self: center;
@@ -475,7 +484,8 @@ export const PriceContainer = styled.div<{
 
   @media (max-width: 768px) {
     grid-area: price-block;
-    margin-bottom: 0.25rem;
+    margin-bottom: ${({ $isExperimentalCard }) =>
+      $isExperimentalCard ? '0' : '0.25rem'};
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
 
     .styled-price-block {
@@ -484,7 +494,6 @@ export const PriceContainer = styled.div<{
 
     .tour-price-container .tour-price {
       margin-right: 0;
-      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
     }
 
     .tour-scratch-price {
@@ -512,6 +521,10 @@ interface IStyledProductCard {
   $isAsideBarOverlay?: boolean;
   $isPoiMwebCard?: boolean;
   $showScratchPrice?: boolean;
+  $isExperimentalCard?: boolean;
+  $isDrawer?: boolean;
+  $hasDiscount?: boolean;
+  $isClicked?: boolean;
 }
 
 const modifiedProductCardStyles = css`
@@ -583,12 +596,18 @@ export const StyledCategoryContainer = styled.div<{
   }
 `;
 
-export const CategoryAndRatingContainer = styled.div`
+export const CategoryAndRatingContainer = styled.div<{
+  $isExperimentalCard?: boolean;
+  $isDrawer?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: -0.25rem;
+  ${({ $isDrawer }) =>
+    !$isDrawer ? `margin-bottom: -0.25rem;` : `margin-bottom: -0.75rem;`}
+  ${({ $isExperimentalCard, $isDrawer }) =>
+    $isExperimentalCard && !$isDrawer && `margin-top: 0.25rem;`}
 
   @media (min-width: 768px) {
     justify-content: flex-start;
@@ -710,9 +729,12 @@ const asideBarStyles = css`
 
 const modifiedProductCardMwebCss = css<{
   isContentExpanded?: boolean;
+  $isExperimentalCard?: boolean;
+  $isDrawer?: boolean;
+  $hasDiscount?: boolean;
 }>`
-  grid-row-gap: 1rem;
-  padding: 0.75rem;
+  grid-row-gap: ${({ $isDrawer }) => ($isDrawer ? '0.8rem' : '1rem')};
+  padding: ${({ $isDrawer }) => ($isDrawer ? '1rem 16px 0 16px' : '0.75rem')};
   overflow: hidden;
   position: relative;
 
@@ -767,7 +789,7 @@ const modifiedProductCardMwebCss = css<{
           position: relative;
           height: 0.25rem;
           width: 0.25rem;
-          background-color: ${COLORS.GRAY.G6};
+          background-color: ${COLORS.GRAY.G5};
           margin-left: 0.375rem;
           border-radius: 0.625rem;
           transform: translateY(0.125rem);
@@ -801,7 +823,8 @@ const modifiedProductCardMwebCss = css<{
           font-weight: 500;
           line-height: 1.5rem;
           letter-spacing: 0;
-          color: ${COLORS.GRAY.G2};
+          color: ${({ $hasDiscount }) =>
+            $hasDiscount ? COLORS.OKAY_GREEN.DARK_TONE : COLORS.GRAY.G2};
         }
       }
 
@@ -824,8 +847,9 @@ const modifiedProductCardMwebCss = css<{
     }
 
     ${PriceContainer} {
-      ${({ isContentExpanded }) =>
+      ${({ isContentExpanded, $isExperimentalCard }) =>
         !isContentExpanded &&
+        !$isExperimentalCard &&
         css`
           margin-bottom: -0.25rem;
         `}
@@ -855,9 +879,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     isV3Design ? 'transparent' : COLORS.BRAND.WHITE};
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile, isV3Design }) =>
+  ${({ isTicketCard, theme, isMobile, isV3Design, $isDrawer }) =>
     (!isTicketCard || isMobile) &&
     !isV3Design &&
+    !$isDrawer &&
     `border: ${theme.productCards.border};
     border-radius: 4px;`};
   display: grid;
@@ -938,14 +963,26 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
-      ${({ theme: { theme }, isTicketCard }) =>
-        theme !== THEMES.MIN_BLUE && !isTicketCard
-          ? '1.5rem'
-          : isTicketCard
-          ? '0'
-          : '24px'};
+      ${({ theme: { theme }, isTicketCard, $isDrawer }) =>
+        getMargin({ theme, isTicketCard, $isDrawer })};
+
     grid-template-areas: ${({ layout }) =>
       layout.mobile.map((row: any) => `'${row}'`)};
+
+    grid-template-areas: ${({ layout, $isExperimentalCard, $isDrawer }) =>
+      $isExperimentalCard
+        ? layout.mobile
+            .filter(
+              (row: any) =>
+                ![
+                  'body',
+                  'cta-block',
+                  ...($isDrawer ? ['price-block'] : []),
+                ].includes(row)
+            )
+            .map((row: any) => `'${row}'`)
+        : layout.mobile.map((row: any) => `'${row}'`)};
+
     width: auto;
     grid-template-columns: 1fr;
 
@@ -1109,7 +1146,7 @@ export const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
   }
 `;
 
-export const StyledRatingsContainer = styled.div`
+export const StyledRatingsContainer = styled.div<{ $isSafari?: boolean }>`
   grid-area: rating;
   display: flex;
   flex-direction: row;
@@ -1119,10 +1156,11 @@ export const StyledRatingsContainer = styled.div`
   svg {
     height: 0.75rem;
     width: 0.75rem;
+    margin-top: ${({ $isSafari }) => ($isSafari ? '0' : '1px')};
   }
 
   span {
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
 
     &.avg-rating {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
@@ -1228,10 +1266,15 @@ export const OpenDatedDescriptor = styled.div`
   }
 `;
 
-export const ButtonContainer = styled.div<{ $isInSidePanel?: boolean }>`
+export const ButtonContainer = styled.div<{
+  $isInSidePanel?: boolean;
+  $isExperimentalCard?: boolean;
+}>`
   margin: auto;
-  min-width: 14.375rem;
+  ${({ $isExperimentalCard }) =>
+    !$isExperimentalCard && `min-width: 14.375rem;`}
   width: 100%;
+
   height: 2.75rem;
   button {
     border: none;
@@ -2586,3 +2629,18 @@ export const BoosterContainer = styled.div<{
       `}
   }
 `;
+
+function getMargin({ theme, isTicketCard, $isDrawer }: any) {
+  if ($isDrawer) {
+    return '0';
+  }
+
+  switch (true) {
+    case theme !== THEMES.MIN_BLUE && !isTicketCard:
+      return '1.5rem';
+    case isTicketCard:
+      return '0';
+    default:
+      return '24px';
+  }
+}

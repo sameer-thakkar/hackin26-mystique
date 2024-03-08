@@ -903,3 +903,23 @@ export const findVideoUrlFromMediaData = (media: Record<string, any>[]) => {
   return media?.find((item) => item?.type === BANNER_API_PARAMS.ELM_TYPE.VIDEO)
     ?.url;
 };
+
+export function getPercentageScrolled(element: HTMLDivElement) {
+  const scrollTop = element.scrollTop;
+  const scrollHeight = element.scrollHeight;
+  const clientHeight = element.clientHeight;
+  const scrollableHeight = scrollHeight - clientHeight;
+  const scrollPercentage = (scrollTop / scrollableHeight) * 100;
+  return scrollPercentage;
+}
+
+export function isSafari() {
+  const userAgent = navigator.userAgent;
+  const vendor = navigator.vendor;
+
+  return (
+    /Safari/.test(userAgent) &&
+    /Apple Computer/.test(vendor) &&
+    !/Chrome/.test(userAgent)
+  );
+}

@@ -57,6 +57,7 @@ export const ProductsWrapper = (props: any) => {
   }, [directTgid]);
 
   if (!activeCategoryTgids?.length) return null;
+
   return (
     <StyledProductWrapper
       className="main-wrapper relative-position"

@@ -4,6 +4,7 @@ export type TNextAvailableProps = {
   earliestAvailability?: any;
   currentLanguage?: any;
   inTitle?: boolean;
+  isExperimentalCard?: boolean;
 };
 
 export type TBookNowCTAProps = {
@@ -14,6 +15,7 @@ export type TBookNowCTAProps = {
   mbTheme?: string | null;
   width?: string;
   showLoadingState?: boolean;
+  isExperimentalCard?: boolean;
 };
 
 export type TProductDescriptors = {
@@ -88,6 +90,9 @@ export type TTourTittleProps = {
   isOpenDated?: boolean;
   earliestAvailability?: any;
   currentLanguage?: any;
+  isExperimentalCard?: boolean;
+  isDrawer?: boolean;
+  isPoiMwebCard?: boolean;
 };
 
 export type TReviewProps = {

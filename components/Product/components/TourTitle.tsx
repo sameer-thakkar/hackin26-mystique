@@ -11,6 +11,7 @@ import {
   TourTitleWrapper,
 } from 'components/Product/styles';
 import { THEMES } from 'const/index';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 
 export const TourTitle = ({
@@ -28,11 +29,16 @@ export const TourTitle = ({
   showAvailability,
   earliestAvailability,
   currentLanguage,
+  isExperimentalCard,
+  isDrawer,
+  isPoiMwebCard,
 }: TTourTittleProps) => {
   return (
     <TitleWrapper
       $isTicketCard={isTicketCard}
       hasBorderedTitle={hasBorderedTitle && !tabs?.length}
+      $isExperimentalCard={isExperimentalCard}
+      $isDrawer={isDrawer}
     >
       <Conditional if={showAvailability}>
         <NextAvailable
@@ -44,7 +50,12 @@ export const TourTitle = ({
       <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
         <BoosterTag>{boosterTag}</BoosterTag>
       </Conditional>
-      <TourTitleWrapper isPopup={isContentOpen} pageType={pageType}>
+      <TourTitleWrapper
+        data-card-section={CARD_SECTION_MARKERS.TITLE}
+        isPopup={isContentOpen}
+        pageType={pageType}
+        isNonPoi={isDrawer && !isPoiMwebCard}
+      >
         <Conditional if={!isLoading}>{cardTitle}</Conditional>
         <Conditional if={isLoading}>
           <Skeleton height={isMobile ? '1rem' : '1.25rem'} borderRadius={2} />

@@ -9,6 +9,7 @@ import {
   NextAvailableBlockSkeletonWrapper,
 } from 'components/Product/styles';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 
 dayjs.extend(advancedFormat);
@@ -18,6 +19,7 @@ export const NextAvailable = ({
   earliestAvailability,
   currentLanguage,
   inTitle,
+  isExperimentalCard,
 }: TNextAvailableProps) => {
   if (showSkeleton)
     return (
@@ -32,8 +34,11 @@ export const NextAvailable = ({
   if (earliestAvailabilityTitle === strings.TODAY && inTitle)
     return <AvailableTodayBooster />;
   return (
-    <NextAvailableBlock>
-      <div className="available-text">
+    <NextAvailableBlock $isExperimentalCard={isExperimentalCard}>
+      <div
+        data-card-section={CARD_SECTION_MARKERS.AVAILABILITY}
+        className="available-text"
+      >
         {strings.NEXT_AVAILABLE}
         {earliestAvailabilityTitle}
       </div>

@@ -11,6 +11,7 @@ export const DiscountTextContainer = styled.div`
   margin: 0;
   padding-right: 0.3125rem;
   overflow: hidden;
+  transform: translateX(-0.0625rem);
 
   p.discount-text {
     transform: translateY(0.5px);

@@ -7,6 +7,7 @@ import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
 import { appAtom } from 'store/atoms/app';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import InfoIcon from 'assets/infoIcon';
 
 export const Wrapper = styled.div`
@@ -144,6 +145,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
       <FutureImage
         className={imageId}
         src={imgSrc}
+        data-card-section={CARD_SECTION_MARKERS.IMAGE}
         width={fillImageProp ? undefined : Number(calculatedWidth)}
         height={fillImageProp ? undefined : Number(calculatedHeight)}
         alt={alt}

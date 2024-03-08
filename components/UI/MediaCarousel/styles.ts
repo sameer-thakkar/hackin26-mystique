@@ -123,3 +123,13 @@ export const NextButtonContainer = styled.div`
   transform: rotateY(180deg);
   ${NavigationContainerStyles}
 `;
+
+export const PaginatorWrapper = styled.div<{ bottomPosition?: string }>`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  z-index: 2;
+  margin-bottom: ${({ bottomPosition }) => bottomPosition ?? 0};
+`;

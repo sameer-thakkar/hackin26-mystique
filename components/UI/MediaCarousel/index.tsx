@@ -8,13 +8,16 @@ import Image from 'UI/Image';
 import {
   CarouselContainer,
   NextButtonContainer,
+  PaginatorWrapper,
   PrevButtonContainer,
 } from 'UI/MediaCarousel/styles';
+import { Paginator } from 'UI/Paginator';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CAROUSEL_UNITS,
   VIDEO_POSITIONS,
 } from 'const/index';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
@@ -35,6 +38,12 @@ type MediaCarouselProps = {
   shouldCrop?: boolean;
   differentBorderRadiusForMobile?: boolean;
   showOverlay?: boolean;
+  showPagination?: boolean;
+  showTimedPaginator?: boolean;
+  bottomPosition?: string;
+  enableAutoplay?: boolean;
+  isTimed?: boolean;
+  trackImage?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -51,6 +60,12 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   shouldCrop,
   differentBorderRadiusForMobile = true,
   showOverlay = false,
+  showPagination = true,
+  showTimedPaginator = false,
+  bottomPosition,
+  enableAutoplay = false,
+  isTimed = true,
+  trackImage = true,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -71,7 +86,9 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     if (swiper !== null) {
       const slideIndex = swiper.realIndex;
       setCurrentIndex(slideIndex);
-      trackEvent(getImageViewEventProperties({ rank: slideIndex + 1 }));
+      if (trackImage) {
+        trackEvent(getImageViewEventProperties({ rank: slideIndex + 1 }));
+      }
     }
   }, [swiper]);
 
@@ -106,14 +123,21 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     loopPreventsSlide: false,
     allowTouchMove: imageList.length > 1,
     pagination: {
+      enabled: showPagination,
       clickable: true,
     },
+    autoplay: enableAutoplay
+      ? {
+          delay: 3000,
+        }
+      : false,
     speed: 600,
     grabCursor: imageList.length > 1,
     preloadImages: false,
     onSlideChangeTransitionStart: updateIndex,
     onSwiper: (swiper) => setSwiperInstance(swiper),
   };
+
   const imageClassNames = `swiper-lazy ${imageId}`;
 
   return (
@@ -164,6 +188,29 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
         })}
       </SwiperWrapper>
 
+      {showTimedPaginator && (
+        <PaginatorWrapper bottomPosition={bottomPosition}>
+          <Paginator
+            tabSize={1.5}
+            dotSize={6 / 16}
+            totalCount={imageList.length}
+            activeIndex={currentIndex}
+            limit={4}
+            activeSlideTimer={isTimed ? 3000 : 1}
+            size={12 / 16}
+            margin={2 / 16}
+            containerWidthOverride={
+              (CAROUSEL_UNITS.dotsLimit - 1) *
+                (CAROUSEL_UNITS.mobileDotSize +
+                  2 * CAROUSEL_UNITS.mobileDotMargin) +
+              (CAROUSEL_UNITS.mobileTabSize +
+                2 * CAROUSEL_UNITS.mobileTabMargin)
+            }
+            enableTranslate={true}
+            enableCompletedColor={true}
+          />
+        </PaginatorWrapper>
+      )}
       <Conditional if={imageList.length > 1 && !isMobile}>
         <PrevButtonContainer onClick={onPrev}>
           <button className={'navigation-button'}>{ChevronLeftCircle}</button>

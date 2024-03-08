@@ -1,8 +1,10 @@
 import COLORS from 'const/colors';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 
 const StarFull = ({ fillColor = COLORS.PRIMARY.JOY_MUSTARD }) => (
   <svg id="star-full" viewBox="0 0 475.075 475.075">
     <path
+      data-card-section={CARD_SECTION_MARKERS.REVIEWS}
       fill={fillColor}
       d="M475.075,186.573c0-7.043-5.328-11.42-15.992-13.135L315.766,152.6L251.529,22.694c-3.614-7.804-8.281-11.704-13.99-11.704
         c-5.708,0-10.372,3.9-13.989,11.704L159.31,152.6L15.986,173.438C5.33,175.153,0,179.53,0,186.573c0,3.999,2.38,8.567,7.139,13.706

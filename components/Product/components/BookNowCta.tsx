@@ -4,6 +4,7 @@ import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { BUTTON_LOADING_DURATION, THEMES } from 'const/index';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import BackArrow from 'assets/backArrow';
 
 export const BookNowCta = ({
@@ -14,6 +15,7 @@ export const BookNowCta = ({
   width,
   isInSidePanel,
   showLoadingState = true,
+  isExperimentalCard,
 }: TBookNowCTAProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleButtonClick = () => {
@@ -29,7 +31,10 @@ export const BookNowCta = ({
     },
   });
   return (
-    <ButtonContainer $isInSidePanel={isInSidePanel}>
+    <ButtonContainer
+      $isExperimentalCard={isExperimentalCard}
+      $isInSidePanel={isInSidePanel}
+    >
       <Button
         width={width}
         size="medium"
@@ -38,6 +43,7 @@ export const BookNowCta = ({
         isLoading={showLoadingState && isLoading}
         onClick={handleButtonClick}
         tabIndex={0}
+        data-card-section={CARD_SECTION_MARKERS.ACTION_BTN}
         text={ctaText}
         icon={mbTheme === THEMES.MIN_BLUE ? <BackArrow /> : null}
         iconPosition="back"

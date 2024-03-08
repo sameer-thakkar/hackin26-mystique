@@ -1,5 +1,6 @@
 import type { TCategoryContainerProps } from 'components/Product/interface';
 import { StyledCategoryContainer } from 'components/Product/styles';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 
 const getCategoryIconColor = (categoryId?: number, subCategoryId?: number) => {
   switch (true) {
@@ -38,7 +39,12 @@ const Category = ({
         primarySubCategory?.id
       )}
     >
-      <span>{displayName}</span>
+      <span
+        data-card-section={CARD_SECTION_MARKERS.CATEGORY}
+        className="category-name"
+      >
+        {displayName}
+      </span>
     </StyledCategoryContainer>
   );
 };

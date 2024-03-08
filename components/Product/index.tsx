@@ -10,6 +10,7 @@ import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
+import ExperimentalProductCard from 'components/experimentalProductCard';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
@@ -89,10 +90,12 @@ import {
   SUBCATEGORY_IDS,
   THEMES,
 } from 'const/index';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 import { BoosterType } from './interface';
+import { trackDeadClick } from './utils';
 
 const Booster = dynamic(
   import(
@@ -119,6 +122,15 @@ const Product = (props: any) => {
   const moreDetailsRef = useRef(null);
   const productRef = useRef<HTMLDivElement>();
   const collapsibleContentRef = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (!productRef.current) return;
+    const element = productRef.current;
+
+    element.addEventListener('click', trackDeadClick, false);
+
+    return () => element?.removeEventListener('click', trackDeadClick, false);
+  }, [productRef]);
 
   const {
     tgid,
@@ -171,6 +183,7 @@ const Product = (props: any) => {
     isPoiMwebCard = false,
     reviewsDetails,
     showBoosters = false,
+    showNewCard = false,
   } = props;
   const {
     mbTheme,
@@ -182,6 +195,7 @@ const Product = (props: any) => {
     sidebarModal: { addToAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
+
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
@@ -638,25 +652,27 @@ const Product = (props: any) => {
     });
 
   const trackedToggleContent = (isOpen: any) => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
-      // @ts-ignore
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
-      [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
-      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-      [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
-        ? 'Combo Slice'
-        : 'Product List',
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-        reviewsDetails,
-        boosterType,
-      }),
-    });
+    if (!isOpen) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
+        // @ts-ignore
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
+        [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+        [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
+          ? 'Combo Slice'
+          : 'Product List',
+        ...getProductCommonProperties({
+          primaryCategory,
+          primaryCollection,
+          primarySubCategory,
+          reviewsDetails,
+          boosterType,
+        }),
+      });
+    }
   };
 
   const getMoreDetailsButton = () => {
@@ -689,6 +705,7 @@ const Product = (props: any) => {
             data-open="0"
             tabIndex={0}
             text={strings.MORE_DETAILS}
+            data-card-section={CARD_SECTION_MARKERS.ACTION_BTN}
           />
         </MoreDetailsBtnWrapper>
       );
@@ -915,8 +932,12 @@ const Product = (props: any) => {
             />
           </Conditional>
           <Conditional if={isMobile && isV3Design && productImage}>
-            <div className="card-img">
+            <div
+              data-card-section={CARD_SECTION_MARKERS.IMAGE}
+              className="card-img"
+            >
               <Image
+                data-card-section={CARD_SECTION_MARKERS.IMAGE}
                 url={productImage}
                 imageId="card-img"
                 aspectRatio={isMobile ? '16:10' : '3:4'}
@@ -1103,23 +1124,44 @@ const Product = (props: any) => {
                   currencyCode={finalListingPrice?.currencyCode ?? ''}
                 />
               </Conditional>
-              <CTABlock
-                isSticky={expandContent}
-                shouldOffset={
-                  earliestAvailability && mbTheme === THEMES.MIN_BLUE
-                }
-                isTicketCard={isTicketCard}
-              >
-                <Conditional if={!isCombo}>
-                  <a
-                    target={isMobile ? '_self' : '_blank'}
-                    href={productBookingUrl}
-                    rel="nofollow noreferrer"
-                  >
+              <Conditional if={!isLoading}>
+                <CTABlock
+                  isSticky={expandContent}
+                  shouldOffset={
+                    earliestAvailability && mbTheme === THEMES.MIN_BLUE
+                  }
+                  isTicketCard={isTicketCard}
+                >
+                  <Conditional if={!isCombo}>
+                    <a
+                      target={isMobile ? '_self' : '_blank'}
+                      href={productBookingUrl}
+                      rel="nofollow noreferrer"
+                    >
+                      <BookNowCta
+                        clickHandler={() =>
+                          sendBookNowEvent(
+                            expandContent
+                              ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
+                              : isAsideBarOverlay
+                              ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
+                              : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                          )
+                        }
+                        isMobile={isMobile}
+                        mbTheme={mbTheme}
+                        ctaText={getBookNowButtonText()}
+                      />
+                    </a>
+                  </Conditional>
+                  <Conditional if={isCombo}>
                     <BookNowCta
+                      showLoadingState={false}
                       clickHandler={() =>
-                        sendBookNowEvent(
-                          isAsideBarOverlay
+                        handleShowComboPopup(
+                          expandContent
+                            ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
+                            : isAsideBarOverlay
                             ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
                             : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
                         )
@@ -1128,24 +1170,9 @@ const Product = (props: any) => {
                       mbTheme={mbTheme}
                       ctaText={getBookNowButtonText()}
                     />
-                  </a>
-                </Conditional>
-                <Conditional if={isCombo}>
-                  <BookNowCta
-                    showLoadingState={false}
-                    clickHandler={() =>
-                      handleShowComboPopup(
-                        isAsideBarOverlay
-                          ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
-                          : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
-                      )
-                    }
-                    isMobile={isMobile}
-                    mbTheme={mbTheme}
-                    ctaText={getBookNowButtonText()}
-                  />
-                </Conditional>
-              </CTABlock>
+                  </Conditional>
+                </CTABlock>
+              </Conditional>
               <Conditional
                 if={
                   showNextAvailable &&
@@ -1293,7 +1320,8 @@ const Product = (props: any) => {
                 !defaultOpen &&
                 !isMobile &&
                 !isSpecialGuidedTour &&
-                !isModifiedProductCard
+                !isModifiedProductCard &&
+                !isLoading
               }
             >
               {getMoreDetailsButton()}
@@ -1304,7 +1332,8 @@ const Product = (props: any) => {
               !defaultOpen &&
               isMobile &&
               !expandContent &&
-              !isModifiedProductCard
+              !isModifiedProductCard &&
+              !isLoading
             }
           >
             {getMoreDetailsButton()}
@@ -1350,6 +1379,16 @@ const Product = (props: any) => {
       {getProductCardElements(isContentOpen, isProductCardLoading)}
     </Container>
   );
+
+  if (showNewCard)
+    return (
+      <ExperimentalProductCard
+        {...props}
+        handleShowComboPopup={handleShowComboPopup}
+        sendBookNowEvent={sendBookNowEvent}
+        isSportsSubCategory={isSportsSubCategory}
+      />
+    );
 
   if (isSpecialGuidedTour || isShortcodePopup)
     return (

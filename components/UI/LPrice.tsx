@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { getLocalisedPrice } from 'utils/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 
 type LocalisedPriceProps = {
   className?: string;
@@ -40,7 +41,13 @@ const LocalisedPrice = ({
       <Conditional if={prefix}>
         <span className="prefix">{prefix}</span>
       </Conditional>
-      <span className="strike-through"> {formattedPrice}</span>
+      <span
+        data-card-section={CARD_SECTION_MARKERS.PRICING}
+        className="strike-through"
+      >
+        {' '}
+        {formattedPrice}
+      </span>
     </span>
   );
 };

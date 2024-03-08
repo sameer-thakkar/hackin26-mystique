@@ -511,6 +511,8 @@ export const ANALYTICS_EVENTS = {
     PRESENT: 'Booster Present',
     VIEWED: 'Product Booster Viewed',
   },
+  MORE_DETAILS_SWIPESHEET_CLOSED: 'More Details Swipesheet Closed',
+  PRODUCT_CARD_DEADCLICK: 'Product Card Deadclick',
 };
 
 export const PAGE_TYPE = {
@@ -521,6 +523,7 @@ export const PRODUCT_CARD_REVAMP = {
   PLACEMENT: {
     SIDE_SHEET: 'Side Sheet',
     PRODUCT_CARD: 'Product Card',
+    SWIPESHEET: 'Swipesheet',
   },
 };
 
@@ -947,6 +950,7 @@ export const ANALYTICS_PROPERTIES = {
   ICON_TYPE: 'Icon Type',
   FILTER_TYPE: 'Filter Type',
   BOOSTER_NAME: 'Booster Name',
+  COMPONENT: 'Component',
 };
 
 export const PAGE_TYPES = {
@@ -2016,3 +2020,11 @@ export const RANKING_EXPERIMENT_UIDS: Array<string> = [
   'www.new-york-tickets.com.the-edge-nyc',
   'the-edge-nyc.new-york-tickets.com',
 ];
+
+export const CAROUSEL_UNITS = {
+  dotsLimit: 4,
+  mobileDotSize: 6,
+  mobileDotMargin: 4,
+  mobileTabSize: 24,
+  mobileTabMargin: 2,
+};

@@ -9,6 +9,7 @@ import {
 import { getDuration } from 'utils/timeUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { DESCRIPTORS } from 'const/index';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 import Globe from 'assets/globe';
 
@@ -76,6 +77,7 @@ export const ProductDescriptors = ({
           item && (
             <div
               key={`descriptor-${index}`}
+              data-card-section={CARD_SECTION_MARKERS.DESCRIPTORS}
               className={`tour-tag ${
                 canShowCancellationPolicyHover ? 'free-cancellation' : ''
               }`}

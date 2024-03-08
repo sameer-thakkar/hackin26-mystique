@@ -1,5 +1,7 @@
 import { truncateNumber } from 'utils';
+import { isSafari } from 'utils/helper';
 import COLORS from 'const/colors';
+import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 import StarFull from 'assets/starFull';
 import { TRatingsContainerProps } from '../interface';
@@ -13,13 +15,19 @@ const Ratings = ({ reviewsDetails }: TRatingsContainerProps) => {
   if (showRatings === undefined) return null;
 
   return (
-    <StyledRatingsContainer>
+    <StyledRatingsContainer $isSafari={isSafari()}>
       {showRatings && <StarFull fillColor={COLORS.BRAND.CANDY} />}
-      <span className="avg-rating">
+      <span
+        data-card-section={CARD_SECTION_MARKERS.REVIEWS}
+        className="avg-rating"
+      >
         {showRatings ? averageRating : strings.NEW}
       </span>
       {showRatings && (
-        <span className="rating-count">
+        <span
+          data-card-section={CARD_SECTION_MARKERS.REVIEWS}
+          className="rating-count"
+        >
           ({truncateNumber(ratingCount).toUpperCase()})
         </span>
       )}
