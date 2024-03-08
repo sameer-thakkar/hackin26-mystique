@@ -96,8 +96,10 @@ const ReviewUI: React.FC<TReviewUIProps> = ({
                   <Date>{formattedDate}</Date>
                 </TitleWrapper>
                 <Rating>
-                  <RatingStars averageRating={rating} isComponentVisible />
-                  <RatingCount>{`${rating}/5`}</RatingCount>
+                  <Conditional if={rating}>
+                    <RatingStars averageRating={rating} isComponentVisible />
+                    <RatingCount>{`${rating}/5`}</RatingCount>
+                  </Conditional>
                 </Rating>
               </MetaInfo>
             </ReviewHeader>

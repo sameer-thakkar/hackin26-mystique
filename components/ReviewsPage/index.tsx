@@ -16,7 +16,7 @@ import ReviewsPageMainContent from 'components/ReviewsPage/components/MainConten
 import { getAlternateLanguages, getHeadoutLanguagecode } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfLTTMB, getLangObject } from 'utils/helper';
-import { sentenceCase } from 'utils/stringUtils';
+import { titleCase } from 'utils/stringUtils';
 import {
   convertUidToUrl,
   getLogoRedirectionUrl,
@@ -129,7 +129,7 @@ const ReviewsPage: React.FC<TReviewsPageProps> = (props) => {
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
-  const bannerHeading = sentenceCase(
+  const bannerHeading = titleCase(
     strings.formatString(BANNER_HEADING, name) as string
   );
 
