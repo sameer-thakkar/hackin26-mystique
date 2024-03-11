@@ -1271,8 +1271,8 @@ export const ButtonContainer = styled.div<{
   $isExperimentalCard?: boolean;
 }>`
   margin: auto;
-  ${({ $isExperimentalCard }) =>
-    !$isExperimentalCard && `min-width: 14.375rem;`}
+  min-width: ${({ $isExperimentalCard }) =>
+    $isExperimentalCard ? '11.375rem' : `14.375rem`};
   width: 100%;
 
   height: 2.75rem;
