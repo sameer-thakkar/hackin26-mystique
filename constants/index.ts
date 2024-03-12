@@ -2008,7 +2008,7 @@ export const RANKING_EXPERIMENT_UIDS: Array<string> = [
   'www.dubai-tickets.co.burj-khalifa',
   'burj-khalifa.dubai-tickets.co',
   'www.acropolis-tickets.com',
-  'www.thevaticantickets.com',
+  'www.versailles-palace-tickets.com',
   'www.colosseum-rome-tickets.com',
   'www.billetseiffel.fr',
   'www.eiffeltickets.com',
