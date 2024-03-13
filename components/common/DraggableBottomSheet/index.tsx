@@ -26,35 +26,49 @@ export const BottomSheet = memo(
     const [isDragging, setIsDragging] = useState(false);
     const [translateY, setTranslateY] = useState(1000);
     const [overlayOpacity, setOverlayOpacity] = useState(0);
+    const [dragEnabled, setDragEnabled] = useState(false);
     const lastY = useRef(0);
     const initialX = useRef(0);
 
     useBodyScrollLock(true);
 
     useEffect(() => {
+      setOverlayOpacity(1);
+      setTranslateY(0);
+    }, []);
+
+    useEffect(() => {
       if (isOpen) {
-        setOverlayOpacity(1);
-        setTranslateY(0);
+        const timer = setTimeout(() => {
+          setDragEnabled(true);
+        }, 500);
+        return () => clearTimeout(timer);
+      } else {
+        setDragEnabled(false);
       }
     }, [isOpen]);
 
-    const handlePositionUpdate = (currentY: any) => {
+    const handlePositionUpdate = useCallback((currentY: any) => {
       const diffY = currentY - lastY.current;
       setTranslateY((prevState) => Math.max(0, prevState + diffY));
       lastY.current = currentY;
-    };
-
-    const handleDragStart = useCallback((e) => {
-      setIsDragging(true);
-      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-      lastY.current = clientY;
-      initialX.current = clientX;
     }, []);
+
+    const handleDragStart = useCallback(
+      (e) => {
+        if (!dragEnabled) return;
+        setIsDragging(true);
+        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+        lastY.current = clientY;
+        initialX.current = clientX;
+      },
+      [dragEnabled]
+    );
 
     const handleDragMove = useCallback(
       (e) => {
-        if (!isDragging) return;
+        if (!isDragging || !dragEnabled) return; // Check if dragging is enabled before moving
         const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY;
         const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         if (
@@ -64,7 +78,7 @@ export const BottomSheet = memo(
           handlePositionUpdate(currentY);
         }
       },
-      [isDragging]
+      [isDragging, dragEnabled, handlePositionUpdate]
     );
 
     const handleDrawerClose = useCallback(
@@ -76,17 +90,18 @@ export const BottomSheet = memo(
           onCloseCompletion?.(type);
         }, 300);
       },
-      [onCloseCompletion]
+      [onCloseCompletion, onCloseInit]
     );
 
     const handleDragEnd = useCallback(() => {
       setIsDragging(false);
+      if (!dragEnabled) return;
       if (translateY > dragLimit) {
         handleDrawerClose(CLOSE_DRAWER_ACTIONS.SWIPE_DOWN);
       } else {
         setTranslateY(0);
       }
-    }, [translateY, handleDrawerClose, dragLimit]);
+    }, [translateY, handleDrawerClose, dragLimit, dragEnabled]);
 
     const eventHandlers = {
       onMouseDown: handleDragStart,
@@ -109,7 +124,7 @@ export const BottomSheet = memo(
           className="backdrop"
         />
         <Sheet
-          {...(isOpen ? eventHandlers : {})}
+          {...(isOpen && dragEnabled ? eventHandlers : {})}
           $sheetHeight={sheetHeight}
           $translateY={translateY}
         >

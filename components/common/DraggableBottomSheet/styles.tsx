@@ -23,7 +23,7 @@ export const Overlay = styled.div<{
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 100;
+  z-index: 50;
 `;
 
 export const Sheet = styled.div<{ $sheetHeight: string; $translateY: number }>`

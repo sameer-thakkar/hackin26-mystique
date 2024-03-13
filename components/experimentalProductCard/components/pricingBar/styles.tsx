@@ -70,14 +70,22 @@ export const ButtonWrapper = styled.div<{ $width: number }>`
   max-width: 182px;
 `;
 
-export const PriceBar = styled.div<{ $hasSavings: boolean }>`
+export const PriceBar = styled.div<{
+  $hasSavings: boolean;
+  $showContent: boolean;
+}>`
   position: fixed;
   background: ${COLORS.BRAND.WHITE};
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 10000;
+  z-index: 51;
   box-sizing: border-box;
+
+  transform: translateY(
+    ${({ $showContent }) => (!$showContent ? '100%' : '0')}
+  );
+  transition: transform 300ms cubic-bezier(0, 0, 0.3, 1) 10ms;
 
   .strike {
     text-decoration: line-through;

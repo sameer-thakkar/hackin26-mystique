@@ -1,5 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import LocalisedPrice from 'UI/LPrice';
@@ -73,7 +72,6 @@ const PricingBar: FC<PricingBarProps> = ({
   sendBookNowEvent,
   handleShowComboPopup,
   isV3Design,
-  tgid,
   isSportsExperiment,
   isGpMotorTicketsMb,
   isSportsSubCategory,
@@ -83,26 +81,15 @@ const PricingBar: FC<PricingBarProps> = ({
   productBookingUrl,
 }) => {
   const [hasSavings, setSavings] = useState<boolean>(false);
-  const router = useRouter();
   const pricingRef = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(null) as any;
   const [buttonWidth, setButtonWidth] = useState(0);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (!widthRef.current) return;
     setButtonWidth(widthRef.current.clientWidth);
   }, [widthRef]);
-
-  const updateQueryParams = useCallback(() => {
-    router.replace(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, selection: tgid },
-      },
-      undefined,
-      { shallow: true }
-    );
-  }, [router, tgid]);
 
   const bookNowText = getBookNowButtonText({
     isV3Design,
@@ -129,8 +116,16 @@ const PricingBar: FC<PricingBarProps> = ({
     setPricingHeight,
   ]);
 
+  useEffect(() => {
+    setShowContent(true);
+  }, []);
+
   return (
-    <PriceBar ref={pricingRef} $hasSavings={hasSavings}>
+    <PriceBar
+      $showContent={showContent}
+      ref={pricingRef}
+      $hasSavings={hasSavings}
+    >
       {showScratchPrice && !!discountText.length && (
         <SavingsContainer $hasSavings={hasSavings}>
           <Emoji symbol="🤑" label="savings" />
@@ -168,9 +163,9 @@ const PricingBar: FC<PricingBarProps> = ({
               <BookNowCta
                 clickHandler={() => {
                   sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET);
-                  updateQueryParams();
                 }}
                 isMobile={true}
+                width={'100%'}
                 mbTheme={mbTheme}
                 isExperimentalCard={true}
                 ctaText={bookNowText}
@@ -185,6 +180,7 @@ const PricingBar: FC<PricingBarProps> = ({
                     : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
                 )
               }
+              width={'100%'}
               isMobile={true}
               mbTheme={mbTheme}
               isExperimentalCard={true}

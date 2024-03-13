@@ -49,6 +49,12 @@ const ExperimentalProductCard = (props: any) => {
   const [isOpen, setOpen] = useState(true);
   const [isClicked, setClicked] = useState(false);
 
+  useEffect(() => {
+    if (!showDrawer && !isOpen) {
+      setOpen(true);
+    }
+  }, [showDrawer]);
+
   const router = useRouter();
 
   const {
@@ -417,7 +423,6 @@ const ExperimentalProductCard = (props: any) => {
         isModifiedProductCard={isModifiedProductCard}
         expandContent={expandContent}
         hasOffer={hasOffer}
-        setShowDrawer={toggleDrawer}
         showDrawer={showDrawer}
         boosterTypeIfShown={boosterTypeIfShown}
         indexPosition={indexPosition}
@@ -486,6 +491,25 @@ const ExperimentalProductCard = (props: any) => {
       isSmallComboCard={isSmallComboCard}
     >
       <Conditional if={showDrawer}>
+        <PricingBar
+          showScratchPrice={showScratchPrice}
+          listingPrice={listingPrice}
+          lang={lang}
+          isAsideBarOverlay={false}
+          isCombo={isCombo}
+          mbTheme={mbTheme as any}
+          productBookingUrl={productBookingUrl}
+          sendBookNowEvent={sendBookNowEvent}
+          handleShowComboPopup={handleShowComboPopup}
+          tgid={tgid}
+          isV3Design={isV3Design}
+          isSportsExperiment={isSportsExperiment}
+          isGpMotorTicketsMb={isGpMotorTicketsMb}
+          isSportsSubCategory={isSportsSubCategory}
+          setPricingHeight={setPricingHeight}
+          discountText={discountText}
+          setDiscountText={setDiscountText}
+        />
         <BottomSheet
           isOpen={isOpen}
           snapHeight={'5rem'}
@@ -516,25 +540,6 @@ const ExperimentalProductCard = (props: any) => {
             });
           }}
         >
-          <PricingBar
-            showScratchPrice={showScratchPrice}
-            listingPrice={listingPrice}
-            lang={lang}
-            isAsideBarOverlay={false}
-            isCombo={isCombo}
-            mbTheme={mbTheme as any}
-            productBookingUrl={productBookingUrl}
-            sendBookNowEvent={sendBookNowEvent}
-            handleShowComboPopup={handleShowComboPopup}
-            tgid={tgid}
-            isV3Design={isV3Design}
-            isSportsExperiment={isSportsExperiment}
-            isGpMotorTicketsMb={isGpMotorTicketsMb}
-            isSportsSubCategory={isSportsSubCategory}
-            setPricingHeight={setPricingHeight}
-            discountText={discountText}
-            setDiscountText={setDiscountText}
-          />
           <DropdownContent
             finalHighlights={finalHighlights}
             images={images}

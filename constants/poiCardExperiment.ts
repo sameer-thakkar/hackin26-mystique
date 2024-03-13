@@ -2,7 +2,7 @@ export const DISABLE_POI_EXPERIMENT_COLLECTIONS = [
   'https://www.dubai-tickets.co/burj-khalifa/',
   'https://burj-khalifa.dubai-tickets.co/',
   'https://www.acropolis-tickets.com/',
-  'https://www.thevaticantickets.com/',
+  'https://www.versailles-palace-tickets.com/',
   'https://www.colosseum-rome-tickets.com/',
   'https://www.billetseiffel.fr/',
   'https://www.eiffeltickets.com/',

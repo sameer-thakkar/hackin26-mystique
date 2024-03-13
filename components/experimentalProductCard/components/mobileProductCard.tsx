@@ -61,7 +61,6 @@ const MobileProductCard = (props: any) => {
     isModifiedProductCard,
     expandContent,
     hasOffer,
-    setShowDrawer,
     images,
     isGuidedTour,
     bannerVideo,
@@ -180,7 +179,7 @@ const MobileProductCard = (props: any) => {
           });
 
           setClicked(true);
-          setShowDrawer(true);
+          toggleDrawer(true);
         }}
         id={tgid}
         layout={layout}
