@@ -20,6 +20,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
+  HIGHLIGHT_TYPES,
   LANGUAGE_CODE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -68,6 +69,9 @@ const ContentSections = ({
     TABS.push(strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews);
   }
 
+  const whyWatchSection = (highlightsSection as any)?.tab_content?.filter?.(
+    (content: any) => content.type === HIGHLIGHT_TYPES.LIST_ITEM
+  );
   const reviewPageUrl = (highlightsSection as any)?.tab_content?.slice?.(
     -1
   )?.[0]?.spans?.[0]?.data?.url;
@@ -279,7 +283,7 @@ const ContentSections = ({
               </h2>
 
               <PrismicRichText
-                field={(highlightsSection as any)?.tab_content?.slice(1, -1)}
+                field={whyWatchSection}
                 components={shortCodeSerializer}
               />
               <Conditional if={showDescription?.length}>
