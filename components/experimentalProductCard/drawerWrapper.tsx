@@ -43,6 +43,7 @@ const DrawerWrapper = (props: any) => {
     activeTab,
     setActiveTab,
     children,
+    trackDrawerOpen,
   } = props;
 
   return (
@@ -104,6 +105,7 @@ const DrawerWrapper = (props: any) => {
             shouldCropImage={shouldCropImage}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            trackDrawerOpen={trackDrawerOpen}
             hasOffers={showScratchPrice && !!discountText.length}
           >
             {children}

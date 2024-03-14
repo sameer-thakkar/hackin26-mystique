@@ -33,13 +33,11 @@ import MediaCarousel from 'UI/MediaCarousel';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { useProductCard } from 'contexts/productCardContext';
-import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
+  PRODUCT_CARD_REVAMP,
   THEMES,
 } from 'const/index';
 import { SWIPESHEET_STATES } from 'const/productCard';
@@ -111,11 +109,8 @@ const MobileProductCard = (props: any) => {
     boosterTypeIfShown,
     indexPosition,
     listingPrice: { bestDiscount },
-    activeTab,
-    isSmallComboCard,
-    primaryCollection,
-    boosterType,
     isPoiMwebCard,
+    sendBookNowEvent,
   } = props as any;
 
   const [discountText, setDiscountText] = useState('');
@@ -162,25 +157,7 @@ const MobileProductCard = (props: any) => {
     <ScaledCard $isClicked={showPricingBar} $isDrawer={isDrawer}>
       <StyledProductCard
         onClick={() => {
-          trackEvent({
-            eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
-            [ANALYTICS_PROPERTIES.TGID]: tgid,
-            [ANALYTICS_PROPERTIES.ACTION]: 'Expand',
-            // @ts-ignore
-            [ANALYTICS_PROPERTIES.INFO_HEADING]: activeTab,
-            [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
-            [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-            [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
-              ? 'Combo Slice'
-              : 'Product List',
-            ...getProductCommonProperties({
-              primaryCategory,
-              primaryCollection,
-              primarySubCategory,
-              reviewsDetails,
-              boosterType,
-            }),
-          });
+          sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD);
           setShowPricingBar(true);
           setDrawerState(SWIPESHEET_STATES.OPEN);
         }}

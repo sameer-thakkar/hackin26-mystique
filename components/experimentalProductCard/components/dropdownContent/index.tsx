@@ -47,6 +47,7 @@ interface DropdownContentProps {
   hasOffers?: boolean;
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  trackDrawerOpen: () => void;
 }
 
 const DropdownContent: FC<DropdownContentProps> = ({
@@ -63,6 +64,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   hasOffers,
   activeTab,
   setActiveTab,
+  trackDrawerOpen,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -191,6 +193,8 @@ const DropdownContent: FC<DropdownContentProps> = ({
       historyState: { ...historyState },
       replace: false,
     });
+
+    trackDrawerOpen();
 
     setTimeout(() => {
       setActive(true);

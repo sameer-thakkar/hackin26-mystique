@@ -271,6 +271,28 @@ const ExperimentalProductCard = (props: any) => {
       ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
       : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
+  const trackDrawerOpen = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.ACTION]: 'Expand',
+      // @ts-ignore
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: activeTab,
+      [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
+        ? 'Combo Slice'
+        : 'Product List',
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+        reviewsDetails,
+        boosterType,
+      }),
+    });
+  };
+
   const getProductCardElements = (
     expandContent: any,
     isDrawer = false,
@@ -339,6 +361,7 @@ const ExperimentalProductCard = (props: any) => {
         primaryCollection={primaryCollection}
         boosterType={boosterType}
         activeTab={activeTab}
+        sendBookNowEvent={sendBookNowEvent}
       />
     );
   };
@@ -375,6 +398,7 @@ const ExperimentalProductCard = (props: any) => {
           shouldCropImage,
           activeTab,
           setActiveTab,
+          trackDrawerOpen,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}
