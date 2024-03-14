@@ -393,7 +393,7 @@ const ar = {
   VIEW_LESS: 'عرض أقل',
   VIEW_MORE: 'عرض المزيد',
   WHY_TAKE_THIS_DAY_TRIP: 'لماذا تقوم بهذه الرحلة اليوم',
-  WHY_WATCH: 'لماذا المشاهدة',
+  WHY_WATCH: '{0} لماذا المشاهدة',
   TAG_NAME: {
     BALLET: 'Ballet',
     CABARET: 'Cabaret',

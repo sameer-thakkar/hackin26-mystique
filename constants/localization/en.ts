@@ -622,7 +622,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   VIEW_LESS: 'View less',
   VIEW_MORE: 'View More',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
-  WHY_WATCH: 'Why Watch',
+  WHY_WATCH: 'Why Watch {0}?',
   FIND_ON_MAP: 'Find On Map',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {

@@ -640,7 +640,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festivals en events',
   },
-  WHY_WATCH: 'Why kijken',
+  WHY_WATCH: 'Waarom naar {0} kijken?',
   FIND_ON_MAP: 'Kaart',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {

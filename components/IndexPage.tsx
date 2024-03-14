@@ -486,8 +486,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return {
         redirect: {
           destination: redirectURL,
-          permanent: true,
-          type: 301,
+          statusCode: 301,
         },
       };
     }
@@ -501,8 +500,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         destination: url,
-        permanent: true,
-        type: 301,
+        statusCode: 301,
       },
     };
   }
@@ -552,9 +550,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return {
         redirect: {
           destination: url,
-          type: 302,
-          permanent: false,
-          props: {},
+          statusCode: 301,
         },
       };
     }
@@ -563,9 +559,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return {
         redirect: {
           destination: props?.redirectInfo?.url,
-          type: props?.redirectInfo?.type,
-          permanent: false,
-          props: {},
+          statusCode: 301,
         },
       };
     }

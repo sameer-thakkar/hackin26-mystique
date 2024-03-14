@@ -693,7 +693,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TRANSPORTATION: 'Transporte',
     FESTIVALS_EVENTS: 'Festivales y eventos',
   },
-  WHY_WATCH: '¿Por qué verlo?',
+  WHY_WATCH: '¿Por qué verlo? {0}?',
   FIND_ON_MAP: 'Ver en el mapa',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {

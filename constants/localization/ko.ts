@@ -556,7 +556,7 @@ const ko = {
   VIEW_LESS: '닫기',
   VIEW_MORE: '더 보기',
   WHY_TAKE_THIS_DAY_TRIP: '당일치기 여행을 하는 이유는 무엇인가요?',
-  WHY_WATCH: '추천 이유',
+  WHY_WATCH: '추천 이유 {0}?',
   TAG_NAME: {
     BALLET: 'Ballet',
     CABARET: 'Cabaret',

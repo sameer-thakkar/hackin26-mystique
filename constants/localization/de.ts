@@ -639,7 +639,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festivals und Events',
   },
-  WHY_WATCH: 'Auf einen Blick',
+  WHY_WATCH: 'Auf einen Blick {0}?',
   FIND_ON_MAP: 'Auf der Karte anzeigen',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
@@ -824,7 +824,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MULTILINGUAL_GUIDES: 'Mehrsprachige Reiseleiter',
     CULINARY_EXPERTS: 'Kulinarische Experten treffen',
     SIGHTSEEING: 'Sightseeing + Unterhaltung an Bord',
-    MULTILINGUAL_GT: 'Mehrsprachige geführte Touren',
+    MULTILINGUAL_GT: 'Touren in mehreren Sprachen',
     ALL_TOP_ATTRACTIONS_COVERED: 'Mit allen Top-Sehenswürdigkeiten',
     REG_SCHEDULE_UNLIMITED_RIDES: 'Regelmäßige Abfahrten. Unbegrenzte Fahrten',
     LAST_MIN_AVAIL_INSTANT_CONFIRMATION:

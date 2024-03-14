@@ -631,7 +631,7 @@ const it = {
     TRANSPORTATION: 'Trasporti',
     FESTIVALS_EVENTS: 'Festival ed eventi',
   },
-  WHY_WATCH: 'Perché guardarlo',
+  WHY_WATCH: 'Perché guardarlo {0}?',
   FIND_ON_MAP: 'Mappa',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {

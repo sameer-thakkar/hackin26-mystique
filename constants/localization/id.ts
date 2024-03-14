@@ -548,7 +548,7 @@ const id = {
   VIEW_LESS: 'Hilangkan sebagian',
   VIEW_MORE: 'Lihat lainnya',
   WHY_TAKE_THIS_DAY_TRIP: 'Mengapa Melakukan Day Trip Ini?',
-  WHY_WATCH: 'Alasan Menonton',
+  WHY_WATCH: 'Alasan Menonton {0}?',
   LTT_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',

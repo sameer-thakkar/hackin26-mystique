@@ -590,7 +590,7 @@ const pl = {
   VIEW_MORE: 'Wyświetl więcej',
   WHY_TAKE_THIS_DAY_TRIP:
     'Dlaczego warto wybrać się na tę wycieczkę jednodniową?',
-  WHY_WATCH: 'Dlaczego warto to obejrzeć',
+  WHY_WATCH: 'Dlaczego warto to obejrzeć {0}?',
   FIND_ON_MAP: 'Znajdź na mapie',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {

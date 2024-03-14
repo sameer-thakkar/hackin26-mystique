@@ -643,7 +643,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TRANSPORTATION: 'Transporte',
     FESTIVALS_EVENTS: 'Festivais e eventos',
   },
-  WHY_WATCH: 'Por que assistir',
+  WHY_WATCH: 'Por que assistir {0}?',
   FIND_ON_MAP: 'Ver no mapa',
   LTT_LANDING_PAGE: {
     TRUST_BOOSTERS: {
