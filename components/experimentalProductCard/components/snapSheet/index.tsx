@@ -1,4 +1,6 @@
 import React, { forwardRef, memo, RefObject } from 'react';
+import { useProductCard } from 'contexts/productCardContext';
+import { SWIPESHEET_STATES } from 'const/productCard';
 import { useContentScroll, useDragBehavior } from './hooks';
 import { Content, SnapSheetContainer } from './styles';
 
@@ -9,7 +11,6 @@ interface SnapSheetProps {
   endPosition: number;
   dragOffset?: number;
   enableDrag?: boolean;
-  isOpen?: boolean;
   cardHeight: number;
   headerHeight: number;
   pricingHeight: number;
@@ -29,7 +30,6 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       dragComplete,
       initialPosition,
       endPosition,
-      isOpen,
       cardHeight,
       headerHeight,
       pricingHeight,
@@ -42,13 +42,14 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
     },
     ref: any
   ) => {
+    const { drawerState } = useProductCard();
     const { startDrag, transform } = useDragBehavior({
       ref,
       initialPosition,
-      isOpen,
       tgid,
       endPosition,
       dragComplete,
+      drawerState,
     });
 
     useContentScroll({
@@ -62,18 +63,18 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
     return (
       <SnapSheetContainer
         onMouseDown={(e) => startDrag(e.clientX, e.clientY)}
-        onTouchStart={(e) =>
-          startDrag(e.touches[0].clientX, e.touches[0].clientY)
-        }
+        onTouchStart={(e) => {
+          startDrag(e.touches[0].clientX, e.touches[0].clientY);
+        }}
         style={{ transform }}
-        $isOpen={isOpen}
+        $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
       >
         <Content
           $cardHeight={cardHeight}
           $headerHeight={headerHeight}
           $pricingHeight={pricingHeight}
           $sheetHeight={sheetHeight}
-          $isOpen={!!isOpen}
+          $isOpen={!!(drawerState === SWIPESHEET_STATES.OPEN)}
           ref={ref}
           $hasOffers={hasOffers}
         >

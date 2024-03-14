@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { useProductCard } from 'contexts/productCardContext';
 import { useBodyScrollLock } from 'hooks/useBodyScrollLock';
-import { CLOSE_DRAWER_ACTIONS } from 'const/productCard';
+import { CLOSE_DRAWER_ACTIONS, SWIPESHEET_STATES } from 'const/productCard';
 import { GrabBar, GrabIndicator, Overlay, Sheet } from './styles';
 
 export const BottomSheet = memo(
@@ -8,17 +9,13 @@ export const BottomSheet = memo(
     children,
     onCloseCompletion,
     onCloseInit,
-    isScrolled,
     sheetHeight = '90%',
     snapHeight,
-    isOpen,
     dragLimit = 100,
   }: {
     children: React.ReactNode;
     onCloseCompletion?: (type: string) => void;
     onCloseInit?: () => void;
-    isScrolled: boolean;
-    isOpen: boolean;
     sheetHeight?: string;
     snapHeight?: string;
     dragLimit?: number;
@@ -30,6 +27,8 @@ export const BottomSheet = memo(
     const lastY = useRef(0);
     const initialX = useRef(0);
 
+    const { drawerState } = useProductCard();
+
     useBodyScrollLock(true);
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export const BottomSheet = memo(
     }, []);
 
     useEffect(() => {
-      if (isOpen) {
+      if (drawerState === SWIPESHEET_STATES.OPEN) {
         const timer = setTimeout(() => {
           setDragEnabled(true);
         }, 500);
@@ -46,7 +45,7 @@ export const BottomSheet = memo(
       } else {
         setDragEnabled(false);
       }
-    }, [isOpen]);
+    }, [drawerState]);
 
     const handlePositionUpdate = useCallback((currentY: any) => {
       const diffY = currentY - lastY.current;
@@ -54,21 +53,17 @@ export const BottomSheet = memo(
       lastY.current = currentY;
     }, []);
 
-    const handleDragStart = useCallback(
-      (e) => {
-        if (!dragEnabled) return;
-        setIsDragging(true);
-        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-        lastY.current = clientY;
-        initialX.current = clientX;
-      },
-      [dragEnabled]
-    );
+    const handleDragStart = useCallback((e) => {
+      setIsDragging(true);
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      lastY.current = clientY;
+      initialX.current = clientX;
+    }, []);
 
     const handleDragMove = useCallback(
       (e) => {
-        if (!isDragging || !dragEnabled) return; // Check if dragging is enabled before moving
+        if (!isDragging) return;
         const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY;
         const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         if (
@@ -78,7 +73,7 @@ export const BottomSheet = memo(
           handlePositionUpdate(currentY);
         }
       },
-      [isDragging, dragEnabled, handlePositionUpdate]
+      [isDragging, handlePositionUpdate]
     );
 
     const handleDrawerClose = useCallback(
@@ -95,13 +90,12 @@ export const BottomSheet = memo(
 
     const handleDragEnd = useCallback(() => {
       setIsDragging(false);
-      if (!dragEnabled) return;
       if (translateY > dragLimit) {
         handleDrawerClose(CLOSE_DRAWER_ACTIONS.SWIPE_DOWN);
       } else {
         setTranslateY(0);
       }
-    }, [translateY, handleDrawerClose, dragLimit, dragEnabled]);
+    }, [translateY, handleDrawerClose, dragLimit]);
 
     const eventHandlers = {
       onMouseDown: handleDragStart,
@@ -124,16 +118,22 @@ export const BottomSheet = memo(
           className="backdrop"
         />
         <Sheet
-          {...(isOpen && dragEnabled ? eventHandlers : {})}
+          {...(drawerState === SWIPESHEET_STATES.OPEN && dragEnabled
+            ? eventHandlers
+            : {})}
           $sheetHeight={sheetHeight}
           $translateY={translateY}
         >
           <GrabBar
-            {...(!isOpen ? eventHandlers : {})}
-            $isScrolled={isScrolled}
+            {...(drawerState === SWIPESHEET_STATES.EXPANDED
+              ? eventHandlers
+              : {})}
+            $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
             $snapHeight={snapHeight}
           >
-            <GrabIndicator $isScrolled={isScrolled} />
+            <GrabIndicator
+              $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
+            />
           </GrabBar>
 
           <div className="sheet-content">{children}</div>

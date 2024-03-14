@@ -1,4 +1,6 @@
 import React, { FC, ReactNode } from 'react';
+import { useProductCard } from 'contexts/productCardContext';
+import { SWIPESHEET_STATES } from 'const/productCard';
 import {
   Header,
   Tab as StyledTab,
@@ -26,7 +28,6 @@ interface TabContainerProps {
   tabs: TabData[];
   activeTab: string;
   onTabClick: (tabHeading: string, index: number) => void;
-  isOpen: boolean;
   ref: any;
 }
 
@@ -52,23 +53,29 @@ const Tab: FC<TabComponentProps> = ({
 const TabContainer: FC<TabContainerProps> = React.forwardRef<
   HTMLDivElement,
   TabContainerProps
->(({ tabs, activeTab, onTabClick, isOpen }, ref) => (
-  <Header>
-    <StyledTabContainer ref={ref} $isOpen={isOpen}>
-      {tabs.map((tab, index) => (
-        <Tab
-          key={tab.heading}
-          isActive={tab.heading === activeTab}
-          onClick={() => onTabClick(tab.heading, index)}
-          id={`tab-${tab.heading}`}
-          isLastElement={index === tabs.length - 1}
-        >
-          {tab.heading}
-        </Tab>
-      ))}
-    </StyledTabContainer>
-  </Header>
-));
+>(({ tabs, activeTab, onTabClick }, ref) => {
+  const { drawerState } = useProductCard();
+  return (
+    <Header>
+      <StyledTabContainer
+        ref={ref}
+        $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
+      >
+        {tabs.map((tab, index) => (
+          <Tab
+            key={tab.heading}
+            isActive={tab.heading === activeTab}
+            onClick={() => onTabClick(tab.heading, index)}
+            id={`tab-${tab.heading}`}
+            isLastElement={index === tabs.length - 1}
+          >
+            {tab.heading}
+          </Tab>
+        ))}
+      </StyledTabContainer>
+    </Header>
+  );
+});
 
 TabContainer.displayName = 'TabContainer';
 

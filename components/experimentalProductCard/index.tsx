@@ -1,26 +1,19 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
-import { BottomSheet } from 'components/common/DraggableBottomSheet';
 import { BoosterType } from 'components/Product/interface';
 import {
   Container,
-  ModalCardContainer,
   PRODUCT_CARD_IMAGE_DIMENSIONS,
 } from 'components/Product/styles';
-import ComboPopup from 'UI/ComboPopup';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
-import {
-  checkIfGpMotorTicketsMB,
-  getHostName,
-  isF1SportsExperiment,
-} from 'utils/helper';
+import { checkIfGpMotorTicketsMB, isF1SportsExperiment } from 'utils/helper';
 import {
   checkForBooster,
   extractCancellationPolicyFromHighlights,
@@ -33,30 +26,13 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CATEGORY_IDS,
-  SIDEBAR_TYPES,
   SUBCATEGORY_IDS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import DropdownContent from './components/dropdownContent';
 import MobileProductCard from './components/mobileProductCard';
-import PricingBar from './components/pricingBar';
+import DrawerWrapper from './drawerWrapper';
 
 const ExperimentalProductCard = (props: any) => {
-  const [showDrawer, toggleDrawer] = useState(false);
-  const [isContentScrolled, setContentScrolled] = useState(false);
-  const [pricingHeight, setPricingHeight] = useState(0);
-  const [discountText, setDiscountText] = useState('');
-  const [isOpen, setOpen] = useState(true);
-  const [isClicked, setClicked] = useState(false);
-
-  useEffect(() => {
-    if (!showDrawer && !isOpen) {
-      setOpen(true);
-    }
-  }, [showDrawer]);
-
-  const router = useRouter();
-
   const {
     tgid,
     position,
@@ -97,8 +73,6 @@ const ExperimentalProductCard = (props: any) => {
     isGuidedTour,
     isSpecialGuidedTour,
     isProductCardLoading = false,
-    setDetailsPopupShown = undefined,
-    detialsPopupShown = false,
     isNonPoi = false,
     isModifiedProductCard = false,
     isSmallComboCard = false,
@@ -115,17 +89,14 @@ const ExperimentalProductCard = (props: any) => {
     biLink,
     bookSubdomain,
     lang,
-    isStage,
     isDev,
-    sidebarModal: { addToAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
+
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
-  const hostname = getHostName(isStage, isDev, host);
   const [isContentOpen] = useState(defaultOpen);
-  const [activeTabIndex] = useState(0);
   const [boosterType, setBoosterType] = useState<
     keyof typeof BoosterType | null
   >(null);
@@ -142,79 +113,12 @@ const ExperimentalProductCard = (props: any) => {
       currentLanguage
     ) === strings.TODAY;
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pid = urlParams.get('pid');
-    const popup = urlParams.get('popup');
-    if (pid != tgid) return;
-    if (detialsPopupShown) return;
-    if (!setDetailsPopupShown) {
-      setDetailsPopupShown?.(true);
-    }
-    if (popup === 'combo') {
-      if (isComboWithMultiVariant && !isV3Design) {
-        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-        addToAside({
-          width: '100vw',
-          children: (
-            <ComboPopup
-              productTitle={cardTitle}
-              l1Booster={boosterTag}
-              tgid={tgid}
-              isMobile={true}
-              closeHandler={handleCloseComboPopup}
-              descriptors={descriptorsList}
-              bookingUrl={productBookingUrl}
-              minDuration={minDuration}
-              maxDuration={maxDuration}
-            />
-          ),
-          type: SIDEBAR_TYPES.COMBO_VARIANT,
-          onCloseCallback: () => handleCloseComboPopup(),
-          history: {
-            enable: true,
-            params: {
-              pid: tgid,
-              popup: 'combo',
-            },
-            isQueryRestore: true,
-          },
-        });
-      }
-    }
-    if (popup === 'details') {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-      addToAside({
-        width: '100vw',
-        children: (
-          <ModalCardContainer>
-            {getProductCardElements(true, false)}
-          </ModalCardContainer>
-        ),
-        onCloseCallback: () => {
-          trackedToggleContent(true);
-        },
-        type: SIDEBAR_TYPES.PRODUCT_CARD,
-        tgid: tgid,
-        history: {
-          enable: true,
-          params: {
-            pid: tgid,
-            popup: 'combo',
-          },
-        },
-      });
-    }
-  }, []);
-
   const {
     combo: isCombo,
-    multiVariant: isMultiVariant,
     minDuration,
     maxDuration,
     images,
   } = scorpioData || {};
-  const isComboWithMultiVariant = isCombo && isMultiVariant;
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -252,20 +156,6 @@ const ExperimentalProductCard = (props: any) => {
     });
   };
 
-  const handleCloseComboPopup = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
-      [ANALYTICS_PROPERTIES.MB_NAME]: hostname,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-      }),
-    });
-  };
-
   const boosterHasIcon =
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
@@ -289,8 +179,6 @@ const ExperimentalProductCard = (props: any) => {
   const [activeTab, setActiveTab] = useState<string>(
     finalHighlights[0]?.heading || ''
   );
-
-  const { tabs } = { tabs: [] };
 
   const cancellationPolicy = useMemo(
     () => extractCancellationPolicyFromHighlights(finalHighlights),
@@ -327,30 +215,6 @@ const ExperimentalProductCard = (props: any) => {
       isModifiedProductCard,
       isPoiMwebCard,
     });
-
-  const trackedToggleContent = (isOpen: any) => {
-    if (!isOpen) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
-        [ANALYTICS_PROPERTIES.TGID]: tgid,
-        [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
-        // @ts-ignore
-        [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
-        [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
-        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-        [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
-          ? 'Combo Slice'
-          : 'Product List',
-        ...getProductCommonProperties({
-          primaryCategory,
-          primaryCollection,
-          primarySubCategory,
-          reviewsDetails,
-          boosterType,
-        }),
-      });
-    }
-  };
 
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
@@ -423,7 +287,6 @@ const ExperimentalProductCard = (props: any) => {
         isModifiedProductCard={isModifiedProductCard}
         expandContent={expandContent}
         hasOffer={hasOffer}
-        showDrawer={showDrawer}
         boosterTypeIfShown={boosterTypeIfShown}
         indexPosition={indexPosition}
         images={images}
@@ -471,14 +334,11 @@ const ExperimentalProductCard = (props: any) => {
         cancellationPolicy={cancellationPolicy}
         trackCancellationPolicyHover={trackCancellationPolicyHover}
         isDrawer={isDrawer}
-        toggleDrawer={toggleDrawer}
         listingPrice={listingPrice}
         isSmallComboCard={isSmallComboCard}
         primaryCollection={primaryCollection}
         boosterType={boosterType}
         activeTab={activeTab}
-        isClicked={isClicked}
-        setClicked={setClicked}
       />
     );
   };
@@ -490,79 +350,35 @@ const ExperimentalProductCard = (props: any) => {
       isCardVisible={!isV3Design}
       isSmallComboCard={isSmallComboCard}
     >
-      <Conditional if={showDrawer}>
-        <PricingBar
-          showScratchPrice={showScratchPrice}
-          listingPrice={listingPrice}
-          lang={lang}
-          isAsideBarOverlay={false}
-          isCombo={isCombo}
-          mbTheme={mbTheme as any}
-          productBookingUrl={productBookingUrl}
-          sendBookNowEvent={sendBookNowEvent}
-          handleShowComboPopup={handleShowComboPopup}
-          tgid={tgid}
-          isV3Design={isV3Design}
-          isSportsExperiment={isSportsExperiment}
-          isGpMotorTicketsMb={isGpMotorTicketsMb}
-          isSportsSubCategory={isSportsSubCategory}
-          setPricingHeight={setPricingHeight}
-          discountText={discountText}
-          setDiscountText={setDiscountText}
-        />
-        <BottomSheet
-          isOpen={isOpen}
-          snapHeight={'5rem'}
-          isScrolled={isContentScrolled}
-          onCloseInit={() => {
-            setClicked(false);
-          }}
-          onCloseCompletion={(action?: string) => {
-            if (!router) return;
-            const { selection } = router.query;
-            if (selection) {
-              const { ['selection']: _, ...restParams } = router.query;
-              router.replace(
-                {
-                  pathname: router.pathname,
-                  query: restParams,
-                },
-                undefined,
-                { shallow: true }
-              );
-            }
-
-            setOpen(true);
-            toggleDrawer(false);
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.MORE_DETAILS_SWIPESHEET_CLOSED,
-              Action: action,
-            });
-          }}
-        >
-          <DropdownContent
-            finalHighlights={finalHighlights}
-            images={images}
-            isBannerCard={isBannerCard}
-            toggleDrawer={toggleDrawer}
-            bannerVideo={bannerVideo}
-            mediaCarouselImageHeight={mediaCarouselImageHeight}
-            mediaCarouselImageWidth={mediaCarouselImageWidth}
-            isFirstProduct={isFirstProduct}
-            tgid={tgid}
-            shouldCropImage={shouldCropImage}
-            setIsScrolled={setContentScrolled}
-            pricingHeight={pricingHeight}
-            isOpen={isOpen}
-            setOpen={setOpen}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            hasOffers={showScratchPrice && !!discountText.length}
-          >
-            {getProductCardElements(isContentOpen, true, isProductCardLoading)}
-          </DropdownContent>
-        </BottomSheet>
-      </Conditional>
+      <DrawerWrapper
+        {...{
+          showScratchPrice,
+          listingPrice,
+          lang,
+          isCombo,
+          mbTheme,
+          productBookingUrl,
+          sendBookNowEvent,
+          handleShowComboPopup,
+          tgid,
+          isV3Design,
+          isSportsExperiment,
+          isGpMotorTicketsMb,
+          isSportsSubCategory,
+          finalHighlights,
+          images,
+          isBannerCard,
+          bannerVideo,
+          mediaCarouselImageWidth,
+          mediaCarouselImageHeight,
+          isFirstProduct,
+          shouldCropImage,
+          activeTab,
+          setActiveTab,
+        }}
+      >
+        {getProductCardElements(isContentOpen, true, isProductCardLoading)}
+      </DrawerWrapper>
       <Conditional if={isV3Design}>
         <div className="indicator-triangle"></div>
       </Conditional>

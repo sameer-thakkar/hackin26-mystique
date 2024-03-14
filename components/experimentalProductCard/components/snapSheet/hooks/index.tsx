@@ -2,11 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { trackEvent } from 'utils/analytics';
 import { getPercentageScrolled, getScrollPercentage } from 'utils/helper';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { SWIPESHEET_STATES } from 'const/productCard';
 
 export const useDragBehavior = ({
   ref,
   initialPosition,
-  isOpen,
+  drawerState,
   tgid,
   endPosition,
   dragComplete,
@@ -141,15 +142,14 @@ export const useDragBehavior = ({
   }, [handleDrag, finalizeDrag]);
 
   useEffect(() => {
-    if (isOpen === false) {
-      // Assume `trackEvent` is a function defined elsewhere
+    if (drawerState === SWIPESHEET_STATES.EXPANDED) {
       trackEvent({
         eventName: 'MORE_DETAILS_SECTION_VIEWED',
         tgid,
         percentageViewed: 0,
       });
     }
-  }, [isOpen, tgid]);
+  }, [drawerState, tgid]);
 
   return { startDrag, transform };
 };

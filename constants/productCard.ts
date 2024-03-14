@@ -14,3 +14,9 @@ export const CLOSE_DRAWER_ACTIONS = {
   OVERLAY_CLICKED: 'Overlay Clicked',
   SWIPE_DOWN: 'Swipe Down',
 };
+
+export const SWIPESHEET_STATES = {
+  HIDDEN: 'hidden',
+  OPEN: 'open',
+  EXPANDED: 'expanded',
+};

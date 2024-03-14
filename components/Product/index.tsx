@@ -53,6 +53,7 @@ import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { MBContext } from 'contexts/MBContext';
+import { ProductCardProvider } from 'contexts/productCardContext';
 import { createBookingURL } from 'utils';
 import {
   getCommonEventMetaData,
@@ -1382,12 +1383,14 @@ const Product = (props: any) => {
 
   if (showNewCard)
     return (
-      <ExperimentalProductCard
-        {...props}
-        handleShowComboPopup={handleShowComboPopup}
-        sendBookNowEvent={sendBookNowEvent}
-        isSportsSubCategory={isSportsSubCategory}
-      />
+      <ProductCardProvider>
+        <ExperimentalProductCard
+          {...props}
+          handleShowComboPopup={handleShowComboPopup}
+          sendBookNowEvent={sendBookNowEvent}
+          isSportsSubCategory={isSportsSubCategory}
+        />
+      </ProductCardProvider>
     );
 
   if (isSpecialGuidedTour || isShortcodePopup)

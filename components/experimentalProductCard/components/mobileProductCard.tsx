@@ -32,6 +32,7 @@ import {
 import MediaCarousel from 'UI/MediaCarousel';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
+import { useProductCard } from 'contexts/productCardContext';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
@@ -41,6 +42,7 @@ import {
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   THEMES,
 } from 'const/index';
+import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 import { ScaledCard } from './styles';
@@ -108,20 +110,21 @@ const MobileProductCard = (props: any) => {
     isDrawer,
     boosterTypeIfShown,
     indexPosition,
-    toggleDrawer,
     listingPrice: { bestDiscount },
     activeTab,
     isSmallComboCard,
     primaryCollection,
     boosterType,
-    isClicked,
-    setClicked,
     isPoiMwebCard,
   } = props as any;
+
   const [discountText, setDiscountText] = useState('');
 
   const productRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+
+  const { setDrawerState, showPricingBar, setShowPricingBar } =
+    useProductCard();
 
   useLayoutEffect(() => {
     if (!router || !productRef.current) return;
@@ -133,8 +136,9 @@ const MobileProductCard = (props: any) => {
         block: 'center',
       });
 
-      setTimeout(() => {
-        timeout = toggleDrawer(true);
+      timeout = setTimeout(() => {
+        setDrawerState(SWIPESHEET_STATES.OPEN);
+        setShowPricingBar(true);
       }, 200);
     }
 
@@ -155,7 +159,7 @@ const MobileProductCard = (props: any) => {
   }, [bestDiscount]);
 
   return (
-    <ScaledCard $isClicked={isClicked} $isDrawer={isDrawer}>
+    <ScaledCard $isClicked={showPricingBar} $isDrawer={isDrawer}>
       <StyledProductCard
         onClick={() => {
           trackEvent({
@@ -177,9 +181,8 @@ const MobileProductCard = (props: any) => {
               boosterType,
             }),
           });
-
-          setClicked(true);
-          toggleDrawer(true);
+          setShowPricingBar(true);
+          setDrawerState(SWIPESHEET_STATES.OPEN);
         }}
         id={tgid}
         layout={layout}
@@ -200,7 +203,7 @@ const MobileProductCard = (props: any) => {
         ref={productRef}
         $isDrawer={isDrawer}
         $hasDiscount={showScratchPrice && !!discountText.length}
-        $isClicked={isClicked}
+        $isClicked={showPricingBar}
       >
         <Conditional if={boosterTypeIfShown && !isDrawer}>
           <Booster

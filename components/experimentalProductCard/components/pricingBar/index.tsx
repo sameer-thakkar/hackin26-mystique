@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import LocalisedPrice from 'UI/LPrice';
+import { useProductCard } from 'contexts/productCardContext';
 import { PRODUCT_CARD_REVAMP } from 'const/index';
 import { strings } from 'const/strings';
 import {
@@ -35,9 +36,6 @@ interface PricingBarProps {
   isSportsExperiment: boolean;
   isGpMotorTicketsMb: boolean;
   isSportsSubCategory: boolean;
-  setPricingHeight: (height: number) => void;
-  discountText: string;
-  setDiscountText: (text: string) => void;
 }
 
 const getDiscountText = (bestDiscount: number): string => {
@@ -75,9 +73,6 @@ const PricingBar: FC<PricingBarProps> = ({
   isSportsExperiment,
   isGpMotorTicketsMb,
   isSportsSubCategory,
-  setPricingHeight,
-  discountText,
-  setDiscountText,
   productBookingUrl,
 }) => {
   const [hasSavings, setSavings] = useState<boolean>(false);
@@ -85,6 +80,8 @@ const PricingBar: FC<PricingBarProps> = ({
   const widthRef = useRef(null) as any;
   const [buttonWidth, setButtonWidth] = useState(0);
   const [showContent, setShowContent] = useState(false);
+
+  const { setPricingHeight, discountText, setDiscountText } = useProductCard();
 
   useEffect(() => {
     if (!widthRef.current) return;

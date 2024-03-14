@@ -10,10 +10,12 @@ import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
 import Conditional from 'components/common/Conditional';
+import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { addUrlParams } from 'utils/urlUtils';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { SWIPESHEET_STATES } from 'const/productCard';
 import SnapSheet from '../snapSheet';
 import MediaCarouselWrapper from './mediaCarouselWrapper';
 import {
@@ -42,13 +44,9 @@ interface DropdownContentProps {
   finalHighlights: TabData[];
   children?: ReactNode;
   setIsScrolled?: (isScrolled: boolean) => void;
-  pricingHeight: number;
   hasOffers?: boolean;
-  isOpen: boolean;
-  setOpen: (open: boolean) => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  toggleDrawer: (state: boolean) => void;
 }
 
 const DropdownContent: FC<DropdownContentProps> = ({
@@ -62,14 +60,9 @@ const DropdownContent: FC<DropdownContentProps> = ({
   shouldCropImage,
   isFirstProduct,
   children,
-  setIsScrolled,
-  pricingHeight,
   hasOffers,
-  isOpen,
-  setOpen,
   activeTab,
   setActiveTab,
-  toggleDrawer,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -78,8 +71,10 @@ const DropdownContent: FC<DropdownContentProps> = ({
   const [isTabClickScroll, setIsTabClickScroll] = useState(false);
   const [isActive, setActive] = useState(false);
 
+  const { setDrawerState, pricingHeight } = useProductCard();
+
   const childRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null) as any;
+  const headerRef = useRef<HTMLDivElement>(null);
   const snapRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -158,14 +153,14 @@ const DropdownContent: FC<DropdownContentProps> = ({
 
   const dragComplete = useCallback(
     (pos: number) => {
-      setOpen(pos === imageHeight);
+      if (pos === imageHeight) {
+        setDrawerState(SWIPESHEET_STATES.OPEN);
+      } else {
+        setDrawerState(SWIPESHEET_STATES.EXPANDED);
+      }
     },
-    [setOpen, imageHeight]
+    [imageHeight, setDrawerState]
   );
-
-  useEffect(() => {
-    setIsScrolled && setIsScrolled(!isOpen);
-  }, [isOpen, setIsScrolled]);
 
   useEffect(() => {
     if (!headerRef.current) return;
@@ -202,16 +197,19 @@ const DropdownContent: FC<DropdownContentProps> = ({
     }, 500);
 
     window.onpopstate = function () {
-      toggleDrawer(false);
+      setDrawerState(SWIPESHEET_STATES.HIDDEN);
     };
 
     return () => {
-      window.onpopstate = null;
-      addUrlParams({
-        urlParams: { ...otherParams },
-        historyState: { ...historyState },
-        replace: false,
-      });
+      if (typeof window !== undefined) {
+        const { ...historyState } = window.history.state;
+        const { selection: _, ...otherParams } = router.query;
+        addUrlParams({
+          urlParams: { ...otherParams },
+          historyState: { ...historyState },
+          replace: false,
+        });
+      }
     };
   }, []);
 
@@ -233,7 +231,6 @@ const DropdownContent: FC<DropdownContentProps> = ({
         ref={headerRef}
         tabs={tabs}
         activeTab={activeTab}
-        isOpen={isOpen}
         onTabClick={handleTabClick}
       />
       <MediaCarouselWrapper
@@ -247,7 +244,6 @@ const DropdownContent: FC<DropdownContentProps> = ({
           tgid,
           shouldCropImage,
           setImageHeight,
-          isOpen,
         }}
       />
       <Conditional if={imageHeight}>
@@ -256,7 +252,6 @@ const DropdownContent: FC<DropdownContentProps> = ({
           initialPosition={imageHeight}
           endPosition={-cardHeight}
           enableDrag={true}
-          isOpen={isOpen}
           cardHeight={cardHeight}
           headerHeight={headerHeight}
           pricingHeight={pricingHeight - 42}

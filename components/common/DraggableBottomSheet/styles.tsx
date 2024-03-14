@@ -35,6 +35,7 @@ export const Sheet = styled.div<{ $sheetHeight: string; $translateY: number }>`
   transform: translateY(${({ $translateY }) => $translateY}px);
   transition: transform 300ms cubic-bezier(0, 0, 0.3, 1);
   max-height: ${({ $sheetHeight }) => $sheetHeight};
+  height: ${({ $sheetHeight }) => $sheetHeight};
   background-color: ${COLORS.BRAND.WHITE};
   border-radius: 1rem 1rem 0 0;
   box-shadow: 0 -0.2rem 1rem rgba(0, 0, 0, 0.1);
