@@ -1134,6 +1134,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     PEAK_SEASON: 'Temporada alta',
     TO: 'A',
     LAST_ENTRY: 'última entrada',
+    SUBATTRACTIONS: 'Sub-Atracciones',
   },
   OFF_PERCENT: '{0} % de descuento',
 };

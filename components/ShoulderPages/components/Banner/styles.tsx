@@ -1,3 +1,4 @@
+import { Styles } from 'react-modal';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -128,4 +129,62 @@ export const TextContainer = styled.div<{ $fullWidth?: boolean }>`
       font-size: 15px;
     }
   }
+
+  button {
+    ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
+    display: inline-block;
+    color: ${COLORS.BRAND.PURPS};
+    background: none;
+    border: none;
+    cursor: pointer;
+    vertical-align: top;
+    padding: 0;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `;
+
+export const ModalContent = styled.div`
+  position: relative;
+
+  button {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+
+  h1 {
+    margin: 0 0 1rem;
+    ${expandFontToken(FONTS.HEADING_SMALL)}
+  }
+
+  p {
+    ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
+  }
+`;
+
+export const modalStyles: Styles = {
+  overlay: {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    zIndex: 99,
+  },
+  content: {
+    padding: '1.5rem',
+    height: 'max-content',
+    margin: 'auto',
+    width: 'calc(100% - 5.46vw * 2)',
+    backgroundColor: 'white',
+    maxWidth: 'min(36rem, 80%)',
+    borderRadius: '12px',
+    zIndex: 999,
+    inset: 0,
+    border: 0,
+  },
+};

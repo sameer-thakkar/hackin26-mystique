@@ -27,7 +27,7 @@ const AboutPage = ({
   primaryCity,
   isMobile,
   relatedContentPages,
-  poiInfo,
+  poiInfo = {},
   automatedBreadcrumbsExists,
   extractedBreadcrumbsSlice,
   extractedProductCardsSlice,
@@ -35,24 +35,23 @@ const AboutPage = ({
   parentProps,
 }: IAboutPageProps) => {
   const { featured_title: featuredTitle } = data;
-  const { poi } = poiInfo || { poi: {} };
   const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
   const lang = data?.content_framework?.lang;
 
-  poi.minPrice = getLocalisedPrice({
+  poiInfo.minPrice = getLocalisedPrice({
     price: categoryTourListData?.minPrice,
     currencyCode: categoryTourListData?.activeCurrency?.code,
     currencyList: useRecoilValue(currencyListAtom),
     lang,
   });
 
-  const description = poi?.content?.data?.description?.find?.(
+  const description = poiInfo?.content?.data?.description?.find?.(
     (desc: Record<string, any>) => desc.type == 'GENERAL'
   )?.description;
 
   const quickInfo = getPoiQuickInfo(
     {
-      ...poi,
+      ...poiInfo,
       ticketsUID: data?.baseLangMicrositeData?.uid,
     },
     relatedContentPages,
@@ -78,9 +77,9 @@ const AboutPage = ({
         imageSrc={featuredImage}
         title={featuredTitle}
         poiInfo={{
-          ALSO_KNOWN_AS: poi?.content?.data?.nickname,
-          FOUNDED_ON: poi?.yearOpened,
-          FOUNDED_BY: poi?.architectedBy,
+          ALSO_KNOWN_AS: poiInfo?.content?.data?.nickname,
+          FOUNDED_ON: poiInfo?.yearOpened,
+          FOUNDED_BY: poiInfo?.architectedBy,
         }}
         description={description}
       />
@@ -105,9 +104,9 @@ const AboutPage = ({
             CTALink={quickInfoCtaLink}
           />
         </Conditional>
-        <Conditional if={poi?.content?.data?.facts?.length}>
+        <Conditional if={poiInfo?.content?.data?.facts?.length}>
           <ListMessageBox
-            list={poi?.content?.data?.facts?.slice?.(0, 3)}
+            list={poiInfo?.content?.data?.facts?.slice?.(0, 3)}
             CTALink={factsCtaLink}
           />
         </Conditional>

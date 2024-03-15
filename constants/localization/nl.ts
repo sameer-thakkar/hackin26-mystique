@@ -1036,6 +1036,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     PEAK_SEASON: 'Hoogseizoen',
     TO: 'TOT',
     LAST_ENTRY: 'laatste invoer',
+    SUBATTRACTIONS: 'Sub-Attracties',
   },
   OFF_PERCENT: '{0}% korting',
 };

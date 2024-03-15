@@ -1072,6 +1072,7 @@ const it = {
     PEAK_SEASON: 'Alta stagione',
     TO: 'AL',
     LAST_ENTRY: 'ultimo ingresso',
+    SUBATTRACTIONS: 'Sotto-Attrazioni',
   },
   OFF_PERCENT: '{0}% di sconto',
 };

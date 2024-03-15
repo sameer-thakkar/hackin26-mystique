@@ -1082,6 +1082,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PEAK_SEASON: 'Alta temporada',
     TO: 'ATÉ',
     LAST_ENTRY: 'última entrada',
+    SUBATTRACTIONS: 'Subatrações',
   },
   OFF_PERCENT: '{0}% de desconto',
 };

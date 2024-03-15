@@ -11,7 +11,7 @@ export interface IShoulderBannerProps {
   };
   title?: string;
   description?: string;
-  poiInfo?: {};
+  poiInfo?: Record<string, any>;
 }
 
 export interface IMessageBoxProps {
@@ -56,6 +56,7 @@ export interface ITimingsPageProps {
   isMobile: boolean;
   relatedContentPages?: Record<string, any>[];
   poiInfo?: Record<string, any>;
+  childPoisInfo?: Record<string, any>[];
   automatedBreadcrumbsExists?: boolean;
   extractedPrismicBreadcrumbs?: Record<string, any>[];
   extractedProductCardsSlice?: Record<string, any>[];
@@ -94,6 +95,7 @@ export interface ITimingsTableProps {
     label: string;
   }[];
   isMobile: boolean;
+  initiallyCollapsed?: boolean;
 }
 
 export interface IIconScaleType {

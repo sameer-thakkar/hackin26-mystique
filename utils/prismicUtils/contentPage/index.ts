@@ -8,7 +8,12 @@ import {
   getSinglePrismicSlice,
   handleSettledPromiseResults,
 } from 'utils';
-import { fetchShoulderPoiInfo } from 'utils/apiUtils';
+import {
+  fetchBulkPoisInfo,
+  fetchCollectionList,
+  fetchCollectionPoiInfo,
+} from 'utils/apiUtils';
+import { getLangObject } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
@@ -223,6 +228,7 @@ const getContentPageDocument = async ({
       shoulder_page_type as string,
     ];
     let poiInfo = {};
+    let childPoisInfo = [];
     // We Currently only want this in the Revamped pages
     if (
       [SHOULDER_PAGE_TYPES.ABOUT, SHOULDER_PAGE_TYPES.TIMINGS].includes(
@@ -235,16 +241,46 @@ const getContentPageDocument = async ({
           tagged_collection ?? '',
           excludedShoulderTypes
         ),
-        fetchShoulderPoiInfo({
-          language: lang,
-          collectionId: tagged_collection,
+        fetchCollectionPoiInfo({
+          language: lang || 'en',
+          collectionId: tagged_collection || '',
         }),
       ]);
       const [prismicRelatedDocs, fetchedPoiInfo] = handleSettledPromiseResults(
         settledPromises,
         uid
       );
-      // @ts-ignore
+      const childPoiIds = fetchedPoiInfo?.childPOIIds;
+      if (
+        shoulder_page_type === SHOULDER_PAGE_TYPES.TIMINGS &&
+        childPoiIds?.length
+      ) {
+        childPoisInfo = await fetchBulkPoisInfo({
+          language: lang || 'en',
+          poiIds: childPoiIds,
+          operatingSchedules: true,
+          content: true,
+        });
+        const childPoiCollectionIds = childPoisInfo?.map(
+          (poi: any) => poi.linkedCollectionId
+        );
+        // fetch the collection for each child id and assign it in the poi object
+        if (childPoiCollectionIds?.length) {
+          const languageCode = getLangObject(lang!).code || 'en';
+          const childPoiCollectionsInfo = (
+            await fetchCollectionList({
+              collectionIds: childPoiCollectionIds,
+              language: languageCode,
+            })
+          )?.collections;
+          childPoisInfo.forEach((poi: any) => {
+            poi.collectionInfo = childPoiCollectionsInfo.find(
+              (childPoiCollection: any) =>
+                childPoiCollection.id == poi.linkedCollectionId
+            );
+          });
+        }
+      }
       relatedContentPages = prismicRelatedDocs?.results?.map(
         (doc: Record<string, any>) => ({
           ...doc,
@@ -254,7 +290,6 @@ const getContentPageDocument = async ({
               : getAlternateLanguageDocUid({ doc, lang: lang || 'en-us' }),
         })
       );
-      // @ts-ignore
       poiInfo = fetchedPoiInfo;
     }
     let completePage = {
@@ -281,6 +316,7 @@ const getContentPageDocument = async ({
         productCardData,
         relatedContentPages,
         poiInfo,
+        childPoisInfo,
       },
     };
 

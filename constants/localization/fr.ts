@@ -1086,6 +1086,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     PEAK_SEASON: 'Haute saison',
     TO: 'AU',
     LAST_ENTRY: 'dernière entrée',
+    SUBATTRACTIONS: 'Sous-Attraits',
   },
   OFF_PERCENT: '{0} % de réduction',
 };

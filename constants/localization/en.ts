@@ -1142,6 +1142,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     PEAK_SEASON: 'Peak Season',
     TO: 'TO',
     LAST_ENTRY: 'last entry',
+    SUBATTRACTIONS: 'Sub-Attractions',
   },
   OFF_PERCENT: '{0}% off',
 };

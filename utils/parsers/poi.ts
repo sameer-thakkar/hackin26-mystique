@@ -34,39 +34,42 @@ export const getPoiTimingsInfo = (
   const today = new Date()
     .toLocaleString('en-US', { weekday: 'long' })
     .toUpperCase();
-  const timingTablesData = operatingSchedules?.map?.((schedule: any) => {
-    const startMonth = new Date(schedule.startDate).toLocaleString(lang, {
-      day: 'numeric',
-      month: 'short',
-    });
-    const endMonth = new Date(schedule.endDate).toLocaleString(lang, {
-      day: 'numeric',
-      month: 'short',
-    });
-    return {
-      columns: [
-        {
-          label: `${strings.CONTENT_PAGE.DAYS} (${startMonth} ${strings.CONTENT_PAGE.TO} ${endMonth})`,
-          key: 'day',
-        },
-        { label: strings.CONTENT_PAGE.TIMINGS.toUpperCase(), key: 'timing' },
-        { label: strings.CONTENT_PAGE.LAST_ADMISSION, key: 'lastAdmission' },
-      ],
-      rows: schedule.operatingDaySchedules
-        ?.map?.((day: any) => {
-          if (day.closed) return;
-          const isActive = day.dayOfWeek === today;
-          const formattedDay = formatOperatingDayTimings({ day, lang });
-          return {
-            isActive,
-            day: localizeDay(day.dayOfWeek, lang),
-            lastAdmission: formattedDay.lastAdmission,
-            timing: formattedDay.hours,
-          };
-        })
-        .filter(Boolean),
-    };
-  });
+  const timingTablesData = operatingSchedules?.map?.(
+    (schedule: any, scheduleIndex: number) => {
+      const startMonth = new Date(schedule.startDate).toLocaleString(lang, {
+        day: 'numeric',
+        month: 'short',
+      });
+      const endMonth = new Date(schedule.endDate).toLocaleString(lang, {
+        day: 'numeric',
+        month: 'short',
+      });
+      return {
+        columns: [
+          {
+            label: `${startMonth} ${strings.CONTENT_PAGE.TO} ${endMonth}`,
+            key: 'day',
+          },
+          { label: strings.CONTENT_PAGE.TIMINGS.toUpperCase(), key: 'timing' },
+          { label: strings.CONTENT_PAGE.LAST_ADMISSION, key: 'lastAdmission' },
+        ],
+        rows: schedule.operatingDaySchedules
+          ?.map?.((day: any) => {
+            const isActive = day.dayOfWeek === today && scheduleIndex === 0;
+            const formattedDay = formatOperatingDayTimings({ day, lang });
+            return {
+              isActive,
+              day: localizeDay(day.dayOfWeek, lang),
+              lastAdmission: day.closed ? '' : formattedDay.lastAdmission || '',
+              timing: day.closed
+                ? strings.CONTENT_PAGE.CLOSED
+                : formattedDay.hours || '',
+            };
+          })
+          .filter(Boolean),
+      };
+    }
+  );
   return {
     today: currentOperatingHours.hours
       ? currentOperatingHours.hours == strings.CONTENT_PAGE.CLOSED_TODAY

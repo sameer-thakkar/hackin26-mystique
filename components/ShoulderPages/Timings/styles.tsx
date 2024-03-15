@@ -91,3 +91,20 @@ export const TimingTablesContainer = styled.div`
     object-fit: contain;
   }
 `;
+
+export const SectionDescription = styled.div`
+  ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
+  color: ${COLORS.GRAY.G2};
+  margin-bottom: 1rem;
+  * {
+    line-height: 1.75rem;
+  }
+
+  ul {
+    padding: 0 1.5rem;
+
+    li {
+      color: ${COLORS.GRAY.G2};
+    }
+  }
+`;

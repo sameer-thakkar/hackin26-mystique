@@ -259,6 +259,7 @@ const ContentPage = (props: any) => {
     baseLangCategorisationMetadata,
     relatedContentPages,
     poiInfo,
+    childPoisInfo,
     body,
     content_framework: contentFramework,
     secondary_footer: secondaryFooter,
@@ -393,7 +394,7 @@ const ContentPage = (props: any) => {
     ) &&
     !(
       shoulder_page_type == SHOULDER_PAGE_TYPE.TIMINGS &&
-      !poiInfo?.poi?.operatingSchedules?.length
+      !poiInfo?.operatingSchedules?.length
     );
   const breadcrumbsSliceIndex = CFWBody.findIndex(
     ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
@@ -482,19 +483,24 @@ const ContentPage = (props: any) => {
       );
     } else if (shoulder_page_type === SHOULDER_PAGE_TYPE.TIMINGS) {
       const weekInfoExists = Object.keys(
-        poiInfo?.poi?.bestTimeToVisit?.week || {}
+        poiInfo?.bestTimeToVisit?.week || {}
       ).length;
       const yearInfoExists = Object.keys(
-        poiInfo?.poi?.bestTimeToVisit?.year || {}
+        poiInfo?.bestTimeToVisit?.year || {}
       ).length;
       extraSideNavItems.push(
         ...[
-          poiInfo?.poi?.name &&
-            `${poiInfo?.poi?.name} ${strings.CONTENT_PAGE.TIMINGS}`,
+          poiInfo?.name && `${poiInfo?.name} ${strings.CONTENT_PAGE.TIMINGS}`,
+          ...(childPoisInfo?.length
+            ? childPoisInfo.map(
+                (childPoiInfo: any) =>
+                  `${childPoiInfo?.name} ${strings.CONTENT_PAGE.TIMINGS}`
+              )
+            : []),
           productCardsSliceTitle,
           (weekInfoExists || yearInfoExists) &&
-            poiInfo?.poi?.name &&
-            `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiInfo?.poi?.name}`,
+            poiInfo?.name &&
+            `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiInfo?.name}`,
         ].filter(Boolean)
       );
     }
@@ -676,6 +682,7 @@ const ContentPage = (props: any) => {
           isMobile={isMobile}
           relatedContentPages={relatedContentPages}
           poiInfo={poiInfo}
+          childPoisInfo={childPoisInfo}
           automatedBreadcrumbsExists={automatedBreadcrumbsExists}
           categoryTourListData={categoryTourListData}
           extractedProductCardsSlice={extractedProductCardsSlice}

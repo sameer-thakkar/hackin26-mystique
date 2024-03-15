@@ -96,7 +96,8 @@ export enum HeadoutEndpoints {
   Media,
   Variants,
   Airports,
-  Poi,
+  CollectionPoi,
+  BulkPoiList,
 }
 
 export const getHeadoutApiUrl = ({
@@ -187,8 +188,11 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.Airports:
       endpointSlug = '/api/v1/airport-transfers/fetch-airports';
       break;
-    case HeadoutEndpoints.Poi:
-      endpointSlug = `/api/v1/poi/`;
+    case HeadoutEndpoints.CollectionPoi:
+      endpointSlug = `/api/v1/collection/${id}/pois`;
+      break;
+    case HeadoutEndpoints.BulkPoiList:
+      endpointSlug = `/api/v1/pois`;
       break;
   }
 
@@ -1301,33 +1305,81 @@ export const fetchBatchedVariants = async ({
   }
 };
 
-export const fetchShoulderPoiInfo = async ({
+type TFetchCollectionPoiInfo = {
+  collectionId?: string | number;
+  language?: string;
+  cookies?: Record<string, any>;
+};
+export const fetchCollectionPoiInfo = async ({
   collectionId,
-  language,
+  language = 'en',
   cookies = {},
-}: any) => {
+}: TFetchCollectionPoiInfo) => {
   try {
+    if (!collectionId) return;
     const params = {
       language: getHeadoutLanguagecode(language),
       operatingSchedules: 'true',
       content: 'true',
       location: 'true',
-      collectionId: String(collectionId),
     };
     const apiUrl = getHeadoutApiUrl({
-      endpoint: HeadoutEndpoints.Poi,
-      // hostname: 'https://api.test-headout.com',
+      endpoint: HeadoutEndpoints.CollectionPoi,
       params,
-      id: null,
+      id: String(collectionId),
     });
     const headers = constructHeaders({ cookies });
     const res = await fetch(apiUrl, { headers });
 
     const data = await res.json();
-    return data?.[0];
+    return data?.pois?.[0];
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchCurrencyList]', error);
+    console.error('[fetchCollectionPoiInfo]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+type TFetchBulkPoisInfo = {
+  poiIds?: (string | number)[];
+  language?: string;
+  cookies?: Record<string, any>;
+  operatingSchedules?: boolean;
+  content?: boolean;
+  location?: boolean;
+};
+export const fetchBulkPoisInfo = async ({
+  poiIds,
+  language = 'en',
+  cookies = {},
+  operatingSchedules = false,
+  content = false,
+  location = false,
+}: TFetchBulkPoisInfo) => {
+  try {
+    if (!poiIds?.length) return;
+
+    const params = {
+      language: getHeadoutLanguagecode(language),
+      'ids[]': poiIds?.join(','),
+      operatingSchedules: String(operatingSchedules),
+      content: String(content),
+      location: String(location),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.BulkPoiList,
+      params,
+      id: null,
+    });
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(apiUrl, { headers });
+    const data = await res.json();
+    return data?.pois;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchBulkPoisInfo]', error);
     sendLog({
       err: error,
     });

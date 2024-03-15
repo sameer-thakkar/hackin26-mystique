@@ -1073,6 +1073,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     PEAK_SEASON: 'Hochsaison',
     TO: 'BIS',
     LAST_ENTRY: 'letzter eintrag',
+    SUBATTRACTIONS: 'Unterattraktionen',
   },
   OFF_PERCENT: '{0} % Rabatt',
 };
