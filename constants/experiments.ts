@@ -18,7 +18,7 @@ export const EXPERIMENT_NAMES = {
   CONSENT_BANNER_EXPERIMENT: 'Consent Banner Experiment',
   BOOSTERS_EXPERIMENT: 'POI Card Booster Experiment',
   RANKING_EXPERIMENT_AB: 'Product Rankings A/B',
-  POI_CARD_EXPERIMENT: 'POI More Details Swipe sheet Experiment',
+  POI_CARD_EXPERIMENT: 'POI More Details Swipe sheet Experiment 2',
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT: 'Shoulder Page Section Ranking',
 };
 

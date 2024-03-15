@@ -22,7 +22,7 @@ import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import getPromoCodesDocument from 'utils/prismicUtils/promoCodes';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -197,10 +197,21 @@ const PopulateProducts = (props: any) => {
 
   const { isEligible, variant, isExperimentResolving } = useABTesting({
     experimentId: 'POI_CARD_EXPERIMENT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () =>
       isPoiMwebCard && !DISABLE_POI_EXPERIMENT_COLLECTIONS.includes(pageUrl),
   });
+
+  useEffect(() => {
+    if (isEligible && !isExperimentResolving && variant) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]: variant,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          EXPERIMENT_NAMES.POI_CARD_EXPERIMENT,
+      });
+    }
+  }, [isEligible, isExperimentResolving, variant]);
 
   const { isStage, isDev, host, design } = useContext(MBContext);
 
