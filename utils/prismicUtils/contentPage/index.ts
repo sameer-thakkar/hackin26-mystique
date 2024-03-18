@@ -274,7 +274,7 @@ const getContentPageDocument = async ({
             })
           )?.collections;
           childPoisInfo.forEach((poi: any) => {
-            poi.collectionInfo = childPoiCollectionsInfo.find(
+            poi.collectionInfo = childPoiCollectionsInfo?.find(
               (childPoiCollection: any) =>
                 childPoiCollection.id == poi.linkedCollectionId
             );

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const TableContainer = styled.div<{ isCollapsed?: boolean }>`
@@ -7,20 +8,64 @@ export const TableContainer = styled.div<{ isCollapsed?: boolean }>`
   border-radius: 0.5rem;
   overflow: hidden;
 
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   max-height: 30rem;
   overflow: hidden;
   ${({ isCollapsed }) =>
-    isCollapsed &&
-    `
-    max-height: 2.5rem;
+    isCollapsed
+      ? `
+      max-height: 2.5rem;
 
-    th {
-      white-space: nowrap;
-      overflow: visible;
-      max-width: 5rem;
+      th {
+        white-space: nowrap;
+        overflow: visible;
+        max-width: 5rem;
+      
+        :first-child {
+          p {
+            :first-child {
+              opacity: 1;
+            }
+            :not(:first-child) {
+              opacity: 0;
+            }
+          }
+        }
+      }
+    `
+      : `
+      th:first-child p {
+        :first-child {
+          opacity: 0;
+        }
+        :not(:first-child) {
+          opacity: 1;
+        }
+      }
+    `}
+`;
+
+export const TableHeaderCell = styled.th`
+  ${expandFontToken(FONTS.MISC_BOOSTER)}
+  font-size: 0.75rem;
+  padding: 0.25rem 1rem;
+  height: 2rem;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+
+  p {
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+    top: 0.075rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.65rem;
+
+    p {
+      top: 0.25rem;
     }
-  `}
+  }
 `;
 
 export const TableRow = styled.tr<{
@@ -30,6 +75,12 @@ export const TableRow = styled.tr<{
   &:not(:last-child) {
     border-bottom: 1px solid ${COLORS.GRAY.G6};
   }
+
+  ${({ isCollapsed }) =>
+    isCollapsed &&
+    `${TableHeaderCell}:not(:first-child) {
+      opacity: 0;
+    }`}
 
   td {
     text-transform: lowercase;
@@ -45,7 +96,7 @@ export const TableRow = styled.tr<{
       isActive &&
       `
       color: ${COLORS.TEXT.PURPS_3};
-      ${expandFontToken('UI/Label Regular (Heavy)')}
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
     `}
   }
 `;
@@ -67,26 +118,15 @@ export const TableWrapper = styled.table`
   }
 `;
 
-export const TableHeaderCell = styled.th`
-  ${expandFontToken('Misc/Booster')}
-  font-size: 0.75rem;
-  padding: 0.25rem 1rem;
-  height: 2rem;
-
-  @media (max-width: 768px) {
-    font-size: 0.65rem;
-  }
-`;
-
 export const TableCell = styled.td`
   width: 33.33%;
   padding: 0.25rem 1rem;
   height: 2.75rem;
-  ${expandFontToken('UI/Label Regular')}
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
 `;
 
 export const LastEntry = styled.p`
-  ${expandFontToken('UI/Label XS')}
+  ${expandFontToken(FONTS.UI_LABEL_XS)}
   color: ${COLORS.GRAY.G4};
   margin: 0.2rem 0 0 0;
 `;
@@ -107,7 +147,7 @@ export const IconWrapper = styled.div<{
     transform: rotate(180deg);
     padding-left: 0.25rem;
   `}
-  transition: transform 0.2s ease-in-out !important;
+  transition: transform 0.3s ease-in-out !important;
   margin-left: auto;
   width: 2.5rem;
   height: 2.5rem;

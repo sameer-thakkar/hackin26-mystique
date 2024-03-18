@@ -25,7 +25,6 @@ const TimingsTable = ({
     rows.some((row) => row[col.key])
   );
   const columns = isMobile ? allColumns.slice(0, 2) : filteredColumns;
-  const daysHeader = `${strings.CONTENT_PAGE.DAYS} (${columns[0].label})`;
 
   const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
@@ -34,20 +33,15 @@ const TimingsTable = ({
       <TableWrapper>
         <thead>
           <TableRow isCollapsed={isCollapsed} onClick={toggleCollapse}>
-            <Conditional if={isCollapsed}>
-              <TableHeaderCell>{`${columns[0].label} ${strings.CONTENT_PAGE.TIMINGS}`}</TableHeaderCell>
-              <TableHeaderCell />
-              <Conditional if={!isMobile}>
-                <TableHeaderCell />
-              </Conditional>
-            </Conditional>
-            <Conditional if={!isCollapsed}>
-              {columns?.map((column, index) => (
-                <TableHeaderCell key={index}>
-                  {index == 0 ? daysHeader : column.label}
-                </TableHeaderCell>
-              ))}
-            </Conditional>
+            {columns?.map((column, index) => (
+              <TableHeaderCell key={index}>
+                <Conditional if={index === 0}>
+                  <p>{`${columns[0].label} ${strings.CONTENT_PAGE.TIMINGS}`}</p>
+                  <p>{`${strings.CONTENT_PAGE.DAYS} (${columns[0].label})`}</p>
+                </Conditional>
+                <Conditional if={index !== 0}>{column.label}</Conditional>
+              </TableHeaderCell>
+            ))}
           </TableRow>
           <IconWrapper isOpen={!isCollapsed} onClick={toggleCollapse}>
             <Chevron />
