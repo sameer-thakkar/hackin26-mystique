@@ -31,7 +31,6 @@ import {
   PROMO_CODES,
   THEMES,
 } from 'const/index';
-import { DISABLE_POI_EXPERIMENT_COLLECTIONS } from 'const/poiCardExperiment';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
@@ -198,8 +197,7 @@ const PopulateProducts = (props: any) => {
   const { isEligible, variant, isExperimentResolving } = useABTesting({
     experimentId: 'POI_CARD_EXPERIMENT',
     noTrack: true,
-    customEligibilityCheckFn: () =>
-      isPoiMwebCard && !DISABLE_POI_EXPERIMENT_COLLECTIONS.includes(pageUrl),
+    customEligibilityCheckFn: () => isPoiMwebCard,
   });
 
   useEffect(() => {
