@@ -125,6 +125,9 @@ const Page = (props: PageProps) => {
 
   const {
     CMSContent,
+    newsArticlesWithSameTgid,
+    featuredNewsArticles,
+    newsLandingPageUrl,
     tourGroupData,
     tgidsInPage,
     inventorySlotData,
@@ -332,6 +335,9 @@ const Page = (props: PageProps) => {
         return showLttSpTreatment ? (
           <ShowPageV2
             CMSContent={CMSContent}
+            newsArticlesWithSameTgid={newsArticlesWithSameTgid}
+            featuredNewsArticles={featuredNewsArticles}
+            newsLandingPageUrl={newsLandingPageUrl}
             tourGroupData={tourGroupData}
             inventorySlotData={inventorySlotData}
             isDev={isDev}

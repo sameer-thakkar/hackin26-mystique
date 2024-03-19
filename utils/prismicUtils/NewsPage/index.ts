@@ -19,6 +19,7 @@ import {
   checkIfLTTMB,
   findVideoUrlFromMediaData,
 } from 'utils/helper';
+import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPE_VALUES,
@@ -102,27 +103,37 @@ export const getArticlesWithSameTgidPromise = (
   uid: string,
   lang: TLANGUAGELOCALE
 ) => {
-  const predicatesArray = [
-    predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
-    predicate.not(`my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`, uid),
-  ];
-  if (tgid) {
-    predicatesArray.push(
-      predicate.at(
-        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
-        tgid
-      )
-    );
-  }
+  try {
+    const predicatesArray = [
+      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+      predicate.not(
+        `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.UID}`,
+        uid
+      ),
+    ];
+    if (tgid) {
+      predicatesArray.push(
+        predicate.at(
+          `my.${CUSTOM_TYPES.NEWS_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
+          tgid
+        )
+      );
+    }
 
-  const prismicClient = createClient();
-  const promise = prismicClient.getByType('news_page', {
-    pageSize: 5,
-    lang,
-    predicates: predicatesArray,
-    graphQuery: newsArticlesWithCFrameworkGq,
-  });
-  return tgid ? promise : Promise.resolve({});
+    const prismicClient = createClient();
+    const promise = prismicClient.getByType('news_page', {
+      pageSize: 5,
+      lang,
+      predicates: predicatesArray,
+      graphQuery: newsArticlesWithCFrameworkGq,
+    });
+    return tgid ? promise : Promise.reject();
+  } catch (err) {
+    sendLog({
+      message: '[getArticlesWithSameTgidPromise] Error',
+      err,
+    });
+  }
 };
 
 export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {

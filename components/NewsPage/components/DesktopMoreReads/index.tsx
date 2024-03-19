@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
@@ -10,6 +10,7 @@ import {
   Container,
   Wrapper,
 } from 'components/NewsPage/components/DesktopMoreReads/styles';
+import { getUniqueFeaturedArticles } from 'components/NewsPage/utils';
 import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
@@ -63,6 +64,11 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
   handleCtaClick,
   trackingObject,
 }) => {
+  const {
+    uniqueArticlesWithSameTgidData,
+    featuredArticles,
+    newsLandingPageUrl,
+  } = content;
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
   const moreReadsRef = useRef(null);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
@@ -71,16 +77,20 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
     ref: moreReadsRef,
     unobserve: true,
   });
-  const {
-    uniqueArticlesWithSameTgidData,
-    featuredArticles,
-    newsLandingPageUrl,
-  } = content;
+  const uniqueFeaturedArticles = useMemo(
+    () =>
+      getUniqueFeaturedArticles(
+        uniqueArticlesWithSameTgidData,
+        featuredArticles.slice(3)
+      ),
+    [featuredArticles, uniqueArticlesWithSameTgidData]
+  );
+
   const { MORE_READS, ALL_NEWS } = strings.NEWS_PAGE;
 
   const finalContentForMoreReads = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
-    ...(featuredArticles ? featuredArticles.slice(3) : []),
+    ...(featuredArticles ? uniqueFeaturedArticles : []),
   ];
 
   useEffect(() => {
@@ -169,13 +179,13 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
         <Wrapper $noOfArticles={finalContentForMoreReads.length}>
           <Swiper {...swiperParams} className="more-reads-swiper">
             {finalContentForMoreReads.slice(0, 10).map((article, index) => {
-              const { first_publication_date, uid } = article;
+              const { first_publication_date, uid } = article ?? {};
               let {
                 heading,
                 author_name,
                 banner_image,
                 content_framework_ref,
-              } = article.data;
+              } = article?.data;
 
               heading = truncate(heading, 50);
               const formattedPublishedDateAndTime = formatDateToString(

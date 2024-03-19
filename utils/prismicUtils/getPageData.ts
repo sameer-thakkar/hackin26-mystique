@@ -1,5 +1,6 @@
 import { NextApiRequest } from 'next';
 import { createClient } from 'prismicio';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import { CollectionDetails } from 'components/StaticBanner';
@@ -51,7 +52,14 @@ import { traceError } from 'utils/logutils';
 import categoryTourListParserV1 from 'utils/parsers/categoryTourListParserV1';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2';
 import monthOnMonthPageParser from 'utils/parsers/monthOnMonthPageParser';
-import { getNewsPageData } from 'utils/prismicUtils/NewsPage';
+import {
+  filterArticlesBasedOnEntMb,
+  getArticlesWithSameTgidPromise,
+  getFeaturedArticlesPromise,
+  getNewsLandingPage,
+  getNewsLandingPageUrl,
+  getNewsPageData,
+} from 'utils/prismicUtils/NewsPage';
 import {
   generateDescriptor,
   standardizeCancellationPolicy,
@@ -543,6 +551,7 @@ export const getPageData = async ({
 
     if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
       try {
+        const langCode = getHeadoutLanguagecode(lang as TLANGUAGELOCALE);
         const tgidData = await fetchTourGroupV6({
           tgid: CMSContent?.data?.tgid,
           hostname,
@@ -591,9 +600,36 @@ export const getPageData = async ({
         const activeCurrency = tgidDataWithoutUrls?.currency;
 
         const breadcrumbs = await getShowPageBreadcrumbs(CMSContent);
+        const articlesWithSameTgidData = await getArticlesWithSameTgidPromise(
+          CMSContent?.data?.tgid,
+          uid,
+          lang as TLANGUAGELOCALE
+        );
+        const featuredArticlesData = await getFeaturedArticlesPromise(
+          uid,
+          lang as TLANGUAGELOCALE
+        );
+        const newsLandingPageData = await getNewsLandingPage();
+        const featuredNewsArticles = filterArticlesBasedOnEntMb(
+          featuredArticlesData?.results,
+          uid
+        );
+        const newsArticlesWithSameTgid = filterArticlesBasedOnEntMb(
+          articlesWithSameTgidData?.results as PrismicDocumentWithUID[],
+          uid
+        );
+        const newsLandingPageUrl = getNewsLandingPageUrl(
+          newsLandingPageData?.results,
+          uid,
+          langCode,
+          hostname
+        );
 
         return {
           CMSContent,
+          newsArticlesWithSameTgid,
+          featuredNewsArticles,
+          newsLandingPageUrl,
           tourGroupData: {
             ...tgidDataWithoutUrls,
             verticalImage,

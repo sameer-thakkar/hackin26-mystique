@@ -40,3 +40,17 @@ export const getTrackingObject = (section: string) => {
     [ANALYTICS_PROPERTIES.SECTION]: section,
   };
 };
+
+export const getUniqueFeaturedArticles = (
+  uniqueArticlesWithSameTgid: Record<string, any>[],
+  featuredArticles: Record<string, any>[]
+) => {
+  const uniqueArticlesSet = new Set();
+  uniqueArticlesWithSameTgid?.forEach((article: Record<string, any>) => {
+    uniqueArticlesSet.add(article.uid);
+  });
+
+  return featuredArticles?.filter((article: Record<string, any>) => {
+    return !uniqueArticlesSet.has(article.uid);
+  });
+};

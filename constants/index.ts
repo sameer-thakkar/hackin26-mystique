@@ -485,6 +485,7 @@ export const ANALYTICS_EVENTS = {
     CONTENT_SECTION_LINK_CLICKED: 'Content Section Link Clicked',
     VIDEO_CLICKED: 'Video Clicked',
     RATINGS_HOVERED: 'Ratings Hovered',
+    SHOW_PAGE_CTA_CLICKED: 'Show Page CTA Clicked',
   },
   MB_CARD_CLICKED: 'MB Card Clicked',
   FREE_CANCELLATION_TOOLTIP_VIEWED: 'Free Cancellation Tooltip Viewed',

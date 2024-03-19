@@ -36,7 +36,7 @@ export const TitleRow = styled.div`
   margin-top: 0;
 
   .title {
-    ${expandFontToken(FONTS.HEADING_LARGE)};
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)};
     color: ${COLORS.GRAY.G2};
     margin: 0;
   }

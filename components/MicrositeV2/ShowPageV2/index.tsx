@@ -19,6 +19,9 @@ import {
   FaqWrapper,
   ShowPageWrapper,
 } from 'components/MicrositeV2/ShowPageV2/style';
+import DesktopMoreReads from 'components/NewsPage/components/DesktopMoreReads';
+import MobileMoreReads from 'components/NewsPage/components/MobileMoreReads';
+import { PageWrapper } from 'components/ReviewsPage/styles';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import LocalisedPrice from 'UI/LPrice';
@@ -47,6 +50,7 @@ import {
   BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
+  NEWS_PAGE_SECTIONS,
   PAGETYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -62,6 +66,9 @@ const SearchPage: ComponentType<any> = dynamic(
 
 const LttShowPageV2 = ({
   CMSContent,
+  newsArticlesWithSameTgid,
+  featuredNewsArticles,
+  newsLandingPageUrl,
   tourGroupData,
   inventorySlotData,
   isMobile,
@@ -312,6 +319,19 @@ const LttShowPageV2 = ({
     },
   });
 
+  const moreReadsSectionCTAClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.SHOW_PAGE.SHOW_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.ALL_NEWS,
+      [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+    });
+  };
+
+  const moreReadsSectionTrackingObject = {
+    eventName: ANALYTICS_EVENTS.SHOW_PAGE_SECTION_VIEWED,
+    [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+  };
+
   return (
     <ShowPageWrapper>
       <ShowPageSeoComponents
@@ -380,7 +400,35 @@ const LttShowPageV2 = ({
           isMobile={isMobile}
         />
       </DateSelectorContainer>
-
+      <PageWrapper>
+        <Conditional if={!isMobile}>
+          <DesktopMoreReads
+            content={{
+              uniqueArticlesWithSameTgidData: newsArticlesWithSameTgid,
+              featuredArticles: featuredNewsArticles,
+              newsLandingPageUrl,
+            }}
+            handleCtaClick={moreReadsSectionCTAClick}
+            trackingObject={moreReadsSectionTrackingObject}
+          />
+        </Conditional>
+        <Conditional if={isMobile}>
+          <MobileMoreReads
+            content={{
+              uniqueArticlesWithSameTgidData: newsArticlesWithSameTgid,
+              featuredArticles: featuredNewsArticles,
+            }}
+            heading={strings.NEWS_PAGE.MORE_READS}
+            showAllNewsCTA
+            showMoreCTAText={strings.NEWS_PAGE.LOAD_MORE}
+            numberOfArticlesToShow={10}
+            initialArticlesToShow={3}
+            newsLandingPageUrl={newsLandingPageUrl}
+            handleCtaClick={moreReadsSectionCTAClick}
+            trackingObject={moreReadsSectionTrackingObject}
+          />
+        </Conditional>
+      </PageWrapper>
       <SimilarShows
         tgid={id}
         primarySubCategoryID={primarySubCategory?.id}

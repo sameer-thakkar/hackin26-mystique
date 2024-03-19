@@ -1,3 +1,4 @@
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 
 export type TShowPageV2Props = {
@@ -5,6 +6,9 @@ export type TShowPageV2Props = {
   tourGroupData: any;
   inventorySlotData: any;
   isDev: boolean;
+  newsArticlesWithSameTgid: PrismicDocumentWithUID[];
+  featuredNewsArticles: PrismicDocumentWithUID[];
+  newsLandingPageUrl: string;
   isMobile: boolean;
   host: string;
   serverRequestStartTimestamp: string;

@@ -1,7 +1,8 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import { TMobileMoreReadsProps } from 'components/NewsPage/components/MobileMoreReads/interface';
 import { Wrapper } from 'components/NewsPage/components/MobileMoreReads/styles';
+import { getUniqueFeaturedArticles } from 'components/NewsPage/utils';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
@@ -30,6 +31,8 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
   handleCtaClick,
   trackingObject,
 }) => {
+  const { uniqueArticlesWithSameTgidData = [], featuredArticles = [] } =
+    content;
   const { host, lang, isDev } = useContext(MBContext);
   const [articlesToShow, setArticlesToShow] = useState(initialArticlesToShow);
   const moreReadsRef = useRef(null);
@@ -37,14 +40,20 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
     ref: moreReadsRef,
     unobserve: true,
   });
+  const uniqueFeaturedArticles = useMemo(
+    () =>
+      getUniqueFeaturedArticles(
+        uniqueArticlesWithSameTgidData,
+        featuredArticles.slice(4)
+      ),
+    [featuredArticles, uniqueArticlesWithSameTgidData]
+  );
 
   const { ALL_NEWS } = strings.NEWS_PAGE;
-  const { uniqueArticlesWithSameTgidData = [], featuredArticles = [] } =
-    content;
 
   const moreReadsData = [
     ...(uniqueArticlesWithSameTgidData ? uniqueArticlesWithSameTgidData : []),
-    ...(featuredArticles ? featuredArticles.slice(4) : []),
+    ...(featuredArticles ? uniqueFeaturedArticles : []),
   ].slice(0, numberOfArticlesToShow);
 
   const handleArticleClick = (index: number, title: string) => {
