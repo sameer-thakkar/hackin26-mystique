@@ -1808,9 +1808,7 @@ export const GDPR_COUNTRY_CODES = [
   'KR',
   'NZ',
   'AR',
-  'BR',
   'UY',
-  'CA',
 ];
 export const COOKIE_BANNER_KEY = 'cookie-banner-state';
 export const UAE_COUNTRY_CODE = 'ae';
