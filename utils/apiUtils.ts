@@ -8,6 +8,7 @@ import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
+import { LOG_LEVELS } from 'const/logs';
 import { simplifySlotData } from './inventoryUtils';
 import { sendLog } from './logger';
 
@@ -271,6 +272,12 @@ export const fetchTourGroupMedia = async ({
       params,
       id: null,
     });
+    if (!tgids.join(',')) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchTourGroupMedia] tgids is required - ${tgids.join(',')}`,
+      });
+    }
 
     const headers = constructHeaders({ cookies });
 
@@ -402,6 +409,12 @@ export const fetchMediaResource = async ({
         'resource-entity-ids': entityIds,
       }),
     };
+    if (!entityIds) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchMediaResource] entityIds is required - ${entityIds}`,
+      });
+    }
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.Media,
       hostname,
@@ -513,6 +526,12 @@ export const fetchTourGroupV6 = async ({
     params,
     id: tgid,
   });
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupV6] tgid is required - ${tgid}`,
+    });
+  }
 
   const res = await fetch(apiUrl, { headers });
   return await res.json();
@@ -567,6 +586,12 @@ export const fetchProductData = async ({
     id,
     params,
   });
+  if (!id) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchProductData] id is required - ${id}`,
+    });
+  }
   try {
     // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, headers);
@@ -896,6 +921,12 @@ export const fetchTourGroupReviews = async ({
     hostname,
     params,
   });
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupReviews] -  tgid is required - ${tgid}`,
+    });
+  }
 
   try {
     const headers = constructHeaders({ cookies });
