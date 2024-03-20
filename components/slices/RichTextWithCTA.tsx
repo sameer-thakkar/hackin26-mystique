@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
@@ -67,9 +67,8 @@ const Wrapper = styled.div<{
   }
 `;
 
-const RichtextWithCTA = (props: any) => {
+const RichtextWithCTA = memo((props: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const handleClick = () => {
     setIsExpanded(!isExpanded);
   };
@@ -123,5 +122,6 @@ const RichtextWithCTA = (props: any) => {
       })}
     </>
   );
-};
+});
+RichtextWithCTA.displayName = 'RichtextWithCTA';
 export default RichtextWithCTA;

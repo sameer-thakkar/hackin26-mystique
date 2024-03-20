@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
-import { useWindowWidth } from '@react-hook/window-size';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
@@ -19,6 +18,7 @@ import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import useABTesting from 'hooks/useABTesting';
+import useWindowWidth from 'hooks/useWindowWidth';
 import {
   displayBannerTrustBoosters,
   displayProductTrustBoosters,
@@ -164,12 +164,19 @@ const MicrositeV1 = (props: any) => {
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
-  const windowWidth = useWindowWidth();
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    const currentIsMobile = (windowWidth as number) < 768;
+    if (isMobile !== currentIsMobile) {
+      setIsMobile(currentIsMobile);
+    }
+  }, [windowWidth]);
 
   const {
     uid,
@@ -341,13 +348,6 @@ const MicrositeV1 = (props: any) => {
   const orderedTgids = orderedTours?.length
     ? orderedTours?.map((tour: any) => tour.tgid)
     : [];
-
-  useEffect(() => {
-    const currentIsMobile = windowWidth < 768;
-    if (isMobile !== currentIsMobile) {
-      setIsMobile(currentIsMobile);
-    }
-  }, [windowWidth]);
 
   useEffect(() => {
     if (tgidToScroll) {
