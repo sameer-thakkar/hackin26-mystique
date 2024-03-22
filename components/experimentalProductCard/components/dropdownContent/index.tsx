@@ -107,7 +107,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   const moveContainer = useCallback(
     (parentContainer: any, childElement: any) => {
       var childPositionRelativeToParent =
-        childElement.offsetTop - cardHeight - 60;
+        childElement.offsetTop - cardHeight - 110;
 
       parentContainer.scrollTo({
         top: childPositionRelativeToParent,
