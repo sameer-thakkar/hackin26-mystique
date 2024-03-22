@@ -4,10 +4,12 @@ export const CarouselContainer = styled.div<{
   $backgroundColor?: string;
   $differentBorderRadiusForMobile?: boolean;
   $showOverlay?: boolean;
+  $hideBorderRadius?: boolean;
 }>`
   width: 100%;
   height: 100%;
-  border-radius: 0.5rem;
+  border-radius: ${({ $hideBorderRadius }) =>
+    $hideBorderRadius ? '0 !important' : '0.5rem'};
   position: relative;
   overflow: hidden;
   isolation: isolate;

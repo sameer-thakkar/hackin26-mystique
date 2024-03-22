@@ -1,17 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
-import LocalisedPrice from 'UI/LPrice';
 import { useProductCard } from 'contexts/productCardContext';
 import { PRODUCT_CARD_REVAMP } from 'const/index';
 import { strings } from 'const/strings';
-import {
-  ButtonWrapper,
-  PriceBar,
-  PriceElements,
-  SavingsContainer,
-  TourScratchPrice,
-} from './styles';
+import { ButtonWrapper, PriceBar, PriceElements } from './styles';
 
 interface ListingPrice {
   currencyCode: string;
@@ -62,11 +54,9 @@ const getBookNowButtonText = ({
 
 const PricingBar: FC<PricingBarProps> = ({
   listingPrice,
-  lang,
   showScratchPrice,
   isCombo,
   mbTheme,
-  isAsideBarOverlay,
   sendBookNowEvent,
   handleShowComboPopup,
   isV3Design,
@@ -75,18 +65,11 @@ const PricingBar: FC<PricingBarProps> = ({
   isSportsSubCategory,
   productBookingUrl,
 }) => {
-  const [hasSavings, setSavings] = useState<boolean>(false);
   const pricingRef = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(null) as any;
-  const [buttonWidth, setButtonWidth] = useState(0);
   const [showContent, setShowContent] = useState(false);
 
   const { setPricingHeight, discountText, setDiscountText } = useProductCard();
-
-  useEffect(() => {
-    if (!widthRef.current) return;
-    setButtonWidth(widthRef.current.clientWidth);
-  }, [widthRef]);
 
   const bookNowText = getBookNowButtonText({
     isV3Design,
@@ -99,8 +82,6 @@ const PricingBar: FC<PricingBarProps> = ({
     if (listingPrice.bestDiscount > 0) {
       setDiscountText(getDiscountText(listingPrice.bestDiscount));
     }
-
-    setSavings(showScratchPrice && !!discountText.length);
 
     if (pricingRef.current) {
       setPricingHeight(pricingRef.current.clientHeight);
@@ -118,39 +99,9 @@ const PricingBar: FC<PricingBarProps> = ({
   }, []);
 
   return (
-    <PriceBar
-      $showContent={showContent}
-      ref={pricingRef}
-      $hasSavings={hasSavings}
-    >
-      {showScratchPrice && !!discountText.length && (
-        <SavingsContainer $hasSavings={hasSavings}>
-          <Emoji symbol="🤑" label="savings" />
-          <p>Save upto {discountText}</p>
-        </SavingsContainer>
-      )}
-      <PriceElements $hasSavings={hasSavings}>
-        <div>
-          <TourScratchPrice>
-            {listingPrice.otherPricesExist && `${strings.FROM.toLowerCase()} `}
-            {showScratchPrice &&
-              listingPrice.originalPrice > listingPrice.finalPrice && (
-                <LocalisedPrice
-                  className="strike"
-                  currencyCode={listingPrice.currencyCode}
-                  lang={lang}
-                  price={listingPrice.originalPrice}
-                />
-              )}
-          </TourScratchPrice>
-          <LocalisedPrice
-            className="tour-price"
-            currencyCode={listingPrice.currencyCode}
-            lang={lang}
-            price={listingPrice.finalPrice}
-          />
-        </div>
-        <ButtonWrapper $width={buttonWidth} ref={widthRef}>
+    <PriceBar $showContent={showContent} ref={pricingRef} $hasSavings={false}>
+      <PriceElements $hasSavings={false}>
+        <ButtonWrapper ref={widthRef}>
           {!isCombo ? (
             <a
               target="_self"
@@ -171,11 +122,7 @@ const PricingBar: FC<PricingBarProps> = ({
           ) : (
             <BookNowCta
               clickHandler={() =>
-                handleShowComboPopup(
-                  isAsideBarOverlay
-                    ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
-                    : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
-                )
+                handleShowComboPopup(PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET)
               }
               width={'100%'}
               isMobile={true}

@@ -26,7 +26,6 @@ export const ContentContainer = styled.div`
   background: ${COLORS.BRAND.WHITE};
   width: 100%;
   position: fixed;
-  border-radius: 0.75rem 0.75rem 0 0;
   bottom: 0;
   left: 0;
   overflow: hidden;

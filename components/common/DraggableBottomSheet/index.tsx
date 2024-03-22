@@ -9,7 +9,7 @@ export const BottomSheet = memo(
     children,
     onCloseCompletion,
     onCloseInit,
-    sheetHeight = '90%',
+    sheetHeight = '100%',
     snapHeight,
     dragLimit = 100,
   }: {
@@ -111,6 +111,7 @@ export const BottomSheet = memo(
       <Overlay $overlayOpacity={overlayOpacity} $isDragging={isDragging}>
         <div
           role="button"
+          id="bottomsheet-overlay"
           tabIndex={0}
           onClick={() =>
             handleDrawerClose(CLOSE_DRAWER_ACTIONS.OVERLAY_CLICKED)

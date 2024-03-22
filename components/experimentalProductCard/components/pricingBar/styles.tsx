@@ -51,23 +51,19 @@ export const PriceElements = styled.div<{ $hasSavings: boolean }>`
   position: relative;
 `;
 
-export const ButtonWrapper = styled.div<{ $width: number }>`
-  ${({ $width }) => $width && `width: ${$width / 16}rem;`}
+export const ButtonWrapper = styled.div`
+  width: 100%;
   button {
-    ${({ $width }) =>
-      $width >= 182 &&
-      ` font-family: ${HALYARD.DISPLAY};
-        font-size: 0.875rem;
-        font-weight: 500;
-        line-height: 1.125rem;
-        letter-spacing: 0.038rem;
-        text-align: left;
-        white-space: normal;
-        max-width: 11.375rem;
-        text-align: center;
-    `}
+    font-family: ${HALYARD.FONT_STACK};
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+    text-align: left;
+    letter-spacing: 0 !important;
+    white-space: normal;
+    text-align: center;
+    }
   }
-  max-width: 182px;
 `;
 
 export const PriceBar = styled.div<{

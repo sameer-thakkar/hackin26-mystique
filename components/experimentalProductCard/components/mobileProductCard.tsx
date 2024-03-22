@@ -118,7 +118,7 @@ const MobileProductCard = (props: any) => {
   const productRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
-  const { setDrawerState, showPricingBar, setShowPricingBar } =
+  const { setDrawerState, showPricingBar, setShowPricingBar, setTitle } =
     useProductCard();
 
   useLayoutEffect(() => {
@@ -152,6 +152,10 @@ const MobileProductCard = (props: any) => {
       else setDiscountText(contents);
     }
   }, [bestDiscount]);
+
+  useEffect(() => {
+    setTitle(cardTitle);
+  }, [cardTitle]);
 
   return (
     <ScaledCard $isClicked={showPricingBar} $isDrawer={isDrawer}>
@@ -293,24 +297,26 @@ const MobileProductCard = (props: any) => {
             })}
           </Conditional>
           <CTAContainer pageType={pageType}>
-            <Conditional if={!isDrawer}>
-              <PriceContainer $isExperimentalCard={true} pageType={pageType}>
-                <PriceBlock
-                  isMobile={true}
-                  isLoading={false}
-                  isSportsExperiment={isSportsExperiment}
-                  showScratchPrice={showScratchPrice}
-                  listingPrice={finalListingPrice}
-                  lang={currentLanguage}
-                  showSavings
-                  id={tgid}
-                  prefix
-                  key={'price-block'}
-                  wrapperRef={priceBlockWrapperRef}
-                  showNewDiscountTagDesign={true}
-                />
-              </PriceContainer>
-            </Conditional>
+            <PriceContainer
+              $isDrawer={isDrawer}
+              $isExperimentalCard={true}
+              pageType={pageType}
+            >
+              <PriceBlock
+                isMobile={true}
+                isLoading={false}
+                isSportsExperiment={isSportsExperiment}
+                showScratchPrice={showScratchPrice}
+                listingPrice={finalListingPrice}
+                lang={currentLanguage}
+                showSavings
+                id={tgid}
+                prefix
+                key={'price-block'}
+                wrapperRef={priceBlockWrapperRef}
+                showNewDiscountTagDesign={true}
+              />
+            </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
               <PromoCodeBlock
                 {...props}
@@ -334,6 +340,7 @@ const MobileProductCard = (props: any) => {
                   !earliestAvailability?.startDate
                 }
                 isExperimentalCard={true}
+                isDrawer={isDrawer}
                 earliestAvailability={earliestAvailability}
                 currentLanguage={currentLanguage}
               />

@@ -5,6 +5,7 @@ export type TNextAvailableProps = {
   currentLanguage?: any;
   inTitle?: boolean;
   isExperimentalCard?: boolean;
+  isDrawer?: boolean;
 };
 
 export type TBookNowCTAProps = {

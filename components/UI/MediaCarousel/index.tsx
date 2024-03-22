@@ -44,6 +44,7 @@ type MediaCarouselProps = {
   enableAutoplay?: boolean;
   isTimed?: boolean;
   trackImage?: boolean;
+  hideBorderRadius?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -66,6 +67,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   enableAutoplay = false,
   isTimed = true,
   trackImage = true,
+  hideBorderRadius,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -146,6 +148,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
       ref={carouselRef}
       $differentBorderRadiusForMobile={differentBorderRadiusForMobile}
       $showOverlay={showOverlay}
+      $hideBorderRadius={hideBorderRadius}
     >
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {

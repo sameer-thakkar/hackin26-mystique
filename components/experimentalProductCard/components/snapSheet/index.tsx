@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, RefObject } from 'react';
+import React, { forwardRef, memo, RefObject, useState } from 'react';
 import { useProductCard } from 'contexts/productCardContext';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { useContentScroll, useDragBehavior } from './hooks';
@@ -43,6 +43,7 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
     ref: any
   ) => {
     const { drawerState } = useProductCard();
+    const [enableProgation, togglePropgation] = useState(false);
     const { startDrag, transform } = useDragBehavior({
       ref,
       initialPosition,
@@ -62,9 +63,16 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
 
     return (
       <SnapSheetContainer
-        onMouseDown={(e) => startDrag(e.clientX, e.clientY)}
+        onMouseDown={(e) => {
+          togglePropgation(true);
+          startDrag(e.clientX, e.clientY);
+        }}
         onTouchStart={(e) => {
+          enableProgation && e.stopPropagation();
           startDrag(e.touches[0].clientX, e.touches[0].clientY);
+        }}
+        onTransitionEnd={() => {
+          togglePropgation(false);
         }}
         style={{ transform }}
         $isOpen={drawerState === SWIPESHEET_STATES.OPEN}

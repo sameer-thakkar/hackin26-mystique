@@ -1,10 +1,15 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect, useRef } from 'react';
 import { useProductCard } from 'contexts/productCardContext';
 import { SWIPESHEET_STATES } from 'const/productCard';
+import CrossiconSvg from 'assets/crossiconSvg';
 import {
+  CloseContainer,
   Header,
+  HeaderTabs,
   Tab as StyledTab,
   TabContainer as StyledTabContainer,
+  Title,
+  TitleContainer,
 } from './styles';
 
 interface TabProps {
@@ -54,24 +59,49 @@ const TabContainer: FC<TabContainerProps> = React.forwardRef<
   HTMLDivElement,
   TabContainerProps
 >(({ tabs, activeTab, onTabClick }, ref) => {
-  const { drawerState } = useProductCard();
+  const { drawerState, title, setHeaderHeight } = useProductCard();
+  const headRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!headRef.current) return;
+    setHeaderHeight(headRef.current.clientHeight);
+  }, [headRef]);
+
+  useEffect(() => {
+    return () => setHeaderHeight(0);
+  }, []);
+
   return (
     <Header>
       <StyledTabContainer
-        ref={ref}
+        ref={headRef}
         $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
       >
-        {tabs.map((tab, index) => (
-          <Tab
-            key={tab.heading}
-            isActive={tab.heading === activeTab}
-            onClick={() => onTabClick(tab.heading, index)}
-            id={`tab-${tab.heading}`}
-            isLastElement={index === tabs.length - 1}
+        <TitleContainer>
+          <Title>{title}</Title>
+          <CloseContainer
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              document.getElementById('bottomsheet-overlay')?.click();
+            }}
           >
-            {tab.heading}
-          </Tab>
-        ))}
+            <CrossiconSvg height={'0.625rem'} width={'0.625rem'} />
+          </CloseContainer>
+        </TitleContainer>
+        <HeaderTabs ref={ref}>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={tab.heading}
+              isActive={tab.heading === activeTab}
+              onClick={() => onTabClick(tab.heading, index)}
+              id={`tab-${tab.heading}`}
+              isLastElement={index === tabs.length - 1}
+            >
+              {tab.heading}
+            </Tab>
+          ))}
+        </HeaderTabs>
       </StyledTabContainer>
     </Header>
   );

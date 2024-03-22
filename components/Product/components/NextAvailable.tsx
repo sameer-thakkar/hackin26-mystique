@@ -20,6 +20,7 @@ export const NextAvailable = ({
   currentLanguage,
   inTitle,
   isExperimentalCard,
+  isDrawer,
 }: TNextAvailableProps) => {
   if (showSkeleton)
     return (
@@ -34,7 +35,10 @@ export const NextAvailable = ({
   if (earliestAvailabilityTitle === strings.TODAY && inTitle)
     return <AvailableTodayBooster />;
   return (
-    <NextAvailableBlock $isExperimentalCard={isExperimentalCard}>
+    <NextAvailableBlock
+      $isDrawer={isDrawer}
+      $isExperimentalCard={isExperimentalCard}
+    >
       <div
         data-card-section={CARD_SECTION_MARKERS.AVAILABILITY}
         className="available-text"

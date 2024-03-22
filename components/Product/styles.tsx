@@ -115,14 +115,17 @@ export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
   }
 `;
 
-export const NextAvailableBlock = styled.div<{ $isExperimentalCard?: boolean }>`
+export const NextAvailableBlock = styled.div<{
+  $isExperimentalCard?: boolean;
+  $isDrawer?: boolean;
+}>`
   ${({ theme }) => theme.productCards?.nextAvailable?.desktop};
   color: ${COLORS.GRAY.G3};
 
   @media (max-width: 768px) {
     grid-area: next-available;
-    margin-top: ${({ $isExperimentalCard }) =>
-      $isExperimentalCard ? '-0.65rem' : '-1rem'};
+    margin-top: ${({ $isExperimentalCard, $isDrawer }) =>
+      $isExperimentalCard ? ($isDrawer ? '-0.75rem' : '-0.65rem') : '-1rem'};
     color: ${COLORS.GRAY.G3};
   }
 `;
@@ -453,6 +456,7 @@ export const PriceContainer = styled.div<{
   $hasScratchPrice?: boolean;
   $isExperimentalCard?: boolean;
   pageType?: string;
+  $isDrawer?: boolean;
 }>`
   justify-self: center;
   display: grid;
@@ -484,8 +488,9 @@ export const PriceContainer = styled.div<{
 
   @media (max-width: 768px) {
     grid-area: price-block;
-    margin-bottom: ${({ $isExperimentalCard }) =>
-      $isExperimentalCard ? '0' : '0.25rem'};
+    margin-bottom: ${({ $isExperimentalCard, $isDrawer }) =>
+      $isExperimentalCard ? ($isDrawer ? '0.25rem' : '0') : '0.25rem'};
+    ${({ $isDrawer }) => $isDrawer && 'margin-top: 0.25rem;'}
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
 
     .styled-price-block {
@@ -969,17 +974,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     grid-template-areas: ${({ layout }) =>
       layout.mobile.map((row: any) => `'${row}'`)};
 
-    grid-template-areas: ${({ layout, $isExperimentalCard, $isDrawer }) =>
+    grid-template-areas: ${({ layout, $isExperimentalCard }) =>
       $isExperimentalCard
         ? layout.mobile
-            .filter(
-              (row: any) =>
-                ![
-                  'body',
-                  'cta-block',
-                  ...($isDrawer ? ['price-block'] : []),
-                ].includes(row)
-            )
+            .filter((row: any) => !['body', 'cta-block'].includes(row))
             .map((row: any) => `'${row}'`)
         : layout.mobile.map((row: any) => `'${row}'`)};
 

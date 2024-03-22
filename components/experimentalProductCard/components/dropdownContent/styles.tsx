@@ -9,37 +9,88 @@ export const ImageContainer = styled.div`
   aspect-ratio: 16/10;
   position: relative;
   overflow: hidden;
-  border-radius: 1rem 1rem 0 0;
+  img {
+    border-radius: 0 !important;
+  }
+`;
+
+export const CloseIconWrapper = styled.div`
+  height: 2rem;
+  width: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 10000;
+  border-radius: 0.25rem;
+  top: 1rem;
+  right: 1rem;
 `;
 
 export const Header = styled.div`
   z-index: 10000 !important;
   position: fixed;
-  overflow: hidden;
-  border-radius: 1rem 1rem 0 0;
   width: 100vw;
 `;
 
 export const TabContainer = styled.div<{ $isOpen: boolean }>`
-  display flex;
-  padding: 1rem 1rem 0.75rem 1rem;
+  padding: 0.875rem 0 0.75rem 0;
   align-items: center;
-  width: 100vw;
   margin-top: 0.5rem;
-  overflow-x: scroll;
-  gap: 0.5rem;
   border-bottom: 0.0625rem solid ${COLORS.GRAY.G6};
-  box-shadow: 0 0.125rem 0.75rem 0 #0000000D;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  box-shadow: 0 0.125rem 0.75rem 0 #0000000d;
+
   background: ${COLORS.BRAND.WHITE};
   box-sizing: border-box;
-  -ms-overflow-style: none;  
-  scrollbar-width: none;
   transition: transform 300ms cubic-bezier(0.7, 0, 0.3, 1);
-  transform: translateY(${({ $isOpen }) =>
-    !$isOpen ? '0' : 'calc(-100% - 1.75rem)'});
+  transform: translateY(
+    ${({ $isOpen }) => (!$isOpen ? '0' : 'calc(-100% - 1.75rem)')}
+  );
+`;
+
+export const TitleContainer = styled.div`
+  width: 100vw;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 2rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
+`;
+
+export const CloseContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+`;
+
+export const Title = styled.p`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${expandFontToken(FONTS.SUBHEADING_REGULAR)};
+  margin: 0;
+`;
+
+export const HeaderTabs = styled.div`
+    display flex;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    width: 100vw;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
 `;
 
 export const Tab = styled.span<{

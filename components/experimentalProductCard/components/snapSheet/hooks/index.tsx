@@ -154,7 +154,7 @@ export const useDragBehavior = ({
   return { startDrag, transform };
 };
 
-const SCROLL_THRESHOLD = 100;
+const SCROLL_THRESHOLD = 80;
 
 export const useContentScroll = ({
   ref,

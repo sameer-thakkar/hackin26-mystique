@@ -10,6 +10,10 @@ interface ProductContextType {
   setDiscountText: (state: string) => void;
   showPricingBar: boolean;
   setShowPricingBar: (state: boolean) => void;
+  title: string;
+  setTitle: (state: string) => void;
+  headerHeight: number;
+  setHeaderHeight: (state: number) => void;
 }
 
 const productCardContext = createContext({} as ProductContextType);
@@ -21,12 +25,14 @@ export const ProductCardProvider: React.FC = ({ children }) => {
   const [pricingHeight, setPricingHeight] = useState(0);
   const [discountText, setDiscountText] = useState('');
   const [showPricingBar, setShowPricingBar] = useState(false);
-
+  const [title, setTitle] = useState('');
+  const [headerHeight, setHeaderHeight] = useState(0);
   const { Provider: ProductCardContextProvider } = productCardContext;
 
   useEffect(() => {
     if (showPricingBar && drawerState === SWIPESHEET_STATES.HIDDEN) {
       setShowPricingBar(false);
+      setHeaderHeight(0);
     }
   }, [showPricingBar, drawerState]);
 
@@ -41,6 +47,10 @@ export const ProductCardProvider: React.FC = ({ children }) => {
         setDiscountText,
         showPricingBar,
         setShowPricingBar,
+        title,
+        setTitle,
+        headerHeight,
+        setHeaderHeight,
       }}
     >
       {children}

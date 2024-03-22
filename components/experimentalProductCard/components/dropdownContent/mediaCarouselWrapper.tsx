@@ -1,8 +1,19 @@
-import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import Conditional from 'components/common/Conditional';
 import MediaCarousel from 'UI/MediaCarousel';
+import { useProductCard } from 'contexts/productCardContext';
 import COLORS from 'const/colors';
 import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
-import { ImageContainer } from './styles';
+import { SWIPESHEET_STATES } from 'const/productCard';
+import CrossiconSvg from 'assets/crossiconSvg';
+import { CloseIconWrapper, ImageContainer } from './styles';
 
 interface MediaCarouselProps {
   images: string[];
@@ -31,6 +42,7 @@ const MediaCarouselWrapper: FC<MediaCarouselProps> = (props) => {
   } = props;
 
   const imageRef = useRef<HTMLDivElement>(null);
+  const { drawerState } = useProductCard();
 
   const limitedImages = useMemo(
     () => images.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT),
@@ -48,6 +60,19 @@ const MediaCarouselWrapper: FC<MediaCarouselProps> = (props) => {
 
   return (
     <ImageContainer ref={imageRef}>
+      <Conditional if={drawerState === SWIPESHEET_STATES.OPEN}>
+        <CloseIconWrapper
+          onClick={() => {
+            document.getElementById('bottomsheet-overlay')?.click();
+          }}
+        >
+          <CrossiconSvg
+            fill={COLORS.BRAND.WHITE}
+            height={'1rem'}
+            width={'0.75rem'}
+          />
+        </CloseIconWrapper>
+      </Conditional>
       <MediaCarousel
         imageList={limitedImages as any}
         videoUrl={isBannerCard ? bannerVideo : undefined}
@@ -66,9 +91,10 @@ const MediaCarouselWrapper: FC<MediaCarouselProps> = (props) => {
         enableAutoplay={false}
         trackImage={false}
         isTimed={false}
+        hideBorderRadius={true}
       />
     </ImageContainer>
   );
 };
 
-export default React.memo(MediaCarouselWrapper);
+export default memo(MediaCarouselWrapper);

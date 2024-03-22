@@ -37,7 +37,6 @@ export const Sheet = styled.div<{ $sheetHeight: string; $translateY: number }>`
   max-height: ${({ $sheetHeight }) => $sheetHeight};
   height: ${({ $sheetHeight }) => $sheetHeight};
   background-color: ${COLORS.BRAND.WHITE};
-  border-radius: 1rem 1rem 0 0;
   box-shadow: 0 -0.2rem 1rem rgba(0, 0, 0, 0.1);
   overflow: hidden;
 `;
@@ -48,13 +47,11 @@ export const GrabBar = styled.div<{
 }>`
   width: 100%;
   height: 1rem;
-  border-radius: 1rem 1rem 0 0;
   cursor: grab;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 10001;
-
   background: ${({ $isScrolled }) =>
     $isScrolled
       ? COLORS.BRAND.WHITE

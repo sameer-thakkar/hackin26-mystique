@@ -1,5 +1,6 @@
 import React, {
   FC,
+  memo,
   ReactNode,
   useCallback,
   useEffect,
@@ -61,7 +62,6 @@ const DropdownContent: FC<DropdownContentProps> = ({
   shouldCropImage,
   isFirstProduct,
   children,
-  hasOffers,
   activeTab,
   setActiveTab,
   trackDrawerOpen,
@@ -69,11 +69,10 @@ const DropdownContent: FC<DropdownContentProps> = ({
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
   const [cardHeight, setCardHeight] = useState(0);
-  const [headerHeight, setHeaderHeight] = useState(0);
   const [isTabClickScroll, setIsTabClickScroll] = useState(false);
   const [isActive, setActive] = useState(false);
 
-  const { setDrawerState, pricingHeight } = useProductCard();
+  const { setDrawerState, pricingHeight, headerHeight } = useProductCard();
 
   const childRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -165,11 +164,6 @@ const DropdownContent: FC<DropdownContentProps> = ({
   );
 
   useEffect(() => {
-    if (!headerRef.current) return;
-    setHeaderHeight(headerRef.current.clientHeight);
-  }, [headerRef]);
-
-  useEffect(() => {
     const { tabs } = extractTabsFromHighlights(finalHighlights) as any;
     if (tabs.length >= 2) {
       const temp = tabs[0];
@@ -227,7 +221,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   return (
     <DropdownContentContainer
       $height={
-        typeof window !== undefined ? window.innerHeight * 0.9 + 'px' : '90vh'
+        typeof window !== undefined ? window.innerHeight + 'px' : '100vh'
       }
       $isActive={isActive}
     >
@@ -258,8 +252,8 @@ const DropdownContent: FC<DropdownContentProps> = ({
           enableDrag={true}
           cardHeight={cardHeight}
           headerHeight={headerHeight}
-          pricingHeight={pricingHeight - 42}
-          hasOffers={hasOffers}
+          pricingHeight={pricingHeight - 82}
+          hasOffers={false}
           ref={snapRef}
           tgid={tgid as string}
           setActiveTab={setActiveTab}
@@ -285,4 +279,4 @@ const DropdownContent: FC<DropdownContentProps> = ({
   );
 };
 
-export default React.memo(DropdownContent);
+export default memo(DropdownContent);
