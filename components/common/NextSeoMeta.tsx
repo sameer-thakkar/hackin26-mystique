@@ -32,7 +32,6 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import { shortcodesAtom } from 'store/atoms/shortcodes';
 import {
   FB_DOMAIN_VERIFICATION,
-  NEWRELIC_RUM_CONFIG,
   PAGE_URL_STRUCTURE,
   QUERY_PARAMS,
   SEO_SUBDOMAINS,
@@ -317,7 +316,7 @@ export default function PopulateMeta({
           isPreview={isPreview}
           originalHost={host}
         />
-        <NewRelicPerformanceMonitoring {...NEWRELIC_RUM_CONFIG} />
+        <NewRelicPerformanceMonitoring />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional

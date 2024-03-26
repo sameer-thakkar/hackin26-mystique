@@ -1995,14 +1995,6 @@ export const BOOSTER_EXPERIMENT_UIDS = {
 export const BOOSTER_RIVE_LOCATION =
   'https://cdn-imgix.headout.com/mb/boosters_4.riv';
 
-export const NEWRELIC_RUM_CONFIG = {
-  ACCOUNT_ID: '1433779',
-  TRUST_KEY: '1433779',
-  AGENT_ID: '1120273956',
-  LICENSE_KEY: 'NRBR-4c8cf2306e045aad2bd',
-  APPLICATION_ID: '1120273956',
-};
-
 export const RANKING_EXPERIMENT_UIDS: Array<string> = [];
 
 export const CAROUSEL_UNITS = {
