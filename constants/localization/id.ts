@@ -607,7 +607,7 @@ const id = {
     THEMES: 'Tema',
     ABOUT: 'Tentang',
     TOURS: 'Tur',
-    SKIP_THE_LINE_TOURS: 'Tur Tanpa Antre',
+    SKIP_THE_LINE: 'Tur Tanpa Antre',
     GUIDED_TOURS: 'Tur Berpemandu',
     NIGHT_TOURS: 'Tur Malam',
     FOOD_TOURS: 'Wisata Kuliner',

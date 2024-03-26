@@ -611,7 +611,7 @@ const ko = {
     THEMES: '테마',
     ABOUT: '정보',
     TOURS: '투어',
-    SKIP_THE_LINE_TOURS: '라인 투어 건너뛰기',
+    SKIP_THE_LINE: '라인 투어 건너뛰기',
     GUIDED_TOURS: '가이드 투어',
     NIGHT_TOURS: '야간 투어',
     FOOD_TOURS: '음식 투어',

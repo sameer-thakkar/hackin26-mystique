@@ -147,7 +147,7 @@ export const VISIT = {
           MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY,
         ],
       },
-      SKIP_THE_LINE_TOURS: {
+      SKIP_THE_LINE: {
         label: 'Skip the Line',
         types: [
           MB_CATEGORISATION.MB_TYPE.A1_COLLECTION,
@@ -698,7 +698,7 @@ export const NESTED_MENU_ORDER = {
   ABOUT: [],
   VISIT: [
     'PLAN_YOUR_VISIT',
-    'SKIP_THE_LINE_TOURS',
+    'SKIP_THE_LINE',
     'GUIDED_TOURS',
     'NIGHT_TOURS',
     'FOOD_TOURS',
