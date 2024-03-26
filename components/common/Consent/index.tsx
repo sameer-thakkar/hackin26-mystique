@@ -42,7 +42,9 @@ const ConsentBanner = ({
   pageType,
   isMobile,
   isGDPRCompliant,
+  countryCode,
 }: {
+  countryCode?: string;
   pageType: string;
   isMobile: boolean;
   isGDPRCompliant: boolean;
@@ -95,11 +97,22 @@ const ConsentBanner = ({
     if (
       typeof cookieState === 'undefined' &&
       !isExperimentResolving &&
-      isGDPRCompliant
+      isGDPRCompliant &&
+      !isVisible
     ) {
       setVisibility(true);
+      trackEvent({
+        eventName: 'Consent Banner Viewed',
+        'Is Country Fallback': !countryCode,
+      });
     }
-  }, [isPrivacyPage, isExperimentResolving, isGDPRCompliant]);
+  }, [
+    isPrivacyPage,
+    isExperimentResolving,
+    isGDPRCompliant,
+    isVisible,
+    countryCode,
+  ]);
 
   useEffect(() => {
     if (showModal) document.body.classList.add('scroll-lock');
@@ -192,12 +205,12 @@ const ConsentBanner = ({
           <div>{strings.COOKIE_CONSENT.BASIC_DESCRIPTION}</div>
         </TextContainer>
         <ActionContainer>
-          <ActionButton onClick={() => onConsentUpdate({ state: 'granted' })}>
-            {strings.COOKIE_CONSENT.ACCEPT}
-          </ActionButton>
           <CancelButton onClick={onShowModal}>
             {strings.COOKIE_CONSENT.MANAGE_PREFERENCES}
           </CancelButton>
+          <ActionButton onClick={() => onConsentUpdate({ state: 'granted' })}>
+            {strings.COOKIE_CONSENT.ACCEPT}
+          </ActionButton>
         </ActionContainer>
       </ConsentContainer>
     </ConsentFixedWrapper>

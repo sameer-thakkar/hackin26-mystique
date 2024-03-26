@@ -115,7 +115,7 @@ const fr = {
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
       'Nous utilisons des cookies et des technologies similaires à de nombreuses fins, notamment pour améliorer votre expérience sur notre site et pour les publicités.',
-    MANAGE_PREFERENCES: 'Gérer les préférences',
+    MANAGE_PREFERENCES: 'Configuration',
     PREFERNCES_SAVED: 'Vos préférences ont été sauvegardées.',
     ACCEPT: 'Ok',
     ALLOW_ALL: 'Autoriser tout',

@@ -15,7 +15,7 @@ export const TextContainer = styled.div`
   width: auto;
 
   @media (max-width: 768px) {
-    ${getFontDetailsByLabel(FONTS.PARAGRAPH_MEDIUM)}
+    ${getFontDetailsByLabel(FONTS.PARAGRAPH_REGULAR)}
     padding-right: 0.75rem;
   }
 `;
@@ -27,16 +27,16 @@ export const PopupButtonsContainer = styled.div`
 `;
 
 export const BaseButton = styled.button`
-  padding: 0.6875rem 4rem 0.8125rem;
+  padding: 0.5rem 0;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   cursor: pointer;
   display: block;
-  min-width: 12.5rem;
-  ${getFontDetailsByLabel(FONTS.BUTTON_MEDIUM)}
+  min-width: 9.84375rem;
+  ${getFontDetailsByLabel(FONTS.BUTTON_SMALL)}
 
   @media (max-width: 768px) {
-    padding: 0.5rem 0.625rem 0.6rem 0.75rem;
+    padding: 0.5rem 0;
     svg {
       width: 0.7rem;
       height: 0.7rem;
@@ -45,8 +45,8 @@ export const BaseButton = styled.button`
 `;
 
 export const ActionButton = styled(BaseButton)`
-  background-color: ${COLORS.PURPS.LEVEL_10};
-  color: ${COLORS.BRAND.PURPS};
+  background-color: ${COLORS.BRAND.PURPS};
+  color: ${COLORS.BRAND.WHITE};
 `;
 
 export const AllowButton = styled(BaseButton)`
@@ -61,72 +61,78 @@ const hidden = css`
   opacity: 0;
 `;
 
-export const CancelButton = styled.div`
+export const CancelButton = styled(BaseButton)`
   cursor: pointer;
   text-align: center;
-  ${getFontDetailsByLabel(FONTS.HEADING_XS)}
+  ${getFontDetailsByLabel(FONTS.BUTTON_SMALL)}
+  background-color: ${COLORS.BRAND.WHITE};
+  border: 1px solid;
+  padding: calc(0.5rem - 1px) 0;
 
   color: ${COLORS.PURPS.LEVEL_3};
+
+  @media (max-width: 768px) {
+    padding: calc(0.5rem - 1px) 0;
+  }
 `;
 
 export const ConsentFixedWrapper = styled.div<{
   $isHidden?: boolean;
 }>`
   position: fixed;
-  bottom: 1.25rem;
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 20;
+  background: ${COLORS.BRAND.WHITE};
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
+    0px -1px 2px 0px rgba(0, 0, 0, 0.08);
   ${({ $isHidden }) => $isHidden && hidden}
+  border-top: 1px solid ${COLORS.GRAY.G6};
 
   @media (max-width: 768px) {
-    border-radius: 0.5rem 0.5rem 0 0;
-    max-width: calc(100% - 1rem);
-    left: 0.5rem;
-    bottom: 1rem;
     transform: unset;
   }
 `;
 
 export const ConsentContainer = styled.div`
-  padding: 1.125rem 1rem;
-  background: ${COLORS.BRAND.WHITE};
+  padding: 1rem 0;
   border-radius: 0.5rem;
 
-  max-width: 39.0625rem;
+  max-width: 75rem;
   margin: auto;
-  width: calc(100% - 2rem);
+  width: 100%;
 
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: left;
+  align-items: center;
   column-gap: 2rem;
 
   transition: visibility 0.3s, opacity 0.3s;
 
   visibility: visible;
   opacity: 1;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
-    0px -1px 2px 0px rgba(0, 0, 0, 0.08);
 
   @media (max-width: 768px) {
+    padding: 1rem 1.5rem;
+    width: calc(100% - 3rem);
     grid-template-columns: 1fr;
   }
 `;
 
 export const ActionContainer = styled.div`
   display: grid;
-  column-gap: 0.5rem;
+  column-gap: 0.75rem;
   justify-content: end;
-  align-items: start;
-  align-content: start;
-  row-gap: 0.5rem;
+  align-items: center;
+  align-content: center;
+  grid-auto-flow: column;
 
   @media (max-width: 768px) {
     display: grid;
     justify-content: unset;
     row-gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     button {
       width: 100%;
     }

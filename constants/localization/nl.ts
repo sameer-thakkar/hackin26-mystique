@@ -114,7 +114,7 @@ const nl = {
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
       'We gebruiken cookies en soortgelijke technologieën voor een aantal doeleinden, waaronder het verbeteren van je ervaring op onze site en voor advertenties,.',
-    MANAGE_PREFERENCES: 'Voorkeuren beheren',
+    MANAGE_PREFERENCES: 'Instellingen',
     PREFERNCES_SAVED: 'Je instellingen zijn opgeslagen',
     ACCEPT: 'Oké',
     ALLOW_ALL: 'Alles toestaan',

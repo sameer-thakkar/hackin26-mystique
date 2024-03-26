@@ -77,6 +77,7 @@ type PageProps = {
   bestDiscount?: number;
   minPrice?: number;
   domainConfig?: Record<string, any>;
+  countryCode?: string;
 };
 
 interface IGetCurrencyCode {
@@ -114,6 +115,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     MBDesign,
     CMSContent,
     domainConfig,
+    countryCode,
   } = pageProps;
 
   const { data } = CMSContent || {};
@@ -328,6 +330,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
               isMobile={isMobile}
               isGDPRCompliant={isGDPRCompliant}
               pageType={pageType}
+              countryCode={countryCode}
             />
           </DeferredComponent>
         </ToastProvider>

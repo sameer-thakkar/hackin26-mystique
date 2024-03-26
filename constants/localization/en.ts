@@ -87,7 +87,7 @@ const en = {
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
       'We use cookies and similar technologies for many purposes, including to improve your experience on our site and for ads.',
-    MANAGE_PREFERENCES: 'Manage preferences',
+    MANAGE_PREFERENCES: 'Manage',
     PREFERNCES_SAVED: 'Your preferences have been saved',
     COOKIES: 'Cookies:',
     ACCEPT: 'Okay',

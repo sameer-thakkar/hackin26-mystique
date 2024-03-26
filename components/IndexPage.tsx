@@ -611,6 +611,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         cookies: req?.cookies ?? {},
         headers: JSON.stringify(req?.headers),
         isGDPRCompliant,
+        countryCode,
       },
     };
     const removeEmpty = (obj: any) => {

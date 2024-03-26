@@ -127,7 +127,7 @@ const de = {
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
       'Wir nutzen Cookies und ähnliche Technologien für viele Zwecke, u. a. zur Verbesserung der Website und für Werbung.',
-    MANAGE_PREFERENCES: 'Einstellungen verwalten',
+    MANAGE_PREFERENCES: 'Einstellungen',
     PREFERNCES_SAVED: 'Ihre Einstellungen wurden gespeichert',
     ACCEPT: 'Ok',
     ALLOW_ALL: 'Alle akzeptieren',
