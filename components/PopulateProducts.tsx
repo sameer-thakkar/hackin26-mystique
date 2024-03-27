@@ -542,7 +542,8 @@ const PopulateProducts = (props: any) => {
     : true;
 
   const showLoader =
-    productsLoading || isRankingExperimentResolving || isExperimentResolving;
+    isEligible &&
+    (productsLoading || isRankingExperimentResolving || isExperimentResolving);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
