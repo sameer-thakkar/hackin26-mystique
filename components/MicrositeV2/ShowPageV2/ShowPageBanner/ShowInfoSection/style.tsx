@@ -288,8 +288,11 @@ export const TagSection = styled.div`
     background: rgba(68, 68, 68, 0.5);
     color: ${COLORS.BRAND.WHITE};
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-    cursor: pointer;
     white-space: nowrap;
+  }
+
+  .tag.with-link {
+    cursor: pointer;
     &:hover {
       background: rgba(68, 68, 68, 0.8);
     }
@@ -322,7 +325,7 @@ export const TagSection = styled.div`
   }
 `;
 
-export const TheatreSection = styled.div`
+export const TheatreSection = styled.div<{ $isUnderlined?: boolean }>`
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -341,7 +344,8 @@ export const TheatreSection = styled.div`
   a {
     color: ${COLORS.GRAY.G7};
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
-    border-bottom: dotted 1px rgba(255, 255, 255, 0.6);
+    ${({ $isUnderlined }) =>
+      $isUnderlined && 'border-bottom: dotted 1px rgba(255, 255, 255, 0.6);'}
   }
 
   @media (max-width: 768px) {

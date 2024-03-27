@@ -303,7 +303,7 @@ const ShowInfoSection = ({
               .map((tag, index) =>
                 getTagUrl(tag) ? (
                   <LinkResolver
-                    className="tag"
+                    className="tag with-link"
                     key={tag}
                     url={getTagUrl(tag)}
                     onClick={() => {
@@ -339,7 +339,7 @@ const ShowInfoSection = ({
               </div>
             </Conditional>
           </TagSection>
-          <TheatreSection>
+          <TheatreSection $isUnderlined={!!theatrePageUrl}>
             {Location}
             <a
               href={theatrePageUrl}
