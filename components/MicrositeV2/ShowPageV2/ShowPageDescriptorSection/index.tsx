@@ -12,7 +12,7 @@ import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  LTT_PERMANENT_SHOWS_TGIDS,
+  PERMANENT_SHOWS_TGIDS,
 } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -37,7 +37,7 @@ const ShowPageDescriptorSection = ({
       content: duration,
       icon: descriptorIcons['DURATION'],
     },
-    ...(!LTT_PERMANENT_SHOWS_TGIDS.includes(tgid) && {
+    ...(!PERMANENT_SHOWS_TGIDS.includes(tgid) && {
       dates: {
         content: closingDate,
         icon: descriptorIcons['EXTENDED_VALIDITY'],

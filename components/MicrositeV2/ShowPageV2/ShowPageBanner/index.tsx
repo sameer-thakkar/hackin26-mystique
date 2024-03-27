@@ -47,10 +47,10 @@ const ShowPageV2Banner = ({
               url={bannerImageToShow.url}
               alt={bannerImageToShow.alt}
               priority
-              width={isMobile ? 487 : 891}
-              aspectRatio={'21:9'}
+              width={isMobile ? 487 : 698}
+              height={isMobile ? 208 : 396}
               fitCrop={true}
-              autoCrop={true}
+              autoCrop={false}
               className="banner-image"
               fetchPriority="high"
             />

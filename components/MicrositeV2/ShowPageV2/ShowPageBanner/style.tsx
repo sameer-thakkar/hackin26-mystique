@@ -9,7 +9,7 @@ export const ShowPageBannerWrapper = styled.div`
   background: -webkit-linear-gradient(
     0deg,
     ${COLORS.BACKGROUND.LTT_INDIGO} calc(100vw - 45.6875rem),
-    rgba(21, 0, 41, 0) 80%
+    rgba(21, 0, 41, 0) 75%
   );
   div {
     background: -webkit-linear-gradient(
