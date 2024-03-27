@@ -883,6 +883,9 @@ const it = {
     HANDPICKED: 'Tour e attività selezionate',
     EFFORTLESS: 'Facile pianificazione',
     EXPERT_GUIDES: "Guide professioniste per un'esperienza completa",
+    ALL_ATTR_ONE_CARD: 'Tutte le attrazioni in una sola card',
+    MULTI_CARD: 'Diverse opzioni',
+    COST_EFF: 'Conveniente',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tutto',

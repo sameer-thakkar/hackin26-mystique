@@ -947,6 +947,9 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     HANDPICKED: 'Tours y actividades cuidadosamente seleccionados',
     EFFORTLESS: 'Planificación sencilla',
     EXPERT_GUIDES: 'Información exclusiva de guías expertos',
+    ALL_ATTR_ONE_CARD: 'Acceso a todas las atracciones con solo una tarjeta',
+    MULTI_CARD: 'Diferentes tarjetas para elegir',
+    COST_EFF: 'Económico y práctico',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Todo',

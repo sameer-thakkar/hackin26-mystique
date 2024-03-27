@@ -897,6 +897,9 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     HANDPICKED: 'Visites/options soigneusement choisies',
     EFFORTLESS: 'Planification simple',
     EXPERT_GUIDES: 'Guides expert·es. Informations uniques',
+    ALL_ATTR_ONE_CARD: 'Toutes les attractions en une seule carte',
+    MULTI_CARD: 'Plusieurs options de cartes',
+    COST_EFF: 'Bon rapport qualité/prix et pratique',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tout',

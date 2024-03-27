@@ -893,6 +893,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     HANDPICKED: 'Erlesene Touroptionen',
     EFFORTLESS: 'Einfache Planung',
     EXPERT_GUIDES: 'Einzigartige Einblicke durch Experten',
+    ALL_ATTR_ONE_CARD: 'Alle Attraktionen mit einer Kart',
+    MULTI_CARD: 'Verschiedene Karten zur Auswahl',
+    COST_EFF: 'Kostengünstig und praktisch',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alle',

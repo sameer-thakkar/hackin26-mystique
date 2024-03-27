@@ -1763,6 +1763,12 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-insights.svg',
   CAMERA:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-camera.svg',
+  ONE_CARD:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-one-card.svg',
+  MULTI_OP:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-multi-option.svg',
+  COST_EFF:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-cost-eff.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [

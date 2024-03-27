@@ -893,6 +893,9 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     HANDPICKED: 'Zorgvuldig gekozen tours en activiteiten',
     EFFORTLESS: 'Eenvoudige planning',
     EXPERT_GUIDES: 'Uitgebreide informatie van expertgidsen',
+    ALL_ATTR_ONE_CARD: 'Alle bezienswaardigheden met 1 kaart',
+    MULTI_CARD: 'Verschillende kaartopties',
+    COST_EFF: 'Voordelig en handig',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alles',

@@ -354,6 +354,20 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
         text: strings.BANNER_DESCRIPTORS.EXPLORE_LOCAL,
       },
     ],
+    '1008': [
+      {
+        icon: BANNER_DESCRIPTORS.ONE_CARD,
+        text: strings.BANNER_DESCRIPTORS.ALL_ATTR_ONE_CARD,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.MULTI_OP,
+        text: strings.BANNER_DESCRIPTORS.MULTI_CARD,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.COST_EFF,
+        text: strings.BANNER_DESCRIPTORS.COST_EFF,
+      },
+    ],
     '1074': [
       {
         icon: BANNER_DESCRIPTORS.PAINT,

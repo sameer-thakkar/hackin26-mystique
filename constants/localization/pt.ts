@@ -895,6 +895,9 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     HANDPICKED: 'Tours e opções escolhidos a dedo',
     EFFORTLESS: 'Fácil planejamento',
     EXPERT_GUIDES: 'Guias profissionais. Perspectivas únicas',
+    ALL_ATTR_ONE_CARD: 'Todas as atrações em apenas um cartão',
+    MULTI_CARD: 'Diversas opções',
+    COST_EFF: 'Econômico e prático',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tudo',

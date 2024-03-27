@@ -983,6 +983,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     HANDPICKED: 'Handpicked tours',
     EFFORTLESS: 'Effortless planning',
     EXPERT_GUIDES: 'Expert guides. Unique insights',
+    ALL_ATTR_ONE_CARD: 'All attractions, one card',
+    MULTI_CARD: 'Multiple card options',
+    COST_EFF: 'Cost-effective and convenient',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'All',
