@@ -2483,6 +2483,7 @@ export const ViewMoreButton = styled.button<{ $isOverlay?: boolean }>`
   z-index: 0;
 
   svg {
+    margin-bottom: -0.06rem;
     height: 0.675rem;
     stroke-width: 0.15rem;
   }
