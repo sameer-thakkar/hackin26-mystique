@@ -2056,7 +2056,7 @@ export const SidePanelOverlay = styled.div<{ $closed: boolean }>`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 21474;
+  z-index: 1000000;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.35);
