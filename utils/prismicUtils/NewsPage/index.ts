@@ -30,6 +30,7 @@ import {
   TLANGUAGELOCALE,
   TOUR_GROUP_MEDIA_RESOURCE_TYPE,
 } from 'const/index';
+import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import { getCollectionReviewsPromise } from '../reviewsPage/utils';
 import {
   newsArticlesWithCFrameworkGq,
@@ -153,7 +154,13 @@ export const getAllArticlesPromise = (uid: string, lang: TLANGUAGELOCALE) => {
   });
 };
 
-export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
+export const getNewsPageDocument = async ({
+  req,
+  uid,
+  host,
+  lang,
+  isDev,
+}: any) => {
   const prismicClient = createClient({
     req,
   });
@@ -164,6 +171,8 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
   });
 
   if (newsPage && Object.keys(newsPage)?.length) {
+    const { uid: currentPageUid, lang: currentPageLang } = newsPage;
+
     const baseLangUid = getEnglishDocUid(newsPage?.alternate_languages);
     const baseLangData =
       lang !== SUPPORTED_LOCALE_MAP.en
@@ -172,14 +181,23 @@ export const getNewsPageDocument = async ({ req, uid, lang }: any) => {
             graphQuery: newsPageGq,
           })
         : newsPage;
-
     const breadcrumbs = await getNewsPageBreadcrumbs(newsPage);
-
+    const pageUrl = convertUidToUrl({
+      uid: currentPageUid,
+      lang: getHeadoutLanguagecode(currentPageLang),
+    });
+    const canonicalLink = await getCanonicalLinkFromBaseLangData({
+      baseLangCanonicalLink: baseLangData?.data?.canonical_link,
+      currentPageLang,
+      isDev,
+      host,
+    });
     const completePageData = {
       ...newsPage,
       data: {
         ...newsPage?.data,
         breadcrumbs,
+        canonical_link: canonicalLink || pageUrl,
         taggedCity: mbCategorisationData(
           baseLangData?.data,
           newsPage?.data,

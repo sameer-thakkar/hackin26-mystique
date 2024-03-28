@@ -55,6 +55,7 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
     header_ref: commonHeader,
     primary_footer_ref: commonFooter,
     secondary_footer_ref: secondaryFooter,
+    canonical_link: canonicalLink,
   } = CMSData ?? {};
 
   const {
@@ -113,7 +114,7 @@ const NewsPage: React.FC<TNewsPageProps> = (props) => {
         {...{
           prismicData: {
             ...CMSData,
-            canonical_link: selfCanonicalLink,
+            canonical_link: canonicalLink || selfCanonicalLink,
           },
           datePublished: first_publication_date,
           dateModified: last_publication_date,

@@ -25,6 +25,7 @@ import {
   SLICE_TYPES,
   SUPPORTED_LOCALE_MAP,
 } from 'const/index';
+import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument } from '../interface';
 import { contentPageGq } from './graphQuery';
 
@@ -62,6 +63,7 @@ const getContentPageDocument = async ({
   uid,
   lang,
   host,
+  isDev,
 }: TGetDocument) => {
   const prismicClient = createClient({
     req,
@@ -162,6 +164,13 @@ const getContentPageDocument = async ({
       shoulder_page_custom_label,
       tagged_content_type,
     };
+
+    const canonicalLink = await getCanonicalLinkFromBaseLangData({
+      baseLangCanonicalLink: baseLangData?.data?.canonical_link,
+      currentPageLang,
+      host,
+      isDev,
+    });
 
     let baseLangTicketsCardsSlice = getSinglePrismicSlice({
       sliceName: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD,
@@ -296,6 +305,7 @@ const getContentPageDocument = async ({
       ...contentPage,
       data: {
         ...contentPage?.data,
+        canonical_link: canonicalLink || pageUrl,
         mbType: tagged_mb_type,
         noindex: isLocalizedLang
           ? baseLangData?.data?.noindex

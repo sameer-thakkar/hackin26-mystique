@@ -31,6 +31,7 @@ export const getPrismicDocument = async ({
           host,
           lang,
           uid,
+          isDev,
         });
       case 'content_page':
         return await getContentPageDocument({
@@ -38,6 +39,7 @@ export const getPrismicDocument = async ({
           host,
           lang,
           uid,
+          isDev,
         });
       case 'showpage':
         return await getShowPage({
@@ -48,19 +50,19 @@ export const getPrismicDocument = async ({
           host,
         });
       case 'news_page':
-        return await getNewsPageDocument({ req, lang, uid });
+        return await getNewsPageDocument({ req, lang, uid, isDev });
       case 'venue_page':
-        return await getVenuePageDocument({ req, lang, uid });
+        return await getVenuePageDocument({ req, lang, uid, isDev });
       case 'reviews_page':
-        return await getReviewsPageDocument({ req, lang, uid });
+        return await getReviewsPageDocument({ req, lang, uid, isDev });
       case 'global_collection':
-        return await getGlobalCollection({ req, lang, uid });
+        return await getGlobalCollection({ req, lang, uid, isDev });
       case 'global_experience':
-        return await getGlobalExperience({ req, lang, uid });
+        return await getGlobalExperience({ req, lang, uid, isDev });
       case 'global_city':
-        return await getGlobalCity({ req, lang, uid });
+        return await getGlobalCity({ req, lang, uid, isDev });
       case 'global_homepage':
-        return await getGlobalHomepage({ req, lang, uid });
+        return await getGlobalHomepage({ req, lang, uid, isDev });
       default:
         throw new Error('No contentType found!');
     }

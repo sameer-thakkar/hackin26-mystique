@@ -21,6 +21,7 @@ export type TGetDocument = {
   uid: string;
   lang?: string | null;
   host?: string;
+  isDev: boolean;
 };
 
 export type TRedirectInfo = {

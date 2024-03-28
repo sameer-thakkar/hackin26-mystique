@@ -18,15 +18,15 @@ import {
   micrositeGq,
 } from 'utils/prismicUtils/microsite/graphQuery';
 import { transformStringValues } from 'utils/transformUtils';
-import { convertUidToUrl, sanitizeURL } from 'utils/urlUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPES,
   DEFAULT_PRISMIC_LANG,
   MICROSITE_STRING_KEYS,
-  PRISMIC_LANG_TO_ROUTE_PARAM,
   SLICE_TYPES,
   TEMPLATES,
 } from 'const/index';
+import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
 import { getTopAttractionsDoc } from '../topAttractions';
 import type {
@@ -39,6 +39,7 @@ const getMicrositeDocument = async ({
   uid,
   lang,
   host,
+  isDev,
 }: TGetDocument): Promise<
   TResolvedDocumentResponseM<TMicrositeDocument> | TRedirectInfo | undefined
 > => {
@@ -235,19 +236,12 @@ const getMicrositeDocument = async ({
           baseLangData: baseLangPageData,
         });
 
-        let canonicalLink;
-
-        if (
-          isLocalizedLang &&
-          canonicalLink &&
-          !currentPageData.canonical_link
-        ) {
-          canonicalLink = new URL(sanitizeURL(canonicalLink));
-          canonicalLink.pathname = `/${
-            PRISMIC_LANG_TO_ROUTE_PARAM?.[lang ?? DEFAULT_PRISMIC_LANG]
-          }${canonicalLink.pathname}`;
-          canonicalLink = canonicalLink.toString();
-        }
+        const canonicalLink = await getCanonicalLinkFromBaseLangData({
+          baseLangCanonicalLink: baseLangPageData?.canonical_link,
+          currentPageLang,
+          isDev,
+          host,
+        });
 
         if (Object.keys(currentPageData?.alert_popup)?.length === 1) {
           currentPageData.alert_popup = baseLangPageData?.alert_popup;

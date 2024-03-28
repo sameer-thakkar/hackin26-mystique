@@ -587,15 +587,12 @@ export const getTgidsFromShow = (shows: any) => {
 export const getEnglishDocUid = (
   prismicAlternateLanguages: AlternateLanguage[]
 ) => {
-  if (prismicAlternateLanguages?.length) {
-    const { uid } =
-      prismicAlternateLanguages?.find(
-        (doc) => doc.lang === DEFAULT_PRISMIC_LANG
-      ) || {};
-    return uid;
-  } else {
-    return null;
-  }
+  if (!prismicAlternateLanguages?.length) return null;
+  const { uid } =
+    prismicAlternateLanguages?.find(
+      (doc) => doc.lang === DEFAULT_PRISMIC_LANG
+    ) || {};
+  return uid;
 };
 
 export const getAlternateLanguageDocUid = ({

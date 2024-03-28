@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect, useMemo, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -319,13 +319,23 @@ const MicrositeV1 = (props: any) => {
     }
   };
 
-  const orderedTGIDRanking = csvTgidToArray(tourRanking);
-  const orderedUncategorizedTours = isCategorisedTours
-    ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
-    : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
+  const orderedTGIDRanking = useMemo(() => {
+    return csvTgidToArray(tourRanking);
+  }, [tourRanking]);
 
-  const orderedTours =
-    isCategorisedTours || tgidToScroll
+  const orderedUncategorizedTours = useMemo(() => {
+    return isCategorisedTours
+      ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
+      : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
+  }, [
+    isCategorisedTours,
+    tgidToScroll,
+    categorizedToursList,
+    uncategorizedToursList,
+  ]);
+
+  const orderedTours = useMemo(() => {
+    return isCategorisedTours || tgidToScroll
       ? orderedUncategorizedTours
       : orderedTGIDRanking?.length
       ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
@@ -335,6 +345,12 @@ const MicrositeV1 = (props: any) => {
           );
         })
       : orderedUncategorizedTours;
+  }, [
+    isCategorisedTours,
+    tgidToScroll,
+    orderedUncategorizedTours,
+    orderedTGIDRanking,
+  ]);
 
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
