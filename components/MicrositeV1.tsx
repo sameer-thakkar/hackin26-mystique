@@ -355,10 +355,6 @@ const MicrositeV1 = (props: any) => {
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
 
-  useEffect(() => {
-    setOrderedFilteredTours(orderedTours);
-  }, [orderedTours]);
-
   const [productsLoading, setProductsLoading] = useState(false);
 
   const orderedTgids = orderedTours?.length

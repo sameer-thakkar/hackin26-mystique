@@ -21,7 +21,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { getLangUID, isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
@@ -31,7 +31,6 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   GDPR_COUNTRY_CODES,
-  RANKING_EXPERIMENT_UIDS,
   THEMES,
   TIME,
 } from 'const/index';
@@ -76,7 +75,6 @@ const Page = (props: PageProps) => {
     categoryTourListData: legacyCategoryTourListData,
     docsForListicles,
     collectionsInListicles,
-    propsWithRandomizedSequence,
   } = props;
 
   const { tourGroupMap, ...rawCategoryTgidMap } =
@@ -100,11 +98,6 @@ const Page = (props: PageProps) => {
     ...(scorpioData && { scorpioData }),
     ...(orderedTours && { orderedTours }),
     ...(collectionVideos && { collectionVideos }),
-  };
-
-  const categoryTourListDataRandomized = {
-    ...categoryTourListData,
-    ...propsWithRandomizedSequence,
   };
 
   strings.setContent({
@@ -298,7 +291,6 @@ const Page = (props: PageProps) => {
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
             uid={uid}
-            categoryTourListDataRandomized={categoryTourListDataRandomized}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -524,28 +516,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ),
   ];
 
-  const { uid } = getLangUID(req, query);
-  if (RANKING_EXPERIMENT_UIDS.includes(uid)) {
-    promiseList.push(
-      reflect(
-        getPageData({
-          res,
-          req,
-          query,
-          isDev,
-          localizedStrings,
-          runRankingExperiment: true,
-        })
-      )
-    );
-  }
-
-  const [responseWithoutExperiment, responseWithExperiment] = await Promise.all(
-    promiseList
-  );
+  const [responseWithoutExperiment] = await Promise.all(promiseList);
 
   const props = responseWithoutExperiment?.payload;
-  const propsWithRandomizedSequence = responseWithExperiment?.payload;
 
   try {
     let url =
@@ -594,9 +567,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
-        ...(propsWithRandomizedSequence && {
-          propsWithRandomizedSequence,
-        }),
         isBot,
         localizedStrings,
         serverRequestStartTimestamp,
