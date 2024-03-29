@@ -186,14 +186,12 @@ const PriceBlock = ({
     finalPrice,
     currencyCode,
     bestDiscount,
-    otherPricesExist,
     cashbackType,
     cashbackValue,
   } = listingPrice ?? {};
   const showScratchPrice =
     (originalPrice > finalPrice && showScratchPriceProp) ||
     showDummyScratchPrice;
-  const showPrefix = prefix && otherPricesExist;
   const showcashbackElm =
     (showCashback || showCashbackBlock || isSportsExperiment) &&
     cashbackValue > 0 &&
@@ -258,7 +256,7 @@ const PriceBlock = ({
               : ''
           }`}
         >
-          {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
+          {prefix ? strings.FROM.toLowerCase() + ' ' : ''}
           <Conditional if={showScratchPrice}>
             <LocalisedPrice
               currencyCode={currencyCode}

@@ -4,8 +4,6 @@ import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
-import { GroupField } from '@prismicio/types';
-import { PromoCodesDocumentDataPromosItem, Simplify } from 'types.prismic';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { MBContext } from 'contexts/MBContext';
@@ -18,8 +16,7 @@ import {
   fetchTourList,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
-import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
-import getPromoCodesDocument from 'utils/prismicUtils/promoCodes';
+import { generateSidenavId, getHostName } from 'utils/helper';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
@@ -28,7 +25,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESIGN,
-  PROMO_CODES,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -135,8 +131,6 @@ const ProductWrapper = styled.div`
   flex: 0 49%;
 `;
 
-type TPromoCode = GroupField<Simplify<PromoCodesDocumentDataPromosItem>>;
-
 const PopulateProducts = (props: any) => {
   const {
     uncategorizedTours: tours,
@@ -177,10 +171,6 @@ const PopulateProducts = (props: any) => {
   productsRef.current = [];
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
-  const [clickedPromo, setClickedPromo] = useState();
-  const [appliedPromo, setAppliedPromo] = useState(null);
-  const [allPromoCodes, setAllPromoCodes] = useState<TPromoCode>([]);
-  const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState({});
   const [detialsPopupShown, setDetailsPopupShown] = useState(false);
   const router = useRouter();
@@ -215,15 +205,6 @@ const PopulateProducts = (props: any) => {
   const { isStage, isDev, host, design } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
-
-  const getAllPromoCodes = async () => {
-    const promoDoc = await getPromoCodesDocument();
-    setAllPromoCodes(promoDoc);
-  };
-
-  const onPromoClick = async (data: any) => {
-    setAppliedPromo(data);
-  };
 
   const fetchProductInfo = async (tgids: any) => {
     if (!tgids) return;
@@ -466,73 +447,10 @@ const PopulateProducts = (props: any) => {
     availableToursList,
   ]);
   const allTgids = availableToursList?.map((el: any) => el?.tgid);
-  const filterPromoCodes = () => {
-    let filteredPromoCodes = {};
-    Object.keys(productInfo ?? {}).forEach((tgid) => {
-      let tgidBased, collectionBased, cityBased;
-      //For each product, filtering out promocodes based on relevant TGID, Collection, City
-      const promosForProduct = allPromoCodes?.filter((promo) => {
-        const {
-          tgids: tgidsString,
-          exclusions: exclusionsString,
-          collections,
-          city_name,
-        } = promo || {};
-        const tgids = csvTgidToArray(tgidsString as string);
-        const exclusions = csvTgidToArray(exclusionsString as string);
-        return (
-          (tgids?.includes(Number(tgid)) ||
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            productInfo[tgid]?.collectionId ==
-              (collections as any)?.collectionId ||
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            productInfo[tgid]?.city === (city_name as any)?.cityCode) &&
-          !exclusions?.includes(Number(tgid))
-        );
-      });
-      //If any promos found based on above filtering-
-      //We find promos specific to TGID -> Collection -> City in the filtered array
-      if (promosForProduct?.length) {
-        tgidBased = promosForProduct?.find((promo) => {
-          const tgids = csvTgidToArray((promo as any)?.tgids);
-          return tgids?.includes(Number(tgid));
-        });
-        if (!tgidBased) {
-          collectionBased = promosForProduct?.find(
-            (promo) =>
-              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-              productInfo[tgid]?.collectionId ==
-              (promo as any)?.collections?.collectionId
-          );
-          if (!collectionBased) {
-            cityBased = promosForProduct?.find(
-              (promo) =>
-                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-                productInfo[tgid]?.city === (promo as any)?.city_name?.cityCode
-            );
-          }
-        }
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        filteredPromoCodes[tgid] = tgidBased || collectionBased || cityBased;
-      } else {
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        filteredPromoCodes[tgid] = PROMO_CODES.DEFAULT;
-      }
-    });
-    return filteredPromoCodes;
-  };
 
   useEffect(() => {
-    getAllPromoCodes();
     fetchProductInfo(allTgids);
   }, []);
-
-  useEffect(() => {
-    if (Object.keys(productInfo)?.length && allPromoCodes && finalPromoCodes) {
-      const finalPromos = filterPromoCodes();
-      setFinalPromoCodes(finalPromos);
-    }
-  }, [productInfo, allPromoCodes]);
 
   const isV1DesignSite = isMBDesign({
     currentDesign: design || '',
@@ -614,12 +532,6 @@ const PopulateProducts = (props: any) => {
       instantCheckout,
       indexPosition: index,
       pageType,
-      clickedPromo,
-      setClickedPromo,
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      finalPromoCode: finalPromoCodes[tgid],
-      onPromoClick,
-      appliedPromo,
       collectionId,
       primaryCategory,
       primaryCollection,

@@ -11,7 +11,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import Button from 'UI/Button';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
-import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
@@ -402,8 +401,6 @@ const TicketCard = (props: any) => {
     isMobile,
     instantCheckout,
     showEarliestAvailability,
-    finalPromoCode,
-    appliedPromo,
     flowType,
   } = props;
 
@@ -419,7 +416,6 @@ const TicketCard = (props: any) => {
   const isTicketCard = true;
   const [isOpened, setIsOpened] = useState(false);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { promo_code } = finalPromoCode || {};
 
   const {
     minDuration,
@@ -555,7 +551,6 @@ const TicketCard = (props: any) => {
     hasV1Booster,
     mbTheme,
     isTicketCard,
-    hasPromoCode: promo_code,
   });
 
   const productBookingUrl = createBookingURL({
@@ -565,7 +560,6 @@ const TicketCard = (props: any) => {
     tgid,
     variantId: tourId,
     biLink,
-    promoCode: promo_code === appliedPromo ? appliedPromo : null,
     date: instantCheckout && earliestAvailability ? earliestAvailability : null,
     isMobile,
     bookSubdomain,
@@ -625,13 +619,8 @@ const TicketCard = (props: any) => {
           lang={currentLanguage}
           showSavings
           key={'price-block'}
+          prefix
         />
-        <Conditional if={promo_code}>
-          <PromoCodeBlock
-            {...props}
-            currencyCode={listingPrice?.currencyCode ?? ''}
-          />
-        </Conditional>
       </PriceContainer>
 
       <CTABlock
