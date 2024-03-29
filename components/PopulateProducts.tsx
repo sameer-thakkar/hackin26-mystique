@@ -169,7 +169,8 @@ const PopulateProducts = (props: any) => {
     productCardsLimit = Infinity,
     showBoosters = false,
     trackProductCardsViewed = false,
-    isRankingExperimentResolving = false,
+    isPopupExperimentResolving = false,
+    showPopup = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -225,6 +226,7 @@ const PopulateProducts = (props: any) => {
   };
 
   const fetchProductInfo = async (tgids: any) => {
+    if (!tgids) return;
     const tgidData = await fetchTourList({ tgids }).then((res) => res.json());
     const tourGroupMap = tgidData?.tourGroups?.reduce((acc: any, el: any) => {
       const { id, primaryCollection, cityCode } = el || {};
@@ -543,7 +545,7 @@ const PopulateProducts = (props: any) => {
 
   const showLoader =
     isEligible &&
-    (productsLoading || isRankingExperimentResolving || isExperimentResolving);
+    (productsLoading || isPopupExperimentResolving || isExperimentResolving);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
@@ -568,17 +570,10 @@ const PopulateProducts = (props: any) => {
       primaryCategory,
       primaryCollection,
       primarySubCategory,
-      averageRating,
-      showRatings,
-      ratingCount,
+      reviewsDetails,
+      topReviews,
       // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     } = productInfo[tgid] ?? {};
-
-    const reviewsDetails = {
-      averageRating,
-      showRatings,
-      ratingCount,
-    };
 
     const childProps = {
       tgid,
@@ -642,6 +637,8 @@ const PopulateProducts = (props: any) => {
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
       showBoosters,
+      topReviews,
+      showPopup,
     };
 
     return isSmallComboCard ? (

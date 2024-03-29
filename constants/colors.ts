@@ -92,6 +92,7 @@ const COLORS = {
     LEVEL_15: '#e6d1ff',
     LEVEL_10: '#f3e9ff',
     LEVEL_3: '#6600CC',
+    LEVEL_20: '#E6CCFF',
     LIGHT_TONE_2: '#b266ff',
     LIGHT_TONE_1: '#9933ff',
     LIGHT_TONE_3: '#ecd9ff',

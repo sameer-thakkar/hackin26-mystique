@@ -514,6 +514,14 @@ export const ANALYTICS_EVENTS = {
   },
   MORE_DETAILS_SWIPESHEET_CLOSED: 'More Details Swipesheet Closed',
   PRODUCT_CARD_DEADCLICK: 'Product Card Deadclick',
+  MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+};
+
+export const MORE_DETAILS_SWIPESHEET = {
+  ACTION: {
+    CLOSE_BUTTON: 'Close Button',
+    OVERLAY_CLICKED: 'Overlay Clicked',
+  },
 };
 
 export const PAGE_TYPE = {
@@ -524,6 +532,8 @@ export const PRODUCT_CARD_REVAMP = {
   PLACEMENT: {
     SIDE_SHEET: 'Side Sheet',
     PRODUCT_CARD: 'Product Card',
+    POPUP: 'Popup',
+    MORE_DETAILS: 'More Details',
     SWIPESHEET: 'Swipesheet',
   },
 };
@@ -2001,6 +2011,10 @@ export const BOOSTER_EXPERIMENT_UIDS = {
 
 export const BOOSTER_RIVE_LOCATION =
   'https://cdn-imgix.headout.com/mb/boosters_4.riv';
+
+export const PRODUCT_CARD_CHILDREN_POSITIONS = {
+  MORE_DETAILS: 'More Details',
+};
 
 export const RANKING_EXPERIMENT_UIDS: Array<string> = [];
 

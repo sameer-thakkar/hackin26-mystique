@@ -92,22 +92,28 @@ export const getProductCommonProperties = ({
   reviewsDetails,
   boosterType,
 }: {
-  primaryCategory: TGenericObject;
-  primaryCollection: TGenericObject;
-  primarySubCategory: TGenericObject;
+  primaryCategory?: TGenericObject;
+  primaryCollection?: TGenericObject;
+  primarySubCategory?: TGenericObject;
   reviewsDetails?: TGenericObject;
   boosterType?: keyof typeof BoosterType | null;
 }): Record<string, number | string> => {
   return {
-    [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
-    [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
-    [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
-    [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
-    [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollection?.id,
-    [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollection?.displayName,
+    ...(primaryCategory && {
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+    }),
+    ...(primarySubCategory && {
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+    }),
+    ...(primaryCollection && {
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollection?.id,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollection?.displayName,
+    }),
     ...(reviewsDetails && {
       [ANALYTICS_PROPERTIES.AVERAGE_RATING]: reviewsDetails?.averageRating,
-      [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: reviewsDetails?.ratingCount,
+      [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: reviewsDetails?.ratingsCount,
     }),
     ...(boosterType && {
       [ANALYTICS_PROPERTIES.BOOSTER_NAME]: BoosterType[boosterType],

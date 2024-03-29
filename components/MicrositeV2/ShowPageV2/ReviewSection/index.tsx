@@ -1,8 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
-import { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
+import type { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
   AllReviewsButton,
   RatingBarAmount,
@@ -17,7 +24,11 @@ import {
   ReviewHeader,
   ReviewMediaSection,
   ReviewSectionWrapper,
+  ReviewSkeletonContainer,
+  ReviewSkeletonMediaContainer,
   ReviewsSection,
+  ReviewUserDetailsContainer,
+  ReviewUserDetailsTextContentContainer,
   ShowMoreReviewsButton,
   StarCount,
   ViewTranslatedContentButton,
@@ -75,33 +86,57 @@ const ReviewSection = ({
   tgid,
   reviewsDetails,
   reviewPageUrl,
-  isMobile,
+  isMobile = false,
+  initialReviews = [],
+  maximumNumberOfReviews = 10,
+  numberOfReviewsToFetchAtOnce = 10,
+  showFetchMoreButton = false,
+  controlledSwiperParams,
+  showSkeleton = false,
+  externalButtonContent,
 }: TReviewSectionProps) => {
-  const [reviews, setReviews] = useState<TReviewMediasResponse['items']>([]);
+  const [reviews, setReviews] =
+    useState<TReviewMediasResponse['items']>(initialReviews);
   const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(5);
   const { averageRating, ratingsCount, ratingsSplit } = reviewsDetails;
   const getShortenedNumber = (num: number) =>
     num > 999 ? `${(num / 1000).toFixed(1)}k` : num;
   const shortenedRatingsCount = getShortenedNumber(ratingsCount);
   const { lang } = useContext(MBContext);
+  const [offset, setOffset] = useState<number | null>(
+    Math.max(5, initialReviews.length)
+  );
+  const [totalNumberOfReviews, setTotalNumberOfReviews] = useState(-1);
+  const [isFetching, setIsFetching] = useState(!initialReviews.length);
+  const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
+
+  const fetchReviews = useCallback(async () => {
+    try {
+      if (!offset || offset >= maximumNumberOfReviews) return;
+      setIsFetching(true);
+      const reviewsResponse = await fetchTourGroupReviews({
+        tgid,
+        offset,
+        limit: numberOfReviewsToFetchAtOnce,
+        filterType: 'TOP',
+        language: lang,
+      });
+      const {
+        items: newReviews = [],
+        nextOffset = null,
+        total,
+      } = reviewsResponse ?? {};
+      setReviews([...reviews, ...newReviews]);
+      setOffset(nextOffset);
+      setIsFetching(false);
+      if (totalNumberOfReviews === -1 && total) setTotalNumberOfReviews(total);
+    } catch (error) {
+      return;
+    }
+  }, [offset, reviews]);
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const reviewsResponse = await fetchTourGroupReviews({
-          tgid,
-          offset: 5,
-          limit: 10,
-          filterType: 'TOP',
-          language: lang,
-        });
-        const { items: reviews = [] } = reviewsResponse ?? {};
-        setReviews(reviews);
-      } catch (error) {
-        return;
-      }
-    };
-    fetchReviews();
+    if (!initialReviews.length) fetchReviews();
   }, []);
 
   return (
@@ -131,24 +166,57 @@ const ReviewSection = ({
       </RatingsDetailsSection>
       <ReviewsSection>
         {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
-          <ReviewElement review={review} isMobile={isMobile} key={index} />
+          <ReviewElement
+            review={review}
+            isMobile={isMobile}
+            key={index}
+            controlledSwiperParams={controlledSwiperParams}
+          />
         ))}
+        <Conditional if={showSkeleton && isFetching}>
+          {Array.from({ length: 5 }, (_, i) => 5 - i).map((idx: number) => (
+            <ReviewSkeleton key={idx} />
+          ))}
+        </Conditional>
       </ReviewsSection>
       <Conditional
-        if={isMobile && numberOfReviewsToShow < 10 && reviews.length > 0}
+        if={
+          (isMobile || showFetchMoreButton) &&
+          numberOfReviewsToShow <
+            (totalNumberOfReviews === -1
+              ? maximumNumberOfReviews
+              : Math.min(totalNumberOfReviews, maximumNumberOfReviews)) &&
+          reviews.length > 0
+        }
       >
         <ShowMoreReviewsButton
-          onClick={() => setNumberOfReviewsToShow(numberOfReviewsToShow + 5)}
+          onClick={() => {
+            setNumberOfReviewsToShow(numberOfReviewsToShow + 5);
+            fetchReviews();
+            trackEvent({
+              eventName: ANALYTICS_EVENTS.MORE_REVIEWS_CLICKED,
+              [ANALYTICS_PROPERTIES.CLICK_COUNT]: moreReviewsClickCount,
+            });
+            setMoreReviewsClickCount(moreReviewsClickCount + 1);
+          }}
         >
           {strings.LTT_SHOW_PAGE.SHOW_MORE_REVIEWS}
         </ShowMoreReviewsButton>
       </Conditional>
 
       <Conditional
-        if={reviewPageUrl && (!isMobile || numberOfReviewsToShow >= 10)}
+        if={
+          reviewPageUrl &&
+          (!(isMobile || showFetchMoreButton) ||
+            numberOfReviewsToShow >=
+              (totalNumberOfReviews === -1
+                ? maximumNumberOfReviews
+                : Math.min(totalNumberOfReviews, maximumNumberOfReviews)))
+        }
       >
         <AllReviewsButton
           href={reviewPageUrl}
+          target="_blank"
           onClick={() => {
             trackEvent({
               eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
@@ -157,19 +225,44 @@ const ReviewSection = ({
             });
           }}
         >
-          {strings.LTT_SHOW_PAGE.READ_DETAILED_REVIEWS}
+          {externalButtonContent ?? strings.LTT_SHOW_PAGE.READ_DETAILED_REVIEWS}
         </AllReviewsButton>
       </Conditional>
     </ReviewSectionWrapper>
   );
 };
 
+const ReviewSkeleton = () => {
+  const showMedia = useMemo(() => Math.round(Math.random()), []);
+
+  return (
+    <ReviewSkeletonContainer>
+      <ReviewUserDetailsContainer>
+        <Skeleton height={'2.5rem'} width={'2.5rem'} circle />
+        <ReviewUserDetailsTextContentContainer>
+          <Skeleton height={'1.2rem'} width={'4rem'} />
+          <Skeleton height={'0.8rem'} width={'2.5rem'} />
+        </ReviewUserDetailsTextContentContainer>
+      </ReviewUserDetailsContainer>
+      <Skeleton height={'2rem'} width={'744px'} />
+      <Conditional if={showMedia}>
+        <ReviewSkeletonMediaContainer>
+          <Skeleton height={'140px'} width={'105px'} />
+          <Skeleton height={'140px'} width={'105px'} />
+        </ReviewSkeletonMediaContainer>
+      </Conditional>
+    </ReviewSkeletonContainer>
+  );
+};
+
 const ReviewElement = ({
   review,
   isMobile,
+  controlledSwiperParams = {},
 }: {
   review: TReviewMediasResponse['items'][0];
   isMobile: boolean;
+  controlledSwiperParams?: SwiperProps;
 }) => {
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
   const { lang } = useContext(MBContext);
@@ -178,6 +271,7 @@ const ReviewElement = ({
     spaceBetween: isMobile ? 16 : 24,
     slidesPerView: isMobile ? 3 : 3.6,
     freeMode: true,
+    ...controlledSwiperParams,
   };
 
   const {

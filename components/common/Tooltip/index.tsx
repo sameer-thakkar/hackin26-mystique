@@ -13,7 +13,7 @@ import {
 } from 'components/common/Tooltip/styles';
 import { isMobile } from 'utils/helper';
 import { strings } from 'const/strings';
-import SwipesheetCross from 'assets/sweipesheetCross';
+import SwipesheetCross from 'assets/swipesheetCross';
 
 const Tooltip = ({
   trigger,

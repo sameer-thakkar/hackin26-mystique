@@ -269,6 +269,19 @@ const MicrositeV1 = (props: any) => {
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
 
   const {
+    isEligible: isEligibleForPopupExperiment,
+    isExperimentResolving: isPopupExperimentResolving,
+    variant: popupExperimentVariant,
+  } = useABTesting({
+    experimentId: 'MORE_DETAILS_POPUP_EXPERIMENT',
+    customEligibilityCheckFn: () => isA1orC1MB(taggedMbType) && baseLangIsPoiMb,
+  });
+
+  const showPopup =
+    popupExperimentVariant === VARIANTS.TREATMENT &&
+    isEligibleForPopupExperiment;
+
+  const {
     attraction: attractionCFoot,
     body: slicesCFoot,
     footer_heading: footerHeadingCFoot,
@@ -642,6 +655,10 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
       }
       isTourListFiltered={isTourListFiltered}
+      showPopup={showPopup}
+      isPopupExperimentResolving={
+        isEligibleForPopupExperiment && isPopupExperimentResolving
+      }
     />
   );
 

@@ -16,6 +16,7 @@ import Category from 'components/Product/components/Category';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
 import Highlights from 'components/Product/components/Highlights';
 import { NextAvailable } from 'components/Product/components/NextAvailable';
+import type { TController } from 'components/Product/components/Popup/interface';
 import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';
 import Ratings from 'components/Product/components/Ratings';
@@ -32,6 +33,8 @@ import {
   ModalCardContainer,
   MoreDetailsBtnWrapper,
   OpenDatedDescriptor,
+  PopupContainer,
+  PopupPricingUnit,
   PriceContainer,
   PRODUCT_CARD_IMAGE_DIMENSIONS,
   ProductBody,
@@ -41,6 +44,8 @@ import {
   SCPContainer,
   SCPPriceContainer,
   SCPTitle,
+  SlideUpContainer,
+  SlideUpTitle,
   SpecialGuidedTourMoreDetailsCTA,
   StyledProductCard,
   TourAvailableInLanguages,
@@ -62,6 +67,7 @@ import {
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
+import { debounce } from 'utils/gen';
 import {
   checkIfGpMotorTicketsMB,
   checkIfSportsSubCategory,
@@ -114,6 +120,36 @@ const MediaCarousel = dynamic(
   () => import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
 );
 
+const ExpandedGallery = dynamic(
+  import(
+    /* webpackChunkName: "ExpandedGallery" */ 'components/Product/components/ExpandedGallery'
+  )
+);
+
+const NavigationBar = dynamic(
+  import(
+    /* webpackChunkName: "NavigationBar" */ 'components/Product/components/Popup/NavigationBar'
+  )
+);
+
+const ReviewSection = dynamic(
+  import(
+    /* webpackChunkName: "ReviewSection" */ 'components/Product/components/Popup/ReviewSection'
+  )
+);
+
+const CloseButton = dynamic(
+  import(
+    /* webpackChunkName: "CloseButtonPopup" */ 'components/Product/components/Popup/CloseButton'
+  )
+);
+
+const Popup = dynamic(
+  import(
+    /* webpackChunkName: "PopupContainer" */ 'components/Product/components/Popup'
+  )
+);
+
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
 const maxProductHeight = 395;
@@ -121,17 +157,11 @@ const maxProductBodyHeight = 265;
 
 const Product = (props: any) => {
   const moreDetailsRef = useRef(null);
-  const productRef = useRef<HTMLDivElement>();
+  const productRef = useRef<HTMLDivElement>(null);
+  const popupContainerRef = useRef<HTMLDivElement>(null);
   const collapsibleContentRef = useRef<HTMLDivElement>();
-
-  useEffect(() => {
-    if (!productRef.current) return;
-    const element = productRef.current;
-
-    element.addEventListener('click', trackDeadClick, false);
-
-    return () => element?.removeEventListener('click', trackDeadClick, false);
-  }, [productRef]);
+  const popupController = useRef<TController>();
+  const priceblockTitleContainerRef = useRef<HTMLDivElement>(null);
 
   const {
     tgid,
@@ -184,6 +214,8 @@ const Product = (props: any) => {
     isPoiMwebCard = false,
     reviewsDetails,
     showBoosters = false,
+    topReviews,
+    showPopup = true,
     showNewCard = false,
   } = props;
   const {
@@ -211,8 +243,18 @@ const Product = (props: any) => {
   const [boosterType, setBoosterType] = useState<
     keyof typeof BoosterType | null
   >(null);
+  const [currentTabActiveIndexForPopup, setCurrentTabActiveIndexForPopup] =
+    useState({ index: 0, isForcedChange: false });
+  const [isUnScrolled, setIsUnScrolled] = useState(true);
+  const [tabContentTopOffsetsForPopup, setTabContentTopOffsetsForPopup] =
+    useState<number[] | null>(null);
+  const [popupScrollTracker, setPopupScrollTracker] = useState({
+    25: false,
+    50: false,
+    75: false,
+    90: false,
+  });
   const priceBlockWrapperRef = useRef<HTMLDivElement>();
-
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
 
@@ -329,6 +371,48 @@ const Product = (props: any) => {
   const handlePopup = () => {
     togglePopup();
   };
+
+  useEffect(() => {
+    if (!productRef.current) return;
+    const element = productRef.current;
+
+    const { listingPrice } = tourPrices[tgid] ?? {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    const extraProps = {
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+        reviewsDetails,
+        boosterType,
+      }),
+    };
+
+    element.addEventListener(
+      'click',
+      (e) => trackDeadClick(e, extraProps),
+      false
+    );
+
+    return () =>
+      element?.removeEventListener(
+        'click',
+        (e) => trackDeadClick(e, extraProps),
+        false
+      );
+  }, [productRef]);
 
   const sendBookNowEvent = (placement?: string) => {
     const placementProperty = placement
@@ -794,15 +878,22 @@ const Product = (props: any) => {
       isLoading={isProductCardLoading}
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
+      showPopup={showPopup}
       onClick={() => {
-        trackedToggleContent(true);
-        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-        addToAside({
-          width: '540px',
-          sidePadding: 20,
-          children: getProductCardElements(true, isProductCardLoading, true),
-          type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
-        });
+        trackedToggleContent(false);
+
+        if (showPopup) {
+          popupController.current?.open();
+          setIsUnScrolled(true);
+        } else {
+          // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
+          addToAside({
+            width: '540px',
+            sidePadding: 20,
+            children: getProductCardElements(true, isProductCardLoading, true),
+            type: SIDEBAR_TYPES.PRODUCT_CARD_EXP,
+          });
+        }
       }}
     />
   ) : (
@@ -836,13 +927,136 @@ const Product = (props: any) => {
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
+  const popupScrollHandler = debounce(
+    (scrollTop: number = 0, startWithReviews: boolean = false) => {
+      if (!popupContainerRef.current) return;
+      if (currentTabActiveIndexForPopup.isForcedChange) {
+        setCurrentTabActiveIndexForPopup({
+          index: currentTabActiveIndexForPopup.index,
+          isForcedChange: false,
+        });
+        return;
+      }
+
+      const hasReviewSection = document.body.querySelector(
+        '#review-section-title'
+      );
+
+      let offsets: number[] = [];
+      if (!tabContentTopOffsetsForPopup) {
+        const headings =
+          popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
+            '.tour-description h6'
+          );
+        if (!headings) return;
+        const tourTags = popupContainerRef.current.querySelector('.tour-tags');
+        const imageContainerHeight =
+          popupContainerRef.current.querySelector('.card-img')?.clientHeight;
+        headings.forEach((element, index) => {
+          let finalOffset = element.offsetTop - 24;
+          if (index === 0 && tourTags) finalOffset -= tourTags.clientHeight;
+          if (imageContainerHeight) finalOffset += imageContainerHeight;
+          offsets.push(finalOffset);
+        });
+        if (reviewsDetails && hasReviewSection)
+          setTabContentTopOffsetsForPopup(offsets);
+      } else {
+        offsets = tabContentTopOffsetsForPopup;
+      }
+
+      const totalSize = popupContainerRef.current.clientHeight;
+      const scrollTrack = popupScrollTracker;
+      const checkScrollTracking = (offset: number) => {
+        Object.keys(scrollTrack)
+          .map((key) => Number(key))
+          .forEach((threshold) => {
+            if (scrollTrack[threshold as keyof typeof scrollTrack]) return;
+
+            if ((offset * 100) / totalSize >= threshold) {
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
+                [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: threshold,
+                [ANALYTICS_PROPERTIES.TGID]: tgid,
+              });
+              scrollTrack[threshold as keyof typeof scrollTrack] = true;
+            }
+          });
+        setPopupScrollTracker(scrollTrack);
+      };
+
+      if (startWithReviews && reviewsDetails) {
+        setCurrentTabActiveIndexForPopup({
+          index: offsets.length - 1,
+          isForcedChange: true,
+        });
+        setIsUnScrolled(false);
+        popupContainerRef.current.scrollTo({
+          top: offsets[offsets.length - 1],
+          behavior: 'smooth',
+        });
+        checkScrollTracking(offsets[offsets.length - 1]);
+      } else {
+        let indexToScrollTo = currentTabActiveIndexForPopup.index,
+          minDifference = 10000;
+        for (let index = 0; index < offsets.length; index++) {
+          const offset = offsets[index];
+          const difference = Math.abs(scrollTop - offset);
+          if (difference < minDifference) {
+            minDifference = difference;
+            indexToScrollTo = index;
+          }
+          if (offset > scrollTop) break;
+        }
+
+        setCurrentTabActiveIndexForPopup({
+          index: indexToScrollTo,
+          isForcedChange: false,
+        });
+
+        setIsUnScrolled(scrollTop < 100);
+        checkScrollTracking(scrollTop);
+      }
+    },
+    100
+  );
+
+  const popupTopNavigationOnClick = (index: number) => {
+    if (!tabContentTopOffsetsForPopup || !popupContainerRef?.current) return;
+
+    setCurrentTabActiveIndexForPopup({ index, isForcedChange: true });
+    popupContainerRef.current.scrollTo({
+      top: tabContentTopOffsetsForPopup[index],
+      behavior: 'smooth',
+    });
+
+    let heading;
+    if (index === tabs.length)
+      heading = strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews;
+    else heading = tabs[index].heading;
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+      ...getCommonEventMetaData(pageMetaData),
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+  };
   const showGuidedTourDescriptor =
     (scorpioData.primarySubCategory ?? primarySubCategory)?.id !== 1010;
 
   const getProductCardElements = (
     expandContent: any,
     isLoading?: boolean,
-    isAsideBarOverlay = false
+    isAsideBarOverlay = false,
+    isPopup = false
   ) => {
     if (!expandContent && isSmallComboCard)
       return (
@@ -922,7 +1136,7 @@ const Product = (props: any) => {
           $isModifiedProductCard={isModifiedProductCard || isAsideBarOverlay}
           $isPoiMwebCard={isPoiMwebCard}
           $isAsideBarOverlay={isAsideBarOverlay}
-          // @ts-ignore
+          $isPopup={isPopup}
           ref={productRef}
         >
           <Conditional if={boosterTypeIfShown}>
@@ -932,7 +1146,7 @@ const Product = (props: any) => {
               isOverlay={isMobile ? expandContent : isAsideBarOverlay}
             />
           </Conditional>
-          <Conditional if={isMobile && isV3Design && productImage}>
+          <Conditional if={isMobile && isV3Design && productImage && !isPopup}>
             <div
               data-card-section={CARD_SECTION_MARKERS.IMAGE}
               className="card-img"
@@ -961,7 +1175,7 @@ const Product = (props: any) => {
               />
             </div>
           </Conditional>
-          <Conditional if={!isTicketCard && images?.length}>
+          <Conditional if={!isTicketCard && images?.length && !isPopup}>
             <div className="card-img">
               <Conditional
                 if={isGuidedTour && !isProductCardLoading && !isAsideBarOverlay}
@@ -1012,7 +1226,30 @@ const Product = (props: any) => {
                     scorpioData.primarySubCategory ?? primarySubCategory
                   }
                 />
-                <Ratings reviewsDetails={reviewsDetails} />
+                <Ratings
+                  reviewsDetails={reviewsDetails}
+                  onRatingsCountClick={
+                    showPopup && reviewsDetails
+                      ? () => {
+                          trackEvent({
+                            eventName:
+                              ANALYTICS_EVENTS.NEWS_PAGE.RATINGS_WIDGET_CLICKED,
+                            [ANALYTICS_PROPERTIES.PLACEMENT]: isPopup
+                              ? PRODUCT_CARD_REVAMP.PLACEMENT.MORE_DETAILS
+                              : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
+                            ...getProductCommonProperties({
+                              reviewsDetails,
+                            }),
+                          });
+                          if (!isPopup) {
+                            popupController.current?.open();
+                            trackedToggleContent(false);
+                          }
+                          popupScrollHandler(0, true);
+                        }
+                      : undefined
+                  }
+                />
               </CategoryAndRatingContainer>
             </Conditional>
 
@@ -1045,7 +1282,7 @@ const Product = (props: any) => {
                 !(isMobile
                   ? showAvailabilityInTitleMobile
                   : showAvailabilityInTitle) &&
-                isAsideBarOverlay
+                (isAsideBarOverlay || isPopup)
               }
             >
               <NextAvailable
@@ -1059,7 +1296,9 @@ const Product = (props: any) => {
               />
             </Conditional>
 
-            <Conditional if={mbTheme === THEMES.MIN_BLUE || isAsideBarOverlay}>
+            <Conditional
+              if={mbTheme === THEMES.MIN_BLUE || isAsideBarOverlay || isPopup}
+            >
               <ProductDescriptors
                 isLoading={isLoading}
                 descriptorArray={descriptorsList}
@@ -1069,7 +1308,11 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isCombo={isCombo}
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
-                horizontal={isPoiMwebCard ? isMobile : isAsideBarOverlay}
+                horizontal={
+                  isPoiMwebCard ? isMobile : isAsideBarOverlay || isPopup
+                }
+                cancellationPolicy={cancellationPolicy}
+                cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
                 showGuidedTourDescriptor={showGuidedTourDescriptor}
               />
             </Conditional>
@@ -1099,49 +1342,68 @@ const Product = (props: any) => {
                   );
                 }
               })}
-            <CTAContainer pageType={pageType}>
-              <PriceContainer pageType={pageType}>
-                <PriceBlock
-                  isMobile={isMobile}
-                  isLoading={isLoading}
-                  isSportsExperiment={isSportsExperiment}
-                  showScratchPrice={showScratchPrice}
-                  listingPrice={finalListingPrice}
-                  lang={currentLanguage}
-                  showSavings
-                  id={tgid}
-                  prefix
-                  key={'price-block'}
-                  wrapperRef={priceBlockWrapperRef}
-                  showNewDiscountTagDesign={
-                    isModifiedProductCard || isPoiMwebCard
-                  }
-                />
-              </PriceContainer>
-              <Conditional if={isTicketCard && promo_code}>
-                <PromoCodeBlock
-                  {...props}
-                  isTicketCardDetailPopup
-                  currencyCode={finalListingPrice?.currencyCode ?? ''}
-                />
-              </Conditional>
-              <Conditional if={!isLoading}>
-                <CTABlock
-                  isSticky={expandContent}
-                  shouldOffset={
-                    earliestAvailability && mbTheme === THEMES.MIN_BLUE
-                  }
-                  isTicketCard={isTicketCard}
-                >
-                  <Conditional if={!isCombo}>
-                    <a
-                      target={isMobile ? '_self' : '_blank'}
-                      href={productBookingUrl}
-                      rel="nofollow noreferrer"
-                    >
+            <Conditional if={!isPopup}>
+              <CTAContainer pageType={pageType}>
+                <PriceContainer pageType={pageType}>
+                  <PriceBlock
+                    isMobile={isMobile}
+                    isLoading={isLoading}
+                    isSportsExperiment={isSportsExperiment}
+                    showScratchPrice={showScratchPrice}
+                    listingPrice={finalListingPrice}
+                    lang={currentLanguage}
+                    showSavings
+                    id={tgid}
+                    prefix
+                    key={'price-block'}
+                    wrapperRef={priceBlockWrapperRef}
+                    newDiscountTagDesignProps={
+                      isModifiedProductCard || isPoiMwebCard
+                    }
+                  />
+                </PriceContainer>
+                <Conditional if={isTicketCard && promo_code}>
+                  <PromoCodeBlock
+                    {...props}
+                    isTicketCardDetailPopup
+                    currencyCode={finalListingPrice?.currencyCode ?? ''}
+                  />
+                </Conditional>
+                <Conditional if={!isLoading}>
+                  <CTABlock
+                    isSticky={expandContent}
+                    shouldOffset={
+                      earliestAvailability && mbTheme === THEMES.MIN_BLUE
+                    }
+                    isTicketCard={isTicketCard}
+                  >
+                    <Conditional if={!isCombo}>
+                      <a
+                        target={isMobile ? '_self' : '_blank'}
+                        href={productBookingUrl}
+                        rel="nofollow noreferrer"
+                      >
+                        <BookNowCta
+                          clickHandler={() =>
+                            sendBookNowEvent(
+                              expandContent
+                                ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
+                                : isAsideBarOverlay
+                                ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
+                                : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                            )
+                          }
+                          isMobile={isMobile}
+                          mbTheme={mbTheme}
+                          ctaText={getBookNowButtonText()}
+                        />
+                      </a>
+                    </Conditional>
+                    <Conditional if={isCombo}>
                       <BookNowCta
+                        showLoadingState={false}
                         clickHandler={() =>
-                          sendBookNowEvent(
+                          handleShowComboPopup(
                             expandContent
                               ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
                               : isAsideBarOverlay
@@ -1153,56 +1415,39 @@ const Product = (props: any) => {
                         mbTheme={mbTheme}
                         ctaText={getBookNowButtonText()}
                       />
-                    </a>
-                  </Conditional>
-                  <Conditional if={isCombo}>
-                    <BookNowCta
-                      showLoadingState={false}
-                      clickHandler={() =>
-                        handleShowComboPopup(
-                          expandContent
-                            ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
-                            : isAsideBarOverlay
-                            ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
-                            : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
-                        )
-                      }
-                      isMobile={isMobile}
-                      mbTheme={mbTheme}
-                      ctaText={getBookNowButtonText()}
-                    />
-                  </Conditional>
-                </CTABlock>
-              </Conditional>
-              <Conditional
-                if={
-                  showNextAvailable &&
-                  showEarliestAvailability &&
-                  !isOpenDated &&
-                  !(isMobile
-                    ? showAvailabilityInTitleMobile
-                    : showAvailabilityInTitle) &&
-                  !isAsideBarOverlay
-                }
-              >
-                <NextAvailable
-                  showSkeleton={
-                    !showEarliestAvailability &&
-                    !earliestAvailability &&
-                    !earliestAvailability?.startDate
+                    </Conditional>
+                  </CTABlock>
+                </Conditional>
+                <Conditional
+                  if={
+                    showNextAvailable &&
+                    showEarliestAvailability &&
+                    !isOpenDated &&
+                    !(isMobile
+                      ? showAvailabilityInTitleMobile
+                      : showAvailabilityInTitle) &&
+                    !isAsideBarOverlay &&
+                    !isPopup
                   }
-                  earliestAvailability={earliestAvailability}
-                  currentLanguage={currentLanguage}
-                />
-              </Conditional>
-              <Conditional if={isMobile && isSpecialGuidedTour}>
-                <GuidesBanner isInSwipeSheet />
-              </Conditional>
-              <Conditional
-                if={isMobile && !expandContent && isSpecialGuidedTour}
-              >
-                <TourAvailableInLanguages>
-                  {/*
+                >
+                  <NextAvailable
+                    showSkeleton={
+                      !showEarliestAvailability &&
+                      !earliestAvailability &&
+                      !earliestAvailability?.startDate
+                    }
+                    earliestAvailability={earliestAvailability}
+                    currentLanguage={currentLanguage}
+                  />
+                </Conditional>
+                <Conditional if={isMobile && isSpecialGuidedTour}>
+                  <GuidesBanner isInSwipeSheet />
+                </Conditional>
+                <Conditional
+                  if={isMobile && !expandContent && isSpecialGuidedTour}
+                >
+                  <TourAvailableInLanguages>
+                    {/*
                 TODO: import language labels from scorpio and prismic here
                 {isSpecialGuidedTour &&
                   strings.formatString(
@@ -1213,41 +1458,48 @@ const Product = (props: any) => {
                       .map((label) => strings.LANGUAGES[label])
                       .join(', ')
                   )} */}
-                </TourAvailableInLanguages>
-              </Conditional>
-              <Conditional if={isOpenDated && isMobile}>
-                <OpenDatedDescriptor>
-                  <Emoji symbol="😇" label="blessed-face" />{' '}
-                  {strings.OPEN_DATED_DESCRIPTOR}
-                </OpenDatedDescriptor>
-              </Conditional>
-              <Conditional
-                if={mbTheme !== THEMES.MIN_BLUE && !isAsideBarOverlay}
-              >
-                <ProductDescriptors
-                  isLoading={isLoading}
-                  descriptorArray={descriptorsList}
-                  pageType={pageType}
-                  minDuration={minDuration}
-                  maxDuration={maxDuration}
-                  lang={currentLanguage}
-                  isCombo={isCombo}
-                  isGpMotorTicketsMb={isGpMotorTicketsMb}
-                  showLanguages={
-                    (!isMobile || expandContent) && isSpecialGuidedTour
+                  </TourAvailableInLanguages>
+                </Conditional>
+                <Conditional if={isOpenDated && isMobile}>
+                  <OpenDatedDescriptor>
+                    <Emoji symbol="😇" label="blessed-face" />{' '}
+                    {strings.OPEN_DATED_DESCRIPTOR}
+                  </OpenDatedDescriptor>
+                </Conditional>
+                <Conditional
+                  if={
+                    mbTheme !== THEMES.MIN_BLUE &&
+                    !isAsideBarOverlay &&
+                    !isPopup
                   }
-                  uid={uid}
-                  horizontal={isPoiMwebCard}
-                  showIcons={!isPoiMwebCard}
-                  cancellationPolicy={cancellationPolicy}
-                  cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
-                  isMobile={isMobile}
-                  showGuidedTourDescriptor={showGuidedTourDescriptor}
-                />
-              </Conditional>
-            </CTAContainer>
+                >
+                  <ProductDescriptors
+                    isLoading={isLoading}
+                    descriptorArray={descriptorsList}
+                    pageType={pageType}
+                    minDuration={minDuration}
+                    maxDuration={maxDuration}
+                    lang={currentLanguage}
+                    isCombo={isCombo}
+                    isGpMotorTicketsMb={isGpMotorTicketsMb}
+                    showLanguages={
+                      (!isMobile || expandContent) && isSpecialGuidedTour
+                    }
+                    uid={uid}
+                    horizontal={isPoiMwebCard}
+                    showIcons={!isPoiMwebCard}
+                    cancellationPolicy={cancellationPolicy}
+                    cancellationPolicyHoverCallBack={
+                      trackCancellationPolicyHover
+                    }
+                    isMobile={isMobile}
+                    showGuidedTourDescriptor={showGuidedTourDescriptor}
+                  />
+                </Conditional>
+              </CTAContainer>
+            </Conditional>
           </ProductHeader>
-          <Conditional if={!isMobile && !isAsideBarOverlay}>
+          <Conditional if={!isMobile && !isAsideBarOverlay && !isPopup}>
             <HorizontalLine colorProp={COLORS.GRAY.G6} />
           </Conditional>
           <ProductBody
@@ -1291,13 +1543,15 @@ const Product = (props: any) => {
                     moreDetailsCTA={getMoreDetailsButton()}
                   />
                 </Conditional>
-                <Conditional if={hasHighlights}>
+                <Conditional if={hasHighlights || isPopup}>
                   <PrismicRichText
-                    field={highlights || []}
+                    field={isPopup ? finalHighlights : highlights || []}
                     components={shortCodeSerializer}
                   />
                 </Conditional>
-                <Conditional if={tabs.length && !isSpecialGuidedTour}>
+                <Conditional
+                  if={!isPopup && tabs.length && !isSpecialGuidedTour}
+                >
                   {isAsideBarOverlay ? (
                     <HighlightTabs
                       isLoading={isProductCardLoading}
@@ -1312,6 +1566,13 @@ const Product = (props: any) => {
                   ) : (
                     getHighlightTabs
                   )}
+                </Conditional>
+                <Conditional if={isPopup && reviewsDetails}>
+                  <ReviewSection
+                    reviewsDetails={reviewsDetails}
+                    tgid={tgid}
+                    topReviews={topReviews}
+                  />
                 </Conditional>
               </div>
             </Conditional>
@@ -1378,6 +1639,124 @@ const Product = (props: any) => {
         <div className="indicator-triangle"></div>
       </Conditional>
       {getProductCardElements(isContentOpen, isProductCardLoading)}
+      <Conditional if={showPopup}>
+        <Popup controller={popupController}>
+          <PopupContainer
+            onScroll={(e) => {
+              if (!e.currentTarget) return;
+              popupScrollHandler(e.currentTarget.scrollTop);
+            }}
+            ref={popupContainerRef}
+            tabIndex={0}
+          >
+            <Conditional if={images}>
+              <div className="card-img">
+                <ExpandedGallery images={images} />
+              </div>
+            </Conditional>
+            {getProductCardElements(
+              isContentOpen,
+              isProductCardLoading,
+              false,
+              true
+            )}
+          </PopupContainer>
+          <NavigationBar
+            tabs={tabs}
+            currentActiveIndex={currentTabActiveIndexForPopup.index}
+            isVisible={!isUnScrolled}
+            onItemClick={popupTopNavigationOnClick}
+            isReviewsSectionPresent={reviewsDetails}
+          />
+          <CloseButton
+            isHighlighted={isUnScrolled}
+            onClick={() => {
+              popupController.current?.close(true);
+            }}
+          />
+          <PopupPricingUnit>
+            <CTAContainer pageType={pageType}>
+              <SlideUpContainer
+                $isTitleVisible={!isUnScrolled}
+                ref={priceblockTitleContainerRef}
+              >
+                <SlideUpTitle
+                  $maxWidth={priceblockTitleContainerRef?.current?.clientWidth}
+                >
+                  {cardTitle}
+                </SlideUpTitle>
+              </SlideUpContainer>
+              <PriceContainer pageType={pageType}>
+                <PriceBlock
+                  isMobile={isMobile}
+                  isLoading={isProductCardLoading}
+                  isSportsExperiment={isSportsExperiment}
+                  showScratchPrice={showScratchPrice}
+                  listingPrice={finalListingPrice}
+                  lang={currentLanguage}
+                  showSavings
+                  id={tgid}
+                  prefix
+                  key={'price-block'}
+                  wrapperRef={priceBlockWrapperRef}
+                  newDiscountTagDesignProps={{ shouldPointLeft: true }}
+                />
+              </PriceContainer>
+              <Conditional if={isTicketCard && promo_code}>
+                <PromoCodeBlock
+                  {...props}
+                  isTicketCardDetailPopup
+                  currencyCode={finalListingPrice?.currencyCode ?? ''}
+                />
+              </Conditional>
+              <CTABlock
+                isSticky={false}
+                shouldOffset={
+                  earliestAvailability && mbTheme === THEMES.MIN_BLUE
+                }
+                isTicketCard={isTicketCard}
+              >
+                <Conditional if={!isCombo}>
+                  <a
+                    target={isMobile ? '_self' : '_blank'}
+                    href={productBookingUrl}
+                    rel="nofollow noreferrer"
+                  >
+                    <BookNowCta
+                      clickHandler={() => {
+                        sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                      }}
+                      isMobile={isMobile}
+                      mbTheme={mbTheme}
+                      ctaText={getBookNowButtonText()}
+                    />
+                  </a>
+                </Conditional>
+                <Conditional if={isCombo}>
+                  <BookNowCta
+                    showLoadingState={false}
+                    clickHandler={() => {
+                      handleShowComboPopup(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                    }}
+                    isMobile={isMobile}
+                    mbTheme={mbTheme}
+                    ctaText={getBookNowButtonText()}
+                  />
+                </Conditional>
+              </CTABlock>
+              <Conditional if={isMobile && isSpecialGuidedTour}>
+                <GuidesBanner isInSwipeSheet />
+              </Conditional>
+              <Conditional if={isOpenDated && isMobile}>
+                <OpenDatedDescriptor>
+                  <Emoji symbol="😇" label="blessed-face" />{' '}
+                  {strings.OPEN_DATED_DESCRIPTOR}
+                </OpenDatedDescriptor>
+              </Conditional>
+            </CTAContainer>
+          </PopupPricingUnit>
+        </Popup>
+      </Conditional>
     </Container>
   );
 

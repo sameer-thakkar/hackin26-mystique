@@ -7,10 +7,13 @@ import StarFull from 'assets/starFull';
 import { TRatingsContainerProps } from '../interface';
 import { StyledRatingsContainer } from '../styles';
 
-const Ratings = ({ reviewsDetails }: TRatingsContainerProps) => {
+const Ratings = ({
+  reviewsDetails,
+  onRatingsCountClick,
+}: TRatingsContainerProps) => {
   if (!reviewsDetails) return null;
 
-  const { ratingCount, averageRating, showRatings } = reviewsDetails;
+  const { ratingsCount, averageRating, showRatings } = reviewsDetails;
 
   if (showRatings === undefined) return null;
 
@@ -25,10 +28,19 @@ const Ratings = ({ reviewsDetails }: TRatingsContainerProps) => {
       </span>
       {showRatings && (
         <span
-          data-card-section={CARD_SECTION_MARKERS.REVIEWS}
           className="rating-count"
+          onClick={onRatingsCountClick}
+          role="button"
+          {...(!onRatingsCountClick && {
+            'data-card-section': CARD_SECTION_MARKERS.REVIEWS,
+          })}
+          tabIndex={0}
         >
-          ({truncateNumber(ratingCount).toUpperCase()})
+          (
+          <span className={`${onRatingsCountClick && 'underline'}`}>
+            {truncateNumber(ratingsCount).toUpperCase()}
+          </span>
+          )
         </span>
       )}
     </StyledRatingsContainer>

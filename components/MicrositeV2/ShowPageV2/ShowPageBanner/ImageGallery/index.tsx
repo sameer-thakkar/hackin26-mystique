@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import { TImageGalleryProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
+import Conditional from 'components/common/Conditional';
+import type { TImageGalleryProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import {
   AllPhotosCta,
   GalleryPopup,
@@ -13,12 +14,23 @@ import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import AllPhotos from 'assets/allPhotos';
+import BackArrow from 'assets/backArrow';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
-import SweipesheetCross from 'assets/sweipesheetCross';
+import SwipesheetCross from 'assets/swipesheetCross';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
-const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
+const ImageGallery = ({
+  imageUploads,
+  startFrom = 0,
+  onHide,
+  showMoreButton = true,
+  hideFirstImageInOverlay = false,
+  controlBodyOverflow = true,
+  navigation = 'cross',
+  imageDimensions,
+  controller,
+}: TImageGalleryProps) => {
   const [isPopupActive, setisPopupActive] = useState(false);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -26,7 +38,7 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
   const swiperParams: SwiperProps = {
     slidesPerView: 1,
     centeredSlides: false,
-    initialSlide: 0,
+    initialSlide: startFrom,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     direction: 'horizontal',
   };
@@ -38,31 +50,45 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
       [ANALYTICS_PROPERTIES.SECTION]: 'Header',
     });
     setisPopupActive(true);
-    setActiveIndex(0);
-    swiper?.slideTo(0);
-    document.body.style.overflow = 'hidden';
+    if (controlBodyOverflow) document.body.style.overflow = 'hidden';
   };
+
   const closePopup = () => {
     setisPopupActive(false);
-    document.body.style.overflow = 'auto';
+    if (controlBodyOverflow) document.body.style.overflow = 'auto';
+    onHide?.();
   };
+
+  useEffect(() => {
+    if (controller) {
+      controller.current = {
+        open: openPopup,
+        close: closePopup,
+      };
+    }
+  }, []);
 
   useEffect(() => {
     const bannerVideo = document.getElementById(
       'show-page-banner'
     ) as HTMLVideoElement;
-    if (!bannerVideo) return;
+    if (!bannerVideo && !controller) return;
 
     const closeCalendarOnEscapePressed = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closePopup();
+      } else if (event.key === 'ArrowRight') {
+        moveNext();
+      } else if (event.key === 'ArrowLeft') {
+        movePrev();
       }
     };
+
     if (isPopupActive) {
-      bannerVideo.pause();
+      bannerVideo?.pause();
       window.addEventListener('keydown', closeCalendarOnEscapePressed);
     } else {
-      bannerVideo.play();
+      bannerVideo?.play();
       window.removeEventListener('keydown', closeCalendarOnEscapePressed);
     }
 
@@ -71,28 +97,22 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
   }, [isPopupActive]);
 
   const onListImageClicked = (index: number) => {
-    setActiveIndex(index);
     swiper?.slideTo(index);
   };
 
-  const onSlideChange = (swiper: TSwiper) => {
-    setActiveIndex(swiper.realIndex);
+  const moveNext = () => {
+    swiper?.slideNext();
   };
-  const goNext = () => {
-    if (swiper !== null) {
-      swiper.slideNext();
-    }
-  };
-  const goPrev = () => {
-    if (swiper !== null) {
-      swiper.slidePrev();
-    }
+
+  const movePrev = () => {
+    swiper?.slidePrev();
   };
 
   useEffect(() => {
     const selectedListImage = document.querySelector(
       `.image-gallery-list-${activeIndex}`
     );
+
     selectedListImage?.scrollIntoView({
       inline: 'center',
       behavior: 'smooth',
@@ -109,9 +129,11 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
 
   return (
     <ImageGalleryWrapper>
-      <AllPhotosCta onClick={openPopup}>
-        {AllPhotos} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
-      </AllPhotosCta>
+      <Conditional if={showMoreButton}>
+        <AllPhotosCta onClick={() => openPopup()}>
+          {AllPhotos} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
+        </AllPhotosCta>
+      </Conditional>
 
       <GalleryPopup isPopupActive={isPopupActive}>
         <div
@@ -121,71 +143,98 @@ const ImageGallery = ({ imageUploads }: TImageGalleryProps) => {
           tabIndex={0}
         ></div>
         <div className="header">
-          <div className="all-photos">{strings.LTT_SHOW_PAGE.ALL_PHOTOS}</div>
-          <div
-            className="close-button"
-            onClick={closePopup}
-            role="button"
-            tabIndex={0}
-          >
-            {SweipesheetCross}
+          <div className="all-photos">
+            <Conditional if={navigation === 'arrow'}>
+              <div
+                className="close-button"
+                onClick={closePopup}
+                role="button"
+                tabIndex={0}
+              >
+                <BackArrow />
+              </div>
+            </Conditional>
+            {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
           </div>
+          <Conditional if={navigation === 'cross'}>
+            <div
+              className="close-button"
+              onClick={closePopup}
+              role="button"
+              tabIndex={0}
+            >
+              {SwipesheetCross}
+            </div>
+          </Conditional>
         </div>
         <div className="main-content">
           <div className="primary-section">
             <div
-              onClick={goPrev}
+              onClick={movePrev}
               role="button"
               tabIndex={0}
               className={`chevron chevron-left ${
-                activeIndex <= 0 ? 'inactive' : ''
+                (activeIndex ?? 0) <= 0 ? 'inactive' : ''
               }`}
             >
               {ChevronLeftCircle}
             </div>
             <div
-              onClick={goNext}
+              onClick={moveNext}
               role="button"
               tabIndex={0}
               className={`chevron chevron-right ${
-                activeIndex >= imageUploads.length - 2 ? 'inactive' : ''
+                (activeIndex ?? 0) >= imageUploads.length - 1 ? 'inactive' : ''
               }`}
             >
               {ChevronLeftCircle}
             </div>
 
-            <Swiper {...swiperParams} onSlideChange={onSlideChange}>
-              {imageUploads.slice(1).map(({ url, alt }, index) => (
+            <Swiper
+              {...swiperParams}
+              onSlideChange={({ realIndex }) => setActiveIndex(realIndex)}
+            >
+              {imageUploads
+                .slice(hideFirstImageInOverlay ? 1 : 0)
+                .map(({ url, alt }, index) => (
+                  <Image
+                    url={url}
+                    alt={alt}
+                    priority
+                    autoCrop={true}
+                    className={`image-gallery-${index} image-gallery-primary`}
+                    fetchPriority="high"
+                    fitCrop={true}
+                    key={`main-${index}`}
+                    {...(imageDimensions?.spotlight && {
+                      ...imageDimensions?.spotlight,
+                    })}
+                  />
+                ))}
+            </Swiper>
+          </div>
+          <div className="image-list-section">
+            {imageUploads
+              .slice(hideFirstImageInOverlay ? 1 : 0)
+              .map(({ url, alt }, index) => (
                 <Image
+                  draggable={false}
                   url={url}
                   alt={alt}
                   priority
                   autoCrop={true}
-                  className={`image-gallery-${index} image-gallery-primary`}
+                  className={`image-gallery-list-${index} gallery-list-image ${
+                    activeIndex === index ? 'active' : ''
+                  }`}
                   fetchPriority="high"
                   fitCrop={true}
-                  key={index}
+                  key={`tn-${index}`}
+                  onClick={() => onListImageClicked(index)}
+                  {...(imageDimensions?.thumbnail && {
+                    ...imageDimensions?.thumbnail,
+                  })}
                 />
               ))}
-            </Swiper>
-          </div>
-          <div className="image-list-section">
-            {imageUploads.slice(1).map(({ url, alt }, index) => (
-              <Image
-                draggable={false}
-                url={url}
-                alt={alt}
-                priority
-                autoCrop={true}
-                className={`image-gallery-list-${index} gallery-list-image ${
-                  activeIndex === index ? 'active' : ''
-                }`}
-                fetchPriority="high"
-                fitCrop={true}
-                key={index}
-                onClick={() => onListImageClicked(index)}
-              />
-            ))}
           </div>
         </div>
       </GalleryPopup>

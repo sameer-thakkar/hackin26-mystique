@@ -35,7 +35,7 @@ import StarFullNew from 'assets/starFullNew';
 import StarHalfNew from 'assets/starHalfNew';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
-  let tabs: Record<string, any> = [];
+  let tabs: any[] = [];
   const nonTabHighlights = highlights?.reduce(
     (acc: Record<string, any>[], highlight: RTNode & { content: RTNode }) => {
       if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
@@ -263,7 +263,6 @@ export const extractContentForProductCard = (
   let rightContent: any = [];
 
   if (tabsMarkdown.length > 0) {
-    // @ts-expect-error TS(7006): Parameter 'md' implicitly has an 'any' type.
     const filteredMarkdown = tabsMarkdown?.filter((md) => {
       const values = [
         strings.SHOW_PAGE.THEATRE_NAME,
@@ -298,7 +297,6 @@ export const extractContentForProductCard = (
       'Cancellation',
       strings.SHOW_PAGE.AGE_LIMIT,
     ];
-    // @ts-expect-error TS(7006): Parameter 'highlight' implicitly has an 'any' type... Remove this comment to see the full error message
     tabsMarkdownLeft.forEach((highlight) => {
       if (isLeftBlock.includes(highlight?.heading)) {
         leftContent.push({
@@ -308,7 +306,6 @@ export const extractContentForProductCard = (
       }
     });
 
-    // @ts-expect-error TS(7006): Parameter 'highlight' implicitly has an 'any' type... Remove this comment to see the full error message
     tabsMarkdownRight.forEach((highlight) => {
       const isCancellation =
         highlight?.heading === strings.SHOW_PAGE.CANCELLATION_POLICY ||

@@ -105,10 +105,11 @@ export type TReviewProps = {
 
 export type TRatingsContainerProps = {
   reviewsDetails?: {
-    ratingCount?: number;
+    ratingsCount?: number;
     averageRating?: number;
     showRatings?: boolean;
   };
+  onRatingsCountClick?: () => void;
 };
 
 export type TCategoryContainerProps = {
@@ -129,4 +130,6 @@ export type TBoosterProps = {
 
 export type TDiscountTagProps = {
   discount: string | number;
+  showAngledTag?: boolean;
+  shouldPointLeft?: boolean;
 };

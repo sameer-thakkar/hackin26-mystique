@@ -11,6 +11,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
+import DiagonalArrow from 'assets/diagonalArrow';
 
 type Props = {
   hasRegularHighlights?: boolean;
@@ -18,6 +19,7 @@ type Props = {
   isLoading?: boolean;
   tabs?: any;
   onClick?: () => void;
+  showPopup?: boolean;
 };
 
 const Highlights = ({
@@ -26,6 +28,7 @@ const Highlights = ({
   tabs,
   isLoading,
   onClick,
+  showPopup = false,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
@@ -43,7 +46,11 @@ const Highlights = ({
       className={className}
       hasRegularHighlights={hasRegularHighlights}
     >
-      <HighlightsPanel ref={contentRef} $isOverlay={showViewMoreAsOverlay}>
+      <HighlightsPanel
+        ref={contentRef}
+        $isOverlay={showViewMoreAsOverlay}
+        $showPopup={showPopup}
+      >
         <Conditional if={!isLoading}>
           <>
             <PrismicRichText
@@ -76,9 +83,17 @@ const Highlights = ({
           </div>
         </Conditional>
       </HighlightsPanel>
-      <ViewMoreButton onClick={onClick} $isOverlay={showViewMoreAsOverlay}>
+      <ViewMoreButton
+        onClick={onClick}
+        $isOverlay={showViewMoreAsOverlay}
+        $showPopup={showPopup}
+      >
         {`${strings.PC_EXP.SHOW_INCL} `}
-        <ChevronRight fillColor={COLORS.BRAND.CANDY} />
+        {showPopup ? (
+          DiagonalArrow
+        ) : (
+          <ChevronRight fillColor={COLORS.BRAND.CANDY} />
+        )}
       </ViewMoreButton>
     </CompactHighlightsWrapper>
   );

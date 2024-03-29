@@ -1,9 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const DiscountTextContainer = styled.div`
+const withoutTagStyles = css`
+  border-radius: 0.25rem;
+  padding: 0 0.3125rem;
+`;
+
+export const DiscountTextContainer = styled.div<{
+  $showAngledTag?: boolean;
+}>`
   background: #088943;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
@@ -21,13 +28,33 @@ export const DiscountTextContainer = styled.div`
     color: ${COLORS.BRAND.WHITE};
     line-height: inherit;
   }
+
+  ${({ $showAngledTag }) => !$showAngledTag && withoutTagStyles}
 `;
 
-export const DiscountTagContainer = styled.div`
+export const DiscountTagContainer = styled.div<{ $shouldPointLeft?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   height: max-content;
   align-items: center;
   align-self: center;
+
+  ${({ $shouldPointLeft }) =>
+    $shouldPointLeft &&
+    css`
+      ${DiscountTextContainer} {
+        padding-left: 0.3125rem;
+        padding-right: 0;
+
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        transform: none;
+      }
+      svg {
+        transform: rotate(180deg);
+      }
+    `}
 `;

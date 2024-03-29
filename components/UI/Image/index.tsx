@@ -57,6 +57,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     blurFill = false,
     fetchPriority = 'auto',
     fallbackImg = '',
+    onLoadingComplete,
   },
   ref
 ) => {
@@ -160,6 +161,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
             setUseFallback(true);
           }
         }}
+        onLoadingComplete={onLoadingComplete}
       />
       <Conditional if={!!attribution}>
         <Tooltip content={attribution} trigger={InfoIcon} />

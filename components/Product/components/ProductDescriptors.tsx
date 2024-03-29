@@ -48,7 +48,7 @@ export const ProductDescriptors = ({
     );
 
   return (
-    <TourTags horizontal={horizontal} pageType={pageType}>
+    <TourTags horizontal={horizontal} pageType={pageType} className="tour-tags">
       {descriptorArray.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
@@ -58,7 +58,6 @@ export const ProductDescriptors = ({
           return null;
 
         const canShowCancellationPolicyHover =
-          !horizontal &&
           !isMobile &&
           cancellationPolicy &&
           item === DESCRIPTORS.FREE_CANCELLATION;

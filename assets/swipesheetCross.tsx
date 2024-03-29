@@ -1,4 +1,4 @@
-const SweipesheetCross = (
+const SwipesheetCross = (
   <svg
     width="16"
     height="16"
@@ -20,4 +20,4 @@ const SweipesheetCross = (
     />
   </svg>
 );
-export default SweipesheetCross;
+export default SwipesheetCross;

@@ -268,3 +268,40 @@ export const ShowMoreReviewsButton = styled.button`
     ${expandFontToken(FONTS.BUTTON_MEDIUM)};
   }
 `;
+
+export const ReviewSkeletonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 744px;
+  margin-bottom: 1rem;
+  line-height: 0;
+
+  :not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  .react-loading-skeleton {
+    z-index: 0;
+  }
+`;
+
+export const ReviewUserDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+export const ReviewUserDetailsTextContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: start;
+`;
+
+export const ReviewSkeletonMediaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+`;

@@ -155,7 +155,9 @@ type PriceBlockProps = {
   wrapperRef?: any;
   isMobile?: boolean;
   showDummyScratchPrice?: boolean;
-  showNewDiscountTagDesign?: boolean;
+  newDiscountTagDesignProps?:
+    | boolean
+    | { showAngledTag?: boolean; shouldPointLeft?: boolean };
 };
 
 const PriceBlock = ({
@@ -174,7 +176,7 @@ const PriceBlock = ({
   isMobile = false,
   wrapperRef,
   showDummyScratchPrice = false,
-  showNewDiscountTagDesign = false,
+  newDiscountTagDesignProps = false,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -205,7 +207,7 @@ const PriceBlock = ({
 
   if (bestDiscount > 0) {
     const contents = strings.formatString<string>(
-      showNewDiscountTagDesign ? strings.OFF_PERCENT : strings.SAVE,
+      newDiscountTagDesignProps ? strings.OFF_PERCENT : strings.SAVE,
       bestDiscount
     );
     if (Array.isArray(contents)) discountText = contents.join(' + ');
@@ -295,8 +297,12 @@ const PriceBlock = ({
           <Conditional
             if={showSavings && showScratchPrice && !!discountText.length}
           >
-            {showNewDiscountTagDesign ? (
-              <DiscountTag discount={discountText} />
+            {newDiscountTagDesignProps !== false ? (
+              <DiscountTag
+                discount={discountText}
+                {...(typeof newDiscountTagDesignProps !== 'boolean' &&
+                  newDiscountTagDesignProps)}
+              />
             ) : (
               <SavedTag
                 className="savedtag-block"

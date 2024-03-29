@@ -526,33 +526,12 @@ interface IStyledProductCard {
   $isAsideBarOverlay?: boolean;
   $isPoiMwebCard?: boolean;
   $showScratchPrice?: boolean;
+  $isPopup?: boolean;
   $isExperimentalCard?: boolean;
   $isDrawer?: boolean;
   $hasDiscount?: boolean;
   $isClicked?: boolean;
 }
-
-const modifiedProductCardStyles = css`
-  grid-row-gap: 0.5rem;
-  grid-template-rows: auto auto 1fr;
-  max-height: max-content;
-  position: relative;
-
-  .card-img {
-    width: 18rem;
-    min-height: 21.5rem;
-    max-height: 23rem;
-    height: 100%;
-  }
-
-  ${TitleWrapper} {
-    margin-bottom: 0.5rem;
-  }
-
-  ${ProductBody} {
-    align-self: stretch;
-  }
-`;
 
 export const CategoryIcon = styled.div<{
   $svgUrl: string;
@@ -632,6 +611,134 @@ export const CategoryAndRatingContainer = styled.div<{
         transform: translate(50%, 25%);
       }
     }
+  }
+`;
+
+export const SlideUpTitle = styled.h3<{ $maxWidth?: number }>`
+  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+  margin: 0;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  max-width: ${({ $maxWidth }) => ($maxWidth ? `${$maxWidth}px` : '100%')};
+  height: min-content;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 3rem;
+  text-overflow: ellipsis;
+`;
+
+export const SlideUpContainer = styled.div<{
+  $isTitleVisible?: boolean;
+}>`
+  margin: 0 auto 0 0;
+  position: relative;
+  height: 48px;
+  width: 100%;
+  overflow: hidden;
+
+  ${SlideUpTitle} {
+    opacity: ${({ $isTitleVisible }) => ($isTitleVisible ? 1 : 0)};
+    top: ${({ $isTitleVisible }) => ($isTitleVisible ? '50%' : '100%')};
+  }
+`;
+
+const popupStyles = css`
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 1rem;
+  margin: 0;
+  border: none;
+  padding: 0 1.5rem 3rem;
+  border-radius: 0;
+  overflow: initial;
+  max-height: 100%;
+  position: relative;
+
+  ::-webkit-scrollbar {
+    width: 0;
+    display: none;
+    visibility: hidden;
+  }
+
+  ${ProductHeader} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+
+    ${CategoryAndRatingContainer} {
+      margin-bottom: 0.5rem;
+    }
+
+    ${TitleWrapper} {
+      h2 {
+        font-family: ${HALYARD.FONT_STACK};
+        font-size: 1.3125rem;
+        font-weight: 500;
+        line-height: 1.75rem;
+        letter-spacing: 0px;
+        text-align: left;
+      }
+    }
+
+    ${TourTags} {
+      padding-top: 1.25rem;
+      width: 38.75rem;
+      row-gap: 1rem;
+    }
+
+    ${NextAvailableBlock} .available-text {
+      color: ${COLORS.TEXT.BEACH};
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+      margin-top: 0.5rem;
+    }
+  }
+
+  ${ProductBody} {
+    padding-bottom: 3rem;
+
+    .tour-description {
+      h6 {
+        ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+        margin: 2rem 0 1rem;
+
+        &:first-child {
+          margin-top: 0.5rem;
+        }
+
+        &:not(:first-child) {
+          padding-top: 2rem;
+          border-top: 1px solid ${COLORS.GRAY.G6};
+        }
+      }
+    }
+  }
+`;
+
+const modifiedProductCardStyles = css`
+  grid-row-gap: 0.5rem;
+  grid-template-rows: auto auto 1fr;
+  max-height: max-content;
+  position: relative;
+
+  .card-img {
+    width: 18rem;
+    min-height: 21.5rem;
+    max-height: 23rem;
+    height: 100%;
+  }
+
+  ${TitleWrapper} {
+    margin-bottom: 0.5rem;
+  }
+
+  ${ProductBody} {
+    align-self: stretch;
   }
 `;
 
@@ -954,7 +1061,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     border-radius: 0;
   }
 
-  ${({ $isModifiedProductCard, $isAsideBarOverlay }) => {
+  ${({ $isModifiedProductCard, $isAsideBarOverlay, $isPopup }) => {
+    if ($isPopup) return popupStyles;
     if ($isModifiedProductCard)
       return $isAsideBarOverlay ? asideBarStyles : modifiedProductCardStyles;
     return null;
@@ -1172,6 +1280,11 @@ export const StyledRatingsContainer = styled.div<{ $isSafari?: boolean }>`
       line-height: 0.9375rem;
       letter-spacing: 0em;
       text-align: left;
+
+      & .underline {
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
   }
 
@@ -2440,6 +2553,7 @@ export const CompactHighlightsWrapper = styled(HighlightTabsWrapper)`
 
 export const HighlightsPanel = styled.div<{
   $isOverlay?: boolean;
+  $showPopup?: boolean;
 }>`
   max-height: 15rem;
   overflow: hidden;
@@ -2449,7 +2563,7 @@ export const HighlightsPanel = styled.div<{
     display: none;
   }
 
-  ${({ $isOverlay }) =>
+  ${({ $isOverlay, $showPopup }) =>
     $isOverlay &&
     css`
       ::after {
@@ -2457,7 +2571,12 @@ export const HighlightsPanel = styled.div<{
         position: absolute;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to top, white, white 10%, transparent 50%);
+        background: linear-gradient(
+          to top,
+          white,
+          white ${$showPopup ? 16.5 : 10}%,
+          transparent 50%
+        );
         left: 0;
         bottom: 0;
         z-index: 0;
@@ -2471,7 +2590,10 @@ export const Heading = styled.h3`
   margin: 0;
 `;
 
-export const ViewMoreButton = styled.button<{ $isOverlay?: boolean }>`
+export const ViewMoreButton = styled.button<{
+  $isOverlay?: boolean;
+  $showPopup?: boolean;
+}>`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
   color: ${COLORS.BRAND.CANDY};
   background: none;
@@ -2493,6 +2615,37 @@ export const ViewMoreButton = styled.button<{ $isOverlay?: boolean }>`
     css`
       position: absolute;
       bottom: 0;
+    `}
+
+  ${({ $showPopup }) =>
+    $showPopup &&
+    css`
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+      padding: 0.5rem 0.5rem 0.6rem 1rem;
+      margin-left: 0;
+      background: ${COLORS.BACKGROUND.FADED_CANDY};
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+
+      svg {
+        margin-top: 1px;
+        margin-left: 1px;
+        height: 0.8rem;
+        path {
+          stroke: ${COLORS.BRAND.CANDY};
+          stroke-width: 0.12rem;
+        }
+        transition: all 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+        transform: rotate(45deg);
+      }
+
+      &:hover {
+        background: ${COLORS.CANDY.LIGHT_TONE_3};
+
+        svg {
+          transform: rotate(90deg);
+        }
+      }
     `}
 `;
 
@@ -2629,6 +2782,77 @@ export const BoosterContainer = styled.div<{
   }
 `;
 
+export const PopupContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 1rem;
+  margin: 0;
+  border: none;
+  max-height: 100%;
+  border-radius: 0;
+  overflow-y: auto;
+  position: relative;
+
+  ::-webkit-scrollbar {
+    width: 0;
+    display: none;
+    visibility: hidden;
+  }
+`;
+
+export const PopupPricingUnit = styled.div`
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+
+  ${CTAContainer} {
+    position: relative;
+    width: 45.5rem;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 0.75rem 2rem;
+    background-color: white;
+    box-shadow: 0px -2px 8px 0px #0000001a;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+
+    ${StyledPriceBlock} {
+      grid-template-columns: repeat(2, max-content);
+      grid-column-gap: 0;
+      grid-row-gap: 0.125rem;
+
+      .tour-scratch-price {
+        justify-content: end;
+      }
+
+      .tour-price-container {
+        flex-direction: row-reverse;
+
+        .tour-price {
+          margin-right: 0;
+          margin-left: 0.375rem;
+
+          .strike-through {
+            ${expandFontToken(FONTS.HEADING_SMALL)}
+          }
+        }
+      }
+    }
+
+    ${CTABlock} {
+      a {
+        ${ButtonContainer} {
+          min-width: 9.875rem;
+          width: max-content;
+          margin: 0 0 0 auto;
+        }
+      }
+    }
+  }
+`;
 function getMargin({ theme, isTicketCard, $isDrawer }: any) {
   if ($isDrawer) {
     return '0';

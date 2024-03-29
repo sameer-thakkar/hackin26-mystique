@@ -314,7 +314,7 @@ const MobileProductCard = (props: any) => {
                 prefix
                 key={'price-block'}
                 wrapperRef={priceBlockWrapperRef}
-                showNewDiscountTagDesign={true}
+                newDiscountTagDesignProps={true}
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
