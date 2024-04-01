@@ -63,7 +63,7 @@ export const getDocsForListicleSlice = async ({
 
   let docsForListicles: MicrositeDocument[] = [];
   let collectionsInListicles = [];
-  if (listicleSliceData && !isEmptyObject(listicleSliceData)) {
+  if (listicleSliceData && !isEmptyObject(listicleSliceData) && cities.length) {
     try {
       const prismicClient = createClient();
       const documents = await prismicClient.getAllByType('microsite', {

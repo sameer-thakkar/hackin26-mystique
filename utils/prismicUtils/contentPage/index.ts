@@ -42,7 +42,7 @@ const getPrismicContentPageRelatedDocs = (
   excludedShoulderTypes: string[]
 ) => {
   const prismicClient = createClient();
-  return prismicClient.get({
+  return prismicClient.getByType('content_page', {
     predicates: [
       predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
       predicate.at(`my.${CONTENT_PAGE}.${TAGGED_COLLECTION}`, collectionId),
