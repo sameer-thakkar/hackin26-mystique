@@ -270,7 +270,7 @@ const getContentPageDocument = async ({
           operatingSchedules: true,
           content: true,
         });
-        const childPoiCollectionIds = childPoisInfo?.map(
+        const childPoiCollectionIds = childPoisInfo?.pois?.map(
           (poi: any) => poi.linkedCollectionId
         );
         // fetch the collection for each child id and assign it in the poi object
@@ -282,7 +282,7 @@ const getContentPageDocument = async ({
               language: languageCode,
             })
           )?.collections;
-          childPoisInfo.forEach((poi: any) => {
+          childPoisInfo?.pois?.forEach((poi: any) => {
             poi.collectionInfo = childPoiCollectionsInfo?.find(
               (childPoiCollection: any) =>
                 childPoiCollection.id == poi.linkedCollectionId
@@ -326,7 +326,7 @@ const getContentPageDocument = async ({
         productCardData,
         relatedContentPages,
         poiInfo,
-        childPoisInfo,
+        childPoisInfo: childPoisInfo?.pois,
       },
     };
 

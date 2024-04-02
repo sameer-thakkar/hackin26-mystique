@@ -8,13 +8,10 @@ import HorizontalLine from './HorizontalLine';
 import PageTabs from './PageTabs';
 import RichTextBox from './RichTextBox';
 import RichtextWithCTA from './RichTextWithCTA';
-import ShowsGrid from './ShowsGrid';
-import ShowsList from './ShowsList';
 import { sliceWrapper } from './SliceWrapper';
 import Table from './Table';
 import TicketCard from './TickerCardSlice';
 import UGCCarousel from './UGCCarousel';
-import VerticalCardsGrid from './VerticalCardsGrid';
 
 // // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./CustomLinkedTours'));
@@ -822,46 +819,6 @@ export const sliceComponents = () => {
           heading={slice?.primary?.title}
           subHeading={slice?.primary?.sub_title}
           cards={slice?.items}
-        />,
-        props
-      );
-    },
-    vertical_cards_grid: (props: any) => {
-      const { slice, context } = props || {};
-      return sliceWrapper(
-        <VerticalCardsGrid
-          data={slice.items}
-          isMobile={context.isMobile}
-          heading={slice.primary.heading}
-        />,
-        props
-      );
-    },
-    shows_list: (props: any) => {
-      const { slice, context } = props || {};
-      return sliceWrapper(
-        <ShowsList
-          uid={context.uid}
-          isMobile={context.isMobile}
-          nowPlayingShows={context.nowPlayingShows}
-          upcomingShows={context.upcomingShows}
-          heading={slice.primary.heading}
-          sliceData={slice.items}
-          allShowPageUids={context.allShowPageUids}
-          isVenuePage={context.isVenuePage}
-        />,
-        props
-      );
-    },
-    shows_grid: (props: any) => {
-      const { slice, context } = props || {};
-      return sliceWrapper(
-        <ShowsGrid
-          isMobile={context.isMobile}
-          data={context.pastShows}
-          sliceData={slice.items}
-          allShowPageUids={context.allShowPageUids}
-          isVenuePage={context.isVenuePage}
         />,
         props
       );

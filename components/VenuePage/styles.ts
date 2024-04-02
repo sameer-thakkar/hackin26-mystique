@@ -18,7 +18,7 @@ export const VenuePageContainer = styled.div`
     }
   }
 
-  .theatre-info {
+  .theatre-information {
     ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
     margin-top: 1.5rem;
 

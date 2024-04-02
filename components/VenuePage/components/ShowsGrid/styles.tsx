@@ -4,7 +4,7 @@ import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
   width: calc(100vw - (5.46vw));
-  margin-top: 0.5rem;
+  margin-top: 4rem;
   h2 {
     ${expandFontToken(FONTS.HEADING_SMALL)};
     margin: 0;

@@ -5428,6 +5428,81 @@ export type ContentFrameworkDocumentDataBodyCriticsReviewSlice = prismic.Slice<
   Simplify<ContentFrameworkDocumentDataBodyCriticsReviewSliceItem>
 >;
 
+/**
+ * Primary content in *Content Framework → Slice zone → Contributors Review → Primary*
+ */
+export interface ContentFrameworkDocumentDataBodyContributorsReviewSlicePrimary {
+  /**
+   * Heading (optional) field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the heading for the section, if required.
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Redirection link field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the redirection link
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.redirection_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  redirection_link: prismic.LinkField;
+
+  /**
+   * Content field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter the content
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.content
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  content: prismic.RichTextField;
+
+  /**
+   * Author Name field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the author name
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.author_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  author_name: prismic.KeyTextField;
+
+  /**
+   * Author Image field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: Enter the author image link
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.author_image
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  author_image: prismic.LinkToMediaField;
+
+  /**
+   * Date of Review field in *Content Framework → Slice zone → Contributors Review → Primary*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: Select the review date.
+   * - **API ID Path**: content_framework.body[].contributors_review.primary.date
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  date: prismic.DateField;
+}
+
+/**
+ * Slice for *Content Framework → Slice zone*
+ */
+export type ContentFrameworkDocumentDataBodyContributorsReviewSlice =
+  prismic.Slice<
+    'contributors_review',
+    Simplify<ContentFrameworkDocumentDataBodyContributorsReviewSlicePrimary>,
+    never
+  >;
+
 type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyTabWrapperStartSlice
   | ContentFrameworkDocumentDataBodyTabWrapperEndSlice
@@ -5482,7 +5557,8 @@ type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyStructuredCardSlice
   | ContentFrameworkDocumentDataBodyReviewChipsSlice
   | ContentFrameworkDocumentDataBodyDetailedReviewSlice
-  | ContentFrameworkDocumentDataBodyCriticsReviewSlice;
+  | ContentFrameworkDocumentDataBodyCriticsReviewSlice
+  | ContentFrameworkDocumentDataBodyContributorsReviewSlice;
 
 /**
  * Content for Content Framework documents
@@ -7158,9 +7234,13 @@ interface ContentPageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
     | 'Rajashree'
     | 'Raavya'
@@ -7176,7 +7256,9 @@ interface ContentPageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -7207,6 +7289,28 @@ interface ContentPageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   tagged_collection: prismic.KeyTextField;
+
+  /**
+   * Child Collection ID field in *Content Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the child collection ID
+   * - **API ID Path**: content_page.child_collection_id
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  child_collection_id: prismic.KeyTextField;
+
+  /**
+   * Child POI ID field in *Content Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the Child POI ID
+   * - **API ID Path**: content_page.child_poi_id
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  child_poi_id: prismic.KeyTextField;
 
   /**
    * Category Name field in *Content Page*
@@ -7258,6 +7362,7 @@ interface ContentPageDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -11107,6 +11212,7 @@ interface GlobalCityDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
@@ -11119,11 +11225,16 @@ interface GlobalCityDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
+    | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -11136,7 +11247,9 @@ interface GlobalCityDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -11958,6 +12071,7 @@ interface GlobalCollectionDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
@@ -11970,11 +12084,16 @@ interface GlobalCollectionDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
+    | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -11987,7 +12106,9 @@ interface GlobalCollectionDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -12471,6 +12592,7 @@ interface GlobalCountryDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
@@ -12483,11 +12605,16 @@ interface GlobalCountryDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
+    | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -12500,7 +12627,9 @@ interface GlobalCountryDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -13258,11 +13387,16 @@ interface GlobalExperienceDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
+    | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -13275,7 +13409,9 @@ interface GlobalExperienceDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -13919,11 +14055,16 @@ interface GlobalHomepageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
+    | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -13936,7 +14077,9 @@ interface GlobalHomepageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -18946,12 +19089,16 @@ interface MicrositeDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -18964,7 +19111,9 @@ interface MicrositeDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -18995,6 +19144,28 @@ interface MicrositeDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   tagged_collection: prismic.KeyTextField;
+
+  /**
+   * Child Collection ID field in *Microsite*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the child collection ID
+   * - **API ID Path**: microsite.child_collection_id
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  child_collection_id: prismic.KeyTextField;
+
+  /**
+   * Child POI ID field in *Microsite*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the Child POI ID
+   * - **API ID Path**: microsite.child_poi_id
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  child_poi_id: prismic.KeyTextField;
 
   /**
    * Category Name field in *Microsite*
@@ -19046,6 +19217,7 @@ interface MicrositeDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -19758,12 +19930,16 @@ interface NewsPageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -19776,7 +19952,9 @@ interface NewsPageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -21691,12 +21869,16 @@ interface ReviewsPageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -21709,7 +21891,9 @@ interface ReviewsPageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -22679,12 +22863,16 @@ interface ShowpageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -22697,7 +22885,9 @@ interface ShowpageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -23444,7 +23634,17 @@ export interface VenuePageDocumentDataBody2VerticalCardsGridSlicePrimary {
  */
 export interface VenuePageDocumentDataBody2VerticalCardsGridSliceItem {
   /**
-   * Nearby Theatre Name field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
+   * Nearby Theatre POI ID (DEV) field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Enter the POI ID for nearby theatre.
+   * - **API ID Path**: venue_page.body2[].vertical_cards_grid.items.nearby_theatre_poi_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  nearby_theatre_poi_id: prismic.NumberField;
+
+  /**
+   * Nearby Theatre Name (to be removed in future) field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Enter the name for the theatre
@@ -23454,7 +23654,7 @@ export interface VenuePageDocumentDataBody2VerticalCardsGridSliceItem {
   nearby_theatre_name: prismic.KeyTextField;
 
   /**
-   * Image URL field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
+   * Image URL (To be removed in future) field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
    *
    * - **Field Type**: Link
    * - **Placeholder**: Enter the CDN URL for the Nearby Theatres Images
@@ -23464,7 +23664,7 @@ export interface VenuePageDocumentDataBody2VerticalCardsGridSliceItem {
   image_url: prismic.LinkField;
 
   /**
-   * Theatre Info field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
+   * Theatre Info (To be removed in future) field in *Venue Page → Slice zone → Vertical Cards Grid → Items*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Enter the theatre Info
@@ -23714,6 +23914,17 @@ export interface VenuePageDocumentDataTaggedContentTypeItem {
  * Content for Venue Page documents
  */
 interface VenuePageDocumentData {
+  /**
+   * POI ID (DEV) field in *Venue Page*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Enter the poi id of the theatre/.
+   * - **API ID Path**: venue_page.poi_id
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  poi_id: prismic.NumberField;
+
   /**
    * Theatre Name field in *Venue Page*
    *
@@ -23989,12 +24200,16 @@ interface VenuePageDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
-    | 'Raavya'
     | 'Rajashree'
+    | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
@@ -24007,7 +24222,9 @@ interface VenuePageDocumentData {
     | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
     | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
@@ -24439,6 +24656,7 @@ declare module '@prismicio/client' {
       ContentFrameworkDocumentDataBodyCategorySectionSlicePrimary,
       ContentFrameworkDocumentDataBodyComparisionTableSliceItem,
       ContentFrameworkDocumentDataBodyComparisionTableSlicePrimary,
+      ContentFrameworkDocumentDataBodyContributorsReviewSlicePrimary,
       ContentFrameworkDocumentDataBodyCriticsReviewSliceItem,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSlicePrimary,

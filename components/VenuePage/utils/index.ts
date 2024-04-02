@@ -12,7 +12,7 @@ export function getShowsBasedOnTimestamp(availableShowsData: []) {
     strings.SHOW_PAGE.CLOSING_DATE,
   ];
 
-  availableShowsData.forEach((show: Record<string, string>) => {
+  availableShowsData?.forEach((show: Record<string, string>) => {
     const { detailsObjects = {} } = getObject(
       show.microBrandsHighlight,
       filterHighlights

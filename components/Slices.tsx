@@ -9,12 +9,10 @@ import HorizontalLine from './slices/HorizontalLine';
 import PageTabs from './slices/PageTabs';
 import RichTextBox from './slices/RichTextBox';
 import RichtextWithCTA from './slices/RichTextWithCTA';
-import ShowsGrid from './slices/ShowsGrid';
-import ShowsList from './slices/ShowsList';
 import Table from './slices/Table';
 import TicketCard from './slices/TickerCardSlice';
 import UGCCarousel from './slices/UGCCarousel';
-import VerticalCardsGrid from './slices/VerticalCardsGrid';
+import VerticalCardsGrid from './VenuePage/components/VerticalCardsGrid';
 
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
@@ -655,31 +653,6 @@ const sliceHandler = (slice: any, props: any = {}) => {
           data={slice.items}
           isMobile={props.isMobile}
           heading={slice.primary.heading}
-        />
-      );
-
-    case SLICE_TYPES.SHOWS_LIST:
-      return (
-        <ShowsList
-          uid={props.uid}
-          isMobile={props.isMobile}
-          nowPlayingShows={props.nowPlayingShows}
-          upcomingShows={props.upcomingShows}
-          heading={slice.primary.heading}
-          sliceData={slice.items}
-          allShowPageUids={props.allShowPageUids}
-          isVenuePage={props.isVenuePage}
-        />
-      );
-
-    case SLICE_TYPES.SHOWS_GRID:
-      return (
-        <ShowsGrid
-          isMobile={props.isMobile}
-          data={props.pastShows}
-          sliceData={slice.items}
-          allShowPageUids={props.allShowPageUids}
-          isVenuePage={props.isVenuePage}
         />
       );
 

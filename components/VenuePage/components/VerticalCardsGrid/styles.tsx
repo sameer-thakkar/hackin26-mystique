@@ -4,7 +4,7 @@ import { expandFontToken } from 'const/typography';
 
 export const Wrapper = styled.div`
   width: calc(100vw - (5.46vw));
-  margin-top: 0.5rem;
+  margin-top: 4rem;
   h2 {
     ${expandFontToken(FONTS.HEADING_SMALL)};
     margin: 0;
@@ -33,9 +33,11 @@ export const Wrapper = styled.div`
       width: 0;
       height: 0;
     }
+
     img {
       border-radius: 0.25rem;
       height: 13rem;
+      width: 9.75rem;
     }
     .image-wrap {
       height: auto;
@@ -56,6 +58,7 @@ export const Wrapper = styled.div`
     h2 {
       ${expandFontToken(FONTS.HEADING_LARGE)};
     }
+
     .slider {
       max-width: 1200px;
       height: 100%;

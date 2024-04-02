@@ -9,7 +9,6 @@ import {
   getCollectionSection,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
-  getTgidsFromShow,
   handleSettledPromiseResults,
   isCategoryMB,
   isCollectionMB,
@@ -27,11 +26,7 @@ import {
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
-import {
-  getBreadcrumbs,
-  getShowPageBreadcrumbs,
-  getVenuePageBreadcrumbs,
-} from 'utils/breadcrumbsUtils';
+import { getBreadcrumbs, getShowPageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { getCatAndSubCatPageData } from 'utils/categoryPageUtils';
 import { generateCityPageData } from 'utils/cityPageUtils';
 import { getDocsForListicleSlice } from 'utils/contentPageUtils';
@@ -80,8 +75,8 @@ import {
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import getRouteDetailsDoc from './getRouteDetails';
-import { getShowPageCollectionsByTgid } from './getShowPageCollections';
 import { getReviewsPageData } from './reviewsPage';
+import { getVenuePageData } from './venuePage';
 import { fetchPrismicDocument } from '.';
 
 function getQueryparams(req: NextApiRequest) {
@@ -214,82 +209,17 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.VENUE_PAGE) {
-      const showsListSlices = CMSContent.data?.descriptionSlices?.filter(
-        (slice: any) => {
-          return slice.slice_type === SLICE_TYPES.SHOWS_LIST;
-        }
-      );
-
-      const showsListSlicesTgids: any[] = showsListSlices?.reduce(
-        (
-          acc: any[],
-          curr: {
-            items: [];
-          }
-        ) => {
-          const tgids = getTgidsFromShow(curr.items);
-          return (acc = [...acc, ...tgids]);
-        },
-        []
-      );
-
-      const showPageDocuments =
-        showsListSlicesTgids.length > 0
-          ? await getShowPageCollectionsByTgid({
-              tgids: showsListSlicesTgids,
-              pageSize: 100,
-            })
-          : [];
-
-      const allShowPageUids = showPageDocuments?.map((document: any) => {
-        const tgid = document.data?.tgid;
-        return {
-          [tgid]: document.uid,
-        };
-      });
-
-      const showsData = await fetchTourListV6({
-        tgids: [...showsListSlicesTgids],
-        hostname,
-        language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
-        cookies,
-      });
-
-      const showsListSlicesData = showsData?.tourGroups;
-      const availableShowsData = showsListSlicesData;
-
-      const tgidForFirstShow = availableShowsData[0];
-
-      const inventorySlotData = tgidForFirstShow
-        ? await fetchTourGroupSlots({
-            tgid: tgidForFirstShow?.id,
-            hostname,
-            forDays: 20,
-            cookies,
-          })
-        : {};
-
-      const breadcrumbs = await getVenuePageBreadcrumbs(CMSContent);
-
-      return {
-        CMSContent: {
-          ...CMSContent,
-          availableShowsData,
-          allShowPageUids,
-          inventorySlotData,
-        },
-        uid,
-        host,
+      return await getVenuePageData(
+        CMSContent,
         ContentType,
-        lang,
         isDev,
-        tgidsInPage: [...showsListSlicesTgids],
-        currencyList: await currencyListPromise,
-        domainConfig: await domainConfigPromise,
-        breadcrumbs,
-        prismicApiCacheStatus,
-        prismicDocumentTypeApiCacheStatus,
-      };
+        host,
+        hostname,
+        lang as TLANGUAGELOCALE,
+        cookies,
+        currencyListPromise,
+        domainConfigPromise
+      );
     }
 
     if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {

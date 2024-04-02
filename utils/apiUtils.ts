@@ -1404,10 +1404,10 @@ export const fetchBulkPoisInfo = async ({
       params,
       id: null,
     });
+
     const headers = constructHeaders({ cookies });
     const res = await fetch(apiUrl, { headers });
-    const data = await res.json();
-    return data?.pois;
+    return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchBulkPoisInfo]', error);

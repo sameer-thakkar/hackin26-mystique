@@ -35,6 +35,9 @@ import { strings } from 'const/strings';
 import ChevronDown from 'assets/chevronDown';
 import ChevronUp from 'assets/chevronUp';
 import LocationSvg from 'assets/locationSvg';
+import ShowsGrid from './components/ShowsGrid';
+import ShowsList from './components/ShowsList';
+import VerticalCardsGrid from './components/VerticalCardsGrid';
 import {
   IAccordionSlice,
   IAmenity,
@@ -42,7 +45,7 @@ import {
   IVerticalCardsGrid,
 } from './interace';
 import { Banner, VenuePageContainer } from './styles';
-import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
+import { getShowsBasedOnTimestamp } from './utils';
 
 const Breadcrumbs = dynamic(
   () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
@@ -57,6 +60,7 @@ const VenuePage = (props: IVenuePageProps) => {
     lang: localeCode,
   } = useContext(MBContext);
   const hsid = useRecoilValue(hsidAtom);
+  const currency = useRecoilValue(currencyAtom);
 
   const {
     host,
@@ -76,6 +80,7 @@ const VenuePage = (props: IVenuePageProps) => {
     availableShowsData,
     allShowPageUids,
     inventorySlotData,
+    nearbyTheatresData,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     alternate_languages,
@@ -134,8 +139,6 @@ const VenuePage = (props: IVenuePageProps) => {
 
   const { SHOW_MORE, SHOW_LESS, SEATS } = strings;
 
-  const currency = useRecoilValue(currencyAtom);
-
   const {
     faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
@@ -150,12 +153,10 @@ const VenuePage = (props: IVenuePageProps) => {
   );
 
   const currentLanguage = getLangObject(lang).code;
-
   const selfCanonicalLink = convertUidToUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
-
   const logoRedirectionUrl = getLogoRedirectionUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
@@ -198,7 +199,7 @@ const VenuePage = (props: IVenuePageProps) => {
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
   });
 
-  const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
+  const automatedBreadcrumbsExists = Object.keys(breadcrumbs ?? {})?.length > 0;
 
   /* Find Best Seats CTA points to the first nowPlayingShow (incase of two) */
   const onFindBestSeatsCtaClicked = () => {
@@ -229,27 +230,6 @@ const VenuePage = (props: IVenuePageProps) => {
       : '');
 
   let modifiedDescriptionSlices = JSON.parse(JSON.stringify(descriptionSlices));
-
-  /* Hardcoding the position of ShowsGrid slice after Accordion slice. */
-  if (pastShows.length > 0) {
-    const indexOfAccordion = descriptionSlices.findIndex(
-      findFirstIndexOfAccordion
-    );
-
-    const items = pastShows.map((show) => ({
-      tgid: show.id,
-    }));
-
-    const pastShowSlice = {
-      primary: {
-        heading: strings.THEATRE_PAGE.PAST_SHOWS,
-      },
-      slice_type: 'shows_grid',
-      items,
-    };
-
-    modifiedDescriptionSlices?.splice(indexOfAccordion + 1, 0, pastShowSlice);
-  }
 
   const uniqueDateTimeSlots = getUniqueArrayItemsBy(slots, [
     'startDate',
@@ -379,22 +359,22 @@ const VenuePage = (props: IVenuePageProps) => {
         allTours={[]}
         host={host}
         dropdownLinks={[]}
-        enableDropdownLinks={true}
+        enableDropdownLinks
         logoRedirectionURL={logoRedirectionUrl ?? ''}
         logoAltText={whiteLabelName || ''}
         enableSearch={false}
         enableBuyTickets={false}
         isGlobalMb={false}
         headerSlices={commonHeader?.data?.body}
-        hasLanguageSelector={true}
+        hasLanguageSelector
         languageProps={{
           uid,
           currentLanguage,
           languages: alternateLanguages,
         }}
-        hideCurrencySelector={true}
+        hideCurrencySelector
         logoUrl={logoUrl}
-        hasPoweredByHeadoutLogo={true}
+        hasPoweredByHeadoutLogo
       />
 
       <Banner url={isMobile ? mobileBanner.url : desktopBanner.url}>
@@ -415,13 +395,9 @@ const VenuePage = (props: IVenuePageProps) => {
 
       <VenuePageContainer>
         <Conditional if={automatedBreadcrumbsExists && !isMobile}>
-          <Breadcrumbs
-            breadcrumbs={breadcrumbs}
-            isVenuePage={true}
-            isMobile={false}
-          />
+          <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile={false} />
         </Conditional>
-        <div className="theatre-info">
+        <div className="theatre-information">
           <RichContent render={theatreInfo} />
         </div>
         <div className="amenities">
@@ -447,29 +423,45 @@ const VenuePage = (props: IVenuePageProps) => {
             </button>
           </div>
         </div>
+        <ShowsList
+          data={nowPlayingShows}
+          allShowPageUids={allShowPageUids}
+          heading={strings.THEATRE_PAGE.NOW_PLAYING}
+          uid={uid}
+          isMobile={isMobile}
+        />
+        <ShowsList
+          data={upcomingShows}
+          heading={strings.THEATRE_PAGE.UPCOMING_SHOWS}
+          allShowPageUids={allShowPageUids}
+          uid={uid}
+          isMobile={isMobile}
+        />
       </VenuePageContainer>
       <LongForm
         content={modifiedDescriptionSlices}
         uid={uid}
         isMobile={isMobile}
         availableShowsData={availableShowsData}
-        nowPlayingShows={nowPlayingShows}
-        upcomingShows={upcomingShows}
-        pastShows={pastShows}
-        allShowPageUids={allShowPageUids}
-        isVenuePage={true}
+        isVenuePage
         redirectUrlForTabDataContent={redirectUrlForTabDataContent}
         findBestSeatsCallback={
           tgidForFirstShow ? onFindBestSeatsCtaClicked : null
         }
       />
       <VenuePageContainer>
+        <ShowsGrid
+          data={pastShows}
+          isMobile={isMobile}
+          allShowPageUids={allShowPageUids}
+        />
+        <VerticalCardsGrid
+          data={nearbyTheatresData}
+          isMobile={isMobile}
+          heading={strings.THEATRE_PAGE.NEARBY_THEATRES}
+        />
         <Conditional if={automatedBreadcrumbsExists && isMobile}>
-          <Breadcrumbs
-            breadcrumbs={breadcrumbs}
-            isVenuePage={true}
-            isMobile={true}
-          />
+          <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile />
         </Conditional>
       </VenuePageContainer>
       <Footer

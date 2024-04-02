@@ -1170,8 +1170,6 @@ export const SLICE_TYPES = {
   CAROUSEL_GALLERY: 'carousel_gallery',
   AUTOMATED_COMPARISION_TABLE: 'automated_comparison_table',
   CUSTOM_LINKED_TOURS: 'custom_linked_tours',
-  SHOWS_LIST: 'shows_list',
-  SHOWS_GRID: 'shows_grid',
   GOOGLE_MAP: 'google_map_iframe',
   VERTICAL_CARD_GRIDS: 'vertical_cards_grid',
   TABBED_INFO: 'tabbedinfo',
