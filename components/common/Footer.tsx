@@ -33,7 +33,6 @@ import {
   FOOTER_LOGO_WIDTH,
   HEADOUT_ADDRESS,
   HEADOUT_MAIL_REDIRECT,
-  HEADOUT_SUPPORT_MAIL,
   LIVE_CHAT_LINK,
   PRIVACY_POLICY_LINK,
   STAR_LOGO_DARK,
@@ -192,7 +191,6 @@ const Footer: React.FC<FooterProps> = ({
                       </Conditional>
                     </div>
                   </div>
-                  <div className="white-line" />
                   <div className="footer-links">
                     <Conditional if={!isLTT}>
                       <div className="download hide-mobile">
@@ -243,7 +241,7 @@ const Footer: React.FC<FooterProps> = ({
                               rel="noreferrer noopener"
                               target="_blank"
                             >
-                              {HEADOUT_SUPPORT_MAIL}
+                              {strings.FOOTER.EMAIL_US}
                             </a>
                           </FooterListItem>
                         </ul>

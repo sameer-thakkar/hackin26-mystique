@@ -332,7 +332,7 @@ export const FooterLegal = styled.div<{
 
   @media (max-width: 768px) {
     margin: 2.625rem 0 0;
-    gap: 1.5625rem;
+    gap: 2.5rem;
     padding-bottom: 0;
 
     .logo-disclaimer {
