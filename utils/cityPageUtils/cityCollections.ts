@@ -164,7 +164,7 @@ export const getNearbyCitiesCollections = async ({
   const result = await fetchCityTopCollections({
     params: {
       city: mbCity,
-      subCategoryId: 1032,
+      subCategoryId: 1143,
       limit: 20,
       language: getHeadoutLanguagecode(lang),
       ...(currency && { currency }),
