@@ -31,6 +31,7 @@ import {
 } from 'utils/lookerUtils';
 import {
   CUSTOM_TYPES,
+  DOC_TYPES,
   PAGE_URL_STRUCTURE,
   SEO_SUBDOMAINS,
   SLICE_TYPES,
@@ -104,6 +105,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
         title,
         description,
         focus_keyword,
+        focus_keywords,
         google_site_verification,
         bing_site_verification,
         canonical_link,
@@ -166,11 +168,14 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);
     const headingsDetails = await getHeadings(doc);
+    const docType = getDocType(type);
+    const focusKeyword =
+      docType === DOC_TYPES.venue_page ? focus_keywords : focus_keyword;
 
     const metaData = {
       id,
       uid,
-      document_type: getDocType(type),
+      document_type: docType,
       first_publication_date,
       last_publication_date,
       has_shoulder_page_tickets: await shoulderPageTicketsCheck(doc),
@@ -191,7 +196,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       content_type: tagged_content_type
         ?.map((tag: any) => tag?.[SLICE_TYPES.CONTENT_TYPE_TAG])
         ?.filter((tag: any) => tag),
-      focus_keyword,
+      focus_keyword: focusKeyword,
       google_site_verification_id: google_site_verification,
       bing_site_verification_id: bing_site_verification,
       author_name,
