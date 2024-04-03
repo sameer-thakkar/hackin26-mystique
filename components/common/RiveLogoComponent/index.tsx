@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { StyledRizLogoWrapper } from 'components/common/RiveLogoComponent/styles';
@@ -17,11 +17,19 @@ const RiveLogoComponent = () => {
       setUseFallbackLogo(true);
     },
   });
+
   useStateMachineInput(rive, 'stateMachine', 'usersA', 2);
-  useStateMachineInput(rive, 'stateMachine', 'usersB', 3);
+  const usersB = useStateMachineInput(rive, 'stateMachine', 'usersB', 5);
   useStateMachineInput(rive, 'stateMachine', 'citiesA', 1);
   useStateMachineInput(rive, 'stateMachine', 'citiesB', 9);
   useStateMachineInput(rive, 'stateMachine', 'citiesC', 0);
+
+  useEffect(() => {
+    if (rive && usersB) {
+      // we can dynamically fetch from looker for these, for now we are using static values
+      usersB.value = 5;
+    }
+  }, [rive && usersB]);
 
   return (
     <StyledRizLogoWrapper>

@@ -650,7 +650,7 @@ export const TOUR_COMPARISION_DESIGN = {
 };
 
 export const RIV_LOGO =
-  'https://cdn-imgix-open.headout.com/MB/RIV/mbLogoV2.riv';
+  'https://cdn-imgix-open.headout.com/MB/RIV/dynamicHeader.riv';
 
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';

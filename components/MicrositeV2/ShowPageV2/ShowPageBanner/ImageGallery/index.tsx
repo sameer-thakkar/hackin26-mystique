@@ -74,6 +74,14 @@ const ImageGallery = ({
     ) as HTMLVideoElement;
     if (!bannerVideo && !controller) return;
 
+    if (isPopupActive) {
+      bannerVideo?.pause();
+    } else {
+      bannerVideo?.play();
+    }
+  }, [isPopupActive]);
+
+  useEffect(() => {
     const closeCalendarOnEscapePressed = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closePopup();
@@ -83,18 +91,11 @@ const ImageGallery = ({
         movePrev();
       }
     };
-
-    if (isPopupActive) {
-      bannerVideo?.pause();
-      window.addEventListener('keydown', closeCalendarOnEscapePressed);
-    } else {
-      bannerVideo?.play();
-      window.removeEventListener('keydown', closeCalendarOnEscapePressed);
-    }
+    window.addEventListener('keydown', closeCalendarOnEscapePressed);
 
     return () =>
       window.removeEventListener('keydown', closeCalendarOnEscapePressed);
-  }, [isPopupActive]);
+  }, []);
 
   const onListImageClicked = (index: number) => {
     swiper?.slideTo(index);
