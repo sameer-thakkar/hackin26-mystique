@@ -23,12 +23,10 @@ const Banner = ({
 }: IShoulderBannerProps) => {
   const MAX_DESCRIPTION_CHARACTERS = 250;
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const strippedDescription = description?.replace(/^<p>|<\/p>$/g, '');
   const showSeeMoreButton =
-    (strippedDescription?.length || 0) > MAX_DESCRIPTION_CHARACTERS;
+    (description?.length || 0) > MAX_DESCRIPTION_CHARACTERS;
 
   const toggleModal = () => setModalIsOpen((prev) => !prev);
-
   return (
     <Container>
       <ContentContainer>
@@ -45,21 +43,25 @@ const Banner = ({
               <h1>
                 {strings.CATEGORY_HEADER.ABOUT} {poiInfo?.name}
               </h1>
-              <p>{strippedDescription}</p>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
             </ModalContent>
           </Modal>
         </Conditional>
         <TextContainer $fullWidth={!imageSrc}>
           <h1>{title}</h1>
           <Conditional if={description}>
-            <p>
-              {showSeeMoreButton
-                ? truncate(strippedDescription, MAX_DESCRIPTION_CHARACTERS)
-                : strippedDescription}
+            <div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: showSeeMoreButton
+                    ? truncate(description, MAX_DESCRIPTION_CHARACTERS)
+                    : description,
+                }}
+              />
               <Conditional if={showSeeMoreButton}>
                 <button onClick={toggleModal}>{strings.READ_MORE}</button>
               </Conditional>
-            </p>
+            </div>
           </Conditional>
           <Conditional if={Object.values(poiInfo).filter((val) => val).length}>
             <Divider />

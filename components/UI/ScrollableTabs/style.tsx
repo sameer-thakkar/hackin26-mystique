@@ -60,7 +60,7 @@ export const TabNamesWrapper = styled.div`
 export const TabName = styled.span<{ $isActive: boolean }>`
   padding-bottom: 0.5rem;
   ${expandFontToken(FONTS.HEADING_REGULAR)};
-  color: ${COLORS.GRAY.G4A};
+  color: ${COLORS.GRAY.G3};
   cursor: pointer;
 
   ${({ $isActive }) =>
