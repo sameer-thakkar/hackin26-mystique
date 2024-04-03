@@ -423,6 +423,27 @@ const MicrositeV1 = (props: any) => {
         [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
       }),
     });
+    const curatedVideoBannerExpEvents =
+      ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP;
+
+    trackEvent({
+      eventName: curatedVideoBannerExpEvents.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getAnalyticsPageType({
+        isCityPageMB,
+        isHOHO,
+        isAirportTransferMB: isAirportTransfersMB,
+        defaultType: PAGE_TYPES.COLLECTION,
+        isCatOrSubCatPage,
+        isSubCategoryPage: isSubCategoryMicrobrand,
+      }),
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+      [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
+        isA1orC1MB(taggedMbType) && isMobile
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+    });
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
@@ -646,6 +667,7 @@ const MicrositeV1 = (props: any) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       bannerVideo={bannerVideo}
+      bannerImages={finalBannerImages}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
       isPoiMwebCard={isPoiMwebCard}

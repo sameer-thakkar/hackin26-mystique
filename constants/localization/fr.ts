@@ -1091,5 +1091,10 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     SUBATTRACTIONS: 'Sous-Attraits',
   },
   OFF_PERCENT: '{0} % de réduction',
+  CURATED_VIDEO_BANNER: {
+    TITLE1: "Besoin d'aide pour choisir l'expérience qui vous convient ?",
+    TITLE2: 'Regardez cette vidéo pour faire le bon choix !',
+    WATCH_VIDEO: 'Regarder la vidéo',
+  },
 };
 export default fr;

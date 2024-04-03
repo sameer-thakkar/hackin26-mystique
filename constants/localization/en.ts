@@ -1147,6 +1147,11 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SUBATTRACTIONS: 'Sub-Attractions',
   },
   OFF_PERCENT: '{0}% off',
+  CURATED_VIDEO_BANNER: {
+    TITLE1: 'Need help picking the right experience?',
+    TITLE2: 'Watch this video to make the perfect choice!',
+    WATCH_VIDEO: 'Watch Video',
+  },
 };
 
 export default en;

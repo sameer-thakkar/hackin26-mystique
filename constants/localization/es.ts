@@ -1139,5 +1139,10 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     SUBATTRACTIONS: 'Sub-Atracciones',
   },
   OFF_PERCENT: '{0} % de descuento',
+  CURATED_VIDEO_BANNER: {
+    TITLE1: '¿No sabes qué experiencia elegir?',
+    TITLE2: 'Pues ve este vídeo para hacerte una idea.',
+    WATCH_VIDEO: 'Ver vídeo',
+  },
 };
 export default es;

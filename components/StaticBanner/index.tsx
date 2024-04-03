@@ -157,6 +157,11 @@ const StaticBanner = ({
     if (!eventsReady || isMobile) return;
 
     trackEvent({
+      eventName:
+        ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP.MICROSITE_PAGE_VIEWED,
+    });
+
+    trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
     });
   }, [eventsReady, isMobile]);

@@ -1041,5 +1041,10 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     SUBATTRACTIONS: 'Sub-Attracties',
   },
   OFF_PERCENT: '{0}% korting',
+  CURATED_VIDEO_BANNER: {
+    TITLE1: 'Op zoek naar de juiste ervaring?',
+    TITLE2: 'Met dit filmpje maak je de perfecte keuze!',
+    WATCH_VIDEO: 'Bekijk video',
+  },
 };
 export default nl;

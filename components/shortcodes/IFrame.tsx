@@ -12,6 +12,10 @@ type IFrameProps = {
   allow?: string;
   allowfullscreen?: string;
   height?: string;
+  autoplay?: boolean;
+  trackVideoProgressFn?: (videoProgress: number) => void;
+  trackVideoPlayedFn?: () => void;
+  trackVideoLoadedFn?: () => void;
 };
 
 const IFrameContainer = styled.div<{
@@ -63,16 +67,24 @@ const IFrame: React.FC<IFrameProps> = ({
   frameborder = 0,
   allow = '',
   allowfullscreen = 'false',
+  autoplay,
+  trackVideoProgressFn,
+  trackVideoPlayedFn,
+  trackVideoLoadedFn,
   ...otherProps
 }) => {
   const [isPlayed, setIsPlayed] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
   useEffect(() => {
     if (videoProgress) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.YT_VIDEO_VIEWED,
-        [ANALYTICS_PROPERTIES.PERCENT_VIEWED]: `${videoProgress}%`,
-      });
+      if (trackVideoProgressFn) {
+        trackVideoProgressFn(videoProgress);
+      } else {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.YT_VIDEO_VIEWED,
+          [ANALYTICS_PROPERTIES.PERCENT_VIEWED]: `${videoProgress}%`,
+        });
+      }
     }
   }, [videoProgress]);
 
@@ -128,9 +140,18 @@ const IFrame: React.FC<IFrameProps> = ({
           <StyledContainer>
             <YouTube
               videoId={videoId}
-              onReady={trackVideoLoaded}
+              onReady={
+                trackVideoLoadedFn ? trackVideoLoadedFn : trackVideoLoaded
+              }
               onStateChange={trackVideoProgress}
-              onPlay={trackVideoPlayed}
+              onPlay={
+                trackVideoPlayedFn ? trackVideoPlayedFn : trackVideoPlayed
+              }
+              opts={{
+                playerVars: {
+                  ...(autoplay && { autoplay: 1 }),
+                },
+              }}
             />
           </StyledContainer>
         </Conditional>

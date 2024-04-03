@@ -514,6 +514,19 @@ export const ANALYTICS_EVENTS = {
   },
   MORE_DETAILS_SWIPESHEET_CLOSED: 'More Details Swipesheet Closed',
   PRODUCT_CARD_DEADCLICK: 'Product Card Deadclick',
+  CURATED_VIDEO_BANNER_EXP: {
+    MICROSITE_PAGE_VIEWED: 'User lands on Microsite Page',
+    VIDEO_BANNER_VIEWD: 'User views the video banner',
+    CTA_CLICKED: 'User clicks video banner',
+    VIDEO_PLAYER_OPENED: 'Modal is set open for user to see the video player',
+    VIDEO_PLAYED: 'Video is played',
+    VIDEO_READY: 'Video is ready',
+    VIDEO_VIEWED_10: '10% of the video is played',
+    VIDEO_VIEWED_25: '25% of the video is played',
+    VIDEO_VIEWED_50: '50% of the video is played',
+    VIDEO_VIEWED_75: '75% of the video is played',
+    VIDEO_VIEWED_90: '90% of the video is played',
+  },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
 };
 
@@ -2004,6 +2017,29 @@ export const BOOSTER_EXPERIMENT_UIDS = {
   },
   'www.singapore-tickets.com.gardens-by-the-bay-tickets': {
     [BoosterType.BESTSELLER]: [7358],
+  },
+};
+
+interface ICuratedVideoBannerExp {
+  [uid: string]: {
+    ytEmbedLink: string;
+  };
+}
+export const curatedVideoBannerExpUids: ICuratedVideoBannerExp = {
+  'www.colosseum-rome-tickets.com': {
+    ytEmbedLink: 'https://www.youtube.com/embed/1qCdM6t0GUw',
+  },
+  'burj-khalifa.dubai-tickets.co': {
+    ytEmbedLink: 'https://www.youtube.com/embed/Nk5m4_Nwiv8',
+  },
+  'www.desert-safari-dxb.com': {
+    ytEmbedLink: 'https://www.youtube.com/embed/nqbom-9-pPA',
+  },
+  'www.milford-sound-cruises.com': {
+    ytEmbedLink: 'https://www.youtube.com/embed/PmuJuvzuepI',
+  },
+  'www.visitdubaiframe.com.home': {
+    ytEmbedLink: 'https://www.youtube.com/embed/mMfSC18b4l8',
   },
 };
 
