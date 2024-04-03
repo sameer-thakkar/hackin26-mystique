@@ -992,7 +992,7 @@ const PopulateProducts = (props: any) => {
 
   const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
   if (
-    availableToursList.length > 3 &&
+    availableToursList?.length > 3 &&
     isBannerMediaPresent &&
     showVideoBanner
   ) {
