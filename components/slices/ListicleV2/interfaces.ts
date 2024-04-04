@@ -1,5 +1,6 @@
 export interface IListicleTypeProps {
   items: Experience[];
+  index: number;
   listicleSectionTitle: string;
   type?: string;
   settings?: string;

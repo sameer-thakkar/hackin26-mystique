@@ -3,10 +3,14 @@ import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
 import LargeListicleGrid from 'components/slices/ListicleV2/LargeListicle/LargeListicleGrid';
 import { LargeListicleWrapper } from 'components/slices/ListicleV2/LargeListicle/styles';
 
-const LargeListicle = ({ items, listicleSectionTitle }: IListicleTypeProps) => {
+const LargeListicle = ({
+  items,
+  listicleSectionTitle,
+  index,
+}: IListicleTypeProps) => {
   return (
     <LargeListicleWrapper>
-      {items?.map((item: Experience, index: number) => {
+      {items?.map((item: Experience) => {
         const {
           imageUrl,
           heading,

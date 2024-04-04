@@ -277,6 +277,7 @@ export const Tag = styled.div`
 
   @media (max-width: 767px) {
     max-width: 8.125rem;
+    ${expandFontToken(FONTS.SUBHEADING_XS)};
   }
 `;
 

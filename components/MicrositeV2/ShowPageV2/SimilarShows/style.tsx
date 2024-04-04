@@ -7,7 +7,7 @@ export const SimilarShowsWrapper = styled.div`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: auto;
-  padding: 4rem 0 4rem 1.5rem;
+  padding: 4rem 0;
 
   overflow: hidden;
 

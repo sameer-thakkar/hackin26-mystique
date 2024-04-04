@@ -17,6 +17,7 @@ import { strings } from 'const/strings';
 const ListicleV2 = ({
   type = LISTICLE_TYPE.SMALL,
   items,
+  index,
   settings = SETTINGS_TYPE.SETTINGS_ONE,
   listicleSectionTitle,
 }: IListicleTypeProps) => {
@@ -75,48 +76,46 @@ const ListicleV2 = ({
   };
 
   const getListicleData = (listicleData: Array<any>): Experience[] => {
-    return listicleData?.map(
-      (data: Record<any, any>): Experience => {
-        const {
-          collection_id,
-          card_heading,
-          cta_text,
+    return listicleData?.map((data: Record<any, any>): Experience => {
+      const {
+        collection_id,
+        card_heading,
+        cta_text,
+        descriptor_tag_one,
+        descriptor_tag_two,
+        descriptor_tag_three,
+        rich_text,
+        category,
+        subcategory,
+        cta_link,
+        card_image,
+        card_image_alt_text,
+      } = data || {};
+
+      const { url } = card_image || {};
+      const { url: ctaUrl } = cta_link || {};
+
+      const experienceType = getExperienceType(data) as string;
+      return {
+        experienceId: collection_id,
+        experienceType,
+        heading: card_heading,
+        imageUrl: url?.split('//')[1] || '',
+        imageAlt: card_image_alt_text,
+        ctaText: getCTAText(cta_text),
+        ctaUrl,
+        categoryTags: [
           descriptor_tag_one,
           descriptor_tag_two,
           descriptor_tag_three,
-          rich_text,
-          category,
-          subcategory,
-          cta_link,
-          card_image,
-          card_image_alt_text,
-        } = data || {};
-
-        const { url } = card_image || {};
-        const { url: ctaUrl } = cta_link || {};
-
-        const experienceType = getExperienceType(data) as string;
-        return {
-          experienceId: collection_id,
-          experienceType,
-          heading: card_heading,
-          imageUrl: url?.split('//')[1] || '',
-          imageAlt: card_image_alt_text,
-          ctaText: getCTAText(cta_text),
-          ctaUrl,
-          categoryTags: [
-            descriptor_tag_one,
-            descriptor_tag_two,
-            descriptor_tag_three,
-          ],
-          richTextData: rich_text,
-          experienceName:
-            experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
-          practicalInfo: getPracticalInfo(data),
-          tabData: getTabData(data) as Array<LargeListicleTabData>,
-        };
-      }
-    );
+        ],
+        richTextData: rich_text,
+        experienceName:
+          experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
+        practicalInfo: getPracticalInfo(data),
+        tabData: getTabData(data) as Array<LargeListicleTabData>,
+      };
+    });
   };
 
   switch (type) {
@@ -125,6 +124,7 @@ const ListicleV2 = ({
         <LargeListicle
           items={getListicleData(items) || []}
           listicleSectionTitle={listicleSectionTitle}
+          index={index}
         />
       );
     case LISTICLE_TYPE.MEDIUM:
@@ -133,6 +133,7 @@ const ListicleV2 = ({
           items={getListicleData(items) || []}
           settings={settings}
           listicleSectionTitle={listicleSectionTitle}
+          index={index}
         />
       );
     case LISTICLE_TYPE.SMALL:
@@ -140,6 +141,7 @@ const ListicleV2 = ({
         <SmallListicle
           items={getListicleData(items) || []}
           listicleSectionTitle={listicleSectionTitle}
+          index={index}
         />
       );
     default:

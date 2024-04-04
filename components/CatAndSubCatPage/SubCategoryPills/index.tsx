@@ -48,6 +48,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [_activeIndex, setActiveIndex] = useState(0);
+  const [activePill, setActivePill] = useState(0);
   const [isSectionAtTop, setIsSectionAtTop] = useState(false);
   const pillsSectionRef = useRef<HTMLDivElement>(null);
   const [appState, setAppState] = useRecoilState(appAtom);
@@ -104,16 +105,19 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
 
   const handlePillClick = ({
     event,
+    id,
     subCategoryName,
     ranking,
   }: {
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>;
+    id: number;
     subCategoryName: string;
     ranking: number;
   }) => {
     if (!isSubCategoryPage) {
       event.preventDefault();
       const className = subCategoryName.toLowerCase().replace(' ', '-');
+      setActivePill(id);
       scroller.scrollTo(className, {
         duration: 1300,
         offset: isMobile ? -60 : -145,
@@ -138,6 +142,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
       const SCROLL_CUTOFF = isMobile ? 56 : 44;
       if (isSectionAtTop && pillsRowScrollPos > SCROLL_CUTOFF) {
         setIsSectionAtTop(false);
+        setActivePill(0);
         setAppState({ ...appState, isPillBarSticky: false });
       }
       if (!isSectionAtTop && pillsRowScrollPos <= SCROLL_CUTOFF) {
@@ -146,7 +151,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
       }
     };
 
-    const throttledScrollHandler = throttle(scrollHandler, 300);
+    const throttledScrollHandler = throttle(scrollHandler, 50);
     window.addEventListener('scroll', throttledScrollHandler, {
       passive: true,
     });
@@ -157,7 +162,12 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
 
   const PillsCarousel = subCategoryPills.map((subCategoryPill, index) => {
     const { id, name, label, url, iconUrl } = subCategoryPill;
-    const isHighlighted = subCategoryId ? id === subCategoryId : label === ALL;
+    let isHighlighted = label === ALL || activePill === 0;
+    if (!isSubCategoryPage) {
+      isHighlighted = id === activePill;
+    } else if (subCategoryId) {
+      isHighlighted = id === subCategoryId;
+    }
     const formattedLabel = getCatAndSubcatPageLabel({ label });
 
     return (
@@ -169,6 +179,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
         onClick={(e) =>
           handlePillClick({
             event: e,
+            id: id,
             subCategoryName: name,
             ranking: index + 1,
           })

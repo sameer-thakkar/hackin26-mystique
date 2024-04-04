@@ -571,13 +571,14 @@ const sliceHandler = (slice: any, props: any = {}) => {
     }
 
     case SLICE_TYPES.LISTICLE_V2:
-      const { type, settings, title } = props;
+      const { type, settings, title, index } = props;
       return (
         <ListicleV2
           type={type}
           items={slice?.items}
           settings={settings}
           listicleSectionTitle={title}
+          index={index}
         />
       );
 

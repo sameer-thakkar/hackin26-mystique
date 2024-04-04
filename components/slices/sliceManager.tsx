@@ -745,13 +745,14 @@ export const sliceComponents = () => {
       );
     },
     listicle_v2: (props: any) => {
-      const { slice, context } = props || {};
+      const { slice, context, index } = props || {};
       const { type, settings, title } = context;
 
       return sliceWrapper(
         <ListicleV2
           type={type}
           items={slice?.items}
+          index={index}
           settings={settings}
           listicleSectionTitle={title}
         />,
