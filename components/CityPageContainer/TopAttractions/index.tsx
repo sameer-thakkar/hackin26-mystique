@@ -147,7 +147,6 @@ const TopAttractions = ({
                     }
                     href={attractionLink}
                     target="_blank"
-                    rel="noreferrer"
                   >
                     <div className="attraction-image-wrapper">
                       <Image

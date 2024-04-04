@@ -174,7 +174,6 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
             }
             href={ctaUrl}
             target="_blank"
-            rel="noreferrer"
           >
             <SeeAllWrapper>
               {strings.SEE_ALL}
@@ -228,7 +227,6 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
                 }
                 href={entityUrl}
                 target="_blank"
-                rel="noreferrer"
               >
                 <Image
                   width={WIDTH}

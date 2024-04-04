@@ -121,11 +121,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }: any) => {
             <Content>
               <h3>{card.title}</h3>
               <div dangerouslySetInnerHTML={{ __html: card.content }}></div>
-              <IconLink
-                href={card.url}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <IconLink href={card.url} target="_blank" rel="noopener">
                 <span>Read More</span>
                 {ChevronLeft}
               </IconLink>

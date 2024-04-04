@@ -51,7 +51,7 @@ const SocialLinks = (props: any) => {
       {SOCIALS.map((item) => {
         return (
           <SocialIcon key={item.id} isLight={isLight}>
-            <a href={item.href} target="_blank" rel="noreferrer noopener">
+            <a href={item.href} target="_blank" rel="noopener">
               {item.icon}
             </a>
           </SocialIcon>

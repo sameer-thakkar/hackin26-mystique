@@ -83,7 +83,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
     <>
       <Conditional if={type === 'REDIRECT' && id}>
         {tourListData?.tourGroups?.length && !isCombo ? (
-          <a href={bookingURL} target="_blank" rel="noreferrer">
+          <a href={bookingURL} target="_blank">
             {text}
           </a>
         ) : (

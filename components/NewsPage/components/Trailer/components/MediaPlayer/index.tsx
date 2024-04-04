@@ -253,7 +253,6 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
                       href={showPageUrl}
                       onClick={() => handleBuyTicketsCTAClicked()}
                       target="_blank"
-                      rel="noreferrer"
                     >
                       <Button widthProp="100%">
                         {BUY_TICKETS_CTA}

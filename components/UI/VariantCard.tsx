@@ -329,7 +329,7 @@ const VariantCard = ({
           </div>
         </Price>
         <Conditional if={isMobile}>
-          <a href={bookUrl} target="_blank" rel="noopener noreferrer">
+          <a href={bookUrl} target="_blank" rel="noopener">
             <Button onClick={trackVariantSelection}>
               {strings.COMBO_VARIANT.SELECT_CTA}
             </Button>
@@ -337,7 +337,7 @@ const VariantCard = ({
         </Conditional>
       </PriceWrapper>
       <Conditional if={!isMobile}>
-        <a href={bookUrl} target="_blank" rel="noopener noreferrer">
+        <a href={bookUrl} target="_blank" rel="noopener">
           <Button onClick={trackVariantSelection}>
             {strings.COMBO_VARIANT.SELECT_CTA}
           </Button>

@@ -333,11 +333,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             )}
             <div className="cta">
               {read_more_link?.url ? (
-                <a
-                  href={read_more_link.url}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a href={read_more_link.url} rel="noopener" target="_blank">
                   {/* @ts-expect-error TS(2769): No overload matches this call. */}
                   <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
                     {strings.READ_MORE}
@@ -345,11 +341,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                 </a>
               ) : null}
               {book_now_link?.url ? (
-                <a
-                  href={book_now_link.url}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a href={book_now_link.url} rel="noopener" target="_blank">
                   <BookNow
                     // @ts-expect-error TS(2769): No overload matches this call.
                     fullWidth={!read_more_link?.url}

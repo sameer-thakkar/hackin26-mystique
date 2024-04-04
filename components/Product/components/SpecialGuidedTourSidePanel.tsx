@@ -153,7 +153,7 @@ const SpecialGuidedTourSidePanel = ({
           id={+tgid}
           prefix
         />
-        <a target="_blank" href={productBookingUrl} rel="nofollow noreferrer">
+        <a target="_blank" href={productBookingUrl} rel="nofollow">
           <BookNowCta
             isInSidePanel
             clickHandler={onBookNowClick}

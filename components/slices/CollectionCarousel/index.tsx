@@ -51,7 +51,7 @@ const handleCardClick = ({ id, name, rank, url }: IHandleCardClick) => {
     [ANALYTICS_PROPERTIES.POSITION]: rank,
     [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAME,
   });
-  window.open(url, '_blank', 'noopener, noreferrer');
+  window.open(url, '_blank', 'noopener');
 };
 
 const CollectionCarousel: React.FC<ICollectionCarousel> = ({
@@ -136,12 +136,7 @@ const CollectionCarousel: React.FC<ICollectionCarousel> = ({
                 className="collection-image"
                 fitCrop
               />
-              <a
-                onClick={(e) => e.preventDefault()}
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a onClick={(e) => e.preventDefault()} href={url} target="_blank">
                 <Label>{label}</Label>
               </a>
             </Card>

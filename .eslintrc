@@ -26,6 +26,7 @@
         "ignore": ["jsx", "global", "text", "font-color", "stop-Color"]
       }
     ],
+    "react/jsx-no-target-blank": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "jsx-a11y/click-events-have-key-events": "off",

@@ -62,10 +62,9 @@ interface TopDestinationsCarouselProps {
   showTitle?: boolean;
 }
 
-const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> = ({
-  destinations,
-  showTitle = true,
-}) => {
+const TopDestinationsCarousel: FunctionComponent<
+  TopDestinationsCarouselProps
+> = ({ destinations, showTitle = true }) => {
   const { isDev, host } = useContext(MBContext);
   const finalCities = destinations?.filter(
     (destination) =>
@@ -93,7 +92,7 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
         key={index}
         href={convertUidToUrl({ uid, isDev, hostname: host })}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener"
       >
         <Image url={image || FALLBACK_IMAGES.THEMEPARKS} alt={altText} />
         <TextWrapper>

@@ -104,7 +104,7 @@ const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
             <a
               href={subCategoryPageUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               onClick={(e) =>
                 trackCTA({
                   event: e,

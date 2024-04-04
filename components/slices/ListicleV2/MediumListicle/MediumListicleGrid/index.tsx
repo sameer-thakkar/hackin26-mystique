@@ -72,7 +72,7 @@ const MediumListicleGrid = ({
       index,
     });
     // TODO: Confirm this from Siddhesh that whetehr we want a button or anchor tag for better SEO.
-    window.open(ctaUrl, '_blank', 'noopener, noreferrer');
+    window.open(ctaUrl, '_blank', 'noopener');
   };
 
   const onClickMapLink = () => {
@@ -85,7 +85,7 @@ const MediumListicleGrid = ({
       experienceName: experienceName as string,
       index,
     });
-    window.open(practicalInfo?.findItOnMap, '_blank', 'noopener, noreferrer');
+    window.open(practicalInfo?.findItOnMap, '_blank', 'noopener');
   };
 
   return (
@@ -127,7 +127,7 @@ const MediumListicleGrid = ({
               href={ctaUrl}
               target={'_blank'}
               onClick={onClickCTAButton}
-              rel="noreferrer noopener"
+              rel="noopener"
             >
               {ctaText}
             </a>

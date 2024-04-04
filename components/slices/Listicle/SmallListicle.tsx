@@ -128,21 +128,13 @@ const SmallListicle: React.FC<SmallListicleProps> = ({
       {seating_chart_link?.url || book_now_link?.url ? (
         <Links>
           {seating_chart_link?.url ? (
-            <a
-              href={seating_chart_link.url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href={seating_chart_link.url} rel="noopener" target="_blank">
               {strings.LISTICLES.SEATING_CHART}
             </a>
           ) : null}
           <br />
           {book_now_link?.url ? (
-            <a
-              href={book_now_link.url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href={book_now_link.url} rel="noopener" target="_blank">
               {strings.BOOK_NOW_CTA}
             </a>
           ) : null}

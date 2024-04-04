@@ -371,7 +371,6 @@ const ContentSections = ({
                 <a
                   href={theatrePageUrl}
                   target="_blank"
-                  rel="noreferrer"
                   className="read-more"
                   onClick={() => {
                     trackEvent({

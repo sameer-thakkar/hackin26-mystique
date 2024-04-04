@@ -696,7 +696,7 @@ export const MobileProductPage = (props: any) => {
         flowType: tour.flowType,
       }),
       '_blank',
-      'noopener, noreferrer'
+      'noopener'
     );
     const { primaryCategory, primarySubCategory } = tour || {};
     trackEvent({

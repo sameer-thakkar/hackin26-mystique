@@ -157,7 +157,6 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
               role="button"
               tabIndex={0}
               target="_blank"
-              rel="noreferrer"
             >
               {ALL_NEWS}
             </a>
@@ -217,7 +216,6 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
                   <a
                     href={redirectionUrl}
                     target="_blank"
-                    rel="noreferrer"
                     onClick={() => handleArticleClick(index)}
                     key={genUniqueId()}
                   >

@@ -48,7 +48,6 @@ const QuickInfo = ({ info = {}, CTALink, id }: IQuickInfoProps) => {
                   <a
                     href={url}
                     target="_blank"
-                    rel="noreferrer"
                     onClick={onCtaClick(
                       key as keyof typeof strings.CONTENT_PAGE
                     )}

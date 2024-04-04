@@ -85,7 +85,7 @@ const LargeListicleGrid = ({
       experienceName: experienceName as string,
       index,
     });
-    window.open(practicalInfo?.findItOnMap, '_blank', 'noopener, noreferrer');
+    window.open(practicalInfo?.findItOnMap, '_blank', 'noopener');
   };
 
   const getProductCardElements = (isOpen: boolean) => {
@@ -118,7 +118,7 @@ const LargeListicleGrid = ({
                 href={ctaUrl}
                 target={'_blank'}
                 onClick={onClickCTAButton}
-                rel="noreferrer noopener"
+                rel="noopener"
               >
                 {ctaText}
               </a>
@@ -135,7 +135,7 @@ const LargeListicleGrid = ({
                 href={ctaUrl}
                 target={'_blank'}
                 onClick={onClickCTAButton}
-                rel="noreferrer noopener"
+                rel="noopener"
               >
                 {ctaText}
               </a>

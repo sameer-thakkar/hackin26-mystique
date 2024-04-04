@@ -59,7 +59,6 @@ const AllDayTripsBtn = ({ uid, lang, host, isDev }: IPagelinkProps) => {
         className="alldaytrips-link"
         href={allDayTripPageLink}
         target="_blank"
-        rel="noreferrer"
       >
         {strings.CITY_PAGE.ALL_DAY_TRIPS}
       </a>
@@ -140,7 +139,6 @@ const NearbyCities = ({
             }
             href={nearbyCollectionLink}
             target="_blank"
-            rel="noreferrer"
           >
             <Image
               width={WIDTH}

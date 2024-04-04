@@ -171,7 +171,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
         });
       }
     },
-    [inventoryData, selectedDateTimeFilterButtonIndex]
+    [router, inventoryData, selectedDateTimeFilterButtonIndex]
   );
 
   useEffect(() => {

@@ -167,7 +167,7 @@ const TableV3 = ({
               <div>{TABLE_V3_SVG_MAPPING[svg_icon]}</div>
             </Conditional>
             <div>
-              <a href={url} rel="nofollow noreferrer" target="_blank">
+              <a href={url} rel="nofollow" target="_blank">
                 {link_text}
               </a>
             </div>

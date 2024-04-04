@@ -135,7 +135,7 @@ const CategoryCard = ({
         height={isMobile ? 102 : 176}
       />
       <div className="category-name">{categoryName}</div>
-      <a href={redirectURL} target="_blank" rel="noreferrer">
+      <a href={redirectURL} target="_blank">
         <h3>{name}</h3>
       </a>
       <div className="priceBlockWrapper">

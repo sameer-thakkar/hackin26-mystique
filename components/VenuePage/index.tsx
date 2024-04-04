@@ -384,7 +384,6 @@ const VenuePage = (props: IVenuePageProps) => {
             className="theatre-location-cta"
             href={theatreLocationUrl.url}
             target="_blank"
-            rel="noreferrer"
             onClick={onTheatreAddressClick}
           >
             <LocationSvg />

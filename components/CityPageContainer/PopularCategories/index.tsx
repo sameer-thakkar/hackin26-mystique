@@ -43,7 +43,7 @@ const handleCardClick = ({ rank, name, mbType, url }: IPopCatCardClick) => {
     [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAMES.POP_CAT,
     [ANALYTICS_PROPERTIES.CARD_MB_TYPE]: mbType,
   });
-  window.open(url, '_blank', 'noopener,noreferrer');
+  window.open(url, '_blank', 'noopener');
 };
 
 const PopularCategories = ({
@@ -144,7 +144,6 @@ const PopularCategories = ({
                 onClick={(e) => e.preventDefault()}
                 href={entityUrl}
                 target="_blank"
-                rel="noreferrer"
               >
                 <div className="entity-name">{heading}</div>
               </a>

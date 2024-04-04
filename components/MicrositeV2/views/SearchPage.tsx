@@ -52,7 +52,7 @@ export const SearchPage = (props: any) => {
       isDev,
       host,
     });
-    window.open(destinationUrl, '_self', 'noopener,noreferrer');
+    window.open(destinationUrl, '_self', 'noopener');
   };
 
   const { isMobile, allTours, headerProps, changePage } = props;

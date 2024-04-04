@@ -60,7 +60,6 @@ const TopAttractionsCarousel: React.FC<TopAttractionsCarouselProps> = (
           <a
             href={see_all_link?.url}
             target="_blank"
-            rel="noreferrer"
             onClick={() =>
               trackEvent({
                 eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,

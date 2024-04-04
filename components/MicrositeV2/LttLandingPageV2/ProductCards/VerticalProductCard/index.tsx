@@ -107,7 +107,7 @@ const VerticalProductCard = ({
     });
 
     if (isMobile) {
-      window.open(destinationUrl, '_self', 'noopener,noreferrer');
+      window.open(destinationUrl, '_self', 'noopener');
     } else {
       window.open(destinationUrl, '_blank');
     }

@@ -142,7 +142,6 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
                 key={article.uid}
                 href={redirectUrl}
                 target={'_blank'}
-                rel={'noreferrer'}
                 onClick={() => handleArticleClick(index, heading)}
               >
                 <ImageContainer>

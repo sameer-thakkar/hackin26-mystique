@@ -176,7 +176,7 @@ export const Sidecard: React.FC<TShowCardProps> = ({
               </Conditional>
             </div>
           </div>
-          <a href={showPageUrl} target="_blank" rel="noreferrer">
+          <a href={showPageUrl} target="_blank">
             <Button widthProp="100%" onClick={handleCheckAvailabiltyClicked}>
               {listingPrice?.finalPrice
                 ? strings.CHECK_AVAIL

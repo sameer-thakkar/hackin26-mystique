@@ -46,7 +46,7 @@ const TopCollectionCard: React.FC<TopCollectionCardProps> = (props) => {
       [ANALYTICS_PROPERTIES.POSITION]: ranking + 1,
       [ANALYTICS_PROPERTIES.SECTION]: SECTIONS.TOP_CATEGORY,
     });
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, '_blank', 'noopener');
   };
 
   return (
@@ -69,7 +69,7 @@ const TopCollectionCard: React.FC<TopCollectionCardProps> = (props) => {
       <CardContent>
         <a
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           href={url}
           onClick={(
             e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>

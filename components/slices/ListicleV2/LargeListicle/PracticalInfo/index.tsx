@@ -119,7 +119,7 @@ const PracticalInfo = ({
               <a
                 href={findItOnMap}
                 target={'_blank'}
-                rel="noreferrer noopener"
+                rel="noopener"
                 onClick={onClickMapLink}
               >
                 {location}

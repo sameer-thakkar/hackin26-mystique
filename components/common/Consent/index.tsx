@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import Cookies from 'js-cookie';
@@ -20,40 +19,21 @@ import {
 import Drawer from 'components/common/Drawer';
 import Image from 'UI/Image';
 import { useToast } from 'contexts/toastContext';
-import useABTesting from 'hooks/useABTesting';
 import { getNakedDomain } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { appAtom } from 'store/atoms/app';
-import { VARIANTS } from 'const/experiments';
 import { COOKIE } from 'const/index';
 import { strings } from 'const/strings';
 
 type TConsentState = 'granted' | 'denied';
 
-const CookieBanner = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CookieBanner" */ 'components/common/CookieBanner'
-    ),
-  { ssr: false }
-);
-
 const ConsentBanner = ({
-  pageType,
-  isMobile,
   isGDPRCompliant,
   countryCode,
 }: {
-  countryCode?: string;
-  pageType: string;
-  isMobile: boolean;
   isGDPRCompliant: boolean;
+  countryCode?: string;
 }) => {
-  const { isEligible, variant, isExperimentResolving } = useABTesting({
-    experimentId: 'CONSENT_BANNER_EXPERIMENT',
-    noTrack: true,
-  });
-  const isConsentTreatment = isEligible && variant === VARIANTS.TREATMENT;
   const [isVisible, setVisibility] = useState(false);
   const { host } = useRecoilValue(appAtom);
   const { pathname } = useRouter();
@@ -94,25 +74,14 @@ const ConsentBanner = ({
       COOKIE.CONSENT_POLICY_STATE
     ) as TConsentState;
     if (isPrivacyPage) return;
-    if (
-      typeof cookieState === 'undefined' &&
-      !isExperimentResolving &&
-      isGDPRCompliant &&
-      !isVisible
-    ) {
+    if (typeof cookieState === 'undefined' && isGDPRCompliant && !isVisible) {
       setVisibility(true);
       trackEvent({
         eventName: 'Consent Banner Viewed',
         'Is Country Fallback': !countryCode,
       });
     }
-  }, [
-    isPrivacyPage,
-    isExperimentResolving,
-    isGDPRCompliant,
-    isVisible,
-    countryCode,
-  ]);
+  }, [isPrivacyPage, isGDPRCompliant, isVisible, countryCode]);
 
   useEffect(() => {
     if (showModal) document.body.classList.add('scroll-lock');
@@ -153,15 +122,6 @@ const ConsentBanner = ({
   const onHideModal = () => {
     setShowModal(false);
   };
-
-  if (!isConsentTreatment)
-    return (
-      <CookieBanner
-        pageType={pageType}
-        isMobile={isMobile}
-        isGDPRCompliant={isGDPRCompliant}
-      />
-    );
 
   if (showModal)
     return (

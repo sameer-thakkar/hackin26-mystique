@@ -105,7 +105,6 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
                 href={redirectionUrl}
                 key={index}
                 target="_blank"
-                rel="noreferrer"
                 onClick={() => handleArticleClick(index)}
               >
                 <article className="news-article">

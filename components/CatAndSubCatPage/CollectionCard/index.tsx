@@ -72,13 +72,13 @@ const CollectionCard: React.FC<CollectionCardProps> = (props) => {
       [ANALYTICS_PROPERTIES.POSITION]: ranking + 1,
       [ANALYTICS_PROPERTIES.SECTION]: sectionName || null,
     });
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, '_blank', 'noopener');
   };
 
   const CTAContent = (
     <CTAContentWrapper>
       <span>
-        <a target="_blank" rel="noopener noreferrer" href={url}>
+        <a target="_blank" rel="noopener" href={url}>
           <Conditional if={!!listingPrice}>
             {strings.CAT_SUBCAT_PAGE.TICKETS_FROM}
             <LocalisedPrice

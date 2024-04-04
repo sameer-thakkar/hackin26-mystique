@@ -310,7 +310,7 @@ const LttShowPageV2 = ({
 
     setButtonLoading(true);
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
-    window.open(bookingUrl, '_self', 'noopener, noreferrer');
+    window.open(bookingUrl, '_self', 'noopener');
   };
 
   useHistoryTraversal({

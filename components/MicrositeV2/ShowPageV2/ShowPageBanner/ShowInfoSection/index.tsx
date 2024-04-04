@@ -345,7 +345,6 @@ const ShowInfoSection = ({
               href={theatrePageUrl}
               className="theatre-name"
               target="_blank"
-              rel="noreferrer"
               onClick={() => {
                 trackEvent({
                   eventName: ANALYTICS_EVENTS.SHOW_PAGE.THEATRE_NAME_CLICKED,

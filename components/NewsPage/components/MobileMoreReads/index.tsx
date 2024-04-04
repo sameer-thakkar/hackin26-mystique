@@ -110,7 +110,6 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
                     href={redirectionUrl}
                     key={article.uid}
                     target="_blank"
-                    rel="noreferrer"
                     onClick={() => handleArticleClick(index, heading)}
                   >
                     <div className="article-image">
@@ -128,7 +127,6 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
                       href={redirectionUrl}
                       key={article.uid}
                       target="_blank"
-                      rel="noreferrer"
                       onClick={() => handleArticleClick(index, heading)}
                     >
                       <span className="published-date">

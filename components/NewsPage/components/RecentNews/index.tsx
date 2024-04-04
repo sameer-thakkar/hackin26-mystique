@@ -140,7 +140,6 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
                 href={articleUrl}
                 key={article.uid}
                 target="_blank"
-                rel="noreferrer"
                 onClick={() => handleArticleClick(index, heading)}
               >
                 <Cell>

@@ -249,7 +249,7 @@ const StickyHeader = ({
                       BUTTON_LOADING_DURATION
                     );
                     trackBookNowClick();
-                    window.open(bookingUrl, '_self', 'noopener, noreferrer');
+                    window.open(bookingUrl, '_self', 'noopener');
                   }}
                   text={isAvailable ? strings.CHECK_AVAIL : strings.UNAVAILABLE}
                 />

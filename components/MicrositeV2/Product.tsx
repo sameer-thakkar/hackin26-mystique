@@ -506,9 +506,9 @@ const Product = (props: any) => {
       if (isV3Design) {
         productClick(tgid, event);
       } else if (showPageExists) {
-        window.open(showPageUrl, '_self', 'noopener,noreferrer');
+        window.open(showPageUrl, '_self', 'noopener');
       } else {
-        window.open(bookingURL, '_self', 'noopener,noreferrer');
+        window.open(bookingURL, '_self', 'noopener');
       }
     } else {
       if (isEntertainmentMb) {
@@ -693,7 +693,7 @@ const Product = (props: any) => {
           <Conditional if={showPageExists}>
             <a
               target="_self"
-              rel="noopener noreferrer"
+              rel="noopener"
               href={showPageUrl}
               onClick={handleProductClick}
             >
@@ -820,7 +820,7 @@ const Product = (props: any) => {
               <div className="title-wrap">
                 <a
                   target="_self"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   href={showPageExists ? showPageUrl : bookingURL}
                   onClick={showPageEvent}
                 >

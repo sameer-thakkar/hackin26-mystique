@@ -150,7 +150,6 @@ export const CategoryCarouselSwiper = ({
               onClick={handleSeaAllClicked}
               href={seeAllUrl}
               target="_blank"
-              rel="noreferrer"
             >
               {strings.LTT_LANDING_PAGE.SEE_ALL}
             </a>

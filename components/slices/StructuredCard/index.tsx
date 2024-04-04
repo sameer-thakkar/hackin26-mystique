@@ -81,7 +81,6 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
           <a
             href={ctaUrl?.url}
             target="_blank"
-            rel="noreferrer"
             onClick={() =>
               trackEvent({
                 eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,

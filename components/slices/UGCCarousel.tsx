@@ -591,7 +591,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   className="username"
                   href={instagramAccountURL}
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   onClick={() => trackUsernameClick(index, postType, username)}
                 >
                   {username}
@@ -607,7 +607,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   <a
                     href={url}
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noopener"
                     onClick={() => {
                       trackRedirectToIG(index, postType);
                     }}

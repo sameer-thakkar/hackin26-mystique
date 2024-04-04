@@ -49,7 +49,7 @@ const ContentContainer = ({
           target={'_blank'}
           className="cta-btn"
           onClick={onClickCTA}
-          rel="noreferrer noopener"
+          rel="noopener"
         >
           {ctaText}
         </a>

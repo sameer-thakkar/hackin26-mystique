@@ -528,7 +528,7 @@ const Product = (props: any) => {
             variantId,
           }),
           '_blank',
-          'noopener noreferrer'
+          'noopener'
         );
         return;
       }
@@ -1381,7 +1381,6 @@ const Product = (props: any) => {
                       <a
                         target={isMobile ? '_self' : '_blank'}
                         href={productBookingUrl}
-                        rel="nofollow noreferrer"
                       >
                         <BookNowCta
                           clickHandler={() =>

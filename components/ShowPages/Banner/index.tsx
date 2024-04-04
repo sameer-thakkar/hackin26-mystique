@@ -435,7 +435,7 @@ const ShowPageBanner = ({
                       BUTTON_LOADING_DURATION
                     );
                     trackBookNowClick();
-                    window.open(bookingUrl, '_self', 'noopener, noreferrer');
+                    window.open(bookingUrl, '_self', 'noopener');
                   }}
                   text={
                     listingPrice ? strings.CHECK_AVAIL : strings.UNAVAILABLE

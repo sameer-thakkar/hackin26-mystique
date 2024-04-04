@@ -56,7 +56,6 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
             role="button"
             tabIndex={0}
             target="_blank"
-            rel="noreferrer"
           >
             {ALL_NEWS}
           </a>
@@ -88,7 +87,6 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
                     href={redirectionUrl}
                     key={index}
                     target="_blank"
-                    rel="noreferrer"
                     onClick={() => handleArticleClick(index)}
                   >
                     <div className="article-image">
@@ -107,7 +105,6 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
                       href={redirectionUrl}
                       key={index}
                       target="_blank"
-                      rel="noreferrer"
                       onClick={() => handleArticleClick(index)}
                     >
                       <span className="published-date">

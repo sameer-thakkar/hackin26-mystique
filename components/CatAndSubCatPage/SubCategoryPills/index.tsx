@@ -164,7 +164,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
       <a
         href={url}
         target="_blank"
-        rel="noreferrer noopener"
+        rel="noopener"
         key={id}
         onClick={(e) =>
           handlePillClick({

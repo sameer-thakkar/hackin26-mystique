@@ -219,7 +219,7 @@ const Footer: React.FC<FooterProps> = ({
                             {MessageIcon}
                             <a
                               href={LIVE_CHAT_LINK}
-                              rel="noreferrer noopener"
+                              rel="noopener"
                               target="_blank"
                             >
                               {strings.FOOTER.CHAT_WITH_US}
@@ -238,7 +238,7 @@ const Footer: React.FC<FooterProps> = ({
                             {MailIcon}
                             <a
                               href={HEADOUT_MAIL_REDIRECT}
-                              rel="noreferrer noopener"
+                              rel="noopener"
                               target="_blank"
                             >
                               {strings.FOOTER.EMAIL_US}
@@ -260,7 +260,7 @@ const Footer: React.FC<FooterProps> = ({
                           <FooterListItem isLight={isLight}>
                             <a
                               href={COMPANY_DETAILS_LINK}
-                              rel="noreferrer noopener"
+                              rel="noopener"
                               target="_blank"
                             >
                               {strings.FOOTER.COMPANY_DETAILS}
@@ -269,18 +269,14 @@ const Footer: React.FC<FooterProps> = ({
                           <FooterListItem isLight={isLight}>
                             <a
                               href={PRIVACY_POLICY_LINK}
-                              rel="noreferrer noopener"
+                              rel="noopener"
                               target="_blank"
                             >
                               {strings.FOOTER.PRIVACY_POLICY}
                             </a>
                           </FooterListItem>
                           <FooterListItem isLight={isLight}>
-                            <a
-                              href={TERMS_LINK}
-                              rel="noreferrer noopener"
-                              target="_blank"
-                            >
+                            <a href={TERMS_LINK} rel="noopener" target="_blank">
                               {strings.FOOTER.TERMS_OF_USAGE}
                             </a>
                           </FooterListItem>

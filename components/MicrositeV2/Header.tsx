@@ -543,7 +543,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       ? convertUidToUrl({ uid: showPageUid, hostname: host, lang })
       : bookingURL;
 
-    window.open(showPageUrl ?? bookingURL, '_self', 'noopener,noreferrer');
+    window.open(showPageUrl ?? bookingURL, '_self', 'noopener');
     setResultClicked(true);
   };
 

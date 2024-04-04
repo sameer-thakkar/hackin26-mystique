@@ -10,7 +10,7 @@ export const parseCaption = (string: string) => {
     newString = newString?.replace(
       regex,
       `<a href="https://www.instagram.com/${accountNames?.[i]}" target="_blank"
-      rel="noreferrer noopener">${el}</a>`
+      rel="noopener">${el}</a>`
     );
   });
 

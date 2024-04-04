@@ -92,7 +92,7 @@ const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
             />
           </StyledProductCardLeft>
           <StyledProductCardRight>
-            <a href={card.cta_link} target="_blank" rel="noopener noreferrer">
+            <a href={card.cta_link} target="_blank" rel="noopener">
               <Button>{card.cta_title}</Button>
             </a>
           </StyledProductCardRight>

@@ -164,7 +164,7 @@ export const LinkCard = (props: any) => {
 
   return (
     <div key={index} className={cardClassName || ''}>
-      <a target="_blank" rel="noopener noreferrer" href={link}>
+      <a target="_blank" rel="noopener" href={link}>
         <MicrobrandCard className="microbrand-card">
           <div className="card-image">
             <Image

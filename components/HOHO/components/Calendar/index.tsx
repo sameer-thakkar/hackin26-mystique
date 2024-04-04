@@ -263,7 +263,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
         showFullScreenPax: true,
       }),
       isMobile ? '_self' : '_blank',
-      'noopener, noreferrer'
+      'noopener'
     );
   };
 

@@ -19,7 +19,7 @@ const CollectionMBShortcode = ({ id, text }: TCollectionMBShortcode) => {
   return (
     <>
       <Conditional if={MBLink}>
-        <a href={MBLink} target="_blank" rel="noreferrer">
+        <a href={MBLink} target="_blank">
           {text}
         </a>
       </Conditional>

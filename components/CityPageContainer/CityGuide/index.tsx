@@ -88,7 +88,6 @@ const CityGuide = ({
               }
               href={travelGuideLink}
               target="_blank"
-              rel="noreferrer"
             >
               <div className="travel-guide-link">
                 <TravelGuideIcon />
@@ -136,7 +135,7 @@ const CityGuide = ({
               <div className="item-svg">
                 <IconSvg />
               </div>
-              <a href={guideLink} target="_blank" rel="noreferrer">
+              <a href={guideLink} target="_blank">
                 <div className="item-name">{displayName}</div>
               </a>
               <div className="item-line" />

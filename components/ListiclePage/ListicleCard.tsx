@@ -352,7 +352,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
               </a>
               <a
                 href={`${bookingUrl}${tgid}`}
-                rel="noopener noreferrer"
+                rel="noopener"
                 target={isMobile ? '' : '_blank'}
               >
                 <Button fillType="fillGradient" paddingSides="41px">

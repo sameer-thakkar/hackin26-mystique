@@ -137,7 +137,6 @@ const NearbyCities = ({
                 }
                 href={cityLink}
                 target="_blank"
-                rel="noreferrer"
               >
                 <Image
                   width={WIDTH}

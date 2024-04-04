@@ -23,6 +23,7 @@ export const COOKIE = {
   CLARITY_PROJECT_ID: 'clarity-pid',
   IS_LAZY: 'is-lazy',
   CONSENT_POLICY_STATE: 'consent-state',
+  HEADOUT_ATTRIBUTION_TRACKER: 'h-attr',
 };
 
 export const TIME = {
@@ -1039,6 +1040,8 @@ export const QUERY_PARAMS = {
   OFFSET: 'offset',
   PAGE: 'page',
   FILTER_REVIEWS: 'filter-reviews',
+  ATRIBUTION_CHANNEL_ID: 'ci',
+  ATRIBUTION_CHANNEL_META: 'cm',
 };
 
 export const LOCALE_ORDER = [

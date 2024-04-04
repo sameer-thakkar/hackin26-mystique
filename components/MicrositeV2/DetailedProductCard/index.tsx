@@ -232,7 +232,7 @@ const DetailedProductCard = (props: any) => {
         <a
           className={`cta ${experimentEnabled ? 'primary' : 'secondary'}`}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           onClick={onMoreDetailsClick}
           href={showPageUrl}
         >
@@ -258,7 +258,7 @@ const DetailedProductCard = (props: any) => {
                 flowType,
               }),
               '_blank',
-              'noopener, noreferrer'
+              'noopener'
             );
           }}
         >

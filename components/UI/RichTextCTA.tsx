@@ -30,7 +30,7 @@ const CTAWrapper = styled.div<StyledCTAWrapperProps>`
 const RichTextCTA = (block: any) => {
   const anchorTagProps = {
     target: '_blank',
-    rel: 'noopener noreferrer',
+    rel: 'noopener',
   };
   const { cta_type, cta_link, cta_text } = block || {};
 

@@ -166,7 +166,7 @@ const ContentContainer = ({
                 href={ctaUrl}
                 target={'_blank'}
                 onClick={onClickCTAButton}
-                rel="noreferrer noopener"
+                rel="noopener"
               >
                 {ctaText}
               </a>

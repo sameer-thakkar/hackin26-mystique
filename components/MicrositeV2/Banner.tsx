@@ -400,7 +400,7 @@ const NewBanner: React.FC<any> = (props) => {
             <Conditional if={isEntertainmentMb}>
               <a
                 target={isMobile ? '_self' : '_blank'}
-                rel="noopener noreferrer"
+                rel="noopener"
                 href={getShowPageUrl(bannerImages[0])}
               >
                 <Image
@@ -464,7 +464,7 @@ const NewBanner: React.FC<any> = (props) => {
                   <Conditional if={isEntertainmentMb}>
                     <a
                       target={isMobile ? '_self' : '_blank'}
-                      rel="noopener noreferrer"
+                      rel="noopener"
                       href={getShowPageUrl(image)}
                       onClick={() => trackBannerClick()}
                     >

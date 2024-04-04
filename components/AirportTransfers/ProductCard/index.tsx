@@ -277,7 +277,7 @@ export const PrivateAirportTranferProductCard = ({
         <a
           target={isMobile ? '_self' : '_blank'}
           href={productBookingUrl}
-          rel="nofollow noreferrer"
+          rel="nofollow noopener"
           className="booking-link"
         >
           <Button
@@ -356,7 +356,7 @@ export const PrivateAirportTranferProductCard = ({
             <a
               target={isMobile ? '_self' : '_blank'}
               href={productBookingUrl}
-              rel="nofollow noreferrer"
+              rel="nofollow"
               className="booking-link"
             >
               <Button

@@ -109,10 +109,7 @@ const getCurrencyCode = ({
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
   const {
     lang: locale,
-    isMobile,
     isGDPRCompliant,
-    ContentType,
-    MBDesign,
     CMSContent,
     domainConfig,
     countryCode,
@@ -304,7 +301,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     set(currencyAtom, ssrCurrencyCode);
     set(localeLoaderAtom, false);
   };
-  const pageType = ContentType + (MBDesign || '');
   const { host } = pageProps;
   return (
     <StyleSheetManager
@@ -327,9 +323,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
           </Conditional>
           <DeferredComponent delay={3_000}>
             <ConsentBanner
-              isMobile={isMobile}
               isGDPRCompliant={isGDPRCompliant}
-              pageType={pageType}
               countryCode={countryCode}
             />
           </DeferredComponent>

@@ -632,7 +632,7 @@ const TicketCard = (props: any) => {
             // @ts-expect-error TS(2322): Type '"_blank" | null' is not assignable to type '... Remove this comment to see the full error message
             target={isFetched && isMobile ? null : '_blank'}
             href={productBookingUrl}
-            rel="nofollow noreferrer"
+            rel="nofollow"
           >
             <Button
               className={`tour-book-now-cta`}

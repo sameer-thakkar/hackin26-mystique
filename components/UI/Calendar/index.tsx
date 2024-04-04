@@ -284,7 +284,7 @@ const Calendar = ({
       },
     });
 
-    window.open(bookingUrl, '_self', 'noopener, noreferrer');
+    window.open(bookingUrl, '_self', 'noopener');
   };
 
   useHistoryTraversal({

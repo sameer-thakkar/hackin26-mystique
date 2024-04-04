@@ -124,7 +124,7 @@ export const MoreDetailsSideDrawer = ({
           <a
             target={'_blank'}
             href={productBookingUrl}
-            rel="nofollow noreferrer"
+            rel="nofollow"
             className="booking-link"
           >
             <Button

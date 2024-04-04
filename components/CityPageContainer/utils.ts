@@ -88,7 +88,7 @@ export const trackCTA = ({ event, url, section, ctaType }: ITrackCTA) => {
     [ANALYTICS_PROPERTIES.CTA_TYPE]: ctaType,
     [ANALYTICS_PROPERTIES.SECTION]: section,
   });
-  window.open(url, '_blank', 'noopener,noreferrer');
+  window.open(url, '_blank', 'noopener');
 };
 
 export const trackPageSection = ({ section }: ITrackPageSection) => {

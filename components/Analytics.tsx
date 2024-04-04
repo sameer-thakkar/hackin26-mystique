@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import useAttribution from 'hooks/useAttribution';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { withShortcodes } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
@@ -70,6 +71,8 @@ const Analytics = ({ contentType, cmsContent }: any) => {
         window.removeEventListener('DOMContentLoaded', setPageLoaded);
     }
   }, []);
+
+  useAttribution();
 
   return null;
 };

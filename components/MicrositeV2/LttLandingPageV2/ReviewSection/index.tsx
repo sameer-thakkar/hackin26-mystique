@@ -131,7 +131,6 @@ const ReviewSection = ({ isMobile }: IReviewSectionProps) => {
                 className="show-name"
                 role="button"
                 tabIndex={0}
-                target="noreferrer"
                 rel="nore"
               >
                 {review.showName}
