@@ -274,7 +274,8 @@ const MicrositeV1 = (props: any) => {
     variant: popupExperimentVariant,
   } = useABTesting({
     experimentId: 'MORE_DETAILS_POPUP_EXPERIMENT',
-    customEligibilityCheckFn: () => isA1orC1MB(taggedMbType) && baseLangIsPoiMb,
+    customEligibilityCheckFn: () =>
+      isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile,
   });
 
   const showPopup =
