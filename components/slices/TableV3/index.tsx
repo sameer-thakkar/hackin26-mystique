@@ -36,7 +36,7 @@ import {
 } from 'components/slices/TableV3/styles';
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import { stringIdfy } from 'utils/helper';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
 import {
   BOOSTER_BACKGROUND_COLOR_CODE_MAPPING,
   TABLE_V3_COLUMN_TYPE,
@@ -305,7 +305,7 @@ const TableV3 = ({
   return (
     <>
       <TitleTextCombo>
-        <h2>{title}</h2>
+        <h2 id={generateSidenavId(title)}>{title}</h2>
       </TitleTextCombo>
 
       <StyledTableWrapper className="table-wrapper">
