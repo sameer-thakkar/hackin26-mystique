@@ -14,11 +14,7 @@ import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import {
-  fetchBatchedCalendarInventory,
-  fetchInventory,
-  fetchTourList,
-} from 'utils/apiUtils';
+import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { getProductDescriptors } from 'utils/productUtils';
@@ -436,7 +432,6 @@ const PopulateProducts = (props: any) => {
   productsRef.current = [];
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
-  const [productInfo, setproductInfo] = useState({});
   const [detialsPopupShown, setDetailsPopupShown] = useState(false);
   const router = useRouter();
   const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
@@ -492,24 +487,6 @@ const PopulateProducts = (props: any) => {
   const { isStage, isDev, host, design } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
-
-  const fetchProductInfo = async (tgids: any) => {
-    if (!tgids) return;
-    const tgidData = await fetchTourList({ tgids }).then((res) => res.json());
-    const tourGroupMap = tgidData?.tourGroups?.reduce((acc: any, el: any) => {
-      const { id, primaryCollection, cityCode } = el || {};
-      return {
-        ...acc,
-        [id]: {
-          ...el,
-          tgid: id,
-          collectionId: primaryCollection?.id,
-          city: cityCode,
-        },
-      };
-    }, {});
-    setproductInfo(tourGroupMap);
-  };
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -733,11 +710,6 @@ const PopulateProducts = (props: any) => {
     isExperimentResolving,
     availableToursList,
   ]);
-  const allTgids = availableToursList?.map((el: any) => el?.tgid);
-
-  useEffect(() => {
-    fetchProductInfo(allTgids);
-  }, []);
 
   const isV1DesignSite = isMBDesign({
     currentDesign: design || '',
@@ -777,8 +749,7 @@ const PopulateProducts = (props: any) => {
       primarySubCategory,
       reviewsDetails,
       topReviews,
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    } = productInfo[tgid] ?? {};
+    } = scorpioData[tgid];
 
     const childProps = {
       tgid,
@@ -819,7 +790,7 @@ const PopulateProducts = (props: any) => {
       instantCheckout,
       indexPosition: index,
       pageType,
-      collectionId,
+      collectionId: collectionId ?? primaryCollection?.id,
       primaryCategory,
       primaryCollection,
       primarySubCategory,

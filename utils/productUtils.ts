@@ -828,6 +828,8 @@ export const getScorpioData = ({
         inclusionsRichText,
         exclusionsRichText,
         ratingCount,
+        reviewsDetails,
+        topReviews,
       } = tour ?? {};
 
       minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
@@ -909,6 +911,8 @@ export const getScorpioData = ({
           flowType,
           allVariantOpenDated,
           ratingCount,
+          reviewsDetails,
+          topReviews,
         },
       };
     },

@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { truncateNumber } from 'utils';
-import { isSafari } from 'utils/helper';
+import { isSafari as checkForSafari } from 'utils/helper';
 import COLORS from 'const/colors';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
@@ -11,6 +12,12 @@ const Ratings = ({
   reviewsDetails,
   onRatingsCountClick,
 }: TRatingsContainerProps) => {
+  const [isSafari, setIsSafari] = useState(false);
+
+  useEffect(() => {
+    setIsSafari(checkForSafari());
+  }, []);
+
   if (!reviewsDetails) return null;
 
   const { ratingsCount, averageRating, showRatings } = reviewsDetails;
@@ -18,7 +25,7 @@ const Ratings = ({
   if (showRatings === undefined) return null;
 
   return (
-    <StyledRatingsContainer $isSafari={isSafari()}>
+    <StyledRatingsContainer $isSafari={isSafari}>
       {showRatings && <StarFull fillColor={COLORS.BRAND.CANDY} />}
       <span
         data-card-section={CARD_SECTION_MARKERS.REVIEWS}
