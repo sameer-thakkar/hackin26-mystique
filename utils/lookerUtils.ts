@@ -185,10 +185,12 @@ export const getTgidsFromProductCards = async ({
   hostname,
 }: TgetTgidsFromProductCards) => {
   try {
-    let localisedCategoryTourListV1 = getTourListCategorySlice(
+    let localisedCategoryTourListV1 = getTourListCategorySlice({
       doc,
-      baseLangDoc
-    );
+      baseLangDoc,
+      sliceType: SLICE_TYPES.TOUR_LIST_CATEGORY_V1,
+    });
+
     const prismicClient = createClient({});
     const productCardData =
       (await prismicClient.getByID(productCardsDocId, {
@@ -259,7 +261,11 @@ export const getTgids = async ({
       case data?.design === DESIGN.V3:
         //categorized v3 MBs
         const { allTgids } = await categoryTourListParserV2({
-          tourListCategory: getTourListCategorySlice(localisedDoc, baseLangDoc),
+          tourListCategory: getTourListCategorySlice({
+            doc: localisedDoc,
+            baseLangDoc,
+            sliceType: SLICE_TYPES.TOUR_LIST_CATEGORY,
+          }),
           hostname,
           lang: lang,
           MBDesign: DESIGN.V3,
@@ -750,9 +756,17 @@ export const fetchBaseLangData = async (
     : doc;
 };
 
-const getTourListCategorySlice = (
-  doc: PrismicDocumentWithUID,
-  baseLangDoc: PrismicDocumentWithUID
-) => {
-  return doc?.data?.body?.[0] ?? baseLangDoc?.data?.body?.[0];
+const getTourListCategorySlice = ({
+  doc,
+  baseLangDoc,
+  sliceType,
+}: {
+  doc: PrismicDocumentWithUID;
+  baseLangDoc: PrismicDocumentWithUID;
+  sliceType: string;
+}) => {
+  const docBody = doc?.data?.body ?? baseLangDoc?.data?.body;
+  return docBody?.find(
+    (slice: Record<string, any>) => slice.slice_type === sliceType
+  );
 };
