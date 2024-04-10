@@ -1601,7 +1601,9 @@ const Product = (props: any) => {
           </Conditional>
         </StyledProductCard>
         <Conditional
-          if={!isMobile && isComboWithMultiVariant && showComboVariant}
+          if={
+            !isMobile && isComboWithMultiVariant && showComboVariant && !isPopup
+          }
         >
           <ComboPopup
             productTitle={cardTitle}
@@ -1735,7 +1737,12 @@ const Product = (props: any) => {
                   <BookNowCta
                     showLoadingState={false}
                     clickHandler={() => {
-                      handleShowComboPopup(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                      popupController.current?.close();
+                      setTimeout(() => {
+                        handleShowComboPopup(
+                          PRODUCT_CARD_REVAMP.PLACEMENT.POPUP
+                        );
+                      }, 300);
                     }}
                     isMobile={isMobile}
                     mbTheme={mbTheme}
