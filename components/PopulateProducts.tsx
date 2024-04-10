@@ -19,7 +19,7 @@ import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -472,17 +472,6 @@ const PopulateProducts = (props: any) => {
     noTrack: true,
     customEligibilityCheckFn: () => isPoiMwebCard,
   });
-
-  useEffect(() => {
-    if (isEligible && !isExperimentResolving && variant) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]: variant,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-          EXPERIMENT_NAMES.POI_CARD_EXPERIMENT,
-      });
-    }
-  }, [isEligible, isExperimentResolving, variant]);
 
   const { isStage, isDev, host, design } = useContext(MBContext);
 
