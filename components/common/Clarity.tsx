@@ -1,14 +1,22 @@
 import { useEffect } from 'react';
+import jsCookie from 'js-cookie';
 import { initClarity } from 'utils/clarityUtils';
 import { isProduction } from 'utils/gen';
+import { COOKIE } from 'const/index';
 
 interface IClarityProps {
   host: string;
-  projectId: string;
 }
 
-const Clarity = ({ host, projectId }: IClarityProps) => {
+const CLARITY_PROJECT_ID_1 = 'bkr8q7wx0t'; // Headout Production 1
+const CLARITY_PROJECT_ID_2 = 'bkra4tjmu8'; // Headout Production 2
+
+const Clarity = ({ host }: IClarityProps) => {
   useEffect(() => {
+    const fallbackProjectId =
+      Math.random() < 0.5 ? CLARITY_PROJECT_ID_1 : CLARITY_PROJECT_ID_2;
+    const projectId =
+      jsCookie.get(COOKIE.CLARITY_PROJECT_ID) || fallbackProjectId;
     try {
       if (!isProduction()) return;
       const timer = setTimeout(() => {
@@ -22,7 +30,7 @@ const Clarity = ({ host, projectId }: IClarityProps) => {
     } catch (e) {
       //
     }
-  }, [host, projectId]);
+  }, [host]);
 
   return null;
 };

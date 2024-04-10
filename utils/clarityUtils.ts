@@ -36,7 +36,8 @@ export const initClarity = ({
   if (!Cookies.get(COOKIE.CLARITY_PROJECT_ID)?.length)
     Cookies.set(COOKIE.CLARITY_PROJECT_ID, projectId, {
       domain: getNakedDomain(host),
-      path: '',
+      path: '/',
+      expires: 30,
     });
 
   initializeClarity(projectId);

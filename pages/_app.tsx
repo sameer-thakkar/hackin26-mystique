@@ -5,7 +5,6 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { TCatAndSubCatPageData } from 'components/CatAndSubCatPage/interface';
-import Clarity from 'components/common/Clarity';
 import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
 import ScrollToTop from 'components/common/ScrollToTop';
@@ -39,6 +38,10 @@ import 'public/global.css';
 const ConsentBanner = dynamic(
   () =>
     import(/* webpackChunkName: "ConsentBanner" */ 'components/common/Consent'),
+  { ssr: false }
+);
+const Clarity = dynamic(
+  () => import(/* webpackChunkName: "Clarity" */ 'components/common/Clarity'),
   { ssr: false }
 );
 
@@ -107,13 +110,7 @@ const getCurrencyCode = ({
 };
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
-  const {
-    lang: locale,
-    isGDPRCompliant,
-    CMSContent,
-    domainConfig,
-    countryCode,
-  } = pageProps;
+  const { lang: locale, isGDPRCompliant, CMSContent, countryCode } = pageProps;
 
   const { data } = CMSContent || {};
   const { categoryTourListV2, is_entertainment_mb, body4 } = data || {};
@@ -318,9 +315,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
               isLttMonthOnMonthPage={isLttMonthOnMonthPage}
             />
           </Conditional>
-          <Conditional if={!!domainConfig?.clarityProjectId}>
-            <Clarity host={host} projectId={domainConfig?.clarityProjectId} />
-          </Conditional>
+          <Clarity host={host} />
           <DeferredComponent delay={3_000}>
             <ConsentBanner
               isGDPRCompliant={isGDPRCompliant}
