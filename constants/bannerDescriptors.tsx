@@ -118,16 +118,16 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     ],
     '1019': [
       {
-        icon: BANNER_DESCRIPTORS.CHECK_CIRCLE,
-        text: strings.DESCRIPTORS.INSTANT_CONFIRMATION,
+        icon: BANNER_DESCRIPTORS.EASY_BEST,
+        text: strings.BANNER_DESCRIPTORS.EASY_BEST,
       },
       {
-        icon: BANNER_DESCRIPTORS.SPARKS_NEW,
-        text: strings.BANNER_DESCRIPTORS.HASSLE_FREE,
+        icon: BANNER_DESCRIPTORS.INSTANT_MOBILE,
+        text: strings.BANNER_DESCRIPTORS.INSTANT_MOBILE,
       },
       {
-        icon: BANNER_DESCRIPTORS.LUGGAGE,
-        text: strings.BANNER_DESCRIPTORS.LUGGAGE_ASSISTANCE,
+        icon: BANNER_DESCRIPTORS.MULTI_TRANSPORT,
+        text: strings.BANNER_DESCRIPTORS.MULTI_TRANSPORT,
       },
     ],
     '1132': [

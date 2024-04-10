@@ -898,6 +898,9 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     ALL_ATTR_ONE_CARD: 'Todas as atrações em apenas um cartão',
     MULTI_CARD: 'Diversas opções',
     COST_EFF: 'Econômico e prático',
+    EASY_BEST: 'Fácil de reservar. Os melhores preços',
+    INSTANT_MOBILE: 'Confirmação imediata. Ingressos digitais',
+    MULTI_TRANSPORT: 'Diversas opções de transporte',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tudo',

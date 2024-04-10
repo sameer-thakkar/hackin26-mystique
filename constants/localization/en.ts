@@ -986,6 +986,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     ALL_ATTR_ONE_CARD: 'All attractions, one card',
     MULTI_CARD: 'Multiple card options',
     COST_EFF: 'Cost-effective and convenient',
+    EASY_BEST: 'Easy booking. Best prices',
+    INSTANT_MOBILE: 'Instant Confirmation. Mobile Tickets',
+    MULTI_TRANSPORT: 'Multiple transport options',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'All',

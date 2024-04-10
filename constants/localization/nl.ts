@@ -896,6 +896,9 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     ALL_ATTR_ONE_CARD: 'Alle bezienswaardigheden met 1 kaart',
     MULTI_CARD: 'Verschillende kaartopties',
     COST_EFF: 'Voordelig en handig',
+    EASY_BEST: 'Gemakkelijk boeken. Beste prijzen',
+    INSTANT_MOBILE: 'Directe bevestiging. Mobiele tickets',
+    MULTI_TRANSPORT: 'Meerdere transportopties',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alles',

@@ -1793,6 +1793,12 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-multi-option.svg',
   COST_EFF:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-cost-eff.svg',
+  EASY_BEST:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-ticket-discount.svg',
+  INSTANT_MOBILE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-mticket.svg',
+  MULTI_TRANSPORT:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-multi-transport.svg',
 };
 
 export const GDPR_COUNTRY_CODES = [

@@ -896,6 +896,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     ALL_ATTR_ONE_CARD: 'Alle Attraktionen mit einer Karte',
     MULTI_CARD: 'Verschiedene Karten zur Auswahl',
     COST_EFF: 'Kostengünstig und praktisch',
+    EASY_BEST: 'Einfache Buchung zu Bestpreisen',
+    INSTANT_MOBILE: 'Sofortige digitale Tickets',
+    MULTI_TRANSPORT: 'Verschiedene Transferdienste',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Alle',

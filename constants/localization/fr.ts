@@ -900,6 +900,9 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     ALL_ATTR_ONE_CARD: 'Toutes les attractions en une seule carte',
     MULTI_CARD: 'Plusieurs options de cartes',
     COST_EFF: 'Bon rapport qualité/prix et pratique',
+    EASY_BEST: 'Réservation facile aux meilleurs prix',
+    INSTANT_MOBILE: 'E-billets avec confirmation rapide',
+    MULTI_TRANSPORT: 'Plusieurs options de transport',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tout',

@@ -950,6 +950,9 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     ALL_ATTR_ONE_CARD: 'Acceso a todas las atracciones con solo una tarjeta',
     MULTI_CARD: 'Diferentes tarjetas para elegir',
     COST_EFF: 'Económico y práctico',
+    EASY_BEST: 'Reserva sencilla. Mejores precios',
+    INSTANT_MOBILE: 'Confirmación instantánea. Billetes en el móvil',
+    MULTI_TRANSPORT: 'Múltiples opciones de transporte',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Todo',

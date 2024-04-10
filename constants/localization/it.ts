@@ -886,6 +886,9 @@ const it = {
     ALL_ATTR_ONE_CARD: 'Tutte le attrazioni in una sola card',
     MULTI_CARD: 'Diverse opzioni',
     COST_EFF: 'Conveniente',
+    EASY_BEST: 'Prenotazione semplice. Prezzi top',
+    INSTANT_MOBILE: 'Conferma istantanea. Biglietti digitali',
+    MULTI_TRANSPORT: 'Tante opzioni di trasporto',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tutto',
