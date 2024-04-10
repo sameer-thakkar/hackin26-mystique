@@ -217,33 +217,37 @@ const ComboPopup = ({
     });
   }, []);
 
-  const variantMarkup = availableVariants?.map((variant: any) => {
-    const {
-      id: variantId,
-      name: variantName,
-      listingPrice: variantListingPrice,
-      variantInfo,
-    } = variant || {};
-    const props = {
-      variantId,
-      variantName,
-      variantListingPrice,
-      variantInfo,
-      currencyCode: variantListingPrice?.currencyCode,
-      language: lang,
-      bookingUrl,
-      hostname,
-      tgid,
-      isMobile,
-    };
-    return (
-      <Conditional if={variantListingPrice} key={variantId}>
-        <div className="swiper-slide">
-          <VariantCard {...props} />
-        </div>
-      </Conditional>
-    );
-  });
+  const variantMarkup = availableVariants
+    ?.sort(
+      (a: any, b: any) => a.listingPrice.finalPrice - b.listingPrice.finalPrice
+    )
+    ?.map((variant: any) => {
+      const {
+        id: variantId,
+        name: variantName,
+        listingPrice: variantListingPrice,
+        variantInfo,
+      } = variant || {};
+      const props = {
+        variantId,
+        variantName,
+        variantListingPrice,
+        variantInfo,
+        currencyCode: variantListingPrice?.currencyCode,
+        language: lang,
+        bookingUrl,
+        hostname,
+        tgid,
+        isMobile,
+      };
+      return (
+        <Conditional if={variantListingPrice} key={variantId}>
+          <div className="swiper-slide">
+            <VariantCard {...props} />
+          </div>
+        </Conditional>
+      );
+    });
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
