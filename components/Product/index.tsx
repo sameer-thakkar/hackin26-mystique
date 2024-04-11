@@ -878,7 +878,7 @@ const Product = (props: any) => {
       isLoading={isProductCardLoading}
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
-      showPopup={showPopup}
+      showPopup={false}
       onClick={() => {
         trackedToggleContent(false);
 
