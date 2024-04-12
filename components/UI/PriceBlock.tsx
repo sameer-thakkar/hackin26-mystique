@@ -23,6 +23,7 @@ export const StyledPriceBlock = styled.div<{
     isSportsExperiment ? '.125rem' : '.25rem'};
   grid-column-gap: 8px;
   align-items: end;
+  align-self: center;
   text-transform: camelcase;
   width: max-content;
   .tour-price {

@@ -374,10 +374,15 @@ const ShowPage = (props: any) => {
         language: currentLanguage,
       });
 
-      const tourGroupReviews = data?.items?.map((review: any) => ({
-        name: review?.nonCustomerName,
-        content: review?.content,
-      }));
+      const tourGroupReviews = data?.items
+        ?.filter(
+          (review: Record<string, any>) =>
+            review?.nonCustomerName && review?.content
+        )
+        ?.map((review: any) => ({
+          name: review?.nonCustomerName,
+          content: review?.content,
+        }));
 
       setCustomerReviews(tourGroupReviews);
     };

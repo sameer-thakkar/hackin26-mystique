@@ -107,7 +107,8 @@ export const TabsWrapper = styled.div`
 
 export const TabRichContentWrapper = styled.div`
   margin-bottom: 3rem;
-  p {
+  p,
+  li {
     font-family: halyard-text !important;
     font-size: 14px !important;
     font-style: normal !important;
@@ -181,7 +182,8 @@ export const Tab = styled.div<{ isActive: boolean }>`
 
 export const RichContentWrapper = styled.div`
   max-width: 894px;
-  p {
+  p,
+  li {
     font-family: halyard-text !important;
     font-size: 15px !important;
     font-style: normal !important;

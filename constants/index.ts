@@ -1701,6 +1701,8 @@ export const ANALYTICS_SECTION_NAMES = {
 };
 
 export const BANNER_DESCRIPTORS = {
+  AUDIOGUIDE:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/audio-guide.svg',
   CANCELLATION:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/cancellation.svg',
   CHAIR:
@@ -1719,6 +1721,8 @@ export const BANNER_DESCRIPTORS = {
   GLOBE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/globe.svg',
   MAP: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/map.svg',
+  ONBOARD_MEAL:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/onboard-meal.svg',
   PAID: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/paid.svg',
   PEACE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/peace.svg',
@@ -1739,13 +1743,14 @@ export const BANNER_DESCRIPTORS = {
   WIFI: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/wifi.svg',
   SPARKS_NEW:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/sparks-new.svg',
-
   LUGGAGE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/luggage.svg',
   BEVERAGE:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-beverage.svg',
   HELICOPTER:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-helicopter.svg',
+  HEART:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-heart.svg',
   HOURGLASS:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-hourglass.svg',
   LANDMARKS:
@@ -1756,6 +1761,8 @@ export const BANNER_DESCRIPTORS = {
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-luxury.svg',
   MAP_PIN:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-map-pin.svg',
+  NIGHT:
+    'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-night.svg',
   PAINT:
     'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-paint.svg',
   PAN: 'https://cdn-imgix-open.headout.com/mb-icons/banner-descriptor/colored-pan.svg',

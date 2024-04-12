@@ -160,16 +160,16 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     ],
     '1061': [
       {
-        icon: BANNER_DESCRIPTORS.TRANSLATE,
-        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GT,
-      },
-      {
-        icon: BANNER_DESCRIPTORS.ROUTE,
-        text: strings.BANNER_DESCRIPTORS.MULTI_ROUTES,
-      },
-      {
         icon: BANNER_DESCRIPTORS.PANAROMA,
-        text: strings.BANNER_DESCRIPTORS.PANAROMIC,
+        text: strings.BANNER_DESCRIPTORS.PANAROMIC_3,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.HOURGLASS,
+        text: strings.BANNER_DESCRIPTORS.FREQUENT_DEPARTURES,
+      },
+      {
+        icon: BANNER_DESCRIPTORS.AUDIOGUIDE,
+        text: strings.BANNER_DESCRIPTORS.MULTI_ROUTES,
       },
     ],
     '1095': [
@@ -188,16 +188,16 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     ],
     '1060': [
       {
-        icon: BANNER_DESCRIPTORS.FnB,
-        text: strings.BANNER_DESCRIPTORS.GOURMET,
+        icon: BANNER_DESCRIPTORS.CULINARY,
+        text: strings.BANNER_DESCRIPTORS.GOURMET_2,
       },
       {
-        icon: BANNER_DESCRIPTORS.BEVERAGE,
-        text: strings.BANNER_DESCRIPTORS.BEVERAGES,
+        icon: BANNER_DESCRIPTORS.NIGHT,
+        text: strings.BANNER_DESCRIPTORS.NIGHTTIME,
       },
       {
-        icon: BANNER_DESCRIPTORS.SIGHTSEEING,
-        text: strings.BANNER_DESCRIPTORS.SIGHTSEEING,
+        icon: BANNER_DESCRIPTORS.HEART,
+        text: strings.BANNER_DESCRIPTORS.ROMANTIC,
       },
     ],
     '1094': [
@@ -445,16 +445,16 @@ export const CATEGORY_BANNER: BannerMap = () => {
   return {
     '18': [
       {
-        icon: BANNER_DESCRIPTORS.SIGHTSEEING,
-        text: strings.BANNER_DESCRIPTORS.SIGHTSEEING,
+        icon: BANNER_DESCRIPTORS.PANAROMA,
+        text: strings.BANNER_DESCRIPTORS.PANAROMIC_2,
       },
       {
-        icon: BANNER_DESCRIPTORS.TRANSLATE,
-        text: strings.BANNER_DESCRIPTORS.MULTILINGUAL_GT,
+        icon: BANNER_DESCRIPTORS.HOURGLASS,
+        text: strings.BANNER_DESCRIPTORS.FREQUENT_DEPARTURES,
       },
       {
-        icon: BANNER_DESCRIPTORS.MAP,
-        text: strings.BANNER_DESCRIPTORS.MULTI_ROUTES,
+        icon: BANNER_DESCRIPTORS.ONBOARD_MEAL,
+        text: strings.BANNER_DESCRIPTORS.SIGHTSEEING_MEAL,
       },
     ],
     '6': [
