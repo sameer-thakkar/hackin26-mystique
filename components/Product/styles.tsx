@@ -424,8 +424,6 @@ export const CTABlock = styled.div<{
   isSticky: boolean;
   shouldOffset?: boolean;
 }>`
-  display: flex;
-  align-self: center;
   a {
     text-decoration: none;
   }
