@@ -423,7 +423,6 @@ const PopulateProducts = (props: any) => {
     showBoosters = false,
     trackProductCardsViewed = false,
     bannerImages,
-    isPopupExperimentResolving = false,
     showPopup = false,
   } = props;
 
@@ -709,9 +708,7 @@ const PopulateProducts = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
 
-  const showLoader =
-    isEligible &&
-    (productsLoading || isPopupExperimentResolving || isExperimentResolving);
+  const showLoader = isEligible && (productsLoading || isExperimentResolving);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,

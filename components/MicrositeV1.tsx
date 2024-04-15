@@ -268,19 +268,7 @@ const MicrositeV1 = (props: any) => {
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
 
-  const {
-    isEligible: isEligibleForPopupExperiment,
-    isExperimentResolving: isPopupExperimentResolving,
-    variant: popupExperimentVariant,
-  } = useABTesting({
-    experimentId: 'MORE_DETAILS_POPUP_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile,
-  });
-
-  const showPopup =
-    popupExperimentVariant === VARIANTS.TREATMENT &&
-    isEligibleForPopupExperiment;
+  const showPopup = isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile;
 
   const {
     attraction: attractionCFoot,
@@ -679,9 +667,6 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
-      isPopupExperimentResolving={
-        isEligibleForPopupExperiment && isPopupExperimentResolving
-      }
     />
   );
 
