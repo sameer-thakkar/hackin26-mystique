@@ -60,6 +60,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
+  curatedVideoBannerExpUids,
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
   PAGE_TYPES,
@@ -268,6 +269,28 @@ const MicrositeV1 = (props: any) => {
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
 
+  const curatedBannerVideoSrc = curatedVideoBannerExpUids[uid]?.ytEmbedLink;
+  const { isEligible: isVideoBannerEligible, variant: videoBannerExpVariant } =
+    useABTesting({
+      experimentId: 'CURATED_VIDEO_BANNER',
+      noTrack: false,
+      customEligibilityCheckFn: () => {
+        return !!curatedBannerVideoSrc;
+      },
+    });
+  const showVideoBanner =
+    videoBannerExpVariant === VARIANTS.TREATMENT && isVideoBannerEligible;
+
+  const {
+    isEligible: isEligibleForPopupExperiment,
+    isExperimentResolving: isPopupExperimentResolving,
+    variant: popupExperimentVariant,
+  } = useABTesting({
+    experimentId: 'MORE_DETAILS_POPUP_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile,
+  });
+
   const showPopup = isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile;
 
   const {
@@ -411,27 +434,6 @@ const MicrositeV1 = (props: any) => {
       ...(taggedMbType && {
         [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
       }),
-    });
-    const curatedVideoBannerExpEvents =
-      ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP;
-
-    trackEvent({
-      eventName: curatedVideoBannerExpEvents.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: getAnalyticsPageType({
-        isCityPageMB,
-        isHOHO,
-        isAirportTransferMB: isAirportTransfersMB,
-        defaultType: PAGE_TYPES.COLLECTION,
-        isCatOrSubCatPage,
-        isSubCategoryPage: isSubCategoryMicrobrand,
-      }),
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
-      [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
-        isA1orC1MB(taggedMbType) && isMobile
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
     });
 
     trackEvent({
@@ -667,6 +669,12 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
+      isPopupExperimentResolving={
+        isEligibleForPopupExperiment && isPopupExperimentResolving
+      }
+      popupExperimentVariant={popupExperimentVariant}
+      showVideoBanner={showVideoBanner}
+      curatedBannerVideoSrc={curatedBannerVideoSrc}
     />
   );
 

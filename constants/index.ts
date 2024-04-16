@@ -516,17 +516,13 @@ export const ANALYTICS_EVENTS = {
   MORE_DETAILS_SWIPESHEET_CLOSED: 'More Details Swipesheet Closed',
   PRODUCT_CARD_DEADCLICK: 'Product Card Deadclick',
   CURATED_VIDEO_BANNER_EXP: {
-    MICROSITE_PAGE_VIEWED: 'User lands on Microsite Page',
-    VIDEO_BANNER_VIEWD: 'User views the video banner',
-    CTA_CLICKED: 'User clicks video banner',
-    VIDEO_PLAYER_OPENED: 'Modal is set open for user to see the video player',
-    VIDEO_PLAYED: 'Video is played',
-    VIDEO_READY: 'Video is ready',
-    VIDEO_VIEWED_10: '10% of the video is played',
-    VIDEO_VIEWED_25: '25% of the video is played',
-    VIDEO_VIEWED_50: '50% of the video is played',
-    VIDEO_VIEWED_75: '75% of the video is played',
-    VIDEO_VIEWED_90: '90% of the video is played',
+    MICROSITE_PAGE_SECTION_VIEWED: 'Microsite Page Section Viewed',
+    EXPERIMENT_VIEWED: 'Experiment Viewed',
+    CTA_CLICKED: 'Microsite Page CTA Clicked',
+    VIDEO_PLAYER_OPENED: 'Video Player Opened',
+    VIDEO_PLAYED: 'Video Played',
+    VIDEO_VIEWED: 'Video Viewed',
+    FOURTH_PRODUCT_CARD: '4th Product Card',
   },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
 };
@@ -942,6 +938,7 @@ export const ANALYTICS_PROPERTIES = {
   AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
   LEVEL: 'Level',
   TIME_WATCHED: 'Time Watched',
+  WATCH_VIDEO: 'Watch Video',
   THEATRE_NAME: 'Theatre Name',
   THEATRE_ADDRESS: 'Theatre Address',
   TOOLTIP_TYPE: 'Tooltip Type',
@@ -2052,10 +2049,13 @@ export const curatedVideoBannerExpUids: ICuratedVideoBannerExp = {
     ytEmbedLink: 'https://www.youtube.com/embed/nqbom-9-pPA',
   },
   'www.milford-sound-cruises.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/PmuJuvzuepI',
+    ytEmbedLink: 'https://www.youtube.com/embed/4j1_uMuNJSQ',
   },
-  'www.visitdubaiframe.com.home': {
-    ytEmbedLink: 'https://www.youtube.com/embed/mMfSC18b4l8',
+  'www.versailles-palace-tickets.com': {
+    ytEmbedLink: 'https://www.youtube.com/embed/SAnh4VuKQkQ',
+  },
+  'www.alhambra-granada-tickets.com': {
+    ytEmbedLink: 'https://www.youtube.com/embed/hf3FKoSLNwQ',
   },
 };
 

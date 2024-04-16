@@ -1087,8 +1087,8 @@ const it = {
   },
   OFF_PERCENT: '{0}% di sconto',
   CURATED_VIDEO_BANNER: {
-    TITLE1: "Sei alla ricerca dell'esperienza giusta?",
-    TITLE2: 'Guarda il video per avere utili consigli!',
+    HEADING: "Sei alla ricerca dell'esperienza giusta?",
+    SUB_HEADING: 'Guarda il video per avere utili consigli!',
     WATCH_VIDEO: 'Guarda il video',
   },
 };

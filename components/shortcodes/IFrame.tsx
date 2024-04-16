@@ -15,7 +15,7 @@ type IFrameProps = {
   autoplay?: boolean;
   trackVideoProgressFn?: (videoProgress: number) => void;
   trackVideoPlayedFn?: () => void;
-  trackVideoLoadedFn?: () => void;
+  shouldTrackVideoLoaded?: boolean;
 };
 
 const IFrameContainer = styled.div<{
@@ -70,7 +70,7 @@ const IFrame: React.FC<IFrameProps> = ({
   autoplay,
   trackVideoProgressFn,
   trackVideoPlayedFn,
-  trackVideoLoadedFn,
+  shouldTrackVideoLoaded = true,
   ...otherProps
 }) => {
   const [isPlayed, setIsPlayed] = useState(false);
@@ -125,6 +125,9 @@ const IFrame: React.FC<IFrameProps> = ({
     }
   };
   const trackVideoLoaded: YouTubeProps['onReady'] = () => {
+    if (!shouldTrackVideoLoaded) {
+      return;
+    }
     trackEvent({
       eventName: ANALYTICS_EVENTS.YT_VIDEO_LOADED,
     });
@@ -140,9 +143,7 @@ const IFrame: React.FC<IFrameProps> = ({
           <StyledContainer>
             <YouTube
               videoId={videoId}
-              onReady={
-                trackVideoLoadedFn ? trackVideoLoadedFn : trackVideoLoaded
-              }
+              onReady={trackVideoLoaded}
               onStateChange={trackVideoProgress}
               onPlay={
                 trackVideoPlayedFn ? trackVideoPlayedFn : trackVideoPlayed

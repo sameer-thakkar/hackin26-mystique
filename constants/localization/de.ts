@@ -1088,8 +1088,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
   OFF_PERCENT: '{0} % Rabatt',
   CURATED_VIDEO_BANNER: {
-    TITLE1: 'Auf der Suche nach dem richtigen Erlebnis?',
-    TITLE2: 'Mit diesem Video treffen Sie die perfekte Wahl!',
+    HEADING: 'Auf der Suche nach dem richtigen Erlebnis?',
+    SUB_HEADING: 'Mit diesem Video treffen Sie die perfekte Wahl!',
     WATCH_VIDEO: 'Video ansehen',
   },
 };

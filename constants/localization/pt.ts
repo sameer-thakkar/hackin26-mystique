@@ -1097,8 +1097,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   OFF_PERCENT: '{0}% de desconto',
   CURATED_VIDEO_BANNER: {
-    TITLE1: 'Não sabe qual experiência escolher?',
-    TITLE2: 'Veja este vídeo para fazer a escolha perfeita!',
+    HEADING: 'Não sabe qual experiência escolher?',
+    SUB_HEADING: 'Veja este vídeo para fazer a escolha perfeita!',
     WATCH_VIDEO: 'Assistir ao vídeo',
   },
 };
