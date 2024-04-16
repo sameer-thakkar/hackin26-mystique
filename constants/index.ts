@@ -24,6 +24,7 @@ export const COOKIE = {
   IS_LAZY: 'is-lazy',
   CONSENT_POLICY_STATE: 'consent-state',
   HEADOUT_ATTRIBUTION_TRACKER: 'h-attr',
+  LANG: 'content_lang',
 };
 
 export const TIME = {

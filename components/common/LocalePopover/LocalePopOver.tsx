@@ -21,6 +21,7 @@ import {
 } from 'components/common/LocalePopover/styles';
 import { MBContext } from 'contexts/MBContext';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { getNakedDomain } from 'utils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { throttle } from 'utils/helper';
 import {
@@ -28,7 +29,6 @@ import {
   getDisplayCurrencyString,
   getSortedLanguages,
 } from 'utils/localeSelectorUtlis';
-import { getDomainFromUid } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
@@ -36,6 +36,7 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  COOKIE,
   IPopularLanguage,
   LANGUAGE_MAP,
   LANGUAGE_MAP_TRANSLATE_CONSTANT,
@@ -71,16 +72,15 @@ function PopOver(props: IPopover) {
   const parentRef = useRef(null);
 
   const router = useRouter();
-  const { mbTheme, uid, isDev } = useContext(MBContext);
+  const { mbTheme, host } = useContext(MBContext);
 
-  const domain = getDomainFromUid(uid ?? LANGUAGE_MAP.en.locale);
   useEffect(() => {
-    Cookies.set('content_lang', currentLanguage, {
-      // @ts-expect-error TS(2322): Type 'string | null | undefined' is not assignable... Remove this comment to see the full error message
-      domain: isDev ? null : domain?.replace('www.', ''),
-      path: '',
+    Cookies.set(COOKIE.LANG, currentLanguage, {
+      domain: getNakedDomain(host),
+      path: '/',
+      expires: 30,
     });
-  }, [currentLanguage]);
+  }, [currentLanguage, host]);
 
   useEffect(() => {
     const scrollHandler = () => {
