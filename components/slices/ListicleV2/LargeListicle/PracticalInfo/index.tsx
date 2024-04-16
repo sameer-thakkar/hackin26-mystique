@@ -8,7 +8,6 @@ import {
   PracticalInfoDistanceContentWrapper,
   PracticalInfoDistanceIconWrapper,
   PracticalInfoDistanceWrapper,
-  PracticalInfoDotIconWrapper,
   PracticalInfoLocationContentWrapper,
   PracticalInfoLocationIconWrapper,
   PracticalInfoLocationWrapper,
@@ -16,14 +15,12 @@ import {
   PracticalInfoSeasonIconWrapper,
   PracticalInfoSeasonWrapper,
   PracticalInfoTimeAndDurationWrapper,
-  PracticalInfoTimeWrapper,
   PracticalInfoTimingsIconWrapper,
   PracticalInfoTimingsWrapper,
   PracticalInfoWrapper,
 } from 'components/slices/ListicleV2/LargeListicle/PracticalInfo/styles';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Distance from 'assets/distance';
-import Dot from 'assets/dot';
 import Location from 'assets/location';
 import PracticalInfoCalendar from 'assets/practicalInfoCalendar';
 import Season from 'assets/season';
@@ -59,10 +56,12 @@ const PracticalInfo = ({
       <Conditional if={isMobile}>
         <PracticalInfoTimeAndDurationWrapper>
           <Conditional if={duration}>
-            <PracticalInfoTimeWrapper>
-              <PracticalInfoDotIconWrapper>{Dot()}</PracticalInfoDotIconWrapper>
+            <PracticalInfoTimingsWrapper>
+              <PracticalInfoTimingsIconWrapper>
+                {Timing()}
+              </PracticalInfoTimingsIconWrapper>
               <div>{duration}</div>
-            </PracticalInfoTimeWrapper>
+            </PracticalInfoTimingsWrapper>
           </Conditional>
 
           <Conditional if={distance}>
@@ -80,10 +79,12 @@ const PracticalInfo = ({
 
       <Conditional if={!isMobile}>
         <Conditional if={duration}>
-          <PracticalInfoTimeWrapper className="practical-info">
-            <PracticalInfoDotIconWrapper>{Dot()}</PracticalInfoDotIconWrapper>
+          <PracticalInfoTimingsWrapper className="practical-info">
+            <PracticalInfoTimingsIconWrapper>
+              {Timing()}
+            </PracticalInfoTimingsIconWrapper>
             <div>{duration}</div>
-          </PracticalInfoTimeWrapper>
+          </PracticalInfoTimingsWrapper>
         </Conditional>
 
         <Conditional if={distance}>

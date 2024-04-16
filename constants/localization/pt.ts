@@ -666,6 +666,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     YOUR_PICK: 'Sua escolha',
     BROWSE_BY_CATEGORIES: 'Navegue por categoria',
     TOP_WEST_END_SHOWS: 'Os melhores espetáculos West End',
+    TOP_SHOWS: 'Melhores espetáculos',
     LAST_MINUTE_TICKETS: 'Ingressos de última hora',
     LOVED_BY_MILLIONS: 'Favoritos de milhares',
     TODAY: 'Hoje',
