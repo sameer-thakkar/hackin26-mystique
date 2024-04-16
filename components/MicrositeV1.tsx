@@ -281,16 +281,6 @@ const MicrositeV1 = (props: any) => {
   const showVideoBanner =
     videoBannerExpVariant === VARIANTS.TREATMENT && isVideoBannerEligible;
 
-  const {
-    isEligible: isEligibleForPopupExperiment,
-    isExperimentResolving: isPopupExperimentResolving,
-    variant: popupExperimentVariant,
-  } = useABTesting({
-    experimentId: 'MORE_DETAILS_POPUP_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile,
-  });
-
   const showPopup = isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile;
 
   const {
@@ -683,10 +673,6 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
-      isPopupExperimentResolving={
-        isEligibleForPopupExperiment && isPopupExperimentResolving
-      }
-      popupExperimentVariant={popupExperimentVariant}
       showVideoBanner={showVideoBanner}
       curatedBannerVideoSrc={curatedBannerVideoSrc}
     />
