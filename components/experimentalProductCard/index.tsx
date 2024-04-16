@@ -82,6 +82,7 @@ const ExperimentalProductCard = (props: any) => {
     sendBookNowEvent,
     handleShowComboPopup,
     isSportsSubCategory,
+    showThumbnailInBanner,
   } = props;
 
   const {
@@ -300,6 +301,7 @@ const ExperimentalProductCard = (props: any) => {
   ) => {
     return (
       <MobileProductCard
+        showThumbnailInBanner={showThumbnailInBanner}
         isPoiMwebCard={isPoiMwebCard}
         layout={layout({ isContentExpanded: expandContent })}
         isTicketCard={isTicketCard}
@@ -399,6 +401,7 @@ const ExperimentalProductCard = (props: any) => {
           activeTab,
           setActiveTab,
           trackDrawerOpen,
+          showThumbnailInBanner,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

@@ -64,6 +64,7 @@ const MobileProductCard = (props: any) => {
     images,
     isGuidedTour,
     bannerVideo,
+    showThumbnailInBanner,
     mediaCarouselImageWidth,
     mediaCarouselImageHeight,
     tgid,
@@ -203,7 +204,9 @@ const MobileProductCard = (props: any) => {
           <div className="card-img">
             <MediaCarousel
               imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
-              videoUrl={isBannerCard ? bannerVideo : null}
+              videoUrl={
+                !showThumbnailInBanner && isBannerCard ? bannerVideo : null
+              }
               imageId="card-img"
               backgroundColor={COLORS.GRAY.G7}
               imageWidth={mediaCarouselImageWidth}

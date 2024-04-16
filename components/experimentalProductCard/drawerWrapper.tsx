@@ -44,6 +44,7 @@ const DrawerWrapper = (props: any) => {
     setActiveTab,
     children,
     trackDrawerOpen,
+    showThumbnailInBanner,
   } = props;
 
   return (
@@ -97,7 +98,7 @@ const DrawerWrapper = (props: any) => {
             finalHighlights={finalHighlights}
             images={images}
             isBannerCard={isBannerCard}
-            bannerVideo={bannerVideo}
+            bannerVideo={showThumbnailInBanner ? null : bannerVideo}
             mediaCarouselImageHeight={mediaCarouselImageHeight}
             mediaCarouselImageWidth={mediaCarouselImageWidth}
             isFirstProduct={isFirstProduct}

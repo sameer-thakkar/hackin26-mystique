@@ -2042,6 +2042,9 @@ export const curatedVideoBannerExpUids: ICuratedVideoBannerExp = {
   'www.colosseum-rome-tickets.com': {
     ytEmbedLink: 'https://www.youtube.com/embed/1qCdM6t0GUw',
   },
+  'www.tickets-rome.com.colosseum': {
+    ytEmbedLink: 'https://www.youtube.com/embed/1qCdM6t0GUw',
+  },
   'burj-khalifa.dubai-tickets.co': {
     ytEmbedLink: 'https://www.youtube.com/embed/Nk5m4_Nwiv8',
   },

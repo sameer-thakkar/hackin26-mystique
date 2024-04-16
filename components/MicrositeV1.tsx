@@ -634,8 +634,22 @@ const MicrositeV1 = (props: any) => {
     bannerImageData?.resourceEntityMedias?.[0]?.medias
   );
 
+  const {
+    isEligible: isThumbnailInBannerEligible,
+    variant: thumbnailInBannerExpVariant,
+  } = useABTesting({
+    experimentId: 'VIDEO_THUMBNAIL_IN_BANNER',
+    noTrack: false,
+    customEligibilityCheckFn: () => !!bannerVideo,
+  });
+
+  const showThumbnailInBanner =
+    thumbnailInBannerExpVariant === VARIANTS.TREATMENT &&
+    isThumbnailInBannerEligible;
+
   const tourListSection = (
     <PopulateProducts
+      showThumbnailInBanner={showThumbnailInBanner}
       currency={currency}
       uncategorizedTours={orderedFilteredTours.filter(
         (tour: TTour) =>
@@ -816,6 +830,7 @@ const MicrositeV1 = (props: any) => {
 
         <Conditional if={showNewBanner && !isCatOrSubCatPage}>
           <StaticBanner
+            showThumbnailInBanner={showThumbnailInBanner}
             bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}

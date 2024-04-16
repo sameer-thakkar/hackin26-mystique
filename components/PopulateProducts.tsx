@@ -160,6 +160,7 @@ const PopulateProducts = (props: any) => {
     productCardsLimit = Infinity,
     showBoosters = false,
     trackProductCardsViewed = false,
+    showThumbnailInBanner,
     bannerImages,
     showPopup = false,
     showVideoBanner = false,
@@ -541,6 +542,7 @@ const PopulateProducts = (props: any) => {
       <Product
         {...childProps}
         showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+        showThumbnailInBanner={showThumbnailInBanner}
       />
     ) : (
       <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
@@ -550,6 +552,7 @@ const PopulateProducts = (props: any) => {
           <Product
             {...childProps}
             showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+            showThumbnailInBanner={showThumbnailInBanner}
           />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

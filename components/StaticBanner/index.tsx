@@ -57,6 +57,7 @@ type StaticBannerProps = {
     ratingsCount: number;
   };
   city?: string | null;
+  showThumbnailInBanner?: boolean;
 };
 
 type CollectionVideo = {
@@ -119,6 +120,7 @@ const StaticBanner = ({
   isHOHORevamp,
   ratingsAndReviewsData,
   city,
+  showThumbnailInBanner,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -200,7 +202,7 @@ const StaticBanner = ({
       <Conditional if={isMobile && showNonPoiDesign}>
         <Overlay $hideBanner={hideBanner} />
         <MediaContainer $isNonPoi={showNonPoiDesign} $hideBanner={hideBanner}>
-          <Conditional if={!bannerVideo}>
+          <Conditional if={!bannerVideo || showThumbnailInBanner}>
             <Image
               url={bannerImage.url}
               width={WIDTH}
@@ -211,7 +213,7 @@ const StaticBanner = ({
               fill
             />
           </Conditional>
-          <Conditional if={bannerVideo}>
+          <Conditional if={!showThumbnailInBanner && bannerVideo}>
             <Video
               url={bannerVideo!}
               imageId={'banner-image'}
@@ -289,7 +291,7 @@ const StaticBanner = ({
 
         <Conditional if={!isMobile}>
           <MediaContainer $isNonPoi={showNonPoiDesign}>
-            <Conditional if={!bannerVideo}>
+            <Conditional if={!bannerVideo || showThumbnailInBanner}>
               <Image
                 url={bannerImage.url}
                 width={WIDTH}
@@ -300,7 +302,7 @@ const StaticBanner = ({
                 fill
               />
             </Conditional>
-            <Conditional if={bannerVideo}>
+            <Conditional if={!showThumbnailInBanner && bannerVideo}>
               <Video
                 url={bannerVideo!}
                 imageId={'banner-image'}

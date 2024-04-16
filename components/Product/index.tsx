@@ -217,6 +217,7 @@ const Product = (props: any) => {
     topReviews,
     showPopup = true,
     showNewCard = false,
+    showThumbnailInBanner = false,
   } = props;
   const {
     mbTheme,
@@ -1188,7 +1189,11 @@ const Product = (props: any) => {
               <Conditional if={!isLoading}>
                 <MediaCarousel
                   imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
-                  videoUrl={isMobile && isBannerCard ? bannerVideo : null}
+                  videoUrl={
+                    isMobile && isBannerCard && !showThumbnailInBanner
+                      ? bannerVideo
+                      : null
+                  }
                   imageId="card-img"
                   imageAspectRatio={
                     isMobile
@@ -1774,6 +1779,7 @@ const Product = (props: any) => {
           handleShowComboPopup={handleShowComboPopup}
           sendBookNowEvent={sendBookNowEvent}
           isSportsSubCategory={isSportsSubCategory}
+          showThumbnailInBanner={showThumbnailInBanner}
         />
       </ProductCardProvider>
     );
