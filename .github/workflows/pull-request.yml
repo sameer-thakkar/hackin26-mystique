@@ -1,26 +1,12 @@
-name: Pull Request
+name: Pull Request Sanity
 on:
   pull_request:
-    types: ['opened', 'edited', 'reopened', 'synchronize']
+    types: ['opened', 'edited']
 
 jobs:
   name-lint:
     name: Name Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check PR Name
-        run: |
-          RES=$(curl --location 'https://medusa.test-headout.com/twirp/medusa.pb.ci.Linter/CheckPRName' \
-            --header 'Content-Type: application/json' \
-            --header 'Accept: application/json' \
-            --header 'x-api-key: 3139e0d6-d67d-4085-aca6-2ef6b20965fa' \
-              --data '{
-            "pr_name": "${{ github.event.pull_request.title }}"
-            }' | jq .is_valid)
-          if [ "$RES" != "true" ]; then
-            echo "::error::type-enum:type must be one of [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test]"
-            echo "::error::$RES"
-            exit 1
-          else
-              echo "SUCCESS"
-          fi
+    uses: headout/arsenal/.github/workflows/pr-sanity.yaml@main
+    secrets:
+      MEDUSA_TEST_URL: ${{ secrets.MEDUSA_TEST_URL }}
+      MEDUSA_API_KEY: ${{ secrets.MEDUSA_API_KEY }}
