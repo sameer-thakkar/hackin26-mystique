@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import LongForm from 'components/common/LongForm';
 import Image from 'UI/Image';
@@ -6,6 +7,7 @@ import { IImageProps } from 'UI/Image/interface';
 import { generateSidenavId } from 'utils/helper';
 import { getPoiTimingsInfo } from 'utils/parsers/poi';
 import renderShortCodes from 'utils/shortCodes';
+import { appAtom } from 'store/atoms/app';
 import { SHOULDER_TIMINGS_SCALE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import Banner from '../components/Banner';
@@ -41,10 +43,10 @@ const TimingsPage = ({
 }: ITimingsPageProps) => {
   const { featured_title: featuredTitle } = data;
   const renderedFeaturedTitle = renderShortCodes(featuredTitle)?.join?.('');
-  const lang = data?.content_framework?.lang;
-  const timingsInfo = getPoiTimingsInfo(poiInfo, lang);
+  const { language } = useRecoilValue(appAtom);
+  const timingsInfo = getPoiTimingsInfo(poiInfo, language);
   const childTimingsInfo = childPoisInfo?.map((childPoi) =>
-    getPoiTimingsInfo(childPoi, lang)
+    getPoiTimingsInfo(childPoi, language)
   );
   const weekInfoExists = Object.keys(
     poiInfo?.bestTimeToVisit?.week || {}
@@ -205,7 +207,7 @@ const TimingsPage = ({
             />
             <IconScale
               values={poiInfo?.bestTimeToVisit?.week}
-              lang={lang}
+              lang={language}
               type={SHOULDER_TIMINGS_SCALE_TYPES.week}
             />
           </Conditional>
@@ -222,7 +224,7 @@ const TimingsPage = ({
             />
             <IconScale
               values={poiInfo?.bestTimeToVisit?.year}
-              lang={lang}
+              lang={language}
               type={SHOULDER_TIMINGS_SCALE_TYPES.year}
             />
           </Conditional>
