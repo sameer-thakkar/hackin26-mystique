@@ -16,6 +16,8 @@ type THOAttribution = {
 
 const MAX_ATTRIBUTION_LENGTH = 20;
 
+const BLACK_LISTED_ROUTES = ['/book/'];
+
 const useAttribution = () => {
   const router = useRouter();
   /**
@@ -54,6 +56,9 @@ const useAttribution = () => {
       replacePageQuery(query, location.pathname);
     }
 
+    if (BLACK_LISTED_ROUTES.some((partialRoute) => href.includes(partialRoute)))
+      return;
+
     /**
      * Attempt to restore cookie.
      */
@@ -64,7 +69,7 @@ const useAttribution = () => {
       currentAttr = [];
     }
     const originalAttrLen = currentAttr.length;
-    const recentMostAttr = currentAttr.at(-1) as THOAttribution;
+    const recentMostAttr = currentAttr[originalAttrLen - 1] as THOAttribution;
 
     switch (true) {
       // external traffic
@@ -107,7 +112,7 @@ const useAttribution = () => {
     }
 
     if (originalAttrLen !== currentAttr.length) {
-      const newAttribution = currentAttr.at(-1) as THOAttribution;
+      const newAttribution = currentAttr[originalAttrLen - 1] as THOAttribution;
       // If newAttr is identical to recentMostAttr, remove old entry.
       if (
         recentMostAttr &&
@@ -138,7 +143,11 @@ const useAttribution = () => {
   }, [router]);
 
   useEffect(() => {
-    onAttemptAttribution();
+    try {
+      onAttemptAttribution();
+    } catch (e) {
+      //
+    }
   }, [onAttemptAttribution]);
 };
 
