@@ -35,6 +35,7 @@ import {
   PAGE_URL_STRUCTURE,
   QUERY_PARAMS,
   SEO_SUBDOMAINS,
+  siteNameMappings,
 } from 'const/index';
 
 type TBreadcrumbsDetails = {
@@ -245,6 +246,15 @@ export default function PopulateMeta({
     },
   ];
 
+  let siteName = null;
+  for (let [siteNameKey, siteNameValue] of siteNameMappings.entries()) {
+    const currentUid = uidFromMBContext ?? uid ?? '';
+
+    if (currentUid.includes(siteNameKey)) {
+      siteName = siteNameValue;
+      break;
+    }
+  }
   // Open Graph
   const openGraph: OpenGraph = {
     type: 'website',
@@ -253,7 +263,7 @@ export default function PopulateMeta({
     description,
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | un... Remove this comment to see the full error message
     locale: language_full,
-    site_name: '',
+    site_name: siteName ?? primaryDomainUrl,
     images: [
       {
         url: firstBannerImage?.url,
@@ -264,7 +274,7 @@ export default function PopulateMeta({
     ],
   };
   const twitter: Twitter = {
-    site: primaryDomainUrl,
+    site: siteName ?? primaryDomainUrl,
     cardType: 'summary_large_image',
   };
   const metaProps: NextSeoProps = {

@@ -6,7 +6,7 @@ import { CollectionDetails } from 'components/StaticBanner/index';
 import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { getBreadcrumbLabel } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
-import { MICROBRANDS_URL } from 'const/index';
+import { MICROBRANDS_URL, siteNameMappings } from 'const/index';
 
 export const TrackingScripts = ({
   isDev,
@@ -73,6 +73,14 @@ export const WebpageJsonLD = ({
   const microbrandUrl = contentPageUrl
     ? getValidUrl(new URL(contentPageUrl).hostname)
     : '';
+  let siteName = null;
+  for (let [siteNameKey, siteNameValue] of siteNameMappings.entries()) {
+    if (uid.includes(siteNameKey)) {
+      siteName = siteNameValue;
+      break;
+    }
+  }
+
   // NEXT-SEO doesn't have components for webpage/website. Migrate this once they release the same
   const baseSchema = [
     {
@@ -82,7 +90,7 @@ export const WebpageJsonLD = ({
           '@type': 'WebSite',
           '@id': `${microbrandUrl}/#website`,
           url: `${microbrandUrl}`,
-          name: `${title}`,
+          name: `${siteName ?? title}`,
         },
         {
           '@type': 'ImageObject',

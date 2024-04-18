@@ -2034,6 +2034,11 @@ export const BOOSTER_EXPERIMENT_UIDS = {
   },
 };
 
+// an experiment to see if we get more ctr
+export const siteNameMappings = new Map<string, string>([
+  ['www.london-theater-tickets.com', 'London Theatre Tickets'],
+]);
+
 interface ICuratedVideoBannerExp {
   [uid: string]: {
     ytEmbedLink: string;
