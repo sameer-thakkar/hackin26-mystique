@@ -563,7 +563,7 @@ const PopulateProducts = (props: any) => {
   };
 
   if (
-    availableToursList.length > 3 &&
+    availableToursList?.length > 3 &&
     isBannerMediaPresent &&
     showVideoBanner
   ) {
