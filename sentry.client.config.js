@@ -20,6 +20,8 @@ initSentry({
   integrations: [
     browserTracingIntegration({
       enableInp: true,
+      // limit interactions sampling for INP
+      interactionsSampleRate: 0.1,
     }),
   ],
 });
