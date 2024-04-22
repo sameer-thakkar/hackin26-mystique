@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
+import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import { ITableV3Props } from 'components/slices/TableV3/interfaces';
 import {
@@ -37,6 +38,7 @@ import {
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   BOOSTER_BACKGROUND_COLOR_CODE_MAPPING,
   TABLE_V3_COLUMN_TYPE,
@@ -104,6 +106,7 @@ const TableV3 = ({
     const { text_type } = requiredColumn || {};
     const {
       text,
+      rich_text,
       booster_text,
       primary_number_text,
       sub_primary_number_text,
@@ -127,19 +130,43 @@ const TableV3 = ({
           <TextOnlyWrapper>
             <Conditional if={text_type === TABLE_V3_TEXT_TYPE.TEXT}>
               <TextWrapper>
-                <div>{text}</div>
+                <Conditional if={text}>
+                  <div>{text}</div>
+                </Conditional>
+                <Conditional if={!text}>
+                  <PrismicRichText
+                    field={rich_text}
+                    components={shortCodeSerializer}
+                  />
+                </Conditional>
               </TextWrapper>
             </Conditional>
 
             <Conditional if={text_type === TABLE_V3_TEXT_TYPE.SUB_TEXT}>
               <SubTextWrapper>
-                <div>{text}</div>
+                <Conditional if={text}>
+                  <div>{text}</div>
+                </Conditional>
+                <Conditional if={!text}>
+                  <PrismicRichText
+                    field={rich_text}
+                    components={shortCodeSerializer}
+                  />
+                </Conditional>
               </SubTextWrapper>
             </Conditional>
 
             <Conditional if={text_type === TABLE_V3_TEXT_TYPE.TEXT_BOLD}>
               <TextBoldWrapper>
-                <div>{text}</div>
+                <Conditional if={text}>
+                  <div>{text}</div>
+                </Conditional>
+                <Conditional if={!text}>
+                  <PrismicRichText
+                    field={rich_text}
+                    components={shortCodeSerializer}
+                  />
+                </Conditional>
               </TextBoldWrapper>
             </Conditional>
           </TextOnlyWrapper>

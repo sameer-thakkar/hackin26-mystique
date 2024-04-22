@@ -44,8 +44,11 @@ export const TextOnlyWrapper = styled.div`
 `;
 
 export const TextWrapper = styled.div`
-  color: ${COLORS.GRAY.G3};
-  ${expandFontToken(FONTS.TABLE_REGULAR)};
+  &,
+  & > p {
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.TABLE_REGULAR)};
+  }
 `;
 
 export const NumericImageText = styled.div`
@@ -63,10 +66,13 @@ export const NumericText = styled.div`
 `;
 
 export const TextBoldWrapper = styled.div`
-  color: ${COLORS.GRAY.G3};
-  ${expandFontToken(FONTS.TABLE_REGULAR_HEAVY)};
-  display: flex;
-  align-items: center;
+  &,
+  & > p {
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.TABLE_REGULAR_HEAVY)};
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const LinkSvgIconWrapper = styled.div`
@@ -152,8 +158,11 @@ export const BoosterTextWrapper = styled.div`
 `;
 
 export const SubTextWrapper = styled.div`
-  color: ${COLORS.GRAY.G3};
-  ${expandFontToken(FONTS.TABLE_SMALL)};
+  &,
+  & > p {
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.TABLE_SMALL)};
+  }
 `;
 
 export const NumericWrapper = styled.div`
@@ -251,7 +260,7 @@ export const StyledRow = styled.div<{
       .map((_, index) => {
         if (index === 0 && displaySerialNum) {
           return 'auto';
-        } else return '1fr';
+        } else return 'minmax(120px,240px)';
       })
       .join(' ')};
 `;
