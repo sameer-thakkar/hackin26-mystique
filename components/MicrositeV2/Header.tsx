@@ -60,12 +60,12 @@ interface IStyledHeader {
   isEntertainmentMbListicle?: boolean;
   overlayActive?: boolean;
   headerHover?: boolean;
-  showLttColoredHeader: boolean;
+  showColoredHeader: boolean;
   isTop?: boolean;
   isCategoryPage?: boolean;
   $isMonthOnMonthPage?: boolean;
   $isReviewsPage?: boolean;
-  isNewLTTLandingPageVisible?: boolean;
+  isEntertainmentLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
 }
@@ -84,18 +84,20 @@ export const StyledHeader = styled.div<IStyledHeader>`
   .fixed-wrap {
     ${({ $categoryHeaderMenuExists }) =>
       !$categoryHeaderMenuExists && `position: fixed;`}
-    box-shadow: ${({ isTop, isNewLTTLandingPageVisible, $isPillBarSticky }) =>
+    box-shadow: ${({
+      isTop,
+      isEntertainmentLandingPageVisible,
+      $isPillBarSticky,
+    }) =>
       !isTop &&
-      !isNewLTTLandingPageVisible &&
+      !isEntertainmentLandingPageVisible &&
       !$isPillBarSticky &&
       '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
     width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
-    border-bottom: ${({ isEntertainmentMb, showLttColoredHeader }) =>
-      isEntertainmentMb &&
-      !showLttColoredHeader &&
-      `1px ${COLORS.GRAY.G6} solid`};
+    border-bottom: ${({ isEntertainmentMb, showColoredHeader }) =>
+      isEntertainmentMb && !showColoredHeader && `1px ${COLORS.GRAY.G6} solid`};
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
@@ -106,8 +108,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
       !$isMonthOnMonthPage &&
       (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
-      background:${({ showLttColoredHeader }) =>
-      showLttColoredHeader ? '#150029' : '#fff'};
+      background:${({ showColoredHeader }) =>
+      showColoredHeader ? '#150029' : '#fff'};
   }
   .fixed-offset::after {
     content: '';
@@ -117,8 +119,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
 
-  ${({ showLttColoredHeader }) =>
-    showLttColoredHeader &&
+  ${({ showColoredHeader }) =>
+    showColoredHeader &&
     `.fixed-offset::before {
       content: '';
       position: fixed;
@@ -146,8 +148,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
   }
 
   .styled-active-value {
-    color: ${({ showLttColoredHeader }) =>
-      showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3};
+    color: ${({ showColoredHeader }) =>
+      showColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3};
   }
   @media (max-width: 768px) {
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '3rem' : '3.5rem')};
@@ -159,13 +161,13 @@ export const StyledHeader = styled.div<IStyledHeader>`
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
       background: ${({
-        showLttColoredHeader,
+        showColoredHeader,
         isCategoryPage,
         $isMonthOnMonthPage,
         $isReviewsPage,
       }) => {
         switch (true) {
-          case showLttColoredHeader:
+          case showColoredHeader:
             return isCategoryPage || $isMonthOnMonthPage || $isReviewsPage
               ? '#1A0232'
               : COLORS.LTT_BANNER_BACKGROUND_COLOR;
@@ -191,8 +193,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
       display: none;
     }
 
-    ${({ showLttColoredHeader, isCategoryPage, $isMonthOnMonthPage }) =>
-      showLttColoredHeader &&
+    ${({ showColoredHeader, isCategoryPage, $isMonthOnMonthPage }) =>
+      showColoredHeader &&
       `.fixed-offset::before {
       background-color:${
         isCategoryPage || $isMonthOnMonthPage
@@ -371,12 +373,11 @@ const HeaderLeft = styled.div<IHeaderLeft>`
   }
 `;
 
-const SearchWrapper = styled.div<{ showLttColoredHeader: boolean }>`
+const SearchWrapper = styled.div<{ showColoredHeader: boolean }>`
   position: relative;
   .input-icon path {
     stroke-width: 1.5px;
-    ${({ showLttColoredHeader }) =>
-      showLttColoredHeader ? 'opacity: 0.5' : ''}
+    ${({ showColoredHeader }) => (showColoredHeader ? 'opacity: 0.5' : '')}
   }
   .results {
     position: absolute;
@@ -442,7 +443,7 @@ interface HeaderProps {
   taggedCity?: string;
   categoryHeaderMenuExists?: boolean;
   categoryHeaderMenu?: Record<string, any>;
-  isNewLTTLandingPageVisible?: boolean;
+  isEntertainmentLandingPageVisible?: boolean;
   isNewsPage?: boolean;
   isReviewsPage?: boolean;
   uid?: string;
@@ -475,7 +476,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   taggedCity,
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
-  isNewLTTLandingPageVisible = false,
+  isEntertainmentLandingPageVisible = false,
   isReviewsPage = false,
   uid,
 }) => {
@@ -496,8 +497,8 @@ const Header: FunctionComponent<HeaderProps> = ({
     results.length > 0
   );
 
-  const showLttColoredHeader =
-    isNewLTTLandingPageVisible && !hasScrolled && !navActive;
+  const showColoredHeader =
+    isEntertainmentLandingPageVisible && !hasScrolled && !navActive;
 
   const [scrollPos, setScrollPos] = useState(0);
 
@@ -645,8 +646,8 @@ const Header: FunctionComponent<HeaderProps> = ({
       $isMonthOnMonthPage={isMonthOnMonthPage}
       $isReviewsPage={isReviewsPage}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
-      showLttColoredHeader={showLttColoredHeader}
-      isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
+      showColoredHeader={showColoredHeader}
+      isEntertainmentLandingPageVisible={isEntertainmentLandingPageVisible}
       isTop={scrollPos <= 80}
       $categoryHeaderMenuExists={categoryHeaderMenuExists}
       $isPillBarSticky={isPillBarSticky}
@@ -660,7 +661,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             onMouseLeave={() => setHeaderHover(false)}
             isGlobalMb={isGlobalMb}
             isEntertainmentMb={isEntertainmentMb}
-            isDarkMode={isNewLTTLandingPageVisible && showLttColoredHeader}
+            isDarkMode={isEntertainmentLandingPageVisible && showColoredHeader}
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
@@ -692,7 +693,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
             <Conditional if={!isMobileDevice && enableSearch}>
               <SearchWrapper
-                showLttColoredHeader={showLttColoredHeader}
+                showColoredHeader={showColoredHeader}
                 onBlur={onSearchWrapperBlur}
               >
                 <SearchBox
@@ -702,8 +703,10 @@ const Header: FunctionComponent<HeaderProps> = ({
                   allToursArray={allToursArray}
                   clearSearch={resultClicked}
                   isEntertainmentMb={isEntertainmentMb}
-                  isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
-                  isDarkMode={showLttColoredHeader}
+                  isEntertainmentLandingPageVisible={
+                    isEntertainmentLandingPageVisible
+                  }
+                  isDarkMode={showColoredHeader}
                 />
                 <Conditional if={displaySearchResults}>
                   <div>
@@ -728,8 +731,8 @@ const Header: FunctionComponent<HeaderProps> = ({
           <HeaderRight
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
-            isDarkMode={showLttColoredHeader}
-            isLtt={isNewLTTLandingPageVisible}
+            isDarkMode={showColoredHeader}
+            isLtt={isEntertainmentLandingPageVisible}
           >
             <Conditional if={!groupedHeaderSlices.length && headerLinks}>
               <HeaderLinks
@@ -785,7 +788,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                 currentLanguage={lang}
                 hasLanguageDropdown={hasLanguageSelector}
                 hasCurrencySelector={hideCurrencySelector}
-                isDarkMode={showLttColoredHeader}
+                isDarkMode={showColoredHeader}
                 isMobile={isMobile}
               />
             </Conditional>
@@ -796,8 +799,8 @@ const Header: FunctionComponent<HeaderProps> = ({
                   isActive={navActive}
                   onClickFn={handleHamburgerClick}
                   isGlobalMb={isGlobalMb}
-                  isLtt={isNewLTTLandingPageVisible}
-                  isDarkMode={showLttColoredHeader}
+                  isLtt={isEntertainmentLandingPageVisible}
+                  isDarkMode={showColoredHeader}
                 />
               </div>
             </Conditional>

@@ -612,6 +612,9 @@ export const checkIfLTTMBLandingPage = (uid: string | null | undefined) =>
 export const checkIfBroadwayMB = (uid: string | null | undefined) =>
   !!uid?.includes('www.broadway-show-tickets.com');
 
+export const checkIfBroadwayMBLandingPage = (uid: string | null | undefined) =>
+  uid === 'www.broadway-show-tickets.com';
+
 export const checkIfViennaConcertMB = (uid: string | null | undefined) =>
   !!uid?.includes('www.vienna-concert-tickets.com');
 

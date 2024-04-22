@@ -200,7 +200,7 @@ const ReviewSection = ({
             setMoreReviewsClickCount(moreReviewsClickCount + 1);
           }}
         >
-          {strings.LTT_SHOW_PAGE.SHOW_MORE_REVIEWS}
+          {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
         </ShowMoreReviewsButton>
       </Conditional>
 
@@ -225,7 +225,7 @@ const ReviewSection = ({
             });
           }}
         >
-          {externalButtonContent ?? strings.LTT_SHOW_PAGE.READ_DETAILED_REVIEWS}
+          {externalButtonContent ?? strings.SHOW_PAGE_V2.READ_DETAILED_REVIEWS}
         </AllReviewsButton>
       </Conditional>
     </ReviewSectionWrapper>

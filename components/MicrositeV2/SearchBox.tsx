@@ -15,14 +15,14 @@ import SearchIcon from 'assets/searchIcon';
 
 const StyledSearchBox = styled.div<{
   isEntertainmentMb?: boolean;
-  isNewLTTLandingPageVisible: boolean;
+  isEntertainmentLandingPageVisible: boolean;
   isDarkMode?: boolean;
 }>`
   position: relative;
 
   input {
-    ${({ isNewLTTLandingPageVisible, isDarkMode }) => {
-      return isNewLTTLandingPageVisible && isDarkMode
+    ${({ isEntertainmentLandingPageVisible, isDarkMode }) => {
+      return isEntertainmentLandingPageVisible && isDarkMode
         ? `
       background: rgba(255, 255, 255, 0.12);
       border: none;
@@ -35,12 +35,12 @@ const StyledSearchBox = styled.div<{
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0.563rem 0' : '0.75rem 0'};
     outline: none;
-    padding-left: ${({ isNewLTTLandingPageVisible }) =>
-      isNewLTTLandingPageVisible ? '1.5rem' : ' 2.5rem'};
-    padding-right: ${({ isNewLTTLandingPageVisible }) =>
-      isNewLTTLandingPageVisible ? '2rem' : ' 2.25rem'};
-    border-radius: ${({ isNewLTTLandingPageVisible }) =>
-      isNewLTTLandingPageVisible ? '0.5rem' : ' 0.25rem'};
+    padding-left: ${({ isEntertainmentLandingPageVisible }) =>
+      isEntertainmentLandingPageVisible ? '1.5rem' : ' 2.5rem'};
+    padding-right: ${({ isEntertainmentLandingPageVisible }) =>
+      isEntertainmentLandingPageVisible ? '2rem' : ' 2.25rem'};
+    border-radius: ${({ isEntertainmentLandingPageVisible }) =>
+      isEntertainmentLandingPageVisible ? '0.5rem' : ' 0.25rem'};
     width: calc(100% - 2.5rem);
     min-width: 13rem;
     ${expandFontToken('UI/Label Medium')};
@@ -66,10 +66,10 @@ const StyledSearchBox = styled.div<{
 
   .input-icon {
     position: absolute;
-    left: ${({ isNewLTTLandingPageVisible }) =>
-      !isNewLTTLandingPageVisible && '1rem'};
-    right: ${({ isNewLTTLandingPageVisible }) =>
-      isNewLTTLandingPageVisible && '0'};
+    left: ${({ isEntertainmentLandingPageVisible }) =>
+      !isEntertainmentLandingPageVisible && '1rem'};
+    right: ${({ isEntertainmentLandingPageVisible }) =>
+      isEntertainmentLandingPageVisible && '0'};
     top: 50%;
     transform: translate(0, -50%);
     display: flex;
@@ -82,8 +82,8 @@ const StyledSearchBox = styled.div<{
     }
 
     path {
-      stroke: ${({ isNewLTTLandingPageVisible, isDarkMode }) =>
-        isNewLTTLandingPageVisible && isDarkMode
+      stroke: ${({ isEntertainmentLandingPageVisible, isDarkMode }) =>
+        isEntertainmentLandingPageVisible && isDarkMode
           ? COLORS.BRAND.WHITE
           : COLORS.GRAY.G3};
     }
@@ -92,8 +92,8 @@ const StyledSearchBox = styled.div<{
   .close-icon {
     position: absolute;
     right: -1.495rem;
-    display: ${({ isNewLTTLandingPageVisible }) =>
-      isNewLTTLandingPageVisible ? 'none' : 'flex'};
+    display: ${({ isEntertainmentLandingPageVisible }) =>
+      isEntertainmentLandingPageVisible ? 'none' : 'flex'};
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
@@ -138,7 +138,7 @@ export const SearchBox = (props: any) => {
     clearSearch,
     isEntertainmentMb,
     isMobile,
-    isNewLTTLandingPageVisible,
+    isEntertainmentLandingPageVisible,
     isDarkMode,
     onEscapePress,
   } = props || {};
@@ -197,7 +197,7 @@ export const SearchBox = (props: any) => {
   return (
     <StyledSearchBox
       isEntertainmentMb={isEntertainmentMb}
-      isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
+      isEntertainmentLandingPageVisible={isEntertainmentLandingPageVisible}
       isDarkMode={isDarkMode}
     >
       <input

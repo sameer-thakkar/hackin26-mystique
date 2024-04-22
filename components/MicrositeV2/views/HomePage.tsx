@@ -14,8 +14,8 @@ import CategoryPage from 'components/CategoryPage';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
+import { CategoriesSection } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection/style';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
-import { CategoriesSection } from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection/style';
 import { sliceComponents } from 'components/slices/sliceManager';
 import StaticBanner from 'components/StaticBanner';
 import TextBanner from 'components/TextBanner';
@@ -35,6 +35,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import {
+  checkIfBroadwayMBLandingPage,
   checkIfCategoryHeaderExists,
   checkIfLTTMB,
   checkIfLTTMBLandingPage,
@@ -109,10 +110,10 @@ const MonthTabs = dynamic(
     import(/* webpackChunkName: "Breadcrumbs" */ 'components/slices/MonthTabs')
 );
 
-const LttLandingPageV2 = dynamic(
+const EntertainmentMBLandingPageV2 = dynamic(
   () =>
     import(
-      /* webpackChunkName: "LttLandingPageV2" */ 'components/MicrositeV2/LttLandingPageV2'
+      /* webpackChunkName: "EntertainmentMBLandingPageV2" */ 'components/MicrositeV2/EntertainmentMBLandingPageV2'
     )
 );
 const MobileBannerV2 = dynamic(
@@ -281,6 +282,8 @@ export const HomePage = (props: any) => {
   const [isCategoriesSectionSticking, setIsCategoriesSectionSticking] =
     useState(false);
 
+  const { collectionId } = pageMetaData;
+
   const {
     isEligible: isLTTRevampExpEligible,
     variant: lttRevampExpVariant,
@@ -289,7 +292,7 @@ export const HomePage = (props: any) => {
     experimentId: 'LTT_LP_REVAMP_EXPERIMENT',
     noTrack: true,
     customEligibilityCheckFn: () => {
-      return checkIfLTTMBLandingPage(uid);
+      return checkIfLTTMBLandingPage(uid) || checkIfBroadwayMBLandingPage(uid);
     },
   });
 
@@ -456,7 +459,7 @@ export const HomePage = (props: any) => {
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
         isCategoryPage={isCategoryPage}
         isMonthOnMonthPage={isLttMonthOnMonthPage}
-        isNewLTTLandingPageVisible={
+        isEntertainmentLandingPageVisible={
           showLttTreatment || isCategoryPage || isLttMonthOnMonthPage
         }
         primaryCity={primaryCity}
@@ -665,12 +668,13 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <Conditional if={showLttTreatment && !isCatOrSubCatPage}>
-        <LttLandingPageV2
+        <EntertainmentMBLandingPageV2
           isMobile={isMobile}
           allTours={allTours}
           categoryProps={categoryProps}
           browseByCategoriesRef={browseByCategorySectionRef}
           directTgid={directTgid}
+          collectionId={Number(collectionId!)}
         />
       </Conditional>
       {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner */}

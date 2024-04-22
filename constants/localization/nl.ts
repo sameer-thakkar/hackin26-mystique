@@ -641,7 +641,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
   WHY_WATCH: 'Waarom naar {0} kijken?',
   FIND_ON_MAP: 'Kaart',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Tickets aan de kassa',
@@ -663,6 +663,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     YOUR_PICK: 'Jouw keuze',
     BROWSE_BY_CATEGORIES: 'Zoek per categorie',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    TOP_THEATRE_SHOWS: ' Topshows op {0}',
     TOP_SHOWS: 'Topshows',
     SEE_MORE_SHOWS: 'Toon {0} meer shows',
     LAST_MINUTE_TICKETS: 'Last-minutetickets',
@@ -778,7 +779,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       NL: 'nederlands',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Snel uitverkocht',
     INTERVAL: 'Pauze',
     TWO_PART_SHOW: 'Voorstelling in twee delen',

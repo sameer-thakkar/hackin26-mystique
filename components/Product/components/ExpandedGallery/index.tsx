@@ -101,7 +101,7 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
         })}
         <Conditional if={imagesLoaded && images.length > 3}>
           <AllPhotosCta onClick={() => onClickHandler(0)}>
-            {AllPhotos} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
+            {AllPhotos} {strings.SHOW_PAGE_V2.ALL_PHOTOS}
           </AllPhotosCta>
         </Conditional>
       </ExpandedGalleryContainer>

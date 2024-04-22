@@ -185,7 +185,7 @@ const LttShowPageV2 = ({
 
   const { faqSchema } = parseShowPageData(microBrandsHighlight);
   const faqHeading = `${strings.formatString(
-    strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
+    strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
       .FREQUENTLY_ASKED_QUESTIONS_ABOUT,
     name
   )}`;
@@ -357,7 +357,7 @@ const LttShowPageV2 = ({
           logoUrl={logoUrl}
           logoAltText={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          isNewLTTLandingPageVisible={true}
+          isEntertainmentLandingPageVisible={true}
           primaryCity={primaryCity}
           taggedCity={taggedCity}
           categoryHeaderMenu={categoryHeaderMenu}

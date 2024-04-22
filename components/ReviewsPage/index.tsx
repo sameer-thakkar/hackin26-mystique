@@ -302,7 +302,7 @@ const ReviewsPage: React.FC<TReviewsPageProps> = (props) => {
         }}
         logoUrl={logoUrl}
         hasPoweredByHeadoutLogo
-        isNewLTTLandingPageVisible
+        isEntertainmentLandingPageVisible
         isReviewsPage
       />
       <ReviewsPageBanner

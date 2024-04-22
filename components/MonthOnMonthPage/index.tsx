@@ -3,9 +3,9 @@ import CalendarUnit from 'components/CalendarUnit';
 import Conditional from 'components/common/Conditional';
 import FabIcon from 'components/common/FabIcon';
 import CategoryPageBanner from 'components/MicrositeV2/CategoryPageBanner';
-import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
-import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
-import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
+import BrowseByCategoriesSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection';
+import CategoryCarouselsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection';
+import TopShowsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/TopShowsSection';
 import { TMonthOnMonthPageProps } from 'components/MonthOnMonthPage/interface';
 import { MonthOnMonthPageWrapper } from 'components/MonthOnMonthPage/styles';
 import {
@@ -105,7 +105,7 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
           />
         </Conditional>
         <div className={isMobile ? '' : 'main-wrapper'}>
-          <TopLttShowsSection
+          <TopShowsSection
             isMobile={isMobile}
             topShows={topShows}
             heading={heroProps?.coverHeading}

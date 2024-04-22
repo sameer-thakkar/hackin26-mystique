@@ -22,7 +22,7 @@ const BOOSTER_INFO = {
     artboard: 'bestSellers',
   },
   [BoosterType.SELLING_OUT_FAST]: {
-    title: strings.LTT_SHOW_PAGE.SELLING_OUT_FAST,
+    title: strings.SHOW_PAGE_V2.SELLING_OUT_FAST,
     icon: <Spark />,
     theme: '#CE007C',
     transform: 'translate(-64%,-12%)',

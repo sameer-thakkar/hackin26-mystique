@@ -1,4 +1,4 @@
-import { CategoryCarouselSwiper } from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
+import { CategoryCarouselSwiper } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection';
 import { getShowPageUid, getVerticalImageUrl } from 'components/NewsPage/utils';
 import { strings } from 'const/strings';
 import { TVerticalProductCardSlideProps } from './interface';

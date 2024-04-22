@@ -623,7 +623,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
   WHY_WATCH: 'Why Watch {0}?',
   FIND_ON_MAP: 'Find On Map',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Box office tickets',
@@ -645,6 +645,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     YOUR_PICK: 'Your pick',
     BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    TOP_THEATRE_SHOWS: 'Top {0} shows',
     TOP_SHOWS: 'Top Shows',
     SEE_MORE_SHOWS: 'See {0} more shows',
     LAST_MINUTE_TICKETS: 'Last minute tickets',
@@ -843,7 +844,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       NL: 'Dutch',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     READ_MORE_REVIEWS: 'Read more reviews',
     SHOW_MORE_REVIEWS: 'Show more reviews',
     ALL_PHOTOS: 'All photos',

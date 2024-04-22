@@ -231,7 +231,10 @@ const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
                           role="button"
                           tabIndex={0}
                         >
-                          {strings.LTT_LANDING_PAGE.GRAB_YOUR_TICKETS}
+                          {
+                            strings.ENTERTAINMENT_MB_LANDING_PAGE
+                              .GRAB_YOUR_TICKETS
+                          }
                         </Button>
                       </Conditional>
                     </Conditional>

@@ -6,7 +6,7 @@ import {
   Container,
   Wrapper,
 } from 'components/MicrositeV2/BannerV2TrustBooster/style';
-import { lttTrustBoostersIcons } from 'const/lttTrustBoosters';
+import { entertainmentMBTrustBoosters } from 'const/entertainmentMBTrustBoosters';
 import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -14,28 +14,36 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
   const ICONS = [
     {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.NAME,
-      icon: lttTrustBoostersIcons['BOX_OFFICE_TICKETS'],
+      name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS
+        .BOX_OFFICE_TICKETS.NAME,
+      icon: entertainmentMBTrustBoosters['BOX_OFFICE_TICKETS'],
       description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS.DESCRIPTION,
+        strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.BOX_OFFICE_TICKETS
+          .DESCRIPTION,
     },
     {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.NAME,
-      icon: lttTrustBoostersIcons['CHOOSE_YOUR_SEATS'],
+      name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS
+        .CHOOSE_YOUR_SEATS.NAME,
+      icon: entertainmentMBTrustBoosters['CHOOSE_YOUR_SEATS'],
       description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS.DESCRIPTION,
+        strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.CHOOSE_YOUR_SEATS
+          .DESCRIPTION,
     },
     {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.NAME,
-      icon: lttTrustBoostersIcons['EXCLUSIVE_DEALS'],
+      name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
+        .NAME,
+      icon: entertainmentMBTrustBoosters['EXCLUSIVE_DEALS'],
       description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS.DESCRIPTION,
+        strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
+          .DESCRIPTION,
     },
     {
-      name: strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.NAME,
-      icon: lttTrustBoostersIcons['BOOK_AND_RELAX'],
+      name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX
+        .NAME,
+      icon: entertainmentMBTrustBoosters['BOOK_AND_RELAX'],
       description:
-        strings.LTT_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX.DESCRIPTION,
+        strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX
+          .DESCRIPTION,
     },
   ];
 

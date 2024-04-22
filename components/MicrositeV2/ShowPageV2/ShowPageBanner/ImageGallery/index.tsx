@@ -132,7 +132,7 @@ const ImageGallery = ({
     <ImageGalleryWrapper>
       <Conditional if={showMoreButton}>
         <AllPhotosCta onClick={() => openPopup()}>
-          {AllPhotos} {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
+          {AllPhotos} {strings.SHOW_PAGE_V2.ALL_PHOTOS}
         </AllPhotosCta>
       </Conditional>
 
@@ -155,7 +155,7 @@ const ImageGallery = ({
                 <BackArrow />
               </div>
             </Conditional>
-            {strings.LTT_SHOW_PAGE.ALL_PHOTOS}
+            {strings.SHOW_PAGE_V2.ALL_PHOTOS}
           </div>
           <Conditional if={navigation === 'cross'}>
             <div

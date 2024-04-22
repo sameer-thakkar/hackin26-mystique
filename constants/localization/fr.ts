@@ -643,7 +643,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   },
   WHY_WATCH: 'Pourquoi faut-il le voir {0}?',
   FIND_ON_MAP: 'Trouver sur la carte',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Billets de guichet',
@@ -665,6 +665,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     YOUR_PICK: 'Votre choix',
     BROWSE_BY_CATEGORIES: 'Explorer par catégories',
     TOP_WEST_END_SHOWS: 'Les meilleurs spectacles de West End',
+    TOP_THEATRE_SHOWS: '{0} : les meilleurs spectacles',
     TOP_SHOWS: 'Meilleurs spectacles',
     SEE_MORE_SHOWS: 'Voir {0} spectacles en plus',
     LAST_MINUTE_TICKETS: 'Billets de dernières minutes',
@@ -781,7 +782,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       NL: 'néerlandais',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Bientôt épuisé',
     INTERVAL: 'Entracte',
     TWO_PART_SHOW: 'Spectacle en deux parties',

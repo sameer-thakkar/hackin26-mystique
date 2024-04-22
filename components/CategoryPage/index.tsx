@@ -1,9 +1,9 @@
 import { TCategoryPageProps } from 'components/CategoryPage/interface';
 import Conditional from 'components/common/Conditional';
 import CategoryPageBanner from 'components/MicrositeV2/CategoryPageBanner';
-import BrowseByCategoriesSection from 'components/MicrositeV2/LttLandingPageV2/BrowseByCategoriesSection';
-import CategoryCarouselsSection from 'components/MicrositeV2/LttLandingPageV2/CategoryCarouselsSection';
-import TopLttShowsSection from 'components/MicrositeV2/LttLandingPageV2/TopLttShowsSection';
+import BrowseByCategoriesSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection';
+import CategoryCarouselsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection';
+import TopShowsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/TopShowsSection';
 import { LTD_COLLECTION_ID } from 'const/index';
 import { strings } from 'const/strings';
 import { CategoryPageWrapper } from './styles';
@@ -18,7 +18,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
   primarySubCategoryId,
   browseByCategoriesRef,
 }) => {
-  const { LTT_LANDING_PAGE } = strings;
+  const { ENTERTAINMENT_MB_LANDING_PAGE } = strings;
   const { categories } = categoryProps;
   const categoriesToRender: Array<Record<string, any>> =
     categories?.filter(
@@ -52,7 +52,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
           <Conditional
             if={categoryTourListData[primarySubCategoryId as number]}
           >
-            <TopLttShowsSection
+            <TopShowsSection
               isMobile={isMobile}
               topShows={Object?.values(
                 primarySubCategoryId
@@ -62,7 +62,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
               heading={
                 categoryTourListData[primarySubCategoryId as number]?.[0]
                   ?.primarySubCategoryIdData?.displayName
-                  ? `${LTT_LANDING_PAGE.TOP_SHOWS}: ${
+                  ? `${ENTERTAINMENT_MB_LANDING_PAGE.TOP_SHOWS}: ${
                       categoryTourListData[primarySubCategoryId as number]?.[0]
                         ?.primarySubCategoryIdData?.displayName
                     }`

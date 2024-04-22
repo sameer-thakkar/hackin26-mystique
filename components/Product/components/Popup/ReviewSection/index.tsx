@@ -15,7 +15,7 @@ const ReviewSection = ({
 }: TReviewSectionProps) => {
   const externalButtonContent = (
     <>
-      {strings.LTT_SHOW_PAGE.SHOW_MORE_REVIEWS}
+      {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
       <StyledExternalLinkIcon>{DiagonalArrow}</StyledExternalLinkIcon>
     </>
   );
@@ -23,7 +23,7 @@ const ReviewSection = ({
   return (
     <>
       <StyledReviewSectionTitle id="review-section-title">
-        {strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews}
+        {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
       </StyledReviewSectionTitle>
       <StyledReviewSectionContainer>
         <ReviewsSection

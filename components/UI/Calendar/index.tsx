@@ -447,8 +447,8 @@ const Calendar = ({
                 </span>
                 <span className="select-time">
                   {timeSlots && timeSlots.length > 1
-                    ? strings.LTT_SHOW_PAGE.SELECT_TIME_SLOT
-                    : strings.LTT_SHOW_PAGE.AVAILABLE_TIME}
+                    ? strings.SHOW_PAGE_V2.SELECT_TIME_SLOT
+                    : strings.SHOW_PAGE_V2.AVAILABLE_TIME}
                 </span>
                 <Conditional if={selectedDate && !timeSlots?.length}>
                   <Loader />
@@ -491,7 +491,7 @@ const Calendar = ({
                               <Conditional if={hasSellingOutFastBooster}>
                                 <UrgencyBooster>
                                   <Emoji symbol="🔥" label="fire-emoji"></Emoji>
-                                  {strings.LTT_SHOW_PAGE.SELLING_OUT_FAST}
+                                  {strings.SHOW_PAGE_V2.SELLING_OUT_FAST}
                                 </UrgencyBooster>
                               </Conditional>
                             </TimingSection>
@@ -540,7 +540,7 @@ const Calendar = ({
                   >
                     <SingleTimeSlotAvailableCard>
                       <p className="info">
-                        {strings.LTT_SHOW_PAGE.EXPERIENCE_AVAILABLE_ONLY_AT}
+                        {strings.SHOW_PAGE_V2.EXPERIENCE_AVAILABLE_ONLY_AT}
                       </p>
                       <span className="time">
                         {getHumanReadableTime({
@@ -594,7 +594,7 @@ const Calendar = ({
                         true
                       );
                     }}
-                    text={strings.LTT_SHOW_PAGE.SELECT_SEATS}
+                    text={strings.SHOW_PAGE_V2.SELECT_SEATS}
                   />
                 </Conditional>
               </CalendarTimeSlotSection>
@@ -641,7 +641,7 @@ export const HarryPotterTwoPartTimeSlot = ({
         </div>
         <div className="gap">
           <div className="spacer" />
-          {strings.LTT_SHOW_PAGE.INTERVAL}: 1hr 20 min
+          {strings.SHOW_PAGE_V2.INTERVAL}: 1hr 20 min
         </div>
         <div className="time">
           <div className="time-index">2</div>

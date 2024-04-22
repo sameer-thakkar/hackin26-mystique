@@ -1566,119 +1566,6 @@ export const LTD_COLLECTION_ID = 167;
 
 export const HARRY_POTTER_CURSED_CHILD_TGID = '16816';
 
-export const LTT_LP_HARDCODED_REVIEWS = [
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Hung Wai',
-    country: '🇭🇰 Hong Kong',
-    reviewText: `We LOVEEEE it! The show is great! Very good atmosphere and everyone's 
-    so happy after the play. The Headout platform is easy to use. You just scan your ticket on your phone for entry.`,
-    showName: 'Tina: The Turner Musical',
-    stars: 5,
-    showLink:
-      'https://www.london-theater-tickets.com/tina-the-tina-turner-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Karen Kadore',
-    country: '🇬🇧 United Kingdom',
-    reviewText: `Ease of booking, regular updates and the text on the day with tickets, maps and easy ordering from the bar. The show was brilliant. Wonderful day!`,
-    showName: 'Tina: The Turner Musical',
-    stars: 5,
-    showLink:
-      'https://www.london-theater-tickets.com/tina-the-tina-turner-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Lucia Quiroz',
-    country: '🇨🇭 Switzerland',
-    reviewText: `Headout helpdesk, was awesome when I had a problem... that at the end turn out to be my fault.
-    The show was fantastic. Even my son loved it. Recommended for groups of friends and families!`,
-    showName: 'Moulin Rouge! The Musical',
-    stars: 5,
-    showLink: 'https://www.london-theater-tickets.com/moulin-rouge-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Karina Salby',
-    country: '🇩🇰 Denmark',
-    reviewText: `Very easy to book tickets, one doesn't need to print anything. An absolutely phenomenal musical experience, amazing scenery, singing and acting.`,
-    showName: 'Frozen the Musical',
-    stars: 5,
-    showLink:
-      'https://www.london-theater-tickets.com/frozen-the-musical-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Itziar Iraola',
-    country: '🇪🇸 Spain',
-    reviewText: `The activity had a very good cast and therefore we enjoyed a quality show. The experience to book the tickets on line was easy and although I missed receiving a pdf on my email we could print them and enter the theatre with no issues.`,
-    showName: 'Frozen the Musical',
-    stars: 4,
-    showLink:
-      'https://www.london-theater-tickets.com/frozen-the-musical-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Tracy Lavin',
-    country: '🇺🇸 United states',
-    reviewText: `We LOVED the theater experience - just amazing! Also, when I coulnd't find my tickets, your team was ever responsive in assisting!`,
-    showName: 'Frozen the Musical',
-    stars: 5,
-    showLink:
-      'https://www.london-theater-tickets.com/frozen-the-musical-tickets/',
-  },
-
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Jane Phillips',
-    country: '🇬🇧 United Kingdom',
-    reviewText: `The musical was fabulous especially with my granddaughter. Headout had a problem with the booking and rectified it immediately.`,
-    showName: 'Matilda The Musical',
-    stars: 4,
-    showLink:
-      'https://www.london-theater-tickets.com/matilda-the-musical-tickets/',
-  },
-
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Bernardeau Lucie',
-    country: '🇫🇷 France',
-    reviewText: `Booking tickets with Headout was really easy, I loved the performance and cried a lot, i think its genuinely the best thing i ever saw`,
-    showName: 'Matilda The Musical',
-    stars: 5,
-    showLink:
-      'https://www.london-theater-tickets.com/matilda-the-musical-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Joanne Kelly',
-    country: '🇮🇪 Ireland',
-    reviewText: `Booking with Headout was very easy and received plenty of other recommendations from them for our trip to London. The Lion King was just out of this world. We had our kids (aged 8&9) with us and they loved it. We'd all love to see it again. Theatre was lovely, the seats in the Royal Circle were perfect. Fantastic experience!`,
-    showName: 'The Lion King',
-    stars: 5,
-    showLink: 'https://www.london-theater-tickets.com/the-lion-king-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Andrea Szanyi',
-    country: '🇭🇺 Hungary',
-    reviewText: `I loved the show. The view from my seat was perfect. I had no problem with buying the ticket. I really recommend headout app 🙂`,
-    showName: 'The Lion King',
-    stars: 5,
-    showLink: 'https://www.london-theater-tickets.com/the-lion-king-tickets/',
-  },
-  {
-    user_image_url: 'https://tourlandish.s3.amazonaws.com/assets/svg/user.svg',
-    name: 'Baruch Josef',
-    country: '🇮🇱 Israel',
-    reviewText: `First, ordering the tickets for the show through Headout was very convenient and easy. The explanation we received on how to get to the show hall was clear and convenient. The show itself was successful, very enjoyable and a perfect experience for the price paid.`,
-    showName: 'The Lion King',
-    stars: 5,
-    showLink: 'https://www.london-theater-tickets.com/the-lion-king-tickets/',
-  },
-];
-
 export const GUIDES_IMAGE_URL =
   'https://cdn-imgix.headout.com/assets/images/guides/{0}.jpg';
 export const LANDSCAPE =
@@ -1916,7 +1803,7 @@ export const REVIEW_CHIPS_BACKGROUND_ILLUSTRATION =
 export const PERMANENT_SHOWS_TGIDS = [
   16818, 16816, 22293, 3031, 19737, 20045, 17432, 18161, 13402, 9858, 2863,
   9162, 9723, 3023, 3027, 3032, 3026, 3028, 3037, 2843, 18551, 519, 507, 512,
-  730, 508, 1293, 24533, 10069, 10017, 5838, 11845, 19636, 11340,
+  730, 508, 1293, 24533, 10069, 10017, 5838, 24863, 11845, 19636, 11340,
 ];
 
 export enum SHOULDER_TIMINGS_SCALE_ICONS {
@@ -2083,4 +1970,9 @@ export const CAROUSEL_UNITS = {
   mobileDotMargin: 4,
   mobileTabSize: 24,
   mobileTabMargin: 2,
+};
+
+export const COLLECTION_ID_THEATRE_NAMES_MAP: Record<number, string> = {
+  167: 'West End',
+  24: 'Broadway',
 };

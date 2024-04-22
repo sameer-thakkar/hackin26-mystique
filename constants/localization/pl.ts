@@ -593,7 +593,7 @@ const pl = {
     'Dlaczego warto wybrać się na tę wycieczkę jednodniową?',
   WHY_WATCH: 'Dlaczego warto to obejrzeć {0}?',
   FIND_ON_MAP: 'Znajdź na mapie',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Bilety z kas',
@@ -748,7 +748,7 @@ const pl = {
     FOOTNOTE: '* Wszystkie ceny są podane w {0}',
     PICK_DATE: 'Wybierz datę',
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     READ_MORE_REVIEWS: 'Czytaj więcej recenzji',
     SHOW_MORE_REVIEWS: 'Pokaż więcej recenzji',
     ALL_PHOTOS: 'Wszystkie zdjęcia',

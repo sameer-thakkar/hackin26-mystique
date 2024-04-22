@@ -640,7 +640,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
   WHY_WATCH: 'Auf einen Blick {0}?',
   FIND_ON_MAP: 'Auf der Karte anzeigen',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Tickets von der Theaterkasse',
@@ -662,6 +662,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     YOUR_PICK: 'Ihre Auswahl',
     BROWSE_BY_CATEGORIES: 'Kategorien durchstöbern',
     TOP_WEST_END_SHOWS: 'Die besten West End Shows',
+    TOP_THEATRE_SHOWS: 'Die besten {0} Shows',
     TOP_SHOWS: 'Top-Shows',
     SEE_MORE_SHOWS: '{0} weitere Shows anzeigen',
     LAST_MINUTE_TICKETS: 'Last-Minute Tickets',
@@ -778,7 +779,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       NL: 'Niederländisch',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Hohe Nachfrage',
     INTERVAL: 'Pause',
     TWO_PART_SHOW: 'Vorstellung in 2 Teilen',

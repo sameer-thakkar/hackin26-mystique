@@ -1032,7 +1032,7 @@ const Product = (props: any) => {
 
     let heading;
     if (index === tabs.length)
-      heading = strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews;
+      heading = strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews;
     else heading = tabs[index].heading;
 
     trackEvent({

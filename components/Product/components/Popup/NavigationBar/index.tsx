@@ -39,7 +39,7 @@ const NavigationBar = ({
             $isSelected={currentActiveIndex === tabs?.length}
             onClick={() => onItemClick(tabs?.length ?? 0)}
           >
-            {strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews}
+            {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
           </NavigationLink>
         </Conditional>
       </NavigationContainer>

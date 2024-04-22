@@ -271,7 +271,7 @@ const ShowInfoSection = ({
                         </ViewTranslatedContentButton>
                       </Conditional>
                       <button className="read-more" onClick={onReadMoreClicked}>
-                        {strings.LTT_SHOW_PAGE.READ_MORE_REVIEWS}
+                        {strings.SHOW_PAGE_V2.READ_MORE_REVIEWS}
                       </button>
                     </div>
                   </ReviewPopover>

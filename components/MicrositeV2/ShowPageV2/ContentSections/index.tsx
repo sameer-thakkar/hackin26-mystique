@@ -50,9 +50,9 @@ const ContentSections = ({
   const { microBrandsHighlight, id, reviewsDetails } = tourGroupData;
   const { ratingsCount } = reviewsDetails ?? {};
   const TABS = [
-    strings.LTT_SHOW_PAGE.CONTENT_TABS.ABOUT,
-    strings.LTT_SHOW_PAGE.CONTENT_TABS.VENUE,
-    strings.LTT_SHOW_PAGE.CONTENT_TABS.TICKETS,
+    strings.SHOW_PAGE_V2.CONTENT_TABS.ABOUT,
+    strings.SHOW_PAGE_V2.CONTENT_TABS.VENUE,
+    strings.SHOW_PAGE_V2.CONTENT_TABS.TICKETS,
   ];
 
   const {
@@ -66,7 +66,7 @@ const ContentSections = ({
   } = parseShowPageData(microBrandsHighlight);
 
   if (ratingsCount > 0 || criticReview?.tab_content?.length) {
-    TABS.push(strings.LTT_SHOW_PAGE.CONTENT_TABS.Reviews);
+    TABS.push(strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews);
   }
 
   const whyWatchSection = (highlightsSection as any)?.tab_content?.filter?.(
@@ -303,7 +303,7 @@ const ContentSections = ({
             <Conditional if={theStoryIndex > 0}>
               <h2 id="Storyline">
                 <Story />{' '}
-                {strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS.STORYLINE}
+                {strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS.STORYLINE}
               </h2>
               <div className="storyline-content">
                 <PrismicRichText
@@ -351,7 +351,7 @@ const ContentSections = ({
                 {' '}
                 <AgeSuitability />{' '}
                 {
-                  strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
+                  strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
                     .AGE_SUITABILITY_AND_GUIDELINES
                 }
               </h2>
@@ -380,7 +380,7 @@ const ContentSections = ({
                     });
                   }}
                 >
-                  {strings.LTT_SHOW_PAGE.READ_MORE}
+                  {strings.SHOW_PAGE_V2.READ_MORE}
                 </a>
               </Conditional>
             </h2>
@@ -467,7 +467,7 @@ const ContentSections = ({
                 <h2 id="What the critics think">
                   <CriticReviewIcon />
                   {
-                    strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
+                    strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
                       .WHAT_CRITICS_THINK
                   }
                 </h2>
@@ -494,7 +494,7 @@ const ContentSections = ({
               <h2 id="Ratings & reviews">
                 <StarEmptyNew fillColor={COLORS.BRAND.BLACK} />
                 {convertToSentenceCase(
-                  strings.LTT_SHOW_PAGE.RATINGS_AND_REVIEWS
+                  strings.SHOW_PAGE_V2.RATINGS_AND_REVIEWS
                 )}
               </h2>
               <ReviewSection

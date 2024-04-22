@@ -548,8 +548,8 @@ const id = {
   VIEW_LESS: 'Hilangkan sebagian',
   VIEW_MORE: 'Lihat lainnya',
   WHY_TAKE_THIS_DAY_TRIP: 'Mengapa Melakukan Day Trip Ini?',
-  WHY_WATCH: 'Alasan Menonton {0}?',
-  LTT_LANDING_PAGE: {
+  WHY_WATCH: 'Alasan Menonton',
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',
   },
@@ -676,7 +676,7 @@ const id = {
   CALENDAR: {
     FOOTNOTE: '* Semua harga dalam {0}',
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     READ_MORE_REVIEWS: 'Read more reviews',
     ALL_PHOTOS: 'All photos',
     SELLING_OUT_FAST: 'Laris',

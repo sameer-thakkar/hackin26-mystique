@@ -56,7 +56,7 @@ const ShowPageDescriptorSection = ({
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
       [ANALYTICS_PROPERTIES.INFO_HEADING]:
-        strings.LTT_SHOW_PAGE.CONTENT_SECTION_HEADERS
+        strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
           .AGE_SUITABILITY_AND_GUIDELINES,
     });
     window.scrollTo({
@@ -90,7 +90,7 @@ const ShowPageDescriptorSection = ({
                   <span>
                     {key === 'dates'
                       ? strings.formatString(
-                          strings.LTT_SHOW_PAGE.UNTIL_DATE,
+                          strings.SHOW_PAGE_V2.UNTIL_DATE,
                           dayjs(content).format('D MMMM YYYY')
                         )
                       : content}

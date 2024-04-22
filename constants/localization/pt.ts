@@ -644,7 +644,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   WHY_WATCH: 'Por que assistir {0}?',
   FIND_ON_MAP: 'Ver no mapa',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Ingressos da bilheteria',
@@ -667,6 +667,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     BROWSE_BY_CATEGORIES: 'Navegue por categoria',
     TOP_WEST_END_SHOWS: 'Os melhores espetáculos West End',
     TOP_SHOWS: 'Melhores espetáculos',
+    TOP_THEATRE_SHOWS: '{0}: os melhores espetáculos',
     LAST_MINUTE_TICKETS: 'Ingressos de última hora',
     LOVED_BY_MILLIONS: 'Favoritos de milhares',
     TODAY: 'Hoje',
@@ -781,7 +782,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       NL: 'holandês',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     TWO_PART_SHOW: 'Espetáculo em duas partes',
     INTERVAL: 'Intervalo',
     SELLING_OUT_FAST: 'Esgota rápido',

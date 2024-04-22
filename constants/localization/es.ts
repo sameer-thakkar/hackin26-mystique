@@ -694,7 +694,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   },
   WHY_WATCH: '¿Por qué verlo? {0}?',
   FIND_ON_MAP: 'Ver en el mapa',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Entradas de taquilla',
@@ -716,6 +716,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     YOUR_PICK: 'Tu elección',
     BROWSE_BY_CATEGORIES: 'Buscar por categorías',
     TOP_WEST_END_SHOWS: 'Los mejores espectáculos del West End',
+    TOP_THEATRE_SHOWS: '{0}: los mejores espectáculos',
     TOP_SHOWS: 'Destacados',
     SEE_MORE_SHOWS: 'Ver {0} espectáculos más',
     LAST_MINUTE_TICKETS: 'Entradas de última hora',
@@ -832,7 +833,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       NL: 'neerlandés',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Se agota rápido',
     INTERVAL: 'Intermedio',
     TWO_PART_SHOW: 'Espectáculo de dos partes',

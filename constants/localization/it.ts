@@ -632,7 +632,7 @@ const it = {
   },
   WHY_WATCH: 'Perché guardarlo {0}?',
   FIND_ON_MAP: 'Mappa',
-  LTT_LANDING_PAGE: {
+  ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
         NAME: 'Biglietti del botteghino',
@@ -654,6 +654,7 @@ const it = {
     YOUR_PICK: 'La tua scelta',
     BROWSE_BY_CATEGORIES: 'Sfoglia per categorie',
     TOP_WEST_END_SHOWS: 'I migliori spettacoli al West End',
+    TOP_THEATRE_SHOWS: '{0}: gli spettacoli da non perdere',
     TOP_SHOWS: 'Gli spettacoli principali',
     SEE_MORE_SHOWS: 'Guarda {0} altri spettacoli',
     LAST_MINUTE_TICKETS: 'Biglietti last minute',
@@ -769,7 +770,7 @@ const it = {
       NL: 'olandese',
     },
   },
-  LTT_SHOW_PAGE: {
+  SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'In rapido esaurimento',
     INTERVAL: 'Intervallo',
     TWO_PART_SHOW: 'Spettacolo in due parti',

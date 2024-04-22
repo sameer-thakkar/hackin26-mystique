@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
-import VerticalProductCard from 'components/MicrositeV2/LttLandingPageV2/ProductCards/VerticalProductCard';
+import VerticalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard';
 import { TSimilarShowsProps } from 'components/MicrositeV2/ShowPageV2/SimilarShows/interface';
 import {
   SimilarShowsWrapper,
@@ -169,7 +169,7 @@ const SimilarShows = ({
     <SimilarShowsWrapper ref={similarShowsRef}>
       <Conditional if={similarProductData.length}>
         <TitleRow>
-          <h2 className="title">{strings.LTT_SHOW_PAGE.SIMILAR_SHOWS}</h2>
+          <h2 className="title">{strings.SHOW_PAGE_V2.SIMILAR_SHOWS}</h2>
           <div className="controls">
             <Conditional
               if={!isMobile && similarProductData.length > slidesPerView}

@@ -32,7 +32,6 @@ export const SwiperWrapper = styled.div`
     video,
     & img {
       position: relative;
-      object-fit: cover;
       height: 12.5rem;
       width: calc(100vw - 5.6vw * 2);
       border-radius: 0.75rem;
