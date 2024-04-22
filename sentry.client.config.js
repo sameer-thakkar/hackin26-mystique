@@ -2,7 +2,7 @@
 // The config you add here will be used whenever a page is visited.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { browserTracingIntegration, init as initSentry } from '@sentry/nextjs';
+import { init as initSentry } from '@sentry/nextjs';
 
 const SENTRY_DSN =
   'https://a952d80706b3435388b1fb5983c74b18@o45960.ingest.sentry.io/1545593';
@@ -17,11 +17,4 @@ initSentry({
   // that it will also get attached to your source maps
   ignoreUrls: [/https?:\/\/(www\.)?(localhost)\.com/],
   enabled: process.env.NODE_ENV !== 'development',
-  integrations: [
-    browserTracingIntegration({
-      enableInp: true,
-      // limit interactions sampling for INP
-      interactionsSampleRate: 0.01,
-    }),
-  ],
 });
