@@ -263,12 +263,16 @@ const ContentSections = ({
     );
 
   const getWhyWatchSectionHeader = () => {
-    if (lang === LANGUAGE_CODE_MAP.DE) return name;
-    else
-      return strings.formatString(
-        convertToSentenceCase(strings.WHY_WATCH),
-        name
-      ) as string;
+    switch (lang) {
+      case LANGUAGE_CODE_MAP.DE:
+      case LANGUAGE_CODE_MAP.ES:
+        return name;
+      default:
+        return strings.formatString(
+          convertToSentenceCase(strings.WHY_WATCH),
+          name
+        ) as string;
+    }
   };
 
   return (
