@@ -110,7 +110,7 @@ export const HighlightTabs = ({
   useEffect(() => {
     if (activeTabIndex !== undefined && activeTabIndex !== _currentIndex)
       updateCurrentIndex(activeTabIndex);
-  }, [activeTabIndex]);
+  }, [_currentIndex, activeTabIndex]);
 
   const trackedTabChange = (index: number) => {
     onTabChange({ tab: tabs[index], index });

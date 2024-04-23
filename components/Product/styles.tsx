@@ -1411,6 +1411,7 @@ export const TabsWrapper = styled.div`
   overflow: hidden;
   margin-top: -0.5rem;
   padding-top: 0.5rem;
+  min-height: 30px;
 
   .swiper-slide {
     width: auto;

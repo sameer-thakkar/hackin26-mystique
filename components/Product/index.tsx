@@ -159,7 +159,7 @@ const Product = (props: any) => {
   const moreDetailsRef = useRef(null);
   const productRef = useRef<HTMLDivElement>(null);
   const popupContainerRef = useRef<HTMLDivElement>(null);
-  const collapsibleContentRef = useRef<HTMLDivElement>();
+  const collapsibleContentRef = useRef<HTMLDivElement>(null);
   const popupController = useRef<TController>();
   const priceblockTitleContainerRef = useRef<HTMLDivElement>(null);
 
@@ -234,7 +234,7 @@ const Product = (props: any) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isStage, isDev, host);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
+  const [isContentOpen, toggleContentOpen] = useState<boolean>(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
@@ -629,7 +629,6 @@ const Product = (props: any) => {
   // It runs only when the tab changes, to check if, before collapsing, the content overflows
   useEffect(() => {
     if (isMobile) return;
-    // @ts-ignore
     toggleContentOpen(false);
     const isTruncated = isTicketCard
       ? false
@@ -1518,7 +1517,6 @@ const Product = (props: any) => {
             }
             defaultOpen={defaultOpen}
             maxHeight={maxProductBodyHeight}
-            // @ts-ignore
             ref={collapsibleContentRef}
           >
             <Conditional
