@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
@@ -104,7 +105,11 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
           text
         )}
         <Conditional if={isDrawerOpen}>
-          <Product {...childProps} />
+          {createPortal(
+            <Product {...childProps} />,
+            document.body,
+            'experience-popup'
+          )}
         </Conditional>
       </Conditional>
     </>
