@@ -530,10 +530,18 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <Conditional if={isMobile && showLttTreatment && !isCatOrSubCatPage}>
-        <MobileBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
+        <MobileBannerV2
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          collectionId={Number(collectionId)}
+        />
       </Conditional>
       <Conditional if={!isMobile && showLttTreatment && !isCatOrSubCatPage}>
-        <DesktopBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
+        <DesktopBannerV2
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          collectionId={Number(collectionId)}
+        />
       </Conditional>
       <Conditional
         if={

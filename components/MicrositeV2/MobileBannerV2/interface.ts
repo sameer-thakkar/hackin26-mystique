@@ -9,4 +9,5 @@ export interface IMediaProps {
 export interface IBannerProps {
   bannerImages: any[];
   allTours: any;
+  collectionId: number;
 }

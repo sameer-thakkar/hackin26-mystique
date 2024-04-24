@@ -7,11 +7,12 @@ import {
   Wrapper,
 } from 'components/MicrositeV2/BannerV2TrustBooster/style';
 import { entertainmentMBTrustBoosters } from 'const/entertainmentMBTrustBoosters';
+import { COLLECTION_ID_CITIES_MAP, LTD_COLLECTION_ID } from 'const/index';
 import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
+const TrustBooster = ({ isMobile, collectionId }: TTrustBoosterProps) => {
   const ICONS = [
     {
       name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS
@@ -33,9 +34,11 @@ const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
       name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
         .NAME,
       icon: entertainmentMBTrustBoosters['EXCLUSIVE_DEALS'],
-      description:
+      description: strings.formatString(
         strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
           .DESCRIPTION,
+        `${COLLECTION_ID_CITIES_MAP[collectionId ?? LTD_COLLECTION_ID]}'s`
+      ),
     },
     {
       name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX

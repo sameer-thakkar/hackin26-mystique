@@ -1976,3 +1976,7 @@ export const COLLECTION_ID_THEATRE_NAMES_MAP: Record<number, string> = {
   167: 'West End',
   24: 'Broadway',
 };
+export const COLLECTION_ID_CITIES_MAP: Record<number, string> = {
+  167: 'London',
+  24: 'New York',
+};
