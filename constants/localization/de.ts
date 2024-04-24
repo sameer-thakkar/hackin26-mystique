@@ -1074,7 +1074,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     OPEN: 'Öffnen',
     LAST_ADMISSION: 'Letzter Einlass',
     DAYS: 'Tage',
-    BEST_TIME_TO_VISIT: 'Melhor época para visitar',
+    BEST_TIME_TO_VISIT: 'Beste Besuchszeit:',
     WEEKDAY_VS_WEEKEND: 'Wochentag vs Wochenende',
     PEAK_VS_LOW_SEASON: 'Hochsaison vs Nebensaison',
     PLEASANT: 'Angenehm',
