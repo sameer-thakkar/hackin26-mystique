@@ -944,7 +944,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     LUXURY: 'Luxury experience',
     FOOD_DRINK: 'Food & Drinks',
     PANAROMIC: 'Panoramic views of top attractions',
-    PANAROMIC_2: 'Panoromic views',
+    PANAROMIC_2: 'Panoramic Views',
     PANAROMIC_3: 'Panoramic, Open-top views',
     BEVERAGES: 'Onboard beverages',
     GOURMET: 'Gourmet dinner',
