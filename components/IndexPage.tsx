@@ -407,9 +407,9 @@ const Page = (props: PageProps) => {
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
             categoryHeaderMenu={categoryHeaderMenu}
           >
+            <Analytics cmsContent={CMSContent} contentType={ContentType} />
             {Component}
             {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
-            <Analytics cmsContent={CMSContent} contentType={ContentType} />
           </MBContextProvider>
         </ThemeProvider>
       </EnvironmentContext.Provider>
