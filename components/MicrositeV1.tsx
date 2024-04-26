@@ -66,7 +66,6 @@ import {
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
-  LFC_IMPACT_EXPERIMENT_UIDS,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
   TEMPLATES,
@@ -299,8 +298,7 @@ const MicrositeV1 = (props: any) => {
     experimentId: 'LFC_IMPACT',
     noTrack: false,
     customEligibilityCheckFn: () =>
-      (isSubdomain || LFC_IMPACT_EXPERIMENT_UIDS.includes(uid)) &&
-      !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
+      isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
 
   const showHohoRevamp =
