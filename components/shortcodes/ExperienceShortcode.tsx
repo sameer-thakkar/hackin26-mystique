@@ -13,6 +13,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
+import { TExperienceDrawerPortal } from './types';
 
 export type TExperienceShortcode = {
   type: 'POPUP' | 'REDIRECT';
@@ -104,15 +105,27 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
         ) : (
           text
         )}
-        <Conditional if={isDrawerOpen}>
-          {createPortal(
-            <Product {...childProps} />,
-            document.body,
-            'experience-popup'
-          )}
-        </Conditional>
+        <ExperienceDrawerPortal isDrawerOpen={isDrawerOpen} {...childProps} />
       </Conditional>
     </>
+  );
+};
+
+const ExperienceDrawerPortal = (props: TExperienceDrawerPortal) => {
+  const { isDrawerOpen, ...restProps } = props;
+
+  if (!isDrawerOpen) {
+    return null;
+  }
+
+  return (
+    <React.Fragment>
+      {createPortal(
+        <Product {...restProps} />,
+        document.body,
+        'experience-popup'
+      )}
+    </React.Fragment>
   );
 };
 
