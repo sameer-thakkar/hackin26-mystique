@@ -1,4 +1,6 @@
+import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
+import { RichTextField } from '@prismicio/types';
 import Conditional from 'components/common/Conditional';
 import { IPracticalInfoProps } from 'components/slices/ListicleV2/LargeListicle/PracticalInfo/intefaces';
 import {
@@ -40,6 +42,10 @@ const PracticalInfo = ({
     openingHours,
     findItOnMap,
   } = practicalInfo;
+
+  const hasOpeningHours: boolean =
+    !!openingHours && asText(openingHours as RichTextField)?.length !== 0;
+
   return (
     <PracticalInfoWrapper>
       <Conditional if={calendar}>
@@ -130,7 +136,7 @@ const PracticalInfo = ({
         </PracticalInfoLocationWrapper>
       </Conditional>
 
-      <Conditional if={openingHours.length > 0}>
+      <Conditional if={hasOpeningHours}>
         <PracticalInfoTimingsWrapper className="practical-info">
           <PracticalInfoTimingsIconWrapper>
             {Timing()}
