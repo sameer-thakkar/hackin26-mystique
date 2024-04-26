@@ -609,7 +609,7 @@ const pl = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Prosta rezerwacja',
-        DESCRIPTION: 'Zaufało nam już ponad 22 miliony gości',
+        DESCRIPTION: 'Zaufało nam już ponad 25 miliony gości',
       },
     },
     YOUR_PICK: 'Twój wybór',

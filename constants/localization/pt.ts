@@ -660,7 +660,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
       BOOK_AND_RELAX: {
         NAME: 'Reserve com tranquilidade',
-        DESCRIPTION: '22 milhões de clientes satisfeitos',
+        DESCRIPTION: '25 milhões de clientes satisfeitos',
       },
     },
     YOUR_PICK: 'Sua escolha',

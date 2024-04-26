@@ -657,7 +657,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       },
       BOOK_AND_RELAX: {
         NAME: 'Eenvoudig boeken',
-        DESCRIPTION: '22 miljoen tevreden klanten',
+        DESCRIPTION: '25 miljoen tevreden klanten',
       },
     },
     YOUR_PICK: 'Jouw keuze',

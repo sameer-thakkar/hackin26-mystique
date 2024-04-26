@@ -659,7 +659,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       },
       BOOK_AND_RELAX: {
         NAME: 'Réservez en toute simplicité',
-        DESCRIPTION: '22 millions de spectateurs satisfaits',
+        DESCRIPTION: '25 millions de spectateurs satisfaits',
       },
     },
     YOUR_PICK: 'Votre choix',

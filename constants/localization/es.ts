@@ -710,7 +710,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       },
       BOOK_AND_RELAX: {
         NAME: 'Reserva sencilla',
-        DESCRIPTION: '22 millones de clientes satisfechos',
+        DESCRIPTION: '25 millones de clientes satisfechos',
       },
     },
     YOUR_PICK: 'Tu elección',

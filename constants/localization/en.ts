@@ -639,7 +639,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       },
       BOOK_AND_RELAX: {
         NAME: 'Book and relax',
-        DESCRIPTION: 'Trusted by 22 million guests and counting',
+        DESCRIPTION: 'Trusted by 25 million guests and counting',
       },
     },
     YOUR_PICK: 'Your pick',

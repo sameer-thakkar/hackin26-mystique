@@ -648,7 +648,7 @@ const it = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Prenotazione semplice',
-        DESCRIPTION: '22 milioni di clienti soddisfatti',
+        DESCRIPTION: '25 milioni di clienti soddisfatti',
       },
     },
     YOUR_PICK: 'La tua scelta',

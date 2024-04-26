@@ -656,7 +656,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       },
       BOOK_AND_RELAX: {
         NAME: 'Einfache Buchung',
-        DESCRIPTION: '22 Millionen zufriedene Gäste',
+        DESCRIPTION: '25 Millionen zufriedene Gäste',
       },
     },
     YOUR_PICK: 'Ihre Auswahl',
