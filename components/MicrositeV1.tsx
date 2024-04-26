@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useMemo, useState } from 'react';
+import { ComponentType, useEffect, useMemo, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -18,6 +18,7 @@ import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import useABTesting from 'hooks/useABTesting';
+import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import {
   displayBannerTrustBoosters,
@@ -48,6 +49,7 @@ import {
   getLangObject,
   groupSlices,
 } from 'utils/helper';
+import { getStructure } from 'utils/lookerUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -63,7 +65,10 @@ import {
   curatedVideoBannerExpUids,
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
+  LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
+  LFC_IMPACT_EXPERIMENT_UIDS,
   PAGE_TYPES,
+  PAGE_URL_STRUCTURE,
   TEMPLATES,
   THEMES,
 } from 'const/index';
@@ -171,6 +176,15 @@ const MicrositeV1 = (props: any) => {
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
+  const [showLfcTimer, setShowLfcTimer] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLfcTimer(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const currentIsMobile = (windowWidth as number) < 768;
@@ -222,6 +236,16 @@ const MicrositeV1 = (props: any) => {
   } = micrositeData ?? {};
 
   const [isTourListFiltered, setIsTourListFiltered] = useState(false);
+  const lfcRef = useRef(null);
+  const footerRef = useRef(null);
+  const isLfcIntersecting = useOnScreen({
+    ref: lfcRef,
+    unobserve: true,
+  });
+  const isFooterIntersecting = useOnScreen({
+    ref: footerRef,
+    unobserve: true,
+  });
 
   const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
 
@@ -237,6 +261,8 @@ const MicrositeV1 = (props: any) => {
   const { COVID19_ALERT, READ_MORE } = strings;
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
+  const isSubdomain =
+    getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
 
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
@@ -265,9 +291,24 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
   });
+  const {
+    isEligible: isLFCImpactExpEligible,
+    isExperimentResolving: isLFCExperimentResolving,
+    variant: lfcExpVariant,
+  } = useABTesting({
+    experimentId: 'LFC_IMPACT',
+    noTrack: false,
+    customEligibilityCheckFn: () =>
+      (isSubdomain || LFC_IMPACT_EXPERIMENT_UIDS.includes(uid)) &&
+      !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
+  });
 
   const showHohoRevamp =
     hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
+
+  const hideLFC =
+    lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
+  const showLFC = lfcExpVariant === VARIANTS.CONTROL && isLFCImpactExpEligible;
 
   const curatedBannerVideoSrc = curatedVideoBannerExpUids[uid]?.ytEmbedLink;
   const { isEligible: isVideoBannerEligible, variant: videoBannerExpVariant } =
@@ -689,7 +730,32 @@ const MicrositeV1 = (props: any) => {
     isToursAvailable &&
     isAirportTransfersMB;
 
-  if (isHohoExpEligible && isExperimentResolving) return <Loader />;
+  useEffect(() => {
+    if (isLfcIntersecting && showLFC && showLfcTimer) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION_TYPE]: 'Long-Form Content',
+        [ANALYTICS_PROPERTIES.SLICE_TYPE]: contentFWSlices[0]?.slice_type,
+      });
+    }
+  }, [isLfcIntersecting, showLFC, showLfcTimer]);
+
+  useEffect(() => {
+    if (isFooterIntersecting && showLFC && showLfcTimer) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: 'Footer',
+        [ANALYTICS_PROPERTIES.SECTION_TYPE]: 'Footer',
+      });
+    }
+  }, [isFooterIntersecting, showLFC, showLfcTimer]);
+
+  if (
+    (isHohoExpEligible && isExperimentResolving) ||
+    (isLFCImpactExpEligible && isLFCExperimentResolving)
+  )
+    return <Loader />;
+
   return (
     <div>
       <div className="microsite-container">
@@ -961,21 +1027,25 @@ const MicrositeV1 = (props: any) => {
           </LazyComponent>
         </Conditional>
 
-        <ProductsContextProvider ready={isReady}>
-          <InteractionContextProvider>
-            <Conditional if={longFormContent}>
-              <LongForm
-                tourListSection={tourListSection}
-                content={[...longFormContent, ...contentFWSlices]}
-                automatedBreadcrumbsExists={automatedBreadcrumbsExists}
-                isRevampedDesign={isCatOrSubCatPage}
-                isMobile={isMobile}
-                isHOHORevamp={showHohoRevamp}
-                isCatAndSubCatPage={isCatOrSubCatPage}
-              />
-            </Conditional>
-          </InteractionContextProvider>
-        </ProductsContextProvider>
+        <div ref={lfcRef}>
+          <Conditional if={!hideLFC}>
+            <ProductsContextProvider ready={isReady}>
+              <InteractionContextProvider>
+                <Conditional if={longFormContent}>
+                  <LongForm
+                    tourListSection={tourListSection}
+                    content={[...longFormContent, ...contentFWSlices]}
+                    automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+                    isRevampedDesign={isCatOrSubCatPage}
+                    isMobile={isMobile}
+                    isHOHORevamp={showHohoRevamp}
+                    isCatAndSubCatPage={isCatOrSubCatPage}
+                  />
+                </Conditional>
+              </InteractionContextProvider>
+            </ProductsContextProvider>
+          </Conditional>
+        </div>
 
         <Conditional if={isCatOrSubCatPage}>
           <LazyComponent>
@@ -992,22 +1062,26 @@ const MicrositeV1 = (props: any) => {
           </LazyComponent>
         </Conditional>
 
-        <Footer
-          currentLanguage={currentLanguage}
-          attraction={footerAttractionName}
-          logoURL={logoUrl}
-          logoAlt={whiteLabelName || ''}
-          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          disclaimerText={
-            isCollectionMicrobrand ? bannerAndFooterSubText : disclaimerText
-          }
-          slices={!isFooterInherited ? slicesCFoot || [] : []}
-          themeOverride={footerThemeOverride}
-          secondaryHeading={footerHeadingSFoot}
-          primaryHeading={footerHeadingCFoot}
-          secondarySlices={!isSecondaryFooterInherited ? slicesSFoot || [] : []}
-          isCatOrSubCatPage={isCatOrSubCatPage}
-        />
+        <div ref={footerRef}>
+          <Footer
+            currentLanguage={currentLanguage}
+            attraction={footerAttractionName}
+            logoURL={logoUrl}
+            logoAlt={whiteLabelName || ''}
+            hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+            disclaimerText={
+              isCollectionMicrobrand ? bannerAndFooterSubText : disclaimerText
+            }
+            slices={!isFooterInherited ? slicesCFoot || [] : []}
+            themeOverride={footerThemeOverride}
+            secondaryHeading={footerHeadingSFoot}
+            primaryHeading={footerHeadingCFoot}
+            secondarySlices={
+              !isSecondaryFooterInherited ? slicesSFoot || [] : []
+            }
+            isCatOrSubCatPage={isCatOrSubCatPage}
+          />
+        </div>
         <Conditional if={hasOffer}>
           <FreeTourPopup
             popupState={freeTourPopupOpen}

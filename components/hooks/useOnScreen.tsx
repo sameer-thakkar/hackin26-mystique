@@ -32,7 +32,7 @@ export default function useOnScreen({
   }
 
   useEffect(() => {
-    if (ref?.current && observer) observer.observe(ref.current);
+    if (ref?.current && observer) observer?.observe(ref.current);
 
     return () => {
       observer?.disconnect();

@@ -974,6 +974,8 @@ export const ANALYTICS_PROPERTIES = {
   FILTER_TYPE: 'Filter Type',
   BOOSTER_NAME: 'Booster Name',
   COMPONENT: 'Component',
+  SECTION_TYPE: 'Section Type',
+  SLICE_TYPE: 'Slice Type',
 };
 
 export const PAGE_TYPES = {
@@ -1976,7 +1978,40 @@ export const COLLECTION_ID_THEATRE_NAMES_MAP: Record<number, string> = {
   167: 'West End',
   24: 'Broadway',
 };
+
+export const LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS = [
+  'sagradafamilia.barcelona-tickets.com',
+  'catacombs.tickets-paris.fr',
+];
+
+export const LFC_IMPACT_EXPERIMENT_UIDS = [
+  'www.schindlers-factory-tickets.com',
+  'louvremuseum.tickets-paris.fr',
+  'www.versailles-palace-tickets.com',
+  'www.st-peters-basilica-tickets.com',
+  'www.alcazar-seville-tickets.com',
+  'www.seville-cathedral-tickets.com',
+  'www.penapalacetickets.com',
+  'www.tulip-garden-tickets.com',
+  'www.singapore-tickets.com.gardens-by-the-bay-tickets',
+  'www.london-tickets.co.uk.warner-bros-studio-tour-london',
+  'www.singapore-tickets.com.resorts-world-sentosa.universal-studios-tickets',
+  'www.topkapipalace-tickets.com',
+  'www.royal-palace-madrid-tickets.com',
+  'www.oceanografictickets.com',
+  'www.barcelona-tickets.com.hola-barcelona-travel-card',
+  'www.barcelona-aerobus-tickets.com',
+  'www.acropolis-tickets.com.acropolis-museum',
+  'www.friedrichstadt-palast.berlin-tickets.com',
+  'www.barcelona-aerobus-tickets.com',
+  'www.singapore-tickets.com.mandai-wildlife-reserve.night-safari',
+  'www.new-york-tickets.com.summit-one-vanderbilt',
+  'www.london-tickets.co.uk.sea-life-london-aquarium-tickets',
+  'safari-world.bangkok-tickets.com',
+];
+
 export const COLLECTION_ID_CITIES_MAP: Record<number, string> = {
   167: 'London',
   24: 'New York',
 };
+
