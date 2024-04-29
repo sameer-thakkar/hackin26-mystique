@@ -605,7 +605,7 @@ const pl = {
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Wyjątkowe oferty i zniżki',
-        DESCRIPTION: `Londyńskie teatry w najlepszych cenach`,
+        DESCRIPTION: `Zaoszczędź na najlepszych spektaklach, które do zaoferowania ma {0}`,
       },
       BOOK_AND_RELAX: {
         NAME: 'Prosta rezerwacja',

@@ -644,7 +644,7 @@ const it = {
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Offerte e sconti esclusivi',
-        DESCRIPTION: `Gli show di Londra al miglior prezzo`,
+        DESCRIPTION: `Grandi sconti sui migliori spettacoli a {0}`,
       },
       BOOK_AND_RELAX: {
         NAME: 'Prenotazione semplice',

@@ -635,7 +635,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Exclusive deals & discounts',
-        DESCRIPTION: `Save big on {0} best shows`,
+        DESCRIPTION: `Save big on {0}'s best shows`,
       },
       BOOK_AND_RELAX: {
         NAME: 'Book and relax',
