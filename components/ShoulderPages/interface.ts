@@ -96,6 +96,7 @@ export interface ITimingsTableProps {
   }[];
   isMobile: boolean;
   initiallyCollapsed?: boolean;
+  hideCollapse?: boolean;
 }
 
 export interface IIconScaleType {

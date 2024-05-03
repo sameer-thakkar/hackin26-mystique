@@ -18,6 +18,7 @@ const TimingsTable = ({
   columns: allColumns,
   isMobile,
   initiallyCollapsed = false,
+  hideCollapse,
 }: ITimingsTableProps) => {
   const [isCollapsed, setIsCollapsed] = useState(initiallyCollapsed);
 
@@ -26,7 +27,7 @@ const TimingsTable = ({
   );
   const columns = isMobile ? allColumns.slice(0, 2) : filteredColumns;
 
-  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+  const toggleCollapse = () => !hideCollapse && setIsCollapsed(!isCollapsed);
 
   return (
     <TableContainer isCollapsed={isCollapsed}>
@@ -43,9 +44,11 @@ const TimingsTable = ({
               </TableHeaderCell>
             ))}
           </TableRow>
-          <IconWrapper isOpen={!isCollapsed} onClick={toggleCollapse}>
-            <Chevron />
-          </IconWrapper>
+          <Conditional if={!hideCollapse}>
+            <IconWrapper isOpen={!isCollapsed} onClick={toggleCollapse}>
+              <Chevron />
+            </IconWrapper>
+          </Conditional>
         </thead>
         <tbody>
           {rows?.map((row, rowIndex) => (

@@ -104,6 +104,7 @@ const TimingsPage = ({
                     rows={tableData.rows}
                     columns={tableData.columns}
                     isMobile={isMobile}
+                    hideCollapse={!isMobile && !!featuredImage?.url}
                   />
                 )
               )}
@@ -149,6 +150,10 @@ const TimingsPage = ({
                           rows={tableData.rows}
                           columns={tableData.columns}
                           isMobile={isMobile}
+                          hideCollapse={
+                            !isMobile &&
+                            !!childPoiInfo.collectionInfo?.heroImageUrl
+                          }
                         />
                       )
                     )}
