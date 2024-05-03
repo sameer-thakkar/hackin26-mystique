@@ -69,6 +69,7 @@ const ReviewUI: React.FC<TReviewUIProps> = ({
 
         const formattedDate = dayjs(review_date).format('MMM, YYYY');
         const commaPresence = origin_website_link?.url ? ',' : '';
+        const spacePresence = author_name ? ' ' : '';
 
         return (
           <ReviewWrapper key={index} $isLoading={isLoading}>
@@ -86,10 +87,12 @@ const ReviewUI: React.FC<TReviewUIProps> = ({
               <MetaInfo>
                 <TitleWrapper>
                   <Author>
-                    <h3 className="author-name">{`${author_name}${commaPresence}`}</h3>
+                    <Conditional if={author_name}>
+                      <h3 className="author-name">{`${author_name}${commaPresence}`}</h3>
+                    </Conditional>
                     <Conditional if={origin_website_link?.url}>
                       <a href={origin_website_link?.url}>
-                        {` ${origin_website}`}
+                        {`${spacePresence}${origin_website}`}
                       </a>
                     </Conditional>
                   </Author>

@@ -1,6 +1,5 @@
 import { NextApiRequest } from 'next';
 import { createClient } from 'prismicio';
-import { PrismicDocumentWithUID } from '@prismicio/types';
 import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import { CollectionDetails } from 'components/StaticBanner';
@@ -544,10 +543,11 @@ export const getPageData = async ({
           featuredArticlesData?.results,
           uid
         );
-        const newsArticlesWithSameTgid = filterArticlesBasedOnEntMb(
-          articlesWithSameTgidData?.results as PrismicDocumentWithUID[],
-          uid
-        );
+        const newsArticlesWithSameTgid =
+          articlesWithSameTgidData && 'results' in articlesWithSameTgidData
+            ? filterArticlesBasedOnEntMb(articlesWithSameTgidData?.results, uid)
+            : [];
+
         const newsLandingPageUrl = getNewsLandingPageUrl(
           newsLandingPageData?.results,
           uid,

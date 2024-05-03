@@ -128,7 +128,7 @@ export const getArticlesWithSameTgidPromise = (
       predicates: predicatesArray,
       graphQuery: newsArticlesWithCFrameworkGq,
     });
-    return tgid ? promise : Promise.reject();
+    return tgid ? promise : Promise.resolve([]);
   } catch (err) {
     sendLog({
       message: '[getArticlesWithSameTgidPromise] Error',
