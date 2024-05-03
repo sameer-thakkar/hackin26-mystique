@@ -6,7 +6,6 @@ import Conditional from 'components/common/Conditional';
 import ContactUS, {
   MobileCallUsPanelDrawer,
 } from 'components/common/ContactUs';
-import LazyComponent from 'components/common/LazyComponent';
 import { FooterProps } from 'UI/Footer/interface';
 import { LinkSlices } from 'UI/Footer/LinkSlices';
 import { PaymentMethods } from 'UI/Footer/PaymentMethods';
@@ -121,227 +120,221 @@ const Footer: React.FC<FooterProps> = ({
         isEntertainmentMb={isEntertainmentMb}
         $isCatOrSubCatPage={isCatOrSubCatPage}
       >
-        <LazyComponent>
-          <>
-            <LinkSlicesWrapper
-              isEntertainmentMb={isEntertainmentMb}
-              slicesLength={slices?.length + secondarySlices?.length}
-              $isCatOrSubCatPage={isCatOrSubCatPage}
-            >
-              <Conditional if={slices?.length}>
-                <LinkSlices
-                  className={'primary-footer'}
-                  linksTitle={primaryHeading}
-                  slices={slices}
-                  theme={finalThemeName}
-                  isCatOrSubCatPage={isCatOrSubCatPage}
-                />
-              </Conditional>
-              <Conditional if={secondarySlices?.length}>
-                <LinkSlices
-                  className={'secondary-footer'}
-                  linksTitle={secondaryHeading}
-                  slices={secondarySlices}
-                  theme={finalThemeName}
-                  isCatOrSubCatPage={isCatOrSubCatPage}
-                />
-              </Conditional>
-              <Container>
-                <Conditional if={showGmapsDisclaimer}>
-                  <GmapsDisclaimer>
-                    <div className="row">
-                      {OutlinedInfoIcon}
-                      <p>{strings.FOOTER.INFORMATION}</p>
-                    </div>
-                    <p>{strings.FOOTER.GMAPS_DISCLAIMER}</p>
-                  </GmapsDisclaimer>
-                </Conditional>
-              </Container>
-            </LinkSlicesWrapper>
-            <FooterLegalWrapper
-              isEntertainmentMb={isEntertainmentMb}
-              isLight={isLight}
-              isLTT={isLTT}
-            >
-              <Container>
-                <FooterLegal
-                  invertLogoColor={
-                    !isLight && finalThemeName !== THEMES.MIN_BLUE
-                  }
-                  isEntertainmentMb={isEntertainmentMb}
-                  isLight={isLight}
-                  isLTT={isLTT}
-                >
-                  <div className="logo-disclaimer">
-                    <div className="logo-wrapper">
-                      <Image
-                        fill
-                        url={logoURL}
-                        alt={logoAlt}
-                        height={FOOTER_LOGO_HEIGHT}
-                        width={FOOTER_LOGO_WIDTH}
-                      />
-                      <Conditional
-                        if={
-                          hasPoweredByHeadoutLogo &&
-                          finalThemeName !== THEMES.MIN_BLUE
-                        }
-                      >
-                        <PoweredByHeadout />
-                      </Conditional>
-                    </div>
+        <>
+          <LinkSlicesWrapper
+            isEntertainmentMb={isEntertainmentMb}
+            slicesLength={slices?.length + secondarySlices?.length}
+            $isCatOrSubCatPage={isCatOrSubCatPage}
+          >
+            <Conditional if={slices?.length}>
+              <LinkSlices
+                className={'primary-footer'}
+                linksTitle={primaryHeading}
+                slices={slices}
+                theme={finalThemeName}
+                isCatOrSubCatPage={isCatOrSubCatPage}
+              />
+            </Conditional>
+            <Conditional if={secondarySlices?.length}>
+              <LinkSlices
+                className={'secondary-footer'}
+                linksTitle={secondaryHeading}
+                slices={secondarySlices}
+                theme={finalThemeName}
+                isCatOrSubCatPage={isCatOrSubCatPage}
+              />
+            </Conditional>
+            <Container>
+              <Conditional if={showGmapsDisclaimer}>
+                <GmapsDisclaimer>
+                  <div className="row">
+                    {OutlinedInfoIcon}
+                    <p>{strings.FOOTER.INFORMATION}</p>
                   </div>
-                  <div className="footer-links">
-                    <Conditional if={!isLTT}>
-                      <div className="download hide-mobile">
-                        <StoreLinks isLight={isLight} isLTT={isLTT}>
-                          <Image
-                            url={DOWNLOAD_APP_QR}
-                            width={DOWNLOAD_APP_QR_DIM}
-                            height={DOWNLOAD_APP_QR_DIM}
-                            alt={strings.FOOTER.SCAN_CODES}
-                          />{' '}
-                          <span>{strings.FOOTER.DOWNLOAD_HEADOUT}</span>
-                        </StoreLinks>
-                      </div>
+                  <p>{strings.FOOTER.GMAPS_DISCLAIMER}</p>
+                </GmapsDisclaimer>
+              </Conditional>
+            </Container>
+          </LinkSlicesWrapper>
+          <FooterLegalWrapper
+            isEntertainmentMb={isEntertainmentMb}
+            isLight={isLight}
+            isLTT={isLTT}
+          >
+            <Container>
+              <FooterLegal
+                invertLogoColor={!isLight && finalThemeName !== THEMES.MIN_BLUE}
+                isEntertainmentMb={isEntertainmentMb}
+                isLight={isLight}
+                isLTT={isLTT}
+              >
+                <div className="logo-disclaimer">
+                  <div className="logo-wrapper">
+                    <Image
+                      fill
+                      url={logoURL}
+                      alt={logoAlt}
+                      height={FOOTER_LOGO_HEIGHT}
+                      width={FOOTER_LOGO_WIDTH}
+                    />
+                    <Conditional
+                      if={
+                        hasPoweredByHeadoutLogo &&
+                        finalThemeName !== THEMES.MIN_BLUE
+                      }
+                    >
+                      <PoweredByHeadout />
                     </Conditional>
-                    <div className="help">
-                      <LinksWrapper
-                        isEntertainmentMb={isEntertainmentMb}
-                        isLight={isLight}
-                        isLTT={isLTT}
-                      >
-                        <FooterHeading isLight={isLight}>
-                          <span>{strings.FOOTER.GET_HELP_24_7}</span>
-                        </FooterHeading>
-                        <ul className="links">
-                          <FooterListItem isLight={isLight}>
-                            {MessageIcon}
-                            <a
-                              href={LIVE_CHAT_LINK}
-                              rel="noopener"
-                              target="_blank"
-                            >
-                              {strings.FOOTER.CHAT_WITH_US}
-                            </a>
-                          </FooterListItem>
-                          <FooterListItem isLight={isLight}>
-                            {PhoneIcon}
-                            <button
-                              className="toggle_panel_button"
-                              onClick={toggleCallUsPanel}
-                            >
-                              {strings.FOOTER.CALL_US}
-                            </button>
-                          </FooterListItem>
-                          <FooterListItem isLight={isLight}>
-                            {MailIcon}
-                            <a
-                              href={HEADOUT_MAIL_REDIRECT}
-                              rel="noopener"
-                              target="_blank"
-                            >
-                              {strings.FOOTER.EMAIL_US}
-                            </a>
-                          </FooterListItem>
-                        </ul>
-                      </LinksWrapper>
-                    </div>
-                    <div className="company">
-                      <LinksWrapper
-                        isEntertainmentMb={isEntertainmentMb}
-                        isLight={isLight}
-                        isLTT={isLTT}
-                      >
-                        <FooterHeading isLight={isLight}>
-                          <span>{strings.HEADOUT}</span>
-                        </FooterHeading>
-                        <ul className="links">
-                          <FooterListItem isLight={isLight}>
-                            <a
-                              href={COMPANY_DETAILS_LINK}
-                              rel="noopener"
-                              target="_blank"
-                            >
-                              {strings.FOOTER.COMPANY_DETAILS}
-                            </a>
-                          </FooterListItem>
-                          <FooterListItem isLight={isLight}>
-                            <a
-                              href={PRIVACY_POLICY_LINK}
-                              rel="noopener"
-                              target="_blank"
-                            >
-                              {strings.FOOTER.PRIVACY_POLICY}
-                            </a>
-                          </FooterListItem>
-                          <FooterListItem isLight={isLight}>
-                            <a href={TERMS_LINK} rel="noopener" target="_blank">
-                              {strings.FOOTER.TERMS_OF_USAGE}
-                            </a>
-                          </FooterListItem>
-                        </ul>
-                      </LinksWrapper>
-                    </div>
-                    <div className="payment">
-                      <LinksWrapper
-                        isEntertainmentMb={isEntertainmentMb}
-                        isLight={isLight}
-                        isLTT={isLTT}
-                      >
-                        <FooterHeading isLight={isLight}>
-                          <span>{strings.FOOTER.WE_ACCEPT}</span>
-                        </FooterHeading>
-                        <PaymentMethods />
-                      </LinksWrapper>
-                    </div>
-                    <Conditional if={isLTT}>
-                      <div className="star-verifier">
-                        <FooterHeading isLight={isLight}>
-                          <span>{strings.FOOTER.OFFICIAL_TICKET_RETAILER}</span>
-                        </FooterHeading>
+                  </div>
+                </div>
+                <div className="footer-links">
+                  <Conditional if={!isLTT}>
+                    <div className="download hide-mobile">
+                      <StoreLinks isLight={isLight} isLTT={isLTT}>
                         <Image
-                          url={isLight ? STAR_LOGO_LIGHT : STAR_LOGO_DARK}
-                          alt={strings.FOOTER.STAR_VERIFIED}
-                          onClick={verifyStar}
-                        />
-                      </div>
-                    </Conditional>
-                  </div>
-
-                  <Conditional
-                    if={finalThemeName === THEMES.MIN_BLUE && isMobile}
-                  >
-                    <div className="chin" style={{ marginTop: '-4.267rem' }}>
-                      <div className={'disclaimer-text copyright'}>
-                        {`© Copyright ${new Date().getFullYear()}`}
-                      </div>
+                          url={DOWNLOAD_APP_QR}
+                          width={DOWNLOAD_APP_QR_DIM}
+                          height={DOWNLOAD_APP_QR_DIM}
+                          alt={strings.FOOTER.SCAN_CODES}
+                        />{' '}
+                        <span>{strings.FOOTER.DOWNLOAD_HEADOUT}</span>
+                      </StoreLinks>
                     </div>
                   </Conditional>
-                </FooterLegal>
-                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                  <div className="footer-chin">
-                    <div className="white-line" />
-                    <div className="super-brand-logo">
-                      {WhiteBlip}
-                      <span className="address">{HEADOUT_ADDRESS}</span>
-                    </div>
-                    <SocialLinks
-                      className="social-links"
+                  <div className="help">
+                    <LinksWrapper
                       isEntertainmentMb={isEntertainmentMb}
                       isLight={isLight}
-                    />
-                    <Conditional if={disclaimerText}>
-                      <div className="disclaimer-text-area">
-                        {disclaimerText}
-                      </div>
-                    </Conditional>
+                      isLTT={isLTT}
+                    >
+                      <FooterHeading isLight={isLight}>
+                        <span>{strings.FOOTER.GET_HELP_24_7}</span>
+                      </FooterHeading>
+                      <ul className="links">
+                        <FooterListItem isLight={isLight}>
+                          {MessageIcon}
+                          <a
+                            href={LIVE_CHAT_LINK}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            {strings.FOOTER.CHAT_WITH_US}
+                          </a>
+                        </FooterListItem>
+                        <FooterListItem isLight={isLight}>
+                          {PhoneIcon}
+                          <button
+                            className="toggle_panel_button"
+                            onClick={toggleCallUsPanel}
+                          >
+                            {strings.FOOTER.CALL_US}
+                          </button>
+                        </FooterListItem>
+                        <FooterListItem isLight={isLight}>
+                          {MailIcon}
+                          <a
+                            href={HEADOUT_MAIL_REDIRECT}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            {strings.FOOTER.EMAIL_US}
+                          </a>
+                        </FooterListItem>
+                      </ul>
+                    </LinksWrapper>
+                  </div>
+                  <div className="company">
+                    <LinksWrapper
+                      isEntertainmentMb={isEntertainmentMb}
+                      isLight={isLight}
+                      isLTT={isLTT}
+                    >
+                      <FooterHeading isLight={isLight}>
+                        <span>{strings.HEADOUT}</span>
+                      </FooterHeading>
+                      <ul className="links">
+                        <FooterListItem isLight={isLight}>
+                          <a
+                            href={COMPANY_DETAILS_LINK}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            {strings.FOOTER.COMPANY_DETAILS}
+                          </a>
+                        </FooterListItem>
+                        <FooterListItem isLight={isLight}>
+                          <a
+                            href={PRIVACY_POLICY_LINK}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            {strings.FOOTER.PRIVACY_POLICY}
+                          </a>
+                        </FooterListItem>
+                        <FooterListItem isLight={isLight}>
+                          <a href={TERMS_LINK} rel="noopener" target="_blank">
+                            {strings.FOOTER.TERMS_OF_USAGE}
+                          </a>
+                        </FooterListItem>
+                      </ul>
+                    </LinksWrapper>
+                  </div>
+                  <div className="payment">
+                    <LinksWrapper
+                      isEntertainmentMb={isEntertainmentMb}
+                      isLight={isLight}
+                      isLTT={isLTT}
+                    >
+                      <FooterHeading isLight={isLight}>
+                        <span>{strings.FOOTER.WE_ACCEPT}</span>
+                      </FooterHeading>
+                      <PaymentMethods />
+                    </LinksWrapper>
+                  </div>
+                  <Conditional if={isLTT}>
+                    <div className="star-verifier">
+                      <FooterHeading isLight={isLight}>
+                        <span>{strings.FOOTER.OFFICIAL_TICKET_RETAILER}</span>
+                      </FooterHeading>
+                      <Image
+                        url={isLight ? STAR_LOGO_LIGHT : STAR_LOGO_DARK}
+                        alt={strings.FOOTER.STAR_VERIFIED}
+                        onClick={verifyStar}
+                      />
+                    </div>
+                  </Conditional>
+                </div>
+
+                <Conditional
+                  if={finalThemeName === THEMES.MIN_BLUE && isMobile}
+                >
+                  <div className="chin" style={{ marginTop: '-4.267rem' }}>
+                    <div className={'disclaimer-text copyright'}>
+                      {`© Copyright ${new Date().getFullYear()}`}
+                    </div>
                   </div>
                 </Conditional>
-              </Container>
-            </FooterLegalWrapper>
-          </>
-        </LazyComponent>
+              </FooterLegal>
+              <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                <div className="footer-chin">
+                  <div className="white-line" />
+                  <div className="super-brand-logo">
+                    {WhiteBlip}
+                    <span className="address">{HEADOUT_ADDRESS}</span>
+                  </div>
+                  <SocialLinks
+                    className="social-links"
+                    isEntertainmentMb={isEntertainmentMb}
+                    isLight={isLight}
+                  />
+                  <Conditional if={disclaimerText}>
+                    <div className="disclaimer-text-area">{disclaimerText}</div>
+                  </Conditional>
+                </div>
+              </Conditional>
+            </Container>
+          </FooterLegalWrapper>
+        </>
         <Conditional if={isMobileCallUsDrawer}>
           <MobileCallUsPanelDrawer
             onToggleMobileCallUsDrawer={onToggleMobileCallUsDrawer}
