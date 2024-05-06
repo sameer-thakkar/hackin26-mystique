@@ -100,7 +100,7 @@ const TimingsPage = ({
                 (tableData: ITimingsTableProps, index: number) => (
                   <TimingsTable
                     key={index}
-                    initiallyCollapsed={index !== 0}
+                    initiallyCollapsed={!featuredImage?.url}
                     rows={tableData.rows}
                     columns={tableData.columns}
                     isMobile={isMobile}
@@ -146,7 +146,9 @@ const TimingsPage = ({
                       (tableData: ITimingsTableProps, index: number) => (
                         <TimingsTable
                           key={index}
-                          initiallyCollapsed={index !== 0}
+                          initiallyCollapsed={
+                            !childPoiInfo.collectionInfo?.heroImageUrl
+                          }
                           rows={tableData.rows}
                           columns={tableData.columns}
                           isMobile={isMobile}
