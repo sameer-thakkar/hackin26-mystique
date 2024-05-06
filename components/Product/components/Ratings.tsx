@@ -31,7 +31,7 @@ const Ratings = ({
         data-card-section={CARD_SECTION_MARKERS.REVIEWS}
         className="avg-rating"
       >
-        {showRatings ? averageRating : strings.NEW}
+        {showRatings ? averageRating?.toFixed(1) : strings.NEW}
       </span>
       {showRatings && (
         <span
