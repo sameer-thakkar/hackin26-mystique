@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { scroller } from 'react-scroll';
@@ -556,7 +555,7 @@ const AsideModal = ({
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
-  const hasBack = stack?.length > 1;
+  const isStacked = stack?.length > 1;
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(active);
   const scrollRef = useRef(null);
@@ -584,7 +583,7 @@ const AsideModal = ({
     };
 
     if (isMobile) {
-      setScrollY(window.scrollY);
+      if (!isStacked) setScrollY(window.scrollY);
       if (active) {
         window.addEventListener('popstate', onPopState);
       }
@@ -649,23 +648,19 @@ const AsideModal = ({
 
     const close = (popHistory = false) => {
       setIsOpen(!active);
-      if (popHistory) {
-        if (isQueryRestore) {
-          //go to landing page
-          const {
-            pid: routerPid,
-            popup: routerPopup,
-            ...otherParams
-          } = router.query;
-          const { pid, popup, ...historyState } = window.history.state;
-          addUrlParams({
-            urlParams: { ...otherParams },
-            historyState: { ...historyState },
-            replace: false,
-          });
-        } else {
-          history.back();
-        }
+      if (popHistory && isQueryRestore) {
+        //go to landing page
+        const {
+          pid: _routerPid,
+          popup: _routerPopup,
+          ...otherParams
+        } = router.query;
+        const { _pid, _popup, ...historyState } = window.history.state;
+        addUrlParams({
+          urlParams: { ...otherParams },
+          historyState: { ...historyState },
+          replace: false,
+        });
       }
 
       // @ts-expect-error TS(2531): Object is possibly 'null'.
@@ -725,7 +720,11 @@ const AsideModal = ({
                 <StyledIcon>{ListIcon}</StyledIcon>
               </Conditional>
               <Title sidebarType={type}>{title}</Title>
-              {hasBack && type !== SIDEBAR_TYPES.CONTACT_US_PANEL ? (
+              {isStacked &&
+              ![
+                SIDEBAR_TYPES.CONTACT_US_PANEL,
+                SIDEBAR_TYPES.PRODUCT_CARD,
+              ].includes(type) ? (
                 <BackIcon
                   // @ts-expect-error TS(2769): No overload matches this call.
                   onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
