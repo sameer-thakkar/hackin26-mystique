@@ -174,6 +174,7 @@ export interface ICurrentCityData {
 }
 export interface ICityPageProps extends ICommonProps {
   prismicBannerImages: PrismicBannerItem[];
+  pageUrl: string;
   cityPageData: {
     nearbyAndCurrentCityData: {
       nearbyCitiesData: ICity[];

@@ -875,6 +875,7 @@ const MicrositeV1 = (props: any) => {
             host={host}
             isDev={isDev}
             prismicBannerImages={finalBannerImages}
+            pageUrl={pageUrl}
           />
         </Conditional>
 

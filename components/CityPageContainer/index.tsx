@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { ICityPageProps } from 'components/CityPageContainer/interface';
 import Mailer from 'components/CityPageContainer/Mailer';
@@ -5,6 +6,7 @@ import { Container } from 'components/CityPageContainer/styles';
 import VideoBanner from 'components/CityPageContainer/VideoBanner';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
+import { MBContext } from 'contexts/MBContext';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -52,7 +54,9 @@ const CityPageContainer = ({
   host,
   isDev,
   prismicBannerImages,
+  pageUrl,
 }: ICityPageProps) => {
+  const { isStage } = useContext(MBContext);
   const {
     nearbyAndCurrentCityData: { nearbyCitiesData, currentCityData },
     cityGuideData,
@@ -73,8 +77,11 @@ const CityPageContainer = ({
 
   const hasPopularEntities = popularEntities?.length > 2;
 
+  const addCSSToken =
+    !isDev && !isStage && pageUrl?.includes('dubai-tickets.co');
+
   return (
-    <Container>
+    <Container $addToken={addCSSToken}>
       <VideoBanner
         currentCityData={currentCityData}
         cityPageBannerData={cityPageBannerData}
