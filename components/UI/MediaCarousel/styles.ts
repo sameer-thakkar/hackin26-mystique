@@ -56,7 +56,7 @@ export const CarouselContainer = styled.div<{
     z-index: 3;
 
     .swiper-pagination-bullet {
-      margin: 0;
+      margin: 0 !important;
       opacity: 0.6;
       width: 0.375rem;
       height: 0.375rem;
