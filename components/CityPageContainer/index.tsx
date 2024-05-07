@@ -78,7 +78,10 @@ const CityPageContainer = ({
   const hasPopularEntities = popularEntities?.length > 2;
 
   const addCSSToken =
-    !isDev && !isStage && pageUrl?.includes('dubai-tickets.co');
+    !isDev &&
+    !isStage &&
+    lang === 'en-us' &&
+    pageUrl?.includes('dubai-tickets.co');
 
   return (
     <Container $addToken={addCSSToken}>
