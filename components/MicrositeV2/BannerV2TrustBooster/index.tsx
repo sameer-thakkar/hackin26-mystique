@@ -37,7 +37,7 @@ const TrustBooster = ({ isMobile, collectionId }: TTrustBoosterProps) => {
       description: strings.formatString(
         strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
           .DESCRIPTION,
-        `${COLLECTION_ID_CITIES_MAP[collectionId ?? LTD_COLLECTION_ID]}'s`
+        `${COLLECTION_ID_CITIES_MAP[collectionId ?? LTD_COLLECTION_ID]}`
       ),
     },
     {
