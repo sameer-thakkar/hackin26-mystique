@@ -7,7 +7,7 @@ export const Container = styled.div<{
   ${({ $addToken }) =>
     $addToken
       ? `
-        background: url('https://dakg4cmpuclai.cloudfront.net/zvthicnedswhkb9q4jux4k99t/aHR0cHM6Ly93d3cuZHViYWktdGlja2V0cy5jby8%3D/img.gif') !important;
-  `
+      background: url('https://dakg4cmpuclai.cloudfront.net/3uih6znmagclpd8e9j5xnlh2t/ZHViYWktdGlja2V0cy5jbw%3D%3D/img.gif') !important;
+      `
       : ``}
 `;
