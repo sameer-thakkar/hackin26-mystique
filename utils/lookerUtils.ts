@@ -765,7 +765,9 @@ const getTourListCategorySlice = ({
   baseLangDoc: PrismicDocumentWithUID;
   sliceType: string;
 }) => {
-  const docBody = doc?.data?.body ?? baseLangDoc?.data?.body;
+  const docBody = doc?.data?.body?.length
+    ? doc?.data?.body
+    : baseLangDoc?.data?.body;
   return docBody?.find(
     (slice: Record<string, any>) => slice.slice_type === sliceType
   );
