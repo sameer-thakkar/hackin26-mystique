@@ -1149,6 +1149,12 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     SUBATTRACTIONS: 'Sub-Atracciones',
   },
   OFF_PERCENT: '{0} % de descuento',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Plano de asientos',
+    CAPACITY: 'Capacidad: {0} asientos',
+    WHATS_ON: 'En cartelera',
+    CATEGORIES: 'Categorías',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: '¿No sabes qué experiencia elegir?',
     SUB_HEADING: 'Pues ve este vídeo para hacerte una idea.',

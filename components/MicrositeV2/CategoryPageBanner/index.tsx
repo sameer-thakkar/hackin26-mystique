@@ -40,7 +40,11 @@ const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
   }, []);
 
   return (
-    <Wrapper hasScrolled={hasScrolled} $isMonthOnMonthPage={isMonthOnMonthPage}>
+    <Wrapper
+      hasScrolled={hasScrolled}
+      $isMonthOnMonthPage={isMonthOnMonthPage}
+      $hasBannerImage={!!bannerImgUrl}
+    >
       <Container>
         <Conditional if={Object.keys(breadcrumbs).length}>
           <Breadcrumbs

@@ -4800,6 +4800,16 @@ export interface ContentFrameworkDocumentDataBodyTableV3ColumnSliceItem {
   text: prismic.KeyTextField;
 
   /**
+   * rich_text (DEV) field in *Content Framework → Slice zone → Table V3 Column → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter rich text here
+   * - **API ID Path**: content_framework.body[].table_v3_column.items.rich_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  rich_text: prismic.RichTextField;
+
+  /**
    * Sub text field in *Content Framework → Slice zone → Table V3 Column → Items*
    *
    * - **Field Type**: Text
@@ -7213,6 +7223,7 @@ interface ContentPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -7221,6 +7232,7 @@ interface ContentPageDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -7291,15 +7303,15 @@ interface ContentPageDocumentData {
   tagged_collection: prismic.KeyTextField;
 
   /**
-   * Child Collection ID field in *Content Page*
+   * Parent Collection ID field in *Content Page*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Enter the child collection ID
-   * - **API ID Path**: content_page.child_collection_id
+   * - **Placeholder**: Enter the parent collection ID
+   * - **API ID Path**: content_page.parent_collection_id
    * - **Tab**: MB Categories
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  child_collection_id: prismic.KeyTextField;
+  parent_collection_id: prismic.KeyTextField;
 
   /**
    * Child POI ID field in *Content Page*
@@ -7386,9 +7398,6 @@ interface ContentPageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -7643,6 +7652,7 @@ interface ContentPageDocumentData {
     | 'Halloween'
     | 'Christmas'
     | "New Year's Eve"
+    | 'Destinations'
   >;
 
   /**
@@ -7655,6 +7665,28 @@ interface ContentPageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   shoulder_page_custom_label: prismic.KeyTextField;
+
+  /**
+   * Subattraction Type field in *Content Page*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Choose the type if it's a Subattraction poi
+   * - **API ID Path**: content_page.subattraction_type
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  subattraction_type: prismic.SelectField<'A' | 'B' | 'C'>;
+
+  /**
+   * Subattraction Banner Disclaimer field in *Content Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter Subattraction Banner Disclaimer
+   * - **API ID Path**: content_page.subattraction_banner_disclaimer
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subattraction_banner_disclaimer: prismic.KeyTextField;
 
   /**
    * MIsc Shoulder Page Mapping field in *Content Page*
@@ -11204,6 +11236,7 @@ interface GlobalCityDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -11340,9 +11373,6 @@ interface GlobalCityDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -12063,6 +12093,7 @@ interface GlobalCollectionDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -12199,9 +12230,6 @@ interface GlobalCollectionDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -12584,6 +12612,7 @@ interface GlobalCountryDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -12720,9 +12749,6 @@ interface GlobalCountryDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -13366,6 +13392,7 @@ interface GlobalExperienceDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -14034,6 +14061,7 @@ interface GlobalHomepageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -14170,9 +14198,6 @@ interface GlobalHomepageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -14482,18 +14507,23 @@ interface HoCategoryContentDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#select
    */
   author_name: prismic.SelectField<
+    | 'Aashica'
     | 'Abhay'
     | 'Aditya'
     | 'Anjali'
+    | 'Ansh'
     | 'Ayush'
     | 'Chirantani'
     | 'Dhruti'
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
+    | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
     | 'Jamie'
+    | 'Jenifer'
     | 'Kalyani'
     | 'Khushboo'
     | 'Kritika'
@@ -14502,23 +14532,32 @@ interface HoCategoryContentDocumentData {
     | 'Madhushree'
     | 'Malavika'
     | 'Maria'
+    | 'Megha'
     | 'Namrata'
+    | 'Nandita'
     | 'Natasha'
+    | 'Neetha'
     | 'Nruthya'
+    | 'Nymisha'
     | 'Palak'
+    | 'Rajashree'
     | 'Raavya'
     | 'Rianna'
     | 'Ritu'
     | 'Saika'
-    | 'Saurodeep'
     | 'Samyukta'
+    | 'Saurodeep'
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
     | 'Shraddha'
+    | 'Shravan'
     | 'Shubhangi'
     | 'Shubhra'
+    | 'Somreeta'
     | 'Sruthi'
+    | 'Sunaina'
+    | 'Suneeti'
     | 'Tanmay'
     | 'Tanya'
     | 'Tom'
@@ -19068,6 +19107,7 @@ interface MicrositeDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -19076,6 +19116,7 @@ interface MicrositeDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -19146,15 +19187,15 @@ interface MicrositeDocumentData {
   tagged_collection: prismic.KeyTextField;
 
   /**
-   * Child Collection ID field in *Microsite*
+   * Parent Collection ID field in *Microsite*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Enter the child collection ID
-   * - **API ID Path**: microsite.child_collection_id
+   * - **Placeholder**: Enter the parent collection ID
+   * - **API ID Path**: microsite.parent_collection_id
    * - **Tab**: MB Categories
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  child_collection_id: prismic.KeyTextField;
+  parent_collection_id: prismic.KeyTextField;
 
   /**
    * Child POI ID field in *Microsite*
@@ -19241,9 +19282,6 @@ interface MicrositeDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -19498,6 +19536,7 @@ interface MicrositeDocumentData {
     | 'Halloween'
     | 'Christmas'
     | "New Year's Eve"
+    | 'Destinations'
   >;
 
   /**
@@ -19510,6 +19549,28 @@ interface MicrositeDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   shoulder_page_custom_label: prismic.KeyTextField;
+
+  /**
+   * Subattraction Type field in *Microsite*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Enter the type if it's a Subattraction poi
+   * - **API ID Path**: microsite.subattraction_type
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  subattraction_type: prismic.SelectField<'A' | 'B' | 'C'>;
+
+  /**
+   * Subattraction Banner Disclaimer field in *Microsite*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter Subattraction Banner Disclaimer
+   * - **API ID Path**: microsite.subattraction_banner_disclaimer
+   * - **Tab**: MB Categories
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subattraction_banner_disclaimer: prismic.KeyTextField;
 
   /**
    * MIsc Shoulder Page Mapping field in *Microsite*
@@ -19909,6 +19970,7 @@ interface NewsPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -19917,6 +19979,7 @@ interface NewsPageDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -20059,9 +20122,6 @@ interface NewsPageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -21848,6 +21908,7 @@ interface ReviewsPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -21856,6 +21917,7 @@ interface ReviewsPageDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -21998,9 +22060,6 @@ interface ReviewsPageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -22842,6 +22901,7 @@ interface ShowpageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -22850,6 +22910,7 @@ interface ShowpageDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -22992,9 +23053,6 @@ interface ShowpageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -23475,6 +23533,31 @@ type VenuePageDocumentDataBodySlice = never;
 type VenuePageDocumentDataBody3Slice = never;
 
 /**
+ * Item in *Venue Page → Landing Page Groups (DEV)*
+ */
+export interface VenuePageDocumentDataLandingPageGroupsItem {
+  /**
+   * Group Name field in *Venue Page → Landing Page Groups (DEV)*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the group name (eg: Off west end theatres)
+   * - **API ID Path**: venue_page.landing_page_groups[].group_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  group_name: prismic.KeyTextField;
+
+  /**
+   * POI Ids field in *Venue Page → Landing Page Groups (DEV)*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter comma separated poi ids.
+   * - **API ID Path**: venue_page.landing_page_groups[].poi_ids
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  poi_ids: prismic.KeyTextField;
+}
+
+/**
  * Primary content in *Venue Page → Slice zone → Tabbed Info → Primary*
  */
 export interface VenuePageDocumentDataBody2TabbedinfoSlicePrimary {
@@ -23926,6 +24009,18 @@ interface VenuePageDocumentData {
   poi_id: prismic.NumberField;
 
   /**
+   * Is Landing Page field in *Venue Page*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: venue_page.is_landing_page
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  is_landing_page: prismic.BooleanField;
+
+  /**
    * Theatre Name field in *Venue Page*
    *
    * - **Field Type**: Text
@@ -24056,6 +24151,30 @@ interface VenuePageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
   mobile_banner: prismic.LinkField;
+
+  /**
+   * Banner Heading(DEV) field in *Venue Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the heading for banner.
+   * - **API ID Path**: venue_page.banner_heading
+   * - **Tab**: Banner
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_heading: prismic.KeyTextField;
+  /**
+   * Landing Page Groups (DEV) field in *Venue Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: venue_page.landing_page_groups[]
+   * - **Tab**: Description
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  landing_page_groups: prismic.GroupField<
+    Simplify<VenuePageDocumentDataLandingPageGroupsItem>
+  >;
+
   /**
    * Slice zone field in *Venue Page*
    *
@@ -24179,6 +24298,7 @@ interface VenuePageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -24187,6 +24307,7 @@ interface VenuePageDocumentData {
     | 'Ganesh'
     | 'Hannah'
     | 'Harshitha'
+    | 'Hayde'
     | 'Hrishita'
     | 'Ishita'
     | 'Jagruti'
@@ -24329,9 +24450,6 @@ interface VenuePageDocumentData {
     | 'Sightseeing Cruises'
     | 'Dinner Cruises'
     | 'Lunch Cruises'
-    | 'Evening Cruises'
-    | 'Yacht Tours'
-    | 'Nature Cruises'
     | 'Dining Experiences'
     | 'Food Tours'
     | 'Cooking Classes'
@@ -24981,6 +25099,7 @@ declare module '@prismicio/client' {
       VenuePageDocumentDataBody2VerticalCardsGridSlicePrimary,
       VenuePageDocumentDataBody3Slice,
       VenuePageDocumentDataBodySlice,
+      VenuePageDocumentDataLandingPageGroupsItem,
       VenuePageDocumentDataOtherMetaTagsItem,
       VenuePageDocumentDataTaggedContentTypeItem,
     };

@@ -1088,6 +1088,12 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     SUBATTRACTIONS: 'Unterattraktionen',
   },
   OFF_PERCENT: '{0} % Rabatt',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Sitzplan',
+    CAPACITY: 'Zuschauer: {0} Plätze',
+    WHATS_ON: 'Programm',
+    CATEGORIES: 'Kategorien',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: 'Auf der Suche nach dem richtigen Erlebnis?',
     SUB_HEADING: 'Mit diesem Video treffen Sie die perfekte Wahl!',

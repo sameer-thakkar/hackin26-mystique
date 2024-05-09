@@ -668,7 +668,8 @@ export const isCategoryMB = (mbType: string | null) =>
 
 export const handleSettledPromiseResults = (
   results: PromiseSettledResult<any>[],
-  uid?: string
+  uid?: string,
+  includeRejected?: boolean
 ) => {
   const errors = results
     .filter((result) => result.status === 'rejected' && result?.reason)
@@ -681,12 +682,14 @@ export const handleSettledPromiseResults = (
       uid - ${uid} - errors - ${errors}`,
     });
   }
-  return (
-    results
-      .filter((result) => result.status === 'fulfilled' && result?.value)
-      // @ts-ignore
-      ?.map((res) => res?.value)
-  );
+  if (!includeRejected) {
+    return (
+      results
+        .filter((result) => result.status === 'fulfilled' && result?.value)
+        // @ts-ignore
+        ?.map((res) => res?.value)
+    );
+  } else return results?.map((res: any) => res?.value);
 };
 
 export const isPartneredMB = (baseLangBannerAndFooterCombinations: string) => {

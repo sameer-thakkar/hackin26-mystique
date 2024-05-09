@@ -44,6 +44,7 @@ import {
   IVenuePageProps,
   IVerticalCardsGrid,
 } from './interace';
+import VenueLandingPage from './LandingPage';
 import { Banner, VenuePageContainer } from './styles';
 import { getShowsBasedOnTimestamp } from './utils';
 
@@ -81,6 +82,9 @@ const VenuePage = (props: IVenuePageProps) => {
     allShowPageUids,
     inventorySlotData,
     nearbyTheatresData,
+    landingPageData,
+    popularShowsData,
+    browseCategoriesData,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     alternate_languages,
@@ -98,6 +102,8 @@ const VenuePage = (props: IVenuePageProps) => {
     descriptionSlices,
     taggedCategoryName,
     taggedSubCategoryName,
+    bannerHeading,
+    isLandingPage,
     mbType,
     header_ref: commonHeader,
     footer_ref: commonFooter,
@@ -112,11 +118,12 @@ const VenuePage = (props: IVenuePageProps) => {
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: CMSContent.taggedCollection,
       [ANALYTICS_PROPERTIES.CITY]: CMSContent.city,
       [ANALYTICS_PROPERTIES.COUNTRY]: CMSContent.country,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Theatre Page',
       [ANALYTICS_PROPERTIES.THEATRE_NAME]: theatreName,
       [ANALYTICS_PROPERTIES.HSID]: hsid,
       [ANALYTICS_PROPERTIES.LANGUAGE]: localeCode,
       [ANALYTICS_PROPERTIES.TGIDS]: tgidsInPage,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Theatre Page',
+      [ANALYTICS_PROPERTIES.IS_LANDING_PAGE]: !!isLandingPage,
       [ANALYTICS_PROPERTIES.PLATFORM_NAME]:
         window.outerWidth < 768
           ? ANALYTICS_PLATFORM.MOBILE
@@ -348,12 +355,14 @@ const VenuePage = (props: IVenuePageProps) => {
           },
         }}
       />
-      <Head>
-        <script
-          dangerouslySetInnerHTML={{ __html: `[${eventSchemaMarkup}]` }}
-          type="application/ld+json"
-        />
-      </Head>
+      <Conditional if={!isLandingPage}>
+        <Head>
+          <script
+            dangerouslySetInnerHTML={{ __html: `[${eventSchemaMarkup}]` }}
+            type="application/ld+json"
+          />
+        </Head>
+      </Conditional>
       <Header
         isMobile={isMobile}
         allTours={[]}
@@ -375,94 +384,114 @@ const VenuePage = (props: IVenuePageProps) => {
         hideCurrencySelector
         logoUrl={logoUrl}
         hasPoweredByHeadoutLogo
-      />
-
-      <Banner url={isMobile ? mobileBanner.url : desktopBanner.url}>
-        <div className="banner-text">
-          <h1 className="theatre-name">{theatreName}</h1>
-          <a
-            className="theatre-location-cta"
-            href={theatreLocationUrl.url}
-            target="_blank"
-            onClick={onTheatreAddressClick}
-          >
-            <LocationSvg />
-            {theatreLocationCta}
-          </a>
-        </div>
-      </Banner>
-
-      <VenuePageContainer>
-        <Conditional if={automatedBreadcrumbsExists && !isMobile}>
-          <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile={false} />
-        </Conditional>
-        <div className="theatre-information">
-          <RichContent render={theatreInfo} />
-        </div>
-        <div className="amenities">
-          <Conditional if={seatingCapacity}>
-            <div className="amenity">
-              {amenitiesIcons['Seating Capacity']}
-              <p>{`${seatingCapacity} ${SEATS}`}</p>
-            </div>
-          </Conditional>
-          <Amenities
-            {...{
-              isMobile,
-              expandedLimit,
-              amenitiesDropdown,
-            }}
-          />
-          <div className="show-more-cta">
-            <button onClick={handleShowMoreClick}>
-              <>
-                {isExpanded ? SHOW_LESS : SHOW_MORE}
-                {isExpanded ? ChevronUp : <ChevronDown />}
-              </>
-            </button>
-          </div>
-        </div>
-        <ShowsList
-          data={nowPlayingShows}
-          allShowPageUids={allShowPageUids}
-          heading={strings.THEATRE_PAGE.NOW_PLAYING}
-          uid={uid}
-          isMobile={isMobile}
-        />
-        <ShowsList
-          data={upcomingShows}
-          heading={strings.THEATRE_PAGE.UPCOMING_SHOWS}
-          allShowPageUids={allShowPageUids}
-          uid={uid}
-          isMobile={isMobile}
-        />
-      </VenuePageContainer>
-      <LongForm
-        content={modifiedDescriptionSlices}
-        uid={uid}
-        isMobile={isMobile}
-        availableShowsData={availableShowsData}
+        isEntertainmentLandingPageVisible={isLandingPage}
         isVenuePage
-        redirectUrlForTabDataContent={redirectUrlForTabDataContent}
-        findBestSeatsCallback={
-          tgidForFirstShow ? onFindBestSeatsCtaClicked : null
-        }
       />
-      <VenuePageContainer>
-        <ShowsGrid
-          data={pastShows}
+      <Conditional if={!isLandingPage}>
+        <Banner url={isMobile ? mobileBanner.url : desktopBanner.url}>
+          <div className="banner-text">
+            <h1 className="theatre-name">{theatreName}</h1>
+            <a
+              className="theatre-location-cta"
+              href={theatreLocationUrl.url}
+              target="_blank"
+              rel="noreferrer"
+              onClick={onTheatreAddressClick}
+            >
+              <LocationSvg />
+              {theatreLocationCta}
+            </a>
+          </div>
+        </Banner>
+
+        <VenuePageContainer>
+          <Conditional if={automatedBreadcrumbsExists && !isMobile}>
+            <Breadcrumbs
+              breadcrumbs={breadcrumbs}
+              isVenuePage
+              isMobile={false}
+            />
+          </Conditional>
+          <div className="theatre-information">
+            <RichContent render={theatreInfo} />
+          </div>
+          <div className="amenities">
+            <Conditional if={seatingCapacity}>
+              <div className="amenity">
+                {amenitiesIcons['Seating Capacity']}
+                <p>{`${seatingCapacity} ${SEATS}`}</p>
+              </div>
+            </Conditional>
+            <Amenities
+              {...{
+                isMobile,
+                expandedLimit,
+                amenitiesDropdown,
+              }}
+            />
+            <div className="show-more-cta">
+              <button onClick={handleShowMoreClick}>
+                <>
+                  {isExpanded ? SHOW_LESS : SHOW_MORE}
+                  {isExpanded ? ChevronUp : <ChevronDown />}
+                </>
+              </button>
+            </div>
+          </div>
+          <ShowsList
+            data={nowPlayingShows}
+            allShowPageUids={allShowPageUids}
+            heading={strings.THEATRE_PAGE.NOW_PLAYING}
+            uid={uid}
+            isMobile={isMobile}
+          />
+          <ShowsList
+            data={upcomingShows}
+            heading={strings.THEATRE_PAGE.UPCOMING_SHOWS}
+            allShowPageUids={allShowPageUids}
+            uid={uid}
+            isMobile={isMobile}
+          />
+        </VenuePageContainer>
+        <LongForm
+          content={modifiedDescriptionSlices}
+          uid={uid}
           isMobile={isMobile}
-          allShowPageUids={allShowPageUids}
+          availableShowsData={availableShowsData}
+          isVenuePage
+          redirectUrlForTabDataContent={redirectUrlForTabDataContent}
+          findBestSeatsCallback={
+            tgidForFirstShow ? onFindBestSeatsCtaClicked : null
+          }
         />
-        <VerticalCardsGrid
-          data={nearbyTheatresData}
+        <VenuePageContainer>
+          <ShowsGrid
+            data={pastShows}
+            isMobile={isMobile}
+            allShowPageUids={allShowPageUids}
+          />
+          <VerticalCardsGrid
+            data={nearbyTheatresData}
+            isMobile={isMobile}
+            heading={strings.THEATRE_PAGE.NEARBY_THEATRES}
+          />
+          <Conditional if={automatedBreadcrumbsExists && isMobile}>
+            <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile />
+          </Conditional>
+        </VenuePageContainer>
+      </Conditional>
+      <Conditional if={isLandingPage}>
+        <VenueLandingPage
           isMobile={isMobile}
-          heading={strings.THEATRE_PAGE.NEARBY_THEATRES}
+          heading={bannerHeading}
+          breadcrumbs={breadcrumbs}
+          landingPageData={landingPageData}
+          popularShowsData={popularShowsData}
+          browseCategoriesData={browseCategoriesData}
+          hostname={host}
+          language={lang}
         />
-        <Conditional if={automatedBreadcrumbsExists && isMobile}>
-          <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile />
-        </Conditional>
-      </VenuePageContainer>
+      </Conditional>
       <Footer
         currentLanguage={currentLanguage}
         attraction={commonFooter?.data?.attraction || 'attraction'}

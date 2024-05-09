@@ -1101,6 +1101,12 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     SUBATTRACTIONS: 'Sous-Attraits',
   },
   OFF_PERCENT: '{0} % de réduction',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Plan de la salle',
+    CAPACITY: 'Capacity: {0} places',
+    WHATS_ON: `À l'affiche`,
+    CATEGORIES: 'Catégories',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: "Besoin d'aide pour choisir l'expérience qui vous convient ?",
     SUB_HEADING: 'Regardez cette vidéo pour faire le bon choix !',

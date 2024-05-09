@@ -313,6 +313,7 @@ export const HomePage = (props: any) => {
     isEntertainmentMbListicle &&
     !!displayMonths &&
     heroSectionSlice[0]?.items?.[0]?.month_label !== null;
+
   const isCategoryMicrobrand = isCategoryMB(mbType);
   const isSubCategoryMicrobrand = isSubCategoryMB(mbType);
 

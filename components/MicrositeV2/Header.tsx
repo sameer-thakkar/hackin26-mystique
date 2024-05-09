@@ -65,6 +65,7 @@ interface IStyledHeader {
   isCategoryPage?: boolean;
   $isMonthOnMonthPage?: boolean;
   $isReviewsPage?: boolean;
+  $isVenuePage?: boolean;
   isEntertainmentLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
@@ -165,10 +166,14 @@ export const StyledHeader = styled.div<IStyledHeader>`
         isCategoryPage,
         $isMonthOnMonthPage,
         $isReviewsPage,
+        $isVenuePage,
       }) => {
         switch (true) {
           case showColoredHeader:
-            return isCategoryPage || $isMonthOnMonthPage || $isReviewsPage
+            return isCategoryPage ||
+              $isMonthOnMonthPage ||
+              $isReviewsPage ||
+              $isVenuePage
               ? '#1A0232'
               : COLORS.LTT_BANNER_BACKGROUND_COLOR;
           default:
@@ -446,6 +451,7 @@ interface HeaderProps {
   isEntertainmentLandingPageVisible?: boolean;
   isNewsPage?: boolean;
   isReviewsPage?: boolean;
+  isVenuePage?: boolean;
   uid?: string;
 }
 
@@ -478,6 +484,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   categoryHeaderMenu,
   isEntertainmentLandingPageVisible = false,
   isReviewsPage = false,
+  isVenuePage = false,
   uid,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
@@ -645,6 +652,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isCategoryPage={isCategoryPage}
       $isMonthOnMonthPage={isMonthOnMonthPage}
       $isReviewsPage={isReviewsPage}
+      $isVenuePage={isVenuePage}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
       showColoredHeader={showColoredHeader}
       isEntertainmentLandingPageVisible={isEntertainmentLandingPageVisible}

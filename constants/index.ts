@@ -429,6 +429,8 @@ export const ANALYTICS_EVENTS = {
     THEATRE_ADDRESS_CLICKED: 'Theatre Address Clicked',
     BEST_SEATS_CTA_CLICKED: 'Best Seats CTA Clicked',
     THEATRE_CARD_CLICKED: 'Theatre Card Clicked',
+    THEATRE_PAGE_CTA_CLICKED: 'Theatre Page CTA Clicked',
+    CARD_DESCRIPTOR_CLICKED: 'Card Descriptor Clicked',
   },
   PRODUCT_CARD_IMAGE_VIEWED: 'Product Card Image Viewed',
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
@@ -973,6 +975,9 @@ export const ANALYTICS_PROPERTIES = {
   ICON_TYPE: 'Icon Type',
   FILTER_TYPE: 'Filter Type',
   BOOSTER_NAME: 'Booster Name',
+  DESCRIPTOR_TYPE: 'Descriptor Type',
+  DESCRIPTOR_NAME: 'Descriptor Name',
+  IS_LANDING_PAGE: 'Is Landing Page',
   COMPONENT: 'Component',
   SECTION_TYPE: 'Section Type',
   SLICE_TYPE: 'Slice Type',
@@ -1430,6 +1435,7 @@ export const PRISMIC_FIELD_ID = {
   TAGS: 'tags',
   UID: 'uid',
   IS_LANDING_PAGE: 'is_landing_page',
+  IS_ENTERTAINMENT_MB: 'is_entertainment_mb',
 };
 
 export const PRISMIC_DEV_TAG = '[DEV]';
@@ -1802,6 +1808,9 @@ export const REVIEWS_PAGE_BANNER_ILLUSTRATION =
 export const REVIEW_CHIPS_BACKGROUND_ILLUSTRATION =
   'https://cdn-imgix.headout.com/media/images/86ce0621f7a25d709e3ed8133b068ccf-adobestock_652508416.jpeg';
 
+export const THEATRE_LANDING_PAGE_ILLUSTRATION =
+  'https://cdn-imgix.headout.com/media/images/67c63d1f914a453897b62736759289c6-Frame%20220015309.png';
+
 export const PERMANENT_SHOWS_TGIDS = [
   16818, 16816, 22293, 3031, 19737, 20045, 17432, 18161, 13402, 9858, 2863,
   9162, 9723, 3023, 3027, 3032, 3026, 3028, 3037, 2843, 18551, 519, 507, 512,
@@ -1984,6 +1993,18 @@ export const LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS = [
   'catacombs.tickets-paris.fr',
 ];
 
+export const ENTERTAINMENT_CATEGORIES = [
+  'Musicals',
+  'Plays',
+  'Kids',
+  'Dance',
+  'Opera',
+  'Comedy',
+  'Cabarets',
+  'Magic',
+  'Drama',
+  'Circus',
+];
 export const LFC_IMPACT_EXPERIMENT_UIDS = [
   'www.schindlers-factory-tickets.com',
   'louvremuseum.tickets-paris.fr',
@@ -2014,4 +2035,3 @@ export const COLLECTION_ID_CITIES_MAP: Record<number, string> = {
   167: 'London',
   24: 'New York',
 };
-

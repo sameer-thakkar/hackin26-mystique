@@ -1157,6 +1157,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SUBATTRACTIONS: 'Sub-Attractions',
   },
   OFF_PERCENT: '{0}% off',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Seat plan',
+    CAPACITY: 'Capacity: {0} seats',
+    WHATS_ON: `What's on`,
+    CATEGORIES: 'Categories',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: 'Need help picking the right experience?',
     SUB_HEADING: 'Watch this video to make the perfect choice!',

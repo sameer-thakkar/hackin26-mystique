@@ -107,17 +107,17 @@ export const Description = styled.div<{
   maxWidth?: string;
 }>`
   &&& {
-    width : ${({ width }) => width && width};
-    height : ${({ height }) => height && height};
-    max-width : ${({ maxWidth }) => maxWidth && maxWidth};
+    width: ${({ width }) => width && width};
+    height: ${({ height }) => height && height};
+    max-width: ${({ maxWidth }) => maxWidth && maxWidth};
     position: relative;
     font-family: ${HALYARD.FONT_STACK};
     p {
-    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
       color: ${COLORS.BRAND.WHITE};
       display: inline;
     }
-}
+  }
 `;
 
 export const StyledImage = styled.div`
@@ -436,12 +436,11 @@ export const Wrapper = styled.div<{
   }
   div {
     border-radius: 8px;
-    background: linear-gradient(93.12deg, #F0F0F0 0%, #F0F0F0 100%);
+    background: linear-gradient(93.12deg, #f0f0f0 0%, #f0f0f0 100%);
   }
 
-   /* Logic for the Grid Layout for dekstop view */
-   @media (min-width: 768px) {
-    
+  /* Logic for the Grid Layout for dekstop view */
+  @media (min-width: 768px) {
     ${({ noOfImages, $isNewsPage }) => {
       if ($isNewsPage && noOfImages === 2) {
         return `
@@ -497,36 +496,36 @@ export const Wrapper = styled.div<{
             }
         `;
       }
-    }}   
-   }
+    }}
+  }
 
-   /* Mobile first style starts */
-    @media (max-width: 767px) {   
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(1, minmax(7rem, 1fr));
-      grid-auto-rows: minmax(7rem, 1fr);
-      gap: 8px;
+  /* Mobile first style starts */
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, minmax(7rem, 1fr));
+    grid-auto-rows: minmax(7rem, 1fr);
+    gap: 8px;
 
-      div:first-child {
-        grid-row: ${({ noOfImages }) => noOfImages > 2 && '1 / span 2'};
-        grid-column: ${({ noOfImages }) => noOfImages > 2 && '1 / span 2'};
-      }
- 
+    div:first-child {
+      grid-row: ${({ noOfImages }) => noOfImages > 2 && '1 / span 2'};
+      grid-column: ${({ noOfImages }) => noOfImages > 2 && '1 / span 2'};
+    }
+
     /* Hide last row having uneven cells for mobile view, according to designs */
-      ${({ noOfImages }) => {
-        if (noOfImages > 5) {
-          return `
+    ${({ noOfImages }) => {
+      if (noOfImages > 5) {
+        return `
               div:nth-last-child(-n + ${noOfImages - 5}){
                   display: none;      
               }
           `;
-        } else if (noOfImages > 2 && noOfImages % 2 == 0) {
-          return `
+      } else if (noOfImages > 2 && noOfImages % 2 == 0) {
+        return `
               div:nth-last-child(-n + 1){
                   display: none;        
               }`;
-        }
-      }}
+      }
+    }}
   }
 
   /* Mobile first style ends */

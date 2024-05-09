@@ -20,3 +20,15 @@ export const venuePageGq = `
         }
     }
 `;
+
+export const venuePageTgidsGq = `
+    {
+        venue_page {
+            poi_id
+            desktop_banner
+            seating_plan
+            theatre_location_cta
+            theatre_location_url
+        }
+    }
+`;

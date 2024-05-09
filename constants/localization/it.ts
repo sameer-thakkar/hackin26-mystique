@@ -1087,6 +1087,12 @@ const it = {
     SUBATTRACTIONS: 'Sotto-Attrazioni',
   },
   OFF_PERCENT: '{0}% di sconto',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Mappa dei posti',
+    CAPACITY: '{0} posti',
+    WHATS_ON: 'In scena',
+    CATEGORIES: 'Categorie',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: "Sei alla ricerca dell'esperienza giusta?",
     SUB_HEADING: 'Guarda il video per avere utili consigli!',

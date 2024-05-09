@@ -221,6 +221,8 @@ type TabWrapperProps = {
   tabElements?: any[];
   renderTabElements?: boolean;
   findBestSeatsCtaCallback?: () => void;
+  jumpscroll?: boolean;
+  makeTabElementsCrawlable?: boolean;
 };
 
 /**
@@ -260,6 +262,8 @@ const TabWrapper = (props: TabWrapperProps) => {
     findBestSeatsCtaCallback,
     tabElements = [],
     renderTabElements = false,
+    jumpscroll = false,
+    makeTabElementsCrawlable = false,
   } = props;
   const { isMobile } = useRecoilValue(appAtom);
 
@@ -357,6 +361,13 @@ const TabWrapper = (props: TabWrapperProps) => {
   }: any) => {
     setActiveTab(tabId);
     setActiveTabIndex(index);
+    if (jumpscroll) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
 
     if (isScrollTab && scrollTarget) {
       (tabsContanier?.current as any)?.scrollTo({
@@ -578,7 +589,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         </Conditional>
         <Conditional if={isMobile}>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
-          <SlideControls isMobile={isMobile}>
+          <SlideControls isMobile={isMobile} className="slide-controls">
             <Conditional if={!isAtStart}>
               <div
                 className="prev-slide"
@@ -636,7 +647,20 @@ const TabWrapper = (props: TabWrapperProps) => {
             </Conditional>
           </div>
         </Conditional>
-        <Conditional if={renderTabElements}>
+        <Conditional if={makeTabElementsCrawlable && renderTabElements}>
+          {tabElements?.map((_, index) => (
+            <div
+              style={{
+                display: `${activeTabIndex === index ? 'block' : 'none'}`,
+              }}
+              key={index}
+            >
+              {' '}
+              {tabElements?.[index]?.children}
+            </div>
+          ))}
+        </Conditional>
+        <Conditional if={!makeTabElementsCrawlable && renderTabElements}>
           <div> {tabElements?.[activeTabIndex]?.children}</div>
         </Conditional>
         <Conditional if={!tabData.length}>

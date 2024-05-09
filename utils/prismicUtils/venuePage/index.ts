@@ -11,7 +11,13 @@ import {
   TLANGUAGELOCALE,
 } from 'const/index';
 import { venuePageGq } from './graphQuery';
-import { getAllShowsDataPromise, getNearbyTheatresDataPromise } from './utils';
+import {
+  getAllShowsData,
+  getCategories,
+  getLandingPageGroups,
+  getNearbyTheatresData,
+  getPopularShows,
+} from './utils';
 
 const getVenuePageDocument = async ({ req, uid, lang }: any) => {
   const prismicClient = createClient({ req });
@@ -53,6 +59,9 @@ const getVenuePageDocument = async ({ req, uid, lang }: any) => {
       tagged_category,
       tagged_sub_category,
       tagged_mb_type,
+      is_landing_page,
+      banner_heading,
+      landing_page_groups,
     } = venuePageData;
 
     const completePageData = {
@@ -68,7 +77,7 @@ const getVenuePageDocument = async ({ req, uid, lang }: any) => {
         theatreLocationCta: theatre_location_cta,
         theatreInfo: info,
         taggedCollection: tagged_collection,
-        city: tagged_city,
+        taggedCity: tagged_city,
         country: tagged_country,
         amenitiesDropdown: amenities_dropdown,
         descriptionSlices: body2,
@@ -79,6 +88,9 @@ const getVenuePageDocument = async ({ req, uid, lang }: any) => {
         taggedCategoryName: tagged_category,
         taggedSubCategoryName: tagged_sub_category,
         poiId: baseLangVenuePageData?.poi_id,
+        isLandingPage: is_landing_page,
+        bannerHeading: banner_heading,
+        landingPageGroups: landing_page_groups,
       },
     };
 
@@ -104,29 +116,69 @@ export const getVenuePageData = async (
 ) => {
   try {
     const { uid, data } = CMSContent ?? {};
-    const { poiId, nearbyTheatreSliceData } = data ?? {};
 
-    const allShowsDataPromise = getAllShowsDataPromise({
+    const {
+      poiId,
+      nearbyTheatreSliceData,
+      isLandingPage,
+      landingPageGroups,
+      taggedCollection,
+      taggedCity,
+    } = data ?? {};
+
+    const allShowsDataPromise = getAllShowsData({
       poiId,
       language: lang,
       cookies,
       hostname,
     });
-    const breadcrumbsPromise = getVenuePageBreadcrumbs(CMSContent);
-    const nearbyTheatrePromise = getNearbyTheatresDataPromise(
+    const breadcrumbsPromise = getVenuePageBreadcrumbs(
+      CMSContent,
+      isLandingPage
+    );
+    const nearbyTheatrePromise = getNearbyTheatresData(
       nearbyTheatreSliceData,
       cookies,
       lang,
       hostname
     );
 
+    const landingPageGroupsPromise = getLandingPageGroups(
+      landingPageGroups,
+      cookies,
+      lang,
+      hostname
+    );
+    const popularShowsPromise = getPopularShows(
+      taggedCollection,
+      hostname,
+      cookies,
+      lang
+    );
+    const browseCategoriesPromise = getCategories(
+      taggedCity,
+      lang,
+      cookies,
+      uid
+    );
+
     const allPromiseSettledResults = await Promise.allSettled([
       allShowsDataPromise,
       breadcrumbsPromise,
       nearbyTheatrePromise,
+      landingPageGroupsPromise,
+      popularShowsPromise,
+      browseCategoriesPromise,
     ]);
-    const [showsData, breadcrumbs, nearbyTheatresData] =
-      handleSettledPromiseResults(allPromiseSettledResults);
+
+    const [
+      showsData,
+      breadcrumbs,
+      nearbyTheatresData,
+      landingPageData,
+      popularShowsData,
+      browseCategoriesData,
+    ] = handleSettledPromiseResults(allPromiseSettledResults, uid, true);
 
     const { availableShowsData, allShowPageUids, inventorySlotData } =
       showsData ?? {};
@@ -138,6 +190,9 @@ export const getVenuePageData = async (
         allShowPageUids,
         inventorySlotData,
         nearbyTheatresData,
+        landingPageData,
+        popularShowsData,
+        browseCategoriesData,
       },
       uid,
       ContentType,

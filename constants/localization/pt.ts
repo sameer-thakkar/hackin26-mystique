@@ -1098,6 +1098,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SUBATTRACTIONS: 'Subatrações',
   },
   OFF_PERCENT: '{0}% de desconto',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Mapa de assentos',
+    CAPACITY: 'Capacidade: {0} assentos',
+    WHATS_ON: 'Em cartaz',
+    CATEGORIES: 'Categorias',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: 'Não sabe qual experiência escolher?',
     SUB_HEADING: 'Veja este vídeo para fazer a escolha perfeita!',

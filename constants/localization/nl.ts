@@ -1051,6 +1051,12 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     SUBATTRACTIONS: 'Sub-Attracties',
   },
   OFF_PERCENT: '{0}% korting',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Zitplaatsindeling',
+    CAPACITY: 'Capaciteit: {0} zitplaatsen',
+    WHATS_ON: 'Programma',
+    CATEGORIES: 'Categorieën',
+  },
   CURATED_VIDEO_BANNER: {
     HEADING: 'Op zoek naar de juiste ervaring?',
     SUB_HEADING: 'Met dit filmpje maak je de perfecte keuze!',
