@@ -1,4 +1,6 @@
-const PoweredByHeadoutNoBorder = () => {
+import { CSSProperties } from 'styled-components';
+
+const PoweredByHeadoutNoBorder = ({ style }: { style?: CSSProperties }) => {
   return (
     <svg
       width="99"
@@ -6,6 +8,7 @@ const PoweredByHeadoutNoBorder = () => {
       viewBox="0 0 99 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={style}
     >
       <g clipPath="url(#clip0_10301_63893)">
         <path

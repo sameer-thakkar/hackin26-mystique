@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import React, { useEffect } from 'react';
+import { useStateMachineInput } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { StyledRizLogoWrapper } from 'components/common/RiveLogoComponent/styles';
+import { useRive } from 'hooks/useRive';
 import { RIV_LOGO } from 'const/index';
-import PoweredByHeadoutNoBorder from 'assets/poweredByHeadout';
+import PoweredByHeadoutNoBorder from 'assets/poweredByHeadoutNoBorder';
 
 const RiveLogoComponent = () => {
-  const [useFallbackLogo, setUseFallbackLogo] = useState(false);
-
-  const { RiveComponent, rive } = useRive({
+  const { RiveComponent, rive, isLoading, isError } = useRive({
     src: RIV_LOGO,
     stateMachines: 'stateMachine',
     artboard: 'txt',
     autoplay: true,
-    onLoadError: () => {
-      setUseFallbackLogo(true);
-    },
   });
 
   useStateMachineInput(rive, 'stateMachine', 'usersA', 2);
@@ -29,14 +25,16 @@ const RiveLogoComponent = () => {
       // we can dynamically fetch from looker for these, for now we are using static values
       usersB.value = 5;
     }
-  }, [rive && usersB]);
+  }, [rive, usersB]);
+
+  const showFallback = isLoading || isError;
 
   return (
     <StyledRizLogoWrapper>
-      <Conditional if={!useFallbackLogo}>
+      <Conditional if={!showFallback}>
         <RiveComponent width={'100%'} height={'100%'} />
       </Conditional>
-      <Conditional if={useFallbackLogo}>
+      <Conditional if={showFallback}>
         <PoweredByHeadoutNoBorder />
       </Conditional>
     </StyledRizLogoWrapper>

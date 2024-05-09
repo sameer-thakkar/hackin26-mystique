@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRive } from 'rive-react';
+import { useRive } from 'hooks/useRive';
 
 export const LoaderWrapper = styled.div`
   display: flex;

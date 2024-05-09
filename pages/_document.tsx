@@ -2,6 +2,8 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
+// @ts-ignore
+import riveWasmUrl from '@rive-app/canvas/rive.wasm';
 import Conditional from 'components/common/Conditional';
 import { InlineFontFace, PreloadFontLinks } from 'components/common/Font';
 import { getLangObject } from 'utils/helper';
@@ -55,6 +57,7 @@ class MystiqueDocument extends Document {
         <Head>
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
+          <link rel="preload" as="fetch" href={riveWasmUrl} />
           <PreloadFontLinks />
           <InlineFontFace />
           <Conditional if={lang === 'ar'}>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRive } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
+import { useRive } from 'hooks/useRive';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, BOOSTER_RIVE_LOCATION } from 'const/index';
 import { strings } from 'const/strings';
@@ -60,21 +60,15 @@ const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
     setEventRecorded(true);
   }, [isOnScreen, eventRecorded]);
 
-  const [useFallbackLogo, setUseFallbackLogo] = useState(true);
-
-  const { RiveComponent } = useRive({
+  const { RiveComponent, isLoading, isError } = useRive({
     src: BOOSTER_RIVE_LOCATION,
     stateMachines: 'stateMachine',
     artboard,
     autoplay: true,
     animations: 'Timeline 1',
-    onLoadError: () => {
-      setUseFallbackLogo(true);
-    },
-    onLoad: () => {
-      setUseFallbackLogo(false);
-    },
   });
+
+  const useFallbackLogo = isLoading || isError;
 
   return (
     <BoosterContainer $mobileLeft={mobileLeft} $isOverlay={isOverlay} ref={ref}>

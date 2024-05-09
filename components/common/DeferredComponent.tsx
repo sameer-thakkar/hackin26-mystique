@@ -1,11 +1,13 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, ReactNode, useState } from 'react';
 import useTimeout from 'hooks/useTimeout';
 
 const DeferredComponent = ({
   children,
   delay = 1_000,
+  renderPlaceholder,
 }: PropsWithChildren<{
   delay?: number;
+  renderPlaceholder?: ReactNode;
 }>) => {
   const [isReady, setReady] = useState(false);
   useTimeout(() => {
@@ -13,7 +15,7 @@ const DeferredComponent = ({
   }, delay);
 
   if (isReady) return <>{children}</>;
-  return null;
+  return <>{renderPlaceholder || null}</>;
 };
 
 export default DeferredComponent;

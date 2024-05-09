@@ -3,8 +3,8 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
+import DeferredComponent from 'components/common/DeferredComponent';
 import LocaleSelector from 'components/common/LocaleSelector';
-import RiveLogoComponent from 'components/common/RiveLogoComponent/index';
 import HeaderLinks from 'components/HeaderLinks';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
@@ -20,6 +20,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import PoweredByHeadout from 'assets/poweredByHeadout';
+import PoweredByHeadoutNoBorder from 'assets/poweredByHeadoutNoBorder';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -27,6 +28,10 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
     import('components/MicrositeV2/ResponsiveSelector').then(
       (m) => m.ResponsiveSelector
     ),
+  { ssr: false }
+);
+const RiveLogoComponent = dynamic(
+  () => import('components/common/RiveLogoComponent/index'),
   { ssr: false }
 );
 
@@ -227,6 +232,19 @@ const StyledMenuItem = styled.div`
   }
 `;
 
+const LogoPlaceholderWrapper = styled.div`
+  display: flex;
+  svg {
+    height: 1.9rem;
+  }
+
+  @media (max-width: 768px) {
+    svg {
+      height: 1.4rem;
+    }
+  }
+`;
+
 const Header: React.FC<any> = (props) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
@@ -364,7 +382,16 @@ const Header: React.FC<any> = (props) => {
             />
             <Conditional if={hasPoweredByHeadoutLogo && !isEntertainmentMB}>
               <StyledVerticalDivider />
-              <RiveLogoComponent />
+              <DeferredComponent
+                renderPlaceholder={
+                  <LogoPlaceholderWrapper>
+                    <PoweredByHeadoutNoBorder />
+                  </LogoPlaceholderWrapper>
+                }
+                delay={5000}
+              >
+                <RiveLogoComponent />
+              </DeferredComponent>
             </Conditional>
             <Conditional if={hasPoweredByHeadoutLogo && isEntertainmentMB}>
               <PoweredByHeadout />
