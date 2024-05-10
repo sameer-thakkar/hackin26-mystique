@@ -1,4 +1,7 @@
-import { TQuickInfo } from 'components/ShoulderPages/interface';
+import {
+  TLocalizedQuarters,
+  TQuickInfo,
+} from 'components/ShoulderPages/interface';
 import { getHeadoutLanguagecode } from 'utils';
 import { getRelatedContentPagesUrl } from 'utils/contentPageUtils';
 import {
@@ -7,7 +10,11 @@ import {
   localizeDay,
 } from 'utils/dateUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { LANGUAGE_MAP, MB_CATEGORISATION } from 'const/index';
+import {
+  getLocalizedQuarters,
+  LANGUAGE_MAP,
+  MB_CATEGORISATION,
+} from 'const/index';
 import { strings } from 'const/strings';
 import Address from 'assets/address';
 import ArchitectureStyle from 'assets/architectureStyle';
@@ -20,11 +27,33 @@ import Users from 'assets/users';
 import WaitTime from 'assets/waitTime';
 import WaitTimeFast from 'assets/waitTimeFast';
 
+const getQuartersForTable = ({
+  startDate,
+  endDate,
+  localizedQuarters,
+}: {
+  startDate: string;
+  endDate: string;
+  localizedQuarters: TLocalizedQuarters;
+}) => {
+  const startMonth = new Date(startDate).getMonth() + 1;
+  const endMonth = new Date(endDate).getMonth() + 1;
+
+  const quartersForTable: string[] = localizedQuarters
+    .filter((quarter: any) => {
+      return startMonth <= quarter.end && endMonth >= quarter.start;
+    })
+    .map((quarter: any) => quarter.label);
+
+  return quartersForTable;
+};
+
 export const getPoiTimingsInfo = (
   data: Record<string, any> = {},
   lang: string
 ) => {
   const { operatingSchedules } = data;
+  const { quarters: localizedQuarters } = getLocalizedQuarters(lang);
 
   const currentOperatingHours = getCurrentOperatingHours(
     operatingSchedules,
@@ -44,11 +73,19 @@ export const getPoiTimingsInfo = (
         day: 'numeric',
         month: 'short',
       });
+
+      const quartersForTable = getQuartersForTable({
+        startDate: schedule.startDate,
+        endDate: schedule.endDate,
+        localizedQuarters,
+      });
+
       return {
         columns: [
           {
             label: `${startMonth} ${strings.CONTENT_PAGE.TO} ${endMonth}`,
             key: 'day',
+            quarters: quartersForTable,
           },
           { label: strings.CONTENT_PAGE.TIMINGS.toUpperCase(), key: 'timing' },
           { label: strings.CONTENT_PAGE.LAST_ADMISSION, key: 'lastAdmission' },

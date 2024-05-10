@@ -19,6 +19,57 @@ export const PageContainer = styled.main`
   }
 `;
 
+export const TimingsTableTabsViewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const TabsContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: no-wrap;
+  flex-shrink: 0;
+  position: relative;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  overflow-x: scroll;
+
+  .tab {
+    width: max-content;
+    min-width: max-content;
+    ${expandFontToken(FONTS.HEADING_SMALL)}
+    padding: 0 1rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1.5px solid ${COLORS.GRAY.G6};
+    cursor: pointer;
+    color: #545454;
+    font-weight: 500;
+    padding-bottom: 1rem;
+    margin: 0;
+    transition: all 0.25s ease-in-out;
+  }
+
+  .tab:hover {
+    border-color: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.PURPS};
+  }
+
+  .active {
+    border-color: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.PURPS};
+  }
+
+  @media (max-width: 768px) {
+    .tab {
+      ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
+      padding: 0.5rem 0.8rem;
+      border-width: 1.2px;
+    }
+  }
+`;
+
 export const TimingNotes = styled.div`
   ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
   color: ${COLORS.GRAY.G3};

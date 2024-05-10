@@ -1,4 +1,5 @@
 import { BoosterType } from 'components/Product/interface';
+import { longMonthtoShort } from 'utils/dateUtils';
 import { strings } from './strings';
 
 export const IP_INFO_TOKEN = '108f1155413636';
@@ -1776,6 +1777,66 @@ export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 export const X_CACHE_HEADER_KEY = 'x-cache' as const;
 
 export const CALENDAR_UNIT = 'calendar-unit';
+
+function capitalizeFirstLetter(word: string | null) {
+  if (!word) {
+    return '';
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+export const getLocalizedQuarters = (lang = 'en-us') => {
+  const quarterMonths = [
+    'January - March',
+    'April - June',
+    'July - September',
+    'October - December',
+  ];
+  let JAN_MAR = '',
+    APR_JUN = '',
+    JUL_SEP = '',
+    OCT_DEC = '';
+
+  quarterMonths.forEach((quarterValue, index) => {
+    const [startMonth, endMonth] = quarterValue.split(' - ');
+    let localisedStartMonth = longMonthtoShort({
+      fullMonth: startMonth,
+      lang,
+    });
+    let localisedEndMonth = longMonthtoShort({
+      fullMonth: endMonth,
+      lang,
+    });
+
+    localisedStartMonth = capitalizeFirstLetter(localisedStartMonth);
+    localisedEndMonth = capitalizeFirstLetter(localisedEndMonth);
+
+    if (index === 0) {
+      JAN_MAR = `${localisedStartMonth} - ${localisedEndMonth}`;
+    } else if (index === 1) {
+      APR_JUN = `${localisedStartMonth} - ${localisedEndMonth}`;
+    } else if (index === 2) {
+      JUL_SEP = `${localisedStartMonth} - ${localisedEndMonth}`;
+    } else {
+      OCT_DEC = `${localisedStartMonth} - ${localisedEndMonth}`;
+    }
+  });
+
+  const quartersData = [
+    { start: 1, end: 3, label: JAN_MAR },
+    { start: 4, end: 6, label: APR_JUN },
+    { start: 7, end: 9, label: JUL_SEP },
+    { start: 10, end: 12, label: OCT_DEC },
+  ];
+
+  return {
+    quarters: quartersData,
+    JAN_MAR,
+    APR_JUN,
+    JUL_SEP,
+    OCT_DEC,
+  };
+};
 
 export const MONTHS = [
   'January',

@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import LongForm from 'components/common/LongForm';
 import Image from 'UI/Image';
-import { IImageProps } from 'UI/Image/interface';
 import { generateSidenavId } from 'utils/helper';
 import { getPoiTimingsInfo } from 'utils/parsers/poi';
 import renderShortCodes from 'utils/shortCodes';
 import { appAtom } from 'store/atoms/app';
-import { SHOULDER_TIMINGS_SCALE_TYPES } from 'const/index';
+import {
+  getLocalizedQuarters,
+  SHOULDER_TIMINGS_SCALE_TYPES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import Banner from '../components/Banner';
 import IconScale from '../components/IconScale';
@@ -19,7 +22,9 @@ import {
   BestTimeSubHeader,
   PageContainer,
   SectionDescription,
+  TabsContainer,
   TimingNotes,
+  TimingsTableTabsViewContainer,
   TimingTablesContainer,
 } from './styles';
 
@@ -94,29 +99,14 @@ const TimingsPage = ({
           <LongForm content={extractedPrismicBreadcrumbs || []} />
         </Conditional>
         <Conditional if={timingsInfo.timingTablesData?.length}>
-          <TimingTablesContainer>
-            <div className="tables">
-              {timingsInfo.timingTablesData?.map(
-                (tableData: ITimingsTableProps, index: number) => (
-                  <TimingsTable
-                    key={index}
-                    initiallyCollapsed={!featuredImage?.url}
-                    rows={tableData.rows}
-                    columns={tableData.columns}
-                    isMobile={isMobile}
-                    hideCollapse={!isMobile && !!featuredImage?.url}
-                  />
-                )
-              )}
-            </div>
-            <Conditional if={featuredImage?.url}>
-              <Image
-                width={isMobile ? 327 : 384}
-                height={isMobile ? 184 : 306}
-                {...(featuredImage as IImageProps)}
-              />
-            </Conditional>
-          </TimingTablesContainer>
+          <TimingsTableTabsView
+            isMobile={isMobile}
+            imageUrl={featuredImage?.url}
+            timingsTableData={timingsInfo.timingTablesData}
+            imageAltText={featuredImage?.alt}
+            lang={language}
+          />
+
           <TimingNotes
             dangerouslySetInnerHTML={{
               __html: poiInfo?.content?.data?.timingNotes || '',
@@ -140,38 +130,15 @@ const TimingsPage = ({
                     __html: childPoiInfo.content?.data?.timingDescription,
                   }}
                 />
-                <TimingTablesContainer key={index}>
-                  <div className="tables">
-                    {childTiming.timingTablesData?.map(
-                      (tableData: ITimingsTableProps, index: number) => (
-                        <TimingsTable
-                          key={index}
-                          initiallyCollapsed={
-                            !childPoiInfo.collectionInfo?.heroImageUrl
-                          }
-                          rows={tableData.rows}
-                          columns={tableData.columns}
-                          isMobile={isMobile}
-                          hideCollapse={
-                            !isMobile &&
-                            !!childPoiInfo.collectionInfo?.heroImageUrl
-                          }
-                        />
-                      )
-                    )}
-                  </div>
-                  <Conditional if={childPoiInfo.collectionInfo?.heroImageUrl}>
-                    <Image
-                      width={isMobile ? 327 : 384}
-                      height={isMobile ? 184 : 306}
-                      url={childPoiInfo.collectionInfo?.heroImageUrl}
-                      alt={
-                        childPoiInfo.collectionInfo?.heroMedia?.metadata
-                          ?.altText
-                      }
-                    />
-                  </Conditional>
-                </TimingTablesContainer>
+                <TimingsTableTabsView
+                  isMobile={isMobile}
+                  imageUrl={childPoiInfo.collectionInfo?.heroImageUrl}
+                  timingsTableData={childTiming.timingTablesData}
+                  imageAltText={
+                    childPoiInfo.collectionInfo?.heroMedia?.metadata?.altText
+                  }
+                  lang={language}
+                />
                 <TimingNotes
                   dangerouslySetInnerHTML={{
                     __html: childPoiInfo.content?.data?.timingNotes || '',
@@ -238,6 +205,114 @@ const TimingsPage = ({
         </PageContainer>
       </Conditional>
     </>
+  );
+};
+
+const groupTablesByQuarter = ({
+  timingsTableData,
+  localizedQuarters,
+}: {
+  timingsTableData: any[];
+  localizedQuarters: ReturnType<typeof getLocalizedQuarters>;
+}) => {
+  const { JAN_MAR, APR_JUN, JUL_SEP, OCT_DEC } = localizedQuarters;
+  const tablesByQuarter: Record<string, any> = {
+    [JAN_MAR]: [],
+    [APR_JUN]: [],
+    [JUL_SEP]: [],
+    [OCT_DEC]: [],
+  };
+
+  timingsTableData.forEach((tableData) => {
+    const quarters = tableData.columns[0].quarters;
+    quarters?.forEach((quarterLabel: string) => {
+      if (quarterLabel in tablesByQuarter) {
+        tablesByQuarter[quarterLabel].push(tableData);
+      }
+    });
+  });
+
+  return tablesByQuarter;
+};
+
+const TimingsTableTabsView = ({
+  timingsTableData,
+  isMobile,
+  imageUrl,
+  imageAltText,
+  lang,
+}: {
+  timingsTableData: any;
+  isMobile: boolean;
+  imageUrl?: string;
+  imageAltText?: string;
+  lang: string;
+}) => {
+  const localizedQuarters = getLocalizedQuarters(lang);
+  const [activeQuarter, setActiveQuarter] = useState<string>(
+    localizedQuarters.JAN_MAR
+  );
+
+  const tablesByQuarter = groupTablesByQuarter({
+    timingsTableData,
+    localizedQuarters,
+  });
+
+  const totalTables = timingsTableData.length;
+
+  // Remove empty quarters
+  Object.keys(tablesByQuarter).forEach((key) => {
+    if (tablesByQuarter[key].length === 0) {
+      delete tablesByQuarter[key];
+    }
+  });
+
+  return (
+    <TimingsTableTabsViewContainer>
+      <Conditional if={totalTables > 1}>
+        <TabsContainer>
+          {Object.keys(tablesByQuarter).map(
+            (quarterLabel: string, index: number) => (
+              <div
+                onClick={() => setActiveQuarter(quarterLabel)}
+                className={`tab ${quarterLabel === activeQuarter && 'active'}`}
+                key={index}
+                role="tab"
+                tabIndex={index}
+              >
+                {quarterLabel}
+              </div>
+            )
+          )}
+        </TabsContainer>
+      </Conditional>
+
+      <TimingTablesContainer>
+        <div className="tables">
+          {tablesByQuarter[activeQuarter]?.map(
+            (tableData: ITimingsTableProps, index: number) => (
+              <TimingsTable
+                key={index}
+                initiallyCollapsed={!imageUrl}
+                rows={tableData.rows}
+                columns={tableData.columns}
+                isMobile={isMobile}
+                hideCollapse={!isMobile && !!imageUrl}
+              />
+            )
+          )}
+        </div>
+
+        <Conditional if={imageUrl}>
+          <Image
+            width={isMobile ? 327 : 384}
+            height={isMobile ? 184 : 306}
+            url={imageUrl ?? ''}
+            alt={imageAltText ?? ''}
+          />
+        </Conditional>
+      </TimingTablesContainer>
+    </TimingsTableTabsViewContainer>
   );
 };
 

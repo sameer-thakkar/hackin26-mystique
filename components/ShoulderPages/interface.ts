@@ -19,6 +19,12 @@ export interface IMessageBoxProps {
   CTALink?: string;
 }
 
+export type TLocalizedQuarters = {
+  start: number;
+  end: number;
+  label: string;
+}[];
+
 export type TQuickInfo = {
   [key: string]: {
     value?: string;
