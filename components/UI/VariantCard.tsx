@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
@@ -229,11 +230,25 @@ export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
 const formatDescription = (desc: any) =>
   desc?.includes('- ') ? (
     <ul className="desc-list">
-      {desc?.split('- ')?.map((line: any) => (
-        <Conditional key={line} if={line}>
-          <li className="desc-text">{line}</li>
-        </Conditional>
-      ))}
+      {desc?.split('- ')?.map((line: any) => {
+        return (
+          <Conditional key={line} if={line}>
+            <ReactMarkdown
+              linkTarget="_blank"
+              className="desc-text"
+              components={{
+                p: 'li',
+                code(props) {
+                  const { children, ...rest } = props;
+                  return <a {...rest}>{children}</a>;
+                },
+              }}
+            >
+              {line}
+            </ReactMarkdown>
+          </Conditional>
+        );
+      })}
     </ul>
   ) : (
     <div className="desc-text">{desc}</div>

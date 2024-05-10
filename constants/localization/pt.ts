@@ -433,7 +433,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   SAVE_UPTO_PERCENT: 'Economize até {0}%',
   SEARCH: 'Pesquisar',
   SEE_ALL: 'Ver todos',
-  SEE_MORE_SHOWS: 'Ver mais shows',
+  SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
   SELECT_CITY: 'Selecionar cidade',
   SELECT_SECTION: 'Escolher setor',
   SEE_ALL_PHOTOS: 'Ver todas as fotos',
@@ -673,6 +673,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TODAY: 'Hoje',
     TOMORROW: 'Amanhã',
     SEE_ALL: 'Ver todos',
+    SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     GRAB_YOUR_TICKETS: 'Garanta seus ingressos agora',
   },
   TAG_NAME: {

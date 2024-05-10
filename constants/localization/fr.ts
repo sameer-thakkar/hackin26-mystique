@@ -668,7 +668,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TOP_THEATRE_SHOWS: '{0} : les meilleurs spectacles',
     TOP_SHOWS: 'Meilleurs spectacles',
     SEE_MORE_SHOWS: 'Voir {0} spectacles en plus',
-    LAST_MINUTE_TICKETS: 'Billets de dernières minutes',
+    LAST_MINUTE_TICKETS: 'Billets de dernière minute',
     LOVED_BY_MILLIONS: 'Aimés par des millions de personnes',
     TODAY: `Aujourd'hui`,
     TOMORROW: 'Demain',
