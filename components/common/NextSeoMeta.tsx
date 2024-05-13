@@ -9,7 +9,6 @@ import {
   BreadcrumbsSchema,
   CollectionAggregatedRatingScript,
   MystiquePerfScript,
-  NewRelicPerformanceMonitoring,
   TrackingScripts,
   VideoMetaScript,
   WebpageJsonLD,
@@ -326,7 +325,6 @@ export default function PopulateMeta({
           isPreview={isPreview}
           originalHost={host}
         />
-        <NewRelicPerformanceMonitoring />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional

@@ -6,7 +6,7 @@ import { CollectionDetails } from 'components/StaticBanner/index';
 import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { getBreadcrumbLabel } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
-import { MICROBRANDS_URL, siteNameMappings } from 'const/index';
+import { siteNameMappings } from 'const/index';
 
 export const TrackingScripts = ({
   isDev,
@@ -301,16 +301,5 @@ export const BreadcrumbsSchema = ({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
       />
     </Head>
-  );
-};
-
-export const NewRelicPerformanceMonitoring = () => {
-  return (
-    <Script
-      id="newRelicPerformanceMonitoring"
-      type="text/javascript"
-      strategy="beforeInteractive"
-      src={`${MICROBRANDS_URL}/scripts/newrelic.js`}
-    />
   );
 };

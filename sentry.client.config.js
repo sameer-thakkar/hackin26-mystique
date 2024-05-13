@@ -9,12 +9,7 @@ const SENTRY_DSN =
 
 initSentry({
   dsn: SENTRY_DSN,
-  // Adjust this value in production, or use tracesSampler for greater control
-  tracesSampleRate: 0.05,
-  // ...
-  // Note: if you want to override the automatic release value, do not set a
-  // `release` value here - use the environment variable `SENTRY_RELEASE`, so
-  // that it will also get attached to your source maps
+  tracesSampler: () => 0,
   ignoreUrls: [/https?:\/\/(www\.)?(localhost)\.com/],
   enabled: process.env.NODE_ENV !== 'development',
 });
