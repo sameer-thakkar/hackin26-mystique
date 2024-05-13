@@ -252,7 +252,7 @@ export const HoverCard = styled.div`
   }
   background: ${COLORS.BRAND.WHITE};
   position: absolute;
-  top: -75px;
+  top: -35px;
   width: 18.1875rem;
 
   height: max-content;

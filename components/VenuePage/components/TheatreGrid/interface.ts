@@ -10,7 +10,6 @@ export type TTheatreGrid = {
 export type TGridUi = {
   heading: string;
   theatresData: Record<string, any>[];
-  showPageDocuments: Record<string, any>[];
   hostname: string;
   language: string;
   isMobile: boolean;

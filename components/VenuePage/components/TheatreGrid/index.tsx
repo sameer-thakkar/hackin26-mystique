@@ -36,14 +36,13 @@ import {
 const TheatreGrid = ({ data, hostname, language, isMobile }: TTheatreGrid) => {
   if (data?.length > 1) {
     const tabsArray = data.map((groupData: Record<string, any>) => {
-      const { groupName, theatresData, showPageDocuments } = groupData ?? {};
+      const { groupName, theatresData } = groupData ?? {};
       return {
         heading: groupData.groupName,
         children: (
           <GridUI
             heading={groupName}
             theatresData={theatresData}
-            showPageDocuments={showPageDocuments}
             hostname={hostname}
             language={language}
             isMobile={isMobile}
@@ -66,7 +65,6 @@ const TheatreGrid = ({ data, hostname, language, isMobile }: TTheatreGrid) => {
     <GridUI
       heading={data[0]?.groupName}
       theatresData={data[0]?.theatresData}
-      showPageDocuments={data[0]?.showPageDocuments}
       isMobile={isMobile}
       hostname={hostname}
       language={language}
@@ -203,13 +201,7 @@ const TheatreChips = ({
   );
 };
 
-const GridUI = ({
-  theatresData,
-  showPageDocuments,
-  hostname,
-  language,
-  isMobile,
-}: TGridUi) => {
+const GridUI = ({ theatresData, hostname, language, isMobile }: TGridUi) => {
   const { THEATRE_LANDING_PAGE, THEATRE_PAGE, MORE_DETAILS } = strings;
   const { CAPACITY, SEAT_PLAN } = THEATRE_LANDING_PAGE;
   const { NOW_PLAYING } = THEATRE_PAGE;
@@ -253,6 +245,7 @@ const GridUI = ({
             nowPlayingShows,
             uid,
             mediaData,
+            showPageDocuments,
           } = theatre ?? {};
           const theatreUrl = convertUidToUrl({
             uid,

@@ -213,12 +213,6 @@ export const getLandingPageGroups = async (
       poiIds,
       pageSize: 100,
     });
-    const allTgidsInsidePoiData = getAllTgidsInsidePoiData(poiData?.pois);
-
-    const showPageDocuments = await getShowPageCollectionsByTgid({
-      tgids: allTgidsInsidePoiData,
-      pageSize: 100,
-    });
 
     const theatresDataPromise = poiIds?.map(async (poiId: string) => {
       const poiApiData = poiData?.pois?.find(
@@ -235,6 +229,11 @@ export const getLandingPageGroups = async (
         language: getHeadoutLanguagecode(lang),
         cookies,
       });
+      const showPageDocuments = await getShowPageCollectionsByTgid({
+        tgids: poiApiData?.linkedTourGroups,
+        pageSize: 100,
+      });
+
       const mediaData = await fetchMediaResource({
         language: getHeadoutLanguagecode(lang),
         resourceType: 'MB_EXPERIENCE',
@@ -260,6 +259,7 @@ export const getLandingPageGroups = async (
         uid,
         theatreName: name,
         mediaData,
+        showPageDocuments,
         theatreLocation: theatre_location_cta,
         theatreImage: asLink(desktop_banner),
         seatingPageLink: asLink(seating_plan),
@@ -274,7 +274,6 @@ export const getLandingPageGroups = async (
     return {
       groupName: group_name,
       theatresData,
-      showPageDocuments,
     };
   });
   const allPromiseSettledResults = await Promise.allSettled(landingPagePromise);
