@@ -131,10 +131,24 @@ export const getHumanReadableTime = ({
   const format =
     formattedTime && formattedTime?.length <= 5 ? 'HH:mm' : 'HH:mm:ss';
   const parsedTime = dayjs(formattedTime, inputFormat ?? format, lang);
-  if (removeTrailingZeros && parsedTime.minute() === 0) {
-    return (formattedTime = parsedTime.format('h A'));
+
+  if (!parsedTime?.isValid()) {
+    return '';
   }
-  return parsedTime.format('h:mm A');
+
+  let options: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: '2-digit',
+  };
+  if (removeTrailingZeros && parsedTime.minute() === 0) {
+    options.second = '2-digit';
+  }
+
+  const formatted = new Intl.DateTimeFormat(lang, options).format(
+    parsedTime.toDate()
+  );
+
+  return formatted;
 };
 
 export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
@@ -269,7 +283,7 @@ export const formatOperatingDayTimings = ({
     });
 
   return {
-    hours: `${formattedOpeningTime} - ${formattedClosingTime}`,
+    hours: `${formattedOpeningTime} – ${formattedClosingTime}`,
     lastAdmission: formattedLastEntryTime,
   };
 };
