@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { PrismicDocument } from '@prismicio/types';
 import { handleSettledPromiseResults } from 'utils';
 import { sendLog } from 'utils/logger';
 import { generateDocumentTypePromises } from 'utils/prismicUtils/getDocumentType';
@@ -34,8 +35,15 @@ const getPrismicDocumentType = async (
       })
     );
 
-    const [settledResult] =
+    const settledResultList: PrismicDocument[] =
       handleSettledPromiseResults(settledPromises, uid) ?? [];
+
+    const [settledResult] = settledResultList.sort((a, b) =>
+      new Date(b.last_publication_date) > new Date(a.last_publication_date)
+        ? 1
+        : -1
+    );
+
     if (settledResult) {
       res.setHeader('Cache-Control', `max-age=${SIXTY_DAYS_CACHE}`);
       res.status(200).json({
