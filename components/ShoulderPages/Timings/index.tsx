@@ -60,6 +60,8 @@ const TimingsPage = ({
     poiInfo?.bestTimeToVisit?.year || {}
   ).length;
   const PRODUCT_CARDS_LIMIT = 4;
+  const poiName = poiInfo?.content?.data?.name ?? poiInfo?.name;
+  const childPoiName = poiInfo?.content?.data?.name ?? poiInfo?.name;
 
   return (
     <>
@@ -83,11 +85,9 @@ const TimingsPage = ({
         </Conditional>
         <Conditional if={timingsInfo.timingTablesData?.length}>
           <BestTimeHeader
-            id={generateSidenavId(
-              `${poiInfo?.name} ${strings.CONTENT_PAGE.TIMINGS}`
-            )}
+            id={generateSidenavId(`${poiName} ${strings.CONTENT_PAGE.TIMINGS}`)}
           >
-            {poiInfo?.name}
+            {poiName}
           </BestTimeHeader>
           <SectionDescription
             dangerouslySetInnerHTML={{
@@ -120,10 +120,10 @@ const TimingsPage = ({
               <>
                 <BestTimeHeader
                   id={generateSidenavId(
-                    `${childPoiInfo?.name} ${strings.CONTENT_PAGE.TIMINGS}`
+                    `${childPoiName} ${strings.CONTENT_PAGE.TIMINGS}`
                   )}
                 >
-                  {childPoiInfo.name}
+                  {childPoiName}
                 </BestTimeHeader>
                 <SectionDescription
                   dangerouslySetInnerHTML={{
@@ -159,14 +159,14 @@ const TimingsPage = ({
           }}
         />
       </Conditional>
-      <Conditional if={poiInfo?.name && (weekInfoExists || yearInfoExists)}>
+      <Conditional if={poiName && (weekInfoExists || yearInfoExists)}>
         <PageContainer>
           <BestTimeHeader
             id={generateSidenavId(
-              `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiInfo?.name}`
+              `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiName}`
             )}
           >
-            {strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} {poiInfo?.name}
+            {strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} {poiName}
           </BestTimeHeader>
           <Conditional if={weekInfoExists}>
             <BestTimeSubHeader>
