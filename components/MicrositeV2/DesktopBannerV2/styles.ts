@@ -98,6 +98,9 @@ export const SwiperWrapper = styled.div`
       max-width: 1200px;
       margin: 0 auto;
     }
+    .paginator-container > div:first-child {
+      padding: 1rem 0 0 0;
+    }
   }
 `;
 
@@ -124,6 +127,7 @@ export const SlideDescription = styled.div<{
   pointer-events: none;
   position: absolute;
   left: 0;
+  top: -12px;
   z-index: 9;
   height: 100%;
   width: 100%;
@@ -183,7 +187,7 @@ export const SlideDescription = styled.div<{
     }
     button {
       pointer-events: all;
-      margin-top: 1.75rem;
+      margin-top: 1.5rem;
       ${expandFontToken(FONTS.BUTTON_MEDIUM)};
       color: #130029;
       background-color: ${COLORS.BRAND.WHITE};

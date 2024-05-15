@@ -144,7 +144,7 @@ const ReviewSection = ({
       <RatingsDetailsSection>
         <RatingsCountSection>
           <Ratings>
-            {averageRating} <StarFullNew fillColor={COLORS.BRAND.CANDY} />
+            <StarFullNew fillColor={COLORS.BRAND.CANDY} /> {averageRating}
           </Ratings>
           <RatingsCount>
             {strings.formatString(strings.RATINGS, shortenedRatingsCount)}

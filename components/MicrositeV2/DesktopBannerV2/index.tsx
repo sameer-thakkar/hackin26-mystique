@@ -47,7 +47,7 @@ const Swiper = dynamic(
 );
 
 const FIRST_SLIDE_DURATION = 12000;
-const SLIDE_DURATION = 2400;
+const SLIDE_DURATION = 4800;
 
 const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -266,6 +266,7 @@ const DesktopBannerV2 = ({
                 swiper?.realIndex === 0 ? FIRST_SLIDE_DURATION : SLIDE_DURATION
               }
               margin={0.1875}
+              containerWidthOverride={110}
               onDotClick={onPaginatorClicked}
             />
           </div>

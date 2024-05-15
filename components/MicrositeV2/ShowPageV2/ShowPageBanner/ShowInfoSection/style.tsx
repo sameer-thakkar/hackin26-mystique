@@ -86,7 +86,7 @@ export const Hero = styled.div<{ $isImageAvailable: boolean }>`
     margin-right: 1.5rem;
     transition: transform 0.2s ease;
     padding-bottom: 4px;
-    border-radius: 4px;
+    border-radius: 12px;
 
     background: linear-gradient(
       180deg,
@@ -102,10 +102,12 @@ export const Hero = styled.div<{ $isImageAvailable: boolean }>`
         $isImageAvailable ? 'absolute' : 'static'};
       z-index: -1;
     }
-
-    img,
     svg {
       border-radius: 4px;
+      border: 2px solid rgba(0, 0, 0, 0.14);
+    }
+    img {
+      border-radius: 12px;
       border: 2px solid rgba(0, 0, 0, 0.14);
     }
     @media (max-width: 768px) {
@@ -211,17 +213,23 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
     padding-bottom: 0.25rem;
     display: flex;
     .rating {
-      ${expandFontToken(FONTS.HEADING_SMALL)};
+      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
       color: ${COLORS.BRAND.CANDY};
-      margin-right: 0.5rem;
+      margin-right: 0.2rem;
       svg {
-        margin-left: 0.12rem;
+        margin-right: 0.15rem;
+        height: 0.875rem;
+        width: 0.875rem;
       }
-      border-bottom: dotted 1px #ff3998;
+      margin-top: 1px;
     }
     .review-count {
-      ${expandFontToken(FONTS.SUBHEADING_LARGE)};
+      ${expandFontToken(FONTS.UI_LABEL_LARGE)};
       color: ${COLORS.GRAY.G4};
+      span {
+        text-decoration: underline;
+        color: ${COLORS.GRAY.G4};
+      }
     }
   }
 
@@ -237,15 +245,18 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
       .ratings-wrapper {
         padding: 0;
         .rating {
-          ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
+          ${expandFontToken(FONTS.SUBHEADING_REGULAR)};
           margin-right: 0.25rem;
           svg {
             margin-left: 0.06rem;
+            height: 0.75rem;
+            width: 0.75rem;
           }
+          margin-top: 0px;
         }
         .review-count {
           ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-          color: ${COLORS.GRAY.G5};
+          color: ${COLORS.GRAY.G4};
         }
       }
     }
@@ -390,7 +401,7 @@ export const ReviewPopover = styled.div`
     svg {
       width: 24px;
       height: 24px;
-      margin-left: 5px;
+      margin-right: 0.15rem;
     }
   }
 

@@ -32,7 +32,6 @@ export const Ratings = styled.div`
   ${expandFontToken(FONTS.DISPLAY_REGULAR)};
   color: ${COLORS.BRAND.CANDY};
   svg {
-    margin-left: 0.31rem;
     height: 1.75rem;
     width: 1.75rem;
   }
