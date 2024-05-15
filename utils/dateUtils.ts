@@ -283,7 +283,7 @@ export const formatOperatingDayTimings = ({
     });
 
   return {
-    hours: `${formattedOpeningTime} – ${formattedClosingTime}`,
+    hours: `${formattedOpeningTime}–${formattedClosingTime}`,
     lastAdmission: formattedLastEntryTime,
   };
 };

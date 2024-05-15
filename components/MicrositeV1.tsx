@@ -312,7 +312,7 @@ const MicrositeV1 = (props: any) => {
   const { isEligible: isVideoBannerEligible, variant: videoBannerExpVariant } =
     useABTesting({
       experimentId: 'CURATED_VIDEO_BANNER',
-      noTrack: false,
+      noTrack: true,
       customEligibilityCheckFn: () => {
         return !!curatedBannerVideoSrc;
       },
@@ -668,7 +668,7 @@ const MicrositeV1 = (props: any) => {
     variant: thumbnailInBannerExpVariant,
   } = useABTesting({
     experimentId: 'VIDEO_THUMBNAIL_IN_BANNER',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () => !!bannerVideo,
   });
 
