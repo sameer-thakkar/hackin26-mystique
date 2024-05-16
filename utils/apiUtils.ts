@@ -623,7 +623,7 @@ export const fetchTourGroupsByCollection = async ({
         'fallback-to-english': '0',
       }),
     ...(primarySubCategoryID && {
-      'filter-by-subcategory-id': String(primarySubCategoryID),
+      'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
     'apply-ranking-experiment': String(runRankingExperiment),
   };
