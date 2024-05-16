@@ -141,7 +141,7 @@ export const getHumanReadableTime = ({
     minute: '2-digit',
   };
   if (removeTrailingZeros && parsedTime.minute() === 0) {
-    options.second = '2-digit';
+    delete options.minute;
   }
 
   const formatted = new Intl.DateTimeFormat(lang, options).format(
