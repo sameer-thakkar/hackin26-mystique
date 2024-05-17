@@ -1085,6 +1085,7 @@ const it = {
     TO: 'AL',
     LAST_ENTRY: 'ultimo ingresso',
     SUBATTRACTIONS: 'Sotto-Attrazioni',
+    MORE_INSIGHTS: 'Altre informazioni',
   },
   OFF_PERCENT: '{0}% di sconto',
   THEATRE_LANDING_PAGE: {

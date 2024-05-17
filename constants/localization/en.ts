@@ -1155,6 +1155,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TO: 'TO',
     LAST_ENTRY: 'last entry',
     SUBATTRACTIONS: 'Sub-Attractions',
+    MORE_INSIGHTS: 'More insights',
   },
   OFF_PERCENT: '{0}% off',
   THEATRE_LANDING_PAGE: {

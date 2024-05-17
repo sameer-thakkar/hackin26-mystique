@@ -1049,6 +1049,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TO: 'TOT',
     LAST_ENTRY: 'laatste invoer',
     SUBATTRACTIONS: 'Sub-Attracties',
+    MORE_INSIGHTS: 'Meer informatie',
   },
   OFF_PERCENT: '{0}% korting',
   THEATRE_LANDING_PAGE: {

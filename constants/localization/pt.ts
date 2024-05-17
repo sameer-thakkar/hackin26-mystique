@@ -1097,6 +1097,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TO: 'ATÉ',
     LAST_ENTRY: 'última entrada',
     SUBATTRACTIONS: 'Subatrações',
+    MORE_INSIGHTS: 'Mais informações',
   },
   OFF_PERCENT: '{0}% de desconto',
   THEATRE_LANDING_PAGE: {

@@ -1099,6 +1099,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TO: 'AU',
     LAST_ENTRY: 'dernière entrée',
     SUBATTRACTIONS: 'Sous-Attraits',
+    MORE_INSIGHTS: 'En savoir plus',
   },
   OFF_PERCENT: '{0} % de réduction',
   THEATRE_LANDING_PAGE: {

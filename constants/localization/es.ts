@@ -1147,6 +1147,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TO: 'A',
     LAST_ENTRY: 'última entrada',
     SUBATTRACTIONS: 'Sub-Atracciones',
+    MORE_INSIGHTS: 'Más información',
   },
   OFF_PERCENT: '{0} % de descuento',
   THEATRE_LANDING_PAGE: {

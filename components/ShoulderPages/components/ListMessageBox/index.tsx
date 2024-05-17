@@ -10,10 +10,7 @@ import { IMessageBoxProps } from '../../interface';
 import { Container, CTA, List } from './styles';
 
 const MessageBox = ({ list = [], CTALink }: IMessageBoxProps) => {
-  const title =
-    list?.length > 1
-      ? strings.CONTENT_PAGE.FUN_FACTS
-      : strings.CONTENT_PAGE.DID_YOU_KNOW;
+  const title = strings.CONTENT_PAGE.DID_YOU_KNOW;
 
   const onCtaClick = () => {
     trackEvent({
@@ -36,7 +33,7 @@ const MessageBox = ({ list = [], CTALink }: IMessageBoxProps) => {
       </List>
       <Conditional if={CTALink}>
         <CTA href={CTALink} target="_blank" onClick={onCtaClick}>
-          {strings.CONTENT_PAGE.MORE_INTERESTING_FACTS}
+          {strings.CONTENT_PAGE.MORE_INSIGHTS}
           <ChevronRightIcon
             strokeColor={COLORS.BRAND.PURPS}
             fillColor={COLORS.BRAND.PURPS}

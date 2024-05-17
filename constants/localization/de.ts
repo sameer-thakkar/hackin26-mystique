@@ -1086,6 +1086,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TO: 'BIS',
     LAST_ENTRY: 'letzter eintrag',
     SUBATTRACTIONS: 'Unterattraktionen',
+    MORE_INSIGHTS: 'Mehr Einblicke',
   },
   OFF_PERCENT: '{0} % Rabatt',
   THEATRE_LANDING_PAGE: {
