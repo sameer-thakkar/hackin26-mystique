@@ -87,6 +87,6 @@ export const EXPERIMENTS = {
   [EXPERIMENT_NAMES.LFC_IMPACT]: new Experiment(
     EXPERIMENT_NAMES.LFC_IMPACT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
 };

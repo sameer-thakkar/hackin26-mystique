@@ -296,7 +296,7 @@ const MicrositeV1 = (props: any) => {
     variant: lfcExpVariant,
   } = useABTesting({
     experimentId: 'LFC_IMPACT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () =>
       isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
