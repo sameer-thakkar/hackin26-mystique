@@ -62,7 +62,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
-  curatedVideoBannerExpUids,
   EMAIL_SUBCRIPTION,
   LANGUAGE_CODE_MAP,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
@@ -307,18 +306,6 @@ const MicrositeV1 = (props: any) => {
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
   const showLFC = lfcExpVariant === VARIANTS.CONTROL && isLFCImpactExpEligible;
-
-  const curatedBannerVideoSrc = curatedVideoBannerExpUids[uid]?.ytEmbedLink;
-  const { isEligible: isVideoBannerEligible, variant: videoBannerExpVariant } =
-    useABTesting({
-      experimentId: 'CURATED_VIDEO_BANNER',
-      noTrack: true,
-      customEligibilityCheckFn: () => {
-        return !!curatedBannerVideoSrc;
-      },
-    });
-  const showVideoBanner =
-    videoBannerExpVariant === VARIANTS.TREATMENT && isVideoBannerEligible;
 
   const showPopup = isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile;
 
@@ -663,22 +650,8 @@ const MicrositeV1 = (props: any) => {
     bannerImageData?.resourceEntityMedias?.[0]?.medias
   );
 
-  const {
-    isEligible: isThumbnailInBannerEligible,
-    variant: thumbnailInBannerExpVariant,
-  } = useABTesting({
-    experimentId: 'VIDEO_THUMBNAIL_IN_BANNER',
-    noTrack: true,
-    customEligibilityCheckFn: () => !!bannerVideo,
-  });
-
-  const showThumbnailInBanner =
-    thumbnailInBannerExpVariant === VARIANTS.TREATMENT &&
-    isThumbnailInBannerEligible;
-
   const tourListSection = (
     <PopulateProducts
-      showThumbnailInBanner={showThumbnailInBanner}
       currency={currency}
       uncategorizedTours={orderedFilteredTours.filter(
         (tour: TTour) =>
@@ -712,8 +685,6 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
-      showVideoBanner={showVideoBanner}
-      curatedBannerVideoSrc={curatedBannerVideoSrc}
     />
   );
 
@@ -881,7 +852,6 @@ const MicrositeV1 = (props: any) => {
 
         <Conditional if={showNewBanner && !isCatOrSubCatPage}>
           <StaticBanner
-            showThumbnailInBanner={showThumbnailInBanner}
             bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
