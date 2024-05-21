@@ -5,4 +5,5 @@ export type TReviewSectionProps = {
   tgid: string | number;
   topReviews?: TReviewMediasResponse['items'];
   tourGroupUrl?: string;
+  isMobile?: boolean;
 };

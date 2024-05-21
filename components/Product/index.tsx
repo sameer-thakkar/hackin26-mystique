@@ -1548,11 +1548,17 @@ const Product = (props: any) => {
                     getHighlightTabs
                   )}
                 </Conditional>
-                <Conditional if={isPopup && reviewsDetails}>
+                <Conditional
+                  if={
+                    (isMobile ? expandContent && isPoiMwebCard : isPopup) &&
+                    reviewsDetails
+                  }
+                >
                   <ReviewSection
                     reviewsDetails={reviewsDetails}
                     tgid={tgid}
                     topReviews={topReviews}
+                    isMobile={isMobile}
                   />
                 </Conditional>
               </div>

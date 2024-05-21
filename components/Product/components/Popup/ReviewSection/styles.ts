@@ -25,57 +25,80 @@ export const StyledExternalLinkIcon = styled.span`
 export const StyledReviewSectionTitle = styled.h6`
   ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
   color: ${COLORS.GRAY.G2};
+
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.HEADING_SMALL)}
+  }
 `;
 
 export const StyledReviewSectionContainer = styled.div`
   ${ReviewsSection} {
     padding-bottom: 0;
   }
-  ${Review} {
-    ${ReviewHeader} {
-      .review-header {
-        .pfp {
-          height: 2.5rem;
-          width: 2.5rem;
+
+  @media (min-width: 768px) {
+    ${Review} {
+      ${ReviewHeader} {
+        .review-header {
+          .pfp {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          .user-details {
+            .details {
+              .name {
+                ${expandFontToken(FONTS.HEADING_XS)};
+              }
+            }
+          }
         }
 
-        .user-details {
-          .details {
-            .name {
-              ${expandFontToken(FONTS.HEADING_XS)};
-            }
+        .rating {
+          margin-top: 0.25rem;
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.12rem;
+          }
+          .rating-count {
+            margin-left: 0.25rem;
+            ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
           }
         }
       }
 
-      .rating {
-        margin-top: 0.25rem;
+      ${ReviewContent} {
+        ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
+      }
 
-        svg {
-          width: 1rem;
-          height: 1rem;
-          margin-right: 0.12rem;
-        }
-        .rating-count {
-          margin-left: 0.25rem;
-          ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+      ${ViewTranslatedContentButton} {
+        ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
+      }
+
+      ${ReviewMediaSection} {
+        img,
+        .image-wrap {
+          width: 6.5625rem;
+          height: 8.75rem;
         }
       }
     }
+  }
 
-    ${ReviewContent} {
-      ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
-    }
-
-    ${ViewTranslatedContentButton} {
-      ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
+  @media (max-width: 768px) {
+    ${Review} {
+      margin-bottom: 1rem;
     }
 
     ${ReviewMediaSection} {
+      width: calc(100vw - 2rem);
+
       img,
       .image-wrap {
-        width: 6.5625rem;
-        height: 8.75rem;
+        width: 6.125rem;
+        height: 8.16625rem;
       }
     }
   }
@@ -96,6 +119,10 @@ export const StyledReviewSectionContainer = styled.div`
 
     &:active {
       transform: scale(0.97);
+    }
+
+    @media (max-width: 768px) {
+      margin-bottom: 1rem;
     }
   }
 `;

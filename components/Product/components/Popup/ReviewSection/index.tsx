@@ -12,6 +12,7 @@ const ReviewSection = ({
   reviewsDetails,
   tgid,
   topReviews = [],
+  isMobile = false,
 }: TReviewSectionProps) => {
   const externalButtonContent = (
     <>
@@ -35,11 +36,12 @@ const ReviewSection = ({
           showFetchMoreButton
           reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
-            slidesPerView: 6.3,
+            slidesPerView: isMobile ? 3.5 : 6.3,
             spaceBetween: 16,
           }}
           showSkeleton
           externalButtonContent={externalButtonContent}
+          isMobile={isMobile}
         />
       </StyledReviewSectionContainer>
     </>

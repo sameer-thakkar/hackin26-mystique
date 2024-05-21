@@ -283,6 +283,10 @@ export const ReviewSkeletonContainer = styled.div`
   .react-loading-skeleton {
     z-index: 0;
   }
+
+  @media (max-width: 768px) {
+    width: 21.75rem;
+  }
 `;
 
 export const ReviewUserDetailsContainer = styled.div`

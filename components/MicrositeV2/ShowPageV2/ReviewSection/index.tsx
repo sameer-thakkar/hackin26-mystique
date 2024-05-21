@@ -151,8 +151,8 @@ const ReviewSection = ({
           </RatingsCount>
         </RatingsCountSection>
         <RatingsSplit>
-          {Array.from({ length: 5 }, (_, i) => 5 - i).map((rating) => (
-            <StarCount key={rating}>
+          {Array.from({ length: 5 }, (_, i) => 5 - i).map((rating, index) => (
+            <StarCount key={index}>
               {getStars(rating)}
               <RatingBarBase>
                 <RatingBarAmount
@@ -175,7 +175,7 @@ const ReviewSection = ({
         ))}
         <Conditional if={showSkeleton && isFetching}>
           {Array.from({ length: 5 }, (_, i) => 5 - i).map((idx: number) => (
-            <ReviewSkeleton key={idx} />
+            <ReviewSkeleton key={idx} isMobile={isMobile} />
           ))}
         </Conditional>
       </ReviewsSection>
@@ -232,7 +232,7 @@ const ReviewSection = ({
   );
 };
 
-const ReviewSkeleton = () => {
+const ReviewSkeleton = ({ isMobile = false }: { isMobile?: boolean }) => {
   const showMedia = useMemo(() => Math.round(Math.random()), []);
 
   return (
@@ -244,7 +244,7 @@ const ReviewSkeleton = () => {
           <Skeleton height={'0.8rem'} width={'2.5rem'} />
         </ReviewUserDetailsTextContentContainer>
       </ReviewUserDetailsContainer>
-      <Skeleton height={'2rem'} width={'744px'} />
+      <Skeleton height={'2rem'} width={isMobile ? '348px' : '744px'} />
       <Conditional if={showMedia}>
         <ReviewSkeletonMediaContainer>
           <Skeleton height={'140px'} width={'105px'} />
