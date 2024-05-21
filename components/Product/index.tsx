@@ -1233,7 +1233,7 @@ const Product = (props: any) => {
                 <Ratings
                   reviewsDetails={reviewsDetails}
                   onRatingsCountClick={
-                    showPopup && reviewsDetails
+                    showPopup && reviewsDetails && !isMobile
                       ? () => {
                           trackEvent({
                             eventName:

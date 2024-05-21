@@ -254,8 +254,6 @@ const MicrositeV1 = (props: any) => {
     tagged_mb_type: taggedMbType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
-  const isPoiMwebCard = isA1orC1MB(taggedMbType) && isMobile && baseLangIsPoiMb;
-
   const { COVID19_ALERT, READ_MORE } = strings;
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
@@ -289,6 +287,7 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
   });
+
   const {
     isEligible: isLFCImpactExpEligible,
     isExperimentResolving: isLFCExperimentResolving,
@@ -307,7 +306,23 @@ const MicrositeV1 = (props: any) => {
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
   const showLFC = lfcExpVariant === VARIANTS.CONTROL && isLFCImpactExpEligible;
 
-  const showPopup = isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile;
+  const {
+    isEligible: isEligibleForDayTripsProductCardExperiment,
+    variant: dayTripsProductCardExperimentVariant,
+    isExperimentResolving: isDayTripsProductCardExperimentResolving,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_PRODUCT_CARD_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => {
+      return !isMobile && taggedSubCategoryName === 'Day Trips';
+    },
+  });
+
+  const showPopup =
+    (isA1orC1MB(taggedMbType) && baseLangIsPoiMb && !isMobile) ||
+    dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT;
+
+  const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
   const {
     attraction: attractionCFoot,
@@ -681,7 +696,10 @@ const MicrositeV1 = (props: any) => {
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
-        isA1orC1MB(taggedMbType) && !isMobile && baseLangIsPoiMb
+        !isMobile &&
+        ((isA1orC1MB(taggedMbType) && baseLangIsPoiMb) ||
+          (isEligibleForDayTripsProductCardExperiment &&
+            dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT))
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
@@ -721,7 +739,9 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isHohoExpEligible && isExperimentResolving) ||
-    (isLFCImpactExpEligible && isLFCExperimentResolving)
+    (isLFCImpactExpEligible && isLFCExperimentResolving) ||
+    (isEligibleForDayTripsProductCardExperiment &&
+      isDayTripsProductCardExperimentResolving)
   )
     return <Loader />;
 
