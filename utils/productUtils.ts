@@ -158,8 +158,7 @@ export const getProductCardLayout = ({
     default:
       layout = {
         desktop: [
-          isModifiedProductCard &&
-            `${PRODUCT_CARD_DESKTOP_IMG_GRID_AREA}category-and-rating line cta-combo`,
+          `${PRODUCT_CARD_DESKTOP_IMG_GRID_AREA}category-and-rating line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
@@ -181,46 +180,26 @@ export const getProductCardLayout = ({
             'card-img . line cta-combo',
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
-        mobile: isPoiMwebCard
-          ? [
-              isTicketCard ? null : 'card-img',
-              'category-and-rating',
-              'title',
-              isOpenDated && 'open-dated-descriptor',
-              hasOffer && 'offer',
-              'tags',
-              !isTicketCard &&
-                !isOpenDated &&
-                !showAvailabilityInTitle &&
-                'next-available',
-              'price-block',
-              showGuidesLabel && 'guides-banner-wrapper',
-              showAvailabilityInLanguagesText &&
-                'tour-available-in-languages-area',
-              isTicketCard && hasPromoCode && 'promo-block',
-              hasV1Booster && 'booster',
-              'body',
-              'cta-block',
-            ]
-          : [
-              isTicketCard ? null : 'card-img',
-              'title',
-              'price-block',
-              isOpenDated && 'open-dated-descriptor',
-              !isTicketCard &&
-                !isOpenDated &&
-                !showAvailabilityInTitle &&
-                'next-available',
-              showGuidesLabel && 'guides-banner-wrapper',
-              showAvailabilityInLanguagesText &&
-                'tour-available-in-languages-area',
-              isTicketCard && hasPromoCode && 'promo-block',
-              hasOffer && 'offer',
-              'tags',
-              hasV1Booster && 'booster',
-              'body',
-              'cta-block',
-            ],
+        mobile: [
+          isTicketCard ? null : 'card-img',
+          'category-and-rating',
+          'title',
+          isOpenDated && 'open-dated-descriptor',
+          hasOffer && 'offer',
+          isPoiMwebCard && 'tags',
+          !isTicketCard &&
+            !isOpenDated &&
+            !showAvailabilityInTitle &&
+            'next-available',
+          'price-block',
+          !isPoiMwebCard && 'tags',
+          showGuidesLabel && 'guides-banner-wrapper',
+          showAvailabilityInLanguagesText && 'tour-available-in-languages-area',
+          isTicketCard && hasPromoCode && 'promo-block',
+          hasV1Booster && 'booster',
+          'body',
+          'cta-block',
+        ],
       };
       break;
   }

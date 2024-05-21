@@ -40,10 +40,6 @@ import {
   ProductBody,
   ProductHeader,
   ProductOfferBlock,
-  SCPCarouselContainer,
-  SCPContainer,
-  SCPPriceContainer,
-  SCPTitle,
   SlideUpContainer,
   SlideUpTitle,
   SpecialGuidedTourMoreDetailsCTA,
@@ -210,7 +206,6 @@ const Product = (props: any) => {
     handleShortcodeDrawer,
     isNonPoi = false,
     isModifiedProductCard = false,
-    isSmallComboCard = false,
     isPoiMwebCard = false,
     reviewsDetails,
     showBoosters = false,
@@ -219,6 +214,7 @@ const Product = (props: any) => {
     showNewCard = false,
     showThumbnailInBanner = false,
   } = props;
+
   const {
     mbTheme,
     biLink,
@@ -635,6 +631,7 @@ const Product = (props: any) => {
       : (collapsibleContentRef.current?.offsetHeight ?? 0) >=
           maxProductBodyHeight ||
         (productRef.current?.offsetHeight ?? 0) >= maxProductHeight;
+
     setShowMoreDetails(isTruncated);
   }, [isMobile, activeTabIndex, isTicketCard]);
 
@@ -713,8 +710,15 @@ const Product = (props: any) => {
         },
       });
     } else {
-      trackedToggleContent(isContentOpen);
-      toggleContentOpen(!isContentOpen);
+      if (showPopup) {
+        popupController.current?.open();
+        setIsUnScrolled(true);
+        trackedToggleContent(false);
+        popupScrollHandler(0, false, activeTabIndex);
+      } else {
+        trackedToggleContent(isContentOpen);
+        toggleContentOpen(!isContentOpen);
+      }
     }
   };
 
@@ -746,9 +750,7 @@ const Product = (props: any) => {
         [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
         [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
         [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-        [ANALYTICS_PROPERTIES.SECTION]: isSmallComboCard
-          ? 'Combo Slice'
-          : 'Product List',
+        [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
         ...getProductCommonProperties({
           primaryCategory,
           primaryCollection,
@@ -763,8 +765,15 @@ const Product = (props: any) => {
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event: any) => {
       if (event.keyCode == 13 && !isMobile) {
-        toggleContentOpen(!isContentOpen);
-        trackedToggleContent(isContentOpen);
+        if (showPopup) {
+          popupController.current?.open();
+          setIsUnScrolled(true);
+          trackedToggleContent(false);
+          popupScrollHandler(0, false, activeTabIndex);
+        } else {
+          toggleContentOpen(!isContentOpen);
+          trackedToggleContent(isContentOpen);
+        }
       }
     };
     const innerContent = (
@@ -817,7 +826,7 @@ const Product = (props: any) => {
     return (
       <div
         ref={moreDetailsRef}
-        className="more-details"
+        className={`more-details ${showPopup ? 'arrow-right' : ''}`}
         data-open="0"
         onClick={onMoreDetailsClick}
         onKeyDown={keyPressedOnReadMore}
@@ -928,7 +937,11 @@ const Product = (props: any) => {
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
   const popupScrollHandler = debounce(
-    (scrollTop: number = 0, startWithReviews: boolean = false) => {
+    (
+      scrollTop: number = 0,
+      startWithReviews: boolean = false,
+      startWithIndex: number = -1
+    ) => {
       if (!popupContainerRef.current) return;
       if (currentTabActiveIndexForPopup.isForcedChange) {
         setCurrentTabActiveIndexForPopup({
@@ -984,17 +997,19 @@ const Product = (props: any) => {
         setPopupScrollTracker(scrollTrack);
       };
 
-      if (startWithReviews && reviewsDetails) {
+      if (startWithIndex > 0 || (startWithReviews && reviewsDetails)) {
+        const activeIndex =
+          startWithIndex > 0 ? startWithIndex : offsets.length - 1;
         setCurrentTabActiveIndexForPopup({
-          index: offsets.length - 1,
+          index: activeIndex,
           isForcedChange: true,
         });
         setIsUnScrolled(false);
         popupContainerRef.current.scrollTo({
-          top: offsets[offsets.length - 1],
+          top: offsets[activeIndex],
           behavior: 'smooth',
         });
-        checkScrollTracking(offsets[offsets.length - 1]);
+        checkScrollTracking(offsets[activeIndex]);
       } else {
         let indexToScrollTo = currentTabActiveIndexForPopup.index,
           minDifference = 10000;
@@ -1058,51 +1073,6 @@ const Product = (props: any) => {
     isAsideBarOverlay = false,
     isPopup = false
   ) => {
-    if (!expandContent && isSmallComboCard)
-      return (
-        <SCPContainer
-          data-tgid={tgid}
-          onClick={(e) => {
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.COMBO_CARDS_CLICKED,
-              [ANALYTICS_PROPERTIES.POSITION]: position,
-            });
-            onMoreDetailsClick(e);
-          }}
-        >
-          <Conditional if={images && images.length > 0}>
-            <SCPCarouselContainer>
-              <Image
-                key={images[0].url}
-                url={images[0].url}
-                alt={images[0].altText}
-                aspectRatio="21:9"
-                autoCrop={false}
-                width={PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width}
-                priority
-                fetchPriority={'high'}
-                fill
-              />
-            </SCPCarouselContainer>
-          </Conditional>
-          <SCPTitle>
-            {cardTitle.split(':')[cardTitle.split(':').length - 1]}
-          </SCPTitle>
-          <SCPPriceContainer $isScratchPriceEnabled={showScratchPrice}>
-            <PriceBlock
-              isMobile
-              showScratchPrice={showScratchPrice}
-              listingPrice={finalListingPrice}
-              lang={currentLanguage}
-              showSavings
-              id={+tgid}
-              prefix
-              key={'price-block'}
-            />
-          </SCPPriceContainer>
-        </SCPContainer>
-      );
-
     const mediaCarouselImageWidth = isMobile
       ? isBannerCard
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
@@ -1220,8 +1190,8 @@ const Product = (props: any) => {
           </Conditional>
 
           <ProductHeader>
-            <Conditional if={isPoiMwebCard || isModifiedProductCard}>
-              <CategoryAndRatingContainer>
+            <CategoryAndRatingContainer>
+              <Conditional if={!isNonPoi}>
                 <Category
                   primaryCategory={
                     scorpioData.primaryCategory ?? primaryCategory
@@ -1230,6 +1200,7 @@ const Product = (props: any) => {
                     scorpioData.primarySubCategory ?? primarySubCategory
                   }
                 />
+              </Conditional>
                 <Ratings
                   reviewsDetails={reviewsDetails}
                   onRatingsCountClick={
@@ -1250,12 +1221,11 @@ const Product = (props: any) => {
                             trackedToggleContent(false);
                           }
                           popupScrollHandler(0, true);
-                        }
-                      : undefined
-                  }
-                />
-              </CategoryAndRatingContainer>
-            </Conditional>
+                      }
+                    : undefined
+                }
+              />
+            </CategoryAndRatingContainer>
 
             <TourTitle
               boosterTag={boosterTag}
@@ -1361,9 +1331,7 @@ const Product = (props: any) => {
                     prefix
                     key={'price-block'}
                     wrapperRef={priceBlockWrapperRef}
-                    newDiscountTagDesignProps={
-                      isModifiedProductCard || isPoiMwebCard
-                    }
+                    newDiscountTagDesignProps
                   />
                 </PriceContainer>
                 <Conditional if={isTicketCard && promo_code}>
@@ -1507,10 +1475,11 @@ const Product = (props: any) => {
           </Conditional>
           <ProductBody
             hasReadMore={
-              showMoreDetailsInTabs &&
-              !defaultOpen &&
-              !isSpecialGuidedTour &&
-              !isModifiedProductCard
+              (showMoreDetailsInTabs &&
+                !defaultOpen &&
+                !isSpecialGuidedTour &&
+                !isModifiedProductCard) ||
+              showPopup
             }
             collapsed={
               !expandContent && !isTicketCard && !isModifiedProductCard
@@ -1531,11 +1500,21 @@ const Product = (props: any) => {
                 id={`tour-description-${position}`}
                 // @ts-expect-error TS(2322): Type '((e: MouseEvent<HTMLDivElement, MouseEvent>)... Remove this comment to see the full error message
                 onClick={
-                  !isMobile && !defaultOpen && !isModifiedProductCard
+                  !isMobile &&
+                  !defaultOpen &&
+                  !isModifiedProductCard &&
+                  !isPopup
                     ? (e) => {
                         e.stopPropagation();
-                        toggleContentOpen(!isContentOpen);
-                        trackedToggleContent(isContentOpen);
+                        if (showPopup) {
+                          popupController.current?.open();
+                          setIsUnScrolled(true);
+                          trackedToggleContent(false);
+                          popupScrollHandler(0, false, activeTabIndex);
+                        } else {
+                          toggleContentOpen(!isContentOpen);
+                          trackedToggleContent(isContentOpen);
+                        }
                       }
                     : null
                 }
@@ -1580,12 +1559,13 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional
               if={
-                showMoreDetailsInTabs &&
+                (showMoreDetailsInTabs || showPopup) &&
                 !defaultOpen &&
                 !isMobile &&
                 !isSpecialGuidedTour &&
                 !isModifiedProductCard &&
-                !isLoading
+                !isLoading &&
+                !isPopup
               }
             >
               {getMoreDetailsButton()}
@@ -1597,7 +1577,8 @@ const Product = (props: any) => {
               isMobile &&
               !expandContent &&
               !isModifiedProductCard &&
-              !isLoading
+              !isLoading &&
+              !isPopup
             }
           >
             {getMoreDetailsButton()}
@@ -1637,7 +1618,6 @@ const Product = (props: any) => {
       isV3Design={isV3Design}
       indexPosition={indexPosition}
       isCardVisible={getIsCardVisible()}
-      isSmallComboCard={isSmallComboCard}
     >
       <Conditional if={isV3Design}>
         <div className="indicator-triangle"></div>

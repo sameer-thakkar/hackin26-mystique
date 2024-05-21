@@ -99,7 +99,6 @@ export const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
     flex-wrap: wrap;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     margin-top: -0.5rem;
-    margin-bottom: -0.5rem;
     .tour-tag {
       margin: 0;
       flex-basis: calc((100% - 2rem) / 2);
@@ -703,6 +702,8 @@ const popupStyles = css`
     padding-bottom: 3rem;
 
     .tour-description {
+      max-height: none;
+
       h6 {
         ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
         margin: 2rem 0 1rem;
@@ -845,30 +846,10 @@ const modifiedProductCardMwebCss = css<{
   $isDrawer?: boolean;
   $hasDiscount?: boolean;
 }>`
-  grid-row-gap: ${({ $isDrawer }) => ($isDrawer ? '0.8rem' : '1rem')};
-  padding: ${({ $isDrawer }) => ($isDrawer ? '1rem 16px 0 16px' : '0.75rem')};
-  overflow: hidden;
-  position: relative;
-
   .card-img {
     height: initial;
     max-height: initial;
     aspect-ratio: 16/10;
-    margin: -0.75rem -1rem -0.5rem;
-  }
-
-  ${TitleWrapper} {
-    margin-top: -0.25rem;
-    margin-bottom: -1.25rem;
-    ${TourTitleWrapper} {
-      color: ${COLORS.GRAY.G1};
-      font-family: ${HALYARD.FONT_STACK};
-      font-size: 1.125rem;
-      font-style: normal;
-      line-height: 1.5rem;
-      letter-spacing: 0;
-      font-weight: 500;
-    }
   }
 
   ${MoreDetailsBtnWrapper} {
@@ -910,71 +891,9 @@ const modifiedProductCardMwebCss = css<{
     }
   }
 
-  ${StyledPriceBlock} {
-    grid-row-gap: 0;
-
-    .tour-scratch-price {
-      color: ${COLORS.GRAY.G3};
-      ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
-    }
-
-    .strike-through {
-      margin-right: 0.375rem;
-      font-family: ${HALYARD.FONT_STACK};
-      letter-spacing: 0;
-      color: ${COLORS.GRAY.G3};
-    }
-
-    .tour-price-container {
-      gap: 0;
-
-      .tour-price {
-        .strike-through {
-          font-size: 1.125rem;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 1.5rem;
-          letter-spacing: 0;
-          color: ${({ $hasDiscount }) =>
-            $hasDiscount ? COLORS.OKAY_GREEN.DARK_TONE : COLORS.GRAY.G2};
-        }
-      }
-
-      ${SavedTag} {
-        ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-        font-family: ${HALYARD.FONT_STACK};
-        padding: 0.125rem 0.375rem;
-        color: ${COLORS.BRAND.WHITE};
-        background-color: ${COLORS.OKAY_GREEN[3]};
-        border-radius: 0.25rem;
-      }
-    }
-  }
-
   ${CTAContainer} {
-    ${NextAvailableBlock} .available-text {
-      margin-top: 1rem;
-      color: ${COLORS.TEXT.BEACH};
-      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
-    }
-
-    ${PriceContainer} {
-      ${({ isContentExpanded, $isExperimentalCard }) =>
-        !isContentExpanded &&
-        !$isExperimentalCard &&
-        css`
-          margin-bottom: -0.25rem;
-        `}
-    }
-
-    ${CTABlock} {
-      margin-bottom: 0.5rem;
-      grid-column: 1/3;
-
-      button {
-        font-family: ${HALYARD.FONT_STACK};
-        letter-spacing: 0;
-      }
+    ${NextAvailableBlock} {
+      margin-top: 0;
     }
   }
 `;
@@ -999,10 +918,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     border-radius: 4px;`};
   display: grid;
 
-  grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
   grid-template-areas: ${({ layout }) =>
     layout.desktop.map((row: any) => `'${row}'`)};
+  gap: 0.5rem 1.5rem;
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -1040,6 +959,21 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       svg {
         path {
           stroke: ${COLORS.TEXT.CANDY_1};
+        }
+      }
+    }
+
+    &.arrow-right {
+      .chevron {
+        top: -0.4rem;
+        left: -0.15rem;
+        height: 0.75rem;
+        width: 0.75rem;
+
+        svg {
+          height: 0.75rem;
+          width: 0.75rem;
+          transform: rotate(270deg);
         }
       }
     }
@@ -1124,6 +1058,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       height: auto;
       max-height: none;
       aspect-ratio: 16/10;
+      margin: -0.75rem -1rem 0;
 
       img {
         border-radius: 0;
@@ -1132,6 +1067,60 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
     .card-img img {
       width: 100%;
+    }
+
+    grid-row-gap: ${({ $isDrawer }) => ($isDrawer ? '0.8rem' : '0.75rem')};
+    padding: ${({ $isDrawer }) => ($isDrawer ? '1rem 16px 0 16px' : '0.75rem')};
+    overflow: hidden;
+    position: relative;
+
+    ${TitleWrapper} {
+      margin-top: -0.25rem;
+      margin-bottom: -1.25rem;
+      ${TourTitleWrapper} {
+        color: ${COLORS.GRAY.G1};
+        font-family: ${HALYARD.FONT_STACK};
+        font-size: 1.125rem;
+        font-style: normal;
+        line-height: 1.5rem;
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+    }
+
+    ${CTAContainer} {
+      ${NextAvailableBlock} {
+        margin-top: 1rem;
+
+        .available-text {
+          color: ${COLORS.TEXT.BEACH};
+          ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+        }
+      }
+
+      ${PriceContainer} {
+        ${({ isContentExpanded, $isExperimentalCard, $isPoiMwebCard }) =>
+          !isContentExpanded &&
+          !$isExperimentalCard &&
+          $isPoiMwebCard &&
+          css`
+            margin-bottom: -0.25rem;
+          `}
+
+        .tour-scratch-price {
+          color: ${COLORS.GRAY.G4};
+        }
+      }
+
+      ${CTABlock} {
+        margin-bottom: 0.5rem;
+        grid-column: 1/3;
+
+        button {
+          font-family: ${HALYARD.FONT_STACK};
+          letter-spacing: 0;
+        }
+      }
     }
 
     ${({ $isPoiMwebCard }) => $isPoiMwebCard && modifiedProductCardMwebCss}
@@ -2648,60 +2637,6 @@ export const ViewMoreButton = styled.button<{
         }
       }
     `}
-`;
-
-export const SCPCarouselContainer = styled.div`
-  width: 14rem;
-  height: 8.75rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-`;
-
-export const SCPTitle = styled.h2`
-  color: ${COLORS.BLACK};
-  ${expandFontToken(FONTS.HEADING_XS)}
-  margin: 0;
-`;
-
-export const SCPPriceContainer = styled.div<{
-  $isScratchPriceEnabled?: boolean;
-}>`
-  ${StyledPriceBlock} {
-    grid-row-gap: 0.125rem;
-
-    .tour-scratch-price {
-      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-      color: ${COLORS.GRAY.G3};
-
-      .strike-through {
-        ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-        color: ${COLORS.GRAY.G3};
-      }
-    }
-
-    .tour-price-container {
-      align-items: center;
-      .tour-price {
-        .strike-through {
-          ${expandFontToken(FONTS.SUBHEADING_LARGE)}
-        }
-      }
-    }
-
-    ${SavedTag} {
-      background-color: ${COLORS.OKAY_GREEN[3]};
-      padding: 0.125rem 0.375rem 0.1875rem 0.375rem;
-      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-      color: ${COLORS.BRAND.WHITE};
-      border-radius: 0.25rem;
-    }
-  }
-`;
-
-export const SCPContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
 
 export const RiveContainer = styled.div<{
