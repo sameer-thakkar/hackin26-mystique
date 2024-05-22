@@ -61,7 +61,6 @@ const TimingsPage = ({
   ).length;
   const PRODUCT_CARDS_LIMIT = 4;
   const poiName = poiInfo?.content?.data?.name ?? poiInfo?.name;
-  const childPoiName = poiInfo?.content?.data?.name ?? poiInfo?.name;
 
   return (
     <>
@@ -116,6 +115,7 @@ const TimingsPage = ({
         <Conditional if={childTimingsInfo?.length}>
           {childTimingsInfo?.map((childTiming, index) => {
             const childPoiInfo = childPoisInfo?.[index] || {};
+            const childPoiName = childPoiInfo?.name;
             return (
               <>
                 <BestTimeHeader
