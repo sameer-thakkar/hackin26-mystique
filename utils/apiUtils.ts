@@ -99,6 +99,7 @@ export enum HeadoutEndpoints {
   Airports,
   CollectionPoi,
   BulkPoiList,
+  CollectionTourGroups,
 }
 
 export const getHeadoutApiUrl = ({
@@ -113,6 +114,7 @@ export const getHeadoutApiUrl = ({
   id: string | number | null;
 }) => {
   let endpointSlug;
+
   switch (endpoint) {
     case HeadoutEndpoints.TourGroupInventoryV5:
       endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}/`;
@@ -195,6 +197,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.BulkPoiList:
       endpointSlug = `/api/v1/pois`;
       break;
+    case HeadoutEndpoints.CollectionTourGroups:
+      endpointSlug = `/api/tours/v1/collection/${id}/tour-groups/`;
+      break;
   }
 
   let url = endpointSlug;
@@ -205,6 +210,7 @@ export const getHeadoutApiUrl = ({
 
     url = `https://api.headout.com${formattedEndpointSlug}`;
   }
+
   if (params && Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
     return finalUrl as string;
@@ -625,21 +631,26 @@ export const fetchTourGroupsByCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
-    'apply-ranking-experiment': String(runRankingExperiment),
+    ...(runRankingExperiment && {
+      'src-version': 'v1',
+    }),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.TourGroupListByCollectionV6,
+    endpoint: runRankingExperiment
+      ? HeadoutEndpoints.CollectionTourGroups
+      : HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,
     id: collectionId,
     params,
   });
+
   try {
     const response = await fetch(url, { headers });
     return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchTGIDsByCollectionV6]', error);
+    console.error('[fetchTourGroupsByCollectionV1]', error);
   }
 };
 

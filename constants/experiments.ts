@@ -21,10 +21,10 @@ const LTT_LP_REVAMP_EXPERIMENT = 'LTT Landing Page Revamp Experiment';
 const LTT_SHOW_PAGE_REVAMP_EXPERIMENT = 'LTT Show Page Revamp Experiment';
 const NON_POI_CARD_EXPERIMENT = 'Non POI Card Popup Experiment';
 const POI_CARD_EXPERIMENT = 'POI More Details Swipe sheet Experiment 2';
-const RANKING_EXPERIMENT_AB = 'Product Rankings A/B';
 const SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT =
   'Shoulder Page Section Ranking';
 const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
+const RANKING_EXPERIMENT_V1_REVENUE = 'Product Rankings v1 (Revenue)';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
@@ -38,7 +38,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LTT_SHOW_PAGE_REVAMP_EXPERIMENT,
   NON_POI_CARD_EXPERIMENT,
   POI_CARD_EXPERIMENT,
-  RANKING_EXPERIMENT_AB,
+  RANKING_EXPERIMENT_V1_REVENUE,
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT,
   VIDEO_THUMBNAIL_IN_BANNER,
 };
@@ -103,8 +103,8 @@ export const EXPERIMENTS: Record<string, any> = {
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
   ),
-  [RANKING_EXPERIMENT_AB]: new Experiment(
-    RANKING_EXPERIMENT_AB,
+  [RANKING_EXPERIMENT_V1_REVENUE]: new Experiment(
+    RANKING_EXPERIMENT_V1_REVENUE,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
   ),

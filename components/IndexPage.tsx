@@ -21,7 +21,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import { getLangUID, isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
@@ -31,6 +31,7 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   GDPR_COUNTRY_CODES,
+  RANKING_EXPERIMENT_UIDS,
   THEMES,
   TIME,
 } from 'const/index';
@@ -75,6 +76,7 @@ const Page = (props: PageProps) => {
     categoryTourListData: legacyCategoryTourListData,
     docsForListicles,
     collectionsInListicles,
+    rankingExperimentProps,
   } = props;
 
   const { tourGroupMap, ...rawCategoryTgidMap } =
@@ -98,6 +100,11 @@ const Page = (props: PageProps) => {
     ...(scorpioData && { scorpioData }),
     ...(orderedTours && { orderedTours }),
     ...(collectionVideos && { collectionVideos }),
+  };
+
+  const categoryTourListDataWithRankingExperiment = {
+    ...categoryTourListData,
+    ...rankingExperimentProps,
   };
 
   strings.setContent({
@@ -291,6 +298,9 @@ const Page = (props: PageProps) => {
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
             uid={uid}
+            categoryTourListDataWithRankingExperiment={
+              categoryTourListDataWithRankingExperiment
+            }
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -516,9 +526,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ),
   ];
 
-  const [responseWithoutExperiment] = await Promise.all(promiseList);
+  const { uid } = getLangUID(req, query);
+
+  if (
+    (!lang || lang === 'en-us' || lang === 'en') &&
+    RANKING_EXPERIMENT_UIDS.includes(uid)
+  ) {
+    promiseList.push(
+      reflect(
+        getPageData({
+          res,
+          req,
+          query,
+          isDev,
+          localizedStrings,
+          runRankingExperiment: true,
+        })
+      )
+    );
+  }
+
+  const [responseWithoutExperiment, responseWithExperiment] = await Promise.all(
+    promiseList
+  );
 
   const props = responseWithoutExperiment?.payload;
+  const rankingExperimentProps = responseWithExperiment?.payload;
 
   try {
     let url =
@@ -567,6 +600,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
+        ...(rankingExperimentProps && { rankingExperimentProps }),
         isBot,
         localizedStrings,
         serverRequestStartTimestamp,

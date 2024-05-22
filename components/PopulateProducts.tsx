@@ -165,6 +165,7 @@ const PopulateProducts = (props: any) => {
     showPopup = false,
     showVideoBanner = false,
     curatedBannerVideoSrc,
+    isRankingExperimentResolving = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -449,7 +450,10 @@ const PopulateProducts = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
 
-  const showLoader = isEligible && (productsLoading || isExperimentResolving);
+  const showLoader =
+    productsLoading ||
+    (isEligible && isExperimentResolving) ||
+    isRankingExperimentResolving;
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,

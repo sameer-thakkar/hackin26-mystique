@@ -666,6 +666,7 @@ export const getPageData = async ({
             localizedStrings,
             runRankingExperiment,
           });
+
           minPrice = categoryTourListData.minPrice;
           bestDiscount = categoryTourListData.bestDiscount;
           const [firstTGID] = categoryTourListData?.finalTgids || [];

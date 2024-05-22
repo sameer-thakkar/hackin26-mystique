@@ -68,6 +68,7 @@ import {
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
+  RANKING_EXPERIMENT_UIDS,
   TEMPLATES,
   THEMES,
 } from 'const/index';
@@ -166,6 +167,7 @@ const MicrositeV1 = (props: any) => {
     routeDetails,
     catAndSubCatPageData,
     isCatOrSubCatPage,
+    categoryTourListDataWithRankingExperiment,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -332,10 +334,25 @@ const MicrositeV1 = (props: any) => {
   const headerCurrencies = currencies_list.filter((c: any) => c?.currency);
   const isCategorisedTours =
     Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
+
+  const {
+    isExperimentResolving: isRankingExperimentResolving,
+    variant: rankingExperimentVariant,
+  } = useABTesting({
+    experimentId: 'RANKING_EXPERIMENT_V1_REVENUE',
+    customEligibilityCheckFn: () =>
+      RANKING_EXPERIMENT_UIDS.includes(uid) &&
+      categoryTourListDataWithRankingExperiment &&
+      (lang === 'en-us' || lang === 'en'),
+  });
+
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
-  } = categoryTourListData || {};
+  } =
+    (rankingExperimentVariant === VARIANTS.TREATMENT
+      ? categoryTourListDataWithRankingExperiment
+      : categoryTourListData) || {};
 
   const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -405,6 +422,11 @@ const MicrositeV1 = (props: any) => {
 
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
+
+  useEffect(() => {
+    if (rankingExperimentVariant !== VARIANTS.TREATMENT) return;
+    setOrderedFilteredTours(orderedTours);
+  }, [rankingExperimentVariant]);
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -698,7 +720,11 @@ const MicrositeV1 = (props: any) => {
         (tour: TTour) =>
           tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
       )}
-      scorpioData={scorpioData}
+      scorpioData={
+        rankingExperimentVariant === VARIANTS.TREATMENT
+          ? categoryTourListDataWithRankingExperiment?.scorpioData
+          : scorpioData
+      }
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
       currentLanguage={currentLanguage}
@@ -729,6 +755,7 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
+      isRankingExperimentResolving={isRankingExperimentResolving}
     />
   );
 

@@ -85,20 +85,25 @@ const categoryTourListParserV1 = async ({
         cookies,
         runRankingExperiment,
       });
+
       const {
         city,
         currency: currentCurrency,
+        tourGroups,
         pageData,
       } = collectionTourGroups;
+      const tourGroupsData = runRankingExperiment
+        ? tourGroups
+        : pageData?.items;
 
-      let filteredData = pageData?.items;
+      let filteredData = tourGroupsData;
       if (sub_category_filter) {
-        filteredData = pageData?.items?.filter(
+        filteredData = tourGroupsData?.filter(
           (el: Record<string, any>) =>
             el?.primarySubCategory?.id === sub_category_filter
         );
       } else if (category_filter && !sub_category_filter) {
-        filteredData = pageData?.items?.filter(
+        filteredData = tourGroupsData?.filter(
           (el: Record<string, any>) =>
             el?.primaryCategory?.id === category_filter
         );
@@ -263,12 +268,14 @@ const categoryTourListParserV1 = async ({
       orderedTGIDRanking = [...finalRanking];
     }
 
-    const orderedTours = allTours?.sort((tourA, tourB) => {
-      return (
-        orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
-        orderedTGIDRanking?.indexOf(parseInt(tourB.id))
-      );
-    });
+    const orderedTours = runRankingExperiment
+      ? allTours
+      : allTours?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.id))
+          );
+        });
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );

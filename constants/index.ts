@@ -2034,7 +2034,18 @@ export const PRODUCT_CARD_CHILDREN_POSITIONS = {
   MORE_DETAILS: 'More Details',
 };
 
-export const RANKING_EXPERIMENT_UIDS: Array<string> = [];
+export const RANKING_EXPERIMENT_UIDS: Array<string> = [
+  'www.dubai-tickets.co.burj-khalifa',
+  'www.acropolis-tickets.com',
+  'www.thevaticantickets.com',
+  'www.eiffeltickets.com',
+  'www.tickets-paris.fr.disneyland-paris',
+  'www.london-tickets.co.uk.london-eye-tickets',
+  'www.kennedyspacecenter-tickets.com',
+  'the-edge-nyc.new-york-tickets.com',
+  'www.accademia-tickets.com',
+  'www.london-tickets.co.uk.tower-of-london',
+];
 
 export const CAROUSEL_UNITS = {
   dotsLimit: 4,
