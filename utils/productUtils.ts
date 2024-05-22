@@ -158,7 +158,9 @@ export const getProductCardLayout = ({
     default:
       layout = {
         desktop: [
-          `${PRODUCT_CARD_DESKTOP_IMG_GRID_AREA}category-and-rating line cta-combo`,
+          `${
+            !isTicketCard ? PRODUCT_CARD_DESKTOP_IMG_GRID_AREA : ''
+          }category-and-rating line cta-combo`,
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
