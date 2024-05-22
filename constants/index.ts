@@ -982,6 +982,7 @@ export const ANALYTICS_PROPERTIES = {
   COMPONENT: 'Component',
   SECTION_TYPE: 'Section Type',
   SLICE_TYPE: 'Slice Type',
+  CONTAINER: 'Container',
 };
 
 export const PAGE_TYPES = {
@@ -2107,3 +2108,5 @@ export const COLLECTION_ID_CITIES_MAP: Record<number, string> = {
   167: 'London',
   24: 'New York',
 };
+
+export const MYSTIQUE = 'Mystique';

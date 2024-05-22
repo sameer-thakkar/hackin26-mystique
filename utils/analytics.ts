@@ -1,5 +1,5 @@
 import { BoosterType } from 'components/Product/interface';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, MYSTIQUE } from 'const/index';
 
 declare global {
   interface Window {
@@ -33,6 +33,7 @@ export const trackEvent = ({ eventName, ...labelProps }: TTrackEvent) => {
   const allProps = {
     event: eventName,
     ...labelProps,
+    [ANALYTICS_PROPERTIES.CONTAINER]: MYSTIQUE,
   };
   window.dataLayer.push(allProps);
 };

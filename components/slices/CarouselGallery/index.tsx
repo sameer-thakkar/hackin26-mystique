@@ -92,7 +92,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
     onSwiper: (swiper) => setSwiperInstance(swiper),
   };
 
-  if (!images?.length) return null;
+  if (!images?.length || !images?.[0]?.linked_image?.url) return null;
   return (
     <>
       <Heading id={stringIdfy(heading)}>

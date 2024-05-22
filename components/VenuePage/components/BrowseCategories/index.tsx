@@ -57,7 +57,7 @@ const BrowseByCategories = ({ data, isMobile }: TBrowseCategories) => {
   };
 
   return (
-    <Conditional if={subCategoriesData.length > 0}>
+    <Conditional if={subCategoriesData?.length > 0}>
       <Wrapper>
         <Title>
           {CATEGORIES}

@@ -1,6 +1,7 @@
 import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import { asLink } from '@prismicio/helpers';
+import { AlternateLanguage } from '@prismicio/types';
 import { getCatSubCatMedia } from 'components/CityPageContainer/utils';
 import { TourGroupDataType } from 'components/NewsPage/interface';
 import { getShowsBasedOnTimestamp } from 'components/VenuePage/utils';
@@ -89,7 +90,12 @@ export const getAllShowsData = async ({
   const allShowPageUids = showPageDocuments?.map((document: any) => {
     const tgid = document.data?.tgid;
     return {
-      [tgid]: document.uid,
+      [tgid]: {
+        uid: document.uid,
+        alternateLanguages: document.alternate_languages.map(
+          (langObj: AlternateLanguage) => langObj.lang
+        ),
+      },
     };
   });
   const showsData = await fetchTourListV6({

@@ -4,17 +4,25 @@ import Product from 'components/MicrositeV2/Product';
 import { ShowsGridProps } from 'components/VenuePage/components/ShowsGrid/interface';
 import { Container } from 'components/VenuePage/components/ShowsGrid/styles';
 import { MBContext } from 'contexts/MBContext';
+import { LANGUAGE_MAP, LanguagesUnion } from 'const/index';
 import { strings } from 'const/strings';
 
 const ShowsGrid = (props: ShowsGridProps) => {
   const { data, isMobile, allShowPageUids } = props;
-  const { host } = useContext(MBContext);
+  const { host, lang } = useContext(MBContext);
+  const currentLang = LANGUAGE_MAP[lang as LanguagesUnion].locale;
 
   const findUid = (tgid: string) => {
-    return allShowPageUids?.reduce((acc: any, curr: any) => {
-      const result = curr[tgid] || '';
-      return acc + result;
-    }, '');
+    const showPage = allShowPageUids?.find(
+      (element) => Object.keys(element || {})?.[0] == tgid
+    );
+    const { alternateLanguages, uid } = showPage?.[tgid] || {};
+    if (
+      currentLang === LANGUAGE_MAP.en.locale ||
+      alternateLanguages?.includes(currentLang)
+    ) {
+      return uid;
+    }
   };
 
   return (

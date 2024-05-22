@@ -37,11 +37,12 @@ const ProductCard = styled.div<{
   singleCard?: boolean;
   categoryFontNameStyles?: string;
   productCardHeight?: number;
+  $hidePointer?: boolean;
 }>`
   width: 100%;
   height: 100%;
   max-width: 100%;
-  cursor: pointer;
+  cursor: ${({ $hidePointer }) => ($hidePointer ? 'default' : 'pointer')};
   display: grid;
   grid-template-rows: 176px auto;
   grid-row-gap: 8px;
@@ -512,6 +513,9 @@ const Product = (props: any) => {
       }
     } else {
       if (isEntertainmentMb) {
+        if (!showPageExists) {
+          return null;
+        }
         window.open(showPageUrl, '_blank');
       } else {
         productClick(tgid, event);
@@ -573,7 +577,11 @@ const Product = (props: any) => {
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
     });
   };
-  const showPageExists = !showPageUrl.includes('/book');
+
+  const showPageExists = isVenuePage
+    ? !!showPageUidForVenuePage
+    : !showPageUrl.includes('/book');
+
   const getBooster = (onlyBoosterText = false) => {
     if ((save > 0 || hasSpecialOffer) && isLTT) {
       if (onlyBoosterText) return strings.SHOW_PAGE.SPECIAL_OFFER;
@@ -629,6 +637,7 @@ const Product = (props: any) => {
       $isV3Design={isV3Design}
       singleCard={!!singleCard}
       productCardHeight={productCardHeight}
+      $hidePointer={!showPageExists}
     >
       <ProductImage
         $isV3Design={isV3Design}

@@ -5,18 +5,26 @@ import PinnedCard from 'components/PinnedCard/pinnedCard';
 import { Container } from 'components/VenuePage/components/ShowsList/styles';
 import { MBContext } from 'contexts/MBContext';
 import { FONTS } from 'const/fonts';
+import { LANGUAGE_MAP, LanguagesUnion } from 'const/index';
 import { expandFontToken } from 'const/typography';
 import { IShowsListProps } from './interface';
 
 const ShowsList = (props: IShowsListProps) => {
-  const { host } = useContext(MBContext);
+  const { host, lang } = useContext(MBContext);
   const { isMobile, heading, data, uid, allShowPageUids } = props;
+  const currentLang = LANGUAGE_MAP[lang as LanguagesUnion].locale;
 
   const findUid = (tgid: string) => {
-    return allShowPageUids?.reduce((acc: any, curr: any) => {
-      const result = curr[tgid] || '';
-      return (acc = acc + result);
-    }, '');
+    const showPage = allShowPageUids?.find(
+      (element) => Object.keys(element || {})?.[0] == tgid
+    );
+    const { alternateLanguages, uid } = showPage?.[tgid] || {};
+    if (
+      currentLang === LANGUAGE_MAP.en.locale ||
+      alternateLanguages?.includes(currentLang)
+    ) {
+      return uid;
+    }
   };
 
   return (

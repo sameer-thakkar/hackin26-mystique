@@ -4,7 +4,7 @@ import { strings } from 'const/strings';
 import { TVerticalProductCardSlideProps } from './interface';
 
 const VerticalProductCardSlide = ({
-  cards,
+  cards = [],
   isMobile,
   mediaData,
   showPageDocuments,

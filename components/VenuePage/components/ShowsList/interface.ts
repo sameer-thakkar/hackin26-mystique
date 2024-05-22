@@ -3,6 +3,6 @@ export interface IShowsListProps {
   uid: string;
   isMobile: boolean;
   heading: string;
-  allShowPageUids: string[];
+  allShowPageUids: Record<string, any>[];
   data: any;
 }
