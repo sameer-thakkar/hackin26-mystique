@@ -5,6 +5,7 @@ import HorizontalProductCard from 'components/MicrositeV2/EntertainmentMBLanding
 import VerticalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard';
 import { TopShowsWrapper } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/TopShowsSection/styles';
 import Button from 'UI/Button';
+import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { ENTERTAINMENT_CATEGORIES } from 'const/entertainmentCategories';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
@@ -93,7 +94,7 @@ const TopShowsSection = ({
           const isShowCampaign = directTgid === show.tgid?.toString();
 
           return isMobile ? (
-            <React.Fragment key={index}>
+            <React.Fragment key={genUniqueId()}>
               <Conditional if={index === 3 && showBrowseByCategories}>
                 <BrowseByCategoriesSection
                   categoriesToRender={categoriesToRender}
@@ -129,7 +130,7 @@ const TopShowsSection = ({
           ) : (
             <div
               className={`card-wrapper ${isShowCampaign ? 'your-pick' : ''}`}
-              key={index}
+              key={genUniqueId()}
             >
               <Conditional if={isShowCampaign}>
                 <div className="your-pick-title">

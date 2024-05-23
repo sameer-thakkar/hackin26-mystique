@@ -105,7 +105,10 @@ const ContentSections = ({
     strings.SHOW_PAGE.THE_STORY
   );
 
-  const showDescription = aboutShow?.tab_content?.slice(0, theStoryIndex);
+  const showDescription =
+    theStoryIndex > 0
+      ? aboutShow?.tab_content?.slice(0, theStoryIndex)
+      : aboutShow?.tab_content;
   const theStory = aboutShow?.tab_content?.slice(theStoryIndex + 1);
 
   const showDetails = getTabContent(
