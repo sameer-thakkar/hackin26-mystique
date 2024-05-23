@@ -655,10 +655,11 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showPopup =
-    !isMobile ||
-    dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT ||
-    (isEligibleForNonPOIPopup &&
-      nonPoiPopupExperimentVariant === VARIANTS.TREATMENT);
+    !isMobile &&
+    ((isA1orC1MB(taggedMbType) && baseLangIsPoiMb) ||
+      dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT ||
+      (isEligibleForNonPOIPopup &&
+        nonPoiPopupExperimentVariant === VARIANTS.TREATMENT));
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 

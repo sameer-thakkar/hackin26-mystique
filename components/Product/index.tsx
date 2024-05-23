@@ -1190,17 +1190,18 @@ const Product = (props: any) => {
           </Conditional>
 
           <ProductHeader>
-            <CategoryAndRatingContainer>
-              <Conditional if={!isNonPoi}>
-                <Category
-                  primaryCategory={
-                    scorpioData.primaryCategory ?? primaryCategory
-                  }
-                  primarySubCategory={
-                    scorpioData.primarySubCategory ?? primarySubCategory
-                  }
-                />
-              </Conditional>
+            <Conditional if={!isV3Design}>
+              <CategoryAndRatingContainer>
+                <Conditional if={!isNonPoi}>
+                  <Category
+                    primaryCategory={
+                      scorpioData.primaryCategory ?? primaryCategory
+                    }
+                    primarySubCategory={
+                      scorpioData.primarySubCategory ?? primarySubCategory
+                    }
+                  />
+                </Conditional>
                 <Ratings
                   reviewsDetails={reviewsDetails}
                   onRatingsCountClick={
@@ -1221,11 +1222,12 @@ const Product = (props: any) => {
                             trackedToggleContent(false);
                           }
                           popupScrollHandler(0, true);
-                      }
-                    : undefined
-                }
-              />
-            </CategoryAndRatingContainer>
+                        }
+                      : undefined
+                  }
+                />
+              </CategoryAndRatingContainer>
+            </Conditional>
 
             <TourTitle
               boosterTag={boosterTag}
@@ -1503,7 +1505,8 @@ const Product = (props: any) => {
                   !isMobile &&
                   !defaultOpen &&
                   !isModifiedProductCard &&
-                  !isPopup
+                  !isPopup &&
+                  showPopup
                     ? (e) => {
                         e.stopPropagation();
                         if (showPopup) {
