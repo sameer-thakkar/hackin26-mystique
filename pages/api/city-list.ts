@@ -25,8 +25,11 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
       results_size: totalCities,
       results: citiesResult?.map((c) => {
         const { cityCode, displayName: city, country, imageURL } = c || {};
-        const { code: countryCode, displayName: countryName, currency } =
-          country || {};
+        const {
+          code: countryCode,
+          displayName: countryName,
+          currency,
+        } = country || {};
         return {
           id: cityCode,
           title: city,
@@ -34,6 +37,7 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
           image_url: getValidUrl(imageURL),
           last_update: new Date().getTime(),
           blob: {
+            id: cityCode,
             cityCode,
             city,
             countryCode,
