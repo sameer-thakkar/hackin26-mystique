@@ -321,6 +321,7 @@ export const ProductBody = styled.div<{
   grid-row-gap: 8px;
   overflow-anchor: none;
   .tour-description {
+    padding-bottom: 1.5rem;
     cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
     ${expandFontToken('Paragraph/Medium')}
     p {
