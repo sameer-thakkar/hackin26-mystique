@@ -68,6 +68,7 @@ export const TabName = styled.span<{ $isActive: boolean }>`
     `
         color: ${COLORS.TEXT.PURPS_3};
         border-bottom: solid 1px ${COLORS.BRAND.PURPS};
+        margin-bottom: -0.063rem;
     `}
 
   @media (max-width: 768px) {

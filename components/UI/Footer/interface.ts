@@ -18,6 +18,7 @@ export type FooterProps = {
   showGmapsDisclaimer?: boolean;
   isDark?: boolean;
   isLTT?: boolean;
+  isDarkPurps?: boolean;
 };
 
 export type TLinkSlices = {

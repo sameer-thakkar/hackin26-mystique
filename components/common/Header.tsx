@@ -269,6 +269,7 @@ const Header: React.FC<any> = (props) => {
     taggedCity,
     categoryHeaderMenu,
     categoryHeaderMenuExists = false,
+    hideLangCurrencySelector = false,
   } = props;
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -448,7 +449,12 @@ const Header: React.FC<any> = (props) => {
             </StyledMenuItem>
           </Conditional>
 
-          <Conditional if={headerCurrencies?.length || headerLanguages?.length}>
+          <Conditional
+            if={
+              !hideLangCurrencySelector &&
+              (headerCurrencies?.length || headerLanguages?.length)
+            }
+          >
             <LocaleSelector
               currencies={headerCurrencies}
               languages={headerLanguages}

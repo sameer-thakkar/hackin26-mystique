@@ -63,6 +63,7 @@ const Footer: React.FC<FooterProps> = ({
   showGmapsDisclaimer = false,
   isDark = false,
   isLTT = false,
+  isDarkPurps = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
@@ -70,7 +71,7 @@ const Footer: React.FC<FooterProps> = ({
   const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
   let isLight = !isLTT;
 
-  if (!isLTT && isDark) isLight = false;
+  if (!isLTT && (isDark || isDarkPurps)) isLight = false;
 
   const onToggleMobileCallUsDrawer = () => {
     setIsMobileCallUsDrawer((isMobileCallUsDrawer) => !isMobileCallUsDrawer);
@@ -160,6 +161,7 @@ const Footer: React.FC<FooterProps> = ({
             isEntertainmentMb={isEntertainmentMb}
             isLight={isLight}
             isLTT={isLTT}
+            isDarkPurps={isDarkPurps}
           >
             <Container>
               <FooterLegal

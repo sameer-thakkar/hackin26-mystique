@@ -174,7 +174,7 @@ const handleMargin = ({
   $isNonPoi?: boolean;
   $showTrustBooster?: boolean;
 }) => {
-  if ($isNonPoi) return '-1rem 1.5rem 0';
+  if ($isNonPoi) return '0 1.5rem 0';
   else if ($showTrustBooster) return '0.5rem 1.5rem 1.5rem';
   else return '0.5rem 1.5rem 0';
 };

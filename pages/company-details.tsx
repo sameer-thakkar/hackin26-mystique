@@ -99,6 +99,7 @@ const CompanyDetailsPage = (
         logoRedirectionURL={logoRedirectionUrl}
         dropdown={dropdown}
         handleDropdownToggle={handleDropdownToggle}
+        hideLangCurrencySelector={true}
       />
       <ContentContainer>
         <TopHeading h1>Company Details</TopHeading>

@@ -119,6 +119,7 @@ const TermsPage = (
           logoRedirectionURL={logoRedirectionUrl}
           dropdown={dropdown}
           handleDropdownToggle={handleDropdownToggle}
+          hideLangCurrencySelector={true}
         />
         <ContentContainer>
           <TopHeading h1>Terms and Conditions</TopHeading>

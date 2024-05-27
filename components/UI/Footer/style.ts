@@ -17,13 +17,14 @@ export const FooterLegalWrapper = styled.div<{
   isEntertainmentMb: boolean;
   isLight: boolean;
   isLTT: boolean;
+  isDarkPurps: boolean;
 }>`
   color: ${({ theme, isLight }) =>
     isLight ? theme.footer.secondaryColor : theme.footer.primaryColor};
-  background: ${({ theme, isLight, isLTT }) =>
+  background: ${({ theme, isLight, isLTT, isDarkPurps }) =>
     isLight
       ? theme.footer.secondaryBackground
-      : isLTT
+      : isLTT || isDarkPurps
       ? theme.footer.lttBackgroundColor
       : theme.footer.primaryBackground};
   margin: 0 auto;

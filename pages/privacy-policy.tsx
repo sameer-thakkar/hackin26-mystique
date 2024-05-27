@@ -115,6 +115,7 @@ const PrivacyPage = (
           logoRedirectionURL={logoRedirectionUrl}
           dropdown={dropdown}
           handleDropdownToggle={handleDropdownToggle}
+          hideLangCurrencySelector={true}
         />
         <PrivacyContentContainer>
           <TopHeading h1>Headout&apos;s Privacy Policy</TopHeading>

@@ -785,6 +785,7 @@ export const HomePage = (props: any) => {
           isEntertainmentMb={isEntertainmentMb}
           isCatOrSubCatPage={isCatOrSubCatPage}
           isLTT={isLTT}
+          isDarkPurps={showLttTreatment}
         />
       </LazyComponent>
     </V2MicrositeWrapper>
