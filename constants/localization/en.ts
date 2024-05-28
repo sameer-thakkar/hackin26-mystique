@@ -1109,8 +1109,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     },
   },
   TOP: 'Top {0}',
-  VIEW_MORE_MONTHS: 'View more months',
-  BEST_WEST_END_SHOWS_CALENDAR: 'Best west end shows calendar',
+  VIEW_CALENDAR: 'View calendar',
+  SHOWS_CALENDAR: 'Shows calendar',
   IN: 'in',
   SEATS: 'Seats',
   CONTENT_PAGE: {

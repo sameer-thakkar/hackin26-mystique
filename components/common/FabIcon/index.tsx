@@ -10,7 +10,7 @@ import { strings } from 'const/strings';
 import CalendarFab from 'assets/calendarFab';
 
 const FabIcon = ({ displayMonth }: { displayMonth: string }) => {
-  const { VIEW_MORE_MONTHS } = strings;
+  const { VIEW_CALENDAR } = strings;
   const handleFabIconClick = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.FAB_ICON_CLICKED,
@@ -27,7 +27,7 @@ const FabIcon = ({ displayMonth }: { displayMonth: string }) => {
   return (
     <FabWrapper onClick={handleFabIconClick}>
       <CalendarFab />
-      <p>{VIEW_MORE_MONTHS}</p>
+      <p>{VIEW_CALENDAR}</p>
     </FabWrapper>
   );
 };

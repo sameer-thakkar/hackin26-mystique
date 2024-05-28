@@ -1081,9 +1081,8 @@ const pl = {
     HASSLE_FREE_TRANSFER: 'Bezproblemowy transfer z lotniska',
   },
   TOP: 'Najpopularniejsze: {0}',
-  VIEW_MORE_MONTHS: 'Wyświetl więcej miesięcy',
-  BEST_WEST_END_SHOWS_CALENDAR:
-    'Kalendarz najlepszych spektakli na West Endzie',
+  VIEW_CALENDAR: 'Wyświetl więcej miesięcy',
+  SHOWS_CALENDAR: 'Kalendarz najlepszych spektakli na West Endzie',
   IN: 'w',
   SEATS: 'Miejsca',
   CONTENT_PAGE: {

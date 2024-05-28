@@ -1051,9 +1051,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     },
   },
   TOP: 'Le meilleur des : {0}',
-  VIEW_MORE_MONTHS: 'Afficher plus de mois',
-  BEST_WEST_END_SHOWS_CALENDAR:
-    'Calendrier des meilleurs spectacles du West End',
+  VIEW_CALENDAR: 'Voir le calendrier',
+  SHOWS_CALENDAR: 'Calendrier des spectacles du West End',
   IN: 'en',
   SEATS: 'Sièges',
   CONTENT_PAGE: {

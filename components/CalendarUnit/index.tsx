@@ -42,7 +42,7 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
     [language]
   );
 
-  const { BEST_WEST_END_SHOWS_CALENDAR } = strings;
+  const { SHOWS_CALENDAR } = strings;
 
   const { items } = pageTabsSlice;
   const sliceDataMap = new Map();
@@ -97,7 +97,7 @@ const CalendarUnit: React.FC<TCalendarUnitProps> = ({
 
   return (
     <CalendarUnitWrapper id={CALENDAR_UNIT} ref={calendarUnitRef}>
-      <Heading>{BEST_WEST_END_SHOWS_CALENDAR}</Heading>
+      <Heading>{SHOWS_CALENDAR}</Heading>
       <CalendarGrid>
         {orderedMonths.map(
           ({ short_format_month, long_format_month, year }, index) => {

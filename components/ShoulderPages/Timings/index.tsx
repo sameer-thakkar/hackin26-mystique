@@ -113,40 +113,42 @@ const TimingsPage = ({
           />
         </Conditional>
         <Conditional if={childTimingsInfo?.length}>
-          {childTimingsInfo?.map((childTiming, index) => {
-            const childPoiInfo = childPoisInfo?.[index] || {};
-            const childPoiName = childPoiInfo?.name;
-            return (
-              <>
-                <BestTimeHeader
-                  id={generateSidenavId(
-                    `${childPoiName} ${strings.CONTENT_PAGE.TIMINGS}`
-                  )}
-                >
-                  {childPoiName}
-                </BestTimeHeader>
-                <SectionDescription
-                  dangerouslySetInnerHTML={{
-                    __html: childPoiInfo.content?.data?.timingDescription,
-                  }}
-                />
-                <TimingsTableTabsView
-                  isMobile={isMobile}
-                  imageUrl={childPoiInfo.collectionInfo?.heroImageUrl}
-                  timingsTableData={childTiming.timingTablesData}
-                  imageAltText={
-                    childPoiInfo.collectionInfo?.heroMedia?.metadata?.altText
-                  }
-                  lang={language}
-                />
-                <TimingNotes
-                  dangerouslySetInnerHTML={{
-                    __html: childPoiInfo.content?.data?.timingNotes || '',
-                  }}
-                />
-              </>
-            );
-          })}
+          {childTimingsInfo
+            ?.filter((childTiming) => childTiming.timingTablesData?.length)
+            .map((childTiming, index) => {
+              const childPoiInfo = childPoisInfo?.[index] || {};
+              const childPoiName = childPoiInfo?.name;
+              return (
+                <>
+                  <BestTimeHeader
+                    id={generateSidenavId(
+                      `${childPoiName} ${strings.CONTENT_PAGE.TIMINGS}`
+                    )}
+                  >
+                    {childPoiName}
+                  </BestTimeHeader>
+                  <SectionDescription
+                    dangerouslySetInnerHTML={{
+                      __html: childPoiInfo.content?.data?.timingDescription,
+                    }}
+                  />
+                  <TimingsTableTabsView
+                    isMobile={isMobile}
+                    imageUrl={childPoiInfo.collectionInfo?.heroImageUrl}
+                    timingsTableData={childTiming.timingTablesData}
+                    imageAltText={
+                      childPoiInfo.collectionInfo?.heroMedia?.metadata?.altText
+                    }
+                    lang={language}
+                  />
+                  <TimingNotes
+                    dangerouslySetInnerHTML={{
+                      __html: childPoiInfo.content?.data?.timingNotes || '',
+                    }}
+                  />
+                </>
+              );
+            })}
         </Conditional>
       </PageContainer>
       <Conditional if={extractedProductCardsSlice?.length}>

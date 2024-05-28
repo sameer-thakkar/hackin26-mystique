@@ -1099,9 +1099,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     },
   },
   TOP: 'Lo más destacado en: {0}',
-  VIEW_MORE_MONTHS: 'Ver más meses',
-  BEST_WEST_END_SHOWS_CALENDAR:
-    'Calendario de los mejores espectáculos del West End ',
+  VIEW_CALENDAR: 'Ver calendario',
+  SHOWS_CALENDAR: 'Calendario de los espectáculos',
   IN: 'en',
   SEATS: 'Asientos',
   CONTENT_PAGE: {

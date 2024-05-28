@@ -1003,8 +1003,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     BUS_ROUTES: 'BUS ROUTES',
   },
   TOP: 'Top-{0}',
-  VIEW_MORE_MONTHS: 'Toon meer maanden',
-  BEST_WEST_END_SHOWS_CALENDAR: 'Kalender van de beste West End-shows',
+  VIEW_CALENDAR: 'Kalender weergeven',
+  SHOWS_CALENDAR: 'Showkalender',
   IN: 'in',
   SEATS: 'Zitplaatsen',
   CONTENT_PAGE: {

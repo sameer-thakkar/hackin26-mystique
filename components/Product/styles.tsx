@@ -1455,14 +1455,13 @@ export const Tab = styled.div`
   padding-bottom: 0.5rem;
   display: block;
   width: auto;
-  border-bottom: 0.0625rem solid transparent;
   transform: translateY(0.0625rem);
   ${expandFontToken('UI/Label Medium')}
   margin-right: 1.5rem;
 
   &.active {
     color: ${COLORS.TEXT.CANDY_1};
-    border-color: ${COLORS.TEXT.CANDY_1};
+    border-bottom: 0.1825rem solid ${COLORS.TEXT.CANDY_1};
     padding-bottom: 0.453125rem;
   }
 `;

@@ -1039,8 +1039,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     },
   },
   TOP: 'Top-{0}',
-  VIEW_MORE_MONTHS: 'Weitere Monate anzeigen',
-  BEST_WEST_END_SHOWS_CALENDAR: 'Kalender für die besten West End Shows',
+  VIEW_CALENDAR: 'Kalender anzeigen',
+  SHOWS_CALENDAR: 'Show-Kalender',
   IN: 'im',
   SEATS: 'Plätze',
   CONTENT_PAGE: {
