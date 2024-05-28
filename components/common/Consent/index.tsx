@@ -36,11 +36,19 @@ const ConsentBanner = ({
 }) => {
   const [isVisible, setVisibility] = useState(false);
   const { host } = useRecoilValue(appAtom);
-  const { pathname } = useRouter();
+  const { pathname, events: routerEvents } = useRouter();
   const isPrivacyPage = pathname.includes('privacy-policy');
   const [showModal, setShowModal] = useState(false);
   const ReactMarkdown: any = Markdown;
   const { addToast } = useToast();
+
+  const setConsentStateCookie = (state: TConsentState) => {
+    Cookies.set(COOKIE.CONSENT_POLICY_STATE, state, {
+      domain: getNakedDomain(host),
+      path: '/',
+      expires: 30,
+    });
+  };
 
   const onConsentUpdate = ({
     state,
@@ -56,11 +64,7 @@ const ConsentBanner = ({
     setVisibility(false);
     setShowModal(false);
     if (actor === 'User') {
-      Cookies.set(COOKIE.CONSENT_POLICY_STATE, state, {
-        domain: getNakedDomain(host),
-        path: '/',
-        expires: 30,
-      });
+      setConsentStateCookie(state);
       addToast({
         message: strings.COOKIE_CONSENT.PREFERNCES_SAVED,
         duration: 5000,
@@ -68,6 +72,17 @@ const ConsentBanner = ({
       });
     }
   };
+
+  useEffect(() => {
+    const onRouteChangeStart = () => {
+      setVisibility(false); // avoid showing banner on subsequent pages client side route change.
+    };
+    routerEvents.on('routeChangeStart', onRouteChangeStart);
+
+    return () => {
+      routerEvents.off('routeChangeStart', onRouteChangeStart);
+    };
+  }, [routerEvents]);
 
   useEffect(() => {
     const cookieState = Cookies.get(
@@ -80,6 +95,7 @@ const ConsentBanner = ({
         eventName: 'Consent Banner Viewed',
         'Is Country Fallback': !countryCode,
       });
+      setConsentStateCookie('granted'); // avoid showing banner on subsequent SSR pages (_blank)
     }
   }, [isPrivacyPage, isGDPRCompliant, isVisible, countryCode]);
 
