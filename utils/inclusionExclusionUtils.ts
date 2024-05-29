@@ -1,3 +1,4 @@
+import { IGNORED_HEADINGS } from 'const/descriptors';
 import { HIGHLIGHT_TYPES } from 'const/index';
 
 const removeCurrentInclusionExclusion = (
@@ -54,7 +55,12 @@ export const appendInclusionExclusionHighlights = ({
     if (type === HIGHLIGHT_TYPES.H6_HEADING) {
       if (
         (text == localizedStrings.HOHO.TOUR_TIMINGS ||
-          text == localizedStrings.HOHO.TOUR_FREQUENCY) &&
+          text == localizedStrings.HOHO.TOUR_FREQUENCY ||
+          text == IGNORED_HEADINGS.OPERATING_HOURS ||
+          text == IGNORED_HEADINGS.FREQUENCY ||
+          text == IGNORED_HEADINGS.AUDIO_GUIDE ||
+          text == IGNORED_HEADINGS.POPULAR_ATTRACTIONS ||
+          text == IGNORED_HEADINGS.STARTING_STOP) &&
         tourInfoIndex.length == 0
       ) {
         tourInfoIndex.push(i);
@@ -63,7 +69,12 @@ export const appendInclusionExclusionHighlights = ({
         break;
       } else if (
         text != localizedStrings.HOHO.TOUR_TIMINGS &&
-        text != localizedStrings.HOHO.TOUR_FREQUENCY
+        text != localizedStrings.HOHO.TOUR_FREQUENCY &&
+        text != IGNORED_HEADINGS.OPERATING_HOURS &&
+        text != IGNORED_HEADINGS.FREQUENCY &&
+        text != IGNORED_HEADINGS.AUDIO_GUIDE &&
+        text != IGNORED_HEADINGS.POPULAR_ATTRACTIONS &&
+        text != IGNORED_HEADINGS.STARTING_STOP
       ) {
         tourInfoIndex.push(i);
         secondHighlightHeadingIndex = i;

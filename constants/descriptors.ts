@@ -12,3 +12,11 @@ export const DESCRIPTOR_RANKING_LOGIC = [
   'HOTEL_PICKUP',
   'MEALS_INCLUDED',
 ];
+
+export const IGNORED_HEADINGS = {
+  OPERATING_HOURS: 'operating hours DoNotTranslate',
+  FREQUENCY: 'frequency DoNotTranslate',
+  AUDIO_GUIDE: 'audio guide DoNotTranslate',
+  POPULAR_ATTRACTIONS: 'popular attractions DoNotTranslate',
+  STARTING_STOP: 'starting stop DoNotTranslate',
+};

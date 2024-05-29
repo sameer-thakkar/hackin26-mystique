@@ -1,3 +1,4 @@
+import { IGNORED_HEADINGS } from 'const/descriptors';
 import { strings } from 'const/strings';
 
 export const SECTION_NAMES = {
@@ -9,4 +10,9 @@ export const SECTION_NAMES = {
 export const FILTERED_HIGHLIGHTS = () => [
   strings.HOHO.TOUR_TIMINGS,
   strings.HOHO.TOUR_FREQUENCY,
+  IGNORED_HEADINGS.OPERATING_HOURS,
+  IGNORED_HEADINGS.FREQUENCY,
+  IGNORED_HEADINGS.AUDIO_GUIDE,
+  IGNORED_HEADINGS.POPULAR_ATTRACTIONS,
+  IGNORED_HEADINGS.STARTING_STOP,
 ];
