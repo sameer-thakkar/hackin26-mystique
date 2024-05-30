@@ -45,6 +45,7 @@ type MediaCarouselProps = {
   isTimed?: boolean;
   trackImage?: boolean;
   hideBorderRadius?: boolean;
+  loadLowerQualityImageFirst?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -68,6 +69,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
+  loadLowerQualityImageFirst = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -186,6 +188,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
                 isMobile && isFirstProduct && index === 0 ? 'high' : 'auto'
               }
               fill
+              loadLowerQualityImageFirst={loadLowerQualityImageFirst}
             />
           );
         })}

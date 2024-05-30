@@ -7,10 +7,10 @@ export const generateImageImgixUrl = (
   width: number | string,
   height: number | string,
   quality: number | string,
-  aspectRatio: string,
+  aspectRatio: string | undefined,
   autoCrop: boolean,
   cropMode: TCropMode | TCropMode[],
-  addDarkOverlay: boolean,
+  addDarkOverlay: boolean | undefined,
   fitCrop: boolean,
   blurFill: boolean,
   minFit: boolean

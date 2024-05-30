@@ -31,4 +31,5 @@ export interface IImageProps
   blurFill?: boolean;
   fetchPriority?: 'high' | 'low' | 'auto';
   fallbackImg?: string;
+  loadLowerQualityImageFirst?: boolean;
 }

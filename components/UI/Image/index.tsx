@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
+import { usePageLoaded } from 'hooks/usePageLoaded';
 import { appAtom } from 'store/atoms/app';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import InfoIcon from 'assets/infoIcon';
@@ -58,16 +59,18 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fetchPriority = 'auto',
     fallbackImg = '',
     onLoadingComplete,
+    loadLowerQualityImageFirst = false,
   },
   ref
 ) => {
-  let calculatedWidth = width,
-    calculatedHeight = height,
+  const [pageLoaded] = usePageLoaded();
+  const { isMobile } = useRecoilValue(appAtom);
+  // Loading a lower quality image by reducing the dimensions.
+  let calculatedWidth = loadLowerQualityImageFirst && !pageLoaded ? 50 : width,
+    calculatedHeight = loadLowerQualityImageFirst && !pageLoaded ? 50 : height,
     mobileImageSrc,
     defaultImageSrc,
     fillImageProp = fill;
-
-  const { isMobile } = useRecoilValue(appAtom);
 
   if (aspectRatio) {
     const [widthRatio, heightRatio] = aspectRatio.split(':').map(Number);
@@ -76,6 +79,10 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     if (height && !width)
       calculatedWidth = Number(height) * (widthRatio / heightRatio);
   }
+
+  const multiplier = loadLowerQualityImageFirst && pageLoaded ? 2 : 1;
+  calculatedWidth = (calculatedWidth as number) * multiplier;
+  calculatedHeight = (calculatedHeight as number) * multiplier;
 
   mobileImageSrc = generateImageImgixUrl(
     format,
@@ -96,7 +103,6 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
   defaultImageSrc = generateImageImgixUrl(
     format,
     url,
-    // @ts-expect-error TS(2345): Argument of type 'string | number | undefined' is ... Remove this comment to see the full error message
     calculatedWidth,
     calculatedHeight,
     quality,
@@ -112,7 +118,6 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
   const fallbackImgUrl = generateImageImgixUrl(
     format,
     fallbackImg,
-    // @ts-expect-error TS(2345): Argument of type 'string | number | undefined' is ... Remove this comment to see the full error message
     calculatedWidth,
     calculatedHeight,
     quality,
