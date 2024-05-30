@@ -11,7 +11,7 @@ import { expandFontToken } from 'const/typography';
 export const GalleryViewContainer = styled.div`
   width: 49.5rem;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   position: fixed;
   z-index: 3;
