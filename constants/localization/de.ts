@@ -670,7 +670,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TODAY: 'Heute',
     TOMORROW: 'Morgen',
     SEE_ALL: 'Alle ansehen',
-    GRAB_YOUR_TICKETS: 'Tickets jetzt buchen',
+    GRAB_YOUR_TICKETS: 'Jetzt Tickets buchen',
   },
   TAG_NAME: {
     BALLET: 'Ballett',
