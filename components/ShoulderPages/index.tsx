@@ -389,6 +389,7 @@ const ContentPage = (props: any) => {
   const contentFWSlices: Record<string, any>[] = groupSlices(CFWBody);
 
   const isRevampedPage =
+    baseLangIsPoiMb &&
     [SHOULDER_PAGE_TYPE.ABOUT, SHOULDER_PAGE_TYPE.TIMINGS].includes(
       shoulder_page_type || ''
     ) &&

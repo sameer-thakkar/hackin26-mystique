@@ -51,9 +51,19 @@ export const TabsContainer = styled.div`
     transition: all 0.25s ease-in-out;
   }
 
+  .tab-extra {
+    flex: 1;
+    cursor: initial;
+  }
+
   .tab:hover {
     border-color: ${COLORS.BRAND.PURPS};
     color: ${COLORS.BRAND.PURPS};
+  }
+
+  .tab-extra:hover {
+    border-color: ${COLORS.GRAY.G6};
+    color: #545454;
   }
 
   .active {

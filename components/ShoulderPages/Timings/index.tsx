@@ -286,6 +286,7 @@ const TimingsTableTabsView = ({
               </div>
             )
           )}
+          <div className={`tab tab-extra`} role="tab"></div>
         </TabsContainer>
       </Conditional>
 
