@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { appAtom } from 'store/atoms/app';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { EXPERIMENT_NAMES } from 'const/experiments';
+import { QUERY_PARAMS } from 'const/index';
 
 const DEFAULT_VARIANT = 'DEFAULT_VARIANT';
 /**
@@ -21,7 +23,13 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   additionalEventProps,
   customEligibilityCheckFn,
 }: TUseABTestingProps<T>) => {
-  const [variant, setVariant] = React.useState<string | null>(DEFAULT_VARIANT);
+  const {
+    query: { [QUERY_PARAMS.EXPERIMENT_OVERRIDE]: experimentOverride },
+  } = useRouter();
+  const experimentOverrideVariant = experimentOverride as string;
+  const [variant, setVariant] = React.useState<string | null>(
+    experimentOverrideVariant || DEFAULT_VARIANT
+  );
   const shouldTrack = useRef(!noTrack);
   const sandboxId = useRecoilValue(hsidAtom);
   const isHsidSetFail = useRecoilValue(hsidSetFailAtom);
@@ -40,6 +48,10 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   }, [isEligible]);
 
   useEffect(() => {
+    if (experimentOverrideVariant) {
+      setVariant(experimentOverrideVariant);
+      return;
+    }
     if (!sandboxId || variant !== DEFAULT_VARIANT || isHsidSetFail || isBot)
       return;
 
@@ -66,6 +78,7 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
     variant,
     isHsidSetFail,
     isBot,
+    experimentOverrideVariant,
   ]);
 
   return {
