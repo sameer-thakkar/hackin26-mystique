@@ -154,6 +154,8 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     >
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {
+          const isLCPCandidate = isMobile && isFirstProduct && index === 0;
+
           return videoUrl && index === 0 ? (
             <Video
               key={videoUrl}
@@ -183,10 +185,8 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               })}
               width={imageWidth}
               height={imageHeight}
-              priority={isMobile && isFirstProduct && index === 0}
-              fetchPriority={
-                isMobile && isFirstProduct && index === 0 ? 'high' : 'auto'
-              }
+              priority={isLCPCandidate}
+              fetchPriority={isLCPCandidate ? 'high' : 'auto'}
               fill
               loadLowerQualityImageFirst={loadLowerQualityImageFirst}
             />

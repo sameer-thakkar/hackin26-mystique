@@ -59,12 +59,13 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fetchPriority = 'auto',
     fallbackImg = '',
     onLoadingComplete,
-    loadLowerQualityImageFirst = false,
+    loadLowerQualityImageFirst: loadLowQualityImageFirstProp = false,
   },
   ref
 ) => {
   const [pageLoaded] = usePageLoaded();
   const { isMobile } = useRecoilValue(appAtom);
+  const loadLowerQualityImageFirst = !priority && loadLowQualityImageFirstProp; // Avoid progressive loading for LCP element.
   // Loading a lower quality image by reducing the dimensions.
   let calculatedWidth = loadLowerQualityImageFirst && !pageLoaded ? 50 : width,
     calculatedHeight = loadLowerQualityImageFirst && !pageLoaded ? 50 : height,
