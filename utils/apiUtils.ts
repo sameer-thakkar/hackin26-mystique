@@ -418,7 +418,7 @@ export const fetchMediaResource = async ({
     if (!entityIds) {
       sendLog({
         level: LOG_LEVELS.ERROR,
-        message: `[fetchMediaResource] entityIds is required - ${entityIds}`,
+        message: `[fetchMediaResource] entityIds is required - ${hostname} - ${entityIds}`,
       });
     }
     const apiUrl = getHeadoutApiUrl({
