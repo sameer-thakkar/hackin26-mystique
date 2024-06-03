@@ -224,6 +224,10 @@ const categoryTourListParserV1 = async ({
       });
 
       tourData.push(...additionalSubCategoryData?.pageData?.items);
+
+      //remove duplicate tgids added as a result of additional subcategories
+      const tourDataMap = new Map(tourData.map((tour) => [tour.id, tour]));
+      tourData = Array.from(tourDataMap.values());
     } catch (err) {
       captureException(err);
       sendLog({
