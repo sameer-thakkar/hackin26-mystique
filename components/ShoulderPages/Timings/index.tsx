@@ -234,6 +234,13 @@ const groupTablesByQuarter = ({
     });
   });
 
+  // Remove empty quarters
+  Object.keys(tablesByQuarter).forEach((key) => {
+    if (tablesByQuarter[key].length === 0) {
+      delete tablesByQuarter[key];
+    }
+  });
+
   return tablesByQuarter;
 };
 
@@ -251,23 +258,14 @@ const TimingsTableTabsView = ({
   lang: string;
 }) => {
   const localizedQuarters = getLocalizedQuarters(lang);
-  const [activeQuarter, setActiveQuarter] = useState<string>(
-    localizedQuarters.JAN_MAR
-  );
-
   const tablesByQuarter = groupTablesByQuarter({
     timingsTableData,
     localizedQuarters,
   });
+  const defaultQuarter = Object.keys(tablesByQuarter)[0];
+  const [activeQuarter, setActiveQuarter] = useState<string>(defaultQuarter);
 
   const totalTables = timingsTableData.length;
-
-  // Remove empty quarters
-  Object.keys(tablesByQuarter).forEach((key) => {
-    if (tablesByQuarter[key].length === 0) {
-      delete tablesByQuarter[key];
-    }
-  });
 
   return (
     <TimingsTableTabsViewContainer>
@@ -296,11 +294,11 @@ const TimingsTableTabsView = ({
             (tableData: ITimingsTableProps, index: number) => (
               <TimingsTable
                 key={index}
-                initiallyCollapsed={!imageUrl}
+                initiallyCollapsed={!imageUrl || index > 0}
                 rows={tableData.rows}
                 columns={tableData.columns}
                 isMobile={isMobile}
-                hideCollapse={!isMobile && !!imageUrl}
+                hideCollapse={!isMobile && !!imageUrl && index === 0}
               />
             )
           )}
