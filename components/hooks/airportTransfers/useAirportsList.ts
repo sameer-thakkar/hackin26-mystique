@@ -7,7 +7,7 @@ type TAirport = {
   tourGroupId: number;
 };
 
-export const useAirportsList = (cityCode: string) => {
+export const usePrivateAirportTransferAirports = (cityCode: string) => {
   const fetchUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.Airports,
     id: null,
@@ -17,7 +17,7 @@ export const useAirportsList = (cityCode: string) => {
   });
 
   const { data, error } = useSWRImmutable<Record<string, TAirport[]>>(
-    fetchUrl,
+    cityCode ? fetchUrl : null, // Only fetch if cityCode is present
     {
       fetcher: swrFetcher,
     }

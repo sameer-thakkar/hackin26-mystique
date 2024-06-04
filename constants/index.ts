@@ -529,6 +529,14 @@ export const ANALYTICS_EVENTS = {
     FOURTH_PRODUCT_CARD: '4th Product Card',
   },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+  AIRPORT_TRANSFERS: {
+    SEARCH_FILTER_CLICKED: 'Search Filter Clicked',
+    SEARCH_FILTER_APPLIED: 'Search Filter Applied',
+    ERROR_VIEWED: 'Error Viewed',
+    SEARCH_BAR_TAB_CLICKED: 'Search Bar Tab Clicked',
+    DRAWER_CTA_CLICKED: 'Drawer CTA Clicked',
+    DRAWER_CLOSED: 'Drawer Closed',
+  },
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -982,6 +990,16 @@ export const ANALYTICS_PROPERTIES = {
   COMPONENT: 'Component',
   SECTION_TYPE: 'Section Type',
   SLICE_TYPE: 'Slice Type',
+  AIRPORT_TRANSFERS: {
+    IS_SEARCH_PRESENT: 'Is Search Present',
+    PRIVATE_TRANSFERS_PRESENT: 'Private Transfers Present',
+    NUMBER_OF_PRODUCTS: 'Number Of Products',
+    FILTER_NAME: 'Filter Name',
+    FILTER_VALUE: 'Filter Value',
+    ERROR_REASON: 'Error Reason',
+    TAB_NAME: 'Tab Name',
+    DRAWER_TYPE: 'Drawer Type',
+  },
   CONTAINER: 'Container',
 };
 

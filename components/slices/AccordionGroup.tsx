@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { FAQPageJsonLd } from 'next-seo';
 import styled from 'styled-components';
 import { asText } from '@prismicio/helpers';
@@ -7,9 +7,16 @@ import Conditional from 'components/common/Conditional';
 import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
-import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  ESCAPE_REGEX,
+  ESCAPE_REPLACER,
+} from 'const/index';
 
 const Divider = styled.div`
   padding-bottom: 1.5rem;
@@ -76,6 +83,19 @@ const AccordionGroup = ({
     };
   });
 
+  const faqSectionRef = useRef(null);
+  const isIntersecting = useOnScreen({ ref: faqSectionRef });
+
+  useEffect(() => {
+    if (isIntersecting && sliceProps.isAirportTransfersMB) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: 'FAQ',
+        [ANALYTICS_PROPERTIES.RANKING]: 3,
+      });
+    }
+  }, [isIntersecting]);
+
   return (
     <>
       <Conditional if={isRevampedDesign}>
@@ -88,7 +108,7 @@ const AccordionGroup = ({
       </Conditional>
 
       <Conditional if={!isRevampedDesign}>
-        <div>
+        <div ref={faqSectionRef}>
           <Conditional if={heading}>
             <TitleTextCombo isVenuePage={isVenuePage} noMargin />
             <h2 id={generateSidenavId(heading || '')}>{heading}</h2>

@@ -261,6 +261,7 @@ export const MoreDetailsButton = styled.button`
 
   @media (max-width: 768px) {
     display: none;
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 

@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import { PaginatorDot, PaginatorWrapper, StyledDotsContainer } from './styles';
 import { calcTranslateX, isNormalScale } from './utils';
 
@@ -22,6 +23,8 @@ interface Props {
   translateX?: number;
   enableCompletedColor?: boolean;
   marginOverride?: any;
+  enableActiveColor?: boolean;
+  showCounter?: boolean;
 }
 
 export const Paginator = ({
@@ -41,6 +44,8 @@ export const Paginator = ({
   enableTranslate = true,
   marginOverride,
   enableCompletedColor = false,
+  enableActiveColor = false,
+  showCounter = false,
 }: Props) => {
   const sizeInPx = size * 5;
   const dotsMargin = marginOverride ?? 4;
@@ -62,6 +67,7 @@ export const Paginator = ({
       enableTranslate={enableTranslate}
       translateX={translateX}
       bottom={bottom}
+      $showCounter={showCounter}
     >
       {[...Array(totalCount)].map((_, i) => {
         const isDotNormalScale = isNormalScale(
@@ -72,6 +78,7 @@ export const Paginator = ({
         );
         return (
           <PaginatorDot
+            $enableActiveColor={enableActiveColor}
             tabSize={tabSize}
             dotSize={dotSize}
             isActive={i === activeIndex}
@@ -86,8 +93,15 @@ export const Paginator = ({
             isCompleted={i < activeIndex}
             enableCompletedColor={enableCompletedColor}
             shouldScaleDown={enableTranslate && !isDotNormalScale}
+            $showCount={i === activeIndex && showCounter}
           >
             <span aria-hidden={true} key={'active' + activeIndex} />
+
+            <Conditional if={i === activeIndex && showCounter}>
+              <div className="count">
+                {activeIndex + 1}/{totalCount}
+              </div>
+            </Conditional>
           </PaginatorDot>
         );
       })}

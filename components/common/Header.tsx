@@ -1,6 +1,6 @@
 import React, { ComponentType, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
@@ -40,6 +40,7 @@ const StyledHeader = styled.header<{
   $isTop: boolean;
   $isEntertainmentMB: boolean;
   $isPillBarSticky: boolean;
+  $isAirportTransfersMB: boolean;
 }>`
   height: 80px;
   width: 100%;
@@ -50,11 +51,18 @@ const StyledHeader = styled.header<{
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;
-  box-shadow: ${({ $isTop, $isEntertainmentMB, $isSticky, $isPillBarSticky }) =>
+  box-shadow: ${({
+    $isTop,
+    $isEntertainmentMB,
+    $isSticky,
+    $isPillBarSticky,
+    $isAirportTransfersMB,
+  }) =>
     !$isTop &&
     !$isEntertainmentMB &&
     !$isPillBarSticky &&
     $isSticky &&
+    !$isAirportTransfersMB &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
   :hover {
@@ -86,8 +94,8 @@ const StyledHeader = styled.header<{
       box-shadow: none;
     `}
 
-    ${({ $isEntertainmentMB, $isPillBarSticky }) =>
-      ($isEntertainmentMB || $isPillBarSticky) &&
+    ${({ $isEntertainmentMB, $isPillBarSticky, $isAirportTransfersMB }) =>
+      ($isEntertainmentMB || $isPillBarSticky || $isAirportTransfersMB) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
   }
 `;
@@ -128,60 +136,59 @@ const StyledHeaderContainer = styled.div`
 const StyledLogo = styled.div<{
   isEntertainmentMB: boolean;
 }>(
-  ({ isEntertainmentMB }) => `
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  justify-self: left;
-  justify-content: left;
-  max-width: 350px;
-  height:2rem !important;
-
-
-  .center {
-    display: flex;
-    padding-top: 0.25rem;
-  }
-
-  .image-wrap {
-    padding-right: 7px;
-    span {
-      position: relative !important;
-    }
-    img {
-      height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`} !important;
-      position: relative !important;
-      max-width: ${isEntertainmentMB ? '10.625rem' : '100%'};
-      width: unset !important;
-      object-fit: contain;
-      padding-top: ${isEntertainmentMB && `4.5px`};
-    }
-  }
-
-  svg {
-    height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`};
-    width: auto;
-    margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
-  }
-
-  @media (max-width: 768px) {
+  ({ isEntertainmentMB }) => css`
     display: grid;
     grid-auto-flow: column;
-    margin-left: 1.5rem;
+    align-items: center;
+    justify-self: left;
+    justify-content: left;
+    max-width: 350px;
+    height: 2rem !important;
 
-    .image-wrap {        
-      padding-right: 0;
+    .center {
+      display: flex;
+      padding-top: 0.25rem;
+    }
+
+    .image-wrap {
+      padding-right: 7px;
+      span {
+        position: relative !important;
+      }
       img {
-        height: ${isEntertainmentMB ? `20px` : `26px`} !important;
+        height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`} !important;
+        position: relative !important;
+        max-width: ${isEntertainmentMB ? '10.625rem' : '100%'};
+        width: unset !important;
+        object-fit: contain;
+        padding-top: ${isEntertainmentMB && `4.5px`};
       }
     }
 
     svg {
-      height: ${isEntertainmentMB ? `20px` : `26px`};
-      width: 67px;
+      height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`};
+      width: auto;
+      margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
     }
-  }
-`
+
+    @media (max-width: 768px) {
+      display: grid;
+      grid-auto-flow: column;
+      margin-left: 1.5rem;
+
+      .image-wrap {
+        padding-right: 0;
+        img {
+          height: ${isEntertainmentMB ? `20px` : `26px`} !important;
+        }
+      }
+
+      svg {
+        height: ${isEntertainmentMB ? `20px` : `26px`};
+        width: 67px;
+      }
+    }
+  `
 );
 
 const StyledHeaderElements = styled.div<{
@@ -269,6 +276,7 @@ const Header: React.FC<any> = (props) => {
     taggedCity,
     categoryHeaderMenu,
     categoryHeaderMenuExists = false,
+    isAirportTransfersMB = false,
     hideLangCurrencySelector = false,
   } = props;
   const headerCurrencies = useRecoilValue(currencyListAtom);
@@ -364,6 +372,7 @@ const Header: React.FC<any> = (props) => {
       $isSticky={isHeaderSticky}
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
+      $isAirportTransfersMB={isAirportTransfersMB}
       $isPillBarSticky={isPillBarSticky}
     >
       {/* @ts-expect-error TS(2769): No overload matches this call. */}

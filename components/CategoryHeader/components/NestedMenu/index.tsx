@@ -16,7 +16,7 @@ const NestedMenu = (props: NestedMenuProps) => {
 
   return (
     <>
-      {Object.keys(categoryHeaderMenu).map((menuItem) => {
+      {Object.keys(categoryHeaderMenu).map((menuItem, index) => {
         if (isMobile && menuItem !== currentMenu) return null;
 
         const menuData = categoryHeaderMenu[menuItem].menu || {};
@@ -26,6 +26,7 @@ const NestedMenu = (props: NestedMenuProps) => {
             $isSelected={selectedMenu === menuItem}
           >
             <NestedMenuItem
+              key={index}
               menuData={menuData}
               handleSettingNestedMenu={handleSettingNestedMenu}
               handleUnsettingNestedMenu={handleUnsettingNestedMenu}

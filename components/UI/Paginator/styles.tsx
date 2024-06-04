@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+import getFontDetailsByLabel from '@headout/aer/src/tokens/typography';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 
 interface PaginatorButtonProps extends ComponentPropsWithoutRef<'li'> {
   isActive: boolean;
@@ -14,6 +16,8 @@ interface PaginatorButtonProps extends ComponentPropsWithoutRef<'li'> {
   shouldScaleDown?: boolean;
   enableCompletedColor?: boolean;
   isCompleted?: boolean;
+  $enableActiveColor?: boolean;
+  $showCount?: boolean;
 }
 
 interface Props {
@@ -35,6 +39,7 @@ interface Props {
   containerWidthOverride?: number;
   enableTranslate?: boolean;
   translateX?: number;
+  $showCounter?: boolean;
 }
 
 export const StyledDotsContainer = styled.div<{ $maxWidth: number }>`
@@ -67,7 +72,11 @@ export const PaginatorDot = styled.li<PaginatorButtonProps>`
     enableCompletedColor,
     isCompleted,
     activeColor,
+    isActive,
+    $enableActiveColor,
   }) => {
+    if ($enableActiveColor && isActive)
+      return activeColor || COLORS.BRAND.WHITE;
     if (enableCompletedColor && isCompleted)
       return activeColor || COLORS.BRAND.WHITE;
     return inactiveColor || `${COLORS.BRAND.WHITE}80`;
@@ -95,10 +104,34 @@ export const PaginatorDot = styled.li<PaginatorButtonProps>`
     animation: ${progressAnimation}
       ${({ activeSlideTimer }) => activeSlideTimer}ms ease-in forwards;
   }
+
+  /* height: max-content; */
+
+  ${({ $showCount }) =>
+    $showCount &&
+    css`
+      height: max-content;
+      box-sizing: border-box;
+      width: 1.625rem;
+      white-space: nowrap;
+      padding-inline: 0.25rem;
+      .count {
+        ${getFontDetailsByLabel(FONTS.MISC_OVERLINE)};
+        text-align: center;
+      }
+    `}
 `;
 
 export const PaginatorWrapper = styled.ul<
-  Pick<Props, 'rtl' | 'isOverlay' | 'bottom' | 'translateX' | 'enableTranslate'>
+  Pick<
+    Props,
+    | 'rtl'
+    | 'isOverlay'
+    | 'bottom'
+    | 'translateX'
+    | 'enableTranslate'
+    | '$showCounter'
+  >
 >`
   display: flex;
   flex-direction: ${(props) => (props.rtl ? 'row-reverse' : 'row')};
@@ -113,4 +146,6 @@ export const PaginatorWrapper = styled.ul<
     transition: transform 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
     transform: translateX(-${translateX}px);
   `}
+
+  ${({ $showCounter }) => $showCounter && `align-items: center;`}
 `;

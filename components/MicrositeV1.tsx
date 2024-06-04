@@ -55,6 +55,7 @@ import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
+import { AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP } from 'const/airportTransfers';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { VARIANTS } from 'const/experiments';
 import {
@@ -74,12 +75,11 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
-import { LongFormAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
+import { AirportTransferProductsSection } from './AirportTransfers/AirportTransferProductsSection';
+import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
+import { TCityInfo, TTour } from './AirportTransfers/interface';
+import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
-import {
-  TCityInfo,
-  TTour,
-} from './AirportTransfers/PopulateAirportTransferProducts/interfaces';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -167,6 +167,7 @@ const MicrositeV1 = (props: any) => {
     routeDetails,
     catAndSubCatPageData,
     isCatOrSubCatPage,
+    airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
     categoryTourListDataWithRankingExperiment,
   } = props;
 
@@ -501,6 +502,22 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && isMobile
           ? BOOLEAN_STATES['YES']
           : BOOLEAN_STATES['NO'],
+      ...(isAirportTransfersMB && {
+        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:
+          isAirportTransfersSubCategory || isAirportTransfersSearchEnabledUID
+            ? BOOLEAN_STATES['YES']
+            : BOOLEAN_STATES['NO'],
+        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.NUMBER_OF_PRODUCTS]:
+          orderedFilteredTours.filter(
+            (tour: TTour) =>
+              tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+          ).length,
+        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.PRIVATE_TRANSFERS_PRESENT]:
+          orderedFilteredTours.filter(
+            (tour: TTour) =>
+              tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+          )?.length ?? 0,
+      }),
     });
   }, [eventsReady]);
 
@@ -771,6 +788,13 @@ const MicrositeV1 = (props: any) => {
     isToursAvailable &&
     isAirportTransfersMB;
 
+  const isAirportTransfersSubCategory =
+    taggedSubCategoryName === 'Airport Transfers' &&
+    taggedMbType === MB_TYPES.A1_SUB_CATEGORY;
+
+  const isAirportTransfersSearchEnabledUID =
+    !!AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP[uid];
+
   useEffect(() => {
     if (isLfcIntersecting && showLFC && showLfcTimer) {
       trackEvent({
@@ -790,6 +814,20 @@ const MicrositeV1 = (props: any) => {
       });
     }
   }, [isFooterIntersecting, showLFC, showLfcTimer]);
+
+  useEffect(() => {
+    if (!eventsReady) return;
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+      [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
+        airportTransfersLPExperimentVariant,
+      [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:
+        isAirportTransfersSubCategory || isAirportTransfersSearchEnabledUID
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+    });
+  }, [eventsReady]);
 
   if (
     (isHohoExpEligible && isExperimentResolving) ||
@@ -854,6 +892,7 @@ const MicrositeV1 = (props: any) => {
           categoryHeaderMenu={categoryHeaderMenu}
           categoryHeaderMenuExists={categoryHeaderMenuExists}
           isCityPageMB={isCityPageMB}
+          isAirportTransfersMB={isAirportTransfersMB}
         />
         <Conditional
           if={
@@ -869,6 +908,7 @@ const MicrositeV1 = (props: any) => {
             languages={alternateLanguages}
             currentLanguage={currentLanguage}
             isMobile={false}
+            showShadowOnSticky={!isAirportTransfersMB}
           />
         </Conditional>
         <Conditional if={showCovid19Alert && covidAlertActive}>
@@ -924,7 +964,32 @@ const MicrositeV1 = (props: any) => {
           />
         </Conditional>
 
-        <Conditional if={showNewBanner && !isCatOrSubCatPage}>
+        <Conditional
+          if={
+            isAirportTransfersMB &&
+            airportTransfersLPExperimentVariant === VARIANTS.TREATMENT
+          }
+        >
+          <AirportTransferHeroSection
+            cityName={primaryCity?.displayName}
+            isMobile={isMobile}
+            tours={orderedFilteredTours}
+            tgidScorpioDataMap={scorpioData}
+            shouldShowSearch={
+              isAirportTransfersSubCategory ||
+              isAirportTransfersSearchEnabledUID
+            }
+          />
+        </Conditional>
+
+        <Conditional
+          if={
+            showNewBanner &&
+            !isCatOrSubCatPage &&
+            (airportTransfersLPExperimentVariant === VARIANTS.CONTROL ||
+              !isAirportTransfersMB)
+          }
+        >
           <StaticBanner
             bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
@@ -972,7 +1037,9 @@ const MicrositeV1 = (props: any) => {
             );
           })}
         </Conditional>
-        <Conditional if={isA1orC1MB(taggedMbType) && isMobile}>
+        <Conditional
+          if={isA1orC1MB(taggedMbType) && isMobile && !isAirportTransfersMB}
+        >
           <LastMinuteFilters
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}
@@ -1018,7 +1085,8 @@ const MicrositeV1 = (props: any) => {
           <TopAttractionsCarousel {...topAttractionsData} isMobile={isMobile} />
         </Conditional>
 
-        {showAirportTransferProducts ? (
+        {showAirportTransferProducts &&
+        airportTransfersLPExperimentVariant === VARIANTS.CONTROL ? (
           <PopulateAirportTransfersProducts
             uncategorizedTours={orderedFilteredTours}
             isMobile={isMobile}
@@ -1030,7 +1098,29 @@ const MicrositeV1 = (props: any) => {
           />
         ) : null}
 
-        <Conditional if={automatedBreadcrumbsExists && !isCatOrSubCatPage}>
+        <Conditional
+          if={
+            showAirportTransferProducts &&
+            airportTransfersLPExperimentVariant === VARIANTS.TREATMENT
+          }
+        >
+          <AirportTransferProductsSection
+            isMobile={isMobile}
+            tgidScorpioDataMap={scorpioData}
+            uncategorizedTours={orderedFilteredTours}
+            enableEarliestAvailability={enableEarliestAvailability}
+            currency={currency}
+            isSubCategoryPage={isAirportTransfersSubCategory}
+          />
+        </Conditional>
+
+        <Conditional
+          if={
+            automatedBreadcrumbsExists &&
+            !isCatOrSubCatPage &&
+            !isAirportTransfersMB
+          }
+        >
           <LazyComponent placeHolderHeight="3rem">
             <Breadcrumbs
               breadcrumbs={breadcrumbs}
@@ -1051,7 +1141,8 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional if={isAirportTransfersMB && longFormContent}>
-          <LongFormAndStaticContent
+          <AirportTransferLFAndStaticContent
+            airportTransferVariant={airportTransfersLPExperimentVariant}
             isMobile={isMobile}
             content={contentFWSlices}
           />
@@ -1082,6 +1173,7 @@ const MicrositeV1 = (props: any) => {
                     isRevampedDesign={isCatOrSubCatPage}
                     isMobile={isMobile}
                     isHOHORevamp={showHohoRevamp}
+                    isAirportTransfersMB={isAirportTransfersMB}
                     isCatAndSubCatPage={isCatOrSubCatPage}
                   />
                 </Conditional>

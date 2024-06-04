@@ -275,7 +275,6 @@ const Product = (props: any) => {
     }
     if (popup === 'combo') {
       if (isMobile && isComboWithMultiVariant && !isV3Design) {
-        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
         addToAside({
           width: '100vw',
           children: (
@@ -305,7 +304,6 @@ const Product = (props: any) => {
       }
     }
     if (popup === 'details') {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -535,7 +533,6 @@ const Product = (props: any) => {
       document.body.style.overflow = 'hidden';
     }
     if (isMobile && isComboWithMultiVariant) {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -684,7 +681,6 @@ const Product = (props: any) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -895,7 +891,6 @@ const Product = (props: any) => {
           popupController.current?.open();
           setIsUnScrolled(true);
         } else {
-          // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
           addToAside({
             width: '540px',
             sidePadding: 20,

@@ -29,7 +29,7 @@ const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
             mbCity,
           });
           return (
-            <li key={index} onMouseEnter={handleUnsettingNestedMenu}>
+            <li key={menuName} onMouseEnter={handleUnsettingNestedMenu}>
               <a
                 href={url}
                 target="_blank"

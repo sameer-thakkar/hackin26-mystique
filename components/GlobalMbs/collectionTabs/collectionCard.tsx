@@ -137,7 +137,6 @@ const Card = ({ card, clickHandler, isMobile, price, currency }: CardProps) => {
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile) {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (

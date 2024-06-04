@@ -203,12 +203,13 @@ export const getHeadoutApiUrl = ({
   }
 
   let url = endpointSlug;
+
   if (hostname) {
     url = `${hostname}${endpointSlug}`;
   } else {
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
 
-    url = `https://api.headout.com${formattedEndpointSlug}`;
+    url = `https://api.test-headout.com${formattedEndpointSlug}`; // ⚠ REVERT
   }
 
   if (params && Object.keys(params).length) {

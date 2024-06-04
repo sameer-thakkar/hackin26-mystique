@@ -9,7 +9,6 @@ import {
   BannerSection,
   Container,
   ContentContainer,
-  Descriptor,
   DescriptorWrapper,
   DisclaimerText,
   Divider,
@@ -31,6 +30,7 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
 import { strings } from 'const/strings';
 import Star from 'assets/star';
+import { getBannerDescriptorsArray } from './utils';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
@@ -180,17 +180,7 @@ const StaticBanner = ({
     loop: true,
     slidesPerView: 'auto',
   };
-  const getBannerDescriptors = () => {
-    return bannerDescriptors?.map((item: Record<string, any>) => {
-      const { icon, text } = item;
-      return (
-        <Descriptor key={text}>
-          <Image url={icon} alt={text} height={20} width={20} />
-          <span>{text}</span>
-        </Descriptor>
-      );
-    });
-  };
+
   let bannerHeadingWithCityName = null;
 
   if (city) {
@@ -278,9 +268,11 @@ const StaticBanner = ({
             <Divider isVisible={!isMobile || !!bannerDescriptors?.length} />
             <DescriptorWrapper>
               {isMobile && bannerDescriptors?.length ? (
-                <Swiper {...swiperParams}>{getBannerDescriptors()}</Swiper>
+                <Swiper {...swiperParams}>
+                  {getBannerDescriptorsArray(bannerDescriptors)}
+                </Swiper>
               ) : (
-                getBannerDescriptors()
+                getBannerDescriptorsArray(bannerDescriptors)
               )}
             </DescriptorWrapper>
           </Conditional>

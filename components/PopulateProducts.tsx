@@ -8,10 +8,10 @@ import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { MBContext } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
+import { useToursWithEarliestAvailability } from 'hooks/useToursWithEarliestAvailability';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
-import { addDays, formatDateToString } from 'utils/dateUtils';
+import { fetchInventory } from 'utils/apiUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
@@ -174,11 +174,6 @@ const PopulateProducts = (props: any) => {
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [detialsPopupShown, setDetailsPopupShown] = useState(false);
   const router = useRouter();
-  const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
-    {}
-  );
-  const [showEarliestAvailability, setShowEarliestAvailability] =
-    useState(false);
 
   const bannerImage = bannerImages?.[0];
   const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
@@ -226,57 +221,6 @@ const PopulateProducts = (props: any) => {
     }
   }, [productsWrapperRef]);
   const showNextAvailable = legacyBooleanCheck(enableEarliestAvailability);
-
-  useEffect(() => {
-    const fetchEarliestAvailability = async (
-      uncategorizedToursList: Array<Record<string, any>>
-    ) => {
-      const tgids = uncategorizedToursList.reduce(
-        (acc: Array<number>, tours) => {
-          const { tgid } = tours;
-          if (!tgid) return acc;
-          return [...acc, tgid];
-        },
-        []
-      );
-
-      const inventory: Record<number, any> =
-        (await fetchBatchedCalendarInventory({
-          tgids,
-          fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
-          currency,
-          toDate: formatDateToString(
-            addDays(new Date(), 60),
-            'en',
-            'YYYY-MM-DD'
-          ),
-        })) || {};
-
-      const earliestAvailabilityData = Object.keys(inventory).reduce(
-        (acc: Record<number, any>, tgid) => {
-          const tour = inventory?.[Number(tgid) as keyof typeof inventory];
-          const { sortedInventoryDates } = tour || {};
-          const [firstAvailableDate] = sortedInventoryDates || [];
-
-          if (!firstAvailableDate) return acc;
-
-          return {
-            ...acc,
-            [tgid]: {
-              startDate: firstAvailableDate,
-            },
-          };
-        },
-        {}
-      );
-
-      setEarliestAvailabilityStore(earliestAvailabilityData);
-      setShowEarliestAvailability(true);
-    };
-    if (showNextAvailable || instantCheckout) {
-      fetchEarliestAvailability(tours);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }: any) => {
@@ -332,16 +276,14 @@ const PopulateProducts = (props: any) => {
     }
   }, [currency]);
 
-  const uncategorizedTours =
-    showEarliestAvailability || instantCheckout
-      ? tours.map((tour: any) => ({
-          ...tour,
-          earliestAvailability:
-            earliestAvailabilityStore[
-              tour.tgid as keyof typeof earliestAvailabilityStore
-            ],
-        }))
-      : tours;
+  const {
+    toursWithEarliestAvailability: uncategorizedTours,
+    showEarliestAvailability,
+  } = useToursWithEarliestAvailability({
+    tours,
+    currency,
+    shouldFetchEarliestAvailabilities: showNextAvailable || instantCheckout,
+  });
 
   let availableToursList = uncategorizedTours
     ?.filter((tour: any) => {
@@ -574,6 +516,7 @@ const PopulateProducts = (props: any) => {
     availableToursList = [
       ...availableToursList.slice(0, 3),
       {
+        // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to type 'string'.
         bannerVideo,
         isBannerVideo: !!bannerVideo,
         bannerImage,

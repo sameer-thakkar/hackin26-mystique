@@ -92,7 +92,6 @@ const Footer: React.FC<FooterProps> = ({
     if (isMobile) {
       onToggleMobileCallUsDrawer();
     } else {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         children: (
           <div>
@@ -115,7 +114,6 @@ const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
       <StyledFooter
         isEntertainmentMb={isEntertainmentMb}

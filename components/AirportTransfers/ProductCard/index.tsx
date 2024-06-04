@@ -1,186 +1,313 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import parse from 'url-parse';
-import Button from '@headout/aer/src/atoms/Button';
+import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
-import Drawer from 'components/common/Drawer';
-import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';
-import { PRODUCT_CARD_IMAGE_DIMENSIONS } from 'components/Product/styles';
+import { BookNowCta } from 'components/Product/components/BookNowCta';
+import { NextAvailable } from 'components/Product/components/NextAvailable';
+import { TController } from 'components/Product/components/Popup/interface';
+import {
+  ModalCardContainer,
+  PRODUCT_CARD_IMAGE_DIMENSIONS,
+} from 'components/Product/styles';
+import ComboPopup from 'UI/ComboPopup';
 import MediaCarousel from 'UI/MediaCarousel';
+import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
-import { useAirportsList } from 'hooks/useAirportsList';
-import { createBookingURL } from 'utils';
-import { trackEvent } from 'utils/analytics';
-import { extractTabsFromHighlights } from 'utils/productUtils';
-import { currencyAtom } from 'store/atoms/currency';
+import { useBookingURL } from 'hooks/useBookingURL';
+import { legacyBooleanCheck } from 'utils';
+import { getProductCommonProperties, trackEvent } from 'utils/analytics';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
+import { addQueryParams } from 'utils/urlUtils';
+import { metaAtom } from 'store/atoms/meta';
+import { BOOKING_FLOW_TYPE } from 'const/booking';
 import COLORS from 'const/colors';
-import { ClockSvg, StarIcon } from 'const/descriptorIcons';
+import { StarIcon } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
+  PRODUCT_CARD_REVAMP,
+  SIDEBAR_TYPES,
 } from 'const/index';
-import en from 'const/localization/en';
 import { strings } from 'const/strings';
+import { Descriptors } from './Descriptors';
+import { TProductCardProps } from './interface';
+import { MoreDetailsPopupContent } from './MoreDetailsPopupContent';
+import { MoreDetailsPopupDesktop } from './MoreDetailsPopupDesktop';
 import {
-  BoltSVG,
-  CarIconSVG,
-  CircleSVG,
-  LocationPinPurpleSVG,
-  ShieldTickSVG,
-  SwapArrowsSVG,
-  TailedArrowSVG,
-} from 'assets/airportTransfers';
-import { TPrivateAirportTransferProductCardProps } from './interface';
-import { MoreDetailsSideDrawer } from './MoreDetailsSideDrawer';
-import {
-  DescriptorsContainer,
-  LineSeparator,
-  LocationFromAndToMobile,
-  LocationFromToDesktop,
-  mobileDrawerStyles,
-  MoreDetailsButton,
   PricingAndCTASection,
-  RatingAndDurationContainer,
-  StyledDescriptorContainer,
-  StyledProductCardContainer,
-  StyledProductCardContent,
+  ProductCardContainer,
+  ProductCardContentContainer,
+  RatingsContainer,
   StyledProductTitle,
   VeritcalDashedSeparator,
-} from './styles';
+} from './style';
 
-export const PrivateAirportTranferProductCard = ({
-  isMobile,
+export const ProductCard = ({
   scorpioData,
   tour,
-  uid,
-  currentLanguage,
-  cityCode,
-  index,
-}: TPrivateAirportTransferProductCardProps) => {
-  const [isMoreDetailsSidebarOpen, setIsMoreDetailsSidebarOpen] =
-    useState(false);
+  isMobile,
+  extraQueryParamsForBookingURL,
+  position,
+}: TProductCardProps) => {
+  const {
+    combo: isCombo,
+    title,
+    multiVariant: isMultiVariant,
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+    averageRating,
+    ratingCount,
+    images,
+    listingPrice,
+    minDuration,
+    maxDuration,
+    primaryCategory,
+    primaryCollection,
+    primarySubCategory,
+    reviewsDetails,
+  } = scorpioData || {};
 
-  const { title, averageRating, ratingCount, images, listingPrice } =
-    scorpioData;
+  const showRating = averageRating > 0;
 
-  const { biLink, bookSubdomain, isDev, host, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const {
+    mbTheme,
+    lang,
+    sidebarModal: { addToAside },
+    isStage,
+    isDev,
+    host,
+  } = useContext(MBContext);
 
-  const currency = useRecoilValue(currencyAtom);
+  const pageMetaData = useRecoilValue(metaAtom);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const popupController = useRef<TController>();
 
-  const { data: airportsList } = useAirportsList(cityCode);
+  const productBookingUrl =
+    useBookingURL({
+      flowType: tour.flowType,
+      isMobile,
+      tourGroupId: tour.tgid,
+      ctaSuffix: tour.cta_url_suffix ?? '',
+      tourId: listingPrice.tourId,
+    }) +
+    `${
+      extraQueryParamsForBookingURL ? `&${extraQueryParamsForBookingURL}` : ''
+    }`;
 
-  const airportName =
-    airportsList?.find((a) => a.tourGroupId === tour.tgid)?.name ?? 'Airport';
+  const [showComboVariant, setShowComboVariant] = useState(false);
 
-  let url = host || window.location.host;
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
+  const isComboWithSingleVariant = isCombo && !isMultiVariant;
+  const isComboWithMultiVariant = isCombo && isMultiVariant;
 
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
-  let hostSplit = hostName.split('.');
-  hostSplit.shift();
-  const bookingUrl = hostSplit.join('.');
-
-  const productBookingUrl = createBookingURL({
-    nakedDomain: bookingUrl,
-    lang: currentLanguage,
-    currency,
-    tgid: tour.tgid,
-    promoCode: null,
-    tourId: String(listingPrice.tourId),
-    biLink,
-    date: null,
-    isMobile,
-    bookSubdomain,
-    redirectToHeadoutBookingFlow,
-    ctaSuffix: tour.cta_url_suffix ?? '',
-    flowType: tour.flowType,
+  const hostname = getHostName(isStage, isDev, host);
+  const tourGroupEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    id: tour.tgid,
+    hostname,
+    params: {
+      ...(lang && {
+        language: lang,
+      }),
+    },
   });
 
-  const { finalPrice, localSymbol } = listingPrice;
+  const { data: tourGroupData } = useSWR(
+    isComboWithSingleVariant ? tourGroupEndpoint : null,
+    { fetcher: swrFetcher }
+  );
 
-  const { highlights, tabs } = isMobile
-    ? extractTabsFromHighlights(scorpioData.highlights)
-    : { highlights: scorpioData.highlights, tabs: [] };
+  const onMoreDetailsClick = () => {
+    if (!isMobile) {
+      popupController.current?.open();
 
-  useEffect(() => {
-    if (!isMobile) return;
+      trackMoreDetailsClick();
 
-    const removeLoading = () => setIsLoading(false);
+      return;
+    }
 
-    window.addEventListener('pagehide', removeLoading);
-  }, []);
+    addToAside({
+      width: '100vw',
+      children: (
+        <ModalCardContainer>
+          <MoreDetailsPopupContent
+            currentLanguage={lang}
+            isMobile={isMobile}
+            mbTheme={mbTheme ?? ''}
+            scorpioData={scorpioData}
+            tour={tour}
+            showComboVariant={showComboVariant}
+            expandContent
+            isInPopup={false}
+            handleShowComboPopup={handleShowComboPopup}
+            handleCloseComboPopup={handleCloseComboPopup}
+            productBookingURL={productBookingUrl}
+            sendBookNowEvent={sendBookNowEvent}
+          />
+        </ModalCardContainer>
+      ),
+      type: SIDEBAR_TYPES.PRODUCT_CARD,
+      onCloseCallback: () => {
+        //
+      },
+      tgid: tour.tgid,
+      isProductCardTracking: true,
+      history: {
+        enable: true,
+        params: {
+          pid: tour.tgid,
+          popup: 'details',
+        },
+      },
+    });
 
-  const handleCTAClick = () => {
+    trackMoreDetailsClick();
+  };
+
+  const sendBookNowEvent = (placement?: string) => {
+    const placementProperty = placement
+      ? {
+          [ANALYTICS_PROPERTIES.PLACEMENT]: placement,
+        }
+      : {};
+
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
-      [ANALYTICS_PROPERTIES.CATEGORY_ID]: scorpioData.primaryCategory.id,
-      [ANALYTICS_PROPERTIES.CATEGORY_NAME]:
-        scorpioData.primaryCategory.displayName,
-      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: scorpioData.primarySubCategory?.id,
-      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]:
-        scorpioData.primarySubCategory?.displayName,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-      [ANALYTICS_PROPERTIES.SECTION]: 'Private Transfers',
-    });
-
-    if (!isMobile) return;
-
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 6000);
-  };
-
-  const handleMoreDetailsClick = () => {
-    setIsMoreDetailsSidebarOpen(true);
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_DETAILS_VIEWED,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-      [ANALYTICS_PROPERTIES.SECTION]: en.AIRPORT_TRANSFER.PRIVATE_TRANSFERS,
-      [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      ...placementProperty,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
-    });
-  };
-
-  const handleMwebHighlightsTabChange = ({
-    index,
-    defaultSelection,
-    tab,
-  }: {
-    index: number;
-    defaultSelection: boolean;
-    tab: any;
-  }) => {
-    setActiveTabIndex(index);
-
-    if (defaultSelection) return;
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: tab.heading,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
       [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
-      [ANALYTICS_PROPERTIES.SECTION]: 'Private Transfers',
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+        reviewsDetails,
+      }),
     });
   };
+
+  const handleShowComboPopup = (placement?: string) => {
+    const { variants } = tourGroupData || {};
+    sendBookNowEvent(placement);
+
+    if (tourGroupData && isComboWithSingleVariant) {
+      if (typeof window !== 'undefined') {
+        const { id: variantId } = variants[0];
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
+          'MB name': hostname,
+          'Variant ID': variantId,
+          TGID: tour.tgid,
+          Device: isMobile ? 'Mweb' : 'Desktop',
+          ...getProductCommonProperties({
+            primaryCategory,
+            primaryCollection,
+            primarySubCategory,
+          }),
+        });
+        window.open(
+          addQueryParams(productBookingUrl, {
+            variantId,
+          }),
+          '_blank',
+          'noopener'
+        );
+        return;
+      }
+    }
+
+    setShowComboVariant(true);
+
+    if (!isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    if (isMobile && isComboWithMultiVariant) {
+      addToAside({
+        width: '100vw',
+        children: (
+          <ComboPopup
+            productTitle={title}
+            l1Booster={tour.tag_booster ?? ''}
+            tgid={tour.tgid}
+            isMobile={isMobile}
+            closeHandler={handleCloseComboPopup}
+            descriptors={scorpioData.descriptors}
+            bookingUrl={productBookingUrl}
+            minDuration={minDuration}
+            maxDuration={maxDuration}
+          />
+        ),
+        type: SIDEBAR_TYPES.COMBO_VARIANT,
+        onCloseCallback: () => handleCloseComboPopup(),
+        history: {
+          enable: true,
+          params: {
+            pid: tour.tgid,
+            popup: 'combo',
+          },
+        },
+      });
+    }
+  };
+
+  const handleCloseComboPopup = () => {
+    setShowComboVariant(false);
+    if (!isMobile) {
+      document.body.style.overflow = 'auto';
+    }
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
+      [ANALYTICS_PROPERTIES.MB_NAME]: hostname,
+      [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: '',
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+  };
+
+  const trackMoreDetailsClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+      [ANALYTICS_PROPERTIES.TGID]: tour.tgid,
+      // @ts-ignore
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      [ANALYTICS_PROPERTIES.PLACEMENT]:
+        tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+          ? 'Private Transfer Card'
+          : 'Product Card',
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+        reviewsDetails,
+      }),
+    });
+  };
+
+  const isScratchPriceEnabled = legacyBooleanCheck(tour.show_scratch_price);
 
   return (
-    <StyledProductCardContainer>
+    <ProductCardContainer>
       <div className="card-images-carousel">
         <MediaCarousel
           imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
           imageId="card-img"
-          imageAspectRatio={isMobile ? '21:9' : '1.186'}
+          imageAspectRatio={'16:10'}
           backgroundColor={COLORS.GRAY.G7}
           imageWidth={
             isMobile ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width : undefined
@@ -189,197 +316,120 @@ export const PrivateAirportTranferProductCard = ({
           isFirstProduct={false}
           tgid={String(tour.tgid)}
           isMobile={isMobile}
+          showOverlay
         />
       </div>
 
-      <StyledProductCardContent>
-        <StyledProductTitle>{title}</StyledProductTitle>
+      <ProductCardContentContainer>
+        <div>
+          <Conditional if={showRating}>
+            <RatingsContainer>
+              <StarIcon className="star-icon" />
+              <span className="rating">{averageRating}</span>
+              <span className="ratings-count">({ratingCount})</span>
+            </RatingsContainer>
+          </Conditional>
 
-        <RatingAndDurationContainer>
-          <StarIcon />
-          <span className="rating">{averageRating}</span>
-          <span className="ratings-count">({ratingCount})</span>
-
-          <LineSeparator />
-
-          <Descriptor icon={<ClockSvg />} text="30 mins" />
-        </RatingAndDurationContainer>
-
-        <Conditional if={!isMobile}>
-          <LocationFromToDesktop>
-            <CircleSVG />
-            <span>{airportName}</span>
-
-            <div className="dotted-line"></div>
-
-            <LocationPinPurpleSVG />
-            <span className="anywhere-chip">
-              {strings.AIRPORT_TRANSFER.ANYWHERE_IN_THE_CITY}
-            </span>
-          </LocationFromToDesktop>
-        </Conditional>
+          <StyledProductTitle>{title}</StyledProductTitle>
+        </div>
 
         <Conditional if={isMobile}>
-          <LocationFromAndToMobile>
-            <LocationPinPurpleSVG />
-            <span>{airportName}</span>
-
-            <SwapArrowsSVG className="swap" />
-
-            <LocationPinPurpleSVG />
-
-            <span>{strings.AIRPORT_TRANSFER.ANYWHERE_IN_THE_CITY}</span>
-          </LocationFromAndToMobile>
+          <NextAvailable
+            showSkeleton={false}
+            earliestAvailability={tour.earliestAvailability}
+            currentLanguage={lang}
+            className="next-available-text"
+          />
         </Conditional>
 
-        <DescriptorsContainer>
-          <Descriptor
-            icon={<CarIconSVG />}
-            text={strings.AIRPORT_TRANSFER.DESCRIPTORS.MULTIPLE_VEHICLE}
-          />
-
-          <LineSeparator />
-
-          <Descriptor
-            icon={<ShieldTickSVG />}
-            text={strings.AIRPORT_TRANSFER.DESCRIPTORS.FREE_CANCELLATION}
-          />
-
-          <LineSeparator />
-
-          <Descriptor
-            icon={<BoltSVG />}
-            text={strings.DESCRIPTORS.INSTANT_CONFIRMATION}
-          />
-
-          <LineSeparator />
-
-          <MoreDetailsButton onClick={handleMoreDetailsClick}>
-            {strings.MORE_DETAILS}
-            <TailedArrowSVG />
-          </MoreDetailsButton>
-        </DescriptorsContainer>
-      </StyledProductCardContent>
+        <Descriptors
+          scorpioData={scorpioData}
+          onMoreDetailsClick={onMoreDetailsClick}
+          tourDescriptionOverride={tour.tour_description_override ?? []}
+          tgid={tour.tgid}
+          isMobile={isMobile}
+          isScratchPriceEnabled={isScratchPriceEnabled}
+          lang={lang}
+          position={position ?? 0}
+        />
+      </ProductCardContentContainer>
 
       <VeritcalDashedSeparator />
 
       <PricingAndCTASection>
-        <div className="scratch-price">
-          {/* from <span className="scratch-price-amount">$ 83</span> */}
-        </div>
-
-        <div className="price">
-          <span>
-            {localSymbol} {finalPrice}
-          </span>
-        </div>
-
-        <a
-          target={isMobile ? '_self' : '_blank'}
-          href={productBookingUrl}
-          rel="nofollow noopener"
-          className="booking-link"
-        >
-          <Button
-            width={isMobile ? '100%' : '13.5rem'}
-            size="medium"
-            color="purps"
-            variant="primary"
-            isLoading={isLoading}
-            onClick={handleCTAClick}
-            tabIndex={0}
-            text={strings.CHECK_AVAIL}
+        <PriceBlock
+          isMobile
+          showScratchPrice={isScratchPriceEnabled}
+          listingPrice={listingPrice}
+          lang={lang}
+          showSavings
+          id={tour.tgid}
+          prefix
+          newDiscountTagDesignProps
+        />
+        {!isCombo ? (
+          <a
+            target={isMobile ? '_self' : '_blank'}
+            href={productBookingUrl}
+            rel="nofollow noopener"
+            className="booking-link"
+          >
+            <BookNowCta
+              clickHandler={() =>
+                sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD)
+              }
+              isMobile={isMobile}
+              mbTheme={mbTheme ?? ''}
+              ctaText={strings.CHECK_AVAIL}
+              width="100%"
+            />
+          </a>
+        ) : (
+          <BookNowCta
+            showLoadingState={false}
+            clickHandler={() => {
+              handleShowComboPopup(PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET);
+            }}
+            isMobile={isMobile}
+            mbTheme={mbTheme ?? ''}
+            ctaText={strings.CHECK_AVAIL}
+            width="100%"
           />
-        </a>
-
-        <Conditional if={isMobile}>
-          <Button
-            className="more-details"
-            width={'100%'}
-            size="medium"
-            color="purps"
-            variant="tertiary"
-            isLoading={false}
-            onClick={handleMoreDetailsClick}
-            tabIndex={0}
-            text={strings.MORE_DETAILS}
-          />
-        </Conditional>
+        )}
       </PricingAndCTASection>
 
-      <Conditional if={isMoreDetailsSidebarOpen && !isMobile}>
-        <MoreDetailsSideDrawer
-          onClose={() => setIsMoreDetailsSidebarOpen(false)}
-          title={title}
-          averageRating={averageRating}
-          ratingsCount={ratingCount}
-          listingPrice={listingPrice}
-          productBookingUrl={productBookingUrl}
-          highlights={scorpioData.highlights}
+      <MoreDetailsPopupDesktop
+        popupController={popupController}
+        mbTheme={mbTheme ?? ''}
+        tour={tour}
+        PopupContent={MoreDetailsPopupContent}
+        scorpioData={scorpioData}
+        currentLanguage={lang}
+        isMobile={isMobile}
+        onShowComboPopup={handleShowComboPopup}
+        onCloseComboPopup={handleCloseComboPopup}
+        showComboVariant={showComboVariant}
+        productBookingUrl={productBookingUrl}
+        sendBookNowEvent={sendBookNowEvent}
+      />
+
+      <Conditional
+        if={!isMobile && isComboWithMultiVariant && showComboVariant}
+      >
+        <ComboPopup
+          productTitle={scorpioData.title}
+          l1Booster={tour.tag_booster ?? ''}
+          tgid={tour.tgid}
+          isMobile={isMobile}
+          closeHandler={() => {
+            handleCloseComboPopup();
+          }}
+          descriptors={scorpioData.descriptors}
+          bookingUrl={productBookingUrl}
+          minDuration={minDuration}
+          maxDuration={maxDuration}
         />
       </Conditional>
-
-      <Conditional if={isMoreDetailsSidebarOpen && isMobile}>
-        <Drawer
-          className="product-details-drawer"
-          hideSeparator
-          $drawerStyles={mobileDrawerStyles}
-          heading={title}
-          closeHandler={() => setIsMoreDetailsSidebarOpen(false)}
-        >
-          <RatingAndDurationContainer>
-            <StarIcon />
-            <span className="rating">{averageRating}</span>
-            <span className="ratings-count">({ratingCount})</span>
-          </RatingAndDurationContainer>
-
-          <HighlightTabs
-            className="product-highlight-tabs"
-            isLoading={false}
-            onTabChange={handleMwebHighlightsTabChange}
-            hasRegularHighlights={highlights.length > 0}
-            tabs={tabs}
-            pageType={''}
-            activeTabIndex={activeTabIndex}
-            showCard={true}
-          />
-
-          <PricingAndCTASection>
-            <div className="scratch-price"></div>
-
-            <div className="price">
-              <span>
-                {localSymbol} {finalPrice}
-              </span>
-            </div>
-
-            <a
-              target={isMobile ? '_self' : '_blank'}
-              href={productBookingUrl}
-              rel="nofollow"
-              className="booking-link"
-            >
-              <Button
-                width={'100%'}
-                size="medium"
-                color="purps"
-                variant="primary"
-                isLoading={isLoading}
-                onClick={handleCTAClick}
-                tabIndex={0}
-                text={strings.CHECK_AVAIL}
-              />
-            </a>
-          </PricingAndCTASection>
-        </Drawer>
-      </Conditional>
-    </StyledProductCardContainer>
+    </ProductCardContainer>
   );
 };
-
-const Descriptor = ({ icon, text }: { icon: any; text: string }) => (
-  <StyledDescriptorContainer className="descriptor">
-    {icon}
-    <span className="descriptor-text">{text}</span>
-  </StyledDescriptorContainer>
-);

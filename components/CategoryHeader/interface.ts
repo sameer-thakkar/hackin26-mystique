@@ -13,4 +13,5 @@ export type CategoryHeaderProps = {
   languages?: Array<Record<string, any>>;
   currentLanguage?: string;
   isMobile: boolean;
+  showShadowOnSticky?: boolean;
 };

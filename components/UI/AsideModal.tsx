@@ -657,6 +657,7 @@ const AsideModal = ({
         } = router.query;
         const { _pid, _popup, ...historyState } = window.history.state;
         addUrlParams({
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           urlParams: { ...otherParams },
           historyState: { ...historyState },
           replace: false,

@@ -1,10 +1,14 @@
-import { ReactNode } from 'react';
-
 export type TCityInfo = {
   cityCode: string;
-  city: string;
+  name?: string;
+  city?: string;
   countryCode: string;
-  country: string;
+  displayName: string;
+  country: {
+    displayName: string;
+    code: string;
+    currency: Currency;
+  };
   currency: Currency;
 };
 
@@ -37,7 +41,17 @@ export type TTour = {
   };
 };
 
+export type TTGIDScorpioDataMap = {
+  [tgid: number]: TScorpioData;
+};
+
 export type TScorpioData = {
+  reviewsDetails?: {
+    ratingsCount?: number | undefined;
+    averageRating?: number | undefined;
+    showRatings?: boolean | undefined;
+  };
+  topReviews?: any[];
   allTags: string[];
   available: boolean;
   averageRating: number;
@@ -163,14 +177,4 @@ type TMicroBrandInfo = {
   supportedLanguages: any[];
   metaTitle: null | string;
   metaDescription: null | string;
-};
-
-export type TPopulateAirportTransferProductsProps = {
-  uncategorizedTours: TTour[];
-  isMobile: boolean;
-  scorpioData: TScorpioData[];
-  city: TCityInfo;
-  sharedTransferProducts: ReactNode;
-  uid: string;
-  currentLanguage: string;
 };

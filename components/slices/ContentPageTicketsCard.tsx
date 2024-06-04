@@ -588,7 +588,6 @@ const TicketCard = (props: any) => {
       document.body.style.overflow = 'hidden';
     }
     if (isMobile) {
-      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (

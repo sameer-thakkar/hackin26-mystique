@@ -5,7 +5,7 @@ import { expandFontToken } from 'const/typography';
 
 export const StyledReviewsContainer = styled.div<{ noMargin?: boolean }>`
   max-width: 75rem;
-  margin: ${({ noMargin }) => (noMargin ? '2rem auto' : '5rem auto')};
+  margin: ${({ noMargin }) => (noMargin ? '2rem auto' : '3.875rem auto')};
 
   .swiper {
     margin-top: 2rem;

@@ -8,7 +8,7 @@ import { StarIcon } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
 import CloseIcon from 'assets/closeIcon';
 import Accordion from '../Accordion';
-import { TScorpioDataHighlight } from '../PopulateAirportTransferProducts/interfaces';
+import { TScorpioDataHighlight } from '../interface';
 import {
   ContentHeader,
   FullHeightDrawer,

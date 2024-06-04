@@ -47,7 +47,6 @@ const LargeListicleGrid = ({
   const onClickMoreDetails = (e: any) => {
     e?.stopPropagation();
     document.body.style.overflow = 'hidden';
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '100vw',
       children: (

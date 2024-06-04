@@ -177,12 +177,13 @@ const Drawer = ({
   slideOutOnClose = false,
   coverHeaderInShadow = false,
   hideCrossIcon = false,
+  customHeader,
 }: {
   closeHandler?: Function;
   contents?: JSX.Element;
   className?: string;
   heading?: string;
-  children?: JSX.Element | Array<JSX.Element>;
+  children?: React.ReactNode;
   noMargin?: boolean;
   $drawerStyles?: any;
   container?: HTMLElement | null;
@@ -190,6 +191,7 @@ const Drawer = ({
   slideOutOnClose?: boolean;
   coverHeaderInShadow?: boolean;
   hideCrossIcon?: boolean;
+  customHeader?: (closeHandler: () => void) => JSX.Element;
 }) => {
   const [mounted, setMounted] = useState(false);
   const drawerRef = useRef(null);
@@ -292,25 +294,29 @@ const Drawer = ({
         $noMargin={noMargin}
         ref={drawerRef}
       >
-        {/* @ts-expect-error TS(2769): No overload matches this call. */}
-        <HeadingContainer $hasHeading={heading?.length}>
-          <Conditional if={!hideCrossIcon}>
-            <PanelAnchor />
-          </Conditional>
-          <Conditional if={heading}>
-            <HeadingText>{heading}</HeadingText>
-
-            <Conditional if={!hideSeparator}>
-              <Separator />
+        {customHeader ? (
+          customHeader(() => close('Close Icon'))
+        ) : (
+          <HeadingContainer $hasHeading={!!heading?.length}>
+            <Conditional if={!hideCrossIcon}>
+              <PanelAnchor />
             </Conditional>
-          </Conditional>
-          <Conditional if={!hideCrossIcon}>
-            <CloseIcon
-              onClick={() => close('Close Icon')}
-              className="close-icon"
-            />
-          </Conditional>
-        </HeadingContainer>
+            <Conditional if={heading}>
+              <HeadingText>{heading}</HeadingText>
+
+              <Conditional if={!hideSeparator}>
+                <Separator />
+              </Conditional>
+            </Conditional>
+            <Conditional if={!hideCrossIcon}>
+              <CloseIcon
+                onClick={() => close('Close Icon')}
+                className="close-icon"
+              />
+            </Conditional>
+          </HeadingContainer>
+        )}
+
         <CoreDrawerText>{contents || children}</CoreDrawerText>
       </DrawerWrapper>
     </DrawerContainer>,

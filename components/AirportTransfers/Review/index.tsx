@@ -38,7 +38,7 @@ const SWIPER_BREAKPOINTS = {
 };
 
 const swiperAutoPlayConfig = {
-  delay: 2000,
+  delay: 4800,
   disableOnInteraction: false,
 };
 

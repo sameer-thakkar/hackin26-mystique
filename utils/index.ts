@@ -314,6 +314,8 @@ export const createBookingURL = ({
     finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.test-headout.com`;
   }
 
+  finalHost = 'landing.deimos.test-headout.com'; // ⚠ TODO: remove before merging
+
   const urlObject = new URL(
     `https://${finalHost}${langRouteParam}/book/${tgid}/${bookingStageSuffix}${
       addTrailingSlash ? '/' : ''

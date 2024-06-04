@@ -1005,6 +1005,68 @@ const it = {
         DESCRIPTION:
           'Raggiungi la tua destinazione in modo rapido e confortevole.',
       },
+      // New experiment (AT LP)
+      EFFORT_LESS_AIRPORT_TRANSFERS:
+        'Semplici trasferimenti aeroportuali a {0} in',
+      BUSES: 'autobus',
+      TRAINS: 'treno',
+      PRIVATE_TAXIS: 'taxi',
+      BUS_TRAIN: 'Bus/Treno',
+      PRIVATE_TAXI: 'Taxi',
+
+      FROM: 'From',
+      SELECT_PICKUP: 'Partenza',
+      TO: 'To',
+      SELECT_DROPOFF: 'Arrivo',
+      ENTER_DESTINATION: 'Inserisci la destinazione',
+      PICKUP_DATE: 'Data prelievo',
+      SELECT_DATE: 'Scegli data',
+      PICKUP_TIME: 'Ora prelievo',
+      SELECT_TIME: 'Scegli ora',
+      GUESTS: 'Guests',
+      ADD_GUESTS: 'Più ospiti',
+      EXPLORE_TRANSFERS: 'Scopri i trasferimenti',
+      COMBOS_AND_EXTRAS: 'Combinazioni e altro',
+
+      YOUR_RIDE_DOORSTEP: 'Il tuo transfer privato',
+      COMFORTABLE_RIDE:
+        'Prenota un comodo taxi privato da e per i principali aeroporti di {0}',
+      TRUSTED_DRIVERS: 'Autisti affidabili',
+      RIDES_24_7: 'Disponibilità 24/7',
+      FLIGHT_TRACKING: 'Tracciamento del volo',
+      KNOW_MORE: 'Scopri di più',
+      RESERVE_YOUR_RIDE: 'Prenota il transfer',
+      TRANSFER_OPTIONS: 'Transfer disponibili per te',
+      TRANSFERS_AVAILABLE_PLURAL: '{0} transfer disponibili',
+      TRANSFERS_AVAILABLE_SINGULAR: '1 transfer disponibile',
+
+      TRUSTED_PARTNERS: '35+ fidati partner, {0}',
+      WORLDWIDE: 'globali',
+      COMFORTABLE_RIDES: 'Corse comode',
+      FREQUENT_DEPARTURES: 'Partenze frequenti',
+      MULTIPLE_TRANSPORT_OPTIONS: 'Diverse opzioni disponibili',
+      AND_MANY_MORE: 'E molti altri',
+
+      ADD_PICKUP_LOCATION: 'Aggiungi luogo di partenza',
+      ADD_DROPOFF_LOCATION: 'Aggiungi luogo di arrivo',
+      SELECT_PICKUP_DATE_AND_TIME: 'Scegli data e ora di partenza',
+      SELECT_A_DATE: 'Seleziona data',
+
+      TRAIN_STATION: 'Stazione dei treni',
+      BUS_STOP: 'Stazione dei bus',
+
+      ADD_RETURN: 'Andata e ritorno?',
+      HEADS_UP: 'Attenzione!',
+      ADDED_RETURN_TRIP: 'Hai aggiunto un ritorno',
+      RETURN_NOTE:
+        'Ti mostreremo i dettagli del viaggio di ritorno nei prossimi passaggi',
+      OKAY_I_UNDERSTAND: 'OK, ho capito',
+
+      SERVING_GUESTS: 'Più di {0} in oltre {1} del mondo',
+      GUESTS_COUNT: '220.000 viaggiatori',
+      CITIES_COUNT: '55 città',
+      PARNTER_WITH_BEST:
+        "Collaboriamo solo con i migliori, per assicurarti un'esperienza indimenticabile. Ai dettagli ci pensiamo noi: tu dovrai solo approfittare del viaggio.",
     },
 
     SHARED_TRANSFERS_IN: 'Trasferimenti condivisi a {0}',

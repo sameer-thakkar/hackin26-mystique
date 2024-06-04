@@ -119,15 +119,15 @@ export const SUB_CATEGORY_BANNER: BannerMap = () => {
     '1019': [
       {
         icon: BANNER_DESCRIPTORS.EASY_BEST,
-        text: strings.BANNER_DESCRIPTORS.EASY_BEST,
+        text: strings.DESCRIPTORS.INSTANT_CONFIRMATION,
       },
       {
         icon: BANNER_DESCRIPTORS.INSTANT_MOBILE,
-        text: strings.BANNER_DESCRIPTORS.INSTANT_MOBILE,
+        text: strings.DESCRIPTORS.MOBILE_TICKET,
       },
       {
-        icon: BANNER_DESCRIPTORS.MULTI_TRANSPORT,
-        text: strings.BANNER_DESCRIPTORS.MULTI_TRANSPORT,
+        icon: BANNER_DESCRIPTORS.SPARKS,
+        text: strings.BANNER_DESCRIPTORS.BEST_PRICES,
       },
     ],
     '1132': [

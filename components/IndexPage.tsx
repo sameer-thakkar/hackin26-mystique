@@ -57,7 +57,12 @@ const getValidUrlParams = (query: any) =>
     .join('&')
     .trim();
 
-type PageProps = { inventorySlotData: SimplifiedSlotsData; [k: string]: any };
+type PageProps = {
+  inventorySlotData: SimplifiedSlotsData;
+  [k: string]: any;
+
+  airportTransfersLPExperimentVariant: string;
+};
 
 const Page = (props: PageProps) => {
   // Render headout's session-id-setter on mount
@@ -76,6 +81,7 @@ const Page = (props: PageProps) => {
     categoryTourListData: legacyCategoryTourListData,
     docsForListicles,
     collectionsInListicles,
+    airportTransfersLPExperimentVariant,
     rankingExperimentProps,
   } = props;
 
@@ -298,6 +304,9 @@ const Page = (props: PageProps) => {
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
             uid={uid}
+            airportTransfersLPExperimentVariant={
+              airportTransfersLPExperimentVariant
+            }
             categoryTourListDataWithRankingExperiment={
               categoryTourListDataWithRankingExperiment
             }
@@ -453,7 +462,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? req.headers['x-bot'] === 'true' || typeof query?.['bot'] !== 'undefined'
     : PlatformUtils.isBot(userAgent);
 
+  const airportTransferABExperimentVariant =
+    req?.headers['x-experiment-variant'];
+
   const serverCookies = new ServerCookies(req, res);
+  if (airportTransferABExperimentVariant) {
+    serverCookies.set(
+      'experiment-variant',
+      airportTransferABExperimentVariant as string
+    );
+  }
   /**
    * Adding window check below since `serverCookies.get` runs only on server side :/
    */
@@ -613,6 +631,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         asPath,
         biLink,
         cookies: req?.cookies ?? {},
+        airportTransfersLPExperimentVariant: airportTransferABExperimentVariant,
         headers: JSON.stringify(req?.headers),
         isGDPRCompliant,
         countryCode,

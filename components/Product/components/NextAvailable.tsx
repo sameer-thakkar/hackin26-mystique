@@ -21,6 +21,7 @@ export const NextAvailable = ({
   inTitle,
   isExperimentalCard,
   isDrawer,
+  className,
 }: TNextAvailableProps) => {
   if (showSkeleton)
     return (
@@ -38,6 +39,7 @@ export const NextAvailable = ({
     <NextAvailableBlock
       $isDrawer={isDrawer}
       $isExperimentalCard={isExperimentalCard}
+      className={className}
     >
       <div
         data-card-section={CARD_SECTION_MARKERS.AVAILABILITY}

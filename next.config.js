@@ -2,9 +2,9 @@ const moduleTranspiler = require('next-transpile-modules');
 
 const { withSentryConfig } = require('@sentry/nextjs');
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// });
 
 const SentryWebpackPluginOptions = {
   include: '.',
@@ -95,5 +95,5 @@ const nextConfig = {
 };
 
 module.exports = withTM(
-  withBundleAnalyzer(withSentryConfig(nextConfig, SentryWebpackPluginOptions))
+  withSentryConfig(nextConfig, SentryWebpackPluginOptions)
 );

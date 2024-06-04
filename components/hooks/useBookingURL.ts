@@ -1,0 +1,60 @@
+import { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
+import parse from 'url-parse';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL } from 'utils';
+import { currencyAtom } from 'store/atoms/currency';
+
+export const useBookingURL = ({
+  tourGroupId,
+  tourId,
+  isMobile,
+  ctaSuffix,
+  flowType,
+}: {
+  tourGroupId: number;
+  tourId?: number;
+  isMobile: boolean;
+  ctaSuffix?: string;
+  flowType: string;
+}) => {
+  const {
+    biLink,
+    bookSubdomain,
+    isDev,
+    host,
+    redirectToHeadoutBookingFlow,
+    uid,
+    lang,
+  } = useContext(MBContext);
+
+  const currency = useRecoilValue(currencyAtom);
+
+  let url = host || window.location.host;
+  const currentHost = !isDev ? url : parse(uid, true).pathname;
+
+  const hostName = currentHost.includes('stage')
+    ? currentHost.replace('stage-', '')
+    : currentHost;
+  let hostSplit = hostName.split('.');
+  hostSplit.shift();
+  const bookingUrl = hostSplit.join('.');
+
+  const productBookingUrl = createBookingURL({
+    nakedDomain: bookingUrl,
+    lang: lang,
+    currency,
+    tgid: tourGroupId,
+    promoCode: null,
+    tourId: tourId ? String(tourId) : null,
+    biLink,
+    date: null,
+    isMobile,
+    bookSubdomain,
+    redirectToHeadoutBookingFlow,
+    ctaSuffix: ctaSuffix ?? '',
+    flowType: flowType,
+  });
+
+  return productBookingUrl;
+};

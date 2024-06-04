@@ -55,6 +55,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
     languages = [],
     currentLanguage = '',
     isMobile,
+    showShadowOnSticky = true,
   } = props;
 
   const [expandMenu, setExpandMenu] = useState(false);
@@ -81,7 +82,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
 
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
-  const isSticky = scrollPos > 80;
+  const isSticky = scrollPos > 80 && showShadowOnSticky;
 
   useEffect(() => {
     if (!window) return;
@@ -218,7 +219,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
 
             if (expandNestedMenu) return null;
             return (
-              <>
+              <React.Fragment key={index}>
                 <StyledMainMenuItems
                   key={index}
                   className={`main-menu-item ${
@@ -256,7 +257,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
                     />
                   </StyledNestedMenuWrapper>
                 </Conditional>
-              </>
+              </React.Fragment>
             );
           })}
         </div>

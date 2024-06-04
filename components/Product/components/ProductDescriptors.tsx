@@ -29,6 +29,7 @@ export const ProductDescriptors = ({
   showIcons = true,
   isMobile = false,
   showGuidedTourDescriptor = true,
+  children,
 }: TProductDescriptors) => {
   const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
     useState(false);
@@ -98,6 +99,9 @@ export const ProductDescriptors = ({
           )
         );
       })}
+
+      {children}
+
       <Conditional if={showLanguages}>
         <div key="descriptor-language" className="tour-tag language-descriptor">
           {Globe}

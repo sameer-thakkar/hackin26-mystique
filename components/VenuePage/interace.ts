@@ -1,3 +1,7 @@
+import { MutableRefObject } from 'react';
+import { TScorpioData, TTour } from 'components/AirportTransfers/interface';
+import { TMoreDetailsPopupContentProps } from 'components/AirportTransfers/ProductCard/interface';
+import { TController } from 'components/Product/components/Popup/interface';
 import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 
 export type IAmenitiesProps = {
@@ -34,4 +38,18 @@ export type IVerticalCardsGrid = {
 
 export type IAmenity = {
   amenities_list: string;
+};
+export type TMoreDetailsPopupDesktopProps = {
+  scorpioData: TScorpioData;
+  mbTheme: string;
+  popupController: MutableRefObject<TController | undefined>;
+  tour: TTour;
+  currentLanguage: string;
+  isMobile: boolean;
+  productBookingUrl: string;
+  showComboVariant: boolean;
+  onShowComboPopup: (placement: string) => void;
+  onCloseComboPopup: () => void;
+  PopupContent: (props: TMoreDetailsPopupContentProps) => JSX.Element;
+  sendBookNowEvent: (placement: string) => void;
 };

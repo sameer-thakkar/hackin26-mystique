@@ -45,6 +45,7 @@ type MediaCarouselProps = {
   isTimed?: boolean;
   trackImage?: boolean;
   hideBorderRadius?: boolean;
+  useWidePaginatorActiveTab?: boolean;
   loadLowerQualityImageFirst?: boolean;
 };
 

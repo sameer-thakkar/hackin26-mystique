@@ -1025,6 +1025,68 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Wählen Sie den besten Flughafentransfer für Sie',
     HASSLE_FREE_TRANSFER: 'Reibungsloser Flughafentransfer',
+
+    // New experiment (AT LP)
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Bequeme Flughafentransfers in {0} mit dem',
+    BUSES: 'Bus',
+    TRAINS: 'Zug',
+    PRIVATE_TAXIS: 'einem Privattaxi',
+    BUS_TRAIN: 'Bus/Zug',
+    PRIVATE_TAXI: 'Privattaxi',
+
+    FROM: 'From',
+    SELECT_PICKUP: 'Abholort auswählen',
+    TO: 'To',
+    SELECT_DROPOFF: 'Zielort auswählen',
+    ENTER_DESTINATION: 'Zielort angeben',
+    PICKUP_DATE: 'Abholdatum',
+    SELECT_DATE: 'Datum wählen',
+    PICKUP_TIME: 'Abholzeit',
+    SELECT_TIME: 'Zeit wählen',
+    GUESTS: 'Guests',
+    ADD_GUESTS: 'Anzahl Gäste',
+    EXPLORE_TRANSFERS: 'Erkunden Sie Transfers und mehr',
+    COMBOS_AND_EXTRAS: 'Kombi-Deals',
+
+    YOUR_RIDE_DOORSTEP: 'Ihre Fahrt, direkt von Ihrer Haustür',
+    COMFORTABLE_RIDE:
+      'Buchen Sie ein bequemes Privattaxi zu und von den Hauptflughäfen in {0}',
+    TRUSTED_DRIVERS: 'Zuverlässige Fahrer',
+    RIDES_24_7: 'Fahrten rund um die Uhr',
+    FLIGHT_TRACKING: 'Live-Flugstatus für Fahrer',
+    KNOW_MORE: 'Weitere Infos',
+    RESERVE_YOUR_RIDE: 'Fahrt reservieren',
+    TRANSFER_OPTIONS: 'Gefundene Transfers',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} Transfers verfügbar',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 Transfer verfügbar',
+
+    TRUSTED_PARTNERS: 'Über 35 zuverlässige Partner {0}',
+    WORLDWIDE: 'weltweit',
+    COMFORTABLE_RIDES: 'Komfortable Fahrten',
+    FREQUENT_DEPARTURES: 'Häufige Abfahrten',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Zahlreiche Transferoptionen',
+    AND_MANY_MORE: 'Und viele mehr',
+
+    ADD_PICKUP_LOCATION: 'Abholort angeben',
+    ADD_DROPOFF_LOCATION: 'Zielort angeben',
+    SELECT_PICKUP_DATE_AND_TIME: 'Abholdatum und -zeit auswählen',
+    SELECT_A_DATE: 'Datum auswählen',
+
+    TRAIN_STATION: 'Bahnhof',
+    BUS_STOP: 'Bushaltestelle',
+
+    ADD_RETURN: 'Rückfahrt hinzufügen',
+    HEADS_UP: 'Achtung!',
+    ADDED_RETURN_TRIP: 'Sie haben eine Rückfahrt hinzugefügt.',
+    RETURN_NOTE:
+      'Die Details zur Rückfahrt werden in den nächsten Schritten angezeigt.',
+    OKAY_I_UNDERSTAND: 'Alles klar',
+
+    SERVING_GUESTS: 'Mehr als {0} aus über {1} weltweit',
+    GUESTS_COUNT: '220.000 zufriedene Gäste',
+    CITIES_COUNT: '55 Städten',
+    PARNTER_WITH_BEST:
+      'Wir arbeiten mit den besten Partnern zusammen, um Ihnen ein perfektes Erlebnis zu bieten. Wir kümmern uns um den Transfer – Sie lehnen sich zurück und genießen die Fahrt.',
   },
   PC_EXP: {
     SHOW_INCL: 'Inklusivleistungen und wichtige Infos',

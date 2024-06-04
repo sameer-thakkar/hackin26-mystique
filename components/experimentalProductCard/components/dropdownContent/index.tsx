@@ -203,7 +203,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
         const { ...historyState } = window.history.state;
         const { selection: _, ...otherParams } = router.query;
         addUrlParams({
-          urlParams: { ...otherParams },
+          urlParams: { ...otherParams } as Record<string, string | string[]>,
           historyState: { ...historyState },
           replace: false,
         });

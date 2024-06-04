@@ -105,8 +105,6 @@ const NavigationContainerStyles = css`
     cursor: pointer;
     width: 1.25rem;
     height: fit-content;
-    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.1))
-      drop-shadow(0px 4px 22px rgba(0, 0, 0, 0.2));
 
     svg {
       height: 2.25rem;

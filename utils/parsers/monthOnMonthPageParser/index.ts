@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nextjs';
-import type { TCityInfo } from 'components/AirportTransfers/PopulateAirportTransferProducts/interfaces';
+import type { TCityInfo } from 'components/AirportTransfers/interface';
 import {
   generatePromiseForCategoryTours,
   generateSubcatFitleredCollectionsPromises,

@@ -993,8 +993,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     ALL_ATTR_ONE_CARD: 'All attractions, one card',
     MULTI_CARD: 'Multiple card options',
     COST_EFF: 'Cost-effective and convenient',
-    EASY_BEST: 'Easy booking. Best prices',
-    INSTANT_MOBILE: 'Instant Confirmation. Mobile Tickets',
+    BEST_PRICES: 'Best prices',
     MULTI_TRANSPORT: 'Multiple transport options',
   },
   CAT_SUBCAT_PAGE: {
@@ -1095,6 +1094,68 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SEAMLESS_TRANSFERS: 'Seamless transfers, trusted worldwide',
     PICK_THE_BEST_AIRPORT_TRANSFER: 'Pick the best airport transfer for you',
     HASSLE_FREE_TRANSFER: 'Hassle-free airport transfer experience',
+
+    // New experiment (AT LP)
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Effortless airport transfers in {0} by',
+    BUSES: 'buses',
+    TRAINS: 'trains',
+    PRIVATE_TAXIS: 'private taxis',
+    BUS_TRAIN: 'Bus/Train',
+    PRIVATE_TAXI: 'Private taxi',
+
+    FROM: 'From',
+    SELECT_PICKUP: 'Select pick-up',
+    TO: 'To',
+    SELECT_DROPOFF: 'Select drop-off',
+    ENTER_DESTINATION: 'Enter your destination',
+    PICKUP_DATE: 'Pick-up date',
+    SELECT_DATE: 'Select date',
+    PICKUP_TIME: 'Pick-up time',
+    SELECT_TIME: 'Select time',
+    GUESTS: 'Guests',
+    ADD_GUESTS: 'Add guests',
+    EXPLORE_TRANSFERS: 'Explore transfers and more',
+    COMBOS_AND_EXTRAS: 'Combos and extras',
+
+    YOUR_RIDE_DOORSTEP: 'Your ride, at your doorstep',
+    COMFORTABLE_RIDE:
+      'Book a comfortable private taxi to and from major airports in {0}',
+    TRUSTED_DRIVERS: 'Trusted drivers',
+    RIDES_24_7: 'Rides available 24/7',
+    FLIGHT_TRACKING: 'Flight tracking',
+    KNOW_MORE: 'Know more',
+    RESERVE_YOUR_RIDE: 'Reserve your ride',
+    TRANSFER_OPTIONS: 'Transfer options found',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} transfers available',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 transfer available',
+
+    TRUSTED_PARTNERS: '35+ trusted partners, {0}',
+    WORLDWIDE: 'worldwide',
+    COMFORTABLE_RIDES: 'Comfortable rides',
+    FREQUENT_DEPARTURES: 'Frequent departures',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Multiple transport options',
+    AND_MANY_MORE: 'And many more',
+
+    ADD_PICKUP_LOCATION: 'Add pick-up location',
+    ADD_DROPOFF_LOCATION: 'Add drop-off location',
+    SELECT_PICKUP_DATE_AND_TIME: 'Select pick-up date and time',
+    SELECT_A_DATE: 'Select a date',
+
+    TRAIN_STATION: 'Train station',
+    BUS_STOP: 'Bus stop',
+
+    ADD_RETURN: 'Add return',
+    HEADS_UP: 'Heads up!',
+    ADDED_RETURN_TRIP: 'You’ve added a return trip!',
+    RETURN_NOTE:
+      'Please note, we’ll show the return journey details in the next steps',
+    OKAY_I_UNDERSTAND: 'Okay, I understand',
+
+    SERVING_GUESTS: 'Serving {0} in {1} around the globe',
+    GUESTS_COUNT: '220K+ guests',
+    CITIES_COUNT: '55+ cities',
+    PARNTER_WITH_BEST:
+      'We partner with only the best, to make sure you have an unforgettable experience. Let us handle the details — while you sit back, unwind, and enjoy the ride',
   },
   PC_EXP: {
     SHOW_INCL: 'Show inclusions & important info',

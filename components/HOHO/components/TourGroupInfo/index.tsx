@@ -83,7 +83,6 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
   const finalFrequecy = detailsObjects[strings.HOHO.TOUR_FREQUENCY];
 
   const closeModal = () => {
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     closeAside();
     // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
     if (!container.current) container.current = document.body;
@@ -209,7 +208,6 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       eventName: ANALYTICS_EVENTS.HOHO.ROUTE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: tourGroupId,
     });
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '50vw',
       children: <TourGroupRouteDetails />,
@@ -224,7 +222,6 @@ const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
       eventName: ANALYTICS_EVENTS.HOHO.MORE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: tourGroupId,
     });
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '50vw',
       children: <TourGroupMoreDetails />,

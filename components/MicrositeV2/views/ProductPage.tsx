@@ -636,7 +636,6 @@ export const MobileProductPage = (props: any) => {
   const isOpeningDateInThePast = isDateInThePast(reopeningDate);
 
   const openSafeSidebar = () => {
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: (

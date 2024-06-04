@@ -189,7 +189,6 @@ const DetailedProductCard = (props: any) => {
   };
 
   const openSafeSidebar = () => {
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: (

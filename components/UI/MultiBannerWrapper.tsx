@@ -122,7 +122,6 @@ const MultiBannerWrapper = ({
 
   if (!hasSafe) return null;
   const openSafeSidebar = () => {
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: [<SafeExperiencesPitch generic={true} key={0} />],

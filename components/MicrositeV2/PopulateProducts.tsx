@@ -254,8 +254,7 @@ const PopulateProducts = (props: any) => {
         >
           {isEntertainmentMb || isEntertainmentMbListicle
             ? strings.SEE_MORE_SHOWS
-            : // @ts-expect-error TS(2531): Object is possibly 'null'.
-              mbContext.buttons.see_more_text || strings.VIEW_MORE}
+            : mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </LinkResolver>
       </Conditional>
     </StyledProductWrapper>

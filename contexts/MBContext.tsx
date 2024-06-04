@@ -5,10 +5,14 @@ import { useRouter } from 'next/router';
 import { getLangObject } from 'utils/helper';
 import { addUrlParams } from 'utils/urlUtils';
 import { SIDEBAR_TYPES } from 'const/index';
+import { TCityInfo } from 'components/AirportTransfers/interface';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 
-export const MBContext = createContext({
+export const MBContext = createContext<{
+  [x: string]: any;
+  primaryCity: TCityInfo | null;
+}>({
   uid: null,
   lang: 'en',
   language_full: null,
@@ -139,16 +143,12 @@ export const MBContextProvider = (props: any) => {
         lang: getLangObject(lang).code,
         language_full: lang,
         nakedDomain,
-        // @ts-expect-error TS(2322): Type '{ see_more_text: any; }' is not assignable t... Remove this comment to see the full error message
         buttons: buttons,
         design,
         sidebarModal: {
           stack: sidebarModalStack,
-          // @ts-expect-error TS(2322): Type '({ children, title, width, sidePadding, type... Remove this comment to see the full error message
           addToAside,
-          // @ts-expect-error TS(2322): Type '() => void' is not assignable to type 'null'... Remove this comment to see the full error message
           closeAside,
-          // @ts-expect-error TS(2322): Type '() => void' is not assignable to type 'null'... Remove this comment to see the full error message
           resetAside,
         },
         mbTheme,

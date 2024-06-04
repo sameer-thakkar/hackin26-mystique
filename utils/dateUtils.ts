@@ -400,3 +400,8 @@ export const localizeDay = (day: string, locale: string): string => {
 
   return formatter.format(date);
 };
+export const getNMonthsFromNow = (n: number) => {
+  return Array.from({ length: n }).map((_, i) => {
+    return dayjs().add(i, 'month');
+  });
+};

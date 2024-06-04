@@ -1,4 +1,5 @@
-import { TScorpioData } from 'components/AirportTransfers/PopulateAirportTransferProducts/interfaces';
+import { TScorpioData, TTour } from 'components/AirportTransfers/interface';
+import { BOOKING_FLOW_TYPE } from 'const/booking';
 
 export function calculateAvgRatingAndTotalReviews(
   scorpioData: Record<number, TScorpioData>
@@ -28,3 +29,9 @@ export function calculateAvgRatingAndTotalReviews(
     ratingsCount: totalRatingsCount,
   };
 }
+
+export const hasPrivateAirportTransfers = (tours: TTour[]) => {
+  return tours.some(
+    (tour) => tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+  );
+};

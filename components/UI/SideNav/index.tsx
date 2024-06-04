@@ -51,7 +51,6 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
       [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
     });
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '282px',
       children: <div>{getSideNavItems(items)}</div>,
@@ -80,7 +79,6 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
     });
     setAppState({ ...appState, isSidenavScroll: true });
-    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     closeAside();
     // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
     if (!container.current) container.current = document.body;

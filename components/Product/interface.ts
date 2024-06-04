@@ -6,6 +6,7 @@ export type TNextAvailableProps = {
   inTitle?: boolean;
   isExperimentalCard?: boolean;
   isDrawer?: boolean;
+  className?: string;
 };
 
 export type TBookNowCTAProps = {
@@ -36,6 +37,7 @@ export type TProductDescriptors = {
   showIcons?: boolean;
   isMobile?: boolean;
   showGuidedTourDescriptor?: boolean;
+  children?: React.ReactNode;
 };
 
 export type TProductHighlightTabs = {

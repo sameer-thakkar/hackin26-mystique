@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/ProductCard/index';
+import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/PrivateAirportTransferProductCard/index';
 import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
@@ -10,11 +10,8 @@ import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import en from 'const/localization/en';
 import { strings } from 'const/strings';
-import {
-  TPopulateAirportTransferProductsProps,
-  TScorpioData,
-  TTour,
-} from './interfaces';
+import { TScorpioData, TTour } from '../interface';
+import { TPopulateAirportTransferProductsProps } from './interface';
 import {
   StyledContainer,
   StyledProductCardsContainer,
