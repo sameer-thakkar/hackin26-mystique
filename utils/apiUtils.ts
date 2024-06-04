@@ -208,8 +208,7 @@ export const getHeadoutApiUrl = ({
     url = `${hostname}${endpointSlug}`;
   } else {
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
-
-    url = `https://api.test-headout.com${formattedEndpointSlug}`; // ⚠ REVERT
+    url = `https://api.headout.com${formattedEndpointSlug}`;
   }
 
   if (params && Object.keys(params).length) {
