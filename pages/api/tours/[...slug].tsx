@@ -50,7 +50,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
 
   const url = `https://api.${
     useTest === 'true' || useTest ? 'test-' : ''
-  }test-headout.com/api/${(req.query.slug as string[])?.join('/')}/${
+  }headout.com/api/${(req.query.slug as string[])?.join('/')}/${
     queryParamsString ? `?${queryParamsString}` : ''
   }`;
 
