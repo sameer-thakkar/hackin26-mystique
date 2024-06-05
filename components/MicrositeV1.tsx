@@ -69,7 +69,6 @@ import {
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
-  RANKING_EXPERIMENT_UIDS,
   TEMPLATES,
   THEMES,
 } from 'const/index';
@@ -336,16 +335,8 @@ const MicrositeV1 = (props: any) => {
   const isCategorisedTours =
     Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
 
-  const {
-    isExperimentResolving: isRankingExperimentResolving,
-    variant: rankingExperimentVariant,
-  } = useABTesting({
-    experimentId: 'RANKING_EXPERIMENT_V1_REVENUE',
-    customEligibilityCheckFn: () =>
-      RANKING_EXPERIMENT_UIDS.includes(uid) &&
-      categoryTourListDataWithRankingExperiment &&
-      (lang === 'en-us' || lang === 'en'),
-  });
+  const rankingExperimentVariant = VARIANTS.CONTROL;
+  const isRankingExperimentResolving = false;
 
   const {
     scorpioData: scorpioDataCategorised,
