@@ -87,7 +87,7 @@ const AccordionGroup = ({
   const isIntersecting = useOnScreen({ ref: faqSectionRef });
 
   useEffect(() => {
-    if (isIntersecting && sliceProps.isAirportTransfersMB) {
+    if (isIntersecting && sliceProps?.isAirportTransfersMB) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
         [ANALYTICS_PROPERTIES.SECTION]: 'FAQ',

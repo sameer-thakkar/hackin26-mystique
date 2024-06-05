@@ -103,4 +103,6 @@ export type TProduct = {
     safetyVideos: Array<TImageObject>;
   };
   flowType: 'string';
+  inclusionsRichText: any;
+  exclusionsRichText: any;
 };

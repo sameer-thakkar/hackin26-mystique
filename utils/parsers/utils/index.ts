@@ -8,6 +8,7 @@ import {
 } from 'components/ShowPages/parseShowPage';
 import { getHeadoutLanguagecode, getPrimarySubCategoryIdData } from 'utils';
 import { fetchMediaResource } from 'utils/apiUtils';
+import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { sendLog } from 'utils/logger';
 import { allShowPagesGq } from 'utils/prismicUtils/microsite/graphQuery';
 import {
@@ -137,6 +138,8 @@ const getProductData = async ({
           urlSlugs,
           media,
           flowType,
+          inclusionsRichText,
+          exclusionsRichText,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -234,6 +237,16 @@ const getProductData = async ({
         const { productImages } = media || {};
         const [, descriptionImage] = productImages || [];
         const verticalImage = verticalImagesDataMap.get(String(id));
+
+        if (MBDesign === DESIGN.V3) {
+          microBrandsHighlight = appendInclusionExclusion({
+            highlightArr: microBrandsHighlight,
+            inclusions: inclusionsRichText,
+            exclusions: exclusionsRichText,
+            localizedStrings: localizedStrings || {},
+          });
+        }
+
         return {
           title: name,
           highlights: microBrandsHighlight,

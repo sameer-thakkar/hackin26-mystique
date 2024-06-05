@@ -1,10 +1,10 @@
 import * as Sentry from '@sentry/nextjs';
+import type { TCityInfo } from 'components/AirportTransfers/interface';
 import { generatePromiseForCategoryTours } from 'utils/index';
 import { sendLog } from 'utils/logger';
 import { accumulatingCategoryAndItemsData } from 'utils/parser';
 import getProductData from '../utils';
 import type { TCategoryTourListParserV2 } from './interface';
-import type { TCityInfo } from 'components/AirportTransfers/interface';
 
 export default async function categoryTourListParserV2({
   tourListCategory,

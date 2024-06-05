@@ -129,7 +129,7 @@ const StaticBanner = ({
     isHOHORevamp && cityName
       ? `<span class='bold-city'>${cityName}</span><br/>${strings.HOHO.HOHO}`
       : bannerHeadingArray?.join(' ');
-  const bannerImage = bannerImages?.[0];
+  const bannerImage = bannerImages?.[0] || {};
   const hideBanner = !isHOHO && isNonPoiCollectionMB && !bannerVideo;
 
   const finalCollectionDetails = isHOHORevamp
@@ -194,11 +194,11 @@ const StaticBanner = ({
         <MediaContainer $isNonPoi={showNonPoiDesign} $hideBanner={hideBanner}>
           <Conditional if={!bannerVideo || showThumbnailInBanner}>
             <Image
-              url={bannerImage.url}
+              url={bannerImage?.url}
               width={WIDTH}
               height={HEIGHT}
               imageId={'banner-image'}
-              alt={bannerImage.alt}
+              alt={bannerImage?.alt}
               priority
               fill
             />
@@ -285,11 +285,11 @@ const StaticBanner = ({
           <MediaContainer $isNonPoi={showNonPoiDesign}>
             <Conditional if={!bannerVideo || showThumbnailInBanner}>
               <Image
-                url={bannerImage.url}
+                url={bannerImage?.url}
                 width={WIDTH}
                 height={HEIGHT}
                 imageId={'banner-image'}
-                alt={bannerImage.alt}
+                alt={bannerImage?.alt}
                 priority
                 fill
               />
