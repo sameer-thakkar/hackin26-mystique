@@ -432,7 +432,7 @@ const Product = (props: any) => {
     category,
     reopeningDate,
     averageRating,
-    reviewCount,
+    ratingCount,
     showPageUid = null,
     secondaryDescriptors = [],
     hasSpecialOffer,
@@ -682,12 +682,12 @@ const Product = (props: any) => {
                 <Star color={COLORS.TEXT.CANDY_1} />
               </span>
             </Conditional>
-            <Conditional if={reviewCount}>
+            <Conditional if={ratingCount}>
               <span className="total-rating">
                 (
-                {reviewCount > 999
-                  ? `${(reviewCount / 1000).toFixed(1)}k`
-                  : reviewCount}
+                {ratingCount > 999
+                  ? `${(ratingCount / 1000).toFixed(1)}k`
+                  : ratingCount}
                 )
               </span>
             </Conditional>
@@ -815,12 +815,12 @@ const Product = (props: any) => {
                       <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
                     </span>
                   </Conditional>
-                  <Conditional if={reviewCount}>
+                  <Conditional if={ratingCount}>
                     <span className="total-rating">
                       (
-                      {reviewCount > 999
-                        ? `${(reviewCount / 1000).toFixed(1)}k`
-                        : reviewCount}
+                      {ratingCount > 999
+                        ? `${(ratingCount / 1000).toFixed(1)}k`
+                        : ratingCount}
                       )
                     </span>
                   </Conditional>
