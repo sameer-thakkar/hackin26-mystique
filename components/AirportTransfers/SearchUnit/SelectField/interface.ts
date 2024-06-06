@@ -6,4 +6,5 @@ export type TSelectFieldProps = {
   onClick: () => void;
   isFocused: boolean;
   error?: boolean;
+  className?: string;
 };

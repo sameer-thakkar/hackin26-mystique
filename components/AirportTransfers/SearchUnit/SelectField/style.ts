@@ -55,7 +55,7 @@ export const FieldWrapper = styled.div<{
 
   @media (min-width: 769px) {
     grid-auto-flow: dense;
-    padding: 0.8125rem 1rem;
+    padding: 0.8125rem 0.75rem 0.8125rem 0.875rem;
     height: 3.875rem;
     svg {
       width: 1.375rem;

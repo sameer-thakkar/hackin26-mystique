@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
 import { MinusIcon, PlusIcon } from 'assets/airportTransfers/searchUnitSVGs';
 import { privateTransferPaxState } from '../state';
 import {
@@ -30,7 +31,7 @@ export const PaxSelection = () => {
       <PaxItem
         value={pax}
         setValue={handlePaxChange}
-        label="Adult/ Children"
+        label={strings.AIRPORT_TRANSFER.ADULT_CHILD}
         description=""
         min={1}
         max={AIRPORT_TRANSFERS_MAX_PAX}

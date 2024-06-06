@@ -68,13 +68,13 @@ export const CITY_AIRPORT_STATION_TGID_MAP: Record<
         stationType: 'TRAIN_STATION',
         tgids: [21373],
       },
-      Oxford: {
-        stationType: 'BUS_STOP',
-        tgids: [26380],
-      },
       'London Victoria Station': {
         stationType: 'BUS_STOP',
         tgids: [9158],
+      },
+      Oxford: {
+        stationType: 'BUS_STOP',
+        tgids: [26380],
       },
     },
     'Stansted Airport': {
@@ -138,11 +138,13 @@ export const AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP: Record<
   string
 > = {
   'heathrow-airport-transfers.london-tickets.co.uk': 'Heathrow Airport',
+  'stansted-airport-transfers.london-tickets.co.uk': 'Stansted Airport',
   'www.london-tickets.co.uk.heathrow-airport-transfers': 'Heathrow Airport',
   'www.london-tickets.co.uk.stansted-airport-transfers': 'Stansted Airport',
-  'stansted-airport-transfers.london-tickets.co.uk': 'Stansted Airport',
   'www.tickets-rome.com.ciampino-international-airport-transfers':
     'Ciampino Airport',
+  'www.tickets-rome.com.fiumicino-leonardo-da-vinci-airport-transfers':
+    'Fiumicino Airport',
   'ciampino-airport-transfers.tickets-rome.com': 'Ciampino Airport',
   'fiumicino-leonardo-da-vinci-airport-transfers.tickets-rome.com':
     'Fiumicino Airport',

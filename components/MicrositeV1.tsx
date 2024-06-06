@@ -811,6 +811,7 @@ const MicrositeV1 = (props: any) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]: 'Airport Transfers Landing Page',
       [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
         airportTransfersLPExperimentVariant,
       [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:

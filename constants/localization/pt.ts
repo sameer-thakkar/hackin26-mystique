@@ -910,6 +910,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     EASY_BEST: 'Fácil de reservar. Os melhores preços',
     INSTANT_MOBILE: 'Confirmação imediata. Ingressos digitais',
     MULTI_TRANSPORT: 'Diversas opções de transporte',
+    BEST_PRICES: 'Os melhores preços',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tudo',
@@ -1035,6 +1036,70 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Escolha o melhor traslado de/para o aeroporto',
     HASSLE_FREE_TRANSFER: 'Traslado de/para o aeroporto sem complicações',
+
+    // New experiment (AT LP)
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Traslados de/para aeroportos em {0} de',
+    BUSES: 'ônibus',
+    TRAINS: 'trem',
+    PRIVATE_TAXIS: 'táxi privado',
+    BUS_TRAIN: 'Ônibus/Trem',
+    PRIVATE_TAXI: 'Táxi privado',
+
+    FROM: 'Partida',
+    TO: 'Chegada',
+    SELECT_PICKUP: 'Selecionar ponto de partida',
+    SELECT_DROPOFF: 'Selecionar destino',
+    ENTER_DESTINATION: 'Insira o seu destino',
+    ENTER_PICKUP: 'Introduzir o local de recolha',
+    PICKUP_DATE: 'Data de partida',
+    SELECT_DATE: 'Escolher data',
+    PICKUP_TIME: 'Hora de partida',
+    SELECT_TIME: 'Escolher hora',
+    GUESTS: 'Hóspedes',
+    ADULT_CHILD: 'Adulto(s)/Criança(s)',
+    ADD_GUESTS: 'Somar hóspedes',
+    EXPLORE_TRANSFERS: 'Traslados e outras experiências',
+    COMBOS_AND_EXTRAS: 'Combos e adicionais',
+
+    YOUR_RIDE_DOORSTEP: 'Sua viagem de porta a porta',
+    COMFORTABLE_RIDE:
+      'Reserve um táxi privado confortável de/para os principais aeroportos de {0}',
+    TRUSTED_DRIVERS: 'Motoristas confiáveis',
+    RIDES_24_7: 'Traslados 24 h por dia',
+    FLIGHT_TRACKING: 'Rastreamento dos voos',
+    KNOW_MORE: 'Saiba mais',
+    RESERVE_YOUR_RIDE: 'Reserve seu traslado',
+    TRANSFER_OPTIONS: 'Opções de traslados encontradas',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} traslados disponíveis',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 traslado disponível',
+
+    TRUSTED_PARTNERS: 'Mais de 35 parceiros confiáveis {0}',
+    WORLDWIDE: 'no mundo',
+    COMFORTABLE_RIDES: 'Traslados confortáveis',
+    FREQUENT_DEPARTURES: 'Partidas frequentes',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Várias opções de transporte',
+    AND_MANY_MORE: 'E muito mais',
+
+    ADD_PICKUP_LOCATION: 'Adicionar local de partida',
+    ADD_DROPOFF_LOCATION: 'Adicionar local de destino',
+    SELECT_PICKUP_DATE_AND_TIME: 'Selecionar data e hora da partida',
+    SELECT_A_DATE: 'Selecionar data',
+
+    TRAIN_STATION: 'Estação de trem',
+    BUS_STOP: 'Ponto de ônibus',
+
+    ADD_RETURN: 'Adicionar volta',
+    HEADS_UP: 'Atenção!',
+    ADDED_RETURN_TRIP: 'Você adicionou uma viagem de volta.',
+    RETURN_NOTE:
+      'Os detalhes da sua viagem de volta serão exibidos nas próximas etapas',
+    OKAY_I_UNDERSTAND: 'Entendi!',
+
+    SERVING_GUESTS: 'Servindo {0} em {1} no mundo',
+    GUESTS_COUNT: 'mais de 220 mil viajantes',
+    CITIES_COUNT: 'mais de 55 cidades',
+    PARNTER_WITH_BEST:
+      'Temos parceria apenas com os melhores para que você tenha uma experiência inesquecível. Nós cuidamos dos detalhes enquanto você se senta, relaxa e aproveita a viagem.',
   },
   PC_EXP: {
     SHOW_INCL: 'O que inclui e informações importantes',

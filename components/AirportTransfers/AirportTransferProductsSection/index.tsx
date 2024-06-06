@@ -71,7 +71,11 @@ export const AirportTransferProductsSection = ({
 
   const allOtherTours = toursWithEarliestAvailability.filter((tour) => {
     const scorpioData = tgidScorpioDataMap[tour.tgid];
-    return scorpioData.primarySubCategory.name !== 'Airport Transfers';
+    return (
+      (scorpioData.primarySubCategory.name !== 'Airport Transfers' ||
+        !isSubCategoryPage) && // If it's not a subcategory page(i.e city AT), show all tours
+      tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+    );
   });
 
   if (allOtherTours.length > 0) {

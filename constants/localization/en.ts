@@ -164,9 +164,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FREE_CANCELLATION: 'Free Cancellation',
     GUIDED_TOUR: 'Guided Tour',
     HOTEL_PICKUP: 'Hotel Pickup',
-    INSTANT_CONFIRMATION: 'Instant Confirmation',
+    INSTANT_CONFIRMATION: 'Instant confirmation',
     MEALS_INCLUDED: 'Meals Included',
-    MOBILE_TICKET: 'Mobile Ticket',
+    MOBILE_TICKET: 'Mobile ticket',
     SKIP_THE_LINE: 'Skip the Line',
     TRANSFERS: 'Transfers Included',
   },
@@ -1108,12 +1108,15 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TO: 'To',
     SELECT_DROPOFF: 'Select drop-off',
     ENTER_DESTINATION: 'Enter your destination',
+    ENTER_PICKUP: 'Enter pick-up location',
     PICKUP_DATE: 'Pick-up date',
     SELECT_DATE: 'Select date',
     PICKUP_TIME: 'Pick-up time',
     SELECT_TIME: 'Select time',
     GUESTS: 'Guests',
     ADD_GUESTS: 'Add guests',
+    ADULT_CHILD: 'Adult/Child',
+
     EXPLORE_TRANSFERS: 'Explore transfers and more',
     COMBOS_AND_EXTRAS: 'Combos and extras',
 
@@ -1148,7 +1151,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     HEADS_UP: 'Heads up!',
     ADDED_RETURN_TRIP: 'You’ve added a return trip!',
     RETURN_NOTE:
-      'Please note, we’ll show the return journey details in the next steps',
+      'Please note, we’ll show the return journey details in the next steps.',
     OKAY_I_UNDERSTAND: 'Okay, I understand',
 
     SERVING_GUESTS: 'Serving {0} in {1} around the globe',

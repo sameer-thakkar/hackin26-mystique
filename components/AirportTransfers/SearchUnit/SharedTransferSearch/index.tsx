@@ -17,7 +17,7 @@ import {
 } from 'assets/airportTransfers/searchUnitSVGs';
 import { BottomDrawer } from '../BottomDrawer';
 import { BottomDrawerNavigation } from '../BottomDrawer/navigation';
-import { ANALYTICS_STEP_FIELD_TEXT_MAP, FIELD_ERRORS } from '../constants';
+import { ANALYTICS_STEP_FIELD_TEXT_MAP, getFieldErrors } from '../constants';
 import { FieldError } from '../FieldError';
 import { TTransferDirection } from '../interface';
 import { ReturnToggle } from '../ReturnToggle';
@@ -153,6 +153,8 @@ export const SharedTransferSearch = ({
       dispatch({ type: 'RESET' });
     }
   });
+
+  const FIELD_ERRORS = getFieldErrors(strings);
 
   useEffect(() => {
     if (!hasAnyError) return;
@@ -439,7 +441,7 @@ export const SharedTransferSearch = ({
           isFocused={currentStep === 'DATE'}
           error={dateFieldError}
         />
-        <FieldError text={FIELD_ERRORS.DATE_TIME} show={dateFieldError} />
+        <FieldError text={FIELD_ERRORS.PICKUP_DATE} show={dateFieldError} />
 
         <Conditional if={isDateFieldFocused && !isMobile}>
           <DatePicker

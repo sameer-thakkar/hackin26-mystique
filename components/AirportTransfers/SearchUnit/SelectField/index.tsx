@@ -12,6 +12,7 @@ export const SelectField = forwardRef<HTMLDivElement, TSelectFieldProps>(
       onClick,
       isFocused,
       error = false,
+      className = '',
     },
     ref
   ) => {
@@ -20,7 +21,7 @@ export const SelectField = forwardRef<HTMLDivElement, TSelectFieldProps>(
         onClick={onClick}
         ref={ref}
         $isFocused={isFocused}
-        className="select-field"
+        className={`select-field ${className}`}
         $hasError={error}
       >
         {icon}

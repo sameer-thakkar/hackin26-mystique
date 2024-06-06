@@ -1036,6 +1036,70 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     PICK_THE_BEST_AIRPORT_TRANSFER:
       "Choisissez la navette d'aéroport qui vous convient le mieux",
     HASSLE_FREE_TRANSFER: 'Navette aéroport en toute tranquillité',
+
+    // New experiment (AT LP)
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Navettes aéroportuaires à {0} en',
+    BUSES: 'bus',
+    TRAINS: 'bus',
+    PRIVATE_TAXIS: 'taxi privé',
+    BUS_TRAIN: 'Bus / train',
+    PRIVATE_TAXI: 'Taxi privé',
+
+    FROM: 'Depuis',
+    TO: 'Vers',
+    SELECT_PICKUP: 'Sélectionnez le ramassage',
+    SELECT_DROPOFF: 'Sélectionner le dépôt',
+    ENTER_DESTINATION: 'Saisissez votre destination',
+    ENTER_PICKUP: "Saisir le lieu d'enlèvement",
+    PICKUP_DATE: 'Date de départ',
+    SELECT_DATE: 'Choix de date',
+    PICKUP_TIME: 'Heure de départ',
+    SELECT_TIME: "Choix d'heure",
+    GUESTS: 'Invités',
+    ADD_GUESTS: 'Ajouter invités',
+    ADULT_CHILD: 'Adulte(s)/Enfant(s)',
+    EXPLORE_TRANSFERS: 'Parcourir les navettes',
+    COMBOS_AND_EXTRAS: 'Combos et options',
+
+    YOUR_RIDE_DOORSTEP: 'Votre trajet depuis chez vous',
+    COMFORTABLE_RIDE:
+      'Réservez un taxi privé confortable de/vers les principaux aéroports de {0}.',
+    TRUSTED_DRIVERS: 'Chauffeur·e·s de confiance',
+    RIDES_24_7: 'Trajets disponibles 24/7',
+    FLIGHT_TRACKING: 'Trajets disponibles 24/7',
+    KNOW_MORE: 'En savoir plus',
+    RESERVE_YOUR_RIDE: 'Réserver votre trajet',
+    TRANSFER_OPTIONS: 'Options de navettes trouvées',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} navettes disponibles',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 navette disponible',
+
+    TRUSTED_PARTNERS: '+ de 35 partenaires {0}',
+    WORLDWIDE: 'à travers le monde',
+    COMFORTABLE_RIDES: 'Trajets confortables',
+    FREQUENT_DEPARTURES: 'Départs fréquents',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Plusieurs options de transport',
+    AND_MANY_MORE: 'Et plus encore',
+
+    ADD_PICKUP_LOCATION: 'Ajouter un lieu de prise en charge',
+    ADD_DROPOFF_LOCATION: 'Ajouter un lieu de dépose',
+    SELECT_PICKUP_DATE_AND_TIME: "Choisir la date et l'heure de départ",
+    SELECT_A_DATE: 'Sélectionner la date',
+
+    TRAIN_STATION: 'Gare ferroviaire',
+    BUS_STOP: 'Arrêt de bus',
+
+    ADD_RETURN: 'Ajouter un retour',
+    HEADS_UP: 'Attention !',
+    ADDED_RETURN_TRIP: 'Vous avez ajouté un trajet retour.',
+    RETURN_NOTE:
+      'Nous afficherons les détails du trajet de retour dans les prochaines étapes.',
+    OKAY_I_UNDERSTAND: "Oui, c'est compris",
+
+    SERVING_GUESTS: '{0} servies dans {0} à travers le monde.',
+    GUESTS_COUNT: 'Plus de 220 000 personnes',
+    CITIES_COUNT: '55 villes',
+    PARNTER_WITH_BEST:
+      'Nous collaborons avec les meilleurs pour vous faire vivre une expérience inoubliable. Nous nous occupons des détails pendant que vous vous détendez et profitez du voyage.',
   },
   PC_EXP: {
     SHOW_INCL: 'Inclusions et infos importantes',

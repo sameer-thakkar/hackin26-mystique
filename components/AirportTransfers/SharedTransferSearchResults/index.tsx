@@ -8,6 +8,7 @@ import { MBContext } from 'contexts/MBContext';
 import { useToursWithEarliestAvailability } from 'hooks/useToursWithEarliestAvailability';
 import { currencyAtom } from 'store/atoms/currency';
 import { CITY_AIRPORT_STATION_TGID_MAP } from 'const/airportTransfers';
+import { strings } from 'const/strings';
 import { TTGIDScorpioDataMap, TTour } from '../interface';
 import { ProductCard } from '../ProductCard';
 import {
@@ -101,12 +102,15 @@ export const SearchResults = ({
       $hasResults={filteredTGIDs.length > 0}
       ref={sectionRef}
     >
-      <div className="title">
-        Transfer options from {airport} to {station}
-      </div>
+      <div className="title">{strings.AIRPORT_TRANSFER.TRANSFER_OPTIONS}</div>
 
       <p className="subtext">
-        Showing results of {availableFilteredTGIDs.length} transfer options
+        {availableFilteredTGIDs.length > 1
+          ? strings.formatString(
+              strings.AIRPORT_TRANSFER.TRANSFERS_AVAILABLE_PLURAL,
+              availableFilteredTGIDs.length
+            )
+          : strings.AIRPORT_TRANSFER.TRANSFERS_AVAILABLE_SINGULAR}
       </p>
 
       {isLoading ? (

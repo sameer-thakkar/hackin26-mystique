@@ -22,7 +22,7 @@ import { BottomDrawer } from '../BottomDrawer';
 import { BottomDrawerNavigation } from '../BottomDrawer/navigation';
 import {
   ANALYTICS_STEP_FIELD_TEXT_MAP,
-  FIELD_ERRORS,
+  getFieldErrors,
   TIME_FORMAT,
   TIME_FORMAT_DISPLAY,
 } from '../constants';
@@ -186,6 +186,8 @@ export const PrivateTransferSearch = ({
       locationFieldRef.current?.style.setProperty('order', '1');
     }
   }, []);
+
+  const FIELD_ERRORS = getFieldErrors(strings);
 
   useEffect(() => {
     if (!hasAnyError) return;
@@ -505,7 +507,9 @@ export const PrivateTransferSearch = ({
             topText={locationFieldLabelText}
             placeholder={
               isLocationFieldFocused
-                ? strings.AIRPORT_TRANSFER.ENTER_DESTINATION
+                ? direction === 'FROM_AIRPORT'
+                  ? strings.AIRPORT_TRANSFER.ENTER_DESTINATION
+                  : strings.AIRPORT_TRANSFER.ENTER_PICKUP
                 : locationFieldPlaceholderText
             }
             onValueChange={goToNextStep}
@@ -545,6 +549,7 @@ export const PrivateTransferSearch = ({
                 : undefined
             }
             error={dateFieldError}
+            className="pvt-date-field"
           />
 
           <Conditional if={currentStep === 'DATE' && !isMobile}>
@@ -565,6 +570,7 @@ export const PrivateTransferSearch = ({
                 : ''
             }
             error={timeFieldError}
+            className="pvt-time-field"
           />
 
           <Conditional if={currentStep === 'TIME' && !isMobile}>
@@ -596,12 +602,13 @@ export const PrivateTransferSearch = ({
       <RelativeWrapper ref={paxFieldRef} $hasError={paxFieldError}>
         <SelectField
           icon={<PassengersIconSVG />}
-          placeHolderText={strings.AIRPORT_TRANSFER.GUESTS}
-          topLabel={strings.AIRPORT_TRANSFER.ADD_GUESTS}
+          placeHolderText={strings.AIRPORT_TRANSFER.ADD_GUESTS}
+          topLabel={strings.AIRPORT_TRANSFER.GUESTS}
           onClick={handlePaxFieldClick}
           isFocused={currentStep === 'PAX'}
           value={getPaxFieldText(selectedPax)}
           error={paxFieldError}
+          className="pvt-pax-field"
         />
 
         <FieldError text={FIELD_ERRORS.PAX} show={paxFieldError} />

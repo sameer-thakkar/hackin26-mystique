@@ -135,6 +135,7 @@ export const HeroText = styled.h1<{
   @media (min-width: 769px) {
     ${getFontDetailsByLabel(FONTS.DISPLAY_REGULAR)};
     margin-bottom: 1rem;
+    z-index: 1;
 
     max-width: ${({ $hasSearchUnit }) =>
       $hasSearchUnit ? 'initial' : '28rem'};

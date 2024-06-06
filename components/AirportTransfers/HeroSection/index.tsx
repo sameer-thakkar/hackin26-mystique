@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import Router from 'next/router';
 import { useRecoilState } from 'recoil';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
@@ -63,6 +64,15 @@ export const AirportTransferHeroSection = ({
   const [selectedSearchTab, setSelectedSearchTab] = useRecoilState(
     selectedSearchTabState
   );
+
+  useEffect(() => {
+    if (
+      Router?.query?.airport_transfer_type === 'private' &&
+      hasPrivateTransfers
+    ) {
+      setSelectedSearchTab('PRIVATE_TAB');
+    }
+  }, [hasPrivateTransfers, setSelectedSearchTab]);
 
   useEffect(() => {
     let index = 0;

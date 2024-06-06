@@ -268,8 +268,8 @@ export const InputsWrapper = styled.div<{
   @media (min-width: 769px) {
     grid-template-columns: ${({ $selectedTab }) =>
       $selectedTab === 'SHARED_TAB'
-        ? '3.2fr 1fr 8.4rem'
-        : '1.8fr minmax(18.2rem, 1fr) 9.5rem 8.4rem'};
+        ? '3.1fr 1fr 7.625rem'
+        : '1.67fr minmax(19rem, 1fr) 11rem 7.625rem'};
     grid-template-rows: ${({ $selectedTab }) =>
       $selectedTab === 'SHARED_TAB' ? 'auto' : '1fr'};
     column-gap: 0.75rem;
@@ -484,9 +484,14 @@ export const RelativeWrapper = styled.div<{
 
   ${({ $hasError }) => $hasError && 'padding-bottom: 0.75rem'};
 
-  /* & > div {
-    height: 100%;
-  } */
+  .pvt-pax-field {
+    padding-right: 0.75rem;
+  }
+
+  .pvt-time-field,
+  .pvt-date-field {
+    padding-right: 0.625rem;
+  }
 `;
 
 export const DropdownContainer = styled.div<{

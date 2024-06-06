@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { useRecoilState } from 'recoil';
+import dayjs from 'dayjs';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { BasicCalendar } from '../BasicCalendarDesktop';
@@ -17,6 +20,10 @@ export const DatePicker = ({
   hasError,
 }: TDatePickerProps) => {
   const [selectedDate, setSelectedDate] = useRecoilState(sharedTransferDate);
+
+  const { lang } = useContext(MBContext);
+
+  dayjs.locale(lang);
 
   const handleDateSelect = (date: string) => {
     setSelectedDate(date);
