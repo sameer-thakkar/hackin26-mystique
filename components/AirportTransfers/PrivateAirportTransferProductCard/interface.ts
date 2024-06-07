@@ -1,7 +1,4 @@
-import {
-  TScorpioData,
-  TTour,
-} from 'components/AirportTransfers/interface';
+import { TScorpioData, TTour } from 'components/AirportTransfers/interface';
 
 export type TPrivateAirportTransferProductCardProps = {
   isMobile: boolean;

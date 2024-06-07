@@ -18,6 +18,7 @@ const TimingsTable = ({
   columns: allColumns,
   isMobile,
   initiallyCollapsed = false,
+  isSubattraction,
   hideCollapse,
 }: ITimingsTableProps) => {
   const [isCollapsed, setIsCollapsed] = useState(initiallyCollapsed);
@@ -30,33 +31,41 @@ const TimingsTable = ({
   const toggleCollapse = () => !hideCollapse && setIsCollapsed(!isCollapsed);
 
   return (
-    <TableContainer isCollapsed={isCollapsed}>
+    <TableContainer isCollapsed={isCollapsed} isSubattraction={isSubattraction}>
       <TableWrapper>
-        <thead>
-          <TableRow isCollapsed={isCollapsed} onClick={toggleCollapse}>
-            {columns?.map((column, index) => (
-              <TableHeaderCell key={index}>
-                <Conditional if={index === 0}>
-                  <p>{`${columns[0].label} ${strings.CONTENT_PAGE.TIMINGS}`}</p>
-                  <p>{`${strings.CONTENT_PAGE.DAYS} (${columns[0].label})`}</p>
-                </Conditional>
-                <Conditional if={index !== 0}>{column.label}</Conditional>
-              </TableHeaderCell>
-            ))}
-          </TableRow>
-          <Conditional if={!hideCollapse}>
-            <IconWrapper isOpen={!isCollapsed} onClick={toggleCollapse}>
-              <Chevron />
-            </IconWrapper>
-          </Conditional>
-        </thead>
+        <Conditional if={!isSubattraction}>
+          <thead>
+            <TableRow isCollapsed={isCollapsed} onClick={toggleCollapse}>
+              {columns?.map((column, index) => (
+                <TableHeaderCell key={index}>
+                  <Conditional if={index === 0}>
+                    <p>{`${columns[0].label} ${strings.CONTENT_PAGE.TIMINGS}`}</p>
+                    <p>{`${strings.CONTENT_PAGE.DAYS} (${columns[0].label})`}</p>
+                  </Conditional>
+                  <Conditional if={index !== 0}>{column.label}</Conditional>
+                </TableHeaderCell>
+              ))}
+            </TableRow>
+            <Conditional if={!hideCollapse}>
+              <IconWrapper isOpen={!isCollapsed} onClick={toggleCollapse}>
+                <Chevron />
+              </IconWrapper>
+            </Conditional>
+          </thead>
+        </Conditional>
         <tbody>
           {rows?.map((row, rowIndex) => (
             <TableRow isActive={row.isActive} key={rowIndex}>
               {columns?.map((column, index) => (
                 <TableCell key={index}>
-                  {`${row[column.key]}${
-                    index == 0 && row.isActive
+                  {index === 2 && isSubattraction && row[allColumns[2]?.key]
+                    ? `${strings.CONTENT_PAGE.LAST_ENTRY} `
+                    : ''}
+                  {`${row[column.key]}
+                  ${
+                    index === 0 &&
+                    row.isActive &&
+                    !(isSubattraction && isMobile)
                       ? ` (${strings.CONTENT_PAGE.TODAY})`
                       : ''
                   }`}

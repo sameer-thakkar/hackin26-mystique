@@ -988,6 +988,8 @@ export const ANALYTICS_PROPERTIES = {
   DESCRIPTOR_NAME: 'Descriptor Name',
   IS_LANDING_PAGE: 'Is Landing Page',
   COMPONENT: 'Component',
+  SUBATTRACTION_TYPE: 'Sub-Attraction Type',
+  PRODUCTS_PRESENT: 'Products Present',
   SECTION_TYPE: 'Section Type',
   SLICE_TYPE: 'Slice Type',
   AIRPORT_TRANSFERS: {
@@ -1374,6 +1376,11 @@ export const MB_CATEGORISATION = {
     HISTORY: 'History',
     RESTAURANTS: 'Restaurants',
   },
+  SUBATTRACTION_TYPE: {
+    A: 'A',
+    B: 'B',
+    C: 'C',
+  },
 };
 export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
   PARTNERED_AND_SENSITIVE: 'Partnered and Sensitive',
@@ -1456,6 +1463,8 @@ export const PRISMIC_FIELD_ID = {
   TAGS: 'tags',
   UID: 'uid',
   IS_LANDING_PAGE: 'is_landing_page',
+  NOINDEX: 'noindex',
+  CANONICAL_LINK: 'canonical_link',
   IS_ENTERTAINMENT_MB: 'is_entertainment_mb',
 };
 

@@ -64,6 +64,7 @@ import {
   CUSTOM_TYPES,
   DEFAULT_PRISMIC_LANG,
   LANGUAGE_MAP,
+  MB_CATEGORISATION,
   MB_TYPES,
   RESOURCE_TYPE,
   SHORTER_CACHE_AGE,
@@ -221,7 +222,11 @@ export const getPageData = async ({
       );
     }
 
-    if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
+    if (
+      ContentType === CUSTOM_TYPES.CONTENT_PAGE ||
+      CMSContent?.data?.shoulder_page_type ===
+        MB_CATEGORISATION.SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
+    ) {
       const { data: CMSData } = CMSContent || {};
       const { productCardData, content_framework: contentFramework } =
         CMSData || {};
@@ -260,7 +265,9 @@ export const getPageData = async ({
       });
 
       let categoryTourListData;
-      const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+      const hasCategoryTourListV1 = Object.keys(
+        categoryTourListV1 || {}
+      )?.length;
 
       if (hasCategoryTourListV1) {
         categoryTourListData = await categoryTourListParserV1({
@@ -289,7 +296,6 @@ export const getPageData = async ({
       }, []);
       const { activeCurrency, primaryCity, primaryCountry } =
         categoryTourListData || {};
-
       scorpioAllTourGroupData = {
         CMSContent,
         collectionsInListicles,
@@ -594,7 +600,11 @@ export const getPageData = async ({
         ? CMSContent?.data?.microsite_document_ref?.data
         : CMSContent?.data;
 
-    if (ContentType === CUSTOM_TYPES.MICROSITE) {
+    if (
+      ContentType === CUSTOM_TYPES.MICROSITE
+      // CMSContent?.data?.shoulder_page_type !==
+      //   MB_CATEGORISATION.SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
+    ) {
       let collectionDetails: CollectionDetails | Object = {};
       let finalTgids: Array<number | string> = [];
       const { data: CMSData } = CMSContent ?? {};
@@ -645,14 +655,16 @@ export const getPageData = async ({
       let variantsData: Array<Record<string, any>> = [];
       let bannerImageData, routeDetails;
       const hasCategoryTourListV1 = Object.keys(
-        localisedCategoryTourListV1
+        localisedCategoryTourListV1 || {}
       )?.length;
-      const hasCategoryTourListV2 = Object.keys(categoryTourListV2)?.length;
+      const hasCategoryTourListV2 = Object.keys(
+        categoryTourListV2 || {}
+      )?.length;
 
       const hasCategoryTourList =
         hasCategoryTourListV2 ||
         hasCategoryTourListV1 ||
-        Object.keys(categoryCarouselCF)?.length;
+        Object.keys(categoryCarouselCF || {})?.length;
 
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {

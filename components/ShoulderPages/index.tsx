@@ -56,6 +56,12 @@ const AboutPage = dynamic(
 const TimingsPage = dynamic(
   () => import(/* webpackChunkName: "TimingsShoulderPage" */ './Timings')
 );
+const SubattractionPage = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SubAttractionShoulderPage" */ './Subattraction'
+    )
+);
 const GroupBooking = dynamic(() => import('../GroupBooking'), { ssr: false });
 const CategoryHeader = dynamic(
   () =>
@@ -196,6 +202,11 @@ const ContentPage = (props: any) => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulder_page_type ?? '',
+        ...(shoulder_page_type === SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS && {
+          [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattraction_type,
+          [ANALYTICS_PROPERTIES.PRODUCTS_PRESENT]:
+            CMSData?.childTgidsList?.length || 0,
+        }),
       });
       setPageViewEventSet(true);
     }
@@ -232,7 +243,8 @@ const ContentPage = (props: any) => {
 
   const {
     alternate_languages,
-    data: CMSData,
+    data,
+    subattractionsContentPageData,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     lang,
@@ -248,8 +260,12 @@ const ContentPage = (props: any) => {
     collectionsInListicles,
     categoryTourListData,
     isMobile,
-    collectionData,
+    collectionData: propsCollectionData,
+    shouldShowNewSubattractionsExp,
   } = props;
+  // This is the content page data that might be returned in the case of a microsite subattraction
+  const CMSData = subattractionsContentPageData?.CMSContent?.data || data;
+
   const {
     footer_ref: commonFooter,
     header_ref: commonHeader,
@@ -263,16 +279,26 @@ const ContentPage = (props: any) => {
     body,
     content_framework: contentFramework,
     secondary_footer: secondaryFooter,
+    subattractionChildPoiData,
+    parentLandingPageDocument,
+    collectionData: CMSCollectionData,
   } = CMSData;
-  const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
+  const collectionData = Object.keys(propsCollectionData || {}).length
+    ? propsCollectionData
+    : CMSCollectionData;
+  const { SHOULDER_PAGE_TYPE, SUBATTRACTION_TYPE } = MB_CATEGORISATION;
   const { data: micrositeData } = microsite_document_ref ?? {};
   const {
     tagged_city: taggedCity,
     tagged_mb_type: taggedMbType,
     shoulder_page_type,
+    subattraction_type,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
-  const { design: mbDesign } = micrositeData || {};
-
+  // @ts-ignore
+  const { design: mbDesign } = {
+    ...CMSData,
+    ...micrositeData,
+  };
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
@@ -317,8 +343,8 @@ const ContentPage = (props: any) => {
     lang: getHeadoutLanguagecode(lang),
   });
   const micrositeRefPageUrl = convertUidToUrl({
-    uid: microsite_document_ref.uid,
-    lang: getHeadoutLanguagecode(microsite_document_ref.lang),
+    uid: microsite_document_ref?.uid,
+    lang: getHeadoutLanguagecode(microsite_document_ref?.lang),
   });
 
   const isLTT = checkIfLTTMB(uid);
@@ -329,7 +355,7 @@ const ContentPage = (props: any) => {
     canonical_link: CMSData.canonical_link || pageUrl,
     other_meta_tags: contentPageHasOtherMetaTags
       ? CMSData.other_meta_tags
-      : microsite_document_ref.other_meta_tags,
+      : microsite_document_ref?.other_meta_tags,
     faq_schema: CMSData.faq_schema,
   };
   // END Data extraction for populating head
@@ -353,11 +379,16 @@ const ContentPage = (props: any) => {
     show_covid19_alert: showCovid19Alert,
   } = microsite_document_ref?.data || {};
 
-  const { featured_image, featured_image_link, featured_image_alt } =
-    CMSData ?? {};
+  const {
+    featured_image,
+    featured_image_link,
+    featured_image_alt,
+    image_url,
+    images,
+  } = CMSData ?? {};
   const featuredImage = {
-    url: featured_image_link.url || featured_image.url,
-    alt: featured_image_alt || featured_image.alt,
+    url: featured_image_link?.url || featured_image?.url,
+    alt: featured_image_alt || featured_image?.alt,
   };
 
   const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
@@ -390,12 +421,19 @@ const ContentPage = (props: any) => {
 
   const isRevampedPage =
     baseLangIsPoiMb &&
-    [SHOULDER_PAGE_TYPE.ABOUT, SHOULDER_PAGE_TYPE.TIMINGS].includes(
-      shoulder_page_type || ''
-    ) &&
+    [
+      SHOULDER_PAGE_TYPE.ABOUT,
+      SHOULDER_PAGE_TYPE.TIMINGS,
+      SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS,
+    ].includes(shoulder_page_type || '') &&
     !(
       shoulder_page_type == SHOULDER_PAGE_TYPE.TIMINGS &&
       !poiInfo?.operatingSchedules?.length
+    ) &&
+    !(
+      shoulder_page_type == SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS &&
+      (!Object.values(SUBATTRACTION_TYPE).includes(subattraction_type || '') ||
+        !shouldShowNewSubattractionsExp)
     );
   const breadcrumbsSliceIndex = CFWBody.findIndex(
     ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
@@ -504,10 +542,28 @@ const ContentPage = (props: any) => {
             `${strings.CONTENT_PAGE.BEST_TIME_TO_VISIT} ${poiInfo?.name}`,
         ].filter(Boolean)
       );
+    } else if (shoulder_page_type === SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS) {
+      extraSideNavItems.push(
+        ...[
+          // CMSData?.heading || CMSData?.featured_title,
+          poiInfo?.name &&
+            strings.formatString(
+              strings.CONTENT_PAGE.EXPLORE_ALL_POI_TICKETS,
+              poiInfo?.name
+            ),
+        ].filter(Boolean)
+      );
     }
   }
   const sidenavItems = sideNavHandler(slices);
-  const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
+  const showSideNav =
+    sideNavToggle !== false &&
+    sidenavItems?.length > 2 &&
+    !(
+      isRevampedPage &&
+      shoulder_page_type == SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS &&
+      shouldShowNewSubattractionsExp
+    );
 
   const { collectionDetails } = categoryTourListData || {};
 
@@ -516,11 +572,22 @@ const ContentPage = (props: any) => {
 
   const collectionFeaturedImage = {
     url:
-      featured_image.url ||
-      featured_image_link.url ||
+      featured_image?.url ||
+      featured_image_link?.url ||
       collectionData?.collection?.heroImageUrl,
     alt:
-      collectionData?.displayName || featured_image.alt || featured_image_alt,
+      collectionData?.displayName || featured_image?.alt || featured_image_alt,
+  };
+
+  const subattractionFeaturedImage = {
+    url:
+      featured_image?.url ||
+      featured_image_link?.url ||
+      image_url?.url ||
+      images?.[0]?.image_src?.url ||
+      collectionData?.collection?.heroImageUrl,
+    alt:
+      collectionData?.displayName || featured_image?.alt || featured_image_alt,
   };
 
   const productCardsSlicePosition = breadcrumbsSliceIndex >= 0 ? 3 : 2;
@@ -687,6 +754,32 @@ const ContentPage = (props: any) => {
           automatedBreadcrumbsExists={automatedBreadcrumbsExists}
           categoryTourListData={categoryTourListData}
           extractedProductCardsSlice={extractedProductCardsSlice}
+          // @ts-ignore
+          extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
+        />
+      </Conditional>
+      <Conditional
+        if={
+          isRevampedPage &&
+          shoulder_page_type === SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
+        }
+      >
+        <SubattractionPage
+          featuredImage={subattractionFeaturedImage}
+          data={CMSData}
+          parentProps={props}
+          breadcrumbs={breadcrumbs}
+          taggedCity={taggedCity}
+          primaryCity={primaryCity}
+          isMobile={isMobile}
+          relatedContentPages={relatedContentPages}
+          poiInfo={poiInfo}
+          subattractionChildPoiData={subattractionChildPoiData}
+          parentLandingPageDocument={parentLandingPageDocument}
+          automatedBreadcrumbsExists={automatedBreadcrumbsExists}
+          categoryTourListData={categoryTourListData}
+          extractedProductCardsSlice={extractedProductCardsSlice}
+          uid={uid}
           // @ts-ignore
           extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
         />

@@ -112,6 +112,7 @@ const MobileProductCard = (props: any) => {
     listingPrice: { bestDiscount },
     isPoiMwebCard,
     sendBookNowEvent,
+    forceMobile,
   } = props as any;
 
   const [discountText, setDiscountText] = useState('');
@@ -257,6 +258,7 @@ const MobileProductCard = (props: any) => {
             currentLanguage={currentLanguage}
             isExperimentalCard={true}
             isDrawer={isDrawer}
+            forceMobile={forceMobile}
           />
           <Conditional if={mbTheme === THEMES.MIN_BLUE || isAsideBarOverlay}>
             <ProductDescriptors
@@ -282,7 +284,7 @@ const MobileProductCard = (props: any) => {
           </Conditional>
 
           <Conditional if={hasOffer && offerId}>
-            {productOffer.map((offer: any, index: number) => {
+            {productOffer?.map((offer: any, index: number) => {
               if (offer.id === offerId) {
                 return (
                   <ProductOfferBlock

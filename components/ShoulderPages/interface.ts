@@ -66,7 +66,7 @@ export interface ITimingsPageProps {
   automatedBreadcrumbsExists?: boolean;
   extractedPrismicBreadcrumbs?: Record<string, any>[];
   extractedProductCardsSlice?: Record<string, any>[];
-  categoryTourListData?: Record<string, any>;
+  categoryTourListData: Record<string, any>[];
   parentProps: any;
   featuredImage?: {
     alt: string;
@@ -102,6 +102,7 @@ export interface ITimingsTableProps {
   }[];
   isMobile: boolean;
   initiallyCollapsed?: boolean;
+  isSubattraction?: boolean;
   hideCollapse?: boolean;
 }
 
@@ -109,4 +110,26 @@ export interface IIconScaleType {
   values?: Record<string, SHOULDER_TIMINGS_SCALE_ICONS>;
   type: SHOULDER_TIMINGS_SCALE_TYPES;
   lang?: string;
+}
+
+export interface ISubattractionPageProps {
+  data: Record<string, any>;
+  breadcrumbs?: TBreadcrumbs;
+  isMobile: boolean;
+  relatedContentPages?: Record<string, any>[];
+  poiInfo?: Record<string, any>;
+  automatedBreadcrumbsExists?: boolean;
+  extractedPrismicBreadcrumbs?: Record<string, any>[];
+  parentProps: any;
+  subattractionChildPoiData?: Record<string, any>;
+  taggedCity: string | null;
+  primaryCity: string | null;
+  parentLandingPageDocument: Record<string, any>;
+  categoryTourListData: Record<string, any>[];
+  extractedProductCardsSlice: Record<string, any>;
+  uid?: string;
+  featuredImage: {
+    alt: string;
+    url: string;
+  };
 }

@@ -50,14 +50,16 @@ const getQuartersForTable = ({
 
 export const getPoiTimingsInfo = (
   data: Record<string, any> = {},
-  lang: string
+  lang: string,
+  useTo?: boolean
 ) => {
   const { operatingSchedules } = data;
   const { quarters: localizedQuarters } = getLocalizedQuarters(lang);
 
   const currentOperatingHours = getCurrentOperatingHours(
     operatingSchedules,
-    lang
+    lang,
+    useTo
   );
 
   const today = new Date()
@@ -65,6 +67,7 @@ export const getPoiTimingsInfo = (
     .toUpperCase();
   const timingTablesData = operatingSchedules?.map?.(
     (schedule: any, scheduleIndex: number) => {
+      if (!schedule) return {};
       const startMonth = new Date(schedule.startDate).toLocaleString(lang, {
         day: 'numeric',
         month: 'short',

@@ -32,6 +32,7 @@ export const TourTitle = ({
   isExperimentalCard,
   isDrawer,
   isPoiMwebCard,
+  forceMobile,
 }: TTourTittleProps) => {
   return (
     <TitleWrapper
@@ -39,6 +40,7 @@ export const TourTitle = ({
       hasBorderedTitle={hasBorderedTitle && !tabs?.length}
       $isExperimentalCard={isExperimentalCard}
       $isDrawer={isDrawer}
+      $forceMobile={forceMobile}
     >
       <Conditional if={showAvailability}>
         <NextAvailable
@@ -55,6 +57,7 @@ export const TourTitle = ({
         isPopup={isContentOpen}
         pageType={pageType}
         isNonPoi={isDrawer && !isPoiMwebCard}
+        $forceMobile={forceMobile}
       >
         <Conditional if={!isLoading}>{cardTitle}</Conditional>
         <Conditional if={isLoading}>

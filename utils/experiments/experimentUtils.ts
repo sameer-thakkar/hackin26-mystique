@@ -11,7 +11,7 @@ export const resolveBucket = (experiment: Experiment, hsid: string) => {
     console.log('null sandbox id', experiment.experimentName);
   }
   const uniqueId = sandboxId ? btoa(sandboxId) : null;
-  return experiment.getBucket(uniqueId);
+  return experiment?.getBucket(uniqueId);
 };
 
 const mobileVariants = {
@@ -41,7 +41,7 @@ export const getABTestingVariant = ({
       'Experiment Name':
         mobileName && mobileVariants?.[experiment.experimentName]
           ? mobileVariants[experiment.experimentName]
-          : experiment.experimentName,
+          : experiment?.experimentName,
       'Experiment Variant': variant,
       ...eventProperties,
     });

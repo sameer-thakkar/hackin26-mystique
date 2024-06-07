@@ -6,15 +6,19 @@ import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import {
   AverageRatingWrapper,
+  BannerDisclaimerText,
   BannerSection,
   Container,
   ContentContainer,
   DescriptorWrapper,
   DisclaimerText,
   Divider,
+  ExtraDivider,
   Heading,
+  InfoContainer,
   MediaContainer,
   Overlay,
+  ParentChip,
   RatingCountWrapper,
   RatingsWrapper,
 } from 'components/StaticBanner/styles';
@@ -25,10 +29,13 @@ import {
   shouldDisplayCollectionRatings,
   truncateNumber,
 } from 'utils/index';
+import { titleCase } from 'utils/stringUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
 import { strings } from 'const/strings';
+import ChevronLeftBold from 'assets/chevronLeftBold';
+import ChevronRightIcon from 'assets/chevronRight';
 import Star from 'assets/star';
 import { getBannerDescriptorsArray } from './utils';
 
@@ -43,6 +50,7 @@ type StaticBannerProps = {
   bannerImages: Array<{ url: string; alt: string }>;
   collectionDetails?: CollectionDetails;
   bannerVideo?: string | null;
+  bannerSubTextIcon?: () => JSX.Element;
   bannerSubText: string | undefined;
   isMobile: boolean;
   shouldDisplayTrustBoosters?: boolean;
@@ -57,7 +65,16 @@ type StaticBannerProps = {
     ratingsCount: number;
   };
   city?: string | null;
+  subattractionParentChip?: {
+    url?: string;
+    title?: string;
+  };
+  extraPairs?: Record<string, any>;
+  onTimingsClick?: () => void;
   showThumbnailInBanner?: boolean;
+  bannerDisclaimerText?: string;
+  id?: string;
+  forceMobile?: boolean;
 };
 
 type CollectionVideo = {
@@ -108,6 +125,7 @@ const StaticBanner = ({
   bannerHeading: tempBannerHeading,
   bannerImages,
   bannerVideo,
+  bannerSubTextIcon,
   isMobile,
   collectionDetails,
   bannerSubText,
@@ -120,7 +138,13 @@ const StaticBanner = ({
   isHOHORevamp,
   ratingsAndReviewsData,
   city,
+  subattractionParentChip,
+  extraPairs = {},
+  onTimingsClick,
   showThumbnailInBanner,
+  id,
+  forceMobile = false,
+  bannerDisclaimerText,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -186,12 +210,24 @@ const StaticBanner = ({
   if (city) {
     bannerHeadingWithCityName = `<span class='airport-transfers'>${city}</span> ${bannerHeading}`;
   }
+  const displayParentChip =
+    !!subattractionParentChip?.url && !!subattractionParentChip?.title;
+  const hasExtraInfo = !!Object.values(extraPairs).filter((val) => val).length;
+  const EXTRA_INFO_TIMINGS_KEY = 'TIMINGS';
 
   return (
-    <BannerSection $isNonPoi={showNonPoiDesign}>
+    <BannerSection
+      $isNonPoi={showNonPoiDesign}
+      id={id}
+      hasParentChip={displayParentChip}
+    >
       <Conditional if={isMobile && showNonPoiDesign}>
         <Overlay $hideBanner={hideBanner} />
-        <MediaContainer $isNonPoi={showNonPoiDesign} $hideBanner={hideBanner}>
+        <MediaContainer
+          $isNonPoi={showNonPoiDesign}
+          $hideBanner={hideBanner}
+          $hideOnMobile={displayParentChip || hasExtraInfo}
+        >
           <Conditional if={!bannerVideo || showThumbnailInBanner}>
             <Image
               url={bannerImage?.url}
@@ -220,13 +256,21 @@ const StaticBanner = ({
         </MediaContainer>
       </Conditional>
       <Container>
-        <ContentContainer>
+        <ContentContainer
+          hasParentChip={displayParentChip}
+          hasExtraInfo={hasExtraInfo}
+        >
+          <Conditional if={displayParentChip}>
+            <ParentChip href={subattractionParentChip?.url}>
+              {ChevronLeftBold}
+              {titleCase(subattractionParentChip?.title as string)}
+            </ParentChip>
+          </Conditional>
           <Conditional if={shouldDisplayTrustBoosters}>
             <F1BannerTrustBoosters
               f1TrustBooster={getF1MBTrustBoosters(true)}
             />
           </Conditional>
-
           <Heading
             dangerouslySetInnerHTML={{
               __html: bannerHeadingWithCityName
@@ -238,6 +282,7 @@ const StaticBanner = ({
               displayCollectionRating || displayAirportTransfersRating
             }
             $showTrustBooster={shouldDisplayTrustBoosters}
+            $hasParentChip={displayParentChip}
           />
           <Conditional
             if={displayCollectionRating || displayAirportTransfersRating}
@@ -245,8 +290,11 @@ const StaticBanner = ({
             <RatingsWrapper
               $isNonPoi={showNonPoiDesign}
               $showTrustBooster={shouldDisplayTrustBoosters}
+              $hideComponent={forceMobile && isMobile}
               onClick={onRatingsClick}
               $showPointer={isHOHORevamp}
+              $hasParentChip={displayParentChip}
+              className="ratings-wrapper"
             >
               <Star
                 color={showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1}
@@ -277,12 +325,57 @@ const StaticBanner = ({
             </DescriptorWrapper>
           </Conditional>
           <Conditional if={!showNonPoiDesign && !shouldDisplayTrustBoosters}>
-            <DisclaimerText>{bannerSubText}</DisclaimerText>
+            <DisclaimerText
+              hasParentChip={displayParentChip}
+              $forceMobile={forceMobile}
+            >
+              {bannerSubTextIcon?.()}
+              {bannerSubText}
+            </DisclaimerText>
+          </Conditional>
+          <Conditional if={bannerDisclaimerText}>
+            <BannerDisclaimerText>{bannerDisclaimerText}</BannerDisclaimerText>
+          </Conditional>
+          <Conditional if={hasExtraInfo && !isMobile}>
+            <ExtraDivider />
+            <InfoContainer>
+              {Object.entries(extraPairs).map(
+                ([key, val]) =>
+                  val && (
+                    <div key={key}>
+                      <p>
+                        {
+                          strings.CONTENT_PAGE[
+                            key as keyof typeof strings.CONTENT_PAGE
+                          ]
+                        }
+                      </p>
+                      <Conditional
+                        if={key === EXTRA_INFO_TIMINGS_KEY && onTimingsClick}
+                      >
+                        <button onClick={onTimingsClick}>
+                          {String(val)}
+                          <ChevronRightIcon
+                            strokeColor={COLORS.GRAY.G2}
+                            fillColor={COLORS.GRAY.G2}
+                          />
+                        </button>
+                      </Conditional>
+                      <Conditional if={key !== EXTRA_INFO_TIMINGS_KEY}>
+                        <p>{String(val)}</p>
+                      </Conditional>
+                    </div>
+                  )
+              )}
+            </InfoContainer>
           </Conditional>
         </ContentContainer>
 
         <Conditional if={!isMobile}>
-          <MediaContainer $isNonPoi={showNonPoiDesign}>
+          <MediaContainer
+            $isNonPoi={showNonPoiDesign}
+            $hideOnMobile={displayParentChip || hasExtraInfo}
+          >
             <Conditional if={!bannerVideo || showThumbnailInBanner}>
               <Image
                 url={bannerImage?.url}

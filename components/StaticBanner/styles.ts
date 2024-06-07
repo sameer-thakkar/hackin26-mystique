@@ -11,6 +11,7 @@ export const BannerPlaceholder = styled.div`
 `;
 export const BannerSection = styled.div<{
   $isNonPoi?: boolean;
+  hasParentChip?: boolean;
 }>`
   margin: 0;
   position: relative;
@@ -20,9 +21,10 @@ export const BannerSection = styled.div<{
     `background: linear-gradient(183deg, #fff 2.24%, #f6ebff 97.71%);`}
 
   @media (min-width: 768px) {
-    height: 18.75rem;
+    min-height: 18.75rem;
     display: grid;
-    padding: 2rem 0 1.25rem;
+    padding: ${({ hasParentChip }) =>
+      hasParentChip ? '2rem 0' : '2rem 0 1.25rem'};
     justify-items: center;
     ${({ $isNonPoi }) =>
       $isNonPoi &&
@@ -51,7 +53,7 @@ export const Container = styled.div`
     grid-column-gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     align-items: center;
   }
 
@@ -61,13 +63,36 @@ export const Container = styled.div`
   }
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<{
+  hasParentChip?: boolean;
+  hasExtraInfo?: boolean;
+}>`
   display: grid;
   grid-template-areas:
+    ${({ hasParentChip }) => hasParentChip && "'chip'"}
     'top'
     'middle'
-    'bottom';
+    'bottom'
+    'end'
+    ${({ hasExtraInfo }) =>
+      hasExtraInfo &&
+      `
+      'extraDivider'
+      'extraInfo'
+    `};
 
+  @media (max-width: 768px) {
+    ${({ hasParentChip }) =>
+      hasParentChip &&
+      `${DisclaimerText} {
+      margin: 0.5rem 1.5rem 0 !important;
+    }`}
+    ${({ hasExtraInfo }) =>
+      hasExtraInfo &&
+      `
+      padding-bottom: 1rem;
+    `}
+  }
   @media (min-width: 768px) {
     max-width: 32.5rem;
     margin: 0;
@@ -77,6 +102,7 @@ export const ContentContainer = styled.div`
 export const MediaContainer = styled.div<{
   $isNonPoi?: boolean;
   $hideBanner?: boolean;
+  $hideOnMobile?: boolean;
 }>`
   position: relative;
   border-radius: 1rem;
@@ -99,6 +125,8 @@ export const MediaContainer = styled.div<{
   }
 
   @media (max-width: 768px) {
+    ${({ $hideOnMobile }) => $hideOnMobile && 'display: none;'}
+
     height: 13.75rem;
     border-radius: 0;
 
@@ -114,12 +142,20 @@ export const Heading = styled.h1<{
   $isNonPoi?: boolean;
   $displayRating?: boolean;
   $showTrustBooster?: boolean;
+  $hasParentChip?: boolean;
 }>`
   margin: ${({ $showTrustBooster }) =>
     $showTrustBooster ? '0 1.5rem' : '1.5rem 1.5rem 0'};
   color: ${COLORS.GRAY.G2};
-  grid-area: ${({ $isNonPoi, $displayRating, $showTrustBooster }) =>
-    ($isNonPoi && $displayRating) || $showTrustBooster ? 'middle' : 'top'};
+  grid-area: ${({
+    $isNonPoi,
+    $displayRating,
+    $showTrustBooster,
+    $hasParentChip,
+  }) =>
+    ($isNonPoi && $displayRating) || $showTrustBooster || $hasParentChip
+      ? 'middle'
+      : 'top'};
   ${expandFontToken(FONTS.HEADING_LARGE)};
   ${({ $isNonPoi }) =>
     $isNonPoi &&
@@ -145,7 +181,6 @@ export const Heading = styled.h1<{
     margin: ${({ $showTrustBooster }) =>
       $showTrustBooster ? '0' : '0.5rem 0 0'};
     ${expandFontToken(FONTS.DISPLAY_REGULAR)}
-
     .bold-city {
       font-size: 48px;
       line-height: 54px;
@@ -153,17 +188,65 @@ export const Heading = styled.h1<{
       color: ${COLORS.PURPS.MEDIUM_TONE};
     }
   }
+
+  ${({ $hasParentChip }) =>
+    $hasParentChip &&
+    `
+    @media (max-width: 768px) {
+      margin: 0.5rem 1.5rem 0 !important;
+    }
+  `}
+`;
+export const BannerDisclaimerText = styled.p`
+  grid-area: end;
+  ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+  max-width: 21.875rem;
+  margin: 0;
+  margin-top: 0.25rem;
+  color: ${COLORS.GRAY.G3};
+  @media (max-width: 768px) {
+    margin-left: 1.5rem;
+  }
 `;
 
-export const DisclaimerText = styled.p`
+export const DisclaimerText = styled.p<{
+  hasParentChip?: boolean;
+  $forceMobile?: boolean;
+}>`
   margin: 1rem 1.5rem 2rem;
-  color: ${COLORS.GRAY.G2};
-  ${expandFontToken(FONTS.PARAGRAPH_SMALL)};
+  grid-area: bottom;
+  ${({ $forceMobile }) =>
+    $forceMobile
+      ? `${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}`
+      : `  ${expandFontToken(FONTS.PARAGRAPH_SMALL)};`}
+  vertical-align: middle;
+
+  svg {
+    width: 0.75rem;
+    margin-right: 0.3rem;
+    margin-bottom: -0.12rem;
+  }
+  color: ${COLORS.GRAY.G1};
+  svg,
+  path {
+    stroke: ${COLORS.GRAY.G1};
+  }
 
   @media (min-width: 768px) {
     width: 30.375rem;
-    margin: 1.5rem 0 0;
-    ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
+    margin: ${({ hasParentChip }) =>
+      hasParentChip ? '0.5rem 0 0' : '1.5rem 0 0'};
+
+    ${({ $forceMobile }) =>
+      $forceMobile
+        ? `${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};`
+        : `${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}`}
+    vertical-align: middle;
+    color: ${COLORS.GRAY.G1};
+    svg,
+    path {
+      stroke: ${COLORS.GRAY.G1};
+    }
   }
 `;
 
@@ -182,11 +265,13 @@ const handleMargin = ({
 const handleGridArea = ({
   $isNonPoi,
   $showTrustBooster,
+  $hasParentChip,
 }: {
   $isNonPoi?: boolean;
   $showTrustBooster?: boolean;
+  $hasParentChip?: boolean;
 }) => {
-  if ($isNonPoi) return 'top';
+  if ($isNonPoi || $hasParentChip) return 'top';
   else if ($showTrustBooster) return 'bottom';
   else return 'middle';
 };
@@ -194,15 +279,18 @@ const handleGridArea = ({
 export const RatingsWrapper = styled.div<{
   $isNonPoi?: boolean;
   $showTrustBooster?: boolean;
+  $hideComponent?: boolean;
   $showPointer?: boolean;
+  $hasParentChip?: boolean;
 }>`
   display: flex;
   align-items: center;
   column-gap: 0;
+  display: ${({ $hideComponent }) => ($hideComponent ? 'none' : '')};
   margin: ${({ $isNonPoi, $showTrustBooster }) =>
     handleMargin({ $isNonPoi, $showTrustBooster })};
-  grid-area: ${({ $isNonPoi, $showTrustBooster }) =>
-    handleGridArea({ $isNonPoi, $showTrustBooster })};
+  grid-area: ${({ $isNonPoi, $showTrustBooster, $hasParentChip }) =>
+    handleGridArea({ $isNonPoi, $showTrustBooster, $hasParentChip })};
 
   svg {
     margin-top: 0.0625rem;
@@ -305,6 +393,121 @@ export const Descriptor = styled.div`
     .image-wrap img {
       width: 1rem;
       height: 1rem;
+    }
+  }
+`;
+
+export const ParentChip = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  grid-area: chip;
+  color: ${COLORS.PURPS.LEVEL_3};
+  background-color: ${COLORS.BACKGROUND.FLOATING_PURPS};
+  border-radius: 2.25rem;
+  padding: 0.5rem 1rem;
+  width: max-content;
+  font-size: 0.8rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+
+  @media (max-width: 768px) {
+    margin: 1rem 1.5rem 0.5rem;
+    padding: 0.5rem 0.75rem;
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+    text-transform: none;
+  }
+
+  svg {
+    height: 0.9rem;
+    margin-top: 0.1rem;
+    path {
+      stroke: ${COLORS.PURPS.LEVEL_3};
+    }
+  }
+`;
+
+export const ExtraDivider = styled.div`
+  grid-area: extraDivider;
+  width: 60%;
+  max-width: 22.8rem;
+  height: 1px;
+  opacity: 0.3;
+  margin: 1.5rem 0;
+  background: linear-gradient(90deg, #8000ff 0%, #ffffff 100%);
+  @media (max-width: 768px) {
+    margin-left: 1.5rem;
+  }
+`;
+
+export const InfoContainer = styled.div`
+  grid-area: extraInfo;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem 10%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  svg {
+    transform: translateY(1.5px);
+  }
+
+  @media (max-width: 768px) {
+    gap: 1rem 2rem;
+    margin-left: 1.5rem;
+
+    svg {
+      height: 0.8rem;
+      top: 0.25rem !important;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+  p:first-child {
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.MISC_BOOSTER)}
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  p:last-child,
+  button {
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    svg {
+      position: absolute;
+      right: -1.2rem;
+      top: 0.15rem;
+      transition: all 0.2s ease;
+    }
+
+    :hover svg,
+    :focus svg {
+      right: -1.45rem;
+    }
+
+    :hover,
+    :focus {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      transform: translateY(-0.06rem);
     }
   }
 `;

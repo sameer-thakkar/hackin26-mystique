@@ -169,7 +169,6 @@ const MicrositeV1 = (props: any) => {
     airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
     categoryTourListDataWithRankingExperiment,
   } = props;
-
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -248,7 +247,7 @@ const MicrositeV1 = (props: any) => {
     unobserve: true,
   });
 
-  const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams;
+  const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams || {};
 
   const {
     tagged_city: taggedCity,
@@ -724,6 +723,7 @@ const MicrositeV1 = (props: any) => {
 
   const tourListSection = (
     <PopulateProducts
+      // @ts-ignore
       currency={currency}
       uncategorizedTours={orderedFilteredTours.filter(
         (tour: TTour) =>

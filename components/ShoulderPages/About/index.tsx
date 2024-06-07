@@ -6,6 +6,7 @@ import { getRelatedContentPagesUrl } from 'utils/contentPageUtils';
 import { getLocalisedPrice } from 'utils/currency';
 import { generateSidenavId } from 'utils/helper';
 import { getPoiQuickInfo } from 'utils/parsers/poi';
+import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { MB_CATEGORISATION } from 'const/index';
 import { strings } from 'const/strings';
@@ -36,7 +37,7 @@ const AboutPage = ({
 }: IAboutPageProps) => {
   const { featured_title: featuredTitle } = data;
   const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
-  const lang = data?.content_framework?.lang;
+  const { language: lang } = useRecoilValue(appAtom);
 
   poiInfo.minPrice = getLocalisedPrice({
     price: categoryTourListData?.minPrice,

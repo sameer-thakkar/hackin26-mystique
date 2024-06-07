@@ -344,7 +344,11 @@ const Header = styled.div`
           height: 10px;
           width: 10px;
         }
-      }`
+      }
+      @media (max-width: 768px) {
+        margin-bottom: -1px;
+      }
+      `
       : ''}
   @media (max-width: 768px) {
     &:before,

@@ -22,7 +22,6 @@ export const getPrismicDocument = async ({
   contentType,
 }: TGetPrismicDocument) => {
   const { host } = req.headers || window.location;
-
   try {
     switch (contentType) {
       case 'microsite':

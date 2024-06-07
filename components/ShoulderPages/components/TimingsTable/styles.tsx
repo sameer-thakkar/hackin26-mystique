@@ -3,7 +3,50 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const TableContainer = styled.div<{ isCollapsed?: boolean }>`
+export const TableContainer = styled.div<{
+  isCollapsed?: boolean;
+  isSubattraction?: boolean;
+}>`
+  ${({ isSubattraction }) =>
+    isSubattraction &&
+    `
+    border: none !important;
+
+
+    ${TableRow} td {
+      vertical-align: top;
+      padding: 0 !important;
+      color: ${COLORS.GRAY.G3};
+      height: unset;
+      padding-bottom: 1rem !important;
+    }
+
+    td:not(:first-child) {
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      * {
+        border: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      ${TableRow} {
+        :not(:last-child) td {
+          padding-bottom: 0.5rem !important;
+        }
+
+        :not(:first-child) td {
+          padding-top: 0.5rem !important;
+        }
+      }
+
+      td:not(:first-child) {
+        text-align: left;
+      }
+    }
+  `}
   border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 0.5rem;
   overflow: hidden;
@@ -95,7 +138,7 @@ export const TableRow = styled.tr<{
     ${({ isActive }) =>
       isActive &&
       `
-      color: ${COLORS.TEXT.PURPS_3};
+      color: ${COLORS.TEXT.PURPS_3} !important;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
     `}
   }

@@ -18599,14 +18599,14 @@ interface MicrositeDocumentData {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Partnered and Sensitive
+   * - **Default Value**: Partnered and Non-Sensitive
    * - **API ID Path**: microsite.banner_and_footer_combinations
    * - **Tab**: Cover
    * - **Documentation**: https://prismic.io/docs/field#select
    */
   banner_and_footer_combinations: prismic.SelectField<
-    | 'Partnered and Sensitive'
     | 'Partnered and Non-Sensitive'
+    | 'Partnered and Sensitive'
     | 'Non-Partnered and Sensitive'
     | 'Non-Partnered and Non-Sensitive',
     'filled'

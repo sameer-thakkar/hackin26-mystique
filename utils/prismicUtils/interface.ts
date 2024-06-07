@@ -22,6 +22,8 @@ export type TGetDocument = {
   lang?: string | null;
   host?: string;
   isDev: boolean;
+  documentData?: Record<string, any>;
+  baseLangMicrositeData?: Record<string, any>;
 };
 
 export type TRedirectInfo = {

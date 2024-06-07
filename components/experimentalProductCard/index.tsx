@@ -82,6 +82,7 @@ const ExperimentalProductCard = (props: any) => {
     sendBookNowEvent,
     handleShowComboPopup,
     isSportsSubCategory,
+    forceMobile,
     showThumbnailInBanner,
   } = props;
 
@@ -364,6 +365,7 @@ const ExperimentalProductCard = (props: any) => {
         boosterType={boosterType}
         activeTab={activeTab}
         sendBookNowEvent={sendBookNowEvent}
+        forceMobile={forceMobile}
       />
     );
   };

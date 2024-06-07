@@ -22,10 +22,12 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPES,
   DEFAULT_PRISMIC_LANG,
+  MB_CATEGORISATION,
   MICROSITE_STRING_KEYS,
   SLICE_TYPES,
   TEMPLATES,
 } from 'const/index';
+import getContentPageDocument from '../contentPage';
 import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
 import { getTopAttractionsDoc } from '../topAttractions';
@@ -34,6 +36,7 @@ import type {
   TResolvedDocumentResponseM,
 } from './interface';
 
+const { SHOULDER_PAGE_TYPE, SUBATTRACTION_TYPE } = MB_CATEGORISATION;
 const getMicrositeDocument = async ({
   req,
   uid,
@@ -58,6 +61,7 @@ const getMicrositeDocument = async ({
     data: currentPageData,
     alternate_languages: currentPageAlternateLanguages,
   } = micrositeData ?? {};
+
   const { body: currentPageCategorizedToursTab } = currentPageData ?? {};
   if (currentPageData) {
     let pageUrl = convertUidToUrl({
@@ -103,6 +107,7 @@ const getMicrositeDocument = async ({
           shoulder_page_type,
           shoulder_page_custom_label,
           tagged_content_type,
+          subattraction_type,
         } = baseLangPageData ?? {};
 
         const baseLangCategorisationMetadata = {
@@ -261,6 +266,26 @@ const getMicrositeDocument = async ({
           ? currentPageData?.images
           : baseLangPageData?.images;
 
+        let subattractionsContentPageData;
+        // treat sub attractions microsite as content page
+        if (
+          shoulder_page_type === SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS &&
+          SUBATTRACTION_TYPE[
+            subattraction_type as keyof typeof SUBATTRACTION_TYPE
+          ]
+        ) {
+          // @ts-ignore
+          subattractionsContentPageData = await getContentPageDocument({
+            req,
+            host,
+            lang,
+            uid,
+            isDev,
+            documentData: micrositeData,
+            baseLangMicrositeData,
+          });
+        }
+
         const transformedData: TMicrositeDocument = {
           ...micrositeData,
           data: {
@@ -296,7 +321,9 @@ const getMicrositeDocument = async ({
             baseLangCategorisationMetadata,
             mbType: tagged_mb_type,
           },
+          subattractionsContentPageData,
         };
+
         return {
           CMSContent: transformedData,
           ContentType: CUSTOM_TYPES.MICROSITE,

@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { TCityInfo, TScorpioData, TTour } from "../interface";
+import { ReactNode } from 'react';
+import { TCityInfo, TScorpioData, TTour } from '../interface';
 
 export type TPopulateAirportTransferProductsProps = {
   uncategorizedTours: TTour[];

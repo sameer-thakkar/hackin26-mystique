@@ -2,10 +2,10 @@
 import React, { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { TCityInfo } from 'components/AirportTransfers/interface';
 import { getLangObject } from 'utils/helper';
 import { addUrlParams } from 'utils/urlUtils';
 import { SIDEBAR_TYPES } from 'const/index';
-import { TCityInfo } from 'components/AirportTransfers/interface';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 

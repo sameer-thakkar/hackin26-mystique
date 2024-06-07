@@ -8,10 +8,10 @@ import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { MBContext } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
-import { useToursWithEarliestAvailability } from 'hooks/useToursWithEarliestAvailability';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { fetchInventory } from 'utils/apiUtils';
+import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
+import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { getProductDescriptors } from 'utils/productUtils';
 import COLORS from 'const/colors';
@@ -128,7 +128,7 @@ const ProductWrapper = styled.div`
   flex: 0 49%;
 `;
 
-const PopulateProducts = (props: any) => {
+const PopulateProducts: any = (props: any) => {
   const {
     uncategorizedTours: tours,
     uid,
@@ -163,6 +163,10 @@ const PopulateProducts = (props: any) => {
     showThumbnailInBanner,
     bannerImages,
     showPopup = false,
+    asHook,
+    forceMobile,
+    hideHeading,
+    disableShowingNewCard,
     showVideoBanner = false,
     curatedBannerVideoSrc,
     isRankingExperimentResolving = false,
@@ -173,6 +177,11 @@ const PopulateProducts = (props: any) => {
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [detialsPopupShown, setDetailsPopupShown] = useState(false);
+  const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
+    {}
+  );
+  const [showEarliestAvailability, setShowEarliestAvailability] =
+    useState(false);
   const router = useRouter();
 
   const bannerImage = bannerImages?.[0];
@@ -204,6 +213,56 @@ const PopulateProducts = (props: any) => {
       });
     }
   }, [productsLoading]);
+  useEffect(() => {
+    const fetchEarliestAvailability = async (
+      uncategorizedToursList: Array<Record<string, any>>
+    ) => {
+      const tgids = uncategorizedToursList.reduce(
+        (acc: Array<number>, tours) => {
+          const { tgid } = tours;
+          if (!tgid) return acc;
+          return [...acc, tgid];
+        },
+        []
+      );
+
+      const inventory: Record<number, any> =
+        (await fetchBatchedCalendarInventory({
+          tgids,
+          fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
+          currency,
+          toDate: formatDateToString(
+            addDays(new Date(), 60),
+            'en',
+            'YYYY-MM-DD'
+          ),
+        })) || {};
+
+      const earliestAvailabilityData = Object.keys(inventory).reduce(
+        (acc: Record<number, any>, tgid) => {
+          const tour = inventory?.[Number(tgid) as keyof typeof inventory];
+          const { sortedInventoryDates } = tour || {};
+          const [firstAvailableDate] = sortedInventoryDates || [];
+
+          if (!firstAvailableDate) return acc;
+
+          return {
+            ...acc,
+            [tgid]: {
+              startDate: firstAvailableDate,
+            },
+          };
+        },
+        {}
+      );
+
+      setEarliestAvailabilityStore(earliestAvailabilityData);
+      setShowEarliestAvailability(true);
+    };
+    if (showNextAvailable || instantCheckout) {
+      fetchEarliestAvailability(tours);
+    }
+  }, []);
 
   useEffect(() => {
     if (!productsWrapperRef?.current) return;
@@ -276,14 +335,16 @@ const PopulateProducts = (props: any) => {
     }
   }, [currency]);
 
-  const {
-    toursWithEarliestAvailability: uncategorizedTours,
-    showEarliestAvailability,
-  } = useToursWithEarliestAvailability({
-    tours,
-    currency,
-    shouldFetchEarliestAvailabilities: showNextAvailable || instantCheckout,
-  });
+  const uncategorizedTours =
+    showEarliestAvailability || instantCheckout
+      ? tours.map((tour: any) => ({
+          ...tour,
+          earliestAvailability:
+            earliestAvailabilityStore[
+              tour.tgid as keyof typeof earliestAvailabilityStore
+            ],
+        }))
+      : tours;
 
   let availableToursList = uncategorizedTours
     ?.filter((tour: any) => {
@@ -480,6 +541,8 @@ const PopulateProducts = (props: any) => {
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
       showBoosters,
+      forceMobile,
+      hideHeading,
       topReviews,
       showPopup,
     };
@@ -487,7 +550,9 @@ const PopulateProducts = (props: any) => {
     return isSmallComboCard ? (
       <Product
         {...childProps}
-        showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+        showNewCard={
+          !disableShowingNewCard && isEligible && variant === VARIANTS.TREATMENT
+        }
         showThumbnailInBanner={showThumbnailInBanner}
       />
     ) : (
@@ -497,7 +562,11 @@ const PopulateProducts = (props: any) => {
         ) : (
           <Product
             {...childProps}
-            showNewCard={isEligible && variant === VARIANTS.TREATMENT}
+            showNewCard={
+              !disableShowingNewCard &&
+              isEligible &&
+              variant === VARIANTS.TREATMENT
+            }
             showThumbnailInBanner={showThumbnailInBanner}
           />
         )}
@@ -516,7 +585,6 @@ const PopulateProducts = (props: any) => {
     availableToursList = [
       ...availableToursList.slice(0, 3),
       {
-        // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to type 'string'.
         bannerVideo,
         isBannerVideo: !!bannerVideo,
         bannerImage,
@@ -524,6 +592,12 @@ const PopulateProducts = (props: any) => {
       },
       ...availableToursList.slice(3),
     ];
+  }
+
+  if (asHook) {
+    return availableToursList?.map((tour: Record<string, any>, index: number) =>
+      getProductCardFromTourAndIndex(tour, index)
+    );
   }
 
   return (
@@ -535,7 +609,7 @@ const PopulateProducts = (props: any) => {
     >
       <ProductContainer
         isTicketCard={isTicketCard}
-        isMobile={isMobile}
+        isMobile={isMobile || forceMobile}
         isNotVisible={!showLoader}
       >
         <Skeleton
@@ -556,6 +630,7 @@ const PopulateProducts = (props: any) => {
         <div id="tour-list-heading">
           <Conditional
             if={
+              !hideHeading &&
               availableToursList?.length &&
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
@@ -570,7 +645,7 @@ const PopulateProducts = (props: any) => {
       </Conditional>
       <ProductContainer
         isTicketCard={isTicketCard}
-        isMobile={isMobile}
+        isMobile={isMobile || forceMobile}
         isNotVisible={showLoader}
       >
         {availableToursList &&

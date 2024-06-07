@@ -127,6 +127,7 @@ export const getHumanReadableTime = ({
   lang?: string;
   inputFormat?: string;
   removeTrailingZeros?: boolean;
+  inSmallCaps?: boolean;
 }) => {
   const format =
     formattedTime && formattedTime?.length <= 5 ? 'HH:mm' : 'HH:mm:ss';
@@ -148,7 +149,7 @@ export const getHumanReadableTime = ({
     parsedTime.toDate()
   );
 
-  return formatted;
+  return formatted.split(' ').join('').toLowerCase();
 };
 
 export const getEarliestAvailableDate = (date: any, currentLanguage: any) => {
@@ -263,16 +264,20 @@ export const formatOperatingDayTimings = ({
   };
   lang: string;
   removeTrailingZeros?: boolean;
+  useTo?: boolean;
+  inSmallCaps?: boolean;
 }): { hours: string; lastAdmission?: string } => {
   const formattedOpeningTime = getHumanReadableTime({
     formattedTime: day.openingTime,
     lang,
     removeTrailingZeros,
+    inSmallCaps: true,
   });
   const formattedClosingTime = getHumanReadableTime({
     formattedTime: day.closingTime,
     lang,
     removeTrailingZeros,
+    inSmallCaps: true,
   });
   const formattedLastEntryTime =
     day.lastEntryTime &&
@@ -280,6 +285,7 @@ export const formatOperatingDayTimings = ({
       formattedTime: day.lastEntryTime,
       lang,
       removeTrailingZeros,
+      inSmallCaps: true,
     });
 
   return {
@@ -342,7 +348,8 @@ export const longDaytoShort = ({
 
 export const getCurrentOperatingHours = (
   operatingSchedules: Record<string, any>[],
-  lang: string
+  lang: string,
+  useTo?: boolean
 ) => {
   try {
     const currentDate = new Date();
@@ -367,6 +374,7 @@ export const getCurrentOperatingHours = (
             day: operatingDay,
             lang,
             removeTrailingZeros: true,
+            useTo,
           });
         }
 
@@ -380,6 +388,17 @@ export const getCurrentOperatingHours = (
   } catch {
     return {};
   }
+};
+
+export const getCurrentOperatingSchedule = (
+  operatingSchedules: Record<string, any>[]
+) => {
+  const currentDate = new Date();
+  return operatingSchedules?.find((schedule) => {
+    const startDate = new Date(schedule?.startDate);
+    const endDate = new Date(schedule?.endDate);
+    return currentDate >= startDate && currentDate <= endDate;
+  });
 };
 
 export const localizeDay = (day: string, locale: string): string => {

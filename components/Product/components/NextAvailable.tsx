@@ -21,6 +21,9 @@ export const NextAvailable = ({
   inTitle,
   isExperimentalCard,
   isDrawer,
+  forceMobileStyles = false,
+  isPopup,
+  flexible = false,
   className,
 }: TNextAvailableProps) => {
   if (showSkeleton)
@@ -33,20 +36,29 @@ export const NextAvailable = ({
     earliestAvailability?.startDate,
     currentLanguage
   );
+  const text = flexible ? (
+    strings.OPEN_DATED_DESCRIPTOR
+  ) : (
+    <>
+      {strings.NEXT_AVAILABLE}
+      {earliestAvailabilityTitle}
+    </>
+  );
   if (earliestAvailabilityTitle === strings.TODAY && inTitle)
     return <AvailableTodayBooster />;
   return (
     <NextAvailableBlock
       $isDrawer={isDrawer}
       $isExperimentalCard={isExperimentalCard}
+      forceMobileStyles={forceMobileStyles}
+      isPopup={isPopup}
       className={className}
     >
       <div
         data-card-section={CARD_SECTION_MARKERS.AVAILABILITY}
         className="available-text"
       >
-        {strings.NEXT_AVAILABLE}
-        {earliestAvailabilityTitle}
+        {text}
       </div>
     </NextAvailableBlock>
   );

@@ -10,7 +10,7 @@ import type {
 import { TMbType } from '../interface';
 
 export type TCategorisationMetadata = Pick<
-  Simplify<MicrositeDocumentData>,
+  Simplify<MicrositeDocumentData & { subattraction_type?: string }>,
   | 'tagged_city'
   | 'tagged_country'
   | 'tagged_collection'
@@ -42,6 +42,7 @@ export type TMicrositeDocument = MicrositeDocument & {
     baseLangCategorisationMetadata: TCategorisationMetadata;
     mbType: TMbType;
   };
+  subattractionsContentPageData?: Record<string, any>;
 };
 
 export type TResolvedDocumentResponseM<T> = {

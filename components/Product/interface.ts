@@ -6,6 +6,9 @@ export type TNextAvailableProps = {
   inTitle?: boolean;
   isExperimentalCard?: boolean;
   isDrawer?: boolean;
+  forceMobileStyles?: boolean;
+  isPopup?: boolean;
+  flexible?: boolean;
   className?: string;
 };
 
@@ -37,6 +40,7 @@ export type TProductDescriptors = {
   showIcons?: boolean;
   isMobile?: boolean;
   showGuidedTourDescriptor?: boolean;
+  forceMobile?: boolean;
   children?: React.ReactNode;
 };
 
@@ -96,6 +100,7 @@ export type TTourTittleProps = {
   isExperimentalCard?: boolean;
   isDrawer?: boolean;
   isPoiMwebCard?: boolean;
+  forceMobile?: boolean;
 };
 
 export type TReviewProps = {

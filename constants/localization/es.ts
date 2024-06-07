@@ -1209,9 +1209,17 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     MID_SEASON: 'Temporada moderada',
     PEAK_SEASON: 'Temporada alta',
     TO: 'A',
+    TO_LOWER: 'a',
     LAST_ENTRY: 'última entrada',
     SUBATTRACTIONS: 'Sub-Atracciones',
+    INCLUDED_WITH_TICKETS: 'Experiencia incluida en las entradas para {0}',
+    INCLUDED_WITH_SOME_TICKETS:
+      'Experiencia incluida en algunas entradas para {0}',
+    EXPLORE_ALL_POI_TICKETS: 'Las entradas y tours para {0} & {1}',
+    OPERATING_HOURS: 'Horario',
+    SEE_MORE: 'Ver más',
     MORE_INSIGHTS: 'Más información',
+    SELECT_YOUR_EXPERIENCE: 'Selecciona tu experiencia',
   },
   OFF_PERCENT: '{0} % de descuento',
   THEATRE_LANDING_PAGE: {

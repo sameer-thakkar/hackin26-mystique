@@ -29,14 +29,23 @@ export const ProductDescriptors = ({
   showIcons = true,
   isMobile = false,
   showGuidedTourDescriptor = true,
+  forceMobile = false,
   children,
 }: TProductDescriptors) => {
   const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
     useState(false);
 
+  if (descriptorArray.length > 4 && forceMobile) {
+    descriptorArray = descriptorArray.slice(0, 4);
+  }
+
   if (isLoading)
     return (
-      <TourTags horizontal={horizontal} pageType={pageType}>
+      <TourTags
+        horizontal={horizontal}
+        pageType={pageType}
+        $forceMobile={forceMobile}
+      >
         {Array.apply(null, Array(4)).map((_item: any, index: number) => {
           return (
             <div key={`descriptor-${index}`} className="tour-tag">
@@ -49,7 +58,12 @@ export const ProductDescriptors = ({
     );
 
   return (
-    <TourTags horizontal={horizontal} pageType={pageType} className="tour-tags">
+    <TourTags
+      horizontal={horizontal}
+      pageType={pageType}
+      $forceMobile={forceMobile}
+      className="tour-tags"
+    >
       {descriptorArray.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
