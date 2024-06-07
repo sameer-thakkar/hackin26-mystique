@@ -807,7 +807,7 @@ const MicrositeV1 = (props: any) => {
   }, [isFooterIntersecting, showLFC, showLfcTimer]);
 
   useEffect(() => {
-    if (!eventsReady) return;
+    if (!eventsReady || !isAirportTransfersMB) return;
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
@@ -819,7 +819,7 @@ const MicrositeV1 = (props: any) => {
           ? BOOLEAN_STATES['YES']
           : BOOLEAN_STATES['NO'],
     });
-  }, [eventsReady]);
+  }, [eventsReady, isAirportTransfersMB]);
 
   if (
     (isHohoExpEligible && isExperimentResolving) ||

@@ -1066,7 +1066,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       'Réservez un taxi privé confortable de/vers les principaux aéroports de {0}.',
     TRUSTED_DRIVERS: 'Chauffeur·e·s de confiance',
     RIDES_24_7: 'Trajets disponibles 24/7',
-    FLIGHT_TRACKING: 'Trajets disponibles 24/7',
+    FLIGHT_TRACKING: 'Suivi des vols',
     KNOW_MORE: 'En savoir plus',
     RESERVE_YOUR_RIDE: 'Réserver votre trajet',
     TRANSFER_OPTIONS: 'Options de navettes trouvées',

@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP } from 'const/airportTransfers';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { LocationPinFilledSVG } from 'assets/airportTransfers/searchUnitSVGs';
 import { DrawerList, DrawerListItem } from '../BottomDrawer';
@@ -29,7 +30,7 @@ export const StationsList = ({
 
   const isFirstField = selectedDirection === 'TO_AIRPORT';
 
-  const { primaryCity } = useContext(MBContext);
+  const { primaryCity, uid } = useContext(MBContext);
 
   useEffect(() => {
     if (isFirstField || !selectedStation.name) return;
@@ -53,8 +54,12 @@ export const StationsList = ({
     setSelectedStation,
   ]);
 
+  const isSearchEnabledAirportTransferUID = Object.keys(
+    AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP
+  ).includes(uid);
+
   const shouldAccountForSelectedAirport =
-    !selectedStation.name || !isFirstField;
+    !selectedStation.name || !isFirstField || isSearchEnabledAirportTransferUID;
 
   const stationsList = getStationsList(
     primaryCity?.cityCode ?? '',

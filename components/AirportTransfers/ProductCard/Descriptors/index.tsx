@@ -124,9 +124,13 @@ export const Descriptors = ({
     setCancellationPolicyEventRecorded(true);
   };
 
+  const isNonAirportTransferProduct =
+    (isCombo && scorpioData.primarySubCategory.name !== 'Airport Transfers') ||
+    scorpioData.primarySubCategory.name !== 'Airport Transfers';
+
   return (
     <StyledContainer>
-      {isCombo ? (
+      {isNonAirportTransferProduct ? (
         <DescriptorsContainer>
           {scorpioData.descriptors
             .filter((d) => d !== DESCRIPTORS.DURATION)
