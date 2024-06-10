@@ -9,6 +9,7 @@ import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
 import { sendLog } from './logger';
 
@@ -210,6 +211,8 @@ export const getHeadoutApiUrl = ({
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
     url = `https://api.headout.com${formattedEndpointSlug}`;
   }
+
+  url = withTrailingSlash(url);
 
   if (params && Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
