@@ -5,7 +5,7 @@ import { FONTS } from 'const/fonts';
 
 export const TextContainer = styled.div`
   ${getFontDetailsByLabel(FONTS.PARAGRAPH_MEDIUM)}
-  color: ${COLORS.GRAY.G2};
+  color: ${COLORS.GRAY.G3};
   width: max-content;
 
   .link-container {
@@ -45,13 +45,13 @@ export const BaseButton = styled.button`
 `;
 
 export const ActionButton = styled(BaseButton)`
-  background-color: ${COLORS.BRAND.PURPS};
+  background-color: ${COLORS.BRAND.BLACK};
   color: ${COLORS.BRAND.WHITE};
 `;
 
 export const AllowButton = styled(BaseButton)`
-  color: ${COLORS.PURPS.LEVEL_10};
-  background-color: ${COLORS.BRAND.PURPS};
+  color: ${COLORS.BRAND.WHITE};
+  background-color: ${COLORS.BRAND.BLACK};
 `;
 
 const hidden = css`
@@ -65,11 +65,11 @@ export const CancelButton = styled(BaseButton)`
   cursor: pointer;
   text-align: center;
   ${getFontDetailsByLabel(FONTS.BUTTON_SMALL)}
-  background-color: ${COLORS.BRAND.WHITE};
+  background-color: transparent;
   border: 1px solid;
   padding: calc(0.5rem - 1px) 0;
 
-  color: ${COLORS.PURPS.LEVEL_3};
+  color: ${COLORS.GRAY.G2};
 
   @media (max-width: 768px) {
     padding: calc(0.5rem - 1px) 0;
@@ -84,11 +84,9 @@ export const ConsentFixedWrapper = styled.div<{
   left: 0;
   width: 100%;
   z-index: 20;
-  background: ${COLORS.BRAND.WHITE};
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12),
-    0px -1px 2px 0px rgba(0, 0, 0, 0.08);
+  background: ${COLORS.GRAY.G7};
   ${({ $isHidden }) => $isHidden && hidden}
-  border-top: 1px solid ${COLORS.GRAY.G6};
+  border-top: 5px solid ${COLORS.GRAY.G6};
 
   @media (max-width: 768px) {
     transform: unset;
