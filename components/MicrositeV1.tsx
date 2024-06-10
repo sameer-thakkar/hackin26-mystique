@@ -807,7 +807,12 @@ const MicrositeV1 = (props: any) => {
   }, [isFooterIntersecting, showLFC, showLfcTimer]);
 
   useEffect(() => {
-    if (!eventsReady || !isAirportTransfersMB) return;
+    if (
+      !eventsReady ||
+      !isAirportTransfersMB ||
+      !['LONDON', 'ROME'].includes(primaryCity.cityCode)
+    )
+      return;
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
