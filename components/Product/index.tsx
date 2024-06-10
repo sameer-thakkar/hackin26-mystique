@@ -1230,7 +1230,6 @@ const Product = (props: any) => {
                   isMobile={isPopup ? originalIsMobile : isMobile}
                   shouldCrop={shouldCropImage}
                   showOverlay
-                  loadLowerQualityImageFirst
                 />
               </Conditional>
               <Conditional if={isLoading}>

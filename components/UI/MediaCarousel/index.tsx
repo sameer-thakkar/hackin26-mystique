@@ -46,7 +46,6 @@ type MediaCarouselProps = {
   trackImage?: boolean;
   hideBorderRadius?: boolean;
   useWidePaginatorActiveTab?: boolean;
-  loadLowerQualityImageFirst?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -70,7 +69,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
-  loadLowerQualityImageFirst = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -189,7 +187,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               priority={isLCPCandidate}
               fetchPriority={isLCPCandidate ? 'high' : 'auto'}
               fill
-              loadLowerQualityImageFirst={loadLowerQualityImageFirst}
             />
           );
         })}
