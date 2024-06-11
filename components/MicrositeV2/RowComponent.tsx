@@ -101,6 +101,7 @@ export const RowComponent = (props: any) => {
       combo,
       multiVariant,
       productImage,
+      images,
     } = currTour;
     return (
       <V3DetailedProductCard
@@ -121,6 +122,7 @@ export const RowComponent = (props: any) => {
           multiVariant,
           combo,
           imageUrl: isMobile ? productImage : '',
+          images: isMobile ? [] : images,
         }}
         host={host}
         showCard={tgid === activeTgid}

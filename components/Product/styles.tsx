@@ -1056,10 +1056,19 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     position: absolute;
     bottom: 1px;
     padding-bottom: 1.5rem;
-    ${({ isContentExpanded }) =>
-      !isContentExpanded &&
-      `background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgba(255, 255, 255, 0.88) 48.92%, #FFF 70%);
-      height: 15%;`};
+    ${({ isContentExpanded, isV3Design }) => {
+      if (!isContentExpanded && !isV3Design) {
+        return `
+            background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgba(255, 255, 255, 0.88) 48.92%, #FFF 70%);
+            height: 15%;
+          `;
+      } else if (!isContentExpanded && isV3Design) {
+        return `
+            background: linear-gradient(182deg, rgba(255, 255, 255, 0.2) 3%, rgb(248, 248, 248) 48.92%, rgb(248, 248, 248) 70%);
+            height: 15%;
+          `;
+      }
+    }};
     cursor: pointer;
     outline: none;
     display: grid;

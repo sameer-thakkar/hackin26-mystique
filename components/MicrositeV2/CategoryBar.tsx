@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -6,6 +12,7 @@ import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
 import InteractionContext from 'contexts/Interaction';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
@@ -16,10 +23,12 @@ const StyledCategoryBar = styled.div<{
   isMobile?: boolean;
   $isEntertainmentMb: boolean;
   $categoryHeaderMenuExists: boolean;
+  $isBarSticky: boolean;
 }>`
   height: fit-content;
   position: sticky;
-  background: ${COLORS.BRAND.WHITE};
+  background: ${({ $isBarSticky }) =>
+    $isBarSticky ? COLORS.BRAND.WHITE : 'transparent'};
   top: ${({ $categoryHeaderMenuExists }) =>
     $categoryHeaderMenuExists ? '2rem' : '56px'};
   z-index: 2;
@@ -34,6 +43,7 @@ const StyledCategoryBar = styled.div<{
     margin-left: -1rem;
     margin-right: -1rem;
     top: ${({ $isEntertainmentMb }) => ($isEntertainmentMb ? '30px' : '56px')};
+    background: ${COLORS.BRAND.WHITE};
   }
 `;
 
@@ -99,11 +109,9 @@ const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     padding-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1.875rem' : '1.188rem'};
+      isEntertainmentMb ? '1.875rem' : '0.7rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '1.10rem' : '1.01rem'};
-    margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '1.5rem'};
 
     .tabs-wrap {
       padding-left: 1rem;
@@ -140,7 +148,7 @@ const CategoryBar = (props: any) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const parent = useRef<HTMLDivElement>(null);
   const category_bar = useRef(null);
-  const scroll_div = useRef(null);
+  const scroll_div = useRef<HTMLDivElement>(null);
   const [activeCategory, setActiveCategory] = useState(activeCategoryIndex);
   const [activeOrder, setActiveOrder] = useState('popularity');
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
@@ -148,6 +156,7 @@ const CategoryBar = (props: any) => {
     width: null,
     left: null,
   });
+  const [isBarSticky, setIsBarSticky] = useState(false);
   const {
     categories,
     allTours,
@@ -259,6 +268,31 @@ const CategoryBar = (props: any) => {
     if (isMobile && parent.current) centerActiveCategory();
   }, [activeCategory, activeCategoryIndex, parent, isMobile]);
 
+  useLayoutEffect(() => {
+    if (!window) return;
+
+    const scrollHandler = () => {
+      if (!scroll_div.current) return;
+
+      const barScrollPos = scroll_div.current.getBoundingClientRect().top;
+      const SCROLL_CUTOFF = 44;
+      if (isBarSticky && barScrollPos > SCROLL_CUTOFF) {
+        setIsBarSticky(false);
+      }
+      if (!isBarSticky && barScrollPos <= SCROLL_CUTOFF) {
+        setIsBarSticky(true);
+      }
+    };
+
+    const throttledScrollHandler = throttle(scrollHandler, 50);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, [isBarSticky]);
+
   // Don't render the category bar if all TGIDs are unavailable
   const isAnyTGIDAvailable = Object.keys(allTours).some(
     (tgid) => allTours[tgid].available
@@ -274,6 +308,7 @@ const CategoryBar = (props: any) => {
         isMobile={isMobile}
         $isEntertainmentMb={isEntertainmentMb}
         $categoryHeaderMenuExists={categoryHeaderMenuExists}
+        $isBarSticky={isBarSticky}
       >
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
