@@ -14,6 +14,7 @@ import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-phone-input-2/lib/style.css';
+import { getHeadoutApiUrl, HeadoutEndpoints } from '../utils/apiUtils';
 import {
   createGroupBooking,
   fetchUserGeoLocation,
@@ -459,8 +460,13 @@ export default class GroupBooking extends Component<any, any> {
   }
 
   getUserGeoLocation = async () => {
-    if (this.state.isFetchingGeolocation) return;
-    const url = `https://api.headout.com/api/v2/geolocate/city`;
+    if (this.state.isFetchingGeolocation) {
+      return;
+    }
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.GeoLocateCity,
+      id: null,
+    });
     this.setState({ isFetchingGeolocation: true });
     const country = await fetchUserGeoLocation(url);
     if (country !== null) {

@@ -1,7 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getHeadoutApiUrl, HeadoutEndpoints } from '../../utils/apiUtils';
 
 const CurrencyList = async (_req: NextApiRequest, res: NextApiResponse) => {
-  await fetch(`https://api.headout.com/api/v1/currency/list`)
+  const endpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CurrencyList,
+    id: null,
+  });
+  await fetch(endpoint)
     .then((r) => r.json())
     .then((r) => {
       let data = r;

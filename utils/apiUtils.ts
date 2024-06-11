@@ -9,6 +9,7 @@ import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
 import { sendLog } from './logger';
 
@@ -89,6 +90,7 @@ export enum HeadoutEndpoints {
   Category,
   CurrencyList,
   CalendarInventory,
+  CityListV2,
   DomainConfig,
   ProductV6,
   Banners,
@@ -100,6 +102,7 @@ export enum HeadoutEndpoints {
   CollectionPoi,
   BulkPoiList,
   CollectionTourGroups,
+  GeoLocateCity,
 }
 
 export const getHeadoutApiUrl = ({
@@ -200,15 +203,26 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.CollectionTourGroups:
       endpointSlug = `/api/tours/v1/collection/${id}/tour-groups/`;
       break;
+    case HeadoutEndpoints.CityListV2:
+      endpointSlug = `/api/tours/v2/city/list`;
+      break;
+    case HeadoutEndpoints.GeoLocateCity:
+      endpointSlug = `/api/tours/v2/geolocate/city`;
   }
 
-  let url = endpointSlug;
+  let url: string;
 
   if (hostname) {
     url = `${hostname}${endpointSlug}`;
   } else {
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
-    url = `https://api.headout.com${formattedEndpointSlug}`;
+
+    /**
+     * NOTE:
+     * Ensure that all API endpoints are ending with a trailing slash "/"
+     * This is being done to prevent creating duplicate records on CDN.
+     */
+    url = withTrailingSlash(`https://api.headout.com${formattedEndpointSlug}`);
   }
 
   if (params && Object.keys(params).length) {
@@ -545,7 +559,11 @@ export const fetchTourGroupV6 = async ({
 
 export const fetchCurrencyList = async () => {
   try {
-    const res = await fetch('https://api.headout.com/api/v1/currency/list');
+    const endpoint = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CurrencyList,
+      id: null,
+    });
+    const res = await fetch(endpoint);
     const data = await res.json();
 
     return data?.sort(currencySortFn);

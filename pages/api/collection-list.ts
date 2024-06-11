@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getHeadoutApiUrl, HeadoutEndpoints } from '../../utils/apiUtils';
 
 const CollectionList = async (req: NextApiRequest, res: NextApiResponse) => {
   let curPage = Number(req.query.page) || 1;
 
   const perPage = 50;
   try {
-    const collectionRes = await fetch(
-      `https://api.headout.com/api/v1/collection/top/list?limit=1200`
-    );
+    const endpoint = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CollectionTop,
+      params: { limit: '1200' },
+      id: null,
+    });
+    const collectionRes = await fetch(endpoint);
     const collectionJSON = await collectionRes.json();
     const collectionData = await collectionJSON?.pageData?.items;
     const totalCollections = collectionData?.length;

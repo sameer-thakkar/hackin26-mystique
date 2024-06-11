@@ -38,6 +38,7 @@ import {
   REVIEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { withTrailingSlash } from '../../../../utils/helper';
 import { TReviewsProps, TReviewUIProps } from './interface';
 
 const ReviewUI: React.FC<TReviewUIProps> = ({
@@ -214,7 +215,14 @@ const Reviews: React.FC<TReviewsProps> = ({
   const getNextSetOfData = () => {
     if (nextPaginatedUrl) {
       const formattedEndpointSlug = nextPaginatedUrl.replace('/tours/', '/');
-      const paginatedUrl = `https://api.headout.com${formattedEndpointSlug}`;
+      /**
+       * NOTE:
+       * Ensure that the following API endpoint is ending with a trailing slash "/"
+       * This is being done to prevent creating duplicate records on CDN.
+       */
+      const paginatedUrl = withTrailingSlash(
+        `https://api.headout.com${formattedEndpointSlug}`
+      );
       setReviewEndpoint(paginatedUrl);
       setLoadMoreCtaClicked(true);
     }

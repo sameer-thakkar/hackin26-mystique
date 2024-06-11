@@ -1,12 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getValidUrl } from 'utils/urlUtils';
+import { getHeadoutApiUrl, HeadoutEndpoints } from '../../utils/apiUtils';
 
 const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
   let curPage = Number(req.query.page) || 1;
   // Display 50 countries per page. Limitation by prismic
   const perPage = 50;
   try {
-    const cityRes = await fetch(`https://api.headout.com/api/v2/city/list`);
+    const endpoint = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CityListV2,
+      id: null,
+    });
+    const cityRes = await fetch(endpoint);
     const cityData = await cityRes.json();
     const totalCities = cityData?.length;
     const maxPage = Math.ceil(totalCities / perPage);
