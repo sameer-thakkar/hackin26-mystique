@@ -638,35 +638,24 @@ const MicrositeV1 = (props: any) => {
     isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
   const isNonPoiCollectionMB = isNonPoiMB && isCollectionMicrobrand;
 
-  const {
-    isEligible: isEligibleForNonPOIPopup,
-    variant: nonPoiPopupExperimentVariant,
-  } = useABTesting({
-    experimentId: 'NON_POI_CARD_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => {
-      return (
-        (!isMobile &&
-          isNonPoiMB &&
-          taggedSubCategoryName !== 'Day Trips' &&
-          (taggedMbType === MB_TYPES.A1_CATEGORY ||
-            taggedMbType === MB_TYPES.A2_CATEGORY ||
-            taggedMbType === MB_TYPES.A1_SUB_CATEGORY ||
-            taggedMbType === MB_TYPES.A2_SUB_CATEGORY)) ||
-        (isNonPoiCollectionMB &&
-          (taggedMbType === MB_TYPES.A1_COLLECTION ||
-            taggedMbType === MB_TYPES.B1_GLOBAL ||
-            taggedMbType === MB_TYPES.C1_COLLECTION))
-      );
-    },
-  });
+  const showPopupNonPOI =
+    !isMobile &&
+    ((isNonPoiMB &&
+      taggedSubCategoryName !== 'Day Trips' &&
+      (taggedMbType === MB_TYPES.A1_CATEGORY ||
+        taggedMbType === MB_TYPES.A2_CATEGORY ||
+        taggedMbType === MB_TYPES.A1_SUB_CATEGORY ||
+        taggedMbType === MB_TYPES.A2_SUB_CATEGORY)) ||
+      (isNonPoiCollectionMB &&
+        (taggedMbType === MB_TYPES.A1_COLLECTION ||
+          taggedMbType === MB_TYPES.B1_GLOBAL ||
+          taggedMbType === MB_TYPES.C1_COLLECTION)));
 
   const showPopup =
     !isMobile &&
     ((isA1orC1MB(taggedMbType) && baseLangIsPoiMb) ||
       dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT ||
-      (isEligibleForNonPOIPopup &&
-        nonPoiPopupExperimentVariant === VARIANTS.TREATMENT));
+      showPopupNonPOI);
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 

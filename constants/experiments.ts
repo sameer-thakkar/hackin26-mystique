@@ -19,7 +19,6 @@ const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
 const LTT_LP_REVAMP_EXPERIMENT = 'LTT Landing Page Revamp Experiment';
 const LTT_SHOW_PAGE_REVAMP_EXPERIMENT = 'LTT Show Page Revamp Experiment';
-const NON_POI_CARD_EXPERIMENT = 'Non POI Card Popup Experiment';
 const POI_CARD_EXPERIMENT = 'POI More Details Swipe sheet Experiment 2';
 const SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT =
   'Shoulder Page Section Ranking';
@@ -37,7 +36,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LTD_LP_Experiment,
   LTT_LP_REVAMP_EXPERIMENT,
   LTT_SHOW_PAGE_REVAMP_EXPERIMENT,
-  NON_POI_CARD_EXPERIMENT,
   POI_CARD_EXPERIMENT,
   RANKING_EXPERIMENT_V1_REVENUE,
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT,
@@ -94,11 +92,6 @@ export const EXPERIMENTS: Record<string, any> = {
     LTT_SHOW_PAGE_REVAMP_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
-  ),
-  [NON_POI_CARD_EXPERIMENT]: new Experiment(
-    NON_POI_CARD_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
   ),
   [POI_CARD_EXPERIMENT]: new Experiment(
     POI_CARD_EXPERIMENT,
