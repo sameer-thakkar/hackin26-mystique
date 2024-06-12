@@ -1233,7 +1233,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   ${CTAContainer} {
     ${NextAvailableBlock} .available-text {
-      margin-top: 2rem;
+      margin-top: 1rem;
       color: ${COLORS.TEXT.BEACH} !important;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
     }
