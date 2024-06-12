@@ -418,18 +418,23 @@ export const fetchMediaResource = async ({
   hostname,
   cookies = {},
   resourceType,
-  entityIds,
+  entityIds = '',
 }: FetchMediaProps) => {
   try {
+    // NOTE: Doing this to get unique TGID.
+    const uniqueTgidString = entityIds?.length
+      ? [...new Set(entityIds.split(','))].join(',')
+      : null;
+
     const params = {
       ...(resourceType && {
         'resource-type': resourceType,
       }),
-      ...(entityIds && {
-        'resource-entity-ids': entityIds,
+      ...(uniqueTgidString && {
+        'resource-entity-ids': uniqueTgidString,
       }),
     };
-    if (!entityIds) {
+    if (!uniqueTgidString) {
       sendLog({
         level: LOG_LEVELS.ERROR,
         message: `[fetchMediaResource] entityIds is required - ${hostname} - ${entityIds}`,
