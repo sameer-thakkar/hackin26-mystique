@@ -36,13 +36,15 @@ const SocialIcon = styled.li<{
 const SocialLinks = (props: any) => {
   const { className, isLight } = props || {};
   const pageMeta = useRecoilValue(metaAtom);
+  const isUAEMB =
+    (pageMeta?.country as any)?.code === 'AE' ||
+    pageMeta?.country === 'United Arab Emirates';
 
   return (
     <StyledSocialLinks className={className}>
       {SOCIAL_DETAILS.map((item) => {
         const { id, href, icon } = item;
-        const isUAEInstagram =
-          id === 'INSTAGRAM' && (pageMeta?.country as any)?.code === 'AE';
+        const isUAEInstagram = id === 'INSTAGRAM' && isUAEMB;
 
         return (
           <SocialIcon key={id} isLight={isLight}>

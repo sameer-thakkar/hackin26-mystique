@@ -272,8 +272,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       eventName: 'Canary Build Viewed',
     });
     set(metaAtom, {
-      city: primaryCity,
-      country: primaryCity?.country,
+      city: primaryCity || baseLangCategorisationMetadata?.tagged_city,
+      country:
+        primaryCity?.country || baseLangCategorisationMetadata?.tagged_country,
       language: getLangObject(lang).code,
       pageTitle: pageTitle,
       collectionId: primaryCollectionId,
