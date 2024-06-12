@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
@@ -11,6 +12,7 @@ import { createBookingURL } from 'utils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId, getHostName } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
@@ -133,6 +135,7 @@ const CustomLinkedTours = ({
     biLink,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
+  const { isMobile } = useRecoilValue(appAtom);
 
   const hostname = getHostName(isStage, isDev, host);
   const tourListEndpoint = getHeadoutApiUrl({
@@ -198,7 +201,7 @@ const CustomLinkedTours = ({
                   url={image}
                   aspectRatio={'16:10'}
                   alt={title}
-                  width={300}
+                  width={isMobile ? 150 : 300}
                 />
                 <TitlePriceCombo>
                   <Title>{title}</Title>

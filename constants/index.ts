@@ -2132,9 +2132,9 @@ export const LFC_IMPACT_EXPERIMENT_UIDS = [
   'safari-world.bangkok-tickets.com',
 ];
 
-export const COLLECTION_ID_CITIES_MAP: Record<number, string> = {
-  167: 'London',
-  24: 'New York',
+export const ENTERTAINMENT_MB_CITIES = {
+  LONDON: 'London',
+  NEW_YORK: 'New York',
 };
 
 export const MYSTIQUE = 'Mystique';

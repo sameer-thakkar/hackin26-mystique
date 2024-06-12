@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import { SwiperOptions } from 'swiper';
 import Conditional from 'components/common/Conditional';
 import { TTrustBoosterProps } from 'components/MicrositeV2/BannerV2TrustBooster/interface';
@@ -6,13 +7,15 @@ import {
   Container,
   Wrapper,
 } from 'components/MicrositeV2/BannerV2TrustBooster/style';
+import { metaAtom } from 'store/atoms/meta';
 import { entertainmentMBTrustBoosters } from 'const/entertainmentMBTrustBoosters';
-import { COLLECTION_ID_CITIES_MAP, LTD_COLLECTION_ID } from 'const/index';
 import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const TrustBooster = ({ isMobile, collectionId }: TTrustBoosterProps) => {
+const TrustBooster = ({ isMobile }: TTrustBoosterProps) => {
+  const { city } = useRecoilValue(metaAtom) as Record<string, any>;
+
   const ICONS = [
     {
       name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS
@@ -37,7 +40,7 @@ const TrustBooster = ({ isMobile, collectionId }: TTrustBoosterProps) => {
       description: strings.formatString(
         strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.EXCLUSIVE_DEALS
           .DESCRIPTION,
-        `${COLLECTION_ID_CITIES_MAP[collectionId ?? LTD_COLLECTION_ID]}`
+        city?.name || ''
       ),
     },
     {

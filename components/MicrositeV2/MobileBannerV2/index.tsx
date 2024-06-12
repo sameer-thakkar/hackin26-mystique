@@ -82,11 +82,7 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
   );
 };
 
-const MobileBannerV2 = ({
-  allTours,
-  bannerImages,
-  collectionId,
-}: IBannerProps) => {
+const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -189,7 +185,7 @@ const MobileBannerV2 = ({
           />
         </div>
       </SwiperWrapper>
-      <TrustBooster isMobile={true} collectionId={collectionId} />
+      <TrustBooster isMobile={true} />
     </Container>
   );
 };

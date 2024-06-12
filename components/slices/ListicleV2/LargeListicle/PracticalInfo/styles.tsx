@@ -5,8 +5,7 @@ import { expandFontToken } from 'const/typography';
 
 export const PracticalInfoWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
+  ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
   column-gap: 1.5rem;
   margin-bottom: 1rem;
 

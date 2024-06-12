@@ -1050,7 +1050,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   .more-details {
     ${expandFontToken('Button/Medium')}
-    color: red;
+    color: ${COLORS.BRAND.CANDY};
     z-index: 1;
     width: calc(100% - 36.6rem);
     position: absolute;

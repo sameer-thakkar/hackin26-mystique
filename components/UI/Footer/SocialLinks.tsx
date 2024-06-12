@@ -36,23 +36,24 @@ const SocialIcon = styled.li<{
 const SocialLinks = (props: any) => {
   const { className, isLight } = props || {};
   const pageMeta = useRecoilValue(metaAtom);
-  const SOCIALS = SOCIAL_DETAILS?.map((item) => {
-    if (
-      (pageMeta?.city as any)?.cityCode === 'DUBAI' &&
-      item.id === 'INSTAGRAM'
-    ) {
-      item.href = SOCIAL_LINKS.INSTAGRAM_HEADOUT_DUBAI_URL;
-    }
-    return item;
-  });
 
   return (
     <StyledSocialLinks className={className}>
-      {SOCIALS.map((item) => {
+      {SOCIAL_DETAILS.map((item) => {
+        const { id, href, icon } = item;
+        const isUAEInstagram =
+          id === 'INSTAGRAM' && (pageMeta?.country as any)?.code === 'AE';
+
         return (
-          <SocialIcon key={item.id} isLight={isLight}>
-            <a href={item.href} target="_blank" rel="noopener">
-              {item.icon}
+          <SocialIcon key={id} isLight={isLight}>
+            <a
+              href={
+                isUAEInstagram ? SOCIAL_LINKS.INSTAGRAM_HEADOUT_DUBAI_URL : href
+              }
+              target="_blank"
+              rel="noopener"
+            >
+              {icon}
             </a>
           </SocialIcon>
         );

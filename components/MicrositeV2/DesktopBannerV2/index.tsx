@@ -99,11 +99,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   );
 };
 
-const DesktopBannerV2 = ({
-  allTours,
-  bannerImages,
-  collectionId,
-}: IBannerProps) => {
+const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -292,7 +288,7 @@ const DesktopBannerV2 = ({
           </div>
         </SwiperControls>
       </SwiperWrapper>
-      <TrustBooster collectionId={collectionId} />
+      <TrustBooster />
     </Container>
   );
 };

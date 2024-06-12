@@ -1136,7 +1136,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     CLOSED_TODAY: 'Heute geschlossen',
     TODAY: 'Heute',
     CLOSED: 'Geschlossen',
-    OPEN: 'Öffnen',
+    OPEN: 'Geöffnet',
     LAST_ADMISSION: 'Letzter Einlass',
     DAYS: 'Tage',
     BEST_TIME_TO_VISIT: 'Beste Besuchszeit:',
