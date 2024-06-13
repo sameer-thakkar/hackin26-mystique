@@ -149,9 +149,11 @@ export const parseShowPageData = (data: any) => {
     } else if (
       element.type == 'heading2' &&
       (element.content.text?.startsWith('FAQs') ||
-        element.content.text?.startsWith(
-          strings.SHOW_PAGE.FREQUENTLY_ASKED_QUESTIONS
-        ))
+        (element.content.text as string)
+          ?.toLowerCase()
+          .startsWith(
+            strings.SHOW_PAGE.FREQUENTLY_ASKED_QUESTIONS.toLowerCase()
+          ))
     ) {
       // faq heading
 
