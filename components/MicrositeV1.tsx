@@ -653,7 +653,8 @@ const MicrositeV1 = (props: any) => {
 
   const showPopup =
     !isMobile &&
-    ((isA1orC1MB(taggedMbType) && baseLangIsPoiMb) ||
+    (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+      baseLangIsPoiMb) ||
       dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT ||
       showPopupNonPOI);
 
@@ -747,7 +748,8 @@ const MicrositeV1 = (props: any) => {
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         !isMobile &&
-        ((isA1orC1MB(taggedMbType) && baseLangIsPoiMb) ||
+        (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+          baseLangIsPoiMb) ||
           (isEligibleForDayTripsProductCardExperiment &&
             dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT))
       }
