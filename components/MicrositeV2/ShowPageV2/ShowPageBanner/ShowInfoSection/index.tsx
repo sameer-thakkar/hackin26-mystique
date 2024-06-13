@@ -88,6 +88,7 @@ const ShowInfoSection = ({
     v2Descriptors: microBrandsDescriptor,
     lang,
     isShowPage: true,
+    primarySubCategory,
   });
 
   const { detailsObjects } = parseShowPageData(microBrandsHighlight);

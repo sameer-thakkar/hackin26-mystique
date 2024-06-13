@@ -82,7 +82,7 @@ type PrimarySubCategory = {
   rank: number;
   displayName: string;
   heading: string;
-  metaTitle: 'London Musical Tickets  – Top Musicals in London';
+  metaTitle: string;
   metaDescription: string;
   noIndex: boolean;
   canonicalUrl: string;

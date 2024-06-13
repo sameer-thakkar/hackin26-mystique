@@ -79,6 +79,7 @@ const PinnedCard = (props: any) => {
     v2Descriptors: microBrandsDescriptor,
     lang,
     isShowPage: true,
+    primarySubCategory,
   });
   const LTT_TAG_PAGE_MAP = getTagPageMap();
 

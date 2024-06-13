@@ -63,6 +63,7 @@ export const tourListApiParser = (
       const updatedDescriptors = generateDescriptor({
         descriptors,
         lang,
+        primarySubCategory,
       });
 
       return {

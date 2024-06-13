@@ -666,6 +666,10 @@ export const isSubCategoryMB = (mbType: string | null) =>
 export const isCategoryMB = (mbType: string | null) =>
   mbType === MB_TYPES.A1_CATEGORY || mbType === MB_TYPES.A2_CATEGORY;
 
+export const isGuidedTourSubcategory = (subcategoryId?: number) => {
+  return subcategoryId === 1010;
+};
+
 export const handleSettledPromiseResults = (
   results: PromiseSettledResult<any>[],
   uid?: string,

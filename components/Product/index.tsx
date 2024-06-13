@@ -55,7 +55,7 @@ import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
-import { createBookingURL } from 'utils';
+import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import {
   getCommonEventMetaData,
   getProductCommonProperties,
@@ -1081,8 +1081,12 @@ const Product = (props: any) => {
       }),
     });
   };
+  const primarySubCategoryId = (
+    scorpioData.primarySubCategory ?? primarySubCategory
+  )?.id;
+
   const showGuidedTourDescriptor =
-    (scorpioData.primarySubCategory ?? primarySubCategory)?.id !== 1010;
+    !isGuidedTourSubcategory(primarySubCategoryId);
 
   const getProductCardElements = ({
     expandContent = false,

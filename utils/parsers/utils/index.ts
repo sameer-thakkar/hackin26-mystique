@@ -167,6 +167,7 @@ const getProductData = async ({
           v2Descriptors: microBrandsDescriptor,
           lang: 'en',
           isEntertainmentMb: true,
+          primarySubCategory: primarySubCategory as PrimarySubCategory,
         });
         let { microBrandsHighlight } = product ?? {};
 

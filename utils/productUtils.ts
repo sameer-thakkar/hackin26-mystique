@@ -3,7 +3,7 @@ import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { BoosterType } from 'components/Product/interface';
-import { createBookingURL } from 'utils';
+import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import { TCurrencyObj } from 'utils/currency';
 import {
   dateToString,
@@ -364,11 +364,9 @@ export const rankDescriptorList = (descriptorList: any) => {
       DESCRIPTOR_RANKING_LOGIC.indexOf(b[0])
   );
 
-  const rankedDescriptorList = rankedDescriptorListWords?.map(
-    (descriptor: any) => descriptor.join(' ')
+  return rankedDescriptorListWords?.map((descriptor: any) =>
+    descriptor.join(' ')
   );
-
-  return rankedDescriptorList;
 };
 
 type TGenerateDescriptor = {
@@ -377,6 +375,7 @@ type TGenerateDescriptor = {
   lang: string;
   isEntertainmentMb?: boolean;
   isShowPage?: boolean;
+  primarySubCategory?: PrimarySubCategory;
 };
 
 export const generateDescriptor = ({
@@ -384,6 +383,7 @@ export const generateDescriptor = ({
   v2Descriptors = '',
   isEntertainmentMb = false,
   isShowPage = false,
+  primarySubCategory,
 }: TGenerateDescriptor) => {
   if (isShowPage || isEntertainmentMb) {
     if (!v2Descriptors) return [];
@@ -392,18 +392,25 @@ export const generateDescriptor = ({
     return v2Descriptors?.split(regex).filter(Boolean);
   }
 
-  if (!isEntertainmentMb && !isShowPage) {
-    const headoutDescriptors = descriptors?.map(
-      (descriptor) => descriptor?.code
-    );
+  const headoutDescriptors = descriptors?.map((descriptor) => descriptor?.code);
+  const isGuidedTour = isGuidedTourSubcategory(primarySubCategory?.id);
 
-    headoutDescriptors.push(DESCRIPTORS.DURATION);
+  headoutDescriptors.push(DESCRIPTORS.DURATION);
 
-    return rankDescriptorList(headoutDescriptors).slice(
-      0,
-      MAX_DESCRIPTORS_DISPLAYED
-    );
+  const rankedDescriptorList = rankDescriptorList(headoutDescriptors);
+  let displayLimit = MAX_DESCRIPTORS_DISPLAYED;
+
+  /**
+   * Product cards remove "Guided Tours" descriptors from cta-section
+   * and append a tag above title. This reduces the max shown descriptors from 5 to 4
+   *
+   * Hence, explicitly increasing count by 1
+   */
+  if (isGuidedTour && rankedDescriptorList.includes(DESCRIPTORS.GUIDED_TOUR)) {
+    displayLimit++;
   }
+
+  return rankDescriptorList(headoutDescriptors).slice(0, displayLimit);
 };
 
 type TCancellationPolicyObj = Record<string, boolean | number | number>;
@@ -820,6 +827,7 @@ export const getScorpioData = ({
       const updatedDescriptors = generateDescriptor({
         descriptors,
         lang: language,
+        primarySubCategory,
       });
       let {
         microBrandsHighlight,
