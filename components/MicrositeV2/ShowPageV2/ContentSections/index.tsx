@@ -451,7 +451,7 @@ const ContentSections = ({
               components={shortCodeSerializer}
             />
 
-            <Conditional if={cancellationAndRefunds.length}>
+            <Conditional if={cancellationAndRefunds?.length}>
               <h2 id="Cancellation & refunds">
                 <CancellationAndRefunds />{' '}
                 {convertToSentenceCase(
