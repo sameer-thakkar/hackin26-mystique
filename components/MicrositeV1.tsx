@@ -309,18 +309,6 @@ const MicrositeV1 = (props: any) => {
   const showLFC = lfcExpVariant === VARIANTS.CONTROL && isLFCImpactExpEligible;
 
   const {
-    isEligible: isEligibleForDayTripsProductCardExperiment,
-    variant: dayTripsProductCardExperimentVariant,
-    isExperimentResolving: isDayTripsProductCardExperimentResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_PRODUCT_CARD_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => {
-      return !isMobile && taggedSubCategoryName === 'Day Trips';
-    },
-  });
-
-  const {
     attraction: attractionCFoot,
     body: slicesCFoot,
     footer_heading: footerHeadingCFoot,
@@ -641,7 +629,6 @@ const MicrositeV1 = (props: any) => {
   const showPopupNonPOI =
     !isMobile &&
     ((isNonPoiMB &&
-      taggedSubCategoryName !== 'Day Trips' &&
       (taggedMbType === MB_TYPES.A1_CATEGORY ||
         taggedMbType === MB_TYPES.A2_CATEGORY ||
         taggedMbType === MB_TYPES.A1_SUB_CATEGORY ||
@@ -655,7 +642,7 @@ const MicrositeV1 = (props: any) => {
     !isMobile &&
     (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
       baseLangIsPoiMb) ||
-      dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT ||
+      taggedSubCategoryName === 'Day Trips' ||
       showPopupNonPOI);
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
@@ -748,10 +735,8 @@ const MicrositeV1 = (props: any) => {
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         !isMobile &&
-        (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
-          baseLangIsPoiMb) ||
-          (isEligibleForDayTripsProductCardExperiment &&
-            dayTripsProductCardExperimentVariant === VARIANTS.TREATMENT))
+        (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+        baseLangIsPoiMb
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
@@ -819,9 +804,7 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isHohoExpEligible && isExperimentResolving) ||
-    (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (isEligibleForDayTripsProductCardExperiment &&
-      isDayTripsProductCardExperimentResolving)
+    (isLFCImpactExpEligible && isLFCExperimentResolving)
   )
     return <Loader />;
 

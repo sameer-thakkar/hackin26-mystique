@@ -12,7 +12,6 @@ export const VARIANTS = {
 
 const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
 const CURATED_VIDEO_BANNER = 'Curated Video Banner';
-const DAY_TRIPS_PRODUCT_CARD_EXPERIMENT = 'Day Trips Product Card Experiment';
 const HOHO_REVAMP_EXPERIMENT = 'HOHO Revamp Experiment';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
@@ -29,7 +28,6 @@ const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
   CURATED_VIDEO_BANNER,
-  DAY_TRIPS_PRODUCT_CARD_EXPERIMENT,
   HOHO_REVAMP_EXPERIMENT,
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
@@ -57,11 +55,6 @@ export const EXPERIMENTS: Record<string, any> = {
     CURATED_VIDEO_BANNER,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
-  ),
-  [DAY_TRIPS_PRODUCT_CARD_EXPERIMENT]: new Experiment(
-    DAY_TRIPS_PRODUCT_CARD_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
   ),
   [HOHO_REVAMP_EXPERIMENT]: new Experiment(
     HOHO_REVAMP_EXPERIMENT,
