@@ -186,9 +186,11 @@ export const Container = styled.div<{
   isV3Design?: boolean;
   indexPosition: number;
   isSmallComboCard?: boolean;
+  isSwiperCard?: boolean;
 }>`
   display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
-
+  background: ${({ isSwiperCard }) =>
+    isSwiperCard ? 'transparent' : COLORS.BRAND.WHITE};
   max-width: 1200px;
   margin: auto;
   width: 100%;
@@ -225,6 +227,9 @@ export const Container = styled.div<{
       }
     `}
 
+  .combo-section-heading {
+    ${expandFontToken(FONTS.HEADING_LARGE)}
+  }
   ${({ isSmallComboCard }) =>
     isSmallComboCard &&
     css`
@@ -263,12 +268,27 @@ export const TourTitleWrapper = styled.h2<{
   isPopup?: boolean;
   pageType?: string;
   isNonPoi?: boolean;
+  $isHOHORevamp?: boolean;
   $forceMobile?: boolean;
 }>`
   ${expandFontToken(FONTS.HEADING_LARGE)}
   margin: 0;
   max-width: 768px;
   ${({ isNonPoi }) => isNonPoi && `margin-top: -1.5rem; margin-bottom: 1rem;`}
+  svg {
+    margin: 0 0 -0.125rem 0.375rem;
+    cursor: pointer;
+  }
+  ${({ $isHOHORevamp }) => $isHOHORevamp && hohoFont}
+
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+    ${({ $isHOHORevamp }) =>
+      $isHOHORevamp &&
+      `font-size: 18px;
+       line-height: 24px;
+       -webkit-text-stroke: 0.1px ${COLORS.GRAY.G1};`}
+  }
 
   && {
     ${({ $forceMobile }) =>
@@ -610,6 +630,8 @@ interface IStyledProductCard {
   $isDrawer?: boolean;
   $hasDiscount?: boolean;
   $isClicked?: boolean;
+  $isHOHORevamp?: boolean;
+  $isSwiperCard?: boolean;
   $hasItineraryData?: boolean;
   $forceMobile?: boolean;
   forcedMobilePopup?: boolean;
@@ -1156,6 +1178,13 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   ${({ isTicketCard, $forceMobile }) =>
     isTicketCard ? null : cardImageStyles($forceMobile)}
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    css`
+      &&& {
+        ${hohoStyles}
+      }
+    `}  
 
   grid-template-rows: min-content min-content min-content;
   grid-template-columns: ${({ isTicketCard }) =>
@@ -1195,8 +1224,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}
     padding: ${({ theme }) => theme.productCards.padding.mobile};
   margin: 0
-    ${({ theme: { theme }, isTicketCard, $isDrawer }) =>
-      getMargin({ theme, isTicketCard, $isDrawer })};
+    ${({ theme: { theme }, isTicketCard, $isDrawer, $isSwiperCard }) =>
+      getMargin({ theme, isTicketCard, $isDrawer, $isSwiperCard })};
   grid-template-areas: ${({ layout }) =>
     layout.mobile.map((row: any) => `'${row}'`)};
   grid-template-areas: ${({ layout, $isExperimentalCard, $isDrawer }) =>
@@ -1279,10 +1308,9 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       font-weight: 500;
     }
   }
-
   ${CTAContainer} {
     ${NextAvailableBlock} .available-text {
-      margin-top: 2rem;
+      margin-top: ${({ $isPoiMwebCard }) => ($isPoiMwebCard ? '1rem' : '2rem')};
       color: ${COLORS.TEXT.BEACH} !important;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
     }
@@ -2773,6 +2801,7 @@ export const Heading = styled.h3`
 export const ViewMoreButton = styled.button<{
   $isOverlay?: boolean;
   $showPopup?: boolean;
+  $hasBackground?: boolean;
 }>`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
   color: ${COLORS.BRAND.CANDY};
@@ -2795,6 +2824,15 @@ export const ViewMoreButton = styled.button<{
     css`
       position: absolute;
       bottom: 0;
+    `}
+
+  ${({ $hasBackground }) =>
+    $hasBackground &&
+    css`
+      background: ${COLORS.BACKGROUND.FADED_CANDY};
+      border-radius: 8px;
+      width: Hug (258px) px;
+      padding: 0.5rem 1rem;
     `}
 
   ${({ $showPopup }) =>
@@ -3033,12 +3071,14 @@ export const PopupPricingUnit = styled.div`
     }
   }
 `;
-function getMargin({ theme, isTicketCard, $isDrawer }: any) {
+function getMargin({ theme, isTicketCard, $isDrawer, $isSwiperCard }: any) {
   if ($isDrawer) {
     return '0';
   }
 
   switch (true) {
+    case $isSwiperCard:
+      return '1rem';
     case theme !== THEMES.MIN_BLUE && !isTicketCard:
       return '1.5rem';
     case isTicketCard:
@@ -3047,3 +3087,137 @@ function getMargin({ theme, isTicketCard, $isDrawer }: any) {
       return '24px';
   }
 }
+export const hohoFont = css`
+  font-family: ${HALYARD.FONT_STACK};
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+  color: ${COLORS.GRAY.G1};
+  letter-spacing: 0;
+  -webkit-text-stroke: 0.2px ${COLORS.GRAY.G1};
+`;
+
+export const hohoStyles = css`
+  grid-template-areas:
+    'card-img category-and-rating line cta-combo'
+    'card-img title line cta-combo'
+    'card-img  tour-tags line cta-combo';
+  grid-template-rows: auto auto 1fr;
+  grid-auto-rows: min-content;
+  grid-row-gap: 0.5rem;
+  padding: 1rem;
+  position: relative;
+  .card-img {
+    width: 20.625rem;
+    height: 13.125rem;
+  }
+  .tour-tag {
+    max-width: unset;
+    align-items: start;
+    grid-column-gap: 0.375rem;
+    svg {
+      padding-top: 0.125rem;
+    }
+  }
+
+  ${StyledPriceBlock} {
+    grid-row-gap: 0.125rem;
+    .tour-scratch-price {
+      font-weight: 400;
+      color: ${COLORS.GRAY.G3};
+      .strike-through {
+        color: ${COLORS.GRAY.G3};
+      }
+    }
+    .tour-price {
+      ${expandFontToken(FONTS.HEADING_REGULAR)}
+    }
+  }
+  ${CarouselContainer} {
+    border-radius: 10px;
+  }
+  ${CTAContainer} {
+    width: 15.375rem;
+    padding-right: 0.5rem;
+  }
+  ${HorizontalLine} {
+    margin-left: 0.313rem;
+  }
+
+  ${TourTitleWrapper} {
+    cursor: pointer;
+    ${hohoFont}
+    font-size: 21px;
+  }
+  ${HorizontalLine} {
+    border-left: 1px solid ${COLORS.GRAY.G6};
+  }
+  ${TourTags} {
+    grid-row-gap: 0.5rem;
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+    grid-area: tour-tags;
+  }
+  ${StyledRatingsContainer} {
+    span {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+    }
+    .avg-rating {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-areas:
+      'card-img' 'category-and-rating' 'title' 'tour-tags'
+      'price-block';
+    grid-row-gap: 0.125rem;
+    padding: 0.75rem;
+    margin: 0 1rem;
+    box-shadow: 0px 2px 8px 0px #0000001a;
+    border-radius: 16px;
+    transition: transform ease-in-out 300ms;
+    :active:not(:focus-within) {
+      transform: scale(0.98);
+    }
+
+    .card-img {
+      justify-self: center;
+      margin-top: 0;
+      width: calc(100%);
+      margin-bottom: 0.625rem;
+      height: 12.438rem;
+    }
+    button {
+      padding: 0;
+      background: none;
+      border: none;
+    }
+
+    ${TourTitleWrapper} {
+      font-size: 18px;
+      line-height: 24px;
+      -webkit-text-stroke: 0.1px ${COLORS.GRAY.G1};
+    }
+    ${TitleWrapper} {
+      margin-bottom: 0.5rem;
+    }
+
+    ${TourTags} {
+      margin: 0 0 1.094rem;
+      display: grid;
+      grid-row-gap: 0.625rem;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+    }
+    ${CategoryAndRatingContainer} {
+      margin: 0 0 0.125rem;
+    }
+    ${PriceContainer} {
+      margin-bottom: 0.344rem;
+    }
+    ${StyledPriceBlock} {
+      .tour-price {
+        ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)}
+      }
+    }
+  }
+`;

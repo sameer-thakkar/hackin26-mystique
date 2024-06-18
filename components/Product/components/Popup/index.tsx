@@ -9,6 +9,7 @@ const Popup = ({
   children,
   tgid,
   scrollToSection,
+  slideUp,
 }: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -67,10 +68,17 @@ const Popup = ({
       overflow: 'hidden',
       padding: 0,
       border: 'none',
-      opacity: isVisible ? 1 : 0,
       top: '40px',
-      transform: `scale(${isVisible ? 1 : 0.8})`,
-      transition: 'all .5s cubic-bezier(0.7, 0, 0.3, 1)',
+      ...(slideUp
+        ? {
+            transform: isVisible ? 'translateY(0vh)' : 'translateY(100vh)',
+            transition: 'transform .5s cubic-bezier(0.7, 0, 0.3, 1)',
+          }
+        : {
+            opacity: isVisible ? 1 : 0,
+            transform: `scale(${isVisible ? 1 : 0.8})`,
+            transition: 'all .5s cubic-bezier(0.7, 0, 0.3, 1)',
+          }),
     },
   };
 

@@ -38,11 +38,6 @@ export const micrositeGq = `{
                 ...content_frameworkFields
             }
         }
-        content_framework_treatment {
-            ...on content_framework {
-                ...content_frameworkFields
-            }
-        }
         footer_ref {
             ...on common_footer {
                 ...common_footerFields

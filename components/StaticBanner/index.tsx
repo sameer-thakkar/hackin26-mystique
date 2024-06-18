@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
+import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import {
   AverageRatingWrapper,
   BannerDisclaimerText,
@@ -14,13 +15,17 @@ import {
   DisclaimerText,
   Divider,
   ExtraDivider,
+  Gradient,
   Heading,
+  HohoDivider,
+  HohoSubtext,
   InfoContainer,
   MediaContainer,
   Overlay,
   ParentChip,
   RatingCountWrapper,
   RatingsWrapper,
+  Subsection,
 } from 'components/StaticBanner/styles';
 import { trackEvent } from 'utils/analytics';
 import { withShortcodes } from 'utils/helper';
@@ -218,14 +223,20 @@ const StaticBanner = ({
   return (
     <BannerSection
       $isNonPoi={showNonPoiDesign}
+      $isHOHORevamp={isHOHORevamp}
       id={id}
       hasParentChip={displayParentChip}
     >
+      <Conditional if={isHOHORevamp && !isMobile}>
+        <Gradient />
+        <Gradient $isLeft={true} />
+      </Conditional>
       <Conditional if={isMobile && showNonPoiDesign}>
-        <Overlay $hideBanner={hideBanner} />
+        <Overlay $hideBanner={hideBanner} $isHOHORevamp={isHOHORevamp} />
         <MediaContainer
           $isNonPoi={showNonPoiDesign}
           $hideBanner={hideBanner}
+          $isHOHORevamp={isHOHORevamp}
           $hideOnMobile={displayParentChip || hasExtraInfo}
         >
           <Conditional if={!bannerVideo || showThumbnailInBanner}>
@@ -282,10 +293,26 @@ const StaticBanner = ({
               displayCollectionRating || displayAirportTransfersRating
             }
             $showTrustBooster={shouldDisplayTrustBoosters}
+            $isHOHORevamp={isHOHORevamp}
             $hasParentChip={displayParentChip}
           />
+          <Conditional if={isHOHORevamp}>
+            <Subsection>
+              <HohoDivider />
+              <Conditional if={!isMobile}>
+                <HohoSubtext
+                  dangerouslySetInnerHTML={{
+                    __html: strings.HOHO.BANNER_SUBTEXT,
+                  }}
+                />
+              </Conditional>
+            </Subsection>
+          </Conditional>
           <Conditional
-            if={displayCollectionRating || displayAirportTransfersRating}
+            if={
+              (displayCollectionRating || displayAirportTransfersRating) &&
+              !isHOHORevamp
+            }
           >
             <RatingsWrapper
               $isNonPoi={showNonPoiDesign}
@@ -312,7 +339,7 @@ const StaticBanner = ({
               </RatingCountWrapper>
             </RatingsWrapper>
           </Conditional>
-          <Conditional if={showNonPoiDesign}>
+          <Conditional if={showNonPoiDesign && !isHOHORevamp}>
             <Divider isVisible={!isMobile || !!bannerDescriptors?.length} />
             <DescriptorWrapper>
               {isMobile && bannerDescriptors?.length ? (
@@ -404,6 +431,9 @@ const StaticBanner = ({
           </MediaContainer>
         </Conditional>
       </Container>
+      <Conditional if={isHOHORevamp}>
+        <TrustBooster isHOHORevamp={isHOHORevamp} isMobile={isMobile} />
+      </Conditional>
     </BannerSection>
   );
 };

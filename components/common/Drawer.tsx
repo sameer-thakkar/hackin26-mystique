@@ -22,7 +22,7 @@ const DrawerWrapper = styled.div<{
   z-index: 1000;
   height: 100%;
   align-content: flex-start;
-  animation: enter 0.4s ease;
+  animation: enter 0.3s ease-in-out;
   transform: translateY(0);
   transition: transform 0.3s ease;
 
@@ -107,7 +107,7 @@ const DrawerContainer = styled.div<{ $drawerStyles: any }>`
   }
 `;
 
-const CoreDrawerText = styled.div`
+export const CoreDrawerText = styled.div`
   position: relative;
   .content-wrapper {
     display: grid;
@@ -157,7 +157,7 @@ export const PanelAnchor = styled.div`
   }
 `;
 
-const HeadingText = styled.div`
+export const HeadingText = styled.div`
   grid-column: 1 / 2;
   ${expandFontToken(FONTS.HEADING_SMALL)}
 `;
@@ -277,6 +277,7 @@ const Drawer = ({
     <DrawerContainer
       $drawerStyles={$drawerStyles}
       className={animateOut ? 'animate-out' : ''}
+      onClick={(e) => e.stopPropagation()}
     >
       <div
         className={`shadow ${coverHeaderInShadow ? 'coverHeader' : ''}`}
@@ -310,7 +311,10 @@ const Drawer = ({
             </Conditional>
             <Conditional if={!hideCrossIcon}>
               <CloseIcon
-                onClick={() => close('Close Icon')}
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  close('Close Icon');
+                }}
                 className="close-icon"
               />
             </Conditional>

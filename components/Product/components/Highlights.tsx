@@ -20,6 +20,7 @@ type Props = {
   tabs?: any;
   onClick?: () => void;
   showPopup?: boolean;
+  ctaHasBackground?: boolean;
 };
 
 const Highlights = ({
@@ -29,6 +30,7 @@ const Highlights = ({
   isLoading,
   onClick,
   showPopup = false,
+  ctaHasBackground = false,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
@@ -87,6 +89,7 @@ const Highlights = ({
         onClick={onClick}
         $isOverlay={showViewMoreAsOverlay}
         $showPopup={showPopup}
+        $hasBackground={ctaHasBackground}
       >
         {`${strings.PC_EXP.SHOW_INCL} `}
         {showPopup ? (

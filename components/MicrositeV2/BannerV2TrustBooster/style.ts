@@ -3,9 +3,16 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isHOHORevamp?: boolean }>`
   margin-top: 0;
   padding-top: 1rem;
+
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    `width: 100%; 
+     height: 0;
+     z-index:1; `}
+
   @media (max-width: 768px) {
     height: 2.5625rem;
     margin-top: 0;
@@ -19,10 +26,16 @@ export const Container = styled.div`
       rgba(80, 64, 111, 0) 0%,
       rgba(70, 56, 96, 0.6) 100%
     );
+    ${({ $isHOHORevamp }) =>
+      $isHOHORevamp &&
+      `min-width: unset;
+       padding: 0 0 2rem 0;
+       margin: 0;
+    `}
   }
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ $isHOHORevamp?: boolean }>`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: 0 auto;
@@ -54,6 +67,11 @@ export const Wrapper = styled.div`
   .trust-booster::first-child {
     margin-top: 0;
   }
+
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    `width: unset;
+     padding:0; `}
 
   @media (max-width: 768px) {
     width: calc(100% - (1.5rem * 2));

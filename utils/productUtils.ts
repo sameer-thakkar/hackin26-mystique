@@ -13,6 +13,7 @@ import {
 } from 'utils/dateUtils';
 import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
+import { BOOKING_FLOW_TYPE } from 'const/booking';
 import COLORS from 'const/colors';
 import {
   DESCRIPTOR_RANKING_LOGIC,
@@ -1108,4 +1109,11 @@ export const checkForBooster = (
     });
 
   return finalType;
+};
+
+export const sortCombos = (tours: Record<string, any>[]) => {
+  const combo = BOOKING_FLOW_TYPE.COMBO;
+  return tours.sort((a, b) =>
+    a.flowType === combo ? 1 : b.flowType === combo ? -1 : 0
+  );
 };

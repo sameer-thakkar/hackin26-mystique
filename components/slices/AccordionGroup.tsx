@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FAQPageJsonLd } from 'next-seo';
 import styled from 'styled-components';
 import { asText } from '@prismicio/helpers';
@@ -83,16 +83,24 @@ const AccordionGroup = ({
     };
   });
 
+  const [isTracked, setIsTracked] = useState(false);
   const faqSectionRef = useRef(null);
-  const isIntersecting = useOnScreen({ ref: faqSectionRef });
+  const isIntersecting = useOnScreen({ ref: faqSectionRef, unobserve: true });
 
   useEffect(() => {
-    if (isIntersecting && sliceProps?.isAirportTransfersMB) {
+    if (
+      !isTracked &&
+      isIntersecting &&
+      (sliceProps?.isAirportTransfersMB || sliceProps?.isHOHORevamp)
+    ) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
         [ANALYTICS_PROPERTIES.SECTION]: 'FAQ',
-        [ANALYTICS_PROPERTIES.RANKING]: 3,
+        ...(sliceProps?.isAirportTransferMB && {
+          [ANALYTICS_PROPERTIES.RANKING]: 3,
+        }),
       });
+      setIsTracked(true);
     }
   }, [isIntersecting]);
 

@@ -51,6 +51,7 @@ export const StyledPriceBlock = styled.div<{
       display: none;
     }
     & .strike-through {
+      color: ${COLORS.GRAY.G3};
       text-decoration: line-through;
       color: ${({ isSportsExperiment }) =>
         isSportsExperiment && `${COLORS.GRAY.G3}`};

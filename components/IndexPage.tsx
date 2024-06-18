@@ -161,8 +161,6 @@ const Page = (props: PageProps) => {
     categoryHeaderMenu,
     breadcrumbs,
     cityPageParams,
-    variantsData,
-    routeDetails,
     isCatOrSubCatPage,
     catAndSubCatPageData,
     uid,
@@ -327,9 +325,7 @@ const Page = (props: PageProps) => {
               domainConfig={domainConfig}
               primaryCity={primaryCity}
               categoryHeaderMenu={categoryHeaderMenu}
-              routeDetails={routeDetails}
               breadcrumbs={breadcrumbs}
-              variantsData={variantsData}
               isCatOrSubCatPage={isCatOrSubCatPage}
               catAndSubCatPageData={catAndSubCatPageData}
               uid={uid}

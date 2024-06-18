@@ -10,4 +10,5 @@ export type TPopupProps = {
   children: JSX.Element | JSX.Element[];
   tgid?: number | string;
   scrollToSection?: (index: number) => Promise<void>;
+  slideUp?: boolean;
 };

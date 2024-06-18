@@ -529,6 +529,16 @@ export const ANALYTICS_EVENTS = {
     FOURTH_PRODUCT_CARD: '4th Product Card',
   },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+  VIEW_ITINERARY_CLICKED: 'View Itinerary Clicked',
+  ITINERARY_POPUP_VIEWED: 'Itinerary Popup Viewed',
+  ITINERARY_POPUP_CLOSED: 'Itinerary Popup Closed',
+  ITINERARY_VARIANT_CLICKED: 'Itinerary Variant Clicked',
+  BACK_BUTTON_CLICKED: 'Back Button Clicked',
+  ITINERARY_CTA_CLICKED: 'Itinerary CTA Clicked',
+  MAP_VIEWED: 'Map Viewed',
+  MAP_ZOOMED: 'Map Zoomed',
+  MAP_CLICKED: 'Map Clicked',
+  STOPS_SCROLLED: 'Stops Scrolled',
   ITINERARY: {
     TIMELINE_VIEWED: 'Timeline Viewed',
     STOP_CLICKED: 'Stop Clicked',
@@ -536,7 +546,7 @@ export const ANALYTICS_EVENTS = {
     ITINERARY_VARIANT_CLICKED: 'Itinerary Variant Clicked',
     ITINERARY_TOGGLE_CLICKED: 'Itinerary Toggle Clicked',
     MAP_VIEWED: 'Map Viewed',
-},
+  },
   AIRPORT_TRANSFERS: {
     SEARCH_FILTER_CLICKED: 'Search Filter Clicked',
     SEARCH_FILTER_APPLIED: 'Search Filter Applied',
@@ -1011,14 +1021,16 @@ export const ANALYTICS_PROPERTIES = {
     DRAWER_TYPE: 'Drawer Type',
   },
   CONTAINER: 'Container',
+  ITINERARY_ID: 'Itinerary ID',
+  ITINERARY_NAME: 'Itinerary Name',
+  CLICK_TYPE: 'Click Type',
+  STOP_NAME: 'Stop Name',
+  STOP_NUMBER: 'Stop Number',
+  DESCRIPTORS: 'Descriptors',
   HAS_MAP: 'Has Map',
   ITINERARY_TYPE: 'Itinerary Type',
   INFORMATION_HEADING: 'Information Heading',
-  ITINERARY_ID: 'Itinerary ID',
-  ITINERARY_NAME: 'Itinerary Name',
   ITINERARY_VIEW: 'Itinerary View',
-  STOP_NAME: 'Stop Name',
-  STOP_NUMBER: 'Stop Number',
 };
 
 export const PAGE_TYPES = {
@@ -1147,6 +1159,8 @@ export const CTA_TYPE = {
   VIEW_ROUTES: 'View All Routes',
   TICKETS: 'Tickets',
   LOAD_MORE: 'Load More',
+  MORE_INFORMATION: 'More Information',
+  MAP_LINK: 'Map Link',
 };
 
 export const HIGHLIGHT_TYPES = {
@@ -1629,6 +1643,8 @@ export const LANDSCAPE_MWEB =
 export const BUS = 'https://cdn-imgix-open.headout.com/MB/assets/bus.svg';
 export const HO_LOGO =
   'https://cdn-imgix-open.headout.com/MB/assets/ho_logo_circle.svg';
+export const ATTRACTIONS_PLACEHOLDER =
+  'https://cdn-imgix-open.headout.com/MB/assets/attractions-placeholder.png';
 
 export const ENTITY_ICONS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/categories';

@@ -25,12 +25,10 @@ import {
   MB_CATEGORISATION,
   MICROSITE_STRING_KEYS,
   SLICE_TYPES,
-  TEMPLATES,
 } from 'const/index';
 import getContentPageDocument from '../contentPage';
 import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
-import { getTopAttractionsDoc } from '../topAttractions';
 import type {
   TMicrositeDocument,
   TResolvedDocumentResponseM,
@@ -136,8 +134,6 @@ const getMicrositeDocument = async ({
           | MicrositeDocumentDataBodyTourListCategorySlice
           | undefined = undefined;
 
-        let topAttractionsData = undefined;
-
         // Base lang Fallback for Tour Ranking.
         const tourTabSlice = currentPageData?.body1?.[0];
         if (tourTabSlice?.primary && !tourTabSlice?.primary?.ranking) {
@@ -200,39 +196,11 @@ const getMicrositeDocument = async ({
           ? baseLangCategoryTourListV1?.primary
           : currentPageCategoryTourListV1?.primary;
 
-        const { product_cards: productCards } = categoryTourListV1Primary ?? {};
-
         let shouldPageHaveShorterTtl = false;
 
         if (!Object.keys(categoryTourListV1Primary ?? {})?.length) {
           shouldPageHaveShorterTtl = true;
           // Have shorter TTL on cache, if product cards are empty (fetch fails or catalog team temporarily remove the cards)
-        }
-
-        // prismic typescript doesn't infer linked document fetch :(
-        const {
-          template,
-          city,
-          sub_category: subcategoryId,
-          // @ts-ignore
-        } = productCards?.data ?? {};
-        const { cityCode: cityName } = city || {};
-        if (template === TEMPLATES.HOHO && cityName && subcategoryId) {
-          try {
-            topAttractionsData = await getTopAttractionsDoc({
-              cityName,
-              subcategoryId,
-              lang,
-            });
-          } catch (error) {
-            Sentry.captureException(error);
-            sendLog({
-              err: error,
-              message: `[getMicrositeDocument] getTopAttractionsDoc for HOHO template - ${uid}`,
-            });
-            // eslint-disable-next-line no-console
-            console.log('top-attractions-data-hoho', error);
-          }
         }
 
         const strValues = transformStringValues<MicrositeDocumentData>({
@@ -308,7 +276,6 @@ const getMicrositeDocument = async ({
               : currentPageCategoryTourListV1,
             currentPageCategoryTourListV1,
             categoryTourListV2,
-            topAttractionsData,
             baseLangPageTitle: isLocalizedLang
               ? baseLangPageData.title
               : currentPageData.title,

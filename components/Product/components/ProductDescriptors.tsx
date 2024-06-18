@@ -15,6 +15,7 @@ import Globe from 'assets/globe';
 
 export const ProductDescriptors = ({
   descriptorArray,
+  hohoDescriptors,
   minDuration,
   maxDuration,
   lang = 'en',
@@ -35,8 +36,8 @@ export const ProductDescriptors = ({
   const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
     useState(false);
 
-  if (descriptorArray.length > 4 && forceMobile) {
-    descriptorArray = descriptorArray.slice(0, 4);
+  if (descriptorArray?.length && descriptorArray?.length > 4 && forceMobile) {
+    descriptorArray = descriptorArray?.slice(0, 4);
   }
 
   if (isLoading)
@@ -64,7 +65,25 @@ export const ProductDescriptors = ({
       $forceMobile={forceMobile}
       className="tour-tags"
     >
-      {descriptorArray.map((item: string, index: number) => {
+      <Conditional if={hohoDescriptors?.length}>
+        {hohoDescriptors?.map((item, index: number) => {
+          const DescriptorSVG = descriptorIcons[item.type];
+
+          return (
+            item && (
+              <div
+                key={`descriptor-${index}`}
+                data-card-section={CARD_SECTION_MARKERS.DESCRIPTORS}
+                className={'tour-tag'}
+              >
+                {showIcons && <DescriptorSVG />}
+                {item.text}
+              </div>
+            )
+          );
+        })}
+      </Conditional>
+      {descriptorArray?.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
           return null;

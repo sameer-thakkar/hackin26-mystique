@@ -31,7 +31,6 @@ import { generateCityPageData } from 'utils/cityPageUtils';
 import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import {
   getToursGlobalCollection,
-  parseVariantsData,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import getCategoryHeaderMenu from 'utils/headerUtils/getCategoryHeaderMenu';
@@ -69,12 +68,10 @@ import {
   RESOURCE_TYPE,
   SHORTER_CACHE_AGE,
   SLICE_TYPES,
-  TEMPLATES,
   THEMES,
   TLANGUAGELOCALE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
-import getRouteDetailsDoc from './getRouteDetails';
 import { getReviewsPageData } from './reviewsPage';
 import { getVenuePageData } from './venuePage';
 import { fetchPrismicDocument } from '.';
@@ -606,7 +603,6 @@ export const getPageData = async ({
       //   MB_CATEGORISATION.SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
     ) {
       let collectionDetails: CollectionDetails | Object = {};
-      let finalTgids: Array<number | string> = [];
       const { data: CMSData } = CMSContent ?? {};
       const {
         content_framework: contentFramework,
@@ -652,8 +648,7 @@ export const getPageData = async ({
         : {};
 
       let categoryTourListData: Record<string, any> = {};
-      let variantsData: Array<Record<string, any>> = [];
-      let bannerImageData, routeDetails;
+      let bannerImageData;
       const hasCategoryTourListV1 = Object.keys(
         localisedCategoryTourListV1 || {}
       )?.length;
@@ -687,18 +682,6 @@ export const getPageData = async ({
           const subCatId = firstProductSubCategory?.id;
           const categoryId = CATEGORY_IDS?.[taggedCategory];
 
-          const productCardsData =
-            localisedCategoryTourListV1?.primary?.product_cards?.data;
-
-          if (productCardsData?.template === TEMPLATES.HOHO) {
-            variantsData = await parseVariantsData({
-              finalTgids: categoryTourListData?.finalTgids || [],
-              currencyCode: categoryTourListData?.activeCurrency?.code,
-              language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
-              cookies,
-            });
-          }
-
           if (isCollectionMB(taggedMbType)) {
             bannerImageData = await fetchMediaResource({
               resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -716,15 +699,6 @@ export const getPageData = async ({
             });
           }
           collectionDetails = categoryTourListData.collectionDetails ?? {};
-
-          finalTgids = categoryTourListData.finalTgids || [];
-          const { template } = productCardsData || {};
-          if (template === TEMPLATES.HOHO) {
-            routeDetails = await getRouteDetailsDoc({
-              tgids: finalTgids,
-              lang: lang ?? 'en',
-            });
-          }
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
           categoryTourListData = await monthOnMonthPageParser({
             uid,
@@ -886,8 +860,6 @@ export const getPageData = async ({
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
         cityPageParams,
-        ...(variantsData && { variantsData }),
-        ...(routeDetails && { routeDetails }),
       };
     }
     tgidsArray = [...tgidsArray];

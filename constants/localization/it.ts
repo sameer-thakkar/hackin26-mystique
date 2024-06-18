@@ -970,7 +970,6 @@ const it = {
     FREQUENCY: 'FREQUENZA',
     DURATION: 'DURATA',
     STARTING_LOCATION: 'Partenza',
-    TOP_ATTRACTIONS: 'Attrazioni principali',
     CALENDAR_FOOTNOTE: '* Tutti i prezzi sono in {0}',
     GOT_IT: 'Capito',
     TOUR_TIMINGS: 'Orari',
@@ -981,6 +980,39 @@ const it = {
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Itinerari',
+    COMBO_SUBTITLE: 'Risparmia di più con',
+    COMBO_TITLE: 'Offerte combinate sul tour Hop-on Hop-off',
+    COMBO_DWEB_TITLE:
+      'Risparmia di più con le offerte combinate sul tuo tour Hop-on Hop-off',
+    STOPS_AND_ATTRACTIONS: 'Fermate e attrazioni',
+    HOP_ON_OFF_AT: 'Sali e scendi a qualsiasi di queste {0} fermate',
+    TIMINGS_FREQUENCY: 'Orari e frequenza',
+    TOUR_DURATION: 'Durata del tour',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Guarda la posizione',
+    BANNER_SUBTEXT:
+      'Il modo più comodo e veloce per visitare tutte le principali attrazioni della città.',
+    TOP_ATTRACTIONS: 'Attrazioni principali',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Prenotazione last minute',
+        DESCRIPTION: 'Conferma istantanea sullo smartphone',
+      },
+      COST_EFF: {
+        NAME: 'La massima convenienza',
+        DESCRIPTION: 'Tante attrazioni, un solo biglietto',
+      },
+      DAILY_RIDES: {
+        NAME: 'Tutte le corse che vuoi',
+        DESCRIPTION: 'Scopri la città al tuo ritmo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Prenota e rilassati',
+        DESCRIPTION: 'Scelto da 22 milioni di persone',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Trasferimenti privati',

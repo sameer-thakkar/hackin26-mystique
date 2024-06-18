@@ -984,7 +984,6 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     FREQUENCY: 'FREQUÊNCIA',
     DURATION: 'DURAÇÃO',
     STARTING_LOCATION: 'Local de partida',
-    TOP_ATTRACTIONS: 'Principais atrações',
     CALENDAR_FOOTNOTE: '* Preços exibidos em {0}',
     GOT_IT: 'Entendido',
     TOUR_TIMINGS: 'Horário',
@@ -995,6 +994,39 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Rotas',
+    COMBO_SUBTITLE: 'Poupe mais com',
+    COMBO_TITLE: 'Ofertas combinadas na sua excursão Hop-on Hop-off',
+    COMBO_DWEB_TITLE:
+      'Poupe mais com ofertas combinadas na sua excursão Hop-on Hop-off',
+    STOPS_AND_ATTRACTIONS: 'Paradas e atrações ao redor',
+    HOP_ON_OFF_AT: 'Embarque e desembarque em {0} paradas',
+    TIMINGS_FREQUENCY: 'Horários e frequência',
+    TOUR_DURATION: 'Duração do tour',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Ver a localização',
+    BANNER_SUBTEXT:
+      'A forma mais rápida e prática de ver todas as atrações da cidade.',
+    TOP_ATTRACTIONS: 'Atrações principais',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Reserva de última hora',
+        DESCRIPTION: 'Confirmação imediata no seu celular',
+      },
+      COST_EFF: {
+        NAME: 'Passeio econômico',
+        DESCRIPTION: 'Várias atrações, um só bilhete',
+      },
+      DAILY_RIDES: {
+        NAME: 'Trajetos diários ilimitados',
+        DESCRIPTION: 'Explore a cidade no seu próprio ritmo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Reserve e relaxe',
+        DESCRIPTION: '22 milhões de viajantes satisfeitos',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

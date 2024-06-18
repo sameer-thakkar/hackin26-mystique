@@ -549,6 +549,53 @@ export const carSvg = () => {
   );
 };
 
+export const attractionSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.87033 1.58343C7.94938 1.53261 8.05083 1.53261 8.12989 1.58343L14.3126 5.55812C14.5141 5.68765 14.4224 6 14.1829 6H1.81717C1.57763 6 1.48589 5.68764 1.68739 5.55812L7.87033 1.58343Z"
+        stroke="#444444"
+      />
+      <path d="M1.5 14.5H14.5" stroke="#444444" strokeLinecap="round" />
+      <path d="M12.5 12.5V8" stroke="#444444" strokeLinecap="round" />
+      <path d="M6.5 12.5V8" stroke="#444444" strokeLinecap="round" />
+      <path d="M9.5 12.5V8" stroke="#444444" strokeLinecap="round" />
+      <path d="M3.5 12.5V8" stroke="#444444" strokeLinecap="round" />
+    </svg>
+  );
+};
+
+export const locationSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14 6.6665C14 11.3332 8 15.3332 8 15.3332C8 15.3332 2 11.3332 2 6.6665C2 5.0752 2.63214 3.54908 3.75736 2.42386C4.88258 1.29864 6.4087 0.666504 8 0.666504C9.5913 0.666504 11.1174 1.29864 12.2426 2.42386C13.3679 3.54908 14 5.0752 14 6.6665Z"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 8.6665C9.10457 8.6665 10 7.77107 10 6.6665C10 5.56193 9.10457 4.6665 8 4.6665C6.89543 4.6665 6 5.56193 6 6.6665C6 7.77107 6.89543 8.6665 8 8.6665Z"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
 export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
@@ -568,4 +615,6 @@ export const descriptorIcons: Record<any, any> = {
   LAST_DEPARTURE: calendarSvg,
   FOOD_AND_DRINKS: foodDrinkSvg,
   MODE_OF_TRANSPORT: carSvg,
+  ATTRACTIONS: attractionSvg,
+  STARTING_STOP: locationSvg,
 };

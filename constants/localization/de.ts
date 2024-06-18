@@ -974,7 +974,6 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     FREQUENCY: 'HÄUFIGKEIT',
     DURATION: 'DAUER',
     STARTING_LOCATION: 'Startpunkt',
-    TOP_ATTRACTIONS: 'Top-Sehenswürdigkeiten der Route',
     CALENDAR_FOOTNOTE: '* Alle Preise sind in {0}',
     TOUR_TIMINGS: 'Tourzeiten',
     TOUR_FREQUENCY: 'Häufigkeit',
@@ -985,6 +984,39 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routen',
+    COMBO_SUBTITLE: 'Sparen Sie mehr mit',
+    COMBO_TITLE: 'Kombi-Angebote für Ihre Hop-on-Hop-off-Tour',
+    COMBO_DWEB_TITLE:
+      'Sparen Sie mehr mit Kombi-Angeboten für Ihre Hop-on-Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Haltestellen und Attraktionen',
+    HOP_ON_OFF_AT: 'Steigen Sie an diesen {0} Stationen ein/aus',
+    TIMINGS_FREQUENCY: 'Fahrzeiten und Häufigkeit',
+    TOUR_DURATION: 'Dauer der Tour',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Standort anzeigen',
+    BANNER_SUBTEXT:
+      'Die bequemste und schnellste Art, um alle Wahrzeichen der Stadt zu sehen.',
+    TOP_ATTRACTIONS: 'Top-Attraktionen',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last-Minute Buchung',
+        DESCRIPTION: 'Sofortige Bestätigung aufs Handy',
+      },
+      COST_EFF: {
+        NAME: 'Günstiges Erkunden',
+        DESCRIPTION: 'Mehrere Wahrzeichen mit einem Ticket',
+      },
+      DAILY_RIDES: {
+        NAME: 'Täglich unbegrenzte Fahrten',
+        DESCRIPTION: 'Entdecken Sie die Stadt in Ihrem Tempo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Buchen und entspannen',
+        DESCRIPTION: '22 Millionen zufriedene Gäste',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Privattransfers',

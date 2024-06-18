@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { trackEvent, TTrackEvent } from 'utils/analytics';
 
 const Wrapper = styled.div<{
   sidePadding?: number;
@@ -46,6 +47,7 @@ const OverflowScroll: React.FC<{
   unsetChildrenMargin?: boolean;
   unsetChildrenPadding?: boolean;
   gap?: number;
+  trackingObject?: TTrackEvent;
 }> = ({
   children,
   minWidthChild = null,
@@ -56,13 +58,24 @@ const OverflowScroll: React.FC<{
   unsetChildrenMargin = false,
   unsetChildrenPadding = false,
   gap = 0,
+  trackingObject,
 }) => {
+  const [isTracked, setIsTracked] = useState(false);
+  const scrollViewProps: React.HTMLAttributes<HTMLDivElement> = {};
+  if (trackingObject && !isTracked) {
+    scrollViewProps.onScroll = () => {
+      trackEvent(trackingObject);
+      setIsTracked(true);
+    };
+  }
+
   return (
     <Wrapper
       $gap={gap}
       $unsetWrapperMargin={unsetWrapperMargin}
       sidePadding={wrapperPadding}
       wrapperMargin={wrapperMargin}
+      {...scrollViewProps}
     >
       {children?.map((child, index) => (
         <Child

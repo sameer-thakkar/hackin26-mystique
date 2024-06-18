@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
+import { StyledButtonWrapper } from 'components/common/LocalePopover/styles';
 import LocaleSelector from 'components/common/LocaleSelector';
 import HeaderLinks from 'components/HeaderLinks';
 import Hamburger from 'UI/Hamburger';
@@ -40,12 +41,17 @@ const StyledHeader = styled.header<{
   $isTop: boolean;
   $isEntertainmentMB: boolean;
   $isPillBarSticky: boolean;
+  $isDarkTheme?: boolean;
   $isAirportTransfersMB: boolean;
 }>`
   height: 80px;
   width: 100%;
-  background-color: ${({ theme: { primaryBackground } }) =>
-    primaryBackground ? primaryBackground : '#fff'};
+  background-color: ${({ theme: { primaryBackground }, $isDarkTheme }) =>
+    $isDarkTheme
+      ? COLORS.PURPS.DARK_TONE_1
+      : primaryBackground
+      ? primaryBackground
+      : '#fff'};
   display: flex;
   z-index: 11;
   transition: all 0.2s ease-in;
@@ -80,6 +86,9 @@ const StyledHeader = styled.header<{
 
   @media (max-width: 768px) {
     height: 56px;
+    ${({ $isDarkTheme }) =>
+      $isDarkTheme &&
+      `background: linear-gradient(180deg, #140029 0%, rgba(20, 0, 41, 0) 100%);`}
 
     ${({ $isSticky, $isEntertainmentMB }) =>
       !$isSticky &&
@@ -135,8 +144,10 @@ const StyledHeaderContainer = styled.div`
 
 const StyledLogo = styled.div<{
   isEntertainmentMB: boolean;
+  $isDarkTheme?: boolean;
+  $reducedMargin?: boolean;
 }>(
-  ({ isEntertainmentMB }) => css`
+  ({ isEntertainmentMB, $isDarkTheme, $reducedMargin }) => css`
     display: grid;
     grid-auto-flow: column;
     align-items: center;
@@ -162,6 +173,8 @@ const StyledLogo = styled.div<{
         width: unset !important;
         object-fit: contain;
         padding-top: ${isEntertainmentMB && `4.5px`};
+        ${$isDarkTheme &&
+        `filter: invert(100%) hue-rotate(196deg) saturate(7);`};
       }
     }
 
@@ -169,12 +182,13 @@ const StyledLogo = styled.div<{
       height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`};
       width: auto;
       margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
+      ${$isDarkTheme && `filter: invert(50%) brightness(2);`};
     }
 
     @media (max-width: 768px) {
       display: grid;
       grid-auto-flow: column;
-      margin-left: 1.5rem;
+      margin-left: ${$isDarkTheme || $reducedMargin ? '1rem' : '1.5rem'};
 
       .image-wrap {
         padding-right: 0;
@@ -193,6 +207,8 @@ const StyledLogo = styled.div<{
 
 const StyledHeaderElements = styled.div<{
   active: boolean;
+  $isDarkTheme?: boolean;
+  $reducedMargin?: boolean;
 }>`
   justify-self: right;
   display: flex;
@@ -202,9 +218,43 @@ const StyledHeaderElements = styled.div<{
     color: ${({ theme: { primaryBGText } }) =>
       primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
+  ${({ $isDarkTheme }) =>
+    $isDarkTheme &&
+    `
+  &&& {
+    & > * { 
+      color: ${COLORS.BRAND.WHITE};
+      stroke: ${COLORS.BRAND.WHITE};
+     }
+     ${StyledButtonWrapper} {
+      :hover {
+        background: ${COLORS.BRAND.WHITE}20;
+      }
+      & > *, svg > g {
+        color: ${COLORS.BRAND.WHITE};
+        stroke: ${COLORS.BRAND.WHITE};
+      }
+     }
+  }
+  `}
+
+  @media (min-width: 768px) {
+    ${({ $isDarkTheme }) =>
+      $isDarkTheme &&
+      `
+    .withIcon > .label { color: ${COLORS.BRAND.WHITE}; }
+    &&& {
+      .nest-icon svg {
+      path {
+        stroke: ${COLORS.BRAND.WHITE}
+      }
+    }}
+    `}
+  }
 
   @media (max-width: 768px) {
-    margin-right: 24px;
+    margin-right: ${({ $isDarkTheme, $reducedMargin }) =>
+      $isDarkTheme || $reducedMargin ? '1rem' : '1.5rem'};
     * {
       color: ${COLORS.GRAY.G2};
     }
@@ -276,6 +326,7 @@ const Header: React.FC<any> = (props) => {
     taggedCity,
     categoryHeaderMenu,
     categoryHeaderMenuExists = false,
+    isDarkTheme = false,
     isAirportTransfersMB = false,
     hideLangCurrencySelector = false,
   } = props;
@@ -340,6 +391,9 @@ const Header: React.FC<any> = (props) => {
         const isUpScroll = scrollPos > window.pageYOffset;
         setIsHeaderSticky(isUpScroll);
       }
+      if (window.scrollY === 0) {
+        setIsHeaderSticky(false);
+      }
     };
     const throttledScrollHandler = throttle(scrollHandler, 500);
     window.addEventListener('scroll', throttledScrollHandler, {
@@ -366,6 +420,9 @@ const Header: React.FC<any> = (props) => {
     }, 5000);
     return () => clearTimeout(timer);
   }, [isSidenavScroll]);
+  const showDarkHeader = isMobile
+    ? isDarkTheme && !isHeaderSticky && !hamburgerOpen
+    : isDarkTheme && !isHeaderSticky;
 
   return (
     <StyledHeader
@@ -374,11 +431,16 @@ const Header: React.FC<any> = (props) => {
       $isEntertainmentMB={isEntertainmentMB}
       $isAirportTransfersMB={isAirportTransfersMB}
       $isPillBarSticky={isPillBarSticky}
+      $isDarkTheme={showDarkHeader}
     >
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
-          <StyledLogo isEntertainmentMB={isEntertainmentMB}>
+          <StyledLogo
+            isEntertainmentMB={isEntertainmentMB}
+            $isDarkTheme={showDarkHeader}
+            $reducedMargin={isDarkTheme}
+          >
             <Image
               url={logoUrl}
               alt={logoAltText}
@@ -390,7 +452,9 @@ const Header: React.FC<any> = (props) => {
               className="center"
               fetchPriority="high"
             />
-            <Conditional if={hasPoweredByHeadoutLogo && !isEntertainmentMB}>
+            <Conditional
+              if={hasPoweredByHeadoutLogo && !isEntertainmentMB && !isDarkTheme}
+            >
               <StyledVerticalDivider />
               <DeferredComponent
                 renderPlaceholder={
@@ -403,7 +467,9 @@ const Header: React.FC<any> = (props) => {
                 <RiveLogoComponent />
               </DeferredComponent>
             </Conditional>
-            <Conditional if={hasPoweredByHeadoutLogo && isEntertainmentMB}>
+            <Conditional
+              if={hasPoweredByHeadoutLogo && (isEntertainmentMB || isDarkTheme)}
+            >
               <PoweredByHeadout />
             </Conditional>
           </StyledLogo>
@@ -417,7 +483,11 @@ const Header: React.FC<any> = (props) => {
             />
           </div>
         </Conditional>
-        <StyledHeaderElements active={hamburgerIconCheck}>
+        <StyledHeaderElements
+          active={hamburgerIconCheck}
+          $isDarkTheme={showDarkHeader}
+          $reducedMargin={isDarkTheme}
+        >
           <Conditional if={!slices && headerLinks}>
             <HeaderLinks
               headerLinks={headerLinks}
@@ -469,6 +539,7 @@ const Header: React.FC<any> = (props) => {
               languages={headerLanguages}
               currentLanguage={currentLanguage}
               isMobile={isMobile}
+              isDarkMode={showDarkHeader}
             />
           </Conditional>
           <Conditional if={isMobile && hamburgerIconCheck}>
@@ -478,7 +549,11 @@ const Header: React.FC<any> = (props) => {
               tabIndex={0}
               role="button"
             >
-              <Hamburger isActive={hamburgerOpen} />
+              <Hamburger
+                isActive={hamburgerOpen}
+                isDarkMode={showDarkHeader}
+                isLtt={isDarkTheme && !isHeaderSticky}
+              />
             </div>
           </Conditional>
         </StyledHeaderElements>

@@ -68,7 +68,14 @@ const DrawerTabHeading = styled.div`
   }
 `;
 
-const drawerStyles = css`
+export const drawerStyles = (isDarkMode?: boolean) => css`
+  ${isDarkMode &&
+  `
+   .shadow {
+    height: 100%;
+   }
+  `}
+
   .close-icon {
     z-index: 1;
     position: absolute;
@@ -341,7 +348,7 @@ const LocaleSelector = ({
 
       <Conditional if={isDrawerActive}>
         <Drawer
-          $drawerStyles={drawerStyles}
+          $drawerStyles={drawerStyles(isDarkMode)}
           noMargin
           closeHandler={trackedOnClose}
           container={menuItemRef?.current}

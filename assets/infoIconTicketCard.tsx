@@ -1,10 +1,11 @@
-const InfoIconTicketCard = () => (
+const InfoIconTicketCard = ({ width = 12, height = 12, props }: any) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
+    width={width}
+    height={height}
     viewBox="0 0 12 12"
     fill="none"
+    {...props}
   >
     <g clipPath="url(#clip0_8365_52842)">
       <path
@@ -28,7 +29,7 @@ const InfoIconTicketCard = () => (
     </g>
     <defs>
       <clipPath id="clip0_8365_52842">
-        <rect width="12" height="12" fill="white" />
+        <rect width={width} height={height} fill="white" />
       </clipPath>
     </defs>
   </svg>

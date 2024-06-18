@@ -12,7 +12,7 @@ export const VARIANTS = {
 
 const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
 const CURATED_VIDEO_BANNER = 'Curated Video Banner';
-const HOHO_REVAMP_EXPERIMENT = 'HOHO Revamp Experiment';
+const HOHO_REVAMP_EXPERIMENT = 'HOHO Revamp';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';

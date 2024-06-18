@@ -1034,7 +1034,6 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     FREQUENCY: 'FRECUENCIA',
     DURATION: 'DURACIÓN',
     STARTING_LOCATION: 'Punto de partida',
-    TOP_ATTRACTIONS: 'Atracciones principales',
     CALENDAR_FOOTNOTE: '*Todos los precios están en {0}',
     GOT_IT: 'Vale',
     TOUR_TIMINGS: 'Horarios',
@@ -1045,6 +1044,39 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Rutas',
+    COMBO_SUBTITLE: 'Ahorre más con"',
+    COMBO_TITLE: 'Ofertas combinadas en su Hop-on Hop-off tour',
+    COMBO_DWEB_TITLE:
+      'Ahorre más con ofertas combinadas en su Hop-on Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Paradas y atracciones cercanas',
+    HOP_ON_OFF_AT: 'Sube y baja en cualquiera de las {0} paradas',
+    TIMINGS_FREQUENCY: 'Horarios y frecuencia',
+    TOUR_DURATION: 'Duración del recorrido',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Ver ubicación',
+    BANNER_SUBTEXT:
+      'La forma más cómoda y rápida de ver las principales atracciones de la ciudad.',
+    TOP_ATTRACTIONS: 'Principales atracciones',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Reservas de última hora',
+        DESCRIPTION: 'confirmación instantánea en el móvil',
+      },
+      COST_EFF: {
+        NAME: 'Exploración eficiente',
+        DESCRIPTION: 'Varios puntos, un billete',
+      },
+      DAILY_RIDES: {
+        NAME: 'Viajes diarios ilimitados',
+        DESCRIPTION: 'Explora la ciudad a tu ritmo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Reserva y relájate',
+        DESCRIPTION: 'Elegido por 22 millones de viajeros',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',

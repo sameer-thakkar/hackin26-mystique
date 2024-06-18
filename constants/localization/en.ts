@@ -894,7 +894,6 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FREQUENCY: 'FREQUENCY',
     DURATION: 'DURATION',
     STARTING_LOCATION: 'Starting location',
-    TOP_ATTRACTIONS: 'Top attractions covered',
     CALENDAR_FOOTNOTE: '* All prices are in {0}',
     TOUR_TIMINGS: 'Tour Timings',
     TOUR_FREQUENCY: 'Tour Frequency',
@@ -905,6 +904,38 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routes',
+    COMBO_SUBTITLE: 'Save more with',
+    COMBO_TITLE: 'Combo deals on your Hop-on Hop-off tour',
+    COMBO_DWEB_TITLE: 'Save more with combo deals on your Hop-on Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Stops & nearby attractions',
+    HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
+    TIMINGS_FREQUENCY: 'Timings & frequency',
+    TOUR_DURATION: 'Tour duration',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'View Location',
+    BANNER_SUBTEXT:
+      'Most convenient and quickest way to see all top attractions in the city.',
+    TOP_ATTRACTIONS: 'Top attractions covered',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last minute booking',
+        DESCRIPTION: 'Instantly confirmed to your phone',
+      },
+      COST_EFF: {
+        NAME: 'Cost-effective exploring',
+        DESCRIPTION: 'Multiple landmarks, one ticket',
+      },
+      DAILY_RIDES: {
+        NAME: 'Daily unlimited rides',
+        DESCRIPTION: 'Explore the city at your pace',
+      },
+      BOOK_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by 22 million guests',
+      },
+    },
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Expert Multilingual Guides',

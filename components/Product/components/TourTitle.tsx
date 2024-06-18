@@ -13,6 +13,7 @@ import {
 import { THEMES } from 'const/index';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
+import InfoIconTicketCard from 'assets/infoIconTicketCard';
 
 export const TourTitle = ({
   isContentOpen,
@@ -32,6 +33,9 @@ export const TourTitle = ({
   isExperimentalCard,
   isDrawer,
   isPoiMwebCard,
+  showInfoIcon,
+  onClick = () => null,
+  isHOHORevamp,
   forceMobile,
 }: TTourTittleProps) => {
   return (
@@ -57,9 +61,17 @@ export const TourTitle = ({
         isPopup={isContentOpen}
         pageType={pageType}
         isNonPoi={isDrawer && !isPoiMwebCard}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        $isHOHORevamp={isHOHORevamp}
         $forceMobile={forceMobile}
       >
         <Conditional if={!isLoading}>{cardTitle}</Conditional>
+        <Conditional if={showInfoIcon}>
+          <InfoIconTicketCard height={18} width={18} />
+        </Conditional>
         <Conditional if={isLoading}>
           <Skeleton height={isMobile ? '1rem' : '1.25rem'} borderRadius={2} />
           <Skeleton height={isMobile ? '1rem' : '1.25rem'} borderRadius={2} />

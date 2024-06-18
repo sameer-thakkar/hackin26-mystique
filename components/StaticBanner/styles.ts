@@ -1,16 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const BannerPlaceholder = styled.div`
-  height: 18.75rem;
+  height: 28rem;
+  background: ${COLORS.GRAY.G8};
   @media (max-width: 768px) {
     height: 22.188rem;
   }
 `;
 export const BannerSection = styled.div<{
   $isNonPoi?: boolean;
+  $isHOHORevamp?: boolean;
   hasParentChip?: boolean;
 }>`
   margin: 0;
@@ -19,6 +21,12 @@ export const BannerSection = styled.div<{
   ${({ $isNonPoi }) =>
     $isNonPoi &&
     `background: linear-gradient(183deg, #fff 2.24%, #f6ebff 97.71%);`}
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    `background: ${COLORS.PURPS.DARK_TONE_1};
+     margin-top: -3.75rem;
+     overflow: hidden;
+  `}
 
   @media (min-width: 768px) {
     min-height: 18.75rem;
@@ -31,10 +39,20 @@ export const BannerSection = styled.div<{
       `background: linear-gradient(180deg,rgba(243, 233, 255, 0) 0%,rgba(243, 233, 255, 0.5) 100%), #fff;
        padding: 2rem 0;
       `}
+    ${({ $isHOHORevamp }) =>
+      $isHOHORevamp &&
+      `background: ${COLORS.PURPS.DARK_TONE_1}; 
+       height: 24.75rem;
+       padding: 0 0 1.25rem;
+       margin-top: unset;
+       `}
   }
 `;
 
-export const Overlay = styled.div<{ $hideBanner?: boolean }>`
+export const Overlay = styled.div<{
+  $hideBanner?: boolean;
+  $isHOHORevamp?: boolean;
+}>`
   position: absolute;
   height: 5.125rem;
   inset: 8.75rem 0 0;
@@ -44,10 +62,17 @@ export const Overlay = styled.div<{ $hideBanner?: boolean }>`
     rgba(247, 236, 255, 0) 1.39%,
     #fbf4ff 85.29%
   );
+
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    `background: linear-gradient(360deg, #140029 0%, rgba(0, 0, 0, 0) 100%);
+     inset: 8.063rem 0 0;
+    `}
   ${({ $hideBanner }) => $hideBanner && `display: none;`}
 `;
 
 export const Container = styled.div`
+  z-index: 1;
   @media (min-width: 768px) {
     display: grid;
     grid-column-gap: 1.5rem;
@@ -102,6 +127,7 @@ export const ContentContainer = styled.div<{
 export const MediaContainer = styled.div<{
   $isNonPoi?: boolean;
   $hideBanner?: boolean;
+  $isHOHORevamp?: boolean;
   $hideOnMobile?: boolean;
 }>`
   position: relative;
@@ -129,6 +155,7 @@ export const MediaContainer = styled.div<{
 
     height: 13.75rem;
     border-radius: 0;
+    ${({ $isHOHORevamp }) => $isHOHORevamp && `height: 13.125rem;`}
 
     img,
     video {
@@ -142,6 +169,7 @@ export const Heading = styled.h1<{
   $isNonPoi?: boolean;
   $displayRating?: boolean;
   $showTrustBooster?: boolean;
+  $isHOHORevamp?: boolean;
   $hasParentChip?: boolean;
 }>`
   margin: ${({ $showTrustBooster }) =>
@@ -161,6 +189,13 @@ export const Heading = styled.h1<{
     $isNonPoi &&
     `margin: 0.25rem 1.5rem 0;
   `}
+  ${({ $isHOHORevamp }) =>
+    $isHOHORevamp &&
+    `color: ${COLORS.BRAND.WHITE};
+     margin: -3.563rem 1.5rem 0;
+     z-index: 2;
+  `}
+
 
   .bold-city {
     font-size: 30px;
@@ -170,6 +205,7 @@ export const Heading = styled.h1<{
     font-weight: 600;
     text-transform: uppercase;
     font-size: 30px;
+    color: ${COLORS.BRAND.WHITE};
   }
   // Airport transfers
   span.airport-transfers {
@@ -185,7 +221,7 @@ export const Heading = styled.h1<{
       font-size: 48px;
       line-height: 54px;
       letter-spacing: 0.6px;
-      color: ${COLORS.PURPS.MEDIUM_TONE};
+      color: ${COLORS.BRAND.WHITE};
     }
   }
 
@@ -361,6 +397,57 @@ export const Divider = styled.div<{ isVisible: boolean }>`
     background: linear-gradient(90deg, #b9a1a1 3.83%, #fff7f7 82.38%);
   }
 `;
+
+export const Subsection = styled.div`
+  grid-area: bottom;
+`;
+
+export const HohoDivider = styled.div`
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  height: 0.125rem;
+  margin: 0.75rem 0 1.25rem;
+
+  @media (max-width: 768px) {
+    height: 0.063rem;
+    margin: 0.75rem 1.5rem;
+  }
+`;
+
+export const HohoSubtext = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
+  max-width: 26.938rem;
+  span {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+  }
+`;
+export const Gradient = styled.div<{ $isLeft?: boolean }>`
+  position: absolute;
+  opacity: 0.5;
+  filter: blur(50px);
+  z-index: 0;
+  background: rgba(44, 7, 82, 0.75);
+  width: 22.063rem;
+  height: 22.063rem;
+  top: 5.313rem;
+  left: -7.813rem;
+
+  ${({ $isLeft }) =>
+    $isLeft &&
+    css`
+      background: rgba(76, 7, 82, 0.4);
+      width: 551px;
+      height: 551px;
+      top: 121px;
+      left: 920px;
+    `}
+`;
+
 export const DescriptorWrapper = styled.div`
   @media (max-width: 768px) {
     overflow: hidden;

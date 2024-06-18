@@ -96,6 +96,43 @@ const formatPartsToDuration = (arr: Array<Intl.RelativeTimeFormatPart>) => {
   }
 };
 
+export const formatDurationToString = ({
+  hour,
+  minute,
+  lang = 'en',
+}: {
+  hour: number | null;
+  minute: number | null;
+  lang?: string;
+}) => {
+  let res = '';
+  if (hour) {
+    const hourParts = localisedRelativeTimeFormat({
+      locale: lang,
+      unit: 'hour',
+      value: hour,
+      formatToParts: true,
+    });
+    res +=
+      typeof hourParts === 'string'
+        ? hourParts
+        : formatPartsToDuration(hourParts);
+  }
+  if (minute) {
+    const minuteParts = localisedRelativeTimeFormat({
+      locale: lang,
+      unit: 'minute',
+      value: minute,
+      formatToParts: true,
+    });
+    res +=
+      typeof minuteParts === 'string'
+        ? ` ${minuteParts}`
+        : ` ${formatPartsToDuration(minuteParts)}`;
+  }
+  return res;
+};
+
 export const getDuration = ({
   minDuration,
   maxDuration,
@@ -108,41 +145,6 @@ export const getDuration = ({
   if (!minDuration && !maxDuration)
     return strings.DESCRIPTORS.FLEXIBLE_DURATION;
 
-  const formatDurationToString = ({
-    hour,
-    minute,
-  }: {
-    hour: number | null;
-    minute: number | null;
-  }) => {
-    let res = '';
-    if (hour) {
-      const hourParts = localisedRelativeTimeFormat({
-        locale: lang,
-        unit: 'hour',
-        value: hour,
-        formatToParts: true,
-      });
-      res +=
-        typeof hourParts === 'string'
-          ? hourParts
-          : formatPartsToDuration(hourParts);
-    }
-    if (minute) {
-      const minuteParts = localisedRelativeTimeFormat({
-        locale: lang,
-        unit: 'minute',
-        value: minute,
-        formatToParts: true,
-      });
-      res +=
-        typeof minuteParts === 'string'
-          ? ` ${minuteParts}`
-          : ` ${formatPartsToDuration(minuteParts)}`;
-    }
-    return res;
-  };
-
   if (minDuration !== maxDuration) {
     const { hour: minHour, minute: minMinute } =
       convertMillisecondsToHours(minDuration);
@@ -151,9 +153,26 @@ export const getDuration = ({
     return `${formatDurationToString({
       hour: minHour,
       minute: minMinute,
-    })} - ${formatDurationToString({ hour: maxHour, minute: maxMinute })}`;
+      lang,
+    })} - ${formatDurationToString({
+      hour: maxHour,
+      minute: maxMinute,
+      lang,
+    })}`;
   } else {
     const { hour, minute } = convertMillisecondsToHours(maxDuration, false);
-    return formatDurationToString({ hour, minute });
+    return formatDurationToString({ hour, minute, lang });
   }
+};
+
+export const convertTo12HrFormat = (timeString: string) => {
+  return new Date('2000-01-01T' + timeString + 'Z').toLocaleTimeString(
+    'en-US',
+    {
+      timeZone: 'UTC',
+      hour12: true,
+      hour: 'numeric',
+      minute: 'numeric',
+    }
+  );
 };

@@ -952,7 +952,7 @@ const pl = {
     FREQUENCY: 'CZĘSTOTLIWOŚĆ',
     DURATION: 'CZAS TRWANIA',
     STARTING_LOCATION: 'Miejsce startu',
-    TOP_ATTRACTIONS: 'Obejmuje najpopularniejsze atrakcje',
+    TOP_ATTRACTIONS: 'Top attractions covered on route',
     CALENDAR_FOOTNOTE: '* Wszystkie ceny są podane w {0}',
     TOUR_TIMINGS: 'Godziny wycieczek',
     TOUR_FREQUENCY: 'Częstotliwość wycieczek',
@@ -963,6 +963,33 @@ const pl = {
     BUS_DETAILS: 'WIĘCEJ SZCZEGÓŁÓW',
     VIEW_ROUTES: 'Wyświetl wszystkie trasy',
     BUS_ROUTES: 'TRASY AUTOBUSOWE',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    STOPS_AND_ATTRACTIONS: 'Stops & nearby attractions',
+    HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
+    TIMINGS_FREQUENCY: 'Timings & frequency',
+    TOUR_DURATION: 'Tour duration',
+    EVERY_X_MINS: 'Every {0} mins',
+    VIEW_LOCATION: 'View Location',
+    BANNER_SUBTEXT: `Fastest and most convenient way to view
+    <span> {0}+ top attractions </span> in all of {1}.`,
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last minute availability',
+        DESCRIPTION: 'Instantly confirmed to your phone',
+      },
+      DAILY_RIDES: {
+        NAME: 'Daily unlimited rides',
+        DESCRIPTION: "Experience {0}'s best in one tour",
+      },
+      DEALS_DISCOUNTS: {
+        NAME: 'Exclusive deals & discounts',
+        DESCRIPTION: 'Save big on hop on hop off tours',
+      },
+      BOOK_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by 22 million guests and counting',
+      },
+    },
   },
   PC_EXP: {
     SHOW_INCL: 'Zobacz, co wchodzi w cenę biletu i poznaj inne informacje',

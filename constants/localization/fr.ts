@@ -983,7 +983,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     FREQUENCY: 'FRÉQUENCE',
     DURATION: 'DURÉE',
     STARTING_LOCATION: 'Lieu de départ',
-    TOP_ATTRACTIONS: 'Principales attractions',
     CALENDAR_FOOTNOTE: '* Tous les prix sont en {0}',
     GOT_IT: "J'ai compris",
     TOUR_TIMINGS: 'Horaires',
@@ -994,6 +993,39 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routes',
+    COMBO_SUBTITLE: 'Économisez davantage avec',
+    COMBO_TITLE: 'Offres combinées sur votre circuit Hop-on Hop-off',
+    COMBO_DWEB_TITLE:
+      'Économisez davantage grâce aux offres combinées sur votre circuit Hop-on Hop-off',
+    STOPS_AND_ATTRACTIONS: 'Arrêts et attractions à proximité',
+    HOP_ON_OFF_AT: "Montez et descendez à l'un de ces {0} arrêts.",
+    TIMINGS_FREQUENCY: 'Horaires et fréquence',
+    TOUR_DURATION: 'Durée du tour',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Voir le lieu',
+    BANNER_SUBTEXT:
+      'Le moyen le plus pratique et le plus rapide de visiter les principales attractions de la ville.',
+    TOP_ATTRACTIONS: 'Principales attractions',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Réservation en dernière minute',
+        DESCRIPTION: 'Confirmation directe sur votre portable',
+      },
+      COST_EFF: {
+        NAME: 'Exploration à moindre coût',
+        DESCRIPTION: 'Plusieurs monuments avec un seul billet',
+      },
+      DAILY_RIDES: {
+        NAME: 'Trajets illimités tous les jours',
+        DESCRIPTION: 'Explorez la ville à votre rythme',
+      },
+      BOOK_RELAX: {
+        NAME: 'Réservez et profitez',
+        DESCRIPTION: '22 millions de personnes satisfaites',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Navettes privées',

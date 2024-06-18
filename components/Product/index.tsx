@@ -10,10 +10,13 @@ import useSWR from 'swr';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
+import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import EntryPoint from 'components/common/Itinerary/EntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
+import HohoProductCard from 'components/HOHO/components/HohoProductCard';
+import { SECTION_NAMES } from 'components/HOHO/constants';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
@@ -59,6 +62,7 @@ import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
+import useOnScreen from 'hooks/useOnScreen';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import {
   getCommonEventMetaData,
@@ -166,6 +170,19 @@ const Product = (props: any) => {
   const collapsibleContentRef = useRef<HTMLDivElement>(null);
   const popupController = useRef<TController>();
   const priceblockTitleContainerRef = useRef<HTMLDivElement>(null);
+  const combosSectionRef = useRef<HTMLDivElement>(null);
+
+  const [isTracked, setIsTracked] = useState(false);
+  const isCombosSectionIntersecting = useOnScreen({
+    ref: combosSectionRef,
+    unobserve: true,
+  });
+  useEffect(() => {
+    if (!isTracked && isCombosSectionIntersecting) {
+      trackPageSection({ section: SECTION_NAMES.COMBOS });
+      setIsTracked(true);
+    }
+  }, [isCombosSectionIntersecting]);
 
   const {
     tgid,
@@ -222,6 +239,9 @@ const Product = (props: any) => {
     showNewCard = false,
     forceMobile = false,
     showThumbnailInBanner = false,
+    isHOHORevamp = false,
+    comboIndex,
+    isSwiperCard = false,
     tgidItineraryData,
     isBot = false,
   } = props;
@@ -890,6 +910,7 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
+    isHOHORevamp: isHOHORevamp,
   });
 
   const onSidePanelClose = () => {
@@ -1168,7 +1189,7 @@ const Product = (props: any) => {
       });
     setPopupScrollTracker(scrollTrack);
   }, 100);
-    
+
   const primarySubCategoryId = (
     scorpioData.primarySubCategory ?? primarySubCategory
   )?.id;
@@ -1235,6 +1256,7 @@ const Product = (props: any) => {
           $isPoiMwebCard={isPoiMwebCard}
           $isAsideBarOverlay={isAsideBarOverlay}
           $isPopup={isPopup}
+          $isSwiperCard={isSwiperCard}
           forcedMobilePopup={forcedMobilePopup}
           ref={productRef}
           $hasItineraryData={hasItineraryData}
@@ -1331,6 +1353,9 @@ const Product = (props: any) => {
                   isMobile={isPopup ? originalIsMobile : isMobile}
                   shouldCrop={shouldCropImage}
                   showOverlay
+                  showPagination={!isHOHORevamp}
+                  showTimedPaginator={isHOHORevamp}
+                  isTimed={!isHOHORevamp}
                 />
               </Conditional>
               <Conditional if={hasItineraryData}>
@@ -1414,6 +1439,7 @@ const Product = (props: any) => {
               tabs={tabs}
               earliestAvailability={earliestAvailability}
               currentLanguage={currentLanguage}
+              isHOHORevamp={isHOHORevamp}
               forceMobile={forceMobile}
             />
 
@@ -1687,12 +1713,13 @@ const Product = (props: any) => {
               )
             }
             collapsed={
-              !expandContent &&
-              !isTicketCard &&
-              !(
-                isModifiedProductCard ||
-                (isPopup && !originalIsMobile && isPoiMwebCard)
-              )
+              (!expandContent &&
+                !isTicketCard &&
+                !(
+                  isModifiedProductCard ||
+                  (isPopup && !originalIsMobile && isPoiMwebCard)
+                )) ||
+              (!expandContent && isHOHORevamp)
             }
             defaultOpen={defaultOpen}
             maxHeight={maxProductBodyHeight}
@@ -1855,19 +1882,49 @@ const Product = (props: any) => {
       isV3Design={isV3Design}
       indexPosition={indexPosition}
       isCardVisible={getIsCardVisible()}
+      isSwiperCard={isSwiperCard}
     >
       <Conditional if={isV3Design}>
         <div className="indicator-triangle"></div>
       </Conditional>
-      {getProductCardElements({
-        expandContent: isContentOpen,
-        isLoading: isProductCardLoading,
-      })}
+      <Conditional
+        if={
+          isHOHORevamp && isCombo && !isMobile && indexPosition === comboIndex
+        }
+      >
+        <h2 className="combo-section-heading" ref={combosSectionRef}>
+          {strings.HOHO.COMBO_DWEB_TITLE}
+        </h2>
+      </Conditional>
+      <Conditional
+        if={
+          !isHOHORevamp ||
+          (isHOHORevamp && isCombo && !isMobile) ||
+          (isHOHORevamp && isCombo && isMobile && isSwiperCard)
+        }
+      >
+        {getProductCardElements({
+          expandContent: isContentOpen,
+          isLoading: isProductCardLoading,
+        })}
+      </Conditional>
+      <Conditional if={isHOHORevamp && !isCombo}>
+        <HohoProductCard
+          {...props}
+          onClick={() => {
+            trackedToggleContent(false);
+            popupController.current?.open();
+            setIsUnScrolled(true);
+          }}
+          onMoreDetailsClick={onMoreDetailsClick}
+        />
+      </Conditional>
       <Conditional if={showPopup}>
         <Popup
           controller={popupController}
           tgid={tgid}
           scrollToSection={scrollToSection}
+          slideUp={isHOHORevamp}
         >
           <PopupContainer
             onScroll={(e) => {

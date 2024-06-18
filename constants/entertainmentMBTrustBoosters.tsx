@@ -154,9 +154,83 @@ const BookAndRelax = (
   </svg>
 );
 
-export const entertainmentMBTrustBoosters: Record<string, JSX.Element> = {
+const Calendar = (
+  <svg
+    width="44"
+    height="44"
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      width="44"
+      height="44"
+      rx="22"
+      fill="url(#paint0_linear_9201_37776)"
+    />
+    <path
+      d="M33 13H28V11C28 10.448 27.552 10 27 10C26.448 10 26 10.448 26 11V13H18V11C18 10.448 17.552 10 17 10C16.448 10 16 10.448 16 11V13H11C10.448 13 10 13.448 10 14V32C10 32.552 10.448 33 11 33H19C19.552 33 20 32.552 20 32C20 31.448 19.552 31 19 31H12.5C12.2239 31 12 30.7761 12 30.5V17.5C12 17.2239 12.2239 17 12.5 17H31.5C31.7761 17 32 17.2239 32 17.5V20C32 20.552 32.448 21 33 21C33.552 21 34 20.552 34 20V14C34 13.448 33.552 13 33 13Z"
+      fill="#00C4EB"
+    />
+    <path
+      d="M28 22C24.686 22 22 24.686 22 28C22 31.314 24.686 34 28 34C31.314 34 34 31.314 34 28C34 24.686 31.314 22 28 22ZM31 29H28C27.448 29 27 28.553 27 28V25C27 24.447 27.448 24 28 24C28.552 24 29 24.447 29 25V27H31C31.552 27 32 27.447 32 28C32 28.553 31.552 29 31 29Z"
+      fill="#00C4EB"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_9201_37776"
+        x1="22"
+        y1="0"
+        x2="22"
+        y2="44"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#00C4EB" stopOpacity="0.25" />
+        <stop offset="1" stopColor="#00C4EB" stopOpacity="0.08" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const LastMinTix = (
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      width="40"
+      height="40"
+      rx="20"
+      fill="url(#paint0_linear_9201_23161)"
+    />
+    <path
+      d="M29.1667 18.3333C29.6275 18.3333 30 17.9608 30 17.5V13.3333C30 12.8725 29.6275 12.5 29.1667 12.5H10.8333C10.3725 12.5 10 12.8725 10 13.3333V17.5C10 17.9608 10.3725 18.3333 10.8333 18.3333C11.7525 18.3333 12.5 19.0808 12.5 20C12.5 20.9192 11.7525 21.6667 10.8333 21.6667C10.3725 21.6667 10 22.0392 10 22.5V26.6667C10 27.1275 10.3725 27.5 10.8333 27.5H29.1667C29.6275 27.5 30 27.1275 30 26.6667V22.5C30 22.0392 29.6275 21.6667 29.1667 21.6667C28.2475 21.6667 27.5 20.9192 27.5 20C27.5 19.0808 28.2475 18.3333 29.1667 18.3333ZM24.1667 22.5H15.8333V20.8333H24.1667V22.5ZM24.1667 19.1667H15.8333V17.5H24.1667V19.1667Z"
+      fill="#FF66AF"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_9201_23161"
+        x1="20"
+        y1="0"
+        x2="20"
+        y2="40"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#CC0062" stopOpacity="0.25" />
+        <stop offset="1" stopColor="#CC0062" stopOpacity="0.08" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export const V2TrustBoosters: Record<string, JSX.Element> = {
   BOX_OFFICE_TICKETS: BoxOfficeTickets,
   CHOOSE_YOUR_SEATS: ChooseYourSeats,
   EXCLUSIVE_DEALS: ExclusiveDeals,
   BOOK_AND_RELAX: BookAndRelax,
+  CALENDAR: Calendar,
+  LAST_MIN: LastMinTix,
 };

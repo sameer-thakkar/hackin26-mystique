@@ -31,7 +31,7 @@ import { sliceComponents } from './sliceManager';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
-const StyledTabWrapper = styled.div`
+export const StyledTabWrapper = styled.div<{ $isTabSticky?: boolean }>`
   display: grid;
   grid-row-gap: 16px;
 
@@ -57,6 +57,12 @@ const StyledTabWrapper = styled.div`
       `
       line-height: 20px;
       `}
+
+    ${({ $isTabSticky }) =>
+      $isTabSticky &&
+      `box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+       transition: box-shadow 0.2s ease-in;
+    `}
   }
 
   .tab-content-wrap {
@@ -109,7 +115,7 @@ const StyledTabWrapper = styled.div`
   }
 `;
 
-const StyledTab = styled.div`
+export const StyledTab = styled.div`
   cursor: pointer;
   padding-bottom: 8px;
   width: 100%;
@@ -227,6 +233,7 @@ type TabWrapperProps = {
   findBestSeatsCtaCallback?: () => void;
   jumpscroll?: boolean;
   makeTabElementsCrawlable?: boolean;
+  showDropShadow?: boolean;
 };
 
 /**
@@ -268,6 +275,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     renderTabElements = false,
     jumpscroll = false,
     makeTabElementsCrawlable = false,
+    showDropShadow = false,
   } = props;
   const { isMobile } = useRecoilValue(appAtom);
 
@@ -317,10 +325,23 @@ const TabWrapper = (props: TabWrapperProps) => {
 
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [isTabSticky, setIsTabSticky] = useState(false);
+  const scrollViewProps: React.HTMLAttributes<HTMLDivElement> = {};
+  const scrollRef = useRef(null);
+
+  if (showDropShadow) {
+    const scrollHandler = () => {
+      if (scrollRef.current) {
+        const { scrollTop } = scrollRef?.current;
+        const isSticky = scrollTop >= 24;
+        setIsTabSticky(isSticky);
+      }
+    };
+    scrollViewProps.onScroll = scrollHandler;
+  }
 
   useEffect(() => {
-    const setScrollPosition = () => {
-      // @ts-expect-error TS(2339): Property 'scrollLeft' does not exist on type '{}'.
+    const setScrollPosition = (tabsContanier: any) => {
       const { scrollLeft, clientWidth, scrollWidth } =
         tabsContanier?.current ?? {};
       setIsAtStart(scrollLeft === 0);
@@ -328,12 +349,12 @@ const TabWrapper = (props: TabWrapperProps) => {
     };
     (tabsContanier?.current as any)?.addEventListener(
       'scroll',
-      setScrollPosition
+      setScrollPosition(tabsContanier)
     );
     return () =>
       (tabsContanier?.current as any)?.removeEventListener(
         'scroll',
-        setScrollPosition
+        setScrollPosition(tabsContanier)
       );
   }, []);
 
@@ -362,6 +383,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     isScrollTab = false,
     scrollTarget = null,
     section,
+    trackingObject,
   }: any) => {
     setActiveTab(tabId);
     setActiveTabIndex(index);
@@ -380,14 +402,18 @@ const TabWrapper = (props: TabWrapperProps) => {
       });
     }
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
-      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
-      [ANALYTICS_PROPERTIES.SECTION]: section || 'Longform Content',
-      ...getCommonEventMetaData(pageMetaData),
-    });
+    if (trackingObject) {
+      trackEvent(trackingObject);
+    } else {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+        [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
+        [ANALYTICS_PROPERTIES.SECTION]: section || 'Longform Content',
+        ...getCommonEventMetaData(pageMetaData),
+      });
+    }
   };
 
   const scrollTab = (direction: 'left' | 'right') => {
@@ -510,7 +536,7 @@ const TabWrapper = (props: TabWrapperProps) => {
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
-    <StyledTabWrapper isGlobalMb={isGlobalMb}>
+    <StyledTabWrapper isGlobalMb={isGlobalMb} $isTabSticky={isTabSticky}>
       <Conditional if={heading?.length}>
         <TitleTextCombo noMargin={true}>
           <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
@@ -560,6 +586,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                     isScrollTab: true,
                     scrollTarget: e.target,
                     section: heading,
+                    trackingObject: tab.trackingObject,
                   })
                 }
               >
@@ -617,7 +644,7 @@ const TabWrapper = (props: TabWrapperProps) => {
           </SlideControls>
         </Conditional>
       </div>
-      <div className="tab-content-wrap">
+      <div className="tab-content-wrap" ref={scrollRef} {...scrollViewProps}>
         <Conditional if={tabData.length}>
           <div style={{ maxWidth: '894px', fontSize: `15px` }}>
             <RichContent render={tabData[activeTabIndex]?.content} />
@@ -659,7 +686,6 @@ const TabWrapper = (props: TabWrapperProps) => {
               }}
               key={index}
             >
-              {' '}
               {tabElements?.[index]?.children}
             </div>
           ))}

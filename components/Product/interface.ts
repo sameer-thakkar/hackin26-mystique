@@ -24,7 +24,7 @@ export type TBookNowCTAProps = {
 };
 
 export type TProductDescriptors = {
-  descriptorArray: Array<string>;
+  descriptorArray?: Array<string>;
   minDuration: number | null;
   maxDuration: number | null;
   lang: string;
@@ -40,6 +40,7 @@ export type TProductDescriptors = {
   showIcons?: boolean;
   isMobile?: boolean;
   showGuidedTourDescriptor?: boolean;
+  hohoDescriptors?: Array<Record<string, string>>;
   forceMobile?: boolean;
   children?: React.ReactNode;
 };
@@ -100,6 +101,9 @@ export type TTourTittleProps = {
   isExperimentalCard?: boolean;
   isDrawer?: boolean;
   isPoiMwebCard?: boolean;
+  showInfoIcon?: boolean;
+  onClick?: () => void;
+  isHOHORevamp?: boolean;
   forceMobile?: boolean;
 };
 

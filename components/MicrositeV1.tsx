@@ -12,8 +12,6 @@ import LastMinuteFilters from 'components/common/LastMinuteFilters';
 import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
-import TopAttractionsCarousel from 'components/HOHO/components/TopAttractions';
-import HOHOCard from 'components/HOHO/index';
 import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -50,6 +48,7 @@ import {
   groupSlices,
 } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
+import { sortCombos } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -64,7 +63,6 @@ import {
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
   EMAIL_SUBCRIPTION,
-  LANGUAGE_CODE_MAP,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_TYPES,
   PAGE_TYPES,
@@ -169,8 +167,6 @@ const MicrositeV1 = (props: any) => {
     categoryHeaderMenu,
     breadcrumbs,
     cityPageParams,
-    variantsData = [],
-    routeDetails,
     catAndSubCatPageData,
     isCatOrSubCatPage,
     airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
@@ -184,6 +180,14 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
+  const [hohoTimer, setHohoTimer] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHohoTimer(true);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -233,9 +237,7 @@ const MicrositeV1 = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
     baseLangCategorisationMetadata,
-    topAttractionsData,
     content_framework: contentFramework,
-    content_framework_treatment: contentFrameworkTreatment,
     common_header_ref: commonHeader,
     footer_ref: commonFooter,
     secondary_footer: secondaryFooter,
@@ -293,8 +295,7 @@ const MicrositeV1 = (props: any) => {
   } = useABTesting({
     experimentId: 'HOHO_REVAMP_EXPERIMENT',
     noTrack: false,
-    customEligibilityCheckFn: () =>
-      isHOHO && currentLanguage === LANGUAGE_CODE_MAP.EN,
+    customEligibilityCheckFn: () => isHOHO,
   });
 
   const {
@@ -309,7 +310,7 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showHohoRevamp =
-    hohoVariant === VARIANTS.TREATMENT && isHohoExpEligible;
+    isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -589,9 +590,7 @@ const MicrositeV1 = (props: any) => {
       });
   }
 
-  const slices = showHohoRevamp
-    ? contentFrameworkTreatment?.data?.body
-    : contentFramework?.data?.body;
+  const slices = contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
   const hasTourListContentFW: boolean = !!contentFWSlices.find(
@@ -649,18 +648,23 @@ const MicrositeV1 = (props: any) => {
     !isMobile &&
     (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
       baseLangIsPoiMb) ||
+      showHohoRevamp ||
       taggedSubCategoryName === 'Day Trips' ||
       showPopupNonPOI);
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
-  const { variant: itineraryRolloutVariant } = useABTesting({
+  const {
+    variant: itineraryRolloutVariant,
+    isEligible: isItineraryExpEligible,
+  } = useABTesting({
     experimentId: 'ITINERARY_CONTROLLED_ROLLOUT',
     customEligibilityCheckFn: () =>
       !isMobile && taggedSubCategoryName !== 'HOHO',
   });
 
-  const showItineraries = itineraryRolloutVariant === VARIANTS.TREATMENT;
+  const showItineraries =
+    isItineraryExpEligible && itineraryRolloutVariant === VARIANTS.TREATMENT;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
@@ -695,7 +699,7 @@ const MicrositeV1 = (props: any) => {
   );
   const firstProduct = orderedTgids?.[0];
   const { primarySubCategory: firstProductSubCategory } =
-    scorpioData[firstProduct] || {};
+    scorpioData?.[firstProduct] || {};
   const bannerDescriptors = getBannerDescriptors({
     taggedMbType,
     taggedCategoryName,
@@ -713,14 +717,18 @@ const MicrositeV1 = (props: any) => {
     bannerImageData?.resourceEntityMedias?.[0]?.medias
   );
 
+  const finalUncategorizedTours = showHohoRevamp
+    ? sortCombos(orderedFilteredTours)
+    : orderedFilteredTours.filter(
+        (tour: TTour) =>
+          tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+      );
+
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
       currency={currency}
-      uncategorizedTours={orderedFilteredTours.filter(
-        (tour: TTour) =>
-          tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
-      )}
+      uncategorizedTours={finalUncategorizedTours}
       scorpioData={
         rankingExperimentVariant === VARIANTS.TREATMENT
           ? categoryTourListDataWithRankingExperiment?.scorpioData
@@ -755,6 +763,8 @@ const MicrositeV1 = (props: any) => {
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
+      isHOHORevamp={showHohoRevamp}
+      isHOHOResolving={isHohoExpEligible && !hohoTimer}
       isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
     />
@@ -872,13 +882,16 @@ const MicrositeV1 = (props: any) => {
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           slices={finalHeaderSlices}
           dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
-          hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
+          hasDropdownLinks={
+            !isHeaderInherited && !showHohoRevamp ? hasDropdownLinks : null
+          }
           headerCurrencies={headerCurrencies}
           primaryCity={primaryCity}
           taggedCity={taggedCity}
           categoryHeaderMenu={categoryHeaderMenu}
           categoryHeaderMenuExists={categoryHeaderMenuExists}
           isCityPageMB={isCityPageMB}
+          isDarkTheme={showHohoRevamp}
           isAirportTransfersMB={isAirportTransfersMB}
         />
         <Conditional
@@ -907,7 +920,7 @@ const MicrositeV1 = (props: any) => {
             handleClose={onCovidAlertClose}
           />
         </Conditional>
-        <Conditional if={isMobile && hasDropdownLinks}>
+        <Conditional if={isMobile && hasDropdownLinks && !showHohoRevamp}>
           <div className="main-wrapper city-selector">
             <ResponsiveSelector
               options={dropdownLinks}
@@ -1003,27 +1016,6 @@ const MicrositeV1 = (props: any) => {
             }
           />
         </Conditional>
-
-        <Conditional if={showHohoRevamp}>
-          {variantsData?.map((item: Record<string, any>, index: number) => {
-            const tgid = item?.id;
-            const isCombo = scorpioData?.[tgid]?.combo;
-            return (
-              <Conditional if={!isCombo && scorpioData?.[tgid]} key={tgid}>
-                <HOHOCard
-                  isMobile={isMobile}
-                  key={tgid}
-                  variants={item?.data}
-                  tourGroupData={scorpioData?.[tgid]}
-                  tourGroupId={tgid}
-                  routeDetails={routeDetails?.[`${tgid}-route`]}
-                  currency={currency}
-                  index={index}
-                />
-              </Conditional>
-            );
-          })}
-        </Conditional>
         <Conditional
           if={isA1orC1MB(taggedMbType) && isMobile && !isAirportTransfersMB}
         >
@@ -1061,15 +1053,11 @@ const MicrositeV1 = (props: any) => {
             hasTours &&
             !hasTourListContentFW &&
             isToursAvailable &&
-            !showHohoRevamp &&
             !isCatOrSubCatPage &&
             !isAirportTransfersMB
           }
         >
           {tourListSection}
-        </Conditional>
-        <Conditional if={topAttractionsData && showHohoRevamp}>
-          <TopAttractionsCarousel {...topAttractionsData} isMobile={isMobile} />
         </Conditional>
 
         {showAirportTransferProducts &&
@@ -1203,6 +1191,7 @@ const MicrositeV1 = (props: any) => {
               !isSecondaryFooterInherited ? slicesSFoot || [] : []
             }
             isCatOrSubCatPage={isCatOrSubCatPage}
+            isDarkPurps={showHohoRevamp}
           />
         </div>
         <Conditional if={hasOffer}>

@@ -991,7 +991,6 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     FREQUENCY: 'FREQUENTIE',
     DURATION: 'DUUR',
     STARTING_LOCATION: 'Startpunt',
-    TOP_ATTRACTIONS: 'Topbezienswaardigheden van de route',
     CALENDAR_FOOTNOTE: '* Alle prijzen zijn in {0}',
     GOT_IT: 'Begrepen',
     TOUR_TIMINGS: 'Tijden',
@@ -1002,6 +1001,38 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     BUS_DETAILS: 'MORE DETAILS',
     VIEW_ROUTES: 'View all routes',
     BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routes',
+    COMBO_SUBTITLE: 'Bespaar meer met',
+    COMBO_TITLE: 'Combideals op je Hop-on Hop-off tour',
+    COMBO_DWEB_TITLE: 'Bespaar meer met combideals op je Hop-on Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Stops en attracties in de buurt',
+    HOP_ON_OFF_AT: 'Stap in en uit bij elk elk van deze {0} stops',
+    TIMINGS_FREQUENCY: 'Vertrektijden en frequentie',
+    TOUR_DURATION: 'Duur van de tour',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'Bekijk locatie',
+    BANNER_SUBTEXT:
+      'De snelste en gemakkelijkste manier om alle populaire bezienswaardigheden te zien in de stad.',
+    TOP_ATTRACTIONS: 'Topattracties die aan bod komen',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last minute-reservering',
+        DESCRIPTION: 'Directe bevestiging op je telefoon',
+      },
+      COST_EFF: {
+        NAME: 'Kosteneffectief verkennen',
+        DESCRIPTION: 'Meerdere bezienswaardigheden, één ticket',
+      },
+      DAILY_RIDES: {
+        NAME: 'Onbeperkt aantal dagelijkse ritjes',
+        DESCRIPTION: 'Ontdek de stad in jouw tempo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Boeken en ontspannen',
+        DESCRIPTION: 'Vertrouwd door 22 miljoen gasten',
+      },
+    },
   },
   AIRPORT_TRANSFER: {
     // New experiment (AT LP)

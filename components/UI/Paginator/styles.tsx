@@ -74,10 +74,14 @@ export const PaginatorDot = styled.li<PaginatorButtonProps>`
     activeColor,
     isActive,
     $enableActiveColor,
+    activeSlideTimer,
   }) => {
     if ($enableActiveColor && isActive)
       return activeColor || COLORS.BRAND.WHITE;
-    if (enableCompletedColor && isCompleted)
+    if (
+      (enableCompletedColor && isCompleted) ||
+      (!activeSlideTimer && isActive)
+    )
       return activeColor || COLORS.BRAND.WHITE;
     return inactiveColor || `${COLORS.BRAND.WHITE}80`;
   }};
@@ -101,8 +105,11 @@ export const PaginatorDot = styled.li<PaginatorButtonProps>`
     border-radius: ${({ dotSize }) => dotSize}rem;
     z-index: 10;
     opacity: 1;
-    animation: ${progressAnimation}
-      ${({ activeSlideTimer }) => activeSlideTimer}ms ease-in forwards;
+    ${({ activeSlideTimer }) =>
+      activeSlideTimer &&
+      css`
+        animation: ${progressAnimation} ${activeSlideTimer}ms ease-in forwards;
+      `}
   }
 
   /* height: max-content; */

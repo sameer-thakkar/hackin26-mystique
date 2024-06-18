@@ -1,15 +1,20 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { SwiperProps } from 'swiper/react';
+import type { Swiper as TSwiper } from 'swiper/types';
 import type { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import { Paginator } from 'UI/Paginator';
+import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
+import useOnScreen from 'hooks/useOnScreen';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
@@ -29,6 +34,9 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import PercentageStamp from 'assets/percentageStamp';
+import { trackPageSection } from './CityPageContainer/utils';
+import { SECTION_NAMES } from './HOHO/constants';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 import CuratedVideoBanner from './CuratedVideoBanner';
 
@@ -41,10 +49,14 @@ const TicketCard = dynamic(
       /* webpackChunkName: "TicketCard" */ 'components/slices/ContentPageTicketsCard'
     )
 );
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
 
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
   isTicketCard?: boolean;
+  isHOHORevamp?: boolean;
 }>`
   margin: 0 auto;
   position: relative;
@@ -60,6 +72,7 @@ const StyledProductsWrapper = styled.div<{
     margin: auto;
     height: 21.5rem;
     border-radius: 1rem;
+    ${({ isHOHORevamp }) => isHOHORevamp && `height: 14.813rem;`}
   }
 
   #tour-list-heading {
@@ -80,6 +93,30 @@ const StyledProductsWrapper = styled.div<{
   }
   @media (max-width: 768px) {
     ${({ isLoading }) => (isLoading ? `min-height: 390px;` : '')}
+    && {
+      ${({ isHOHORevamp }) =>
+        isHOHORevamp &&
+        css`
+          .product-card-skeleton {
+            height: 28.438rem;
+          }
+          ::before {
+            content: '';
+            position: absolute;
+            background-color: ${COLORS.BRAND.WHITE};
+            top: -0.938rem;
+            height: 1rem;
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+          }
+        `}
+    }
+
+    ${StyledDotsContainer} {
+      width: min-content;
+      margin: auto;
+      padding-top: 1rem;
+    }
   }
 `;
 
@@ -93,6 +130,7 @@ const ProductContainer = styled.div<{
   isTicketCard: boolean;
   isMobile: boolean;
   isNotVisible?: boolean;
+  isHOHORevamp?: boolean;
 }>`
   ${({ isTicketCard, isMobile }) =>
     isTicketCard && !isMobile
@@ -117,7 +155,12 @@ const ProductContainer = styled.div<{
   @media (max-width: 768px) {
     margin-top: ${({ isNotVisible }) => (isNotVisible ? 0 : 0.5)}rem;
     margin-bottom: ${({ isNotVisible }) => (isNotVisible ? 0 : 1.75)}rem;
-    grid-row-gap: 2rem;
+    grid-row-gap: ${({ isHOHORevamp }) => (isHOHORevamp ? '1.5rem' : '2rem')};
+
+    ${({ isHOHORevamp }) =>
+      isHOHORevamp &&
+      `margin: 0;
+       padding-bottom: 2.25rem;`}
 
     .product-card-skeleton {
       max-width: auto;
@@ -130,6 +173,29 @@ const ProductContainer = styled.div<{
 
 const ProductWrapper = styled.div`
   flex: 0 49%;
+`;
+
+const CombosContainer = styled.div`
+  background: linear-gradient(115.83deg, #f8f6ff 0%, #fff2f8 81.51%);
+  padding-bottom: 1.25rem;
+`;
+
+const SectionTitle = styled.div`
+  margin: 0 1rem;
+
+  .subtitle {
+    display: grid;
+    grid-column-gap: 0.25rem;
+    grid-template-columns: min-content max-content;
+    align-items: center;
+    padding: 1.5rem 0 0.25rem;
+    ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
+  }
+  h2 {
+    margin: 0;
+    padding-bottom: 1.25rem;
+    ${expandFontToken(FONTS.HEADING_REGULAR)}
+  }
 `;
 
 const PopulateProducts: any = (props: any) => {
@@ -173,6 +239,8 @@ const PopulateProducts: any = (props: any) => {
     disableShowingNewCard,
     showVideoBanner = false,
     curatedBannerVideoSrc,
+    isHOHORevamp,
+    isHOHOResolving,
     isRankingExperimentResolving = false,
     showItineraries = false,
   } = props;
@@ -189,6 +257,13 @@ const PopulateProducts: any = (props: any) => {
     useState(false);
   const router = useRouter();
   const { isBot } = useRecoilValue(appAtom);
+
+  const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const updateIndex = useCallback(() => {
+    if (!swiper) return;
+    setActiveIndex(swiper.realIndex);
+  }, [swiper]);
 
   const bannerImage = bannerImages?.[0];
   const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
@@ -364,6 +439,18 @@ const PopulateProducts: any = (props: any) => {
     })
     .slice(0, productCardsLimit);
 
+  const comboIndex = availableToursList?.findIndex(
+    (tour: Record<string, any>) => scorpioData[tour.tgid]?.combo
+  );
+  const comboTours = availableToursList?.filter(
+    (tour: Record<string, any>) => scorpioData[tour.tgid]?.combo
+  );
+  const nonComboTours = availableToursList?.filter(
+    (tour: Record<string, any>) => !scorpioData[tour.tgid]?.combo
+  );
+  const finalToursList =
+    isHOHORevamp && isMobile ? nonComboTours : availableToursList;
+
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
     if (!productsRef.current || isExperimentResolving) return;
@@ -462,12 +549,20 @@ const PopulateProducts: any = (props: any) => {
   const showLoader =
     productsLoading ||
     (isEligible && isExperimentResolving) ||
-    isRankingExperimentResolving;
+    isRankingExperimentResolving ||
+    isHOHOResolving;
+
+  const swiperParams: SwiperProps = {
+    onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
+    onTouchEnd: () => {},
+    onSlideChange: () => updateIndex(),
+  };
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
     index: number,
-    isSmallComboCard = false
+    isSmallComboCard = false,
+    isSwiperCard = false
   ) => {
     const {
       tgid,
@@ -565,8 +660,11 @@ const PopulateProducts: any = (props: any) => {
       detialsPopupShown,
       setDetailsPopupShown,
       isNonPoi,
-      isModifiedProductCard,
-      isPoiMwebCard,
+      isModifiedProductCard:
+        isHOHORevamp && scorpioData?.[tgid].combo && !isMobile
+          ? true
+          : isModifiedProductCard,
+      isPoiMwebCard: isPoiMwebCard,
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
@@ -575,6 +673,8 @@ const PopulateProducts: any = (props: any) => {
       hideHeading,
       topReviews,
       showPopup,
+      isHOHORevamp,
+      isSwiperCard,
       tgidItineraryData,
       isBot,
     };
@@ -586,6 +686,7 @@ const PopulateProducts: any = (props: any) => {
           !disableShowingNewCard && isEligible && variant === VARIANTS.TREATMENT
         }
         showThumbnailInBanner={showThumbnailInBanner}
+        comboIndex={comboIndex}
       />
     ) : (
       <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
@@ -600,6 +701,7 @@ const PopulateProducts: any = (props: any) => {
               variant === VARIANTS.TREATMENT
             }
             showThumbnailInBanner={showThumbnailInBanner}
+            comboIndex={comboIndex}
           />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -626,6 +728,20 @@ const PopulateProducts: any = (props: any) => {
     ];
   }
 
+  const combosSectionRef = useRef<HTMLDivElement>(null);
+  const [isTracked, setIsTracked] = useState(false);
+
+  const isCombosSectionIntersecting = useOnScreen({
+    ref: combosSectionRef,
+    unobserve: true,
+  });
+  useEffect(() => {
+    if (isCombosSectionIntersecting && !isTracked) {
+      trackPageSection({ section: SECTION_NAMES.COMBOS });
+      setIsTracked(true);
+    }
+  }, [isCombosSectionIntersecting]);
+
   if (asHook) {
     return availableToursList?.map((tour: Record<string, any>, index: number) =>
       getProductCardFromTourAndIndex(tour, index)
@@ -636,6 +752,7 @@ const PopulateProducts: any = (props: any) => {
     <StyledProductsWrapper
       isLoading={showLoader}
       isTicketCard={isTicketCard}
+      isHOHORevamp={isHOHORevamp}
       id="products-container"
       ref={productsWrapperRef}
     >
@@ -679,9 +796,10 @@ const PopulateProducts: any = (props: any) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile || forceMobile}
         isNotVisible={showLoader}
+        isHOHORevamp={isHOHORevamp}
       >
-        {availableToursList &&
-          availableToursList.map((tour: Record<string, any>, index: number) => {
+        {finalToursList &&
+          finalToursList.map((tour: Record<string, any>, index: number) => {
             if (tour.isBannerVideo || tour.isBannerImage) {
               return (
                 <div key={index}>
@@ -697,6 +815,32 @@ const PopulateProducts: any = (props: any) => {
             return getProductCardFromTourAndIndex(tour, index);
           })}
       </ProductContainer>
+      <Conditional if={isHOHORevamp && isMobile && comboTours?.length}>
+        <CombosContainer ref={combosSectionRef}>
+          <SectionTitle>
+            <div className="subtitle">
+              <PercentageStamp />
+              <span>{strings.HOHO.COMBO_SUBTITLE}</span>
+            </div>
+            <h2>{strings.HOHO.COMBO_TITLE}</h2>
+          </SectionTitle>
+          <Swiper {...swiperParams}>
+            {comboTours?.map((tour: Record<string, any>, index: number) => {
+              return getProductCardFromTourAndIndex(tour, index, false, true);
+            })}
+          </Swiper>
+          <Paginator
+            tabSize={1.5}
+            dotSize={0.5}
+            totalCount={comboTours?.length}
+            activeIndex={activeIndex}
+            activeSlideTimer={0.1}
+            margin={0.125}
+            activeColor={`${COLORS.BLACK}35`}
+            inactiveColor={`${COLORS.BLACK}20`}
+          />
+        </CombosContainer>
+      </Conditional>
     </StyledProductsWrapper>
   );
 };

@@ -89,6 +89,7 @@ const COLORS = {
     SECONDARY: '#7300e5',
     MEDIUM_TONE: '#8329DE',
     DARK_TONE: '#330066',
+    DARK_TONE_1: '#140029',
     LEVEL_15: '#e6d1ff',
     LEVEL_10: '#f3e9ff',
     LEVEL_3: '#6600CC',
@@ -147,6 +148,9 @@ const COLORS = {
   LTT_BANNER_BACKGROUND_COLOR: '#150029',
   EERIE_BLACK: '#180030',
   CHINESE_BLACK: '#150029',
+  MISC: {
+    FADED_WHITE: '#FFFFFF4D',
+  },
   metadata: {
     generated: 'Tue Jun 15 2021 13:18:23 GMT+0530 (India Standard Time)',
     figma: {

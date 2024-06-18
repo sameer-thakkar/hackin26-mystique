@@ -101,6 +101,7 @@ export enum HeadoutEndpoints {
   Airports,
   CollectionPoi,
   BulkPoiList,
+  ItinerariesByTGID,
   BulkExperienceItineraries,
   CollectionTourGroups,
   GeoLocateCity,
@@ -200,6 +201,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.BulkPoiList:
       endpointSlug = `/api/v1/pois`;
+      break;
+    case HeadoutEndpoints.ItinerariesByTGID:
+      endpointSlug = `/api/v6/tour-groups/${id}/experience-itineraries/`;
       break;
     case HeadoutEndpoints.BulkExperienceItineraries:
       endpointSlug = '/api/tours/v1/experience-itineraries/';

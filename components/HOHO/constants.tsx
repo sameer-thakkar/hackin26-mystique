@@ -5,6 +5,12 @@ export const SECTION_NAMES = {
   TOP_ATTRACTIONS: 'Top Attractions',
   REVIEWS: 'Reviews',
   BUS_ROUTES: 'Bus Routes',
+  COMBOS: 'Combos',
+  TOP_ATTRACTIONS_COVERED: 'Top attractions covered',
+  PRODUCT_CARD: 'Product Card',
+  STOPS_AND_ATTRACTIONS: 'Stops and nearby attractions',
+  NEARBY_ATTRACTIONS: 'Nearby Attractions',
+  ITINERARY_DETAILS: 'Itinerary Details',
 };
 
 export const FILTERED_HIGHLIGHTS = () => [

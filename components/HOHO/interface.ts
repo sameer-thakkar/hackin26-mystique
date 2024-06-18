@@ -7,5 +7,3 @@ export type HOHOCardProps = {
   currency: string | null;
   index: number;
 };
-
-//NOTE: Will modify this accordingly once we start consuming data from the API
