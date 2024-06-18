@@ -1184,5 +1184,49 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     SUB_HEADING: 'Regardez cette vidéo pour faire le bon choix !',
     WATCH_VIDEO: 'Regarder la vidéo',
   },
+  NEXT: 'Prochaine étape',
+  PREVIOUS: 'Précédent',
+  ITINERARY: {
+    TAB: 'Itinéraire',
+    HEADING: 'Votre trajet',
+    VIEW_ITINERARY: "Voir l'itinéraire",
+    PASSES_BY_SECTION_HEADING: 'À voir en cours de route',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Points forts',
+      NEARBY_THINGS_TO_DO: 'Choses à faire à proximité',
+      THINGS_TO_DO: 'Choses à faire',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'Point de départ',
+        END: "Point d'arrivée",
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} points de départ disponibles',
+        END: "{0} points d'arrivée disponibles",
+      },
+    },
+    GET_DIRECTION: "Comment s'y rendre",
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} h {1} min',
+        WITHOUT_HOURS: '{1} min',
+      },
+      ATTRACTIONS_COUNT: '{0} attractions',
+      ACTIVITIES_COUNT: '{0} activités',
+      TOTAL_DURATION: 'Durée totale',
+      FREQUENCY: 'Fréquence',
+      FIRST_DEPARTURE: 'Premier départ',
+      LAST_DEPARTURE: 'Dernier départ',
+      FIRST_DEPARTURE_TIME: 'Première heure de départ',
+      LAST_DEPARTURE_TIME: 'Dernière heure de départ',
+      MODE_OF_TRANSPORT: 'Mode de transport',
+      FOOD_AND_DRINKS: 'Nouriture et boissons',
+    },
+    WALK_DURATION: '{0} à pied',
+    MORE: '{0} de plus',
+    TIMELINE_VIEW: 'Voir le programme',
+    MAP_VIEW: 'Voir le plan',
+  },
 };
 export default fr;

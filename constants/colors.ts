@@ -126,6 +126,7 @@ const COLORS = {
     LIGHT_TONE_2: '#ff66af',
     LIGHT_TONE_1: '#fe3394',
     LIGHT_TONE_3: '#ffe5f2',
+    FADED: '#FFF2F8',
   },
   OCEAN_BLUE: {
     SECONDARY: '#00afd1',

@@ -1,0 +1,132 @@
+import dynamic from 'next/dynamic';
+import { ModeOfTravelOptions, SUB_TYPES } from 'types/itinerary.type';
+import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
+import { getHumanReadableTime } from 'utils/dateUtils';
+import { descriptorIcons } from 'const/descriptorIcons';
+import { strings } from 'const/strings';
+
+export const ITINERARY_DESCRIPTORS_DATA: Record<
+  keyof typeof ItineraryDescriptorsTypes,
+  {
+    label?: string;
+    icon?: () => JSX.Element;
+    fieldIdentifier: string[];
+    fieldTransformer?: (
+      value: Record<string, any>,
+      additionalMeta: { lang: string }
+    ) => string;
+    useCTA?: boolean;
+    ctaLabel?: string;
+    onCTAClick?: (value: any) => void;
+    hideIfFieldsPresent?: string[];
+    getIcon?: (value: Record<string, any>) => () => JSX.Element;
+    getLabel?: (value: Record<string, any>) => string;
+  }
+> = {
+  [ItineraryDescriptorsTypes.TOTAL_DURATION]: {
+    icon: descriptorIcons.TOTAL_DURATION,
+    fieldIdentifier: ['duration'],
+    fieldTransformer: ({ duration }) => {
+      const { hours, minutes } = duration;
+      return `${hours}h ${minutes ? `${minutes}min` : ''}`;
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
+  },
+  [ItineraryDescriptorsTypes.FREQUENCY]: {
+    icon: descriptorIcons.FREQUENCY,
+    fieldIdentifier: ['frequency'],
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.FREQUENCY,
+  },
+  [ItineraryDescriptorsTypes.FIRST_DEPARTURE_TIME]: {
+    icon: descriptorIcons.FIRST_DEPARTURE,
+    fieldIdentifier: ['firstDepartureTime'],
+    hideIfFieldsPresent: ['firstDepartureStop'],
+    fieldTransformer: ({ firstDepartureTime }, { lang }) => {
+      return getHumanReadableTime({
+        formattedTime: firstDepartureTime,
+        lang,
+      });
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE_TIME,
+  },
+  [ItineraryDescriptorsTypes.LAST_DEPARTURE_TIME]: {
+    icon: descriptorIcons.LAST_DEPARTURE,
+    fieldIdentifier: ['lastDepartureTime'],
+    hideIfFieldsPresent: ['lastDepartureStop'],
+    fieldTransformer: ({ lastDepartureTime }, { lang }) => {
+      return getHumanReadableTime({
+        formattedTime: lastDepartureTime,
+        lang,
+      });
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE_TIME,
+  },
+  [ItineraryDescriptorsTypes.FOOD_AND_DRINKS]: {
+    icon: descriptorIcons.FOOD_AND_DRINKS,
+    fieldIdentifier: ['menuImageLink'],
+    useCTA: true,
+    ctaLabel: 'View Menu',
+    onCTAClick: (url: string) => {
+      window.open(url);
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.FOOD_AND_DRINKS,
+  },
+  [ItineraryDescriptorsTypes.MODE_OF_TRANSPORT]: {
+    fieldIdentifier: ['modeOfTravel'],
+    getIcon: ({ modeOfTravel }) => {
+      return dynamic(
+        motIcons[modeOfTravel as ModeOfTravelOptions]
+      ) as () => JSX.Element;
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
+  },
+  [ItineraryDescriptorsTypes.FIRST_DEPARTURE]: {
+    icon: descriptorIcons.FIRST_DEPARTURE,
+    fieldIdentifier: ['firstDepartureStop', 'firstDepartureTime'],
+    fieldTransformer: (
+      { firstDepartureStop, firstDepartureTime },
+      { lang }
+    ) => {
+      return `${firstDepartureStop}\nat ${getHumanReadableTime({
+        formattedTime: firstDepartureTime,
+        lang,
+      })}`;
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE,
+  },
+  [ItineraryDescriptorsTypes.LAST_DEPARTURE]: {
+    icon: descriptorIcons.LAST_DEPARTURE,
+    fieldIdentifier: ['lastDepartureStop', 'lastDepartureTime'],
+    fieldTransformer: ({ lastDepartureStop, lastDepartureTime }, { lang }) => {
+      return `${lastDepartureStop}\nat ${getHumanReadableTime({
+        formattedTime: lastDepartureTime,
+        lang,
+      })}`;
+    },
+    getLabel: () => strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE,
+  },
+};
+
+export const motIcons: Record<ModeOfTravelOptions, () => Promise<any>> = {
+  [ModeOfTravelOptions.BOAT]: () => import('assets/boat'),
+  [ModeOfTravelOptions.BUS_COACH]: () => import('assets/bus'),
+  [ModeOfTravelOptions.CAR]: () => import('assets/car'),
+  [ModeOfTravelOptions.FERRY]: () => import('assets/ferry'),
+  [ModeOfTravelOptions.MINIBUS]: () => import('assets/minibus'),
+  [ModeOfTravelOptions.MINIVAN]: () => import('assets/minivan'),
+  [ModeOfTravelOptions.SHIP]: () => import('assets/ship'),
+  [ModeOfTravelOptions.SPEEDBOAT]: () => import('assets/speedboat'),
+  [ModeOfTravelOptions.SUV]: () => import('assets/suv'),
+  [ModeOfTravelOptions.TRAIN]: () => import('assets/motTrain'),
+  [ModeOfTravelOptions.YACHT]: () => import('assets/yacht'),
+};
+
+export const nearbyThingsIcon: Record<string, () => Promise<any>> = {
+  [SUB_TYPES.POI]: () => import('assets/cityTours'),
+  [SUB_TYPES.LANDMARK]: () => import('assets/landmarks'),
+  [SUB_TYPES.SHOPPING_CENTER]: () => import('assets/shopping'),
+  [SUB_TYPES.SUBSECTION_OF_POI]: () => import('assets/cityTours'),
+  [SUB_TYPES.NEIGHBOURHOOD_AREA]: () => import('assets/neighbourhood'),
+  [SUB_TYPES.HOHO_BUS_STOP]: () => import('assets/stop'),
+  [SUB_TYPES.OTHERS]: () => import('assets/locationPin'),
+};

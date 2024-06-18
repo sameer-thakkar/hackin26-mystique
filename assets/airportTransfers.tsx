@@ -1,3 +1,5 @@
+import { SVGProps } from 'react';
+
 export const CircleSVG = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -149,13 +151,14 @@ export const BoltSVG = () => (
   </svg>
 );
 
-export const TailedArrowSVG = () => (
+export const TailedArrowSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
     height="14"
     viewBox="0 0 14 14"
     fill="none"
+    {...props}
   >
     <path
       d="M2.625 7L11.375 7"

@@ -1128,5 +1128,46 @@ const pl = {
     TO: 'DO',
     LAST_ENTRY: 'Ostatni wstęp',
   },
+  NEXT: 'Następne',
+  PREVIOUS: 'Poprzednie',
+  ITINERARY: {
+    TAB: 'Plan wycieczki',
+    HEADING: 'Twoja wycieczka',
+    VIEW_ITINERARY: 'Wyświetl plan podróży',
+    PASSES_BY_SECTION_HEADING: 'Widok na:',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Główne punkty',
+      NEARBY_THINGS_TO_DO: 'W okolicy',
+      THINGS_TO_DO: 'Atrakcje',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'START POINT',
+        END: 'END POINT',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: 'Dostępne punkty startowe ({0})',
+        END: 'Dostępne punkty końcowe ({0})',
+      },
+    },
+    GET_DIRECTION: 'Dojazd',
+    DESCRIPTORS: {
+      DURATION: '{0} min',
+      ATTRACTIONS_COUNT: 'Atrakcje: {0}',
+      ACTIVITIES_COUNT: 'Aktywności: {0}',
+      TOTAL_DURATION: 'Całkowity czas trwania',
+      FREQUENCY: 'Częstotliwość',
+      FIRST_DEPARTURE: 'Pierwszy kurs',
+      LAST_DEPARTURE: 'Ostatni kurs',
+      FIRST_DEPARTURE_TIME: 'Pierwszy kurs',
+      LAST_DEPARTURE_TIME: 'Ostatni kurs',
+      MODE_OF_TRANSPORT: 'Rodzaj transferu',
+      FOOD_AND_DRINKS: 'Jedzenie i napoje',
+    },
+    WALK_DURATION: '{0} walk',
+    MORE: '{0} więcej',
+    TIMELINE_VIEW: 'Widok osi czasu',
+    MAP_VIEW: 'Widok mapy',
+  },
 };
 export default pl;

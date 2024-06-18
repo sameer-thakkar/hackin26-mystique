@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
+import { ButtonContainer as PopupCloseButtonContainer } from 'components/Product/components/Popup/CloseButton/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import { CarouselContainer } from 'UI/MediaCarousel/styles';
 import { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { StlyedSplit } from 'UI/Split';
 import { pxToRem } from 'utils/cssUtils';
@@ -191,41 +193,49 @@ export const Container = styled.div<{
   margin: auto;
   width: 100%;
   position: relative;
+
   ${({ isV3Design, indexPosition }) =>
     isV3Design &&
-    `
-    border-top: 1px solid ${COLORS.GRAY.G4A};
-    background-color: ${COLORS.GRAY.G8};
-    min-height: 400px;
-  
-  .indicator-triangle::before {
-    border-color: transparent transparent ${COLORS.GRAY.G4A};
-    border-width: 12px;
-    border-style: solid;content: "";
-    position: absolute;
-    top: -24px;
-    // use indexPosition to find the position of card in overall list and % 4 to find the order in a single row
-    // and use this info to find a perfect fir for arrow from left
-    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
-  }
+    css`
+      border-top: 1px solid ${COLORS.GRAY.G4A};
+      background-color: ${COLORS.GRAY.G8};
+      min-height: 400px;
 
-  .indicator-triangle::after {
-    border-color: transparent transparent ${COLORS.GRAY.G8};
-    border-width: 12px;
-    border-style: solid;
-    content: "";
-    position: absolute;
-    top: -22px;
-    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
-    transform: translateY(0px);
-  }
-  `}
+      .indicator-triangle::before {
+        border-color: transparent transparent ${COLORS.GRAY.G4A};
+        border-width: 12px;
+        border-style: solid;
+        content: '';
+        position: absolute;
+        top: -24px;
+        // use indexPosition to find the position of card in overall list and % 4 to find the order in a single row
+        // and use this info to find a perfect fir for arrow from left
+        left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
+      }
+
+      .indicator-triangle::after {
+        border-color: transparent transparent ${COLORS.GRAY.G8};
+        border-width: 12px;
+        border-style: solid;
+        content: '';
+        position: absolute;
+        top: -22px;
+        left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
+        transform: translateY(0px);
+      }
+    `}
 
   ${({ isSmallComboCard }) =>
     isSmallComboCard &&
     css`
       margin: 0;
     `}
+`;
+
+export const CloseButtonContainer = styled.div`
+  ${PopupCloseButtonContainer} {
+    z-index: 100;
+  }
 `;
 
 export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
@@ -241,6 +251,10 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
     modified: {
       width: 460,
       height: 344,
+    },
+    withItinerary: {
+      width: 288,
+      height: 180,
     },
   },
 };
@@ -360,6 +374,7 @@ export const ProductBody = styled.div<{
   defaultOpen?: boolean;
   collapsed?: boolean;
   $forceMobile?: boolean;
+  $isPopup?: boolean;
 }>`
   grid-area: body;
   display: grid;
@@ -382,6 +397,11 @@ export const ProductBody = styled.div<{
         overflow: hidden;
       `
         : ''}
+    ${({ $isPopup }) =>
+      $isPopup &&
+      css`
+        overflow: initial;
+      `}   
     ul {
       margin: 0;
       padding: 0;
@@ -467,6 +487,7 @@ export const CTAContainer = styled.div<{
   display: grid;
   grid-gap: 16px;
   align-content: start;
+  z-index: 9;
   ${({ $forceMobile }) => $forceMobile && 'display: contents;'}
   @media (max-width: 768px) {
     display: contents;
@@ -589,6 +610,7 @@ interface IStyledProductCard {
   $isDrawer?: boolean;
   $hasDiscount?: boolean;
   $isClicked?: boolean;
+  $hasItineraryData?: boolean;
   $forceMobile?: boolean;
   forcedMobilePopup?: boolean;
 }
@@ -799,6 +821,10 @@ const modifiedProductCardStyles = css`
 
   ${ProductBody} {
     align-self: stretch;
+
+    .tour-description {
+      padding-bottom: 0;
+    }
   }
 `;
 
@@ -1012,6 +1038,28 @@ const modifiedProductCardMwebCss = css<{
   }
 `;
 
+export const itineraryStyles = css`
+  .card-img {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    ${CarouselContainer} {
+      height: 11.25rem;
+      width: 18rem;
+
+      .swiper-slide {
+        img {
+          height: 11.25rem;
+          min-height: 11.25rem;
+          max-height: 11.25rem;
+          aspect-ratio: 16/10;
+        }
+      }
+    }
+  }
+`;
+
 export const StyledProductCard = styled.div<IStyledProductCard>`
   ${({ collapsed, defaultOpen, isMobile, $isPopup }) =>
     collapsed && !defaultOpen && !isMobile && !$isPopup
@@ -1130,6 +1178,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }}
 
   @media (min-width: 768px) {
+    ${({ $hasItineraryData }) => $hasItineraryData && itineraryStyles}
     ${TourTags} {
       margin-top: 0;
     }
@@ -2933,7 +2982,7 @@ export const PopupContainer = styled.div`
 
 export const PopupPricingUnit = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   bottom: 0;
 
   ${CTAContainer} {

@@ -23,7 +23,7 @@ const ReviewSection = ({
 
   return (
     <>
-      <StyledReviewSectionTitle id="review-section-title">
+      <StyledReviewSectionTitle data-review-section-title="true">
         {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
       </StyledReviewSectionTitle>
       <StyledReviewSectionContainer>

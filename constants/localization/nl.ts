@@ -1137,5 +1137,49 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     SUB_HEADING: 'Met dit filmpje maak je de perfecte keuze!',
     WATCH_VIDEO: 'Bekijk video',
   },
+  NEXT: 'Volgende',
+  PREVIOUS: 'Vorige',
+  ITINERARY: {
+    TAB: 'Reisplan',
+    HEADING: 'Je belevenis',
+    VIEW_ITINERARY: 'Bekijk route',
+    PASSES_BY_SECTION_HEADING: 'Komt langs',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Hoogtepunten',
+      NEARBY_THINGS_TO_DO: 'Ervaringen in de buurt',
+      THINGS_TO_DO: 'Ervaringen',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'STARTPUNT',
+        END: 'EINDPUNT',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} startpunten beschikbaar',
+        END: '{0} eindpunten beschikbaar',
+      },
+    },
+    GET_DIRECTION: 'Cómo llegar',
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} uur {1} minuten',
+        WITHOUT_HOURS: '{0} minuten',
+      },
+      ATTRACTIONS_COUNT: '{0} bezienswaardigheden',
+      ACTIVITIES_COUNT: '{0} activiteiten',
+      TOTAL_DURATION: 'Totale duur',
+      FREQUENCY: 'Frequentie',
+      FIRST_DEPARTURE: 'Eerste vertrek',
+      LAST_DEPARTURE: 'Laatste vertrek',
+      FIRST_DEPARTURE_TIME: 'Tijd eerste vertrek',
+      LAST_DEPARTURE_TIME: 'Tijd laatste vertrek',
+      MODE_OF_TRANSPORT: 'Vervoermiddel',
+      FOOD_AND_DRINKS: 'Eten en drinken',
+    },
+    WALK_DURATION: '{0} lopen',
+    MORE: '{0} meer',
+    TIMELINE_VIEW: 'Tijdlijn',
+    MAP_VIEW: 'Kaart',
+  },
 };
 export default nl;

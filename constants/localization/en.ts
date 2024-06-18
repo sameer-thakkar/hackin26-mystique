@@ -1242,6 +1242,50 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SUB_HEADING: 'Watch this video to make the perfect choice!',
     WATCH_VIDEO: 'Watch Video',
   },
+  NEXT: 'Next',
+  PREVIOUS: 'Previous',
+  ITINERARY: {
+    TAB: 'Itinerary',
+    HEADING: 'Your experience',
+    VIEW_ITINERARY: 'View Itinerary',
+    PASSES_BY_SECTION_HEADING: 'Passes By',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Highlights',
+      NEARBY_THINGS_TO_DO: 'Nearby things to do',
+      THINGS_TO_DO: 'Things to do',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'START POINT',
+        END: 'END POINT',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} starting points available',
+        END: '{0} ending points available',
+      },
+    },
+    GET_DIRECTION: 'Get direction',
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} hrs {1} mins',
+        WITHOUT_HOURS: '{0} mins',
+      },
+      ATTRACTIONS_COUNT: '{0} attractions',
+      ACTIVITIES_COUNT: '{0} activities',
+      TOTAL_DURATION: 'TOTAL DURATION',
+      FREQUENCY: 'FREQUENCY',
+      FIRST_DEPARTURE: 'FIRST DEPARTURE',
+      LAST_DEPARTURE: 'LAST DEPARTURE',
+      FIRST_DEPARTURE_TIME: 'FIRST DEPARTURE TIME',
+      LAST_DEPARTURE_TIME: 'LAST DEPARTURE TIME',
+      MODE_OF_TRANSPORT: 'MODE OF TRANSFER',
+      FOOD_AND_DRINKS: 'FOOD & DRINKS',
+    },
+    WALK_DURATION: '{0} walk',
+    MORE: '{0} more',
+    TIMELINE_VIEW: 'Timeline View',
+    MAP_VIEW: 'Map View',
+  },
 };
 
 export default en;

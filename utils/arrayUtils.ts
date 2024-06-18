@@ -48,3 +48,6 @@ export const arrayMedian = (arr: Array<any>) => {
   if (arr.length % 2) return arr[half];
   return (arr[half - 1] + arr[half]) / 2.0;
 };
+
+export const isSubsetArray = (parentArray: any[], childArray: any[]) =>
+  childArray.every((element) => parentArray.includes(element));

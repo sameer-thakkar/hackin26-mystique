@@ -4,6 +4,8 @@ import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import type { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { MBContext } from 'contexts/MBContext';
@@ -13,7 +15,9 @@ import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
+import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
@@ -170,6 +174,7 @@ const PopulateProducts: any = (props: any) => {
     showVideoBanner = false,
     curatedBannerVideoSrc,
     isRankingExperimentResolving = false,
+    showItineraries = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -183,6 +188,7 @@ const PopulateProducts: any = (props: any) => {
   const [showEarliestAvailability, setShowEarliestAvailability] =
     useState(false);
   const router = useRouter();
+  const { isBot } = useRecoilValue(appAtom);
 
   const bannerImage = bannerImages?.[0];
   const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
@@ -483,7 +489,31 @@ const PopulateProducts: any = (props: any) => {
       primarySubCategory,
       reviewsDetails,
       topReviews,
+      experienceItineraryIds = [],
     } = scorpioData[tgid];
+
+    const { itineraryData = {} } = scorpioData;
+    const { itineraries } = itineraryData;
+
+    const itineraryDataMap: Record<string, Itinerary> = showItineraries
+      ? itineraries?.reduce(
+          (prev: Record<string, Itinerary>, curr: Itinerary) => {
+            prev[curr.id] = curr;
+            return prev;
+          },
+          {}
+        )
+      : {};
+
+    const tgidItineraryData = showItineraries
+      ? experienceItineraryIds.reduce((acc: Array<Itinerary>, id: string) => {
+          const itinerary = itineraryDataMap[id];
+          if (itinerary && isItineraryValid(itinerary)) {
+            acc.push(itinerary);
+          }
+          return acc;
+        }, [] as Array<Itinerary>)
+      : [];
 
     const childProps = {
       tgid,
@@ -545,6 +575,8 @@ const PopulateProducts: any = (props: any) => {
       hideHeading,
       topReviews,
       showPopup,
+      tgidItineraryData,
+      isBot,
     };
 
     return isSmallComboCard ? (

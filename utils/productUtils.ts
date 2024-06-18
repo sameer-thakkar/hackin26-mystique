@@ -33,6 +33,7 @@ import { strings } from 'const/strings';
 import StarEmptyNew from 'assets/starEmptyNew';
 import StarFullNew from 'assets/starFullNew';
 import StarHalfNew from 'assets/starHalfNew';
+import { fetchExperienceItineraries } from './apiUtils';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   let tabs: any[] = [];
@@ -771,7 +772,7 @@ export const getProductCardDestination = ({
   return { destinationUrl, showPageExists };
 };
 
-export const getScorpioData = ({
+export const getScorpioData = async ({
   finalTours,
   currency,
   language,
@@ -786,6 +787,7 @@ export const getScorpioData = ({
 }) => {
   let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
   let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
+  const itineraryIds = new Set<number>();
   const scorpioData = finalTours?.reduce(
     (acc: Record<string, any>, tour: any) => {
       const {
@@ -818,7 +820,10 @@ export const getScorpioData = ({
         ratingCount,
         reviewsDetails,
         topReviews,
+        experienceItineraryIds,
       } = tour ?? {};
+
+      experienceItineraryIds?.forEach((id: number) => itineraryIds.add(id));
 
       minPrice = Math.min(listingPrice?.finalPrice || Infinity, minPrice);
       bestDiscount = Math.max(listingPrice?.bestDiscount || 0, bestDiscount);
@@ -869,6 +874,7 @@ export const getScorpioData = ({
       const finalListingPrice = variantListingPrice
         ? variantListingPrice
         : listingPrice;
+
       return {
         ...acc,
         [id]: {
@@ -902,6 +908,7 @@ export const getScorpioData = ({
           ratingCount,
           reviewsDetails,
           topReviews,
+          experienceItineraryIds,
         },
       };
     },
@@ -909,8 +916,16 @@ export const getScorpioData = ({
   );
   if (minPrice == Infinity) minPrice = 0;
 
+  const itineraryData = itineraryIds.size
+    ? await fetchExperienceItineraries({
+        tgids: Array.from(itineraryIds),
+        language,
+      })
+    : {};
+
   return {
     ...scorpioData,
+    itineraryData,
     minPrice,
     bestDiscount,
   };

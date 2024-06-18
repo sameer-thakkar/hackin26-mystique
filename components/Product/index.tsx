@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
+import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
+import EntryPoint from 'components/common/Itinerary/EntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
@@ -25,6 +28,7 @@ import SpecialGuidedTourSummary from 'components/Product/components/SpecialGuide
 import { TourTitle } from 'components/Product/components/TourTitle';
 import {
   CategoryAndRatingContainer,
+  CloseButtonContainer,
   Container,
   CTABlock,
   CTAContainer,
@@ -70,6 +74,7 @@ import {
   getHostName,
   isF1SportsExperiment,
 } from 'utils/helper';
+import { isItineraryValid } from 'utils/itinerary';
 import {
   checkForBooster,
   extractCancellationPolicyFromHighlights,
@@ -145,6 +150,9 @@ const Popup = dynamic(
     /* webpackChunkName: "PopupContainer" */ 'components/Product/components/Popup'
   )
 );
+const Itinerary = dynamic(
+  import(/* webpackChunkName: "Itinerary" */ 'components/common/Itinerary')
+);
 
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
@@ -214,6 +222,8 @@ const Product = (props: any) => {
     showNewCard = false,
     forceMobile = false,
     showThumbnailInBanner = false,
+    tgidItineraryData,
+    isBot = false,
   } = props;
 
   const {
@@ -227,6 +237,12 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const isMobile = forceMobile || originalIsMobile;
+
+  const hasItineraryData =
+    !!tgidItineraryData &&
+    tgidItineraryData.findIndex((itinerary: TItinerary) =>
+      isItineraryValid(itinerary)
+    ) !== -1;
 
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -242,11 +258,14 @@ const Product = (props: any) => {
   const [boosterType, setBoosterType] = useState<
     keyof typeof BoosterType | null
   >(null);
-  const [currentTabActiveIndexForPopup, setCurrentTabActiveIndexForPopup] =
-    useState({ index: 0, isForcedChange: false });
+  const [
+    currentTabActiveIndexForPopup,
+    setCurrentTabActiveIndexForPopupForPopup,
+  ] = useState({
+    index: 0,
+    isForcedChange: false,
+  });
   const [isUnScrolled, setIsUnScrolled] = useState(true);
-  const [tabContentTopOffsetsForPopup, setTabContentTopOffsetsForPopup] =
-    useState<number[] | null>(null);
   const [popupScrollTracker, setPopupScrollTracker] = useState({
     25: false,
     50: false,
@@ -692,8 +711,8 @@ const Product = (props: any) => {
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
       if (showPopup && !originalIsMobile) {
-        popupController.current?.open();
         setIsUnScrolled(true);
+        popupController.current?.open(activeTabIndex);
       } else {
         addToAside({
           width: originalIsMobile ? '100vw' : '40rem',
@@ -725,10 +744,9 @@ const Product = (props: any) => {
       }
     } else {
       if (showPopup) {
-        popupController.current?.open();
         setIsUnScrolled(true);
+        popupController.current?.open(activeTabIndex);
         trackedToggleContent(false);
-        popupScrollHandler(0, false, activeTabIndex);
       } else {
         trackedToggleContent(isContentOpen);
         toggleContentOpen(!isContentOpen);
@@ -780,10 +798,9 @@ const Product = (props: any) => {
     const keyPressedOnReadMore = (event: any) => {
       if (event.keyCode == 13 && !isMobile) {
         if (showPopup) {
-          popupController.current?.open();
           setIsUnScrolled(true);
+          popupController.current?.open(activeTabIndex);
           trackedToggleContent(false);
-          popupScrollHandler(0, false, activeTabIndex);
         } else {
           toggleContentOpen(!isContentOpen);
           trackedToggleContent(isContentOpen);
@@ -906,8 +923,8 @@ const Product = (props: any) => {
         trackedToggleContent(false);
 
         if (showPopup) {
-          popupController.current?.open();
           setIsUnScrolled(true);
+          popupController.current?.open();
         } else {
           addToAside({
             width: '540px',
@@ -934,6 +951,24 @@ const Product = (props: any) => {
     />
   );
 
+  const getHighlightSplit = () => {
+    const inclusionHeading = finalHighlights.filter(
+      ({ type }: { type: string }) => type === 'heading6'
+    )[1];
+    const inclusionHeadingIndex = finalHighlights.findIndex(
+      (element: any) => element === inclusionHeading
+    );
+    const highlightsRichText = finalHighlights.slice(0, inclusionHeadingIndex);
+    const everyRichTextExceptHighlights = finalHighlights.slice(
+      inclusionHeadingIndex
+    );
+
+    return { highlightsRichText, everyRichTextExceptHighlights };
+  };
+
+  const { highlightsRichText, everyRichTextExceptHighlights } =
+    getHighlightSplit();
+
   const croppingExcludedSubCats = [
     SUBCATEGORY_IDS['Combo'],
     SUBCATEGORY_IDS['City Cards'],
@@ -953,134 +988,187 @@ const Product = (props: any) => {
     ) &&
     !croppingExcludedSubCats.includes(String(primarySubCategory?.id));
 
-  const popupScrollHandler = debounce(
-    (
-      scrollTop: number = 0,
-      startWithReviews: boolean = false,
-      startWithIndex: number = -1
-    ) => {
-      if (!popupContainerRef.current) return;
-      if (currentTabActiveIndexForPopup.isForcedChange) {
-        setCurrentTabActiveIndexForPopup({
-          index: currentTabActiveIndexForPopup.index,
-          isForcedChange: false,
-        });
-        return;
-      }
-
-      const hasReviewSection = document.body.querySelector(
-        '#review-section-title'
-      );
-
-      let offsets: number[] = [];
-      if (!tabContentTopOffsetsForPopup) {
-        const headings =
-          popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
-            '.tour-description h6'
-          );
-        if (!headings) return;
-        const tourTags = popupContainerRef.current.querySelector('.tour-tags');
-        const imageContainerHeight =
-          popupContainerRef.current.querySelector('.card-img')?.clientHeight;
-        headings.forEach((element, index) => {
-          let finalOffset = element.offsetTop - 24;
-          if (index === 0 && tourTags) finalOffset -= tourTags.clientHeight;
-          if (imageContainerHeight) finalOffset += imageContainerHeight;
-          offsets.push(finalOffset);
-        });
-        if (reviewsDetails && hasReviewSection)
-          setTabContentTopOffsetsForPopup(offsets);
-      } else {
-        offsets = tabContentTopOffsetsForPopup;
-      }
-
-      const totalSize = popupContainerRef.current.clientHeight;
-      const scrollTrack = popupScrollTracker;
-      const checkScrollTracking = (offset: number) => {
-        Object.keys(scrollTrack)
-          .map((key) => Number(key))
-          .forEach((threshold) => {
-            if (scrollTrack[threshold as keyof typeof scrollTrack]) return;
-
-            if ((offset * 100) / totalSize >= threshold) {
-              trackEvent({
-                eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
-                [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: threshold,
-                [ANALYTICS_PROPERTIES.TGID]: tgid,
-              });
-              scrollTrack[threshold as keyof typeof scrollTrack] = true;
-            }
-          });
-        setPopupScrollTracker(scrollTrack);
-      };
-
-      if (startWithIndex > 0 || (startWithReviews && reviewsDetails)) {
-        const activeIndex =
-          startWithIndex > 0 ? startWithIndex : offsets.length - 1;
-        setCurrentTabActiveIndexForPopup({
-          index: activeIndex,
-          isForcedChange: true,
-        });
-        setIsUnScrolled(false);
-        popupContainerRef.current.scrollTo({
-          top: offsets[activeIndex],
-          behavior: 'smooth',
-        });
-        checkScrollTracking(offsets[activeIndex]);
-      } else {
-        let indexToScrollTo = currentTabActiveIndexForPopup.index,
-          minDifference = 10000;
-        for (let index = 0; index < offsets.length; index++) {
-          const offset = offsets[index];
-          const difference = Math.abs(scrollTop - offset);
-          if (difference < minDifference) {
-            minDifference = difference;
-            indexToScrollTo = index;
-          }
-          if (offset > scrollTop) break;
+  const checkForSections = () => {
+    return new Promise((resolve, reject) => {
+      // Check if all headings are already present
+      const checkHeadings = () => {
+        if (!popupContainerRef.current) {
+          reject();
+          return false;
         }
 
-        setCurrentTabActiveIndexForPopup({
-          index: indexToScrollTo,
-          isForcedChange: false,
+        const headings = Array.from(
+          popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
+            '.tour-description > h6'
+          )
+        );
+
+        headings.forEach((heading, index) => {
+          heading.id = `description-heading-pos-${index}`;
         });
 
-        setIsUnScrolled(scrollTop < 100);
-        checkScrollTracking(scrollTop);
-      }
-    },
-    100
-  );
+        const itinerarySectionLoaded =
+          !!popupContainerRef.current.querySelector(
+            "[data-itinerary-section-title='true']"
+          );
 
-  const popupTopNavigationOnClick = (index: number) => {
-    if (!tabContentTopOffsetsForPopup || !popupContainerRef?.current) return;
+        const reviewSectionLoaded = !!popupContainerRef.current.querySelector(
+          "[data-review-section-title='true']"
+        );
 
-    setCurrentTabActiveIndexForPopup({ index, isForcedChange: true });
-    popupContainerRef.current.scrollTo({
-      top: tabContentTopOffsetsForPopup[index],
-      behavior: 'smooth',
-    });
+        const isItinerarySectionConditionSatisfied = hasItineraryData
+          ? itinerarySectionLoaded
+          : true;
+        const isReviewSectionConditionSatisfied = reviewsDetails?.showRatings
+          ? reviewSectionLoaded
+          : true;
 
-    let heading;
-    if (index === tabs.length)
-      heading = strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews;
-    else heading = tabs[index].heading;
+        if (
+          isItinerarySectionConditionSatisfied &&
+          isReviewSectionConditionSatisfied
+        ) {
+          resolve(true);
+          return true;
+        }
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-      [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
-      ...getCommonEventMetaData(pageMetaData),
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-      }),
+        return false;
+      };
+
+      // If headings are already present, resolve the promise
+      if (checkHeadings()) return;
+
+      // Create a MutationObserver to watch for changes in the DOM
+      const observer = new MutationObserver((_mutations, obs) => {
+        if (checkHeadings()) {
+          obs.disconnect(); // Stop observing once h6 elements are found
+        }
+      });
+
+      // Start observing the tour description container for changes
+      observer.observe(
+        popupContainerRef.current!.querySelector('.tour-description')!,
+        {
+          childList: true,
+        }
+      );
+
+      // Reject the promise once it times out
+      setTimeout(() => {
+        observer.disconnect();
+        reject();
+      }, 10000);
     });
   };
+
+  const scrollToSection = async (index: number) => {
+    if (!popupContainerRef.current) return;
+
+    try {
+      await checkForSections();
+
+      const containerId = `product-card-popup-${tgid}`;
+      const targetHeadingId = `description-heading-pos-${index}`;
+
+      scroller.scrollTo(targetHeadingId, {
+        duration: 300,
+        delay: 0,
+        smooth: true,
+        offset: index === 0 ? -80 : -48,
+        containerId,
+      });
+
+      setCurrentTabActiveIndexForPopupForPopup({
+        index: index,
+        isForcedChange: true,
+      });
+
+      const heading =
+        popupContainerRef.current.querySelector<HTMLHeadingElement>(
+          `#description-heading-pos-${index}`
+        )!.innerText;
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+        [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+        [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+        ...getCommonEventMetaData(pageMetaData),
+        ...getProductCommonProperties({
+          primaryCategory,
+          primaryCollection,
+          primarySubCategory,
+        }),
+      });
+    } catch (error) {
+      return;
+    }
+  };
+
+  const trackPopupScroll = debounce((offset: number) => {
+    if (!popupContainerRef.current) return;
+
+    const totalSize = popupContainerRef.current.clientHeight;
+    const scrollTrack = popupScrollTracker;
+
+    setIsUnScrolled(offset < 100);
+
+    const isElementInScrollableView = (element: HTMLHeadingElement) => {
+      if (!popupContainerRef.current) return false;
+
+      const elementRect = element.getBoundingClientRect();
+      const containerRect = popupContainerRef.current.getBoundingClientRect();
+      return (
+        elementRect.top >= containerRect.top &&
+        elementRect.left >= containerRect.left &&
+        elementRect.bottom <= containerRect.bottom &&
+        elementRect.right <= containerRect.right
+      );
+    };
+
+    let isIndexSet = false;
+
+    Array.from(
+      popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
+        '.tour-description > h6'
+      )
+    ).forEach((heading, index) => {
+      if (isIndexSet) return;
+
+      if (isElementInScrollableView(heading)) {
+        if (index !== currentTabActiveIndexForPopup.index) {
+          setCurrentTabActiveIndexForPopupForPopup({
+            index,
+            isForcedChange: false,
+          });
+        }
+        isIndexSet = true;
+      }
+    });
+
+    if (
+      Array.from(Object.values(popupScrollTracker)).reduce((p, c) => (c &&= p))
+    )
+      return;
+
+    Object.keys(scrollTrack)
+      .map((key) => Number(key))
+      .forEach((threshold) => {
+        if (scrollTrack[threshold as keyof typeof scrollTrack]) return;
+
+        if ((offset * 100) / totalSize >= threshold) {
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
+            [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: threshold,
+            [ANALYTICS_PROPERTIES.TGID]: tgid,
+          });
+          scrollTrack[threshold as keyof typeof scrollTrack] = true;
+        }
+      });
+    setPopupScrollTracker(scrollTrack);
+  }, 100);
+    
   const primarySubCategoryId = (
     scorpioData.primarySubCategory ?? primarySubCategory
   )?.id;
@@ -1095,6 +1183,8 @@ const Product = (props: any) => {
     isPopup = false,
     forcedMobilePopup = false,
   }) => {
+    const showItinerarySection = hasItineraryData && (isPopup || isBot);
+
     const mediaCarouselImageWidth = (isPopup ? originalIsMobile : isMobile)
       ? isBannerCard
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
@@ -1102,7 +1192,9 @@ const Product = (props: any) => {
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.modified.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
       : isModifiedProductCard || (isPopup && !originalIsMobile && isPoiMwebCard)
-      ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
+      ? hasItineraryData
+        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.width
+        : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
       : undefined;
 
     const mediaCarouselImageHeight =
@@ -1112,7 +1204,9 @@ const Product = (props: any) => {
         ? undefined
         : isModifiedProductCard ||
           (isPopup && !originalIsMobile && isPoiMwebCard)
-        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
+        ? hasItineraryData
+          ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.height
+          : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
     return (
@@ -1143,6 +1237,7 @@ const Product = (props: any) => {
           $isPopup={isPopup}
           forcedMobilePopup={forcedMobilePopup}
           ref={productRef}
+          $hasItineraryData={hasItineraryData}
         >
           <Conditional if={boosterTypeIfShown}>
             <Booster
@@ -1223,7 +1318,9 @@ const Product = (props: any) => {
                       ? '16:10'
                       : isModifiedProductCard ||
                         (isPopup && !originalIsMobile && isPoiMwebCard)
-                      ? '3:4'
+                      ? hasItineraryData
+                        ? '16:10'
+                        : '3:4'
                       : '5:6'
                   }
                   backgroundColor={COLORS.GRAY.G7}
@@ -1234,6 +1331,15 @@ const Product = (props: any) => {
                   isMobile={isPopup ? originalIsMobile : isMobile}
                   shouldCrop={shouldCropImage}
                   showOverlay
+                />
+              </Conditional>
+              <Conditional if={hasItineraryData}>
+                <EntryPoint
+                  onClick={async () => {
+                    popupController.current?.open(1);
+                    trackedToggleContent(false);
+                  }}
+                  image={tgidItineraryData?.[0]?.details?.mapPreviewLink}
                 />
               </Conditional>
               <Conditional if={isLoading}>
@@ -1274,7 +1380,14 @@ const Product = (props: any) => {
                             popupController.current?.open();
                             trackedToggleContent(false);
                           }
-                          popupScrollHandler(0, true);
+                          if (!popupContainerRef.current) return;
+
+                          const headings =
+                            popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
+                              '.tour-description > h6'
+                            );
+
+                          scrollToSection(headings.length - 1);
                         }
                       : undefined
                   }
@@ -1585,6 +1698,7 @@ const Product = (props: any) => {
             maxHeight={maxProductBodyHeight}
             ref={collapsibleContentRef}
             $forceMobile={forceMobile}
+            $isPopup={isPopup}
           >
             <Conditional
               if={
@@ -1606,10 +1720,9 @@ const Product = (props: any) => {
                     ? (e) => {
                         e.stopPropagation();
                         if (showPopup) {
-                          popupController.current?.open();
                           setIsUnScrolled(true);
+                          popupController.current?.open(activeTabIndex);
                           trackedToggleContent(false);
-                          popupScrollHandler(0, false, activeTabIndex);
                         } else {
                           toggleContentOpen(!isContentOpen);
                           trackedToggleContent(isContentOpen);
@@ -1625,7 +1738,19 @@ const Product = (props: any) => {
                 </Conditional>
                 <Conditional if={hasHighlights || isPopup}>
                   <PrismicRichText
-                    field={isPopup ? finalHighlights : highlights || []}
+                    field={isPopup ? highlightsRichText : highlights || []}
+                    components={shortCodeSerializer}
+                  />
+                  <Conditional if={showItinerarySection}>
+                    <Itinerary
+                      itineraryData={tgidItineraryData}
+                      lang={currentLanguage}
+                    />
+                  </Conditional>
+                  <PrismicRichText
+                    field={
+                      isPopup ? everyRichTextExceptHighlights : highlights || []
+                    }
                     components={shortCodeSerializer}
                   />
                 </Conditional>
@@ -1651,7 +1776,7 @@ const Product = (props: any) => {
                   if={
                     (originalIsMobile
                       ? expandContent && isPoiMwebCard
-                      : isPopup) && reviewsDetails
+                      : isPopup) && reviewsDetails?.showRatings
                   }
                 >
                   <ReviewSection
@@ -1739,14 +1864,19 @@ const Product = (props: any) => {
         isLoading: isProductCardLoading,
       })}
       <Conditional if={showPopup}>
-        <Popup controller={popupController}>
+        <Popup
+          controller={popupController}
+          tgid={tgid}
+          scrollToSection={scrollToSection}
+        >
           <PopupContainer
             onScroll={(e) => {
               if (!e.currentTarget) return;
-              popupScrollHandler(e.currentTarget.scrollTop);
+              trackPopupScroll(e.currentTarget.scrollTop);
             }}
             ref={popupContainerRef}
             tabIndex={0}
+            id={`product-card-popup-${tgid}`}
           >
             <Conditional if={images}>
               <div className="card-img">
@@ -1764,15 +1894,19 @@ const Product = (props: any) => {
             tabs={tabs}
             currentActiveIndex={currentTabActiveIndexForPopup.index}
             isVisible={!isUnScrolled}
-            onItemClick={popupTopNavigationOnClick}
-            isReviewsSectionPresent={reviewsDetails}
+            onItemClick={scrollToSection}
+            isReviewsSectionPresent={reviewsDetails?.showRatings}
+            isItinerarySectionPresent={hasItineraryData}
           />
-          <CloseButton
-            isHighlighted={isUnScrolled}
-            onClick={() => {
-              popupController.current?.close(true);
-            }}
-          />
+          <CloseButtonContainer>
+            <CloseButton
+              isHighlighted={isUnScrolled}
+              onClick={() => {
+                popupController.current?.close(true);
+              }}
+            />
+          </CloseButtonContainer>
+
           <PopupPricingUnit>
             <CTAContainer pageType={pageType}>
               <SlideUpContainer

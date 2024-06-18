@@ -9,7 +9,7 @@ export const NavigationParent = styled.div<{ $isVisible?: boolean }>`
   border-top-left-radius: 12px;
   width: 100%;
   top: 0;
-  z-index: 1;
+  z-index: 100;
   height: 4rem;
   width: 49.5rem;
   overflow: hidden;
@@ -43,6 +43,20 @@ export const NavigationLink = styled.div<{ $isSelected?: boolean }>`
   transition: all 0.3s;
   background: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  .new-tag {
+    padding: 0.125rem 0.375rem 0.1875rem;
+    border-radius: 0.25rem;
+    background: linear-gradient(180deg, ${COLORS.BRAND.CANDY} 0%, #d8096d 100%);
+    ${expandFontToken(FONTS.MISC_OVERLINE)};
+    color: ${COLORS.BRAND.WHITE};
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: auto;
+  }
 
   ${({ $isSelected }) =>
     $isSelected

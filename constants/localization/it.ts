@@ -1173,5 +1173,49 @@ const it = {
     SUB_HEADING: 'Guarda il video per avere utili consigli!',
     WATCH_VIDEO: 'Guarda il video',
   },
+  NEXT: 'Continua',
+  PREVIOUS: 'Precedente',
+  ITINERARY: {
+    TAB: 'Itinerario',
+    HEADING: 'Itinerario',
+    VIEW_ITINERARY: "Vedi l'itinerario",
+    PASSES_BY_SECTION_HEADING: 'Passa per',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'In primo piano',
+      NEARBY_THINGS_TO_DO: 'Cosa fare nelle vicinanze',
+      THINGS_TO_DO: 'Cosa fare',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'INIZIO',
+        END: 'FINE',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} punti di partenza disponibili',
+        END: '{0} punti di arrivo disponibili',
+      },
+    },
+    GET_DIRECTION: 'Come arrivare',
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} ore {1} minuti',
+        WITHOUT_HOURS: '{0} minuti',
+      },
+      ATTRACTIONS_COUNT: '{0} attrazioni',
+      ACTIVITIES_COUNT: '{0} attività',
+      TOTAL_DURATION: 'Durata',
+      FREQUENCY: 'Frequenza',
+      FIRST_DEPARTURE: 'Prima partenza',
+      LAST_DEPARTURE: 'Ultima partenza',
+      FIRST_DEPARTURE_TIME: 'Orario prima partenza',
+      LAST_DEPARTURE_TIME: 'Orario ultima partenza',
+      MODE_OF_TRANSPORT: 'Mezzo di trasporto',
+      FOOD_AND_DRINKS: 'Cibo e bevande',
+    },
+    WALK_DURATION: '{0} a piedi',
+    MORE: 'e {0} ancora',
+    TIMELINE_VIEW: 'Programma',
+    MAP_VIEW: 'Mappa',
+  },
 };
 export default it;

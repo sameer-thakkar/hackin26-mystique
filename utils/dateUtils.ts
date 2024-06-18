@@ -41,6 +41,13 @@ export const getDurationInDays = (duration: number) =>
 export const getDurationInHours = (duration: number) =>
   Math.round(duration / 60);
 
+export const getDurationInHHMM = (durationInMinutes: number) => {
+  const hours = Math.floor(durationInMinutes / 60);
+  const minutes = durationInMinutes % 60;
+
+  return { hours, minutes };
+};
+
 export const isDateValid = (date: string | null) => dayjs(date).isValid();
 
 export const getPrevDate = (date: string | null) =>

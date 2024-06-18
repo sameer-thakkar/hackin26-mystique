@@ -1234,5 +1234,49 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     SUB_HEADING: 'Pues ve este vídeo para hacerte una idea.',
     WATCH_VIDEO: 'Ver vídeo',
   },
+  NEXT: 'Continuar',
+  PREVIOUS: 'Anterior',
+  ITINERARY: {
+    TAB: 'Itinerario',
+    HEADING: 'Tu experiencia',
+    VIEW_ITINERARY: 'Ver itinerario',
+    PASSES_BY_SECTION_HEADING: 'Pasa por',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Lo más destacado',
+      NEARBY_THINGS_TO_DO: 'Cosas que hacer en los alrededores',
+      THINGS_TO_DO: 'Cosas que hacer',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'LUGAR DE SALIDA',
+        END: 'LUGAR DE LLEGADA',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} puntos de partida disponibles',
+        END: '{0} puntos de llegada disponibles',
+      },
+    },
+    GET_DIRECTION: 'Cómo llegar',
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} h {1} min',
+        WITHOUT_HOURS: '{0} min',
+      },
+      ATTRACTIONS_COUNT: '{0} atracciones',
+      ACTIVITIES_COUNT: '{0} actividades',
+      TOTAL_DURATION: 'Duración',
+      FREQUENCY: 'Frecuencia',
+      FIRST_DEPARTURE: 'Primera salida',
+      LAST_DEPARTURE: 'Última salida',
+      FIRST_DEPARTURE_TIME: 'Primera hora de salida',
+      LAST_DEPARTURE_TIME: 'Última hora de salida',
+      MODE_OF_TRANSPORT: 'Medio de transporte',
+      FOOD_AND_DRINKS: 'Comida y bebida',
+    },
+    WALK_DURATION: '{0} a pie',
+    MORE: '{0} más',
+    TIMELINE_VIEW: 'Vista cronológica',
+    MAP_VIEW: 'Vista de la ruta',
+  },
 };
 export default es;

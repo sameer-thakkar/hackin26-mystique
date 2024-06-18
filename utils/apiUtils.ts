@@ -101,6 +101,7 @@ export enum HeadoutEndpoints {
   Airports,
   CollectionPoi,
   BulkPoiList,
+  BulkExperienceItineraries,
   CollectionTourGroups,
   GeoLocateCity,
 }
@@ -114,7 +115,7 @@ export const getHeadoutApiUrl = ({
   endpoint: HeadoutEndpoints;
   hostname?: THost;
   params?: { [_key: string]: string };
-  id: string | number | null;
+  id?: string | number | null;
 }) => {
   let endpointSlug;
 
@@ -200,6 +201,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.BulkPoiList:
       endpointSlug = `/api/v1/pois`;
       break;
+    case HeadoutEndpoints.BulkExperienceItineraries:
+      endpointSlug = '/api/tours/v1/experience-itineraries/';
+      break;
     case HeadoutEndpoints.CollectionTourGroups:
       endpointSlug = `/api/tours/v1/collection/${id}/tour-groups/`;
       break;
@@ -269,6 +273,12 @@ interface TourListMediaProps extends CommonApiProps {
   tgids: string[] | number[] | (string | number)[];
   resourceType: string;
 }
+
+interface ExperienceItinerariesProps extends CommonApiProps {
+  tgids: string[] | number[] | (string | number)[];
+  sections?: boolean;
+}
+
 interface CollectionReviewsProps extends CommonApiProps {
   collectionId: number;
   limit?: string;
@@ -306,6 +316,36 @@ export const fetchTourGroupMedia = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourGroupMedia]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+export const fetchExperienceItineraries = async ({
+  tgids,
+  sections = true,
+  cookies = {},
+  language = 'EN',
+}: ExperienceItinerariesProps) => {
+  try {
+    const params = {
+      ids: tgids?.join(','),
+      language: language?.toUpperCase(),
+      sections: String(sections),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.BulkExperienceItineraries,
+      params,
+    });
+    const headers = constructHeaders({ cookies });
+
+    const res = await fetch(apiUrl, { headers });
+
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchExperienceItineraries]', error);
     sendLog({
       err: error,
     });

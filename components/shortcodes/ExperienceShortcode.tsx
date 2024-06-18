@@ -23,7 +23,9 @@ export type TExperienceShortcode = {
 
 const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  const [scorpioData, setScorpioData] = useState<Record<string, any> | null>(
+    null
+  );
   const { nakedDomain, lang, host, isDev, isStage } = useContext(MBContext);
   const currencyCode = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
@@ -54,14 +56,17 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   });
   const { data: tourListData } = useSWR(tourGroupEndpoint, {
     fetcher: swrFetcher,
+    onSuccess: async (data) => {
+      const scorpioDataResponse = await getScorpioData({
+        finalTours: data?.tourGroups,
+        currency,
+        language: lang,
+        localizedStrings: strings,
+      });
+      setScorpioData(scorpioDataResponse);
+    },
   });
 
-  const scorpioData = getScorpioData({
-    finalTours: tourListData?.tourGroups,
-    currency,
-    language: lang,
-    localizedStrings: strings,
-  });
   const handleDrawer = (isOpen: boolean) => {
     setIsDrawerOpen(isOpen);
   };

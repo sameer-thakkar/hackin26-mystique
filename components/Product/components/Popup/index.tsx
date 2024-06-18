@@ -1,18 +1,18 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, MORE_DETAILS_SWIPESHEET } from 'const/index';
-import { TController } from './interface';
+import { TPopupProps } from './interface';
 
 const Popup = ({
   controller,
   children,
-}: {
-  controller?: MutableRefObject<TController | undefined>;
-  children: JSX.Element | JSX.Element[];
-}) => {
+  tgid,
+  scrollToSection,
+}: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [startingIndex, setStartingIndex] = useState(-1);
 
   const close = (isButton = false) => {
     setIsVisible(false);
@@ -27,17 +27,28 @@ const Popup = ({
         : MORE_DETAILS_SWIPESHEET.ACTION.OVERLAY_CLICKED,
     });
   };
+  const open = (startingIndex = -1) => {
+    setIsActive(true);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    document.body.style.overflow = 'hidden';
+    if (startingIndex !== -1) setStartingIndex(startingIndex);
+  };
+
+  const onAfterOpen = () => {
+    if (startingIndex !== -1) {
+      setTimeout(() => {
+        scrollToSection?.(startingIndex);
+        setStartingIndex(-1);
+      }, 150);
+    }
+  };
 
   useEffect(() => {
     if (controller)
       controller.current ??= {
-        open: () => {
-          setIsActive(true);
-          setTimeout(() => {
-            setIsVisible(true);
-          }, 100);
-          document.body.style.overflow = 'hidden';
-        },
+        open,
         close,
       };
   }, []);
@@ -72,6 +83,8 @@ const Popup = ({
       shouldReturnFocusAfterClose
       preventScroll={true}
       style={popupStyles}
+      onAfterOpen={onAfterOpen}
+      portalClassName={`popup-portal-${tgid}`}
     >
       {children}
     </Modal>

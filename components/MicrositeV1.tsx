@@ -654,6 +654,14 @@ const MicrositeV1 = (props: any) => {
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
+  const { variant: itineraryRolloutVariant } = useABTesting({
+    experimentId: 'ITINERARY_CONTROLLED_ROLLOUT',
+    customEligibilityCheckFn: () =>
+      !isMobile && taggedSubCategoryName !== 'HOHO',
+  });
+
+  const showItineraries = itineraryRolloutVariant === VARIANTS.TREATMENT;
+
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
     mbType: taggedMbType,
@@ -748,6 +756,7 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isRankingExperimentResolving={isRankingExperimentResolving}
+      showItineraries={showItineraries}
     />
   );
 

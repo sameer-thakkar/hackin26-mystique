@@ -1183,5 +1183,49 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SUB_HEADING: 'Veja este vídeo para fazer a escolha perfeita!',
     WATCH_VIDEO: 'Assistir ao vídeo',
   },
+  NEXT: 'Continuar',
+  PREVIOUS: 'Anterior',
+  ITINERARY: {
+    TAB: 'Itinerário',
+    HEADING: 'Sua experiência',
+    VIEW_ITINERARY: 'Ver itinerário',
+    PASSES_BY_SECTION_HEADING: 'Passa por',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Destaques',
+      NEARBY_THINGS_TO_DO: 'O que fazer nas proximidades',
+      THINGS_TO_DO: 'O que fazer',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'PONTO DE PARTIDA',
+        END: 'PONTO FINAL',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} pontos de partida disponíveis',
+        END: '{0} pontos finais disponíveis',
+      },
+    },
+    GET_DIRECTION: 'Como chegar',
+    DESCRIPTORS: {
+      DURATION: {
+        WITH_HOURS: '{0} h e {1} min',
+        WITHOUT_HOURS: '{0} min',
+      },
+      ATTRACTIONS_COUNT: '{0} atrações',
+      ACTIVITIES_COUNT: '{0} atividades',
+      TOTAL_DURATION: 'Duração total',
+      FREQUENCY: 'Frequência',
+      FIRST_DEPARTURE: 'Primeira partida',
+      LAST_DEPARTURE: 'Última partida',
+      FIRST_DEPARTURE_TIME: 'Hora da primeira partida',
+      LAST_DEPARTURE_TIME: 'Hora da última partida',
+      MODE_OF_TRANSPORT: 'Meio de transporte',
+      FOOD_AND_DRINKS: 'Alimentos e bebidas',
+    },
+    WALK_DURATION: '{0} a pé',
+    MORE: 'mais {0}',
+    TIMELINE_VIEW: 'Visualizar cronograma',
+    MAP_VIEW: 'Visualizar mapa',
+  },
 };
 export default pt;

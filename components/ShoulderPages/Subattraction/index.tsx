@@ -271,7 +271,9 @@ const SubattractionPage = ({
         bannerHeading={headerText}
         bannerSubText={subHeaderText as string}
         bannerSubTextIcon={
-          subattraction_type === SUBATTRACTION_TYPE.A ? CheckCircle : undefined
+          subattraction_type === SUBATTRACTION_TYPE.A
+            ? () => <CheckCircle />
+            : undefined
         }
         bannerDisclaimerText={subattraction_banner_disclaimer}
         isMobile={isMobile}

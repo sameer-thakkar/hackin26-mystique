@@ -54,7 +54,7 @@ import WalkingTours from 'assets/walkingTours';
 import WaterParks from 'assets/waterParks';
 import WifiAndSimCards from 'assets/wifiAndSimCards';
 import Wineries from 'assets/wineries';
-import YachtTours from 'assets/yachtTours';
+import YachtTours from 'assets/yacht';
 import ZooAndAquarium from 'assets/zooAndAquarium';
 
 export const TABLE_V3_SVG_MAPPING: Record<any, JSX.Element> = {

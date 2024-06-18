@@ -1,0 +1,140 @@
+import { useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
+import type { TItineraryComponentProps } from 'components/common/Itinerary/interface';
+// import ItineraryViewSwitch from 'components/common/Itinerary/ItineraryViewSwitch';
+// import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
+import type { TTabListItemProps } from 'UI/Tabs/interface';
+import { trackEvent } from 'utils/analytics';
+import { getItineraryDescriptorsTypes } from 'utils/itinerary';
+import { appAtom } from 'store/atoms/app';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import ItineraryDescriptorsCarousel from './ItineraryDescriptorsCarousel';
+import { Block, SpaceBlock, StyledItinerarySectionContainer } from './styles';
+
+const TimelineView = dynamic(
+  () => import(/* webpackChunkName: "TimelineView" */ './TimelineView')
+);
+const Tabs = dynamic(() => import(/* webpackChunkName: "Tabs" */ 'UI/Tabs'));
+
+const Itinerary = ({ itineraryData = [], lang }: TItineraryComponentProps) => {
+  const { isBot } = useRecoilValue(appAtom);
+  const [activeTab, setActiveTab] = useState(
+    itineraryData[0]?.id.toString() ?? ''
+  );
+  // const [viewMode, setViewMode] = useState<ItineraryViewMode>(
+  //   ItineraryViewMode.TIMELINE
+  // );
+
+  const tabListItems: TTabListItemProps[] = itineraryData
+    .filter((item) => item)
+    .map(({ id, details: { routeName }, name }) => ({
+      id: id.toString(),
+      label: routeName || name,
+    }));
+  const activeItineraryData = useMemo(() => {
+    return itineraryData
+      .filter((item) => item)
+      .find(({ id }) => id.toString() === activeTab);
+  }, [activeTab]);
+  const itineraryDescriptorTypes = useMemo(() => {
+    if (activeItineraryData)
+      return getItineraryDescriptorsTypes(activeItineraryData);
+
+    return [];
+  }, [activeItineraryData]);
+
+  const itinerariesToRender = (
+    isBot ? itineraryData : [activeItineraryData!]
+  ).filter((itineraryItem) => itineraryItem);
+
+  const handleTabChange = (tab: TTabListItemProps) => {
+    setActiveTab(tab.id);
+    trackItineraryTabChange(tab);
+  };
+
+  // const handleViewChange = (activeView: ItineraryViewMode) => {
+  //   setViewMode(activeView);
+  //   trackItineraryViewModeChange(activeView);
+  // };
+
+  const trackItineraryTabChange = (activeItineraryTab: TTabListItemProps) => {
+    const newTab = itineraryData.find(
+      ({ id }) => id.toString() === activeItineraryTab.id
+    );
+    const tabIndex = tabListItems.indexOf(activeItineraryTab);
+    if (newTab) {
+      const {
+        id,
+        details: { routeName },
+      } = newTab;
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_VARIANT_CLICKED,
+        [ANALYTICS_PROPERTIES.ITINERARY_ID]: id,
+        [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
+        [ANALYTICS_PROPERTIES.RANKING]: tabIndex + 1,
+      });
+    }
+  };
+
+  // const trackItineraryViewModeChange = (activeView: ItineraryViewMode) => {
+  //   trackEvent({
+  //     eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_TOGGLE_CLICKED,
+  //     [ANALYTICS_PROPERTIES.ITINERARY_VIEW]: activeView,
+  //   });
+  // };
+
+  return (
+    <>
+      <h6 data-itinerary-section-title="true">{strings.ITINERARY.HEADING}</h6>
+      <StyledItinerarySectionContainer>
+        <Conditional if={itineraryData?.length > 1}>
+          <Tabs
+            activeTab={activeTab}
+            onChangeTab={handleTabChange}
+            tabListItems={tabListItems}
+          />
+        </Conditional>
+        <Conditional
+          if={
+            activeItineraryData &&
+            !!Object.keys(activeItineraryData.details)?.length &&
+            itineraryDescriptorTypes?.length
+          }
+        >
+          {itinerariesToRender.map((itineraryItem) => (
+            <Block
+              $isVisible={itineraryItem.id === activeItineraryData?.id}
+              key={itineraryItem.id}
+            >
+              <ItineraryDescriptorsCarousel
+                itinerary={itineraryItem}
+                lang={lang}
+              />
+            </Block>
+          ))}
+        </Conditional>
+        <SpaceBlock $gap={'1.5rem'} />
+        {/*<ItineraryViewSwitch*/}
+        {/*  viewMode={viewMode}*/}
+        {/*  onChangeViewMode={handleViewChange}*/}
+        {/*/>*/}
+        {/*<SpaceBlock $gap={'2rem'} />*/}
+      </StyledItinerarySectionContainer>
+      <Conditional if={activeItineraryData}>
+        {itinerariesToRender.map((itineraryItem) => (
+          <Block
+            $isVisible={itineraryItem.id === activeItineraryData?.id}
+            key={itineraryItem.id}
+          >
+            <TimelineView itinerary={itineraryItem} />
+          </Block>
+        ))}
+      </Conditional>
+    </>
+  );
+};
+
+export default Itinerary;

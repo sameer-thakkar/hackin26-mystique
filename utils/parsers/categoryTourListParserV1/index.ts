@@ -328,7 +328,7 @@ const categoryTourListParserV1 = async ({
 
     let scorpioData = {};
     if (!isLookerWebhookCall) {
-      scorpioData = getScorpioData({
+      scorpioData = await getScorpioData({
         finalTours,
         currency,
         language,

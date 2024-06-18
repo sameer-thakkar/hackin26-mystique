@@ -352,6 +352,203 @@ export const userSvg = () => {
   );
 };
 
+export const timerSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2.40002 2.5C2.40002 5.59279 4.90723 8.1 8.00002 8.1C11.0928 8.1 13.6 5.59279 13.6 2.5L12.6 2.5C12.6 5.04051 10.5405 7.1 8.00002 7.1C5.45951 7.1 3.40002 5.04051 3.40002 2.5L2.40002 2.5Z"
+        fill="#444444"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M1 2C1 1.72386 1.22386 1.5 1.5 1.5L14.5 1.5C14.7761 1.5 15 1.72386 15 2C15 2.27614 14.7761 2.5 14.5 2.5L1.5 2.5C1.22386 2.5 1 2.27614 1 2Z"
+        fill="#444444"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2.40002 13.6997C2.40002 13.6996 2.40002 13.6998 2.40002 13.6997C2.40002 10.6069 4.90723 8.1 8.00002 8.1C11.0928 8.1 13.6 10.6066 13.6 13.6994C13.6 13.6993 13.6 13.6995 13.6 13.6994L12.6 13.6997C12.6 13.6996 12.6 13.6998 12.6 13.6997C12.6 11.1592 10.5405 9.09941 8.00002 9.09941C5.45951 9.09941 3.40002 11.1589 3.40002 13.6994C3.40002 13.6993 3.40002 13.6995 3.40002 13.6994L2.40002 13.6997Z"
+        fill="#444444"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M1 14.1997C1 14.4758 1.22386 14.6997 1.5 14.6997L14.5 14.6997C14.7761 14.6997 15 14.4758 15 14.1997C15 13.9236 14.7761 13.6997 14.5 13.6997L1.5 13.6997C1.22386 13.6997 1 13.9236 1 14.1997Z"
+        fill="#444444"
+      />
+    </svg>
+  );
+};
+
+export const busTimeSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="11.75" cy="3.75" r="2.75" stroke="#444444" />
+      <path
+        d="M12 2.5V4H11"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11.5 1L4.5 1C3.39543 1 2.5 1.89543 2.5 3L2.5 13C2.5 13.5523 2.94771 14 3.5 14L12.5 14C13.0523 14 13.5 13.5523 13.5 13L13.5 6"
+        stroke="#444444"
+        strokeLinecap="round"
+      />
+      <path d="M3 9L13.5 9" stroke="#444444" strokeLinecap="round" />
+      <path d="M3 4.5L9 4.5" stroke="#444444" strokeLinecap="round" />
+      <path d="M10 11.5H11.5" stroke="#444444" strokeLinecap="round" />
+      <path d="M4.5 11.5H6" stroke="#444444" strokeLinecap="round" />
+      <path
+        d="M3.34998 13.5H4.84998V14.75C4.84998 15.1642 4.51419 15.5 4.09998 15.5C3.68576 15.5 3.34998 15.1642 3.34998 14.75V13.5Z"
+        fill="#444444"
+      />
+      <path
+        d="M11.5 13.5H13V14.75C13 15.1642 12.6642 15.5 12.25 15.5C11.8358 15.5 11.5 15.1642 11.5 14.75V13.5Z"
+        fill="#444444"
+      />
+    </svg>
+  );
+};
+
+export const calendarSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14 9.5V3.91634C14 3.17996 13.403 2.58301 12.6667 2.58301L3.33333 2.58301C2.59695 2.58301 2 3.17996 2 3.91634L2 13.2497C2 13.9861 2.59695 14.583 3.33333 14.583L10.5 14.583"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.6667 1.25V3.91667"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.33334 1.25V3.91667"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2 6.58301L14 6.58301"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="11.75" cy="11.8506" r="3" stroke="#444444" />
+      <path
+        d="M11.4773 10.4863V12.1227H13.1137"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const foodDrinkSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.5 1.5V5C6.5 6.10457 5.60457 7 4.5 7H4.25M2 1.5L2 5C2 6.10457 2.89543 7 4 7H4.25M4.25 7L4.25 14.6125M4.25 1.5V5"
+        stroke="#444444"
+        strokeLinecap="round"
+      />
+      <path d="M11 7.19336L11 14.5001" stroke="#444444" strokeLinecap="round" />
+      <path
+        d="M9.37399 2.55272C9.66142 1.91216 10.2981 1.5 11.0002 1.5V1.5C11.7023 1.5 12.339 1.91216 12.6264 2.55272L12.7429 2.81229C13.2222 3.88045 13.1965 5.10738 12.6729 6.15454V6.15454C12.5598 6.38092 12.3894 6.57385 12.1788 6.71425L12.0238 6.81763C11.404 7.23084 10.5965 7.23084 9.97666 6.81763L9.82158 6.71425C9.61099 6.57385 9.44067 6.38092 9.32748 6.15454V6.15454C8.8039 5.10738 8.77822 3.88045 9.25752 2.81229L9.37399 2.55272Z"
+        stroke="#444444"
+      />
+    </svg>
+  );
+};
+
+export const carSvg = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.87847 4.40782C3.06544 3.47297 3.88627 2.80005 4.83963 2.80005L11.1604 2.80005C12.1138 2.80005 12.9346 3.47297 13.1216 4.40782L13.6 6.80005L2.40002 6.80005L2.87847 4.40782Z"
+        stroke="#444444"
+      />
+      <path
+        d="M0.800049 8.80005C0.800049 7.69548 1.69548 6.80005 2.80005 6.80005L13.2 6.80005C14.3046 6.80005 15.2 7.69548 15.2 8.80005V12.2C15.2 12.3105 15.1105 12.4 15 12.4L1.00005 12.4C0.889592 12.4 0.800049 12.3105 0.800049 12.2L0.800049 8.80005Z"
+        stroke="#444444"
+      />
+      <path d="M6.5 9.5L9.5 9.5" stroke="#444444" strokeLinecap="round" />
+      <path
+        d="M1 12.5L1 13.535C1 14.1066 1.46337 14.57 2.03496 14.57V14.57C2.60655 14.57 3.06992 14.1066 3.06992 13.535V12.5"
+        stroke="#444444"
+      />
+      <path
+        d="M13 12.5V13.535C13 14.1066 13.4634 14.57 14.035 14.57V14.57C14.6065 14.57 15.0699 14.1066 15.0699 13.535V12.5"
+        stroke="#444444"
+      />
+      <path
+        d="M2.5 6H1"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 6H13.5"
+        stroke="#444444"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.75 8.825C2.51528 8.825 2.325 9.01528 2.325 9.25V10.1C2.325 10.3347 2.51528 10.525 2.75 10.525H4.025C4.49444 10.525 4.875 10.1444 4.875 9.675C4.875 9.20556 4.49444 8.825 4.025 8.825H2.75Z"
+        stroke="#444444"
+        strokeWidth="0.85"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.25 8.825C13.4847 8.825 13.675 9.01528 13.675 9.25V10.1C13.675 10.3347 13.4847 10.525 13.25 10.525H11.975C11.5056 10.525 11.125 10.1444 11.125 9.675C11.125 9.20556 11.5056 8.825 11.975 8.825H13.25Z"
+        stroke="#444444"
+        strokeWidth="0.85"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
 export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
@@ -365,4 +562,10 @@ export const descriptorIcons: Record<any, any> = {
   GUIDED_TOUR: guidedTourSvg,
   EXTENDED_VALIDITY: validitySvg,
   USER: userSvg,
+  TOTAL_DURATION: timerSvg,
+  FREQUENCY: busTimeSvg,
+  FIRST_DEPARTURE: calendarSvg,
+  LAST_DEPARTURE: calendarSvg,
+  FOOD_AND_DRINKS: foodDrinkSvg,
+  MODE_OF_TRANSPORT: carSvg,
 };

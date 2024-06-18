@@ -529,6 +529,14 @@ export const ANALYTICS_EVENTS = {
     FOURTH_PRODUCT_CARD: '4th Product Card',
   },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+  ITINERARY: {
+    TIMELINE_VIEWED: 'Timeline Viewed',
+    STOP_CLICKED: 'Stop Clicked',
+    SUB_STOP_CLICKED: 'Sub Stop Clicked',
+    ITINERARY_VARIANT_CLICKED: 'Itinerary Variant Clicked',
+    ITINERARY_TOGGLE_CLICKED: 'Itinerary Toggle Clicked',
+    MAP_VIEWED: 'Map Viewed',
+},
   AIRPORT_TRANSFERS: {
     SEARCH_FILTER_CLICKED: 'Search Filter Clicked',
     SEARCH_FILTER_APPLIED: 'Search Filter Applied',
@@ -1003,6 +1011,14 @@ export const ANALYTICS_PROPERTIES = {
     DRAWER_TYPE: 'Drawer Type',
   },
   CONTAINER: 'Container',
+  HAS_MAP: 'Has Map',
+  ITINERARY_TYPE: 'Itinerary Type',
+  INFORMATION_HEADING: 'Information Heading',
+  ITINERARY_ID: 'Itinerary ID',
+  ITINERARY_NAME: 'Itinerary Name',
+  ITINERARY_VIEW: 'Itinerary View',
+  STOP_NAME: 'Stop Name',
+  STOP_NUMBER: 'Stop Number',
 };
 
 export const PAGE_TYPES = {
