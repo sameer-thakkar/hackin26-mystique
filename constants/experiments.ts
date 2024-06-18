@@ -111,7 +111,7 @@ export const EXPERIMENTS: Record<string, any> = {
   [SUBATTRACTIONS_EXPERIMENT]: new Experiment(
     SUBATTRACTIONS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [VIDEO_THUMBNAIL_IN_BANNER]: new Experiment(
     VIDEO_THUMBNAIL_IN_BANNER,
