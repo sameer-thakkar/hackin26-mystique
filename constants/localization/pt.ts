@@ -1056,6 +1056,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PICKUP_TIME: 'Hora de partida',
     SELECT_TIME: 'Escolher hora',
     GUESTS: 'Hóspedes',
+    GUEST: 'Hóspede',
     ADULT_CHILD: 'Adulto(s)/Criança(s)',
     ADD_GUESTS: 'Somar hóspedes',
     EXPLORE_TRANSFERS: 'Traslados e outras experiências',

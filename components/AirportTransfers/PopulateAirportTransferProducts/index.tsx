@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { PrivateAirportTranferProductCard } from 'components/AirportTransfers/PrivateAirportTransferProductCard/index';
 import { TransferTypeTabs } from 'components/AirportTransfers/TransferTypeTabs';
 import Conditional from 'components/common/Conditional';
+import { ConditionallyLazyComponent } from 'components/common/LazyComponent';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { debounce } from 'utils/gen';
@@ -11,6 +12,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import en from 'const/localization/en';
 import { strings } from 'const/strings';
 import { TScorpioData, TTour } from '../interface';
+import { TPrivateAirportTransferProductCardProps } from '../PrivateAirportTransferProductCard/interface';
 import { TPopulateAirportTransferProductsProps } from './interface';
 import {
   StyledContainer,
@@ -18,6 +20,14 @@ import {
   StyledSectionInfo,
   StyledSectionTitle,
 } from './styles';
+
+const PrivateAirportTranferProductCard =
+  dynamic<TPrivateAirportTransferProductCardProps>(() =>
+    import(
+      /* webpackChunkName: "PrivateAirportTransferProductCard" */
+      'components/AirportTransfers/PrivateAirportTransferProductCard/index'
+    ).then((mod) => mod.PrivateAirportTranferProductCard)
+  );
 
 const TAB_ORDER_MAP = {
   private: ['private', 'shared'],
@@ -208,6 +218,7 @@ export const PopulateAirportTransfersProducts = ({
 
         return (
           <PrivateTransfersSection
+            isFirst={tab === tabOrder[0]}
             key={tab}
             privateTransfersProductsList={privateTransfersProductsList}
             cityCountryString={cityCountryString}
@@ -264,6 +275,7 @@ const PrivateTransfersSection = ({
   scorpioData,
   currentLanguage,
   privateTransfersHeadingRef,
+  isFirst,
 }: {
   privateTransfersProductsList: TTour[];
   cityCountryString: string;
@@ -273,6 +285,7 @@ const PrivateTransfersSection = ({
   scorpioData: TScorpioData[];
   currentLanguage: string;
   privateTransfersHeadingRef: React.RefObject<HTMLDivElement>;
+  isFirst: boolean;
 }) => {
   if (privateTransfersProductsList.length === 0) return null;
 
@@ -291,16 +304,22 @@ const PrivateTransfersSection = ({
 
       <StyledProductCardsContainer>
         {privateTransfersProductsList.map((tour, index) => (
-          <PrivateAirportTranferProductCard
-            index={index}
-            cityCode={cityCode}
-            isMobile={isMobile}
+          <ConditionallyLazyComponent
             key={tour.tgid}
-            tour={tour}
-            uid={uid}
-            scorpioData={scorpioData[tour.tgid]}
-            currentLanguage={currentLanguage}
-          />
+            isLazy={!isFirst}
+            placeholderHeight="13rem"
+          >
+            <PrivateAirportTranferProductCard
+              index={index}
+              cityCode={cityCode}
+              isMobile={isMobile}
+              key={tour.tgid}
+              tour={tour}
+              uid={uid}
+              scorpioData={scorpioData[tour.tgid]}
+              currentLanguage={currentLanguage}
+            />
+          </ConditionallyLazyComponent>
         ))}
       </StyledProductCardsContainer>
     </>

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useMemo, useRef } from 'react';
+import React, { PropsWithChildren, ReactNode, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useOnScreen from 'hooks/useOnScreen';
@@ -57,4 +57,21 @@ export default LazyComponent;
 
 export const WrapInLazyComponent = (children: any) => {
   return <LazyComponent>{children}</LazyComponent>;
+};
+
+export const ConditionallyLazyComponent = ({
+  children,
+  placeholderHeight,
+  isLazy,
+}: {
+  children: ReactNode;
+  placeholderHeight?: string;
+  isLazy: boolean;
+}) => {
+  if (!isLazy) return <>{children}</>;
+  return (
+    <LazyComponent placeHolderHeight={placeholderHeight}>
+      {children}
+    </LazyComponent>
+  );
 };

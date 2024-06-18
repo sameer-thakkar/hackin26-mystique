@@ -1,6 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
+import { ConditionallyLazyComponent } from 'components/common/LazyComponent';
 import { MBContext } from 'contexts/MBContext';
 import { useToursWithEarliestAvailability } from 'hooks/useToursWithEarliestAvailability';
 import { legacyBooleanCheck } from 'utils';
@@ -8,7 +10,7 @@ import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { strings } from 'const/strings';
 import { selectedSearchTabState } from '../HeroSection/state';
 import { PrivateTransferCTACard } from '../PrivateTransferCTACard';
-import { ProductCard } from '../ProductCard';
+import { TProductCardProps } from '../ProductCard/interface';
 import {
   getAirportsList,
   getAirportTGIDsMap,
@@ -24,6 +26,12 @@ import {
   SectionTitle,
 } from './style';
 
+const ProductCard = dynamic<TProductCardProps>(() =>
+  import(
+    /* webpackChunkName: "AirportTransferProductCardNew" */ '../ProductCard'
+  ).then((mod) => mod.ProductCard)
+);
+
 export const AirportTransferProductsSection = ({
   isMobile,
   tgidScorpioDataMap,
@@ -31,6 +39,7 @@ export const AirportTransferProductsSection = ({
   enableEarliestAvailability,
   currency,
   isSubCategoryPage,
+  hasCategoryHeaderMenu,
 }: TAirportTransfersProductSectionProps) => {
   const { primaryCity } = useContext(MBContext);
 
@@ -187,6 +196,7 @@ export const AirportTransferProductsSection = ({
             selectedAirport={selectedAirport}
             setSelectedAirport={onSelectAirport}
             isMobile={isMobile}
+            hasCategoryHeaderMenuOnTop={hasCategoryHeaderMenu}
           />
         </Conditional>
 
@@ -216,13 +226,18 @@ export const AirportTransferProductsSection = ({
                     if (!tour) return null;
 
                     return (
-                      <ProductCard
+                      <ConditionallyLazyComponent
                         key={tgid}
-                        tour={tour}
-                        scorpioData={tgidScorpioDataMap[tgid]}
-                        isMobile={isMobile}
-                        position={totalIndex++ + 1} // pass in the true index
-                      />
+                        placeholderHeight={isMobile ? '31rem' : '13rem'}
+                        isLazy={totalIndex > 1}
+                      >
+                        <ProductCard
+                          tour={tour}
+                          scorpioData={tgidScorpioDataMap[tgid]}
+                          isMobile={isMobile}
+                          position={totalIndex++ + 1} // pass in the true index
+                        />
+                      </ConditionallyLazyComponent>
                     );
                   })}
                 </ProductCardsContainer>

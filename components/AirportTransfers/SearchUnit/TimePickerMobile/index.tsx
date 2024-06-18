@@ -18,7 +18,9 @@ export const ScrollableTimePicker = ({
   const initMinute = initTimeParsed.minute();
   const initAmPmIndex = initHour24 < 12 ? 0 : 1;
 
-  const [centerHourIndex, setCenterHourIndex] = useState(initHour12);
+  const [centerHourIndex, setCenterHourIndex] = useState(
+    isNaN(initHour12) ? 12 : initHour12
+  );
   const [centerMinuteIndex, setCenterMinuteIndex] = useState(
     () => initMinute / 15 // 0, 1, 2, 3 (index)
   );

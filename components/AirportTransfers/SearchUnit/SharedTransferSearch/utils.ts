@@ -4,13 +4,14 @@ import { TTransferDirection } from '../interface';
 import { TSharedAirportTransferSearchFormStep } from '../state';
 
 export const getSharedTransferDrawerTitle = (
-  step: TSharedAirportTransferSearchFormStep
+  step: TSharedAirportTransferSearchFormStep,
+  localisedStrings: typeof strings
 ) => {
   if (step === null) return '';
   return {
-    PICKUP: 'Select pickup location',
-    DROPOFF: 'Select dropoff location',
-    DATE: 'Select pickup date',
+    PICKUP: localisedStrings.AIRPORT_TRANSFER.SELECT_PICKUP,
+    DROPOFF: localisedStrings.AIRPORT_TRANSFER.SELECT_DROPOFF,
+    DATE: localisedStrings.AIRPORT_TRANSFER.SELECT_DATE,
   }[step];
 };
 

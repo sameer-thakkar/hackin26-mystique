@@ -74,11 +74,18 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
-import { AirportTransferProductsSection } from './AirportTransfers/AirportTransferProductsSection';
+import { TAirportTransfersProductSectionProps } from './AirportTransfers/AirportTransferProductsSection/interface';
 import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
+
+const AirportTransferProductsSection =
+  dynamic<TAirportTransfersProductSectionProps>(() =>
+    import(
+      /* webpackChunkName: "AirportTransferProductsSection" */ './AirportTransfers/AirportTransferProductsSection'
+    ).then((m) => m.AirportTransferProductsSection)
+  );
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -1082,6 +1089,7 @@ const MicrositeV1 = (props: any) => {
             enableEarliestAvailability={enableEarliestAvailability}
             currency={currency}
             isSubCategoryPage={isAirportTransfersSubCategory}
+            hasCategoryHeaderMenu={Object.keys(categoryHeaderMenu).length > 0}
           />
         </Conditional>
 

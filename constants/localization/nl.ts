@@ -1023,6 +1023,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     PICKUP_TIME: 'Ophaaltijd',
     SELECT_TIME: 'Tijd kiezen',
     GUESTS: 'Gasten',
+    GUEST: 'Gast',
     ADD_GUESTS: 'Gasten toevoegen',
     ADULT_CHILD: 'Volwassenen/Kinderen',
     EXPLORE_TRANSFERS: 'Vervoer en meer',

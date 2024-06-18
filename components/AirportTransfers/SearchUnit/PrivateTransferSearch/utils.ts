@@ -1,24 +1,34 @@
 import dayjs from 'dayjs';
+import { strings } from 'const/strings';
 import { TIME_FORMAT } from '../constants';
 import { TTransferDirection } from '../interface';
 import { TPrivateAirportTransferSearchFormStep } from '../state';
 
-export const getPaxFieldText = (pax: number) => {
+export const getPaxFieldText = (
+  pax: number,
+  localisedStrings: typeof strings
+) => {
   if (pax === 0) return '';
 
-  return `${pax} pax`;
+  return `${pax} ${
+    pax > 1
+      ? localisedStrings.AIRPORT_TRANSFER.GUESTS
+      : localisedStrings.AIRPORT_TRANSFER.GUEST
+  }`;
 };
+
 export const getPrivateTransferDrawerTitle = (
-  currentStep: TPrivateAirportTransferSearchFormStep
+  currentStep: TPrivateAirportTransferSearchFormStep,
+  localisedStrings: typeof strings
 ) => {
   if (currentStep === null) return null;
 
   return {
-    PICKUP: 'Enter pickup location',
-    DROPOFF: 'Enter dropoff location',
-    DATE: 'Select pickup date',
-    TIME: 'Select pickup time',
-    PAX: 'Select passengers',
+    PICKUP: localisedStrings.AIRPORT_TRANSFER.SELECT_PICKUP,
+    DROPOFF: localisedStrings.AIRPORT_TRANSFER.SELECT_DROPOFF,
+    DATE: localisedStrings.AIRPORT_TRANSFER.SELECT_DATE,
+    TIME: localisedStrings.AIRPORT_TRANSFER.SELECT_TIME,
+    PAX: localisedStrings.AIRPORT_TRANSFER.ADD_GUESTS,
   }[currentStep];
 };
 

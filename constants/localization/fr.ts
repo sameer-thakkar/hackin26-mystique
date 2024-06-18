@@ -1056,6 +1056,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     PICKUP_TIME: 'Heure de départ',
     SELECT_TIME: "Choix d'heure",
     GUESTS: 'Invités',
+    GUEST: 'Invité',
     ADD_GUESTS: 'Ajouter invités',
     ADULT_CHILD: 'Adulte(s)/Enfant(s)',
     EXPLORE_TRANSFERS: 'Parcourir les navettes',

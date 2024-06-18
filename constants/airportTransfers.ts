@@ -119,7 +119,7 @@ export const CITY_AIRPORT_STATION_TGID_MAP: Record<
         stationType: 'BUS_STOP',
         tgids: [21977, 22664],
       },
-      'Siena Central TRAIN_STATION': {
+      'Siena Central Station': {
         stationType: 'TRAIN_STATION',
         tgids: [22078, 22665],
       },

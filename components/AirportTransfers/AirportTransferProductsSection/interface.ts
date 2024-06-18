@@ -7,4 +7,5 @@ export type TAirportTransfersProductSectionProps = {
   isSubCategoryPage: boolean;
   enableEarliestAvailability: boolean;
   currency: string | null;
+  hasCategoryHeaderMenu: boolean;
 };

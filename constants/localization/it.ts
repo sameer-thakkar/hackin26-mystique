@@ -1045,6 +1045,7 @@ const it = {
     PICKUP_TIME: 'Ora prelievo',
     SELECT_TIME: 'Scegli ora',
     GUESTS: 'Ospiti',
+    GUEST: 'Ospite',
     ADD_GUESTS: 'Più ospiti',
     ADULT_CHILD: 'Adulti/Bambini',
     EXPLORE_TRANSFERS: 'Scopri i trasferimenti',

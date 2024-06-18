@@ -19,8 +19,6 @@ const embedGoogleMapsScript = () => {
   document.body.appendChild(script);
 };
 
-embedGoogleMapsScript();
-
 export const useGooglePlacesSearch = () => {
   const { primaryCity } = useContext(MBContext);
 
@@ -73,31 +71,46 @@ const useProductCityBounds = ({
   useEffect(() => {
     if (!cityName || !countryName) return;
 
-    if (!window.google?.maps) return;
-    ``;
+    const loadScriptAndGetBounds = async () => {
+      if (!window.google?.maps && !isScriptLoaded) {
+        embedGoogleMapsScript();
 
-    getGeocode({ address: `${cityName}, ${countryName}` }).then((results) => {
-      const { geometry } = results[0];
-      const { viewport, bounds } = geometry;
-
-      if (bounds) {
-        const extendedBounds = extendBounds(bounds, BOUNDS_PADDING_IN_KM);
-        setBounds(extendedBounds);
-        return;
+        await new Promise((resolve) => {
+          const checkScriptLoaded = setInterval(() => {
+            if (isScriptLoaded) {
+              clearInterval(checkScriptLoaded);
+              resolve(true);
+            }
+          }, 150);
+        });
       }
 
-      const ne = viewport.getNorthEast();
-      const sw = viewport.getSouthWest();
+      if (window.google?.maps) {
+        const results = await getGeocode({
+          address: `${cityName}, ${countryName}`,
+        });
+        const { geometry } = results[0];
+        const { viewport, bounds } = geometry;
 
-      const generatedBounds = new window.google.maps.LatLngBounds(sw, ne);
+        if (bounds) {
+          const extendedBounds = extendBounds(bounds, BOUNDS_PADDING_IN_KM);
+          setBounds(extendedBounds);
+          return;
+        }
 
-      const extendedBounds = extendBounds(
-        generatedBounds,
-        BOUNDS_PADDING_IN_KM
-      );
+        const ne = viewport.getNorthEast();
+        const sw = viewport.getSouthWest();
+        const generatedBounds = new window.google.maps.LatLngBounds(sw, ne);
+        const extendedBounds = extendBounds(
+          generatedBounds,
+          BOUNDS_PADDING_IN_KM
+        );
 
-      setBounds(extendedBounds);
-    });
+        setBounds(extendedBounds);
+      }
+    };
+
+    loadScriptAndGetBounds();
     // isScriptLoaded is a dependency because we want window.google and window.google.maps to be defined
   }, [cityName, countryName, isScriptLoaded]);
 

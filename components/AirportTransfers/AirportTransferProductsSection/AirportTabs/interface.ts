@@ -3,4 +3,5 @@ export type TAirportTabsProps = {
   selectedAirport: string;
   setSelectedAirport: (airport: string) => void;
   isMobile: boolean;
+  hasCategoryHeaderMenuOnTop: boolean;
 };

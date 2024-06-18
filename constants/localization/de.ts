@@ -1046,6 +1046,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     PICKUP_TIME: 'Abholzeit',
     SELECT_TIME: 'Zeit wählen',
     GUESTS: 'Gäste',
+    GUEST: 'Gast',
+
     ADD_GUESTS: 'Anzahl Gäste',
     ADULT_CHILD: 'Erwachsene/Kinder',
     EXPLORE_TRANSFERS: 'Erkunden Sie Transfers und mehr',

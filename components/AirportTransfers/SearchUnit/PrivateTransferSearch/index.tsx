@@ -606,7 +606,7 @@ export const PrivateTransferSearch = ({
           topLabel={strings.AIRPORT_TRANSFER.GUESTS}
           onClick={handlePaxFieldClick}
           isFocused={currentStep === 'PAX'}
-          value={getPaxFieldText(selectedPax)}
+          value={getPaxFieldText(selectedPax, strings)}
           error={paxFieldError}
           className="pvt-pax-field"
         />
@@ -648,7 +648,7 @@ export const PrivateTransferSearch = ({
         }
       >
         <BottomDrawer
-          title={getPrivateTransferDrawerTitle(currentStep) ?? ''}
+          title={getPrivateTransferDrawerTitle(currentStep, strings) ?? ''}
           handleClose={handleDrawerClose}
           height={currentStep === 'DATE' ? '75vh' : '69vh'}
         >

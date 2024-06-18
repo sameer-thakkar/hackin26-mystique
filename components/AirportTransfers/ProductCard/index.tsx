@@ -313,7 +313,7 @@ export const ProductCard = ({
             isMobile ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width : undefined
           }
           imageHeight={PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height}
-          isFirstProduct={false}
+          isFirstProduct={position === 1}
           tgid={String(tour.tgid)}
           isMobile={isMobile}
           showOverlay
@@ -398,20 +398,22 @@ export const ProductCard = ({
         )}
       </PricingAndCTASection>
 
-      <MoreDetailsPopupDesktop
-        popupController={popupController}
-        mbTheme={mbTheme ?? ''}
-        tour={tour}
-        PopupContent={MoreDetailsPopupContent}
-        scorpioData={scorpioData}
-        currentLanguage={lang}
-        isMobile={isMobile}
-        onShowComboPopup={handleShowComboPopup}
-        onCloseComboPopup={handleCloseComboPopup}
-        showComboVariant={showComboVariant}
-        productBookingUrl={productBookingUrl}
-        sendBookNowEvent={sendBookNowEvent}
-      />
+      <Conditional if={!isMobile}>
+        <MoreDetailsPopupDesktop
+          popupController={popupController}
+          mbTheme={mbTheme ?? ''}
+          tour={tour}
+          PopupContent={MoreDetailsPopupContent}
+          scorpioData={scorpioData}
+          currentLanguage={lang}
+          isMobile={isMobile}
+          onShowComboPopup={handleShowComboPopup}
+          onCloseComboPopup={handleCloseComboPopup}
+          showComboVariant={showComboVariant}
+          productBookingUrl={productBookingUrl}
+          sendBookNowEvent={sendBookNowEvent}
+        />
+      </Conditional>
 
       <Conditional
         if={!isMobile && isComboWithMultiVariant && showComboVariant}

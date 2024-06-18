@@ -33,7 +33,9 @@ export const Tab = styled.button<{ isActive: boolean }>`
   }
 `;
 
-export const TabsContainer = styled.div<{}>`
+export const TabsContainer = styled.div<{
+  $hasCategoryHeaderMenuOnTop: boolean;
+}>`
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
@@ -49,7 +51,8 @@ export const TabsContainer = styled.div<{}>`
   }
 
   position: sticky;
-  top: 56px;
+  top: ${({ $hasCategoryHeaderMenuOnTop }) =>
+    !$hasCategoryHeaderMenuOnTop ? '0' : '56px'};
   background-color: white;
   z-index: 1;
 
@@ -62,7 +65,8 @@ export const TabsContainer = styled.div<{}>`
   @media (min-width: 769px) {
     margin-top: -0.75rem;
     padding-top: 1.25rem;
-    top: 44px;
+    top: ${({ $hasCategoryHeaderMenuOnTop }) =>
+      !$hasCategoryHeaderMenuOnTop ? '0' : '44px'};
     margin-inline: 0;
     padding-inline: 0;
     gap: 2rem;

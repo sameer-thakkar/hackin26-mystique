@@ -1113,6 +1113,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SELECT_DATE: 'Select date',
     PICKUP_TIME: 'Pick-up time',
     SELECT_TIME: 'Select time',
+    GUEST: 'Guest',
     GUESTS: 'Guests',
     ADD_GUESTS: 'Add guests',
     ADULT_CHILD: 'Adult/Child',

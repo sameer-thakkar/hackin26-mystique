@@ -124,7 +124,7 @@ export const LocationSearch = forwardRef<
         setLocationData(locationData);
 
         await onValueChange();
-        clearSuggestions();
+        if (suggestionsData) clearSuggestions();
 
         trackEvent({
           eventName: ANALYTICS_EVENTS.AIRPORT_TRANSFERS.SEARCH_FILTER_APPLIED,

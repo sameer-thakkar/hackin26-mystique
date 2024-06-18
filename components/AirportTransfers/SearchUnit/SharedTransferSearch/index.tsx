@@ -482,7 +482,7 @@ export const SharedTransferSearch = ({
         }
       >
         <BottomDrawer
-          title={getSharedTransferDrawerTitle(currentStep)}
+          title={getSharedTransferDrawerTitle(currentStep, strings)}
           handleClose={handleDrawerClose}
           height={currentStep === 'DATE' ? '75vh' : '69vh'}
         >

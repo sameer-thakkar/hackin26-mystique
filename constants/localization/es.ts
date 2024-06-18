@@ -1106,6 +1106,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     PICKUP_TIME: 'Hora de recogida',
     SELECT_TIME: 'Elegir hora',
     GUESTS: 'Invitados',
+    GUEST: 'Invitados',
     ADD_GUESTS: 'Añadir invitados',
     ADULT_CHILD: 'Adulto(s)/Niño(s)',
     EXPLORE_TRANSFERS: 'Información de los traslados',

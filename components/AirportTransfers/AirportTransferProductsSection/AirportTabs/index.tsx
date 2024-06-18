@@ -10,6 +10,7 @@ export const AirportTabs = ({
   selectedAirport,
   setSelectedAirport,
   isMobile,
+  hasCategoryHeaderMenuOnTop,
 }: TAirportTabsProps) => {
   const tabContainerRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -23,7 +24,10 @@ export const AirportTabs = ({
     if (!tabContainer) return;
 
     const listener = () => {
-      const stickyTop = isMobile ? 56 : 44;
+      let stickyTop = 0;
+      if (hasCategoryHeaderMenuOnTop) {
+        stickyTop = isMobile ? 56 : 44;
+      }
 
       const currentTop = tabContainer.getBoundingClientRect().top;
 
@@ -86,7 +90,10 @@ export const AirportTabs = ({
   };
 
   return (
-    <TabsContainer ref={tabContainerRef}>
+    <TabsContainer
+      ref={tabContainerRef}
+      $hasCategoryHeaderMenuOnTop={hasCategoryHeaderMenuOnTop}
+    >
       {airportsList.map((airport, index) => (
         <Tab
           className={airport === selectedAirport ? 'active' : ''}
