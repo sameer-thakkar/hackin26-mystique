@@ -57,6 +57,7 @@ export type TGetLocalisedPrice = Omit<
   truncateIfLong?: boolean;
   truncateAfter?: number;
   hideCurrency?: boolean;
+  removeCurrencyIfExceedsMaxLength?: boolean;
 };
 /**
  * The `getLocalisedPrice` function formats a price value with the specified currency code and language, using the Intl.NumberFormat API.
@@ -69,6 +70,7 @@ export const getLocalisedPrice = ({
   truncateIfLong,
   truncateAfter,
   hideCurrency = false,
+  removeCurrencyIfExceedsMaxLength,
 }: TGetLocalisedPrice) => {
   try {
     if ((!price && !isNaN(price)) || !currencyCode) return '';
@@ -134,7 +136,16 @@ export const getLocalisedPrice = ({
         }
       });
     }
-    return formattedParts.join('');
+
+    const finalFormattedPrice = formattedParts.join('');
+
+    if (removeCurrencyIfExceedsMaxLength && finalFormattedPrice.length > 5) {
+      return parts.reduce((acc, part) => {
+        return part.type !== 'currency' ? acc + part.value : acc;
+      }, '');
+    }
+
+    return finalFormattedPrice;
   } catch (e) {
     return '';
   }

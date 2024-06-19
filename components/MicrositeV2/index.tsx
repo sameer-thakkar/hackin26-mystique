@@ -1,4 +1,4 @@
-import React, { Component, ComponentType } from 'react';
+import { Component, ComponentType } from 'react';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import Conditional from 'components/common/Conditional';
@@ -152,6 +152,8 @@ class MicrositeV2 extends Component<any, any> {
       breadcrumbs,
       isCatOrSubCatPage,
       catAndSubCatPageData,
+      isSeatingPlanPage,
+      theatreType,
     } = this.props;
 
     const {
@@ -589,6 +591,8 @@ class MicrositeV2 extends Component<any, any> {
             isListicle={isListicle}
             displayMonths={displayMonths}
             isDev={isDev}
+            theatreType={theatreType}
+            isSeatingPlanPage={isSeatingPlanPage}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>

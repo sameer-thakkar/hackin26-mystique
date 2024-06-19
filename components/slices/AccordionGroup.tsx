@@ -89,6 +89,16 @@ const AccordionGroup = ({
 
   useEffect(() => {
     if (
+      isIntersecting &&
+      sliceProps?.showSeatMapExperiment &&
+      sliceProps?.addVenueSeatsPageSectionViewedDataEvents
+    ) {
+      sliceProps?.addVenueSeatsPageSectionViewedDataEvents?.({
+        sectionName: heading ?? '',
+        rank: 5,
+      });
+    }
+    if (
       !isTracked &&
       isIntersecting &&
       (sliceProps?.isAirportTransfersMB || sliceProps?.isHOHORevamp)

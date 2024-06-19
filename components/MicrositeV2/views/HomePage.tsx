@@ -1,4 +1,4 @@
-import React, {
+import {
   ComponentType,
   useContext,
   useEffect,
@@ -16,6 +16,7 @@ import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
 import { CategoriesSection } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection/style';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
+import SeatMapPage from 'components/SeatMapPage';
 import { sliceComponents } from 'components/slices/sliceManager';
 import StaticBanner from 'components/StaticBanner';
 import TextBanner from 'components/TextBanner';
@@ -45,6 +46,7 @@ import {
   getPriceSortedListicleTgids,
   getTGIDListForMonth,
   groupSlices,
+  isTheatreInSeatMapExperiment,
   withShortcodes,
 } from 'utils/helper';
 import { titleCase } from 'utils/stringUtils';
@@ -52,13 +54,14 @@ import { gtmAtom } from 'store/atoms/gtm';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 // import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESIGN,
   EMAIL_SUBCRIPTION,
+  PAGE_TYPES,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -271,6 +274,8 @@ export const HomePage = (props: any) => {
     alternateLanguages,
     isCatOrSubCatPage,
     catAndSubCatPageData,
+    theatreType,
+    isSeatingPlanPage,
   } = props;
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
@@ -298,6 +303,22 @@ export const HomePage = (props: any) => {
 
   const showLttTreatment =
     lttRevampExpVariant === VARIANTS.TREATMENT && isLTTRevampExpEligible;
+
+  const isTheatreInSeatingExperiment =
+    isSeatingPlanPage && isTheatreInSeatMapExperiment(theatreType);
+
+  const { isEligible: isSeatMapExpEligible, variant: SeatMapExpVariant } =
+    useABTesting({
+      experimentId: 'SEATMAP_EXPERIMENT',
+      noTrack: false,
+      customEligibilityCheckFn: () => isTheatreInSeatingExperiment,
+    });
+
+  const isSeatMapExpControlAndEligible =
+    isTheatreInSeatingExperiment && SeatMapExpVariant === VARIANTS.CONTROL;
+
+  const showSeatMapExperiment =
+    SeatMapExpVariant === VARIANTS.TREATMENT && isSeatMapExpEligible;
 
   let { categoryProps } = props;
 
@@ -375,7 +396,7 @@ export const HomePage = (props: any) => {
   };
   const slices = contentFramework?.body;
   const contentFWSlices = (slices && groupSlices(slices, undefined, uid)) || [];
-  const longFormSlices = [...contentFWSlices, ...longFormContent];
+  let longFormSlices = [...contentFWSlices, ...longFormContent];
   const hasLanguageSelector = languages?.length > 0;
   const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
@@ -416,6 +437,17 @@ export const HomePage = (props: any) => {
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
         ...getCommonEventMetaData(pageMetaData),
+        ...(isTheatreInSeatingExperiment
+          ? {
+              [ANALYTICS_PROPERTIES.THEATRE_NAME]: theatreType,
+              [ANALYTICS_PROPERTIES.HAS_ACTIVE_SHOWS]: 'Yes',
+              [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: 1,
+              [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+                EXPERIMENT_NAMES.SEATMAP_EXPERIMENT,
+              [ANALYTICS_PROPERTIES.VARIANT]: SeatMapExpVariant,
+              [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.VENUE_SEATS_PAGE,
+            }
+          : {}),
       });
     }
   }, [eventsReady]);
@@ -441,6 +473,25 @@ export const HomePage = (props: any) => {
 
   if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
 
+  if (showSeatMapExperiment) {
+    longFormSlices = longFormSlices.splice(3);
+  }
+
+  const addVenueSeatsPageSectionViewedDataEvents = ({
+    sectionName,
+    rank,
+  }: {
+    sectionName: string;
+    rank: number;
+  }) => {
+    trackEvent({
+      eventName:
+        ANALYTICS_EVENTS.SEATMAP_EXPERIMENT.VENUE_SEATS_PAGE_SECTION_VIEWED,
+      [ANALYTICS_PROPERTIES.SECTION]: sectionName,
+      [ANALYTICS_PROPERTIES.RANK]: rank,
+    });
+  };
+
   return (
     <V2MicrositeWrapper
       $isCategoriesSectionSticking={isCategoriesSectionSticking}
@@ -452,7 +503,7 @@ export const HomePage = (props: any) => {
         isMobile={isMobile}
         allTours={allTours}
         isEntertainmentMb={isEntertainmentMb}
-        hasLanguageSelector={hasLanguageSelector}
+        hasLanguageSelector={showSeatMapExperiment || hasLanguageSelector}
         hideCurrencySelector
         isEntertainmentMbListicle={isEntertainmentMbListicle}
         logoUrl={logoUrl}
@@ -469,7 +520,7 @@ export const HomePage = (props: any) => {
         categoryHeaderMenuExists={categoryHeaderMenuExists}
         uid={uid}
       />
-      <Conditional if={isLttMonthOnMonthPage}>
+      <Conditional if={!showSeatMapExperiment && isLttMonthOnMonthPage}>
         <MonthOnMonthPage
           heroProps={heroProps}
           isMobile={isMobile}
@@ -485,6 +536,7 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           categoryHeaderMenuExists &&
           Object.keys(categoryHeaderMenu).length > 0 &&
           !isMobile
@@ -499,7 +551,7 @@ export const HomePage = (props: any) => {
           isMobile={false}
         />
       </Conditional>
-      <Conditional if={isMobile && hasDropdownLinks}>
+      <Conditional if={!showSeatMapExperiment && isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
           <ResponsiveSelector
             options={dropdownLinks}
@@ -514,6 +566,7 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           showCovid19Alert &&
           covid19AlertOpen &&
           !isEntertainmentMb &&
@@ -530,14 +583,29 @@ export const HomePage = (props: any) => {
           }}
         />
       </Conditional>
-      <Conditional if={isMobile && showLttTreatment && !isCatOrSubCatPage}>
+      <Conditional
+        if={
+          !showSeatMapExperiment &&
+          isMobile &&
+          showLttTreatment &&
+          !isCatOrSubCatPage
+        }
+      >
         <MobileBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
       </Conditional>
-      <Conditional if={!isMobile && showLttTreatment && !isCatOrSubCatPage}>
+      <Conditional
+        if={
+          !showSeatMapExperiment &&
+          !isMobile &&
+          showLttTreatment &&
+          !isCatOrSubCatPage
+        }
+      >
         <DesktopBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           mbTheme === THEMES.DEFAULT &&
           !isListicle &&
           !showLttTreatment &&
@@ -557,13 +625,15 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
           !isListicle &&
           !showLttTreatment &&
           !isCatOrSubCatPage &&
           !isCategoryPage &&
-          mbDesign !== DESIGN.V3
+          mbDesign !== DESIGN.V3 &&
+          !showSeatMapExperiment
         }
       >
         <Banner
@@ -575,7 +645,17 @@ export const HomePage = (props: any) => {
           uid={uid}
         />
       </Conditional>
-      <Conditional if={isCategoryPage}>
+      <Conditional if={showSeatMapExperiment}>
+        <SeatMapPage
+          breadcrumbs={breadcrumbs}
+          theatreType={theatreType}
+          isMobile={isMobile}
+          addVenueSeatsPageSectionViewedDataEvents={
+            addVenueSeatsPageSectionViewedDataEvents
+          }
+        />
+      </Conditional>
+      <Conditional if={!showSeatMapExperiment && isCategoryPage}>
         <CategoryPage
           allTours={allTours}
           heroProps={heroProps}
@@ -589,6 +669,7 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           isEntertainmentMbListicle &&
           !isCatOrSubCatPage &&
           !isLttMonthOnMonthPage
@@ -598,7 +679,13 @@ export const HomePage = (props: any) => {
           <h1>{coverHeading}</h1>
         </ListicleHeadingWrapper>
       </Conditional>
-      <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>
+      <Conditional
+        if={
+          !showSeatMapExperiment &&
+          mbTheme === THEMES.MIN_BLUE &&
+          !isCatOrSubCatPage
+        }
+      >
         <TextBanner bannerHeading={coverHeading ? coverHeading : null} />
       </Conditional>
       <Conditional if={alertPopup?.uid}>
@@ -678,7 +765,7 @@ export const HomePage = (props: any) => {
           collectionId={Number(collectionId!)}
         />
       </Conditional>
-      {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner */}
+      {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner*/}
       <Conditional
         if={
           automatedBreadcrumbsExists &&
@@ -705,6 +792,7 @@ export const HomePage = (props: any) => {
           isMobile={isMobile}
         />
       </Conditional>
+
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           <Conditional if={longFormContent && longFormSlices?.length}>
@@ -724,10 +812,16 @@ export const HomePage = (props: any) => {
                 isRevampedDesign: isCatOrSubCatPage,
               }}
               hasToursSection={hasToursSection}
+              showSeatMapExperiment={showSeatMapExperiment}
+              addVenueSeatsPageSectionViewedDataEvents={
+                addVenueSeatsPageSectionViewedDataEvents
+              }
+              isSeatMapExpControlAndEligible={isSeatMapExpControlAndEligible}
             />
           </Conditional>
         </div>
       </ProductsContextProvider>
+
       <Conditional
         if={
           isEntertainmentMb &&

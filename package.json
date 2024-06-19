@@ -70,7 +70,7 @@
     "react-select": "^3.0.4",
     "react-transition-group": "^4.4.5",
     "react-youtube": "^10.1.0",
-    "react-zoom-pan-pinch": "^1.6.1",
+    "react-zoom-pan-pinch": "^3.4.4",
     "recoil": "^0.7.6",
     "signale": "^1.4.0",
     "slack-webhook": "^1.0.0",

@@ -293,6 +293,15 @@ export const CUSTOM_TYPES = {
   HOHO_ROUTES: 'hoho_routes',
   TOP_ATTRACTIONS: 'top_attractions',
   REVIEWS_PAGE: 'reviews_page',
+  SEATING_PLAN: 'seating-plan',
+};
+
+export const THEATRE_TYPES = {
+  ABBA_ARENA: 'abba-arena',
+  HIS_MAJESTYS_THEATRE: 'his-majestys-theatre',
+  NOVELLO_THEATRE: 'novello-theatre',
+  THEATRE_ROYAL_DRURY_LANE: 'theatre-royal-drury-lane',
+  PRINCE_EDWARD_THEATRE: 'prince-edward-theatre',
 };
 
 export const TEMPLATES = {
@@ -529,6 +538,17 @@ export const ANALYTICS_EVENTS = {
     FOURTH_PRODUCT_CARD: '4th Product Card',
   },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+  SEATMAP_EXPERIMENT: {
+    THEATRE_NAME: 'Theatre Name',
+    HAS_ACTIVE_SHOWS: 'Has Active Shows',
+    NUMBER_OF_PRODUCTS: 'Number of products',
+    SEATMAP_SECTION: 'Seatmap Section',
+    SEATS_LEFT: 'Seats Left',
+    READ_MORE: 'Read More',
+    FIND_BEST_SEATS: 'Find Best Seats',
+    THEATRE_SECTION_VIEWED: 'Seatmap Section Details Viewed',
+    VENUE_SEATS_PAGE_SECTION_VIEWED: 'Venue Seats Page Section Viewed',
+  },
   VIEW_ITINERARY_CLICKED: 'View Itinerary Clicked',
   ITINERARY_POPUP_VIEWED: 'Itinerary Popup Viewed',
   ITINERARY_POPUP_CLOSED: 'Itinerary Popup Closed',
@@ -555,6 +575,11 @@ export const ANALYTICS_EVENTS = {
     DRAWER_CTA_CLICKED: 'Drawer CTA Clicked',
     DRAWER_CLOSED: 'Drawer Closed',
   },
+  EXPERIENCE_DATE_SELECTED: 'Experience Date Selected',
+  EXPERIENCE_TIME_SELECTED: 'Expereince Time Selected',
+  CALENDAR_OPEN: 'Calendar Opened',
+  CALENDAR_CLOSED: 'Calendar Closed',
+  CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1021,6 +1046,11 @@ export const ANALYTICS_PROPERTIES = {
     DRAWER_TYPE: 'Drawer Type',
   },
   CONTAINER: 'Container',
+  DETAILS_TYPE: 'Details Type',
+  RANK: 'Rank',
+  TIME_SLOTS_AVAILABLE: 'Timeslots Available',
+  HAS_ACTIVE_SHOWS: 'Has Active Shows',
+  NUMBER_OF_PRODUCTS: 'Number of Products',
   ITINERARY_ID: 'Itinerary ID',
   ITINERARY_NAME: 'Itinerary Name',
   CLICK_TYPE: 'Click Type',
@@ -1045,6 +1075,7 @@ export const PAGE_TYPES = {
   HOHO: 'Hop-On Hop-Off',
   AIRPORT_TRANSFERS: 'Airport Transfers',
   REVIEWS_PAGE: 'Reviews Page',
+  VENUE_SEATS_PAGE: 'Venue Seats Page',
 };
 
 export const BOOLEAN_STATES = {

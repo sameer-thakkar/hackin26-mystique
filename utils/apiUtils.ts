@@ -1083,6 +1083,7 @@ export const fetchInventoryV7 = async ({
   variantId,
   currency,
   cookies,
+  useSeatmapPrices,
 }: {
   tgid: number | string;
   hostname: string;
@@ -1093,6 +1094,7 @@ export const fetchInventoryV7 = async ({
   variantId?: number;
   currency?: string | null;
   cookies?: { [_key: string]: any };
+  useSeatmapPrices?: boolean;
 }) => {
   try {
     const params = {
@@ -1113,6 +1115,9 @@ export const fetchInventoryV7 = async ({
       }),
       ...(currency && {
         currency,
+      }),
+      ...(useSeatmapPrices && {
+        'use-seatmap-prices': `${useSeatmapPrices}`,
       }),
     };
     const headers = constructHeaders({ cookies });

@@ -235,6 +235,7 @@ type CardProps = {
   cardsInARow?: number;
   isGlobalMb?: boolean;
   isMobile: boolean;
+  isSeatMapExpControlAndEligible?: boolean;
 };
 
 type PlayIconProps = {
@@ -399,6 +400,7 @@ const Card: React.FC<CardProps> = ({
   cardsInARow = 1,
   isGlobalMb,
   isMobile,
+  isSeatMapExpControlAndEligible,
 }) => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [videoPlay, setVideoPlay] = useState(false);
@@ -507,6 +509,22 @@ const Card: React.FC<CardProps> = ({
       break;
   }
 
+  const handleCTAButtonClick = (e: any) => {
+    e.stopPropagation();
+
+    if (
+      cta.text === strings.THEATRE_PAGE.FIND_BEST_SEATS &&
+      isSeatMapExpControlAndEligible
+    ) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+        [ANALYTICS_PROPERTIES.CTA_TYPE]:
+          ANALYTICS_EVENTS.SEATMAP_EXPERIMENT.FIND_BEST_SEATS,
+        [ANALYTICS_PROPERTIES.SECTION]: ANALYTICS_PROPERTIES.HEADER,
+      });
+    }
+  };
+
   let CTA;
   switch (cta.type) {
     case 'Button':
@@ -518,7 +536,7 @@ const Card: React.FC<CardProps> = ({
               href={cta.link.url}
               // @ts-expect-error TS(2532): Object is possibly 'undefined'.
               target={cta.link.target}
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleCTAButtonClick}
             >
               <Button>{cta.text || strings.BOOK_NOW_CTA}</Button>
             </a>

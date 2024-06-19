@@ -9,7 +9,7 @@ import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { ToastProvider } from 'contexts/toastContext';
-import { getAnalyticsPageType } from 'utils';
+import { containsPOIAndSeatmap, getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { dynamicPolyfillIntlLocale } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
@@ -160,6 +160,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       minPrice,
       bestDiscount,
     } = pageProps;
+
     set(shortcodesAtom, {
       minPrice,
       bestDiscount,
@@ -250,6 +251,8 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       CMSContent?.data?.refs?.productCardData?.template ===
       AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
 
+    const isSeatMapExperiment = containsPOIAndSeatmap(CMSContent?.tags);
+
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
       [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
@@ -266,6 +269,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         isSubCategoryPage,
         isAirportTransferMB,
         defaultType: pageType,
+        isSeatMapExperiment,
       }),
     });
     trackEvent({

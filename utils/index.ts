@@ -956,6 +956,7 @@ type TGetAnalyticsPageType = {
   isCatOrSubCatPage: boolean;
   isSubCategoryPage: boolean;
   defaultType: string;
+  isSeatMapExperiment?: boolean;
 };
 
 export const getAnalyticsPageType = ({
@@ -965,8 +966,11 @@ export const getAnalyticsPageType = ({
   isCatOrSubCatPage,
   isSubCategoryPage,
   defaultType,
+  isSeatMapExperiment,
 }: TGetAnalyticsPageType) => {
   switch (true) {
+    case isSeatMapExperiment:
+      return PAGE_TYPES.VENUE_SEATS_PAGE;
     case isCityPageMB:
       return PAGE_TYPES.CITY_PAGE;
     case isHOHO:
@@ -1009,4 +1013,8 @@ export const getPrimarySubCategoryIdData = (
     });
   }
   return finalData;
+};
+
+export const containsPOIAndSeatmap = (array = []) => {
+  return array.some((item) => /POI.*seatmap/.test(item));
 };

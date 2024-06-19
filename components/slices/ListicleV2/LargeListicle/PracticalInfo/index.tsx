@@ -51,7 +51,7 @@ const PracticalInfo = ({
       <Conditional if={calendar}>
         <PracticalInfoCalendarWrapper className="practical-info">
           <PracticalInfoCalendarIconWrapper>
-            {PracticalInfoCalendar()}
+            <PracticalInfoCalendar />
           </PracticalInfoCalendarIconWrapper>
           <PracticalInfoCalendarContentWrapper>
             {calendar}

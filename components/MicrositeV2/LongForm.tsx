@@ -110,7 +110,14 @@ const StyledLongform = styled.div<{
 `;
 
 const LongForm = (props: any) => {
-  const { slicesArray, props: sliceProps, hasToursSection } = props;
+  const {
+    slicesArray,
+    props: sliceProps,
+    hasToursSection,
+    showSeatMapExperiment,
+    addVenueSeatsPageSectionViewedDataEvents,
+    isSeatMapExpControlAndEligible,
+  } = props;
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
 
@@ -127,7 +134,12 @@ const LongForm = (props: any) => {
       <SliceZone
         slices={slicesArray}
         components={components}
-        context={{ ...sliceProps }}
+        context={{
+          ...sliceProps,
+          showSeatMapExperiment,
+          addVenueSeatsPageSectionViewedDataEvents,
+          isSeatMapExpControlAndEligible,
+        }}
         defaultComponent={() => null}
       />
     </StyledLongform>

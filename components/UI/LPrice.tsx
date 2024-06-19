@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { getLocalisedPrice } from 'utils/currency';

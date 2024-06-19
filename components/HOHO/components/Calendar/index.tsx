@@ -52,6 +52,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     setIsLoading,
     variantName,
     tourGroupName,
+    onDateClick,
   } = props;
   const {
     lang,
@@ -267,6 +268,14 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     );
   };
 
+  const handleDateClick = (date: string, priceTag: string) => {
+    if (onDateClick) {
+      onDateClick({ date, priceTag });
+    } else {
+      onCheckAvailabilityClick(date, priceTag);
+    }
+  };
+
   const getDateComponents = ({
     isSecondMonth,
     monthName,
@@ -290,7 +299,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           return (
             <DateEl
               key={date || genUniqueId()}
-              onClick={() => onCheckAvailabilityClick(date, priceTag)}
+              onClick={() => handleDateClick(date, priceTag)}
             >
               <CalendarDatePrice
                 date={dateAsString}

@@ -10,8 +10,9 @@ const InteractiveImage = (props: any) => {
   return (
     <div className="interactive-image">
       <TransformWrapper
-        scale={isMobile ? 4 : 1}
-        options={isMobile ? mobileProps : {}}
+        initialScale={isMobile ? 4 : 1}
+        limitToBounds={isMobile && mobileProps.limitToWrapper}
+        centerOnInit={isMobile && mobileProps.centerContent}
       >
         <TransformComponent>
           <div className="zoom-wrapper">

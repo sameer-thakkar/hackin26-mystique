@@ -984,6 +984,59 @@ export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   } else return getNonTgidBasedNewsPageBreadcrumbs(doc);
 };
 
+export const getSeatingPlanBreadcrumbs = async (
+  doc: PrismicDocumentWithUID
+) => {
+  return getNonTgidSeatingPlanBreadcrumbs(doc);
+};
+
+export const getNonTgidSeatingPlanBreadcrumbs = async (
+  doc: PrismicDocumentWithUID
+) => {
+  const { uid, lang } = doc;
+
+  const isLTT = checkIfLTTMB(uid);
+
+  if (!isLTT) return {};
+
+  let breadcrumbs: TBreadcrumbs = {};
+  const headoutLanguagecode = getHeadoutLanguagecode(lang);
+
+  const pageUrl = convertUidToUrl({
+    uid,
+    lang: headoutLanguagecode,
+  });
+  const pageUrlObject = new URL(pageUrl);
+  const hostUrl = convertUidToUrl({
+    uid: pageUrlObject.host,
+    lang: headoutLanguagecode,
+  });
+
+  const { HOME } = getEntMBLabels({
+    isLTT,
+  });
+
+  breadcrumbs[`level_1`] = {
+    level: 1,
+    label: HOME,
+    url: hostUrl,
+  };
+
+  breadcrumbs[`level_2`] = {
+    level: 2,
+    label: 'Theatre Seating Plans',
+    url: `${hostUrl}/theater-seating-plan-guide/`,
+  };
+
+  breadcrumbs[`level_3`] = {
+    level: 4,
+    label: 'ABBA Arena Seating Plan',
+    url: pageUrl,
+  };
+
+  return breadcrumbs;
+};
+
 export const getTgidBasedNewsPageBreadcrumbs = async (
   doc: PrismicDocumentWithUID
 ) => {

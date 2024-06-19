@@ -48,10 +48,6 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   }, [isEligible]);
 
   useEffect(() => {
-    if (experimentOverrideVariant) {
-      setVariant(experimentOverrideVariant);
-      return;
-    }
     if (!sandboxId || variant !== DEFAULT_VARIANT || isHsidSetFail || isBot)
       return;
 
@@ -70,7 +66,9 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
     // Ensure you avoid tracking on any re-render. (failsafe, ideally should not be required)
     shouldTrack.current = false;
 
-    setVariant(abTestingVariant);
+    if (!experimentOverrideVariant) {
+      setVariant(abTestingVariant);
+    }
   }, [
     experimentNameKey,
     sandboxId,

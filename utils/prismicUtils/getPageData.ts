@@ -25,7 +25,11 @@ import {
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
-import { getBreadcrumbs, getShowPageBreadcrumbs } from 'utils/breadcrumbsUtils';
+import {
+  getBreadcrumbs,
+  getSeatingPlanBreadcrumbs,
+  getShowPageBreadcrumbs,
+} from 'utils/breadcrumbsUtils';
 import { getCatAndSubCatPageData } from 'utils/categoryPageUtils';
 import { generateCityPageData } from 'utils/cityPageUtils';
 import { getDocsForListicleSlice } from 'utils/contentPageUtils';
@@ -39,6 +43,7 @@ import {
   checkIfCatOrSubCatPage,
   getHostName,
   getLangObject,
+  getSeatingPlanAndTheatreType,
 } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -1027,7 +1032,15 @@ export const getPageData = async ({
 
     const breadcrumbsDoc = CMSContent;
 
-    const breadcrumbsPromise = getBreadcrumbs(breadcrumbsDoc);
+    let breadcrumbsPromise;
+    const { isSeatingPlanPage, theatreType } =
+      getSeatingPlanAndTheatreType(uid);
+
+    if (isSeatingPlanPage) {
+      breadcrumbsPromise = getSeatingPlanBreadcrumbs(breadcrumbsDoc);
+    } else {
+      breadcrumbsPromise = getBreadcrumbs(breadcrumbsDoc);
+    }
 
     const aggregatedPromise = await Promise.allSettled([
       categoryHeaderMenuPromise,
@@ -1066,6 +1079,8 @@ export const getPageData = async ({
       prismicApiCacheStatus,
       prismicDocumentTypeApiCacheStatus,
       collectionData,
+      isSeatingPlanPage,
+      theatreType,
     };
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);

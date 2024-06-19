@@ -24,6 +24,7 @@ const CalendarDatePrice = ({
     lang,
     currencyList,
     hideCurrency,
+    removeCurrencyIfExceedsMaxLength: true,
   });
 
   return (

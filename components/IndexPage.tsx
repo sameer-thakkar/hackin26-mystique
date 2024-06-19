@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
@@ -166,6 +166,8 @@ const Page = (props: PageProps) => {
     uid,
     MBDesign,
     collectionData,
+    isSeatingPlanPage,
+    theatreType,
   } = props;
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
@@ -252,6 +254,8 @@ const Page = (props: PageProps) => {
             isCatOrSubCatPage={isCatOrSubCatPage}
             catAndSubCatPageData={catAndSubCatPageData}
             uid={uid}
+            isSeatingPlanPage={isSeatingPlanPage}
+            theatreType={theatreType}
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:

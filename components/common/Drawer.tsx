@@ -177,6 +177,7 @@ const Drawer = ({
   slideOutOnClose = false,
   coverHeaderInShadow = false,
   hideCrossIcon = false,
+  showPanelAnchor = false,
   customHeader,
 }: {
   closeHandler?: Function;
@@ -191,6 +192,7 @@ const Drawer = ({
   slideOutOnClose?: boolean;
   coverHeaderInShadow?: boolean;
   hideCrossIcon?: boolean;
+  showPanelAnchor?: boolean;
   customHeader?: (closeHandler: () => void) => JSX.Element;
 }) => {
   const [mounted, setMounted] = useState(false);
@@ -299,7 +301,7 @@ const Drawer = ({
           customHeader(() => close('Close Icon'))
         ) : (
           <HeadingContainer $hasHeading={!!heading?.length}>
-            <Conditional if={!hideCrossIcon}>
+            <Conditional if={!hideCrossIcon || showPanelAnchor}>
               <PanelAnchor />
             </Conditional>
             <Conditional if={heading}>

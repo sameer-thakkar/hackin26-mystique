@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
+import { TAddVenueSeatsPageSectionViewedDataEvents } from 'components/SeatMapPage/interface';
 import sliceHandler from 'components/Slices';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
+import useOnScreen from 'hooks/useOnScreen';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
 import { SIZES } from 'const/ui-constants';
@@ -127,6 +129,10 @@ type CardSectionProps = {
   description?: any[];
   exitDescription?: any[];
   isGlobalMb?: boolean;
+  showSeatMapExperiment?: boolean;
+  index?: number;
+  addVenueSeatsPageSectionViewedDataEvents?: TAddVenueSeatsPageSectionViewedDataEvents;
+  isSeatMapExpControlAndEligible?: boolean;
 };
 
 /**
@@ -166,14 +172,23 @@ const CardSection: React.FC<CardSectionProps> = ({
   description,
   exitDescription,
   isGlobalMb = false,
+  showSeatMapExperiment,
+  index,
+  addVenueSeatsPageSectionViewedDataEvents,
+  isSeatMapExpControlAndEligible,
 }) => {
   const hasLessCards = slices?.length < cardsInARow;
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
+  const cardSectionRef = useRef(null);
+  const isIntersecting = useOnScreen({
+    ref: cardSectionRef,
+    unobserve: true,
+  });
 
   // Title and Text combo for the starting of the Card Section
   const EntrySection = (
-    <TitleTextCombo>
+    <TitleTextCombo ref={cardSectionRef}>
       {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
       {description ? <RichContent render={description} /> : null}
     </TitleTextCombo>
@@ -185,6 +200,24 @@ const CardSection: React.FC<CardSectionProps> = ({
       <RichContent render={exitDescription} />
     </ExitDescription>
   ) : null;
+
+  useEffect(() => {
+    if (!showSeatMapExperiment) {
+      return;
+    }
+    if ((index === 0 || index === 1) && isIntersecting) {
+      addVenueSeatsPageSectionViewedDataEvents?.({
+        sectionName: title ?? '',
+        rank: 3 + index,
+      });
+    }
+  }, [
+    isIntersecting,
+    index,
+    showSeatMapExperiment,
+    addVenueSeatsPageSectionViewedDataEvents,
+    title,
+  ]);
 
   // isMobile effect
   useEffect(() => {
@@ -211,6 +244,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       cardsInARow: cardsInARow,
       isGlobalMb,
       isMobile,
+      isSeatMapExpControlAndEligible,
     });
   });
 

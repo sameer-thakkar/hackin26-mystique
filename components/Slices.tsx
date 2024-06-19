@@ -414,6 +414,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           linkType={card_link_type}
           isGlobalMb={props.isGlobalMb}
           isMobile={props.isMobile}
+          isSeatMapExpControlAndEligible={props.isSeatMapExpControlAndEligible}
         />
       );
     case 'horizontal_line':

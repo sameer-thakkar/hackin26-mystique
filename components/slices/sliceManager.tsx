@@ -206,6 +206,7 @@ export const sliceComponents = () => {
           description={description}
           exitDescription={exit_description}
           {...props?.context}
+          index={props.index}
         />,
         props
       );
@@ -247,6 +248,7 @@ export const sliceComponents = () => {
           linkType={card_link_type}
           isGlobalMb={isGlobalMb}
           isMobile={isMobile}
+          isSeatMapExpControlAndEligible={props?.isSeatMapExpControlAndEligible}
         />,
         props
       );

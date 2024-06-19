@@ -39,6 +39,7 @@ import {
   PAGE_URL_STRUCTURE,
   RESOURCE_ASSET_TYPE,
   SUBCATEGORY,
+  THEATRE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -926,3 +927,16 @@ export function isSafari() {
     !/Chrome/.test(userAgent)
   );
 }
+
+export const isTheatreInSeatMapExperiment = (theatreType: string) => {
+  return Object.values(THEATRE_TYPES).includes(theatreType);
+};
+
+export const getSeatingPlanAndTheatreType = (uid: string) => {
+  const isSeatingPlanPage = uid.includes('seating-plan');
+
+  const uidSplit = uid.split('.');
+  const currentTheatreType = uidSplit?.[4];
+
+  return { isSeatingPlanPage, theatreType: currentTheatreType };
+};

@@ -11,4 +11,5 @@ export type CalendarProps = {
   isActive?: boolean;
   onClickout?: () => void;
   setIsLoading: (arg: boolean) => void;
+  onDateClick?: (arg: any) => void;
 };
