@@ -172,20 +172,7 @@ const Page = (props: PageProps) => {
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
 
-  const {
-    isEligible: isLTTSpRevampExpEligible,
-    variant: lttSpRevampExpVariant,
-    isExperimentResolving: isLTTSpRevampExpResolving,
-  } = useABTesting({
-    experimentId: 'LTT_SHOW_PAGE_REVAMP_EXPERIMENT',
-    noTrack: true,
-    customEligibilityCheckFn: () => {
-      return isLTT || isBroadway;
-    },
-  });
-
-  const showLttSpTreatment =
-    lttSpRevampExpVariant === VARIANTS.TREATMENT && isLTTSpRevampExpEligible;
+  const showLttSpTreatment = isLTT || isBroadway;
 
   const {
     isEligible: isSubattractionsExpEligible,
@@ -375,9 +362,6 @@ const Page = (props: PageProps) => {
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:
-        if (isLTTSpRevampExpResolving && isLTTSpRevampExpEligible)
-          return <Loader />;
-
         return showLttSpTreatment ? (
           <ShowPageV2
             CMSContent={CMSContent}

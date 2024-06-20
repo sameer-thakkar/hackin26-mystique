@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Conditional from 'components/common/Conditional';
 import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/interface';
@@ -23,7 +24,8 @@ const ShowPageDescriptorSection = ({
 }: TShowPageDescriptorSectionProps) => {
   const { detailsObjects, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
-  const ageSuitabilitySection = document.getElementById(`Age & content guide`);
+  const [ageSuitabilitySectionExists, setAgeSuitabilitySectionExists] =
+    useState(false);
   const { offerHeading, offerText } = specialOffer ?? {};
 
   const {
@@ -64,6 +66,11 @@ const ShowPageDescriptorSection = ({
       behavior: 'smooth',
     });
   };
+  useEffect(() => {
+    const ageSuitabilitySection =
+      document.getElementById(`Age & content guide`);
+    setAgeSuitabilitySectionExists(!!ageSuitabilitySection);
+  }, []);
 
   return (
     <ShowPageDescriptorSectionWrapper>
@@ -80,7 +87,7 @@ const ShowPageDescriptorSection = ({
                 <span className="title">{key.toUpperCase()}</span>
                 <div
                   className={`value ${key} ${
-                    ageSuitabilitySection ? '' : 'no-highlight'
+                    ageSuitabilitySectionExists ? '' : 'no-highlight'
                   } `}
                   {...(key === 'age' && {
                     onClick: jumpToAgeSuitability,

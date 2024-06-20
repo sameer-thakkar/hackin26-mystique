@@ -88,9 +88,6 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
 const Banner: ComponentType<any> = dynamic(
   () => import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
-const Loader: ComponentType<any> = dynamic(
-  () => import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
-);
 const LongForm: ComponentType<any> = dynamic(
   () =>
     import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
@@ -289,20 +286,8 @@ export const HomePage = (props: any) => {
 
   const { collectionId } = pageMetaData;
 
-  const {
-    isEligible: isLTTRevampExpEligible,
-    variant: lttRevampExpVariant,
-    isExperimentResolving: isLTTRevampExpResolving,
-  } = useABTesting({
-    experimentId: 'LTT_LP_REVAMP_EXPERIMENT',
-    noTrack: true,
-    customEligibilityCheckFn: () => {
-      return checkIfLTTMBLandingPage(uid) || checkIfBroadwayMBLandingPage(uid);
-    },
-  });
-
   const showLttTreatment =
-    lttRevampExpVariant === VARIANTS.TREATMENT && isLTTRevampExpEligible;
+    checkIfLTTMBLandingPage(uid) || checkIfBroadwayMBLandingPage(uid);
 
   const isTheatreInSeatingExperiment =
     isSeatingPlanPage && isTheatreInSeatMapExperiment(theatreType);
@@ -470,8 +455,6 @@ export const HomePage = (props: any) => {
   const components = useMemo(() => {
     return sliceComponents();
   }, []);
-
-  if (isLTTRevampExpResolving && isLTTRevampExpEligible) return <Loader />;
 
   if (showSeatMapExperiment) {
     longFormSlices = longFormSlices.splice(3);

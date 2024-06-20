@@ -16,8 +16,6 @@ const HOHO_REVAMP_EXPERIMENT = 'HOHO Revamp';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
-const LTT_LP_REVAMP_EXPERIMENT = 'LTT Landing Page Revamp Experiment';
-const LTT_SHOW_PAGE_REVAMP_EXPERIMENT = 'LTT Show Page Revamp Experiment';
 const POI_CARD_EXPERIMENT = 'POI More Details Swipe sheet Experiment 2';
 const SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT =
   'Shoulder Page Section Ranking';
@@ -35,8 +33,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
-  LTT_LP_REVAMP_EXPERIMENT,
-  LTT_SHOW_PAGE_REVAMP_EXPERIMENT,
   POI_CARD_EXPERIMENT,
   RANKING_EXPERIMENT_V1_REVENUE,
   SEATMAP_EXPERIMENT,
@@ -83,16 +79,6 @@ export const EXPERIMENTS: Record<string, any> = {
   [LTD_LP_Experiment]: new Experiment(
     LTD_LP_Experiment,
     [VARIANTS.SHOWPAGE_REDIRECT, VARIANTS.CHECKOUT_REDIRECT],
-    [0, 100]
-  ),
-  [LTT_LP_REVAMP_EXPERIMENT]: new Experiment(
-    LTT_LP_REVAMP_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [0, 100]
-  ),
-  [LTT_SHOW_PAGE_REVAMP_EXPERIMENT]: new Experiment(
-    LTT_SHOW_PAGE_REVAMP_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
   ),
   [POI_CARD_EXPERIMENT]: new Experiment(
