@@ -10,8 +10,6 @@ const cookiesSideEffect =
     const savedValue = Cookies.get(COOKIE.CURRENT_CURRENCY);
     if (savedValue != null) {
       setSelf(savedValue);
-    } else {
-      setSelf('USD'); // Set default value if no cookie is found
     }
 
     onSet((newValue: any, _: any, isReset: any) => {
