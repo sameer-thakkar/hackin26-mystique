@@ -399,6 +399,8 @@ export const fetchTourListV6 = async ({
   cookies = {},
 }: TourListProps) => {
   try {
+    if (!tgids?.length) return {};
+
     const params = {
       'ids[]': tgids?.join(','),
       ...(language && { language }),
@@ -711,6 +713,8 @@ export const fetchTourGroupsByCollection = async ({
     id: collectionId,
     params,
   });
+
+  if (!collectionId) return {};
 
   try {
     const response = await fetch(url, { headers });
