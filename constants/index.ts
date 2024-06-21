@@ -298,10 +298,6 @@ export const CUSTOM_TYPES = {
 
 export const THEATRE_TYPES = {
   ABBA_ARENA: 'abba-arena',
-  HIS_MAJESTYS_THEATRE: 'his-majestys-theatre',
-  NOVELLO_THEATRE: 'novello-theatre',
-  THEATRE_ROYAL_DRURY_LANE: 'theatre-royal-drury-lane',
-  PRINCE_EDWARD_THEATRE: 'prince-edward-theatre',
 };
 
 export const TEMPLATES = {

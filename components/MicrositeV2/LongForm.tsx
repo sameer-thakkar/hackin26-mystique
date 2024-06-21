@@ -117,6 +117,7 @@ const LongForm = (props: any) => {
     showSeatMapExperiment,
     addVenueSeatsPageSectionViewedDataEvents,
     isSeatMapExpControlAndEligible,
+    isTheatreInSeatingExperiment,
   } = props;
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
@@ -139,6 +140,7 @@ const LongForm = (props: any) => {
           showSeatMapExperiment,
           addVenueSeatsPageSectionViewedDataEvents,
           isSeatMapExpControlAndEligible,
+          isTheatreInSeatingExperiment,
         }}
         defaultComponent={() => null}
       />

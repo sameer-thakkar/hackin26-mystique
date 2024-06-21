@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { mobileDrawerStyles } from 'components/AirportTransfers/PrivateAirportTransferProductCard/styles';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
@@ -55,13 +55,18 @@ const InteractiveMap = ({
   const [highlightSvgSection, setHighlightSvgSection] = useState('');
   const [mapHoveredSectionInfo, setMapHoveredSectionInfo] =
     useState<MapHoveredSectionInfoType>(DEFAULT_MAP_SECTION_INFO);
+  const svgContainerRef = useRef<HTMLDivElement>(null);
 
   const removeEventListeners = () => {
-    document.removeEventListener('mousemove', mapMouseMoveFn);
+    svgContainerRef.current?.removeEventListener('mousemove', mapMouseMoveFn);
+    svgContainerRef.current?.removeEventListener('mouseleave', closeHoverCard);
+    document?.removeEventListener('scroll', closeHoverCard);
   };
 
   const addEventListeners = () => {
-    document.addEventListener('mousemove', mapMouseMoveFn);
+    svgContainerRef.current?.addEventListener('mousemove', mapMouseMoveFn);
+    svgContainerRef.current?.addEventListener('mouseleave', closeHoverCard);
+    document?.addEventListener('scroll', closeHoverCard);
   };
 
   const addSeatMapSectionViewedDataEvents = (
@@ -181,6 +186,16 @@ const InteractiveMap = ({
     setHighlightSvgSection('');
   };
 
+  const closeHoverCard = () => {
+    setMapHoveredSectionInfo((prev) => {
+      if (prev.isVisible) {
+        return DEFAULT_MAP_SECTION_INFO;
+      }
+
+      return prev;
+    });
+  };
+
   return (
     <InteractiveMapWrapper>
       <MagicLabelWrapper>
@@ -193,7 +208,7 @@ const InteractiveMap = ({
           </p>
         </MagicLabel>
       </MagicLabelWrapper>
-      <SvgMapContainer>
+      <SvgMapContainer ref={svgContainerRef}>
         <ZoomPanPinch isMobile={isMobile}>
           <CurrentSeatMapSvg
             svgViewBox={DEFAULT_VIEW_BOX}

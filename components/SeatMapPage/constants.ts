@@ -4,7 +4,6 @@ import BinocularIcon from 'assets/binocularIcon';
 import CouchSvg from 'assets/couchSvg';
 import DiscoBallSvg from 'assets/discoBallSvg';
 import DrinkSvg from 'assets/drinkSvg';
-import HisMajestysTheatreSvg from 'assets/hisMajestysTheatreSvg';
 import LegRoomSvg from 'assets/legRoomSvg';
 import RestRoomSvg from 'assets/restRoomSvg';
 import SeatIcon from 'assets/seatIcon';
@@ -651,7 +650,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: '',
       },
     },
-    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: {
+    'his-majesty-theatres': {
       'front-stalls': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
@@ -876,7 +875,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows A-D',
       },
     },
-    [THEATRE_TYPES.NOVELLO_THEATRE]: {
+    'novello-theatre': {
       'front-stalls': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
@@ -1069,7 +1068,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Private Box',
       },
     },
-    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: {
+    'theatre-royal-drury-lane': {
       'front-left-stalls': {
         blockName: 'Front Left',
         theatreSectionName: 'Stalls',
@@ -1557,7 +1556,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows A-K',
       },
     },
-    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: {
+    'prince-edward-theatre': {
       'Front-Stalls': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
@@ -1778,13 +1777,8 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
   },
   availableShowsTgid: {
     [THEATRE_TYPES.ABBA_ARENA]: ['20045'],
-    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: ['3031'],
-    [THEATRE_TYPES.NOVELLO_THEATRE]: ['3026'],
-    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: ['20498'],
-    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: ['18161'],
   },
   seatMapSvgs: {
     [THEATRE_TYPES.ABBA_ARENA]: AbbaSeatMapSvg,
-    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: HisMajestysTheatreSvg,
   },
 };

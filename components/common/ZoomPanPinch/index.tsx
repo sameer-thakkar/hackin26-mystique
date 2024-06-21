@@ -1,5 +1,6 @@
-import { ReactChild } from 'react';
+import { ReactChild, useEffect, useRef } from 'react';
 import {
+  ReactZoomPanPinchContentRef,
   TransformComponent,
   TransformWrapper,
   useControls,
@@ -12,12 +13,37 @@ import { ControlsButton, ControlsWrapper } from './styles';
 const ZoomPanPinch = ({
   children,
   isMobile,
+  handleOnWheel,
 }: {
   children: ReactChild;
   isMobile: boolean;
+  handleOnWheel?: () => void;
 }) => {
+  const wrapperRef = useRef<ReactZoomPanPinchContentRef>(null);
+
+  useEffect(() => {
+    const currentWrapper = wrapperRef.current;
+
+    if (currentWrapper && handleOnWheel instanceof Function) {
+      currentWrapper.instance.wrapperComponent?.addEventListener(
+        'wheel',
+        handleOnWheel
+      );
+    }
+
+    return () => {
+      if (currentWrapper && handleOnWheel instanceof Function) {
+        currentWrapper.instance.wrapperComponent?.removeEventListener(
+          'wheel',
+          handleOnWheel
+        );
+      }
+    };
+  }, []);
+
   return (
     <TransformWrapper
+      ref={wrapperRef}
       disabled={isMobile}
       wheel={{ activationKeys: ['Control'] }}
     >

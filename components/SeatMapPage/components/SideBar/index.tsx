@@ -64,13 +64,12 @@ import {
   getToursAgainstDates,
 } from './utils';
 
-const DEFAULT_CURRENCY_CODE = 'USD';
 const VERTICAL_IMAGE_ASPECT_RATIO = 10 / 16;
 
 const SideBar = (props: TSideBarProps) => {
   const { isMobile, variantId, isFirstScroll, theatreShowTgid, lang } = props;
 
-  const currency = useRecoilValue(currencyAtom);
+  const headerCurrency = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
   const { host } = useRecoilValue(appAtom);
   const [timeSlotIndex, setTimeSlotIndex] = useState(0);
@@ -113,15 +112,20 @@ const SideBar = (props: TSideBarProps) => {
     reviewsDetails = {},
     listingPrice,
     startLocation = {},
+    currency: productCurrencyObj,
   } = theatreShowData ?? {};
+
+  const { code: productCurrencyCode } = productCurrencyObj ?? {};
 
   const { finalPrice, bestDiscount, cashbackType, cashbackValue } =
     listingPrice ?? {};
 
   const currencyObj = currencyList?.find(
-    (currencyObj) => currencyObj?.code === currency
+    (currencyObj) =>
+      currencyObj?.code === (headerCurrency ?? productCurrencyCode)
   );
   const { localSymbol, code: currencyCode } = currencyObj || {};
+  const activeCurrencyCode = currencyCode ?? productCurrencyCode;
   const currentDate = getCurrentDate();
 
   const [showCalendar, setShowCalendar] = useState(false);
@@ -159,8 +163,8 @@ const SideBar = (props: TSideBarProps) => {
       ...(variantId && {
         variantId: variantId?.toString(),
       }),
-      ...(currency && {
-        currency,
+      ...(activeCurrencyCode && {
+        currency: activeCurrencyCode,
       }),
     },
   });
@@ -297,7 +301,7 @@ const SideBar = (props: TSideBarProps) => {
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: experienceName,
-      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currency,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: activeCurrencyCode,
       [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating?.toFixed(1),
       [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: truncateNumber(reviewsCount),
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
@@ -309,7 +313,7 @@ const SideBar = (props: TSideBarProps) => {
     const { startTime } = selectedTour ?? {};
     const checkAvailabilityUrl = createBookingURL({
       lang,
-      currency: currencyCode,
+      currency: activeCurrencyCode,
       tgid: theatreShowTgid,
       promoCode: null,
       date: { startDate: selectedTourDate, ...(startTime && { startTime }) },
@@ -325,7 +329,7 @@ const SideBar = (props: TSideBarProps) => {
   if (isMobile) {
     const localisedActualPrice = getLocalisedPrice({
       price: finalPrice,
-      currencyCode: currencyCode ?? DEFAULT_CURRENCY_CODE,
+      currencyCode: activeCurrencyCode,
       lang,
       currencyList,
       truncateIfLong: true,
@@ -333,7 +337,7 @@ const SideBar = (props: TSideBarProps) => {
     });
     const localiseStartingPrice = getLocalisedPrice({
       price: finalPrice,
-      currencyCode: currencyCode ?? DEFAULT_CURRENCY_CODE,
+      currencyCode: activeCurrencyCode,
       lang,
       currencyList,
       truncateIfLong: true,
@@ -442,7 +446,7 @@ const SideBar = (props: TSideBarProps) => {
               <h2>Select date</h2>
 
               <p>
-                All prices are in {currencyCode} ({localSymbol})
+                All prices are in {activeCurrencyCode} ({localSymbol})
               </p>
             </SelectDateTitleBlock>
             <HorizontalDateList>
@@ -458,10 +462,10 @@ const SideBar = (props: TSideBarProps) => {
                 const isDisabled = !calendarData?.dates[tourDate];
                 const { listingPrice } = calendarData?.dates[tourDate] ?? {};
                 const localizedPrice =
-                  currencyCode &&
+                  activeCurrencyCode &&
                   getLocalisedPrice({
                     price: Number(listingPrice),
-                    currencyCode,
+                    currencyCode: activeCurrencyCode,
                     lang,
                     currencyList,
                   });
@@ -518,7 +522,7 @@ const SideBar = (props: TSideBarProps) => {
                   setShowCalendar(false);
                   addCalendarToggleDataEvents(false);
                 }}
-                currency={currency}
+                currency={activeCurrencyCode}
                 setIsLoading={() => {}}
               />
             </HorizontalDateList>
@@ -528,7 +532,7 @@ const SideBar = (props: TSideBarProps) => {
         <TimeSelection
           selectedTourDate={selectedTourDate}
           tourStartDate={tourStartDate}
-          currencyCode={currencyCode}
+          activeCurrencyCode={activeCurrencyCode}
           currencyList={currencyList}
           lang={lang}
           host={host}
@@ -548,7 +552,7 @@ const TimeSelection = (props: any) => {
   const {
     selectedTourDate,
     tourStartDate,
-    currencyCode,
+    activeCurrencyCode,
     lang,
     currencyList,
     tgid,
@@ -565,7 +569,7 @@ const TimeSelection = (props: any) => {
     params: {
       'from-date': tourStartDate,
       'to-date': getDateXDaysAhead({ startDate: tourStartDate, daysAhead: 4 }),
-      currency: currencyCode,
+      currency: activeCurrencyCode,
       'use-seatmap-prices': 'true',
     },
   });
@@ -655,7 +659,7 @@ const TimeSelection = (props: any) => {
               const availability = paxAvailability[0]?.availability;
               const localizedPrice = getLocalisedPrice({
                 price,
-                currencyCode,
+                currencyCode: activeCurrencyCode,
                 lang,
                 currencyList,
               });

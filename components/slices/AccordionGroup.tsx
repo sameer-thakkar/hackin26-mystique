@@ -90,7 +90,7 @@ const AccordionGroup = ({
   useEffect(() => {
     if (
       isIntersecting &&
-      sliceProps?.showSeatMapExperiment &&
+      sliceProps?.isTheatreInSeatingExperiment &&
       sliceProps?.addVenueSeatsPageSectionViewedDataEvents
     ) {
       sliceProps?.addVenueSeatsPageSectionViewedDataEvents?.({

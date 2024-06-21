@@ -800,6 +800,7 @@ export const HomePage = (props: any) => {
                 addVenueSeatsPageSectionViewedDataEvents
               }
               isSeatMapExpControlAndEligible={isSeatMapExpControlAndEligible}
+              isTheatreInSeatingExperiment={isTheatreInSeatingExperiment}
             />
           </Conditional>
         </div>

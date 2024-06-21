@@ -107,7 +107,7 @@ export const BannerDescription = styled.p<{
   }
 `;
 
-export const BannerHeading = styled.h2`
+export const BannerHeading = styled.h1`
   color: ${COLORS.BRAND.WHITE};
   margin: 0;
   ${expandFontToken(FONTS.DISPLAY_SMALL)};

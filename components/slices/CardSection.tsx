@@ -202,6 +202,12 @@ const CardSection: React.FC<CardSectionProps> = ({
   ) : null;
 
   useEffect(() => {
+    if (isSeatMapExpControlAndEligible && index === 2 && isIntersecting) {
+      addVenueSeatsPageSectionViewedDataEvents?.({
+        sectionName: title ?? '',
+        rank: index + 1,
+      });
+    }
     if (!showSeatMapExperiment) {
       return;
     }
