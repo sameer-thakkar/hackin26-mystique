@@ -43,6 +43,9 @@ const StyledLongform = styled.div<{
   .slice-wrapper {
     ${({ isGlobalMb }) => isGlobalMb && `width: calc(100vw - (5.46vw * 2));`}
   }
+  .slice-block img {
+    width: 100%;
+  }
 
   .rich_text h1 {
     ${expandFontToken('Display/Small')}
