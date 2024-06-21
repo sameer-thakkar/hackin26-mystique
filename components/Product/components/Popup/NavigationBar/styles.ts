@@ -17,6 +17,25 @@ export const NavigationParent = styled.div<{ $isVisible?: boolean }>`
   pointer-events: none;
 `;
 
+export const ButtonGradient = styled.div<{ $isLeft?: boolean }>`
+  background: linear-gradient(to left, white 0%, transparent 75%);
+  height: 2rem;
+  width: 4rem;
+  top: 50%;
+  right: 3rem;
+  transform: translateY(-50%);
+  position: absolute;
+  z-index: 1;
+
+  ${({ $isLeft }) =>
+    $isLeft &&
+    css`
+      background: linear-gradient(to right, white 0%, transparent 75%);
+      right: auto;
+      left: 0.75rem;
+    `}
+`;
+
 export const NavigationContainer = styled.div<{ $isVisible?: boolean }>`
   background-color: white;
   width: 48rem;
@@ -32,6 +51,47 @@ export const NavigationContainer = styled.div<{ $isVisible?: boolean }>`
   gap: 0.25rem;
   touch-action: auto;
   pointer-events: all;
+
+  .swiper {
+    width: 45rem;
+    margin: 0;
+
+    .swiper-slide {
+      width: auto;
+    }
+  }
+
+  .descriptors-carousel-controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: ${COLORS.BRAND.WHITE};
+    border-radius: 50%;
+    height: 1.5rem;
+    width: 1.5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    filter: drop-shadow(0px 1.333px 5.333px rgba(0, 0, 0, 0.1))
+      drop-shadow(0px 0px 0.667px rgba(0, 0, 0, 0.1));
+
+    svg {
+      height: 0.6875rem;
+      width: 0.6875rem;
+    }
+
+    &.prev {
+      left: 0.5rem;
+    }
+
+    &.next {
+      right: 3rem;
+    }
+  }
 `;
 
 export const NavigationLink = styled.div<{ $isSelected?: boolean }>`
@@ -46,6 +106,7 @@ export const NavigationLink = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.375rem;
+  width: max-content;
 
   .new-tag {
     padding: 0.125rem 0.375rem 0.1875rem;

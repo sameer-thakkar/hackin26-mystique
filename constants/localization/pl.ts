@@ -1179,7 +1179,11 @@ const pl = {
     },
     GET_DIRECTION: 'Dojazd',
     DESCRIPTORS: {
-      DURATION: '{0} min',
+      DURATION: {
+        FULL: '{0} godz. {1} min',
+        WITHOUT_HOURS: '{0} min',
+        WITHOUT_MINS: '{0} godz.',
+      },
       ATTRACTIONS_COUNT: 'Atrakcje: {0}',
       ACTIVITIES_COUNT: 'Aktywności: {0}',
       TOTAL_DURATION: 'Całkowity czas trwania',

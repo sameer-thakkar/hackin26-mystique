@@ -1230,8 +1230,9 @@ const it = {
     GET_DIRECTION: 'Come arrivare',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} ore {1} minuti',
+        FULL: '{0} ore {1} minuti',
         WITHOUT_HOURS: '{0} minuti',
+        WITHOUT_MINS: '{0} ore',
       },
       ATTRACTIONS_COUNT: '{0} attrazioni',
       ACTIVITIES_COUNT: '{0} attività',

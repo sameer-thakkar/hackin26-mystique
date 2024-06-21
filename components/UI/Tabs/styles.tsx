@@ -13,6 +13,7 @@ export const StyledTabsContainer = styled.div<{
   flex-direction: column;
   overflow-x: visible;
   min-width: 0;
+  margin-bottom: 1.5rem;
 
   &::-webkit-scrollbar {
     display: none;
@@ -24,6 +25,9 @@ export const StyledTabsContainer = styled.div<{
 
   .swiper-slide {
     flex-shrink: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
     &:last-child {
       margin-right: 10.625rem;
@@ -130,15 +134,15 @@ export const StyledTabsContainer = styled.div<{
       cursor: pointer;
       padding: 0;
       margin-right: 1.5rem;
-      max-width: 15rem;
+      max-width: 18.75rem;
+      width: max-content;
 
       &-title {
         ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
         color: ${COLORS.GRAY.G2};
         margin: 0;
         padding: 0.5rem 0 0.4375rem;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        text-align: start;
         overflow: hidden;
       }
     }

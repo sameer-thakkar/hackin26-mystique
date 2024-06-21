@@ -16,6 +16,7 @@ export enum INCLUSION {
   ADMISSION_TICKET_INCLUDED = 'ADMISSION_TICKET_INCLUDED',
   FREE_ADMISSION = 'FREE_ADMISSION',
   ADMISSION_TICKET_NOT_INCLUDED = 'ADMISSION_TICKET_NOT_INCLUDED',
+  TICKET_INCLUDED_BASED_ON_SELECTION = 'TICKET_INCLUDED_BASED_ON_SELECTION',
 
   // activity
   INCLUDED_IN_COST = 'INCLUDED_IN_COST',
@@ -53,17 +54,24 @@ export enum SUB_TYPES {
 }
 
 export enum ModeOfTravelOptions {
-  CAR = 'Car',
+  CAR = 'CAR',
   SUV = 'SUV',
-  MINIVAN = 'Minivan',
-  BUS_COACH = 'Bus/Coach',
-  MINIBUS = 'Minibus',
-  FERRY = 'Ferry',
-  BOAT = 'Boat',
-  SPEEDBOAT = 'Speedboat',
-  YACHT = 'Yacht',
-  SHIP = 'Ship',
-  TRAIN = 'Train',
+  MINIVAN = 'MINIVAN',
+  BUS_COACH = 'BUS_COACH',
+  MINIBUS = 'MINIBUS',
+  FERRY = 'FERRY',
+  BOAT = 'BOAT',
+  SPEEDBOAT = 'SPEEDBOAT',
+  YACHT = 'YACHT',
+  SHIP = 'SHIP',
+  TRAIN = 'TRAIN',
+  WALK = 'WALK',
+}
+
+export enum ItineraryType {
+  CRUISE = 'CRUISE',
+  HOHO = 'HOHO',
+  GENERIC = 'GENERIC',
 }
 
 export interface APIResponse {
@@ -73,6 +81,7 @@ export interface APIResponse {
 export interface Itinerary {
   id: number;
   name: string;
+  type: ItineraryType;
   subCategoryId: number;
   active: boolean;
   map: Map;
@@ -131,7 +140,7 @@ export interface BaseSectionDetails {
   distanceFromParent?: number;
   inclusion?: LabelWithLocalization<INCLUSION>;
   location?: Location;
-  modeOfTravel?: ModeOfTravelOptions;
+  modeOfTravel?: LabelWithLocalization<ModeOfTravelOptions>;
   name?: string;
   passBy?: boolean;
   sameAsStartingPoint: boolean;

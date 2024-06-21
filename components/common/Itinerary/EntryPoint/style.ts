@@ -11,10 +11,11 @@ export const EntryPointContainer = styled.button`
   position: relative;
   cursor: pointer;
   align-items: center;
+  cursor: pointer;
 
   .image-wrap {
     width: 18rem;
-    height: 9.25rem;
+    height: 6.375rem;
     border: 1px solid ${COLORS.GRAY.G6};
     border-radius: 12px;
     overflow: hidden;
@@ -45,7 +46,7 @@ export const EntryPointContainer = styled.button`
 
   &:hover {
     .entry-point-button svg {
-      transform: rotate(45deg);
+      transform: translateX(0.125rem);
     }
   }
 `;

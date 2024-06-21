@@ -7,7 +7,7 @@ import Conditional from 'components/common/Conditional';
 import SwiperWrapper from 'components/Swiper';
 import Image from 'UI/Image';
 import { useSwiperArrows } from 'hooks/useSwiper';
-import { getDurationInHHMM } from 'utils/dateUtils';
+import { getDurationInHMNotation } from 'utils/dateUtils';
 import { nearbyThingsIcon } from 'const/itinerary';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
@@ -48,19 +48,8 @@ const NearbyItem = ({
     setTypeIcon(icon);
   }, []);
 
-  const durationObject = timeFromParent
-    ? getDurationInHHMM(timeFromParent)
-    : null;
-  const hasHours = durationObject?.hours !== 0;
-  const walkDuration = durationObject
-    ? (strings.formatString(
-        hasHours
-          ? strings.ITINERARY.DESCRIPTORS.DURATION.WITH_HOURS
-          : strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
-        ...(hasHours
-          ? [durationObject?.hours, durationObject?.minutes]
-          : [durationObject?.minutes])
-      ) as string)
+  const walkDuration = timeFromParent
+    ? getDurationInHMNotation(timeFromParent)
     : '';
 
   const hasImage = !!mediaUrls?.length;

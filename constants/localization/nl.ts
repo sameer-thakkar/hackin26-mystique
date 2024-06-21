@@ -1193,8 +1193,9 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     GET_DIRECTION: 'Cómo llegar',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} uur {1} minuten',
+        FULL: '{0} uur {1} minuten',
         WITHOUT_HOURS: '{0} minuten',
+        WITHOUT_MINS: '{0} uur',
       },
       ATTRACTIONS_COUNT: '{0} bezienswaardigheden',
       ACTIVITIES_COUNT: '{0} activiteiten',

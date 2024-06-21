@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { ChildSection, SECTION_TYPE, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { SubCardHeadingContainer } from 'components/common/Itinerary/TimelineView/components/PassesByCard/styles';
@@ -28,7 +29,7 @@ import {
 } from './styles';
 import { StopCardProps } from './types';
 
-const MAX_LEN_DESCRIPTION_STOP_CARD = 228;
+const MAX_LEN_DESCRIPTION_STOP_CARD = 114;
 
 const StopCard = ({
   descriptors,
@@ -41,9 +42,11 @@ const StopCard = ({
   isSubSection = false,
   isForcedStart = false,
   isForcedEnd = false,
+  findDirections = false,
 }: StopCardProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [multiPointDefaultOpen, setMultiPointDefaultOpen] = useState(-1);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const { id, type, details, location } = isSubSection
@@ -114,11 +117,21 @@ const StopCard = ({
     }
   }, []);
 
-  const allowOpen =
-    hasImage ||
-    (description && description.length - 7 >= MAX_LEN_DESCRIPTION_STOP_CARD) ||
-    ((isStart || isEnd) && hasMultiPoints) ||
-    (isSubCard && endPointIsNotSameAsStart);
+  const allowOpen = useMemo(() => {
+    if ((isStart || isEnd) && hasMultiPoints) return false;
+
+    if (isSubCard && !hasImage && !description) return false;
+
+    if (
+      !isSubCard &&
+      !isSubSection &&
+      !hasImage &&
+      (!description || description.length - 7 < MAX_LEN_DESCRIPTION_STOP_CARD)
+    )
+      return false;
+
+    return true;
+  }, []);
 
   const subSectionHeading =
     subType?.label === SUB_TYPES.POI || subType?.label === SUB_TYPES.LANDMARK
@@ -202,7 +215,7 @@ const StopCard = ({
               : name}
           </p>
 
-          <Conditional if={!endPointIsNotSameAsStart && isSubCard && location}>
+          <Conditional if={findDirections && isSubCard}>
             <FindDirection location={location!} hoverAnimation />
           </Conditional>
         </HeadingContainer>
@@ -210,9 +223,7 @@ const StopCard = ({
           <Conditional if={endPointIsNotSameAsStart}>
             <Descriptors {...descriptors} />
           </Conditional>
-          <Conditional
-            if={location && !hasMultiPoints && (isSubCard ? isOpen : true)}
-          >
+          <Conditional if={findDirections && !isSubCard}>
             <FindDirection location={location!} hoverAnimation />
           </Conditional>
           <Conditional
@@ -225,18 +236,29 @@ const StopCard = ({
             >
               <Conditional if={showSubCardImage}>
                 {hasImage && (
-                  <Image
-                    url={mediaUrls[0]}
-                    alt="stop-image"
-                    height={142.5}
-                    width={228}
-                    priority
-                    fetchPriority={'high'}
-                    fill
-                    aspectRatio="16:10"
-                    autoCrop={false}
-                    className="sub-card-image"
-                  />
+                  <>
+                    <Image
+                      url={mediaUrls[0]}
+                      alt="stop-image"
+                      height={142.5}
+                      width={228}
+                      priority
+                      fetchPriority={'high'}
+                      fill
+                      aspectRatio="16:10"
+                      autoCrop={false}
+                      className="sub-card-image"
+                      onLoadingComplete={() => setImageLoaded(true)}
+                    />
+                    {!imageLoaded && (
+                      <Skeleton
+                        height={143}
+                        width={228}
+                        borderRadius={4}
+                        containerClassName="sub-image-loader"
+                      />
+                    )}
+                  </>
                 )}
               </Conditional>
               <Conditional if={description}>

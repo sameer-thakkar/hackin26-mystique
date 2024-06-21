@@ -1240,8 +1240,9 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     GET_DIRECTION: 'Como chegar',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} h e {1} min',
-        WITHOUT_HOURS: '{0} min',
+        FULL: '{0} horas e {1} minutos',
+        WITHOUT_HOURS: '{0} minutos',
+        WITHOUT_MINS: '{0} horas',
       },
       ATTRACTIONS_COUNT: '{0} atrações',
       ACTIVITIES_COUNT: '{0} atividades',

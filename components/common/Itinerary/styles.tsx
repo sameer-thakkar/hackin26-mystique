@@ -17,6 +17,7 @@ export const SpaceBlock = styled.div<{
   width: 100%;
 `;
 
-export const Block = styled.div<{ $isVisible?: boolean }>`
+export const Block = styled.div<{ $isVisible?: boolean; $hasTabs?: boolean }>`
   display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+  margin-top: ${({ $hasTabs }) => ($hasTabs ? 0.5 : 0)}rem;
 `;

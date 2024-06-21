@@ -41,11 +41,40 @@ export const getDurationInDays = (duration: number) =>
 export const getDurationInHours = (duration: number) =>
   Math.round(duration / 60);
 
-export const getDurationInHHMM = (durationInMinutes: number) => {
-  const hours = Math.floor(durationInMinutes / 60);
-  const minutes = durationInMinutes % 60;
+export const getDurationInHMNotation = (durationInMinutes: number) => {
+  let hours = Math.floor(durationInMinutes / 60);
+  let minutes = durationInMinutes % 60;
 
-  return { hours, minutes };
+  if (durationInMinutes <= 90) {
+    hours = 0;
+    minutes = durationInMinutes;
+  }
+
+  let durationString = '';
+
+  switch (true) {
+    case hours === 0:
+      durationString = strings.formatString(
+        strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
+        minutes
+      ) as string;
+      break;
+    case minutes === 0:
+      durationString = strings.formatString(
+        strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_MINS,
+        hours
+      ) as string;
+      break;
+    default:
+      durationString = strings.formatString(
+        strings.ITINERARY.DESCRIPTORS.DURATION.FULL,
+        hours,
+        minutes
+      ) as string;
+      break;
+  }
+
+  return durationString;
 };
 
 export const isDateValid = (date: string | null) => dayjs(date).isValid();

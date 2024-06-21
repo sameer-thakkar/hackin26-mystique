@@ -1291,8 +1291,9 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     GET_DIRECTION: 'Cómo llegar',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} h {1} min',
+        FULL: '{0} h {1} min',
         WITHOUT_HOURS: '{0} min',
+        WITHOUT_MINS: '{0} h',
       },
       ATTRACTIONS_COUNT: '{0} atracciones',
       ACTIVITIES_COUNT: '{0} actividades',

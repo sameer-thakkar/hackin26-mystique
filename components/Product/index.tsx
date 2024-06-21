@@ -278,13 +278,11 @@ const Product = (props: any) => {
   const [boosterType, setBoosterType] = useState<
     keyof typeof BoosterType | null
   >(null);
-  const [
-    currentTabActiveIndexForPopup,
-    setCurrentTabActiveIndexForPopupForPopup,
-  ] = useState({
-    index: 0,
-    isForcedChange: false,
-  });
+  const [currentTabActiveIndexForPopup, setCurrentTabActiveIndexForPopup] =
+    useState({
+      index: 0,
+      isForcedChange: false,
+    });
   const [isUnScrolled, setIsUnScrolled] = useState(true);
   const [popupScrollTracker, setPopupScrollTracker] = useState({
     25: false,
@@ -1098,7 +1096,7 @@ const Product = (props: any) => {
         containerId,
       });
 
-      setCurrentTabActiveIndexForPopupForPopup({
+      setCurrentTabActiveIndexForPopup({
         index: index,
         isForcedChange: true,
       });
@@ -1159,7 +1157,7 @@ const Product = (props: any) => {
 
       if (isElementInScrollableView(heading)) {
         if (index !== currentTabActiveIndexForPopup.index) {
-          setCurrentTabActiveIndexForPopupForPopup({
+          setCurrentTabActiveIndexForPopup({
             index,
             isForcedChange: false,
           });
@@ -1358,13 +1356,14 @@ const Product = (props: any) => {
                   isTimed={!isHOHORevamp}
                 />
               </Conditional>
-              <Conditional if={hasItineraryData}>
+              <Conditional if={hasItineraryData && !isMobile}>
                 <EntryPoint
                   onClick={async () => {
                     popupController.current?.open(1);
                     trackedToggleContent(false);
                   }}
                   image={tgidItineraryData?.[0]?.details?.mapPreviewLink}
+                  index={position}
                 />
               </Conditional>
               <Conditional if={isLoading}>
@@ -1389,7 +1388,9 @@ const Product = (props: any) => {
                 <Ratings
                   reviewsDetails={reviewsDetails}
                   onRatingsCountClick={
-                    showPopup && !originalIsMobile && reviewsDetails
+                    showPopup &&
+                    !originalIsMobile &&
+                    reviewsDetails?.showRatings
                       ? () => {
                           trackEvent({
                             eventName:
@@ -1401,18 +1402,17 @@ const Product = (props: any) => {
                               reviewsDetails,
                             }),
                           });
+
+                          const numberOfSections =
+                            tabs.length + (hasItineraryData ? 1 : 0);
+
                           if (!isPopup) {
-                            popupController.current?.open();
+                            popupController.current?.open(numberOfSections);
                             trackedToggleContent(false);
+                          } else {
+                            if (!popupContainerRef.current) return;
+                            scrollToSection(numberOfSections);
                           }
-                          if (!popupContainerRef.current) return;
-
-                          const headings =
-                            popupContainerRef.current.querySelectorAll<HTMLHeadingElement>(
-                              '.tour-description > h6'
-                            );
-
-                          scrollToSection(headings.length - 1);
                         }
                       : undefined
                   }
@@ -1774,12 +1774,16 @@ const Product = (props: any) => {
                       lang={currentLanguage}
                     />
                   </Conditional>
-                  <PrismicRichText
-                    field={
-                      isPopup ? everyRichTextExceptHighlights : highlights || []
-                    }
-                    components={shortCodeSerializer}
-                  />
+                  <Conditional if={!isMobile}>
+                    <PrismicRichText
+                      field={
+                        isPopup
+                          ? everyRichTextExceptHighlights
+                          : highlights || []
+                      }
+                      components={shortCodeSerializer}
+                    />
+                  </Conditional>
                 </Conditional>
                 <Conditional
                   if={!isPopup && tabs.length && !isSpecialGuidedTour}

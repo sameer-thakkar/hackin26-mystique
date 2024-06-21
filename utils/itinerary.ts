@@ -11,9 +11,9 @@ import { StopCardProps } from 'components/common/Itinerary/TimelineView/componen
 import { isSubsetArray } from 'utils/arrayUtils';
 import { ITINERARY_DESCRIPTORS_DATA } from 'const/itinerary';
 
-export const getEntryPointPlaceHolder = () => {
-  const index = Math.ceil(Math.random() * 5);
-  return `https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-entry-${index}.png`;
+export const getEntryPointPlaceHolder = (index: number) => {
+  const imageIndex = (index % 5) + 1;
+  return `https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-entry-c-${imageIndex}.png`;
 };
 
 type CombinedStopAndPassby = {
@@ -25,6 +25,9 @@ const DEFAULT_VALUE: CombinedStopAndPassby = {
   passby: null,
   stop: null,
 };
+
+export const isValidLocation = (location?: Location) =>
+  !!location && location.latitude !== 0 && location.longitude !== 0;
 
 export const sectionDataSanitizer = (
   sections: Section[],
@@ -56,6 +59,8 @@ export const sectionDataSanitizer = (
               descriptors: startLocationDescriptors,
               sectionDetails: startLocations[0],
               position: 0,
+              defaultOpen: startLocations.length > 1,
+              findDirections: isValidLocation(startLocations[0].location),
               subCards: !startLocations.length
                 ? []
                 : startLocations.length > 1
@@ -68,6 +73,8 @@ export const sectionDataSanitizer = (
                     },
                     sectionDetails: { ...section, rank: index + 1 },
                     isSubSection: false,
+                    position: index + 1,
+                    findDirections: isValidLocation(section.location),
                   }))
                 : startLocations[0].childSections.map((child, index) => ({
                     descriptors: {
@@ -139,6 +146,7 @@ export const sectionDataSanitizer = (
                 ...stop,
                 location: isHOHO ? stop.location : undefined,
               },
+              findDirections: isHOHO ? isValidLocation(stop.location) : false,
               position: index + startLocations.length,
               subCards: stop.childSections.map((child, index) => {
                 subCardPosition += child.details.passBy ? 0 : 1;
@@ -238,6 +246,7 @@ export const sectionDataSanitizer = (
                         attractionsCount: section.attractionsCount,
                         activitiesCount: section.activitiesCount,
                       },
+                      position: index + 1,
                       sectionDetails: {
                         ...section,
                         type: SECTION_TYPE.END_LOCATION,
@@ -255,6 +264,8 @@ export const sectionDataSanitizer = (
               descriptors: endLocationDescriptors,
               sectionDetails: endLocations[0],
               position: 1 + stopLocations.length,
+              findDirections: isValidLocation(endLocations[0].location),
+              defaultOpen: endLocations.length > 1,
               subCards: !endLocations.length
                 ? []
                 : endLocations.length > 1
@@ -267,6 +278,8 @@ export const sectionDataSanitizer = (
                     },
                     sectionDetails: { ...section, rank: index + 1 },
                     isSubSection: false,
+                    position: index + 1,
+                    findDirections: isValidLocation(section.location),
                   }))
                 : endLocations[0].childSections.map((child, index) => ({
                     descriptors: {

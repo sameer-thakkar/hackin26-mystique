@@ -6,20 +6,19 @@ import { TailedArrowSVG } from 'assets/airportTransfers';
 import { EntryPointContainer } from './style';
 import { EntryPointProps } from './type';
 
-const EntryPoint = ({ onClick, image }: EntryPointProps) => {
-  const defaultImage = useMemo(() => getEntryPointPlaceHolder(), []);
+const EntryPoint = ({ onClick, image, index }: EntryPointProps) => {
+  const defaultImage = useMemo(() => getEntryPointPlaceHolder(index), [index]);
 
   return (
     <EntryPointContainer onClick={onClick}>
       <Image
         url={image ?? defaultImage}
         alt="banner-image"
-        height={296}
+        height={198.5}
         width={576}
         priority
         fetchPriority={'high'}
         fill
-        aspectRatio="16:10"
         autoCrop={false}
       />
       <div className="entry-point-button">

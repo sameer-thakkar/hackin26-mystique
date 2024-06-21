@@ -1298,8 +1298,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     GET_DIRECTION: 'Get direction',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} hrs {1} mins',
+        FULL: '{0} hours {1} mins',
         WITHOUT_HOURS: '{0} mins',
+        WITHOUT_MINS: '{0} hours',
       },
       ATTRACTIONS_COUNT: '{0} attractions',
       ACTIVITIES_COUNT: '{0} activities',

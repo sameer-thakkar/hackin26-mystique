@@ -16,4 +16,5 @@ export type StopCardProps = {
   isSubSection?: boolean;
   isForcedStart?: boolean;
   isForcedEnd?: boolean;
+  findDirections?: boolean;
 };

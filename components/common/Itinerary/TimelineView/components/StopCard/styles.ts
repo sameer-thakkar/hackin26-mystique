@@ -73,10 +73,10 @@ export const ToggleContainer = styled.div`
 `;
 
 export const TitleContainer = styled.h5`
-  margin: 0;
   ${expandFontToken(FONTS.MISC_OVERLINE_LARGE)}
   color: ${COLORS.GRAY.G2};
   z-index: 1;
+  margin: 0 0 -0.5rem;
 `;
 
 export const HeadingContainer = styled.div<{
@@ -227,6 +227,14 @@ export const DescriptionContainer = styled.div<{
     img {
       border-radius: 4px;
     }
+  }
+
+  .sub-image-loader {
+    width: 14.25rem;
+    height: 8.9375rem;
+    border-radius: 4px;
+    transform: translateY(-0.3125rem);
+    position: absolute;
   }
 
   display: ${({ $isSubCard, $isOpen }) =>

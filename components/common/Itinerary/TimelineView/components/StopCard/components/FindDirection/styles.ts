@@ -19,6 +19,7 @@ export const Container = styled.a<{
   align-items: center;
   width: max-content;
   gap: 0.25rem;
+  position: relative;
 
   ${({ $hoverAnimation }) =>
     $hoverAnimation &&

@@ -125,6 +125,12 @@ export const SubCardContentContainer = styled.div<{ $hasImage?: boolean }>`
         border-radius: 8px;
       }
     }
+
+    .image-loader {
+      position: absolute;
+      top: 4.675rem;
+      transform: translateY(-0.28125rem);
+    }
   }
 
   .passing-by-sub-card-content-text-section {

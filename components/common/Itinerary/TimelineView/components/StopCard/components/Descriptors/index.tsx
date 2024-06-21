@@ -1,7 +1,7 @@
 import React from 'react';
 import { INCLUSION, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
-import { getDurationInHHMM } from 'utils/dateUtils';
+import { getDurationInHMNotation } from 'utils/dateUtils';
 import { ClockSvg } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
 import Activities from 'assets/activities';
@@ -54,18 +54,7 @@ const Descriptors = ({
   )
     return null;
 
-  const durationObject = duration ? getDurationInHHMM(duration) : null;
-  const hasHours = durationObject?.hours !== 0;
-  const walkDuration = durationObject
-    ? (strings.formatString(
-        hasHours
-          ? strings.ITINERARY.DESCRIPTORS.DURATION.WITH_HOURS
-          : strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
-        ...(hasHours
-          ? [durationObject?.hours, durationObject?.minutes]
-          : [durationObject?.minutes])
-      ) as string)
-    : '';
+  const walkDuration = duration ? getDurationInHMNotation(duration) : '';
 
   return (
     <Container>

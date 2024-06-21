@@ -108,6 +108,7 @@ const Itinerary = ({ itineraryData = [], lang }: TItineraryComponentProps) => {
             <Block
               $isVisible={itineraryItem.id === activeItineraryData?.id}
               key={itineraryItem.id}
+              $hasTabs={itineraryData?.length > 1}
             >
               <ItineraryDescriptorsCarousel
                 itinerary={itineraryItem}

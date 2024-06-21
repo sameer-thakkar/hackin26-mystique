@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import Link from 'next/link';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
@@ -24,6 +25,7 @@ const PassingBySubCard = ({
   link,
 }: PassesByCardProps['stops'][0]) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const hasContent = image || description;
 
@@ -79,7 +81,16 @@ const PassingBySubCard = ({
                 fill
                 aspectRatio="16:10"
                 autoCrop={false}
+                onLoadingComplete={() => setImageLoaded(true)}
               />
+              {!imageLoaded && (
+                <Skeleton
+                  height={160}
+                  width={256}
+                  borderRadius={8}
+                  containerClassName="image-loader"
+                />
+              )}
               <Conditional if={!description && link}>
                 <Link href={link!} passHref>
                   <Cta>

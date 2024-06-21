@@ -258,8 +258,8 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
       height: 344,
     },
     withItinerary: {
-      width: 288,
-      height: 180,
+      width: 432,
+      height: 396,
     },
   },
 };
@@ -1067,15 +1067,15 @@ export const itineraryStyles = css`
     gap: 1rem;
 
     ${CarouselContainer} {
-      height: 11.25rem;
+      height: 16.5rem;
       width: 18rem;
 
       .swiper-slide {
         img {
-          height: 11.25rem;
-          min-height: 11.25rem;
-          max-height: 11.25rem;
-          aspect-ratio: 16/10;
+          height: 16.5rem;
+          min-height: 16.5rem;
+          max-height: 16.5rem;
+          width: 18rem;
         }
       }
     }

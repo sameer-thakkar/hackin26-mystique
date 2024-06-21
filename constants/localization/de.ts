@@ -1231,8 +1231,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     GET_DIRECTION: 'Wegbeschreibung',
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} Std. {1} Min.',
-        WITHOUT_HOURS: '{1} Min.',
+        FULL: '{0} Std. {1} Min.',
+        WITHOUT_HOURS: '{0} Min.',
+        WITHOUT_MINS: '{0} Std.',
       },
       ATTRACTIONS_COUNT: '{0} Attraktionen',
       ACTIVITIES_COUNT: '{0} Aktivitäten',

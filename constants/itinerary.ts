@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { ModeOfTravelOptions, SUB_TYPES } from 'types/itinerary.type';
 import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
-import { getHumanReadableTime } from 'utils/dateUtils';
+import { getDurationInHMNotation, getHumanReadableTime } from 'utils/dateUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
 
@@ -28,7 +28,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     fieldIdentifier: ['duration'],
     fieldTransformer: ({ duration }) => {
       const { hours, minutes } = duration;
-      return `${hours}h ${minutes ? `${minutes}min` : ''}`;
+      const timeInMinutes = hours * 60 + minutes;
+      return getDurationInHMNotation(timeInMinutes);
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
   },
@@ -75,8 +76,11 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     fieldIdentifier: ['modeOfTravel'],
     getIcon: ({ modeOfTravel }) => {
       return dynamic(
-        motIcons[modeOfTravel as ModeOfTravelOptions]
+        motIcons[modeOfTravel.label as ModeOfTravelOptions]
       ) as () => JSX.Element;
+    },
+    fieldTransformer: ({ modeOfTravel }) => {
+      return modeOfTravel.localisedLabel;
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
   },
@@ -119,6 +123,7 @@ export const motIcons: Record<ModeOfTravelOptions, () => Promise<any>> = {
   [ModeOfTravelOptions.SUV]: () => import('assets/suv'),
   [ModeOfTravelOptions.TRAIN]: () => import('assets/motTrain'),
   [ModeOfTravelOptions.YACHT]: () => import('assets/yacht'),
+  [ModeOfTravelOptions.WALK]: () => import('assets/walkingTours'),
 };
 
 export const nearbyThingsIcon: Record<string, () => Promise<any>> = {

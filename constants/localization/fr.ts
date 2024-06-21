@@ -1241,8 +1241,9 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     GET_DIRECTION: "Comment s'y rendre",
     DESCRIPTORS: {
       DURATION: {
-        WITH_HOURS: '{0} h {1} min',
-        WITHOUT_HOURS: '{1} min',
+        FULL: '{0} h {1} min',
+        WITHOUT_HOURS: '{0} min',
+        WITHOUT_MINS: '{0} h',
       },
       ATTRACTIONS_COUNT: '{0} attractions',
       ACTIVITIES_COUNT: '{0} activités',

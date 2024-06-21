@@ -17,7 +17,6 @@ export const StyledItineraryDescriptorsCarouselContainer = styled.div`
   flex-direction: column;
   width: 100%;
   position: relative;
-  margin-top: 1.5rem;
 
   .swiper-wrapper {
     max-width: calc(100vw - 2rem);
