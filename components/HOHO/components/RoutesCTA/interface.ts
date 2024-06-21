@@ -4,4 +4,5 @@ export type TRoutesCTA = {
   listingPrice: Record<string, any>;
   bookingUrl: string;
   isMobile: boolean;
+  ranking: number;
 };

@@ -1,47 +1,29 @@
-import { useEffect, useMemo } from 'react';
-import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
+import RouteMap from 'components/common/Itinerary/MapView/Map';
+import {
+  TOnClickTrackEvent,
+  TOnZoomTrackEvent,
+} from 'components/common/Itinerary/MapView/Map/interface';
 import { SECTION_NAMES } from 'components/HOHO/constants';
 import { trackEvent } from 'utils/analytics';
-import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { TRouteMap } from './interface';
 import { MapContainer } from './styles';
-import { getLeafletMapMarkers } from './utils';
 
-const LeafletMap = dynamic(
-  () => import('@headout/aer/src/molecules/LeafletMap'),
-  {
-    ssr: false,
-  }
-);
-
-const RouteMap = (props: TRouteMap) => {
+const HOHORouteMap = (props: TRouteMap) => {
   const {
-    routeSectionsData,
     routeMapData,
     showRoutesTimeline,
-    isMobile,
     routeName,
     isSideModalOpen,
+    itinerary,
   } = props;
 
-  const {
-    itineraryRoute: { polyline = '', polylineColor = COLORS.BRAND.PURPS } = {},
-  } = routeMapData || {};
+  const { itineraryRoute: { polyline = '' } = {} } = routeMapData || {};
 
   const SECTION_NAME = showRoutesTimeline
     ? SECTION_NAMES.NEARBY_ATTRACTIONS
     : SECTION_NAMES.ITINERARY_DETAILS;
-
-  const markers = useMemo(
-    () =>
-      getLeafletMapMarkers({
-        itinerary: routeSectionsData,
-        sectionName: SECTION_NAME,
-        itineraryName: routeName,
-      }),
-    [routeSectionsData]
-  );
 
   useEffect(() => {
     if (!showRoutesTimeline || (showRoutesTimeline && isSideModalOpen))
@@ -52,29 +34,41 @@ const RouteMap = (props: TRouteMap) => {
       });
   }, [routeName, showRoutesTimeline, isSideModalOpen]);
 
+  const handleClickEvent = ({
+    type,
+    stopName,
+    stopNumber,
+  }: TOnClickTrackEvent) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MAP_CLICKED,
+      [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAME,
+      [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
+      [ANALYTICS_PROPERTIES.CLICK_TYPE]: type,
+      [ANALYTICS_PROPERTIES.STOP_NAME]: stopName,
+      [ANALYTICS_PROPERTIES.STOP_NUMBER]: stopNumber,
+    });
+  };
+
+  const handleZoomEvent = ({ zoomType }: TOnZoomTrackEvent) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MAP_ZOOMED,
+      [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAME,
+      [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
+      [ANALYTICS_PROPERTIES.ZOOM_TYPE]: zoomType,
+    });
+  };
+
   if (!polyline) return <MapContainer $isTimelineModal={showRoutesTimeline} />;
   return (
     <MapContainer $isTimelineModal={showRoutesTimeline} key={polyline}>
-      <LeafletMap
-        lines={[
-          {
-            path: polyline,
-            options: {
-              color: polylineColor,
-              lineJoin: 'round',
-            },
-          },
-        ]}
-        markers={markers}
-        minZoomLevel={isMobile ? 8 : 10}
-        maxZoomLevel={18}
-        showZoomControls={true}
-        mapTiles={
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-        }
+      <RouteMap
+        itinerary={itinerary}
+        showRoutesTimeline={false}
+        onClickTrackEvent={handleClickEvent}
+        onZoomTrackEvent={handleZoomEvent}
       />
     </MapContainer>
   );
 };
 
-export default RouteMap;
+export default HOHORouteMap;

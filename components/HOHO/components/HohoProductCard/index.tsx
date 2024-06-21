@@ -330,6 +330,7 @@ const HohoProductCard = (props: any) => {
                   listingPrice={finalListingPrice}
                   bookingUrl={productBookingUrl}
                   isMobile={isMobile}
+                  ranking={indexPosition + 1}
                 />
               </Conditional>
               <Conditional if={isLoading}>

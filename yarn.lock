@@ -2419,9 +2419,9 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@headout/aer@headout/aer#6743137951672abf6f5710b2bc539a4902288219":
+"@headout/aer@headout/aer#807bdd9fa9131d98b17ae5565a2149bc9826a750":
   version "0.1.7"
-  resolved "git+ssh://git@github.com/headout/aer.git#6743137951672abf6f5710b2bc539a4902288219"
+  resolved "git+ssh://git@github.com/headout/aer.git#807bdd9fa9131d98b17ae5565a2149bc9826a750"
   dependencies:
     "@googlemaps/js-api-loader" "^1.16.6"
     "@googlemaps/polyline-codec" "^1.0.28"
@@ -4693,10 +4693,10 @@
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
   integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
-"@types/google.maps@^3.55.5":
-  version "3.55.9"
-  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.55.9.tgz#3bbe1d044d9b999392a359fb37b0de2545ac53c4"
-  integrity sha512-phaOMtezbT3NaXPKiI3m0OosUS7Nly0auw3Be5s/CgMWLVoDAUP1Yb/Ld0TRoRp8ibrlT4VqM5kmzfvUA0UNLQ==
+"@types/google.maps@^3.55.8":
+  version "3.55.10"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.55.10.tgz#ce4a8c375b84990a0e9eec9f151c3494cbe5bf2c"
+  integrity sha512-XbDu2MIvcKgN+MBrufjWcsQRtXTbrBGBKperbhMLnPSq4770+pvlR66Oqq/Ub4AVkmGc9QciCfwPZpVCLaKAOw==
 
 "@types/hast@^2.0.0":
   version "2.3.10"
@@ -4768,7 +4768,7 @@
   resolved "https://registry.yarnpkg.com/@types/keygrip/-/keygrip-1.0.6.tgz#1749535181a2a9b02ac04a797550a8787345b740"
   integrity sha512-lZuNAY9xeJt7Bx4t4dx0rYCDqGPW8RXhQZK1td7d4H6E9zYbLoOtjBvfwdTKpsyxQI/2jv+armjX/RW+ZNpXOQ==
 
-"@types/leaflet@^1.9.9":
+"@types/leaflet@^1.9.12":
   version "1.9.12"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.9.12.tgz#a6626a0b3fba36fd34723d6e95b22e8024781ad6"
   integrity sha512-BK7XS+NyRI291HIo0HCfE18Lp8oA30H1gpi1tf0mF3TgiCEzanQjOqNZ4x126SXzzi2oNSZhZ5axJp1k0iM6jg==

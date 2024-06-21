@@ -1061,6 +1061,7 @@ export const ANALYTICS_PROPERTIES = {
   ITINERARY_TYPE: 'Itinerary Type',
   INFORMATION_HEADING: 'Information Heading',
   ITINERARY_VIEW: 'Itinerary View',
+  ZOOM_TYPE: 'Zoom Type',
 };
 
 export const PAGE_TYPES = {

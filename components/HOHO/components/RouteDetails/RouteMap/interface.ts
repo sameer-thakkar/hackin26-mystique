@@ -1,3 +1,4 @@
+import { Itinerary } from 'types/itinerary.type';
 import { TItineraryMap } from '../interface';
 
 export type TNumberedMarkerIcon = {
@@ -6,10 +7,9 @@ export type TNumberedMarkerIcon = {
 };
 
 export type TRouteMap = {
-  routeSectionsData: Record<string, any>[];
   routeMapData: TItineraryMap;
-  isMobile: boolean;
   routeName: string;
+  itinerary: Itinerary;
   showRoutesTimeline?: boolean;
   isSideModalOpen?: boolean;
 };

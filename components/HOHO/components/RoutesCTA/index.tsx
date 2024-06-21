@@ -19,7 +19,8 @@ import { Container, routesDrawerStyles, TextIconContainer } from './styles';
 const RoutesCTA = (props: TRoutesCTA) => {
   const popupController = useRef<TController>();
 
-  const { tourGroupName, tgid, listingPrice, bookingUrl, isMobile } = props;
+  const { tourGroupName, tgid, listingPrice, bookingUrl, isMobile, ranking } =
+    props;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
 
@@ -29,6 +30,8 @@ const RoutesCTA = (props: TRoutesCTA) => {
       eventName: ANALYTICS_EVENTS.VIEW_ITINERARY_CLICKED,
       [ANALYTICS_PROPERTIES.CTA_TYPE]: 'Itinerary',
       [ANALYTICS_PROPERTIES.LABEL]: 'Route Details',
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.RANKING]: ranking,
     });
     if (isMobile) {
       setIsDrawerOpen(true);

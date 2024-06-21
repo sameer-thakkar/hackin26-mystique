@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
@@ -10,7 +11,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THRESHOLD } from 'const/index';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import AttractionsCarousel from '../../AttractionsCarousel';
-import RouteMap from '../RouteMap';
+import HOHORouteMap from '../RouteMap';
 import RoutesTimeline from '../RoutesTimeline';
 import { TRouteInfo } from './interface';
 import {
@@ -144,13 +145,12 @@ const RouteInfo = (props: TRouteInfo) => {
             </div>
           </Conditional>
           <Conditional if={isMobile}>
-            <RouteMap
-              routeSectionsData={routeSectionsData}
+            <HOHORouteMap
               routeMapData={routeMapData}
               showRoutesTimeline={showRoutesTimeline}
               isSideModalOpen={isSideModalOpen}
-              isMobile={isMobile}
               routeName={routeName}
+              itinerary={routeData as Itinerary}
             />
           </Conditional>
           <AttractionsCarousel
@@ -170,13 +170,12 @@ const RouteInfo = (props: TRouteInfo) => {
         </TimelineWrapper>
       </Conditional>
       <Conditional if={!isMobile}>
-        <RouteMap
-          routeSectionsData={routeSectionsData}
+        <HOHORouteMap
           routeMapData={routeMapData}
           showRoutesTimeline={showRoutesTimeline}
           isSideModalOpen={isSideModalOpen}
-          isMobile={isMobile}
           routeName={routeName}
+          itinerary={routeData as Itinerary}
         />
       </Conditional>
     </Container>
