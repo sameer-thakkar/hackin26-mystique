@@ -37,6 +37,7 @@ export const BaseButton = styled.button`
 
   @media (max-width: 768px) {
     padding: 0.5rem 0;
+    min-width: unset;
     svg {
       width: 0.7rem;
       height: 0.7rem;
@@ -79,14 +80,24 @@ export const CancelButton = styled(BaseButton)`
 export const ConsentFixedWrapper = styled.div<{
   $isHidden?: boolean;
 }>`
-  position: fixed;
-  bottom: 0;
+  position: sticky;
+  bottom: -100%;
   left: 0;
   width: 100%;
   z-index: 20;
   background: ${COLORS.GRAY.G7};
   ${({ $isHidden }) => $isHidden && hidden}
   border-top: 5px solid ${COLORS.GRAY.G6};
+  animation: 350ms flyIn ease-out forwards;
+
+  @keyframes flyIn {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0;
+    }
+  }
 
   @media (max-width: 768px) {
     transform: unset;
@@ -124,7 +135,7 @@ export const ActionContainer = styled.div`
   justify-content: end;
   align-items: center;
   align-content: center;
-  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
 
   @media (max-width: 768px) {
     display: grid;
