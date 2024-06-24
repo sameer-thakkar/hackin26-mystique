@@ -419,13 +419,14 @@ const ContentPage = (props: any) => {
   const CFWBody: Record<string, any>[] = contentFramework?.data?.body || [];
   const contentFWSlices: Record<string, any>[] = groupSlices(CFWBody);
 
-  const isRevampedPage =
-    baseLangIsPoiMb &&
-    [
-      SHOULDER_PAGE_TYPE.ABOUT,
-      SHOULDER_PAGE_TYPE.TIMINGS,
-      SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS,
-    ].includes(shoulder_page_type || '') &&
+  const isShoulderPageTypeIncluded = [
+    SHOULDER_PAGE_TYPE.ABOUT,
+    SHOULDER_PAGE_TYPE.TIMINGS,
+    SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS,
+  ].includes(shoulder_page_type || '');
+
+  let isRevampedPage =
+    isShoulderPageTypeIncluded &&
     !(
       shoulder_page_type == SHOULDER_PAGE_TYPE.TIMINGS &&
       !poiInfo?.operatingSchedules?.length
@@ -435,6 +436,13 @@ const ContentPage = (props: any) => {
       (!Object.values(SUBATTRACTION_TYPE).includes(subattraction_type || '') ||
         !shouldShowNewSubattractionsExp)
     );
+
+  if (
+    isShoulderPageTypeIncluded &&
+    shoulder_page_type !== SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
+  ) {
+    isRevampedPage = isRevampedPage && baseLangIsPoiMb;
+  }
   const breadcrumbsSliceIndex = CFWBody.findIndex(
     ({ slice_type }) => slice_type === SLICE_TYPES.BREADCRUMBS
   );

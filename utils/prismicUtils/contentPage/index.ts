@@ -439,7 +439,7 @@ const getContentPageDocument = async ({
           hostname,
         });
         parentTgidsList = tgidsResult?.pageData?.items || [];
-        parentTgidsData = getScorpioData({
+        parentTgidsData = await getScorpioData({
           finalTours: parentTgidsList,
           currency: tgidsResult?.currency,
           language: lang!,
@@ -456,7 +456,7 @@ const getContentPageDocument = async ({
             hostname,
           });
           childTgidsList = tgidsResult?.tourGroups || [];
-          childTgidsData = getScorpioData({
+          childTgidsData = await getScorpioData({
             finalTours: childTgidsList,
             currency: tgidsResult?.currencies?.[0],
             language: lang!,
@@ -470,7 +470,7 @@ const getContentPageDocument = async ({
             currency,
           });
           childTgidsList = tgidsResult?.pageData?.items || [];
-          childTgidsData = getScorpioData({
+          childTgidsData = await getScorpioData({
             currency: tgidsResult?.currency,
             finalTours: childTgidsList,
             language: lang!,
