@@ -185,6 +185,10 @@ export const getHumanReadableTime = ({
     parsedTime.toDate()
   );
 
+  if (lang !== 'en-us') {
+    return formatted;
+  }
+
   return formatted.split(' ').join('').toLowerCase();
 };
 
