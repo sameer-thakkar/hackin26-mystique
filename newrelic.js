@@ -6,7 +6,7 @@
  * description of configuration variables and their potential values.
  */
 exports.config = {
-  agent_enabled: ['stage', 'production'].includes(process.env.APP_ENV),
+  agent_enabled: ['test', 'production'].includes(process.env.APP_ENV),
   /**
    * Array of application names.
    */
