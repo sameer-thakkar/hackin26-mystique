@@ -38,7 +38,7 @@ const Highlights = ({
   useEffect(() => {
     if (contentRef.current) {
       setShowViewMoreAsOverlay(
-        contentRef.current.querySelector('ul')!.offsetHeight > 240
+        contentRef.current.querySelector('ul')!.offsetHeight >= 240
       );
     }
   }, []);

@@ -77,6 +77,7 @@ import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
+import { EXPERIMENT_UIDS } from './HOHO/constants';
 
 const AirportTransferProductsSection =
   dynamic<TAirportTransfersProductSectionProps>(() =>
@@ -289,13 +290,25 @@ const MicrositeV1 = (props: any) => {
   const currentLanguage = getLangObject(lang).code;
 
   const {
-    isEligible: isHohoExpEligible,
-    isExperimentResolving,
-    variant: hohoVariant,
+    isEligible: isHohoExpEligibleDweb,
+    isExperimentResolving: isExperimentResolvingDweb,
+    variant: hohoVariantDweb,
   } = useABTesting({
-    experimentId: 'HOHO_REVAMP_EXPERIMENT',
+    experimentId: 'HOHO_DWEB',
     noTrack: false,
-    customEligibilityCheckFn: () => isHOHO,
+    customEligibilityCheckFn: () =>
+      isHOHO && EXPERIMENT_UIDS.includes(uid) && !isMobile,
+  });
+
+  const {
+    isEligible: isHohoExpEligibleMweb,
+    isExperimentResolving: isExperimentResolvingMweb,
+    variant: hohoVariantMweb,
+  } = useABTesting({
+    experimentId: 'HOHO_MWEB',
+    noTrack: false,
+    customEligibilityCheckFn: () =>
+      isHOHO && EXPERIMENT_UIDS.includes(uid) && isMobile,
   });
 
   const {
@@ -310,7 +323,8 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showHohoRevamp =
-    isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
+    (isHohoExpEligibleDweb && hohoVariantDweb === VARIANTS.TREATMENT) ||
+    (isHohoExpEligibleMweb && hohoVariantMweb === VARIANTS.TREATMENT);
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -764,7 +778,9 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
-      isHOHOResolving={isHohoExpEligible && !hohoTimer}
+      isHOHOResolving={
+        (isHohoExpEligibleDweb || isHohoExpEligibleMweb) && !hohoTimer
+      }
       isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
     />
@@ -829,7 +845,8 @@ const MicrositeV1 = (props: any) => {
   }, [eventsReady, isAirportTransfersMB]);
 
   if (
-    (isHohoExpEligible && isExperimentResolving) ||
+    (isHohoExpEligibleDweb && isExperimentResolvingDweb) ||
+    (isHohoExpEligibleMweb && isExperimentResolvingMweb) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving)
   )
     return <Loader />;

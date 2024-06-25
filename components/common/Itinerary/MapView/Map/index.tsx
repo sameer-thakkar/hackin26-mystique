@@ -6,7 +6,9 @@ import {
   SECTION_TYPE,
 } from 'types/itinerary.type';
 import type { MapMarker } from '@headout/aer/src/molecules/LeafletMap/map';
+import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import type { TMapController, TMapProps, TZoomInfo } from './interface';
 import ResetButton from './ResetButton';
 import { MapContainer } from './styles';
@@ -179,13 +181,27 @@ const RouteMap = ({
   }, [itinerary, !!controller.current, onActiveSectionChange]);
 
   const handleZoomChange = (zoom: number) => {
-    setCurrentZoom(zoom);
+    setTimeout(() => {
+      setCurrentZoom(zoom);
+    }, 4000);
     if (!mapPinClick && currentZoom !== 0) {
       onZoomTrackEvent?.({
         zoomType: zoom > currentZoom ? 'Zoom In' : 'Zoom Out',
       });
     }
   };
+
+  const handleFreeTouch = (e: any) => {
+    e.stopPropagation();
+    const { className } = e.target as HTMLElement;
+    if (typeof className === 'string' && className.includes('leaflet-touch')) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MAP_CLICKED,
+        [ANALYTICS_PROPERTIES.CLICK_TYPE]: 'Free Area',
+      });
+    }
+  };
+
   if (!itinerary.map || !itinerary.map.active) return null;
   const {
     polyline,
@@ -194,7 +210,7 @@ const RouteMap = ({
   } = itinerary.map.itineraryRoute || {};
 
   return (
-    <MapContainer>
+    <MapContainer onClick={handleFreeTouch} onTouchEnd={handleFreeTouch}>
       <Map
         lines={
           isItineraryRouteActive

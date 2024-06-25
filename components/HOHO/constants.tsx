@@ -23,3 +23,8 @@ export const FILTERED_HIGHLIGHTS = () => [
   IGNORED_HEADINGS.STARTING_STOP,
   IGNORED_HEADINGS.TRAVEL_TIME,
 ];
+
+export const EXPERIMENT_UIDS = [
+  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours',
+  'www.hop-on-hop-off-tickets.com.paris-bus-tours',
+];

@@ -48,9 +48,6 @@ const RouteDetails = (props: TRouteDetails) => {
     id: tgid,
     params: {
       sections: 'true',
-      ...(lang && {
-        lang,
-      }),
     },
   });
 

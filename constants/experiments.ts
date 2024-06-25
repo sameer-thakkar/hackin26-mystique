@@ -12,7 +12,6 @@ export const VARIANTS = {
 
 const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
 const CURATED_VIDEO_BANNER = 'Curated Video Banner';
-const HOHO_REVAMP_EXPERIMENT = 'HOHO Revamp';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
@@ -24,11 +23,14 @@ const RANKING_EXPERIMENT_V1_REVENUE = 'Product Rankings v1 (Revenue)';
 const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 const ITINERARY_CONTROLLED_ROLLOUT = 'Itinerary Controlled Rollout';
+const HOHO_DWEB = 'HOHO Revamp 1.1 Dweb';
+const HOHO_MWEB = 'HOHO Revamp 1.1 Mweb';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
   CURATED_VIDEO_BANNER,
-  HOHO_REVAMP_EXPERIMENT,
+  HOHO_DWEB,
+  HOHO_MWEB,
   ITINERARY_CONTROLLED_ROLLOUT,
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
@@ -56,10 +58,15 @@ export const EXPERIMENTS: Record<string, any> = {
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
   ),
-  [HOHO_REVAMP_EXPERIMENT]: new Experiment(
-    HOHO_REVAMP_EXPERIMENT,
+  [HOHO_DWEB]: new Experiment(
+    HOHO_DWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [70, 30]
+  ),
+  [HOHO_MWEB]: new Experiment(
+    HOHO_MWEB,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
   ),
   [ITINERARY_CONTROLLED_ROLLOUT]: new Experiment(
     ITINERARY_CONTROLLED_ROLLOUT,
