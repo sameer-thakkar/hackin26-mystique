@@ -14,7 +14,7 @@ import { ITINERARY_DESCRIPTORS_DATA } from 'const/itinerary';
 
 export const getEntryPointPlaceHolder = (index: number) => {
   const imageIndex = (index % 5) + 1;
-  return `https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-entry-c-${imageIndex}.png`;
+  return `https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-entry-s-${imageIndex}.png`;
 };
 
 type CombinedStopAndPassby = {

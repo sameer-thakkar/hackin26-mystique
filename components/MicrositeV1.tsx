@@ -677,7 +677,7 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       !isMobile &&
       taggedSubCategoryName !== 'HOHO' &&
-      !!scorpioData?.itineraryData?.itineraries,
+      !!scorpioData?.itineraryData?.itineraries?.length,
   });
 
   const showItineraries =
