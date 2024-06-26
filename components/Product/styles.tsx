@@ -104,7 +104,7 @@ export const TourTags = styled.div<{
   gap: 0.5rem;
   flex-wrap: wrap;
   ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-  margin-top: -0.5rem;
+  margin-top: 0rem;
   margin-bottom: 0.5rem;
   .tour-tag {
     margin: 0;
@@ -365,7 +365,7 @@ export const cardImageStyles = ($forceMobile?: boolean) => css`
     width: calc(100% + 2rem);
     height: 11.25rem;
     max-height: 11.25rem;
-    margin: -1.375rem -1rem -0.5rem;
+    margin: -0.75rem -1rem -0.5rem;
     border-radius: 0.5rem 0.5rem 0 0;
 
     img {
@@ -519,6 +519,7 @@ export const CTABlock = styled.div<{
   isSticky: boolean;
   shouldOffset?: boolean;
   $forceMobile?: boolean;
+  isPoiMwebCard?: boolean;
 }>`
   a {
     text-decoration: none;
@@ -562,13 +563,14 @@ export const PriceContainer = styled.div<{
   align-items: end;
   grid-column-gap: 8px;
   justify-items: left;
-  grid-row-gap: 4px;
   justify-self: left;
+  grid-row-gap: 4px;
 
   .tour-scratch-price {
     display: grid;
     grid-template-columns: auto auto;
     justify-content: left;
+
     grid-column-gap: 4px;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
   }
@@ -593,7 +595,7 @@ export const PriceContainer = styled.div<{
   ${({ theme }) => theme.productCards.priceFontSettings.mobile}
 
     .styled-price-block {
-    grid-column-gap: 0.25rem;
+    row-gap: 0;
   }
 
   .tour-price-container .tour-price {
@@ -1281,6 +1283,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     height: auto;
     max-height: none;
     aspect-ratio: 16/10;
+    margin-bottom: 0;
 
     img {
       border-radius: 0;
@@ -1325,14 +1328,12 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     }
 
     ${CTABlock} {
-      margin-bottom: -0.5rem;
+      margin-bottom: ${({ $isPoiMwebCard }) =>
+        $isPoiMwebCard ? '-0.5rem' : '-0.25rem'};
+      margin-top: ${({ $isPoiMwebCard }) =>
+        $isPoiMwebCard ? '0' : '-0.25rem'};
       grid-column: 1/3;
       align-self: flex-end;
-
-      button {
-        font-family: ${HALYARD.FONT_STACK};
-        letter-spacing: 0;
-      }
     }
   }
 
