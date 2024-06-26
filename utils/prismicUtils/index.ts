@@ -115,6 +115,9 @@ type TFetchPrismicDocumentResponse = Promise<{
   prismicApiResponse: Omit<TDocumentResponse<any>, 'shouldHaveShorterTtl'> & {
     shouldPageHaveShorterTtl?: boolean;
     prismicDocumentTypeApiCacheStatus?: string;
+    categoryHeaderMenu: Record<string, any>;
+    collectionIdsInListicles: Array<number>;
+    docsForListicles: any;
   };
 }>;
 

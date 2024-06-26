@@ -3,15 +3,17 @@ import { getHeadoutLanguagecode, handleSettledPromiseResults } from 'utils';
 import { fetchCategory } from 'utils/apiUtils';
 import getCityGuideDocs from 'utils/prismicUtils/getCityGuideDocs';
 import getShoulderPageDocs from 'utils/prismicUtils/getShoulderPageDocs';
+import { labeledPromiseAllSettled } from 'utils/promiseUtils';
 import { CITY_GUIDE } from 'const/header';
 import { MB_CATEGORISATION } from 'const/index';
 import generateCityAttractionsMenu from './generateCityAttractionsMenu';
 import generateCityGuideMenu from './generateCityGuideMenu';
 import generateSubCategoryMenu from './generateSubCategoryMenu';
 import {
-  addMiscMenuItems,
   applyTransformations,
+  getNormalisedMiscDocs,
   isMainMenu,
+  mergeMiscDocsWithMenu,
   sortMenu,
 } from '.';
 
@@ -26,7 +28,21 @@ const getNonCollectionMBMenu = async ({
     language: getHeadoutLanguagecode(lang),
   });
 
-  const cityGuideDocs = await getCityGuideDocs(categorisationMetadata);
+  const cityGuideDocsPromise = getCityGuideDocs(categorisationMetadata);
+
+  const shoulderPageDocsPromise = getShoulderPageDocs({
+    categorisationMetadata,
+    filterMiscDocs: true,
+    lang,
+  });
+
+  const { cityGuideDocs, shoulderPageDocs } = await labeledPromiseAllSettled([
+    {
+      promise: cityGuideDocsPromise,
+      label: 'cityGuideDocs',
+    },
+    { promise: shoulderPageDocsPromise, label: 'shoulderPageDocs' },
+  ] as const);
 
   const topThingsToDoMenuPromise = generateCityAttractionsMenu({
     categorisationMetadata,
@@ -61,12 +77,19 @@ const getNonCollectionMBMenu = async ({
     lang,
   });
 
+  const miscDocsPromise = getNormalisedMiscDocs({
+    docsStore: shoulderPageDocs,
+    lang,
+    categorisationMetadata,
+  });
+
   const menuPromiseSettledResults = await Promise.allSettled([
     topThingsToDoMenuPromise,
     cityToursMenuPromise,
     cityGuideMenuPromise,
     attractionsMenuPromise,
     cruisesMenuPromise,
+    miscDocsPromise,
   ]);
 
   const [
@@ -75,6 +98,7 @@ const getNonCollectionMBMenu = async ({
     cityGuideMenu,
     attractionsMenu,
     cruisesMenu,
+    miscDocs,
   ] = handleSettledPromiseResults(menuPromiseSettledResults);
 
   const aggregatedMenu = {
@@ -85,18 +109,9 @@ const getNonCollectionMBMenu = async ({
     ...cruisesMenu,
   };
 
-  const miscShoulderPageDocs = await getShoulderPageDocs({
-    categorisationMetadata,
-    filterMiscDocs: true,
-    lang,
-  });
+  const menu = cloneDeep(aggregatedMenu);
 
-  const menuWithMiscItems = await addMiscMenuItems({
-    menu: cloneDeep(aggregatedMenu),
-    docsStore: miscShoulderPageDocs,
-    lang,
-    categorisationMetadata,
-  });
+  const menuWithMiscItems = mergeMiscDocsWithMenu({ miscDocs, menu, lang });
 
   const transformedMenu = applyTransformations(cloneDeep(menuWithMiscItems));
 

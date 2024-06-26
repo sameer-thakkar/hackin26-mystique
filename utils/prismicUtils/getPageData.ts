@@ -1,5 +1,4 @@
 import { NextApiRequest } from 'next';
-import { createClient } from 'prismicio';
 import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import { CollectionDetails } from 'components/StaticBanner';
@@ -8,7 +7,6 @@ import {
   getCollectionSection,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
-  handleSettledPromiseResults,
   isCategoryMB,
   isCollectionMB,
   isSubCategoryMB,
@@ -31,15 +29,11 @@ import {
   getShowPageBreadcrumbs,
 } from 'utils/breadcrumbsUtils';
 import { getCatAndSubCatPageData } from 'utils/categoryPageUtils';
-import { generateCityPageData } from 'utils/cityPageUtils';
-import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import {
   getToursGlobalCollection,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import getCategoryHeaderMenu from 'utils/headerUtils/getCategoryHeaderMenu';
 import {
-  checkIfCategoryHeaderExists,
   checkIfCatOrSubCatPage,
   getHostName,
   getLangObject,
@@ -50,6 +44,8 @@ import { traceError } from 'utils/logutils';
 import categoryTourListParserV1 from 'utils/parsers/categoryTourListParserV1';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2';
 import monthOnMonthPageParser from 'utils/parsers/monthOnMonthPageParser';
+import { getCategoryData } from 'utils/prismicUtils/categoryUtils';
+import { getCityPageData } from 'utils/prismicUtils/cityUtils';
 import {
   filterArticlesBasedOnEntMb,
   getArticlesWithSameTgidPromise,
@@ -58,21 +54,25 @@ import {
   getNewsLandingPageUrl,
   getNewsPageData,
 } from 'utils/prismicUtils/NewsPage';
+import { extractOfferFromTourSliceTgids } from 'utils/prismicUtils/tourUtils';
 import {
   generateDescriptor,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
+import {
+  conditionalPromise,
+  labeledPromiseAllSettled,
+} from 'utils/promiseUtils';
 import { getLangUID, getValidUrlParams } from 'utils/urlUtils';
 import {
   CATEGORY_IDS,
   CUSTOM_TYPES,
-  DEFAULT_PRISMIC_LANG,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
-  MB_TYPES,
   RESOURCE_TYPE,
   SHORTER_CACHE_AGE,
   SLICE_TYPES,
+  SUPPORTED_LOCALE_MAP,
   THEMES,
   TLANGUAGELOCALE,
 } from 'const/index';
@@ -136,10 +136,14 @@ export const getPageData = async ({
       redirectInfo,
       shouldPageHaveShorterTtl,
       prismicDocumentTypeApiCacheStatus,
+      categoryHeaderMenu,
+      docsForListicles,
+      collectionIdsInListicles,
     } = prismicApiResponse;
 
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
+    const isCatOrSubCatPagePromise = checkIfCatOrSubCatPage(CMSContent);
 
     if (redirectInfo) {
       const { url, type } = redirectInfo;
@@ -178,7 +182,24 @@ export const getPageData = async ({
     let tgidsArray: any = [];
     let minPrice = 0;
     let bestDiscount = 0;
-    let collectionData = {};
+    let collectionDataPromise = Promise.resolve(
+      {} as ReturnType<typeof fetchCollection>
+    );
+    let bannerImageDataPromise: ReturnType<typeof fetchMediaResource> =
+      Promise.resolve(undefined);
+    let routeDetailsPromise: Promise<Record<string, any>> =
+      null as unknown as Promise<any>;
+    let variantsDataPromise: Promise<Record<string, any>[]> =
+      null as unknown as Promise<any>;
+
+    let collectionListPromise = Promise.resolve(
+      {} as ReturnType<typeof fetchCollectionList>
+    );
+
+    let categoryTourListDataPromise = Promise.resolve(
+      {} as ReturnType<typeof getCategoryData>
+    );
+
     const queryParams = getQueryparams(req);
 
     if (ContentType === CUSTOM_TYPES.NEWS_PAGE) {
@@ -235,19 +256,23 @@ export const getPageData = async ({
       const { data: contentFrameworkData } = contentFramework || {};
       const { body: slices } = contentFrameworkData || {};
 
-      const [collectionsInListicles, docsForListicles] =
-        await getDocsForListicleSlice({
-          slices,
+      if (collectionIdsInListicles?.length > 0) {
+        const language = getHeadoutLanguagecode(
+          lang ?? SUPPORTED_LOCALE_MAP.en
+        );
+        collectionListPromise = fetchCollectionList({
+          collectionIds: collectionIdsInListicles,
+          language,
           hostname,
-          lang: lang as string,
           cookies,
         });
+      }
 
       const collectionId =
         CMSData?.baseLangCategorisationMetadata?.tagged_collection;
       if (collectionId) {
         const languageCode = getLangObject(lang!).code;
-        collectionData = await fetchCollection({
+        collectionDataPromise = fetchCollection({
           collectionId,
           hostname,
           language: languageCode,
@@ -266,22 +291,19 @@ export const getPageData = async ({
         slices,
       });
 
-      let categoryTourListData;
       const hasCategoryTourListV1 = Object.keys(
         categoryTourListV1 || {}
       )?.length;
 
       if (hasCategoryTourListV1) {
-        categoryTourListData = await categoryTourListParserV1({
-          shoulderPageTicketsCard: productCardData,
-          hostname,
-          lang: lang ?? LANGUAGE_MAP.en.code,
+        categoryTourListDataPromise = getCategoryData({
           cookies,
+          hostname,
+          lang: lang as string,
           localizedStrings,
+          productCardData,
           runRankingExperiment,
         });
-        minPrice = categoryTourListData.minPrice;
-        bestDiscount = categoryTourListData.bestDiscount;
       }
 
       const prismicTours = toursTabFirstSlice
@@ -296,14 +318,11 @@ export const getPageData = async ({
       tgidsArray = toursList?.reduce((acc: any, tour: any) => {
         return [...acc, tour.tgid];
       }, []);
-      const { activeCurrency, primaryCity, primaryCountry } =
-        categoryTourListData || {};
+
       scorpioAllTourGroupData = {
         CMSContent,
-        collectionsInListicles,
         docsForListicles,
         toursList,
-        categoryTourListData,
         ContentType,
         uid,
         lang,
@@ -313,9 +332,6 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
-        ...(primaryCity && { primaryCity }),
-        ...(primaryCountry && { primaryCountry }),
-        ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
         prismicApiCacheStatus,
         prismicDocumentTypeApiCacheStatus,
@@ -489,16 +505,80 @@ export const getPageData = async ({
     if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
       try {
         const langCode = getHeadoutLanguagecode(lang as TLANGUAGELOCALE);
-        const tgidData = await fetchTourGroupV6({
+        const tgidDataPromise = fetchTourGroupV6({
           tgid: CMSContent?.data?.tgid,
           hostname,
           language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
           cookies,
         });
-        const mediaData = await fetchMediaResource({
+        const mediaDataPromise = fetchMediaResource({
           entityIds: [CMSContent?.data?.tgid].join(','),
           resourceType: 'MB_EXPERIENCE',
         });
+
+        const inventorySlotDataPromise = fetchTourGroupSlots({
+          tgid: CMSContent?.data?.tgid,
+          hostname,
+          forDays: 20,
+          cookies,
+        });
+
+        const breadcrumbsPromise = getShowPageBreadcrumbs(CMSContent);
+        const articlesWithSameTgidDataPromise =
+          getArticlesWithSameTgidPromise(
+            CMSContent?.data?.tgid,
+            uid,
+            lang as TLANGUAGELOCALE
+          ) || Promise.resolve(undefined);
+        const featuredArticlesDataPromise = getFeaturedArticlesPromise(
+          uid,
+          lang as TLANGUAGELOCALE
+        );
+        const newsLandingPageDataPromise = getNewsLandingPage();
+
+        const {
+          breadcrumbs,
+          articlesWithSameTgidData,
+          featuredArticlesData,
+          newsLandingPageData,
+          tgidData,
+          mediaData,
+          inventorySlotData,
+          currencyList,
+          domainConfig,
+        } = await labeledPromiseAllSettled([
+          {
+            label: 'breadcrumbs',
+            promise: breadcrumbsPromise,
+          },
+          {
+            label: 'articlesWithSameTgidData',
+            promise: articlesWithSameTgidDataPromise,
+          },
+          {
+            label: 'featuredArticlesData',
+            promise: featuredArticlesDataPromise,
+          },
+          {
+            label: 'newsLandingPageData',
+            promise: newsLandingPageDataPromise,
+          },
+          {
+            label: 'tgidData',
+            promise: tgidDataPromise,
+          },
+          {
+            label: 'mediaData',
+            promise: mediaDataPromise,
+          },
+          {
+            label: 'inventorySlotData',
+            promise: inventorySlotDataPromise,
+          },
+          { promise: currencyListPromise, label: 'currencyList' },
+          { promise: domainConfigPromise, label: 'domainConfig' },
+        ]);
+
         const verticalImageData =
           mediaData?.resourceEntityMedias?.[0]?.medias?.find(
             (media: any) => media.type === 'IMAGE'
@@ -524,29 +604,11 @@ export const getPageData = async ({
         const { url: _tgidDataUrl, ...tgidDataWithoutUrls } =
           tgidDataWithoutUrlSlugs;
 
-        const inventorySlotData = await fetchTourGroupSlots({
-          tgid: CMSContent?.data?.tgid,
-          hostname,
-          forDays: 20,
-          cookies,
-        });
-
         const primaryCountry = tgidDataWithoutUrls?.city?.country;
         const primaryCity = tgidDataWithoutUrls?.city;
 
         const activeCurrency = tgidDataWithoutUrls?.currency;
 
-        const breadcrumbs = await getShowPageBreadcrumbs(CMSContent);
-        const articlesWithSameTgidData = await getArticlesWithSameTgidPromise(
-          CMSContent?.data?.tgid,
-          uid,
-          lang as TLANGUAGELOCALE
-        );
-        const featuredArticlesData = await getFeaturedArticlesPromise(
-          uid,
-          lang as TLANGUAGELOCALE
-        );
-        const newsLandingPageData = await getNewsLandingPage();
         const featuredNewsArticles = filterArticlesBasedOnEntMb(
           featuredArticlesData?.results,
           uid
@@ -582,8 +644,8 @@ export const getPageData = async ({
           ...(primaryCity && { primaryCity }),
           ...(primaryCountry && { primaryCountry }),
           ...(activeCurrency && { activeCurrency }),
-          currencyList: await currencyListPromise,
-          domainConfig: await domainConfigPromise,
+          currencyList,
+          domainConfig,
           breadcrumbs,
           prismicApiCacheStatus,
           prismicDocumentTypeApiCacheStatus,
@@ -640,10 +702,7 @@ export const getPageData = async ({
         isEntertainmentMbListicle &&
         body4?.[0]?.items?.[0]?.month_label !== null;
 
-      const isCatOrSubCatPage = await checkIfCatOrSubCatPage(
-        CMSContent,
-        baseLangCategorisationMetadata
-      );
+      const isCatOrSubCatPage = await isCatOrSubCatPagePromise;
 
       const categoryCarouselCF = !isCatOrSubCatPage
         ? getSinglePrismicSlice({
@@ -652,8 +711,9 @@ export const getPageData = async ({
           })
         : {};
 
-      let categoryTourListData: Record<string, any> = {};
-      let bannerImageData;
+      let categoryTourListPromise: Promise<Record<string, any>> = {} as Promise<
+        Record<string, any>
+      >;
       const hasCategoryTourListV1 = Object.keys(
         localisedCategoryTourListV1 || {}
       )?.length;
@@ -668,7 +728,7 @@ export const getPageData = async ({
 
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
-          categoryTourListData = await categoryTourListParserV1({
+          categoryTourListPromise = categoryTourListParserV1({
             micrositeProductCardSliceWithData: localisedCategoryTourListV1,
             currentMicrositeProductCardSliceWithData:
               currentPageCategoryTourListV1,
@@ -678,34 +738,8 @@ export const getPageData = async ({
             localizedStrings,
             runRankingExperiment,
           });
-
-          minPrice = categoryTourListData.minPrice;
-          bestDiscount = categoryTourListData.bestDiscount;
-          const [firstTGID] = categoryTourListData?.finalTgids || [];
-          const { primarySubCategory: firstProductSubCategory } =
-            categoryTourListData.scorpioData?.[firstTGID] || {};
-          const subCatId = firstProductSubCategory?.id;
-          const categoryId = CATEGORY_IDS?.[taggedCategory];
-
-          if (isCollectionMB(taggedMbType)) {
-            bannerImageData = await fetchMediaResource({
-              resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
-              entityIds: taggedCollection,
-            });
-          } else if (isSubCategoryMB(taggedMbType)) {
-            bannerImageData = await fetchMediaResource({
-              resourceType: RESOURCE_TYPE.SUB_CATEGORY_CITY,
-              entityIds: `${subCatId}-${taggedCity}`,
-            });
-          } else if (isCategoryMB(taggedMbType)) {
-            bannerImageData = await fetchMediaResource({
-              resourceType: RESOURCE_TYPE.CATEGORY_CITY,
-              entityIds: `${categoryId}-${taggedCity}`,
-            });
-          }
-          collectionDetails = categoryTourListData.collectionDetails ?? {};
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
-          categoryTourListData = await monthOnMonthPageParser({
+          categoryTourListPromise = monthOnMonthPageParser({
             uid,
             tourListCategory: categoryTourListV2,
             hostname,
@@ -717,7 +751,7 @@ export const getPageData = async ({
           });
         } else {
           const timestampForCoralogix = Date.now();
-          categoryTourListData = await categoryTourListParserV2({
+          categoryTourListPromise = categoryTourListParserV2({
             tourListCategory: categoryTourListV2,
             hostname,
             categoryCarousel: categoryCarouselCF,
@@ -736,53 +770,56 @@ export const getPageData = async ({
 
       const { tagged_city: mbCity, tagged_country: mbCountry } =
         microsite?.baseLangCategorisationMetadata || {};
+      const cityPageDataPromise = getCityPageData({
+        cookies,
+        lang: lang as string,
+        mbCity,
+        mbCountry,
+        taggedMbType,
+      });
+      const offerTgidsPromise = extractOfferFromTourSliceTgids({
+        isCatOrSubCatPage,
+        toursTabFirstSlice,
+      });
 
-      let cityPageData = {};
-      let isCityPageMB = false;
-      if (taggedMbType === MB_TYPES.A1_HOMEPAGE && mbCity) {
-        isCityPageMB = true;
-        cityPageData = await generateCityPageData({
-          mbCity,
-          mbCountry,
-          lang: lang || LANGUAGE_MAP.en.locale,
-          cookies,
-        });
+      const { categoryTourListData, cityPageParams, offerDetails } =
+        await labeledPromiseAllSettled([
+          { promise: categoryTourListPromise, label: 'categoryTourListData' },
+          { promise: cityPageDataPromise, label: 'cityPageParams' },
+          { promise: offerTgidsPromise, label: 'offerDetails' },
+        ] as const);
 
-        const {
-          nearbyAndCurrentCityData: { currentCityData },
-        } = cityPageData as Record<string, any>;
-        const { discoverable } = currentCityData || {};
+      if (hasCategoryTourListV1 && hasCategoryTourList && !isCatOrSubCatPage) {
+        minPrice = categoryTourListData.minPrice;
+        bestDiscount = categoryTourListData.bestDiscount;
+        const [firstTGID] = categoryTourListData?.finalTgids || [];
+        const { primarySubCategory: firstProductSubCategory } =
+          categoryTourListData.scorpioData?.[firstTGID] || {};
+        const subCatId = firstProductSubCategory?.id;
+        const categoryId = CATEGORY_IDS?.[taggedCategory];
 
-        isCityPageMB = !!discoverable;
+        if (isCollectionMB(taggedMbType)) {
+          bannerImageDataPromise = fetchMediaResource({
+            resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
+            entityIds: taggedCollection,
+          });
+        } else if (isSubCategoryMB(taggedMbType)) {
+          bannerImageDataPromise = fetchMediaResource({
+            resourceType: RESOURCE_TYPE.SUB_CATEGORY_CITY,
+            entityIds: `${subCatId}-${taggedCity}`,
+          });
+        } else if (isCategoryMB(taggedMbType)) {
+          bannerImageDataPromise = fetchMediaResource({
+            resourceType: RESOURCE_TYPE.CATEGORY_CITY,
+            entityIds: `${categoryId}-${taggedCity}`,
+          });
+        }
+        collectionDetails = categoryTourListData.collectionDetails ?? {};
       }
 
-      const cityPageParams = {
-        mbLocationData: { mbCity, mbCountry },
-        isCityPageMB,
-        cityPageData,
-      };
+      const { prismicTours, offerTgids } = offerDetails;
 
-      const prismicTours =
-        toursTabFirstSlice && !isCatOrSubCatPage
-          ? toursTabSliceHandler(toursTabFirstSlice)
-          : [];
-      const offers = prismicTours
-        ?.filter((tour: any) => tour.offer__free_tour?.id)
-        ?.map((tour: any) => tour.offer__free_tour?.id);
-      const uniqueOfferIds = offers.filter(
-        (id: any, index: any) => offers.indexOf(id) === index
-      );
-      if (uniqueOfferIds.length) {
-        const prismicClient = createClient();
-        const offerTours = await prismicClient.getByIDs(uniqueOfferIds);
-
-        (CMSContent as any).offerData = offerTours?.results?.forEach(
-          (offer: any) => {
-            if (parseInt(offer.data.offer_tgid) > 0)
-              initial_tgids.push(offer.data.offer_tgid);
-          }
-        );
-      }
+      initial_tgids = initial_tgids.concat(offerTgids);
 
       const toursList = uncategorizedToursListParser(
         prismicTours,
@@ -860,7 +897,6 @@ export const getPageData = async ({
         mbTheme,
         isStage,
         collectionDetails,
-        bannerImageData,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
@@ -870,7 +906,7 @@ export const getPageData = async ({
     tgidsArray = [...tgidsArray];
     const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
 
-    const tourGroupAPIResponses = await fetchTourListV6({
+    const tourGroupAPIResponsesPromise = fetchTourListV6({
       hostname,
       language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
       tgids: tgidsArray,
@@ -896,6 +932,57 @@ export const getPageData = async ({
         })),
       };
     });
+
+    const breadcrumbsDoc = CMSContent;
+
+    const { isSeatingPlanPage, theatreType } =
+      getSeatingPlanAndTheatreType(uid);
+
+    const breadcrumbsPromise = isSeatingPlanPage
+      ? getSeatingPlanBreadcrumbs(breadcrumbsDoc)
+      : getBreadcrumbs(breadcrumbsDoc);
+
+    const isCatOrSubCatPage = await isCatOrSubCatPagePromise;
+
+    const catAndSubCatPageDataPromise = conditionalPromise(
+      isCatOrSubCatPage,
+      () =>
+        getCatAndSubCatPageData({
+          doc: CMSContent,
+          attractionsHeaderMenu: categoryHeaderMenu?.ATTRACTIONS?.menu || {},
+          themesHeaderMenu: categoryHeaderMenu?.THEMES?.menu || {},
+          cookies,
+        })
+    );
+
+    const {
+      tourGroupAPIResponses,
+      breadcrumbs,
+      catAndSubCatPageData,
+      currencyList,
+      domainConfig,
+      bannerImageData,
+      variantsData,
+      routeDetails,
+      collectionData,
+      collectionList,
+      categoryTourListData,
+    } = await labeledPromiseAllSettled([
+      {
+        promise: tourGroupAPIResponsesPromise,
+        label: 'tourGroupAPIResponses',
+      },
+      { promise: bannerImageDataPromise, label: 'bannerImageData' },
+      { promise: breadcrumbsPromise, label: 'breadcrumbs' },
+      { promise: catAndSubCatPageDataPromise, label: 'catAndSubCatPageData' },
+      { promise: currencyListPromise, label: 'currencyList' },
+      { promise: domainConfigPromise, label: 'domainConfig' },
+      { promise: variantsDataPromise, label: 'variantsData' },
+      { promise: routeDetailsPromise, label: 'routeDetails' },
+      { promise: collectionDataPromise, label: 'collectionData' },
+      { promise: collectionListPromise, label: 'collectionList' },
+      { promise: categoryTourListDataPromise, label: 'categoryTourListData' },
+    ] as const);
 
     const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
       // @ts-expect-error TS(7006): Parameter 'acc' implicitly has an 'any' type.
@@ -1007,73 +1094,24 @@ export const getPageData = async ({
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
 
-    const baseLangCategorisationMetadata =
-      CMSContent?.data?.baseLangCategorisationMetadata;
-    //for content pages baseLangMicrositeData is the base lang microsite doc
-    //for microsites baseLangMicrositeData is the current microsite doc (NOT BASE LANG)
-    const baseLangMicrositeDoc =
-      ContentType === CUSTOM_TYPES.CONTENT_PAGE
-        ? CMSContent?.data?.baseLangMicrositeData
-        : CMSContent;
-
-    const categoryHeaderMenuExists: boolean =
-      checkIfCategoryHeaderExists({
-        mbDesign: baseLangMicrositeDoc?.data?.design,
-        mbType: baseLangCategorisationMetadata?.tagged_mb_type,
-      }) && !!baseLangCategorisationMetadata?.tagged_city;
-
-    const categoryHeaderMenuPromise = categoryHeaderMenuExists
-      ? getCategoryHeaderMenu({
-          doc: baseLangMicrositeDoc,
-          lang: lang || DEFAULT_PRISMIC_LANG,
-          ContentType,
-        })
-      : {};
-
-    const breadcrumbsDoc = CMSContent;
-
-    let breadcrumbsPromise;
-    const { isSeatingPlanPage, theatreType } =
-      getSeatingPlanAndTheatreType(uid);
-
-    if (isSeatingPlanPage) {
-      breadcrumbsPromise = getSeatingPlanBreadcrumbs(breadcrumbsDoc);
-    } else {
-      breadcrumbsPromise = getBreadcrumbs(breadcrumbsDoc);
-    }
-
-    const aggregatedPromise = await Promise.allSettled([
-      categoryHeaderMenuPromise,
-      breadcrumbsPromise,
-    ]);
-
-    const [categoryHeaderMenu, breadcrumbs] = handleSettledPromiseResults(
-      aggregatedPromise,
-      uid
-    );
-
-    const isCatOrSubCatPage = await checkIfCatOrSubCatPage(CMSContent);
-    const catAndSubCatPageData = isCatOrSubCatPage
-      ? await getCatAndSubCatPageData({
-          doc: CMSContent,
-          attractionsHeaderMenu: categoryHeaderMenu?.ATTRACTIONS?.menu || {},
-          themesHeaderMenu: categoryHeaderMenu?.THEMES?.menu || {},
-          cookies,
-        })
-      : {};
     return {
+      ...categoryTourListData,
       ...scorpioAllTourGroupData,
+      collectionList,
+      bannerImageData,
+      variantsData,
+      routeDetails,
       ...(activeCurrency && { activeCurrency }),
       ...(primaryCity && { primaryCity }),
       tourGroupData,
       currencySymbolMap,
       primaryCountry,
-      currencyList: await currencyListPromise,
-      domainConfig: await domainConfigPromise,
+      currencyList,
+      domainConfig,
       categoryHeaderMenu,
       breadcrumbs,
       isCatOrSubCatPage,
-      catAndSubCatPageData,
+      catAndSubCatPageData: catAndSubCatPageData || {},
       minPrice,
       bestDiscount,
       prismicApiCacheStatus,

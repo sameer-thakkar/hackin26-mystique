@@ -3,6 +3,7 @@ import { getHeadoutLanguagecode, handleSettledPromiseResults } from 'utils';
 import { fetchCategory } from 'utils/apiUtils';
 import getCityGuideDocs from 'utils/prismicUtils/getCityGuideDocs';
 import getShoulderPageDocs from 'utils/prismicUtils/getShoulderPageDocs';
+import { labeledPromiseAllSettled } from 'utils/promiseUtils';
 import { ABOUT, CITY_GUIDE, THINGS_TO_DO, VISIT } from 'const/header';
 import { MB_CATEGORISATION } from 'const/index';
 import generateCityAttractionsMenu from './generateCityAttractionsMenu';
@@ -10,9 +11,10 @@ import generateCityGuideMenu from './generateCityGuideMenu';
 import generateShoulderPageMenu from './generateShoulderPageMenu';
 import generateSubCategoryMenu from './generateSubCategoryMenu';
 import {
-  addMiscMenuItems,
   applyTransformations,
+  getNormalisedMiscDocs,
   isMainMenu,
+  mergeMiscDocsWithMenu,
   sortMenu,
 } from '.';
 
@@ -23,15 +25,25 @@ const getCollectionMBMenu = async ({
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
 }): Promise<Record<string, any>> => {
-  const shoulderPageDocs = await getShoulderPageDocs({
+  const shoulderPageDocsPromise = getShoulderPageDocs({
     categorisationMetadata,
   });
 
-  const cityGuideDocs = await getCityGuideDocs(categorisationMetadata);
+  const cityGuideDocsPromise = getCityGuideDocs(categorisationMetadata);
 
-  const categoryApiData = await fetchCategory({
+  const categoryApiDataPromise = fetchCategory({
     language: getHeadoutLanguagecode(lang),
   });
+
+  const { shoulderPageDocs, cityGuideDocs, categoryApiData } =
+    await labeledPromiseAllSettled([
+      {
+        promise: shoulderPageDocsPromise,
+        label: 'shoulderPageDocs',
+      },
+      { promise: cityGuideDocsPromise, label: 'cityGuideDocs' },
+      { promise: categoryApiDataPromise, label: 'categoryApiData' },
+    ] as const);
 
   const aboutMenuPromise = generateShoulderPageMenu({
     isAboutMenu: true,
@@ -81,6 +93,12 @@ const getCollectionMBMenu = async ({
     docsStore: cityGuideDocs,
   });
 
+  const miscDocsPromise = getNormalisedMiscDocs({
+    docsStore: shoulderPageDocs,
+    lang,
+    categorisationMetadata,
+  });
+
   const menuPromiseSettledResults = await Promise.allSettled([
     aboutMenuPromise,
     visitMenuPromise,
@@ -89,6 +107,7 @@ const getCollectionMBMenu = async ({
     cityToursMenuPromise,
     cruisesMenuPromise,
     cityGuideMenuPromise,
+    miscDocsPromise,
   ]);
 
   const [
@@ -99,6 +118,7 @@ const getCollectionMBMenu = async ({
     cityToursMenu,
     cruisesMenu,
     cityGuideMenu,
+    miscDocs,
   ] = handleSettledPromiseResults(menuPromiseSettledResults);
 
   const aggregatedMenu = {
@@ -111,12 +131,9 @@ const getCollectionMBMenu = async ({
     ...cityGuideMenu,
   };
 
-  const menuWithMiscItems = await addMiscMenuItems({
-    menu: cloneDeep(aggregatedMenu),
-    docsStore: shoulderPageDocs,
-    lang,
-    categorisationMetadata,
-  });
+  const menu: Record<string, any> = cloneDeep(aggregatedMenu);
+
+  const menuWithMiscItems = mergeMiscDocsWithMenu({ menu, miscDocs, lang });
 
   const transformedMenu = applyTransformations(cloneDeep(menuWithMiscItems));
 

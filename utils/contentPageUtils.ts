@@ -7,7 +7,6 @@ import {
   getSinglePrismicSlice,
   isEmptyObject,
 } from 'utils';
-import { fetchCollectionList } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger/index';
 import {
   CUSTOM_TYPES,
@@ -17,7 +16,6 @@ import {
   SEO_SUBDOMAINS_UID,
   SHOULDER_TIMINGS_SCALE_ICONS,
   SLICE_TYPES,
-  SUPPORTED_LOCALE_MAP,
 } from 'const/index';
 import {
   Closed,
@@ -32,17 +30,9 @@ import { convertUidToUrl } from './urlUtils';
 
 export type TListicleData = {
   slices: Array<any>;
-  hostname: string;
-  cookies: any;
-  lang?: string;
 };
 
-export const getDocsForListicleSlice = async ({
-  slices,
-  lang,
-  hostname,
-  cookies,
-}: TListicleData) => {
+export const getDocsForListicleSlice = async ({ slices }: TListicleData) => {
   const listicleSliceData = getSinglePrismicSlice({
     sliceName: SLICE_TYPES.LISTICLE_V2,
     slices,
@@ -62,7 +52,6 @@ export const getDocsForListicleSlice = async ({
   ).filter(Boolean);
 
   let docsForListicles: MicrositeDocument[] = [];
-  let collectionsInListicles = [];
   if (listicleSliceData && !isEmptyObject(listicleSliceData) && cities.length) {
     try {
       const prismicClient = createClient();
@@ -101,18 +90,7 @@ export const getDocsForListicleSlice = async ({
       sendLog({ err: e, message: `[getDocsForListicleSlice]` });
     }
   }
-  if (collectionIdsInListicles?.length > 0) {
-    const language = getHeadoutLanguagecode(lang ?? SUPPORTED_LOCALE_MAP.en);
-    const { collections: collections } =
-      (await fetchCollectionList({
-        collectionIds: collectionIdsInListicles,
-        language,
-        hostname,
-        cookies,
-      })) || {};
-    collectionsInListicles = collections;
-  }
-  return [collectionsInListicles, docsForListicles];
+  return { collectionIdsInListicles, docsForListicles };
 };
 
 export const getRelatedContentPagesUrl = ({

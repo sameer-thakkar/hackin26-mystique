@@ -108,12 +108,10 @@ export const isMainMenu = ({
   }
 };
 
-export const addMiscMenuItems = async ({
-  menu,
+export const getNormalisedMiscDocs = async ({
   docsStore,
   lang,
 }: {
-  menu: Record<string, any>;
   docsStore: PrismicDocumentWithUID[];
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
@@ -132,6 +130,18 @@ export const addMiscMenuItems = async ({
     });
   }
 
+  return miscDocs;
+};
+
+export const mergeMiscDocsWithMenu = ({
+  menu,
+  lang,
+  miscDocs,
+}: {
+  menu: Record<string, any>;
+  lang: string;
+  miscDocs: Array<any>;
+}) => {
   miscDocs.forEach((doc) => {
     const { uid, data } = doc;
     const {
