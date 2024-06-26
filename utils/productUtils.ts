@@ -1117,3 +1117,38 @@ export const sortCombos = (tours: Record<string, any>[]) => {
     a.flowType === combo ? 1 : b.flowType === combo ? -1 : 0
   );
 };
+
+export const filterHighlights = (
+  highlights: Array<any>,
+  removeSitesVisited = false
+) => {
+  const inclusionHeading = highlights.filter(
+    ({ type }: { type: string }) => type === 'heading6'
+  )[1];
+  const inclusionHeadingIndex = highlights.findIndex(
+    (element: any) => element === inclusionHeading
+  );
+  const highlightsRichText = highlights.slice(0, inclusionHeadingIndex);
+  let everyRichTextExceptHighlights = highlights.slice(inclusionHeadingIndex);
+
+  if (removeSitesVisited) {
+    const headings = everyRichTextExceptHighlights.filter(
+      ({ type }: { type: string }) => type === 'heading6'
+    );
+    const sitesVisitedHeading = headings[1];
+    const nextHeading = headings[2];
+    const sitesVisitedHeadingIndex = everyRichTextExceptHighlights.findIndex(
+      (element: any) => element === sitesVisitedHeading
+    );
+    const nextHeadingIndex = everyRichTextExceptHighlights.findIndex(
+      (element: any) => element === nextHeading
+    );
+
+    everyRichTextExceptHighlights = [
+      ...everyRichTextExceptHighlights.slice(0, sitesVisitedHeadingIndex),
+      ...everyRichTextExceptHighlights.slice(nextHeadingIndex),
+    ];
+  }
+
+  return { highlightsRichText, everyRichTextExceptHighlights };
+};

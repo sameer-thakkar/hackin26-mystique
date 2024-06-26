@@ -7,7 +7,6 @@ import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
-import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import { trackPageSection } from 'components/CityPageContainer/utils';
@@ -78,12 +77,12 @@ import {
   getHostName,
   isF1SportsExperiment,
 } from 'utils/helper';
-import { isItineraryValid } from 'utils/itinerary';
 import {
   checkForBooster,
   extractCancellationPolicyFromHighlights,
   extractTabsFromHighlights,
   filterFromHighlights,
+  filterHighlights,
   getMaxListItemsToShow,
   getProductCardLayout,
 } from 'utils/productUtils';
@@ -102,6 +101,7 @@ import {
   SUBCATEGORY_IDS,
   THEMES,
 } from 'const/index';
+import { tgidsWithSitesVisited } from 'const/itinerary';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
@@ -242,9 +242,15 @@ const Product = (props: any) => {
     isHOHORevamp = false,
     comboIndex,
     isSwiperCard = false,
-    tgidItineraryData,
     isBot = false,
+    itineraryInfo,
   } = props;
+
+  const {
+    data: tgidItineraryData,
+    showData: showItinerary,
+    isHOHO: isHohoItinerary,
+  } = itineraryInfo;
 
   const {
     mbTheme,
@@ -257,12 +263,6 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const isMobile = forceMobile || originalIsMobile;
-
-  const hasItineraryData =
-    !!tgidItineraryData &&
-    tgidItineraryData.findIndex((itinerary: TItinerary) =>
-      isItineraryValid(itinerary)
-    ) !== -1;
 
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -525,6 +525,35 @@ const Product = (props: any) => {
     });
   };
 
+  const trackItineraryEntrypoint = () => {
+    const { listingPrice } = tourPrices[tgid] ?? {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.ITINERARY.VIEW_ITINERARY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+        reviewsDetails,
+        boosterType,
+      }),
+      [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: tgidItineraryData[0]?.type,
+      [ANALYTICS_PROPERTIES.HAS_MAP]: tgidItineraryData[0]?.map?.active,
+    });
+  };
+
   const handleCloseComboPopup = () => {
     setShowComboVariant(false);
     if (!originalIsMobile) {
@@ -624,9 +653,14 @@ const Product = (props: any) => {
     ? tempHighlights
     : filterFromHighlights(scorpioData.highlights);
 
-  const { highlights, tabs } = originalIsMobile
+  let { highlights, tabs } = originalIsMobile
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
+
+  tabs =
+    showItinerary && tgidsWithSitesVisited.includes(tgid)
+      ? [...tabs.slice(0, 2), ...tabs.slice(3)]
+      : tabs;
 
   const cancellationPolicy = useMemo(
     () => extractCancellationPolicyFromHighlights(finalHighlights),
@@ -715,6 +749,15 @@ const Product = (props: any) => {
     return boosterInfo;
   }, [tgid, showBoosters]);
 
+  const { highlightsRichText, everyRichTextExceptHighlights } = useMemo(
+    () =>
+      filterHighlights(
+        finalHighlights,
+        showItinerary && tgidsWithSitesVisited.includes(tgid)
+      ),
+    [finalHighlights]
+  );
+
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
   if (!listingPrice) return null;
@@ -730,7 +773,9 @@ const Product = (props: any) => {
       trackedToggleContent(false);
       if (showPopup && !originalIsMobile) {
         setIsUnScrolled(true);
-        popupController.current?.open(activeTabIndex);
+        popupController.current?.open(
+          activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
+        );
       } else {
         addToAside({
           width: originalIsMobile ? '100vw' : '40rem',
@@ -763,7 +808,9 @@ const Product = (props: any) => {
     } else {
       if (showPopup) {
         setIsUnScrolled(true);
-        popupController.current?.open(activeTabIndex);
+        popupController.current?.open(
+          activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
+        );
         trackedToggleContent(false);
       } else {
         trackedToggleContent(isContentOpen);
@@ -817,7 +864,10 @@ const Product = (props: any) => {
       if (event.keyCode == 13 && !isMobile) {
         if (showPopup) {
           setIsUnScrolled(true);
-          popupController.current?.open(activeTabIndex);
+          popupController.current?.open(
+            activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
+          );
+
           trackedToggleContent(false);
         } else {
           toggleContentOpen(!isContentOpen);
@@ -970,24 +1020,6 @@ const Product = (props: any) => {
     />
   );
 
-  const getHighlightSplit = () => {
-    const inclusionHeading = finalHighlights.filter(
-      ({ type }: { type: string }) => type === 'heading6'
-    )[1];
-    const inclusionHeadingIndex = finalHighlights.findIndex(
-      (element: any) => element === inclusionHeading
-    );
-    const highlightsRichText = finalHighlights.slice(0, inclusionHeadingIndex);
-    const everyRichTextExceptHighlights = finalHighlights.slice(
-      inclusionHeadingIndex
-    );
-
-    return { highlightsRichText, everyRichTextExceptHighlights };
-  };
-
-  const { highlightsRichText, everyRichTextExceptHighlights } =
-    getHighlightSplit();
-
   const croppingExcludedSubCats = [
     SUBCATEGORY_IDS['Combo'],
     SUBCATEGORY_IDS['City Cards'],
@@ -1035,7 +1067,7 @@ const Product = (props: any) => {
           "[data-review-section-title='true']"
         );
 
-        const isItinerarySectionConditionSatisfied = hasItineraryData
+        const isItinerarySectionConditionSatisfied = showItinerary
           ? itinerarySectionLoaded
           : true;
         const isReviewSectionConditionSatisfied = reviewsDetails?.showRatings
@@ -1202,7 +1234,7 @@ const Product = (props: any) => {
     isPopup = false,
     forcedMobilePopup = false,
   }) => {
-    const showItinerarySection = hasItineraryData && (isPopup || isBot);
+    const showItinerarySection = showItinerary && (isPopup || isBot);
 
     const mediaCarouselImageWidth = (isPopup ? originalIsMobile : isMobile)
       ? isBannerCard
@@ -1211,7 +1243,7 @@ const Product = (props: any) => {
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.modified.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
       : isModifiedProductCard || (isPopup && !originalIsMobile && isPoiMwebCard)
-      ? hasItineraryData
+      ? showItinerary
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
       : undefined;
@@ -1223,7 +1255,7 @@ const Product = (props: any) => {
         ? undefined
         : isModifiedProductCard ||
           (isPopup && !originalIsMobile && isPoiMwebCard)
-        ? hasItineraryData
+        ? showItinerary
           ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.height
           : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
@@ -1257,7 +1289,7 @@ const Product = (props: any) => {
           $isSwiperCard={isSwiperCard}
           forcedMobilePopup={forcedMobilePopup}
           ref={productRef}
-          $hasItineraryData={hasItineraryData}
+          $hasItineraryData={showItinerary}
         >
           <Conditional if={boosterTypeIfShown}>
             <Booster
@@ -1338,7 +1370,7 @@ const Product = (props: any) => {
                       ? '16:10'
                       : isModifiedProductCard ||
                         (isPopup && !originalIsMobile && isPoiMwebCard)
-                      ? hasItineraryData
+                      ? showItinerary
                         ? '16:10'
                         : '3:4'
                       : '5:6'
@@ -1356,14 +1388,16 @@ const Product = (props: any) => {
                   isTimed={!isHOHORevamp}
                 />
               </Conditional>
-              <Conditional if={hasItineraryData && !isMobile}>
+              <Conditional if={showItinerary && !isMobile}>
                 <EntryPoint
                   onClick={async () => {
                     popupController.current?.open(1);
                     trackedToggleContent(false);
+                    trackItineraryEntrypoint();
                   }}
                   image={tgidItineraryData?.[0]?.details?.mapPreviewLink}
                   index={position}
+                  isHOHOItinerary={isHohoItinerary}
                 />
               </Conditional>
               <Conditional if={isLoading}>
@@ -1404,7 +1438,7 @@ const Product = (props: any) => {
                           });
 
                           const numberOfSections =
-                            tabs.length + (hasItineraryData ? 1 : 0);
+                            tabs.length + (showItinerary ? 1 : 0);
 
                           if (!isPopup) {
                             popupController.current?.open(numberOfSections);
@@ -1772,6 +1806,7 @@ const Product = (props: any) => {
                     <Itinerary
                       itineraryData={tgidItineraryData}
                       lang={currentLanguage}
+                      isHohoItinerary={isHohoItinerary}
                     />
                   </Conditional>
                   <Conditional if={!isMobile}>
@@ -1957,7 +1992,8 @@ const Product = (props: any) => {
             isVisible={!isUnScrolled}
             onItemClick={scrollToSection}
             isReviewsSectionPresent={reviewsDetails?.showRatings}
-            isItinerarySectionPresent={hasItineraryData}
+            isItinerarySectionPresent={showItinerary}
+            isHohoItinerary={isHohoItinerary}
           />
           <CloseButtonContainer>
             <CloseButton

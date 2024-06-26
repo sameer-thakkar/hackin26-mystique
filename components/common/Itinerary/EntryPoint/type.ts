@@ -3,4 +3,5 @@ export type EntryPointProps = {
   isMobile?: boolean;
   image?: string | null;
   index: number;
+  isHOHOItinerary?: boolean;
 };

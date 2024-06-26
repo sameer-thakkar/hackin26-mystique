@@ -13,7 +13,7 @@ export const StyledTabsContainer = styled.div<{
   flex-direction: column;
   overflow-x: visible;
   min-width: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   &::-webkit-scrollbar {
     display: none;

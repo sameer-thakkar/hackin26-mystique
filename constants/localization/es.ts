@@ -1270,7 +1270,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   PREVIOUS: 'Anterior',
   ITINERARY: {
     TAB: 'Itinerario',
-    HEADING: 'Tu experiencia',
+    HEADING: 'Itinerario de la experiencia',
     VIEW_ITINERARY: 'Ver itinerario',
     PASSES_BY_SECTION_HEADING: 'Pasa por',
     SUB_SECTION_HEADING: {

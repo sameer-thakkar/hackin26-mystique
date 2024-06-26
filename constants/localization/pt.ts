@@ -1219,7 +1219,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   PREVIOUS: 'Anterior',
   ITINERARY: {
     TAB: 'Itinerário',
-    HEADING: 'Sua experiência',
+    HEADING: 'Itinerário da experiência',
     VIEW_ITINERARY: 'Ver itinerário',
     PASSES_BY_SECTION_HEADING: 'Passa por',
     SUB_SECTION_HEADING: {

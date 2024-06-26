@@ -1,6 +1,7 @@
 import {
   CHILD_SECTION_TYPE,
   Itinerary,
+  ItineraryType,
   Location,
   Section,
   SECTION_TYPE,
@@ -31,9 +32,9 @@ export const isValidLocation = (location?: Location) =>
 
 export const sectionDataSanitizer = (
   sections: Section[],
-  subCategoryId: number
+  type: ItineraryType
 ) => {
-  const isHOHO = subCategoryId === 1011;
+  const isHOHO = isHOHOItinerary(type);
 
   const startLocations = sections.filter(
     (section) => section.type === SECTION_TYPE.START_LOCATION
@@ -354,3 +355,6 @@ export const isItineraryValid = (itinerary: Itinerary) => {
 
   return true;
 };
+
+export const isHOHOItinerary = (type: ItineraryType) =>
+  type === ItineraryType.HOHO;

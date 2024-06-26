@@ -118,6 +118,8 @@ const StopCard = ({
   }, []);
 
   const allowOpen = useMemo(() => {
+    if (!endPointIsNotSameAsStart && isEnd) return false;
+
     if ((isStart || isEnd) && hasMultiPoints) return false;
 
     if (isSubCard && !hasImage && !description) return false;

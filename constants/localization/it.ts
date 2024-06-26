@@ -1209,7 +1209,7 @@ const it = {
   PREVIOUS: 'Precedente',
   ITINERARY: {
     TAB: 'Itinerario',
-    HEADING: 'Itinerario',
+    HEADING: 'Il tuo itinerario',
     VIEW_ITINERARY: "Vedi l'itinerario",
     PASSES_BY_SECTION_HEADING: 'Passa per',
     SUB_SECTION_HEADING: {

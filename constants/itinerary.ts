@@ -135,3 +135,7 @@ export const nearbyThingsIcon: Record<string, () => Promise<any>> = {
   [SUB_TYPES.HOHO_BUS_STOP]: () => import('assets/stop'),
   [SUB_TYPES.OTHERS]: () => import('assets/locationPin'),
 };
+
+export const tgidsWithSitesVisited = [
+  16990, 2926, 9641, 21364, 28144, 3728, 21495, 3696, 6756, 26310,
+];

@@ -14,11 +14,7 @@ const TimelineView = ({ itinerary }: TTimelineViewComponentProps) => {
   const isOnScreen = useOnScreen({ ref, unobserve: eventRecorded });
 
   const stopCardProps = useMemo(
-    () =>
-      sectionDataSanitizer(
-        itinerary.sections as Section[],
-        itinerary.subCategoryId
-      ),
+    () => sectionDataSanitizer(itinerary.sections as Section[], itinerary.type),
     [itinerary]
   );
 

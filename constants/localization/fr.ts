@@ -1220,7 +1220,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   PREVIOUS: 'Précédent',
   ITINERARY: {
     TAB: 'Itinéraire',
-    HEADING: 'Votre trajet',
+    HEADING: "Itinéraire de l'expérience",
     VIEW_ITINERARY: "Voir l'itinéraire",
     PASSES_BY_SECTION_HEADING: 'À voir en cours de route',
     SUB_SECTION_HEADING: {

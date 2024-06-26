@@ -25,6 +25,7 @@ type Props = {
   isVisible?: boolean;
   isReviewsSectionPresent?: boolean;
   isItinerarySectionPresent?: boolean;
+  isHohoItinerary?: boolean;
 };
 
 const NavigationBar = ({
@@ -34,6 +35,7 @@ const NavigationBar = ({
   onItemClick,
   isReviewsSectionPresent = false,
   isItinerarySectionPresent = false,
+  isHohoItinerary = false,
 }: Props) => {
   const swiperRef = useRef<TSwiper | null>(null);
   const { showRightArrow, showLeftArrow, onSlideChange } = useSwiperArrows();
@@ -93,7 +95,7 @@ const NavigationBar = ({
           onClick={() => onItemClick(1)}
           data-navigation-bar-index={1}
         >
-          {strings.ITINERARY.TAB}
+          {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
           <div className="new-tag">{strings.NEW}</div>
         </NavigationLink>
       );

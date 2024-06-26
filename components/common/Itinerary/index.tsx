@@ -19,7 +19,11 @@ const TimelineView = dynamic(
 );
 const Tabs = dynamic(() => import(/* webpackChunkName: "Tabs" */ 'UI/Tabs'));
 
-const Itinerary = ({ itineraryData = [], lang }: TItineraryComponentProps) => {
+const Itinerary = ({
+  itineraryData = [],
+  lang,
+  isHohoItinerary = false,
+}: TItineraryComponentProps) => {
   const { isBot } = useRecoilValue(appAtom);
   const [activeTab, setActiveTab] = useState(
     itineraryData[0]?.id.toString() ?? ''
@@ -88,7 +92,9 @@ const Itinerary = ({ itineraryData = [], lang }: TItineraryComponentProps) => {
 
   return (
     <>
-      <h6 data-itinerary-section-title="true">{strings.ITINERARY.HEADING}</h6>
+      <h6 data-itinerary-section-title="true">
+        {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.HEADING}
+      </h6>
       <StyledItinerarySectionContainer>
         <Conditional if={itineraryData?.length > 1}>
           <Tabs

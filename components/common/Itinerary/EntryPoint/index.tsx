@@ -6,7 +6,12 @@ import { TailedArrowSVG } from 'assets/airportTransfers';
 import { EntryPointContainer } from './style';
 import { EntryPointProps } from './type';
 
-const EntryPoint = ({ onClick, image, index }: EntryPointProps) => {
+const EntryPoint = ({
+  onClick,
+  image,
+  index,
+  isHOHOItinerary = false,
+}: EntryPointProps) => {
   const defaultImage = useMemo(() => getEntryPointPlaceHolder(index), [index]);
 
   return (
@@ -22,7 +27,9 @@ const EntryPoint = ({ onClick, image, index }: EntryPointProps) => {
         autoCrop={false}
       />
       <div className="entry-point-button">
-        {strings.ITINERARY.VIEW_ITINERARY}
+        {isHOHOItinerary
+          ? strings.HOHO.ROUTES
+          : strings.ITINERARY.VIEW_ITINERARY}
         <TailedArrowSVG />
       </div>
     </EntryPointContainer>

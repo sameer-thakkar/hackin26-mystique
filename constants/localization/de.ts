@@ -1210,7 +1210,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   PREVIOUS: 'Zurück',
   ITINERARY: {
     TAB: 'Plan',
-    HEADING: 'Ihr Erlebnis',
+    HEADING: 'Erlebnisplan',
     VIEW_ITINERARY: 'Plan anzeigen',
     PASSES_BY_SECTION_HEADING: 'Entlang der Route',
     SUB_SECTION_HEADING: {

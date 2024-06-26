@@ -562,6 +562,7 @@ export const ANALYTICS_EVENTS = {
     ITINERARY_VARIANT_CLICKED: 'Itinerary Variant Clicked',
     ITINERARY_TOGGLE_CLICKED: 'Itinerary Toggle Clicked',
     MAP_VIEWED: 'Map Viewed',
+    VIEW_ITINERARY_CLICKED: 'View Itinerary Clicked',
   },
   AIRPORT_TRANSFERS: {
     SEARCH_FILTER_CLICKED: 'Search Filter Clicked',

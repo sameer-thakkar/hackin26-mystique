@@ -7,7 +7,10 @@ import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import type { Itinerary } from 'types/itinerary.type';
+import {
+  type Itinerary as TItinerary,
+  ItineraryType,
+} from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
@@ -590,25 +593,35 @@ const PopulateProducts: any = (props: any) => {
     const { itineraryData = {} } = scorpioData;
     const { itineraries } = itineraryData;
 
-    const itineraryDataMap: Record<string, Itinerary> = showItineraries
-      ? itineraries?.reduce(
-          (prev: Record<string, Itinerary>, curr: Itinerary) => {
-            prev[curr.id] = curr;
-            return prev;
-          },
-          {}
-        )
-      : {};
+    const itineraryDataMap: Record<string | number, TItinerary> =
+      showItineraries
+        ? itineraries?.reduce(
+            (prev: Record<string | number, TItinerary>, curr: TItinerary) => {
+              prev[curr.id] = curr;
+              return prev;
+            },
+            {}
+          )
+        : {};
 
     const tgidItineraryData = showItineraries
-      ? experienceItineraryIds.reduce((acc: Array<Itinerary>, id: string) => {
+      ? experienceItineraryIds.reduce((acc: Array<TItinerary>, id: string) => {
           const itinerary = itineraryDataMap[id];
           if (itinerary && isItineraryValid(itinerary)) {
             acc.push(itinerary);
           }
           return acc;
-        }, [] as Array<Itinerary>)
+        }, [] as Array<TItinerary>)
       : [];
+
+    const showItinerary =
+      !!tgidItineraryData?.length &&
+      tgidItineraryData.findIndex((itinerary: TItinerary) =>
+        isItineraryValid(itinerary)
+      ) !== -1;
+
+    const isHohoItinerary =
+      showItinerary && tgidItineraryData[0].type === ItineraryType.HOHO;
 
     const childProps = {
       tgid,
@@ -675,8 +688,12 @@ const PopulateProducts: any = (props: any) => {
       showPopup,
       isHOHORevamp,
       isSwiperCard,
-      tgidItineraryData,
       isBot,
+      itineraryInfo: {
+        data: tgidItineraryData,
+        showData: showItinerary,
+        isHOHO: isHohoItinerary,
+      },
     };
 
     return isSmallComboCard ? (

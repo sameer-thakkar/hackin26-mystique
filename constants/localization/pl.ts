@@ -1159,7 +1159,7 @@ const pl = {
   PREVIOUS: 'Poprzednie',
   ITINERARY: {
     TAB: 'Plan wycieczki',
-    HEADING: 'Twoja wycieczka',
+    HEADING: 'Plan wycieczki',
     VIEW_ITINERARY: 'Wyświetl plan podróży',
     PASSES_BY_SECTION_HEADING: 'Widok na:',
     SUB_SECTION_HEADING: {

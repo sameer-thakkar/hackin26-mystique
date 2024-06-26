@@ -673,8 +673,11 @@ const MicrositeV1 = (props: any) => {
     isEligible: isItineraryExpEligible,
   } = useABTesting({
     experimentId: 'ITINERARY_CONTROLLED_ROLLOUT',
+    noTrack: false,
     customEligibilityCheckFn: () =>
-      !isMobile && taggedSubCategoryName !== 'HOHO',
+      !isMobile &&
+      taggedSubCategoryName !== 'HOHO' &&
+      !!scorpioData?.itineraryData?.itineraries,
   });
 
   const showItineraries =

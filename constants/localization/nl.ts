@@ -1172,7 +1172,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   PREVIOUS: 'Vorige',
   ITINERARY: {
     TAB: 'Reisplan',
-    HEADING: 'Je belevenis',
+    HEADING: 'Reisprogramma',
     VIEW_ITINERARY: 'Bekijk route',
     PASSES_BY_SECTION_HEADING: 'Komt langs',
     SUB_SECTION_HEADING: {
