@@ -250,7 +250,7 @@ const Product = (props: any) => {
     data: tgidItineraryData,
     showData: showItinerary,
     isHOHO: isHohoItinerary,
-  } = itineraryInfo;
+  } = itineraryInfo || {};
 
   const {
     mbTheme,
