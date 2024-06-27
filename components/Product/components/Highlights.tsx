@@ -21,6 +21,7 @@ type Props = {
   onClick?: () => void;
   showPopup?: boolean;
   ctaHasBackground?: boolean;
+  showMoreDetails?: boolean;
 };
 
 const Highlights = ({
@@ -31,6 +32,7 @@ const Highlights = ({
   onClick,
   showPopup = false,
   ctaHasBackground = false,
+  showMoreDetails = false,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
@@ -91,11 +93,16 @@ const Highlights = ({
         $showPopup={showPopup}
         $hasBackground={ctaHasBackground}
       >
-        {`${strings.PC_EXP.SHOW_INCL} `}
+        {`${showMoreDetails ? strings.MORE_DETAILS : strings.PC_EXP.SHOW_INCL}`}
         {showPopup ? (
           DiagonalArrow
         ) : (
-          <ChevronRight fillColor={COLORS.BRAND.CANDY} />
+          <ChevronRight
+            fillColor={COLORS.TEXT.CANDY_1}
+            height={12}
+            width={12}
+            strokeWidth={1.5}
+          />
         )}
       </ViewMoreButton>
     </CompactHighlightsWrapper>

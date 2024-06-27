@@ -8,6 +8,7 @@ import Conditional from 'components/common/Conditional';
 import { FILTERED_HIGHLIGHTS, SECTION_NAMES } from 'components/HOHO/constants';
 import { getObject } from 'components/HOHO/utils';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
+import { NextAvailable } from 'components/Product/components/NextAvailable';
 import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import Ratings from 'components/Product/components/Ratings';
 import { TourTitle } from 'components/Product/components/TourTitle';
@@ -18,6 +19,7 @@ import {
   PriceContainer,
   ProductHeader,
   StyledProductCard,
+  ViewMoreButton,
 } from 'components/Product/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import MediaCarousel from 'UI/MediaCarousel';
@@ -43,6 +45,7 @@ import {
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import ChevronRight from 'assets/chevronRight';
 import InfoIconTicketCard from 'assets/infoIconTicketCard';
 import RoutesCTA from '../RoutesCTA';
 
@@ -59,6 +62,7 @@ const HohoProductCard = (props: any) => {
     offerId,
     scorpioData,
     host,
+    showEarliestAvailability,
     earliestAvailability = {},
     ctaUrlSuffix,
     isScratchPriceEnabled,
@@ -212,7 +216,7 @@ const HohoProductCard = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
-    isHOHORevamp: isHOHORevamp,
+    isHOHORevamp: isMobile && isHOHORevamp,
   });
 
   const onMoreInfoClick = () => {
@@ -368,10 +372,10 @@ const HohoProductCard = (props: any) => {
               tabs={tabs}
               earliestAvailability={earliestAvailability}
               currentLanguage={currentLanguage}
-              showInfoIcon={!isMobile}
+              showInfoIcon={false}
               onClick={
                 !isMobile
-                  ? onMoreInfoClick
+                  ? () => null
                   : () => window.open(productBookingUrl, '_self', 'noopener')
               }
             />
@@ -421,6 +425,15 @@ const HohoProductCard = (props: any) => {
                       </a>
                     </Conditional>
                   </CTABlock>
+                  <NextAvailable
+                    showSkeleton={
+                      !showEarliestAvailability &&
+                      !earliestAvailability &&
+                      !earliestAvailability?.startDate
+                    }
+                    earliestAvailability={earliestAvailability}
+                    currentLanguage={currentLanguage}
+                  />
                 </Conditional>
               </CTAContainer>
             </Conditional>
@@ -445,6 +458,17 @@ const HohoProductCard = (props: any) => {
             isMobile={isMobile}
             showGuidedTourDescriptor={false}
           />
+          <Conditional if={!isMobile}>
+            <ViewMoreButton $noMargin={true} onClick={onMoreInfoClick}>
+              {strings.MORE_DETAILS}
+              <ChevronRight
+                fillColor={COLORS.TEXT.CANDY_1}
+                height={12}
+                width={12}
+                strokeWidth={1.5}
+              />
+            </ViewMoreButton>
+          </Conditional>
         </StyledProductCard>
       </>
     );

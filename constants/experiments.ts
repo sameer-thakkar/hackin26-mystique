@@ -23,7 +23,7 @@ const RANKING_EXPERIMENT_V1_REVENUE = 'Product Rankings v1 (Revenue)';
 const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 const ITINERARY_CONTROLLED_ROLLOUT = 'Itinerary Controlled Rollout';
-const HOHO_DWEB = 'HOHO Revamp 1.1 Dweb';
+const HOHO_DWEB = 'HOHO Revamp 1.2 Dweb';
 const HOHO_MWEB = 'HOHO Revamp 1.1 Mweb';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
@@ -61,7 +61,7 @@ export const EXPERIMENTS: Record<string, any> = {
   [HOHO_DWEB]: new Experiment(
     HOHO_DWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [70, 30]
+    [90, 10]
   ),
   [HOHO_MWEB]: new Experiment(
     HOHO_MWEB,

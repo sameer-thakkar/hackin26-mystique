@@ -2803,21 +2803,20 @@ export const ViewMoreButton = styled.button<{
   $isOverlay?: boolean;
   $showPopup?: boolean;
   $hasBackground?: boolean;
+  $noMargin?: boolean;
 }>`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   background: none;
   border: none;
   padding: 0;
-  margin-left: 1rem;
+  margin-left: ${({ $noMargin }) => ($noMargin ? '0' : '1rem')};
   width: max-content;
   cursor: pointer;
   z-index: 0;
 
   svg {
-    margin-bottom: -0.06rem;
-    height: 0.675rem;
-    stroke-width: 0.15rem;
+    margin-left: 0.25rem;
   }
 
   ${({ $isOverlay }) =>
@@ -3102,7 +3101,8 @@ export const hohoStyles = css`
   grid-template-areas:
     'card-img category-and-rating line cta-combo'
     'card-img title line cta-combo'
-    'card-img  tour-tags line cta-combo';
+    'card-img  tour-tags line cta-combo'
+    'card-img  more-details-cta line cta-combo';
   grid-template-rows: auto auto 1fr;
   grid-auto-rows: min-content;
   grid-row-gap: 0.5rem;
@@ -3140,13 +3140,21 @@ export const hohoStyles = css`
   ${CTAContainer} {
     width: 15.375rem;
     padding-right: 0.5rem;
+    grid-gap: 0.625rem;
+  }
+  ${CTABlock} {
+    margin-top: 0.125rem;
+  }
+  ${NextAvailableBlock} {
+    .available-text {
+      color: ${COLORS.GRAY.G2};
+    }
   }
   ${HorizontalLine} {
     margin-left: 0.313rem;
   }
 
   ${TourTitleWrapper} {
-    cursor: pointer;
     ${hohoFont}
     font-size: 21px;
   }

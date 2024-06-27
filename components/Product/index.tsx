@@ -958,7 +958,7 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
-    isHOHORevamp: isHOHORevamp,
+    isHOHORevamp: isMobile && isHOHORevamp,
   });
 
   const onSidePanelClose = () => {
@@ -988,6 +988,7 @@ const Product = (props: any) => {
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
       showPopup={false}
+      showMoreDetails={isHOHORevamp}
       onClick={() => {
         trackedToggleContent(false);
 
