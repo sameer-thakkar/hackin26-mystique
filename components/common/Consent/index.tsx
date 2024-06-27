@@ -16,31 +16,33 @@ import {
   PopupButtonsContainer,
   TextContainer,
 } from 'components/common/Consent/styles';
+import { getConsentFallback } from 'components/common/Consent/utils';
 import Drawer from 'components/common/Drawer';
 import Image from 'UI/Image';
 import { useToast } from 'contexts/toastContext';
 import { getNakedDomain } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { appAtom } from 'store/atoms/app';
-import { COOKIE } from 'const/index';
+import { metaAtom } from 'store/atoms/meta';
+import { COOKIE, GDPR_COUNTRY_CODES } from 'const/index';
 import { strings } from 'const/strings';
 
 type TConsentState = 'granted' | 'denied';
 
-const ConsentBanner = ({
-  isGDPRCompliant,
-  countryCode,
-}: {
-  isGDPRCompliant: boolean;
-  countryCode?: string;
-}) => {
+const ConsentBanner = ({ countryCode }: { countryCode?: string }) => {
   const [isVisible, setVisibility] = useState(false);
   const { host } = useRecoilValue(appAtom);
+  const { country: mbCountry } = useRecoilValue(metaAtom);
   const { pathname, events: routerEvents } = useRouter();
   const isPrivacyPage = pathname.includes('privacy-policy');
   const [showModal, setShowModal] = useState(false);
   const ReactMarkdown: any = Markdown;
   const { addToast } = useToast();
+  const isGDPRCompliant = countryCode
+    ? GDPR_COUNTRY_CODES.includes(countryCode)
+    : getConsentFallback({
+        country: mbCountry?.code || mbCountry?.displayName || '',
+      });
 
   const setConsentStateCookie = (state: TConsentState) => {
     Cookies.set(COOKIE.CONSENT_POLICY_STATE, state, {

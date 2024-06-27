@@ -30,7 +30,6 @@ import {
   COOKIE,
   CUSTOM_TYPES,
   DESIGN,
-  GDPR_COUNTRY_CODES,
   MB_CATEGORISATION,
   THEMES,
   TIME,
@@ -611,8 +610,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         : 'https';
 
     const countryCode = req?.headers?.['cloudfront-viewer-country'] as string;
-    const isGDPRCompliant =
-      !countryCode || GDPR_COUNTRY_CODES.includes(countryCode);
 
     const response = {
       props: {
@@ -632,7 +629,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         cookies: req?.cookies ?? {},
         airportTransfersLPExperimentVariant: airportTransferABExperimentVariant,
         headers: JSON.stringify(req?.headers),
-        isGDPRCompliant,
         countryCode,
       },
     };

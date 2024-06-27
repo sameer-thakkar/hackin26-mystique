@@ -37,8 +37,8 @@ const SocialLinks = (props: any) => {
   const { className, isLight } = props || {};
   const pageMeta = useRecoilValue(metaAtom);
   const isUAEMB =
-    (pageMeta?.country as any)?.code === 'AE' ||
-    pageMeta?.country === 'United Arab Emirates';
+    pageMeta?.country?.code === 'AE' ||
+    pageMeta?.country?.displayName === 'United Arab Emirates';
 
   return (
     <StyledSocialLinks className={className}>

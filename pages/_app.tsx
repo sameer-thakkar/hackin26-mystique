@@ -10,7 +10,7 @@ import DeferredComponent from 'components/common/DeferredComponent';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { ToastProvider } from 'contexts/toastContext';
 import { containsPOIAndSeatmap, getAnalyticsPageType } from 'utils';
-import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
+import { sendVariablesToDataLayer } from 'utils/analytics';
 import { dynamicPolyfillIntlLocale } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
 import { initDayJSLocale } from 'utils/localizationUtils';
@@ -76,7 +76,6 @@ type PageProps = {
   catAndSubCatPageData: TCatAndSubCatPageData;
   isCatOrSubCatPage: boolean;
   isBot: boolean;
-  isGDPRCompliant: boolean;
   bestDiscount?: number;
   minPrice?: number;
   domainConfig?: Record<string, any>;
@@ -110,7 +109,7 @@ const getCurrencyCode = ({
 };
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
-  const { lang: locale, isGDPRCompliant, CMSContent, countryCode } = pageProps;
+  const { lang: locale, CMSContent, countryCode } = pageProps;
 
   const { data } = CMSContent || {};
   const { categoryTourListV2, is_entertainment_mb, body4 } = data || {};
@@ -272,13 +271,13 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         isSeatMapExperiment,
       }),
     });
-    trackEvent({
-      eventName: 'Canary Build Viewed',
-    });
     set(metaAtom, {
-      city: primaryCity || baseLangCategorisationMetadata?.tagged_city,
-      country:
-        primaryCity?.country || baseLangCategorisationMetadata?.tagged_country,
+      city: primaryCity || {
+        code: baseLangCategorisationMetadata?.tagged_city,
+      },
+      country: primaryCity?.country || {
+        displayName: baseLangCategorisationMetadata?.tagged_country,
+      },
       language: getLangObject(lang).code,
       pageTitle: pageTitle,
       collectionId: primaryCollectionId,
@@ -322,10 +321,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
           </Conditional>
           <Clarity host={host} />
           <DeferredComponent delay={3_000}>
-            <ConsentBanner
-              isGDPRCompliant={isGDPRCompliant}
-              countryCode={countryCode}
-            />
+            <ConsentBanner countryCode={countryCode} />
           </DeferredComponent>
         </ToastProvider>
       </RecoilRoot>

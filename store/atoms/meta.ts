@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
 export const metaAtom = atom<{
-  city?: string;
-  country?: string;
+  city?: { code?: string; displayName?: string };
+  country?: { code?: string; displayName: string };
   collectionId?: string;
   collectionName?: string;
   mbName?: string;
@@ -12,8 +12,8 @@ export const metaAtom = atom<{
 }>({
   key: 'meta',
   default: {
-    city: '',
-    country: '',
+    city: {} as any,
+    country: {} as any,
     collectionId: '',
     collectionName: '',
     mbName: '',
