@@ -1,6 +1,7 @@
 import React from 'react';
 import { INCLUSION, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { getDurationInHMNotation } from 'utils/dateUtils';
 import { ClockSvg } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
@@ -13,10 +14,15 @@ import FoodAndDrink from 'assets/foodAndDrink';
 import Ticket from 'assets/ticket';
 import { Container, DescriptorContainer } from './styles';
 import type { DescriptorProps, Props } from './types';
+import { DescriptorSize } from './types';
 
-const Descriptor = ({ icon, text }: DescriptorProps) => {
+const Descriptor = ({
+  icon,
+  text,
+  size = DescriptorSize.LARGE,
+}: DescriptorProps) => {
   return (
-    <DescriptorContainer>
+    <DescriptorContainer $size={size}>
       {icon}
       <p className="descriptor-text">{text}</p>
     </DescriptorContainer>
@@ -29,6 +35,8 @@ const Descriptors = ({
   attractionsCount = 0,
   activitiesCount = 0,
   foodTypes,
+  variant = TimelineViewComponentVariant.DEFAULT,
+  descriptorSize = DescriptorSize.LARGE,
 }: Props) => {
   const getInclusionIcon = (label?: INCLUSION) => {
     if (!label) return null;
@@ -57,9 +65,18 @@ const Descriptors = ({
   const walkDuration = duration ? getDurationInHMNotation(duration) : '';
 
   return (
-    <Container>
+    <Container $variant={variant}>
       <Conditional if={walkDuration}>
-        <Descriptor icon={<ClockSvg />} text={walkDuration} />
+        <Descriptor
+          icon={<ClockSvg />}
+          text={
+            strings.formatString(
+              strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
+              walkDuration
+            ) as string
+          }
+          size={descriptorSize}
+        />
       </Conditional>
       <Conditional if={attractionsCount}>
         <Descriptor
@@ -70,6 +87,7 @@ const Descriptors = ({
               attractionsCount.toString()
             ) as string
           }
+          size={descriptorSize}
         />
       </Conditional>
       <Conditional if={activitiesCount}>
@@ -81,6 +99,7 @@ const Descriptors = ({
               activitiesCount.toString()
             ) as string
           }
+          size={descriptorSize}
         />
       </Conditional>
       <Conditional if={foodTypes}>
@@ -93,12 +112,14 @@ const Descriptors = ({
             )
           }
           text={foodTypes?.localisedLabel}
+          size={descriptorSize}
         />
       </Conditional>
       <Conditional if={inclusion}>
         <Descriptor
           icon={getInclusionIcon(inclusion?.label)}
           text={inclusion?.localisedLabel}
+          size={descriptorSize}
         />
       </Conditional>
     </Container>

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Location } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { generateGoogleMapUrl } from 'utils/itinerary';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
@@ -11,12 +12,14 @@ type FindDirectionProps = {
   location: Location;
   show?: boolean | { icon?: boolean; text?: boolean };
   hoverAnimation?: boolean;
+  variant?: TimelineViewComponentVariant;
 };
 
 const FindDirection = ({
   location,
   show = true,
   hoverAnimation = false,
+  variant = TimelineViewComponentVariant.DEFAULT,
 }: FindDirectionProps) => {
   const url = generateGoogleMapUrl(location);
 
@@ -28,6 +31,7 @@ const FindDirection = ({
       <Container
         $iconOnly={!showText && showIcon}
         $hoverAnimation={hoverAnimation}
+        $variant={variant}
         target="_blank"
         onClick={(e) => {
           e.stopPropagation();

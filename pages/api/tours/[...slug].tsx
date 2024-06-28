@@ -48,6 +48,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
 
   const queryParamsString = queryParamsObj.toString();
 
+  // TODO
   const url = `https://api.${
     useTest === 'true' || useTest ? 'test-' : ''
   }headout.com/api/${(req.query.slug as string[])?.join('/')}/${

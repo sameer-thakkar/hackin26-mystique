@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import { ChildSection, Itinerary, Section } from 'types/itinerary.type';
 import { TCalculateBoundsCallback } from '@headout/aer/src/molecules/LeafletMap/map';
 
@@ -29,8 +30,7 @@ export type TMapController = {
 
 export type TMapProps = {
   itinerary: Itinerary;
-  showRoutesTimeline?: boolean;
-  activeSectionId?: number;
+  controller?: MutableRefObject<TMapController | null>;
   onActiveSectionChange?: (id: number) => void;
   onClickTrackEvent?: ({
     type,
@@ -38,6 +38,7 @@ export type TMapProps = {
     stopNumber,
   }: TOnClickTrackEvent) => void;
   onZoomTrackEvent?: ({ zoomType }: TOnZoomTrackEvent) => void;
+  interactionBlockingOverlayText?: string;
 };
 
 export type TGetMarkerIconProps = {

@@ -1249,6 +1249,7 @@ const it = {
     MORE: 'e {0} ancora',
     TIMELINE_VIEW: 'Programma',
     MAP_VIEW: 'Mappa',
+    MAP_OVERLAY: 'Usa CTRL/⌘ + il cursore per spostarti',
   },
 };
 export default it;

@@ -1250,6 +1250,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MORE: '{0} mehr',
     TIMELINE_VIEW: 'Zeitstrahl',
     MAP_VIEW: 'Karte',
+    MAP_OVERLAY: 'Verschieben Sie die Karte mit Strg/⌘ + scrollen',
   },
 };
 

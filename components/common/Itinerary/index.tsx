@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
+import { ChildSection, Section } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import type { TItineraryComponentProps } from 'components/common/Itinerary/interface';
-// import ItineraryViewSwitch from 'components/common/Itinerary/ItineraryViewSwitch';
-// import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
+import ItineraryViewSwitch from 'components/common/Itinerary/ItineraryViewSwitch';
+import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import type { TTabListItemProps } from 'UI/Tabs/interface';
 import { trackEvent } from 'utils/analytics';
 import { getItineraryDescriptorsTypes } from 'utils/itinerary';
@@ -17,6 +19,10 @@ import { Block, SpaceBlock, StyledItinerarySectionContainer } from './styles';
 const TimelineView = dynamic(
   () => import(/* webpackChunkName: "TimelineView" */ './TimelineView')
 );
+const MapView = dynamic(
+  () => import(/* webpackChunkName: "MapView" */ './MapView'),
+  { ssr: false }
+);
 const Tabs = dynamic(() => import(/* webpackChunkName: "Tabs" */ 'UI/Tabs'));
 
 const Itinerary = ({
@@ -28,9 +34,12 @@ const Itinerary = ({
   const [activeTab, setActiveTab] = useState(
     itineraryData[0]?.id.toString() ?? ''
   );
-  // const [viewMode, setViewMode] = useState<ItineraryViewMode>(
-  //   ItineraryViewMode.TIMELINE
-  // );
+  const [viewMode, setViewMode] = useState<ItineraryViewMode>(
+    ItineraryViewMode.TIMELINE
+  );
+  const [activeStopSectionId, setActiveStopSectionId] = useState<number | null>(
+    null
+  );
 
   const tabListItems: TTabListItemProps[] = itineraryData
     .filter((item) => item)
@@ -50,6 +59,10 @@ const Itinerary = ({
     return [];
   }, [activeItineraryData]);
 
+  useEffect(() => {
+    setViewMode(ItineraryViewMode.TIMELINE);
+  }, [activeItineraryData]);
+
   const itinerariesToRender = (
     isBot ? itineraryData : [activeItineraryData!]
   ).filter((itineraryItem) => itineraryItem);
@@ -59,10 +72,15 @@ const Itinerary = ({
     trackItineraryTabChange(tab);
   };
 
-  // const handleViewChange = (activeView: ItineraryViewMode) => {
-  //   setViewMode(activeView);
-  //   trackItineraryViewModeChange(activeView);
-  // };
+  const handleViewChange = () => {
+    const activeView =
+      viewMode === ItineraryViewMode.TIMELINE
+        ? ItineraryViewMode.MAP
+        : ItineraryViewMode.TIMELINE;
+
+    setViewMode(activeView);
+    trackItineraryViewModeChange(activeView);
+  };
 
   const trackItineraryTabChange = (activeItineraryTab: TTabListItemProps) => {
     const newTab = itineraryData.find(
@@ -83,12 +101,23 @@ const Itinerary = ({
     }
   };
 
-  // const trackItineraryViewModeChange = (activeView: ItineraryViewMode) => {
-  //   trackEvent({
-  //     eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_TOGGLE_CLICKED,
-  //     [ANALYTICS_PROPERTIES.ITINERARY_VIEW]: activeView,
-  //   });
-  // };
+  const trackItineraryViewModeChange = (activeView: ItineraryViewMode) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_TOGGLE_CLICKED,
+      [ANALYTICS_PROPERTIES.ITINERARY_VIEW]: activeView,
+    });
+  };
+
+  const hasMapView =
+    activeItineraryData?.map &&
+    activeItineraryData?.map.active &&
+    !!activeItineraryData.map.itineraryRoute.polyline;
+
+  const handleStopSectionClick = (
+    sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>
+  ) => {
+    setActiveStopSectionId(sectionDetails.id);
+  };
 
   return (
     <>
@@ -124,21 +153,37 @@ const Itinerary = ({
           ))}
         </Conditional>
         <SpaceBlock $gap={'1.5rem'} />
-        {/*<ItineraryViewSwitch*/}
-        {/*  viewMode={viewMode}*/}
-        {/*  onChangeViewMode={handleViewChange}*/}
-        {/*/>*/}
-        {/*<SpaceBlock $gap={'2rem'} />*/}
+        <Conditional if={hasMapView}>
+          <ItineraryViewSwitch
+            viewMode={viewMode}
+            onChangeViewMode={handleViewChange}
+          />
+          <SpaceBlock $gap={'2rem'} />
+        </Conditional>
       </StyledItinerarySectionContainer>
-      <Conditional if={activeItineraryData}>
+      <Conditional
+        if={activeItineraryData && viewMode === ItineraryViewMode.TIMELINE}
+      >
         {itinerariesToRender.map((itineraryItem) => (
           <Block
             $isVisible={itineraryItem.id === activeItineraryData?.id}
             key={itineraryItem.id}
           >
-            <TimelineView itinerary={itineraryItem} />
+            <TimelineView
+              itinerary={itineraryItem}
+              variant={
+                viewMode === ItineraryViewMode.TIMELINE
+                  ? TimelineViewComponentVariant.DEFAULT
+                  : TimelineViewComponentVariant.REDUCED_WIDTH
+              }
+              onStopSectionClick={handleStopSectionClick}
+              activeStopSectionId={activeStopSectionId}
+            />
           </Block>
         ))}
+      </Conditional>
+      <Conditional if={viewMode === ItineraryViewMode.MAP}>
+        {activeItineraryData && <MapView itinerary={activeItineraryData} />}
       </Conditional>
     </>
   );

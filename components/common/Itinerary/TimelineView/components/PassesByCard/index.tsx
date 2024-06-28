@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { Section } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import {
+  TimelineViewComponentVariant,
+  TOnStopClick,
+} from 'components/common/Itinerary/TimelineView/interface';
 import Image from 'UI/Image';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
@@ -11,20 +17,38 @@ import {
   Container,
   Cta,
   Heading,
+  SpaceBlock,
   SubCardContainer,
   SubCardContentContainer,
   SubCardContentTextContainer,
   SubCardHeadingContainer,
 } from './styles';
-import { PassesByCardProps } from './types';
+import { PassesByCardProps, PassesBySubCardProps } from './types';
+
+const SubStopCard = dynamic(
+  () =>
+    import(
+      /*webpackChunkName: "SubStopCard"  */ 'components/common/Itinerary/TimelineView/components/SubStopCard'
+    )
+);
 
 const PassingBySubCard = ({
   title,
   image,
   description,
   link,
-}: PassesByCardProps['stops'][0]) => {
+  variant,
+  id,
+  itineraryId,
+  onClick,
+}: PassesBySubCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isReducedWidthVariant =
+    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
+
+  const handleClick = () => {
+    if (!isLink) setIsOpen(!isOpen);
+  };
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const hasContent = image || description;
@@ -34,18 +58,17 @@ const PassingBySubCard = ({
   return (
     <SubCardContainer
       $isOpen={isOpen}
+      $variant={variant}
       {...(isLink && { href: link!, as: 'a', target: '_blank' })}
+      id={`itinerary-card-${itineraryId}-${id}`}
+      onClick={() => id && onClick?.({ id } as Section)}
     >
-      <SubCardHeadingContainer
-        onClick={() => {
-          if (!isLink) setIsOpen(!isOpen);
-        }}
-      >
+      <SubCardHeadingContainer onClick={handleClick} $variant={variant}>
         <Image
           url={image!}
           alt="stop-image"
-          height={20}
-          width={32}
+          height={isReducedWidthVariant ? 16 : 20}
+          width={isReducedWidthVariant ? 26 : 32}
           priority
           fetchPriority={'high'}
           fill
@@ -67,7 +90,7 @@ const PassingBySubCard = ({
           </>
         </Conditional>
       </SubCardHeadingContainer>
-      <Conditional if={isOpen}>
+      <Conditional if={isOpen && !isReducedWidthVariant}>
         <SubCardContentContainer>
           <Conditional if={image}>
             <div className="passing-by-sub-card-content-child passing-by-sub-card-content-image-section">
@@ -112,16 +135,46 @@ const PassingBySubCard = ({
           </Conditional>
         </SubCardContentContainer>
       </Conditional>
+      <Conditional if={isOpen && isReducedWidthVariant}>
+        <SpaceBlock $gap={'1rem'} />
+        <SubStopCard
+          subSectionDetails={{
+            details: {
+              name: title,
+              mediaUrls: image ? [image] : [],
+              sameAsStartingPoint: false,
+            },
+            id: id!,
+          }}
+          itineraryId={itineraryId}
+        />
+      </Conditional>
     </SubCardContainer>
   );
 };
 
-const PassesByCard = ({ stops }: PassesByCardProps) => {
+const PassesByCard = ({
+  stops,
+  variant,
+  itineraryId,
+  onStopSectionClick,
+}: PassesByCardProps & {
+  itineraryId: number;
+  onStopSectionClick?: TOnStopClick;
+}) => {
   return (
     <Container>
-      <Heading>{strings.ITINERARY.PASSES_BY_SECTION_HEADING}</Heading>
+      <Heading $variant={variant}>
+        {strings.ITINERARY.PASSES_BY_SECTION_HEADING}
+      </Heading>
       {stops.map((stop, index) => (
-        <PassingBySubCard {...stop} key={`passing-by-${index}`} />
+        <PassingBySubCard
+          {...stop}
+          key={`passing-by-${index}`}
+          variant={variant}
+          itineraryId={itineraryId}
+          onClick={onStopSectionClick}
+        />
       ))}
     </Container>
   );

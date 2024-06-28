@@ -1,23 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import { ChildSection } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
-import SwiperWrapper from 'components/Swiper';
-import Image from 'UI/Image';
+import PassByItemCard from 'components/common/Itinerary/TimelineView/components/PassByItemCard';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { useSwiperArrows } from 'hooks/useSwiper';
-import { getDurationInHMNotation } from 'utils/dateUtils';
-import { nearbyThingsIcon } from 'const/itinerary';
 import { strings } from 'const/strings';
-import { TailedArrowSVG } from 'assets/airportTransfers';
 import {
   CarouselContainer,
   Container,
   HeadingContainer,
-  IconContainer,
-  PassByContainer,
-  PassByContent,
+  NearbyCardsContainer,
 } from './styles';
 import { NearbyThingsToDoProps } from './types';
 
@@ -27,74 +21,16 @@ const NavigationButtons = dynamic(
       /* webpackChunkName: "NavigationButtons" */ 'components/common/NavigationButtons'
     )
 );
+const SwiperWrapper = dynamic(
+  () => import(/* webpackChunkName: "SwiperWrapper" */ 'components/Swiper')
+);
 
-const NearbyItem = ({
-  details: { mediaUrls, name, timeFromParent, subType },
-  id,
-  link,
-}: ChildSection & { link?: string | null }) => {
-  const [TypeIcon, setTypeIcon] = useState<React.ComponentType<{}> | null>(
-    null
-  );
-
-  const iconAvailable =
-    subType && Object.keys(nearbyThingsIcon).includes(subType.label);
-
-  useEffect(() => {
-    if (!subType) return;
-
-    const icon = dynamic(nearbyThingsIcon[subType.label]);
-
-    setTypeIcon(icon);
-  }, []);
-
-  const walkDuration = timeFromParent
-    ? getDurationInHMNotation(timeFromParent)
-    : '';
-
-  const hasImage = !!mediaUrls?.length;
-
-  return (
-    <PassByContainer
-      key={`nearby-things-${id}`}
-      {...(link && { href: link, as: 'a', target: '_blank' })}
-    >
-      {hasImage && (
-        <Image
-          url={mediaUrls[0]}
-          alt="passby-image"
-          height={36}
-          width={56}
-          priority
-          fetchPriority={'high'}
-          fill
-          aspectRatio="16:10"
-          autoCrop={false}
-        />
-      )}
-      <Conditional if={!hasImage && iconAvailable}>
-        <IconContainer>{TypeIcon && <TypeIcon />}</IconContainer>
-      </Conditional>
-
-      <PassByContent $isClickable={!!link}>
-        <div className="passby-name">{name}</div>
-        <Conditional if={walkDuration}>
-          <div className="passby-duration">
-            {strings.formatString(
-              strings.ITINERARY.WALK_DURATION,
-              walkDuration
-            )}
-          </div>
-        </Conditional>
-        <Conditional if={!!link}>
-          <TailedArrowSVG className="passby-arrow" />
-        </Conditional>
-      </PassByContent>
-    </PassByContainer>
-  );
-};
-
-const NearbyThingsToDo = ({ passBys = [] }: NearbyThingsToDoProps) => {
+const NearbyThingsToDo = ({
+  passBys = [],
+  variant = TimelineViewComponentVariant.DEFAULT,
+  itineraryId,
+  onClick,
+}: NearbyThingsToDoProps) => {
   const swiperRef = useRef<TSwiper | null>(null);
 
   const { showRightArrow, showLeftArrow, onSlideChange } = useSwiperArrows();
@@ -125,6 +61,9 @@ const NearbyThingsToDo = ({ passBys = [] }: NearbyThingsToDoProps) => {
   const handleNext = () => swiperRef.current?.slideNext();
   const handlePrev = () => swiperRef.current?.slidePrev();
 
+  const isReducedWidthVariant =
+    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
+
   return (
     <Container>
       <HeadingContainer>
@@ -142,13 +81,31 @@ const NearbyThingsToDo = ({ passBys = [] }: NearbyThingsToDoProps) => {
           />
         </Conditional>
       </HeadingContainer>
-      <CarouselContainer>
-        <SwiperWrapper {...swiperParams}>
+      <Conditional if={!isReducedWidthVariant}>
+        <CarouselContainer>
+          <SwiperWrapper {...swiperParams}>
+            {passBys.map((passBy, index) => (
+              <PassByItemCard
+                key={index}
+                {...passBy}
+                itineraryId={itineraryId}
+              />
+            ))}
+          </SwiperWrapper>
+        </CarouselContainer>
+      </Conditional>
+      <Conditional if={isReducedWidthVariant}>
+        <NearbyCardsContainer>
           {passBys.map((passBy, index) => (
-            <NearbyItem key={index} {...passBy} />
+            <PassByItemCard
+              key={index}
+              {...passBy}
+              itineraryId={itineraryId}
+              onClick={onClick}
+            />
           ))}
-        </SwiperWrapper>
-      </CarouselContainer>
+        </NearbyCardsContainer>
+      </Conditional>
     </Container>
   );
 };

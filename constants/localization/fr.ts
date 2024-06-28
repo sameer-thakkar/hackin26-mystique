@@ -1260,6 +1260,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     MORE: '{0} de plus',
     TIMELINE_VIEW: 'Voir le programme',
     MAP_VIEW: 'Voir le plan',
+    MAP_OVERLAY: "Déplacez la carte à l'aide de CTRL/⌘ + votre souris",
   },
 };
 export default fr;

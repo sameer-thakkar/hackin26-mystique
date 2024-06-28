@@ -1,5 +1,6 @@
 import { ChildSection, Section } from 'types/itinerary.type';
 import { Props as DescriptorProps } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/types';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 
 export type StopCardProps = {
   sectionDetails?: Omit<Section, 'childSections'>;
@@ -16,5 +17,11 @@ export type StopCardProps = {
   isSubSection?: boolean;
   isForcedStart?: boolean;
   isForcedEnd?: boolean;
+  variant?: TimelineViewComponentVariant;
+  onStopSectionClick?: (
+    sectionDetails: Omit<Section, 'childSections'> | Section | ChildSection
+  ) => void;
+  isActive?: boolean;
+  isHOHOItinerary?: boolean;
   findDirections?: boolean;
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   CHILD_SECTION_TYPE,
@@ -7,6 +7,7 @@ import {
 } from 'types/itinerary.type';
 import type { MapMarker } from '@headout/aer/src/molecules/LeafletMap/map';
 import { trackEvent } from 'utils/analytics';
+import { isValidLocation } from 'utils/itinerary';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import type { TMapController, TMapProps, TZoomInfo } from './interface';
@@ -14,28 +15,31 @@ import ResetButton from './ResetButton';
 import { MapContainer } from './styles';
 import { getChildMarkers, getMarkerIconProps } from './utils';
 
-const Map = dynamic(() => import('@headout/aer/src/molecules/LeafletMap'), {
-  ssr: false,
-});
+const LeafletMap = dynamic(
+  () => import('@headout/aer/src/molecules/LeafletMap'),
+  {
+    ssr: false,
+  }
+);
 
 const RouteMap = ({
   itinerary,
+  controller,
   onActiveSectionChange,
   onClickTrackEvent,
+  interactionBlockingOverlayText,
   onZoomTrackEvent,
 }: TMapProps) => {
-  const [markers, setMarkers] = useState<Array<MapMarker>>([]);
+  const [markers, setMarkers] = useState<Array<MapMarker> | undefined>();
   const [zoomInfo, setZoomInfo] = useState<TZoomInfo>(null);
   const [currentZoom, setCurrentZoom] = useState(0);
   const [mapPinClick, setMapPinClick] = useState(false);
 
-  const controller = useRef<TMapController | null>(null);
-  useEffect(() => {
-    controller?.current?.reset();
-  }, [itinerary?.id]);
+  const localController = useRef<TMapController | undefined>();
+  const mapController = controller ?? localController;
 
   const calculateMarkers = useCallback(() => {
-    if (!controller.current) return;
+    if (!mapController?.current) return;
 
     let markers: Array<MapMarker> = [];
 
@@ -46,15 +50,17 @@ const RouteMap = ({
       { zoom: number; bounds: L.LatLngBounds }
     > = {};
 
-    const currentZoom = controller.current!.map?.getZoom();
+    const currentZoom = mapController.current!.map?.getZoom();
+
+    const childToParent = new Map<number, number>();
 
     markers = itinerary.sections.reduce((acc, section) => {
-      if (!!section.location && !!section.details.name) {
+      if (section.details.name) {
         const { location, type, id, details, childSections = [] } = section;
         const { name, passBy } = details;
-        const { latitude = 0, longitude = 0 } = location || {};
-
         if (type === SECTION_TYPE.STOP && !passBy) stopIndex++;
+        if (!isValidLocation(location)) return acc;
+        const { latitude = 0, longitude = 0 } = location!;
 
         const markerType = passBy ? CHILD_SECTION_TYPE.PASS_BY : type;
         const locations: Array<MarkerLocation> = [location!];
@@ -62,14 +68,15 @@ const RouteMap = ({
           locations.push(location!);
         };
         const childMarkers = getChildMarkers(childSections, pushLocation);
+        childSections.forEach(({ id }) => childToParent.set(id, section.id));
 
-        const bounds = controller.current!.calculateBounds(
+        const bounds = mapController.current!.calculateBounds(
           locations.map(({ latitude = 0, longitude = 0 }) => ({
             lat: latitude,
             lng: longitude,
           }))
         );
-        const parentPotentialZoom = controller.current!.map.getBoundsZoom(
+        const parentPotentialZoom = mapController.current!.map.getBoundsZoom(
           bounds,
           false
         );
@@ -106,7 +113,7 @@ const RouteMap = ({
 
         acc.push(
           ...childMarkers.map((marker) => {
-            const bounds = controller.current!.calculateBounds([
+            const bounds = mapController.current!.calculateBounds([
               {
                 lat: marker.element.location.latitude,
                 lng: marker.element.location.longitude,
@@ -137,9 +144,9 @@ const RouteMap = ({
       if (!localZoomInfo?.[id]) return;
       const { bounds, zoom } = localZoomInfo[id];
       if (childSection || !section?.childSections.length) {
-        controller.current!.map?.flyTo(bounds.getCenter(), zoom);
+        mapController.current!.map?.flyTo(bounds.getCenter(), zoom);
       } else
-        controller.current!.map?.flyToBounds(bounds, {
+        mapController.current!.map?.flyToBounds(bounds, {
           padding: [60, 60],
         });
     };
@@ -164,7 +171,10 @@ const RouteMap = ({
             stopName: title,
             stopNumber: rank,
           });
-          onActiveSectionChange?.(marker.element.id);
+
+          onActiveSectionChange?.(
+            childToParent.get(marker.element.id) ?? marker.element.id
+          );
           const isSection = Array.isArray(marker.element.childSections);
           zoomIntoSection(
             isSection
@@ -175,15 +185,13 @@ const RouteMap = ({
       }))
     );
 
-    controller.current.zoomIntoSection = zoomIntoSection;
+    mapController.current.zoomIntoSection = zoomIntoSection;
 
-    controller.current?.map?.invalidateSize();
-  }, [itinerary, !!controller.current, onActiveSectionChange]);
+    mapController.current?.map?.invalidateSize();
+  }, [itinerary, !!mapController?.current, onActiveSectionChange]);
 
   const handleZoomChange = (zoom: number) => {
-    setTimeout(() => {
-      setCurrentZoom(zoom);
-    }, 4000);
+    setCurrentZoom(zoom);
     if (!mapPinClick && currentZoom !== 0) {
       onZoomTrackEvent?.({
         zoomType: zoom > currentZoom ? 'Zoom In' : 'Zoom Out',
@@ -203,6 +211,7 @@ const RouteMap = ({
   };
 
   if (!itinerary.map || !itinerary.map.active) return null;
+
   const {
     polyline,
     polylineColor,
@@ -211,7 +220,7 @@ const RouteMap = ({
 
   return (
     <MapContainer onClick={handleFreeTouch} onTouchEnd={handleFreeTouch}>
-      <Map
+      <LeafletMap
         lines={
           isItineraryRouteActive
             ? [
@@ -226,11 +235,12 @@ const RouteMap = ({
             : []
         }
         markers={markers}
+        interactionBlockingOverlayText={interactionBlockingOverlayText}
         maxZoomLevel={30}
         showZoomControls={false}
         onMapLoad={(map, reset, calculateBounds) => {
-          if (map && reset && !controller.current) {
-            controller.current = {
+          if (map && reset && mapController && !mapController?.current) {
+            mapController.current = {
               map,
               reset,
               calculateBounds,
@@ -239,12 +249,13 @@ const RouteMap = ({
           }
         }}
         onMapUnload={() => {
-          controller.current = null;
+          if (mapController && mapController.current)
+            mapController.current = null;
         }}
         onZoomChanged={handleZoomChange}
       />
 
-      <ResetButton onClick={controller.current?.reset} />
+      <ResetButton onClick={mapController?.current?.reset} />
     </MapContainer>
   );
 };

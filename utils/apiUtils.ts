@@ -230,6 +230,7 @@ export const getHeadoutApiUrl = ({
      * Ensure that all API endpoints are ending with a trailing slash "/"
      * This is being done to prevent creating duplicate records on CDN.
      */
+    // TODO
     url = withTrailingSlash(`https://api.headout.com${formattedEndpointSlug}`);
   }
 
@@ -706,9 +707,7 @@ export const fetchTourGroupsByCollection = async ({
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: runRankingExperiment
-      ? HeadoutEndpoints.CollectionTourGroups
-      : HeadoutEndpoints.TourGroupListByCollectionV6,
+    endpoint: HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,
     id: collectionId,
     params,

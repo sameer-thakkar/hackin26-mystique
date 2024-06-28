@@ -1310,6 +1310,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     MORE: '{0} más',
     TIMELINE_VIEW: 'Vista cronológica',
     MAP_VIEW: 'Vista de la ruta',
+    MAP_OVERLAY: 'Usa CTRL/⌘ + el ratón para desplazarte por el mapa',
   },
 };
 export default es;

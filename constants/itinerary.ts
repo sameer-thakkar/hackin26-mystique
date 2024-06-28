@@ -24,6 +24,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
   }
 > = {
   [ItineraryDescriptorsTypes.TOTAL_DURATION]: {
+    label: strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
     icon: descriptorIcons.TOTAL_DURATION,
     fieldIdentifier: ['duration'],
     fieldTransformer: ({ duration }) => {
@@ -34,11 +35,13 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
   },
   [ItineraryDescriptorsTypes.FREQUENCY]: {
+    label: strings.ITINERARY.DESCRIPTORS.FREQUENCY,
     icon: descriptorIcons.FREQUENCY,
     fieldIdentifier: ['frequency'],
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FREQUENCY,
   },
   [ItineraryDescriptorsTypes.FIRST_DEPARTURE_TIME]: {
+    label: strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE_TIME,
     icon: descriptorIcons.FIRST_DEPARTURE,
     fieldIdentifier: ['firstDepartureTime'],
     hideIfFieldsPresent: ['firstDepartureStop'],
@@ -51,6 +54,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE_TIME,
   },
   [ItineraryDescriptorsTypes.LAST_DEPARTURE_TIME]: {
+    label: strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE_TIME,
     icon: descriptorIcons.LAST_DEPARTURE,
     fieldIdentifier: ['lastDepartureTime'],
     hideIfFieldsPresent: ['lastDepartureStop'],
@@ -63,6 +67,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE_TIME,
   },
   [ItineraryDescriptorsTypes.FOOD_AND_DRINKS]: {
+    label: strings.ITINERARY.DESCRIPTORS.FOOD_AND_DRINKS,
     icon: descriptorIcons.FOOD_AND_DRINKS,
     fieldIdentifier: ['menuImageLink'],
     useCTA: true,
@@ -73,6 +78,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FOOD_AND_DRINKS,
   },
   [ItineraryDescriptorsTypes.MODE_OF_TRANSPORT]: {
+    label: strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
+    icon: descriptorIcons.MODE_OF_TRANSPORT,
     fieldIdentifier: ['modeOfTravel'],
     getIcon: ({ modeOfTravel }) => {
       return dynamic(
@@ -85,6 +92,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
   },
   [ItineraryDescriptorsTypes.FIRST_DEPARTURE]: {
+    label: strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE,
     icon: descriptorIcons.FIRST_DEPARTURE,
     fieldIdentifier: ['firstDepartureStop', 'firstDepartureTime'],
     fieldTransformer: (
@@ -99,6 +107,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE,
   },
   [ItineraryDescriptorsTypes.LAST_DEPARTURE]: {
+    label: strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE,
     icon: descriptorIcons.LAST_DEPARTURE,
     fieldIdentifier: ['lastDepartureStop', 'lastDepartureTime'],
     fieldTransformer: ({ lastDepartureStop, lastDepartureTime }, { lang }) => {

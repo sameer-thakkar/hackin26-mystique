@@ -2199,3 +2199,5 @@ export const ENTERTAINMENT_MB_CITIES = {
 };
 
 export const MYSTIQUE = 'Mystique';
+
+export const HOHO_SUBCATEGORY_ID = 1011;

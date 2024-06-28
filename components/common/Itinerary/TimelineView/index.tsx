@@ -2,16 +2,33 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Section } from 'types/itinerary.type';
 import PassesByCard from 'components/common/Itinerary/TimelineView/components/PassesByCard';
 import StopCard from 'components/common/Itinerary/TimelineView/components/StopCard';
-import type { TTimelineViewComponentProps } from 'components/common/Itinerary/TimelineView/interface';
+import type {
+  TOnStopClick,
+  TTimelineViewComponentProps,
+} from 'components/common/Itinerary/TimelineView/interface';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
+import { StyledTimelineViewContainer } from 'components/common/Itinerary/TimelineView/styles';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { sectionDataSanitizer } from 'utils/itinerary';
+import {
+  isHOHOItinerary as checkIfHOHOItinerary,
+  sectionDataSanitizer,
+} from 'utils/itinerary';
 import { ANALYTICS_EVENTS } from 'const/index';
 
-const TimelineView = ({ itinerary }: TTimelineViewComponentProps) => {
+const TimelineView = ({
+  itinerary,
+  variant = TimelineViewComponentVariant.DEFAULT,
+  onStopSectionClick,
+  activeStopSectionId: activeStopSectionIdFromProps,
+}: TTimelineViewComponentProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const timelineContainerRef = useRef<HTMLDivElement>(null);
   const [eventRecorded, setEventRecorded] = useState(false);
   const isOnScreen = useOnScreen({ ref, unobserve: eventRecorded });
+  const [activeStopSectionId, setActiveStopSectionId] = useState<
+    number | null | undefined
+  >(activeStopSectionIdFromProps);
 
   const stopCardProps = useMemo(
     () => sectionDataSanitizer(itinerary.sections as Section[], itinerary.type),
@@ -26,19 +43,47 @@ const TimelineView = ({ itinerary }: TTimelineViewComponentProps) => {
     setEventRecorded(true);
   }, [eventRecorded, isOnScreen]);
 
+  useEffect(() => {
+    if (activeStopSectionIdFromProps) {
+      setActiveStopSectionId(activeStopSectionIdFromProps);
+    }
+  }, [activeStopSectionIdFromProps]);
+
+  const handleStopSectionClick: TOnStopClick = (sectionDetails) => {
+    onStopSectionClick?.(sectionDetails);
+  };
+
+  const isReducedWidthVariant =
+    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
+  const isHOHOItinerary = checkIfHOHOItinerary(itinerary.type);
+
   return (
-    <div>
+    <StyledTimelineViewContainer $variant={variant} ref={timelineContainerRef}>
       {stopCardProps.map(({ stop, passby }) =>
         passby ? (
           <PassesByCard
             {...passby}
             key={`passby-card-${passby.stops[0]!.id}`}
+            variant={variant}
+            itineraryId={itinerary.id}
+            onStopSectionClick={handleStopSectionClick}
           />
         ) : (
-          <StopCard {...stop} key={`stop-card-${stop!.sectionDetails?.id}`} />
+          <StopCard
+            {...stop}
+            key={`stop-card-${stop!.sectionDetails?.id}`}
+            variant={variant}
+            onStopSectionClick={handleStopSectionClick}
+            isActive={
+              isReducedWidthVariant &&
+              stop!.sectionDetails?.id === activeStopSectionId
+            }
+            isHOHOItinerary={isHOHOItinerary}
+            itineraryId={itinerary.id}
+          />
         )
       )}
-    </div>
+    </StyledTimelineViewContainer>
   );
 };
 

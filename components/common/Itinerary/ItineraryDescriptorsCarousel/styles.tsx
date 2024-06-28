@@ -24,8 +24,9 @@ export const StyledItineraryDescriptorsCarouselContainer = styled.div`
   }
 
   .itinerary-descriptors-no-carousel-container {
-    display: flex;
+    display: grid;
     width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     &.space-between {
       justify-content: space-between;

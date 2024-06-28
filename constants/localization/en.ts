@@ -1317,6 +1317,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     MORE: '{0} more',
     TIMELINE_VIEW: 'Timeline View',
     MAP_VIEW: 'Map View',
+    MAP_OVERLAY: 'Use CTRL/⌘ + scroll to move the map',
   },
 };
 

@@ -1,10 +1,15 @@
 import styled, { css } from 'styled-components';
 import { Container as FindDirectionContainer } from 'components/common/Itinerary/TimelineView/components/StopCard/components/FindDirection/styles';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const RankContainer = styled.div<{ $isEnd?: boolean }>`
+export const RankContainer = styled.div<{
+  $isEnd?: boolean;
+  $isActive?: boolean;
+  $variant?: TimelineViewComponentVariant;
+}>`
   left: 0;
   top: 0.2rem;
   height: 1.5rem;
@@ -52,6 +57,38 @@ export const RankContainer = styled.div<{ $isEnd?: boolean }>`
         }
       `}
   }
+
+  ${({ $variant, $isEnd }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      left: 0.1rem;
+      top: 0.2rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      border-radius: 2px;
+
+      p {
+        ${expandFontToken(FONTS.SUBHEADING_SMALL)};
+
+        ${$isEnd &&
+        css`
+          height: 0.625rem;
+          width: 0.625rem;
+
+          ::after {
+            height: 0.625rem;
+            width: 0.625rem;
+          }
+        `}
+      }
+    `}
+
+  ${({ $isActive, $variant }) =>
+    $isActive &&
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      box-shadow: 0 0 0 4px rgba(136, 0, 255, 0.2);
+    `}
 `;
 
 export const ToggleContainer = styled.div`
@@ -81,6 +118,7 @@ export const TitleContainer = styled.h5`
 
 export const HeadingContainer = styled.div<{
   $isSubCard?: boolean;
+  $variant?: TimelineViewComponentVariant;
 }>`
   display: flex;
   flex-direction: row;
@@ -106,7 +144,7 @@ export const HeadingContainer = styled.div<{
   }
 
   ${FindDirectionContainer} {
-    margin-left: 1.875rem;
+    margin-left: 1rem;
 
     &::after {
       content: '';
@@ -115,10 +153,54 @@ export const HeadingContainer = styled.div<{
       width: 0.375rem;
       border-radius: 50px;
       background-color: ${COLORS.GRAY.G5};
-      left: -1.0625rem;
-      transform: translateX(-50%);
+      left: -0.625rem;
+      transform: translate(-50%, 10%);
     }
   }
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      justify-content: space-between;
+
+      .stop-title {
+        ${expandFontToken(FONTS.MISC_OVERLINE)};
+        letter-spacing: 0.8px;
+        color: ${COLORS.GRAY.G2};
+      }
+
+      .stop-heading-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .stop-name-container {
+        display: flex;
+        gap: 0.375rem;
+      }
+
+      .stop-name {
+        ${expandFontToken(FONTS.HEADING_XS)};
+      }
+
+      .stop-subtext {
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+        color: ${COLORS.GRAY.G3};
+      }
+
+      .toggle-icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          path {
+            stroke: ${COLORS.GRAY.G2};
+          }
+        }
+      }
+    `}
 `;
 
 export const Description = styled.div<{
@@ -258,6 +340,7 @@ export const Container = styled.div<{
   $isSubCard?: boolean;
   $isStart?: boolean;
   $isEnd?: boolean;
+  $variant?: TimelineViewComponentVariant;
 }>`
   position: relative;
   cursor: default;
@@ -317,6 +400,32 @@ export const Container = styled.div<{
           display: none;
         }
       }
+    `};
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      padding: 0.1875rem 0.5rem 1.25rem 1.75rem;
+      gap: 1rem;
+    `};
+`;
+
+export const ContentContainer = styled.div<{
+  $variant?: TimelineViewComponentVariant;
+}>`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      gap: 1rem;
+
+      &:hover {
+        cursor: pointer;
+      }
     `}
 `;
 
@@ -326,4 +435,10 @@ export const ClickableContainer = styled.div<{ $isClickable?: boolean }>`
   gap: 0.5rem;
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'auto')};
   position: relative;
+`;
+
+export const SubStopsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;

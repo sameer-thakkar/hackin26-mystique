@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -13,6 +14,7 @@ const iconOnlyStyles = css`
 export const Container = styled.a<{
   $iconOnly?: boolean;
   $hoverAnimation?: boolean;
+  $variant?: TimelineViewComponentVariant;
 }>`
   display: flex;
   flex-direction: row;
@@ -60,4 +62,12 @@ export const Container = styled.a<{
       }
     }
   }
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      .direction-text {
+        ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
+      }
+    `}
 `;

@@ -84,7 +84,7 @@ export interface Itinerary {
   type: ItineraryType;
   subCategoryId: number;
   active: boolean;
-  map: Map;
+  map?: Map;
   details: ItineraryDetails;
   sections: Section[];
 }

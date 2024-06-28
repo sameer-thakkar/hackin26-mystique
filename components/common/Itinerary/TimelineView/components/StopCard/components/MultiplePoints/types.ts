@@ -1,7 +1,10 @@
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
+
 export type MultiplePointsProps = {
   points: {
     title: string;
     image?: string | null;
+    timeForNextSection?: number;
   }[];
   isStartPoint?: boolean;
   /**
@@ -11,4 +14,6 @@ export type MultiplePointsProps = {
    * @returns void
    */
   onItemClick: (index: number) => void;
+  variant?: TimelineViewComponentVariant;
+  itineraryId: number;
 };

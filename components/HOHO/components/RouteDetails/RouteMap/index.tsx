@@ -63,7 +63,6 @@ const HOHORouteMap = (props: TRouteMap) => {
     <MapContainer $isTimelineModal={showRoutesTimeline} key={polyline}>
       <RouteMap
         itinerary={itinerary}
-        showRoutesTimeline={false}
         onClickTrackEvent={handleClickEvent}
         onZoomTrackEvent={handleZoomEvent}
       />

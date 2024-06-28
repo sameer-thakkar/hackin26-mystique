@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Conditional from 'components/common/Conditional';
 import type { TItineraryViewSwitchComponentProps } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
@@ -17,6 +17,10 @@ const ItineraryViewSwitch = ({
   onChangeViewMode,
 }: TItineraryViewSwitchComponentProps) => {
   const [activeViewMode, setActiveViewMode] = useState(viewMode);
+
+  useEffect(() => {
+    setActiveViewMode(viewMode);
+  }, [viewMode]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const mode = e.target.checked

@@ -1212,6 +1212,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     MORE: '{0} meer',
     TIMELINE_VIEW: 'Tijdlijn',
     MAP_VIEW: 'Kaart',
+    MAP_OVERLAY: 'Beweeg de kaart met CTRL/⌘ + scrolfunctie',
   },
 };
 export default nl;

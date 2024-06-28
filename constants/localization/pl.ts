@@ -1199,6 +1199,7 @@ const pl = {
     MORE: '{0} więcej',
     TIMELINE_VIEW: 'Widok osi czasu',
     MAP_VIEW: 'Widok mapy',
+    MAP_OVERLAY: 'Użyj CTRL/⌘ + przewiń, żeby przesunąć mapę',
   },
 };
 export default pl;

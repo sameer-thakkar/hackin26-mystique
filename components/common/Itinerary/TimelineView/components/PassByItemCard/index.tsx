@@ -1,0 +1,96 @@
+import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { ChildSection } from 'types/itinerary.type';
+import Conditional from 'components/common/Conditional';
+import {
+  IconContainer,
+  PassByContainer,
+  PassByContent,
+} from 'components/common/Itinerary/TimelineView/components/PassByItemCard/styles';
+import Image from 'UI/Image';
+import { getDurationInHMNotation } from 'utils/dateUtils';
+import { nearbyThingsIcon } from 'const/itinerary';
+import { strings } from 'const/strings';
+import { TailedArrowSVG } from 'assets/airportTransfers';
+import { TPassesByItemCardProps } from './types';
+
+const PassByItemCard = ({
+  details,
+  id,
+  link,
+  itineraryId,
+  onClick,
+}: TPassesByItemCardProps) => {
+  const {
+    mediaUrls = [],
+    name = '',
+    timeFromParent = 0,
+    subType = null,
+  } = details;
+  const [TypeIcon, setTypeIcon] = useState<React.ComponentType<{}> | null>(
+    null
+  );
+
+  const iconAvailable =
+    subType && Object.keys(nearbyThingsIcon).includes(subType.label);
+
+  useEffect(() => {
+    if (!subType) return;
+
+    const icon = dynamic(nearbyThingsIcon[subType.label]);
+
+    setTypeIcon(icon);
+  }, []);
+
+  const walkDuration = timeFromParent
+    ? getDurationInHMNotation(timeFromParent)
+    : '';
+
+  const hasImage = !!mediaUrls?.length;
+
+  return (
+    <PassByContainer
+      key={`nearby-things-${id}`}
+      {...(link && { href: link, as: 'a', target: '_blank' })}
+      id={`itinerary-card-${itineraryId}-${id}`}
+      onClick={(e: any) => {
+        e.stopPropagation();
+        onClick?.({ id } as ChildSection);
+      }}
+    >
+      {hasImage && (
+        <Image
+          url={mediaUrls[0]}
+          alt="passby-image"
+          height={36}
+          width={56}
+          priority
+          fetchPriority={'high'}
+          fill
+          aspectRatio="16:10"
+          autoCrop={false}
+        />
+      )}
+      <Conditional if={!hasImage && iconAvailable}>
+        <IconContainer>{TypeIcon && <TypeIcon />}</IconContainer>
+      </Conditional>
+
+      <PassByContent $isClickable={!!link}>
+        <div className="passby-name">{name}</div>
+        <Conditional if={walkDuration}>
+          <div className="passby-duration">
+            {strings.formatString(
+              strings.ITINERARY.WALK_DURATION,
+              walkDuration
+            )}
+          </div>
+        </Conditional>
+        <Conditional if={!!link}>
+          <TailedArrowSVG className="passby-arrow" />
+        </Conditional>
+      </PassByContent>
+    </PassByContainer>
+  );
+};
+
+export default PassByItemCard;

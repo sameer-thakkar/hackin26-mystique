@@ -1,9 +1,12 @@
 import styled, { css } from 'styled-components';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Heading = styled.h4`
+export const Heading = styled.h4<{
+  $variant?: TimelineViewComponentVariant;
+}>`
   ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
   color: ${COLORS.BRAND.CANDY};
   margin: 0;
@@ -20,9 +23,19 @@ export const Heading = styled.h4`
     border-radius: 100px;
     background: ${COLORS.BRAND.PURPS};
   }
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+      color: ${COLORS.GRAY.G3};
+    `}
 `;
 
-export const SubCardContainer = styled.div<{ $isOpen?: boolean }>`
+export const SubCardContainer = styled.div<{
+  $isOpen?: boolean;
+  $variant?: TimelineViewComponentVariant;
+}>`
   transition: background-color 0.3s;
   border-radius: 8px;
 
@@ -33,9 +46,17 @@ export const SubCardContainer = styled.div<{ $isOpen?: boolean }>`
       width: max-content;
       transform: translateX(-0.5rem);
     `}
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
-export const SubCardHeadingContainer = styled.div`
+export const SubCardHeadingContainer = styled.div<{
+  $variant?: TimelineViewComponentVariant;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -69,6 +90,21 @@ export const SubCardHeadingContainer = styled.div`
     }
   }
 
+  .action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      height: 1rem;
+      width: 1rem;
+
+      path {
+        stroke: ${COLORS.GRAY.G2};
+      }
+    }
+  }
+
   &:hover {
     p.passing-by-sub-card-title {
       color: ${COLORS.GRAY.G1};
@@ -81,6 +117,19 @@ export const SubCardHeadingContainer = styled.div`
       }
     }
   }
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      p.passing-by-sub-card-title {
+        ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+      }
+
+      .image-wrap {
+        height: 1rem;
+        width: 1.625rem;
+      }
+    `}
 `;
 
 export const SubCardContentTextContainer = styled.div`
@@ -192,4 +241,11 @@ export const Container = styled.div`
     transform: translateX(-50%);
     background: ${COLORS.BRAND.PURPS};
   }
+`;
+
+export const SpaceBlock = styled.div<{
+  $gap: string;
+}>`
+  height: ${({ $gap }) => $gap};
+  width: 100%;
 `;

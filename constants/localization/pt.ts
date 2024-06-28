@@ -1259,6 +1259,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     MORE: 'mais {0}',
     TIMELINE_VIEW: 'Visualizar cronograma',
     MAP_VIEW: 'Visualizar mapa',
+    MAP_OVERLAY: 'Use CTRL/⌘ + cursor para mover o mapa',
   },
 };
 export default pt;

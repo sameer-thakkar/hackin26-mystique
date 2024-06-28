@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -95,7 +96,10 @@ export const SinglePointContainer = styled.button<{
   }
 `;
 
-export const Container = styled.div<{ $showMorePoints?: boolean }>`
+export const Container = styled.div<{
+  $showMorePoints?: boolean;
+  $variant?: TimelineViewComponentVariant;
+}>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
@@ -105,5 +109,12 @@ export const Container = styled.div<{ $showMorePoints?: boolean }>`
     $showMorePoints &&
     css`
       grid-template-columns: repeat(3, 1fr) 4rem;
-    `}
+    `};
+
+  ${({ $variant }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      grid-template-columns: repeat(1, 1fr);
+      gap: 0.5rem;
+    `};
 `;

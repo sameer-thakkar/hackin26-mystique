@@ -6,6 +6,7 @@ import {
   SECTION_TYPE,
 } from 'types/itinerary.type';
 import { MapMarker } from '@headout/aer/src/molecules/LeafletMap/map';
+import { isValidLocation } from 'utils/itinerary';
 import { ICONS } from './constants';
 import { TGetMarkerIconProps } from './interface';
 import NumberedMarkerIcon from './NumberedMarkerIcon';
@@ -59,16 +60,18 @@ export const getChildMarkers = (
 ) => {
   let childIndex = 0;
   const childMarkers = childSections.reduce((childAcc, childSection) => {
-    if (!!childSection.location && !!childSection.details.name) {
+    if (childSection.details.name) {
       const { location, type, id, details } = childSection;
       const { name, passBy } = details;
-      const { latitude = 0, longitude = 0 } = location || {};
 
       if (!passBy) childIndex++;
+      if (!isValidLocation(location)) return childAcc;
+
+      const { latitude = 0, longitude = 0 } = location!;
 
       const markerType = passBy ? CHILD_SECTION_TYPE.PASS_BY : type;
 
-      pushLocation(location);
+      pushLocation(location!);
 
       childAcc.push({
         id,
