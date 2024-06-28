@@ -22,10 +22,9 @@ const TimelineView = ({
   onStopSectionClick,
   activeStopSectionId: activeStopSectionIdFromProps,
 }: TTimelineViewComponentProps) => {
-  const ref = useRef<HTMLDivElement>(null);
   const timelineContainerRef = useRef<HTMLDivElement>(null);
   const [eventRecorded, setEventRecorded] = useState(false);
-  const isOnScreen = useOnScreen({ ref, unobserve: eventRecorded });
+  const isOnScreen = useOnScreen({ ref: timelineContainerRef });
   const [activeStopSectionId, setActiveStopSectionId] = useState<
     number | null | undefined
   >(activeStopSectionIdFromProps);
@@ -35,10 +34,14 @@ const TimelineView = ({
     [itinerary]
   );
 
+  const isReducedWidthVariant =
+    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
+
   useEffect(() => {
     if (eventRecorded || !isOnScreen) return;
     trackEvent({
       eventName: ANALYTICS_EVENTS.ITINERARY.TIMELINE_VIEWED,
+      variant,
     });
     setEventRecorded(true);
   }, [eventRecorded, isOnScreen]);
@@ -53,8 +56,6 @@ const TimelineView = ({
     onStopSectionClick?.(sectionDetails);
   };
 
-  const isReducedWidthVariant =
-    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
   const isHOHOItinerary = checkIfHOHOItinerary(itinerary.type);
 
   return (

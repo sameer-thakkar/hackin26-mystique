@@ -90,12 +90,13 @@ const Itinerary = ({
     if (newTab) {
       const {
         id,
+        name,
         details: { routeName },
       } = newTab;
       trackEvent({
         eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_VARIANT_CLICKED,
         [ANALYTICS_PROPERTIES.ITINERARY_ID]: id,
-        [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
+        [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName ?? name,
         [ANALYTICS_PROPERTIES.RANKING]: tabIndex + 1,
       });
     }
