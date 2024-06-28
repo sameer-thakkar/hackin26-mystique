@@ -61,7 +61,7 @@ export const EXPERIMENTS: Record<string, any> = {
   [HOHO_DWEB]: new Experiment(
     HOHO_DWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [90, 10]
+    [50, 50]
   ),
   [HOHO_MWEB]: new Experiment(
     HOHO_MWEB,
