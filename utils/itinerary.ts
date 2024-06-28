@@ -238,6 +238,9 @@ export const sectionDataSanitizer = (
                   sameAsStartingPoint: true,
                 },
               },
+              findDirections: false,
+              isForcedStart: false,
+              position: 1 + stopLocations.length,
               subCards:
                 startLocations.length > 1
                   ? startLocations.map((section, index) => ({

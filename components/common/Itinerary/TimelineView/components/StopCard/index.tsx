@@ -290,6 +290,7 @@ const StopCard = ({
       </HeadingContainer>
     );
   };
+
   return (
     <Container
       $isSubCard={isSubCard}
@@ -307,7 +308,7 @@ const StopCard = ({
             <Conditional if={position}>
               <p>{position}</p>
             </Conditional>
-            <Conditional if={!position}>
+            <Conditional if={position === 0}>
               <TailedArrowSVG />
             </Conditional>
           </RankContainer>

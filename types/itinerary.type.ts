@@ -130,7 +130,7 @@ export interface Section {
 export interface Location {
   latitude: number;
   longitude: number;
-  placeId: string;
+  placeId?: string;
 }
 
 export interface BaseSectionDetails {

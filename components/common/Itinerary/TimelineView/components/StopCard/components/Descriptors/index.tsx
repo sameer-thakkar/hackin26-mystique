@@ -69,12 +69,7 @@ const Descriptors = ({
       <Conditional if={walkDuration}>
         <Descriptor
           icon={<ClockSvg />}
-          text={
-            strings.formatString(
-              strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
-              walkDuration
-            ) as string
-          }
+          text={walkDuration}
           size={descriptorSize}
         />
       </Conditional>

@@ -144,6 +144,8 @@ export const StyledTabsContainer = styled.div<{
         padding: 0.5rem 0 0.4375rem;
         text-align: start;
         overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
       }
     }
   }

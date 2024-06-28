@@ -155,7 +155,7 @@ const RouteMap = ({
       setZoomInfo(localZoomInfo);
     }
     setMarkers(
-      markers.map((marker) => ({
+      markers.reverse().map((marker) => ({
         ...marker,
         onClick: () => {
           setMapPinClick(true);
@@ -176,11 +176,9 @@ const RouteMap = ({
             childToParent.get(marker.element.id) ?? marker.element.id
           );
           const isSection = Array.isArray(marker.element.childSections);
-          zoomIntoSection(
-            isSection
-              ? { section: marker.element }
-              : { childSection: marker.element }
-          );
+          const sectionName = isSection ? 'section' : 'childSection';
+
+          zoomIntoSection({ [sectionName]: marker.element });
         },
       }))
     );
