@@ -173,7 +173,7 @@ const getContentPageDocument = async ({
   documentData,
   baseLangMicrositeData: fetchedBaseLangMicrositeData,
 }: TGetDocument) => {
-  const currency = req?.cookies?.[COOKIE.CURRENT_CURRENCY] || 'USD';
+  const currency = req?.cookies?.[COOKIE.CURRENT_CURRENCY];
   const prismicClient = createClient({
     req,
   });
