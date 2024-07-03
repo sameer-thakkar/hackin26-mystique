@@ -3,6 +3,7 @@ import { getHeadoutLanguagecode, handleSettledPromiseResults } from 'utils';
 import { fetchCategory } from 'utils/apiUtils';
 import getCityGuideDocs from 'utils/prismicUtils/getCityGuideDocs';
 import getShoulderPageDocs from 'utils/prismicUtils/getShoulderPageDocs';
+import getSubattractionPageDocs from 'utils/prismicUtils/getSubattractionPageDocs';
 import { labeledPromiseAllSettled } from 'utils/promiseUtils';
 import { ABOUT, CITY_GUIDE, THINGS_TO_DO, VISIT } from 'const/header';
 import { MB_CATEGORISATION } from 'const/index';
@@ -25,8 +26,15 @@ const getCollectionMBMenu = async ({
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
 }): Promise<Record<string, any>> => {
+  const { tagged_city, tagged_collection } = categorisationMetadata;
+
   const shoulderPageDocsPromise = getShoulderPageDocs({
     categorisationMetadata,
+  });
+
+  const subattractionPageDocsPromise = getSubattractionPageDocs({
+    mbCity: tagged_city,
+    mbCollection: tagged_collection,
   });
 
   const cityGuideDocsPromise = getCityGuideDocs(categorisationMetadata);
@@ -35,36 +43,45 @@ const getCollectionMBMenu = async ({
     language: getHeadoutLanguagecode(lang),
   });
 
-  const { shoulderPageDocs, cityGuideDocs, categoryApiData } =
-    await labeledPromiseAllSettled([
-      {
-        promise: shoulderPageDocsPromise,
-        label: 'shoulderPageDocs',
-      },
-      { promise: cityGuideDocsPromise, label: 'cityGuideDocs' },
-      { promise: categoryApiDataPromise, label: 'categoryApiData' },
-    ] as const);
+  const {
+    shoulderPageDocs,
+    subattractionPageDocs,
+    cityGuideDocs,
+    categoryApiData,
+  } = await labeledPromiseAllSettled([
+    {
+      promise: shoulderPageDocsPromise,
+      label: 'shoulderPageDocs',
+    },
+    {
+      promise: subattractionPageDocsPromise,
+      label: 'subattractionPageDocs',
+    },
+    { promise: cityGuideDocsPromise, label: 'cityGuideDocs' },
+    { promise: categoryApiDataPromise, label: 'categoryApiData' },
+  ] as const);
 
   const aboutMenuPromise = generateShoulderPageMenu({
     isAboutMenu: true,
     menuType: ABOUT,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
+    subattractionPageDocsStore: subattractionPageDocs,
   });
 
   const visitMenuPromise = generateShoulderPageMenu({
     menuType: VISIT,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
   });
 
   const thingsToDoMenuPromise = generateShoulderPageMenu({
     menuType: THINGS_TO_DO,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
   });
 
   const cityAttractionsMenuPromise = generateCityAttractionsMenu({

@@ -9,13 +9,15 @@ const generateShoulderPageMenu = async ({
   menuType,
   categorisationMetadata,
   lang,
-  docsStore,
+  shoulderPageDocsStore,
+  subattractionPageDocsStore = [],
 }: {
   isAboutMenu?: boolean;
   menuType: Record<string, any>;
   categorisationMetadata: TCategorisationMetadata;
   lang: string;
-  docsStore: PrismicDocumentWithUID[];
+  shoulderPageDocsStore: PrismicDocumentWithUID[];
+  subattractionPageDocsStore?: PrismicDocumentWithUID[];
 }): Promise<Record<string, any>> => {
   const { tagged_mb_type: mbType } = categorisationMetadata;
 
@@ -28,10 +30,11 @@ const generateShoulderPageMenu = async ({
         menuType: menuItem.children,
         categorisationMetadata,
         lang,
-        docsStore,
+        shoulderPageDocsStore,
+        subattractionPageDocsStore,
       });
     } else if (menuItem.types.includes(mbType)) {
-      const docFound = docsStore.find(
+      const docFound = shoulderPageDocsStore.find(
         (doc) =>
           doc?.data?.shoulder_page_type?.toLowerCase() ===
             menuItem.label.toLowerCase() && shouldIncludeinQueries(doc)
@@ -50,12 +53,12 @@ const generateShoulderPageMenu = async ({
 
   if (isAboutMenu) {
     const aboutPage = await generateAboutMenuItem({
-      docsStore,
+      docsStore: shoulderPageDocsStore,
       lang,
       categorisationMetadata,
     });
     const subAttractionsPages = await generateSubAttractionsMenu({
-      docsStore,
+      docsStore: [...subattractionPageDocsStore, ...shoulderPageDocsStore],
       lang,
     });
 

@@ -1525,6 +1525,7 @@ export const PRISMIC_FIELD_ID = {
   NOINDEX: 'noindex',
   CANONICAL_LINK: 'canonical_link',
   IS_ENTERTAINMENT_MB: 'is_entertainment_mb',
+  PARENT_COLLECTION_ID: 'parent_collection_id',
 };
 
 export const PRISMIC_DEV_TAG = '[DEV]';

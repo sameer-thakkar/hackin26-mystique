@@ -50,21 +50,21 @@ const getA2SubcatMBMenu = async ({
     menuType: ABOUT,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
   });
 
   const visitMenuPromise = generateShoulderPageMenu({
     menuType: VISIT,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
   });
 
   const thingsToDoMenuPromise = generateShoulderPageMenu({
     menuType: THINGS_TO_DO,
     categorisationMetadata,
     lang,
-    docsStore: shoulderPageDocs,
+    shoulderPageDocsStore: shoulderPageDocs,
   });
 
   const cityAttractionsMenuPromise = generateCityAttractionsMenu({
