@@ -481,18 +481,22 @@ export const fetchMediaResource = async ({
         'resource-entity-ids': uniqueTgidString,
       }),
     };
+
     if (!uniqueTgidString) {
       sendLog({
         level: LOG_LEVELS.ERROR,
         message: `[fetchMediaResource] entityIds is required - ${hostname} - ${entityIds}`,
       });
+      return {} as FetchMediaResponse;
     }
+
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.Media,
       hostname,
       params,
       id: null,
     });
+
     const headers = constructHeaders({ cookies });
 
     const res = await fetch(apiUrl, { headers });
