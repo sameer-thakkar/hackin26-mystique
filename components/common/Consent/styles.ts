@@ -80,7 +80,7 @@ export const CancelButton = styled(BaseButton)`
 export const ConsentFixedWrapper = styled.div<{
   $isHidden?: boolean;
 }>`
-  position: sticky;
+  position: fixed;
   bottom: -100%;
   left: 0;
   width: 100%;
