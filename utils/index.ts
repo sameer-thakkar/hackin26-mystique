@@ -239,7 +239,6 @@ type TCreateBookingUrl = {
   ctaSuffix?: string;
   flowType?: string;
   showFullScreenPax?: boolean;
-  isHOHORevamp?: boolean;
 };
 
 export const createBookingURL = ({
@@ -258,7 +257,6 @@ export const createBookingURL = ({
   ctaSuffix = '',
   flowType = undefined,
   showFullScreenPax = false,
-  isHOHORevamp = false,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -338,8 +336,6 @@ export const createBookingURL = ({
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
   if (showFullScreenPax)
     urlObject.searchParams.set('showFullScreenPax', 'true');
-  if (isHOHORevamp)
-    urlObject.searchParams.set('hohoExperimentVariant', 'Treatment');
 
   if (ctaSuffix) {
     const suffixes = new URLSearchParams(ctaSuffix);

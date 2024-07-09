@@ -958,7 +958,6 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
-    isHOHORevamp: isMobile && isHOHORevamp,
   });
 
   const onSidePanelClose = () => {

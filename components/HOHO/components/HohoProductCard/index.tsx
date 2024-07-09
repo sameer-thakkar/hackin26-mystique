@@ -89,7 +89,6 @@ const HohoProductCard = (props: any) => {
     primarySubCategory,
     onClick,
     onMoreDetailsClick,
-    isHOHORevamp,
   } = props;
 
   const {
@@ -216,7 +215,6 @@ const HohoProductCard = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
-    isHOHORevamp: isMobile && isHOHORevamp,
   });
 
   const onMoreInfoClick = () => {

@@ -290,25 +290,13 @@ const MicrositeV1 = (props: any) => {
   const currentLanguage = getLangObject(lang).code;
 
   const {
-    isEligible: isHohoExpEligibleDweb,
-    isExperimentResolving: isExperimentResolvingDweb,
-    variant: hohoVariantDweb,
+    isEligible: isHohoExpEligible,
+    isExperimentResolving: isHohoExperimentResolving,
+    variant: hohoVariant,
   } = useABTesting({
-    experimentId: 'HOHO_DWEB',
+    experimentId: 'HOHO_REVAMP',
     noTrack: false,
-    customEligibilityCheckFn: () =>
-      isHOHO && EXPERIMENT_UIDS.includes(uid) && !isMobile,
-  });
-
-  const {
-    isEligible: isHohoExpEligibleMweb,
-    isExperimentResolving: isExperimentResolvingMweb,
-    variant: hohoVariantMweb,
-  } = useABTesting({
-    experimentId: 'HOHO_MWEB',
-    noTrack: false,
-    customEligibilityCheckFn: () =>
-      isHOHO && EXPERIMENT_UIDS.includes(uid) && isMobile,
+    customEligibilityCheckFn: () => isHOHO && EXPERIMENT_UIDS.includes(uid),
   });
 
   const {
@@ -323,8 +311,7 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showHohoRevamp =
-    (isHohoExpEligibleDweb && hohoVariantDweb === VARIANTS.TREATMENT) ||
-    (isHohoExpEligibleMweb && hohoVariantMweb === VARIANTS.TREATMENT);
+    isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -781,9 +768,7 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
-      isHOHOResolving={
-        (isHohoExpEligibleDweb || isHohoExpEligibleMweb) && !hohoTimer
-      }
+      isHOHOResolving={isHohoExpEligible && !hohoTimer}
       isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
     />
@@ -848,8 +833,7 @@ const MicrositeV1 = (props: any) => {
   }, [eventsReady, isAirportTransfersMB]);
 
   if (
-    (isHohoExpEligibleDweb && isExperimentResolvingDweb) ||
-    (isHohoExpEligibleMweb && isExperimentResolvingMweb) ||
+    (isHohoExpEligible && isHohoExperimentResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving)
   )
     return <Loader />;
