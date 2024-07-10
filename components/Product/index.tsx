@@ -1386,6 +1386,7 @@ const Product = (props: any) => {
                   showPagination={!isHOHORevamp}
                   showTimedPaginator={isHOHORevamp}
                   isTimed={!isHOHORevamp}
+                  uid={uid}
                 />
               </Conditional>
               <Conditional if={showItinerary && !isMobile}>

@@ -6,7 +6,6 @@ import Conditional from 'components/common/Conditional';
 import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
-import { usePageLoaded } from 'hooks/usePageLoaded';
 import { appAtom } from 'store/atoms/app';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import InfoIcon from 'assets/infoIcon';
@@ -59,16 +58,14 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fetchPriority = 'auto',
     fallbackImg = '',
     onLoadingComplete,
-    loadLowerQualityImageFirst: loadLowQualityImageFirstProp = false,
+    loadHigherQualityImage: loadHigherQualityImageProp = false,
   },
   ref
 ) => {
-  const [pageLoaded] = usePageLoaded();
   const { isMobile } = useRecoilValue(appAtom);
-  const loadLowerQualityImageFirst = !priority && loadLowQualityImageFirstProp; // Avoid progressive loading for LCP element.
   // Loading a lower quality image by reducing the dimensions.
-  let calculatedWidth = loadLowerQualityImageFirst && !pageLoaded ? 50 : width,
-    calculatedHeight = loadLowerQualityImageFirst && !pageLoaded ? 50 : height,
+  let calculatedWidth = width,
+    calculatedHeight = height,
     mobileImageSrc,
     defaultImageSrc,
     fillImageProp = fill;
@@ -81,7 +78,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
       calculatedWidth = Number(height) * (widthRatio / heightRatio);
   }
 
-  const multiplier = loadLowerQualityImageFirst && pageLoaded ? 2 : 1;
+  const multiplier = loadHigherQualityImageProp ? 1.3 : 1;
   calculatedWidth = (calculatedWidth as number) * multiplier;
   calculatedHeight = (calculatedHeight as number) * multiplier;
 

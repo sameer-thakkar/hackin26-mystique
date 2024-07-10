@@ -46,6 +46,7 @@ type MediaCarouselProps = {
   trackImage?: boolean;
   hideBorderRadius?: boolean;
   useWidePaginatorActiveTab?: boolean;
+  uid?: string;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -69,12 +70,14 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
+  uid,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
     ref: carouselRef,
     options: { threshold: 0.75 },
   });
+
   const [isVisibilityTracked, setIsVisibilityTracked] = useState(false);
   const [swiper, setSwiperInstance] = useState<Swiper | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -187,6 +190,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               priority={isLCPCandidate}
               fetchPriority={isLCPCandidate ? 'high' : 'auto'}
               fill
+              loadHigherQualityImage={uid === 'www.thevaticantickets.com'}
             />
           );
         })}
