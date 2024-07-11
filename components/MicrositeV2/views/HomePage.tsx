@@ -458,6 +458,10 @@ export const HomePage = (props: any) => {
 
   if (showSeatMapExperiment) {
     longFormSlices = longFormSlices.splice(3);
+  } else if (isSeatMapExpControlAndEligible) {
+    longFormSlices = longFormSlices.filter(
+      ({ slice_type }, index) => slice_type !== 'rich_text' || index !== 3
+    );
   }
 
   const addVenueSeatsPageSectionViewedDataEvents = ({
