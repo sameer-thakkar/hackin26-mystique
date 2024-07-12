@@ -281,8 +281,10 @@ const ContentPage = (props: any) => {
     secondary_footer: secondaryFooter,
     subattractionChildPoiData,
     parentLandingPageDocument,
+    parentLandingPageUrl,
     collectionData: CMSCollectionData,
   } = CMSData;
+
   const collectionData = Object.keys(propsCollectionData || {}).length
     ? propsCollectionData
     : CMSCollectionData;
@@ -802,6 +804,7 @@ const ContentPage = (props: any) => {
               automatedBreadcrumbsExists={automatedBreadcrumbsExists}
               isContentPage
               trackProductCardsViewed={isPlanYourVisitCardsExpEligible}
+              parentLandingPageUrl={parentLandingPageUrl}
               {...props}
               {...(shouldReorderProductCardsExp && {
                 categoryTourListData: {

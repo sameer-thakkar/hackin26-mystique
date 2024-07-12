@@ -10,7 +10,7 @@ import RichTextBox from './RichTextBox';
 import RichtextWithCTA from './RichTextWithCTA';
 import { sliceWrapper } from './SliceWrapper';
 import Table from './Table';
-import TicketCard from './TickerCardSlice';
+import TicketCard from './TicketCardSlice';
 import UGCCarousel from './UGCCarousel';
 
 // // Dynamic imports
@@ -285,15 +285,17 @@ export const sliceComponents = () => {
         />,
         props
       ),
-    ticket_card_shoulder_page: (props: any) =>
-      sliceWrapper(
+    ticket_card_shoulder_page: (props: any) => {
+      return sliceWrapper(
         <TicketCard
           subtext={props.slice?.primary?.subtext}
           title={props.slice?.primary?.title}
+          parentLandingPageUrl={props?.context?.parentLandingPageUrl}
           {...props.context}
         />,
         props
-      ),
+      );
+    },
     page_tabs: (props: any) =>
       sliceWrapper(
         <PageTabs

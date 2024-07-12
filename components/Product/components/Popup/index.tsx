@@ -34,7 +34,8 @@ const Popup = ({
       setIsVisible(true);
     }, 100);
     document.body.style.overflow = 'hidden';
-    if (startingIndex !== -1) setStartingIndex(startingIndex);
+    if (startingIndex !== -1 && startingIndex !== 0)
+      setStartingIndex(startingIndex);
   };
 
   const onAfterOpen = () => {

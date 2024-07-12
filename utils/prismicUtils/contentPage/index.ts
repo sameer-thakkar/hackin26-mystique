@@ -308,12 +308,27 @@ const getContentPageDocument = async ({
 
     let productCardData: Record<string, any> | undefined;
     const hasTicketsCardSlice = Object.keys(baseLangTicketsCardsSlice)?.length;
+    let parentLandingPageUrl;
 
     if (hasTicketsCardSlice) {
       const { id, slice_type, slice_label, primary, items } =
         baseLangTicketsCardsSlice;
       const { product_cards } = primary || {};
       const { id: productCardsId } = product_cards || {};
+      const languageCode = getLangObject(lang!).code;
+
+      const parentLandingPageDocument =
+        await getPrismicParentCollectionLandingPage(
+          tagged_city ?? '',
+          tagged_collection ?? '',
+          uid,
+          languageCode
+        );
+
+      parentLandingPageUrl = convertUidToUrl({
+        uid: parentLandingPageDocument?.uid as string,
+        lang: languageCode,
+      });
 
       try {
         const { data } =
@@ -429,6 +444,7 @@ const getContentPageDocument = async ({
       subattractionParentCollectionData =
         fetchedSubattractionParentCollection?.collection;
       subattractionChildPoiData = fetchedSubattractionChildPoi?.pois?.[0];
+
       if (shoulder_page_type === SHOULDER_PAGE_TYPES.SUB_ATTRACTIONS) {
         const isStage = !!host?.includes('stage-');
         const hostname = getHostName(isStage, !!isDev, host!);
@@ -546,6 +562,7 @@ const getContentPageDocument = async ({
         subattractionParentCollectionData,
         subattractionChildPoiData,
         parentLandingPageDocument,
+        parentLandingPageUrl,
         childTgidsData,
         childTgidsList,
         parentTgidsData,

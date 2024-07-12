@@ -189,8 +189,7 @@ export const Container = styled.div<{
   isSwiperCard?: boolean;
 }>`
   display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
-  background: ${({ isSwiperCard }) =>
-    isSwiperCard ? 'transparent' : COLORS.BRAND.WHITE};
+  background: 'transparent';
   max-width: 1200px;
   margin: auto;
   width: 100%;

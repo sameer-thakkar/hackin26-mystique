@@ -10,7 +10,7 @@ import PageTabs from './slices/PageTabs';
 import RichTextBox from './slices/RichTextBox';
 import RichtextWithCTA from './slices/RichTextWithCTA';
 import Table from './slices/Table';
-import TicketCard from './slices/TickerCardSlice';
+import TicketCard from './slices/TicketCardSlice';
 import UGCCarousel from './slices/UGCCarousel';
 import VerticalCardsGrid from './VenuePage/components/VerticalCardsGrid';
 

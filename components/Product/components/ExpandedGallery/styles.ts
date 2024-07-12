@@ -164,8 +164,14 @@ export const ExpandedGalleryContainer = styled.div<{
     ${({ $numberOfImages }) =>
       $numberOfImages === 1 &&
       css`
+        .image-wrap {
+          width: 100%;
+          img {
+            object-fit: cover;
+          }
+        }
         max-height: 20rem;
-        max-width: 32rem;
+        /* max-width: 32rem; */
       `};
   }
 

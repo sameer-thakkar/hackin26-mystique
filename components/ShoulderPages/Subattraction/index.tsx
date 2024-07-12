@@ -90,6 +90,7 @@ const SubattractionPage = ({
     baseLangCategorisationMetadata,
     collectionData,
   } = data;
+
   const { uid: parentUID, data: parentData } = parentLandingPageDocument ?? {};
   const {
     banner_and_footer_combinations: parentBannerFooterCombinations,

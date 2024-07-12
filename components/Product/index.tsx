@@ -1810,7 +1810,7 @@ const Product = (props: any) => {
                       isHohoItinerary={isHohoItinerary}
                     />
                   </Conditional>
-                  <Conditional if={!isMobile}>
+                  <Conditional if={!originalIsMobile}>
                     <PrismicRichText
                       field={
                         isPopup
