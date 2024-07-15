@@ -95,6 +95,7 @@ const generateSubCategoryMenu = async ({
       const docFound = docsStore?.find(
         (doc) =>
           baseLangName === doc?.data?.tagged_sub_category &&
+          !Number(doc?.data?.tagged_collection) &&
           shouldIncludeinQueries(doc)
       );
 
