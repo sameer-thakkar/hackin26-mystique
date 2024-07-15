@@ -1598,6 +1598,13 @@ export const ButtonContainer = styled.div<{
     border: none;
     white-space: nowrap;
   }
+  @media (max-width: 768px) {
+    // overriding aer style
+    button {
+      font-family: halyard-text, sans-serif;
+      letter-spacing: 0;
+    }
+  }
 `;
 
 export const HighlightTabsWrapper = styled.div<{
@@ -3193,7 +3200,7 @@ export const hohoStyles = css`
       margin-top: 0;
       width: calc(100%);
       margin-bottom: 0.625rem;
-      height: 12.438rem;
+      height: auto;
     }
     button {
       padding: 0;
