@@ -62,7 +62,7 @@ export const EXPERIMENTS: Record<string, any> = {
   [HOHO_REVAMP]: new Experiment(
     HOHO_REVAMP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [ITINERARY_CONTROLLED_ROLLOUT]: new Experiment(
     ITINERARY_CONTROLLED_ROLLOUT,
