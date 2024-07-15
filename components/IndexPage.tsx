@@ -504,8 +504,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? req.headers['x-bot'] === 'true' || typeof query?.['bot'] !== 'undefined'
     : PlatformUtils.isBot(userAgent);
 
-  const airportTransferABExperimentVariant =
-    req?.headers['x-experiment-variant'];
+  const airportTransferABExperimentVariant = 'Control'; // TODO: temporary, remove after AB test is concluded
 
   const serverCookies = new ServerCookies(req, res);
   if (airportTransferABExperimentVariant) {
