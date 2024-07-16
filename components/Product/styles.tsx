@@ -688,6 +688,7 @@ export const StyledCategoryContainer = styled.div<{
 export const CategoryAndRatingContainer = styled.div<{
   $isExperimentalCard?: boolean;
   $isDrawer?: boolean;
+  $hasRatings?: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -705,16 +706,20 @@ export const CategoryAndRatingContainer = styled.div<{
     ${StyledCategoryContainer} {
       position: relative;
 
-      &::after {
-        content: '';
-        position: absolute;
-        height: 0.25rem;
-        width: 0.25rem;
-        background-color: ${COLORS.GRAY.G5};
-        border-radius: 50px;
-        right: -0.5rem;
-        transform: translate(50%, 25%);
-      }
+      ${({ $hasRatings }) =>
+        $hasRatings &&
+        css`
+          &::after {
+            content: '';
+            position: absolute;
+            height: 0.25rem;
+            width: 0.25rem;
+            background-color: ${COLORS.GRAY.G5};
+            border-radius: 50px;
+            right: -0.5rem;
+            transform: translate(50%, 25%);
+          }
+        `}
     }
   }
 `;

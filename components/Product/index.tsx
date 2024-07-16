@@ -1409,7 +1409,9 @@ const Product = (props: any) => {
 
           <ProductHeader>
             <Conditional if={!isV3Design}>
-              <CategoryAndRatingContainer>
+              <CategoryAndRatingContainer
+                $hasRatings={reviewsDetails?.showRatings}
+              >
                 <Conditional if={!isNonPoi}>
                   <Category
                     primaryCategory={
