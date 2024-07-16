@@ -356,7 +356,7 @@ export const shortCodeSerializer: any = (
       renderedChildrens
     );
   }
-  return getRichtextElements({ type, element, children });
+  return getRichtextElements({ type, element, children, parentProps });
 };
 
 export const shortCodeSerializerWithParentProps = (

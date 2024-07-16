@@ -16,6 +16,7 @@ import {
   ANALYTICS_PROPERTIES,
   ESCAPE_REGEX,
   ESCAPE_REPLACER,
+  SLICE_TYPES,
 } from 'const/index';
 
 const Divider = styled.div`
@@ -136,7 +137,15 @@ const AccordionGroup = ({
             </Conditional>
           </Conditional>
           {accordions.map((accordion, index) => {
-            const content = <RichContent render={accordion.content} />;
+            const content = (
+              <RichContent
+                render={accordion.content}
+                parentProps={{
+                  sectionName: heading,
+                  sliceType: SLICE_TYPES.ACCORDION,
+                }}
+              />
+            );
             return (
               <Accordion
                 key={index}

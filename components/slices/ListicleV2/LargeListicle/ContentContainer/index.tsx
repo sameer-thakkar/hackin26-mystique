@@ -20,7 +20,8 @@ import {
 import PracticalInfo from 'components/slices/ListicleV2/LargeListicle/PracticalInfo';
 import Button from 'UI/Button';
 import RichContent from 'UI/RichContent';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { SLICE_TYPES } from 'const/index';
 import ChevronRightCircle from 'assets/chevronRightCircle';
 
 const Swiper = dynamic(
@@ -101,7 +102,12 @@ const ContentContainer = ({
       <RichTextWrapper>
         <PrismicRichText
           field={richTextData}
-          components={shortCodeSerializer}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName: heading,
+              sliceType: SLICE_TYPES.LISTICLE,
+            })
+          }
         />
       </RichTextWrapper>
       <Conditional if={!isMobile}>
@@ -154,7 +160,13 @@ const ContentContainer = ({
           <div className="tab-content-wrap">
             <Conditional if={tabData.length}>
               <RichContentWrapper>
-                <RichContent render={tabData[activeTabIndex]?.text} />
+                <RichContent
+                  render={tabData[activeTabIndex]?.text}
+                  parentProps={{
+                    sectionName: heading,
+                    sliceType: SLICE_TYPES.LISTICLE,
+                  }}
+                />
               </RichContentWrapper>
             </Conditional>
           </div>
@@ -183,7 +195,13 @@ const ContentContainer = ({
               <div key={index} className="tab-content-wrapper">
                 <TabHeadingsWrapper>{title}</TabHeadingsWrapper>
                 <TabRichContentWrapper>
-                  <RichContent render={text} />
+                  <RichContent
+                    render={text}
+                    parentProps={{
+                      sectionName: heading,
+                      sliceType: SLICE_TYPES.LISTICLE,
+                    }}
+                  />
                 </TabRichContentWrapper>
               </div>
             );

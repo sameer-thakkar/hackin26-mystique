@@ -6,8 +6,9 @@ import Button from 'UI/Button';
 import Chevron from 'UI/Chevron';
 import Image from 'UI/Image';
 import Tags from 'UI/Tags';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import CandyStar from 'assets/candyStar';
@@ -300,7 +301,12 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             <div className="summary">
               <PrismicRichText
                 field={summary}
-                components={shortCodeSerializer}
+                components={(...defaultArgs: any) =>
+                  shortCodeSerializerWithParentProps(defaultArgs, {
+                    sectionName: title || tourData?.name,
+                    sliceType: SLICE_TYPES.LISTICLE,
+                  })
+                }
               />
             </div>
             {duration ? (

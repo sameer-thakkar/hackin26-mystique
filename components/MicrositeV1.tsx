@@ -64,9 +64,11 @@ import {
   BOOLEAN_STATES,
   EMAIL_SUBCRIPTION,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
+  MB_CATEGORISATION,
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
+  SLICE_TYPES,
   TEMPLATES,
   THEMES,
 } from 'const/index';
@@ -264,6 +266,7 @@ const MicrositeV1 = (props: any) => {
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
+    tagged_page_type: taggedPageType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -489,6 +492,14 @@ const MicrositeV1 = (props: any) => {
         isA1orC1MB(taggedMbType) && isMobile
           ? BOOLEAN_STATES['YES']
           : BOOLEAN_STATES['NO'],
+      [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: orderedTgids?.length ?? 0,
+      [ANALYTICS_PROPERTIES.NUMBER_OF_SLICES]: contentFWSlices?.length ?? 0,
+      [ANALYTICS_PROPERTIES.FIRST_SLICE_TYPE]: contentFWSlices?.find(
+        (slice: Record<string, any>) =>
+          slice?.slice_type !== SLICE_TYPES.BREADCRUMBS
+      )?.slice_type,
+      [ANALYTICS_PROPERTIES.IS_LANDING_PAGE]:
+        taggedPageType === MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE,
       ...(isAirportTransfersMB && {
         [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:
           isAirportTransfersSubCategory || isAirportTransfersSearchEnabledUID

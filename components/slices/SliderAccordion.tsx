@@ -5,7 +5,8 @@ import { PrismicRichText } from '@prismicio/react';
 import type { SwiperProps } from 'swiper/react';
 import Accordion, { StyledAccordion } from 'components/slices/Accordion';
 import Image from 'UI/Image';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { SLICE_TYPES } from 'const/index';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
@@ -156,7 +157,7 @@ const SingleImage = styled.div`
 
 const SliderAccordion = (props: any) => {
   const { faqs: accordions, sliceProps } = props;
-  const { isMobile, isGlobalMb } = sliceProps;
+  const { isMobile, isGlobalMb, sectionName } = sliceProps;
 
   accordions.forEach((accordian: any) => {
     if (accordian.images.length == 0)
@@ -227,7 +228,12 @@ const SliderAccordion = (props: any) => {
               <div className="answer-content">
                 <PrismicRichText
                   field={accordion.answer}
-                  components={shortCodeSerializer}
+                  components={(...defaultArgs: any) =>
+                    shortCodeSerializerWithParentProps(defaultArgs, {
+                      sectionName,
+                      sliceType: SLICE_TYPES.QUESTION,
+                    })
+                  }
                 />
               </div>
             </>

@@ -131,7 +131,7 @@ export const sliceComponents = () => {
         image_alt,
       } = props.slice.primary || {};
 
-      const { isMobile, activeTabIndex } = props.context || {};
+      const { isMobile, activeTabIndex, sectionName } = props.context || {};
 
       return (
         <StructuredCard
@@ -146,6 +146,7 @@ export const sliceComponents = () => {
           ctaUrl={cta_url}
           isMobile={isMobile}
           activeTabIndex={activeTabIndex}
+          sectionName={sectionName}
         />
       );
     },
@@ -188,7 +189,8 @@ export const sliceComponents = () => {
         exit_description,
       } = props.slice.primary;
 
-      const { isGlobalCollection, collectionName } = props.context || {};
+      const { isGlobalCollection, collectionName, sectionName } =
+        props.context || {};
 
       const cardSectionTitle =
         isGlobalCollection &&
@@ -205,6 +207,7 @@ export const sliceComponents = () => {
           cardsInARow={Number(cards_in_a_row) || 1}
           description={description}
           exitDescription={exit_description}
+          sectionName={sectionName}
           {...props?.context}
           index={props.index}
         />,
@@ -222,8 +225,14 @@ export const sliceComponents = () => {
         cta_type,
       } = props.slice.primary;
 
-      const { index, cardType, cardsInARow, isGlobalMb, isMobile } =
-        props?.context || {};
+      const {
+        index,
+        cardType,
+        cardsInARow,
+        isGlobalMb,
+        isMobile,
+        sectionName,
+      } = props?.context || {};
 
       const images = props.slice.items
         .filter((image: any) => {
@@ -248,6 +257,7 @@ export const sliceComponents = () => {
           linkType={card_link_type}
           isGlobalMb={isGlobalMb}
           isMobile={isMobile}
+          sectionName={sectionName}
           isSeatMapExpControlAndEligible={props?.isSeatMapExpControlAndEligible}
         />,
         props
@@ -554,16 +564,17 @@ export const sliceComponents = () => {
         props
       );
     },
-    content_tabs: (props: any) =>
-      sliceWrapper(
+    content_tabs: (props: any) => {
+      const { slice, context } = props || {};
+      return sliceWrapper(
         <ContentTabs
-          tabsArr={props.slice.primary.tab_list
-            .split(',')
-            .map((t: any) => t.trim())}
-          contentArr={props.slice.items}
+          tabsArr={slice.primary.tab_list.split(',').map((t: any) => t.trim())}
+          contentArr={slice.items}
+          sectionName={context?.sectionName}
         />,
         props
-      ),
+      );
+    },
     question: (props: any) => {
       const { slice, context } = props || {};
       const faqs = slice.items.reduce((acc: any, slice: any) => {

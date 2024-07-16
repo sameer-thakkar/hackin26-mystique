@@ -7,6 +7,7 @@ import {
 } from 'components/CatAndSubCatPage/faqSection/styles';
 import Accordion from 'components/slices/Accordion';
 import RichContent from 'UI/RichContent';
+import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 
 const FaqSection: React.FC<FaqSectionProps> = (props) => {
@@ -19,7 +20,15 @@ const FaqSection: React.FC<FaqSectionProps> = (props) => {
       </SectionHeading>
       <AccordianContainer>
         {faqData.map((accordion, index) => {
-          const content = <RichContent render={accordion.content} />;
+          const content = (
+            <RichContent
+              render={accordion.content}
+              parentProps={{
+                sectionName: strings.SHOW_PAGE.FREQUENTLY_ASKED_QUESTIONS,
+                sliceType: SLICE_TYPES.ACCORDION,
+              }}
+            />
+          );
           return (
             <Accordion
               key={index}

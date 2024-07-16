@@ -14,7 +14,7 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import { DESIGN } from 'const/index';
+import { DESIGN, SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import StarFull from 'assets/starFull';
 
@@ -174,7 +174,13 @@ const CustomLinkedTours = ({
     // @ts-expect-error TS(2769): No overload matches this call.
     <StyledCustomLinkedTours design={design}>
       <TitleTextCombo id={headingId?.[0]}>
-        <RichContent render={content} />
+        <RichContent
+          render={content}
+          parentProps={{
+            sectionName: headingId?.[0],
+            sliceType: SLICE_TYPES.CUSTOM_LINKED_TOURS,
+          }}
+        />
       </TitleTextCombo>
       <TourGrid>
         {Object.keys(apiTours).length &&

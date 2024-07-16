@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import Button from 'UI/Button';
 import { generateSidenavId } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 
 type FWActionCardProps = {
@@ -88,7 +89,12 @@ const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
             <PrismicRichText
               key={0}
               field={card.card_description}
-              components={shortCodeSerializer}
+              components={(...defaultArgs: any) =>
+                shortCodeSerializerWithParentProps(defaultArgs, {
+                  sectionName: title,
+                  sliceType: SLICE_TYPES.FULL_WIDTH_ACTION_CARD,
+                })
+              }
             />
           </StyledProductCardLeft>
           <StyledProductCardRight>

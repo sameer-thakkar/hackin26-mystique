@@ -10,7 +10,8 @@ import {
   RichTextWrapper,
   TitleWrapper,
 } from 'components/slices/ListicleV2/SmallListicle/SmallListicleGrid/ContentContainer/styles';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { SLICE_TYPES } from 'const/index';
 
 const ContentContainer = ({
   heading,
@@ -34,7 +35,12 @@ const ContentContainer = ({
       <RichTextWrapper overflow={overflow}>
         <PrismicRichText
           field={richTextData}
-          components={shortCodeSerializer}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName: heading,
+              sliceType: SLICE_TYPES.LISTICLE,
+            })
+          }
         />
         <Conditional if={overflow && richTextData?.length}>
           <GradientWrapper />

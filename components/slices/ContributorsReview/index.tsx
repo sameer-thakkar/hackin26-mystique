@@ -7,8 +7,8 @@ import { getRandomImage } from 'components/ReviewsPage/utils';
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { REVIEWS_PAGE_SECTIONS } from 'const/index';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { REVIEWS_PAGE_SECTIONS, SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import ContributorsReviewDoubleQuotes from 'assets/contributorsReviewDoubleQuotes';
 import { TContributorsReviewProps } from './interface';
@@ -61,7 +61,15 @@ const ContributorsReview: React.FC<TContributorsReviewProps> = ({
           <BottomRightSvg>
             <ContributorsReviewDoubleQuotes />
           </BottomRightSvg>
-          <PrismicRichText field={content} components={shortCodeSerializer} />
+          <PrismicRichText
+            field={content}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, {
+                sectionName: heading ?? CONTRIBUTORS_REVIEW,
+                sliceType: SLICE_TYPES.CONTRIBUTORS_REVIEW,
+              })
+            }
+          />
           <a
             href={redirectionLink}
             onClick={() =>

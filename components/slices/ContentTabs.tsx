@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 
 type ContentTabsProps = {
   tabsArr: any[];
   contentArr: any[];
+  sectionName?: string;
 };
 
 const StyledContentTabsWrapper = styled.div`
@@ -79,7 +81,11 @@ const StyledContent = styled.div`
  *
  */
 
-const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
+const ContentTabs: React.FC<ContentTabsProps> = ({
+  tabsArr,
+  contentArr,
+  sectionName,
+}) => {
   const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
   const defaultTabName = defaultTab ? defaultTab.tab_name : '';
   const [activeTabName, setActiveTab] = useState(defaultTabName);
@@ -105,7 +111,12 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
             <StyledContent key={index}>
               <PrismicRichText
                 field={content.tab_content}
-                components={shortCodeSerializer}
+                components={(...defaultArgs: any) =>
+                  shortCodeSerializerWithParentProps(defaultArgs, {
+                    sectionName,
+                    sliceType: SLICE_TYPES.CONTENT_TABS,
+                  })
+                }
               />
             </StyledContent>
           );

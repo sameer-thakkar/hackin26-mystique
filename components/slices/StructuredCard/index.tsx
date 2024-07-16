@@ -13,8 +13,13 @@ import Button from 'UI/Button';
 import Image from 'UI/Image';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CTA_TYPE,
+  SLICE_TYPES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import DiagonalArrow from 'assets/diagonalArrow';
 import Duration from 'assets/duration';
@@ -34,8 +39,8 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
     ctaUrl,
     ctaText,
     activeTabIndex,
+    sectionName,
   } = props;
-
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
 
@@ -48,7 +53,15 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
   return (
     <StyledCard ref={containerRef}>
       <ContentWrapper>
-        <PrismicRichText field={introText} components={shortCodeSerializer} />
+        <PrismicRichText
+          field={introText}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName,
+              sliceType: SLICE_TYPES.STRUCTURED_CARD,
+            })
+          }
+        />
         <div className="structured-content">
           <Conditional if={timings}>
             <StructuredItem>
@@ -76,7 +89,15 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
             </StructuredItem>
           </Conditional>
         </div>
-        <PrismicRichText field={outroText} components={shortCodeSerializer} />
+        <PrismicRichText
+          field={outroText}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName,
+              sliceType: SLICE_TYPES.STRUCTURED_CARD,
+            })
+          }
+        />
         <Conditional if={ctaUrl?.url && ctaText}>
           <a
             href={ctaUrl?.url}

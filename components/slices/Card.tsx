@@ -13,7 +13,7 @@ import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import {
@@ -21,6 +21,7 @@ import {
   ANALYTICS_PROPERTIES,
   FALLBACK_IMAGE,
   FALLBACK_IMAGES,
+  SLICE_TYPES,
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -235,6 +236,7 @@ type CardProps = {
   cardsInARow?: number;
   isGlobalMb?: boolean;
   isMobile: boolean;
+  sectionName?: string;
   isSeatMapExpControlAndEligible?: boolean;
 };
 
@@ -400,6 +402,7 @@ const Card: React.FC<CardProps> = ({
   cardsInARow = 1,
   isGlobalMb,
   isMobile,
+  sectionName,
   isSeatMapExpControlAndEligible,
 }) => {
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -597,7 +600,12 @@ const Card: React.FC<CardProps> = ({
           </Conditional>
           <PrismicRichText
             field={description}
-            components={shortCodeSerializer}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, {
+                sectionName,
+                sliceType: SLICE_TYPES.CARD,
+              })
+            }
           />
           {cta?.link?.url ? CTA : null}
         </div>

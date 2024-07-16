@@ -7,9 +7,9 @@ import type { SwiperProps } from 'swiper/react';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
-import { DESIGN } from 'const/index';
+import { DESIGN, SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import ChevronLeft from 'assets/chevronLeft';
 
@@ -294,7 +294,12 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
         <div>
           <PrismicRichText
             field={description}
-            components={shortCodeSerializer}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, {
+                sectionName: heading,
+                sliceType: SLICE_TYPES.IMAGE_LINKS_CAROUSEL,
+              })
+            }
           />
         </div>
       </StyledContent>

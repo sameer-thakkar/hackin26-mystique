@@ -4,8 +4,9 @@ import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import RichTextCTA from 'UI/RichTextCTA';
 import { generateSidenavId } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import ChevronDown from 'assets/chevronDown';
@@ -81,10 +82,10 @@ const RichtextWithCTA = memo((props: any) => {
           cta_text,
           text: textArray,
         } = block || {};
-        const idArray = textArray?.reduce(
+        const headingArray = textArray?.reduce(
           (acc: Array<string>, el: TRichTextArray) => {
             if (el?.type === 'heading2') {
-              acc.push(generateSidenavId(el?.text));
+              acc.push(el?.text);
             }
             return acc;
           },
@@ -99,10 +100,18 @@ const RichtextWithCTA = memo((props: any) => {
             // @ts-expect-error TS(2769): No overload matches this call.
             $hasCTA={cta_text}
           >
-            <div className="rich-text" id={idArray?.[0]}>
+            <div
+              className="rich-text"
+              id={generateSidenavId(headingArray?.[0])}
+            >
               <PrismicRichText
                 field={textArray}
-                components={shortCodeSerializer}
+                components={(...defaultArgs: any) =>
+                  shortCodeSerializerWithParentProps(defaultArgs, {
+                    sectionName: headingArray?.[0],
+                    sliceType: SLICE_TYPES.RICH_TEXT,
+                  })
+                }
               />
             </div>
             <Conditional if={cta_text}>

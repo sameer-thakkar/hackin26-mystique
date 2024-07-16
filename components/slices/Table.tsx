@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
-import { shortCodeSerializer } from '../../utils/shortCodes';
+import { SLICE_TYPES } from 'const/index';
+import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 
 const StyledTableV1 = styled.div`
   .description-table {
@@ -63,7 +64,12 @@ export default class Table extends Component<any, any> {
                     <td key={index}>
                       <PrismicRichText
                         field={item.column}
-                        components={shortCodeSerializer}
+                        components={(...defaultArgs: any) =>
+                          shortCodeSerializerWithParentProps(defaultArgs, {
+                            sectionName: title,
+                            sliceType: SLICE_TYPES.TABLE,
+                          })
+                        }
                       />
                     </td>
                   ))}

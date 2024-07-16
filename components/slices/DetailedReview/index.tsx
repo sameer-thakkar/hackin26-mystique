@@ -3,8 +3,8 @@ import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { REVIEWS_PAGE_SECTIONS } from 'const/index';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { REVIEWS_PAGE_SECTIONS, SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import ChevronDown from 'assets/chevronDown';
 import DOUBLE_QUOTES from 'assets/doubleQuotes';
@@ -60,7 +60,12 @@ const DetailedReview: React.FC<TDetailedReviewProps> = ({
           <Description>
             <PrismicRichText
               field={description}
-              components={shortCodeSerializer}
+              components={(...defaultArgs: any) =>
+                shortCodeSerializerWithParentProps(defaultArgs, {
+                  sectionName: heading ?? REVIEW_BY_HEADOUT,
+                  sliceType: SLICE_TYPES.DETAILED_REVIEW,
+                })
+              }
             />
           </Description>
           <Conditional if={repeatableContent?.length}>
@@ -82,7 +87,12 @@ const DetailedReview: React.FC<TDetailedReviewProps> = ({
                       <SubDescription>
                         <PrismicRichText
                           field={item.subdescription}
-                          components={shortCodeSerializer}
+                          components={(...defaultArgs: any) =>
+                            shortCodeSerializerWithParentProps(defaultArgs, {
+                              sectionName: heading ?? REVIEW_BY_HEADOUT,
+                              sliceType: SLICE_TYPES.DETAILED_REVIEW,
+                            })
+                          }
                         />
                       </SubDescription>
                       <Conditional if={index < repeatableContent?.length - 1}>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
 
@@ -16,15 +16,29 @@ export const StyledRichContent = styled.div`
   }
 `;
 
-const RichContent = ({ render, disableShortcodes = false }: any) => {
+const RichContent = ({
+  render,
+  parentProps,
+  disableShortcodes = false,
+}: any) => {
   if (typeof render === 'object' && asText(render as []).trim().length === 0) {
     return null;
   }
+  const { sectionName, sliceType } = parentProps || {};
+
   return (
     <StyledRichContent>
       <PrismicRichText
         field={render}
-        components={disableShortcodes ? null : shortCodeSerializer}
+        components={
+          disableShortcodes
+            ? null
+            : (((...defaultArgs: any) =>
+                shortCodeSerializerWithParentProps(defaultArgs, {
+                  sectionName,
+                  sliceType,
+                })) as any)
+        }
       />
     </StyledRichContent>
   );

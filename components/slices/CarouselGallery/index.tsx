@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
+import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import ChevronRightCircle from 'assets/chevronRightCircle';
 import { CarouselGalleryProps } from '../CarouselGallery/interface';
@@ -157,10 +158,22 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                       }}
                     >
                       <div className="heading">
-                        <RichContent render={activeSlideHeading} />
+                        <RichContent
+                          render={activeSlideHeading}
+                          parentProps={{
+                            sectionName: heading,
+                            sliceType: SLICE_TYPES.CAROUSEL_GALLERY,
+                          }}
+                        />
                       </div>
                       <div className="content">
-                        <RichContent render={content} />
+                        <RichContent
+                          render={content}
+                          parentProps={{
+                            sectionName: heading,
+                            sliceType: SLICE_TYPES.CAROUSEL_GALLERY,
+                          }}
+                        />
                       </div>
                       <Conditional if={ctaUrl}>
                         <div

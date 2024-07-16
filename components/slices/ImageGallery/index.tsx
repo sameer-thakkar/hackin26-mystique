@@ -40,7 +40,11 @@ import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { generateSidenavId, truncate } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  SLICE_TYPES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
 import CloseWhite from 'assets/closeWhite';
@@ -272,6 +276,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   if (!(images?.[0].linked_image?.url || images?.[0].uploaded_image?.url))
     return null;
 
+  const parentProps = {
+    sectionName: heading,
+    sliceType: SLICE_TYPES.IMAGE_GALLERY,
+  };
+
   return (
     <Conditional if={images?.length}>
       <StyledImageGallery ref={imageGalleryRef} $isNewsPage={$isNewsPage}>
@@ -352,10 +361,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                     <Content>
                       <div className="content-wrapper">
                         <DesktopLightboxHeading>
-                          <RichContent render={image.heading} />
+                          <RichContent
+                            render={image.heading}
+                            parentProps={parentProps}
+                          />
                         </DesktopLightboxHeading>
                         <Description width="80%" maxWidth="39.37rem">
-                          <RichContent render={image.content} />
+                          <RichContent
+                            render={image.content}
+                            parentProps={parentProps}
+                          />
                         </Description>
                       </div>
                     </Content>
@@ -446,10 +461,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             </FullImage>
             <ContentContainer>
               <Heading>
-                <RichContent render={activeImage?.heading} />
+                <RichContent
+                  render={activeImage?.heading}
+                  parentProps={parentProps}
+                />
               </Heading>
               <Description height="5rem">
-                <RichContent render={lightboxImages?.[currentIndex]?.content} />
+                <RichContent
+                  render={lightboxImages?.[currentIndex]?.content}
+                  parentProps={parentProps}
+                />
               </Description>
               <ThumbnailSwiper>
                 <Swiper {...thumbnailSwiperParams}>

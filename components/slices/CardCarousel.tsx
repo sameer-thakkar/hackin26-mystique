@@ -7,8 +7,9 @@ import { LinkCard } from 'components/slices/MicrobrandCards';
 import { fetchTourListV6 } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -234,16 +235,24 @@ export default class CardCarousel extends Component<
   render() {
     const { carouselHeading } = this.props;
     const { isClient } = this.state;
-    const headingId = carouselHeading?.map((el: TRichTextArray) => {
-      if (el.type === 'heading2') return generateSidenavId(el.text);
-    });
+    const firstHeading = carouselHeading?.find(
+      (el: Record<string, any>) => el.type === 'heading2'
+    )?.text;
 
     return (
       <CardCarouselContainer>
-        <div className="card-carousel-heading" id={headingId[0]}>
+        <div
+          className="card-carousel-heading"
+          id={generateSidenavId(firstHeading ?? '')}
+        >
           <PrismicRichText
             field={carouselHeading}
-            components={shortCodeSerializer}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, {
+                sectionName: firstHeading ?? '',
+                sliceType: SLICE_TYPES.CARD_CAROUSEL,
+              })
+            }
           />
         </div>
         <div className="carousel-slider">

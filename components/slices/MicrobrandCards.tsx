@@ -9,9 +9,9 @@ import { MBContext } from 'contexts/MBContext';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId, getHostName } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
-import { THEMES } from 'const/index';
+import { SLICE_TYPES, THEMES } from 'const/index';
 import { expandFontToken } from 'const/typography';
 
 const StyledMBCards = styled.div<{ gridAutoCol: boolean }>`
@@ -311,20 +311,28 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
     content_below_cards: belowContent,
   } = cardsContent || {};
 
-  const idArray: Array<string> = [];
+  const headingArray: Array<string> = [];
   aboveContent?.forEach((el: TRichTextArray) => {
-    el.type === 'heading2' && idArray.push(generateSidenavId(el?.text));
+    el.type === 'heading2' && headingArray.push(el?.text);
   });
   belowContent?.forEach((el: TRichTextArray) => {
-    el.type === 'heading2' && idArray.push(generateSidenavId(el?.text));
+    el.type === 'heading2' && headingArray.push(el?.text);
   });
 
   return (
     <StyledMicrobandCards>
-      <div className="microbrand-cards-content" id={idArray?.[0]}>
+      <div
+        className="microbrand-cards-content"
+        id={generateSidenavId(headingArray?.[0])}
+      >
         <PrismicRichText
           field={cardsContent.content_above_cards}
-          components={shortCodeSerializer}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName: headingArray?.[0],
+              sliceType: SLICE_TYPES.MICROBRAND_CARDS,
+            })
+          }
         />
       </div>
       <LinkCardWrapper
@@ -333,10 +341,18 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         cardPrices={cardPrices}
         currencySymbol={currencySymbol}
       />
-      <div className="microbrand-cards-content" id={idArray?.[1]}>
+      <div
+        className="microbrand-cards-content"
+        id={generateSidenavId(headingArray?.[1])}
+      >
         <PrismicRichText
           field={cardsContent.content_below_cards}
-          components={shortCodeSerializer}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName: headingArray?.[1],
+              sliceType: SLICE_TYPES.MICROBRAND_CARDS,
+            })
+          }
         />
       </div>
     </StyledMicrobandCards>

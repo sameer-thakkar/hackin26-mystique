@@ -377,6 +377,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           cardsInARow={Number(cards_in_a_row) || 1}
           description={description}
           exitDescription={exit_description}
+          sectionName={props.sectionName}
           {...props}
         />
       );
@@ -414,6 +415,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           linkType={card_link_type}
           isGlobalMb={props.isGlobalMb}
           isMobile={props.isMobile}
+          sectionName={props.sectionName}
           isSeatMapExpControlAndEligible={props.isSeatMapExpControlAndEligible}
         />
       );

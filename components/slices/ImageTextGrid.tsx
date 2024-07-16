@@ -4,8 +4,9 @@ import { PrismicRichText } from '@prismicio/react';
 import Image from 'UI/Image';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { expandFontToken } from 'const/typography';
-import { shortCodeSerializer } from '../../utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 
 type ImageTextProps = {
   cols: number;
@@ -92,7 +93,12 @@ const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
         <div>
           <PrismicRichText
             field={card.card_description}
-            components={shortCodeSerializer}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, {
+                sectionName: card?.card_title,
+                sliceType: SLICE_TYPES.IMAGE_TEXT_COMBO_GRID,
+              })
+            }
           />
         </div>
       </StyledComboCard>

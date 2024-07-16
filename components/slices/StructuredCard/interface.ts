@@ -10,4 +10,5 @@ export type StructuredCardProps = {
   ctaUrl?: Record<string, any>;
   isMobile?: boolean;
   activeTabIndex?: number;
+  sectionName?: string;
 };

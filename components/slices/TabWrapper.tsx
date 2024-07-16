@@ -20,7 +20,11 @@ import { appAtom } from 'store/atoms/app';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  SLICE_TYPES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
@@ -470,7 +474,15 @@ const TabWrapper = (props: TabWrapperProps) => {
           <Conditional if={heading?.length}>
             <h2 id={generateSidenavId(heading || '')}>{tabSectionHeading}</h2>
           </Conditional>
-          {description ? <RichContent render={description} /> : null}
+          {description ? (
+            <RichContent
+              render={description}
+              parentProps={{
+                sectionName: tabSectionHeading,
+                sliceType: SLICE_TYPES.TAB_WRAPPER,
+              }}
+            />
+          ) : null}
         </TitleTextCombo>
         <TabCarousel>
           <StyledSwiper>
@@ -526,7 +538,11 @@ const TabWrapper = (props: TabWrapperProps) => {
           <SliceZone
             slices={slices}
             components={components}
-            context={{ ...sliceProps, wrapperType: 'tab' }}
+            context={{
+              ...sliceProps,
+              wrapperType: 'tab',
+              sectionName: heading,
+            }}
             defaultComponent={() => null}
           />
         </div>
@@ -540,7 +556,15 @@ const TabWrapper = (props: TabWrapperProps) => {
       <Conditional if={heading?.length}>
         <TitleTextCombo noMargin={true}>
           <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
-          {description ? <RichContent render={description} /> : null}
+          {description ? (
+            <RichContent
+              render={description}
+              parentProps={{
+                sectionName: heading,
+                sliceType: SLICE_TYPES.TAB_WRAPPER,
+              }}
+            />
+          ) : null}
         </TitleTextCombo>
       </Conditional>
       <div ref={tabsContanier} className="tabs">
@@ -647,7 +671,13 @@ const TabWrapper = (props: TabWrapperProps) => {
       <div className="tab-content-wrap" ref={scrollRef} {...scrollViewProps}>
         <Conditional if={tabData.length}>
           <div style={{ maxWidth: '894px', fontSize: `15px` }}>
-            <RichContent render={tabData[activeTabIndex]?.content} />
+            <RichContent
+              render={tabData[activeTabIndex]?.content}
+              parentProps={{
+                sectionName: tabSectionHeading,
+                sliceType: SLICE_TYPES.TAB_WRAPPER,
+              }}
+            />
           </div>
           <div className="tabbed-info-image">
             <Image
@@ -697,7 +727,11 @@ const TabWrapper = (props: TabWrapperProps) => {
           <SliceZone
             slices={slices}
             components={components}
-            context={{ ...sliceProps, wrapperType: 'tab' }}
+            context={{
+              ...sliceProps,
+              wrapperType: 'tab',
+              sectionName: heading,
+            }}
             defaultComponent={() => null}
           />
         </Conditional>

@@ -11,6 +11,7 @@ import TitleTextCombo from 'UI/TitleTextCombo';
 import useOnScreen from 'hooks/useOnScreen';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { SIZES } from 'const/ui-constants';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
@@ -129,6 +130,7 @@ type CardSectionProps = {
   description?: any[];
   exitDescription?: any[];
   isGlobalMb?: boolean;
+  sectionName?: string;
   showSeatMapExperiment?: boolean;
   index?: number;
   addVenueSeatsPageSectionViewedDataEvents?: TAddVenueSeatsPageSectionViewedDataEvents;
@@ -172,6 +174,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   description,
   exitDescription,
   isGlobalMb = false,
+  sectionName,
   showSeatMapExperiment,
   index,
   addVenueSeatsPageSectionViewedDataEvents,
@@ -190,14 +193,28 @@ const CardSection: React.FC<CardSectionProps> = ({
   const EntrySection = (
     <TitleTextCombo ref={cardSectionRef}>
       {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
-      {description ? <RichContent render={description} /> : null}
+      {description ? (
+        <RichContent
+          render={description}
+          parentProps={{
+            sectionName: title,
+            sliceType: SLICE_TYPES.CARD_SECTION,
+          }}
+        />
+      ) : null}
     </TitleTextCombo>
   );
 
   // Rich Text for ending of the Card Section
   const ExitSection = exitDescription ? (
     <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
-      <RichContent render={exitDescription} />
+      <RichContent
+        render={exitDescription}
+        parentProps={{
+          sectionName: title,
+          sliceType: SLICE_TYPES.CARD_SECTION,
+        }}
+      />
     </ExitDescription>
   ) : null;
 
@@ -250,6 +267,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       cardsInARow: cardsInARow,
       isGlobalMb,
       isMobile,
+      sectionName: title ?? sectionName,
       isSeatMapExpControlAndEligible,
     });
   });

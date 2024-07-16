@@ -38,9 +38,10 @@ import {
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import {
   BOOSTER_BACKGROUND_COLOR_CODE_MAPPING,
+  SLICE_TYPES,
   TABLE_V3_COLUMN_TYPE,
   TABLE_V3_SVG_ICONS,
   TABLE_V3_TEXT_TYPE,
@@ -136,7 +137,12 @@ const TableV3 = ({
                 <Conditional if={!text}>
                   <PrismicRichText
                     field={rich_text}
-                    components={shortCodeSerializer}
+                    components={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(defaultArgs, {
+                        sectionName: title,
+                        sliceType: SLICE_TYPES.TABLE_V3,
+                      })
+                    }
                   />
                 </Conditional>
               </TextWrapper>
@@ -150,7 +156,12 @@ const TableV3 = ({
                 <Conditional if={!text}>
                   <PrismicRichText
                     field={rich_text}
-                    components={shortCodeSerializer}
+                    components={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(defaultArgs, {
+                        sectionName: title,
+                        sliceType: SLICE_TYPES.TABLE_V3,
+                      })
+                    }
                   />
                 </Conditional>
               </SubTextWrapper>
@@ -164,7 +175,12 @@ const TableV3 = ({
                 <Conditional if={!text}>
                   <PrismicRichText
                     field={rich_text}
-                    components={shortCodeSerializer}
+                    components={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(defaultArgs, {
+                        sectionName: title,
+                        sliceType: SLICE_TYPES.TABLE_V3,
+                      })
+                    }
                   />
                 </Conditional>
               </TextBoldWrapper>

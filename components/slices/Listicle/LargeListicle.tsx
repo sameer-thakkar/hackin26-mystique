@@ -5,8 +5,9 @@ import { PrismicRichText } from '@prismicio/react';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import Tags from 'UI/Tags';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import Pricing from './Pricing';
@@ -207,6 +208,10 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
     url: items[0]?.image?.url || tourData?.imageUploads[0]?.url,
     alt: items[0]?.image?.alt || tourData?.imageUploads[0]?.alt,
   };
+  const parentProps = {
+    sectionName: title || tourData?.name,
+    sliceType: SLICE_TYPES.LISTICLE,
+  };
 
   return (
     <StyledLargeListicle>
@@ -233,7 +238,12 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       {asText(summary as []).length > 0 ? (
         <Paragraph>
-          <PrismicRichText field={summary} components={shortCodeSerializer} />
+          <PrismicRichText
+            field={summary}
+            components={(...defaultArgs: any) =>
+              shortCodeSerializerWithParentProps(defaultArgs, parentProps)
+            }
+          />
         </Paragraph>
       ) : null}
       {infoItems.length > 0 ? (
@@ -245,7 +255,12 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
                   <InfoTitle>{infoTitle}</InfoTitle>
                   <PrismicRichText
                     field={infoDescription}
-                    components={shortCodeSerializer}
+                    components={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(
+                        defaultArgs,
+                        parentProps
+                      )
+                    }
                   />
                 </div>
               );
@@ -278,7 +293,9 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
             <PrismicRichText
               field={why_summary}
-              components={shortCodeSerializer}
+              components={(...defaultArgs: any) =>
+                shortCodeSerializerWithParentProps(defaultArgs, parentProps)
+              }
             />
           </WTTDTSectionRichText>
           <WTTDTToggle

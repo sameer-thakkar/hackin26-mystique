@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
+import { SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import { stringIdfy } from '../../utils/helper';
-import { shortCodeSerializer } from '../../utils/shortCodes';
+import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 
@@ -109,7 +110,15 @@ const TableV2 = (props: any) => {
     <StyledTable>
       <TitleTextCombo id={stringIdfy(title)}>
         <h2 id={generateSidenavId(title)}>{title}</h2>
-        {description ? <RichContent render={description} /> : null}
+        {description ? (
+          <RichContent
+            render={description}
+            parentProps={{
+              sectionName: title,
+              sliceType: SLICE_TYPES.TABLE,
+            }}
+          />
+        ) : null}
       </TitleTextCombo>
       {rows.map((row: any, rowIndex: number) => {
         if (isMobile && rowIndex === 0) return null;
@@ -124,7 +133,12 @@ const TableV2 = (props: any) => {
                   <PrismicRichText
                     key={colIndex}
                     field={column.content}
-                    components={shortCodeSerializer}
+                    components={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(defaultArgs, {
+                        sectionName: title,
+                        sliceType: SLICE_TYPES.TABLE,
+                      })
+                    }
                   />
                 </StyledColumn>
               );

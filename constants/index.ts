@@ -522,6 +522,7 @@ export const ANALYTICS_EVENTS = {
   REVIEWS_PAGE_CTA_CLICKED: 'Reviews Page CTA Clicked',
   RATING_WIDGET_CLICKED: 'Rating Widget Clicked',
   REVIEWS_PAGE_SECTION_VIEWED: 'Reviews Page Section Viewed',
+  CONTENT_SECTION_LINK_CLICKED: 'Content Section Link Clicked',
   BOOSTERS: {
     PRESENT: 'Booster Present',
     VIEWED: 'Product Booster Viewed',
@@ -1047,11 +1048,14 @@ export const ANALYTICS_PROPERTIES = {
     DRAWER_TYPE: 'Drawer Type',
   },
   CONTAINER: 'Container',
+  NUMBER_OF_PRODUCTS: 'Number Of Products',
+  NUMBER_OF_SLICES: 'Number Of Slices',
+  FIRST_SLICE_TYPE: 'First Slice Type',
+  HYPERLINK: 'Hyperlink',
   DETAILS_TYPE: 'Details Type',
   RANK: 'Rank',
   TIME_SLOTS_AVAILABLE: 'Timeslots Available',
   HAS_ACTIVE_SHOWS: 'Has Active Shows',
-  NUMBER_OF_PRODUCTS: 'Number of Products',
   ITINERARY_ID: 'Itinerary ID',
   ITINERARY_NAME: 'Itinerary Name',
   CLICK_TYPE: 'Click Type',
@@ -1289,6 +1293,7 @@ export const SLICE_TYPES = {
   LISTICLE_SECTION_START: 'listicle_section___start',
   TABLE_V3: 'table_v3',
   STRUCTURED_CARD: 'structured_card',
+  CONTENT_TABS: 'Content Tabs',
   // Airport Transfer
   CARS_CAROUSEL: 'cars_carousel',
   //Reviews Page

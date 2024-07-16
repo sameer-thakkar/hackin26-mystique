@@ -202,6 +202,14 @@ const ContentPage = (props: any) => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulder_page_type ?? '',
+        [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]:
+          categoryTourListData?.finalTgids?.length ?? 0,
+        [ANALYTICS_PROPERTIES.NUMBER_OF_SLICES]: longFormContent?.length ?? 0,
+        [ANALYTICS_PROPERTIES.FIRST_SLICE_TYPE]: longFormContent?.find(
+          (slice) => slice?.slice_type !== SLICE_TYPES.BREADCRUMBS
+        )?.slice_type,
+        [ANALYTICS_PROPERTIES.IS_LANDING_PAGE]:
+          taggedPageType === MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE,
         ...(shoulder_page_type === SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS && {
           [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattraction_type,
           [ANALYTICS_PROPERTIES.PRODUCTS_PRESENT]:
@@ -293,6 +301,7 @@ const ContentPage = (props: any) => {
   const {
     tagged_city: taggedCity,
     tagged_mb_type: taggedMbType,
+    tagged_page_type: taggedPageType,
     shoulder_page_type,
     subattraction_type,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
