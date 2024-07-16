@@ -38,6 +38,7 @@ import {
   getHostName,
   getLangObject,
   getSeatingPlanAndTheatreType,
+  isTheatreInSeatMapExperiment,
 } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -937,9 +938,11 @@ export const getPageData = async ({
 
     const { isSeatingPlanPage, theatreType } =
       getSeatingPlanAndTheatreType(uid);
+    const isSeatingPlanExperiment =
+      isTheatreInSeatMapExperiment(theatreType) && isSeatingPlanPage;
 
-    const breadcrumbsPromise = isSeatingPlanPage
-      ? getSeatingPlanBreadcrumbs(breadcrumbsDoc)
+    const breadcrumbsPromise = isSeatingPlanExperiment
+      ? getSeatingPlanBreadcrumbs(breadcrumbsDoc, theatreType)
       : getBreadcrumbs(breadcrumbsDoc);
 
     const isCatOrSubCatPage = await isCatOrSubCatPagePromise;

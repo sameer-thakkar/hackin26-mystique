@@ -269,8 +269,11 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   };
 
   const handleDateClick = (date: string, priceTag: string) => {
+    if (!date || !priceTag) return;
+
     if (onDateClick) {
       onDateClick({ date, priceTag });
+      document.body.classList.remove('scroll-lock');
     } else {
       onCheckAvailabilityClick(date, priceTag);
     }

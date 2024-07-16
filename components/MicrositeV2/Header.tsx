@@ -453,6 +453,7 @@ interface HeaderProps {
   isReviewsPage?: boolean;
   isVenuePage?: boolean;
   uid?: string;
+  showSeatMapExperiment?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -486,6 +487,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   isReviewsPage = false,
   isVenuePage = false,
   uid,
+  showSeatMapExperiment,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -505,7 +507,9 @@ const Header: FunctionComponent<HeaderProps> = ({
   );
 
   const showColoredHeader =
-    isEntertainmentLandingPageVisible && !hasScrolled && !navActive;
+    (isEntertainmentLandingPageVisible || !!showSeatMapExperiment) &&
+    !hasScrolled &&
+    !navActive;
 
   const [scrollPos, setScrollPos] = useState(0);
 
@@ -669,7 +673,10 @@ const Header: FunctionComponent<HeaderProps> = ({
             onMouseLeave={() => setHeaderHover(false)}
             isGlobalMb={isGlobalMb}
             isEntertainmentMb={isEntertainmentMb}
-            isDarkMode={isEntertainmentLandingPageVisible && showColoredHeader}
+            isDarkMode={
+              (isEntertainmentLandingPageVisible || showSeatMapExperiment) &&
+              showColoredHeader
+            }
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">

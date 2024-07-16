@@ -1,4 +1,4 @@
-import React from 'react';
+import { THEATRE_TYPES } from 'const/index';
 import { IconWrapper } from '../InteractiveMap/styles';
 import { TMapHoverInfoCardParams } from './interface';
 import {
@@ -18,13 +18,16 @@ const MapHoverInfoCard = ({
   left,
   top,
   isVisible,
+  theatreType,
 }: TMapHoverInfoCardParams) => {
   return (
     <MapSectionInfoCardContainer left={left} top={top} isVisible={isVisible}>
       <MapSectionInfoCard>
         <Header>
           <HeaderLeft>
-            {sectionInfo?.blockName} - {sectionInfo?.theatreSectionLabel}
+            {theatreType !== THEATRE_TYPES.ABBA_ARENA
+              ? `${sectionInfo?.theatreSectionLabel}`
+              : `${sectionInfo?.blockName} - ${sectionInfo?.theatreSectionLabel}`}
           </HeaderLeft>
           <HeaderRight>{sectionInfo?.rows}</HeaderRight>
         </Header>

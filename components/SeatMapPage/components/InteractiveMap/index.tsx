@@ -16,7 +16,11 @@ import {
   THEATRE_SECTION_TYPE,
 } from 'components/SeatMapPage/interface';
 import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  THEATRE_TYPES,
+} from 'const/index';
 import ShiningStarIcon from 'assets/shiningStarIcon';
 import MapHoverInfoCard from '../MapHoverInfoCard';
 import { TInteractiveMapParams } from './interface';
@@ -46,7 +50,7 @@ const InteractiveMap = ({
   theatreShowTgid,
   addVenueSeatsPageSectionViewedDataEvents,
 }: TInteractiveMapParams) => {
-  const DEFAULT_VIEW_BOX = isMobile ? '0 0 343 299' : '0 0 607 471';
+  const DEFAULT_VIEW_BOX = SEATING_MAP.viewBox[theatreType]?.(isMobile);
   const seatMapSvgs = SEATING_MAP.seatMapSvgs;
   const mapHoverContent = SEATING_MAP.mapHoverContent[theatreType];
   const CurrentSeatMapSvg = seatMapSvgs[theatreType];
@@ -224,6 +228,7 @@ const InteractiveMap = ({
           left={mapHoveredSectionInfo.left}
           isVisible={mapHoveredSectionInfo.isVisible}
           sectionInfo={sectionInfo}
+          theatreType={theatreType}
         />
       </Conditional>
 
@@ -251,8 +256,9 @@ const InteractiveMap = ({
               <MSectionInfo>
                 <MQuickInfoHeader>
                   <MHeaderLeft>
-                    {sectionInfo?.blockName} -{' '}
-                    {sectionInfo?.theatreSectionLabel}
+                    {theatreType !== THEATRE_TYPES.ABBA_ARENA
+                      ? `${sectionInfo?.theatreSectionLabel}`
+                      : `${sectionInfo?.blockName} - ${sectionInfo?.theatreSectionLabel}`}
                   </MHeaderLeft>
                   <MHeaderRight>{sectionInfo?.rows}</MHeaderRight>
                 </MQuickInfoHeader>

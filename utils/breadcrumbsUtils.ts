@@ -2,6 +2,7 @@ import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import type { ShowpageDocument } from 'types.prismic';
+import { SEATING_MAP } from 'components/SeatMapPage/constants';
 import {
   getAlternateLanguageDocUid,
   getCategorisationMetadata,
@@ -985,13 +986,15 @@ export const getNewsPageBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 };
 
 export const getSeatingPlanBreadcrumbs = async (
-  doc: PrismicDocumentWithUID
+  doc: PrismicDocumentWithUID,
+  theatreType: string
 ) => {
-  return getNonTgidSeatingPlanBreadcrumbs(doc);
+  return getNonTgidSeatingPlanBreadcrumbs(doc, theatreType);
 };
 
 export const getNonTgidSeatingPlanBreadcrumbs = async (
-  doc: PrismicDocumentWithUID
+  doc: PrismicDocumentWithUID,
+  theatreType: string
 ) => {
   const { uid, lang } = doc;
 
@@ -1029,8 +1032,8 @@ export const getNonTgidSeatingPlanBreadcrumbs = async (
   };
 
   breadcrumbs[`level_3`] = {
-    level: 4,
-    label: 'ABBA Arena Seating Plan',
+    level: 3,
+    label: SEATING_MAP.breadCrumbsLabel[theatreType],
     url: pageUrl,
   };
 

@@ -247,6 +247,7 @@ export const MoreTourDates = styled.button`
   transition: 0.4s;
   background: none;
   color: #666666;
+  cursor: pointer;
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);

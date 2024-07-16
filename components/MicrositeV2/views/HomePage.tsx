@@ -458,6 +458,7 @@ export const HomePage = (props: any) => {
 
   if (showSeatMapExperiment) {
     longFormSlices = longFormSlices.splice(3);
+    header.enableSearch = false;
   } else if (isSeatMapExpControlAndEligible) {
     longFormSlices = longFormSlices.filter(
       ({ slice_type }, index) => slice_type !== 'rich_text' || index !== 3
@@ -506,6 +507,7 @@ export const HomePage = (props: any) => {
         categoryHeaderMenu={categoryHeaderMenu}
         categoryHeaderMenuExists={categoryHeaderMenuExists}
         uid={uid}
+        showSeatMapExperiment={showSeatMapExperiment}
       />
       <Conditional if={!showSeatMapExperiment && isLttMonthOnMonthPage}>
         <MonthOnMonthPage

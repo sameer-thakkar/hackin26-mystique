@@ -26,6 +26,12 @@ export type SEATING_MAP_TYPE = {
   seatMapSvgs: {
     [theatreId: string]: typeof AbbaSeatMapSvg;
   };
+  viewBox: {
+    [theatreId: string]: (isMobile: boolean) => string;
+  };
+  breadCrumbsLabel: {
+    [theatreId: string]: string;
+  };
 };
 
 export type THEATRE_SECTION_TYPE = {

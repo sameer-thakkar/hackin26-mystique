@@ -49,6 +49,7 @@ export const HeaderLeft = styled.div`
   font-size: 1rem;
   color: ${COLORS.BRAND.WHITE};
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
+  white-space: nowrap;
 `;
 
 export const HeaderRight = styled.div`
@@ -64,6 +65,7 @@ export const HeaderRight = styled.div`
   position: relative;
   color: ${COLORS.BRAND.WHITE};
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
+  white-space: nowrap;
 `;
 
 export const Body = styled.section`

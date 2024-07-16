@@ -4,10 +4,14 @@ import BinocularIcon from 'assets/binocularIcon';
 import CouchSvg from 'assets/couchSvg';
 import DiscoBallSvg from 'assets/discoBallSvg';
 import DrinkSvg from 'assets/drinkSvg';
+import HisMajestysTheatreSvg from 'assets/hisMajestysTheatreSvg';
 import LegRoomSvg from 'assets/legRoomSvg';
+import NovelloTheatreSvg from 'assets/novelloThetreSvg';
+import PrinceEdwardTheatreSvg from 'assets/princeEdwardTheatreSvg';
 import RestRoomSvg from 'assets/restRoomSvg';
 import SeatIcon from 'assets/seatIcon';
 import SeatIcon2 from 'assets/seatIcon2';
+import TheatreRoyalDruryLaneSvg from 'assets/theatreRoyalDruryLaneSvg';
 import WalkingTours from 'assets/walkingTours';
 import WheelChairIcon from 'assets/wheelChairIcon';
 import Wineries from 'assets/wineries';
@@ -21,7 +25,7 @@ export const DEFAULT_MAP_SECTION_INFO = {
 };
 
 export const MIN_VISIBLE_POINT_ON_SCREEN = 120;
-export const MAX_VISIBLE_POINT_X_ON_MAP = 996;
+export const MAX_VISIBLE_POINT_X_ON_MAP = 1300;
 export const MIN_HEIGHT_OF_HOVERED_INFO_CARD = 300;
 export const BUFFER_DISTANCE = 20;
 
@@ -52,6 +56,66 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       BANNER_ICONS: [
         {
           name: '3000 capacity',
+          icon: SeatIcon2,
+        },
+        {
+          name: 'Wheelchair accessible',
+          icon: WheelChairIcon,
+        },
+      ],
+    },
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: {
+      BANNER_HEADING: "His Majesty's Seating Plan",
+      BANNER_DESCRIPTION:
+        "The second oldest theatre site in London, the venue is home to the city's greatest love story. His Majesty's Theatre seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.",
+      BANNER_ICONS: [
+        {
+          name: '1231 seats',
+          icon: SeatIcon2,
+        },
+        {
+          name: 'Wheelchair accessible',
+          icon: WheelChairIcon,
+        },
+      ],
+    },
+    [THEATRE_TYPES.NOVELLO_THEATRE]: {
+      BANNER_HEADING: 'Novello Theatre seating plan',
+      BANNER_DESCRIPTION:
+        'A prestigious West End venue run by the Delfont Mackintosh Theatres, Novello Theatre is located on the banks of the Thames River. Novello Theatre seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.',
+      BANNER_ICONS: [
+        {
+          name: '1095 seats',
+          icon: SeatIcon2,
+        },
+        {
+          name: 'Wheelchair accessible',
+          icon: WheelChairIcon,
+        },
+      ],
+    },
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: {
+      BANNER_HEADING: 'Theatre Royal Drury Lane seating plan',
+      BANNER_DESCRIPTION:
+        "West End's oldest theatre, this venue has been a royal favourite since 1633. Theatre Royal Drury Lane's seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.",
+      BANNER_ICONS: [
+        {
+          name: '1974 seats',
+          icon: SeatIcon2,
+        },
+        {
+          name: 'Wheelchair accessible',
+          icon: WheelChairIcon,
+        },
+      ],
+    },
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: {
+      BANNER_HEADING: 'Prince Edward Theatre seating plan',
+      BANNER_DESCRIPTION:
+        'This venue served as a club fro servicemen and a dance and cabaret hall before reverting to hosting theatrical shows. The Prince Edward Theatre seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.',
+      BANNER_ICONS: [
+        {
+          name: '1728 seats',
           icon: SeatIcon2,
         },
         {
@@ -650,13 +714,13 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: '',
       },
     },
-    'his-majesty-theatres': {
-      'front-stalls': {
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: {
+      'stalls-front': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Front',
+        theatreSectionLabel: 'Front - Stalls',
         description:
-          'The most premium section in the theatre - the views are excellent from all of the seats here. The middle seats in Rows E-H provide good views at slightly lower prices.',
+          'Prime seating area, offers excellent views from every seat. For a more affordable option, the middle seats in Rows E-H provide great views at slightly lower prices..',
         quickInfo: [
           { icon: SeatIcon, label: '369 seats' },
           { icon: BinocularIcon, label: 'Best views in Rows B-F' },
@@ -664,12 +728,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-N',
       },
-      'rear-stalls': {
+      'stalls-rear': {
         blockName: 'Rear',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rear',
+        theatreSectionLabel: 'Rear - Stalls',
         description:
-          'The views are great here due to the centrality and proximity to the stage. However, pillars and the circle overhang may restrict the views from some seats.',
+          'This section offers great views due to its central location and proximity to the stage. However, some seats may have restricted views due to pillars and the circle overhang.',
         accessibleSeating: 'Wheelchair accessibility: Row S',
         quickInfo: [
           { icon: SeatIcon, label: '140 seats' },
@@ -679,12 +743,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows P-T',
       },
-      'box1-stalls': {
+      'box-1': {
         blockName: 'Box 1',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Box 1',
+        theatreSectionLabel: 'Box 1 Stalls',
         description:
-          'The box provides a super close-up view of the stage. If you don’t mind missing some views of the stage on one side, the comfort, privacy and the special experience provided by the box seats is unbeatable.',
+          'The box seats offer an unbeatable close-up view of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience make it worth it.',
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           {
@@ -695,12 +759,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private box',
       },
-      'box2-stalls': {
+      'box-2': {
         blockName: 'Box 2',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Box 2',
+        theatreSectionLabel: 'Box 2 Stalls',
         description:
-          'The box provides a super close-up view of the stage. If you don’t mind missing some views of the stage on one side, the comfort, privacy and the special experience provided by the box seats is unbeatable.',
+          'The box seats offer an unbeatable close-up view of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience make it worth it.',
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           {
@@ -711,12 +775,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private box',
       },
-      'left-royal-circle': {
+      'royal-circle-left': {
         blockName: 'Left',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Royal Circle',
         description:
-          'The first 3 rows offer great views even though the ends are marked as restricted views. The seats towards the ends provide a slightly angled view as the rows curve along the sides of the auditorium.',
+          'The first three rows provide excellent views, though the ends are marked as restricted views. Seats towards the ends have a slightly angled view due to the curved rows along the auditorium sides.',
         quickInfo: [
           { icon: SeatIcon, label: '79 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows A-C' },
@@ -724,12 +788,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-H',
       },
-      'center-royal-circle': {
+      'royal-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Royal Circle',
         description:
-          'Due to its central location and proximity to the stage, this section provides some of the best views of the stage. 4 pillars in this section obstruct views in the seats around them.',
+          'This centrally located section offers some of the best views of the stage due to its proximity. However, four pillars in the area obstruct views from the surrounding seats.',
         quickInfo: [
           { icon: SeatIcon, label: '123 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows A-F' },
@@ -737,12 +801,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-H',
       },
-      'right-royal-circle': {
+      'royal-circle-right': {
         blockName: 'Right',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Royal Circle',
         description:
-          'The first 3 rows offer great views even though the ends are marked as restricted views. The seats towards the ends provide a slightly angled view as the rows curve along the sides of the auditorium.',
+          'The first three rows provide excellent views, though the ends are marked as restricted views. Seats towards the ends have a slightly angled view due to the curved rows along the auditorium sides.',
         quickInfo: [
           { icon: SeatIcon, label: '79 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows A-C' },
@@ -750,12 +814,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-H',
       },
-      'box3-royal-circle': {
+      'box-3': {
         blockName: 'Box 3',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box 3',
+        theatreSectionLabel: 'Box 3 Royal Circle',
         description:
-          'If you don’t mind missing some views of the stage on one side, the comfort, privacy and the special experience provided by the box seats is unbeatable.',
+          'If you don’t mind missing some views on one side, the comfort, privacy, and unique experience of the box seats are unbeatable.',
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           {
@@ -766,12 +830,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private box',
       },
-      'box4-royal-circle': {
+      'box-4': {
         blockName: 'Box 4',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box 4',
+        theatreSectionLabel: 'Box 4 Royal Circle',
         description:
-          'If you don’t mind missing some views of the stage on one side, the comfort, privacy and the special experience provided by the box seats is unbeatable.',
+          'If you don’t mind missing some views on one side, the comfort, privacy, and unique experience of the box seats are unbeatable.',
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           { icon: BinocularIcon, label: 'Great view; left side restricted' },
@@ -783,12 +847,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private box',
       },
-      'left-grand-circle': {
+      'grand-circle-left': {
         blockName: 'Left',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. Expect partial obstructions from support pillars in some seats. Largely unrestricted views towards the aisle in Rows A-D.',
+          'This section features steep seating, offering elevated views, especially towards the rear. Some seats may have partial obstructions from support pillars. Rows A-D provide mostly unobstructed views towards the aisle.',
         quickInfo: [
           { icon: SeatIcon, label: '80 seats' },
           { icon: BinocularIcon, label: 'Good views in Rows A-D' },
@@ -796,12 +860,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'center-grand-circle': {
+      'grand-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. Great views in the middle seats (12-23) in Rows A-C.',
+          'This section features a steep rake, elevating rear seats for excellent views. Rows A-C, seats 12-23 offer particularly great views.',
         quickInfo: [
           { icon: SeatIcon, label: '170 seats' },
           { icon: BinocularIcon, label: 'Best views in Rows A-C' },
@@ -809,12 +873,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'right-grand-circle': {
+      'grand-circle-right': {
         blockName: 'Right',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. Expect partial obstructions from support pillars in some seats. Largely unrestricted views towards the aisle in Rows A-D.',
+          'This section features steep seating, offering elevated views, especially towards the rear. Some seats may have partial obstructions from support pillars. Rows A-D provide mostly unobstructed views towards the aisle.',
         quickInfo: [
           { icon: SeatIcon, label: '80 seats' },
           { icon: BinocularIcon, label: 'Good views in Rows A-D' },
@@ -822,12 +886,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'left-balcony': {
+      'balcony-left': {
         blockName: 'Left',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Balcony',
         description:
-          'The seats are very far and high up so consider renting binoculars if you wish to sit here. Opt for aisle seats for a little extra space & legroom.',
+          'These seats are elevated and distant, so renting binoculars might enhance your experience. Opting for aisle seats can provide additional space and legroom.',
         quickInfo: [
           { icon: SeatIcon, label: '29 seats' },
           { icon: BinocularIcon, label: 'Decent views in Rows A-C' },
@@ -835,12 +899,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-F',
       },
-      'mid-left-balcony': {
+      'balcony-mid-left': {
         blockName: 'Mid - left',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Mid - left',
+        theatreSectionLabel: 'Mid Left Balcony',
         description:
-          'The stage is very far away but as this section is in the far back center, the views are still great. Rent binoculars for enhanced views. Opt for aisle seats for a little extra space & legroom.',
+          "The stage is quite distant, but this section's central rear position still offers great views. Consider renting binoculars for an enhanced experience. Aisle seats provide a bit of extra space and legroom.",
         quickInfo: [
           { icon: SeatIcon, label: '27 seats' },
           { icon: BinocularIcon, label: 'Good views in Row A' },
@@ -848,12 +912,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-C',
       },
-      'mid-right-balcony': {
+      'balcony-mid-right': {
         blockName: 'Mid - right',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Mid - right',
+        theatreSectionLabel: 'Mid Right Balcony',
         description:
-          'The stage is very far away but as this section is in the far back center, the views are still great. Rent binoculars for enhanced views.',
+          "The stage is quite distant, but this section's central rear position still offers great views. Consider renting binoculars for an enhanced experience.",
         quickInfo: [
           { icon: SeatIcon, label: '27 seats' },
           { icon: BinocularIcon, label: 'Good views in Row A' },
@@ -861,12 +925,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-C',
       },
-      'right-balcony': {
+      'balcony-right': {
         blockName: 'Right',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Balcony',
         description:
-          'The seats are very far and high up so consider renting binoculars if you wish to sit here. Opt for aisle seats for a little extra space & legroom.',
+          "The stage is quite distant, but this section's central rear position still offers great views. Consider renting binoculars for an enhanced experience. Aisle seats provide a bit of extra space and legroom.",
         quickInfo: [
           { icon: SeatIcon, label: '20 seats' },
           { icon: BinocularIcon, label: 'Decent views in Rows A-C' },
@@ -875,11 +939,11 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows A-D',
       },
     },
-    'novello-theatre': {
-      'front-stalls': {
+    [THEATRE_TYPES.NOVELLO_THEATRE]: {
+      'stalls-front': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Front',
+        theatreSectionLabel: 'Front Stalls',
         description:
           'This section is well-raked ensuring premium views from all rows. Unlike other sections, the rows don’t curve here so even the seats on the edge provide great views.',
         quickInfo: [
@@ -889,10 +953,10 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows C-M',
       },
-      'rear-stalls': {
+      'stalls-rear': {
         blockName: 'Rear',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rear',
+        theatreSectionLabel: 'Rear Stalls',
         description:
           'This section is well-raked ensuring premium views from all rows. Unlike other sections, the rows don’t curve here so even the seats on the edge provide great views. The overhang from the dress circle affects the last few rows.',
         quickInfo: [
@@ -902,12 +966,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows N-X',
       },
-      'left-dress-circle': {
+      'dress-circle-slips-left': {
         blockName: 'Left',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Dress Circle',
         description:
-          'As the row curves along the sides of the auditorium, most of the seats provide limited and angled views of the stage. However, you can get good stage views from AA10, AA11, and AA12 at a decent price.',
+          'The row curves along the sides of the auditorium, resulting in limited and angled views from most seats. However, seats AA10, AA11, and AA12 offer good stage views at a reasonable price.',
         quickInfo: [
           { icon: SeatIcon, label: '9 seats' },
           { icon: BinocularIcon, label: 'Restricted & side-on views' },
@@ -918,12 +982,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Row AA',
       },
-      'center-dress-circle': {
+      'dress-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Dress Circle',
         description:
-          'The proximity to the stage and the steeped structure ensure that almost all seats in this section provide clear views of the stage. The rows gently curve towards the edges, meaning that these seats offer a slightly angled view.',
+          'The proximity to the stage and steep structure ensure almost all seats in this section provide clear views. The rows gently curve towards the edges, offering a slightly angled view.',
         quickInfo: [
           { icon: SeatIcon, label: '227 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows A-F' },
@@ -931,24 +995,24 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'right-dress-circle': {
+      'dress-circle-slips-right': {
         blockName: 'Right',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Dress Circle',
         description:
-          'As the row curves along the sides of the auditorium, most of the seats provide limited and angled views of the stage. However, you can get good stage views from AA8, AA9, BB2, and BB3 at a decent price.',
+          'The row curves along the sides of the auditorium, resulting in limited and angled views from most seats. However, seats AA8, AA9, BB2, and BB3 offer good stage views at a reasonable price.',
         quickInfo: [
           { icon: SeatIcon, label: '12 seats' },
           { icon: BinocularIcon, label: 'Restricted & side-on views' },
         ],
         rows: 'Rows AA-BB',
       },
-      'left-grand-circle': {
+      'grand-circle-slips-left': {
         blockName: 'Left',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left - Grand Circle',
         description:
-          'As the row curves along the sides of the auditorium, most of the seats provide limited and angled views of the stage. However, you can get good stage views from AA13 and AA14 at a decent price.',
+          'The row curves along the sides of the auditorium, resulting in limited and angled views from most seats. However, seats AA13 and AA14 offer good stage views at a reasonable price.',
         quickInfo: [
           { icon: SeatIcon, label: '12 seats' },
           { icon: BinocularIcon, label: 'Restricted & side-on views' },
@@ -956,12 +1020,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Row AA',
       },
-      'center-grand-circle': {
+      'grand-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Grand Circle',
         description:
-          'As the rows curve along the sides of the auditorium, the seats towards the end provide limited and angled views of the stage. However, the steepness of the section ensures that the middle seats offer clear views.',
+          'As the rows curve along the sides, seats towards the ends offer limited and angled views of the stage. However, the steep incline ensures clear views from the middle seats.',
         quickInfo: [
           { icon: SeatIcon, label: '190 seats' },
           {
@@ -972,12 +1036,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-H',
       },
-      'right-grand-circle': {
+      'grand-circle-slips-right': {
         blockName: 'Right',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Grand Circle',
         description:
-          'As the row curves along the sides of the auditorium, most of the seats provide limited and angled views of the stage. However, you can get good stage views from AA11 and AA12 at a decent price.',
+          'As the row curves along the sides of the auditorium, most seats offer limited and angled views of the stage. However, AA11 and AA12 provide good stage views at a reasonable price.',
         quickInfo: [
           { icon: SeatIcon, label: '12 seats' },
           { icon: BinocularIcon, label: 'Restricted & side-on views' },
@@ -985,12 +1049,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Row AA',
       },
-      balcony: {
+      'balcony-balcony': {
         blockName: 'Balcony',
         theatreSectionName: 'Balcony',
         theatreSectionLabel: 'Balcony',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are still great & obstruction-free from most seats, especially in the middle. A large safety bar runs along the balcony's length, affecting the views from some seats.",
+          "The stage is distant, yet the steeply raked rows ensure great, obstruction-free views from most seats, particularly in the middle. However, a large safety bar along the balcony's length may affect views from some seats.",
         quickInfo: [
           { icon: SeatIcon, label: '142 seats' },
           {
@@ -1001,12 +1065,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-F',
       },
-      'dress-circle-box-a': {
+      'box-a': {
         blockName: 'Dress Circle Box A',
         theatreSectionName: 'Dress Circle Boxes',
-        theatreSectionLabel: 'Dress Circle Box A',
+        theatreSectionLabel: 'Box A Dress Circle ',
         description:
-          'The box seats provide a super close-up view of the stage. If you don’t mind missing some views of the stage on one side, the comfort, privacy, and special experience the box seats provide are unbeatable.',
+          'The box seats offer an unbeatable close-up view of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience make it worth it.',
         quickInfo: [
           { icon: SeatIcon, label: '4 seats' },
           {
@@ -1018,12 +1082,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private Box',
       },
-      'dress-circle-box-c': {
+      'box-c': {
         blockName: 'Dress Circle Box C',
         theatreSectionName: 'Dress Circle Boxes',
-        theatreSectionLabel: 'Dress Circle Box C',
+        theatreSectionLabel: 'Box C Dress Circle ',
         description:
-          'The box seats provide a super close-up view of the stage. If you don’t mind missing some views of the stage on one side, the comfort, privacy, and special experience the box seats provide are unbeatable.',
+          'The box seats offer an unbeatable close-up view of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience make it worth it.',
         quickInfo: [
           { icon: SeatIcon, label: '4 seats' },
           {
@@ -1035,12 +1099,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private Box',
       },
-      'grand-circle-box-e': {
+      'box-e': {
         blockName: 'Grand Circle Box E',
         theatreSectionName: 'Grand Circle Boxes',
-        theatreSectionLabel: 'Grand Circle Box E',
+        theatreSectionLabel: 'Box E Dress Circle ',
         description:
-          'If you don’t mind missing some views of the stage on one side, the comfort, privacy, and special experience the box seats provide are unbeatable. Due to its elevated position, you get largely unrestricted views.',
+          "If you're comfortable with potentially missing some stage views on one side, the box seats offer unbeatable comfort, privacy, and a special experience. Positioned elevated, they provide largely unrestricted views.",
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           {
@@ -1051,12 +1115,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Private Box',
       },
-      'grand-circle-box-f': {
+      'box-f': {
         blockName: 'Grand Circle Box F',
         theatreSectionName: 'Grand Circle Boxes',
-        theatreSectionLabel: 'Grand Circle Box F',
+        theatreSectionLabel: 'Box F Dress Circle ',
         description:
-          'If you don’t mind missing some views of the stage on one side, the comfort, privacy, and special experience the box seats provide are unbeatable. Due to its elevated position, you get largely unrestricted views.',
+          "If you're comfortable with potentially missing some stage views on one side, the box seats offer unbeatable comfort, privacy, and a special experience. Positioned elevated, they provide largely unrestricted views.",
         quickInfo: [
           { icon: SeatIcon, label: '2 seats' },
           {
@@ -1068,13 +1132,234 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Private Box',
       },
     },
-    'theatre-royal-drury-lane': {
-      'front-left-stalls': {
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: {
+      kings: {
+        blockName: 'Grand King’s Box',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Grand King’s Box',
+        description:
+          'With comfortable seating and ample legroom, this section features inclined seats offering mostly clear views, albeit with slight obstructions. Some seats may have the top of the stage cut off. There is also space available for storing bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '3 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      princess: {
+        blockName: 'Grand Prince’s Box',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Grand Prince’s Box seats',
+        description:
+          'With comfortable seating and ample legroom, this section features inclined seats offering mostly clear views, albeit with slight obstructions. Some seats may have the top of the stage cut off. There is also space available for storing bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '3 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-k': {
+        blockName: 'Box K',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Box K Grand Circle',
+        description:
+          'With comfortable seating and ample legroom, this section features inclined seats offering mostly clear views, albeit with slight obstructions. Some seats may have the top of the stage cut off. There is also space available for storing bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Great views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-l': {
+        blockName: 'Box L',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Box L Grand Circle',
+        description:
+          'With comfortable seating and ample legroom, this section features inclined seats offering mostly clear views, albeit with slight obstructions. Some seats may have the top of the stage cut off. There is also space available for storing bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Great views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'stalls-left-slip': {
+        blockName: 'Left Slips',
+        theatreSectionName: 'Stalls',
+        theatreSectionLabel: 'Left Slips - Stalls',
+        description:
+          'This section offers comfortable seats with ample legroom and storage for bags and coats. While the views are mostly clear, there are slight obstructions on the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '6 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'stalls-right-slip': {
+        blockName: 'Right Slips',
+        theatreSectionName: 'Stalls',
+        theatreSectionLabel: 'Right Slips - Stalls',
+        description:
+          'This section offers comfortable seats with ample legroom and storage for bags and coats. While the views are mostly clear, there are slight obstructions on the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '6 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'royal-box': {
+        blockName: 'The Royal Box',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'The Royal Box seats',
+        description:
+          'This section offers comfortable seats with ample legroom and storage for bags and coats. While the views are mostly clear, there are slight obstructions on the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '6 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'princess-box': {
+        blockName: 'The Prince’s Box',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'The Prince’s Box seats',
+        description:
+          'This section offers comfortable seats with ample legroom and storage for bags and coats. While the views are mostly clear, there are slight obstructions on the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '6 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-a': {
+        blockName: 'Box A',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box A Royal Circle',
+        description:
+          'This section offers comfortable seats with ample legroom and storage for bags and coats. While the views are mostly clear, there are slight obstructions on the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-b': {
+        blockName: 'Box B',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box B Royal Circle',
+        description:
+          "With comfortable seats and ample legroom, this section's inclined seats offer clear views with minimal obstructions. Convenient storage space for bags and coats is also available..",
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Great views; slightly restricted' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-c': {
+        blockName: 'Box C',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box C Royal Circle',
+        description:
+          "With comfortable seats and ample legroom, this section's inclined seats offer clear views with minimal obstructions. Convenient storage space for bags and coats is also available..",
+        quickInfo: [
+          { icon: SeatIcon, label: '3 seats' },
+          { icon: BinocularIcon, label: 'Great views; slightly restricted' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-d': {
+        blockName: 'Box D',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box D Royal Circle',
+        description:
+          'This section features comfortable seats and ample legroom. The inclined seating offers central, clear views, with additional space for bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          { icon: BinocularIcon, label: 'Excellent views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-e': {
+        blockName: 'Box E',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box E Royal Circle',
+        description:
+          'This section features comfortable seats and ample legroom. The inclined seating offers central, clear views, with additional space for bags and coats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          { icon: BinocularIcon, label: 'Excellent views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-f': {
+        blockName: 'Box F',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box F Royal Circle',
+        description:
+          'The seats and legroom in this section are comfortable. The inclined seats provide central views. There is also additional space for bags and coats. However, the views are slightly obstructed here.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          { icon: BinocularIcon, label: 'Great views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-g': {
+        blockName: 'Box G',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box G Royal Circle',
+        description:
+          "With comfortable seats and ample legroom, this section's inclined seats offer clear and central views. Convenient storage space for bags and coats is also available.",
+        quickInfo: [
+          { icon: SeatIcon, label: '3 seats' },
+          { icon: BinocularIcon, label: 'Excellent views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-h': {
+        blockName: 'Box H',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box H Royal Circle',
+        description:
+          "With comfortable seats and ample legroom, this section's inclined seats offer clear and central views. Convenient storage space for bags and coats is also available.",
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Excellent views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'box-j': {
+        blockName: 'Box J',
+        theatreSectionName: 'Royal Circle',
+        theatreSectionLabel: 'Box J Royal Circle',
+        description:
+          "With comfortable seating and ample legroom, this section's inclined seats offer mostly clear views, albeit with slight obstructions. Some seats may have the top of the stage cut off. There is also space available for storing bags and coats.",
+        quickInfo: [
+          { icon: SeatIcon, label: '2 seats' },
+          { icon: BinocularIcon, label: 'Great; close-up views' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'stalls-front-left': {
         blockName: 'Front Left',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Front Left',
+        theatreSectionLabel: 'Front Left Stalls',
         description:
-          'The section provides clear, close-up views of the stage. However, as the seats are towards the left, most seats provide an angled view of the stage.',
+          'This section offers clear, close-up views of the stage. However, being on the left side, most seats provide an angled perspective.',
         quickInfo: [
           { icon: SeatIcon, label: '58 seats' },
           { icon: BinocularIcon, label: 'Great views towards the aisle' },
@@ -1082,12 +1367,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'center-stalls': {
+      'stalls-center': {
         blockName: 'Center',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Stalls',
         description:
-          'The most premium section in the theatre - the views are excellent from most seats here. The middle seats in Rows E-M provide great views.',
+          'Prime seating area, offers excellent views from every seat. Middle seats in Rows E-M provide particularly great views.',
         quickInfo: [
           { icon: SeatIcon, label: '389 seats' },
           {
@@ -1098,12 +1383,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-X',
       },
-      'front-right-stalls': {
+      'stalls-front-right': {
         blockName: 'Front Right',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Front Right',
+        theatreSectionLabel: 'Front Right Stalls',
         description:
-          'The section provides clear, close-up views of the stage. However, as the seats are towards the right, most seats provide an angled view of the stage.',
+          'This section offers clear, close-up views of the stage. However, since the seats are towards the right, most views are angled.',
         quickInfo: [
           { icon: SeatIcon, label: '58 seats' },
           { icon: BinocularIcon, label: 'Great views towards the aisle' },
@@ -1111,12 +1396,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'rear-left-stalls': {
+      'stalls-rear-left': {
         blockName: 'Rear Left',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rear Left',
+        theatreSectionLabel: 'Rear Left Stalls',
         description:
-          "The section is located very close to the stage and provides great, clear views of the stage. The seats towards the aisle are great as they provide extra legroom and there's no one to block your views.",
+          'This section, located very close to the stage, offers great, clear views. Aisle seats are particularly advantageous, providing extra legroom and unobstructed views.',
         quickInfo: [
           { icon: SeatIcon, label: '110 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows M - P' },
@@ -1124,12 +1409,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows M-X',
       },
-      'rear-right-stalls': {
+      'stalls-rear-right': {
         blockName: 'Rear Right',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rear Right',
+        theatreSectionLabel: 'Rear Right - Stalls',
         description:
-          "The section is located very close to the stage and provides great, clear views of the stage. The seats towards the aisle are great as they provide extra legroom and there's no one to block your views.",
+          'This section, located very close to the stage, offers great, clear views. Aisle seats are particularly advantageous, providing extra legroom and unobstructed views.',
         quickInfo: [
           { icon: SeatIcon, label: '110 seats' },
           { icon: BinocularIcon, label: 'Great views in Rows M - P' },
@@ -1137,46 +1422,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows M-X',
       },
-      'left-slips-stalls': {
-        blockName: 'Left Slips',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Left Slips',
-        description:
-          'With comfortable seats and legroom, this section provide largely clear views with slight obstructions to the side. The section has space to store bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'No row',
-      },
-      'right-slips-stalls': {
-        blockName: 'Right Slips',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Right Slips',
-        description:
-          'With comfortable seats and legroom, this section provide largely clear views with slight obstructions to the side. The section has space to store bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'No row',
-      },
-      'left-royal-circle': {
+      'royal-circle-left': {
         blockName: 'Left',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Royal Circle',
         description:
-          'The first few rows of this section are relatively close to the stage and provide great views. Due to the steeped nature of seats, most of the rows here provide good, clear views.',
+          'The first few rows in this section are close to the stage, offering excellent views. The steep seating ensures clear views from most rows.',
         quickInfo: [
           { icon: SeatIcon, label: '120 seats' },
           { icon: BinocularIcon, label: 'Great, clear views in Rows A - H' },
@@ -1184,12 +1435,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-L',
       },
-      'center-royal-circle': {
+      'royal-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Royal Circle',
         description:
-          'The section is centrally located and relatively close to the stage. Due to the steeped nature of seats, most of the rows here provide great, clear views.',
+          'Centrally located and close to the stage, this section offers excellent, clear views due to the steep seating arrangement.',
         quickInfo: [
           { icon: SeatIcon, label: '180 seats' },
           {
@@ -1200,12 +1451,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-L',
       },
-      'right-royal-circle': {
+      'royal-circle-right': {
         blockName: 'Right',
         theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Royal Circle',
         description:
-          'The first few rows of this section are relatively close to the stage and provide great views. Due to the steeped nature of seats, most of the rows here provide good, clear views.',
+          'The first few rows in this section are close to the stage, offering excellent views. The steep seating ensures clear views from most rows.',
         quickInfo: [
           { icon: SeatIcon, label: '120 seats' },
           { icon: BinocularIcon, label: 'Great, clear views in Rows A - H' },
@@ -1213,199 +1464,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-L',
       },
-      'royal-box-royal-circle': {
-        blockName: 'The Royal Box',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'The Royal Box',
-        description:
-          'With comfortable seats and legroom, this section provide largely clear views with slight obstructions to the side. The section has space to store bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'princes-box-royal-circle': {
-        blockName: 'The Prince’s Box',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'The Prince’s Box',
-        description:
-          'With comfortable seats and legroom, this section provide largely clear views with slight obstructions to the side. The section has space to store bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-a-royal-circle': {
-        blockName: 'Box A',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box A',
-        description:
-          'With comfortable seats and legroom, this section provide largely clear views with slight obstructions to the side. The section has space to store bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-b-royal-circle': {
-        blockName: 'Box B',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box B',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Great views; slightly restricted' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-c-royal-circle': {
-        blockName: 'Box C',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box C',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '3 seats' },
-          { icon: BinocularIcon, label: 'Great views; slightly restricted' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-d-royal-circle': {
-        blockName: 'Box D',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box D',
-        description:
-          'The seats and legroom in this section are comfortable. The inclined seats provide central and clear views. There is also additional space for bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '4 seats' },
-          { icon: BinocularIcon, label: 'Excellent views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-e-royal-circle': {
-        blockName: 'Box E',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box E',
-        description:
-          'The seats and legroom in this section are comfortable. The inclined seats provide central and clear views. There is also additional space for bags and coats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '4 seats' },
-          { icon: BinocularIcon, label: 'Excellent views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-f-royal-circle': {
-        blockName: 'Box F',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box F',
-        description:
-          'The seats and legroom in this section are comfortable. The inclined seats provide central views. There is also additional space for bags and coats. However, the views are slightly obstructed here.',
-        quickInfo: [
-          { icon: SeatIcon, label: '4 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-g-royal-circle': {
-        blockName: 'Box G',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box G',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide central and clear views. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '3 seats' },
-          { icon: BinocularIcon, label: 'Excellent views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-h-royal-circle': {
-        blockName: 'Box H',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box H',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide central and clear views. The seats have space to store bags and coats. The loos and bar are easily accessible from here.",
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Excellent views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-j-royal-circle': {
-        blockName: 'Box J',
-        theatreSectionName: 'Royal Circle',
-        theatreSectionLabel: 'Box J',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The top of the stage may get cut off here. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'left-grand-circle': {
+      'grand-circle-left': {
         blockName: 'Left',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. However, due to this, the stage is clearly visible as well from most seats.',
+          "This section's steep rake positions rear seats high up, ensuring clear visibility of the stage from most seats.",
         quickInfo: [
           { icon: SeatIcon, label: '122 seats' },
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
@@ -1413,12 +1477,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'center-grand-circle': {
+      'grand-circle-center': {
         blockName: 'Center',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. Due to this, the stage is clearly visible as well from most seats. The views are better here due to the central location.',
+          "This section's steep rake places rear seats high up, ensuring excellent visibility of the stage from most angles. The central location enhances the viewing experience.",
         quickInfo: [
           { icon: SeatIcon, label: '155 seats' },
           {
@@ -1429,12 +1493,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'right-grand-circle': {
+      'grand-circle-right': {
         blockName: 'Right',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Grand Circle',
         description:
-          'This section is steeply raked, which makes the seats towards the rear very high up. However, due to this, the stage is clearly visible as well from most seats.',
+          "This section's steep rake positions rear seats high up, ensuring clear visibility of the stage from most seats.",
         quickInfo: [
           { icon: SeatIcon, label: '121 seats' },
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
@@ -1442,80 +1506,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'grand-kings-box-grand-circle': {
-        blockName: 'Grand King’s Box',
-        theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Grand King’s Box',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The top of the stage may get cut off here. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '3 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'grand-princes-box-grand-circle': {
-        blockName: 'Grand Prince’s Box',
-        theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Grand Prince’s Box',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The top of the stage may get cut off here. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '3 seats' },
-          { icon: BinocularIcon, label: 'Great; close-up views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon, //TODO: Comfortable chair
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-k-grand-circle': {
-        blockName: 'Box K',
-        theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Box K',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The top of the stage may get cut off here. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'box-l-grand-circle': {
-        blockName: 'Box L',
-        theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Box L',
-        description:
-          "With comfortable seats and legroom, this section's inclined seats provide largely clear views with slight obstructions. The top of the stage may get cut off here. The seats have space to store bags and coats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '2 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: LegRoomSvg, label: 'Excellent legroom' },
-          {
-            icon: SeatIcon,
-            label: 'Comfortable & movable chairs',
-          },
-        ],
-        rows: 'Box seats',
-      },
-      'left-balcony': {
+      'balcony-left': {
         blockName: 'Left',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Left',
+        theatreSectionLabel: 'Left Balcony',
         description:
-          'The section is very steeply raked and quite far from the stage. However, as the seats are very high up, you can get clear views from most seats. As the section is towards the left, the views are angled.',
+          'The section is steeply raked and located quite far from the stage. However, the elevated seating offers clear views from most seats. Positioned towards the left, the views are slightly angled.',
         quickInfo: [
           { icon: SeatIcon, label: '107 seats' },
           {
@@ -1526,12 +1522,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'center-balcony': {
+      'balcony-center': {
         blockName: 'Center',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Center',
+        theatreSectionLabel: 'Center Balcony',
         description:
-          'The section is very steeply raked and quite far from the stage. However, as the seats are very high up, you can get clear views from most seats.',
+          'The section is steeply raked and located quite far from the stage. However, the elevated seating offers clear views from most seats.',
         quickInfo: [
           { icon: SeatIcon, label: '157 seats' },
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
@@ -1539,12 +1535,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-K',
       },
-      'right-balcony': {
+      'balcony-right': {
         blockName: 'Right',
         theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Right',
+        theatreSectionLabel: 'Right Balcony',
         description:
-          'The section is very steeply raked and quite far from the stage. However, as the seats are very high up, you can get clear views from most seats. As the section is towards the left, the views are angled.',
+          'The section is steeply raked and located quite far from the stage. However, the elevated seating offers clear views from most seats. Positioned towards the right, the views are slightly angled.',
         quickInfo: [
           { icon: SeatIcon, label: '107 seats' },
           {
@@ -1556,13 +1552,45 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows A-K',
       },
     },
-    'prince-edward-theatre': {
-      'Front-Stalls': {
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: {
+      'aa-right': {
+        blockName: 'AA',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'AA Right Grand Circle',
+        description:
+          'The section offers good views of the stage from its elevated position. While you might miss some views on one side, movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '5 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Good views; right side views restricted',
+          },
+          { icon: LegRoomSvg, label: 'Average legroom' },
+        ],
+        rows: 'Rows AA-K',
+      },
+      'aa-left': {
+        blockName: 'AA',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'AA Left Grand Circle',
+        description:
+          'The section offers good views of the stage from its elevated position. While you might miss some views on one side, movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '5 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Good views; left side views restricted',
+          },
+          { icon: LegRoomSvg, label: 'Average legroom' },
+        ],
+        rows: 'Rows AA-K',
+      },
+      'stalls-front': {
         blockName: 'Front',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rows AA-K',
+        theatreSectionLabel: 'Front Stalls',
         description:
-          "The most premium section in the theatre - the views are excellent from all of the seats here. The seats are staggered so your view won't get restricted by people in front of you even if you are seated in one of the rows at the back.",
+          'The most premium section in the theatre, offering excellent views from all seats. The staggered seating ensures an unobstructed view, even from the back rows.',
         quickInfo: [
           { icon: SeatIcon, label: '327 seats' },
           { icon: BinocularIcon, label: 'Best views in Rows C-G' },
@@ -1570,12 +1598,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows AA-K',
       },
-      'RearLeft-Stalls': {
+      'stalls-rear-left': {
         blockName: 'Rear Left',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rows L-ZC',
+        theatreSectionLabel: 'Rear Left Stalls',
         description:
-          'The section provides great, clear views of the stage. The seats towards the aisle are great as they provide extra legroom. As the section is located to the left of the stage, some seats provide angled views and you may miss the far left section of the stage.',
+          'This section offers clear views of the stage. Aisle seats provide extra legroom. Being to the left of the stage, some seats have angled views, potentially missing the far left section.',
         quickInfo: [
           { icon: SeatIcon, label: '169 seats' },
           { icon: BinocularIcon, label: 'Best views from aisle seats' },
@@ -1583,12 +1611,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows L-ZC',
       },
-      'RearCentre-Stalls': {
+      'stalls-rear-center': {
         blockName: 'Rear Centre',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rows L-ZC',
+        theatreSectionLabel: 'Rear Centre Stalls',
         description:
-          "The views are great here due to the centrality and proximity to the stage. The steeped seats ensure that the rows ahead don't block your views.",
+          'The central location and proximity to the stage offer great views. The steep seating ensures unobstructed views, even with rows ahead.',
         quickInfo: [
           { icon: SeatIcon, label: '215 seats' },
           { icon: BinocularIcon, label: 'Great views from Rows L-T' },
@@ -1596,12 +1624,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows L-ZC',
       },
-      'RearRight-Stalls': {
+      'stalls-rear-right': {
         blockName: 'Rear Right',
         theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Rows L-ZC',
+        theatreSectionLabel: 'Rear Right Stalls',
         description:
-          'The section is located close to the stage and provides great, clear views of the stage. As the section is located to the right of the stage, some seats provide angled views and you may miss the far right section of the stage.',
+          'Located close to the stage, this section offers clear views. Positioned to the right of the stage, some seats have angled views, potentially missing the far right section.',
         quickInfo: [
           { icon: SeatIcon, label: '169 seats' },
           { icon: BinocularIcon, label: 'Great views from Rows L-T' },
@@ -1609,12 +1637,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows L-ZC',
       },
-      'FrontLeft-DressCircle': {
+      'dress-circle-front-left': {
         blockName: 'Front Left',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Rows A-E',
+        theatreSectionLabel: 'Front Left Dress Circle',
         description:
-          'The section is a bit far from the stage but the steep rake provides great and clear views from all the rows. The seats to the extreme left provide great legroom.',
+          'Though a bit far from the stage, the steep rake offers clear views from all rows. Seats on the extreme left provide excellent legroom.',
         quickInfo: [
           { icon: SeatIcon, label: '80 seats' },
           { icon: BinocularIcon, label: 'Best views from Rows A-D' },
@@ -1622,12 +1650,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-E',
       },
-      'FrontRight-DressCircle': {
+      'dress-circle-front-right': {
         blockName: 'Front Right',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Rows A-E',
+        theatreSectionLabel: 'Front Right Dress Circle',
         description:
-          'The section is a bit far from the stage but the steep rake provides great and clear views from all the rows. The seats to the extreme left provide great legroom. The safety rail in front of Row A may obstruct the view slightly.',
+          'Though a bit far from the stage, the steep rake offers clear views from all rows. Seats on the extreme left provide excellent legroom. The safety rail in front of Row A may obstruct the view slightly.',
         quickInfo: [
           { icon: SeatIcon, label: '80 seats' },
           { icon: BinocularIcon, label: 'Best views from Rows A-D' },
@@ -1635,12 +1663,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-E',
       },
-      'RearLeft-DressCircle': {
+      'dress-circle-rear-left': {
         blockName: 'Rear Left',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Rows F-O',
+        theatreSectionLabel: 'Rear Left Dress Circle',
         description:
-          'The stage may seem quite far but the steeped seating ensures good views from most seats. The seats towards the aisle on the right provide great legroom. Note that some of the stage may be obstructed due to the Grand Circle overhang.',
+          'The stage may appear distant, yet the steep seating guarantees good views from most seats. Aisle seats on the right offer ample legroom. Keep in mind, the Grand Circle overhang may obstruct parts of the stage.',
         quickInfo: [
           { icon: SeatIcon, label: '59 seats' },
           { icon: BinocularIcon, label: 'Good views from Rows F-J' },
@@ -1648,12 +1676,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows F-O',
       },
-      'RearCentre-DressCircle': {
+      'dress-circle-rear-center': {
         blockName: 'Rear Centre',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Rows F-M',
+        theatreSectionLabel: 'Rear Centre Dress Circle',
         description:
-          'The centrality of this section along with the steep make this section a great choice. great unobstructed views of the stage. Almost all seats in this section offer brilliant and unobstructed views. The seats are also comfortable and provide ample legroom.',
+          "This section's central location and steep incline make it an excellent choice with unobstructed views of the stage. Nearly every seat in this section offers brilliant views and ample legroom, ensuring comfort throughout the performance.",
         quickInfo: [
           { icon: SeatIcon, label: '120 seats' },
           {
@@ -1664,12 +1692,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows F-M',
       },
-      'RearRight-DressCircle': {
+      'dress-circle-rear-right': {
         blockName: 'Rear Right',
         theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Rows F-M',
+        theatreSectionLabel: 'Rear Right Dress Circle',
         description:
-          'The stage may seem quite far but the steeped seating ensures good views from most seats. The seats towards the aisle on the right provide great legroom. Note that some of the stage may be obstructed due to the Grand Circle overhang.',
+          'The stage may appear distant, yet the steep seating guarantees good views from most seats. Aisle seats on the right offer ample legroom. Keep in mind, the Grand Circle overhang may obstruct parts of the stage.',
         quickInfo: [
           { icon: SeatIcon, label: '50 seats' },
           { icon: BinocularIcon, label: 'Good views from Rows F-J' },
@@ -1677,12 +1705,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows F-M',
       },
-      'FrontLeft-GrandCircle': {
+      'grand-circle-front-left': {
         blockName: 'Front Left',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows A-F',
+        theatreSectionLabel: 'Front Left Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are good but as the section is towards the left of the stage, some views of the stage are restricted. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, yet the steeply raked rows provide good views. Positioned left of the stage, some views are restricted. A large safety bar along the section's length affects views from certain seats.",
         quickInfo: [
           { icon: SeatIcon, label: '60 seats' },
           {
@@ -1693,12 +1721,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-F',
       },
-      'FrontCentre-GrandCircle': {
+      'grand-circle-front-center': {
         blockName: 'Front Centre',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows A-G',
+        theatreSectionLabel: 'Front Centre Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are still great & obstruction-free from most seats, especially in the middle. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, but the steeply raked rows offer great, obstruction-free views from most seats, especially in the middle. However, a large safety bar along the section's length may affect views from some seats.",
         quickInfo: [
           { icon: SeatIcon, label: '119 seats' },
           {
@@ -1709,12 +1737,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-G',
       },
-      'FrontRight-GrandCircle': {
+      'grand-circle-front-right': {
         blockName: 'Front Right',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows A-F',
+        theatreSectionLabel: 'Front Right Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are good but as the section is towards the right of the stage, some views of the stage are restricted. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, yet the steeply raked rows provide good views. Positioned right of the stage, some views are restricted. A large safety bar along the section's length affects views from certain seats.",
         quickInfo: [
           { icon: SeatIcon, label: '60 seats' },
           {
@@ -1725,12 +1753,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows A-F',
       },
-      'RearLeft-GrandCircle': {
-        blockName: 'Rear Left',
+      'grand-circle-rear-left': {
+        blockName: 'Rear Left Grand Circle',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows H-L',
+        theatreSectionLabel: 'Rear Left Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are good but as the section is towards the left of the stage, some views of the stage are restricted. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, yet the steeply raked rows provide good views. Positioned left of the stage, some views are restricted. A large safety bar along the section's length affects views from certain seats.",
         quickInfo: [
           { icon: SeatIcon, label: '30 seats' },
           {
@@ -1741,12 +1769,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows H-L',
       },
-      'RearCentre-GrandCircle': {
+      'grand-circle-rear-center': {
         blockName: 'Rear Centre',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows H-N',
+        theatreSectionLabel: 'Rear Center Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are still great & obstruction-free from most seats, especially in the middle. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, but the steeply raked rows offer great, obstruction-free views from most seats, especially in the middle. However, a large safety bar along the section's length may affect views from some seats.",
         quickInfo: [
           { icon: SeatIcon, label: '98 seats' },
           {
@@ -1757,12 +1785,12 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows H-N',
       },
-      'RearRight-GrandCircle': {
+      'grand-circle-rear-right': {
         blockName: 'Rear Right',
         theatreSectionName: 'Grand Circle',
-        theatreSectionLabel: 'Rows H-L',
+        theatreSectionLabel: 'Rear Right Grand Circle',
         description:
-          "The stage is far away but as the rows are steeply raked, the views are good but as the section is towards the right of the stage, some views of the stage are restricted. A large safety bar runs along the section's length, affecting the views from some seats.",
+          "The stage is distant, yet the steeply raked rows provide good views. Positioned right of the stage, some views are restricted. A large safety bar along the section's length affects views from certain seats.",
         quickInfo: [
           { icon: SeatIcon, label: '30 seats' },
           {
@@ -1773,12 +1801,187 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         rows: 'Rows H-L',
       },
+      'stb-2': {
+        blockName: 'Box - Left',
+        theatreSectionName: 'Stalls',
+        theatreSectionLabel: 'Box - Left Stalls - STB2',
+        description:
+          'The box offers excellent views of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience of the box seats are unbeatable.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          { icon: BinocularIcon, label: 'Excellent, clear views' },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'stb-1': {
+        blockName: 'Box - Right',
+        theatreSectionName: 'Stalls',
+        theatreSectionLabel: 'Box - Right Stalls - STB1',
+        description:
+          'The box offers excellent views of the stage. While you might miss some views on one side, the comfort, privacy, and unique experience of the box seats are unbeatable.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          { icon: BinocularIcon, label: 'Excellent, clear views' },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'lg-6-10': {
+        blockName: 'Boxes - Left',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Boxes - Left LG6-10',
+        description:
+          'The loges offer great views and are very close to the stage. Positioned on the left, you may miss some action on the far left. The comfort and privacy make it an excellent section.',
+        quickInfo: [
+          { icon: SeatIcon, label: '15 seats' },
+          { icon: BinocularIcon, label: 'Best views from LG6' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'lg-1-5': {
+        blockName: 'Boxes - Right',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Boxes - Right - LG1-5',
+        description:
+          'The loges offer great views and are very close to the stage. Positioned on the right, you may miss some action on the far right. The comfort and privacy make it an excellent section.',
+        quickInfo: [
+          { icon: SeatIcon, label: '15 seats' },
+          { icon: BinocularIcon, label: 'Best views from LG1' },
+          { icon: LegRoomSvg, label: 'Excellent legroom' },
+        ],
+        rows: '',
+      },
+      'cb-2': {
+        blockName: 'Slips - Front - Left',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Slips - Front Left - CB2',
+        description:
+          'This section offers good views of the stage due to its considerable height. While you may miss some views on one side, the movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views; left side slightly restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'cb-1': {
+        blockName: 'Slips - Front - Right',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Slips - Front Right - CB1',
+        description:
+          'This section offers good views of the stage due to its considerable height. While you may miss some views on one side, the movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views; right side slightly restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'sb-2': {
+        blockName: 'Slips - Rear - Left',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Slips - Rear Left - SB2',
+        description:
+          'This section offers good views of the stage due to its considerable height. While you may miss some views on one side, the movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views; left side slightly restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'sb-1': {
+        blockName: 'Slips - Rear - Right',
+        theatreSectionName: 'Dress Circle',
+        theatreSectionLabel: 'Slips - Rear Right - SB1',
+        description:
+          'This section offers good views of the stage due to its considerable height. While you may miss some views on one side, the movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views; right side slightly restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'gb-2': {
+        blockName: 'Slips - Left',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Slips - Left Grand Circle',
+        description:
+          'The section offers good views of the stage from its elevated position. While you might miss some views on one side, movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Good views; left side views restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
+      'gb-1': {
+        blockName: 'Slips - Right',
+        theatreSectionName: 'Grand Circle',
+        theatreSectionLabel: 'Slips - Right Grand Circle',
+        description:
+          'The section offers good views of the stage from its elevated position. While you might miss some views on one side, movable seats allow you to lean forward for a better view.',
+        quickInfo: [
+          { icon: SeatIcon, label: '4 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Good views; right side views restricted',
+          },
+          { icon: LegRoomSvg, label: 'Great legroom' },
+        ],
+        rows: '',
+      },
     },
   },
   availableShowsTgid: {
     [THEATRE_TYPES.ABBA_ARENA]: ['20045'],
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: ['3031'],
+    [THEATRE_TYPES.NOVELLO_THEATRE]: ['3026'],
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: ['18161'],
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: ['20498'],
   },
   seatMapSvgs: {
     [THEATRE_TYPES.ABBA_ARENA]: AbbaSeatMapSvg,
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: TheatreRoyalDruryLaneSvg,
+    [THEATRE_TYPES.NOVELLO_THEATRE]: NovelloTheatreSvg,
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: PrinceEdwardTheatreSvg,
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: HisMajestysTheatreSvg,
+  },
+  viewBox: {
+    [THEATRE_TYPES.ABBA_ARENA]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 299' : '0 0 607 471',
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 535' : '0 0 607 633',
+    [THEATRE_TYPES.NOVELLO_THEATRE]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 387' : '0 0 607 633',
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 484' : '0 0 607 633',
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 502' : '0 0 607 640',
+  },
+  breadCrumbsLabel: {
+    [THEATRE_TYPES.ABBA_ARENA]: 'ABBA Arena Seating Plan',
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: 'Theatre Royal Drury Lane',
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: "His Majesty's Theatre",
+    [THEATRE_TYPES.NOVELLO_THEATRE]: 'Novello Theatre',
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: 'Prince Edward Theatre',
   },
 };

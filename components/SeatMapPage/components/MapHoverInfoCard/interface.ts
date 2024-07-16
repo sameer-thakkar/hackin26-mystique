@@ -5,4 +5,5 @@ export type TMapHoverInfoCardParams = {
   left: number;
   top: number;
   isVisible: boolean;
+  theatreType: string;
 };

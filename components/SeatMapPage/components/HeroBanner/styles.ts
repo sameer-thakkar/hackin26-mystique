@@ -195,7 +195,7 @@ export const IconContainer = styled.div`
   margin-right: 1rem !important;
   width: max-content !important;
   padding: 0 !important;
-  gap: 0.375rem;
+  gap: 0.25rem;
 
   .icon {
     margin-right: 0.75rem;
