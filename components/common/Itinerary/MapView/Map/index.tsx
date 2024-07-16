@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   CHILD_SECTION_TYPE,
@@ -154,6 +154,7 @@ const RouteMap = ({
     if (!zoomInfo) {
       setZoomInfo(localZoomInfo);
     }
+
     setMarkers(
       markers.reverse().map((marker) => ({
         ...marker,
@@ -208,6 +209,10 @@ const RouteMap = ({
     }
   };
 
+  useEffect(() => {
+    controller?.current?.reset();
+  }, [markers]);
+
   if (!itinerary.map || !itinerary.map.active) return null;
 
   const {
@@ -230,11 +235,28 @@ const RouteMap = ({
                   },
                 },
               ]
+            : itinerary.sections.length
+            ? [
+                {
+                  path: itinerary.sections.reduce<
+                    { lat: number; lng: number }[]
+                  >((acc, { location }) => {
+                    if (location && isValidLocation(location)) {
+                      acc.push({
+                        lat: location.latitude,
+                        lng: location.longitude,
+                      });
+                    }
+                    return acc;
+                  }, []),
+                  visible: false,
+                },
+              ]
             : []
         }
         markers={markers}
         interactionBlockingOverlayText={interactionBlockingOverlayText}
-        maxZoomLevel={30}
+        maxZoomLevel={15}
         showZoomControls={false}
         onMapLoad={(map, reset, calculateBounds) => {
           if (map && reset && mapController && !mapController?.current) {

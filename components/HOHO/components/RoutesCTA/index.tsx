@@ -7,14 +7,12 @@ import {
   ANALYTICS_PROPERTIES,
   MORE_DETAILS_SWIPESHEET,
 } from 'const/index';
-import { strings } from 'const/strings';
-import MapBackground from 'assets/mapBackground';
-import Route from 'assets/route';
 import RouteDetails from '../RouteDetails';
 import Popup from '../RouteDetails/Popup';
 import { TController } from '../RouteDetails/Popup/interface';
+import ItineraryEntryPoint from './EntryPoint';
 import { TRoutesCTA } from './interface';
-import { Container, routesDrawerStyles, TextIconContainer } from './styles';
+import { routesDrawerStyles } from './styles';
 
 const RoutesCTA = (props: TRoutesCTA) => {
   const popupController = useRef<TController>();
@@ -42,13 +40,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
 
   return (
     <>
-      <Container onClick={onCTAClick}>
-        <MapBackground />
-        <TextIconContainer>
-          <Route />
-          <span className="routes-text">{strings.HOHO.ROUTES}</span>
-        </TextIconContainer>
-      </Container>
+      <ItineraryEntryPoint onClick={onCTAClick} />
       <Conditional if={!isMobile}>
         <Popup controller={popupController}>
           <RouteDetails

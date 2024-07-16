@@ -12,9 +12,9 @@ import Button from '@headout/aer/src/atoms/Button';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
-import EntryPoint from 'components/common/Itinerary/EntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
 import HohoProductCard from 'components/HOHO/components/HohoProductCard';
+import ItineraryEntryPoint from 'components/HOHO/components/RoutesCTA/EntryPoint';
 import { SECTION_NAMES } from 'components/HOHO/constants';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
@@ -1243,9 +1243,7 @@ const Product = (props: any) => {
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.modified.width
         : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
       : isModifiedProductCard || (isPopup && !originalIsMobile && isPoiMwebCard)
-      ? showItinerary
-        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.width
-        : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
+      ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.width
       : undefined;
 
     const mediaCarouselImageHeight =
@@ -1255,9 +1253,7 @@ const Product = (props: any) => {
         ? undefined
         : isModifiedProductCard ||
           (isPopup && !originalIsMobile && isPoiMwebCard)
-        ? showItinerary
-          ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.withItinerary.height
-          : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
+        ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
     return (
@@ -1370,9 +1366,7 @@ const Product = (props: any) => {
                       ? '16:10'
                       : isModifiedProductCard ||
                         (isPopup && !originalIsMobile && isPoiMwebCard)
-                      ? showItinerary
-                        ? '16:10'
-                        : '3:4'
+                      ? '3:4'
                       : '5:6'
                   }
                   backgroundColor={COLORS.GRAY.G7}
@@ -1390,14 +1384,12 @@ const Product = (props: any) => {
                 />
               </Conditional>
               <Conditional if={showItinerary && !isMobile}>
-                <EntryPoint
+                <ItineraryEntryPoint
                   onClick={async () => {
                     popupController.current?.open(1);
                     trackedToggleContent(false);
                     trackItineraryEntrypoint();
                   }}
-                  image={tgidItineraryData?.[0]?.details?.mapPreviewLink}
-                  index={position}
                   isHOHOItinerary={isHohoItinerary}
                 />
               </Conditional>
