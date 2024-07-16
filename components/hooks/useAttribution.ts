@@ -43,6 +43,7 @@ const useAttribution = () => {
     const isDirectTraffic = !referrer?.length;
     const isInlinkTraffic = referrer?.includes(currentHost);
 
+    // Remove query params from URL
     if (ci || cm) {
       delete routerQuery[QUERY_PARAMS.ATRIBUTION_CHANNEL_ID];
       delete routerQuery[QUERY_PARAMS.ATRIBUTION_CHANNEL_META];
@@ -69,7 +70,7 @@ const useAttribution = () => {
       currentAttr = [];
     }
     const originalAttrLen = currentAttr.length;
-    const recentMostAttr = currentAttr[originalAttrLen - 1] as THOAttribution;
+    const recentMostAttr = currentAttr[originalAttrLen - 1];
 
     switch (true) {
       // external traffic
@@ -112,7 +113,7 @@ const useAttribution = () => {
     }
 
     if (originalAttrLen !== currentAttr.length) {
-      const newAttribution = currentAttr[originalAttrLen - 1] as THOAttribution;
+      const newAttribution = currentAttr[currentAttr.length - 1];
       // If newAttr is identical to recentMostAttr, remove old entry.
       if (
         recentMostAttr &&
