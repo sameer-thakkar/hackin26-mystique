@@ -137,6 +137,7 @@ const SubattractionPage = ({
     currency,
     showNextAvailable: true,
     enableEarliestAvailability: true,
+    horizontalProductCard: true,
   });
 
   const mappedChildTgidsList = childTgidsList?.map(({ id }: any) => ({
@@ -240,6 +241,13 @@ const SubattractionPage = ({
     });
   };
 
+  const handleSeeAllClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.SHOULDER_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.LABEL]: 'See All',
+    });
+  };
+
   const toggleModal = () => setModalIsOpen((prev) => !prev);
 
   return (
@@ -331,6 +339,7 @@ const SubattractionPage = ({
           enableEarliestAvailability
           disableShowingNewCard
           showPopup
+          verticalProductCard
         />
       </Conditional>
       <Conditional if={parentProductCards.length}>
@@ -339,7 +348,9 @@ const SubattractionPage = ({
             <ParentTicketsTitle>{parentTicketsTitle}</ParentTicketsTitle>
             <Row>
               <Conditional if={parentUrl}>
-                <a href={parentUrl}>{strings.SEE_ALL}</a>
+                <a href={parentUrl} onClick={handleSeeAllClick}>
+                  {strings.SEE_ALL}
+                </a>
               </Conditional>
               <Conditional if={!isMobile}>
                 <Arrows>

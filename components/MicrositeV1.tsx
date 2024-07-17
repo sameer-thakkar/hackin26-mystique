@@ -266,6 +266,7 @@ const MicrositeV1 = (props: any) => {
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
+    subattraction_type: subattractionType,
     tagged_page_type: taggedPageType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
@@ -515,6 +516,9 @@ const MicrositeV1 = (props: any) => {
             (tour: TTour) =>
               tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
           )?.length ?? 0,
+      }),
+      ...(subattractionType && {
+        [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,
       }),
     });
   }, [eventsReady]);

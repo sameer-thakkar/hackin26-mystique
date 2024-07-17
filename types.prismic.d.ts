@@ -7264,6 +7264,7 @@ interface ContentPageDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -7670,7 +7671,7 @@ interface ContentPageDocumentData {
    * Subattraction Type field in *Content Page*
    *
    * - **Field Type**: Select
-   * - **Placeholder**: Choose the type if it's a Subattraction poi
+   * - **Placeholder**: Miscellaneous sub-attraction
    * - **API ID Path**: content_page.subattraction_type
    * - **Tab**: MB Categories
    * - **Documentation**: https://prismic.io/docs/field#select
@@ -14510,6 +14511,7 @@ interface HoCategoryContentDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
     | 'Ayush'
@@ -14550,6 +14552,7 @@ interface HoCategoryContentDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -19148,6 +19151,7 @@ interface MicrositeDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -19554,7 +19558,7 @@ interface MicrositeDocumentData {
    * Subattraction Type field in *Microsite*
    *
    * - **Field Type**: Select
-   * - **Placeholder**: Enter the type if it's a Subattraction poi
+   * - **Placeholder**: Miscellaneous sub-attraction
    * - **API ID Path**: microsite.subattraction_type
    * - **Tab**: MB Categories
    * - **Documentation**: https://prismic.io/docs/field#select
@@ -20011,6 +20015,7 @@ interface NewsPageDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -21949,6 +21954,7 @@ interface ReviewsPageDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -22942,6 +22948,7 @@ interface ShowpageDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'
@@ -24339,6 +24346,7 @@ interface VenuePageDocumentData {
     | 'Shaina'
     | 'Shaona'
     | 'Shikha'
+    | 'Shivika'
     | 'Shraddha'
     | 'Shravan'
     | 'Shubhangi'

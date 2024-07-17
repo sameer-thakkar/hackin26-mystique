@@ -693,6 +693,7 @@ export const getPageData = async ({
         tagged_collection: taggedCollection,
         tagged_city: taggedCity,
       } = baseLangCategorisationMetadata || {};
+
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
       const toursTabFirstSlice = body1?.[0] ?? [];

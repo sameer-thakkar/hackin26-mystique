@@ -246,6 +246,8 @@ const PopulateProducts: any = (props: any) => {
     isHOHOResolving,
     isRankingExperimentResolving = false,
     showItineraries = false,
+    horizontalProductCard = false,
+    verticalProductCard = false,
   } = props;
 
   const productsRef = useRef([]);
@@ -689,6 +691,8 @@ const PopulateProducts: any = (props: any) => {
       isHOHORevamp,
       isSwiperCard,
       isBot,
+      verticalProductCard,
+      horizontalProductCard,
       itineraryInfo: {
         data: tgidItineraryData,
         showData: showItinerary,

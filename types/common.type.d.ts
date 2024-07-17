@@ -37,7 +37,7 @@ type TCategorisationMetadata = {
   shoulder_page_type: string | null;
   shoulder_page_custom_label: string | null;
   tagged_content_type: Object[] | [];
-  subattraction_type?: string;
+  subattraction_type?: SelectField<'A' | 'B' | 'C'>;
   subattraction_banner_disclaimer?: string | null;
   subattractionParentCollectionId?: string;
   subattractionChildPoiId?: string;

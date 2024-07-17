@@ -244,6 +244,8 @@ const Product = (props: any) => {
     isSwiperCard = false,
     isBot = false,
     itineraryInfo,
+    verticalProductCard = false,
+    horizontalProductCard = false,
   } = props;
 
   const {
@@ -293,6 +295,11 @@ const Product = (props: any) => {
   const priceBlockWrapperRef = useRef<HTMLDivElement>();
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
+  const typeOfProductCard = horizontalProductCard
+    ? 'Product Card Carousel'
+    : verticalProductCard
+    ? 'Vertical Product List'
+    : '';
 
   const isOpenDated = scorpioData?.allVariantOpenDated;
 
@@ -848,6 +855,9 @@ const Product = (props: any) => {
         [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
         [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
         [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+        ...(typeOfProductCard && {
+          [ANALYTICS_PROPERTIES.PLACEMENT]: typeOfProductCard,
+        }),
         ...getProductCommonProperties({
           primaryCategory,
           primaryCollection,
@@ -1589,7 +1599,9 @@ const Product = (props: any) => {
                         <BookNowCta
                           clickHandler={() =>
                             sendBookNowEvent(
-                              expandContent
+                              horizontalProductCard || verticalProductCard
+                                ? typeOfProductCard
+                                : expandContent
                                 ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
                                 : isAsideBarOverlay
                                 ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET
@@ -1607,7 +1619,9 @@ const Product = (props: any) => {
                         showLoadingState={false}
                         clickHandler={() =>
                           handleShowComboPopup(
-                            expandContent
+                            horizontalProductCard || verticalProductCard
+                              ? typeOfProductCard
+                              : expandContent
                               ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
                               : isAsideBarOverlay
                               ? PRODUCT_CARD_REVAMP.PLACEMENT.SIDE_SHEET

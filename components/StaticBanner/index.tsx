@@ -37,7 +37,11 @@ import {
 import { titleCase } from 'utils/stringUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  VIDEO_POSITIONS,
+} from 'const/index';
 import { strings } from 'const/strings';
 import ChevronLeftBold from 'assets/chevronLeftBold';
 import ChevronRightIcon from 'assets/chevronRight';
@@ -220,6 +224,15 @@ const StaticBanner = ({
   const hasExtraInfo = !!Object.values(extraPairs).filter((val) => val).length;
   const EXTRA_INFO_TIMINGS_KEY = 'TIMINGS';
 
+  const handleParentChipClick = (label: string) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.SHOULDER_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: 'Back CTA',
+      [ANALYTICS_PROPERTIES.SECTION]: 'Banner Section',
+      [ANALYTICS_PROPERTIES.LABEL]: label,
+    });
+  };
+
   return (
     <BannerSection
       $isNonPoi={showNonPoiDesign}
@@ -272,7 +285,12 @@ const StaticBanner = ({
           hasExtraInfo={hasExtraInfo}
         >
           <Conditional if={displayParentChip}>
-            <ParentChip href={subattractionParentChip?.url}>
+            <ParentChip
+              href={subattractionParentChip?.url}
+              onClick={() =>
+                handleParentChipClick(subattractionParentChip?.title as string)
+              }
+            >
               {ChevronLeftBold}
               {titleCase(subattractionParentChip?.title as string)}
             </ParentChip>

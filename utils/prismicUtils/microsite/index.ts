@@ -118,6 +118,7 @@ const getMicrositeDocument = async ({
           tagged_page_type,
           primary_tag,
           shoulder_page_type,
+          subattraction_type,
           shoulder_page_custom_label,
           tagged_content_type,
         };
