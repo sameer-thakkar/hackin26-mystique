@@ -707,6 +707,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     STARS_ON_STAGE: 'Avec célébrités',
     THEATRICAL_CONCERT: 'Concert théâtral',
     TRUE_STORY: 'Basé sur une histoire vraie',
+    TONY_WINNER: 'Lauréat des Tony Awards',
+    OFF_BROADWAY: 'Hors Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Oups, nous avons un problème',

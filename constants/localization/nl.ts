@@ -705,6 +705,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     STARS_ON_STAGE: 'Sterren op het podium',
     THEATRICAL_CONCERT: 'Theaterconcert',
     TRUE_STORY: 'Waargebeurd verhaal',
+    TONY_WINNER: 'Tony Award-winnaar',
+    OFF_BROADWAY: 'Off Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Oh oh! We hebben een probleem',

@@ -687,6 +687,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     STARS_ON_STAGE: 'Stars on Stage',
     THEATRICAL_CONCERT: 'Theatrical Concert',
     TRUE_STORY: 'True Story',
+    TONY_WINNER: 'Tony Winner',
+    OFF_BROADWAY: 'Off Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Uh oh, we’ve a problem',

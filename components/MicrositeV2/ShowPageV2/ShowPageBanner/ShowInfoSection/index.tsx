@@ -72,10 +72,10 @@ const ShowInfoSection = ({
 
   const numberOfTagsToShow = isMobile ? 2 : 5;
 
-  const LTT_TAG_PAGE_MAP = getTagPageMap();
+  const TAG_PAGE_MAP = getTagPageMap(uid);
   const getTagUrl = (name: string) =>
     getTagPageLink({
-      url: LTT_TAG_PAGE_MAP[name.replace('’', "'")],
+      url: TAG_PAGE_MAP[name.replace('’', "'")],
       lang,
       uid: uid ?? '',
       isProd: !isDev,

@@ -708,6 +708,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     STARS_ON_STAGE: 'Estrelas no palco',
     THEATRICAL_CONCERT: 'Concerto teatral',
     TRUE_STORY: 'História real',
+    TONY_WINNER: 'Vencedor do Prêmio Tony',
+    OFF_BROADWAY: 'Fora da Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Opa! Parece que temos um problema',

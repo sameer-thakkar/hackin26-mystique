@@ -1,7 +1,7 @@
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
-import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { checkIfBroadwayMB, checkIfLTTMB, getLangObject } from 'utils/helper';
 import {
   ENTERTAINMENT_MB_BREADCRUMBS,
   LANGUAGE_MAP,
@@ -317,7 +317,7 @@ export const getTagPageLink = ({
   uid: string;
   isProd: boolean;
 }) =>
-  checkIfLTTMB(uid)
+  checkIfLTTMB(uid) || checkIfBroadwayMB(uid)
     ? addLanguageParamToUrl({
         url,
         lang: lang?.toLowerCase(),

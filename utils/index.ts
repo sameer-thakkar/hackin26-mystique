@@ -12,7 +12,11 @@ import {
   fetchTourGroupsByCategory,
   fetchTourGroupsByCollection,
 } from 'utils/apiUtils';
-import { getLangObject, withoutTrailingSlash } from 'utils/helper';
+import {
+  checkIfBroadwayMB,
+  getLangObject,
+  withoutTrailingSlash,
+} from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
@@ -812,70 +816,124 @@ export const getFinalisedBannerImages = (bannerImages: any) => {
   });
 };
 
-export const getTagPageMap = () => ({
-  [strings.TAG_NAME.BALLET]:
-    'https://www.london-theater-tickets.com/shows-in-london/ballet-shows/',
-  [strings.TAG_NAME.CABARET]:
-    'https://www.london-theater-tickets.com/shows-in-london/cabaret-shows/',
-  [strings.TAG_NAME.CHRISTMAS]:
-    'https://www.london-theater-tickets.com/christmas-shows-in-london/',
-  [strings.TAG_NAME.CIRCUS]:
-    'https://www.london-theater-tickets.com/shows-in-london/circus-shows/',
-  [strings.TAG_NAME.CLASSIC]:
-    'https://www.london-theater-tickets.com/shows-in-london/longest-running-shows/',
-  [strings.TAG_NAME.COMEDY]:
-    'https://www.london-theater-tickets.com/shows-in-london/comedy-shows/',
-  [strings.TAG_NAME.COMING_SOON]:
-    'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
-  [strings.TAG_NAME.CRITICS_CHOICE]:
-    'https://www.london-theater-tickets.com/shows-in-london/critics-choice-london-theatre-shows/',
-  [strings.TAG_NAME.DANCE]:
-    'https://www.london-theater-tickets.com/shows-in-london/dance-shows/',
-  [strings.TAG_NAME.DISNEY]:
-    'https://www.london-theater-tickets.com/shows-in-london/disney-shows/',
-  [strings.TAG_NAME.DRAMA]:
-    'https://www.london-theater-tickets.com/shows-in-london/drama-shows/',
-  [strings.TAG_NAME.ENGLISH_NATIONAL_BALLET]:
-    'https://www.london-theater-tickets.com/shows-in-london/english-national-ballet-tickets/',
-  [strings.TAG_NAME.ENGLISH_NATIONAL_OPERA]:
-    'https://www.london-theater-tickets.com/shows-in-london/english-national-opera-tickets/',
-  [strings.TAG_NAME.FANTASY]:
-    'https://www.london-theater-tickets.com/shows-in-london/fantasy-shows/',
-  [strings.TAG_NAME.HALLOWEEN]:
-    'https://www.london-theater-tickets.com/shows-in-london/halloween-shows/',
-  [strings.TAG_NAME.IMMERSIVE_THEATRE]:
-    'https://www.london-theater-tickets.com/shows-in-london/immersive-theatre/',
-  [strings.TAG_NAME.JUKEBOX]:
-    'https://www.london-theater-tickets.com/shows-in-london/jukebox-musicals/',
-  [strings.TAG_NAME.KIDS]:
-    'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/',
-  [strings.TAG_NAME.MAGIC]:
-    'https://www.london-theater-tickets.com/shows-in-london/magic-shows/',
-  [strings.TAG_NAME.MUSICALS]:
-    'https://www.london-theater-tickets.com/london-musicals/',
-  [strings.TAG_NAME.NEW_ARRIVAL]:
-    'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/',
-  [strings.TAG_NAME.OFF_WEST_END]:
-    'https://www.london-theater-tickets.com/shows-in-london/off-west-end-shows/',
-  [strings.TAG_NAME.OLIVIER_WINNER]:
-    'https://www.london-theater-tickets.com/shows-in-london/olivier-award-winners/',
-  [strings.TAG_NAME.OPERA]:
-    'https://www.london-theater-tickets.com/shows-in-london/opera-shows/',
-  [strings.TAG_NAME.PANTOMIMES]:
-    'https://www.london-theater-tickets.com/pantomimes-in-london/',
-  [strings.TAG_NAME.PLAYS]:
-    'https://www.london-theater-tickets.com/west-end-plays-in-london/',
-  [strings.TAG_NAME.ROMANCE]:
-    'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/',
-  [strings.TAG_NAME.SHAKESPEARE]:
-    'https://www.london-theater-tickets.com/shows-in-london/shakespeare-plays/',
-  [strings.TAG_NAME.STARS_ON_STAGE]:
-    'https://www.london-theater-tickets.com/shows-in-london/stars-on-stage/',
-  [strings.TAG_NAME.THEATRICAL_CONCERT]:
-    'https://www.london-theater-tickets.com/shows-in-london/concerts-tickets/',
-  [strings.TAG_NAME.TRUE_STORY]:
-    'https://www.london-theater-tickets.com/shows-in-london/based-on-a-true-story/',
-});
+export const getTagPageMap = (uid?: string) => {
+  if (checkIfBroadwayMB(uid))
+    return {
+      [strings.TAG_NAME.CHRISTMAS]:
+        'https://www.broadway-show-tickets.com/christmas-shows-on-broadway/',
+      [strings.TAG_NAME.DISNEY]:
+        'https://www.broadway-show-tickets.com/disney-on-broadway/',
+      [strings.TAG_NAME.TONY_WINNER]:
+        'https://www.broadway-show-tickets.com/tony-award-winners/',
+      [strings.TAG_NAME.ROMANCE]:
+        'https://www.broadway-show-tickets.com/romantic-broadway-shows/',
+      [strings.TAG_NAME.OFF_BROADWAY]:
+        'https://www.broadway-show-tickets.com/off-broadway-shows-in-new-york/',
+      [strings.TAG_NAME.CRITICS_CHOICE]:
+        'https://www.broadway-show-tickets.com/critics-choice-shows/',
+      [strings.TAG_NAME.CLASSIC]:
+        'https://www.broadway-show-tickets.com/broadway-classics/',
+      [strings.TAG_NAME.STARS_ON_STAGE]:
+        'https://www.broadway-show-tickets.com/stars-on-stage/',
+      [strings.TAG_NAME.JUKEBOX]:
+        'https://www.broadway-show-tickets.com/jukebox-musicals/',
+      [strings.TAG_NAME.TRUE_STORY]:
+        'https://www.broadway-show-tickets.com/true-story-shows/',
+      [strings.TAG_NAME.IMMERSIVE_THEATRE]:
+        'https://www.broadway-show-tickets.com/immersive-theatre-shows/',
+      [strings.TAG_NAME.CIRCUS]:
+        'https://www.broadway-show-tickets.com/circus-shows/',
+      [strings.TAG_NAME.FANTASY]:
+        'https://www.broadway-show-tickets.com/fantasy-shows/',
+      [strings.TAG_NAME.DRAMA]:
+        'https://www.broadway-show-tickets.com/drama-shows/',
+      [strings.TAG_NAME.DANCE]:
+        'https://www.broadway-show-tickets.com/dance-shows/',
+      [strings.TAG_NAME.THEATRICAL_CONCERT]:
+        'https://www.broadway-show-tickets.com/concert-shows/',
+      [strings.TAG_NAME.COMEDY]:
+        'https://www.broadway-show-tickets.com/broadway-comedies/',
+      [strings.TAG_NAME.NEW_ARRIVAL]:
+        'https://www.broadway-show-tickets.com/new-broadway-shows/',
+      [strings.TAG_NAME.KIDS]:
+        'https://www.broadway-show-tickets.com/broadway-for-kids/',
+      [strings.TAG_NAME.CABARET]:
+        'https://www.broadway-show-tickets.com/cabaret-shows/',
+      [strings.TAG_NAME.MAGIC]:
+        'https://www.broadway-show-tickets.com/magic-shows/',
+      [strings.TAG_NAME.MUSICALS]:
+        'https://www.broadway-show-tickets.com/musical/',
+      [strings.TAG_NAME.PLAYS]: 'https://www.broadway-show-tickets.com/plays/',
+      [strings.TAG_NAME.OPERA]: 'https://www.broadway-show-tickets.com/operas/',
+      [strings.TAG_NAME.BALLET]:
+        'https://www.broadway-show-tickets.com/ballet/',
+    };
+
+  return {
+    [strings.TAG_NAME.BALLET]:
+      'https://www.london-theater-tickets.com/shows-in-london/ballet-shows/',
+    [strings.TAG_NAME.CABARET]:
+      'https://www.london-theater-tickets.com/shows-in-london/cabaret-shows/',
+    [strings.TAG_NAME.CHRISTMAS]:
+      'https://www.london-theater-tickets.com/christmas-shows-in-london/',
+    [strings.TAG_NAME.CIRCUS]:
+      'https://www.london-theater-tickets.com/shows-in-london/circus-shows/',
+    [strings.TAG_NAME.CLASSIC]:
+      'https://www.london-theater-tickets.com/shows-in-london/longest-running-shows/',
+    [strings.TAG_NAME.COMEDY]:
+      'https://www.london-theater-tickets.com/shows-in-london/comedy-shows/',
+    [strings.TAG_NAME.COMING_SOON]:
+      'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
+    [strings.TAG_NAME.CRITICS_CHOICE]:
+      'https://www.london-theater-tickets.com/shows-in-london/critics-choice-london-theatre-shows/',
+    [strings.TAG_NAME.DANCE]:
+      'https://www.london-theater-tickets.com/shows-in-london/dance-shows/',
+    [strings.TAG_NAME.DISNEY]:
+      'https://www.london-theater-tickets.com/shows-in-london/disney-shows/',
+    [strings.TAG_NAME.DRAMA]:
+      'https://www.london-theater-tickets.com/shows-in-london/drama-shows/',
+    [strings.TAG_NAME.ENGLISH_NATIONAL_BALLET]:
+      'https://www.london-theater-tickets.com/shows-in-london/english-national-ballet-tickets/',
+    [strings.TAG_NAME.ENGLISH_NATIONAL_OPERA]:
+      'https://www.london-theater-tickets.com/shows-in-london/english-national-opera-tickets/',
+    [strings.TAG_NAME.FANTASY]:
+      'https://www.london-theater-tickets.com/shows-in-london/fantasy-shows/',
+    [strings.TAG_NAME.HALLOWEEN]:
+      'https://www.london-theater-tickets.com/shows-in-london/halloween-shows/',
+    [strings.TAG_NAME.IMMERSIVE_THEATRE]:
+      'https://www.london-theater-tickets.com/shows-in-london/immersive-theatre/',
+    [strings.TAG_NAME.JUKEBOX]:
+      'https://www.london-theater-tickets.com/shows-in-london/jukebox-musicals/',
+    [strings.TAG_NAME.KIDS]:
+      'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/',
+    [strings.TAG_NAME.MAGIC]:
+      'https://www.london-theater-tickets.com/shows-in-london/magic-shows/',
+    [strings.TAG_NAME.MUSICALS]:
+      'https://www.london-theater-tickets.com/london-musicals/',
+    [strings.TAG_NAME.NEW_ARRIVAL]:
+      'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/',
+    [strings.TAG_NAME.OFF_WEST_END]:
+      'https://www.london-theater-tickets.com/shows-in-london/off-west-end-shows/',
+    [strings.TAG_NAME.OLIVIER_WINNER]:
+      'https://www.london-theater-tickets.com/shows-in-london/olivier-award-winners/',
+    [strings.TAG_NAME.OPERA]:
+      'https://www.london-theater-tickets.com/shows-in-london/opera-shows/',
+    [strings.TAG_NAME.PANTOMIMES]:
+      'https://www.london-theater-tickets.com/pantomimes-in-london/',
+    [strings.TAG_NAME.PLAYS]:
+      'https://www.london-theater-tickets.com/west-end-plays-in-london/',
+    [strings.TAG_NAME.ROMANCE]:
+      'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/',
+    [strings.TAG_NAME.SHAKESPEARE]:
+      'https://www.london-theater-tickets.com/shows-in-london/shakespeare-plays/',
+    [strings.TAG_NAME.STARS_ON_STAGE]:
+      'https://www.london-theater-tickets.com/shows-in-london/stars-on-stage/',
+    [strings.TAG_NAME.THEATRICAL_CONCERT]:
+      'https://www.london-theater-tickets.com/shows-in-london/concerts-tickets/',
+    [strings.TAG_NAME.TRUE_STORY]:
+      'https://www.london-theater-tickets.com/shows-in-london/based-on-a-true-story/',
+  };
+};
 
 export const getCategorisationMetadata = async ({
   doc,

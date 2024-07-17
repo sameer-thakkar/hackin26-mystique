@@ -758,6 +758,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     STARS_ON_STAGE: 'Estrellas en escena',
     THEATRICAL_CONCERT: 'Concierto teatral',
     TRUE_STORY: 'Basado en una historia real',
+    TONY_WINNER: 'Ganador de un Premio Tony',
+    OFF_BROADWAY: 'Fuera de Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Vaya, parece que tenemos un problema',

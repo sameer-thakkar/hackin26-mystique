@@ -696,6 +696,8 @@ const it = {
     STARS_ON_STAGE: 'Star sul palco',
     THEATRICAL_CONCERT: 'Concerto teatrale',
     TRUE_STORY: 'Una storia vera',
+    TONY_WINNER: 'Vincitore del Tony',
+    OFF_BROADWAY: 'Fuori da Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'C’è un piccolo problema',

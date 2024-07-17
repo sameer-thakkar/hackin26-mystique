@@ -704,6 +704,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     STARS_ON_STAGE: 'Stars on Stage',
     THEATRICAL_CONCERT: 'Theaterkonzert',
     TRUE_STORY: 'Wahre Begebenheiten',
+    TONY_WINNER: 'Tony Awards-Gewinner',
+    OFF_BROADWAY: 'Off Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Oh, das hat nicht geklappt',
