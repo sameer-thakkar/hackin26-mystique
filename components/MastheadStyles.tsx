@@ -52,6 +52,7 @@ export const StyledMasthead = styled.div<{
         : `
         background-image: url("${imageUrl}");
         background-size: 100vw 18.75rem;
+        min-width: 18.75rem;
         ${
           withoutImage
             ? `
@@ -82,7 +83,7 @@ export const MobileTitle = styled.h1<{
   ${expandFontToken(FONTS.HEADING_REGULAR)}
   padding: ${({ withoutImage }) =>
     withoutImage ? '1.5rem 1rem 1rem' : '1.5rem'};
-  ${({ withoutImage }) => !withoutImage && 'margin: 0 0 1rem 0'} 
+  ${({ withoutImage }) => !withoutImage && 'margin: 0 0 1rem 0'}
 `;
 
 export const TitleWrapper = styled.div`
