@@ -22,7 +22,7 @@ const Ratings = ({
 
   const { ratingsCount, averageRating, showRatings } = reviewsDetails;
 
-  if (!showRatings) return null;
+  if (showRatings === undefined) return null;
 
   return (
     <StyledRatingsContainer $isSafari={isSafari}>
