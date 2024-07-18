@@ -472,7 +472,7 @@ const SideBar = (props: TSideBarProps) => {
               </div>
             </TourPriceInfo>
             <CheckAvailability onClick={handleCheckAvailabilityClick}>
-              <span>Check Availability</span>
+              <span>Find best seats</span>
             </CheckAvailability>
           </ActionContainer>
         </TourInfoBanner>
@@ -767,7 +767,7 @@ const TimeSelection = (props: any) => {
           )}
         </TourTimeSlotContainer>
         <CheckAvailability onClick={handleCheckAvailabilityClick}>
-          <span>Check Availability</span>
+          <span>Find best seats</span>
         </CheckAvailability>
       </Conditional>
     </StyledTimeSelection>

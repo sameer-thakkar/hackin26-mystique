@@ -153,7 +153,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           'Prime seating area, closest to the stage with raised elevation for clear views, though some seats offer angled views.',
         sectionsAtTheatre: 'Seating blocks',
         accessibleSeating: 'wheelchair icon',
-        rows: 'Rows A - C',
+        rows: 'rows A - C',
       },
       'seating-block-b': {
         blockName: 'Block B',
@@ -181,7 +181,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           'Get up close and personal with the ABBA-tars from these comfortable seating blocks positioned right above the dance floor, offering perfectly clear views. Some seats may have slightly angled views.',
         sectionsAtTheatre: 'Dance booths',
         accessibleSeating: 'step-free / ramp icon',
-        rows: 'Rows A - C',
+        rows: 'rows A - C',
       },
       'seating-block-c': {
         blockName: 'Block C',
@@ -209,7 +209,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           'Every seat in this section easily provides the best views of the stage. Seated right above the dance floor, you will get the best lighting effects due to its centrality.',
         sectionsAtTheatre: 'Dance Floor',
         accessibleSeating: 'car icon',
-        rows: 'Rows A - C',
+        rows: 'rows A - C',
       },
       'seating-block-d': {
         blockName: 'Block D',
@@ -236,7 +236,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         description:
           'Get up close and personal with the ABBA-tars from these comfortable seating blocks positioned right above the dance floor, offering perfectly clear views. Some seats may have slightly angled views.',
         accessibleSeating: 'guide dog icon',
-        rows: 'Rows A - C',
+        rows: 'rows A - C',
       },
       'seating-block-e': {
         blockName: 'Block E',
@@ -263,7 +263,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         description:
           'Prime seating area, closest to the stage with raised elevation for clear views, though some seats offer angled views.',
         accessibleSeating: 'closed-loop hearing system',
-        rows: 'Rows A - C',
+        rows: 'rows A - C',
       },
       'seating-block-f': {
         blockName: 'Block F',
@@ -285,7 +285,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         description:
           'Steep tiering provides unrestricted great views from nearly every seat, even if you are in the farthest row. Left-most side views of the screen may be slightly affected from certain angles.',
-        rows: 'Rows A - P',
+        rows: 'rows A - P',
       },
       'seating-block-g': {
         blockName: 'Block G',
@@ -307,7 +307,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         description:
           'Provides good views from most seats, even if you are in the farthest row. Largely unrestricted views as the seats are steeply tiered. Angled view - might be tough to see the left-most side of the screen.',
-        rows: 'Rows A - P',
+        rows: 'rows A - P',
       },
       'seating-block-h': {
         blockName: 'Block H',
@@ -333,7 +333,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         description:
           'The front or middle seats offer great views. Massive screens ensure visibility even from seats towards the back.',
-        rows: 'Rows A - P',
+        rows: 'rows A - P',
       },
       'seating-block-j': {
         blockName: 'Block J',
@@ -355,7 +355,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         description:
           'Provides good views from most seats, even if you are in the farthest row. Largely unrestricted views as the seats are steeply tiered. Angled view - might be tough to see the right-most side of the screen.',
-        rows: 'Rows A - P',
+        rows: 'rows A - P',
       },
       'seating-block-k': {
         blockName: 'Block K',
@@ -377,7 +377,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         ],
         description:
           'Steep tiering provides unrestricted great views from nearly every seat, even if you are in the farthest row. Right-most side views of the screen may be slightly affected from certain angles.',
-        rows: 'Rows A - P',
+        rows: 'rows A - P',
       },
       'seating-accessible-a': {
         blockName: 'Accessible A',
@@ -726,7 +726,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views in Rows B-F' },
           { icon: LegRoomSvg, label: 'Good legroom' },
         ],
-        rows: 'Rows A-N',
+        rows: 'rows A-N',
       },
       'stalls-rear': {
         blockName: 'Rear',
@@ -741,7 +741,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: LegRoomSvg, label: 'Good legroom' },
           { icon: WheelChairIcon, label: 'Wheelchair accessibility: Row S' },
         ],
-        rows: 'Rows P-T',
+        rows: 'rows P-T',
       },
       'box-1': {
         blockName: 'Box 1',
@@ -786,7 +786,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows A-C' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-H',
+        rows: 'rows A-H',
       },
       'royal-circle-center': {
         blockName: 'Center',
@@ -799,7 +799,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows A-F' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-H',
+        rows: 'rows A-H',
       },
       'royal-circle-right': {
         blockName: 'Right',
@@ -812,7 +812,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows A-C' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-H',
+        rows: 'rows A-H',
       },
       'box-3': {
         blockName: 'Box 3',
@@ -858,7 +858,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Rows A-D' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'grand-circle-center': {
         blockName: 'Center',
@@ -871,7 +871,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views in Rows A-C' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'grand-circle-right': {
         blockName: 'Right',
@@ -884,7 +884,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Rows A-D' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'balcony-left': {
         blockName: 'Left',
@@ -897,7 +897,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Decent views in Rows A-C' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-F',
+        rows: 'rows A-F',
       },
       'balcony-mid-left': {
         blockName: 'Mid - left',
@@ -910,7 +910,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Row A' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-C',
+        rows: 'rows A-C',
       },
       'balcony-mid-right': {
         blockName: 'Mid - right',
@@ -923,7 +923,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Row A' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-C',
+        rows: 'rows A-C',
       },
       'balcony-right': {
         blockName: 'Right',
@@ -936,7 +936,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Decent views in Rows A-C' },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-D',
+        rows: 'rows A-D',
       },
     },
     [THEATRE_TYPES.NOVELLO_THEATRE]: {
@@ -951,7 +951,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Excellent views in Rows D-H' },
           { icon: LegRoomSvg, label: 'Great legroom' },
         ],
-        rows: 'Rows C-M',
+        rows: 'rows C-M',
       },
       'stalls-rear': {
         blockName: 'Rear',
@@ -964,7 +964,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows N-T' },
           { icon: LegRoomSvg, label: 'Great legroom' },
         ],
-        rows: 'Rows N-X',
+        rows: 'rows N-X',
       },
       'dress-circle-slips-left': {
         blockName: 'Left',
@@ -993,7 +993,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows A-F' },
           { icon: LegRoomSvg, label: 'Good legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'dress-circle-slips-right': {
         blockName: 'Right',
@@ -1005,7 +1005,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: SeatIcon, label: '12 seats' },
           { icon: BinocularIcon, label: 'Restricted & side-on views' },
         ],
-        rows: 'Rows AA-BB',
+        rows: 'rows AA-BB',
       },
       'grand-circle-slips-left': {
         blockName: 'Left',
@@ -1034,7 +1034,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-H',
+        rows: 'rows A-H',
       },
       'grand-circle-slips-right': {
         blockName: 'Right',
@@ -1063,7 +1063,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Limited legroom' },
         ],
-        rows: 'Rows A-F',
+        rows: 'rows A-F',
       },
       'box-a': {
         blockName: 'Dress Circle Box A',
@@ -1365,7 +1365,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views towards the aisle' },
           { icon: LegRoomSvg, label: 'Excellent legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'stalls-center': {
         blockName: 'Center',
@@ -1381,7 +1381,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Excellent legroom' },
         ],
-        rows: 'Rows A-X',
+        rows: 'rows A-X',
       },
       'stalls-front-right': {
         blockName: 'Front Right',
@@ -1394,7 +1394,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views towards the aisle' },
           { icon: LegRoomSvg, label: 'Excellent legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'stalls-rear-left': {
         blockName: 'Rear Left',
@@ -1407,7 +1407,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows M - P' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows M-X',
+        rows: 'rows M-X',
       },
       'stalls-rear-right': {
         blockName: 'Rear Right',
@@ -1420,7 +1420,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views in Rows M - P' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows M-X',
+        rows: 'rows M-X',
       },
       'royal-circle-left': {
         blockName: 'Left',
@@ -1433,7 +1433,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great, clear views in Rows A - H' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-L',
+        rows: 'rows A-L',
       },
       'royal-circle-center': {
         blockName: 'Center',
@@ -1449,7 +1449,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-L',
+        rows: 'rows A-L',
       },
       'royal-circle-right': {
         blockName: 'Right',
@@ -1462,7 +1462,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great, clear views in Rows A - H' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-L',
+        rows: 'rows A-L',
       },
       'grand-circle-left': {
         blockName: 'Left',
@@ -1475,7 +1475,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'grand-circle-center': {
         blockName: 'Center',
@@ -1491,7 +1491,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'grand-circle-right': {
         blockName: 'Right',
@@ -1504,7 +1504,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'balcony-left': {
         blockName: 'Left',
@@ -1520,7 +1520,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'balcony-center': {
         blockName: 'Center',
@@ -1533,7 +1533,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views in Rows A - C' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
       'balcony-right': {
         blockName: 'Right',
@@ -1549,7 +1549,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows A-K',
+        rows: 'rows A-K',
       },
     },
     [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: {
@@ -1567,7 +1567,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows AA-K',
+        rows: 'rows AA-K',
       },
       'aa-left': {
         blockName: 'AA',
@@ -1583,7 +1583,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows AA-K',
+        rows: 'rows AA-K',
       },
       'stalls-front': {
         blockName: 'Front',
@@ -1596,7 +1596,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views in Rows C-G' },
           { icon: LegRoomSvg, label: 'Comfortable legroom' },
         ],
-        rows: 'Rows AA-K',
+        rows: 'rows AA-K',
       },
       'stalls-rear-left': {
         blockName: 'Rear Left',
@@ -1609,7 +1609,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views from aisle seats' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows L-ZC',
+        rows: 'rows L-ZC',
       },
       'stalls-rear-center': {
         blockName: 'Rear Centre',
@@ -1622,7 +1622,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views from Rows L-T' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows L-ZC',
+        rows: 'rows L-ZC',
       },
       'stalls-rear-right': {
         blockName: 'Rear Right',
@@ -1635,7 +1635,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Great views from Rows L-T' },
           { icon: LegRoomSvg, label: 'Average legroom' },
         ],
-        rows: 'Rows L-ZC',
+        rows: 'rows L-ZC',
       },
       'dress-circle-front-left': {
         blockName: 'Front Left',
@@ -1648,7 +1648,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views from Rows A-D' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-E',
+        rows: 'rows A-E',
       },
       'dress-circle-front-right': {
         blockName: 'Front Right',
@@ -1661,7 +1661,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Best views from Rows A-D' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-E',
+        rows: 'rows A-E',
       },
       'dress-circle-rear-left': {
         blockName: 'Rear Left',
@@ -1674,7 +1674,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views from Rows F-J' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows F-O',
+        rows: 'rows F-O',
       },
       'dress-circle-rear-center': {
         blockName: 'Rear Centre',
@@ -1690,7 +1690,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Great legroom' },
         ],
-        rows: 'Rows F-M',
+        rows: 'rows F-M',
       },
       'dress-circle-rear-right': {
         blockName: 'Rear Right',
@@ -1703,7 +1703,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           { icon: BinocularIcon, label: 'Good views from Rows F-J' },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows F-M',
+        rows: 'rows F-M',
       },
       'grand-circle-front-left': {
         blockName: 'Front Left',
@@ -1719,7 +1719,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-F',
+        rows: 'rows A-F',
       },
       'grand-circle-front-center': {
         blockName: 'Front Centre',
@@ -1735,7 +1735,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-G',
+        rows: 'rows A-G',
       },
       'grand-circle-front-right': {
         blockName: 'Front Right',
@@ -1751,7 +1751,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows A-F',
+        rows: 'rows A-F',
       },
       'grand-circle-rear-left': {
         blockName: 'Rear Left Grand Circle',
@@ -1767,7 +1767,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows H-L',
+        rows: 'rows H-L',
       },
       'grand-circle-rear-center': {
         blockName: 'Rear Centre',
@@ -1783,7 +1783,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows H-N',
+        rows: 'rows H-N',
       },
       'grand-circle-rear-right': {
         blockName: 'Rear Right',
@@ -1799,7 +1799,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
           },
           { icon: LegRoomSvg, label: 'Decent legroom' },
         ],
-        rows: 'Rows H-L',
+        rows: 'rows H-L',
       },
       'stb-2': {
         blockName: 'Box - Left',
@@ -1979,9 +1979,10 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
   },
   breadCrumbsLabel: {
     [THEATRE_TYPES.ABBA_ARENA]: 'ABBA Arena Seating Plan',
-    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]: 'Theatre Royal Drury Lane',
-    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: "His Majesty's Theatre",
-    [THEATRE_TYPES.NOVELLO_THEATRE]: 'Novello Theatre',
-    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: 'Prince Edward Theatre',
+    [THEATRE_TYPES.THEATRE_ROYAL_DRURY_LANE]:
+      'Theatre Royal Drury Lane Seating Plan',
+    [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: "His Majesty's Theatre Seating Plan",
+    [THEATRE_TYPES.NOVELLO_THEATRE]: 'Novello Theatre Seating Plan',
+    [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: 'Prince Edward Theatre Seating Plan',
   },
 };
