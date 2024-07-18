@@ -19,7 +19,7 @@ import { findImageUrlFromMediaData, getSubCategoryIconUrl } from 'utils/helper';
 import { getShowPageCollectionsByTgid } from 'utils/prismicUtils/getShowPageCollections';
 import getVenuePageDocumentsByPoiId from 'utils/prismicUtils/getVenuePageDocumentsByPoiId';
 import { filterArticlesBasedOnEntMb as filterSubCategoriesBasedOnEntMb } from 'utils/prismicUtils/NewsPage';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { addLanguageParamToUrl, convertUidToUrl } from 'utils/urlUtils';
 import {
   CUSTOM_TYPES,
   MB_CATEGORISATION,
@@ -156,13 +156,11 @@ export const getNearbyTheatresData = async (
       const availableShowsData = showsData?.tourGroups;
       const { nowPlayingShows } = getShowsBasedOnTimestamp(availableShowsData);
 
-      if (nowPlayingShows?.length == 0) {
-        return;
-      }
+      if (!nowPlayingShows?.length) return;
 
       const nearbyTheatreName = poiData?.name ?? '';
-      const nearbyTheatreRunningShowName = nowPlayingShows[0]?.name ?? '';
-      const nearbyTheatreShowId = nowPlayingShows[0]?.id;
+      const nearbyTheatreRunningShowName = nowPlayingShows?.[0]?.name ?? '';
+      const nearbyTheatreShowId = nowPlayingShows?.[0]?.id;
       const nearbyTheatreRedirectUrl = items?.find(
         (item: Record<string, any>) =>
           item?.nearby_theatre_poi_id === poiData?.id
@@ -172,7 +170,7 @@ export const getNearbyTheatresData = async (
         ? await fetchMediaResource({
             language: getHeadoutLanguagecode(language),
             resourceType: 'MB_EXPERIENCE',
-            entityIds: nearbyTheatreShowId,
+            entityIds: String(nearbyTheatreShowId),
           })
         : undefined;
 
@@ -186,7 +184,11 @@ export const getNearbyTheatresData = async (
         nearbyTheatreName,
         nearbyTheatreRunningShowName,
         verticalImageUrl,
-        redirectUrl: nearbyTheatreRedirectUrl,
+        redirectUrl: addLanguageParamToUrl({
+          url: nearbyTheatreRedirectUrl,
+          lang: getHeadoutLanguagecode(language),
+          isProd: true,
+        }),
       };
     }
   );

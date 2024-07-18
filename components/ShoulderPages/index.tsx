@@ -480,7 +480,7 @@ const ContentPage = (props: any) => {
     isExperimentResolving: isPlanYourVisitCardsExpResolving,
   } = useABTesting({
     experimentId: 'SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () =>
       SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT.toLowerCase() ===
       shoulder_page_type?.toLowerCase(),

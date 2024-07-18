@@ -199,6 +199,7 @@ class MicrositeV2 extends Component<any, any> {
       tagged_sub_category: taggedSubCategoryName,
       tagged_mb_type: taggedMbType,
       tagged_collection: taggedCollection,
+      shoulder_page_type: shoulderPageType,
     } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
     const currentLanguage = getLangObject(docLang).code;
     const languageProps = {
@@ -531,6 +532,7 @@ class MicrositeV2 extends Component<any, any> {
       taggedSubCategoryName,
       taggedMbType,
       taggedCollection,
+      shoulderPageType,
       categoryHeaderMenu,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,

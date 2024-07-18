@@ -266,6 +266,7 @@ const MicrositeV1 = (props: any) => {
     tagged_category: taggedCategoryName,
     tagged_sub_category: taggedSubCategoryName,
     tagged_mb_type: taggedMbType,
+    shoulder_page_type: shoulderPageType,
     subattraction_type: subattractionType,
     tagged_page_type: taggedPageType,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
@@ -473,6 +474,9 @@ const MicrositeV1 = (props: any) => {
       }),
       ...(taggedMbType && {
         [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+      }),
+      ...(shoulderPageType && {
+        [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulderPageType,
       }),
     });
 

@@ -7,7 +7,7 @@ export const PracticalInfoWrapper = styled.div`
   display: flex;
   ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
   column-gap: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   .practical-info {
     margin-bottom: 1rem;

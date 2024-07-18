@@ -264,6 +264,7 @@ export const HomePage = (props: any) => {
     taggedSubCategoryName,
     taggedCollection,
     taggedMbType,
+    shoulderPageType,
     categoryHeaderMenu,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
@@ -414,6 +415,9 @@ export const HomePage = (props: any) => {
         }),
         ...(taggedMbType && {
           [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+        }),
+        ...(shoulderPageType && {
+          [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulderPageType,
         }),
       });
 
