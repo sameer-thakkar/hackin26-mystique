@@ -34,19 +34,25 @@ const ShowPageDescriptorSection = ({
     [strings.SHOW_PAGE.CLOSING_DATE]: closingDate,
   } = detailsObjects;
 
-  const descriptors: Record<string, { content: string; icon: any }> = {
+  const descriptors: Record<
+    string,
+    { content: string; icon: any; label: string }
+  > = {
     duration: {
       content: duration,
+      label: strings.SHOW_PAGE.DURATION ?? 'Duration',
       icon: descriptorIcons['DURATION'],
     },
     ...(!PERMANENT_SHOWS_TGIDS.includes(tgid) && {
       dates: {
         content: closingDate,
+        label: strings.SHOW_PAGE.CLOSING_DATE ?? 'Closing Date',
         icon: descriptorIcons['EXTENDED_VALIDITY'],
       },
     }),
     age: {
       content: ageLimit,
+      label: strings.SHOW_PAGE.AGE_LIMIT ?? 'Age',
       icon: descriptorIcons['USER'],
     },
   };
@@ -76,7 +82,7 @@ const ShowPageDescriptorSection = ({
     <ShowPageDescriptorSectionWrapper>
       <DescriptorsWrapper numberOfDescriptors={Object.keys(descriptors).length}>
         {Object.keys(descriptors).map((key) => {
-          const { content, icon: Icon } = descriptors[key];
+          const { content, icon: Icon, label } = descriptors[key];
           if (!content) return null;
           return (
             <div className="descriptor" key={key}>
@@ -84,7 +90,7 @@ const ShowPageDescriptorSection = ({
                 <Icon />
               </div>
               <div className="content">
-                <span className="title">{key.toUpperCase()}</span>
+                <span className="title">{label.toUpperCase()}</span>
                 <div
                   className={`value ${key} ${
                     ageSuitabilitySectionExists ? '' : 'no-highlight'
