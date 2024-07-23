@@ -246,6 +246,7 @@ const Product = (props: any) => {
     itineraryInfo,
     verticalProductCard = false,
     horizontalProductCard = false,
+    isImageQualityExperimentResolving = false,
   } = props;
 
   const {
@@ -1360,6 +1361,7 @@ const Product = (props: any) => {
               </Conditional>
               <Conditional if={!isLoading}>
                 <MediaCarousel
+                  isImageQualityExperiment={isImageQualityExperimentResolving}
                   imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                   videoUrl={
                     (isPopup ? originalIsMobile : isMobile) &&

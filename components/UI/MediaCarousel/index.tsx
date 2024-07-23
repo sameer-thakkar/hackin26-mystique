@@ -47,6 +47,7 @@ type MediaCarouselProps = {
   hideBorderRadius?: boolean;
   useWidePaginatorActiveTab?: boolean;
   uid?: string;
+  isImageQualityExperiment?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -70,7 +71,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
-  uid,
+  isImageQualityExperiment,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -190,7 +191,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               priority={isLCPCandidate}
               fetchPriority={isLCPCandidate ? 'high' : 'auto'}
               fill
-              loadHigherQualityImage={uid === 'www.thevaticantickets.com'}
+              loadHigherQualityImage={isImageQualityExperiment}
             />
           );
         })}
