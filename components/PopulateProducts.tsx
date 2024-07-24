@@ -18,6 +18,7 @@ import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
+import useWindowWidth from 'hooks/useWindowWidth';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
@@ -251,6 +252,9 @@ const PopulateProducts: any = (props: any) => {
     verticalProductCard = false,
   } = props;
 
+  const clientWidth = useWindowWidth();
+  const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
+
   const productsRef = useRef([]);
   productsRef.current = [];
   const productsWrapperRef = useRef(null);
@@ -455,7 +459,9 @@ const PopulateProducts: any = (props: any) => {
     (tour: Record<string, any>) => !scorpioData[tour.tgid]?.combo
   );
   const finalToursList =
-    isHOHORevamp && isMobile ? nonComboTours : availableToursList;
+    isHOHORevamp && (isMobile || clientIsMobile)
+      ? nonComboTours
+      : availableToursList;
 
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
@@ -841,7 +847,9 @@ const PopulateProducts: any = (props: any) => {
             return getProductCardFromTourAndIndex(tour, index);
           })}
       </ProductContainer>
-      <Conditional if={isHOHORevamp && isMobile && comboTours?.length}>
+      <Conditional
+        if={isHOHORevamp && (isMobile || clientIsMobile) && comboTours?.length}
+      >
         <CombosContainer ref={combosSectionRef}>
           <SectionTitle>
             <div className="subtitle">

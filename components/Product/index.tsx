@@ -62,6 +62,7 @@ import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
 import useOnScreen from 'hooks/useOnScreen';
+import useWindowWidth from 'hooks/useWindowWidth';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import {
   getCommonEventMetaData,
@@ -265,7 +266,10 @@ const Product = (props: any) => {
     sidebarModal: { addToAside, closeAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const isMobile = forceMobile || originalIsMobile;
+
+  const clientWidth = useWindowWidth();
+  const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
+  const isMobile = forceMobile || originalIsMobile || clientIsMobile;
 
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -1865,8 +1869,7 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional
               if={
-                !forceMobile &&
-                !originalIsMobile &&
+                !isMobile &&
                 (showMoreDetailsInTabs || showPopup) &&
                 !defaultOpen &&
                 !isPopup &&
@@ -1959,6 +1962,7 @@ const Product = (props: any) => {
       <Conditional if={isHOHORevamp && !isCombo}>
         <HohoProductCard
           {...props}
+          isMobile={isMobile}
           onClick={() => {
             trackedToggleContent(false);
             popupController.current?.open();
