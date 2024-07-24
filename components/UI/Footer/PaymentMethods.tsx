@@ -23,7 +23,7 @@ export const PaymentMethods = () => {
       {PAYMENT_METHODS.map(([iconName, iconURL]) => {
         return (
           <GridItem key={iconName}>
-            <Image url={iconURL} alt={iconName} />
+            <Image fitCrop={true} url={iconURL} alt={iconName} />
           </GridItem>
         );
       })}
