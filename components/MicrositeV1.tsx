@@ -687,20 +687,10 @@ const MicrositeV1 = (props: any) => {
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
-  const {
-    variant: itineraryRolloutVariant,
-    isEligible: isItineraryExpEligible,
-  } = useABTesting({
-    experimentId: 'ITINERARY_CONTROLLED_ROLLOUT',
-    noTrack: false,
-    customEligibilityCheckFn: () =>
-      !isMobile &&
-      taggedSubCategoryName !== 'HOHO' &&
-      !!scorpioData?.itineraryData?.itineraries?.length,
-  });
-
   const showItineraries =
-    isItineraryExpEligible && itineraryRolloutVariant === VARIANTS.TREATMENT;
+    !isMobile &&
+    taggedSubCategoryName !== 'HOHO' &&
+    !!scorpioData?.itineraryData?.itineraries?.length;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
