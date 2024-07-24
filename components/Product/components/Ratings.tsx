@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { truncateNumber } from 'utils';
+import { useRecoilValue } from 'recoil';
+import { checkIfHarryPotterPage, truncateNumber } from 'utils';
 import { isSafari as checkForSafari } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
@@ -13,6 +15,7 @@ const Ratings = ({
   onRatingsCountClick,
 }: TRatingsContainerProps) => {
   const [isSafari, setIsSafari] = useState(false);
+  const { uid } = useRecoilValue(appAtom);
 
   useEffect(() => {
     setIsSafari(checkForSafari());
@@ -24,8 +27,13 @@ const Ratings = ({
 
   if (showRatings === undefined) return null;
 
+  const isHarryPotterPage = checkIfHarryPotterPage(uid);
+
   return (
-    <StyledRatingsContainer $isSafari={isSafari}>
+    <StyledRatingsContainer
+      $isHarryPotterPage={isHarryPotterPage}
+      $isSafari={isSafari}
+    >
       {showRatings && <StarFull fillColor={COLORS.BRAND.CANDY} />}
       <span
         data-card-section={CARD_SECTION_MARKERS.REVIEWS}
