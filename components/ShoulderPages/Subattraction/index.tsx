@@ -340,6 +340,7 @@ const SubattractionPage = ({
           disableShowingNewCard
           showPopup
           verticalProductCard
+          subattraction_type={subattraction_type}
         />
       </Conditional>
       <Conditional if={parentProductCards.length}>

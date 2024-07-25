@@ -34,6 +34,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESIGN,
+  MB_CATEGORISATION,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -250,8 +251,10 @@ const PopulateProducts: any = (props: any) => {
     showItineraries = false,
     horizontalProductCard = false,
     verticalProductCard = false,
+    subattraction_type,
   } = props;
 
+  const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
   const clientWidth = useWindowWidth();
   const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
 
@@ -458,11 +461,15 @@ const PopulateProducts: any = (props: any) => {
   const nonComboTours = availableToursList?.filter(
     (tour: Record<string, any>) => !scorpioData[tour.tgid]?.combo
   );
-  const finalToursList =
+
+  let finalToursList =
     isHOHORevamp && (isMobile || clientIsMobile)
       ? nonComboTours
       : availableToursList;
 
+  if (subattraction_type === SUBATTRACTION_TYPE.C) {
+    finalToursList = finalToursList.splice(0, 5);
+  }
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
     if (!productsRef.current || isExperimentResolving) return;
