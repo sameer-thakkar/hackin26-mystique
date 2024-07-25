@@ -80,9 +80,12 @@ const getPrismicDocumentData = async (
       contentType: contentType.type,
     });
 
-    // @ts-expect-error redirectInfo & shouldHaveShorterTtl is not present in all document response hence the error
-    const { CMSContent, statusCode, shouldHaveShorterTtl, redirectInfo } =
-      prismicDocument ?? {};
+    const {
+      CMSContent,
+      statusCode,
+      shouldPageHaveShorterTtl: shouldHaveShorterTtl,
+      redirectInfo,
+    } = prismicDocument ?? ({} as any);
     const ContentType = contentType.type;
     const { data: CMSData } = CMSContent || {};
 

@@ -64,6 +64,7 @@ import {
   conditionalPromise,
   labeledPromiseAllSettled,
 } from 'utils/promiseUtils';
+import { setShortTTL } from 'utils/serverUtils';
 import { getLangUID, getValidUrlParams } from 'utils/urlUtils';
 import {
   CATEGORY_IDS,
@@ -71,7 +72,6 @@ import {
   LANGUAGE_MAP,
   MB_CATEGORISATION,
   RESOURCE_TYPE,
-  SHORTER_CACHE_AGE,
   SLICE_TYPES,
   SUPPORTED_LOCALE_MAP,
   THEMES,
@@ -172,7 +172,7 @@ export const getPageData = async ({
         lang,
       };
     } else if (shouldPageHaveShorterTtl) {
-      res.setHeader('Cache-Control', `max-age=${SHORTER_CACHE_AGE}`);
+      setShortTTL(res);
     }
 
     /**
@@ -924,6 +924,7 @@ export const getPageData = async ({
         err: error,
         message: `[getPageData] fetchTourListV6 failed for tgids: ${tgidsArray}`,
       });
+      setShortTTL(res);
 
       // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
       return {

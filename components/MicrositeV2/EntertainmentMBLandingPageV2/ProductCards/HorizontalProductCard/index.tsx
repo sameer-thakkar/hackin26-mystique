@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { THorizontalProductCardProps } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard/interface';
@@ -36,6 +37,7 @@ const HorizontalProductCard = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+  const router = useRouter();
 
   if (!product) return null;
 
@@ -104,9 +106,7 @@ const HorizontalProductCard = ({
     });
 
     if (showPageExists) {
-      window.open(destinationUrl, '_self', 'noopener');
-    } else {
-      window.open(destinationUrl, '_self', 'noopener');
+      router.push(destinationUrl);
     }
   };
 

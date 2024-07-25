@@ -199,7 +199,10 @@ const getMicrositeDocument = async ({
 
         let shouldPageHaveShorterTtl = false;
 
-        if (!Object.keys(categoryTourListV1Primary ?? {})?.length) {
+        if (
+          !Object.keys(categoryTourListV1Primary ?? {})?.length &&
+          currentPageData?.design === 'V1 - Horizontal Card Layout'
+        ) {
           shouldPageHaveShorterTtl = true;
           // Have shorter TTL on cache, if product cards are empty (fetch fails or catalog team temporarily remove the cards)
         }

@@ -37,6 +37,10 @@ app.prepare().then(() => {
     const isBotQuery = typeof req.query.bot !== 'undefined';
 
     res.end = function (data, encoding) {
+      const isError = /^5\d+/.test(res.statusCode);
+      if (isError) {
+        res.removeHeader('Cache-Control');
+      }
       const isBot = req.headers['x-bot'] === 'true' || isBotQuery;
       const isSSRPage = res.getHeader('content-type')?.includes('text/html');
       if (isBot && data && isSSRPage) {
@@ -51,6 +55,7 @@ app.prepare().then(() => {
 
   server.use((req, res, next) => {
     const isAPIRoute = /\/(fe)?api\//.test(req.path);
+
     if (!isAPIRoute) {
       const isBot = req.headers['x-bot'] === 'true';
       const sieTTL = TIME.SECONDS_IN_DAY * 1;
