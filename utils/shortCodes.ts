@@ -286,6 +286,7 @@ export const renderShortCodes = (CMSString = '', props = {}): Array<string> => {
   let fullLength = CMSString.length;
   let renderedRichList = [];
   let cursor = -1;
+
   shortCodesList.forEach((shortCodeObj, index) => {
     renderedRichList.push(
       CMSString.slice(cursor + 1, shortCodeObj.indices.start)
@@ -345,15 +346,19 @@ export const shortCodeSerializer: any = (
 ) => {
   let props = {};
   if (getShortcodesList(content).length && !children.length) {
-    let renderedChildrens: any = renderShortCodes(content, parentProps);
+    let renderedChildren: any = renderShortCodes(content, parentProps);
+
     if (wrapInLazyComponent) {
-      renderedChildrens = WrapInLazyComponent(renderedChildrens);
+      renderedChildren = WrapInLazyComponent(renderedChildren, {
+        placeHolderHeight: '1.5rem',
+      });
     }
+
     return React.createElement(
       // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       tagsMap[type] || React.Fragment,
       propsWithUniqueKey(props, key),
-      renderedChildrens
+      renderedChildren
     );
   }
   return getRichtextElements({ type, element, children, parentProps });

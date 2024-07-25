@@ -9,14 +9,16 @@ const DEFAULT_PLACEHOLDER_HEIGHT = '22rem';
 
 const PlaceHolder = styled.div``;
 
+type TLazyComponentProps = PropsWithChildren<{
+  target?: 'BOT' | 'USER' | 'BOTH' | 'NONE';
+  placeHolderHeight?: string;
+}>;
+
 const LazyComponent = ({
   children,
   target = 'USER',
   placeHolderHeight = DEFAULT_PLACEHOLDER_HEIGHT,
-}: PropsWithChildren<{
-  target?: 'BOT' | 'USER' | 'BOTH' | 'NONE';
-  placeHolderHeight?: string;
-}>) => {
+}: TLazyComponentProps) => {
   const lazyElementRef = useRef<HTMLDivElement>(null);
   const isIntersecting = useOnScreen({
     ref: lazyElementRef,
@@ -55,8 +57,11 @@ const LazyComponent = ({
 
 export default LazyComponent;
 
-export const WrapInLazyComponent = (children: any) => {
-  return <LazyComponent>{children}</LazyComponent>;
+export const WrapInLazyComponent = (
+  children: React.ReactNode,
+  restProps: Omit<TLazyComponentProps, 'children'> = {}
+) => {
+  return <LazyComponent {...restProps}>{children}</LazyComponent>;
 };
 
 export const ConditionallyLazyComponent = ({
