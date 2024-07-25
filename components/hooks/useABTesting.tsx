@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { appAtom } from 'store/atoms/app';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
-import { EXPERIMENT_NAMES } from 'const/experiments';
+import { EXPERIMENT_NAMES, EXPERIMENTS } from 'const/experiments';
 import { QUERY_PARAMS } from 'const/index';
 
 const DEFAULT_VARIANT = 'DEFAULT_VARIANT';
@@ -26,9 +26,18 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   const {
     query: { [QUERY_PARAMS.EXPERIMENT_OVERRIDE]: experimentOverride },
   } = useRouter();
+  const experimentName = EXPERIMENT_NAMES[experimentNameKey];
+  const experimentObject = EXPERIMENTS[experimentName];
+  /**
+   * identifes and avoids experiment resolution flow for full rollout, [100, 0]/[0, 100] cases.
+   */
+  const fullRolloutIndex = experimentObject?.bucketWeight.indexOf(100);
+  const fullRolloutVariant =
+    experimentObject?.bucketName[fullRolloutIndex] || '';
+
   const experimentOverrideVariant = experimentOverride as string;
   const [variant, setVariant] = React.useState<string | null>(
-    experimentOverrideVariant || DEFAULT_VARIANT
+    experimentOverrideVariant || fullRolloutVariant || DEFAULT_VARIANT
   );
   const shouldTrack = useRef(!noTrack);
   const sandboxId = useRecoilValue(hsidAtom);
@@ -57,7 +66,7 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
         : additionalEventProps;
 
     const abTestingVariant = getABTestingVariant({
-      expName: EXPERIMENT_NAMES[experimentNameKey],
+      expName: experimentName,
       hsid: sandboxId,
       noTrack: !shouldTrack.current,
       eventProperties,
@@ -77,6 +86,7 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
     isHsidSetFail,
     isBot,
     experimentOverrideVariant,
+    experimentName,
   ]);
 
   return {

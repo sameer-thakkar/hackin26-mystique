@@ -48,7 +48,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
  * Experiments List
  * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
  */
-export const EXPERIMENTS: Record<string, any> = {
+export const EXPERIMENTS: Record<string, Experiment> = {
   [BOOSTERS_EXPERIMENT]: new Experiment(
     BOOSTERS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
