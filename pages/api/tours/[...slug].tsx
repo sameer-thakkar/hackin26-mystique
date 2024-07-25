@@ -21,9 +21,9 @@ const getRichTextFromHtmlContent = (properties: string) => {
 };
 
 const ToursAPI: NextApiHandler = async (req, res) => {
-  const { useTest } = req?.query;
+  const { useTest, newCDN } = req?.query;
   const cookies = new Cookies(req, res);
-  const blackListQueryParams = ['slug', 'useTest'];
+  const blackListQueryParams = ['slug', 'useTest', 'newCDN'];
 
   const queryParamsObj = new URLSearchParams();
   const cookieCurrency = cookies.get(COOKIE.CURRENT_CURRENCY);
@@ -49,7 +49,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
   const queryParamsString = queryParamsObj.toString();
 
   // TODO
-  const url = `https://api.${
+  const url = `https://${newCDN === 'true' ? 'api-mb' : 'api'}.${
     useTest === 'true' || useTest ? 'test-' : ''
   }headout.com/api/${(req.query.slug as string[])?.join('/')}/${
     queryParamsString ? `?${queryParamsString}` : ''

@@ -107,6 +107,8 @@ export enum HeadoutEndpoints {
   GeoLocateCity,
 }
 
+const endPointsOnNewCDN = [HeadoutEndpoints.TourGroupsV6];
+
 export const getHeadoutApiUrl = ({
   endpoint,
   hostname,
@@ -173,7 +175,7 @@ export const getHeadoutApiUrl = ({
       endpointSlug = `/api/domain/`;
       break;
     case HeadoutEndpoints.ProductV6:
-      endpointSlug = `https://api.headout.com/api/v6/tour-groups/${id}/`;
+      endpointSlug = `https://api-mb.headout.com/api/v6/tour-groups/${id}/`;
       break;
     case HeadoutEndpoints.Banners:
       endpointSlug = `/api/v2/banners/`;
@@ -218,6 +220,8 @@ export const getHeadoutApiUrl = ({
       endpointSlug = `/api/tours/v2/geolocate/city`;
   }
 
+  const shouldPointToNewCDN = endPointsOnNewCDN.includes(endpoint);
+
   let url: string;
 
   if (hostname) {
@@ -231,15 +235,25 @@ export const getHeadoutApiUrl = ({
      * This is being done to prevent creating duplicate records on CDN.
      */
     // TODO
-    url = withTrailingSlash(`https://api.headout.com${formattedEndpointSlug}`);
+    url = withTrailingSlash(
+      `https://${
+        shouldPointToNewCDN ? 'api-mb' : 'api'
+      }.headout.com${formattedEndpointSlug}`
+    );
   }
 
-  if (params && Object.keys(params).length) {
-    const finalUrl = addQueryParams(url, params);
-    return finalUrl as string;
-  } else {
-    return url as string;
-  }
+  const finalParams = {
+    ...(shouldPointToNewCDN && { newCDN: 'true' }),
+    ...(params && params),
+  };
+
+  const finalUrl = (
+    finalParams && Object.keys(finalParams).length
+      ? addQueryParams(url, finalParams)
+      : url
+  ) as string;
+
+  return finalUrl;
 };
 
 export const fetchTourList = ({
