@@ -273,11 +273,7 @@ function PopOver(props: IPopover) {
       <Conditional
         if={!localeLoader && hasLanguageDropdown && hasCurrencySelector}
       >
-        <StyledButtonWrapper
-          className="locale-button-wrapper"
-          $isDarkMode={isDarkMode}
-          onClick={onOpenPopOver}
-        >
+        <StyledButtonWrapper $isDarkMode={isDarkMode} onClick={onOpenPopOver}>
           <div className="icon">
             <GlobeIcon stroke={isDarkMode ? COLORS.GRAY.G8 : COLORS.GRAY.G3} />
           </div>
@@ -292,7 +288,7 @@ function PopOver(props: IPopover) {
       </Conditional>
 
       <StyledPopOverWrapper $isOpen={isOpen}>
-        <StyledPopOverHeader className="locale-popover-header">
+        <StyledPopOverHeader>
           {tabs?.map((item, index) => {
             return (
               <Conditional

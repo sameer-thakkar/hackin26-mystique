@@ -9,11 +9,7 @@ import Conditional from 'components/common/Conditional';
 import DeferredComponent from 'components/common/DeferredComponent';
 import ScrollToTop from 'components/common/ScrollToTop';
 import { ToastProvider } from 'contexts/toastContext';
-import {
-  checkIfHarryPotterPage,
-  containsPOIAndSeatmap,
-  getAnalyticsPageType,
-} from 'utils';
+import { containsPOIAndSeatmap, getAnalyticsPageType } from 'utils';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { dynamicPolyfillIntlLocale } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
@@ -307,8 +303,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     set(localeLoaderAtom, false);
   };
   const { host } = pageProps;
-  const isHarryPotterPage = checkIfHarryPotterPage(pageProps?.uid);
-
   return (
     <StyleSheetManager
       // @ts-expect-error TS(2769): No overload matches this call.
@@ -318,10 +312,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         <ToastProvider>
           {getLanguageBasedGlobalStyling(langCode)}
           <Component {...pageProps} />
-          <ScrollToTop
-            $isHarryPotterPage={isHarryPotterPage}
-            $isLttMonthOnMonthPage={isLttMonthOnMonthPage}
-          />
+          <ScrollToTop $isLttMonthOnMonthPage={isLttMonthOnMonthPage} />
           <Conditional if={!isLttMonthOnMonthPage}>
             <ZendeskChat
               uid={pageProps?.uid}

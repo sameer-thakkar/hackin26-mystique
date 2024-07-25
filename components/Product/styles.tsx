@@ -1437,10 +1437,7 @@ export const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
   }
 `;
 
-export const StyledRatingsContainer = styled.div<{
-  $isSafari?: boolean;
-  $isHarryPotterPage?: boolean;
-}>`
+export const StyledRatingsContainer = styled.div<{ $isSafari?: boolean }>`
   grid-area: rating;
   display: flex;
   flex-direction: row;
@@ -1475,20 +1472,6 @@ export const StyledRatingsContainer = styled.div<{
       }
     }
   }
-
-  ${({ $isHarryPotterPage }) =>
-    $isHarryPotterPage &&
-    `&:hover {
-      transition: ease-in-out 250ms;
-
-      span {
-        color: ${COLORS.CANDY.TERTIARY};
-      }
-
-      svg > path {
-        fill: ${COLORS.CANDY.TERTIARY};
-      }
-    }`};
 
   @media (min-width: 768px) {
     gap: 0.25rem;
@@ -2810,7 +2793,6 @@ export const ViewMoreButton = styled.button<{
   $showPopup?: boolean;
   $hasBackground?: boolean;
   $noMargin?: boolean;
-  $isHarryPotterPage?: boolean;
 }>`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
   color: ${COLORS.TEXT.CANDY_1};
@@ -2825,17 +2807,6 @@ export const ViewMoreButton = styled.button<{
   svg {
     margin-left: 0.25rem;
   }
-
-  ${({ $isHarryPotterPage }) =>
-    $isHarryPotterPage &&
-    `&:hover {
-      color: ${COLORS.CANDY.TERTIARY};
-
-      svg {
-        transition: ease-in-out 250ms;
-        transform: translateX(1px);
-      }
-    }`});
 
   ${({ $isOverlay }) =>
     $isOverlay &&

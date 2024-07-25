@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { useRecoilValue } from 'recoil';
-import { checkIfHarryPotterPage } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, MORE_DETAILS_SWIPESHEET } from 'const/index';
-import { DEFAULT_MAGIC_WAND } from 'assets/magicWand';
 import { TPopupProps } from './interface';
-import { StyledPopupContent } from './styles';
 
 const Popup = ({
   controller,
@@ -19,7 +14,6 @@ const Popup = ({
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [startingIndex, setStartingIndex] = useState(-1);
-  const { uid } = useRecoilValue(appAtom);
 
   const close = (isButton = false) => {
     setIsVisible(false);
@@ -61,17 +55,12 @@ const Popup = ({
       };
   }, []);
 
-  const isHarryPotterPage = checkIfHarryPotterPage(uid);
-
   const popupStyles: Modal.Styles = {
     overlay: {
       zIndex: 100,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
       opacity: isVisible ? 1 : 0,
       transition: 'opacity .5s cubic-bezier(0.7, 0, 0.3, 1)',
-      ...(isHarryPotterPage && {
-        cursor: `url("${DEFAULT_MAGIC_WAND}") 0 0, auto`,
-      }),
     },
     content: {
       maxWidth: 792,
@@ -106,9 +95,7 @@ const Popup = ({
       onAfterOpen={onAfterOpen}
       portalClassName={`popup-portal-${tgid}`}
     >
-      <StyledPopupContent $isHarryPotterPage={isHarryPotterPage}>
-        {children}
-      </StyledPopupContent>
+      {children}
     </Modal>
   );
 };
