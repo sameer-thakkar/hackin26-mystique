@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
 import {
@@ -7,7 +8,9 @@ import {
   HighlightsPanel,
   ViewMoreButton,
 } from 'components/Product/styles';
+import { checkIfHarryPotterPage } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
@@ -36,6 +39,7 @@ const Highlights = ({
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
+  const { uid } = useRecoilValue(appAtom);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -44,6 +48,8 @@ const Highlights = ({
       );
     }
   }, []);
+
+  const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
   return (
     <CompactHighlightsWrapper
@@ -92,6 +98,7 @@ const Highlights = ({
         $isOverlay={showViewMoreAsOverlay}
         $showPopup={showPopup}
         $hasBackground={ctaHasBackground}
+        $isHarryPotterPage={isHarryPotterPage}
       >
         {`${showMoreDetails ? strings.MORE_DETAILS : strings.PC_EXP.SHOW_INCL}`}
         {showPopup ? (

@@ -19,6 +19,7 @@ import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import {
+  checkIfHarryPotterPage,
   displayBannerTrustBoosters,
   displayProductTrustBoosters,
   getAlternateLanguages,
@@ -75,6 +76,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
+import { DEFAULT_MAGIC_WAND, HOVERED_MAGIC_WAND } from 'assets/magicWand';
 import { TAirportTransfersProductSectionProps } from './AirportTransfers/AirportTransferProductsSection/interface';
 import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
@@ -150,6 +152,39 @@ const CatAndSubCatPage = dynamic(
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
+`;
+
+const StyledMicrositeContainer = styled.div<{ $isHarryPotterPage: boolean }>`
+  ${({ $isHarryPotterPage }) =>
+    $isHarryPotterPage &&
+    `
+      & {
+        cursor: url("${DEFAULT_MAGIC_WAND}") 0 0,
+        auto !important;
+      }
+      
+      .custom-hover,
+      button,
+      .active,
+      .main-menu-item,
+      .menu-item,
+      a,
+      span[role='button'],
+      .rating-count .underline,
+      .free-cancellation,
+      div[role='button'],
+      button > svg,
+      .tabs div,
+      div[role='button'].question,
+      div[role='button'] > .question-text,
+      .chevron-icon,
+      .chevron-icon svg,
+      .menu-items-container > div > div,
+      .content-layer > div,
+      .locale-button-wrapper, .locale-popover-header > div {
+        cursor: url("${HOVERED_MAGIC_WAND}") 10 8,
+          auto !important;
+      }`}
 `;
 
 const MicrositeV1 = (props: any) => {
@@ -855,6 +890,8 @@ const MicrositeV1 = (props: any) => {
     });
   }, [eventsReady, isAirportTransfersMB]);
 
+  const isHarryPotterPage = checkIfHarryPotterPage(uid);
+
   if (
     (isHohoExpEligible && isHohoExperimentResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
@@ -864,7 +901,10 @@ const MicrositeV1 = (props: any) => {
 
   return (
     <div>
-      <div className="microsite-container">
+      <StyledMicrositeContainer
+        $isHarryPotterPage={isHarryPotterPage}
+        className="microsite-container"
+      >
         <Conditional if={groupBookingModalActive}>
           <GroupBooking
             closeGroupBookingModal={() => closeGroupBookingModal}
@@ -1231,7 +1271,7 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-      </div>
+      </StyledMicrositeContainer>
     </div>
   );
 };

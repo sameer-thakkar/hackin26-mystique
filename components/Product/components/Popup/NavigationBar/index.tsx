@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
@@ -94,6 +94,7 @@ const NavigationBar = ({
           $isSelected={currentActiveIndex === 1}
           onClick={() => onItemClick(1)}
           data-navigation-bar-index={1}
+          className="navigation-link"
         >
           {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
           <div className="new-tag">{strings.NEW}</div>
@@ -109,6 +110,7 @@ const NavigationBar = ({
             $isSelected={currentActiveIndex === finalIndex}
             onClick={() => onItemClick(finalIndex)}
             data-navigation-bar-index={finalIndex}
+            className="navigation-link"
           >
             {heading}
           </NavigationLink>
@@ -123,6 +125,7 @@ const NavigationBar = ({
           $isSelected={currentActiveIndex === reviewSectionIndex}
           onClick={() => onItemClick(reviewSectionIndex)}
           data-navigation-bar-index={reviewSectionIndex}
+          className="navigation-link"
         >
           {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
         </NavigationLink>

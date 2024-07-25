@@ -1072,3 +1072,7 @@ export const getPrimarySubCategoryIdData = (
 export const containsPOIAndSeatmap = (array = []) => {
   return array.some((item) => /POI.*seatmap/.test(item));
 };
+
+export const checkIfHarryPotterPage = (uid: string) => {
+  return uid === 'harry-potter.london-tickets.co.uk';
+};
