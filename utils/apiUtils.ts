@@ -107,7 +107,11 @@ export enum HeadoutEndpoints {
   GeoLocateCity,
 }
 
-const endPointsOnNewCDN = [HeadoutEndpoints.TourGroupsV6];
+const endPointsOnNewCDN = [
+  HeadoutEndpoints.TourGroupsV6,
+  HeadoutEndpoints.TourGroupListByCollectionV6,
+  HeadoutEndpoints.CollectionSections,
+];
 
 export const getHeadoutApiUrl = ({
   endpoint,
