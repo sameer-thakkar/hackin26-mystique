@@ -2211,28 +2211,3 @@ export const ENTERTAINMENT_MB_CITIES = {
 export const MYSTIQUE = 'Mystique';
 
 export const HOHO_SUBCATEGORY_ID = 1011;
-
-export const IMAGE_QUALITY_EXPERIMENT_UIDS = [
-  'www.thevaticantickets.com',
-  'www.alcazar-seville-tickets.com',
-  'www.london-tickets.co.uk.windsor-castle-tickets',
-  'www.london-tickets.co.uk.sea-life-london-aquarium-tickets',
-  'anne-frank.tickets-amsterdam.com',
-  'www.stonehenge-london-tours.com',
-  'www.abudhabi-tickets.com.warner-bros-world-abu-dhabi',
-  'www.castel-sant-angelo-ticket.com',
-  'www.versailles-palace-tickets.com',
-  'www.belvederepalacetickets.com',
-  'moma.new-york-tickets.com',
-  'www.palmtowertickets.com',
-  'www.dubai-tickets.co.dubai-aquarium',
-  'www.krkanationalparktickets.com',
-  'summit-one-vanderbilt.new-york-tickets.com',
-  'www.new-york-tickets.com/summit-one-vanderbilt',
-  'www.knossospalacetickets.com',
-  'www.jeronimosmonasterytickets.com',
-  'skytree.tickets-tokyo.com',
-  'gardaland.themeparkstickets.com',
-  'www.singapore-tickets.com.mandai-wildlife-reserve.night-safari',
-  'www.tickets-valencia.com.ciudad-de-las-artes-y-las-ciencias',
-];

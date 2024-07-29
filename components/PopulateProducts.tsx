@@ -247,7 +247,6 @@ const PopulateProducts: any = (props: any) => {
     isHOHORevamp,
     isHOHOResolving,
     isRankingExperimentResolving = false,
-    isImageQualityExperimentResolving = false,
     showItineraries = false,
     horizontalProductCard = false,
     verticalProductCard = false,
@@ -722,7 +721,6 @@ const PopulateProducts: any = (props: any) => {
         }
         showThumbnailInBanner={showThumbnailInBanner}
         comboIndex={comboIndex}
-        isImageQualityExperimentResolving={isImageQualityExperimentResolving}
       />
     ) : (
       <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
@@ -738,9 +736,6 @@ const PopulateProducts: any = (props: any) => {
             }
             showThumbnailInBanner={showThumbnailInBanner}
             comboIndex={comboIndex}
-            isImageQualityExperimentResolving={
-              isImageQualityExperimentResolving
-            }
           />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

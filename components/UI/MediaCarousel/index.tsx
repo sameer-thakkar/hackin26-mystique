@@ -71,7 +71,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
-  isImageQualityExperiment,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -191,7 +190,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               priority={isLCPCandidate}
               fetchPriority={isLCPCandidate ? 'high' : 'auto'}
               fill
-              loadHigherQualityImage={isImageQualityExperiment}
+              loadHigherQualityImage={true}
             />
           );
         })}

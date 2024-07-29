@@ -64,7 +64,6 @@ import {
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
   EMAIL_SUBCRIPTION,
-  IMAGE_QUALITY_EXPERIMENT_UIDS,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_CATEGORISATION,
   MB_TYPES,
@@ -351,20 +350,8 @@ const MicrositeV1 = (props: any) => {
       isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
 
-  const {
-    isEligible: isImageQualityExpEligible,
-    variant: imageQualityExpVariant,
-    isExperimentResolving: isImageQualityExpResolving,
-  } = useABTesting({
-    experimentId: 'IMAGE_QUALITY_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => IMAGE_QUALITY_EXPERIMENT_UIDS.includes(uid),
-  });
-
   const showHohoRevamp =
     isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
-  const showHigherQualityImage =
-    isImageQualityExpEligible && imageQualityExpVariant === VARIANTS.TREATMENT;
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -827,7 +814,6 @@ const MicrositeV1 = (props: any) => {
       isHOHORevamp={showHohoRevamp}
       isHOHOResolving={isHohoExpEligible && !hohoTimer}
       isRankingExperimentResolving={isRankingExperimentResolving}
-      isImageQualityExperimentResolving={showHigherQualityImage}
       showItineraries={showItineraries}
     />
   );
@@ -894,8 +880,7 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isHohoExpEligible && isHohoExperimentResolving) ||
-    (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (isImageQualityExpEligible && isImageQualityExpResolving)
+    (isLFCImpactExpEligible && isLFCExperimentResolving)
   )
     return <Loader />;
 
