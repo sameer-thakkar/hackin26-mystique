@@ -111,6 +111,9 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.TourGroupsV6,
   HeadoutEndpoints.TourGroupListByCollectionV6,
   HeadoutEndpoints.CollectionSections,
+  HeadoutEndpoints.TourGroupListByCategoryV6,
+  HeadoutEndpoints.TourGroupListBySubCategoryV6,
+  HeadoutEndpoints.TourGroupReviewsV2,
 ];
 
 export const getHeadoutApiUrl = ({
