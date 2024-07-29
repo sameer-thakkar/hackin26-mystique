@@ -39,6 +39,9 @@ export type TMapProps = {
   }: TOnClickTrackEvent) => void;
   onZoomTrackEvent?: ({ zoomType }: TOnZoomTrackEvent) => void;
   interactionBlockingOverlayText?: string;
+  zoomPadding?: L.PointExpression;
+  enableFreeTouchPropagation?: boolean;
+  onReset?: () => void;
 };
 
 export type TGetMarkerIconProps = {

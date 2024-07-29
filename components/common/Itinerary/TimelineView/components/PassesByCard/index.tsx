@@ -9,8 +9,10 @@ import {
   TOnStopClick,
 } from 'components/common/Itinerary/TimelineView/interface';
 import Image from 'UI/Image';
+import { isMobile } from 'utils/helper';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
+import EyeSVG from 'assets/eye';
 import Minus from 'assets/minus';
 import Plus from 'assets/plus';
 import {
@@ -18,6 +20,7 @@ import {
   Cta,
   Heading,
   SpaceBlock,
+  StyledMobilePassesByCardContainer,
   SubCardContainer,
   SubCardContentContainer,
   SubCardContentTextContainer,
@@ -42,12 +45,16 @@ const PassingBySubCard = ({
   itineraryId,
   onClick,
 }: PassesBySubCardProps) => {
+  const isDesktop = !isMobile();
   const [isOpen, setIsOpen] = useState(false);
   const isReducedWidthVariant =
     variant === TimelineViewComponentVariant.REDUCED_WIDTH;
 
   const handleClick = () => {
-    if (!isLink) setIsOpen(!isOpen);
+    if (isDesktop) {
+      if (!isLink) setIsOpen(!isOpen);
+    }
+    onClick?.({ id } as Section);
   };
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -67,8 +74,8 @@ const PassingBySubCard = ({
         <Image
           url={image!}
           alt="stop-image"
-          height={isReducedWidthVariant ? 16 : 20}
-          width={isReducedWidthVariant ? 26 : 32}
+          height={isDesktop ? (isReducedWidthVariant ? 16 : 20) : 20}
+          width={isDesktop ? (isReducedWidthVariant ? 26 : 32) : 20}
           priority
           fetchPriority={'high'}
           fill
@@ -153,28 +160,90 @@ const PassingBySubCard = ({
   );
 };
 
+const MobilePassesByCard = ({
+  title,
+  image,
+  description,
+  link,
+  id,
+  onClick,
+}: PassesBySubCardProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const isLink = !image && !description;
+
+  const handleContainerClick = () => {
+    if (!isLink) setIsOpen(!isOpen);
+    onClick?.({ id } as Section);
+  };
+
+  return (
+    <StyledMobilePassesByCardContainer
+      onClick={handleContainerClick}
+      {...(isLink && {
+        href: link!,
+        as: 'a',
+        target: '_blank',
+        rel: 'noreferrer',
+      })}
+    >
+      <div className="heading-container">
+        <p className="heading">{title}</p>
+        <div className="cta-container">
+          <Conditional if={!isOpen && !isLink}>
+            <Plus />
+          </Conditional>
+          <Conditional if={isOpen}>
+            <Minus />
+          </Conditional>
+        </div>
+      </div>
+
+      <div className="rank-tag-container">
+        <EyeSVG />
+      </div>
+    </StyledMobilePassesByCardContainer>
+  );
+};
+
 const PassesByCard = ({
-  stops,
+  stops = [],
   variant,
+  isCruiseItinerary,
   itineraryId,
   onStopSectionClick,
 }: PassesByCardProps & {
   itineraryId: number;
   onStopSectionClick?: TOnStopClick;
 }) => {
+  const isDesktop = !isMobile();
+
   return (
-    <Container>
-      <Heading $variant={variant}>
-        {strings.ITINERARY.PASSES_BY_SECTION_HEADING}
-      </Heading>
+    <Container $variant={variant} $isCruiseItinerary={isCruiseItinerary}>
+      <Conditional if={!(isCruiseItinerary && !isDesktop)}>
+        <Heading $variant={variant}>
+          {strings.ITINERARY.PASSES_BY_SECTION_HEADING}
+        </Heading>
+      </Conditional>
       {stops.map((stop, index) => (
-        <PassingBySubCard
-          {...stop}
-          key={`passing-by-${index}`}
-          variant={variant}
-          itineraryId={itineraryId}
-          onClick={onStopSectionClick}
-        />
+        <>
+          <Conditional if={!(isCruiseItinerary && !isDesktop)}>
+            <PassingBySubCard
+              {...stop}
+              key={`passing-by-${index}`}
+              variant={variant}
+              itineraryId={itineraryId}
+              onClick={onStopSectionClick}
+            />
+          </Conditional>
+          <Conditional if={!isDesktop && isCruiseItinerary}>
+            <MobilePassesByCard
+              {...stop}
+              key={`passing-by-${index}`}
+              onClick={onStopSectionClick}
+              itineraryId={itineraryId}
+            />
+          </Conditional>
+        </>
       ))}
     </Container>
   );

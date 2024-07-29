@@ -24,6 +24,7 @@ const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 const SHOULDER_PAGE_PRODUCT_CARD_EXPERIMENT =
   'Shoulder Page Product Card Experiment';
+const ITINERARY_CONTROLLED_ROLLOUT = 'Itinerary Controlled Rollout';
 const IMAGE_QUALITY_EXPERIMENT = 'Image Quality Experiment';
 const HOHO_REVAMP = 'HOHO LP Revamp 1.3';
 
@@ -32,6 +33,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   CURATED_VIDEO_BANNER,
   HOHO_REVAMP,
   IMAGE_QUALITY_EXPERIMENT,
+  ITINERARY_CONTROLLED_ROLLOUT,
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
@@ -68,6 +70,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     IMAGE_QUALITY_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
+  ),
+  [ITINERARY_CONTROLLED_ROLLOUT]: new Experiment(
+    ITINERARY_CONTROLLED_ROLLOUT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
   ),
   [LAST_MINUTE_FILTERS_EXPERIMENT]: new Experiment(
     LAST_MINUTE_FILTERS_EXPERIMENT,

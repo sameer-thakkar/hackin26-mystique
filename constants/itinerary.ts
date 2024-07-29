@@ -1,5 +1,9 @@
 import dynamic from 'next/dynamic';
-import { ModeOfTravelOptions, SUB_TYPES } from 'types/itinerary.type';
+import {
+  CHILD_SECTION_TYPE,
+  ModeOfTravelOptions,
+  SUB_TYPES,
+} from 'types/itinerary.type';
 import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
 import { getDurationInHMNotation, getHumanReadableTime } from 'utils/dateUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
@@ -122,7 +126,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
 
 export const motIcons: Record<ModeOfTravelOptions, () => Promise<any>> = {
   [ModeOfTravelOptions.BOAT]: () => import('assets/boat'),
-  [ModeOfTravelOptions.BUS_COACH]: () => import('assets/bus'),
+  [ModeOfTravelOptions.BUS_COACH]: () => import('assets/coach'),
   [ModeOfTravelOptions.CAR]: () => import('assets/car'),
   [ModeOfTravelOptions.FERRY]: () => import('assets/ferry'),
   [ModeOfTravelOptions.MINIBUS]: () => import('assets/minibus'),
@@ -143,7 +147,24 @@ export const nearbyThingsIcon: Record<string, () => Promise<any>> = {
   [SUB_TYPES.NEIGHBOURHOOD_AREA]: () => import('assets/neighbourhood'),
   [SUB_TYPES.HOHO_BUS_STOP]: () => import('assets/stop'),
   [SUB_TYPES.OTHERS]: () => import('assets/locationPin'),
+
+  [SUB_TYPES.BREAKFAST]: () => import('assets/foodAndDrink'),
+  [SUB_TYPES.LUNCH]: () => import('assets/foodAndDrink'),
+  [SUB_TYPES.SNACKS]: () => import('assets/foodAndDrink'),
+  [SUB_TYPES.DINNER]: () => import('assets/foodAndDrink'),
+
+  [SUB_TYPES.DRINKS]: () => import('assets/beverage'),
+
+  [CHILD_SECTION_TYPE.ACTIVITY]: () => import('assets/activities'),
+  [CHILD_SECTION_TYPE.ATTRACTION]: () => import('assets/attractions'),
+  [CHILD_SECTION_TYPE.FOOD_AND_DRINKS]: () => import('assets/foodAndDrink'),
 };
+
+export const ITINERARY_MAP_BANNER_ICON_IMAGE =
+  'https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-map-banner-icon.svg';
+
+export const ITINERARY_MAP_BANNER_BG_IMAGE =
+  'https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-map-banner-bg.png';
 
 export const tgidsWithSitesVisited = [
   16990, 2926, 9641, 21364, 28144, 3728, 21495, 3696, 6756, 26310,

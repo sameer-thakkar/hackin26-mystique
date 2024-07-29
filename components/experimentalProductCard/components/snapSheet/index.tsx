@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, RefObject, useState } from 'react';
+import React, { forwardRef, memo, RefObject, useEffect, useState } from 'react';
 import { useProductCard } from 'contexts/productCardContext';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { useContentScroll, useDragBehavior } from './hooks';
@@ -21,6 +21,7 @@ interface SnapSheetProps {
   setActiveTab: (tab: string) => void;
   activeTab: string;
   isTabClickScroll: boolean;
+  preventTouchEvents?: boolean;
 }
 
 const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
@@ -39,10 +40,16 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       setActiveTab,
       activeTab,
       isTabClickScroll,
+      preventTouchEvents,
     },
     ref: any
   ) => {
-    const { drawerState } = useProductCard();
+    const { drawerState, snapDrawerConfig } = useProductCard();
+    const {
+      isMountedOnTop: isSnapDrawerMountedToTop,
+      transform: snapDrawerTranslate,
+      isCompleted: isSnapDrawerMountingComplete,
+    } = snapDrawerConfig;
     const [enableProgation, togglePropgation] = useState(false);
     const { startDrag, transform } = useDragBehavior({
       ref,
@@ -52,6 +59,8 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       dragComplete,
       drawerState,
     });
+    const [finalSnapSheetTransform, setFinalSnapSheetTransform] =
+      useState(transform);
 
     useContentScroll({
       ref,
@@ -60,6 +69,18 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       activeTab,
       setActiveTab,
     });
+
+    useEffect(() => {
+      if (isSnapDrawerMountingComplete || !isSnapDrawerMountedToTop) {
+        setFinalSnapSheetTransform(transform);
+      }
+    }, [transform]);
+
+    useEffect(() => {
+      if (isSnapDrawerMountedToTop && snapDrawerTranslate) {
+        setFinalSnapSheetTransform(snapDrawerTranslate);
+      }
+    }, [isSnapDrawerMountedToTop]);
 
     return (
       <SnapSheetContainer
@@ -74,7 +95,9 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
         onTransitionEnd={() => {
           togglePropgation(false);
         }}
-        style={{ transform }}
+        style={{
+          transform: finalSnapSheetTransform,
+        }}
         $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
       >
         <Content
@@ -85,6 +108,7 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
           $isOpen={!!(drawerState === SWIPESHEET_STATES.OPEN)}
           ref={ref}
           $hasOffers={hasOffers}
+          $preventTouchEvents={preventTouchEvents}
         >
           {children}
         </Content>

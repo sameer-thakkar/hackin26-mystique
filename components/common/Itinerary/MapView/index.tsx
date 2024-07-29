@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { ChildSection, Section } from 'types/itinerary.type';
+import { useItinerary } from 'contexts/ItineraryContext';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
@@ -23,9 +24,7 @@ const MapView = ({ itinerary }: MapViewProps) => {
   const isOnScreen = useOnScreen({ ref, unobserve: eventRecorded });
   const [isTimelineViewVisible, setIsTimelineViewVisible] = useState(false);
   const mapController = useRef<TMapController | null>(null);
-  const [activeStopSectionId, setActiveStopSectionId] = useState<number | null>(
-    null
-  );
+  const { setActiveItineraryStopId } = useItinerary();
 
   useEffect(() => {
     if (eventRecorded || !isOnScreen) return;
@@ -53,7 +52,7 @@ const MapView = ({ itinerary }: MapViewProps) => {
   };
 
   const onMapSelect = (id: number) => {
-    setActiveStopSectionId(id);
+    setActiveItineraryStopId(id);
     scrollToSection(id);
     setIsTimelineViewVisible(true);
   };
@@ -63,7 +62,7 @@ const MapView = ({ itinerary }: MapViewProps) => {
   ) => {
     const isSection = Object.keys(sectionDetails).includes('childSections');
     if (isSection) {
-      setActiveStopSectionId(sectionDetails.id);
+      setActiveItineraryStopId(sectionDetails.id);
       scrollToSection(sectionDetails.id);
     }
 
@@ -90,7 +89,6 @@ const MapView = ({ itinerary }: MapViewProps) => {
         <TimelineView
           itinerary={itinerary}
           variant={TimelineViewComponentVariant.REDUCED_WIDTH}
-          activeStopSectionId={activeStopSectionId}
           onStopSectionClick={handleStopSectionClick}
         />
       </SlideInTimelineViewContainer>

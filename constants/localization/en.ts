@@ -1291,6 +1291,10 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       TITLE: {
         START: 'START POINT',
         END: 'END POINT',
+        STARTING_POINT: 'STARTING POINT',
+        STOP: 'STOP',
+        ENDING_POINT: 'ENDING POINT',
+        PASSING_BY: 'PASSING BY',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} starting points available',
@@ -1320,6 +1324,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TIMELINE_VIEW: 'Timeline View',
     MAP_VIEW: 'Map View',
     MAP_OVERLAY: 'Use CTRL/⌘ + scroll to move the map',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'View your experience all mapped out.',
+    OPEN_MAP_VIEW: 'Open map view',
   },
 };
 

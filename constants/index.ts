@@ -568,6 +568,7 @@ export const ANALYTICS_EVENTS = {
     ITINERARY_TOGGLE_CLICKED: 'Itinerary Toggle Clicked',
     MAP_VIEWED: 'Map Viewed',
     VIEW_ITINERARY_CLICKED: 'View Itinerary Clicked',
+    ITINERARY_DRAWER_CTA_CLICKED: 'Itinerary Drawer CTA Clicked',
   },
   AIRPORT_TRANSFERS: {
     SEARCH_FILTER_CLICKED: 'Search Filter Clicked',
@@ -815,6 +816,7 @@ export const SIDEBAR_TYPES = {
   DEFAULT: 'default',
   FIXED: 'fixed',
   PRODUCT_CARD: 'product-card',
+  PRODUCT_CARD_NEW: 'product-card-new',
   COMBO_VARIANT: 'combo-variant',
   SIDE_NAV: 'side-navigation',
   LISTICLE_CARD: 'listicle-card',
@@ -2211,5 +2213,3 @@ export const ENTERTAINMENT_MB_CITIES = {
 };
 
 export const MYSTIQUE = 'Mystique';
-
-export const HOHO_SUBCATEGORY_ID = 1011;

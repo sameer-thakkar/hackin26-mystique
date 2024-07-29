@@ -10,13 +10,22 @@ import React, {
 import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
+import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import Itinerary from 'components/common/Itinerary';
+import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
+import { isItineraryValid } from 'utils/itinerary';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { addUrlParams } from 'utils/urlUtils';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  type LanguagesUnion,
+} from 'const/index';
 import { SWIPESHEET_STATES } from 'const/productCard';
+import { strings } from 'const/strings';
 import SnapSheet from '../snapSheet';
 import MediaCarouselWrapper from './mediaCarouselWrapper';
 import {
@@ -30,6 +39,8 @@ import TabContainer from './tabContainer';
 interface TabData {
   heading: string;
   contents: RichTextField;
+  isNew?: boolean;
+  type: 'richTextField' | 'itinerary';
 }
 
 interface DropdownContentProps {
@@ -49,6 +60,11 @@ interface DropdownContentProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   trackDrawerOpen: () => void;
+  hideCloseButton?: boolean;
+  tgidItineraryData?: TItinerary[];
+  lang: LanguagesUnion;
+  onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
+  preventTouchEvents?: boolean;
 }
 
 const DropdownContent: FC<DropdownContentProps> = ({
@@ -65,6 +81,11 @@ const DropdownContent: FC<DropdownContentProps> = ({
   activeTab,
   setActiveTab,
   trackDrawerOpen,
+  hideCloseButton = false,
+  tgidItineraryData,
+  lang,
+  onActiveItineraryTabChange,
+  preventTouchEvents,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -79,6 +100,12 @@ const DropdownContent: FC<DropdownContentProps> = ({
   const snapRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+
+  const hasItinerarySection =
+    !!tgidItineraryData &&
+    tgidItineraryData.findIndex((itinerary: TItinerary) =>
+      isItineraryValid(itinerary)
+    ) !== -1;
 
   const adjustContainerScroll = useCallback(
     (targetElement: any, container: any) => {
@@ -164,15 +191,34 @@ const DropdownContent: FC<DropdownContentProps> = ({
   );
 
   useEffect(() => {
-    const { tabs } = extractTabsFromHighlights(finalHighlights) as any;
+    let { tabs } = extractTabsFromHighlights(finalHighlights) as any;
     if (tabs.length >= 2) {
       const temp = tabs[0];
       tabs[0] = tabs[1];
       tabs[1] = temp;
     }
+    tabs = tabs.map((tab: TabData) => ({
+      ...tab,
+      type: 'richTextField',
+    }));
     setTabs(tabs);
     setActiveTab(tabs[0]?.heading || '');
   }, [finalHighlights]);
+
+  useEffect(() => {
+    if (hasItinerarySection && finalHighlights) {
+      setTabs((prevTabs) => [
+        prevTabs[0],
+        {
+          heading: strings.ITINERARY.TAB,
+          isNew: true,
+          contents: [],
+          type: 'itinerary',
+        },
+        ...prevTabs.slice(1),
+      ]);
+    }
+  }, [tgidItineraryData, finalHighlights]);
 
   useEffect(() => {
     if (!childRef.current || !headerHeight) return;
@@ -224,6 +270,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
         typeof window !== undefined ? window.innerHeight + 'px' : '100vh'
       }
       $isActive={isActive}
+      id={'dropdown-content-container'}
     >
       <TabContainer
         ref={headerRef}
@@ -242,6 +289,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
           tgid,
           shouldCropImage,
           setImageHeight,
+          hideCloseButton,
         }}
       />
       <Conditional if={imageHeight}>
@@ -259,6 +307,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
           setActiveTab={setActiveTab}
           activeTab={activeTab}
           isTabClickScroll={isTabClickScroll}
+          preventTouchEvents={preventTouchEvents}
         >
           <div ref={childRef}>{children}</div>
           <ContentContainer>
@@ -268,8 +317,32 @@ const DropdownContent: FC<DropdownContentProps> = ({
                 key={index}
                 id={tab.heading}
               >
-                <Heading $isFirst={index === 0}>{tab.heading}</Heading>
-                <PrismicRichText field={tab.contents} />
+                <Heading
+                  $bottomMargin={
+                    tab.type === 'itinerary'
+                      ? '1.5rem'
+                      : index === 0
+                      ? '0.75rem'
+                      : '1rem'
+                  }
+                >
+                  {tab.type === 'itinerary'
+                    ? strings.ITINERARY.HEADING
+                    : tab.heading}
+                </Heading>
+                <Conditional if={tab.type === 'richTextField'}>
+                  <PrismicRichText field={tab.contents} />
+                </Conditional>
+                <Conditional
+                  if={tab.type === 'itinerary' && hasItinerarySection}
+                >
+                  <Itinerary
+                    itineraryData={tgidItineraryData!}
+                    lang={lang}
+                    onActiveTabChange={onActiveItineraryTabChange}
+                    showTitle={false}
+                  />
+                </Conditional>
               </TabContent>
             ))}
           </ContentContainer>

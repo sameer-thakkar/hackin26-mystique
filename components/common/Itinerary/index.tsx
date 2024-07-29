@@ -4,11 +4,14 @@ import { useRecoilValue } from 'recoil';
 import { ChildSection, Section } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import type { TItineraryComponentProps } from 'components/common/Itinerary/interface';
+import ItineraryMapViewBanner from 'components/common/Itinerary/ItineraryMapViewBanner';
 import ItineraryViewSwitch from 'components/common/Itinerary/ItineraryViewSwitch';
 import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import type { TTabListItemProps } from 'UI/Tabs/interface';
+import { useItinerary } from 'contexts/ItineraryContext';
 import { trackEvent } from 'utils/analytics';
+import { isMobile } from 'utils/helper';
 import { getItineraryDescriptorsTypes } from 'utils/itinerary';
 import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
@@ -28,17 +31,16 @@ const Tabs = dynamic(() => import(/* webpackChunkName: "Tabs" */ 'UI/Tabs'));
 const Itinerary = ({
   itineraryData = [],
   lang,
+  onActiveTabChange,
+  showTitle = true,
   isHohoItinerary = false,
 }: TItineraryComponentProps) => {
+  const isDesktop = !isMobile();
   const { isBot } = useRecoilValue(appAtom);
+  const { itineraryViewMode, setItineraryViewMode, setActiveItineraryStopId } =
+    useItinerary();
   const [activeTab, setActiveTab] = useState(
     itineraryData[0]?.id.toString() ?? ''
-  );
-  const [viewMode, setViewMode] = useState<ItineraryViewMode>(
-    ItineraryViewMode.TIMELINE
-  );
-  const [activeStopSectionId, setActiveStopSectionId] = useState<number | null>(
-    null
   );
 
   const tabListItems: TTabListItemProps[] = itineraryData
@@ -60,7 +62,7 @@ const Itinerary = ({
   }, [activeItineraryData]);
 
   useEffect(() => {
-    setViewMode(ItineraryViewMode.TIMELINE);
+    setItineraryViewMode(ItineraryViewMode.TIMELINE);
   }, [activeItineraryData]);
 
   const itinerariesToRender = (
@@ -70,15 +72,11 @@ const Itinerary = ({
   const handleTabChange = (tab: TTabListItemProps) => {
     setActiveTab(tab.id);
     trackItineraryTabChange(tab);
+    onActiveTabChange?.(tab);
   };
 
-  const handleViewChange = () => {
-    const activeView =
-      viewMode === ItineraryViewMode.TIMELINE
-        ? ItineraryViewMode.MAP
-        : ItineraryViewMode.TIMELINE;
-
-    setViewMode(activeView);
+  const handleViewChange = (activeView: ItineraryViewMode) => {
+    setItineraryViewMode(activeView);
     trackItineraryViewModeChange(activeView);
   };
 
@@ -117,20 +115,24 @@ const Itinerary = ({
   const handleStopSectionClick = (
     sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>
   ) => {
-    setActiveStopSectionId(sectionDetails.id);
+    setActiveItineraryStopId(sectionDetails.id);
   };
 
   return (
     <>
-      <h6 data-itinerary-section-title="true">
-        {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.HEADING}
-      </h6>
+      <Conditional if={showTitle}>
+        <h6 id="itinerary-section-title" data-itinerary-section-title="true">
+          {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.HEADING}
+        </h6>
+      </Conditional>
       <StyledItinerarySectionContainer>
         <Conditional if={itineraryData?.length > 1}>
           <Tabs
             activeTab={activeTab}
             onChangeTab={handleTabChange}
             tabListItems={tabListItems}
+            hideNavigationArrows={!isDesktop}
+            autoFocusOnSelectedTab={!isDesktop}
           />
         </Conditional>
         <Conditional
@@ -154,16 +156,25 @@ const Itinerary = ({
           ))}
         </Conditional>
         <SpaceBlock $gap={'1.5rem'} />
-        <Conditional if={hasMapView}>
+        <Conditional if={isDesktop && hasMapView}>
           <ItineraryViewSwitch
-            viewMode={viewMode}
+            viewMode={itineraryViewMode}
             onChangeViewMode={handleViewChange}
+          />
+          <SpaceBlock $gap={'2rem'} />
+        </Conditional>
+        <Conditional if={!isDesktop && hasMapView}>
+          <ItineraryMapViewBanner
+            onClick={() => handleViewChange(ItineraryViewMode.MAP)}
           />
           <SpaceBlock $gap={'2rem'} />
         </Conditional>
       </StyledItinerarySectionContainer>
       <Conditional
-        if={activeItineraryData && viewMode === ItineraryViewMode.TIMELINE}
+        if={
+          activeItineraryData &&
+          itineraryViewMode === ItineraryViewMode.TIMELINE
+        }
       >
         {itinerariesToRender.map((itineraryItem) => (
           <Block
@@ -173,17 +184,16 @@ const Itinerary = ({
             <TimelineView
               itinerary={itineraryItem}
               variant={
-                viewMode === ItineraryViewMode.TIMELINE
+                isDesktop && itineraryViewMode === ItineraryViewMode.TIMELINE
                   ? TimelineViewComponentVariant.DEFAULT
                   : TimelineViewComponentVariant.REDUCED_WIDTH
               }
               onStopSectionClick={handleStopSectionClick}
-              activeStopSectionId={activeStopSectionId}
             />
           </Block>
         ))}
       </Conditional>
-      <Conditional if={viewMode === ItineraryViewMode.MAP}>
+      <Conditional if={itineraryViewMode === ItineraryViewMode.MAP}>
         {activeItineraryData && <MapView itinerary={activeItineraryData} />}
       </Conditional>
     </>

@@ -7,6 +7,7 @@ export const IconWrapper = styled.div<{ $isSection?: boolean }>`
   position: relative;
   width: min-content;
   z-index: 1;
+
   img {
     height: 2rem;
   }

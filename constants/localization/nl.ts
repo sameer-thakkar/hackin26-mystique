@@ -1186,6 +1186,10 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       TITLE: {
         START: 'STARTPUNT',
         END: 'EINDPUNT',
+        STARTING_POINT: 'STARTPUNT',
+        STOP: 'STOPPUNT',
+        ENDING_POINT: 'EINDPUNT',
+        PASSING_BY: 'ROUTEGEDEELTE',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} startpunten beschikbaar',
@@ -1215,6 +1219,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TIMELINE_VIEW: 'Tijdlijn',
     MAP_VIEW: 'Kaart',
     MAP_OVERLAY: 'Beweeg de kaart met CTRL/⌘ + scrolfunctie',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Bekijk je ervaring op de kaart.',
+    OPEN_MAP_VIEW: 'Kaart weergeven',
   },
 };
 export default nl;

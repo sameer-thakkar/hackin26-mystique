@@ -14,20 +14,46 @@ interface ProductContextType {
   setTitle: (state: string) => void;
   headerHeight: number;
   setHeaderHeight: (state: number) => void;
+  snapDrawerConfig: {
+    isMountedOnTop: boolean;
+    transform?: string;
+    isCompleted?: boolean;
+  };
+  setSnapDrawerConfig: (state: {
+    isMountedOnTop: boolean;
+    transform?: string;
+    isCompleted?: boolean;
+  }) => void;
 }
 
 const productCardContext = createContext({} as ProductContextType);
 
 export const useProductCard = () => useContext(productCardContext);
 
-export const ProductCardProvider: React.FC = ({ children }) => {
-  const [drawerState, setDrawerState] = useState(SWIPESHEET_STATES.HIDDEN);
+export const ProductCardProvider: React.FC<{
+  drawerDefault?: string;
+  onDrawerStateChanged?: (state: string) => void;
+}> = ({
+  children,
+  drawerDefault = SWIPESHEET_STATES.HIDDEN,
+  onDrawerStateChanged,
+}) => {
+  const [drawerState, setDrawerState] = useState(drawerDefault);
   const [pricingHeight, setPricingHeight] = useState(0);
   const [discountText, setDiscountText] = useState('');
   const [showPricingBar, setShowPricingBar] = useState(false);
   const [title, setTitle] = useState('');
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [snapDrawerConfig, setSnapDrawerConfig] = useState({
+    isMountedOnTop: false,
+  });
+
   const { Provider: ProductCardContextProvider } = productCardContext;
+
+  const setDrawerStateHandler = (state: string) => {
+    setDrawerState(state);
+    onDrawerStateChanged && onDrawerStateChanged(state);
+  };
 
   useEffect(() => {
     if (showPricingBar && drawerState === SWIPESHEET_STATES.HIDDEN) {
@@ -40,7 +66,7 @@ export const ProductCardProvider: React.FC = ({ children }) => {
     <ProductCardContextProvider
       value={{
         drawerState,
-        setDrawerState,
+        setDrawerState: setDrawerStateHandler,
         pricingHeight,
         setPricingHeight,
         discountText,
@@ -51,6 +77,8 @@ export const ProductCardProvider: React.FC = ({ children }) => {
         setTitle,
         headerHeight,
         setHeaderHeight,
+        snapDrawerConfig,
+        setSnapDrawerConfig,
       }}
     >
       {children}

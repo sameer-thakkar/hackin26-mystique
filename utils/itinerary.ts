@@ -17,7 +17,7 @@ export const getEntryPointPlaceHolder = (index: number) => {
   return `https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-entry-s-${imageIndex}.png`;
 };
 
-type CombinedStopAndPassby = {
+export type CombinedStopAndPassby = {
   stop?: StopCardProps | null;
   passby?: PassesByCardProps | null;
 };
@@ -32,9 +32,9 @@ export const isValidLocation = (location?: Location) =>
 
 export const sectionDataSanitizer = (
   sections: Section[],
-  type: ItineraryType
+  itineraryType: ItineraryType
 ) => {
-  const isHOHO = isHOHOItinerary(type);
+  const isHOHO = isHOHOItinerary(itineraryType);
 
   const startLocations = sections.filter(
     (section) => section.type === SECTION_TYPE.START_LOCATION
@@ -126,6 +126,8 @@ export const sectionDataSanitizer = (
                   link: stop.location
                     ? generateGoogleMapUrl(stop.location)
                     : null,
+                  type: stop.type,
+                  subType: stop.details.subType,
                 },
               ],
             }
@@ -187,8 +189,8 @@ export const sectionDataSanitizer = (
       if (index === 0) finalStops.push(prop);
       else {
         if (finalStops[finalStops.length - 1].passby) {
-          finalStops[finalStops.length - 1].passby?.stops.push(
-            prop.passby.stops[0]
+          finalStops[finalStops.length - 1].passby?.stops?.push(
+            prop.passby.stops![0]
           );
         } else {
           finalStops.push(prop);
@@ -353,11 +355,16 @@ export const getItineraryDescriptorsTypes = (
   }, [] as Array<keyof typeof ItineraryDescriptorsTypes>);
 };
 
+export const isHOHOItinerary = (itineraryType: ItineraryType) => {
+  return itineraryType === ItineraryType.HOHO;
+};
+
+export const isCruiseItinerary = (itineraryType: ItineraryType) => {
+  return itineraryType === ItineraryType.CRUISE;
+};
+
 export const isItineraryValid = (itinerary: Itinerary) => {
   if (!itinerary.active || !itinerary.sections.length) return false;
 
   return true;
 };
-
-export const isHOHOItinerary = (type: ItineraryType) =>
-  type === ItineraryType.HOHO;

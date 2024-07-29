@@ -6,9 +6,11 @@ export const StyledTimelineViewContainer = styled.div<{
 }>`
   width: 100%;
 
-  ${({ $variant }) =>
-    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
-    css`
-      max-width: 16.25rem;
-    `}
+  @media only screen and (min-width: 768px), print {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        max-width: 16.25rem;
+      `}
+  }
 `;

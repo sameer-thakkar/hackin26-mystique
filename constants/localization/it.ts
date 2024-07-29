@@ -1223,6 +1223,10 @@ const it = {
       TITLE: {
         START: 'INIZIO',
         END: 'FINE',
+        STARTING_POINT: 'INIZIO',
+        STOP: 'FERMATA',
+        ENDING_POINT: 'FINE',
+        PASSING_BY: 'PERCORSO',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} punti di partenza disponibili',
@@ -1252,6 +1256,8 @@ const it = {
     TIMELINE_VIEW: 'Programma',
     MAP_VIEW: 'Mappa',
     MAP_OVERLAY: 'Usa CTRL/⌘ + il cursore per spostarti',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Guarda la tua esperienza sulla mappa.',
+    OPEN_MAP_VIEW: 'Apri la mappa',
   },
 };
 export default it;

@@ -1224,6 +1224,10 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       TITLE: {
         START: 'STARTPUNKT',
         END: 'ENDPUNKT',
+        STARTING_POINT: 'STARTPUNKT',
+        STOP: 'HALTEPUNKT',
+        ENDING_POINT: 'ENDPUNKT',
+        PASSING_BY: 'TEIL DER ROUTE',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} Startpunkte verfügbar',
@@ -1253,6 +1257,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TIMELINE_VIEW: 'Zeitstrahl',
     MAP_VIEW: 'Karte',
     MAP_OVERLAY: 'Verschieben Sie die Karte mit Strg/⌘ + scrollen',
+    VIEW_EXPERIENCE_MAPPED_OUT:
+      'Schauen Sie sich Ihr Erlebnis auf der Karte an.',
+    OPEN_MAP_VIEW: 'Kartenansicht öffnen',
   },
 };
 

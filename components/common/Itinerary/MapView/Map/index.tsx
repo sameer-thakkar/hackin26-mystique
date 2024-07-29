@@ -29,6 +29,9 @@ const RouteMap = ({
   onClickTrackEvent,
   interactionBlockingOverlayText,
   onZoomTrackEvent,
+  zoomPadding = [60, 60],
+  enableFreeTouchPropagation = false,
+  onReset,
 }: TMapProps) => {
   const [markers, setMarkers] = useState<Array<MapMarker> | undefined>();
   const [zoomInfo, setZoomInfo] = useState<TZoomInfo>(null);
@@ -147,7 +150,7 @@ const RouteMap = ({
         mapController.current!.map?.flyTo(bounds.getCenter(), zoom);
       } else
         mapController.current!.map?.flyToBounds(bounds, {
-          padding: [60, 60],
+          padding: zoomPadding,
         });
     };
 
@@ -199,7 +202,7 @@ const RouteMap = ({
   };
 
   const handleFreeTouch = (e: any) => {
-    e.stopPropagation();
+    if (!enableFreeTouchPropagation) e.stopPropagation();
     const { className } = e.target as HTMLElement;
     if (typeof className === 'string' && className.includes('leaflet-touch')) {
       trackEvent({
@@ -207,6 +210,11 @@ const RouteMap = ({
         [ANALYTICS_PROPERTIES.CLICK_TYPE]: 'Free Area',
       });
     }
+  };
+
+  const handleReset = () => {
+    mapController?.current?.reset();
+    onReset?.();
   };
 
   useEffect(() => {
@@ -275,7 +283,7 @@ const RouteMap = ({
         onZoomChanged={handleZoomChange}
       />
 
-      <ResetButton onClick={mapController?.current?.reset} />
+      <ResetButton onClick={handleReset} />
     </MapContainer>
   );
 };

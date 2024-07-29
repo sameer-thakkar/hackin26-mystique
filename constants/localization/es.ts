@@ -1284,6 +1284,10 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       TITLE: {
         START: 'LUGAR DE SALIDA',
         END: 'LUGAR DE LLEGADA',
+        STARTING_POINT: 'PUNTO DE PARTIDA',
+        STOP: 'PARADA',
+        ENDING_POINT: 'PUNTO DE LLEGADA',
+        PASSING_BY: 'PASA POR',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} puntos de partida disponibles',
@@ -1313,6 +1317,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TIMELINE_VIEW: 'Vista cronológica',
     MAP_VIEW: 'Vista de la ruta',
     MAP_OVERLAY: 'Usa CTRL/⌘ + el ratón para desplazarte por el mapa',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Mira tu experiencia en el mapa.',
+    OPEN_MAP_VIEW: 'Mostrar mapa',
   },
 };
 export default es;

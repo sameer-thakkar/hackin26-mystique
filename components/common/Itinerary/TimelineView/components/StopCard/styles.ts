@@ -36,6 +36,7 @@ export const RankContainer = styled.div<{
     color: ${COLORS.BRAND.WHITE};
     transform: translateY(-1px);
     position: relative;
+    margin: 0 !important;
 
     ${({ $isEnd }) =>
       $isEnd &&
@@ -62,10 +63,10 @@ export const RankContainer = styled.div<{
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
       left: 0.1rem;
-      top: 0.2rem;
+      top: 0.3rem;
       height: 1.25rem;
       width: 1.25rem;
-      border-radius: 2px;
+      border-radius: 4px;
 
       p {
         ${expandFontToken(FONTS.SUBHEADING_SMALL)};
@@ -81,6 +82,11 @@ export const RankContainer = styled.div<{
           }
         `}
       }
+
+      @media only screen and (min-width: 768px), print {
+        border-radius: 2px;
+        top: 0.2rem;
+      }
     `}
 
   ${({ $isActive, $variant }) =>
@@ -88,7 +94,18 @@ export const RankContainer = styled.div<{
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
       box-shadow: 0 0 0 4px rgba(136, 0, 255, 0.2);
-    `}
+    `};
+
+  @media only screen and (min-width: 768px), print {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        height: 1rem;
+        width: 1rem;
+        left: 0.25rem;
+        top: 0.4rem;
+      `}
+  }
 `;
 
 export const ToggleContainer = styled.div`
@@ -127,9 +144,15 @@ export const HeadingContainer = styled.div<{
   position: relative;
 
   .image-wrap {
-    height: 1.25rem;
-    width: 2rem;
-
+    display: flex;
+    height: ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH
+        ? '1rem'
+        : '1.25rem'};
+    width: ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH
+        ? '1.5rem'
+        : '1.25rem'};
     img {
       border-radius: 2px;
     }
@@ -164,9 +187,10 @@ export const HeadingContainer = styled.div<{
       justify-content: space-between;
 
       .stop-title {
-        ${expandFontToken(FONTS.MISC_OVERLINE)};
+        ${expandFontToken(FONTS.MISC_OVERLINE_LARGE)};
         letter-spacing: 0.8px;
         color: ${COLORS.GRAY.G2};
+        margin: 0 !important;
       }
 
       .stop-heading-container {
@@ -178,10 +202,12 @@ export const HeadingContainer = styled.div<{
       .stop-name-container {
         display: flex;
         gap: 0.375rem;
+        align-items: center;
       }
 
       .stop-name {
-        ${expandFontToken(FONTS.HEADING_XS)};
+        ${expandFontToken(FONTS.HEADING_SMALL)};
+        margin: 0 !important;
       }
 
       .stop-subtext {
@@ -200,7 +226,26 @@ export const HeadingContainer = styled.div<{
           }
         }
       }
-    `}
+    `};
+
+  @media only screen and (min-width: 768px), print {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        .stop-title {
+          ${expandFontToken(FONTS.MISC_OVERLINE)};
+        }
+
+        .stop-name {
+          ${expandFontToken(FONTS.HEADING_XS)};
+        }
+      `}
+
+    .image-wrap {
+      height: 1.25rem;
+      width: 2rem;
+    }
+  }
 `;
 
 export const Description = styled.div<{
@@ -405,9 +450,17 @@ export const Container = styled.div<{
   ${({ $variant }) =>
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
-      padding: 0.1875rem 0.5rem 1.25rem 1.75rem;
-      gap: 1rem;
+      padding: 0.1875rem 0.5rem 1.25rem 2.5rem;
     `};
+
+  @media only screen and (min-width: 768px), print {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        padding: 0.1875rem 0.5rem 1.25rem 1.75rem;
+        gap: 1rem;
+      `};
+  }
 `;
 
 export const ContentContainer = styled.div<{

@@ -1234,6 +1234,10 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       TITLE: {
         START: 'Point de départ',
         END: "Point d'arrivée",
+        STARTING_POINT: 'POINT DE DÉPART',
+        STOP: 'ARRÊT',
+        ENDING_POINT: "POINT D'ARRIVÉE",
+        PASSING_BY: 'PASSE PAR',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} points de départ disponibles',
@@ -1263,6 +1267,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TIMELINE_VIEW: 'Voir le programme',
     MAP_VIEW: 'Voir le plan',
     MAP_OVERLAY: "Déplacez la carte à l'aide de CTRL/⌘ + votre souris",
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Regardez votre expérience sur la carte.',
+    OPEN_MAP_VIEW: 'Ouvrir la carte',
   },
 };
 export default fr;

@@ -1,16 +1,19 @@
 import { useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import PassByItemCard from 'components/common/Itinerary/TimelineView/components/PassByItemCard';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { useSwiperArrows } from 'hooks/useSwiper';
+import { appAtom } from 'store/atoms/app';
 import { strings } from 'const/strings';
 import {
   CarouselContainer,
   Container,
   HeadingContainer,
+  MobileNearbyCards,
   NearbyCardsContainer,
 } from './styles';
 import { NearbyThingsToDoProps } from './types';
@@ -31,6 +34,8 @@ const NearbyThingsToDo = ({
   itineraryId,
   onClick,
 }: NearbyThingsToDoProps) => {
+  const { isMobile } = useRecoilValue(appAtom);
+  const isDesktop = !isMobile;
   const swiperRef = useRef<TSwiper | null>(null);
 
   const { showRightArrow, showLeftArrow, onSlideChange } = useSwiperArrows();
@@ -71,7 +76,11 @@ const NearbyThingsToDo = ({
           {strings.ITINERARY.SUB_SECTION_HEADING.NEARBY_THINGS_TO_DO}
         </p>
         <Conditional
-          if={passBys.length > 2 && (showLeftArrow || showRightArrow)}
+          if={
+            passBys.length > 2 &&
+            (showLeftArrow || showRightArrow) &&
+            !isReducedWidthVariant
+          }
         >
           <NavigationButtons
             showLeftArrow={showLeftArrow}
@@ -94,7 +103,7 @@ const NearbyThingsToDo = ({
           </SwiperWrapper>
         </CarouselContainer>
       </Conditional>
-      <Conditional if={isReducedWidthVariant}>
+      <Conditional if={isReducedWidthVariant && isDesktop}>
         <NearbyCardsContainer>
           {passBys.map((passBy, index) => (
             <PassByItemCard
@@ -105,6 +114,23 @@ const NearbyThingsToDo = ({
             />
           ))}
         </NearbyCardsContainer>
+      </Conditional>
+      <Conditional if={isReducedWidthVariant && !isDesktop}>
+        <MobileNearbyCards>
+          {passBys?.slice(0, 1).map((passBy) => (
+            <PassByItemCard
+              key={passBy.id}
+              {...passBy}
+              itineraryId={itineraryId}
+            />
+          ))}
+          <Conditional if={passBys?.length > 1}>
+            <div className="more-card">
+              <p className="count">+{passBys?.length - 1}</p>
+              <p className="label">more things</p>
+            </div>
+          </Conditional>
+        </MobileNearbyCards>
       </Conditional>
     </Container>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useRecoilValue } from 'recoil';
 import { ChildSection, SECTION_TYPE, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { SubCardHeadingContainer } from 'components/common/Itinerary/TimelineView/components/PassesByCard/styles';
@@ -13,6 +14,7 @@ import SubStopCard from 'components/common/Itinerary/TimelineView/components/Sub
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
+import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
@@ -54,7 +56,11 @@ const StopCard = ({
 }: StopCardProps & {
   itineraryId: number;
 }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen || isActive);
+  const { isMobile } = useRecoilValue(appAtom);
+  const isDesktop = !isMobile;
+  const [isOpen, setIsOpen] = useState(
+    isDesktop ? defaultOpen || isActive : false
+  );
   const [multiPointDefaultOpen, setMultiPointDefaultOpen] = useState(-1);
   const [imageLoaded, setImageLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -115,7 +121,7 @@ const StopCard = ({
   };
   const hasMultiPoints = multiPoints.points.length > 1;
   const handleStopSectionClick = () => {
-    if (!hasMultiPoints) {
+    if (!hasMultiPoints || !isDesktop) {
       onStopSectionClick?.(isSubSection ? subSectionDetails! : sectionDetails!);
     }
   };
@@ -133,7 +139,7 @@ const StopCard = ({
     variant === TimelineViewComponentVariant.REDUCED_WIDTH;
 
   useEffect(() => {
-    if (isReducedVariant) setIsOpen(hasMultiPoints || isActive);
+    if (isReducedVariant && isDesktop) setIsOpen(hasMultiPoints || isActive);
   }, [isActive]);
 
   const allowOpen = useMemo(() => {
@@ -151,10 +157,12 @@ const StopCard = ({
       return true;
     } else {
       return (
-        !isStart &&
-        !isEnd &&
-        !isHOHOItinerary &&
-        (!!subStops?.length || !!passBys?.length)
+        (!isStart &&
+          !isEnd &&
+          !isHOHOItinerary &&
+          (!!subStops?.length || !!passBys?.length)) ||
+        ((isStart || isEnd) && !hasMultiPoints) ||
+        !isDesktop
       );
     }
   }, []);
@@ -164,6 +172,7 @@ const StopCard = ({
       : subType?.label === SUB_TYPES.HOHO_BUS_STOP
       ? strings.ITINERARY.SUB_SECTION_HEADING.NEARBY_THINGS_TO_DO
       : strings.ITINERARY.SUB_SECTION_HEADING.THINGS_TO_DO;
+
   const DefaultHeadingContainer = () => {
     return (
       <>
@@ -197,8 +206,8 @@ const StopCard = ({
                 />
                 {!imageLoaded && (
                   <Skeleton
-                    height={143}
-                    width={228}
+                    height={20}
+                    width={32}
                     borderRadius={4}
                     containerClassName="sub-image-loader"
                   />
@@ -243,19 +252,19 @@ const StopCard = ({
                   <Image
                     url={mediaUrls[0]}
                     alt={name || 'stop-image'}
-                    height={20}
-                    width={32}
+                    height={isDesktop ? 20 : 16}
+                    width={isDesktop ? 32 : 24}
                     priority
                     fetchPriority={'high'}
                     fill
-                    aspectRatio="16:10"
+                    aspectRatio="15:10"
                     autoCrop={false}
                     onLoadingComplete={() => setImageLoaded(true)}
                   />
                   {!imageLoaded && (
                     <Skeleton
-                      height={143}
-                      width={228}
+                      height={isDesktop ? 20 : 16}
+                      width={isDesktop ? 32 : 24}
                       borderRadius={4}
                       containerClassName="sub-image-loader"
                     />
@@ -290,7 +299,6 @@ const StopCard = ({
       </HeadingContainer>
     );
   };
-
   return (
     <Container
       $isSubCard={isSubCard}
@@ -317,7 +325,7 @@ const StopCard = ({
           onClick={() => {
             if (allowOpen) {
               setMultiPointDefaultOpen(-1);
-              setIsOpen(!isOpen);
+              if (isDesktop) setIsOpen(!isOpen);
               trackEvent({
                 eventName: isSubCard
                   ? ANALYTICS_EVENTS.ITINERARY.SUB_STOP_CLICKED
@@ -373,18 +381,29 @@ const StopCard = ({
               >
                 <Conditional if={showSubCardImage}>
                   {hasImage && (
-                    <Image
-                      url={mediaUrls[0]}
-                      alt="stop-image"
-                      height={142.5}
-                      width={228}
-                      priority
-                      fetchPriority={'high'}
-                      fill
-                      aspectRatio="16:10"
-                      autoCrop={false}
-                      className="sub-card-image"
-                    />
+                    <>
+                      <Image
+                        url={mediaUrls[0]}
+                        alt="stop-image"
+                        height={142.5}
+                        width={228}
+                        priority
+                        fetchPriority={'high'}
+                        fill
+                        aspectRatio="16:10"
+                        autoCrop={false}
+                        className="sub-card-image"
+                        onLoadingComplete={() => setImageLoaded(true)}
+                      />
+                      {!imageLoaded && (
+                        <Skeleton
+                          height={143}
+                          width={228}
+                          borderRadius={4}
+                          containerClassName="sub-image-loader"
+                        />
+                      )}
+                    </>
                   )}
                 </Conditional>
                 <Conditional if={description}>
@@ -530,4 +549,5 @@ const StopCard = ({
     </Container>
   );
 };
+
 export default StopCard;

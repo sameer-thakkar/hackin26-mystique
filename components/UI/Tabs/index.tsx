@@ -43,6 +43,8 @@ const Tabs = ({
   activeTab: activeTabFromProps,
   onChangeTab,
   children,
+  autoFocusOnSelectedTab,
+  hideNavigationArrows,
 }: PropsWithChildren<TTabsProps>) => {
   const isDesktop = !isMobile();
   const tabsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -70,6 +72,13 @@ const Tabs = ({
 
   const handleTabClick = (tab: TTabListItemProps) => {
     setActiveTab(tab.id);
+    if (autoFocusOnSelectedTab) {
+      const idx = tabListItems.findIndex((item) => tab.id === item.id);
+      if (idx >= 0) {
+        swiperRef.current?.slideTo(idx);
+      }
+    }
+
     onChangeTab?.(tab);
   };
 
@@ -173,23 +182,25 @@ const Tabs = ({
             </button>
           ))}
         </Swiper>
-        <button
-          className="tab-list-gradient prev"
-          onClick={handlePrev}
-        ></button>
-        <button
-          className="tab-list-gradient next"
-          onClick={handleNext}
-        ></button>
-        <Conditional if={showLeftArrow}>
-          <button className={'tab-swiper-controls prev'} onClick={handlePrev}>
-            <LeftArrowSvg />
-          </button>
-        </Conditional>
-        <Conditional if={showRightArrow}>
-          <button className={'tab-swiper-controls next'} onClick={handleNext}>
-            <RightArrowSvg />
-          </button>
+        <Conditional if={!hideNavigationArrows}>
+          <button
+            className="tab-list-gradient prev"
+            onClick={handlePrev}
+          ></button>
+          <button
+            className="tab-list-gradient next"
+            onClick={handleNext}
+          ></button>
+          <Conditional if={showLeftArrow}>
+            <button className={'tab-swiper-controls prev'} onClick={handlePrev}>
+              <LeftArrowSvg />
+            </button>
+          </Conditional>
+          <Conditional if={showRightArrow}>
+            <button className={'tab-swiper-controls next'} onClick={handleNext}>
+              <RightArrowSvg />
+            </button>
+          </Conditional>
         </Conditional>
       </div>
       {Children.map(children, (child) => {

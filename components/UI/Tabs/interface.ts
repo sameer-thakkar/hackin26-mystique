@@ -2,6 +2,8 @@ export type TTabsProps = {
   activeTab?: string;
   onChangeTab?: (tab: TTabListItemProps) => void;
   tabListItems?: TTabListItemProps[];
+  autoFocusOnSelectedTab?: boolean;
+  hideNavigationArrows?: boolean;
 };
 
 export type TTabPanelProps = {

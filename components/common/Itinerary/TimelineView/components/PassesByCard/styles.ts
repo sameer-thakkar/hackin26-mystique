@@ -38,20 +38,23 @@ export const SubCardContainer = styled.div<{
 }>`
   transition: background-color 0.3s;
   border-radius: 8px;
-
   padding: ${({ $isOpen }) => ($isOpen ? '0.5rem 0' : '0.5rem')};
+
   ${({ $isOpen }) =>
     !$isOpen &&
     css`
       width: max-content;
       transform: translateX(-0.5rem);
-    `}
+    `};
 
-  ${({ $variant }) =>
+  ${({ $variant, $isOpen }) =>
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
       cursor: pointer;
-    `}
+      &:hover {
+        background-color: ${$isOpen ? 'transparent' : COLORS.GRAY.G8};
+      }
+    `};
 `;
 
 export const SubCardHeadingContainer = styled.div<{
@@ -79,7 +82,8 @@ export const SubCardHeadingContainer = styled.div<{
 
   p.passing-by-sub-card-title {
     ${expandFontToken(FONTS.UI_LABEL_LARGE)}
-    transition: color .3s;
+    transition: color 0.3s;
+    margin: 0 !important;
   }
 
   svg {
@@ -126,10 +130,20 @@ export const SubCardHeadingContainer = styled.div<{
       }
 
       .image-wrap {
-        height: 1rem;
-        width: 1.625rem;
+        height: 1.25rem;
+        width: 1.25rem;
       }
-    `}
+    `};
+
+  @media only screen and (min-width: 768px) {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        .image-wrap {
+          height: 1rem;
+          width: 1.625rem;
+        }
+      `}
 `;
 
 export const SubCardContentTextContainer = styled.div`
@@ -145,7 +159,6 @@ export const SubCardContentTextContainer = styled.div`
   .sub-card-description p {
     ${expandFontToken(FONTS.PARAGRAPH_REGULAR)}
     color: ${COLORS.GRAY.G3};
-
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
@@ -192,7 +205,6 @@ export const Cta = styled.a`
   align-items: center;
   gap: 0.25rem;
   width: max-content;
-
   color: ${COLORS.TEXT.PURPS_3};
   ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
   text-anchor: middle;
@@ -222,11 +234,13 @@ export const Cta = styled.a`
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  $variant?: TimelineViewComponentVariant;
+  $isCruiseItinerary?: boolean;
+}>`
   position: relative;
   padding: 0.1875rem 0.5rem 1.25rem 2.25rem;
   transition: all 0.3s;
-
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -241,6 +255,22 @@ export const Container = styled.div`
     transform: translateX(-50%);
     background: ${COLORS.BRAND.PURPS};
   }
+
+  ${({ $variant, $isCruiseItinerary }) =>
+    $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+    css`
+      padding: ${$isCruiseItinerary
+        ? '0.1875rem 0.5rem 1.25rem 2.5rem'
+        : '0.1875rem 0.5rem 1.25rem 2.25rem'};
+    `};
+
+  @media only screen and (min-width: 768px) {
+    ${({ $variant }) =>
+      $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
+      css`
+        padding: 0.1875rem 0.5rem 1.25rem 2.25rem;
+      `};
+  }
 `;
 
 export const SpaceBlock = styled.div<{
@@ -248,4 +278,49 @@ export const SpaceBlock = styled.div<{
 }>`
   height: ${({ $gap }) => $gap};
   width: 100%;
+`;
+
+export const StyledMobilePassesByCardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .heading {
+    ${expandFontToken(FONTS.HEADING_SMALL)};
+    color: ${COLORS.GRAY.G2};
+    margin: 0;
+  }
+
+  .rank-tag-container {
+    position: absolute;
+    left: 0.05rem;
+    display: flex;
+    background-color: ${COLORS.BRAND.PURPS};
+    border-radius: 4px;
+    height: 1.5rem;
+    width: 1.5rem;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+  }
+
+  .heading-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    svg {
+      height: 1.25rem;
+      width: 1.25rem;
+      path {
+        fill: ${COLORS.GRAY.G3};
+      }
+    }
+  }
 `;

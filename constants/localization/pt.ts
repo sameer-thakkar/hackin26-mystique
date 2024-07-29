@@ -1233,6 +1233,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       TITLE: {
         START: 'PONTO DE PARTIDA',
         END: 'PONTO FINAL',
+        STARTING_POINT: 'PONTO DE PARTIDA',
+        STOP: 'PARADA',
+        ENDING_POINT: 'PONTO FINAL',
+        PASSING_BY: 'PASSA POR',
       },
       MULTI_POINTS_AVAILABLE: {
         START: '{0} pontos de partida disponíveis',
@@ -1262,6 +1266,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TIMELINE_VIEW: 'Visualizar cronograma',
     MAP_VIEW: 'Visualizar mapa',
     MAP_OVERLAY: 'Use CTRL/⌘ + cursor para mover o mapa',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Confira sua experiência mapeada.',
+    OPEN_MAP_VIEW: 'Visualizar o mapa',
   },
 };
 export default pt;

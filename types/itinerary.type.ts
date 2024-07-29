@@ -150,7 +150,7 @@ export interface BaseSectionDetails {
   mediaUrls?: Array<string>;
 }
 
-type LabelWithLocalization<T> = {
+export type LabelWithLocalization<T> = {
   label: T;
   localisedLabel: string;
 };

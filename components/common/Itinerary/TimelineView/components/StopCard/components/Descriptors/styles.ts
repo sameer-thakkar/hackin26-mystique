@@ -29,6 +29,7 @@ export const DescriptorContainer = styled.div<{
         ? expandFontToken(FONTS.UI_LABEL_SMALL)
         : expandFontToken(FONTS.UI_LABEL_REGULAR)};
     color: ${COLORS.GRAY.G2};
+    margin: 0 !important;
   }
 `;
 

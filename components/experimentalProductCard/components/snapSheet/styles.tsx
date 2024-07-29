@@ -21,6 +21,7 @@ export const Content = styled.div<{
   $cardHeight: number;
   $pricingHeight?: number;
   $hasOffers?: boolean;
+  $preventTouchEvents?: boolean;
 }>`
   max-height: ${({
     $sheetHeight,
@@ -32,6 +33,8 @@ export const Content = styled.div<{
     `calc(${$sheetHeight} - ${$headerHeight}px + ${$cardHeight}px - ${$pricingHeight}px - ${
       $hasOffers ? '2.75rem' : '1rem'
     } );`}
+  pointer-events: ${({ $preventTouchEvents }) =>
+    $preventTouchEvents ? 'none' : 'unset'};
   overflow-y: ${({ $isOpen }) => ($isOpen ? 'hidden' : 'auto')};
   overflow-x: hidden;
   overscroll-behavior-y: none;

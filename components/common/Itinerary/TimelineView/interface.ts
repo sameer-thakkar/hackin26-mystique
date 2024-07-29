@@ -7,7 +7,6 @@ export type TTimelineViewComponentProps = {
   onStopSectionClick?: (
     sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>
   ) => void;
-  activeStopSectionId?: number | null;
 };
 
 export enum TimelineViewComponentVariant {
@@ -16,5 +15,6 @@ export enum TimelineViewComponentVariant {
 }
 
 export type TOnStopClick = (
-  sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>
+  sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>,
+  stopIndex?: number
 ) => void;

@@ -32,7 +32,7 @@ type MediaCarouselProps = {
   imageWidth?: number;
   imageHeight?: number;
   isFirstProduct?: boolean; // prevent lazy load on the first image of first product
-  tgid: string;
+  tgid?: string;
   backgroundColor?: string;
   isMobile: boolean;
   shouldCrop?: boolean;
@@ -92,7 +92,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     if (swiper !== null) {
       const slideIndex = swiper.realIndex;
       setCurrentIndex(slideIndex);
-      if (trackImage) {
+      if (trackImage && tgid) {
         trackEvent(getImageViewEventProperties({ rank: slideIndex + 1 }));
       }
     }

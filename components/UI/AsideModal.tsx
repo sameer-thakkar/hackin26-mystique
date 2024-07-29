@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
 import styled, { css, keyframes } from 'styled-components';
+import classNames from 'classnames';
 import Conditional from 'components/common/Conditional';
 import useWindowSize from 'hooks/useWindowSize';
 import { trackEvent } from 'utils/analytics';
@@ -550,6 +551,8 @@ const AsideModal = ({
   isQueryRestore = false,
   isProductCardTracking = false,
   tgid = '',
+  hideCloseButton = false,
+  noBackgroundOverlay = false,
 }: any) => {
   const container = useRef(null);
   // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
@@ -574,6 +577,23 @@ const AsideModal = ({
   });
   const [shouldSlideOut, setSlideOut] = useState(false);
 
+  const toggleModalBgClass = (add = false) => {
+    const containerClasses = classNames(
+      'scroll-lock',
+      noBackgroundOverlay ? 'no-shadow' : ''
+    ).split(' ');
+
+    containerClasses.forEach((className) => {
+      if (add) {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
+        container.current.classList.add(className);
+      } else {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
+        container.current.classList.remove(className);
+      }
+    });
+  };
+
   useEffect(() => {
     if (type === SIDEBAR_TYPES.SIDE_NAV) {
       scroller.scrollTo('active-element', {
@@ -596,10 +616,14 @@ const AsideModal = ({
       // to avoid this we removed position: fixed, and let the sidebar live in regular scroll flow.
       window.scrollTo(0, 0);
     }
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    if (active) container.current.classList.add('scroll-lock');
+    if (active) {
+      toggleModalBgClass(true);
+    }
 
-    return () => window.removeEventListener('popstate', onPopState);
+    return () => {
+      toggleModalBgClass(false);
+      window.removeEventListener('popstate', onPopState);
+    };
   }, [active, isMobile]);
 
   useEffect(() => {
@@ -667,9 +691,7 @@ const AsideModal = ({
           replace: false,
         });
       }
-
-      // @ts-expect-error TS(2531): Object is possibly 'null'.
-      container.current.classList.remove('scroll-lock');
+      toggleModalBgClass(false);
       if (isMobile) window.scrollTo(0, scrollY);
       if (onCloseCallback) onCloseCallback();
       closeModal();
@@ -685,8 +707,7 @@ const AsideModal = ({
   const onCloseAll = (delay = 0) => {
     setIsOpen(!active);
     if (isMobile) window.scrollTo(0, scrollY);
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    container.current.classList.remove('scroll-lock');
+    toggleModalBgClass(false);
     if (type === SIDEBAR_TYPES.PRODUCT_CARD_EXP && !isMobile)
       slideOut(() => {
         resetAside();
@@ -725,37 +746,41 @@ const AsideModal = ({
                 <StyledIcon>{ListIcon}</StyledIcon>
               </Conditional>
               <Title sidebarType={type}>{title}</Title>
-              {isStacked &&
-              ![
-                SIDEBAR_TYPES.CONTACT_US_PANEL,
-                SIDEBAR_TYPES.PRODUCT_CARD,
-              ].includes(type) ? (
-                <BackIcon
-                  // @ts-expect-error TS(2769): No overload matches this call.
-                  onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
-                >
-                  <BackArrow />
-                </BackIcon>
-              ) : (
-                <CloseIcon
-                  className={'close-icon'}
-                  /* @ts-expect-error TS(2769): No overload matches this call. */
-                  onClick={
-                    [
-                      SIDEBAR_TYPES.SIDE_NAV,
-                      SIDEBAR_TYPES.CONTACT_US_PANEL,
-                      SIDEBAR_TYPES.TOUR_GROUP_INFO,
-                    ].includes(type)
-                      ? () => onCloseAll(closeDelay)
-                      : onClose
-                  }
-                  sidebarType={type}
-                >
-                  {type === SIDEBAR_TYPES.SIDE_NAV && !isMobile
-                    ? DoubleChevron
-                    : CloseWhite}
-                </CloseIcon>
-              )}
+              <Conditional if={!hideCloseButton}>
+                {isStacked &&
+                ![
+                  SIDEBAR_TYPES.CONTACT_US_PANEL,
+                  SIDEBAR_TYPES.PRODUCT_CARD,
+                ].includes(type) ? (
+                  <BackIcon
+                    // @ts-expect-error TS(2769): No overload matches this call.
+                    onClick={
+                      type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose
+                    }
+                  >
+                    <BackArrow />
+                  </BackIcon>
+                ) : (
+                  <CloseIcon
+                    className={'close-icon'}
+                    /* @ts-expect-error TS(2769): No overload matches this call. */
+                    onClick={
+                      [
+                        SIDEBAR_TYPES.SIDE_NAV,
+                        SIDEBAR_TYPES.CONTACT_US_PANEL,
+                        SIDEBAR_TYPES.TOUR_GROUP_INFO,
+                      ].includes(type)
+                        ? () => onCloseAll(closeDelay)
+                        : onClose
+                    }
+                    sidebarType={type}
+                  >
+                    {type === SIDEBAR_TYPES.SIDE_NAV && !isMobile
+                      ? DoubleChevron
+                      : CloseWhite}
+                  </CloseIcon>
+                )}
+              </Conditional>
             </Header>
             <ModalContent
               /* @ts-expect-error TS(2769): No overload matches this call. */

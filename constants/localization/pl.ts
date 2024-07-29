@@ -1171,8 +1171,12 @@ const pl = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'START POINT',
-        END: 'END POINT',
+        START: 'PUNKT STARTOWY',
+        END: 'PUNKT KOŃCOWY',
+        STARTING_POINT: 'PUNKT STARTOWY',
+        STOP: 'PRZYSTANEK',
+        ENDING_POINT: 'PUNKT KOŃCOWY',
+        PASSING_BY: 'PO DRODZE',
       },
       MULTI_POINTS_AVAILABLE: {
         START: 'Dostępne punkty startowe ({0})',
@@ -1202,6 +1206,8 @@ const pl = {
     TIMELINE_VIEW: 'Widok osi czasu',
     MAP_VIEW: 'Widok mapy',
     MAP_OVERLAY: 'Użyj CTRL/⌘ + przewiń, żeby przesunąć mapę',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'Zobacz trasę swojej wycieczki.',
+    OPEN_MAP_VIEW: 'Otwórz widok mapy',
   },
 };
 export default pl;

@@ -22,7 +22,7 @@ const Descriptor = ({
   size = DescriptorSize.LARGE,
 }: DescriptorProps) => {
   return (
-    <DescriptorContainer $size={size}>
+    <DescriptorContainer className="descriptor-container" $size={size}>
       {icon}
       <p className="descriptor-text">{text}</p>
     </DescriptorContainer>
@@ -65,7 +65,7 @@ const Descriptors = ({
   const walkDuration = duration ? getDurationInHMNotation(duration) : '';
 
   return (
-    <Container $variant={variant}>
+    <Container className="descriptors-container" $variant={variant}>
       <Conditional if={walkDuration}>
         <Descriptor
           icon={<ClockSvg />}

@@ -124,6 +124,7 @@ export const BottomSheet = memo(
             : {})}
           $sheetHeight={sheetHeight}
           $translateY={translateY}
+          className="sheet-container"
         >
           <GrabBar
             {...(drawerState === SWIPESHEET_STATES.EXPANDED
@@ -131,6 +132,7 @@ export const BottomSheet = memo(
               : {})}
             $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
             $snapHeight={snapHeight}
+            className="grab-bar"
           >
             <GrabIndicator
               $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}

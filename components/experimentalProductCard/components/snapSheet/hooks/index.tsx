@@ -38,9 +38,6 @@ export const useDragBehavior = ({
     dragStateRef.current.isDragging = false;
     dragStateRef.current.initialDragDirection = null;
 
-    document.body.style.userSelect = '';
-    document.body.style.pointerEvents = '';
-
     if (animationFrameID.current) {
       window.cancelAnimationFrame(animationFrameID.current);
       animationFrameID.current = null;
@@ -108,9 +105,6 @@ export const useDragBehavior = ({
         ),
         initialDragDirection: null,
       };
-
-      document.body.style.userSelect = 'none';
-      document.body.style.pointerEvents = 'none';
     },
     [ref, transform]
   );

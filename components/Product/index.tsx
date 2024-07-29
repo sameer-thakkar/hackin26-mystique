@@ -7,11 +7,13 @@ import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
+import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
+import MWebEntryPoint from 'components/common/Itinerary/MWebEntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
 import HohoProductCard from 'components/HOHO/components/HohoProductCard';
 import ItineraryEntryPoint from 'components/HOHO/components/RoutesCTA/EntryPoint';
@@ -36,7 +38,6 @@ import {
   CTAContainer,
   GuidedTourLabel,
   LineMoreDetailsButton,
-  ModalCardContainer,
   MoreDetailsBtnWrapper,
   OpenDatedDescriptor,
   PopupContainer,
@@ -59,6 +60,7 @@ import ComboPopup from 'UI/ComboPopup';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
+import { ItineraryProvider } from 'contexts/ItineraryContext';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
 import useOnScreen from 'hooks/useOnScreen';
@@ -103,7 +105,7 @@ import {
   THEMES,
 } from 'const/index';
 import { tgidsWithSitesVisited } from 'const/itinerary';
-import { CARD_SECTION_MARKERS } from 'const/productCard';
+import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
@@ -354,26 +356,7 @@ const Product = (props: any) => {
       }
     }
     if (popup === 'details') {
-      addToAside({
-        width: '100vw',
-        children: (
-          <ModalCardContainer>
-            {getProductCardElements({ expandContent: true, isLoading: false })}
-          </ModalCardContainer>
-        ),
-        onCloseCallback: () => {
-          trackedToggleContent(true);
-        },
-        type: SIDEBAR_TYPES.PRODUCT_CARD,
-        tgid: tgid,
-        history: {
-          enable: true,
-          params: {
-            pid: tgid,
-            popup: 'combo',
-          },
-        },
-      });
+      openProductCardAside();
     }
   }, [isMobile]);
 
@@ -788,33 +771,8 @@ const Product = (props: any) => {
           activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
         );
       } else {
-        addToAside({
-          width: originalIsMobile ? '100vw' : '40rem',
-          children: (
-            <ModalCardContainer>
-              {getProductCardElements({
-                expandContent: true,
-                forcedMobilePopup: true,
-              })}
-            </ModalCardContainer>
-          ),
-          type: SIDEBAR_TYPES.PRODUCT_CARD,
-          onCloseCallback: () => {
-            trackedToggleContent(true);
-            if (isShortcodePopup) {
-              handleShortcodeDrawer(false);
-            }
-          },
-          tgid: tgid,
-          isProductCardTracking: true,
-          history: {
-            enable: true,
-            params: {
-              pid: tgid,
-              popup: 'details',
-            },
-          },
-        });
+        // TODO: CHECK WIDTH CASE
+        openProductCardAside();
       }
     } else {
       if (showPopup) {
@@ -828,6 +786,59 @@ const Product = (props: any) => {
         toggleContentOpen(!isContentOpen);
       }
     }
+  };
+
+  const openProductCardAside = (
+    args: {
+      scrollToItinerarySection?: boolean;
+    } | void
+  ) => {
+    const { scrollToItinerarySection = false } = args || {};
+
+    addToAside({
+      width: '100vw',
+      hideCloseButton: true,
+      noBackgroundOverlay: true,
+      children: (
+        <ProductCardProvider
+          drawerDefault={SWIPESHEET_STATES.OPEN}
+          onDrawerStateChanged={(drawerState: string) => {
+            if (drawerState === SWIPESHEET_STATES.HIDDEN) {
+              closeAside();
+            }
+          }}
+        >
+          <ItineraryProvider>
+            <ExperimentalProductCard
+              {...props}
+              handleShowComboPopup={handleShowComboPopup}
+              sendBookNowEvent={sendBookNowEvent}
+              isSportsSubCategory={isSportsSubCategory}
+              showThumbnailInBanner={showThumbnailInBanner}
+              showJustDrawer={true}
+              scrollToItinerarySection={scrollToItinerarySection}
+              tgidItineraryData={tgidItineraryData}
+            />
+          </ItineraryProvider>
+        </ProductCardProvider>
+      ),
+      type: SIDEBAR_TYPES.PRODUCT_CARD,
+      onCloseCallback: () => {
+        trackedToggleContent(true);
+        if (isShortcodePopup) {
+          handleShortcodeDrawer(false);
+        }
+      },
+      tgid: tgid,
+      isProductCardTracking: true,
+      history: {
+        enable: true,
+        params: {
+          pid: tgid,
+          popup: 'details',
+        },
+      },
+    });
   };
 
   const layout = ({ isContentExpanded }: { isContentExpanded?: boolean }) =>
@@ -1270,6 +1281,18 @@ const Product = (props: any) => {
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
+    const trackItineraryViewCTAClick = (activeItineraryData: TItinerary) => {
+      const hasMapView = activeItineraryData?.map?.active;
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.VIEW_ITINERARY_CLICKED,
+        [ANALYTICS_PROPERTIES.CTA_TYPE]: 'Itinerary',
+        [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: activeItineraryData?.type,
+        [ANALYTICS_PROPERTIES.HAS_MAP]: hasMapView,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+      });
+    };
+
     return (
       <>
         <StyledProductCard
@@ -1405,6 +1428,14 @@ const Product = (props: any) => {
                     trackItineraryEntrypoint();
                   }}
                   isHOHOItinerary={isHohoItinerary}
+                />
+              </Conditional>
+              <Conditional if={showItinerary && isMobile}>
+                <MWebEntryPoint
+                  onClick={() => {
+                    openProductCardAside({ scrollToItinerarySection: true });
+                    trackItineraryViewCTAClick(tgidItineraryData?.[0]);
+                  }}
                 />
               </Conditional>
               <Conditional if={isLoading}>
@@ -1814,11 +1845,13 @@ const Product = (props: any) => {
                     components={shortCodeSerializer}
                   />
                   <Conditional if={showItinerarySection}>
-                    <Itinerary
-                      itineraryData={tgidItineraryData}
-                      lang={currentLanguage}
-                      isHohoItinerary={isHohoItinerary}
-                    />
+                    <ItineraryProvider>
+                      <Itinerary
+                        itineraryData={tgidItineraryData}
+                        lang={currentLanguage}
+                        isHohoItinerary={isHohoItinerary}
+                      />
+                    </ItineraryProvider>
                   </Conditional>
                   <Conditional if={!originalIsMobile}>
                     <PrismicRichText
@@ -2109,13 +2142,16 @@ const Product = (props: any) => {
   if (showNewCard)
     return (
       <ProductCardProvider>
-        <ExperimentalProductCard
-          {...props}
-          handleShowComboPopup={handleShowComboPopup}
-          sendBookNowEvent={sendBookNowEvent}
-          isSportsSubCategory={isSportsSubCategory}
-          showThumbnailInBanner={showThumbnailInBanner}
-        />
+        <ItineraryProvider>
+          <ExperimentalProductCard
+            {...props}
+            handleShowComboPopup={handleShowComboPopup}
+            sendBookNowEvent={sendBookNowEvent}
+            isSportsSubCategory={isSportsSubCategory}
+            showThumbnailInBanner={showThumbnailInBanner}
+            defaultOpen={true}
+          />
+        </ItineraryProvider>
       </ProductCardProvider>
     );
 

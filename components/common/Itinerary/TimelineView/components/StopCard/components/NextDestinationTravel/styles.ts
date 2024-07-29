@@ -37,6 +37,7 @@ export const NextDestinationTravelContainer = styled.div`
       ${expandFontToken(FONTS.UI_LABEL_XS)}
       color: ${COLORS.GRAY.G2};
       position: relative;
+      margin: 0 !important;
 
       :not(:last-child) {
         ::after {

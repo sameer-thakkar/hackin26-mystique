@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import router from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { BottomSheet } from 'components/common/DraggableBottomSheet';
+import ItinerarySwipeSheet from 'components/common/Itinerary/ItinerarySwipeSheet';
+import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
+import { TTabListItemProps } from 'UI/Tabs/interface';
+import { useItinerary } from 'contexts/ItineraryContext';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { appAtom } from 'store/atoms/app';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import DropdownContent from './components/dropdownContent';
 import PricingBar from './components/pricingBar';
 
+const MWebMapView = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "MWebMapView" */ 'components/common/Itinerary/MapView/MWebMapView'
+    )
+);
 const DrawerWrapper = (props: any) => {
   const {
     drawerState,
@@ -45,11 +59,70 @@ const DrawerWrapper = (props: any) => {
     children,
     trackDrawerOpen,
     showThumbnailInBanner,
+    tgidItineraryData,
   } = props;
+
+  const [activeItinerary, setActiveItinerary] = useState<Itinerary>(
+    tgidItineraryData?.[0]
+  );
+  const {
+    setActiveItineraryStopId,
+    setActiveStopIndex,
+    isItineraryDetailsSwipeSheetOpen,
+    setIsItineraryDetailsSwipeSheetOpen,
+    itineraryViewMode,
+    setItineraryViewMode,
+  } = useItinerary();
+  const { isMobile } = useRecoilValue(appAtom);
+  const isDesktop = !isMobile;
+
+  useEffect(() => {
+    if (drawerState === SWIPESHEET_STATES.OPEN) {
+      setTimeout(() => {
+        setShowPricingBar(true);
+      }, 300);
+    }
+  }, [drawerState]);
+
+  const handleCloseItinerarySwipeSheet = () => {
+    setActiveItineraryStopId(null);
+    setActiveStopIndex(null);
+    setIsItineraryDetailsSwipeSheetOpen(false);
+  };
+
+  const handleActiveItineraryTabChange = (tab: TTabListItemProps) => {
+    const activeItineraryData = (
+      tgidItineraryData as Array<Itinerary | null>
+    ).reduce(
+      (acc, item) => (item?.id.toString() === tab.id ? item : acc),
+      null
+    );
+    if (activeItineraryData) {
+      setActiveItinerary(activeItineraryData);
+    }
+  };
+
+  const handleItineraryMapBottomSheetClose = () => {
+    setItineraryViewMode(ItineraryViewMode.TIMELINE);
+    trackItineraryViewModeChange(ItineraryViewMode.TIMELINE);
+  };
+
+  const trackItineraryViewModeChange = (activeView: ItineraryViewMode) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_TOGGLE_CLICKED,
+      [ANALYTICS_PROPERTIES.ITINERARY_VIEW]: activeView,
+    });
+  };
 
   return (
     <>
-      <Conditional if={showPricingBar}>
+      <Conditional
+        if={
+          showPricingBar &&
+          !isItineraryDetailsSwipeSheetOpen &&
+          itineraryViewMode === ItineraryViewMode.TIMELINE
+        }
+      >
         <PricingBar
           showScratchPrice={showScratchPrice}
           listingPrice={listingPrice}
@@ -108,10 +181,34 @@ const DrawerWrapper = (props: any) => {
             setActiveTab={setActiveTab}
             trackDrawerOpen={trackDrawerOpen}
             hasOffers={showScratchPrice && !!discountText.length}
+            tgidItineraryData={tgidItineraryData}
+            lang={lang}
+            onActiveItineraryTabChange={handleActiveItineraryTabChange}
+            preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
           >
             {children}
           </DropdownContent>
         </BottomSheet>
+      </Conditional>
+      <Conditional if={activeItinerary}>
+        <ItinerarySwipeSheet
+          visible={isItineraryDetailsSwipeSheetOpen}
+          currentLanguage={lang}
+          itinerary={activeItinerary}
+          onCloseSwipeSheet={handleCloseItinerarySwipeSheet}
+        />
+      </Conditional>
+      <Conditional
+        if={
+          activeItinerary &&
+          itineraryViewMode === ItineraryViewMode.MAP &&
+          !isDesktop
+        }
+      >
+        <MWebMapView
+          itinerary={activeItinerary}
+          onCloseInitBottomSheet={handleItineraryMapBottomSheetClose}
+        />
       </Conditional>
     </>
   );

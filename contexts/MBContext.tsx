@@ -79,6 +79,8 @@ export const MBContextProvider = (props: any) => {
     history,
     isProductCardTracking = false,
     tgid = '',
+    hideCloseButton = false,
+    noBackgroundOverlay = false,
   }: any) => {
     const modalState = {
       children,
@@ -90,6 +92,8 @@ export const MBContextProvider = (props: any) => {
       history,
       isProductCardTracking,
       tgid,
+      hideCloseButton,
+      noBackgroundOverlay,
     };
 
     // @ts-expect-error TS(2322): Type '{ children: any; title: any; width: any; sid... Remove this comment to see the full error message
@@ -185,6 +189,8 @@ export const MBContextProvider = (props: any) => {
             (getActiveAside() as any)?.isProductCardTracking
           }
           tgid={(getActiveAside() as any)?.tgid}
+          hideCloseButton={(getActiveAside() as any)?.hideCloseButton}
+          noBackgroundOverlay={(getActiveAside() as any)?.noBackgroundOverlay}
         >
           {(getActiveAside() as any)?.children}
         </AsideModal>

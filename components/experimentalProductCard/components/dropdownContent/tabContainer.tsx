@@ -1,11 +1,14 @@
 import React, { FC, ReactNode, useEffect, useRef } from 'react';
+import Conditional from 'components/common/Conditional';
 import { useProductCard } from 'contexts/productCardContext';
 import { SWIPESHEET_STATES } from 'const/productCard';
+import { strings } from 'const/strings';
 import CrossiconSvg from 'assets/crossiconSvg';
 import {
   CloseContainer,
   Header,
   HeaderTabs,
+  NewTabTag,
   Tab as StyledTab,
   TabContainer as StyledTabContainer,
   Title,
@@ -27,6 +30,8 @@ interface TabComponentProps extends TabProps {
 interface TabData {
   heading: string;
   contents: RichTextField;
+  isNew?: boolean;
+  type: 'richTextField' | 'itinerary';
 }
 
 interface TabContainerProps {
@@ -98,7 +103,12 @@ const TabContainer: FC<TabContainerProps> = React.forwardRef<
               id={`tab-${tab.heading}`}
               isLastElement={index === tabs.length - 1}
             >
-              {tab.heading}
+              <div className="tab-content">
+                {tab.heading}
+                <Conditional if={tab.isNew}>
+                  <NewTabTag>{strings.NEW}</NewTabTag>
+                </Conditional>
+              </div>
             </Tab>
           ))}
         </HeaderTabs>

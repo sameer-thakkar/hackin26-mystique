@@ -4,11 +4,24 @@ import COLORS from 'const/colors';
 export const StyledItineraryDescriptorCard = styled.div`
   display: flex;
   width: fit-content;
-  margin-right: 1.5rem;
+  padding-right: 1rem;
+  margin-right: 1rem;
+  border-right: 1px solid ${COLORS.GRAY.G6};
+
+  &:last-child {
+    margin-right: 0;
+    border-right: none;
+  }
 
   @media only screen and (min-width: 768px), print {
     width: 10.875rem;
     margin-right: 1rem;
+    padding-right: 0;
+    border-right: none;
+
+    &:last-child {
+      margin-right: 1rem;
+    }
   }
 `;
 
@@ -24,9 +37,9 @@ export const StyledItineraryDescriptorsCarouselContainer = styled.div`
   }
 
   .itinerary-descriptors-no-carousel-container {
-    display: grid;
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     &.space-between {
       justify-content: space-between;
@@ -71,6 +84,9 @@ export const StyledItineraryDescriptorsCarouselContainer = styled.div`
     }
 
     .itinerary-descriptors-no-carousel-container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
       ${StyledItineraryDescriptorCard} {
         width: fit-content;
       }
