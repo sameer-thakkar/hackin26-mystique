@@ -710,7 +710,6 @@ export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
       breadcrumbs = await getC1CollectionBreadcrumbs(doc);
       break;
     case MB_CATEGORISATION.MB_TYPE.A1_COLLECTION:
-    case MB_CATEGORISATION.MB_TYPE.B1_GLOBAL:
       breadcrumbs = await getA1CollectionBreadcrumbs(doc);
       break;
     case MB_CATEGORISATION.MB_TYPE.A1_CATEGORY:
@@ -728,9 +727,7 @@ export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     case MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE:
       breadcrumbs = await getA1CityGuideBreadcrumbs(doc);
       break;
-
     case MB_CATEGORISATION.MB_TYPE.A1_HOMEPAGE:
-    case MB_CATEGORISATION.MB_TYPE.B1_GLOBAL_HOMEPAGE:
       breadcrumbs = {};
       break;
 
