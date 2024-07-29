@@ -16,7 +16,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
@@ -28,7 +27,6 @@ import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -241,7 +239,6 @@ const PopulateProducts: any = (props: any) => {
     asHook,
     forceMobile,
     hideHeading,
-    disableShowingNewCard,
     showVideoBanner = false,
     curatedBannerVideoSrc,
     isHOHORevamp,
@@ -284,12 +281,6 @@ const PopulateProducts: any = (props: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
     el && productsRef.current.push(el);
   };
-
-  const { isEligible, variant, isExperimentResolving } = useABTesting({
-    experimentId: 'POI_CARD_EXPERIMENT',
-    noTrack: true,
-    customEligibilityCheckFn: () => isPoiMwebCard,
-  });
 
   const { isStage, isDev, host, design } = useContext(MBContext);
 
@@ -471,7 +462,7 @@ const PopulateProducts: any = (props: any) => {
   }
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
-    if (!productsRef.current || isExperimentResolving) return;
+    if (!productsRef.current) return;
 
     try {
       let didTrackProductCardsSliceViewed = false;
@@ -547,13 +538,7 @@ const PopulateProducts: any = (props: any) => {
     } catch (e) {
       //
     }
-  }, [
-    productsRef,
-    selectedDate,
-    trackProductCardsViewed,
-    isExperimentResolving,
-    availableToursList,
-  ]);
+  }, [productsRef, selectedDate, trackProductCardsViewed, availableToursList]);
 
   const isV1DesignSite = isMBDesign({
     currentDesign: design || '',
@@ -565,10 +550,7 @@ const PopulateProducts: any = (props: any) => {
     : true;
 
   const showLoader =
-    productsLoading ||
-    (isEligible && isExperimentResolving) ||
-    isRankingExperimentResolving ||
-    isHOHOResolving;
+    productsLoading || isRankingExperimentResolving || isHOHOResolving;
 
   const swiperParams: SwiperProps = {
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
@@ -716,9 +698,6 @@ const PopulateProducts: any = (props: any) => {
     return isSmallComboCard ? (
       <Product
         {...childProps}
-        showNewCard={
-          !disableShowingNewCard && isEligible && variant === VARIANTS.TREATMENT
-        }
         showThumbnailInBanner={showThumbnailInBanner}
         comboIndex={comboIndex}
       />
@@ -729,11 +708,6 @@ const PopulateProducts: any = (props: any) => {
         ) : (
           <Product
             {...childProps}
-            showNewCard={
-              !disableShowingNewCard &&
-              isEligible &&
-              variant === VARIANTS.TREATMENT
-            }
             showThumbnailInBanner={showThumbnailInBanner}
             comboIndex={comboIndex}
           />

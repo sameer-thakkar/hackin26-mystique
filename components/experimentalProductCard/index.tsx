@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
@@ -10,7 +10,6 @@ import {
   PRODUCT_CARD_IMAGE_DIMENSIONS,
 } from 'components/Product/styles';
 import { MBContext } from 'contexts/MBContext';
-import { useProductCard } from 'contexts/productCardContext';
 import { createBookingURL } from 'utils';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
@@ -29,7 +28,6 @@ import {
   CATEGORY_IDS,
   SUBCATEGORY_IDS,
 } from 'const/index';
-import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import MobileProductCard from './components/mobileProductCard';
 import DrawerWrapper from './drawerWrapper';
@@ -100,25 +98,6 @@ const ExperimentalProductCard = (props: any) => {
     isDev,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const { setDrawerState, setSnapDrawerConfig } = useProductCard();
-
-  useEffect(() => {
-    if (scrollToItinerarySection) {
-      setDrawerState(SWIPESHEET_STATES.EXPANDED);
-      const config = {
-        isMountedOnTop: true,
-        transform: 'translate3d(0px, -99px, 0px)',
-      };
-      setSnapDrawerConfig(config);
-      setTimeout(() => {
-        document.getElementById('tab-Itinerary')?.click();
-        setSnapDrawerConfig({
-          ...config,
-          isCompleted: true,
-        });
-      }, 500);
-    }
-  }, []);
 
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -392,6 +371,7 @@ const ExperimentalProductCard = (props: any) => {
         sendBookNowEvent={sendBookNowEvent}
         tgidItineraryData={tgidItineraryData}
         forceMobile={forceMobile}
+        scrollToItinerarySection={scrollToItinerarySection}
       />
     );
   };

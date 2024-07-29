@@ -113,6 +113,7 @@ const MobileProductCard = (props: any) => {
     isPoiMwebCard,
     sendBookNowEvent,
     forceMobile,
+    scrollToItinerarySection,
   } = props as any;
 
   const [discountText, setDiscountText] = useState('');
@@ -120,8 +121,13 @@ const MobileProductCard = (props: any) => {
   const productRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
-  const { setDrawerState, showPricingBar, setShowPricingBar, setTitle } =
-    useProductCard();
+  const {
+    setDrawerState,
+    showPricingBar,
+    setShowPricingBar,
+    setTitle,
+    setSnapDrawerConfig,
+  } = useProductCard();
 
   useLayoutEffect(() => {
     if (!router || !productRef.current) return;
@@ -143,6 +149,31 @@ const MobileProductCard = (props: any) => {
       timeout && clearTimeout(timeout);
     };
   }, [router, productRef]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (scrollToItinerarySection) {
+      setDrawerState(SWIPESHEET_STATES.OPEN);
+      timeout = setTimeout(() => {
+        setDrawerState(SWIPESHEET_STATES.EXPANDED);
+
+        const config = {
+          isMountedOnTop: true,
+          transform: 'translate3d(0px, -99px, 0px)',
+        };
+        setSnapDrawerConfig(config);
+        setTimeout(() => {
+          document.getElementById('tab-Itinerary')?.click();
+          setSnapDrawerConfig({
+            ...config,
+            isCompleted: true,
+          });
+        }, 500);
+      }, 300);
+    }
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     if (bestDiscount > 0) {

@@ -15,7 +15,6 @@ const CURATED_VIDEO_BANNER = 'Curated Video Banner';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
-const POI_CARD_EXPERIMENT = 'POI More Details Swipe sheet Experiment 2';
 const SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT =
   'Shoulder Page Section Ranking';
 const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
@@ -37,7 +36,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
-  POI_CARD_EXPERIMENT,
   RANKING_EXPERIMENT_V1_REVENUE,
   SEATMAP_EXPERIMENT,
   SHOULDER_PAGE_PRODUCT_CARD_EXPERIMENT,
@@ -90,11 +88,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     LTD_LP_Experiment,
     [VARIANTS.SHOWPAGE_REDIRECT, VARIANTS.CHECKOUT_REDIRECT],
     [0, 100]
-  ),
-  [POI_CARD_EXPERIMENT]: new Experiment(
-    POI_CARD_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
   ),
   [RANKING_EXPERIMENT_V1_REVENUE]: new Experiment(
     RANKING_EXPERIMENT_V1_REVENUE,
