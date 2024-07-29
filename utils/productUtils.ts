@@ -109,6 +109,7 @@ type TGetProductCardLayout = {
   showAvailabilityInLanguagesText?: boolean;
   isModifiedProductCard?: boolean;
   isPoiMwebCard?: boolean;
+  showNextAvailable?: boolean;
 };
 
 export const getProductCardLayout = ({
@@ -123,6 +124,7 @@ export const getProductCardLayout = ({
   showAvailabilityInLanguagesText = false,
   isModifiedProductCard = false,
   isPoiMwebCard = false,
+  showNextAvailable = false,
 }: TGetProductCardLayout) => {
   let layout: {
     desktop: Array<string | boolean | undefined | null>;
@@ -191,7 +193,8 @@ export const getProductCardLayout = ({
           isOpenDated && 'open-dated-descriptor',
           hasOffer && 'offer',
           isPoiMwebCard && 'tags',
-          !isTicketCard &&
+          showNextAvailable &&
+            !isTicketCard &&
             !isOpenDated &&
             !showAvailabilityInTitle &&
             'next-available',

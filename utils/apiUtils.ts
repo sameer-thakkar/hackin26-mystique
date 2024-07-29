@@ -241,7 +241,6 @@ export const getHeadoutApiUrl = ({
      * Ensure that all API endpoints are ending with a trailing slash "/"
      * This is being done to prevent creating duplicate records on CDN.
      */
-    // TODO
     url = withTrailingSlash(
       `https://${
         shouldPointToNewCDN ? 'api-mb' : 'api'

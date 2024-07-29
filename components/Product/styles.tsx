@@ -551,6 +551,8 @@ export const PriceContainer = styled.div<{
   $forceMobile?: boolean;
   pageType?: string;
   $isDrawer?: boolean;
+  $isPoiMwebCard?: boolean;
+  $showNextAvailable?: boolean;
 }>`
   justify-self: center;
   display: grid;
@@ -579,6 +581,13 @@ export const PriceContainer = styled.div<{
       color: ${COLORS.GRAY.G3};
       ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     }
+  }
+
+  @media only screen and (max-width: 768px) {
+    margin-top: ${({ $isPoiMwebCard, $showNextAvailable }) =>
+      !$isPoiMwebCard && !$showNextAvailable ? '1.25rem' : '0'};
+    padding-bottom: ${({ $isPoiMwebCard, $showNextAvailable }) =>
+      !$isPoiMwebCard && !$showNextAvailable ? '0.25rem' : '0'};
   }
 
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}

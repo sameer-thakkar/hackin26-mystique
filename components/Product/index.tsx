@@ -857,6 +857,7 @@ const Product = (props: any) => {
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
       isPoiMwebCard,
+      showNextAvailable,
     });
 
   const trackedToggleContent = (isOpen: any) => {
@@ -1592,7 +1593,12 @@ const Product = (props: any) => {
               })}
             <Conditional if={!isPopup}>
               <CTAContainer pageType={pageType} $forceMobile={forceMobile}>
-                <PriceContainer pageType={pageType} $forceMobile={forceMobile}>
+                <PriceContainer
+                  pageType={pageType}
+                  $forceMobile={forceMobile}
+                  $isPoiMwebCard={isPoiMwebCard}
+                  $showNextAvailable={showNextAvailable}
+                >
                   <PriceBlock
                     isMobile={isPopup ? originalIsMobile : isMobile}
                     isLoading={isLoading}

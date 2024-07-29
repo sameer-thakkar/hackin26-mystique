@@ -16,6 +16,7 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
+import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
@@ -27,6 +28,7 @@ import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -282,6 +284,10 @@ const PopulateProducts: any = (props: any) => {
     el && productsRef.current.push(el);
   };
 
+  const { variant: nextAvailableMBProductCardVariant } = useABTesting({
+    experimentId: 'NEXT_AVAILABLE_MB_PRODUCT_CARD',
+  });
+
   const { isStage, isDev, host, design } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
@@ -363,7 +369,10 @@ const PopulateProducts: any = (props: any) => {
       //
     }
   }, [productsWrapperRef]);
-  const showNextAvailable = legacyBooleanCheck(enableEarliestAvailability);
+  const showNextAvailable =
+    nextAvailableMBProductCardVariant === VARIANTS.TREATMENT
+      ? false
+      : legacyBooleanCheck(enableEarliestAvailability);
 
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }: any) => {
