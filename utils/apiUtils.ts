@@ -73,7 +73,6 @@ export const swrMultiFetcher = (...urls: string[]) => {
 };
 
 export enum HeadoutEndpoints {
-  TourGroupInventoryV5,
   TourGroupsV6,
   TourGroupInventoriesV6,
   TourGroupInventoriesV7,
@@ -114,6 +113,21 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.TourGroupListByCategoryV6,
   HeadoutEndpoints.TourGroupListBySubCategoryV6,
   HeadoutEndpoints.TourGroupReviewsV2,
+  HeadoutEndpoints.CityListV2,
+  HeadoutEndpoints.CollectionTourGroups,
+  HeadoutEndpoints.BulkExperienceItineraries,
+  HeadoutEndpoints.ItinerariesByTGID,
+  HeadoutEndpoints.BulkPoiList,
+  HeadoutEndpoints.CollectionPoi,
+  HeadoutEndpoints.CollectionReviews,
+  HeadoutEndpoints.Media,
+  HeadoutEndpoints.NearbyCityList,
+  HeadoutEndpoints.Banners,
+  HeadoutEndpoints.DomainConfig,
+  HeadoutEndpoints.CurrencyList,
+  HeadoutEndpoints.Category,
+  HeadoutEndpoints.CollectionTop,
+  HeadoutEndpoints.TourGroupReviewMedias,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -130,9 +144,6 @@ export const getHeadoutApiUrl = ({
   let endpointSlug;
 
   switch (endpoint) {
-    case HeadoutEndpoints.TourGroupInventoryV5:
-      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}/`;
-      break;
     case HeadoutEndpoints.TourGroupsV6:
       endpointSlug = `/api/tours/v6/tour-groups/${id ? `${id}/` : ''}`;
       break;
