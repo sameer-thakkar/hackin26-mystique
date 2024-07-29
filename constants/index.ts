@@ -1233,6 +1233,8 @@ export const CANCELLATION_POLICY_POSSIBLE_LABELS = [
   'cancellazione',
 ];
 
+export const REVIEW_API_DOMAIN = 'MICROBRAND';
+
 export const RTL_LANGUAGE_CODES = [LANGUAGE_MAP.ar.code];
 
 export const LIVE_CHAT = {

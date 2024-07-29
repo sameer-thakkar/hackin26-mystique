@@ -7,7 +7,7 @@ import {
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER } from 'const/index';
+import { CUSTOM_HEADER, REVIEW_API_DOMAIN } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
@@ -389,6 +389,7 @@ export const fetchCollectionReviews = async ({
       offset,
       sortOrder,
       language,
+      domain: REVIEW_API_DOMAIN,
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.CollectionReviews,
