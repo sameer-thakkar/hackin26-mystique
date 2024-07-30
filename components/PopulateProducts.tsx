@@ -35,6 +35,7 @@ import {
   ANALYTICS_PROPERTIES,
   DESIGN,
   MB_CATEGORISATION,
+  OLYMPIC_BANNER_UID,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -267,7 +268,7 @@ const PopulateProducts: any = (props: any) => {
   const [showEarliestAvailability, setShowEarliestAvailability] =
     useState(false);
   const router = useRouter();
-  const { isBot } = useRecoilValue(appAtom);
+  const { isBot, language } = useRecoilValue(appAtom);
 
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -278,6 +279,7 @@ const PopulateProducts: any = (props: any) => {
 
   const bannerImage = bannerImages?.[0];
   const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
+  const showOlympicsBanner = OLYMPIC_BANNER_UID.includes(uid);
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
@@ -457,17 +459,9 @@ const PopulateProducts: any = (props: any) => {
   const comboTours = availableToursList?.filter(
     (tour: Record<string, any>) => scorpioData[tour.tgid]?.combo
   );
-  const nonComboTours = availableToursList?.filter(
-    (tour: Record<string, any>) => !scorpioData[tour.tgid]?.combo
-  );
-
-  let finalToursList =
-    isHOHORevamp && (isMobile || clientIsMobile)
-      ? nonComboTours
-      : availableToursList;
 
   if (subattraction_type === SUBATTRACTION_TYPE.C) {
-    finalToursList = finalToursList.splice(0, 5);
+    availableToursList = availableToursList.splice(0, 5);
   }
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
@@ -745,6 +739,24 @@ const PopulateProducts: any = (props: any) => {
     ];
   }
 
+  if (
+    availableToursList?.length &&
+    showOlympicsBanner &&
+    language === 'en-us'
+  ) {
+    availableToursList = [
+      ...availableToursList.slice(0, 1),
+      {
+        bannerVideo: null,
+        isBannerVideo: null,
+        bannerImage: null,
+        isBannerImage: false,
+        showOlympicsBanner,
+      },
+      ...availableToursList.slice(1),
+    ];
+  }
+
   const combosSectionRef = useRef<HTMLDivElement>(null);
   const [isTracked, setIsTracked] = useState(false);
 
@@ -815,22 +827,29 @@ const PopulateProducts: any = (props: any) => {
         isNotVisible={showLoader}
         isHOHORevamp={isHOHORevamp}
       >
-        {finalToursList &&
-          finalToursList.map((tour: Record<string, any>, index: number) => {
-            if (tour.isBannerVideo || tour.isBannerImage) {
-              return (
-                <div key={index}>
-                  <CuratedVideoBanner
-                    tour={tour}
-                    curatedBannerVideoSrc={curatedBannerVideoSrc}
-                    isMobile={isMobile}
-                  />
-                </div>
-              );
-            }
+        <Conditional if={availableToursList?.length > 0}>
+          {availableToursList.map(
+            (tour: Record<string, any>, index: number) => {
+              const { isBannerVideo, isBannerImage, showOlympicsBanner } = tour;
+              if (isBannerVideo || isBannerImage || showOlympicsBanner) {
+                return (
+                  <div key={index}>
+                    <CuratedVideoBanner
+                      tour={tour}
+                      curatedBannerVideoSrc={curatedBannerVideoSrc}
+                      isMobile={isMobile}
+                      isOlympicsBanner={
+                        showOlympicsBanner && language === 'en-us'
+                      }
+                    />
+                  </div>
+                );
+              }
 
-            return getProductCardFromTourAndIndex(tour, index);
-          })}
+              return getProductCardFromTourAndIndex(tour, index);
+            }
+          )}
+        </Conditional>
       </ProductContainer>
       <Conditional
         if={isHOHORevamp && (isMobile || clientIsMobile) && comboTours?.length}

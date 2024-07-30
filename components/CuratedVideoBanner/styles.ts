@@ -33,6 +33,9 @@ export const YoutubeBannerWrapper = styled.div`
       box-shadow: none;
     }
   }
+  a:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const YoutubeBanner = styled.div`
@@ -46,30 +49,29 @@ export const YoutubeBanner = styled.div`
     ${COLORS.BACKGROUND.FLOATING_PURPS},
     ${COLORS.PURPS.LEVEL_10}
   );
-  padding: 1rem 3rem;
+  padding: 1rem 2.25rem;
   border-radius: 1rem;
   box-sizing: border-box;
-  cursor: pointer;
 
   @media (max-width: 768px) {
     flex-direction: column;
     width: auto;
     margin: 0 1.5rem;
-    padding: 0.75rem;
+    padding: 1rem;
   }
 `;
 
 export const YoutubeBannerLeft = styled.div`
   width: 60%;
 
-  h3 {
+  span {
     margin: 0;
     color: black;
     ${expandFontToken(FONTS.HEADING_SMALL)}
   }
 
-  p {
-    ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+  h2 {
+    ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
     margin: 0;
     margin-top: 0.1rem;
   }
@@ -83,12 +85,15 @@ export const YoutubeBannerLeft = styled.div`
   }
 `;
 
-export const YoutubeBannerRight = styled.div`
+export const YoutubeBannerRight = styled.div<{
+  $isOlympicsBanner: boolean;
+}>`
   width: 40%;
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: ${({ $isOlympicsBanner }) =>
+    $isOlympicsBanner ? 'end' : 'space-evenly'};
 
   h3,
   p {
@@ -99,28 +104,29 @@ export const YoutubeBannerRight = styled.div`
   .label-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
 
     svg {
-      margin-right: 1rem;
+      /* margin-right: 1rem;
       margin-top: 0.2rem;
       position: relative;
       animation-name: play-icon-animation;
       animation-duration: 1.4s;
       animation-iteration-count: infinite;
       animation-delay: 250ms;
-      animation-timing-function: ease-in-out;
+      animation-timing-function: ease-in-out; */
+      margin-left: 0.5rem;
+      transform: translateY(1px);
     }
-
-    h3 {
-      width: max-content;
+    @media (max-width: 768px) {
+      justify-content: flex-start;
     }
   }
 
   @media (max-width: 768px) {
+    display: block;
     width: 100%;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 
   @keyframes play-icon-animation {
@@ -142,6 +148,28 @@ export const YoutubeBannerRight = styled.div`
       left: 0px;
       opacity: 1;
     }
+  }
+`;
+
+export const H3Heading = styled.h3<{
+  $isOlympicsBanner?: boolean;
+}>`
+  width: max-content;
+  a {
+    color: ${COLORS.BRAND.PURPS};
+    ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+  }
+  ${({ $isOlympicsBanner }) =>
+    $isOlympicsBanner &&
+    `
+    ${expandFontToken(FONTS.BUTTON_SMALL)};
+    margin:0;
+    @media (max-width: 768px){
+      display:flex;
+    }
+  `}
+  a:hover {
+    text-decoration: underline;
   }
 `;
 
