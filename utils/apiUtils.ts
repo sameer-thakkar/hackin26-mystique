@@ -240,12 +240,6 @@ export const getHeadoutApiUrl = ({
 
   const shouldPointToNewCDN = endPointsOnNewCDN.includes(endpoint);
 
-  /**
-   * This tells us whether we will be directly calling calipso
-   * or whether we will be calling it behind a proxy nextjs api call
-   */
-  const isProxyCall = endpointSlug.includes('/tours/') && !!hostname;
-
   let url: string;
 
   if (hostname) {
@@ -265,16 +259,8 @@ export const getHeadoutApiUrl = ({
     );
   }
 
-  /**
-   * newCDN param should only be added if it is a proxy call
-   *
-   * newCDN tells the nextjs API route to call api-mb.headout.com
-   * instead of api.headout.com
-   */
-  const shouldAddNewCDNQueryParam = shouldPointToNewCDN && isProxyCall;
-
   const finalParams = {
-    ...(shouldAddNewCDNQueryParam && { newCDN: 'true' }),
+    ...(shouldPointToNewCDN && { newCDN: 'true' }),
     ...(params && params),
   };
 
