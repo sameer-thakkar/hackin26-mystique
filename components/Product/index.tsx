@@ -38,6 +38,7 @@ import {
   CTAContainer,
   GuidedTourLabel,
   LineMoreDetailsButton,
+  ModalCardContainer,
   MoreDetailsBtnWrapper,
   OpenDatedDescriptor,
   PopupContainer,
@@ -356,7 +357,33 @@ const Product = (props: any) => {
       }
     }
     if (popup === 'details') {
-      openProductCardAside();
+      if (!isV3Design) {
+        openProductCardAside();
+      } else {
+        addToAside({
+          width: '100vw',
+          children: (
+            <ModalCardContainer>
+              {getProductCardElements({
+                expandContent: true,
+                isLoading: false,
+              })}
+            </ModalCardContainer>
+          ),
+          onCloseCallback: () => {
+            trackedToggleContent(true);
+          },
+          type: SIDEBAR_TYPES.PRODUCT_CARD,
+          tgid: tgid,
+          history: {
+            enable: true,
+            params: {
+              pid: tgid,
+              popup: 'combo',
+            },
+          },
+        });
+      }
     }
   }, [isMobile]);
 
@@ -771,7 +798,6 @@ const Product = (props: any) => {
           activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
         );
       } else {
-        // TODO: CHECK WIDTH CASE
         openProductCardAside();
       }
     } else {
@@ -857,7 +883,7 @@ const Product = (props: any) => {
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
       isPoiMwebCard,
-      showNextAvailable,
+      hideNextAvailable: !showNextAvailable,
     });
 
   const trackedToggleContent = (isOpen: any) => {

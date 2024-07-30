@@ -337,6 +337,8 @@ const MobileProductCard = (props: any) => {
               $isDrawer={isDrawer}
               $isExperimentalCard={true}
               pageType={pageType}
+              $isPoiMwebCard={isPoiMwebCard}
+              $showNextAvailable={showNextAvailable}
             >
               <PriceBlock
                 isMobile={true}

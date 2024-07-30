@@ -220,6 +220,7 @@ const ExperimentalProductCard = (props: any) => {
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
       isPoiMwebCard,
+      hideNextAvailable: !showNextAvailable,
     });
 
   const productBookingUrl = createBookingURL({
