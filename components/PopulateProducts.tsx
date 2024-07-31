@@ -828,7 +828,7 @@ const PopulateProducts: any = (props: any) => {
         isHOHORevamp={isHOHORevamp}
       >
         <Conditional if={availableToursList?.length > 0}>
-          {availableToursList.map(
+          {availableToursList?.map(
             (tour: Record<string, any>, index: number) => {
               const { isBannerVideo, isBannerImage, showOlympicsBanner } = tour;
               if (isBannerVideo || isBannerImage || showOlympicsBanner) {
