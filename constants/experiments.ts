@@ -94,7 +94,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [NEXT_AVAILABLE_MB_PRODUCT_CARD]: new Experiment(
     NEXT_AVAILABLE_MB_PRODUCT_CARD,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [80, 20]
+    [50, 50]
   ),
   [RANKING_EXPERIMENT_V1_REVENUE]: new Experiment(
     RANKING_EXPERIMENT_V1_REVENUE,
