@@ -88,6 +88,7 @@ const ExperimentalProductCard = (props: any) => {
     hideDrawerCloseButton = false,
     tgidItineraryData,
     scrollToItinerarySection = false,
+    topReviews,
   } = props;
 
   const {
@@ -413,6 +414,8 @@ const ExperimentalProductCard = (props: any) => {
           showThumbnailInBanner,
           hideCloseButton: hideDrawerCloseButton,
           tgidItineraryData,
+          reviewsDetails,
+          topReviews,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

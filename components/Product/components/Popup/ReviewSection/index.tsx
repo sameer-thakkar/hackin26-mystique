@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import ReviewsSection from 'components/MicrositeV2/ShowPageV2/ReviewSection';
 import { strings } from 'const/strings';
 import DiagonalArrow from 'assets/diagonalArrow';
@@ -13,6 +14,7 @@ const ReviewSection = ({
   tgid,
   topReviews = [],
   isMobile = false,
+  showTitle = true,
 }: TReviewSectionProps) => {
   const externalButtonContent = (
     <>
@@ -23,9 +25,11 @@ const ReviewSection = ({
 
   return (
     <>
-      <StyledReviewSectionTitle data-review-section-title="true">
-        {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
-      </StyledReviewSectionTitle>
+      <Conditional if={showTitle}>
+        <StyledReviewSectionTitle data-review-section-title="true">
+          {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
+        </StyledReviewSectionTitle>
+      </Conditional>
       <StyledReviewSectionContainer>
         <ReviewsSection
           reviewsDetails={reviewsDetails}

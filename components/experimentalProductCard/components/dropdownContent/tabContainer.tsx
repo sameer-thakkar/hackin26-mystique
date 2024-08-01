@@ -31,7 +31,7 @@ interface TabData {
   heading: string;
   contents: RichTextField;
   isNew?: boolean;
-  type: 'richTextField' | 'itinerary';
+  type: 'richTextField' | 'itinerary' | 'reviews';
 }
 
 interface TabContainerProps {

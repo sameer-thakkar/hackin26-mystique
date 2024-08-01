@@ -6,4 +6,5 @@ export type TReviewSectionProps = {
   topReviews?: TReviewMediasResponse['items'];
   tourGroupUrl?: string;
   isMobile?: boolean;
+  showTitle?: boolean;
 };

@@ -16,12 +16,12 @@ interface ProductContextType {
   setHeaderHeight: (state: number) => void;
   snapDrawerConfig: {
     isMountedOnTop: boolean;
-    transform?: string;
+    transform?: string | null;
     isCompleted?: boolean;
   };
   setSnapDrawerConfig: (state: {
     isMountedOnTop: boolean;
-    transform?: string;
+    transform?: string | null;
     isCompleted?: boolean;
   }) => void;
 }

@@ -69,18 +69,17 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       activeTab,
       setActiveTab,
     });
-
     useEffect(() => {
       if (isSnapDrawerMountingComplete || !isSnapDrawerMountedToTop) {
         setFinalSnapSheetTransform(transform);
       }
-    }, [transform]);
+    }, [transform, drawerState]);
 
     useEffect(() => {
       if (isSnapDrawerMountedToTop && snapDrawerTranslate) {
         setFinalSnapSheetTransform(snapDrawerTranslate);
       }
-    }, [isSnapDrawerMountedToTop]);
+    }, [isSnapDrawerMountedToTop, snapDrawerTranslate]);
 
     return (
       <SnapSheetContainer

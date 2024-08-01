@@ -160,15 +160,18 @@ const MobileProductCard = (props: any) => {
         const config = {
           isMountedOnTop: true,
           transform: 'translate3d(0px, -99px, 0px)',
+          isCompleted: false,
         };
         setSnapDrawerConfig(config);
         setTimeout(() => {
-          document.getElementById('tab-Itinerary')?.click();
+          const elemId = `tab-${strings.ITINERARY.TAB}`;
+          document.getElementById(elemId)?.click();
           setSnapDrawerConfig({
             ...config,
             isCompleted: true,
+            transform: null,
           });
-        }, 500);
+        }, 0);
       }, 300);
     }
 
@@ -189,6 +192,29 @@ const MobileProductCard = (props: any) => {
   useEffect(() => {
     setTitle(cardTitle);
   }, [cardTitle]);
+
+  const handleRatingsCountClick = () => {
+    setDrawerState(SWIPESHEET_STATES.OPEN);
+
+    setTimeout(() => {
+      setDrawerState(SWIPESHEET_STATES.EXPANDED);
+      const config = {
+        isMountedOnTop: true,
+        transform: 'translate3d(0px, -60px, 0px)',
+        isCompleted: false,
+      };
+      setSnapDrawerConfig(config);
+      setTimeout(() => {
+        const elemId = `tab-${strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}`;
+        document.getElementById(elemId)?.click();
+        setSnapDrawerConfig({
+          ...config,
+          isCompleted: true,
+          transform: null,
+        });
+      }, 0);
+    }, 0);
+  };
 
   return (
     <ScaledCard $isClicked={showPricingBar} $isDrawer={isDrawer}>
@@ -257,20 +283,28 @@ const MobileProductCard = (props: any) => {
           </div>
         </Conditional>
         <ProductHeader>
-          <Conditional if={isPoiMwebCard || isModifiedProductCard}>
-            <CategoryAndRatingContainer
-              $isDrawer={isDrawer}
-              $isExperimentalCard={true}
-            >
+          <CategoryAndRatingContainer
+            $isDrawer={isDrawer}
+            $isExperimentalCard={true}
+            $isNonPOICardWithRatings={
+              !isPoiMwebCard &&
+              !isModifiedProductCard &&
+              reviewsDetails?.showRatings
+            }
+          >
+            <Conditional if={isPoiMwebCard || isModifiedProductCard}>
               <Category
                 primaryCategory={scorpioData.primaryCategory ?? primaryCategory}
                 primarySubCategory={
                   scorpioData.primarySubCategory ?? primarySubCategory
                 }
               />
-              <Ratings reviewsDetails={reviewsDetails} />
-            </CategoryAndRatingContainer>
-          </Conditional>
+            </Conditional>
+            <Ratings
+              reviewsDetails={reviewsDetails}
+              onRatingsCountClick={handleRatingsCountClick}
+            />
+          </CategoryAndRatingContainer>
           <TourTitle
             boosterTag={boosterTag}
             isPoiMwebCard={isPoiMwebCard}

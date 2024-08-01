@@ -7,7 +7,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
@@ -16,9 +18,11 @@ import Itinerary from 'components/common/Itinerary';
 import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
+import type { TReviewMediasResponse } from 'utils/apiUtils';
 import { isItineraryValid } from 'utils/itinerary';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { addUrlParams } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -36,11 +40,17 @@ import {
 } from './styles';
 import TabContainer from './tabContainer';
 
+const ReviewSection = dynamic(
+  import(
+    /* webpackChunkName: "ReviewSection" */ 'components/Product/components/Popup/ReviewSection'
+  )
+);
+
 interface TabData {
   heading: string;
   contents: RichTextField;
   isNew?: boolean;
-  type: 'richTextField' | 'itinerary';
+  type: 'richTextField' | 'itinerary' | 'reviews';
 }
 
 interface DropdownContentProps {
@@ -65,6 +75,8 @@ interface DropdownContentProps {
   lang: LanguagesUnion;
   onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
   preventTouchEvents?: boolean;
+  reviewsDetails?: Record<string, any>;
+  topReviews?: TReviewMediasResponse['items'];
 }
 
 const DropdownContent: FC<DropdownContentProps> = ({
@@ -86,7 +98,10 @@ const DropdownContent: FC<DropdownContentProps> = ({
   lang,
   onActiveItineraryTabChange,
   preventTouchEvents,
+  reviewsDetails,
+  topReviews,
 }) => {
+  const { isMobile } = useRecoilValue(appAtom);
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
   const [cardHeight, setCardHeight] = useState(0);
@@ -106,6 +121,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
     tgidItineraryData.findIndex((itinerary: TItinerary) =>
       isItineraryValid(itinerary)
     ) !== -1;
+  const reviewSectionLoaded = !!reviewsDetails?.showRatings;
 
   const adjustContainerScroll = useCallback(
     (targetElement: any, container: any) => {
@@ -218,7 +234,19 @@ const DropdownContent: FC<DropdownContentProps> = ({
         ...prevTabs.slice(1),
       ]);
     }
-  }, [tgidItineraryData, finalHighlights]);
+
+    if (reviewSectionLoaded) {
+      setTabs((prevTabs) => [
+        ...prevTabs,
+        {
+          heading: strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews,
+          isNew: false,
+          contents: [],
+          type: 'reviews',
+        },
+      ]);
+    }
+  }, [tgidItineraryData, finalHighlights, reviewSectionLoaded]);
 
   useEffect(() => {
     if (!childRef.current || !headerHeight) return;
@@ -340,6 +368,17 @@ const DropdownContent: FC<DropdownContentProps> = ({
                     itineraryData={tgidItineraryData!}
                     lang={lang}
                     onActiveTabChange={onActiveItineraryTabChange}
+                    showTitle={false}
+                  />
+                </Conditional>
+                <Conditional
+                  if={tab.type === 'reviews' && reviewsDetails?.showRatings}
+                >
+                  <ReviewSection
+                    reviewsDetails={reviewsDetails!}
+                    topReviews={topReviews}
+                    tgid={tgid}
+                    isMobile={isMobile}
                     showTitle={false}
                   />
                 </Conditional>

@@ -693,6 +693,7 @@ export const StyledCategoryContainer = styled.div<{
 export const CategoryAndRatingContainer = styled.div<{
   $isExperimentalCard?: boolean;
   $isDrawer?: boolean;
+  $isNonPOICardWithRatings?: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -701,7 +702,9 @@ export const CategoryAndRatingContainer = styled.div<{
   ${({ $isDrawer }) =>
     !$isDrawer ? `margin-bottom: -0.25rem;` : `margin-bottom: -0.75rem;`}
   ${({ $isExperimentalCard, $isDrawer }) =>
-    $isExperimentalCard && !$isDrawer && `margin-top: 0.25rem;`}
+    $isExperimentalCard && !$isDrawer && `margin-top: 0.25rem;`};
+  ${({ $isNonPOICardWithRatings }) =>
+    $isNonPOICardWithRatings && `margin-bottom: 1rem;`};
 
   @media (min-width: 768px) {
     justify-content: flex-start;
@@ -1471,11 +1474,8 @@ export const StyledRatingsContainer = styled.div<{
     }
 
     &.rating-count {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
       font-family: ${HALYARD.FONT_STACK};
-      font-size: 0.75rem;
-      font-weight: 300;
-      line-height: 0.9375rem;
-      letter-spacing: 0em;
       text-align: left;
 
       & .underline {

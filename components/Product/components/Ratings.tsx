@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import classNames from 'classnames';
 import { checkIfHarryPotterPage, truncateNumber } from 'utils';
 import { isSafari as checkForSafari } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
@@ -52,7 +53,7 @@ const Ratings = ({
           tabIndex={0}
         >
           (
-          <span className={`${onRatingsCountClick && 'underline'}`}>
+          <span className={classNames({ 'underline': onRatingsCountClick })}>
             {truncateNumber(ratingsCount).toUpperCase()}
           </span>
           )

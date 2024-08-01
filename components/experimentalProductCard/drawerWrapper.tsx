@@ -60,6 +60,8 @@ const DrawerWrapper = (props: any) => {
     trackDrawerOpen,
     showThumbnailInBanner,
     tgidItineraryData,
+    reviewsDetails,
+    topReviews,
   } = props;
 
   const [activeItinerary, setActiveItinerary] = useState<Itinerary>(
@@ -185,6 +187,8 @@ const DrawerWrapper = (props: any) => {
             lang={lang}
             onActiveItineraryTabChange={handleActiveItineraryTabChange}
             preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
+            reviewsDetails={reviewsDetails}
+            topReviews={topReviews}
           >
             {children}
           </DropdownContent>

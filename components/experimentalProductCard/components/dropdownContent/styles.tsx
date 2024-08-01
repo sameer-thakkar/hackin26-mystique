@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Review } from 'components/MicrositeV2/ShowPageV2/ReviewSection/style';
+import { StyledReviewSectionContainer } from 'components/Product/components/Popup/ReviewSection/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -183,6 +185,16 @@ export const ContentContainer = styled.div`
   h6#itinerary-section-title {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
     margin: 1rem 0 1.5rem;
+  }
+
+  ${StyledReviewSectionContainer} {
+    p {
+      margin-top: unset;
+    }
+  }
+
+  ${Review} {
+    margin-bottom: 1.5rem;
   }
 `;
 
