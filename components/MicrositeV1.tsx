@@ -720,12 +720,17 @@ const MicrositeV1 = (props: any) => {
   } = useABTesting({
     experimentId: 'ITINERARY_CONTROLLED_ROLLOUT',
     noTrack: false,
-    customEligibilityCheckFn: () => isMobile,
+    customEligibilityCheckFn: () =>
+      isMobile &&
+      taggedSubCategoryName &&
+      !['HOHO', 'Cruises'].includes(taggedSubCategoryName) &&
+      !!scorpioData?.itineraryData?.itineraries?.length,
   });
 
   const showItineraries = isItineraryExpEligible
     ? itineraryRolloutVariant === VARIANTS.TREATMENT
-    : taggedSubCategoryName !== 'HOHO' &&
+    : taggedSubCategoryName &&
+      !['HOHO', 'Cruises'].includes(taggedSubCategoryName) &&
       !!scorpioData?.itineraryData?.itineraries?.length;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
