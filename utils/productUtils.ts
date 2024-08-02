@@ -76,7 +76,9 @@ export const extractCancellationPolicyFromHighlights = (
   return cancellationPolicy;
 };
 
-export const filterFromHighlights = (highlights: Record<string, any>[]) => {
+export const filterFromHighlights = (
+  highlights: Record<string, any>[] = []
+) => {
   let exclude = false;
   const filteredData: Record<string, any> = [];
 

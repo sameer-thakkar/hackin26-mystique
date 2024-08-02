@@ -403,8 +403,8 @@ const Product = (props: any) => {
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
 
-  const descriptorsList = descriptors || scorpioData.descriptors;
-  const cardTitle = title || scorpioData.title;
+  const descriptorsList = descriptors || scorpioData?.descriptors || [];
+  const cardTitle = title || scorpioData?.title;
   const { promo_code } = finalPromoCode || {};
   const isFirstProduct = indexPosition === 0;
   const isBannerCard =
@@ -672,7 +672,7 @@ const Product = (props: any) => {
   const showScratchPrice = isScratchPriceEnabled;
   const finalHighlights = asText(tempHighlights)?.trim()?.length
     ? tempHighlights
-    : filterFromHighlights(scorpioData.highlights);
+    : filterFromHighlights(scorpioData?.highlights);
 
   let { highlights, tabs } = originalIsMobile
     ? { highlights: finalHighlights, tabs: [] }
@@ -1273,7 +1273,7 @@ const Product = (props: any) => {
   }, 100);
 
   const primarySubCategoryId = (
-    scorpioData.primarySubCategory ?? primarySubCategory
+    scorpioData?.primarySubCategory ?? primarySubCategory
   )?.id;
 
   const showGuidedTourDescriptor =
@@ -1477,10 +1477,10 @@ const Product = (props: any) => {
                 <Conditional if={!isNonPoi}>
                   <Category
                     primaryCategory={
-                      scorpioData.primaryCategory ?? primaryCategory
+                      scorpioData?.primaryCategory ?? primaryCategory
                     }
                     primarySubCategory={
-                      scorpioData.primarySubCategory ?? primarySubCategory
+                      scorpioData?.primarySubCategory ?? primarySubCategory
                     }
                   />
                 </Conditional>
