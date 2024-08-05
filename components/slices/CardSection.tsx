@@ -193,7 +193,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   const EntrySection = (
     <TitleTextCombo ref={cardSectionRef}>
       {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
-      {description ? (
+      {description?.length ? (
         <RichContent
           render={description}
           parentProps={{
@@ -206,7 +206,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   );
 
   // Rich Text for ending of the Card Section
-  const ExitSection = exitDescription ? (
+  const ExitSection = exitDescription?.length ? (
     <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
       <RichContent
         render={exitDescription}
