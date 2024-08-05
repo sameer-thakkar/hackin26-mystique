@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const JS_REPLACEMENTS = {
-  'www.test-headout.com': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.test-headout.com`,
-  'api.test-headout.com': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.test-headout.com`,
-  'calipso.test-headout.internal': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.test-headout.com`,
-  'headout-calipso.headout-calipso.svc.cluster.local': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.test-headout.com`,
+  'www.test-headout.com': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.dev-headout.com`,
+  'api.test-headout.com': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.dev-headout.com`,
+  'calipso.test-headout.internal': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.dev-headout.com`,
+  'headout-calipso.headout-calipso.svc.cluster.local': `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.api.dev-headout.com`,
   '"test"': '"ondemand"',
 };
 
