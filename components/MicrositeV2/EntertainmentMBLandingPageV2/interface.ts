@@ -7,4 +7,5 @@ export type TLandingPageV2Props = {
   collectionId: number;
   directTgid?: number;
   browseByCategoriesRef?: MutableRefObject<HTMLDivElement | null>;
+  showHigherQualityImage?: boolean;
 };

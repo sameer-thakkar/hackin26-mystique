@@ -40,6 +40,7 @@ const SpecialSections = ({
   useForcedSekeltonLoaders,
   handleSeaAllClicked,
   id,
+  showHigherQualityImage = false,
 }: ISpecialSections) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
@@ -188,6 +189,7 @@ const SpecialSections = ({
           isMobile={isMobile}
           background="DARK"
           key={index}
+          showHigherQualityImage={showHigherQualityImage}
         />
       </Conditional>
     </div>

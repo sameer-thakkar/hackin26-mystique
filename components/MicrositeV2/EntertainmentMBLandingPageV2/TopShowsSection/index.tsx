@@ -27,6 +27,7 @@ export interface ITopShowsSectionProps {
   showBrowseByCategories: boolean;
   isCategoryPage?: boolean;
   directTgid?: number;
+  showHigherQualityImage?: boolean;
 }
 
 const TopShowsSection = ({
@@ -37,6 +38,7 @@ const TopShowsSection = ({
   showBrowseByCategories,
   isCategoryPage = false,
   directTgid,
+  showHigherQualityImage = false,
 }: ITopShowsSectionProps) => {
   const [numberOfShowsToDisplay, setNumberOfShowsToDisplay] = useState(
     isMobile ? 18 : 36
@@ -123,6 +125,7 @@ const TopShowsSection = ({
                     product={show}
                     background="LIGHT"
                     key={show.title}
+                    showHigherQualityImage={showHigherQualityImage}
                   />
                 </div>
               </div>
@@ -149,6 +152,7 @@ const TopShowsSection = ({
                 background="LIGHT"
                 key={show.title}
                 isMobile={isMobile}
+                showHigherQualityImage={showHigherQualityImage}
               />
             </div>
           );

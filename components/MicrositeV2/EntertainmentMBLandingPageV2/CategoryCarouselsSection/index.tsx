@@ -30,6 +30,7 @@ export const CategoryCarouselSwiper = ({
   isMobile,
   allTours,
   index,
+  showHigherQualityImage = false,
 }: TCategoryCarouselSwiperProps) => {
   const sliderList = isMobile
     ? category.ranking.popularity.slice(0, 10)
@@ -169,6 +170,7 @@ export const CategoryCarouselSwiper = ({
             product={allTours[tgid]}
             key={tgid}
             isMobile={isMobile}
+            showHigherQualityImage={showHigherQualityImage}
           />
         ))}
       </Swiper>
@@ -181,6 +183,7 @@ const CategoryCarouselsSection = ({
   allTours,
   isMobile,
   isCategoryPage = false,
+  showHigherQualityImage = false,
 }: TCategoryCarouselsSection) => {
   return (
     <CategoriesSectionWrapper $isCategoryPage={isCategoryPage}>
@@ -193,6 +196,7 @@ const CategoryCarouselsSection = ({
             allTours={allTours}
             isMobile={isMobile}
             index={categoryNumber}
+            showHigherQualityImage={showHigherQualityImage}
           />
         );
       })}

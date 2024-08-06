@@ -37,6 +37,7 @@ const EntertainmentMBLandingPageV2 = ({
   browseByCategoriesRef,
   directTgid,
   collectionId,
+  showHigherQualityImage = false,
 }: TLandingPageV2Props) => {
   const { lang } = useContext(MBContext);
 
@@ -204,6 +205,7 @@ const EntertainmentMBLandingPageV2 = ({
         }
         directTgid={directTgid}
         showBrowseByCategories={false}
+        showHigherQualityImage={showHigherQualityImage}
       />
       <SpecialSections
         allTours={allTours}
@@ -218,6 +220,7 @@ const EntertainmentMBLandingPageV2 = ({
         hideSeeAll={true}
         useForcedSekeltonLoaders
         id="Last minute"
+        showHigherQualityImage={showHigherQualityImage}
       />
       <CategoryCarouselsSection
         categoriesToRender={categoriesToRender.slice(
@@ -226,6 +229,7 @@ const EntertainmentMBLandingPageV2 = ({
         )}
         allTours={allTours}
         isMobile={isMobile}
+        showHigherQualityImage={showHigherQualityImage}
       />
       <Conditional if={!collectionReviewsError}>
         <ReviewSectionWrapper id="review-section-wrapper">
@@ -245,6 +249,7 @@ const EntertainmentMBLandingPageV2 = ({
         )}
         allTours={allTours}
         isMobile={isMobile}
+        showHigherQualityImage={showHigherQualityImage}
       />
     </LandingPageWrapper>
   );

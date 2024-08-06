@@ -3,6 +3,7 @@ export type TCategoryCarouselsSection = {
   allTours: any;
   isMobile: boolean;
   isCategoryPage?: boolean;
+  showHigherQualityImage?: boolean;
 };
 
 export type TCategoryCarouselSwiperProps = {
@@ -10,4 +11,5 @@ export type TCategoryCarouselSwiperProps = {
   isMobile: boolean;
   index: number;
   category?: any;
+  showHigherQualityImage?: boolean;
 };

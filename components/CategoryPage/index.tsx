@@ -17,6 +17,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
   categoryTourListData,
   primarySubCategoryId,
   browseByCategoriesRef,
+  showHigherQualityImage,
 }) => {
   const { ENTERTAINMENT_MB_LANDING_PAGE } = strings;
   const { categories } = categoryProps;
@@ -71,6 +72,7 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
               showBrowseByCategories
               isCategoryPage
               categoriesToRender={categoriesToRender}
+              showHigherQualityImage={showHigherQualityImage}
             />
           </Conditional>
           <CategoryCarouselsSection

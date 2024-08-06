@@ -26,6 +26,7 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
   allTours,
   pageTabsSlice,
   displayMonth,
+  showHigherQualityImage,
 }) => {
   const allowedTgids = useMemo(() => {
     const result = getAllowedTgids(displayMonth, allTours);
@@ -112,12 +113,14 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
             showBrowseByCategories
             isCategoryPage
             categoriesToRender={getUpdatedCategoriesToRender(categories)}
+            showHigherQualityImage={showHigherQualityImage}
           />
           <CategoryCarouselsSection
             categoriesToRender={getUpdatedCategoriesToRender(categories)}
             allTours={allTours}
             isMobile={isMobile}
             isCategoryPage
+            showHigherQualityImage={showHigherQualityImage}
           />
         </div>
       </MonthOnMonthPageWrapper>

@@ -78,7 +78,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
       calculatedWidth = Number(height) * (widthRatio / heightRatio);
   }
 
-  const multiplier = loadHigherQualityImageProp ? 1.3 : 1;
+  const multiplier = loadHigherQualityImageProp ? 1.5 : 1;
+
   calculatedWidth = (calculatedWidth as number) * multiplier;
   calculatedHeight = (calculatedHeight as number) * multiplier;
 

@@ -11,4 +11,5 @@ export type TMonthOnMonthPageProps = {
   allTours: Record<string, any>;
   pageTabsSlice: Record<string, any>;
   displayMonth: string;
+  showHigherQualityImage?: boolean;
 };
