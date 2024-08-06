@@ -351,6 +351,23 @@ const MicrositeV1 = (props: any) => {
       isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
 
+  const {
+    isEligible: isHighlightsExpEligible,
+    isExperimentResolving: isHighlightsExperimentResolving,
+    variant: highlightsExpVariant,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_ONLY_HIGHLIGHTS',
+    customEligibilityCheckFn: () =>
+      !isMobile &&
+      !(
+        (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+        baseLangIsPoiMb
+      ),
+  });
+
+  const showOnlyHighlightsProductCard =
+    highlightsExpVariant === VARIANTS.TREATMENT;
+
   const showHohoRevamp =
     isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
 
@@ -825,8 +842,9 @@ const MicrositeV1 = (props: any) => {
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         !isMobile &&
-        (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
-        baseLangIsPoiMb
+        (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+          baseLangIsPoiMb) ||
+          showOnlyHighlightsProductCard)
       }
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
@@ -899,7 +917,8 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isHohoExpEligible && isHohoExperimentResolving) ||
-    (isLFCImpactExpEligible && isLFCExperimentResolving)
+    (isLFCImpactExpEligible && isLFCExperimentResolving) ||
+    (isHighlightsExpEligible && isHighlightsExperimentResolving)
   )
     return <Loader />;
 
