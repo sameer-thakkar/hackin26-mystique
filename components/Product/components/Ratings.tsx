@@ -53,7 +53,7 @@ const Ratings = ({
           tabIndex={0}
         >
           (
-          <span className={classNames({ 'underline': onRatingsCountClick })}>
+          <span className={classNames({ underline: onRatingsCountClick })}>
             {truncateNumber(ratingsCount).toUpperCase()}
           </span>
           )

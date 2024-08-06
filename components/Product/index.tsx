@@ -212,7 +212,7 @@ const Product = (props: any) => {
     boosterTag,
     isMobile: originalIsMobile,
     instantCheckout,
-    showNextAvailable,
+    showNextAvailable = false,
     isTicketCard = false,
     indexPosition,
     pageType = '',
