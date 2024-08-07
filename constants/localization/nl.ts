@@ -1165,11 +1165,6 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     WHATS_ON: 'Programma',
     CATEGORIES: 'Categorieën',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: 'Op zoek naar de juiste ervaring?',
-    SUB_HEADING: 'Met dit filmpje maak je de perfecte keuze!',
-    WATCH_VIDEO: 'Bekijk video',
-  },
   NEXT: 'Volgende',
   PREVIOUS: 'Vorige',
   ITINERARY: {

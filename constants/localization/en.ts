@@ -1270,11 +1270,6 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     WHATS_ON: `What's on`,
     CATEGORIES: 'Categories',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: 'Need help picking the right experience?',
-    SUB_HEADING: 'Watch this video to make the perfect choice!',
-    WATCH_VIDEO: 'Watch Video',
-  },
   NEXT: 'Next',
   PREVIOUS: 'Previous',
   ITINERARY: {

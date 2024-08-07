@@ -1213,11 +1213,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     WHATS_ON: `À l'affiche`,
     CATEGORIES: 'Catégories',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: "Besoin d'aide pour choisir l'expérience qui vous convient ?",
-    SUB_HEADING: 'Regardez cette vidéo pour faire le bon choix !',
-    WATCH_VIDEO: 'Regarder la vidéo',
-  },
   NEXT: 'Prochaine étape',
   PREVIOUS: 'Précédent',
   ITINERARY: {

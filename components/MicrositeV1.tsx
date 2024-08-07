@@ -837,7 +837,6 @@ const MicrositeV1 = (props: any) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       bannerVideo={bannerVideo}
-      bannerImages={finalBannerImages}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
       isPoiMwebCard={isPoiMwebCard}

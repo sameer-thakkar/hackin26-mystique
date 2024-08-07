@@ -1263,11 +1263,6 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     WHATS_ON: 'En cartelera',
     CATEGORIES: 'Categorías',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: '¿No sabes qué experiencia elegir?',
-    SUB_HEADING: 'Pues ve este vídeo para hacerte una idea.',
-    WATCH_VIDEO: 'Ver vídeo',
-  },
   NEXT: 'Continuar',
   PREVIOUS: 'Anterior',
   ITINERARY: {

@@ -6,14 +6,12 @@ import Image from 'UI/Image';
 import Video from 'UI/Video';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { EXPERIMENT_NAMES } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   OLYMPICS_BANNER,
   VIDEO_POSITIONS,
 } from 'const/index';
-import { strings } from 'const/strings';
 import VideoPlayIcon from 'assets/playIcon';
 import RightChevron from 'assets/rightChevron';
 import { BANNER_DIMENSIONS } from './constants';
@@ -52,9 +50,7 @@ const CuratedVideoBanner = ({
   useEffect(() => {
     if (isIntersecting) {
       trackEvent({
-        eventName:
-          ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP
-            .MICROSITE_PAGE_SECTION_VIEWED,
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
         [ANALYTICS_PROPERTIES.SECTION]: OLYMPICS_BANNER.BLOG_BANNER,
       });
     }
@@ -62,43 +58,6 @@ const CuratedVideoBanner = ({
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-  const trackVideoPlayedFn = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP.VIDEO_PLAYED,
-      [ANALYTICS_PROPERTIES.SECTION]: EXPERIMENT_NAMES.CURATED_VIDEO_BANNER,
-    });
-  };
-
-  const trackVideoProgressFn = (videoProgress: number) => {
-    if (
-      videoProgress === 10 ||
-      videoProgress === 25 ||
-      videoProgress === 50 ||
-      videoProgress === 75
-    ) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP.VIDEO_VIEWED,
-        [ANALYTICS_PROPERTIES.SECTION]: EXPERIMENT_NAMES.CURATED_VIDEO_BANNER,
-        [ANALYTICS_PROPERTIES.PERCENT_VIEWED]: videoProgress,
-      });
-    }
-  };
-  const openModal = () => {
-    setIsModalOpen(true);
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP.VIDEO_PLAYER_OPENED,
-      [ANALYTICS_PROPERTIES.SECTION]: EXPERIMENT_NAMES.CURATED_VIDEO_BANNER,
-    });
-  };
-  const handleCuratedVideoBannerClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP.CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: ANALYTICS_PROPERTIES.WATCH_VIDEO,
-      [ANALYTICS_PROPERTIES.SECTION]: EXPERIMENT_NAMES.CURATED_VIDEO_BANNER,
-    });
-
-    openModal();
   };
 
   const handleCTAClick = (
@@ -114,12 +73,8 @@ const CuratedVideoBanner = ({
     });
   };
 
-  const bannerContent = isOlympicsBanner
-    ? OLYMPICS_BANNER.BANNER_CONTENT
-    : strings.CURATED_VIDEO_BANNER.SUB_HEADING;
-  const ctaContent = isOlympicsBanner
-    ? OLYMPICS_BANNER.CTA_CONTENT
-    : strings.CURATED_VIDEO_BANNER.WATCH_VIDEO;
+  const bannerContent = isOlympicsBanner ? OLYMPICS_BANNER.BANNER_CONTENT : '';
+  const ctaContent = isOlympicsBanner ? OLYMPICS_BANNER.CTA_CONTENT : '';
 
   return (
     <>
@@ -131,8 +86,6 @@ const CuratedVideoBanner = ({
         >
           <IFrameWrapper>
             <IFrame
-              trackVideoProgressFn={trackVideoProgressFn}
-              trackVideoPlayedFn={trackVideoPlayedFn}
               shouldTrackVideoLoaded={false}
               autoplay={true}
               src={curatedBannerVideoSrc}
@@ -140,17 +93,13 @@ const CuratedVideoBanner = ({
           </IFrameWrapper>
         </Modal>
       </Conditional>
-      <YoutubeBannerWrapper
-        onClick={isOlympicsBanner ? () => {} : handleCuratedVideoBannerClick}
-        ref={mediaPreviewWrapperRef}
-      >
+      <YoutubeBannerWrapper ref={mediaPreviewWrapperRef}>
         <YoutubeBanner>
           <YoutubeBannerLeft>
-            <span>
-              {isOlympicsBanner
-                ? OLYMPICS_BANNER.VIP_ACCESS
-                : strings.CURATED_VIDEO_BANNER.HEADING}
-            </span>
+            <Conditional if={isOlympicsBanner}>
+              <span>{OLYMPICS_BANNER.VIP_ACCESS}</span>
+            </Conditional>
+
             <h2
               onClick={(e) =>
                 handleCTAClick(e, OLYMPICS_BANNER.HOW_TO_GET_PASS)

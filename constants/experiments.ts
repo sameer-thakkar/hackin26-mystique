@@ -11,7 +11,6 @@ export const VARIANTS = {
 };
 
 const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
-const CURATED_VIDEO_BANNER = 'Curated Video Banner';
 const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
@@ -30,7 +29,6 @@ const PRODUCT_CARD_ONLY_HIGHLIGHTS = 'Product Card Tabs Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
-  CURATED_VIDEO_BANNER,
   HOHO_REVAMP,
   IMAGE_QUALITY_EXPERIMENT,
   ITINERARY_CONTROLLED_ROLLOUT,
@@ -55,11 +53,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     BOOSTERS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
-  ),
-  [CURATED_VIDEO_BANNER]: new Experiment(
-    CURATED_VIDEO_BANNER,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
   ),
   [HOHO_REVAMP]: new Experiment(
     HOHO_REVAMP,

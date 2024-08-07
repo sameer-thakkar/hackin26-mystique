@@ -1212,11 +1212,6 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     WHATS_ON: 'Em cartaz',
     CATEGORIES: 'Categorias',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: 'Não sabe qual experiência escolher?',
-    SUB_HEADING: 'Veja este vídeo para fazer a escolha perfeita!',
-    WATCH_VIDEO: 'Assistir ao vídeo',
-  },
   NEXT: 'Continuar',
   PREVIOUS: 'Anterior',
   ITINERARY: {

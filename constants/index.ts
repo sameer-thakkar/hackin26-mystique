@@ -529,15 +529,6 @@ export const ANALYTICS_EVENTS = {
   },
   MORE_DETAILS_SWIPESHEET_CLOSED: 'More Details Swipesheet Closed',
   PRODUCT_CARD_DEADCLICK: 'Product Card Deadclick',
-  CURATED_VIDEO_BANNER_EXP: {
-    MICROSITE_PAGE_SECTION_VIEWED: 'Microsite Page Section Viewed',
-    EXPERIMENT_VIEWED: 'Experiment Viewed',
-    CTA_CLICKED: 'Microsite Page CTA Clicked',
-    VIDEO_PLAYER_OPENED: 'Video Player Opened',
-    VIDEO_PLAYED: 'Video Played',
-    VIDEO_VIEWED: 'Video Viewed',
-    FOURTH_PRODUCT_CARD: '4th Product Card',
-  },
   MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
   SEATMAP_EXPERIMENT: {
     THEATRE_NAME: 'Theatre Name',
@@ -2102,35 +2093,6 @@ export const BOOSTER_EXPERIMENT_UIDS = {
 export const siteNameMappings = new Map<string, string>([
   ['www.london-theater-tickets.com', 'London Theatre Tickets'],
 ]);
-
-interface ICuratedVideoBannerExp {
-  [uid: string]: {
-    ytEmbedLink: string;
-  };
-}
-export const curatedVideoBannerExpUids: ICuratedVideoBannerExp = {
-  'www.colosseum-rome-tickets.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/1qCdM6t0GUw',
-  },
-  'www.tickets-rome.com.colosseum': {
-    ytEmbedLink: 'https://www.youtube.com/embed/1qCdM6t0GUw',
-  },
-  'burj-khalifa.dubai-tickets.co': {
-    ytEmbedLink: 'https://www.youtube.com/embed/Nk5m4_Nwiv8',
-  },
-  'www.desert-safari-dxb.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/nqbom-9-pPA',
-  },
-  'www.milford-sound-cruises.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/4j1_uMuNJSQ',
-  },
-  'www.versailles-palace-tickets.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/SAnh4VuKQkQ',
-  },
-  'www.alhambra-granada-tickets.com': {
-    ytEmbedLink: 'https://www.youtube.com/embed/hf3FKoSLNwQ',
-  },
-};
 
 export const BOOSTER_RIVE_LOCATION =
   'https://cdn-imgix.headout.com/mb/boosters_4.riv';

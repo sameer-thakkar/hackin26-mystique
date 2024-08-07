@@ -1203,11 +1203,6 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     WHATS_ON: 'Programm',
     CATEGORIES: 'Kategorien',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: 'Auf der Suche nach dem richtigen Erlebnis?',
-    SUB_HEADING: 'Mit diesem Video treffen Sie die perfekte Wahl!',
-    WATCH_VIDEO: 'Video ansehen',
-  },
   NEXT: 'Weiter',
   PREVIOUS: 'Zurück',
   ITINERARY: {

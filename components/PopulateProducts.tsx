@@ -234,12 +234,10 @@ const PopulateProducts: any = (props: any) => {
     showBoosters = false,
     trackProductCardsViewed = false,
     showThumbnailInBanner,
-    bannerImages,
     showPopup = false,
     asHook,
     forceMobile,
     hideHeading,
-    showVideoBanner = false,
     curatedBannerVideoSrc,
     isHOHORevamp,
     isHOHOResolving,
@@ -275,8 +273,6 @@ const PopulateProducts: any = (props: any) => {
     setActiveIndex(swiper.realIndex);
   }, [swiper]);
 
-  const bannerImage = bannerImages?.[0];
-  const isBannerMediaPresent = !!bannerVideo || !!bannerImage;
   const showOlympicsBanner = OLYMPIC_BANNER_UID.includes(uid);
 
   const addToRef = (el: any) => {
@@ -488,26 +484,6 @@ const PopulateProducts: any = (props: any) => {
                 [ANALYTICS_PROPERTIES.IS_TRUNCATED]:
                   !!entry.target?.querySelector?.('.more-details'),
               });
-
-              const isFourthProductCard =
-                availableToursList?.findIndex((t: any) => t.tgid === tgid) +
-                  1 ===
-                4;
-
-              if (
-                !showVideoBanner &&
-                curatedBannerVideoSrc &&
-                isFourthProductCard
-              ) {
-                trackEvent({
-                  eventName:
-                    ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP
-                      .MICROSITE_PAGE_SECTION_VIEWED,
-                  [ANALYTICS_PROPERTIES.SECTION]:
-                    ANALYTICS_EVENTS.CURATED_VIDEO_BANNER_EXP
-                      .FOURTH_PRODUCT_CARD,
-                });
-              }
             }
           }
         });
@@ -713,23 +689,6 @@ const PopulateProducts: any = (props: any) => {
   };
 
   if (
-    availableToursList?.length > 3 &&
-    isBannerMediaPresent &&
-    showVideoBanner
-  ) {
-    availableToursList = [
-      ...availableToursList.slice(0, 3),
-      {
-        bannerVideo,
-        isBannerVideo: !!bannerVideo,
-        bannerImage,
-        isBannerImage: !!bannerImage,
-      },
-      ...availableToursList.slice(3),
-    ];
-  }
-
-  if (
     availableToursList?.length &&
     showOlympicsBanner &&
     language === 'en-us'
@@ -737,10 +696,6 @@ const PopulateProducts: any = (props: any) => {
     availableToursList = [
       ...availableToursList.slice(0, 1),
       {
-        bannerVideo: null,
-        isBannerVideo: null,
-        bannerImage: null,
-        isBannerImage: false,
         showOlympicsBanner,
       },
       ...availableToursList.slice(1),
@@ -820,8 +775,8 @@ const PopulateProducts: any = (props: any) => {
         <Conditional if={availableToursList?.length > 0}>
           {availableToursList?.map(
             (tour: Record<string, any>, index: number) => {
-              const { isBannerVideo, isBannerImage, showOlympicsBanner } = tour;
-              if (isBannerVideo || isBannerImage || showOlympicsBanner) {
+              const { showOlympicsBanner } = tour;
+              if (showOlympicsBanner) {
                 return (
                   <div key={index}>
                     <CuratedVideoBanner

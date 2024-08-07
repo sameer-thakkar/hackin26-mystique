@@ -1202,11 +1202,6 @@ const it = {
     WHATS_ON: 'In scena',
     CATEGORIES: 'Categorie',
   },
-  CURATED_VIDEO_BANNER: {
-    HEADING: "Sei alla ricerca dell'esperienza giusta?",
-    SUB_HEADING: 'Guarda il video per avere utili consigli!',
-    WATCH_VIDEO: 'Guarda il video',
-  },
   NEXT: 'Continua',
   PREVIOUS: 'Precedente',
   ITINERARY: {
