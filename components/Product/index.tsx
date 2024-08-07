@@ -250,6 +250,7 @@ const Product = (props: any) => {
     itineraryInfo,
     verticalProductCard = false,
     horizontalProductCard = false,
+    isHighlightsExperiment = false,
   } = props;
 
   const {
@@ -1039,7 +1040,7 @@ const Product = (props: any) => {
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
       showPopup={false}
-      showMoreDetails={isHOHORevamp}
+      showMoreDetails={isHOHORevamp || isHighlightsExperiment}
       onClick={() => {
         trackedToggleContent(false);
 

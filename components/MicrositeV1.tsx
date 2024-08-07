@@ -855,6 +855,7 @@ const MicrositeV1 = (props: any) => {
       isHOHOResolving={isHohoExpEligible && !hohoTimer}
       isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
+      isHighlightsExperiment={isHighlightsExpEligible}
     />
   );
 

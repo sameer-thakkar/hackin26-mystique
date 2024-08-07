@@ -248,6 +248,7 @@ const PopulateProducts: any = (props: any) => {
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
+    isHighlightsExperiment = false,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -679,6 +680,7 @@ const PopulateProducts: any = (props: any) => {
       isBot,
       verticalProductCard,
       horizontalProductCard,
+      isHighlightsExperiment,
       itineraryInfo: {
         data: tgidItineraryData,
         showData: showItinerary,
