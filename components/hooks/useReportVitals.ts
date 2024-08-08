@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { onCLS, onFCP, onFID, onINP, onLCP, onTTFB } from 'web-vitals';
 import { trackEvent } from 'utils/analytics';
+import PlatformUtils from 'utils/platformUtils';
 
 type TVitalsPayload = {
   worstInp: number;
@@ -28,6 +29,8 @@ const useReportVitals = () => {
   const trackerRef = useRef<TVitalsPayload>(initialValues);
 
   useEffect(() => {
+    if (PlatformUtils.isIPhone()) return;
+
     onTTFB((metric) => {
       trackerRef.current.ttfb = metric.value;
     });
@@ -85,6 +88,8 @@ const useReportVitals = () => {
   }, []);
 
   useEffect(() => {
+    if (PlatformUtils.isIPhone()) return;
+
     const timer = setTimeout(() => {
       const { cls, fcp, fid, lcp, ttfb, worstInp, worstInpMeta } =
         trackerRef.current;

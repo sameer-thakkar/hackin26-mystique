@@ -359,7 +359,7 @@ const MicrositeV1 = (props: any) => {
     experimentId: 'PRODUCT_CARD_ONLY_HIGHLIGHTS',
     customEligibilityCheckFn: () =>
       !isMobile &&
-      !(
+      !(        
         (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
         baseLangIsPoiMb
       ),

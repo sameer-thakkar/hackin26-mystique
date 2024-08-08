@@ -19,6 +19,12 @@ class PlatformUtils {
     const regularExpression = new RegExp(botPattern, 'i');
     return regularExpression.test(UA);
   }
+
+  static isIPhone() {
+    const ua = navigator?.userAgent || PlatformUtils.ua;
+
+    return ua && new RegExp(/iPhone|iPad|iPod/i).test(ua);
+  }
 }
 
 export default PlatformUtils;
