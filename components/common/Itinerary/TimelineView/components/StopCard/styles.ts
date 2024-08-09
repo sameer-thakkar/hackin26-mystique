@@ -386,6 +386,7 @@ export const Container = styled.div<{
   $isStart?: boolean;
   $isEnd?: boolean;
   $variant?: TimelineViewComponentVariant;
+  $isClickable?: boolean;
 }>`
   position: relative;
   cursor: default;
@@ -451,6 +452,16 @@ export const Container = styled.div<{
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
       padding: 0.1875rem 0.5rem 1.25rem 2.5rem;
+    `};
+
+  ${({ $isClickable }) =>
+    !$isClickable &&
+    css`
+      -webkit-tap-highlight-color: transparent;
+      &:active,
+      &:focus {
+        outline: none;
+      }
     `};
 
   @media only screen and (min-width: 768px), print {

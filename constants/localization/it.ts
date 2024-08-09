@@ -1248,11 +1248,13 @@ const it = {
     },
     WALK_DURATION: '{0} a piedi',
     MORE: 'e {0} ancora',
-    TIMELINE_VIEW: 'Programma',
+    TIMELINE_VIEW: 'Orari',
     MAP_VIEW: 'Mappa',
     MAP_OVERLAY: 'Usa CTRL/⌘ + il cursore per spostarti',
     VIEW_EXPERIENCE_MAPPED_OUT: 'Guarda la tua esperienza sulla mappa.',
     OPEN_MAP_VIEW: 'Apri la mappa',
+    START_POINT_SAME_AS_END_POINT:
+      'Il punto di arrivo sarà lo stesso del punto di partenza',
   },
 };
 export default it;

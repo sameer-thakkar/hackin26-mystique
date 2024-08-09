@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Location } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
-import { generateGoogleMapUrl } from 'utils/itinerary';
+import { generateGoogleMapPlacesUrl } from 'utils/itinerary';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
 import { Container } from './styles';
@@ -21,7 +21,7 @@ const FindDirection = ({
   hoverAnimation = false,
   variant = TimelineViewComponentVariant.DEFAULT,
 }: FindDirectionProps) => {
-  const url = generateGoogleMapUrl(location);
+  const url = generateGoogleMapPlacesUrl(location);
 
   const showIcon = typeof show === 'boolean' ? show : show.icon;
   const showText = typeof show === 'boolean' ? show : show.text;

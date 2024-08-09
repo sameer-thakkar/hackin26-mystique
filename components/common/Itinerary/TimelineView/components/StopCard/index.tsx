@@ -121,7 +121,11 @@ const StopCard = ({
   };
   const hasMultiPoints = multiPoints.points.length > 1;
   const handleStopSectionClick = () => {
-    if (!hasMultiPoints || !isDesktop) {
+    if (isDesktop && !hasMultiPoints) {
+      onStopSectionClick?.(isSubSection ? subSectionDetails! : sectionDetails!);
+    }
+
+    if (!isDesktop && endPointIsNotSameAsStart && !hasMultiPoints) {
       onStopSectionClick?.(isSubSection ? subSectionDetails! : sectionDetails!);
     }
   };
@@ -156,14 +160,17 @@ const StopCard = ({
         return false;
       return true;
     } else {
-      return (
-        (!isStart &&
-          !isEnd &&
-          !isHOHOItinerary &&
-          (!!subStops?.length || !!passBys?.length)) ||
-        ((isStart || isEnd) && !hasMultiPoints) ||
-        !isDesktop
-      );
+      if (isDesktop) {
+        return (
+          (!isStart &&
+            !isEnd &&
+            !isHOHOItinerary &&
+            (!!subStops?.length || !!passBys?.length)) ||
+          ((isStart || isEnd) && !hasMultiPoints)
+        );
+      } else {
+        return !(isEnd && !endPointIsNotSameAsStart);
+      }
     }
   }, []);
   const subSectionHeading =
@@ -287,7 +294,7 @@ const StopCard = ({
           </div>
           <Conditional if={!endPointIsNotSameAsStart && isEnd}>
             <p className="stop-subtext">
-              Your ending point would be same as your start point
+              {strings.ITINERARY.START_POINT_SAME_AS_END_POINT}
             </p>
           </Conditional>
         </div>
@@ -309,6 +316,7 @@ const StopCard = ({
       ref={ref}
       onClick={handleStopSectionClick}
       id={`itinerary-card-${itineraryId}-${id}`}
+      $isClickable={allowOpen}
     >
       <ContentContainer onClick={handleStopSectionClick} $variant={variant}>
         <Conditional if={!isSubCard && position !== null}>
@@ -338,7 +346,7 @@ const StopCard = ({
               });
             }
           }}
-          $isClickable={allowOpen || isReducedVariant}
+          $isClickable={allowOpen}
         >
           <Conditional if={!isReducedVariant}>
             <DefaultHeadingContainer />

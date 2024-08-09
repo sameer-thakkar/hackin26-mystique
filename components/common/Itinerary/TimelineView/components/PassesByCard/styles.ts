@@ -319,7 +319,7 @@ export const StyledMobilePassesByCardContainer = styled.div`
       height: 1.25rem;
       width: 1.25rem;
       path {
-        fill: ${COLORS.GRAY.G3};
+        stroke: ${COLORS.GRAY.G2};
       }
     }
   }

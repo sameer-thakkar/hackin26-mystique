@@ -1259,11 +1259,13 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     },
     WALK_DURATION: '{0} à pied',
     MORE: '{0} de plus',
-    TIMELINE_VIEW: 'Voir le programme',
-    MAP_VIEW: 'Voir le plan',
+    TIMELINE_VIEW: 'Itinéraire',
+    MAP_VIEW: 'Carte',
     MAP_OVERLAY: "Déplacez la carte à l'aide de CTRL/⌘ + votre souris",
     VIEW_EXPERIENCE_MAPPED_OUT: 'Regardez votre expérience sur la carte.',
     OPEN_MAP_VIEW: 'Ouvrir la carte',
+    START_POINT_SAME_AS_END_POINT:
+      "Votre point d'arrivée sera le même que votre point de départ.",
   },
 };
 export default fr;

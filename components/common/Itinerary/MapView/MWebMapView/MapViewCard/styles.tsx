@@ -81,6 +81,11 @@ export const StyledMapViewCardContainer = styled.div`
     padding-bottom: 0.125rem; // this is added to prevent text from cutting off from the bottom
     text-overflow: ellipsis;
   }
+
+  .endpoint-same-callout-label {
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    color: ${COLORS.GRAY.G3};
+  }
 `;
 
 export const StyledMapViewCardButton = styled.button<{

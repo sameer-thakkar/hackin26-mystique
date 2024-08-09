@@ -217,36 +217,33 @@ const DropdownContent: FC<DropdownContentProps> = ({
       ...tab,
       type: 'richTextField',
     }));
-    setTabs(tabs);
-    setActiveTab(tabs[0]?.heading || '');
-  }, [finalHighlights]);
 
-  useEffect(() => {
     if (hasItinerarySection && finalHighlights) {
-      setTabs((prevTabs) => [
-        prevTabs[0],
+      tabs = [
+        tabs[0],
         {
           heading: strings.ITINERARY.TAB,
           isNew: true,
           contents: [],
           type: 'itinerary',
         },
-        ...prevTabs.slice(1),
-      ]);
+        ...tabs.slice(1),
+      ];
     }
-
     if (reviewSectionLoaded) {
-      setTabs((prevTabs) => [
-        ...prevTabs,
+      tabs = [
+        ...tabs,
         {
           heading: strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews,
           isNew: false,
           contents: [],
           type: 'reviews',
         },
-      ]);
+      ];
     }
-  }, [tgidItineraryData, finalHighlights, reviewSectionLoaded]);
+    setTabs(tabs);
+    setActiveTab(tabs[0]?.heading || '');
+  }, [finalHighlights, tgidItineraryData, reviewSectionLoaded]);
 
   useEffect(() => {
     if (!childRef.current || !headerHeight) return;
@@ -354,9 +351,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
                       : '1rem'
                   }
                 >
-                  {tab.type === 'itinerary'
-                    ? strings.ITINERARY.HEADING
-                    : tab.heading}
+                  {tab.heading}
                 </Heading>
                 <Conditional if={tab.type === 'richTextField'}>
                   <PrismicRichText field={tab.contents} />

@@ -1254,7 +1254,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MAP_OVERLAY: 'Verschieben Sie die Karte mit Strg/⌘ + scrollen',
     VIEW_EXPERIENCE_MAPPED_OUT:
       'Schauen Sie sich Ihr Erlebnis auf der Karte an.',
-    OPEN_MAP_VIEW: 'Kartenansicht öffnen',
+    OPEN_MAP_VIEW: 'Karte öffnen',
+    START_POINT_SAME_AS_END_POINT:
+      'Der Endpunkt ist derselbe wie der Startpunkt',
   },
 };
 

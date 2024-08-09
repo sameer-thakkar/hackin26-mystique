@@ -1316,11 +1316,13 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     },
     WALK_DURATION: '{0} walk',
     MORE: '{0} more',
-    TIMELINE_VIEW: 'Timeline View',
-    MAP_VIEW: 'Map View',
+    TIMELINE_VIEW: 'Timeline',
+    MAP_VIEW: 'Map',
     MAP_OVERLAY: 'Use CTRL/⌘ + scroll to move the map',
     VIEW_EXPERIENCE_MAPPED_OUT: 'View your experience all mapped out.',
-    OPEN_MAP_VIEW: 'Open map view',
+    OPEN_MAP_VIEW: 'Open map',
+    START_POINT_SAME_AS_END_POINT:
+      'Your ending point would be same as your start point',
   },
 };
 

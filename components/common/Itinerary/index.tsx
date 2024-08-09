@@ -122,7 +122,7 @@ const Itinerary = ({
     <>
       <Conditional if={showTitle}>
         <h6 id="itinerary-section-title" data-itinerary-section-title="true">
-          {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.HEADING}
+          {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
         </h6>
       </Conditional>
       <StyledItinerarySectionContainer>

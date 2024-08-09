@@ -1211,11 +1211,12 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     },
     WALK_DURATION: '{0} lopen',
     MORE: '{0} meer',
-    TIMELINE_VIEW: 'Tijdlijn',
+    TIMELINE_VIEW: 'Planning',
     MAP_VIEW: 'Kaart',
     MAP_OVERLAY: 'Beweeg de kaart met CTRL/⌘ + scrolfunctie',
     VIEW_EXPERIENCE_MAPPED_OUT: 'Bekijk je ervaring op de kaart.',
-    OPEN_MAP_VIEW: 'Kaart weergeven',
+    OPEN_MAP_VIEW: 'Kaart openen',
+    START_POINT_SAME_AS_END_POINT: 'Je eindpunt is hetzelfde als je startpunt',
   },
 };
 export default nl;

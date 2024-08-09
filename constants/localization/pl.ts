@@ -1203,11 +1203,13 @@ const pl = {
     },
     WALK_DURATION: '{0} walk',
     MORE: '{0} więcej',
-    TIMELINE_VIEW: 'Widok osi czasu',
-    MAP_VIEW: 'Widok mapy',
+    TIMELINE_VIEW: 'Oś czasu',
+    MAP_VIEW: 'Mapa',
     MAP_OVERLAY: 'Użyj CTRL/⌘ + przewiń, żeby przesunąć mapę',
     VIEW_EXPERIENCE_MAPPED_OUT: 'Zobacz trasę swojej wycieczki.',
-    OPEN_MAP_VIEW: 'Otwórz widok mapy',
+    OPEN_MAP_VIEW: 'Otwórz mapę',
+    START_POINT_SAME_AS_END_POINT:
+      'Twój punkt końcowy byłby taki sam jak punkt startowy',
   },
 };
 export default pl;

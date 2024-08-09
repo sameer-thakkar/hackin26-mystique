@@ -168,11 +168,9 @@ const MobilePassesByCard = ({
   id,
   onClick,
 }: PassesBySubCardProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const isLink = !image && !description;
 
   const handleContainerClick = () => {
-    if (!isLink) setIsOpen(!isOpen);
     onClick?.({ id } as Section);
   };
 
@@ -189,11 +187,8 @@ const MobilePassesByCard = ({
       <div className="heading-container">
         <p className="heading">{title}</p>
         <div className="cta-container">
-          <Conditional if={!isOpen && !isLink}>
+          <Conditional if={!isLink}>
             <Plus />
-          </Conditional>
-          <Conditional if={isOpen}>
-            <Minus />
           </Conditional>
         </div>
       </div>

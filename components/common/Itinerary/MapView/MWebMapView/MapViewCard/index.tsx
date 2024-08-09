@@ -33,6 +33,7 @@ const MapViewCard = ({
   const { details, location, id: stopId } = sectionDetails ?? {};
   const { name } = details ?? {};
   const { title, id: passById } = stops?.[0] ?? {};
+  const endPointIsNotSameAsStart = !sectionDetails?.details.sameAsStartingPoint;
   const isOnScreen = useOnScreen({
     ref: cardRef,
     options: {
@@ -156,7 +157,14 @@ const MapViewCard = ({
         {...descriptors}
         variant={TimelineViewComponentVariant.REDUCED_WIDTH}
       />
-      <div className="cta-container">{getCTAs()}</div>
+      <Conditional if={!endPointIsNotSameAsStart}>
+        <p className="endpoint-same-callout-label">
+          {strings.ITINERARY.START_POINT_SAME_AS_END_POINT}
+        </p>
+      </Conditional>
+      <Conditional if={endPointIsNotSameAsStart}>
+        <div className="cta-container">{getCTAs()}</div>
+      </Conditional>
       <Conditional if={subStopsAndPassBys?.length}>
         <div className="nearby-things-container">
           <p className="nearby-things-heading">

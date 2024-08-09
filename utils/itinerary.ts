@@ -331,6 +331,17 @@ export const generateGoogleMapUrl = ({
   }`;
 };
 
+export const generateGoogleMapPlacesUrl = ({
+  latitude,
+  longitude,
+  placeId,
+}: Location) => {
+  const baseURL = 'https://www.google.com/maps/search/?api=1';
+  return `${baseURL}&query=${latitude},${longitude}${
+    placeId ? `&query_place_id=${placeId}` : ''
+  }`;
+};
+
 export const getItineraryDescriptorsTypes = (
   itinerary: Itinerary
 ): Array<keyof typeof ItineraryDescriptorsTypes> => {
@@ -367,4 +378,22 @@ export const isItineraryValid = (itinerary: Itinerary) => {
   if (!itinerary.active || !itinerary.sections.length) return false;
 
   return true;
+};
+
+export const checkIfItineraryHasSameStartAndEndPoint = (
+  itinerarySectionsData: CombinedStopAndPassby[]
+) => {
+  const endLocation = itinerarySectionsData.find(({ stop }) => {
+    const { type } =
+      (stop?.isSubSection ? stop.subSectionDetails! : stop?.sectionDetails!) ??
+      {};
+
+    return type === SECTION_TYPE.END_LOCATION;
+  });
+
+  const sectionDetails = endLocation?.stop?.isSubSection
+    ? endLocation.stop.subSectionDetails!
+    : endLocation?.stop?.sectionDetails!;
+
+  return sectionDetails?.details.sameAsStartingPoint;
 };

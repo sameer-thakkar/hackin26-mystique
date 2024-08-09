@@ -1309,11 +1309,13 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     },
     WALK_DURATION: '{0} a pie',
     MORE: '{0} más',
-    TIMELINE_VIEW: 'Vista cronológica',
-    MAP_VIEW: 'Vista de la ruta',
+    TIMELINE_VIEW: 'Itinerario',
+    MAP_VIEW: 'Mapa',
     MAP_OVERLAY: 'Usa CTRL/⌘ + el ratón para desplazarte por el mapa',
     VIEW_EXPERIENCE_MAPPED_OUT: 'Mira tu experiencia en el mapa.',
-    OPEN_MAP_VIEW: 'Mostrar mapa',
+    OPEN_MAP_VIEW: 'Abrir el mapa',
+    START_POINT_SAME_AS_END_POINT:
+      'El punto de llegada será el mismo que el de salida',
   },
 };
 export default es;

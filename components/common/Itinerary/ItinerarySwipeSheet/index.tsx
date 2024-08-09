@@ -5,7 +5,10 @@ import Conditional from 'components/common/Conditional';
 import { BottomSheet } from 'components/common/DraggableBottomSheet';
 import { useItinerary } from 'contexts/ItineraryContext';
 import { trackEvent } from 'utils/analytics';
-import { sectionDataSanitizer } from 'utils/itinerary';
+import {
+  checkIfItineraryHasSameStartAndEndPoint,
+  sectionDataSanitizer,
+} from 'utils/itinerary';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 import CrossiconSvg from 'assets/crossiconSvg';
@@ -36,6 +39,10 @@ const ItinerarySwipeSheet = ({
   const stopCardProps = useMemo(
     () => sectionDataSanitizer(itinerary.sections as Section[], itinerary.type),
     [itinerary]
+  );
+  const isEndpointSameAsStartPoint = useMemo(
+    () => checkIfItineraryHasSameStartAndEndPoint(stopCardProps),
+    [stopCardProps]
   );
 
   const [currentStop, setCurrentStop] = useState(activeStopIndex ?? 0);
@@ -83,7 +90,11 @@ const ItinerarySwipeSheet = ({
 
   const canShowNavigationButtons = stopCardProps.length > 1;
   const canShowPreviousButton = currentStop > 0;
-  const canShowNextButton = currentStop < stopCardProps.length - 1;
+  const canShowNextButtonBaseCondition = currentStop < stopCardProps.length - 1;
+  const canShowNextButton =
+    currentStop === stopCardProps.length - 2
+      ? !isEndpointSameAsStartPoint && canShowNextButtonBaseCondition
+      : canShowNextButtonBaseCondition;
 
   return (
     <Conditional if={visible}>

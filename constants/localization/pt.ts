@@ -1258,11 +1258,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     },
     WALK_DURATION: '{0} a pé',
     MORE: 'mais {0}',
-    TIMELINE_VIEW: 'Visualizar cronograma',
-    MAP_VIEW: 'Visualizar mapa',
+    TIMELINE_VIEW: 'Cronograma',
+    MAP_VIEW: 'Mapa',
     MAP_OVERLAY: 'Use CTRL/⌘ + cursor para mover o mapa',
     VIEW_EXPERIENCE_MAPPED_OUT: 'Confira sua experiência mapeada.',
-    OPEN_MAP_VIEW: 'Visualizar o mapa',
+    OPEN_MAP_VIEW: 'Abrir o mapa',
+    START_POINT_SAME_AS_END_POINT: 'O ponto final será o ponto de partida',
   },
 };
 export default pt;
