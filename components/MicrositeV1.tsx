@@ -359,7 +359,7 @@ const MicrositeV1 = (props: any) => {
     experimentId: 'PRODUCT_CARD_ONLY_HIGHLIGHTS',
     customEligibilityCheckFn: () =>
       !isMobile &&
-      !(        
+      !(
         (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
         baseLangIsPoiMb
       ),
@@ -739,19 +739,14 @@ const MicrositeV1 = (props: any) => {
     noTrack: false,
     customEligibilityCheckFn: () =>
       isMobile &&
-      !(
-        taggedSubCategoryName &&
-        ['HOHO', 'Cruises'].includes(taggedSubCategoryName)
-      ) &&
+      !(taggedSubCategoryName === 'HOHO' || taggedCategoryName === 'Cruises') &&
       !!scorpioData?.itineraryData?.itineraries?.length,
   });
 
   const showItineraries = isItineraryExpEligible
     ? itineraryRolloutVariant === VARIANTS.TREATMENT
-    : !(
-        taggedSubCategoryName &&
-        ['HOHO', 'Cruises'].includes(taggedSubCategoryName)
-      ) && !!scorpioData?.itineraryData?.itineraries?.length;
+    : !(taggedSubCategoryName === 'HOHO' || taggedCategoryName === 'Cruises') &&
+      !!scorpioData?.itineraryData?.itineraries?.length;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
