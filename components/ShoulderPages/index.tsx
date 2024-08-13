@@ -799,6 +799,7 @@ const ContentPage = (props: any) => {
           categoryTourListData={categoryTourListData}
           extractedProductCardsSlice={extractedProductCardsSlice}
           uid={uid}
+          categoryHeaderMenu={categoryHeaderMenu}
           // @ts-ignore
           extractedPrismicBreadcrumbs={extractedPrismicBreadcrumbs}
         />
@@ -811,7 +812,7 @@ const ContentPage = (props: any) => {
               prismicDocsForListicle={prismicDocsForListicle}
               collectionsInListicles={collectionsInListicles}
               automatedBreadcrumbsExists={automatedBreadcrumbsExists}
-              isContentPage
+              isContentPage={false}
               trackProductCardsViewed={isPlanYourVisitCardsExpEligible}
               parentLandingPageUrl={parentLandingPageUrl}
               {...props}

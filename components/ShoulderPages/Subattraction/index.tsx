@@ -6,6 +6,7 @@ import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import LastMinuteFilters from 'components/common/LastMinuteFilters';
+import LazyComponent from 'components/common/LazyComponent';
 import PopulateProducts from 'components/PopulateProducts';
 import StaticBanner from 'components/StaticBanner';
 import { getBannerAndFooterSubtext, getHeadoutLanguagecode } from 'utils';
@@ -39,6 +40,13 @@ import {
   SwiperWrapper,
 } from './styles';
 
+const CollectionCarousel = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
+    )
+);
+
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
@@ -68,6 +76,7 @@ const SubattractionPage = ({
   featuredImage,
   subattractionChildPoiData,
   uid,
+  categoryHeaderMenu,
 }: ISubattractionPageProps) => {
   const [, setActiveSwiperIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -97,7 +106,7 @@ const SubattractionPage = ({
     is_poi_mb: isPoiMb,
   } = parentData ?? {};
 
-  let { subattraction_type, subattraction_banner_disclaimer } =
+  let { subattraction_type, subattraction_banner_disclaimer, tagged_city } =
     baseLangCategorisationMetadata;
 
   const swiperParams: SwiperProps = {
@@ -343,7 +352,12 @@ const SubattractionPage = ({
           subattraction_type={subattraction_type}
         />
       </Conditional>
-      <Conditional if={parentProductCards.length}>
+      <Conditional
+        if={
+          parentProductCards.length &&
+          subattraction_type === SUBATTRACTION_TYPE.A
+        }
+      >
         <SwiperWrapper id={generateSidenavId(parentTicketsTitle)}>
           <Navigation>
             <ParentTicketsTitle>{parentTicketsTitle}</ParentTicketsTitle>
@@ -370,6 +384,21 @@ const SubattractionPage = ({
             ))}
           </Swiper>
         </SwiperWrapper>
+      </Conditional>
+      <Conditional
+        if={
+          subattraction_type === SUBATTRACTION_TYPE.C &&
+          tagged_city &&
+          Object.keys(categoryHeaderMenu?.CITY_ATTRACTIONS || {}).length
+        }
+      >
+        <LazyComponent>
+          <CollectionCarousel
+            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+            isMobile={isMobile}
+            taggedCity={tagged_city}
+          />
+        </LazyComponent>
       </Conditional>
     </>
   );

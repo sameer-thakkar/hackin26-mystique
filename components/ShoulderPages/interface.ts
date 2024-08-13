@@ -127,6 +127,7 @@ export interface ISubattractionPageProps {
   parentLandingPageDocument: Record<string, any>;
   categoryTourListData: Record<string, any>[];
   extractedProductCardsSlice: Record<string, any>;
+  categoryHeaderMenu: Record<string, any>;
   uid?: string;
   featuredImage: {
     alt: string;

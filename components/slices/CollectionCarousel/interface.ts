@@ -6,7 +6,7 @@ export interface CollectionItem {
 
 export interface ICollectionCarousel {
   isMobile: boolean;
-  primaryCity: Record<string, any>;
+  primaryCity?: Record<string, any>;
   taggedCity: string | null;
   allCollectionsData: {
     menu: Record<string, CollectionItem>;
