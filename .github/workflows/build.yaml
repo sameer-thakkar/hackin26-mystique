@@ -234,3 +234,21 @@ jobs:
           --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="mystique/$VERSION_FILE" \
           --version-label "github-$VERSION_LABEL" \
           --description "$VERSION_DESCRIPTION"
+
+  qa-automation:
+    needs: push-ecr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Docker Image Tag
+        run: |
+          echo "Docker Image Tag: ${{ needs.push-ecr.outputs.dockerImageTag }}"
+      - name: Run Sanity
+        run: |
+          curl --location "${{ secrets.MEDUSA_TEST_URL }}/twirp/medusa.pb.qa.automation.QaAutomationService/RunTestSuite" \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/json' \
+          --data '{
+            "commit_id": "${{ github.sha }}",
+            "tag": "${{ needs.push-ecr.outputs.dockerImageTag }}",
+            "test_suite": "SANITY"
+          }'

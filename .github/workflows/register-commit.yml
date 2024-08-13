@@ -1,0 +1,61 @@
+name: Register new commit
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+
+jobs:
+  register_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Check PR Opened Event
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.action }}" = "opened" ]; then
+            echo "PR_OPENED=true" >> $GITHUB_ENV
+          else
+            echo "PR_OPENED=false" >> $GITHUB_ENV
+          fi
+
+      - name: Set PR Information
+        id: pr_info
+        run: |
+          PR_NUMBER=${{ github.event.number }}
+          LATEST_COMMIT=${{ github.event.pull_request.head.sha }}
+          REPO_NAME=${{ github.event.repository.name }}
+
+          echo "PR Number: $PR_NUMBER"
+          echo "Latest Commit: $LATEST_COMMIT"
+          echo "Repository Name: $REPO_NAME"
+
+          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "LATEST_COMMIT=${LATEST_COMMIT}" >> $GITHUB_ENV
+          echo "REPO_NAME=${REPO_NAME}" >> $GITHUB_ENV
+          echo "MEDUSA_TEST_URL=${{ secrets.MEDUSA_TEST_URL }}" >> $GITHUB_ENV
+      - name: Debug Variables
+        run: |
+          echo "LATEST_COMMIT: $LATEST_COMMIT"
+          echo "PR_NUMBER: $PR_NUMBER"
+          echo "REPO_NAME: $REPO_NAME"
+          echo "MEDUSA_TEST_URL: $MEDUSA_TEST_URL"
+          echo "PR_OPENED: $PR_OPENED"
+
+      - name: Call Medusa
+        run: |
+          if [ -n "$LATEST_COMMIT" ] && [ -n "$PR_NUMBER" ] && [ -n "$REPO_NAME" ] && [ -n "$MEDUSA_TEST_URL" ]; then
+            curl --location "$MEDUSA_TEST_URL/twirp/medusa.pb.qa.automation.QaAutomationService/RegisterNewCommit" \
+            --header 'Content-Type: application/json' \
+            --header 'Accept: application/json' \
+            --data '{
+              "commit_id": "'"$LATEST_COMMIT"'",
+              "pr_id": '"$PR_NUMBER"',
+              "repo_name": "'"$REPO_NAME"'",
+              "is_new_pr": '$PR_OPENED'
+            }'
+          else
+            echo "One or more required variables are missing."
+          fi
