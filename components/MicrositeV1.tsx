@@ -67,7 +67,6 @@ import {
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_CATEGORISATION,
   MB_TYPES,
-  OLYMPIC_BANNER_UID,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
   SLICE_TYPES,
@@ -391,7 +390,6 @@ const MicrositeV1 = (props: any) => {
 
   const rankingExperimentVariant = VARIANTS.CONTROL;
   const isRankingExperimentResolving = false;
-  const showOlympicsBanner = OLYMPIC_BANNER_UID.includes(uid);
 
   const {
     scorpioData: scorpioDataCategorised,
@@ -574,9 +572,6 @@ const MicrositeV1 = (props: any) => {
             (tour: TTour) =>
               tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
           )?.length ?? 0,
-      }),
-      ...(showOlympicsBanner && {
-        [ANALYTICS_PROPERTIES.IS_BLOG_BANNER_PRESENT]: true,
       }),
       ...(subattractionType && {
         [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,

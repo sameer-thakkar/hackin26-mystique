@@ -33,7 +33,6 @@ import {
   ANALYTICS_PROPERTIES,
   DESIGN,
   MB_CATEGORISATION,
-  OLYMPIC_BANNER_UID,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -42,7 +41,6 @@ import PercentageStamp from 'assets/percentageStamp';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
-import CuratedVideoBanner from './CuratedVideoBanner';
 
 const Product = dynamic(
   () => import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -238,7 +236,6 @@ const PopulateProducts: any = (props: any) => {
     asHook,
     forceMobile,
     hideHeading,
-    curatedBannerVideoSrc,
     isHOHORevamp,
     isHOHOResolving,
     isRankingExperimentResolving = false,
@@ -264,7 +261,7 @@ const PopulateProducts: any = (props: any) => {
   const [showEarliestAvailability, setShowEarliestAvailability] =
     useState(false);
   const router = useRouter();
-  const { isBot, language } = useRecoilValue(appAtom);
+  const { isBot } = useRecoilValue(appAtom);
 
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -272,8 +269,6 @@ const PopulateProducts: any = (props: any) => {
     if (!swiper) return;
     setActiveIndex(swiper.realIndex);
   }, [swiper]);
-
-  const showOlympicsBanner = OLYMPIC_BANNER_UID.includes(uid);
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
@@ -688,20 +683,6 @@ const PopulateProducts: any = (props: any) => {
     );
   };
 
-  if (
-    availableToursList?.length &&
-    showOlympicsBanner &&
-    language === 'en-us'
-  ) {
-    availableToursList = [
-      ...availableToursList.slice(0, 1),
-      {
-        showOlympicsBanner,
-      },
-      ...availableToursList.slice(1),
-    ];
-  }
-
   const combosSectionRef = useRef<HTMLDivElement>(null);
   const [isTracked, setIsTracked] = useState(false);
 
@@ -775,22 +756,6 @@ const PopulateProducts: any = (props: any) => {
         <Conditional if={availableToursList?.length > 0}>
           {availableToursList?.map(
             (tour: Record<string, any>, index: number) => {
-              const { showOlympicsBanner } = tour;
-              if (showOlympicsBanner) {
-                return (
-                  <div key={index}>
-                    <CuratedVideoBanner
-                      tour={tour}
-                      curatedBannerVideoSrc={curatedBannerVideoSrc}
-                      isMobile={isMobile}
-                      isOlympicsBanner={
-                        showOlympicsBanner && language === 'en-us'
-                      }
-                    />
-                  </div>
-                );
-              }
-
               return getProductCardFromTourAndIndex(tour, index);
             }
           )}
