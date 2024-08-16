@@ -62,6 +62,7 @@ const DrawerWrapper = (props: any) => {
     tgidItineraryData,
     reviewsDetails,
     topReviews,
+    showCustomProductCardCTA,
   } = props;
 
   const [activeItinerary, setActiveItinerary] = useState<Itinerary>(
@@ -140,6 +141,7 @@ const DrawerWrapper = (props: any) => {
           isSportsExperiment={isSportsExperiment}
           isGpMotorTicketsMb={isGpMotorTicketsMb}
           isSportsSubCategory={isSportsSubCategory}
+          showCustomProductCardCTA={showCustomProductCardCTA}
         />
       </Conditional>
       <Conditional if={drawerState !== SWIPESHEET_STATES.HIDDEN}>

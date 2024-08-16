@@ -89,6 +89,8 @@ const ExperimentalProductCard = (props: any) => {
     tgidItineraryData,
     scrollToItinerarySection = false,
     topReviews,
+    showCustomProductCardCTA,
+    shouldRunCustomCTAExperiment,
   } = props;
 
   const {
@@ -241,6 +243,9 @@ const ExperimentalProductCard = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
+    showCustomCheckoutCTA: shouldRunCustomCTAExperiment
+      ? showCustomProductCardCTA
+      : undefined,
   });
 
   const croppingExcludedSubCats = [
@@ -416,6 +421,7 @@ const ExperimentalProductCard = (props: any) => {
           tgidItineraryData,
           reviewsDetails,
           topReviews,
+          showCustomProductCardCTA,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

@@ -28,6 +28,7 @@ interface PricingBarProps {
   isSportsExperiment: boolean;
   isGpMotorTicketsMb: boolean;
   isSportsSubCategory: boolean;
+  showCustomProductCardCTA?: boolean;
 }
 
 const getDiscountText = (bestDiscount: number): string => {
@@ -64,6 +65,7 @@ const PricingBar: FC<PricingBarProps> = ({
   isGpMotorTicketsMb,
   isSportsSubCategory,
   productBookingUrl,
+  showCustomProductCardCTA,
 }) => {
   const pricingRef = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(null) as any;
@@ -71,12 +73,14 @@ const PricingBar: FC<PricingBarProps> = ({
 
   const { setPricingHeight, discountText, setDiscountText } = useProductCard();
 
-  const bookNowText = getBookNowButtonText({
-    isV3Design,
-    isSportsExperiment,
-    isGpMotorTicketsMb,
-    isSportsSubCategory,
-  });
+  const bookNowText = showCustomProductCardCTA
+    ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+    : getBookNowButtonText({
+        isV3Design,
+        isSportsExperiment,
+        isGpMotorTicketsMb,
+        isSportsSubCategory,
+      });
 
   useEffect(() => {
     if (listingPrice.bestDiscount > 0) {
