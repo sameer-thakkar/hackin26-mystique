@@ -1,55 +1,42 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import useWindowSize from 'hooks/useWindowSize';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
 import { initializeZenchat, ZendeskApi } from 'utils/zenchatUtils';
-import { ZENDESK_CHAT } from 'const/index';
 
 interface IZendeskChat {
   uid?: string;
   isLttMonthOnMonthPage?: boolean;
 }
 
-let timeoutId: NodeJS.Timeout;
 const ZendeskChat: React.FC<IZendeskChat> = (props) => {
   const { uid, isLttMonthOnMonthPage } = props;
 
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = useWindowSize()?.width < 768;
-  const isChatInitializedRef = React.useRef(false);
-  const shouldHideZenchatWidget = React.useMemo(() => {
+  const shouldHideZenchatWidget = useMemo(() => {
     return (isMobile && !checkIfGpMotorTicketsMB(uid)) || isLttMonthOnMonthPage;
   }, [isMobile, uid, isLttMonthOnMonthPage]);
 
-  /**
-   * Enables the zendesk widget
-   */
-  const showWidget = React.useCallback(() => {
+  const showWidget = useCallback(() => {
     ZendeskApi('messenger', 'show');
   }, []);
 
-  /**
-   * Hides the zendesk widget
-   */
-  const hideWidget = React.useCallback(() => {
+  const hideWidget = useCallback(() => {
     ZendeskApi('messenger', 'hide');
   }, []);
 
-  React.useEffect(() => {
-    if (shouldHideZenchatWidget) return;
-    if (!isChatInitializedRef.current) {
-      timeoutId = setTimeout(initializeZenchat, ZENDESK_CHAT.DELAY);
-      isChatInitializedRef.current = true;
-    }
+  /* keep the widget hidden by-default for hide conditions */
+  const onZenchatLoaded = () => {
+    ZendeskApi('messenger', shouldHideZenchatWidget ? 'hide' : 'show');
+    ZendeskApi('messenger', 'close');
+  };
 
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        isChatInitializedRef.current = false;
-      }
-    };
-  }, [shouldHideZenchatWidget]);
+  useEffect(() => {
+    //no need to maintain ref since this is already handled by window.zE check while initialization
+    initializeZenchat(onZenchatLoaded);
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldHideZenchatWidget) {
       hideWidget();
     } else {

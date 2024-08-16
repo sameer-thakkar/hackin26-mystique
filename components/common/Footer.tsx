@@ -24,6 +24,7 @@ import {
 } from 'UI/Footer/style';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
 import {
   COMPANY_DETAILS_LINK,
   DOWNLOAD_APP_QR,
@@ -32,7 +33,6 @@ import {
   FOOTER_LOGO_WIDTH,
   HEADOUT_ADDRESS,
   HEADOUT_MAIL_REDIRECT,
-  LIVE_CHAT_LINK,
   PRIVACY_POLICY_LINK,
   STAR_LOGO_DARK,
   STAR_LOGO_LIGHT,
@@ -213,13 +213,12 @@ const Footer: React.FC<FooterProps> = ({
                       <ul className="links">
                         <FooterListItem isLight={isLight}>
                           {MessageIcon}
-                          <a
-                            href={LIVE_CHAT_LINK}
-                            rel="noopener"
-                            target="_blank"
+                          <button
+                            className="toggle_panel_button"
+                            onClick={showAndOpenZendeskChat}
                           >
                             {strings.FOOTER.CHAT_WITH_US}
-                          </a>
+                          </button>
                         </FooterListItem>
                         <FooterListItem isLight={isLight}>
                           {PhoneIcon}

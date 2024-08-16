@@ -1,11 +1,10 @@
+import { LIVE_CHAT_LINK } from 'const/footer';
 import { ZENDESK_CHAT } from 'const/index';
 
 declare global {
   interface Window {
     zE?: (...args: any[]) => void;
-    /**
-     * attachEvent is only supported on IE - this handles cross-browser chat interactions
-     */
+    /* attachEvent is only supported on IE - this handles cross-browser chat interactions */
     attachEvent?: (event: string, cb: () => void) => void;
   }
 }
@@ -38,31 +37,24 @@ export const ZendeskApi = (
   }
 };
 
-const onZenchatLoaded = () => {
-  ZendeskApi('messenger', 'show');
-  ZendeskApi('messenger', 'close');
-};
-
-export const initializeZenchat = () => {
+export const initializeZenchat = (onChatLoaded: () => void) => {
   const zendeskChatBotID = getZendeskChatbotID() || '';
+
   if (
     zendeskChatBotID &&
     typeof window !== 'undefined' &&
     typeof window.zE === 'undefined'
   ) {
     const appendScript = () => {
-      /**
-       * Makes sure that the script addition is not blocking the main thread
-       */
+      /* Makes sure that the script addition is not blocking the main thread */
       requestAnimationFrame(() => {
         const zenchatScript = document.createElement('script');
         zenchatScript.id = 'ze-snippet';
         zenchatScript.type = 'text/javascript';
-        zenchatScript.onload = onZenchatLoaded;
+        zenchatScript.onload = onChatLoaded;
         zenchatScript.src = `https://static.zdassets.com/ekr/snippet.js?key=${zendeskChatBotID}`;
 
-        const firstScript = document.getElementsByTagName('script')[0];
-        firstScript?.parentNode?.insertBefore(zenchatScript, firstScript);
+        document?.head?.appendChild(zenchatScript);
       });
     };
 
@@ -82,4 +74,14 @@ export const initializeZenchat = () => {
 export const hideZendeskChatWidget = () => {
   ZendeskApi('messenger', 'show');
   ZendeskApi('messenger', 'hide');
+};
+
+export const showAndOpenZendeskChat = () => {
+  if (typeof window !== 'undefined' && typeof window.zE === 'undefined') {
+    window.open(LIVE_CHAT_LINK, '_blank');
+    return;
+  }
+
+  ZendeskApi('messenger', 'show');
+  ZendeskApi('messenger', 'open');
 };
