@@ -77,6 +77,8 @@ const LttShowPageV2 = ({
   primaryCity,
   categoryHeaderMenu,
   breadcrumbs,
+  showCustomBookButtonCTA = false,
+  shouldRunCustomCTAExperiment = false,
 }: TShowPageV2Props) => {
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -383,6 +385,8 @@ const LttShowPageV2 = ({
           $visible={!isMobile || mwebDateSelectorPopupActive}
         >
           <ShowPagePricingSection
+            showCustomBookButtonText={showCustomBookButtonCTA}
+            shouldRunCustomCTAExperiment={shouldRunCustomCTAExperiment}
             tourGroupData={tourGroupData}
             flowType={flowType}
             onClose={() => {
@@ -515,7 +519,11 @@ const LttShowPageV2 = ({
             variant="primary"
             isLoading={isButtonLoading}
             onClick={checkAvailabilityClicked}
-            text={strings.CHECK_AVAIL}
+            text={
+              showCustomBookButtonCTA
+                ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+                : strings.CHECK_AVAIL
+            }
           />
         </BuyButtonWrapper>
       </Conditional>

@@ -244,6 +244,8 @@ const PopulateProducts: any = (props: any) => {
     verticalProductCard = false,
     subattraction_type,
     isHighlightsExperiment = false,
+    showCustomProductCardCTA = false,
+    shouldRunCustomCTAExperiment = false,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -657,6 +659,8 @@ const PopulateProducts: any = (props: any) => {
         showData: showItinerary,
         isHOHO: isHohoItinerary,
       },
+      showCustomProductCardCTA,
+      shouldRunCustomCTAExperiment,
     };
 
     return isSmallComboCard ? (

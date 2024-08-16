@@ -1256,5 +1256,6 @@ const it = {
     START_POINT_SAME_AS_END_POINT:
       'Il punto di arrivo sarà lo stesso del punto di partenza',
   },
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
 };
 export default it;

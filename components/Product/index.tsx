@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
@@ -251,6 +251,8 @@ const Product = (props: any) => {
     verticalProductCard = false,
     horizontalProductCard = false,
     isHighlightsExperiment = false,
+    showCustomProductCardCTA = false,
+    shouldRunCustomCTAExperiment = false,
   } = props;
 
   const {
@@ -1011,6 +1013,9 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
+    showCustomCheckoutCTA: shouldRunCustomCTAExperiment
+      ? showCustomProductCardCTA
+      : undefined,
   });
 
   const onSidePanelClose = () => {
@@ -1029,6 +1034,8 @@ const Product = (props: any) => {
         return strings.SELECT_SECTION;
       case isGpMotorTicketsMb && isSportsSubCategory:
         return strings.BUY_TICKETS_CTA;
+      case showCustomProductCardCTA:
+        return strings.CUSTOM_CTA_EXPERIMENT_TEXT;
       default:
         return strings.CHECK_AVAIL;
     }

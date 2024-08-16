@@ -1324,6 +1324,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     START_POINT_SAME_AS_END_POINT:
       'Your ending point would be same as your start point',
   },
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Check availability', // just for types
 };
 
 export default en;

@@ -16,4 +16,6 @@ export type TShowPageV2Props = {
   primaryCity: any;
   categoryHeaderMenu: any;
   breadcrumbs: TBreadcrumbs;
+  showCustomBookButtonCTA?: boolean;
+  shouldRunCustomCTAExperiment?: boolean;
 };

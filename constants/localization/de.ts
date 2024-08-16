@@ -1258,6 +1258,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     START_POINT_SAME_AS_END_POINT:
       'Der Endpunkt ist derselbe wie der Startpunkt',
   },
+
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
 };
 
 export default de;

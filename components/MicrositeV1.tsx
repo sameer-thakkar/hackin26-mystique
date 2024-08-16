@@ -364,6 +364,21 @@ const MicrositeV1 = (props: any) => {
       ),
   });
 
+  const {
+    isEligible: shouldRunCustomCTAExperiment,
+    isExperimentResolving: isCustomCTAExperimentResolving,
+    variant: customCTAExperimentVariant,
+  } = useABTesting({
+    experimentId: 'C1_COLLECTION_LTT_BROADWAY_PRODUCT_CARD_CTA_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      taggedMbType === MB_TYPES.C1_COLLECTION &&
+      (lang == 'it-it' || lang == 'de-de'),
+  });
+
+  const showCustomProductCardCTA =
+    shouldRunCustomCTAExperiment &&
+    customCTAExperimentVariant === VARIANTS.TREATMENT;
+
   const showOnlyHighlightsProductCard =
     highlightsExpVariant === VARIANTS.TREATMENT;
 
@@ -815,6 +830,8 @@ const MicrositeV1 = (props: any) => {
       uid={uid}
       currentLanguage={currentLanguage}
       bookNowText={bookNowText}
+      shouldRunCustomCTAExperiment={shouldRunCustomCTAExperiment}
+      showCustomProductCardCTA={showCustomProductCardCTA}
       readMoreText={readMoreText}
       showLessText={showLessText}
       productOffer={productOffer}
@@ -911,7 +928,8 @@ const MicrositeV1 = (props: any) => {
   if (
     (isHohoExpEligible && isHohoExperimentResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (isHighlightsExpEligible && isHighlightsExperimentResolving)
+    (isHighlightsExpEligible && isHighlightsExperimentResolving) ||
+    (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving)
   )
     return <Loader />;
 

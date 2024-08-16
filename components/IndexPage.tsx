@@ -206,6 +206,19 @@ const Page = (props: PageProps) => {
     },
   });
 
+  const {
+    isEligible: shouldRunCustomCTAExperiment,
+    variant: customCTAExperimentVariant,
+  } = useABTesting({
+    experimentId: 'C1_COLLECTION_LTT_BROADWAY_PRODUCT_CARD_CTA_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      (isLTT || isBroadway) && (lang == 'it-it' || lang == 'de-de'),
+  });
+
+  const showCustomBookButtonCTA =
+    shouldRunCustomCTAExperiment &&
+    customCTAExperimentVariant === VARIANTS.TREATMENT;
+
   const shouldShowNewSubattractionsExp =
     isSubattractionsExpEligible &&
     subattractionsExpVariant == VARIANTS.TREATMENT;
@@ -401,6 +414,8 @@ const Page = (props: PageProps) => {
             primaryCity={primaryCity}
             categoryHeaderMenu={categoryHeaderMenu}
             breadcrumbs={breadcrumbs}
+            shouldRunCustomCTAExperiment={shouldRunCustomCTAExperiment}
+            showCustomBookButtonCTA={showCustomBookButtonCTA}
           />
         ) : (
           <ShowPage

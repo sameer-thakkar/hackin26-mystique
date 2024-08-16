@@ -29,6 +29,8 @@ import { strings } from 'const/strings';
 const ShowPagePricingSection = ({
   tourGroupData,
   flowType,
+  showCustomBookButtonText,
+  shouldRunCustomCTAExperiment,
 }: TShowPagePricingSectionProps) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
 
@@ -73,6 +75,9 @@ const ShowPagePricingSection = ({
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
+    showCustomCheckoutCTA: shouldRunCustomCTAExperiment
+      ? showCustomBookButtonText
+      : undefined,
   });
 
   useHistoryTraversal({
@@ -159,7 +164,11 @@ const ShowPagePricingSection = ({
               variant="primary"
               isLoading={isButtonLoading}
               onClick={onCheckAvailabilityClicked}
-              text={strings.CHECK_AVAIL}
+              text={
+                showCustomBookButtonText
+                  ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+                  : strings.CHECK_AVAIL
+              }
               disabled={!listingPrice}
             />
           </BuyButtonWrapper>

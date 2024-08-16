@@ -243,6 +243,7 @@ type TCreateBookingUrl = {
   ctaSuffix?: string;
   flowType?: string;
   showFullScreenPax?: boolean;
+  showCustomCheckoutCTA?: boolean;
 };
 
 export const createBookingURL = ({
@@ -261,6 +262,7 @@ export const createBookingURL = ({
   ctaSuffix = '',
   flowType = undefined,
   showFullScreenPax = false,
+  showCustomCheckoutCTA,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -315,7 +317,7 @@ export const createBookingURL = ({
     process.env.NEXT_PUBLIC_ODE_NAMESPACE.length &&
     process.env.APP_ENV !== 'production'
   ) {
-    finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.test-headout.com`;
+    finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.dev-headout.com`;
   }
 
   const urlObject = new URL(
@@ -340,6 +342,12 @@ export const createBookingURL = ({
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
   if (showFullScreenPax)
     urlObject.searchParams.set('showFullScreenPax', 'true');
+
+  if (showCustomCheckoutCTA !== undefined)
+    urlObject.searchParams.set(
+      'showCustomCheckoutCTA',
+      `${showCustomCheckoutCTA}`
+    );
 
   if (ctaSuffix) {
     const suffixes = new URLSearchParams(ctaSuffix);
