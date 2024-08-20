@@ -36,6 +36,13 @@ export const Wrapper = styled.div<{
     margin-right: 0.75rem;
   }
 
+  .image-wrap {
+    img {
+      height: 270px;
+      width: 180px;
+    }
+  }
+
   .image-placeholder {
     ${({ isVerticalImageUrlPresent }) =>
       isVerticalImageUrlPresent &&
@@ -91,6 +98,14 @@ export const Wrapper = styled.div<{
       transition: ease-in-out 150ms;
       transform: scale(0.98);
     }
+
+    .image-wrap {
+      img {
+        height: 180px;
+        width: 120px;
+      }
+    }
+
     .pinned-card-vertical-image {
       min-width: 120px;
       min-height: 180px;
