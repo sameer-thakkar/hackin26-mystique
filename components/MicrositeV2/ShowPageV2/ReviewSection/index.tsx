@@ -95,8 +95,9 @@ const ReviewSection = ({
   showSkeleton = false,
   externalButtonContent,
 }: TReviewSectionProps) => {
-  const [reviews, setReviews] =
-    useState<TReviewMediasResponse['items']>(initialReviews);
+  const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
+    initialReviews || []
+  );
   const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(5);
   const { averageRating, ratingsCount, ratingsSplit } = reviewsDetails;
   const getShortenedNumber = (num: number) =>
@@ -104,10 +105,10 @@ const ReviewSection = ({
   const shortenedRatingsCount = getShortenedNumber(ratingsCount);
   const { lang } = useContext(MBContext);
   const [offset, setOffset] = useState<number | null>(
-    Math.max(5, initialReviews.length)
+    Math.max(5, initialReviews?.length || 0)
   );
   const [totalNumberOfReviews, setTotalNumberOfReviews] = useState(-1);
-  const [isFetching, setIsFetching] = useState(!initialReviews.length);
+  const [isFetching, setIsFetching] = useState(!initialReviews?.length);
   const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
 
   const fetchReviews = useCallback(async () => {
@@ -136,7 +137,7 @@ const ReviewSection = ({
   }, [offset, reviews]);
 
   useEffect(() => {
-    if (!initialReviews.length) fetchReviews();
+    if (!initialReviews?.length) fetchReviews();
   }, []);
 
   return (
