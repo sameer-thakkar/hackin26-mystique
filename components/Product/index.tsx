@@ -1879,7 +1879,7 @@ const Product = (props: any) => {
                     moreDetailsCTA={getMoreDetailsButton()}
                   />
                 </Conditional>
-                <Conditional if={hasHighlights || isPopup}>
+                <Conditional if={hasHighlights || isPopup || isBot}>
                   <PrismicRichText
                     field={isPopup ? highlightsRichText : highlights || []}
                     components={shortCodeSerializer}
