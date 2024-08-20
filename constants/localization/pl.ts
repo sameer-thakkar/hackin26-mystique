@@ -615,7 +615,7 @@ const pl = {
     YOUR_PICK: 'Twój wybór',
     BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
     TOP_WEST_END_SHOWS: 'Popularne spektakle na West Endzie',
-    TOP_SHOWS: 'Melhores espetáculos',
+    TOP_SHOWS: 'Popularne spektakle',
     SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     LAST_MINUTE_TICKETS: 'Bilety last minute',
     LOVED_BY_MILLIONS: 'Uwielbiane przez miliony',

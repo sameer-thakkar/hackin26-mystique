@@ -84,7 +84,7 @@ const TopShowsSection = ({
   return (
     <TopShowsWrapper
       id={ENTERTAINMENT_CATEGORIES.top.name}
-      className="hroizontally-aligned-child"
+      className="horizontally-aligned-child"
       $isCategoryPage={isCategoryPage}
       $hasShowCampaign={!!directTgid}
     >

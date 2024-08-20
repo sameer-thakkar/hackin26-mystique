@@ -134,7 +134,7 @@ export const CategoryCarouselSwiper = ({
   return (
     <CategoryCarousel
       id={category.name}
-      className={`hroizontally-aligned-child`}
+      className="horizontally-aligned-child"
       key={category.id}
       ref={sectionRef}
     >

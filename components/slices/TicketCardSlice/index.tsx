@@ -271,6 +271,9 @@ const TicketCard = (props: any) => {
     });
   };
 
+  if (!parentProductCards?.length && !orderedTours?.length && !scorpioData)
+    return null;
+
   return (
     <Wrapper ref={productCarouselRef}>
       <Conditional if={!shouldShowShoulderPageProductCardExperiment}>

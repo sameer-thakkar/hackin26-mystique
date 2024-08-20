@@ -14,7 +14,7 @@ export const LandingPageWrapper = styled.div`
   justify-content: start;
   margin: 0 auto;
   padding: 0;
-  .hroizontally-aligned-child {
+  .horizontally-aligned-child {
     width: calc(100% - (1.5rem * 2));
     max-width: 75rem;
     margin-left: auto;
@@ -22,7 +22,7 @@ export const LandingPageWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    .hroizontally-aligned-child {
+    .horizontally-aligned-child {
       width: 100%;
       max-width: 100vw;
       margin-left: auto;

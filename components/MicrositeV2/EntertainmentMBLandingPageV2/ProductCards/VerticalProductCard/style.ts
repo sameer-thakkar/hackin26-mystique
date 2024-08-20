@@ -35,12 +35,6 @@ export const Wrapper = styled.div<{
     width: auto;
     margin-right: 0.75rem;
   }
-  .image-wrap {
-    img {
-      height: 16.875rem;
-      width: 11.25rem;
-    }
-  }
 
   .image-placeholder {
     ${({ isVerticalImageUrlPresent }) =>
