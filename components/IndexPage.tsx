@@ -21,7 +21,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import { getLangUID, isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
@@ -31,6 +31,7 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   MB_CATEGORISATION,
+  RANKING_EXPERIMENT_UIDS,
   THEMES,
   TIME,
 } from 'const/index';
@@ -603,6 +604,26 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       })
     ),
   ];
+
+  const { uid } = getLangUID(req, query);
+
+  if (
+    (!lang || lang === 'en-us' || lang === 'en') &&
+    RANKING_EXPERIMENT_UIDS.includes(uid)
+  ) {
+    promiseList.push(
+      reflect(
+        getPageData({
+          res,
+          req,
+          query,
+          isDev,
+          localizedStrings,
+          runRankingExperiment: true,
+        })
+      )
+    );
+  }
 
   const [responseWithoutExperiment, responseWithExperiment] = await Promise.all(
     promiseList

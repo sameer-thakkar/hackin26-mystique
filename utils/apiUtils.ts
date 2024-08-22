@@ -754,12 +754,14 @@ export const fetchTourGroupsByCollection = async ({
       'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
     ...(runRankingExperiment && {
-      'src-version': 'v1',
+      'src-version': 'v2',
     }),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.TourGroupListByCollectionV6,
+    endpoint: runRankingExperiment
+      ? HeadoutEndpoints.CollectionTourGroups
+      : HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,
     id: collectionId,
     params,
@@ -772,7 +774,12 @@ export const fetchTourGroupsByCollection = async ({
     return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchTourGroupsByCollectionV1]', error);
+    console.error(
+      runRankingExperiment
+        ? '[fetchTourGroupsByCollectionV1]'
+        : '[fetchTGIDsByCollectionV6]',
+      error
+    );
   }
 };
 

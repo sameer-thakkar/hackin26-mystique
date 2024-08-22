@@ -2104,7 +2104,11 @@ export const PRODUCT_CARD_CHILDREN_POSITIONS = {
 export const RANKING_EXPERIMENT_UIDS: Array<string> = [
   'www.dubai-tickets.co.burj-khalifa',
   'www.acropolis-tickets.com',
-  'www.thevaticantickets.com',
+  /**
+   * removed because being used in other experiment
+   * will re-add later
+   */
+  // 'www.thevaticantickets.com',
   'www.eiffeltickets.com',
   'www.tickets-paris.fr.disneyland-paris',
   'www.london-tickets.co.uk.london-eye-tickets',

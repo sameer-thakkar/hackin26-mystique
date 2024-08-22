@@ -69,6 +69,7 @@ import {
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
+  RANKING_EXPERIMENT_UIDS,
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
@@ -383,8 +384,17 @@ const MicrositeV1 = (props: any) => {
   const isCategorisedTours =
     Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
 
-  const rankingExperimentVariant = VARIANTS.CONTROL;
-  const isRankingExperimentResolving = false;
+  const {
+    isExperimentResolving: isRankingExperimentResolving,
+    variant: rankingExperimentVariant,
+    isEligible: isRankingExperimentEligible,
+  } = useABTesting({
+    experimentId: 'RANKING_EXPERIMENT_V2',
+    customEligibilityCheckFn: () =>
+      RANKING_EXPERIMENT_UIDS.includes(uid) &&
+      categoryTourListDataWithRankingExperiment &&
+      (lang === 'en-us' || lang === 'en'),
+  });
 
   const {
     scorpioData: scorpioDataCategorised,
@@ -825,7 +835,6 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
-      isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
       isHighlightsExperiment={isHighlightsExpEligible}
     />
@@ -894,6 +903,7 @@ const MicrositeV1 = (props: any) => {
   if (
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isHighlightsExpEligible && isHighlightsExperimentResolving) ||
+    (isRankingExperimentEligible && isRankingExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving)
   )
     return <Loader />;
