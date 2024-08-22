@@ -27,8 +27,3 @@ export const FILTERED_HIGHLIGHTS = () => [
   IGNORED_HEADINGS.CRUISE_MEALS,
   IGNORED_HEADINGS.CRUISE_BOAT,
 ];
-
-export const EXPERIMENT_UIDS = [
-  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours',
-  'www.hop-on-hop-off-tickets.com.paris-bus-tours',
-];

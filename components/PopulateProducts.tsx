@@ -237,7 +237,6 @@ const PopulateProducts: any = (props: any) => {
     forceMobile,
     hideHeading,
     isHOHORevamp,
-    isHOHOResolving,
     isRankingExperimentResolving = false,
     showItineraries = false,
     horizontalProductCard = false,
@@ -515,8 +514,7 @@ const PopulateProducts: any = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB
     : true;
 
-  const showLoader =
-    productsLoading || isRankingExperimentResolving || isHOHOResolving;
+  const showLoader = productsLoading || isRankingExperimentResolving;
 
   const swiperParams: SwiperProps = {
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),

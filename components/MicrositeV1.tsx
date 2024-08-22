@@ -81,7 +81,6 @@ import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
-import { EXPERIMENT_UIDS } from './HOHO/constants';
 
 const AirportTransferProductsSection =
   dynamic<TAirportTransfersProductSectionProps>(() =>
@@ -218,14 +217,6 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
-  const [hohoTimer, setHohoTimer] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setHohoTimer(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -330,16 +321,6 @@ const MicrositeV1 = (props: any) => {
   const currentLanguage = getLangObject(lang).code;
 
   const {
-    isEligible: isHohoExpEligible,
-    isExperimentResolving: isHohoExperimentResolving,
-    variant: hohoVariant,
-  } = useABTesting({
-    experimentId: 'HOHO_REVAMP',
-    noTrack: false,
-    customEligibilityCheckFn: () => isHOHO && EXPERIMENT_UIDS.includes(uid),
-  });
-
-  const {
     isEligible: isLFCImpactExpEligible,
     isExperimentResolving: isLFCExperimentResolving,
     variant: lfcExpVariant,
@@ -349,6 +330,8 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
+
+  const showHohoRevamp = isHOHO && isMobile;
 
   const {
     isEligible: isHighlightsExpEligible,
@@ -381,9 +364,6 @@ const MicrositeV1 = (props: any) => {
 
   const showOnlyHighlightsProductCard =
     highlightsExpVariant === VARIANTS.TREATMENT;
-
-  const showHohoRevamp =
-    isHohoExpEligible && hohoVariant === VARIANTS.TREATMENT;
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -845,7 +825,6 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
-      isHOHOResolving={isHohoExpEligible && !hohoTimer}
       isRankingExperimentResolving={isRankingExperimentResolving}
       showItineraries={showItineraries}
       isHighlightsExperiment={isHighlightsExpEligible}
@@ -913,7 +892,6 @@ const MicrositeV1 = (props: any) => {
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
   if (
-    (isHohoExpEligible && isHohoExperimentResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isHighlightsExpEligible && isHighlightsExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving)
