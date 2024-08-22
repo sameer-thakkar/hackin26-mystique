@@ -643,16 +643,18 @@ const ShowPage = (props: any) => {
           <LazyComponent>
             <FeatureCard />
           </LazyComponent>
-          <LazyComponent>
-            <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
-            <CategorySlider
-              cards={similarProductData}
-              isMobile={isMobile}
-              allShowPagesDocuments={allShowPagesDocuments}
-              currentLanguage={currentLanguage}
-              categoryName={primarySubCategoryName}
-            />
-          </LazyComponent>
+          <Conditional if={similarProductData?.length}>
+            <LazyComponent>
+              <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
+              <CategorySlider
+                cards={similarProductData}
+                isMobile={isMobile}
+                allShowPagesDocuments={allShowPagesDocuments}
+                currentLanguage={currentLanguage}
+                categoryName={primarySubCategoryName}
+              />
+            </LazyComponent>
+          </Conditional>
           <LazyComponent>
             <Breadcrumbs
               breadcrumbs={breadcrumbs}
