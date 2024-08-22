@@ -644,7 +644,6 @@ interface IStyledProductCard {
   $isBannerCard?: boolean;
   $isSwipeSheetOpen?: boolean;
   $isModifiedProductCard?: boolean;
-  $isAsideBarOverlay?: boolean;
   $isPoiMwebCard?: boolean;
   $showScratchPrice?: boolean;
   $isPopup?: boolean;
@@ -886,103 +885,6 @@ const modifiedProductCardStyles = css`
     .tour-description {
       padding-bottom: 0;
     }
-  }
-`;
-
-const asideBarStyles = css`
-  max-height: none;
-  padding: 1.25rem;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  grid-row-gap: 1rem;
-  border-radius: 0;
-
-  .card-img {
-    width: 28.75rem;
-    height: auto;
-    max-height: none;
-    aspect-ratio: 16/10;
-  }
-
-  ${ProductHeader} {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 0.75rem;
-    width: 100%;
-
-    ${CategoryAndRatingContainer} {
-      margin-bottom: 0.25rem;
-    }
-
-    ${NextAvailableBlock} {
-      margin-top: 0.5rem;
-
-      // text type not given on figma
-      font-size: 0.75rem;
-      font-weight: 400;
-      line-height: 1rem;
-      text-align: left;
-
-      text-transform: uppercase;
-    }
-
-    ${TourTags} {
-      margin-top: 1rem;
-      gap: 0.75rem;
-
-      .tour-tag {
-        ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
-        color: ${COLORS.GRAY.G2};
-        grid-column-gap: 0.25rem;
-
-        ${CancellationPolicyHoverCard} {
-          top: 80%;
-        }
-
-        &:not(:last-child) {
-          margin: 0;
-
-          &::after {
-            content: '';
-            position: relative;
-            height: 0.25rem;
-            width: 0.25rem;
-            background-color: ${COLORS.GRAY.G5};
-            margin-left: 0.4rem;
-            border-radius: 50%;
-            transform: translateY(2px);
-          }
-        }
-      }
-    }
-
-    ${CTAContainer} {
-      position: fixed;
-      bottom: 0;
-      background-color: white;
-      box-shadow: 0px -2px 12px 0px #5454541a;
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      padding: 0.75rem 1.5rem;
-      width: 28.25rem;
-      z-index: 10;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      ${PriceContainer} {
-        .tour-price {
-          ${expandFontToken(FONTS.HEADING_REGULAR)}
-        }
-      }
-    }
-  }
-
-  ${ProductBody} {
-    padding-bottom: 8rem;
   }
 `;
 
@@ -1234,10 +1136,9 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     border-radius: 0;
   }
 
-  ${({ $isModifiedProductCard, $isAsideBarOverlay, $isPopup }) => {
+  ${({ $isModifiedProductCard, $isPopup }) => {
     if ($isPopup) return popupStyles;
-    if ($isModifiedProductCard)
-      return $isAsideBarOverlay ? asideBarStyles : modifiedProductCardStyles;
+    if ($isModifiedProductCard) return modifiedProductCardStyles;
     return null;
   }}
 
@@ -2883,7 +2784,7 @@ export const ViewMoreButton = styled.button<{
         transition: ease-in-out 250ms;
         transform: translateX(1px);
       }
-    }`});
+    }`};
 
   ${({ $isOverlay }) =>
     $isOverlay &&

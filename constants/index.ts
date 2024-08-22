@@ -1,4 +1,3 @@
-import { BoosterType } from 'components/Product/interface';
 import { longMonthtoShort } from 'utils/dateUtils';
 import { strings } from './strings';
 
@@ -2062,49 +2061,6 @@ export const REVIEWS_PAGE_SECTIONS = {
   MORE_READS: 'More Reads',
   CRITICS_USER_REVIEWS: 'Critics/User Reviews',
   REVIEWS: 'Reviews',
-};
-
-export const BOOSTER_EXPERIMENT_UIDS = {
-  'www.thevaticantickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [6732],
-  },
-  'www.kennedyspacecenter-tickets.com': {
-    [BoosterType.BESTSELLER]: [1647],
-    [BoosterType.SELLING_OUT_FAST]: [14667],
-  },
-  'www.pradomuseumtickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [4082],
-  },
-  'www.colosseum-rome-tickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [7148],
-  },
-  'www.versailles-palace-tickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [7654],
-  },
-  'www.tickets-paris.fr.louvre-museum': {
-    [BoosterType.SELLING_OUT_FAST]: [3909],
-  },
-  'www.accademia-tickets.com': {
-    [BoosterType.SELLING_OUT_FAST]: [7600],
-  },
-  'www.miraclegardentickets.com': {
-    [BoosterType.BESTSELLER]: [14133],
-  },
-  'www.dubai-tickets.co.burj-khalifa': {
-    [BoosterType.BESTSELLER]: [1866],
-  },
-  'www.dubai-tickets.co.dubai-global-village-tickets': {
-    [BoosterType.BESTSELLER]: [2449],
-  },
-  'www.barcelona-tickets.com.park-guell': {
-    [BoosterType.BESTSELLER]: [7563],
-  },
-  'www.tickets-paris.fr.disneyland-paris': {
-    [BoosterType.BESTSELLER]: [10209],
-  },
-  'www.singapore-tickets.com.gardens-by-the-bay-tickets': {
-    [BoosterType.BESTSELLER]: [7358],
-  },
 };
 
 // an experiment to see if we get more ctr

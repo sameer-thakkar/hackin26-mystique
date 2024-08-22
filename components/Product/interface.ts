@@ -137,12 +137,6 @@ export enum BoosterType {
   SELLING_OUT_FAST = 'Selling out fast',
 }
 
-export type TBoosterProps = {
-  type: BoosterType;
-  rank?: number;
-  isOverlay?: boolean;
-};
-
 export type TDiscountTagProps = {
   discount: string | number;
   showAngledTag?: boolean;

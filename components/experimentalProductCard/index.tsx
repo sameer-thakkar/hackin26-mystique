@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
-import { BoosterType } from 'components/Product/interface';
 import {
   Container,
   PRODUCT_CARD_IMAGE_DIMENSIONS,
@@ -15,7 +14,6 @@ import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
 import { checkIfGpMotorTicketsMB, isF1SportsExperiment } from 'utils/helper';
 import {
-  checkForBooster,
   extractCancellationPolicyFromHighlights,
   filterFromHighlights,
   getProductCardLayout,
@@ -78,7 +76,6 @@ const ExperimentalProductCard = (props: any) => {
     isSmallComboCard = false,
     isPoiMwebCard = false,
     reviewsDetails,
-    showBoosters = false,
     sendBookNowEvent,
     handleShowComboPopup,
     isSportsSubCategory,
@@ -108,9 +105,6 @@ const ExperimentalProductCard = (props: any) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen] = useState(defaultOpen);
-  const [boosterType, setBoosterType] = useState<
-    keyof typeof BoosterType | null
-  >(null);
   const priceBlockWrapperRef = useRef<HTMLDivElement>();
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
@@ -195,12 +189,6 @@ const ExperimentalProductCard = (props: any) => {
     () => extractCancellationPolicyFromHighlights(finalHighlights),
     [finalHighlights]
   );
-
-  const boosterTypeIfShown = useMemo(() => {
-    const boosterInfo = showBoosters && checkForBooster(uid, tgid);
-    if (boosterInfo) setBoosterType(boosterInfo);
-    return boosterInfo;
-  }, [tgid, showBoosters, uid]);
 
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
@@ -303,7 +291,6 @@ const ExperimentalProductCard = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
-        boosterType,
       }),
     });
   };
@@ -325,7 +312,6 @@ const ExperimentalProductCard = (props: any) => {
         isModifiedProductCard={isModifiedProductCard}
         expandContent={expandContent}
         hasOffer={hasOffer}
-        boosterTypeIfShown={boosterTypeIfShown}
         indexPosition={indexPosition}
         images={images}
         isGuidedTour={isGuidedTour}
@@ -375,7 +361,6 @@ const ExperimentalProductCard = (props: any) => {
         listingPrice={listingPrice}
         isSmallComboCard={isSmallComboCard}
         primaryCollection={primaryCollection}
-        boosterType={boosterType}
         activeTab={activeTab}
         sendBookNowEvent={sendBookNowEvent}
         tgidItineraryData={tgidItineraryData}

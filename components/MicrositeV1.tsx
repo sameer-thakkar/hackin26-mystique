@@ -358,20 +358,6 @@ const MicrositeV1 = (props: any) => {
   const showHohoRevamp = isHOHO && isMobile;
 
   const {
-    isEligible: isHighlightsExpEligible,
-    isExperimentResolving: isHighlightsExperimentResolving,
-    variant: highlightsExpVariant,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_ONLY_HIGHLIGHTS',
-    customEligibilityCheckFn: () =>
-      !isMobile &&
-      !(
-        (isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
-        baseLangIsPoiMb
-      ),
-  });
-
-  const {
     isEligible: shouldRunCustomCTAExperiment,
     isExperimentResolving: isCustomCTAExperimentResolving,
     variant: customCTAExperimentVariant,
@@ -385,9 +371,6 @@ const MicrositeV1 = (props: any) => {
   const showCustomProductCardCTA =
     shouldRunCustomCTAExperiment &&
     customCTAExperimentVariant === VARIANTS.TREATMENT;
-
-  const showOnlyHighlightsProductCard =
-    highlightsExpVariant === VARIANTS.TREATMENT;
 
   const showCruisesRevamp =
     isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
@@ -878,14 +861,7 @@ const MicrositeV1 = (props: any) => {
       isPoiMwebCard={isPoiMwebCard}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
-      isModifiedProductCard={
-        !isMobile &&
-        !showCruisesRevamp &&
-        !showHohoRevamp &&
-        (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
-          baseLangIsPoiMb) ||
-          showOnlyHighlightsProductCard)
-      }
+      isModifiedProductCard={!isMobile && !showCruisesRevamp}
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
@@ -894,7 +870,6 @@ const MicrositeV1 = (props: any) => {
       isCruisesRevamp={showCruisesRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
       activeSubCat={activeSubCat}
-      isHighlightsExperiment={isHighlightsExpEligible}
     />
   );
 
@@ -961,7 +936,6 @@ const MicrositeV1 = (props: any) => {
   if (
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (isHighlightsExpEligible && isHighlightsExperimentResolving) ||
     (isRankingExperimentEligible && isRankingExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving)
   )

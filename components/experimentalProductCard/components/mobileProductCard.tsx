@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
@@ -16,7 +15,6 @@ import { NextAvailable } from 'components/Product/components/NextAvailable';
 import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import Ratings from 'components/Product/components/Ratings';
 import { TourTitle } from 'components/Product/components/TourTitle';
-import { BoosterType } from 'components/Product/interface';
 import {
   CategoryAndRatingContainer,
   CTAContainer,
@@ -44,12 +42,6 @@ import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 import { ScaledCard } from './styles';
-
-const Booster = dynamic(
-  import(
-    /* webpackChunkName: "Booster" */ 'components/Product/components/Booster'
-  )
-);
 
 const MobileProductCard = (props: any) => {
   const {
@@ -107,8 +99,6 @@ const MobileProductCard = (props: any) => {
     cancellationPolicy,
     trackCancellationPolicyHover,
     isDrawer,
-    boosterTypeIfShown,
-    indexPosition,
     listingPrice: { bestDiscount },
     isPoiMwebCard,
     sendBookNowEvent,
@@ -239,7 +229,6 @@ const MobileProductCard = (props: any) => {
         defaultOpen={false}
         $isModifiedProductCard={isModifiedProductCard}
         $isPoiMwebCard={isPoiMwebCard}
-        $isAsideBarOverlay={false}
         $isExperimentalCard={true}
         // @ts-ignore
         ref={productRef}
@@ -248,13 +237,6 @@ const MobileProductCard = (props: any) => {
         $isClicked={showPricingBar}
         $isModifiedPopup={isModifiedPopup}
       >
-        <Conditional if={boosterTypeIfShown && !isDrawer}>
-          <Booster
-            type={BoosterType[boosterTypeIfShown as keyof typeof BoosterType]}
-            rank={indexPosition + 1}
-            isOverlay={expandContent}
-          />
-        </Conditional>
         <Conditional if={!isTicketCard && images?.length && !isDrawer}>
           <Conditional if={isGuidedTour}>
             <GuidedTourLabel>

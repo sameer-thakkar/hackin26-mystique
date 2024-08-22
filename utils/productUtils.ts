@@ -3,7 +3,6 @@ import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { headingsToRemove } from 'components/Product/components/NewVerticalsProductCard/constants';
-import { BoosterType } from 'components/Product/interface';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import { TCurrencyObj } from 'utils/currency';
 import {
@@ -21,7 +20,6 @@ import {
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
 import {
-  BOOSTER_EXPERIMENT_UIDS,
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   CASHBACK_TYPES,
   CRUISE_CATEGORY_ID,
@@ -1063,59 +1061,6 @@ export const getCategoryMap = (
   );
 
   return { mapping, categoriesAndSubCategories };
-};
-
-type BoosterKeys = keyof typeof BoosterType;
-
-export const getTotalBoosters = (uid: keyof typeof BOOSTER_EXPERIMENT_UIDS) => {
-  let total = 0;
-
-  const distribution: Record<BoosterKeys, number> = {
-    BESTSELLER: 0,
-    SELLING_OUT_FAST: 0,
-  };
-
-  if (!Object.keys(BOOSTER_EXPERIMENT_UIDS).includes(uid))
-    return { total, distribution };
-
-  Object.keys(BoosterType)
-    .filter((key) => isNaN(Number(key)))
-    .forEach((type) => {
-      if (
-        Object.keys(BOOSTER_EXPERIMENT_UIDS[uid]).includes(
-          BoosterType[type as BoosterKeys]
-        )
-      ) {
-        distribution[type as BoosterKeys] = (
-          BOOSTER_EXPERIMENT_UIDS[uid] as Record<string, Array<number>>
-        )[BoosterType[type as BoosterKeys]].length;
-      } else {
-        distribution[type as BoosterKeys] = 0;
-      }
-      total += distribution[type as BoosterKeys];
-    });
-
-  return { total, distribution };
-};
-
-export const checkForBooster = (
-  uid: keyof typeof BOOSTER_EXPERIMENT_UIDS,
-  tgid: number
-) => {
-  let finalType = '';
-
-  Object.keys(BoosterType)
-    .filter((key) => isNaN(Number(key)))
-    .forEach((type) => {
-      if (
-        (BOOSTER_EXPERIMENT_UIDS[uid] as Record<string, Array<number>>)?.[
-          BoosterType[type as BoosterKeys]
-        ]?.includes(tgid)
-      )
-        finalType = type;
-    });
-
-  return finalType;
 };
 
 export const sortCombos = (tours: Record<string, any>[]) => {

@@ -300,7 +300,6 @@ const NewVerticalsProductCard = (props: any) => {
           defaultOpen={defaultOpen}
           $isModifiedProductCard={isModifiedProductCard || isAsideBarOverlay}
           $isPoiMwebCard={isPoiMwebCard}
-          $isAsideBarOverlay={isAsideBarOverlay}
           $isPopup={isPopup}
           ref={productRef}
           $isNewVerticalsProductCard={true}

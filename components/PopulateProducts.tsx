@@ -246,7 +246,6 @@ const PopulateProducts: any = (props: any) => {
     isModifiedProductCard = false,
     isPoiMwebCard = false,
     productCardsLimit = Infinity,
-    showBoosters = false,
     trackProductCardsViewed = false,
     showThumbnailInBanner,
     showPopup = false,
@@ -263,7 +262,6 @@ const PopulateProducts: any = (props: any) => {
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
-    isHighlightsExperiment = false,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
   } = props;
@@ -768,7 +766,6 @@ const PopulateProducts: any = (props: any) => {
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
-      showBoosters,
       forceMobile,
       hideHeading,
       topReviews,
@@ -780,7 +777,6 @@ const PopulateProducts: any = (props: any) => {
       isBot,
       verticalProductCard,
       horizontalProductCard,
-      isHighlightsExperiment,
       itineraryInfo: {
         data: tgidItineraryData,
         showData: showItinerary,
