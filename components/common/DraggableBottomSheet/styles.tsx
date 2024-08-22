@@ -26,7 +26,11 @@ export const Overlay = styled.div<{
   z-index: 50;
 `;
 
-export const Sheet = styled.div<{ $sheetHeight: string; $translateY: number }>`
+export const Sheet = styled.div<{
+  $sheetHeight: string;
+  $translateY: number;
+  $roundedBorder?: boolean;
+}>`
   position: fixed;
   top: auto;
   left: 0;
@@ -39,6 +43,7 @@ export const Sheet = styled.div<{ $sheetHeight: string; $translateY: number }>`
   background-color: ${COLORS.BRAND.WHITE};
   box-shadow: 0 -0.2rem 1rem rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  border-radius: ${({ $roundedBorder }) => ($roundedBorder ? '1rem' : '0')};
 `;
 
 export const GrabBar = styled.div<{

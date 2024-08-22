@@ -1258,7 +1258,38 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     START_POINT_SAME_AS_END_POINT:
       'Der Endpunkt ist derselbe wie der Startpunkt',
   },
-
+  CRUISES: {
+    BANNER_HEADING: 'Schifffahrten in {0}: entdecken, essen, entspannen',
+    FILTERS: {
+      ALL: 'Alle',
+      SIGHTSEEING: 'Sightseeing',
+      LUNCH: 'Mittagessen',
+      DINNER: 'Abendessen',
+      COMBOS: 'Kombitickets',
+    },
+    MAP_OVERLAY: 'Verschieben Sie die Karte durch Klicken oder Tippen',
+    SIGHTS_COVERED: 'Sehens- würdigkeiten',
+    MENU: 'Speisekarte',
+    BOARD_AT: 'Boarding: {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} mögliche Einstiegsstellen',
+    VIEW_POPULAR_SIGHTS: 'Beliebte Sehenswürdigkeiten: {0} {1}',
+    X_BOARDING_POINTS: '{0} Einstiegsstellen',
+    BOARDING_POINT: 'Einstiegsstelle',
+    BOARDING_POINTS: 'Einstiegsstellen',
+    LANDMARKS: 'Wahrzeichen',
+    GET_DIRECTIONS: 'Wegbeschreibung',
+    FOOD_MENU: 'Speisekarte',
+    X_PAGE: '{0} Seite',
+    X_PAGES: '{0} Seiten',
+    MORE: 'und {0} weitere',
+    PDF: {
+      ZOOM_IN: 'Heranzoomen',
+      ZOOM_OUT: 'Herauszoomen',
+      FIT_TO_WIDTH: 'Vollbild',
+      RESET_ZOOM: 'Zoom zurücksetzen',
+    },
+    COMBO_HEADING: 'Mehr für weniger: Kombideals und City Cards',
+  },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
 };
 

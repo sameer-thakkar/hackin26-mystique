@@ -42,6 +42,7 @@ export const TourTags = styled.div<{
   horizontal?: boolean;
   pageType?: string;
   $forceMobile?: boolean;
+  $isClickable?: boolean;
 }>`
   ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
   display: grid;
@@ -59,6 +60,20 @@ export const TourTags = styled.div<{
     flex-wrap: wrap;
     gap: 0.5rem;
   `}
+
+  ${({ $isClickable }) =>
+    $isClickable &&
+    css`
+      .clickable {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+      }
+      .tour-tag:has(span.clickable) {
+        cursor: pointer;
+      }
+    `}
+        
   .tour-tag {
     display: grid;
     grid-auto-flow: column;
@@ -97,6 +112,7 @@ export const TourTags = styled.div<{
       }
     }
   }
+
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}
   grid-area: tags;
   align-items: start;
@@ -636,7 +652,9 @@ interface IStyledProductCard {
   $isDrawer?: boolean;
   $hasDiscount?: boolean;
   $isClicked?: boolean;
-  $isHOHORevamp?: boolean;
+  $isNewVerticalsProductCard?: boolean;
+  $isCruise?: boolean;
+  $isModifiedPopup?: boolean;
   $isSwiperCard?: boolean;
   $hasItineraryData?: boolean;
   $forceMobile?: boolean;
@@ -822,6 +840,18 @@ const popupStyles = css`
 
         &:first-child {
           margin-top: 0.5rem;
+        }
+
+        &.inclusions-heading {
+          margin-top: 0;
+          padding-top: 2rem;
+          border-top: 1px solid ${COLORS.GRAY.G6};
+        }
+        &.sights-covered-heading {
+          visibility: hidden;
+          height: 0;
+          margin: 0;
+          padding: 0 !important;
         }
 
         &:not(:first-child) {
@@ -1174,13 +1204,22 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   ${({ isTicketCard, $forceMobile }) =>
     isTicketCard ? null : cardImageStyles($forceMobile)}
-  ${({ $isHOHORevamp }) =>
-    $isHOHORevamp &&
+  ${({ $isNewVerticalsProductCard, $isCruise, $isModifiedPopup }) =>
+    $isNewVerticalsProductCard &&
     css`
       &&& {
-        ${hohoStyles}
+        ${newVerticalStyles}
+        ${$isCruise && cruiseStyles}
+        ${$isModifiedPopup && modifiedPopupStyles}
       }
     `}  
+      ${({ $isModifiedPopup }) =>
+    $isModifiedPopup &&
+    css`
+      &&& {
+        ${modifiedPopupStyles}
+      }
+    `} 
 
   grid-template-rows: min-content min-content min-content;
   grid-template-columns: ${({ isTicketCard }) =>
@@ -3124,7 +3163,7 @@ export const hohoFont = css`
   -webkit-text-stroke: 0.2px ${COLORS.GRAY.G1};
 `;
 
-export const hohoStyles = css`
+export const newVerticalStyles = css`
   grid-template-areas:
     'card-img category-and-rating line cta-combo'
     'card-img title line cta-combo'
@@ -3136,8 +3175,9 @@ export const hohoStyles = css`
   padding: 1rem;
   position: relative;
   .card-img {
-    width: 20.625rem;
+    width: 21rem;
     height: 13.125rem;
+    cursor: pointer;
   }
   .tour-tag {
     max-width: unset;
@@ -3223,7 +3263,7 @@ export const hohoStyles = css`
       margin-bottom: 0.625rem;
       height: auto;
     }
-    button {
+    button.info-icon {
       padding: 0;
       background: none;
       border: none;
@@ -3248,11 +3288,89 @@ export const hohoStyles = css`
       margin: 0 0 0.125rem;
     }
     ${PriceContainer} {
-      margin-bottom: 0.344rem;
+      margin: 1rem 0 0;
+      padding-bottom: 0;
     }
     ${StyledPriceBlock} {
       .tour-price {
         ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)}
+      }
+    }
+  }
+`;
+
+export const cruiseStyles = css`
+  @media (max-width: 768px) {
+    :active:not(:focus-within) {
+      transform: unset;
+    }
+    grid-template-areas:
+      'card-img'
+      'category-and-rating'
+      'title'
+      'tour-tags'
+      'next-available'
+      'price-block'
+      'cta-block'
+      'more-details-cta';
+    ${CTABlock} {
+      grid-area: cta-block;
+      margin: 0.5rem 0 0.5rem;
+    }
+    ${MoreDetailsBtnWrapper} {
+      grid-area: more-details-cta;
+      button {
+        font-family: ${HALYARD.FONT_STACK};
+        letter-spacing: 0;
+      }
+    }
+
+    ${NextAvailableBlock} .available-text {
+      color: ${COLORS.GRAY.G2} !important;
+      margin: 0.75rem 0 0;
+    }
+  }
+`;
+
+export const modifiedPopupStyles = css`
+  ${TourTags} {
+    width: unset;
+    gap: 0.5rem;
+    padding: 1rem 0 1.5rem;
+    .tour-tag {
+      max-width: unset;
+    }
+  }
+  ${NextAvailableBlock} {
+    .available-text {
+      margin-top: 0.5rem;
+    }
+  }
+  @media (max-width: 768px) {
+    grid-template-areas:
+      'card-img'
+      'category-and-rating'
+      'title'
+      'next-available'
+      'tags';
+    ${PriceContainer} {
+      display: none;
+    }
+    ${TourTitleWrapper}, ${TitleWrapper} {
+      margin-bottom: 0;
+    }
+    ${TourTags} {
+      gap: 0.625rem;
+      flex-direction: column;
+      padding-bottom: 0;
+      margin: -0.25rem 0 0;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+    }
+    ${NextAvailableBlock} {
+      margin-top: -0.5rem;
+      .available-text {
+        color: ${COLORS.GRAY.G2} !important;
+        margin-top: 0;
       }
     }
   }

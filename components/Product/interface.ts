@@ -1,3 +1,5 @@
+import { TDescriptorsList } from './components/NewVerticalsProductCard/types';
+
 export type TNextAvailableProps = {
   showSkeleton?: boolean;
   showCalendarIcon?: boolean;
@@ -10,6 +12,7 @@ export type TNextAvailableProps = {
   isPopup?: boolean;
   flexible?: boolean;
   className?: string;
+  showTime?: boolean;
 };
 
 export type TBookNowCTAProps = {
@@ -40,7 +43,8 @@ export type TProductDescriptors = {
   showIcons?: boolean;
   isMobile?: boolean;
   showGuidedTourDescriptor?: boolean;
-  hohoDescriptors?: Array<Record<string, string>>;
+  customDescriptors?: TDescriptorsList[];
+  allowClick?: boolean;
   forceMobile?: boolean;
   children?: React.ReactNode;
 };

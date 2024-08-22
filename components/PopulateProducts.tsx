@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import dayjs from 'dayjs';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import {
@@ -19,8 +20,16 @@ import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { fetchBatchedCalendarInventory, fetchInventory } from 'utils/apiUtils';
+import {
+  getProductCommonProperties,
+  sendVariableToDataLayer,
+  trackEvent,
+} from 'utils/analytics';
+import {
+  fetchBatchedCalendarInventory,
+  fetchBulkInventories,
+  fetchInventory,
+} from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
@@ -31,6 +40,7 @@ import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CRUISE_CATEGORY_ID,
   DESIGN,
   MB_CATEGORISATION,
   THEMES,
@@ -58,7 +68,7 @@ const Swiper = dynamic(
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
   isTicketCard?: boolean;
-  isHOHORevamp?: boolean;
+  isNewVerticalsProductCard?: boolean;
 }>`
   margin: 0 auto;
   position: relative;
@@ -74,7 +84,8 @@ const StyledProductsWrapper = styled.div<{
     margin: auto;
     height: 21.5rem;
     border-radius: 1rem;
-    ${({ isHOHORevamp }) => isHOHORevamp && `height: 14.813rem;`}
+    ${({ isNewVerticalsProductCard }) =>
+      isNewVerticalsProductCard && `height: 14.813rem;`}
   }
 
   #tour-list-heading {
@@ -96,8 +107,8 @@ const StyledProductsWrapper = styled.div<{
   @media (max-width: 768px) {
     ${({ isLoading }) => (isLoading ? `min-height: 390px;` : '')}
     && {
-      ${({ isHOHORevamp }) =>
-        isHOHORevamp &&
+      ${({ isNewVerticalsProductCard }) =>
+        isNewVerticalsProductCard &&
         css`
           .product-card-skeleton {
             height: 28.438rem;
@@ -132,14 +143,17 @@ const ProductContainer = styled.div<{
   isTicketCard: boolean;
   isMobile: boolean;
   isNotVisible?: boolean;
-  isHOHORevamp?: boolean;
+  isNewVerticalsProductCard?: boolean;
+  isCruise?: boolean;
+  $noPadding?: boolean;
 }>`
   ${({ isTicketCard, isMobile }) =>
     isTicketCard && !isMobile
       ? ` ${ticketCardDesktopDisplay} `
       : `display: grid;`}
   grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
-  margin: ${({ isNotVisible }) => (isNotVisible ? '0' : '2.25rem 0')};
+  margin: ${({ isNotVisible, isCruise }) =>
+    isNotVisible ? '0' : isCruise ? '1.5rem 0 2.25rem' : '2.25rem 0'};
   & > ${HorizontalLine} {
     border-bottom-style: dashed;
   }
@@ -157,12 +171,13 @@ const ProductContainer = styled.div<{
   @media (max-width: 768px) {
     margin-top: ${({ isNotVisible }) => (isNotVisible ? 0 : 0.5)}rem;
     margin-bottom: ${({ isNotVisible }) => (isNotVisible ? 0 : 1.75)}rem;
-    grid-row-gap: ${({ isHOHORevamp }) => (isHOHORevamp ? '1.5rem' : '2rem')};
+    grid-row-gap: ${({ isNewVerticalsProductCard }) =>
+      isNewVerticalsProductCard ? '1.5rem' : '2rem'};
 
-    ${({ isHOHORevamp }) =>
-      isHOHORevamp &&
+    ${({ isNewVerticalsProductCard, $noPadding }) =>
+      isNewVerticalsProductCard &&
       `margin: 0;
-       padding-bottom: 2.25rem;`}
+       padding-bottom: ${$noPadding ? '0' : '2.25rem'};`}
 
     .product-card-skeleton {
       max-width: auto;
@@ -180,9 +195,10 @@ const ProductWrapper = styled.div`
 const CombosContainer = styled.div`
   background: linear-gradient(115.83deg, #f8f6ff 0%, #fff2f8 81.51%);
   padding-bottom: 1.25rem;
+  margin-bottom: 2.25rem;
 `;
 
-const SectionTitle = styled.div`
+const SectionTitle = styled.div<{ $noSubtitle?: boolean }>`
   margin: 0 1rem;
 
   .subtitle {
@@ -197,6 +213,7 @@ const SectionTitle = styled.div`
     margin: 0;
     padding-bottom: 1.25rem;
     ${expandFontToken(FONTS.HEADING_REGULAR)}
+    ${($noSubtitle) => $noSubtitle && 'padding-top: 1.5rem'}
   }
 `;
 
@@ -237,8 +254,12 @@ const PopulateProducts: any = (props: any) => {
     forceMobile,
     hideHeading,
     isHOHORevamp,
+    isNVResolving,
     isRankingExperimentResolving = false,
     showItineraries = false,
+    isCruisesRevamp = false,
+    isNewVerticalsProductCard = false,
+    activeSubCat = 0,
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
@@ -283,7 +304,7 @@ const PopulateProducts: any = (props: any) => {
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
   useEffect(() => {
-    if (productsLoading) {
+    if (!isCruisesRevamp && productsLoading) {
       scroller.scrollTo('products-container', {
         duration: 600,
         offset: -120,
@@ -291,7 +312,9 @@ const PopulateProducts: any = (props: any) => {
       });
     }
   }, [productsLoading]);
+
   useEffect(() => {
+    let timeInventory: Record<number, any>;
     const fetchEarliestAvailability = async (
       uncategorizedToursList: Array<Record<string, any>>
     ) => {
@@ -316,18 +339,40 @@ const PopulateProducts: any = (props: any) => {
           ),
         })) || {};
 
+      if (isCruisesRevamp) {
+        timeInventory =
+          (await fetchBulkInventories({
+            tgids,
+            fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
+            currency,
+            toDate: formatDateToString(
+              addDays(new Date(), 2),
+              'en',
+              'YYYY-MM-DD'
+            ),
+          })) || {};
+      }
+
       const earliestAvailabilityData = Object.keys(inventory).reduce(
         (acc: Record<number, any>, tgid) => {
           const tour = inventory?.[Number(tgid) as keyof typeof inventory];
           const { sortedInventoryDates } = tour || {};
           const [firstAvailableDate] = sortedInventoryDates || [];
+          const today = dayjs().format('YYYY-MM-DD');
+          let startTime;
 
           if (!firstAvailableDate) return acc;
+          if (isCruisesRevamp && firstAvailableDate === today) {
+            const tour =
+              timeInventory?.[Number(tgid) as keyof typeof inventory];
+            startTime = tour?.availabilities?.[0]?.startTime;
+          }
 
           return {
             ...acc,
             [tgid]: {
               startDate: firstAvailableDate,
+              ...(isCruisesRevamp && { startTime }),
             },
           };
         },
@@ -337,7 +382,7 @@ const PopulateProducts: any = (props: any) => {
       setEarliestAvailabilityStore(earliestAvailabilityData);
       setShowEarliestAvailability(true);
     };
-    if (instantCheckout) {
+    if (showNextAvailable || instantCheckout) {
       fetchEarliestAvailability(tours);
     }
   }, []);
@@ -358,6 +403,7 @@ const PopulateProducts: any = (props: any) => {
     }
   }, [productsWrapperRef]);
 
+  const showNextAvailable = isCruisesRevamp;
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }: any) => {
       const fetchVariantPrices: Promise<any>[] = variantTgids.map(
@@ -435,16 +481,49 @@ const PopulateProducts: any = (props: any) => {
     })
     .slice(0, productCardsLimit);
 
-  const comboIndex = availableToursList?.findIndex(
-    (tour: Record<string, any>) => scorpioData[tour.tgid]?.combo
+  if (isCruisesRevamp && activeSubCat !== 0) {
+    availableToursList = availableToursList?.filter(
+      (tour: Record<string, any>) =>
+        scorpioData[tour.tgid]?.primarySubCategory?.id === activeSubCat
+    );
+  }
+
+  const nonNewVerticalIndex = availableToursList?.findIndex(
+    (tour: Record<string, any>) => {
+      if (isCruisesRevamp) {
+        return (
+          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+        );
+      } else return scorpioData[tour.tgid]?.combo;
+    }
   );
-  const comboTours = availableToursList?.filter(
-    (tour: Record<string, any>) => scorpioData[tour.tgid]?.combo
+  const nonNewVerticalTours = availableToursList?.filter(
+    (tour: Record<string, any>) => {
+      if (isCruisesRevamp) {
+        return (
+          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+        );
+      } else return scorpioData[tour.tgid]?.combo;
+    }
+  );
+
+  const newVerticalTours = availableToursList?.filter(
+    (tour: Record<string, any>) => {
+      if (isCruisesRevamp) {
+        return (
+          scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID
+        );
+      } else return !scorpioData[tour.tgid]?.combo;
+    }
   );
 
   if (subattraction_type === SUBATTRACTION_TYPE.C) {
     availableToursList = availableToursList.splice(0, 5);
   }
+  const finalToursList =
+    isNewVerticalsProductCard && isMobile
+      ? newVerticalTours
+      : availableToursList;
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
     if (!productsRef.current) return;
@@ -471,15 +550,45 @@ const PopulateProducts: any = (props: any) => {
                 });
               }
 
-              trackEvent({
-                eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
-                [ANALYTICS_PROPERTIES.TGID]: tgid,
-                [ANALYTICS_PROPERTIES.POSITION]:
-                  availableToursList?.findIndex((t: any) => t.tgid === tgid) +
-                  1,
-                [ANALYTICS_PROPERTIES.IS_TRUNCATED]:
-                  !!entry.target?.querySelector?.('.more-details'),
-              });
+              const isNonCruiseProductCard =
+                scorpioData?.[tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID;
+              if (isCruisesRevamp && !isNonCruiseProductCard) {
+                trackEvent({
+                  eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
+                  [ANALYTICS_PROPERTIES.TGID]: tgid,
+                  [ANALYTICS_PROPERTIES.POSITION]:
+                    availableToursList?.findIndex((t: any) => t.tgid === tgid) +
+                    1,
+                  [ANALYTICS_PROPERTIES.IS_TRUNCATED]:
+                    !!entry.target?.querySelector?.('.more-details'),
+                });
+              }
+
+              if (isCruisesRevamp && isNonCruiseProductCard) {
+                const {
+                  primaryCategory,
+                  primaryCollection,
+                  primarySubCategory,
+                  reviewsDetails,
+                } = scorpioData[tgid];
+                trackEvent({
+                  eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VIEWED,
+                  [ANALYTICS_PROPERTIES.TGID]: tgid,
+                  [ANALYTICS_PROPERTIES.SECTION]: 'Non Cruises Product Section',
+                  [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]:
+                    scorpioData?.[tgid]?.productTitle,
+                  [ANALYTICS_PROPERTIES.POSITION]:
+                    availableToursList?.findIndex((t: any) => t.tgid === tgid) +
+                    1 -
+                    nonNewVerticalIndex,
+                  ...getProductCommonProperties({
+                    primaryCategory,
+                    primaryCollection,
+                    primarySubCategory,
+                    reviewsDetails,
+                  }),
+                });
+              }
             }
           }
         });
@@ -511,10 +620,11 @@ const PopulateProducts: any = (props: any) => {
   });
 
   const shouldShowHeading = isV1DesignSite
-    ? !isCollectionMB && !isAirportTransfersMB
+    ? !isCollectionMB && !isAirportTransfersMB && !isCruisesRevamp
     : true;
 
-  const showLoader = productsLoading || isRankingExperimentResolving;
+  const showLoader =
+    productsLoading || isRankingExperimentResolving || isNVResolving;
 
   const swiperParams: SwiperProps = {
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
@@ -555,7 +665,7 @@ const PopulateProducts: any = (props: any) => {
     const { itineraries } = itineraryData;
 
     const itineraryDataMap: Record<string | number, TItinerary> =
-      showItineraries
+      showItineraries || isCruisesRevamp
         ? itineraries?.reduce(
             (prev: Record<string | number, TItinerary>, curr: TItinerary) => {
               prev[curr.id] = curr;
@@ -565,17 +675,22 @@ const PopulateProducts: any = (props: any) => {
           )
         : {};
 
-    const tgidItineraryData = showItineraries
-      ? experienceItineraryIds.reduce((acc: Array<TItinerary>, id: string) => {
-          const itinerary = itineraryDataMap[id];
-          if (itinerary && isItineraryValid(itinerary)) {
-            acc.push(itinerary);
-          }
-          return acc;
-        }, [] as Array<TItinerary>)
-      : [];
+    const tgidItineraryData =
+      showItineraries || isCruisesRevamp
+        ? experienceItineraryIds.reduce(
+            (acc: Array<TItinerary>, id: string) => {
+              const itinerary = itineraryDataMap[id];
+              if (itinerary && isItineraryValid(itinerary)) {
+                acc.push(itinerary);
+              }
+              return acc;
+            },
+            [] as Array<TItinerary>
+          )
+        : [];
 
     const showItinerary =
+      showItineraries &&
       !!tgidItineraryData?.length &&
       tgidItineraryData.findIndex((itinerary: TItinerary) =>
         isItineraryValid(itinerary)
@@ -589,6 +704,7 @@ const PopulateProducts: any = (props: any) => {
       earliestAvailability,
       showEarliestAvailability:
         earliestAvailability?.startDate && showEarliestAvailability,
+      showNextAvailable,
       tid: tour_variant_id,
       title: tour_title_override,
       descriptors: getProductDescriptors({
@@ -634,10 +750,21 @@ const PopulateProducts: any = (props: any) => {
       setDetailsPopupShown,
       isNonPoi,
       isModifiedProductCard:
-        isHOHORevamp && scorpioData?.[tgid].combo && !isMobile
+        isNewVerticalsProductCard &&
+        (isCruisesRevamp
+          ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+          : scorpioData?.[tgid].combo) &&
+        !isMobile
           ? true
           : isModifiedProductCard,
-      isPoiMwebCard: isPoiMwebCard,
+      isPoiMwebCard:
+        isNewVerticalsProductCard &&
+        isMobile &&
+        (isCruisesRevamp
+          ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+          : scorpioData?.[tgid].combo)
+          ? true
+          : isPoiMwebCard,
       isSmallComboCard,
       reviewsDetails,
       originalRank: ogIndex ? ogIndex + 1 : undefined,
@@ -647,6 +774,8 @@ const PopulateProducts: any = (props: any) => {
       topReviews,
       showPopup,
       isHOHORevamp,
+      isCruisesRevamp,
+      isNewVerticalsProductCard,
       isSwiperCard,
       isBot,
       verticalProductCard,
@@ -665,7 +794,7 @@ const PopulateProducts: any = (props: any) => {
       <Product
         {...childProps}
         showThumbnailInBanner={showThumbnailInBanner}
-        comboIndex={comboIndex}
+        nonNewVerticalIndex={nonNewVerticalIndex}
       />
     ) : (
       <ProductWrapper ref={addToRef} data-tgid={tour.tgid} key={tour.tgid}>
@@ -675,7 +804,7 @@ const PopulateProducts: any = (props: any) => {
           <Product
             {...childProps}
             showThumbnailInBanner={showThumbnailInBanner}
-            comboIndex={comboIndex}
+            nonNewVerticalIndex={nonNewVerticalIndex}
           />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -700,7 +829,7 @@ const PopulateProducts: any = (props: any) => {
   }, [isCombosSectionIntersecting]);
 
   if (asHook) {
-    return availableToursList?.map((tour: Record<string, any>, index: number) =>
+    return finalToursList?.map((tour: Record<string, any>, index: number) =>
       getProductCardFromTourAndIndex(tour, index)
     );
   }
@@ -709,7 +838,7 @@ const PopulateProducts: any = (props: any) => {
     <StyledProductsWrapper
       isLoading={showLoader}
       isTicketCard={isTicketCard}
-      isHOHORevamp={isHOHORevamp}
+      isNewVerticalsProductCard={isNewVerticalsProductCard}
       id="products-container"
       ref={productsWrapperRef}
     >
@@ -753,36 +882,48 @@ const PopulateProducts: any = (props: any) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile || forceMobile}
         isNotVisible={showLoader}
-        isHOHORevamp={isHOHORevamp}
+        isNewVerticalsProductCard={isNewVerticalsProductCard}
+        isCruise={isCruisesRevamp}
+        $noPadding={finalToursList?.length < 1}
       >
-        <Conditional if={availableToursList?.length > 0}>
-          {availableToursList?.map(
-            (tour: Record<string, any>, index: number) => {
-              return getProductCardFromTourAndIndex(tour, index);
-            }
-          )}
+        <Conditional if={finalToursList?.length > 0}>
+          {finalToursList?.map((tour: Record<string, any>, index: number) => {
+            return getProductCardFromTourAndIndex(tour, index);
+          })}
         </Conditional>
       </ProductContainer>
       <Conditional
-        if={isHOHORevamp && (isMobile || clientIsMobile) && comboTours?.length}
+        if={
+          isNewVerticalsProductCard &&
+          (isMobile || clientIsMobile) &&
+          nonNewVerticalTours?.length
+        }
       >
         <CombosContainer ref={combosSectionRef}>
-          <SectionTitle>
-            <div className="subtitle">
-              <PercentageStamp />
-              <span>{strings.HOHO.COMBO_SUBTITLE}</span>
-            </div>
-            <h2>{strings.HOHO.COMBO_TITLE}</h2>
+          <SectionTitle $noSubtitle={isCruisesRevamp}>
+            <Conditional if={!isCruisesRevamp}>
+              <div className="subtitle">
+                <PercentageStamp />
+                <span>{strings.HOHO.COMBO_SUBTITLE}</span>
+              </div>
+            </Conditional>
+            <h2>
+              {isCruisesRevamp
+                ? strings.CRUISES.COMBO_HEADING
+                : strings.HOHO.COMBO_TITLE}
+            </h2>
           </SectionTitle>
           <Swiper {...swiperParams}>
-            {comboTours?.map((tour: Record<string, any>, index: number) => {
-              return getProductCardFromTourAndIndex(tour, index, false, true);
-            })}
+            {nonNewVerticalTours?.map(
+              (tour: Record<string, any>, index: number) => {
+                return getProductCardFromTourAndIndex(tour, index, false, true);
+              }
+            )}
           </Swiper>
           <Paginator
             tabSize={1.5}
             dotSize={0.5}
-            totalCount={comboTours?.length}
+            totalCount={nonNewVerticalTours?.length}
             activeIndex={activeIndex}
             activeSlideTimer={0.1}
             margin={0.125}

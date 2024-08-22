@@ -31,6 +31,7 @@ import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
   ANALYTICS_PROPERTIES,
   COOKIE,
+  CRUISES_REVAMP_UIDS,
   CUSTOM_TYPES,
   PAGETYPE_BY_CUSTOMTYPE,
   RTL_LANGUAGE_CODES,
@@ -255,6 +256,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       AIRPORT_TRANSFER_PRODUCT_CARD_TEMPLATE;
 
     const isSeatMapExperiment = containsPOIAndSeatmap(CMSContent?.tags);
+    const isCruises = CRUISES_REVAMP_UIDS.includes(uid);
 
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
@@ -273,6 +275,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         isAirportTransferMB,
         defaultType: pageType,
         isSeatMapExperiment,
+        isCruises,
       }),
     });
     set(metaAtom, {

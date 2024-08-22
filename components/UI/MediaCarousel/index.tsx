@@ -48,6 +48,7 @@ type MediaCarouselProps = {
   useWidePaginatorActiveTab?: boolean;
   uid?: string;
   isImageQualityExperiment?: boolean;
+  hideGrabCursor?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -71,6 +72,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
+  hideGrabCursor = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -98,13 +100,15 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     }
   }, [swiper]);
 
-  const onPrev = () => {
+  const onPrev = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (swiper !== null) {
       swiper.slidePrev();
     }
   };
 
-  const onNext = () => {
+  const onNext = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (swiper !== null) {
       swiper.slideNext();
     }
@@ -138,7 +142,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
         }
       : false,
     speed: 600,
-    grabCursor: imageList.length > 1,
+    grabCursor: !hideGrabCursor && imageList.length > 1,
     preloadImages: false,
     onSlideChangeTransitionStart: updateIndex,
     onSwiper: (swiper) => setSwiperInstance(swiper),

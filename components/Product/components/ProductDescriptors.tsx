@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { renderToString } from 'react-dom/server';
 import Skeleton from 'react-loading-skeleton';
 import Conditional from 'components/common/Conditional';
 import { TProductDescriptors } from 'components/Product/interface';
@@ -15,7 +16,7 @@ import Globe from 'assets/globe';
 
 export const ProductDescriptors = ({
   descriptorArray,
-  hohoDescriptors,
+  customDescriptors,
   minDuration,
   maxDuration,
   lang = 'en',
@@ -31,6 +32,7 @@ export const ProductDescriptors = ({
   isMobile = false,
   showGuidedTourDescriptor = true,
   forceMobile = false,
+  allowClick = false,
   children,
 }: TProductDescriptors) => {
   const [cancellationPolicyEventRecorded, setCancellationPolicyEventRecorded] =
@@ -63,11 +65,15 @@ export const ProductDescriptors = ({
       horizontal={horizontal}
       pageType={pageType}
       $forceMobile={forceMobile}
+      $isClickable={allowClick}
       className="tour-tags"
     >
-      <Conditional if={hohoDescriptors?.length}>
-        {hohoDescriptors?.map((item, index: number) => {
+      <Conditional if={customDescriptors?.length}>
+        {customDescriptors?.map((item, index: number) => {
           const DescriptorSVG = descriptorIcons[item.type];
+          const descriptorContent = `${renderToString(
+            <DescriptorSVG />
+          )}<span>${item.text}</span>`;
 
           return (
             item && (
@@ -75,10 +81,13 @@ export const ProductDescriptors = ({
                 key={`descriptor-${index}`}
                 data-card-section={CARD_SECTION_MARKERS.DESCRIPTORS}
                 className={'tour-tag'}
-              >
-                {showIcons && <DescriptorSVG />}
-                {item.text}
-              </div>
+                dangerouslySetInnerHTML={{
+                  __html: descriptorContent,
+                }}
+                {...(allowClick && item?.onClick
+                  ? { onClick: item?.onClick }
+                  : {})}
+              />
             )
           );
         })}

@@ -238,6 +238,7 @@ type TabWrapperProps = {
   jumpscroll?: boolean;
   makeTabElementsCrawlable?: boolean;
   showDropShadow?: boolean;
+  showControls?: boolean;
 };
 
 /**
@@ -280,6 +281,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     jumpscroll = false,
     makeTabElementsCrawlable = false,
     showDropShadow = false,
+    showControls = false,
   } = props;
   const { isMobile } = useRecoilValue(appAtom);
 
@@ -344,23 +346,17 @@ const TabWrapper = (props: TabWrapperProps) => {
     scrollViewProps.onScroll = scrollHandler;
   }
 
+  const setScrollPosition = (tabsContanier: any) => {
+    const { scrollLeft, clientWidth, scrollWidth } =
+      tabsContanier?.current ?? {};
+    setIsAtStart(scrollLeft <= 16);
+    setIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
+  };
+
   useEffect(() => {
-    const setScrollPosition = (tabsContanier: any) => {
-      const { scrollLeft, clientWidth, scrollWidth } =
-        tabsContanier?.current ?? {};
-      setIsAtStart(scrollLeft === 0);
-      setIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
-    };
-    (tabsContanier?.current as any)?.addEventListener(
-      'scroll',
-      setScrollPosition(tabsContanier)
-    );
-    return () =>
-      (tabsContanier?.current as any)?.removeEventListener(
-        'scroll',
-        setScrollPosition(tabsContanier)
-      );
-  }, []);
+    if (!tabsContanier?.current) return;
+    setScrollPosition(tabsContanier);
+  }, [tabsContanier]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -401,7 +397,7 @@ const TabWrapper = (props: TabWrapperProps) => {
 
     if (isScrollTab && scrollTarget) {
       (tabsContanier?.current as any)?.scrollTo({
-        left: scrollTarget.offsetLeft - scrollTarget.offsetWidth / 2,
+        left: scrollTarget.offsetLeft - 20,
         behavior: 'smooth',
       });
     }
@@ -567,7 +563,11 @@ const TabWrapper = (props: TabWrapperProps) => {
           ) : null}
         </TitleTextCombo>
       </Conditional>
-      <div ref={tabsContanier} className="tabs">
+      <div
+        ref={tabsContanier}
+        className="tabs"
+        onScroll={() => setScrollPosition(tabsContanier)}
+      >
         <Conditional if={tabData.length}>
           {tabData.map((tab, index) => {
             const tabId = stringIdfy(tab.heading);
@@ -642,7 +642,7 @@ const TabWrapper = (props: TabWrapperProps) => {
             );
           })}
         </Conditional>
-        <Conditional if={isMobile}>
+        <Conditional if={isMobile || showControls}>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <SlideControls isMobile={isMobile} className="slide-controls">
             <Conditional if={!isAtStart}>

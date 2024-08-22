@@ -15,9 +15,9 @@ import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import MWebEntryPoint from 'components/common/Itinerary/MWebEntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
-import HohoProductCard from 'components/HOHO/components/HohoProductCard';
 import ItineraryEntryPoint from 'components/HOHO/components/RoutesCTA/EntryPoint';
 import { SECTION_NAMES } from 'components/HOHO/constants';
+import SightsCovered from 'components/NewVerticals/SightsCovered';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
@@ -89,6 +89,7 @@ import {
   filterHighlights,
   getMaxListItemsToShow,
   getProductCardLayout,
+  parseInclusionsExclusions,
 } from 'utils/productUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { addQueryParams } from 'utils/urlUtils';
@@ -99,6 +100,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CATEGORY_IDS,
+  CRUISE_CATEGORY_ID,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   PRODUCT_CARD_REVAMP,
   SIDEBAR_TYPES,
@@ -110,6 +112,9 @@ import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
+import NewVerticalsProductCard from './components/NewVerticalsProductCard';
+import InclusionsExclusions from './components/NewVerticalsProductCard/InclusionsExclusions';
+import MenuSection from './components/NewVerticalsProductCard/MenuSection';
 import { BoosterType } from './interface';
 import { trackDeadClick } from './utils';
 
@@ -243,11 +248,12 @@ const Product = (props: any) => {
     showNewCard = false,
     forceMobile = false,
     showThumbnailInBanner = false,
-    isHOHORevamp = false,
-    comboIndex,
+    nonNewVerticalIndex,
     isSwiperCard = false,
     isBot = false,
     itineraryInfo,
+    isNewVerticalsProductCard = false,
+    isCruisesRevamp = false,
     verticalProductCard = false,
     horizontalProductCard = false,
     isHighlightsExperiment = false,
@@ -260,6 +266,13 @@ const Product = (props: any) => {
     showData: showItinerary,
     isHOHO: isHohoItinerary,
   } = itineraryInfo || {};
+
+  const {
+    details,
+    sections,
+    type: itineraryType,
+    map: itineraryMap,
+  } = tgidItineraryData?.[0] || {};
 
   const {
     mbTheme,
@@ -296,6 +309,8 @@ const Product = (props: any) => {
       isForcedChange: false,
     });
   const [isUnScrolled, setIsUnScrolled] = useState(true);
+  const [customDescriptors, setCustomDescriptors] = useState([]);
+
   const [popupScrollTracker, setPopupScrollTracker] = useState({
     25: false,
     50: false,
@@ -315,10 +330,10 @@ const Product = (props: any) => {
 
   const showAvailabilityInTitleMobile =
     isSpecialGuidedTour &&
-    getEarliestAvailableDate(
-      earliestAvailability?.startDate,
-      currentLanguage
-    ) === strings.TODAY;
+    getEarliestAvailableDate({
+      date: earliestAvailability?.startDate,
+      currentLanguage,
+    }) === strings.TODAY;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -412,6 +427,10 @@ const Product = (props: any) => {
   const isFirstProduct = indexPosition === 0;
   const isBannerCard =
     isFirstProduct && isCollectionMB && bannerVideo && !isNonPoi;
+  const isNonNewVerticalProductCard = isCruisesRevamp
+    ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+    : isCombo;
+  const isModifiedPopup = isCruisesRevamp && !isNonNewVerticalProductCard;
 
   const params = {
     ...(lang && {
@@ -573,8 +592,8 @@ const Product = (props: any) => {
         reviewsDetails,
         boosterType,
       }),
-      [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: tgidItineraryData[0]?.type,
-      [ANALYTICS_PROPERTIES.HAS_MAP]: tgidItineraryData[0]?.map?.active,
+      [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: itineraryType,
+      [ANALYTICS_PROPERTIES.HAS_MAP]: itineraryMap?.active,
     });
   };
 
@@ -677,15 +696,6 @@ const Product = (props: any) => {
     ? tempHighlights
     : filterFromHighlights(scorpioData?.highlights);
 
-  let { highlights, tabs } = originalIsMobile
-    ? { highlights: finalHighlights, tabs: [] }
-    : extractTabsFromHighlights(finalHighlights);
-
-  tabs =
-    showItinerary && tgidsWithSitesVisited.includes(tgid)
-      ? [...tabs.slice(0, 2), ...tabs.slice(3)]
-      : tabs;
-
   const cancellationPolicy = useMemo(
     () => extractCancellationPolicyFromHighlights(finalHighlights),
     [finalHighlights]
@@ -749,10 +759,10 @@ const Product = (props: any) => {
       setShowAvailabilityInTitle(true);
     } else if (
       isSpecialGuidedTour &&
-      getEarliestAvailableDate(
-        earliestAvailability?.startDate,
-        currentLanguage
-      ) === strings.TODAY
+      getEarliestAvailableDate({
+        date: earliestAvailability?.startDate,
+        currentLanguage,
+      }) === strings.TODAY
     )
       setShowAvailabilityInTitle(true);
   }, [
@@ -773,14 +783,64 @@ const Product = (props: any) => {
     return boosterInfo;
   }, [tgid, showBoosters]);
 
-  const { highlightsRichText, everyRichTextExceptHighlights } = useMemo(
+  const {
+    highlightsRichText,
+    everyRichTextExceptHighlights,
+    inclusionsRichText = [],
+    everyRichTextExceptInclusions,
+  } = useMemo(
     () =>
-      filterHighlights(
-        finalHighlights,
-        showItinerary && tgidsWithSitesVisited.includes(tgid)
-      ),
+      filterHighlights({
+        highlights: finalHighlights,
+        removeSitesVisited:
+          showItinerary && tgidsWithSitesVisited.includes(tgid),
+        isModifiedPopup,
+      }),
     [finalHighlights]
   );
+
+  let { highlights, tabs } = originalIsMobile
+    ? { highlights: finalHighlights, tabs: [] }
+    : extractTabsFromHighlights(
+        isModifiedPopup ? everyRichTextExceptInclusions : finalHighlights
+      );
+
+  tabs =
+    showItinerary && tgidsWithSitesVisited.includes(tgid)
+      ? [...tabs.slice(0, 2), ...tabs.slice(3)]
+      : tabs;
+
+  if (isModifiedPopup) {
+    tabs = [
+      {
+        heading: strings.INCLUSIONS,
+        contents: [],
+        type: 'nonRichText',
+      },
+      {
+        ...(details?.cruiseMenus?.length
+          ? {
+              heading: strings.CRUISES.FOOD_MENU,
+              contents: [],
+              type: 'nonRichText',
+            }
+          : null),
+      },
+      {
+        ...(sections?.length
+          ? {
+              heading: strings.CRUISES.SIGHTS_COVERED,
+              contents: [],
+              type: 'nonRichText',
+            }
+          : null),
+      },
+      ...tabs,
+    ]?.filter((el) => Object.keys(el)?.length);
+  }
+
+  const { inclusionsExclusions } =
+    parseInclusionsExclusions(inclusionsRichText);
 
   const { listingPrice } = tourPrices[tgid];
   const { query } = useRouter();
@@ -847,6 +907,8 @@ const Product = (props: any) => {
               showJustDrawer={true}
               scrollToItinerarySection={scrollToItinerarySection}
               tgidItineraryData={tgidItineraryData}
+              isModifiedPopup={isModifiedPopup}
+              customDescriptors={customDescriptors}
             />
           </ItineraryProvider>
         </ProductCardProvider>
@@ -1047,7 +1109,7 @@ const Product = (props: any) => {
       hasRegularHighlights={hasHighlights}
       tabs={tabs}
       showPopup={false}
-      showMoreDetails={isHOHORevamp || isHighlightsExperiment}
+      showMoreDetails={isNewVerticalsProductCard || isHighlightsExperiment}
       onClick={() => {
         trackedToggleContent(false);
 
@@ -1127,9 +1189,8 @@ const Product = (props: any) => {
           "[data-review-section-title='true']"
         );
 
-        const isItinerarySectionConditionSatisfied = showItinerary
-          ? itinerarySectionLoaded
-          : true;
+        const isItinerarySectionConditionSatisfied =
+          showItinerary && !isCruisesRevamp ? itinerarySectionLoaded : true;
         const isReviewSectionConditionSatisfied = reviewsDetails?.showRatings
           ? reviewSectionLoaded
           : true;
@@ -1176,7 +1237,6 @@ const Product = (props: any) => {
 
     try {
       await checkForSections();
-
       const containerId = `product-card-popup-${tgid}`;
       const targetHeadingId = `description-heading-pos-${index}`;
 
@@ -1287,6 +1347,29 @@ const Product = (props: any) => {
   const showGuidedTourDescriptor =
     !isGuidedTourSubcategory(primarySubCategoryId);
 
+  const onRatingsCountClick = ({ isPopup }: { isPopup?: boolean }) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.NEWS_PAGE.RATINGS_WIDGET_CLICKED,
+      [ANALYTICS_PROPERTIES.PLACEMENT]: isPopup
+        ? PRODUCT_CARD_REVAMP.PLACEMENT.MORE_DETAILS
+        : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
+      ...getProductCommonProperties({
+        reviewsDetails,
+      }),
+    });
+
+    const numberOfSections =
+      tabs.length + (showItinerary && !isCruisesRevamp ? 1 : 0);
+
+    if (!isPopup) {
+      popupController.current?.open(numberOfSections);
+      trackedToggleContent(false);
+    } else {
+      if (!popupContainerRef.current) return;
+      scrollToSection(numberOfSections);
+    }
+  };
+
   const getProductCardElements = ({
     expandContent = false,
     isLoading = false,
@@ -1358,6 +1441,10 @@ const Product = (props: any) => {
           forcedMobilePopup={forcedMobilePopup}
           ref={productRef}
           $hasItineraryData={showItinerary}
+          $isModifiedPopup={isModifiedPopup}
+          $isNewVerticalsProductCard={
+            isNewVerticalsProductCard && !isNonNewVerticalProductCard
+          }
         >
           <Conditional if={boosterTypeIfShown}>
             <Booster
@@ -1449,9 +1536,9 @@ const Product = (props: any) => {
                   isMobile={isPopup ? originalIsMobile : isMobile}
                   shouldCrop={shouldCropImage}
                   showOverlay
-                  showPagination={!isHOHORevamp}
-                  showTimedPaginator={isHOHORevamp}
-                  isTimed={!isHOHORevamp}
+                  showPagination={!isNewVerticalsProductCard}
+                  showTimedPaginator={isNewVerticalsProductCard}
+                  isTimed={!isNewVerticalsProductCard}
                   uid={uid}
                 />
               </Conditional>
@@ -1498,29 +1585,7 @@ const Product = (props: any) => {
                     showPopup &&
                     !originalIsMobile &&
                     reviewsDetails?.showRatings
-                      ? () => {
-                          trackEvent({
-                            eventName:
-                              ANALYTICS_EVENTS.NEWS_PAGE.RATINGS_WIDGET_CLICKED,
-                            [ANALYTICS_PROPERTIES.PLACEMENT]: isPopup
-                              ? PRODUCT_CARD_REVAMP.PLACEMENT.MORE_DETAILS
-                              : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
-                            ...getProductCommonProperties({
-                              reviewsDetails,
-                            }),
-                          });
-
-                          const numberOfSections =
-                            tabs.length + (showItinerary ? 1 : 0);
-
-                          if (!isPopup) {
-                            popupController.current?.open(numberOfSections);
-                            trackedToggleContent(false);
-                          } else {
-                            if (!popupContainerRef.current) return;
-                            scrollToSection(numberOfSections);
-                          }
-                        }
+                      ? () => onRatingsCountClick({ isPopup })
                       : undefined
                   }
                 />
@@ -1546,7 +1611,7 @@ const Product = (props: any) => {
               tabs={tabs}
               earliestAvailability={earliestAvailability}
               currentLanguage={currentLanguage}
-              isHOHORevamp={isHOHORevamp}
+              isHOHORevamp={isNewVerticalsProductCard}
               forceMobile={forceMobile}
             />
 
@@ -1572,6 +1637,7 @@ const Product = (props: any) => {
                 forceMobileStyles={forceMobile}
                 isPopup={isPopup}
                 flexible={isOpenDated}
+                showTime={isModifiedPopup}
               />
             </Conditional>
             <Conditional
@@ -1579,7 +1645,9 @@ const Product = (props: any) => {
             >
               <ProductDescriptors
                 isLoading={isLoading}
-                descriptorArray={descriptorsList}
+                customDescriptors={isModifiedPopup ? customDescriptors : []}
+                allowClick={!isPopup}
+                descriptorArray={!isModifiedPopup ? descriptorsList : []}
                 pageType={pageType}
                 minDuration={minDuration}
                 maxDuration={maxDuration}
@@ -1591,7 +1659,7 @@ const Product = (props: any) => {
                     ? isPopup
                       ? originalIsMobile
                       : isMobile
-                    : isAsideBarOverlay || isPopup
+                    : isAsideBarOverlay || (isPopup && !isModifiedPopup)
                 }
                 cancellationPolicy={cancellationPolicy}
                 cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
@@ -1835,7 +1903,7 @@ const Product = (props: any) => {
                   isModifiedProductCard ||
                   (isPopup && !originalIsMobile && isPoiMwebCard)
                 )) ||
-              (!expandContent && isHOHORevamp)
+              (!expandContent && isNewVerticalsProductCard)
             }
             defaultOpen={defaultOpen}
             maxHeight={maxProductBodyHeight}
@@ -1880,11 +1948,13 @@ const Product = (props: any) => {
                   />
                 </Conditional>
                 <Conditional if={hasHighlights || isPopup || isBot}>
-                  <PrismicRichText
-                    field={isPopup ? highlightsRichText : highlights || []}
-                    components={shortCodeSerializer}
-                  />
-                  <Conditional if={showItinerarySection}>
+                  <Conditional if={!isModifiedPopup}>
+                    <PrismicRichText
+                      field={isPopup ? highlightsRichText : highlights || []}
+                      components={shortCodeSerializer}
+                    />
+                  </Conditional>
+                  <Conditional if={showItinerarySection && !isCruisesRevamp}>
                     <ItineraryProvider>
                       <Itinerary
                         itineraryData={tgidItineraryData}
@@ -1893,7 +1963,29 @@ const Product = (props: any) => {
                       />
                     </ItineraryProvider>
                   </Conditional>
-                  <Conditional if={!originalIsMobile}>
+                  <Conditional if={isModifiedPopup}>
+                    <InclusionsExclusions
+                      inclusionsExclusions={inclusionsExclusions}
+                    />
+                    <Conditional if={details?.cruiseMenus}>
+                      <MenuSection
+                        menuData={details?.cruiseMenus}
+                        tgid={tgid}
+                      />
+                    </Conditional>
+                    <Conditional if={details}>
+                      <SightsCovered itineraryData={tgidItineraryData!} />
+                    </Conditional>
+                    <PrismicRichText
+                      field={
+                        isPopup
+                          ? everyRichTextExceptInclusions
+                          : highlights || []
+                      }
+                      components={shortCodeSerializer}
+                    />
+                  </Conditional>
+                  <Conditional if={!isModifiedPopup && !originalIsMobile}>
                     <PrismicRichText
                       field={
                         isPopup
@@ -2011,18 +2103,28 @@ const Product = (props: any) => {
       </Conditional>
       <Conditional
         if={
-          isHOHORevamp && isCombo && !isMobile && indexPosition === comboIndex
+          isNewVerticalsProductCard &&
+          isNonNewVerticalProductCard &&
+          !isMobile &&
+          indexPosition === nonNewVerticalIndex
         }
       >
         <h2 className="combo-section-heading" ref={combosSectionRef}>
-          {strings.HOHO.COMBO_DWEB_TITLE}
+          {isCruisesRevamp
+            ? strings.CRUISES.COMBO_HEADING
+            : strings.HOHO.COMBO_DWEB_TITLE}
         </h2>
       </Conditional>
       <Conditional
         if={
-          !isHOHORevamp ||
-          (isHOHORevamp && isCombo && !isMobile) ||
-          (isHOHORevamp && isCombo && isMobile && isSwiperCard)
+          !isNewVerticalsProductCard ||
+          (isNewVerticalsProductCard &&
+            isNonNewVerticalProductCard &&
+            !isMobile) ||
+          (isNewVerticalsProductCard &&
+            isNonNewVerticalProductCard &&
+            isMobile &&
+            isSwiperCard)
         }
       >
         {getProductCardElements({
@@ -2030,8 +2132,10 @@ const Product = (props: any) => {
           isLoading: isProductCardLoading,
         })}
       </Conditional>
-      <Conditional if={isHOHORevamp && !isCombo}>
-        <HohoProductCard
+      <Conditional
+        if={isNewVerticalsProductCard && !isNonNewVerticalProductCard}
+      >
+        <NewVerticalsProductCard
           {...props}
           isMobile={isMobile}
           onClick={() => {
@@ -2040,14 +2144,18 @@ const Product = (props: any) => {
             setIsUnScrolled(true);
           }}
           onMoreDetailsClick={onMoreDetailsClick}
+          onRatingsCountClick={onRatingsCountClick}
+          getMoreDetailsButton={getMoreDetailsButton}
+          setCustomDescriptors={setCustomDescriptors}
         />
       </Conditional>
+
       <Conditional if={showPopup}>
         <Popup
           controller={popupController}
           tgid={tgid}
           scrollToSection={scrollToSection}
-          slideUp={isHOHORevamp}
+          slideUp={isNewVerticalsProductCard}
         >
           <PopupContainer
             onScroll={(e) => {
@@ -2076,7 +2184,7 @@ const Product = (props: any) => {
             isVisible={!isUnScrolled}
             onItemClick={scrollToSection}
             isReviewsSectionPresent={reviewsDetails?.showRatings}
-            isItinerarySectionPresent={showItinerary}
+            isItinerarySectionPresent={!isCruisesRevamp && showItinerary}
             isHohoItinerary={isHohoItinerary}
           />
           <CloseButtonContainer>
@@ -2213,10 +2321,10 @@ const Product = (props: any) => {
             listingPrice={finalListingPrice}
             onBookNowClick={sendBookNowEvent}
             showAvailabilityInTitle={
-              getEarliestAvailableDate(
-                earliestAvailability?.startDate,
-                currentLanguage
-              ) === strings.TODAY
+              getEarliestAvailableDate({
+                date: earliestAvailability?.startDate,
+                currentLanguage,
+              }) === strings.TODAY
             }
             earliestAvailability={earliestAvailability}
             productBookingUrl={productBookingUrl}

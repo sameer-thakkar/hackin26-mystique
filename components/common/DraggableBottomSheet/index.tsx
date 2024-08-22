@@ -12,6 +12,7 @@ export const BottomSheet = memo(
     sheetHeight = '100%',
     snapHeight,
     dragLimit = 100,
+    roundedBorder = false,
   }: {
     children: React.ReactNode;
     onCloseCompletion?: (type: string) => void;
@@ -19,6 +20,7 @@ export const BottomSheet = memo(
     sheetHeight?: string;
     snapHeight?: string;
     dragLimit?: number;
+    roundedBorder?: boolean;
   }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [translateY, setTranslateY] = useState(1000);
@@ -124,6 +126,7 @@ export const BottomSheet = memo(
             : {})}
           $sheetHeight={sheetHeight}
           $translateY={translateY}
+          $roundedBorder={roundedBorder}
           className="sheet-container"
         >
           <GrabBar

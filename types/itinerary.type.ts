@@ -101,6 +101,7 @@ export interface ItineraryRoute {
 }
 
 export interface ItineraryDetails {
+  frequency?: string;
   duration?: Duration;
   modeOfTravel?: string;
   mapPreviewLink?: string;
@@ -109,6 +110,8 @@ export interface ItineraryDetails {
   firstDepartureStop?: string;
   lastDepartureTime?: string;
   lastDepartureStop?: string;
+  popularAttractionsCovered?: string;
+  cruiseMenus?: Record<string, any>[];
 }
 
 export interface Duration {

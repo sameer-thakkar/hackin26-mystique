@@ -31,7 +31,7 @@ interface TabData {
   heading: string;
   contents: RichTextField;
   isNew?: boolean;
-  type: 'richTextField' | 'itinerary' | 'reviews';
+  type: 'richTextField' | 'itinerary' | 'reviews' | 'nonRichText';
 }
 
 interface TabContainerProps {
@@ -39,6 +39,7 @@ interface TabContainerProps {
   activeTab: string;
   onTabClick: (tabHeading: string, index: number) => void;
   ref: any;
+  hideTitle?: boolean;
 }
 
 const Tab: FC<TabComponentProps> = ({
@@ -63,7 +64,7 @@ const Tab: FC<TabComponentProps> = ({
 const TabContainer: FC<TabContainerProps> = React.forwardRef<
   HTMLDivElement,
   TabContainerProps
->(({ tabs, activeTab, onTabClick }, ref) => {
+>(({ tabs, activeTab, onTabClick, hideTitle = false }, ref) => {
   const { drawerState, title, setHeaderHeight } = useProductCard();
   const headRef = useRef<HTMLDivElement>(null);
 
@@ -82,18 +83,20 @@ const TabContainer: FC<TabContainerProps> = React.forwardRef<
         ref={headRef}
         $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
       >
-        <TitleContainer>
-          <Title>{title}</Title>
-          <CloseContainer
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              document.getElementById('bottomsheet-overlay')?.click();
-            }}
-          >
-            <CrossiconSvg height={'0.625rem'} width={'0.625rem'} />
-          </CloseContainer>
-        </TitleContainer>
+        <Conditional if={!hideTitle}>
+          <TitleContainer>
+            <Title>{title}</Title>
+            <CloseContainer
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                document.getElementById('bottomsheet-overlay')?.click();
+              }}
+            >
+              <CrossiconSvg height={'0.625rem'} width={'0.625rem'} />
+            </CloseContainer>
+          </TitleContainer>
+        </Conditional>
         <HeaderTabs ref={ref}>
           {tabs.map((tab, index) => (
             <Tab

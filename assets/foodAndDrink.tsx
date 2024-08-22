@@ -1,20 +1,26 @@
-const FoodAndDrink = () => (
+import COLORS from 'const/colors';
+
+const FoodAndDrink = ({
+  height = 16,
+  width = 16,
+  stroke = COLORS.GRAY.G2,
+}: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="16"
-    height="16"
+    width={width}
+    height={height}
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
       d="M6.5 1.5V5C6.5 6.10457 5.60457 7 4.5 7H4.25M2 1.5V5C2 6.10457 2.89543 7 4 7H4.25M4.25 7V14.6125M4.25 1.5V5"
-      stroke="#444444"
+      stroke={stroke}
       strokeLinecap="round"
     />
-    <path d="M11 7.19325V14.5" stroke="#444444" strokeLinecap="round" />
+    <path d="M11 7.19325V14.5" stroke={stroke} strokeLinecap="round" />
     <path
       d="M9.37399 2.55269C9.66142 1.91213 10.2981 1.49997 11.0002 1.49997V1.49997C11.7023 1.49997 12.339 1.91213 12.6264 2.55269L12.7429 2.81226C13.2222 3.88042 13.1965 5.10735 12.6729 6.15451V6.15451C12.5598 6.38089 12.3894 6.57382 12.1788 6.71422L12.0238 6.8176C11.404 7.23081 10.5965 7.23081 9.97666 6.8176L9.82158 6.71422C9.61099 6.57382 9.44067 6.38089 9.32748 6.15451V6.15451C8.8039 5.10735 8.77822 3.88042 9.25752 2.81226L9.37399 2.55269Z"
-      stroke="#444444"
+      stroke={stroke}
     />
   </svg>
 );

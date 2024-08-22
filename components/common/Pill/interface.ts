@@ -4,4 +4,5 @@ export type PillProps = {
   isHighlighted?: boolean;
   isSubCategoryPage: boolean;
   height?: string;
+  isDarkVariant?: boolean;
 };

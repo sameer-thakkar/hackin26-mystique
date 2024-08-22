@@ -40,12 +40,14 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CRUISES_ILLUSTRATION,
   VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import ChevronLeftBold from 'assets/chevronLeftBold';
 import ChevronRightIcon from 'assets/chevronRight';
 import Star from 'assets/star';
+import { IllustrationBanner } from './IllustrationBanner';
 import { getBannerDescriptorsArray } from './utils';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
@@ -84,6 +86,7 @@ type StaticBannerProps = {
   bannerDisclaimerText?: string;
   id?: string;
   forceMobile?: boolean;
+  isCruisesRevamp?: boolean;
 };
 
 type CollectionVideo = {
@@ -130,6 +133,19 @@ const BANNER_DIMENSIONS = {
     HEIGHT: 168,
   },
 };
+
+export const swiperParams: SwiperProps = {
+  spaceBetween: 16,
+  centeredSlides: true,
+  speed: 5000,
+  autoplay: {
+    delay: 1,
+    disableOnInteraction: false,
+  },
+  loop: true,
+  slidesPerView: 'auto',
+};
+
 const StaticBanner = ({
   bannerHeading: tempBannerHeading,
   bannerImages,
@@ -154,6 +170,7 @@ const StaticBanner = ({
   id,
   forceMobile = false,
   bannerDisclaimerText,
+  isCruisesRevamp = false,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -202,18 +219,6 @@ const StaticBanner = ({
     section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const swiperParams: SwiperProps = {
-    spaceBetween: 16,
-    centeredSlides: true,
-    speed: 5000,
-    autoplay: {
-      delay: 1,
-      disableOnInteraction: false,
-    },
-    loop: true,
-    slidesPerView: 'auto',
-  };
-
   let bannerHeadingWithCityName = null;
 
   if (city) {
@@ -223,6 +228,15 @@ const StaticBanner = ({
     !!subattractionParentChip?.url && !!subattractionParentChip?.title;
   const hasExtraInfo = !!Object.values(extraPairs).filter((val) => val).length;
   const EXTRA_INFO_TIMINGS_KEY = 'TIMINGS';
+  if (isCruisesRevamp)
+    return (
+      <IllustrationBanner
+        isMobile={isMobile}
+        cityName={cityName ?? ''}
+        bannerDescriptors={bannerDescriptors}
+        illustrationUrl={CRUISES_ILLUSTRATION}
+      />
+    );
 
   const handleParentChipClick = (label: string) => {
     trackEvent({

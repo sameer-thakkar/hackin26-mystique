@@ -7,6 +7,7 @@ export const PillContainer = styled.div<{
   $isHighlighted: boolean;
   $isSubCategoryPage: boolean;
   $height?: string;
+  $isDarkVariant?: boolean;
 }>`
   ${({ $height }) => $height && `height: ${$height};`}
   display: flex;
@@ -28,6 +29,29 @@ export const PillContainer = styled.div<{
   span {
     color: ${({ $isHighlighted }) =>
       $isHighlighted ? COLORS.BRAND.PURPS : COLORS.GRAY.G2};
+  }
+  && {
+    ${({ $isDarkVariant, $isHighlighted }) =>
+      $isDarkVariant &&
+      css`
+        padding: 0.5rem 0.75rem;
+        gap: 0.375rem;
+        border: ${$isHighlighted
+          ? `1px solid ${COLORS.PURPS.DARK_TONE}`
+          : `1px solid ${COLORS.GRAY.G6}`};
+        background: ${$isHighlighted
+          ? COLORS.PURPS.DARK_TONE
+          : COLORS.BRAND.WHITE};
+        span {
+          color: ${$isHighlighted ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
+        }
+        :active {
+          transform: scale(0.98);
+        }
+        :hover {
+          border: 1px solid ${COLORS.GRAY.G4};
+        }
+      `}
   }
 
   @media (max-width: 768px) {
@@ -57,15 +81,28 @@ export const AllIcon = styled.span`
 export const PillIcon = styled.span<{
   $iconUrl: string | null;
   $isHighlighted: boolean;
+  $isDarkVariant?: boolean;
 }>`
   ${CommonIconStyles}
   mask: ${({ $iconUrl }) => `url("${$iconUrl}") no-repeat center / contain`};
   background: ${({ $isHighlighted }) =>
     $isHighlighted ? COLORS.BRAND.PURPS : COLORS.GRAY.G2};
+  && {
+    ${({ $isDarkVariant, $isHighlighted }) =>
+      $isDarkVariant &&
+      css`
+        height: 1rem;
+        width: 1rem;
+        background: ${$isHighlighted ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
+      `}
+  }
 `;
 
-export const PillLabel = styled.span`
-  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+export const PillLabel = styled.span<{ $isDarkVariant?: boolean }>`
+  ${({ $isDarkVariant }) =>
+    $isDarkVariant
+      ? expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)
+      : expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)}

@@ -114,6 +114,8 @@ const MobileProductCard = (props: any) => {
     sendBookNowEvent,
     forceMobile,
     scrollToItinerarySection,
+    isModifiedPopup,
+    customDescriptors,
   } = props as any;
 
   const [discountText, setDiscountText] = useState('');
@@ -244,6 +246,7 @@ const MobileProductCard = (props: any) => {
         $isDrawer={isDrawer}
         $hasDiscount={showScratchPrice && !!discountText.length}
         $isClicked={showPricingBar}
+        $isModifiedPopup={isModifiedPopup}
       >
         <Conditional if={boosterTypeIfShown && !isDrawer}>
           <Booster
@@ -415,6 +418,7 @@ const MobileProductCard = (props: any) => {
                 isDrawer={isDrawer}
                 earliestAvailability={earliestAvailability}
                 currentLanguage={currentLanguage}
+                showTime={isModifiedPopup}
               />
             </Conditional>
 
@@ -433,7 +437,8 @@ const MobileProductCard = (props: any) => {
             <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isAsideBarOverlay}>
               <ProductDescriptors
                 isLoading={false}
-                descriptorArray={descriptorsList}
+                customDescriptors={isModifiedPopup ? customDescriptors : []}
+                descriptorArray={!isModifiedPopup ? descriptorsList : []}
                 pageType={pageType}
                 minDuration={minDuration}
                 maxDuration={maxDuration}

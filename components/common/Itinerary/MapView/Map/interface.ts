@@ -39,6 +39,7 @@ export type TMapProps = {
   }: TOnClickTrackEvent) => void;
   onZoomTrackEvent?: ({ zoomType }: TOnZoomTrackEvent) => void;
   interactionBlockingOverlayText?: string;
+  showStartAsStop?: boolean;
   zoomPadding?: L.PointExpression;
   enableFreeTouchPropagation?: boolean;
   onReset?: () => void;

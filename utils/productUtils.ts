@@ -2,6 +2,7 @@ import { asText } from '@prismicio/helpers';
 import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
+import { headingsToRemove } from 'components/Product/components/NewVerticalsProductCard/constants';
 import { BoosterType } from 'components/Product/interface';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import { TCurrencyObj } from 'utils/currency';
@@ -23,6 +24,7 @@ import {
   BOOSTER_EXPERIMENT_UIDS,
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   CASHBACK_TYPES,
+  CRUISE_CATEGORY_ID,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
   LANGUAGE_MAP,
@@ -1123,18 +1125,106 @@ export const sortCombos = (tours: Record<string, any>[]) => {
   );
 };
 
-export const filterHighlights = (
-  highlights: Array<any>,
-  removeSitesVisited = false
+export const sortNonCruises = (
+  tours: Record<string, any>[],
+  scorpioData: Record<string, any>
 ) => {
+  return tours.sort((a, b) => {
+    const tourA = scorpioData[a?.tgid];
+    const tourB = scorpioData[b?.tgid];
+
+    return tourA?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+      ? 1
+      : tourB?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+      ? -1
+      : 0;
+  });
+};
+
+export const getFinalUncategorizedTours = ({
+  orderedFilteredTours,
+  scorpioData,
+  showCruisesRevamp,
+  showHohoRevamp,
+}: {
+  orderedFilteredTours: Record<string, any>[];
+  scorpioData: Record<string, any>;
+  showCruisesRevamp: boolean;
+  showHohoRevamp: boolean;
+}) => {
+  if (showCruisesRevamp) {
+    return sortNonCruises(orderedFilteredTours, scorpioData);
+  }
+  if (showHohoRevamp) {
+    return sortCombos(orderedFilteredTours);
+  }
+  return orderedFilteredTours.filter(
+    (tour) => tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
+  );
+};
+
+export const filterHighlights = ({
+  highlights,
+  removeSitesVisited = false,
+  isModifiedPopup = false,
+}: {
+  highlights: Array<any>;
+  removeSitesVisited: boolean;
+  isModifiedPopup: boolean;
+}) => {
   const inclusionHeading = highlights.filter(
     ({ type }: { type: string }) => type === 'heading6'
   )[1];
   const inclusionHeadingIndex = highlights.findIndex(
     (element: any) => element === inclusionHeading
   );
+
   const highlightsRichText = highlights.slice(0, inclusionHeadingIndex);
   let everyRichTextExceptHighlights = highlights.slice(inclusionHeadingIndex);
+
+  if (isModifiedPopup) {
+    const nonInclusionHeading = everyRichTextExceptHighlights.filter(
+      ({ type }: { type: string }) => type === 'heading6'
+    )[1];
+    const nonInclusionHeadingIndex = everyRichTextExceptHighlights.findIndex(
+      (element: any) => element === nonInclusionHeading
+    );
+    const inclusionsRichText = everyRichTextExceptHighlights.slice(
+      0,
+      nonInclusionHeadingIndex
+    );
+    let everyRichTextExceptInclusions = everyRichTextExceptHighlights.slice(
+      nonInclusionHeadingIndex
+    );
+
+    const headingToRemove = everyRichTextExceptInclusions.filter(
+      ({ type, text }: { type: string; text: string }) =>
+        type === 'heading6' && headingsToRemove?.includes(text)
+    );
+    const headingToNotRemove = everyRichTextExceptInclusions.filter(
+      ({ type, text }: { type: string; text: string }) =>
+        type === 'heading6' && !headingsToRemove?.includes(text)
+    );
+    if (headingToRemove?.length) {
+      const headingToRemoveIndex = everyRichTextExceptInclusions.findIndex(
+        (element: any) => element === headingToRemove?.[0]
+      );
+      const nextHeadingIndex = everyRichTextExceptInclusions.findIndex(
+        (element: any) => element === headingToNotRemove?.[0]
+      );
+      everyRichTextExceptInclusions = [
+        ...everyRichTextExceptInclusions.slice(0, headingToRemoveIndex),
+        ...everyRichTextExceptInclusions.slice(nextHeadingIndex),
+      ];
+    }
+
+    return {
+      highlightsRichText,
+      everyRichTextExceptHighlights,
+      inclusionsRichText,
+      everyRichTextExceptInclusions,
+    };
+  }
 
   if (removeSitesVisited) {
     const headings = everyRichTextExceptHighlights.filter(
@@ -1156,4 +1246,28 @@ export const filterHighlights = (
   }
 
   return { highlightsRichText, everyRichTextExceptHighlights };
+};
+
+export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
+  let inclusionsExclusions: Record<string, any> = {
+    inclusions: [],
+    exclusions: [],
+  };
+
+  let currentObject = '';
+  richText?.forEach((item: Record<string, any>) => {
+    if (item.type === 'heading6' || item.type === 'paragraph') {
+      if (item.text === strings.INCLUSIONS) {
+        currentObject = 'inclusions';
+      } else if (item.text === strings.EXCLUSIONS) {
+        currentObject = 'exclusions';
+      }
+    } else if (item.type === 'list-item') {
+      if (currentObject) {
+        inclusionsExclusions?.[currentObject]?.push(item);
+      }
+    }
+  });
+
+  return { inclusionsExclusions };
 };

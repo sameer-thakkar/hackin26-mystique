@@ -60,6 +60,7 @@ const DrawerWrapper = (props: any) => {
     trackDrawerOpen,
     showThumbnailInBanner,
     tgidItineraryData,
+    isModifiedPopup,
     reviewsDetails,
     topReviews,
     showCustomProductCardCTA,
@@ -141,6 +142,7 @@ const DrawerWrapper = (props: any) => {
           isSportsExperiment={isSportsExperiment}
           isGpMotorTicketsMb={isGpMotorTicketsMb}
           isSportsSubCategory={isSportsSubCategory}
+          isModifiedCTA={isModifiedPopup}
           showCustomProductCardCTA={showCustomProductCardCTA}
         />
       </Conditional>
@@ -170,6 +172,8 @@ const DrawerWrapper = (props: any) => {
               Action: action,
             });
           }}
+          sheetHeight={isModifiedPopup ? '85%' : '100%'}
+          roundedBorder={isModifiedPopup}
         >
           <DropdownContent
             finalHighlights={finalHighlights}
@@ -189,6 +193,7 @@ const DrawerWrapper = (props: any) => {
             lang={lang}
             onActiveItineraryTabChange={handleActiveItineraryTabChange}
             preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
+            isModifiedPopup={isModifiedPopup}
             reviewsDetails={reviewsDetails}
             topReviews={topReviews}
           >

@@ -76,6 +76,7 @@ export enum HeadoutEndpoints {
   TourGroupsV6,
   TourGroupInventoriesV6,
   TourGroupInventoriesV7,
+  BulkTourGroupInventories,
   TourGroupSlotsV6,
   TourGroupListByCollectionV6,
   TourGroupListByCategoryV6,
@@ -104,6 +105,7 @@ export enum HeadoutEndpoints {
   BulkExperienceItineraries,
   CollectionTourGroups,
   GeoLocateCity,
+  BulkItineraries,
 }
 
 const endPointsOnNewCDN = [
@@ -154,6 +156,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupInventoriesV7:
       endpointSlug = `/api/v7/tour-groups/${id}/inventories/`;
+      break;
+    case HeadoutEndpoints.BulkTourGroupInventories:
+      endpointSlug = `/api/v7/tour-groups/inventories`;
       break;
     case HeadoutEndpoints.TourGroupSlotsV6:
       endpointSlug = `/api/tours/v6/tour-groups/slots/get/${id}`;
@@ -235,6 +240,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.CityListV2:
       endpointSlug = `/api/tours/v2/city/list`;
+      break;
+    case HeadoutEndpoints.BulkItineraries:
+      endpointSlug = `/api/v1/experience-itineraries/`;
       break;
     case HeadoutEndpoints.GeoLocateCity:
       endpointSlug = `/api/tours/v2/geolocate/city`;
@@ -1191,6 +1199,71 @@ export const fetchInventoryV7 = async ({
     const response = await fetch(url, { headers });
 
     return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchInventory]', error);
+  }
+};
+
+export const fetchBulkInventories = async ({
+  tgids,
+  fromDate,
+  toDate,
+  language = 'en',
+  variantId,
+  currency,
+  cookies,
+  useSeatmapPrices,
+}: {
+  tgids: Array<number | string>;
+  fromDate?: string;
+  toDate?: string;
+  language?: string;
+  variantId?: number;
+  currency?: string | null;
+  cookies?: { [_key: string]: any };
+  useSeatmapPrices?: boolean;
+}) => {
+  try {
+    const params = {
+      'tour-group-ids': tgids?.join(','),
+      ...(language && {
+        language,
+      }),
+      ...(fromDate && {
+        'from-date': fromDate,
+      }),
+      ...(toDate && {
+        'to-date': toDate,
+      }),
+      ...(variantId && {
+        variantId: `${variantId}`,
+      }),
+      ...(currency && {
+        currency,
+      }),
+      ...(useSeatmapPrices && {
+        'use-seatmap-prices': `${useSeatmapPrices}`,
+      }),
+    };
+    const headers = constructHeaders({ cookies });
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.BulkTourGroupInventories,
+      params,
+    });
+
+    const response = await fetch(url, { headers });
+    const data = await response.json();
+
+    const inventory = Object.keys(data).reduce((acc, tgid) => {
+      const { availabilities } = data[tgid] || {};
+      return {
+        ...acc,
+        [tgid]: { availabilities },
+      };
+    }, {});
+
+    return inventory;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchInventory]', error);

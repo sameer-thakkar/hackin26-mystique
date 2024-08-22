@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-const Minus = (props: SVGProps<SVGSVGElement>) => (
+const Minus = (props: SVGProps<SVGSVGElement>, stroke = '#444') => (
   <svg
     width={20}
     height={20}
@@ -11,7 +11,7 @@ const Minus = (props: SVGProps<SVGSVGElement>) => (
   >
     <path
       d="M4.166 10h11.667"
-      stroke="#444"
+      stroke={stroke}
       strokeWidth={1.25}
       strokeLinecap="round"
       strokeLinejoin="round"

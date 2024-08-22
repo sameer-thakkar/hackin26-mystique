@@ -1,5 +1,6 @@
 import {
   CHILD_SECTION_TYPE,
+  Duration,
   Itinerary,
   ItineraryType,
   Location,
@@ -10,7 +11,9 @@ import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/Itinerary
 import { PassesByCardProps } from 'components/common/Itinerary/TimelineView/components/PassesByCard/types';
 import { StopCardProps } from 'components/common/Itinerary/TimelineView/components/StopCard/types';
 import { isSubsetArray } from 'utils/arrayUtils';
+import { LanguagesUnion } from 'const/index';
 import { ITINERARY_DESCRIPTORS_DATA } from 'const/itinerary';
+import { convertTo12HrFormat, formatDurationToString } from './timeUtils';
 
 export const getEntryPointPlaceHolder = (index: number) => {
   const imageIndex = (index % 5) + 1;
@@ -378,6 +381,35 @@ export const isItineraryValid = (itinerary: Itinerary) => {
   if (!itinerary.active || !itinerary.sections.length) return false;
 
   return true;
+};
+
+export const getItineraryDuration = ({
+  duration,
+  lang,
+}: {
+  duration: Duration | undefined;
+  lang: LanguagesUnion;
+}) => {
+  if (!duration) return '';
+  const { hours, minutes } = duration || {};
+  return formatDurationToString({
+    hour: hours,
+    minute: minutes,
+    lang,
+  });
+};
+
+export const getItineraryTiming = ({
+  firstDepartureTime,
+  lastDepartureTime,
+}: {
+  firstDepartureTime: string;
+  lastDepartureTime: string;
+}) => {
+  if (!firstDepartureTime || !lastDepartureTime) return '';
+  const startTime = convertTo12HrFormat({ time: firstDepartureTime });
+  const endTime = convertTo12HrFormat({ time: lastDepartureTime });
+  return `${startTime} - ${endTime}`;
 };
 
 export const checkIfItineraryHasSameStartAndEndPoint = (

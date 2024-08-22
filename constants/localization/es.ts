@@ -1317,5 +1317,38 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     START_POINT_SAME_AS_END_POINT:
       'El punto de llegada será el mismo que el de salida',
   },
+  CRUISES: {
+    BANNER_HEADING: 'Descubre {0} en un crucero: comidas, bebidas y relax',
+    FILTERS: {
+      ALL: 'Todos',
+      SIGHTSEEING: 'Recorrido turístico',
+      LUNCH: 'Almuerzo',
+      DINNER: 'Cena',
+      COMBOS: 'Combos',
+    },
+    MAP_OVERLAY: 'Mueve el mapa haciendo clic o pulsando sobre él',
+    SIGHTS_COVERED: 'Lugares de interés',
+    MENU: 'Menú',
+    BOARD_AT: 'Embarque: {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} puntos de embarque',
+    VIEW_POPULAR_SIGHTS: 'Lugares de interés: {0} {1}',
+    X_BOARDING_POINTS: '{0} puntos de embarque',
+    BOARDING_POINT: 'Punto de embarque',
+    BOARDING_POINTS: 'Puntos de embarque',
+    LANDMARKS: 'Lugares de interés',
+    GET_DIRECTIONS: 'Cómo llegar',
+    FOOD_MENU: 'Menú',
+    X_PAGE: '{0} página',
+    X_PAGES: '{0} páginas',
+    MORE: 'y {0} más',
+    PDF: {
+      ZOOM_IN: 'Ampliar',
+      ZOOM_OUT: 'Alejar',
+      FIT_TO_WIDTH: 'Ajustar',
+      RESET_ZOOM: 'Restablecer zoom',
+    },
+    COMBO_HEADING:
+      'Visita más por menos: ofertas combinadas y tarjetas urbanas',
+  },
 };
 export default es;

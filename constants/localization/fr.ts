@@ -1267,5 +1267,38 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     START_POINT_SAME_AS_END_POINT:
       "Votre point d'arrivée sera le même que votre point de départ.",
   },
+  CRUISES: {
+    BANNER_HEADING: 'Croisière à travers {0} : découverte, détente et dîner',
+    FILTERS: {
+      ALL: 'Tout',
+      SIGHTSEEING: 'Visites',
+      LUNCH: 'Déjeuner',
+      DINNER: 'Dîner',
+      COMBOS: 'Combos',
+    },
+    MAP_OVERLAY: 'Appuyez ou cliquez pour déplacer la carte',
+    SIGHTS_COVERED: 'Sites inclus',
+    MENU: 'Menu',
+    BOARD_AT: 'Embarquement à {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} disponibles',
+    VIEW_POPULAR_SIGHTS: 'Vue de sites populaires tels que {0} {1}',
+    X_BOARDING_POINTS: "{0} points d'embarquement",
+    BOARDING_POINT: "Point d'embarquement",
+    BOARDING_POINTS: "Points d'embarquement",
+    LANDMARKS: 'Monuments',
+    GET_DIRECTIONS: "Comment s'y rendre",
+    FOOD_MENU: 'Menu',
+    X_PAGE: '{0} page',
+    X_PAGES: '{0} pages',
+    MORE: '+{0} plus',
+    PDF: {
+      ZOOM_IN: 'Zoomer',
+      ZOOM_OUT: 'Dézoomer',
+      FIT_TO_WIDTH: 'Rétablir',
+      RESET_ZOOM: 'Réinitialiser',
+    },
+    COMBO_HEADING:
+      "Plus d'expériences à moindre coût : offres combo et Pass touristiques",
+  },
 };
 export default fr;

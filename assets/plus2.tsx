@@ -1,4 +1,6 @@
-const Plus2 = () => {
+import { SVGProps } from 'react';
+
+const Plus2 = ({ stroke = '#444444' }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="21"
@@ -9,7 +11,7 @@ const Plus2 = () => {
     >
       <path
         d="M10.5052 4.16602V15.8327M4.67188 9.99935H16.3385"
-        stroke="#444444"
+        stroke={stroke}
         strokeLinecap="round"
         strokeLinejoin="round"
       />

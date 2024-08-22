@@ -6,16 +6,24 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const HeroSectionContainer = styled.div`
+  position: relative;
   padding: 1rem 1rem 0 1rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #efdfff 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(230, 209, 255, 0.5) 100%
+  );
+  border-top: 1.5px solid ${COLORS.GRAY.G7};
 
   @media (min-width: 769px) {
     padding: 0;
+    border-top: unset;
   }
 `;
 
 export const MarginWrapper = styled.div<{
   $hasSearchUnit: boolean;
+  $isIllustrationBanner?: boolean;
 }>`
   max-width: 75rem;
   margin: 0 auto;
@@ -47,7 +55,8 @@ export const MarginWrapper = styled.div<{
   }
 
   @media (min-width: 769px) {
-    padding: 2.625rem 0 3.25rem 0;
+    padding: ${({ $isIllustrationBanner }) =>
+      $isIllustrationBanner ? '2.625rem 0 2.5rem 0' : '2.625rem 0 3.25rem 0'};
     min-width: max-content;
 
     ${DescriptorWrapper} {
@@ -90,10 +99,12 @@ export const MarginWrapper = styled.div<{
 
 export const HeroText = styled.h1<{
   $hasSearchUnit: boolean;
+  $isIllustrationBanner?: boolean;
 }>`
   ${getFontDetailsByLabel(FONTS.HEADING_LARGE)};
   color: ${COLORS.GRAY.G1};
-  margin-bottom: ${({ $hasSearchUnit }) => (!$hasSearchUnit ? 0 : '2rem')};
+  margin-bottom: ${({ $hasSearchUnit, $isIllustrationBanner }) =>
+    !$hasSearchUnit || $isIllustrationBanner ? 0 : '2rem'};
   margin-top: 0;
 
   box-sizing: border-box;
@@ -137,8 +148,8 @@ export const HeroText = styled.h1<{
     margin-bottom: 1rem;
     z-index: 1;
 
-    max-width: ${({ $hasSearchUnit }) =>
-      $hasSearchUnit ? 'initial' : '28rem'};
+    max-width: ${({ $isIllustrationBanner, $hasSearchUnit }) =>
+      $isIllustrationBanner ? '60%' : $hasSearchUnit ? 'initial' : '28rem'};
 
     .travel-mode-text {
       margin-left: 0.25rem;
@@ -149,7 +160,7 @@ export const HeroText = styled.h1<{
       display: block;
       bottom: 0;
       margin-top: 1rem;
-      width: 40%;
+      width: 100%;
       height: 2px;
       background: linear-gradient(
         90deg,
@@ -163,17 +174,16 @@ export const HeroText = styled.h1<{
 export const HeroIllustrationContainer = styled.div<{
   $hasSearchUnit: boolean;
   $noTabs: boolean;
+  $isIllustrationBanner?: boolean;
 }>`
   margin-inline: -1rem;
   display: none;
+  order: 2;
 
   img {
     max-width: 100%;
-
     width: calc(100% + 2rem);
   }
-
-  order: 2;
 
   ${({ $hasSearchUnit }) =>
     !$hasSearchUnit &&
@@ -181,6 +191,20 @@ export const HeroIllustrationContainer = styled.div<{
     display: block;
     margin-bottom: -0.75rem;
   `};
+
+  @media (max-width: 768px) {
+    ${({ $isIllustrationBanner }) =>
+      $isIllustrationBanner &&
+      css`
+        display: block;
+        height: 6.5rem;
+        overflow: hidden;
+        img {
+          object-fit: cover;
+          transform: scale(1.13);
+        }
+      `};
+  }
 
   @media (min-width: 769px) {
     order: 2;
@@ -195,7 +219,8 @@ export const HeroIllustrationContainer = styled.div<{
     z-index: 0;
 
     ${({ $noTabs }) => $noTabs && 'top: 2.05rem;'};
-
+    ${({ $isIllustrationBanner }) =>
+      $isIllustrationBanner && 'bottom: 0; top: unset;'}
     ${({ $hasSearchUnit }) =>
       !$hasSearchUnit &&
       css`

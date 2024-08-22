@@ -15,6 +15,7 @@ const Pill: React.FC<PillProps> = (props) => {
     label,
     isHighlighted = false,
     isSubCategoryPage,
+    isDarkVariant,
     height,
   } = props;
 
@@ -23,16 +24,21 @@ const Pill: React.FC<PillProps> = (props) => {
       $isHighlighted={isHighlighted}
       $isSubCategoryPage={isSubCategoryPage}
       $height={height}
+      $isDarkVariant={isDarkVariant}
     >
       <Conditional if={iconUrl}>
-        <PillIcon $iconUrl={iconUrl} $isHighlighted={isHighlighted} />
+        <PillIcon
+          $iconUrl={iconUrl}
+          $isHighlighted={isHighlighted}
+          $isDarkVariant={isDarkVariant}
+        />
       </Conditional>
       <Conditional if={!iconUrl && isSubCategoryPage}>
         <AllIcon>
           <GridIcon />
         </AllIcon>
       </Conditional>
-      <PillLabel>{label}</PillLabel>
+      <PillLabel $isDarkVariant={isDarkVariant}>{label}</PillLabel>
     </PillContainer>
   );
 };

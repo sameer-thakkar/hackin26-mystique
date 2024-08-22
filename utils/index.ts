@@ -366,7 +366,7 @@ export const createBookingURL = ({
 };
 
 export const getNakedDomain = (host: string) => {
-  const sliceCount = host.includes('mystique.test-headout') ? 2 : 1;
+  const sliceCount = host.includes('mystique.dev-headout') ? 2 : 1;
   return !host?.includes('localhost')
     ? host?.replace('stage-', '').split('.').slice(sliceCount).join('.')
     : HEADOUT_NAKED_DOMAIN;
@@ -1019,6 +1019,7 @@ type TGetAnalyticsPageType = {
   isSubCategoryPage: boolean;
   defaultType: string;
   isSeatMapExperiment?: boolean;
+  isCruises: boolean;
 };
 
 export const getAnalyticsPageType = ({
@@ -1029,6 +1030,7 @@ export const getAnalyticsPageType = ({
   isSubCategoryPage,
   defaultType,
   isSeatMapExperiment,
+  isCruises,
 }: TGetAnalyticsPageType) => {
   switch (true) {
     case isSeatMapExperiment:
@@ -1037,6 +1039,8 @@ export const getAnalyticsPageType = ({
       return PAGE_TYPES.CITY_PAGE;
     case isHOHO:
       return PAGE_TYPES.HOHO;
+    case isCruises:
+      return PAGE_TYPES.CRUISES_LP;
     case isAirportTransferMB:
       return PAGE_TYPES.AIRPORT_TRANSFERS;
     case isCatOrSubCatPage && !isSubCategoryPage:

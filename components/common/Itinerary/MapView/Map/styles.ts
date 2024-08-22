@@ -13,7 +13,7 @@ export const IconWrapper = styled.div<{ $isSection?: boolean }>`
   }
 `;
 
-export const MarkerText = styled.p`
+export const MarkerText = styled.span`
   position: absolute;
   top: 44%;
   left: 49%;

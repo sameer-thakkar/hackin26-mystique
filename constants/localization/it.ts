@@ -1256,6 +1256,38 @@ const it = {
     START_POINT_SAME_AS_END_POINT:
       'Il punto di arrivo sarà lo stesso del punto di partenza',
   },
+  CRUISES: {
+    BANNER_HEADING: 'Scopri {0} in crociera: pasti, bevande e relax',
+    FILTERS: {
+      ALL: 'Tutte',
+      SIGHTSEEING: 'Turistiche',
+      LUNCH: 'Con pranzo',
+      DINNER: 'Con cena',
+      COMBOS: 'Combinazioni',
+    },
+    MAP_OVERLAY: 'Clicca o tocca per esplorare la mappa',
+    SIGHTS_COVERED: 'Cosa vedrai',
+    MENU: 'Menu',
+    BOARD_AT: 'Imbarco: {0}',
+    BOARDING_POINTS_AVAILABLE: 'Numero di punti di imbarco: {0}',
+    VIEW_POPULAR_SIGHTS: 'Ammira attrazioni come {0} {1}',
+    X_BOARDING_POINTS: '{0} punti di imbarco',
+    BOARDING_POINT: 'Punto di imbarco',
+    BOARDING_POINTS: 'Punti di imbarco',
+    LANDMARKS: 'Attrazioni',
+    GET_DIRECTIONS: 'Indicazioni',
+    FOOD_MENU: 'Il menù',
+    X_PAGE: '{0} pagine',
+    X_PAGES: '{0} pagine',
+    MORE: '+{0} altri',
+    PDF: {
+      ZOOM_IN: 'Ingrandisci',
+      ZOOM_OUT: 'Riduci',
+      FIT_TO_WIDTH: 'Adatta alla larghezza',
+      RESET_ZOOM: 'Reimposta zoom',
+    },
+    COMBO_HEADING: 'Scopri di più e risparmia: offerte combinate e city card',
+  },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
 };
 export default it;

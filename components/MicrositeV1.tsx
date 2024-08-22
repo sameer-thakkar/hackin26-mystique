@@ -49,7 +49,7 @@ import {
   groupSlices,
 } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
-import { sortCombos } from 'utils/productUtils';
+import { getFinalUncategorizedTours } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -63,6 +63,8 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
+  CRUISE_CATEGORY_ID,
+  CRUISES_REVAMP_UIDS,
   EMAIL_SUBCRIPTION,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_CATEGORISATION,
@@ -82,6 +84,8 @@ import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
+import SubCategoryFilters from './Cruises/SubcategoryFilters';
+import { SUBCATEGORY_PILLS } from './Cruises/SubcategoryFilters/constants';
 
 const AirportTransferProductsSection =
   dynamic<TAirportTransfersProductSectionProps>(() =>
@@ -218,6 +222,15 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
+  const [newVerticalsTimer, setNewVerticalsTimer] = useState(false);
+  const [activeSubCat, setActiveSubCat] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNewVerticalsTimer(true);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -322,6 +335,16 @@ const MicrositeV1 = (props: any) => {
   const currentLanguage = getLangObject(lang).code;
 
   const {
+    isEligible: isCruisesExpEligible,
+    isExperimentResolving: isCruisesExpResolving,
+    variant: cruisesVariant,
+  } = useABTesting({
+    experimentId: 'CRUISES_REVAMP',
+    noTrack: false,
+    customEligibilityCheckFn: () => CRUISES_REVAMP_UIDS.includes(uid),
+  });
+
+  const {
     isEligible: isLFCImpactExpEligible,
     isExperimentResolving: isLFCExperimentResolving,
     variant: lfcExpVariant,
@@ -365,6 +388,9 @@ const MicrositeV1 = (props: any) => {
 
   const showOnlyHighlightsProductCard =
     highlightsExpVariant === VARIANTS.TREATMENT;
+
+  const showCruisesRevamp =
+    isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -484,6 +510,28 @@ const MicrositeV1 = (props: any) => {
     ? orderedTours?.map((tour: any) => tour.tgid)
     : [];
 
+  const finalUncategorizedTours = getFinalUncategorizedTours({
+    orderedFilteredTours,
+    scorpioData,
+    showCruisesRevamp,
+    showHohoRevamp,
+  });
+
+  const subCatArray = finalUncategorizedTours.reduce(
+    (acc: number[], item: Record<string, any>) => {
+      const subCatId = scorpioData[item.tgid]?.primarySubCategory?.id;
+      if (!acc.includes(subCatId)) {
+        acc.push(subCatId);
+      }
+      return acc;
+    },
+    []
+  );
+
+  const subcategoryPills = SUBCATEGORY_PILLS().filter(
+    (item) => !item.subCatId || subCatArray?.includes(item.subCatId)
+  );
+
   useEffect(() => {
     if (tgidToScroll) {
       scroller.scrollTo(tgidToScroll, {
@@ -546,6 +594,7 @@ const MicrositeV1 = (props: any) => {
         defaultType: PAGE_TYPES.COLLECTION,
         isCatOrSubCatPage,
         isSubCategoryPage: isSubCategoryMicrobrand,
+        isCruises: isCruisesExpEligible,
       }),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
@@ -580,6 +629,16 @@ const MicrositeV1 = (props: any) => {
       }),
       ...(subattractionType && {
         [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,
+      }),
+      ...(showCruisesRevamp && {
+        [ANALYTICS_PROPERTIES.FILTERS_PRESENT]: subcategoryPills?.map(
+          (pill) => pill.label
+        ),
+        [ANALYTICS_PROPERTIES.PRIMARY_PRODUCTS_PRESENT]:
+          finalUncategorizedTours?.filter(
+            (tour: Record<string, any>) =>
+              scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID
+          )?.length,
       }),
     });
   }, [eventsReady]);
@@ -786,13 +845,6 @@ const MicrositeV1 = (props: any) => {
     bannerImageData?.resourceEntityMedias?.[0]?.medias
   );
 
-  const finalUncategorizedTours = showHohoRevamp
-    ? sortCombos(orderedFilteredTours)
-    : orderedFilteredTours.filter(
-        (tour: TTour) =>
-          tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
-      );
-
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -828,6 +880,8 @@ const MicrositeV1 = (props: any) => {
       isAirportTransfersMB={isAirportTransfersMB}
       isModifiedProductCard={
         !isMobile &&
+        !showCruisesRevamp &&
+        !showHohoRevamp &&
         (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
           baseLangIsPoiMb) ||
           showOnlyHighlightsProductCard)
@@ -835,7 +889,11 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
+      isNVResolving={isCruisesExpEligible && !newVerticalsTimer}
       showItineraries={showItineraries}
+      isCruisesRevamp={showCruisesRevamp}
+      isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
+      activeSubCat={activeSubCat}
       isHighlightsExperiment={isHighlightsExpEligible}
     />
   );
@@ -901,6 +959,7 @@ const MicrositeV1 = (props: any) => {
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
   if (
+    (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isHighlightsExpEligible && isHighlightsExperimentResolving) ||
     (isRankingExperimentEligible && isRankingExperimentResolving) ||
@@ -1091,6 +1150,7 @@ const MicrositeV1 = (props: any) => {
                 ? (productCardData?.city as TCityInfo)?.city
                 : null
             }
+            isCruisesRevamp={showCruisesRevamp}
           />
         </Conditional>
         <Conditional
@@ -1123,6 +1183,19 @@ const MicrositeV1 = (props: any) => {
           <F1TrustBoosters
             f1TrustBooster={getF1MBTrustBoosters(false)}
             isMobile={isMobile}
+          />
+        </Conditional>
+        <Conditional if={showCruisesRevamp}>
+          <SubCategoryFilters
+            isMobile={isMobile}
+            subCategoryPills={subcategoryPills}
+            setActiveSubCat={(subCatId) => {
+              setActiveSubCat(subCatId);
+              setProductsLoading(true);
+              setTimeout(() => {
+                setProductsLoading(false);
+              }, 500);
+            }}
           />
         </Conditional>
         <Conditional

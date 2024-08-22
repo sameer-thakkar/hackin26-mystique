@@ -88,6 +88,8 @@ const ExperimentalProductCard = (props: any) => {
     hideDrawerCloseButton = false,
     tgidItineraryData,
     scrollToItinerarySection = false,
+    isModifiedPopup = false,
+    customDescriptors = [],
     topReviews,
     showCustomProductCardCTA,
     shouldRunCustomCTAExperiment,
@@ -117,10 +119,10 @@ const ExperimentalProductCard = (props: any) => {
 
   const showAvailabilityInTitleMobile =
     isSpecialGuidedTour &&
-    getEarliestAvailableDate(
-      earliestAvailability?.startDate,
-      currentLanguage
-    ) === strings.TODAY;
+    getEarliestAvailableDate({
+      date: earliestAvailability?.startDate,
+      currentLanguage,
+    }) === strings.TODAY;
 
   const {
     combo: isCombo,
@@ -379,6 +381,8 @@ const ExperimentalProductCard = (props: any) => {
         tgidItineraryData={tgidItineraryData}
         forceMobile={forceMobile}
         scrollToItinerarySection={scrollToItinerarySection}
+        isModifiedPopup={isModifiedPopup}
+        customDescriptors={customDescriptors}
       />
     );
   };
@@ -419,6 +423,7 @@ const ExperimentalProductCard = (props: any) => {
           showThumbnailInBanner,
           hideCloseButton: hideDrawerCloseButton,
           tgidItineraryData,
+          isModifiedPopup,
           reviewsDetails,
           topReviews,
           showCustomProductCardCTA,

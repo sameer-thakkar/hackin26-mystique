@@ -1211,5 +1211,36 @@ const pl = {
     START_POINT_SAME_AS_END_POINT:
       'Twój punkt końcowy byłby taki sam jak punkt startowy',
   },
+  CRUISES: {
+    BANNER_HEADING: 'Cruise through {0} & discover scenic landscapes',
+    FILTERS: {
+      ALL: 'All',
+      SIGHTSEEING: 'Sightseeing',
+      LUNCH: 'Lunch',
+      DINNER: 'Dinner',
+      COMBOS: 'Combos',
+    },
+    MAP_OVERLAY: 'Click or tap to move around the map',
+    SIGHTS_COVERED: 'Sights covered',
+    MENU: 'Menu',
+    BOARD_AT: 'Board at {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} available',
+    VIEW_POPULAR_SIGHTS: 'View popular sights like {0} {1}',
+    X_BOARDING_POINTS: '{0} boarding points',
+    BOARDING_POINT: 'Boarding point',
+    BOARDING_POINTS: 'Boarding points',
+    LANDMARKS: 'Landmarks',
+    GET_DIRECTIONS: 'Get directions',
+    FOOD_MENU: 'Food menu',
+    X_PAGE: '{0} page',
+    X_PAGES: '{0} pages',
+    MORE: '+{0} more',
+    PDF: {
+      ZOOM_IN: 'Zoom in',
+      ZOOM_OUT: 'Zoom out',
+      FIT_TO_WIDTH: 'Fit to width',
+      RESET_ZOOM: 'Reset Zoom',
+    },
+  },
 };
 export default pl;

@@ -135,6 +135,10 @@ export const TabContent = styled.div`
   &:last-child {
     padding-bottom: 2rem;
   }
+  h6 {
+    margin: 1rem 0;
+    ${expandFontToken(FONTS.SUBHEADING_LARGE)}
+  }
 `;
 
 export const Heading = styled.h4<{ $bottomMargin: string }>`

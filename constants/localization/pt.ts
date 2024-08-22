@@ -1265,5 +1265,38 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     OPEN_MAP_VIEW: 'Abrir o mapa',
     START_POINT_SAME_AS_END_POINT: 'O ponto final será o ponto de partida',
   },
+  CRUISES: {
+    BANNER_HEADING:
+      'Descubra {0} em um cruzeiro: refeições, bebidas e tranquilidade',
+    FILTERS: {
+      ALL: 'Todos',
+      SIGHTSEEING: 'Passeio turístico',
+      LUNCH: 'Almoço',
+      DINNER: 'Jantar',
+      COMBOS: 'Combos',
+    },
+    MAP_OVERLAY: 'Clique ou toque para mover o mapa',
+    SIGHTS_COVERED: 'Pontos turísticos no caminho',
+    MENU: 'Menu',
+    BOARD_AT: 'Embarque em {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} disponíveis',
+    VIEW_POPULAR_SIGHTS: 'Veja pontos turísticos famosos como {0} {1}',
+    X_BOARDING_POINTS: '{0} pontos de embarque',
+    BOARDING_POINT: 'Ponto de embarque',
+    BOARDING_POINTS: 'Pontos de embarque',
+    LANDMARKS: 'Pontos turísticos',
+    GET_DIRECTIONS: 'Como chegar',
+    FOOD_MENU: 'Menu',
+    X_PAGE: '{0} página',
+    X_PAGES: '{0} páginas',
+    MORE: 'e mais {1}',
+    PDF: {
+      ZOOM_IN: 'Ampliar zoom',
+      ZOOM_OUT: 'Diminuir zoom',
+      FIT_TO_WIDTH: 'Ajustar à largura',
+      RESET_ZOOM: 'Redefinir zoom',
+    },
+    COMBO_HEADING: 'Veja mais por menos: ofertas em combos e city cards',
+  },
 };
 export default pt;

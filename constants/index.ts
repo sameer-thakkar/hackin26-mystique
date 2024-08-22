@@ -574,6 +574,11 @@ export const ANALYTICS_EVENTS = {
   CALENDAR_OPEN: 'Calendar Opened',
   CALENDAR_CLOSED: 'Calendar Closed',
   CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
+  FILTER_APPLIED: 'Filter Applied',
+  FOOD_TAB_CLICKED: 'Food Menu Tab Clicked',
+  DEAD_CLICK: 'Dead Click Captured',
+  DESCRIPTOR_CLICKED: 'Descriptor Clicked',
+  EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -581,6 +586,10 @@ export const MORE_DETAILS_SWIPESHEET = {
     CLOSE_BUTTON: 'Close Button',
     OVERLAY_CLICKED: 'Overlay Clicked',
   },
+};
+
+export const FILTER_TYPE = {
+  SUB_CATEGORY: 'Sub-Category Filter',
 };
 
 export const PAGE_TYPE = {
@@ -594,6 +603,7 @@ export const PRODUCT_CARD_REVAMP = {
     POPUP: 'Popup',
     MORE_DETAILS: 'More Details',
     SWIPESHEET: 'Swipesheet',
+    DESCRIPTORS: 'Descriptors',
   },
 };
 
@@ -652,6 +662,7 @@ export const DESCRIPTORS = {
   DURATION: 'DURATION',
   FREE_CANCELLATION: 'FREE_CANCELLATION',
   GUIDED_TOUR: 'GUIDED_TOUR',
+  TRANSFERS: 'TRANSFERS',
 };
 
 export const MICROSITE_OBJECT_KEYS = [
@@ -1061,6 +1072,12 @@ export const ANALYTICS_PROPERTIES = {
   ITINERARY_VIEW: 'Itinerary View',
   ZOOM_TYPE: 'Zoom Type',
   IS_BLOG_BANNER_PRESENT: 'Is Blog Banner Present',
+  FILTERS_PRESENT: 'Filters Present',
+  PRIMARY_PRODUCTS_PRESENT: 'Primary Products Present',
+  FILTER_NAME: 'Filter Name',
+  BOARDING_POINTS: 'Boarding Points Present',
+  FOOD_MENUS_PRESENT: 'Food Menus Present',
+  TAB_NAME: 'Tab Name',
 };
 
 export const PAGE_TYPES = {
@@ -1076,6 +1093,7 @@ export const PAGE_TYPES = {
   AIRPORT_TRANSFERS: 'Airport Transfers',
   REVIEWS_PAGE: 'Reviews Page',
   VENUE_SEATS_PAGE: 'Venue Seats Page',
+  CRUISES_LP: 'Cruises Landing Page',
 };
 
 export const BOOLEAN_STATES = {
@@ -2182,6 +2200,25 @@ export const ENTERTAINMENT_MB_CITIES = {
 export const MYSTIQUE = 'Mystique';
 
 export const HOHO_SUBCATEGORY_ID = 1011;
+export const CRUISE_CATEGORY_ID = 18;
+
+export const CRUISES_REVAMP_UIDS = [
+  'www.seine-river-cruises.com',
+  'www.canal-cruise-amsterdam.com',
+  'www.chaophrayacruises.com',
+  'www.thames-river-cruise.com',
+  'www.bangkok-river-cruise.com',
+];
+
+export const CRUISES_ILLUSTRATION =
+  'https://cdn-imgix-open.headout.com/MB/assets/cruise-banner.svg';
+
+export const MEALS_SUBCAT_IDS = [1060, 1094];
+export const SUBCAT_IDS = { COMBOS: 1080 };
+export const GREEN_TICK =
+  'https://cdn-imgix-open.headout.com/mb-icons/green-tick.svg';
+export const RED_CROSS =
+  'https://cdn-imgix-open.headout.com/mb-icons/red-cross.svg';
 
 export const IMAGE_QUALITY_EXPERIMENT_UIDS = [
   'www.thevaticantickets.com',

@@ -4,7 +4,11 @@ import { useRecoilValue } from 'recoil';
 import { checkIfHarryPotterPage } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { appAtom } from 'store/atoms/app';
-import { ANALYTICS_EVENTS, MORE_DETAILS_SWIPESHEET } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  MORE_DETAILS_SWIPESHEET,
+} from 'const/index';
 import { DEFAULT_MAGIC_WAND } from 'assets/magicWand';
 import { TPopupProps } from './interface';
 import { StyledPopupContent } from './styles';
@@ -29,7 +33,7 @@ const Popup = ({
     document.body.style.overflow = 'auto';
     trackEvent({
       eventName: ANALYTICS_EVENTS.MORE_DETAILS_SWIPESHEET_CLOSED,
-      action: isButton
+      [ANALYTICS_PROPERTIES.ACTION]: isButton
         ? MORE_DETAILS_SWIPESHEET.ACTION.CLOSE_BUTTON
         : MORE_DETAILS_SWIPESHEET.ACTION.OVERLAY_CLICKED,
     });

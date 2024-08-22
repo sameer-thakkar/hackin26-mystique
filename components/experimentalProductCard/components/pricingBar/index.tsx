@@ -1,9 +1,18 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import Conditional from 'components/common/Conditional';
+import Emoji from 'components/common/Emoji';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
+import LocalisedPrice from 'UI/LPrice';
 import { useProductCard } from 'contexts/productCardContext';
 import { PRODUCT_CARD_REVAMP } from 'const/index';
 import { strings } from 'const/strings';
-import { ButtonWrapper, PriceBar, PriceElements } from './styles';
+import {
+  ButtonWrapper,
+  PriceBar,
+  PriceElements,
+  SavingsStrip,
+  TourScratchPrice,
+} from './styles';
 
 interface ListingPrice {
   currencyCode: string;
@@ -28,6 +37,7 @@ interface PricingBarProps {
   isSportsExperiment: boolean;
   isGpMotorTicketsMb: boolean;
   isSportsSubCategory: boolean;
+  isModifiedCTA?: boolean;
   showCustomProductCardCTA?: boolean;
 }
 
@@ -55,6 +65,7 @@ const getBookNowButtonText = ({
 
 const PricingBar: FC<PricingBarProps> = ({
   listingPrice,
+  lang,
   showScratchPrice,
   isCombo,
   mbTheme,
@@ -65,6 +76,7 @@ const PricingBar: FC<PricingBarProps> = ({
   isGpMotorTicketsMb,
   isSportsSubCategory,
   productBookingUrl,
+  isModifiedCTA,
   showCustomProductCardCTA,
 }) => {
   const pricingRef = useRef<HTMLDivElement | null>(null);
@@ -103,8 +115,47 @@ const PricingBar: FC<PricingBarProps> = ({
   }, []);
 
   return (
-    <PriceBar $showContent={showContent} ref={pricingRef} $hasSavings={false}>
-      <PriceElements $hasSavings={false}>
+    <PriceBar
+      $showContent={showContent}
+      ref={pricingRef}
+      $hasSavings={false}
+      $hasDropShadow={isModifiedCTA}
+    >
+      <Conditional
+        if={isModifiedCTA && showScratchPrice && listingPrice.bestDiscount > 0}
+      >
+        <SavingsStrip>
+          <Emoji symbol="🤑" label="money-mouth-face" />
+          {strings.formatString(
+            strings.SAVE_UPTO_PERCENT,
+            listingPrice.bestDiscount
+          )}
+        </SavingsStrip>
+      </Conditional>
+      <PriceElements $hasSavings={false} $isModifiedCTA={isModifiedCTA}>
+        <Conditional if={isModifiedCTA}>
+          <div>
+            <TourScratchPrice>
+              {listingPrice.otherPricesExist &&
+                `${strings.FROM.toLowerCase()} `}
+              {showScratchPrice &&
+                listingPrice.originalPrice > listingPrice.finalPrice && (
+                  <LocalisedPrice
+                    className="strike"
+                    currencyCode={listingPrice.currencyCode}
+                    lang={lang}
+                    price={listingPrice.originalPrice}
+                  />
+                )}
+            </TourScratchPrice>
+            <LocalisedPrice
+              className="tour-price"
+              currencyCode={listingPrice.currencyCode}
+              lang={lang}
+              price={listingPrice.finalPrice}
+            />
+          </div>
+        </Conditional>
         <ButtonWrapper ref={widthRef}>
           {!isCombo ? (
             <a

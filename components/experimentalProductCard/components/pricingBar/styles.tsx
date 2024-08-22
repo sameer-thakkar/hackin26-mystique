@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 
@@ -37,20 +38,6 @@ export const TourScratchPrice = styled.div`
   color: ${COLORS.GRAY.G3};
 `;
 
-export const PriceElements = styled.div<{ $hasSavings: boolean }>`
-  background: ${COLORS.BRAND.WHITE};
-  justify: space-between;
-  ${({ $hasSavings }) =>
-    !$hasSavings && 'box-shadow: 0 -0.125rem 0.75rem 0 #0000000d;'}
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1.5rem 1rem 1.5rem;
-  box-sizing: border-box;
-  z-index: 10;
-  position: relative;
-`;
-
 export const ButtonWrapper = styled.div`
   width: 100%;
   button {
@@ -66,9 +53,39 @@ export const ButtonWrapper = styled.div`
   }
 `;
 
+export const PriceElements = styled.div<{
+  $hasSavings: boolean;
+  $isModifiedCTA?: boolean;
+}>`
+  background: ${COLORS.BRAND.WHITE};
+  justify: space-between;
+  ${({ $hasSavings }) =>
+    !$hasSavings && 'box-shadow: 0 -0.125rem 0.75rem 0 #0000000d;'}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem 1rem 1.5rem;
+  box-sizing: border-box;
+  z-index: 10;
+  position: relative;
+  ${({ $isModifiedCTA }) =>
+    $isModifiedCTA &&
+    css`
+      display: grid;
+      grid-template-columns: auto 10.125rem;
+      ${ButtonWrapper} {
+        button {
+          ${expandFontToken(FONTS.BUTTON_MEDIUM)}
+          font-family: ${HALYARD.DISPLAY};
+        }
+      }
+    `}
+`;
+
 export const PriceBar = styled.div<{
   $hasSavings: boolean;
   $showContent: boolean;
+  $hasDropShadow?: boolean;
 }>`
   position: fixed;
   background: ${COLORS.BRAND.WHITE};
@@ -77,6 +94,11 @@ export const PriceBar = styled.div<{
   width: 100%;
   z-index: 51;
   box-sizing: border-box;
+  ${({ $hasDropShadow }) =>
+    $hasDropShadow &&
+    css`
+      box-shadow: 0px -2px 12px 0px #0000001a;
+    `}
 
   transform: translateY(
     ${({ $showContent }) => (!$showContent ? '100%' : '0')}
@@ -94,4 +116,14 @@ export const PriceBar = styled.div<{
         $hasSavings ? COLORS.OKAY_GREEN.DARK_TONE : COLORS.GRAY.G1};
     }
   }
+`;
+
+export const SavingsStrip = styled.div`
+  display: grid;
+  grid-template-columns: 0.875rem auto;
+  padding: 0.375rem 1rem;
+  gap: 0.375rem;
+  background: ${COLORS.BACKGROUND.FADED_GREEN};
+  color: ${COLORS.TEXT.OKAY_GREEN_3};
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
 `;

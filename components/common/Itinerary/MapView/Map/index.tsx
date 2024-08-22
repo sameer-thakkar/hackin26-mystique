@@ -29,6 +29,7 @@ const RouteMap = ({
   onClickTrackEvent,
   interactionBlockingOverlayText,
   onZoomTrackEvent,
+  showStartAsStop = false,
   zoomPadding = [60, 60],
   enableFreeTouchPropagation = false,
   onReset,
@@ -60,12 +61,23 @@ const RouteMap = ({
     markers = itinerary.sections.reduce((acc, section) => {
       if (section.details.name) {
         const { location, type, id, details, childSections = [] } = section;
-        const { name, passBy } = details;
-        if (type === SECTION_TYPE.STOP && !passBy) stopIndex++;
-        if (!isValidLocation(location)) return acc;
+        const { name, passBy, sameAsStartingPoint } = details;
+        if (
+          (type === SECTION_TYPE.STOP && !passBy) ||
+          (showStartAsStop && type === SECTION_TYPE.START_LOCATION)
+        )
+          stopIndex++;
+        if (
+          !isValidLocation(location) ||
+          (showStartAsStop && sameAsStartingPoint)
+        )
+          return acc;
         const { latitude = 0, longitude = 0 } = location!;
 
-        const markerType = passBy ? CHILD_SECTION_TYPE.PASS_BY : type;
+        let markerType = passBy ? CHILD_SECTION_TYPE.PASS_BY : type;
+        if (showStartAsStop && type === SECTION_TYPE.START_LOCATION) {
+          markerType = SECTION_TYPE.STOP;
+        }
         const locations: Array<MarkerLocation> = [location!];
         const pushLocation = (location: MarkerLocation) => {
           locations.push(location!);
@@ -221,8 +233,7 @@ const RouteMap = ({
     controller?.current?.reset();
   }, [markers]);
 
-  if (!itinerary.map || !itinerary.map.active) return null;
-
+  if (!itinerary.map) return null;
   const {
     polyline,
     polylineColor,
