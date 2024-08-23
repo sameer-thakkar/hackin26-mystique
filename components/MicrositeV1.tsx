@@ -341,7 +341,7 @@ const MicrositeV1 = (props: any) => {
     variant: cruisesVariant,
   } = useABTesting({
     experimentId: 'CRUISES_REVAMP',
-    noTrack: true,
+    noTrack: false,
     customEligibilityCheckFn: () => isCruisesExperimentMB,
   });
 
@@ -931,15 +931,6 @@ const MicrositeV1 = (props: any) => {
           : BOOLEAN_STATES['NO'],
     });
   }, [eventsReady, isAirportTransfersMB]);
-
-  useEffect(() => {
-    if (!eventsReady || !isCruisesExperimentMB) return;
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]: 'Cruises Revamp Experiment',
-      [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]: cruisesVariant,
-    });
-  }, [eventsReady, isCruisesExperimentMB]);
 
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
