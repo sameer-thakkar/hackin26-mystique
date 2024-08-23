@@ -14,7 +14,6 @@ import CategoryPage from 'components/CategoryPage';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
-import Loader from 'components/common/Loader';
 import { CategoriesSection } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection/style';
 import Header, { StyledHeader } from 'components/MicrositeV2/Header';
 import SeatMapPage from 'components/SeatMapPage';
@@ -311,25 +310,11 @@ export const HomePage = (props: any) => {
       customEligibilityCheckFn: () => isTheatreInSeatingExperiment,
     });
 
-  const {
-    isEligible: isImageQualityExpEligible,
-    variant: imageQualityExpVariant,
-    isExperimentResolving: isImageQualityExpResolving,
-  } = useABTesting({
-    experimentId: 'IMAGE_QUALITY_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => {
-      return isLttMonthOnMonthPage || isCategoryPage || showLttTreatment;
-    },
-  });
-
   const isSeatMapExpControlAndEligible =
     isTheatreInSeatingExperiment && SeatMapExpVariant === VARIANTS.CONTROL;
 
   const showSeatMapExperiment =
     SeatMapExpVariant === VARIANTS.TREATMENT && isSeatMapExpEligible;
-  const showHigherQualityImage =
-    imageQualityExpVariant === VARIANTS.TREATMENT && isImageQualityExpEligible;
 
   let { categoryProps } = props;
 
@@ -498,9 +483,6 @@ export const HomePage = (props: any) => {
     });
   };
 
-  if (isImageQualityExpEligible && isImageQualityExpResolving)
-    return <Loader />;
-
   return (
     <V2MicrositeWrapper
       $isCategoriesSectionSticking={isCategoriesSectionSticking}
@@ -542,7 +524,7 @@ export const HomePage = (props: any) => {
           allTours={allTours}
           pageTabsSlice={heroSectionSlice[0]}
           displayMonth={displayMonths}
-          showHigherQualityImage={showHigherQualityImage}
+          showHigherQualityImage={true}
         />
       </Conditional>
       <Conditional
@@ -676,7 +658,7 @@ export const HomePage = (props: any) => {
           categoryTourListData={categoryTourListData}
           primarySubCategoryId={primarySubCategoryId}
           browseByCategoriesRef={browseByCategorySectionRef}
-          showHigherQualityImage={showHigherQualityImage}
+          showHigherQualityImage={true}
         />
       </Conditional>
       <Conditional
@@ -775,7 +757,7 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
           directTgid={directTgid}
           collectionId={Number(collectionId!)}
-          showHigherQualityImage={showHigherQualityImage}
+          showHigherQualityImage={true}
         />
       </Conditional>
       {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner*/}
