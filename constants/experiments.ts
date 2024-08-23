@@ -85,7 +85,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [RANKING_EXPERIMENT_V2]: new Experiment(
     RANKING_EXPERIMENT_V2,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [50, 50]
   ),
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,
