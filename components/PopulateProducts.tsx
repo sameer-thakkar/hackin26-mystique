@@ -69,6 +69,7 @@ const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
   isTicketCard?: boolean;
   isNewVerticalsProductCard?: boolean;
+  $hideRoundedEdge?: boolean;
 }>`
   margin: 0 auto;
   position: relative;
@@ -107,9 +108,10 @@ const StyledProductsWrapper = styled.div<{
   @media (max-width: 768px) {
     ${({ isLoading }) => (isLoading ? `min-height: 390px;` : '')}
     && {
-      ${({ isNewVerticalsProductCard }) =>
+      ${({ isNewVerticalsProductCard, $hideRoundedEdge }) =>
         isNewVerticalsProductCard &&
         css`
+          ${$hideRoundedEdge && 'padding-top: 1rem;'}
           .product-card-skeleton {
             height: 28.438rem;
           }
@@ -121,6 +123,7 @@ const StyledProductsWrapper = styled.div<{
             height: 1rem;
             width: 100%;
             border-radius: 20px 20px 0 0;
+            ${$hideRoundedEdge && 'display: none;'}
           }
         `}
     }
@@ -837,6 +840,7 @@ const PopulateProducts: any = (props: any) => {
       isNewVerticalsProductCard={isNewVerticalsProductCard}
       id="products-container"
       ref={productsWrapperRef}
+      $hideRoundedEdge={isCruisesRevamp}
     >
       <ProductContainer
         isTicketCard={isTicketCard}

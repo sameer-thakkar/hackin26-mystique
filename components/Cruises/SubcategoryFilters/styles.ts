@@ -7,7 +7,7 @@ export const PillsSection = styled.div<{}>`
   padding: 1.5rem 0 0;
 
   @media (max-width: 768px) {
-    padding: 1.25rem 0 1rem 0;
+    padding: 1.25rem 0 0;
   }
 `;
 
