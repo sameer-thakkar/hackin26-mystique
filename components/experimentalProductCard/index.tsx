@@ -390,6 +390,7 @@ const ExperimentalProductCard = (props: any) => {
           sendBookNowEvent,
           handleShowComboPopup,
           tgid,
+          rank: position,
           isV3Design,
           isSportsExperiment,
           isGpMotorTicketsMb,

@@ -21,6 +21,7 @@ const PdfPopup = ({
   pdfData = [],
   isCTA = false,
   tgid,
+  rank,
 }: TPdfPopup) => {
   const [isPopupActive, setisPopupActive] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -39,6 +40,7 @@ const PdfPopup = ({
         (pdf) => pdf.name
       ),
       [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.RANKING]: rank,
     });
   };
 

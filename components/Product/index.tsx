@@ -1898,6 +1898,7 @@ const Product = (props: any) => {
                       <MenuSection
                         menuData={details?.cruiseMenus}
                         tgid={tgid}
+                        rank={position}
                       />
                     </Conditional>
                     <Conditional if={details}>

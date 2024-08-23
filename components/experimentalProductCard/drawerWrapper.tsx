@@ -42,6 +42,7 @@ const DrawerWrapper = (props: any) => {
     sendBookNowEvent,
     handleShowComboPopup,
     tgid,
+    rank,
     isV3Design,
     isSportsExperiment,
     isGpMotorTicketsMb,
@@ -184,6 +185,7 @@ const DrawerWrapper = (props: any) => {
             mediaCarouselImageWidth={mediaCarouselImageWidth}
             isFirstProduct={isFirstProduct}
             tgid={tgid}
+            rank={rank}
             shouldCropImage={shouldCropImage}
             activeTab={activeTab}
             setActiveTab={setActiveTab}

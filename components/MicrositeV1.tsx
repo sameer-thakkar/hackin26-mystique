@@ -333,6 +333,7 @@ const MicrositeV1 = (props: any) => {
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
   const currentLanguage = getLangObject(lang).code;
+  const isCruisesExperimentMB = CRUISES_REVAMP_UIDS.includes(uid);
 
   const {
     isEligible: isCruisesExpEligible,
@@ -340,8 +341,8 @@ const MicrositeV1 = (props: any) => {
     variant: cruisesVariant,
   } = useABTesting({
     experimentId: 'CRUISES_REVAMP',
-    noTrack: false,
-    customEligibilityCheckFn: () => CRUISES_REVAMP_UIDS.includes(uid),
+    noTrack: true,
+    customEligibilityCheckFn: () => isCruisesExperimentMB,
   });
 
   const {
@@ -931,6 +932,15 @@ const MicrositeV1 = (props: any) => {
     });
   }, [eventsReady, isAirportTransfersMB]);
 
+  useEffect(() => {
+    if (!eventsReady || !isCruisesExperimentMB) return;
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]: 'Cruises Revamp Experiment',
+      [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]: cruisesVariant,
+    });
+  }, [eventsReady, isCruisesExperimentMB]);
+
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
   if (
@@ -1147,7 +1157,9 @@ const MicrositeV1 = (props: any) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </Conditional>
 
-        <Conditional if={coverSlices?.length && !isCatOrSubCatPage}>
+        <Conditional
+          if={coverSlices?.length && !isCatOrSubCatPage && !showCruisesRevamp}
+        >
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>
@@ -1159,7 +1171,7 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-        <Conditional if={showCruisesRevamp}>
+        <Conditional if={showCruisesRevamp && subcategoryPills?.length > 2}>
           <SubCategoryFilters
             isMobile={isMobile}
             subCategoryPills={subcategoryPills}

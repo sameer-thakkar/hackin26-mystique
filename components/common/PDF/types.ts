@@ -7,6 +7,7 @@ export type TPdfPopup = {
   pdfData?: Record<string, any>[];
   isCTA?: boolean;
   tgid: number | string;
+  rank: number;
 };
 
 export type TPdfViewer = {

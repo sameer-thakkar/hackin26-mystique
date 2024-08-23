@@ -41,6 +41,7 @@ const RouteDetails = (props: TRouteDetails) => {
     isMobile,
     tourGroupName,
     tgid,
+    rank,
     listingPrice,
     bookingUrl,
     setIsSideDrawerOpen,
@@ -91,6 +92,7 @@ const RouteDetails = (props: TRouteDetails) => {
         <>
           <RouteInfo
             tgid={tgid}
+            rank={rank}
             openRoutesTimeline={() => {
               setIsOpen(true);
               setTimeout(() => {
@@ -134,6 +136,7 @@ const RouteDetails = (props: TRouteDetails) => {
               </HeadingContainer>
               <RouteInfo
                 tgid={tgid}
+                rank={rank}
                 openRoutesTimeline={() => {
                   setIsOpen(true);
                   setTimeout(() => {

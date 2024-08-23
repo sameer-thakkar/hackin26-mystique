@@ -98,6 +98,7 @@ export const Subtext = styled.div<{ $isBoardingPoint?: boolean }>`
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      padding-bottom: 0.063rem;
     `}
 
   @media (max-width: 768px) {

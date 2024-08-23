@@ -3,6 +3,7 @@ import { Itinerary } from 'types/itinerary.type';
 
 export type TRouteInfo = {
   tgid: number | string;
+  rank: number;
   openRoutesTimeline: () => void;
   isMobile: boolean;
   routeData: Itinerary;

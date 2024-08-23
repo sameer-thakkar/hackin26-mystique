@@ -1276,7 +1276,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       COMBOS: 'Combos',
     },
     MAP_OVERLAY: 'Clique ou toque para mover o mapa',
-    SIGHTS_COVERED: 'Pontos turísticos no caminho',
+    SIGHTS_COVERED: 'Atrações no caminho',
     MENU: 'Menu',
     BOARD_AT: 'Embarque em {0}',
     BOARDING_POINTS_AVAILABLE: '{0} disponíveis',

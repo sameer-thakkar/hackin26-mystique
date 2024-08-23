@@ -1269,7 +1269,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     },
     MAP_OVERLAY: 'Verschieben Sie die Karte durch Klicken oder Tippen',
     SIGHTS_COVERED: 'Sehens- würdigkeiten',
-    MENU: 'Speisekarte',
+    MENU: 'Speise- karte',
     BOARD_AT: 'Boarding: {0}',
     BOARDING_POINTS_AVAILABLE: '{0} mögliche Einstiegsstellen',
     VIEW_POPULAR_SIGHTS: 'Beliebte Sehenswürdigkeiten: {0} {1}',

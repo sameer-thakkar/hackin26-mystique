@@ -39,6 +39,7 @@ import {
 const RouteInfo = (props: TRouteInfo) => {
   const {
     tgid,
+    rank,
     openRoutesTimeline,
     showRoutesTimeline,
     isSideModalOpen,
@@ -89,6 +90,7 @@ const RouteInfo = (props: TRouteInfo) => {
           ? PRODUCT_CARD_REVAMP.PLACEMENT.DESCRIPTORS
           : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
         [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.RANKING]: rank,
         ...(isCruise && {
           [ANALYTICS_PROPERTIES.BOARDING_POINTS]: boardingPoints?.join(', '),
         }),

@@ -35,4 +35,5 @@ export type TMenuCard = {
 export type TMenuSection = {
   menuData: Record<string, any>[];
   tgid: number | string;
+  rank: number;
 };

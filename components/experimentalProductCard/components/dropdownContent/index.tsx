@@ -70,6 +70,7 @@ interface DropdownContentProps {
   mediaCarouselImageHeight?: number;
   isFirstProduct?: boolean;
   tgid: string;
+  rank: number;
   shouldCropImage?: boolean;
   setImageHeight?: (height: number) => void;
   finalHighlights: TabData[];
@@ -97,6 +98,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   mediaCarouselImageWidth,
   mediaCarouselImageHeight,
   tgid,
+  rank,
   shouldCropImage,
   isFirstProduct,
   children,
@@ -443,7 +445,11 @@ const DropdownContent: FC<DropdownContentProps> = ({
                       details?.cruiseMenus
                     }
                   >
-                    <MenuSection menuData={details?.cruiseMenus!} tgid={tgid} />
+                    <MenuSection
+                      menuData={details?.cruiseMenus!}
+                      tgid={tgid}
+                      rank={rank}
+                    />
                   </Conditional>
                   <Conditional
                     if={

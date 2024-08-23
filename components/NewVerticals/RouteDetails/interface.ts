@@ -6,6 +6,7 @@ export type TRouteDetails = {
   isMobile: boolean;
   tourGroupName: string;
   tgid: number;
+  rank: number;
   listingPrice: Record<string, any>;
   bookingUrl: string;
   setIsSideDrawerOpen: Dispatch<SetStateAction<boolean>>;

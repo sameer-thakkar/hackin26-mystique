@@ -58,7 +58,7 @@ export const PopupContainer = styled.div<{
     justify-content: space-between;
     width: 100%;
     max-width: 75.875rem;
-    margin: 4.31rem auto 0;
+    margin: 1.5rem auto 0;
     z-index: 15;
     .title {
       color: ${COLORS.BRAND.WHITE};

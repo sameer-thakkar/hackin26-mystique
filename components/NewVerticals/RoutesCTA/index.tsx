@@ -108,6 +108,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
             isMobile={isMobile}
             tourGroupName={tourGroupName}
             tgid={tgid}
+            rank={ranking}
             listingPrice={listingPrice}
             bookingUrl={bookingUrl}
             setIsSideDrawerOpen={setIsSideDrawerOpen}
@@ -120,6 +121,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
       <Conditional if={isMealCruise}>
         <PdfPopup
           tgid={tgid}
+          rank={ranking}
           controller={pdfPopupController}
           pdfData={cruisesItineraryData?.[0]?.details?.cruiseMenus}
           isCTA={true}
@@ -157,6 +159,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
             isMobile={isMobile}
             tourGroupName={tourGroupName}
             tgid={tgid}
+            rank={ranking}
             listingPrice={listingPrice}
             bookingUrl={bookingUrl}
             setIsSideDrawerOpen={setIsSideDrawerOpen}

@@ -1228,7 +1228,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       COMBOS: 'Combitickets',
     },
     MAP_OVERLAY: 'Klik of tik om over de kaart te bewegen',
-    SIGHTS_COVERED: 'Bezienswaardigheden',
+    SIGHTS_COVERED: 'Locaties',
     MENU: 'Menu',
     BOARD_AT: 'Opstapplaats: {0}',
     BOARDING_POINTS_AVAILABLE: '{0} mogelijke opstapplaatsen',

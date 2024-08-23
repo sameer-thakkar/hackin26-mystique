@@ -10,7 +10,7 @@ import { MenuList } from './styles';
 import { TMenuSection } from './types';
 
 const MenuSection = (props: TMenuSection) => {
-  const { menuData = [], tgid } = props;
+  const { menuData = [], tgid, rank } = props;
   const pdfPopupController = useRef<TController>();
   const { isMobile } = useRecoilValue(appAtom);
 
@@ -34,6 +34,7 @@ const MenuSection = (props: TMenuSection) => {
       {ReactDOM.createPortal(
         <PdfPopup
           tgid={tgid}
+          rank={rank}
           controller={pdfPopupController}
           pdfData={menuData}
           onHide={

@@ -93,7 +93,7 @@ const StyledProductsWrapper = styled.div<{
     margin: 0 auto;
     width: 100%;
     @media (max-width: 768px) {
-      margin: ${({ isTicketCard }) => (isTicketCard ? '0 auto' : '0 1rem')};
+      margin: ${({ isTicketCard }) => (isTicketCard ? '0 auto' : '0 1.5rem')};
       width: auto;
     }
     h2 {
