@@ -46,6 +46,7 @@ const ReviewSection = ({
           showSkeleton
           externalButtonContent={externalButtonContent}
           isMobile={isMobile}
+          showReviews={topReviews && topReviews.length > 0}
         />
       </StyledReviewSectionContainer>
     </>

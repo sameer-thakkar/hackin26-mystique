@@ -13,4 +13,5 @@ export type TReviewSectionProps = {
   showSkeleton?: boolean;
   controlledSwiperParams?: SwiperProps;
   externalButtonContent?: JSX.Element | JSX.Element[];
+  showReviews?: boolean;
 };

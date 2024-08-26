@@ -2214,3 +2214,7 @@ export const OLYMPICS_BANNER = {
   BLOG_BANNER: 'Olympics Blog Banner',
   BLOG_REDIRECTION: 'Blog Redirection',
 };
+
+export const DEFAULT_REVIEWER_NAME = 'headout guest';
+
+export const DEFAULT_TOP_REVIEWS_COUNT = 5;

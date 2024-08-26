@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -10,16 +10,25 @@ export const ReviewSectionWrapper = styled.div`
   }
 `;
 
-export const RatingsDetailsSection = styled.div`
+export const RatingsDetailsSection = styled.div<{
+  $showingReviewsSection?: boolean;
+}>`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  padding-bottom: 2.94rem;
-  border-bottom: dotted 1px ${COLORS.GRAY.G6};
+  ${({ $showingReviewsSection }) =>
+    $showingReviewsSection &&
+    css`
+      padding-bottom: 2.94rem;
+      border-bottom: dotted 1px ${COLORS.GRAY.G6};
+
+      @media (max-width: 768px) {
+        padding-bottom: 0.75rem;
+      }
+    `}
 
   @media (max-width: 768px) {
     flex-direction: column;
-    padding-bottom: 0.75rem;
   }
 `;
 

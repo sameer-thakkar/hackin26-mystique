@@ -45,6 +45,8 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
+  DEFAULT_REVIEWER_NAME,
+  DEFAULT_TOP_REVIEWS_COUNT,
   LANGUAGE_SORT_ORDER,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -94,6 +96,7 @@ const ReviewSection = ({
   controlledSwiperParams,
   showSkeleton = false,
   externalButtonContent,
+  showReviews = true,
 }: TReviewSectionProps) => {
   const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
     initialReviews || []
@@ -105,7 +108,7 @@ const ReviewSection = ({
   const shortenedRatingsCount = getShortenedNumber(ratingsCount);
   const { lang } = useContext(MBContext);
   const [offset, setOffset] = useState<number | null>(
-    Math.max(5, initialReviews?.length || 0)
+    !initialReviews ? 0 : Math.max(5, initialReviews?.length || 0)
   );
   const [totalNumberOfReviews, setTotalNumberOfReviews] = useState(-1);
   const [isFetching, setIsFetching] = useState(!initialReviews?.length);
@@ -113,7 +116,7 @@ const ReviewSection = ({
 
   const fetchReviews = useCallback(async () => {
     try {
-      if (!offset || offset >= maximumNumberOfReviews) return;
+      if (offset === null || offset >= maximumNumberOfReviews) return;
       setIsFetching(true);
       const reviewsResponse = await fetchTourGroupReviews({
         tgid,
@@ -142,7 +145,7 @@ const ReviewSection = ({
 
   return (
     <ReviewSectionWrapper>
-      <RatingsDetailsSection>
+      <RatingsDetailsSection $showingReviewsSection={showReviews}>
         <RatingsCountSection>
           <Ratings>
             <StarFullNew fillColor={COLORS.BRAND.CANDY} /> {averageRating}
@@ -165,69 +168,73 @@ const ReviewSection = ({
           ))}
         </RatingsSplit>
       </RatingsDetailsSection>
-      <ReviewsSection>
-        {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
-          <ReviewElement
-            review={review}
-            isMobile={isMobile}
-            key={index}
-            controlledSwiperParams={controlledSwiperParams}
-          />
-        ))}
-        <Conditional if={showSkeleton && isFetching}>
-          {Array.from({ length: 5 }, (_, i) => 5 - i).map((idx: number) => (
-            <ReviewSkeleton key={idx} isMobile={isMobile} />
+      <Conditional if={showReviews}>
+        <ReviewsSection>
+          {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
+            <ReviewElement
+              review={review}
+              isMobile={isMobile}
+              key={index}
+              controlledSwiperParams={controlledSwiperParams}
+            />
           ))}
-        </Conditional>
-      </ReviewsSection>
-      <Conditional
-        if={
-          (isMobile || showFetchMoreButton) &&
-          numberOfReviewsToShow <
-            (totalNumberOfReviews === -1
-              ? maximumNumberOfReviews
-              : Math.min(totalNumberOfReviews, maximumNumberOfReviews)) &&
-          reviews.length > 0
-        }
-      >
-        <ShowMoreReviewsButton
-          onClick={() => {
-            setNumberOfReviewsToShow(numberOfReviewsToShow + 5);
-            fetchReviews();
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.MORE_REVIEWS_CLICKED,
-              [ANALYTICS_PROPERTIES.CLICK_COUNT]: moreReviewsClickCount,
-            });
-            setMoreReviewsClickCount(moreReviewsClickCount + 1);
-          }}
-        >
-          {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
-        </ShowMoreReviewsButton>
-      </Conditional>
-
-      <Conditional
-        if={
-          reviewPageUrl &&
-          (!(isMobile || showFetchMoreButton) ||
-            numberOfReviewsToShow >=
+          <Conditional if={showSkeleton && isFetching}>
+            {Array.from({ length: 5 }, (_, i) => 5 - i).map((idx: number) => (
+              <ReviewSkeleton key={idx} isMobile={isMobile} />
+            ))}
+          </Conditional>
+        </ReviewsSection>
+        <Conditional
+          if={
+            (isMobile || showFetchMoreButton) &&
+            numberOfReviewsToShow <
               (totalNumberOfReviews === -1
                 ? maximumNumberOfReviews
-                : Math.min(totalNumberOfReviews, maximumNumberOfReviews)))
-        }
-      >
-        <AllReviewsButton
-          href={reviewPageUrl}
-          target="_blank"
-          onClick={() => {
-            trackEvent({
-              eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
-              [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.READ_DETAILED_REVIEWS,
-              [ANALYTICS_PROPERTIES.SECTION]: 'Reviews',
-            });
-          }}
+                : Math.min(totalNumberOfReviews, maximumNumberOfReviews)) &&
+            reviews.length >= DEFAULT_TOP_REVIEWS_COUNT
+          }
         >
-          {externalButtonContent ?? strings.SHOW_PAGE_V2.READ_DETAILED_REVIEWS}
-        </AllReviewsButton>
+          <ShowMoreReviewsButton
+            onClick={() => {
+              setNumberOfReviewsToShow(numberOfReviewsToShow + 5);
+              fetchReviews();
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.MORE_REVIEWS_CLICKED,
+                [ANALYTICS_PROPERTIES.CLICK_COUNT]: moreReviewsClickCount,
+              });
+              setMoreReviewsClickCount(moreReviewsClickCount + 1);
+            }}
+          >
+            {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
+          </ShowMoreReviewsButton>
+        </Conditional>
+
+        <Conditional
+          if={
+            reviewPageUrl &&
+            (!(isMobile || showFetchMoreButton) ||
+              numberOfReviewsToShow >=
+                (totalNumberOfReviews === -1
+                  ? maximumNumberOfReviews
+                  : Math.min(totalNumberOfReviews, maximumNumberOfReviews))) &&
+            reviews.length >= DEFAULT_TOP_REVIEWS_COUNT
+          }
+        >
+          <AllReviewsButton
+            href={reviewPageUrl}
+            target="_blank"
+            onClick={() => {
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+                [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.READ_DETAILED_REVIEWS,
+                [ANALYTICS_PROPERTIES.SECTION]: 'Reviews',
+              });
+            }}
+          >
+            {externalButtonContent ??
+              strings.SHOW_PAGE_V2.READ_DETAILED_REVIEWS}
+          </AllReviewsButton>
+        </Conditional>
       </Conditional>
     </ReviewSectionWrapper>
   );
@@ -290,7 +297,13 @@ const ReviewElement = ({
     lang,
     'MMM, YYYY'
   );
-  const customerFirstName = nonCustomerName?.split(' ')?.[0];
+  const customerFirstName = useMemo(() => {
+    if (!nonCustomerName) return '';
+    if (nonCustomerName.toLowerCase().trim() === DEFAULT_REVIEWER_NAME)
+      return nonCustomerName;
+    return nonCustomerName?.split(' ')?.[0];
+  }, [nonCustomerName]);
+
   return (
     <Review>
       <ReviewHeader>
