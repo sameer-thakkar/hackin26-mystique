@@ -53,7 +53,7 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
 
     return {
       children: (
-        <Container>
+        <Container key={routeName || itineraryName}>
           <AttractionsCarousel
             isMobile={isMobile}
             routeSectionsData={sections}
@@ -64,7 +64,7 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
           />
           <Conditional if={sections?.length}>
             <HOHORouteMap
-              itinerary={itineraryData?.[0]}
+              itinerary={itinerary}
               routeMapData={routeMapData}
               routeName={routeName}
               showLegend={true}

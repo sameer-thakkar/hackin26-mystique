@@ -58,7 +58,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [CRUISES_REVAMP]: new Experiment(
     CRUISES_REVAMP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [90, 10]
+    [50, 50]
   ),
   [LAST_MINUTE_FILTERS_EXPERIMENT]: new Experiment(
     LAST_MINUTE_FILTERS_EXPERIMENT,

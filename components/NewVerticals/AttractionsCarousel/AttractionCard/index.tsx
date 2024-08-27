@@ -22,8 +22,8 @@ const AttractionCard = (props: TAttractionCard) => {
   } = props;
 
   const IMAGE_DIMENSIONS = {
-    WIDTH: isMobile ? 208 : 133,
-    HEIGHT: isMobile ? 126 : 82,
+    WIDTH: isMobile ? 208 : 266,
+    HEIGHT: isMobile ? 126 : 164,
   };
 
   enum COMPONENT {
