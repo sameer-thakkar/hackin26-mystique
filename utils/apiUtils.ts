@@ -7,7 +7,7 @@ import {
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER, REVIEW_API_DOMAIN } from 'const/index';
+import { CUSTOM_HEADER, MICROBRANDS_URL, REVIEW_API_DOMAIN } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
@@ -1632,5 +1632,31 @@ export const fetchBulkPoisInfo = async ({
     sendLog({
       err: error,
     });
+  }
+};
+
+export const getCatSubcatDescriptors = async ({
+  descriptorsUid,
+  lang,
+  isDev,
+  host,
+}: {
+  descriptorsUid: string;
+  lang?: string | null;
+  isDev: boolean;
+  host: string;
+}) => {
+  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const endpoint = `${domain}/api/prismic/get-banner-descriptors/${descriptorsUid}/${lang}`;
+
+  try {
+    const response = await fetch(endpoint);
+    const bannerDescriptors = await response.json();
+    return bannerDescriptors;
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+    return {};
   }
 };

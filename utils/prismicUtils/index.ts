@@ -1,3 +1,4 @@
+import { createClient } from 'prismicio';
 import { constructHeaders } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
@@ -11,7 +12,11 @@ import { getNewsPageDocument } from 'utils/prismicUtils/NewsPage';
 import getShowPage from 'utils/prismicUtils/showPage';
 import getVenuePageDocument from 'utils/prismicUtils/venuePage';
 import { MICROBRANDS_URL, X_CACHE_HEADER_KEY } from 'const/index';
-import type { TDocumentResponse, TGetPrismicDocument } from './interface';
+import type {
+  TDocumentResponse,
+  TFetchBannerDescriptors,
+  TGetPrismicDocument,
+} from './interface';
 import { getReviewsPageDocument } from './reviewsPage';
 
 export const getPrismicDocument = async ({
@@ -162,4 +167,37 @@ export const fetchPrismicDocument = async ({
     prismicApiResponse: data,
     prismicApiCacheStatus: `${cacheHeader}, Age: ${cacheAge ?? -1}`,
   };
+};
+
+export const fetchBannerDescriptors = async ({
+  uid,
+  lang,
+}: {
+  uid: string;
+  lang?: any;
+}): Promise<TFetchBannerDescriptors> => {
+  const defaultBannerDescriptors = {
+    category_descriptors: [],
+    body: [],
+  };
+  try {
+    const prismicClient = createClient();
+    const bannerDescriptorsRes = await prismicClient.getByUID(
+      'banner_descriptors' as any,
+      uid,
+      {
+        lang,
+      }
+    );
+
+    return (
+      (bannerDescriptorsRes?.data as TFetchBannerDescriptors) ??
+      defaultBannerDescriptors
+    );
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+    return defaultBannerDescriptors as TFetchBannerDescriptors;
+  }
 };

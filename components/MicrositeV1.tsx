@@ -213,6 +213,8 @@ const MicrositeV1 = (props: any) => {
     isCatOrSubCatPage,
     airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
     categoryTourListDataWithRankingExperiment,
+    categoryDescriptors,
+    subcategoryDescriptors,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -817,6 +819,10 @@ const MicrositeV1 = (props: any) => {
     taggedCategoryName,
     taggedSubCategoryName,
     firstProductSubCategory,
+    categoryDescriptors,
+    subcategoryDescriptors,
+    lang,
+    cityName: primaryCity?.displayName,
   });
 
   const availableTours = orderedTours?.filter(

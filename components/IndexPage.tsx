@@ -168,6 +168,8 @@ const Page = (props: PageProps) => {
     collectionData,
     isSeatingPlanPage,
     theatreType,
+    categoryDescriptors,
+    subcategoryDescriptors,
   } = props;
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
@@ -273,6 +275,8 @@ const Page = (props: PageProps) => {
             uid={uid}
             isSeatingPlanPage={isSeatingPlanPage}
             theatreType={theatreType}
+            categoryDescriptors={categoryDescriptors}
+            subcategoryDescriptors={subcategoryDescriptors}
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -356,6 +360,8 @@ const Page = (props: PageProps) => {
               categoryTourListDataWithRankingExperiment={
                 categoryTourListDataWithRankingExperiment
               }
+              categoryDescriptors={categoryDescriptors}
+              subcategoryDescriptors={subcategoryDescriptors}
             />
           );
         }

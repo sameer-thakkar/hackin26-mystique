@@ -19,7 +19,6 @@ import renderShortCodes from 'utils/shortCodes';
 import { constantCase } from 'utils/stringUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID } from 'const/airportTransfers';
-import { CATEGORY_BANNER, SUB_CATEGORY_BANNER } from 'const/bannerDescriptors';
 import {
   A2_SHOULDER_PAGE_TYPES,
   REVIEWS_PAGE_BANNER_HEADING,
@@ -28,7 +27,6 @@ import {
 import { MISC, SUB_ATTRACTIONS } from 'const/header';
 import {
   BANNER_API_PARAMS,
-  CATEGORY_IDS,
   CUSTOM_TYPES,
   DESIGN,
   ENTITY_ICONS_FOLDER_URL,
@@ -37,11 +35,17 @@ import {
   MB_CATEGORISATION,
   MONTHS,
   PAGE_URL_STRUCTURE,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
   RESOURCE_ASSET_TYPE,
   SUBCATEGORY,
   THEATRE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import {
+  TBannerDescriptor,
+  TPrismicBannerDescriptor,
+  TPrismicSubcategoryDescriptors,
+} from './prismicUtils/interface';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -793,40 +797,102 @@ export const getCatAndSubcatPageLabel = ({
   return formattedLabelString || label;
 };
 
+const replaceBannerDescriptorPlaceholders = ({
+  descriptorText,
+  language,
+  cityName,
+}: {
+  descriptorText: string;
+  language: string;
+  cityName: string;
+}) => {
+  return descriptorText
+    .replace(/<language>/gi, (match) => {
+      return match === match.toLowerCase() ? language.toLowerCase() : language;
+    })
+    .replace(/<city>|<location>/gi, (match) => {
+      return match === match.toLowerCase() ? cityName.toLowerCase() : cityName;
+    });
+};
+
+const mapDescriptorItems = ({ descriptors = [], cityName, language }: any) =>
+  descriptors?.reduce(
+    (
+      acc: TBannerDescriptor[],
+      { descriptor_text = '', descriptor_icon_url }: TPrismicBannerDescriptor
+    ) => {
+      if (acc.length >= 3) return acc;
+
+      const descriptorText = replaceBannerDescriptorPlaceholders({
+        descriptorText: descriptor_text,
+        language,
+        cityName,
+      });
+
+      const icon = descriptor_icon_url?.url;
+
+      if (descriptorText && icon) {
+        acc.push({ text: descriptorText, icon });
+      }
+
+      return acc;
+    },
+    []
+  ) || [];
+
 export const getBannerDescriptors = ({
   taggedMbType,
   taggedCategoryName,
   taggedSubCategoryName,
   firstProductSubCategory,
+  subcategoryDescriptors,
+  categoryDescriptors,
+  lang,
+  cityName,
 }: {
   taggedMbType: string | null;
   taggedCategoryName: string | null;
   taggedSubCategoryName: string | null;
   firstProductSubCategory: Record<string, any> | undefined;
+  subcategoryDescriptors: TPrismicSubcategoryDescriptors[];
+  categoryDescriptors: [];
+  lang: string;
+  cityName?: string;
 }) => {
   const { id, name } = firstProductSubCategory || {};
+
+  const languageCode = PRISMIC_LANG_TO_ROUTE_PARAM[lang];
+  let descriptors: TPrismicBannerDescriptor[] = [];
+
+  const language =
+    LANGUAGE_MAP[languageCode as keyof typeof LANGUAGE_MAP]?.displayName;
 
   const isAirportTransfersMB =
     (name === 'Private Airport Transfers' || name === 'Airport Transfers') &&
     taggedSubCategoryName === 'Airport Transfers';
 
-  let descriptorData = [];
+  const findDescriptors = (subcategoryId: number) =>
+    subcategoryDescriptors?.find?.(
+      (descriptor: any) => descriptor?.primary?.subcategory_id === subcategoryId
+    )?.items || [];
 
   if (isAirportTransfersMB) {
-    descriptorData =
-      SUB_CATEGORY_BANNER()[AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID];
+    descriptors = findDescriptors(AIRPORT_TRANSFER_PRIMARY_SUBCATEGORY_ID);
   } else if (isSubCategoryMB(taggedMbType) && taggedSubCategoryName === name) {
-    descriptorData = SUB_CATEGORY_BANNER()[id];
+    descriptors = findDescriptors(id);
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {
-    const categoryId = CATEGORY_IDS[taggedCategoryName];
-    descriptorData = CATEGORY_BANNER()[categoryId];
+    descriptors = categoryDescriptors;
   } else if (isCollectionMB(taggedMbType) && taggedSubCategoryName === name) {
-    descriptorData = SUB_CATEGORY_BANNER()[id];
+    descriptors = findDescriptors(id);
   } else if (isCollectionMB(taggedMbType) && taggedCategoryName) {
-    const categoryId = CATEGORY_IDS[taggedCategoryName];
-    descriptorData = CATEGORY_BANNER()[categoryId];
+    descriptors = categoryDescriptors;
   }
-  return descriptorData;
+
+  return mapDescriptorItems({
+    descriptors,
+    language,
+    cityName,
+  });
 };
 
 export const getShoulderPageLabel = ({

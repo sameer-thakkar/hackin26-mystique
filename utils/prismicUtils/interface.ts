@@ -77,3 +77,26 @@ export type TMbType = SelectField<
   | 'B1 - Global Home Page'
   | 'C1 - Collection MB'
 >;
+
+export type TFetchBannerDescriptors = {
+  category_descriptors: TPrismicBannerDescriptor[];
+  body: TPrismicBannerDescriptor[];
+};
+
+export type TPrismicBannerDescriptor = {
+  descriptor_text: string;
+  descriptor_icon_url: Record<string, string>;
+};
+
+export type TBannerDescriptor = {
+  text: string;
+  icon: string;
+};
+
+export type TPrismicSubcategoryDescriptors = {
+  primary: Record<string, any>;
+  items: TPrismicBannerDescriptor[];
+  id: string;
+  slice_type: string;
+  slice_label: any;
+};

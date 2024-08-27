@@ -22,6 +22,7 @@ import {
   fetchTourGroupSlots,
   fetchTourGroupV6,
   fetchTourListV6,
+  getCatSubcatDescriptors,
 } from 'utils/apiUtils';
 import {
   getBreadcrumbs,
@@ -670,6 +671,8 @@ export const getPageData = async ({
       // CMSContent?.data?.shoulder_page_type !==
       //   MB_CATEGORISATION.SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS
     ) {
+      let categoryDescriptors: any = [],
+        subcategoryDescriptors = [];
       let collectionDetails: CollectionDetails | Object = {};
       const { data: CMSData } = CMSContent ?? {};
       const {
@@ -795,11 +798,40 @@ export const getPageData = async ({
         minPrice = categoryTourListData.minPrice;
         bestDiscount = categoryTourListData.bestDiscount;
         const [firstTGID] = categoryTourListData?.finalTgids || [];
-        const { primarySubCategory: firstProductSubCategory } =
+        const { primarySubCategory: firstProductSubCategory, primaryCategory } =
           categoryTourListData.scorpioData?.[firstTGID] || {};
         const subCatId = firstProductSubCategory?.id;
         const categoryId = CATEGORY_IDS?.[taggedCategory];
+        const isAirportTransfersMB =
+          (taggedMbType === 'Private Airport Transfers' ||
+            taggedMbType === 'Airport Transfers') &&
+          taggedMbType === 'Airport Transfers';
 
+        const shouldFetchBannerDescriptors =
+          isAirportTransfersMB ||
+          isCollectionMB(taggedMbType) ||
+          isSubCategoryMB(taggedMbType) ||
+          isCategoryMB(taggedMbType);
+
+        if (shouldFetchBannerDescriptors) {
+          const { name = '', id: primaryCategoryId } = primaryCategory || {};
+          const categoryName = name.toLowerCase();
+
+          const descriptorsUid = `${categoryName}-${primaryCategoryId}-descriptors`;
+
+          const bannerDescriptors = await getCatSubcatDescriptors({
+            host,
+            isDev,
+            descriptorsUid,
+            lang,
+          });
+
+          if (bannerDescriptors) {
+            categoryDescriptors = bannerDescriptors?.categoryDescriptors || [];
+            subcategoryDescriptors =
+              bannerDescriptors?.subcategoryDescriptors || [];
+          }
+        }
         if (isCollectionMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -903,6 +935,8 @@ export const getPageData = async ({
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
         cityPageParams,
+        categoryDescriptors,
+        subcategoryDescriptors,
       };
     }
     tgidsArray = [...tgidsArray];

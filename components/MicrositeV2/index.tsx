@@ -154,6 +154,8 @@ class MicrositeV2 extends Component<any, any> {
       catAndSubCatPageData,
       isSeatingPlanPage,
       theatreType,
+      categoryDescriptors,
+      subcategoryDescriptors,
     } = this.props;
 
     const {
@@ -595,6 +597,8 @@ class MicrositeV2 extends Component<any, any> {
             isDev={isDev}
             theatreType={theatreType}
             isSeatingPlanPage={isSeatingPlanPage}
+            categoryDescriptors={categoryDescriptors}
+            subcategoryDescriptors={subcategoryDescriptors}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>

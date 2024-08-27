@@ -274,6 +274,8 @@ export const HomePage = (props: any) => {
     catAndSubCatPageData,
     theatreType,
     isSeatingPlanPage,
+    categoryDescriptors,
+    subcategoryDescriptors,
   } = props;
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
@@ -335,6 +337,10 @@ export const HomePage = (props: any) => {
     taggedCategoryName,
     taggedSubCategoryName,
     firstProductSubCategory,
+    categoryDescriptors,
+    subcategoryDescriptors,
+    lang: currentLanguage,
+    cityName: primaryCity?.displayName,
   });
 
   if (!isLttMonthOnMonthPage && (isListicle || isDiscountedPage)) {
