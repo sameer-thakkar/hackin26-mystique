@@ -508,24 +508,30 @@ const ContentPage = (props: any) => {
   }
 
   if (isRevampedPage) {
-    extractedProductCardsSlice = extractSliceByType({
-      slices: contentFWSlices,
-      sliceType:
-        SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
-    });
     extractedBreadcrumbsSlice = !automatedBreadcrumbsExists
       ? extractSliceByType({
           slices: contentFWSlices,
           sliceType: SLICE_TYPES.BREADCRUMBS as keyof typeof SLICE_TYPES,
         })
       : [];
+    // exception: we wanna keep the cards slice in subattractions type B
+    if (subattraction_type !== SUBATTRACTION_TYPE.B) {
+      extractedProductCardsSlice = extractSliceByType({
+        slices: contentFWSlices,
+        sliceType:
+          SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
+      });
+    }
+    const slicesToBeRemoved =
+      subattraction_type !== SUBATTRACTION_TYPE.B
+        ? [SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD, SLICE_TYPES.BREADCRUMBS]
+        : [SLICE_TYPES.BREADCRUMBS];
     // besides reordering in the sidebar, also remove from the longform slices
-    [SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD, SLICE_TYPES.BREADCRUMBS].forEach(
-      (sliceType) =>
-        extractSliceByType({
-          slices,
-          sliceType: sliceType as keyof typeof SLICE_TYPES,
-        })
+    slicesToBeRemoved.forEach((sliceType) =>
+      extractSliceByType({
+        slices,
+        sliceType: sliceType as keyof typeof SLICE_TYPES,
+      })
     );
 
     // as we're reordering the product cards, reorder its title in the sidebar
