@@ -152,13 +152,15 @@ export const getReviewsPageData = async (
    *  Modifying breadcrumbs last node, since we don't have
    * heading field in reviews page doc.
    **/
-  breadcrumbsData['level_4'].label = sentenceCase(
-    getBreadcrumbLabel({
-      label: REVIEWS_PAGE_BANNER_HEADING,
-      mbCity: '',
-      showName: tgidData.name,
-    })
-  );
+  if (breadcrumbsData['level_4']) {
+    breadcrumbsData['level_4'].label = sentenceCase(
+      getBreadcrumbLabel({
+        label: REVIEWS_PAGE_BANNER_HEADING,
+        mbCity: '',
+        showName: tgidData.name,
+      })
+    );
+  }
   const newsLandingPageUrl = getNewsLandingPageUrl(
     newsLandingPageData?.results,
     uid,
