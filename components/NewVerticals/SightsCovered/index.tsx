@@ -53,7 +53,7 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
 
     return {
       children: (
-        <Container key={routeName || itineraryName}>
+        <Container key={itineraryId}>
           <AttractionsCarousel
             isMobile={isMobile}
             routeSectionsData={sections}

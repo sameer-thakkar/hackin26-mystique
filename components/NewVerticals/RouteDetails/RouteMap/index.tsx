@@ -93,6 +93,7 @@ const HOHORouteMap = (props: TRouteMap) => {
           onClickTrackEvent={handleClickEvent}
           onZoomTrackEvent={handleZoomEvent}
           showStartAsStop={itinerary?.type === ItineraryType.CRUISE}
+          enableFreeTouchPropagation
         />
         <Conditional if={showOverlay && !isEnabled}>
           <Overlay interactionEnabler={handleInteraction} />
