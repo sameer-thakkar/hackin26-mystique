@@ -90,7 +90,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
             priority
             height={433}
             width={784}
-            autoCrop
+            autoCrop={false}
             className={`banner-image-${index} ${className}`}
           />
         </SlideImageWrapper>
