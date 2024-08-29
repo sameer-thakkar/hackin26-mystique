@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
@@ -49,6 +49,7 @@ const Container = styled.div`
   border: ${({ theme }) => theme.productCards.border};
   border-radius: 16px;
   background: ${COLORS.BRAND.WHITE};
+  box-sizing: border-box;
 `;
 
 const ProductHeader = styled.div`
