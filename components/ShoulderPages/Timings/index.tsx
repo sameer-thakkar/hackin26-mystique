@@ -310,6 +310,7 @@ const TimingsTableTabsView = ({
             height={isMobile ? 184 : 306}
             url={imageUrl ?? ''}
             alt={imageAltText ?? ''}
+            autoCrop={false}
           />
         </Conditional>
       </TimingTablesContainer>

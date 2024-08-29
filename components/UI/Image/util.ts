@@ -45,7 +45,7 @@ export const generateImageImgixUrl = (
 
   if (autoCrop) {
     imigxOptionsQueryParams.set('crop', 'faces');
-    imigxOptionsQueryParams.delete('fit');
+    imigxOptionsQueryParams.set('fit', 'crop');
   }
 
   if (cropMode) {
