@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
-import { generateSidenavId } from 'utils/helper';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
 import COLORS from 'const/colors';
 import { SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { stringIdfy } from '../../utils/helper';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';

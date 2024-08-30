@@ -47,6 +47,10 @@ typings/
 # TypeScript cache
 *.tsbuildinfo
 
+## Panda
+styled-system
+styled-system-studio
+
 # Optional npm cache directory
 .npm
 
