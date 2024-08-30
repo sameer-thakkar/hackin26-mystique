@@ -38,7 +38,7 @@ export const YoutubeBannerWrapper = styled.div`
   }
 `;
 
-export const YoutubeBanner = styled.div`
+export const YoutubeBanner = styled.div<{ insideCards?: boolean }>`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -56,24 +56,31 @@ export const YoutubeBanner = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     width: auto;
-    margin: 0 1.5rem;
     padding: 1rem;
+    ${({ insideCards }) => insideCards && 'margin: 0 1.5rem'};
   }
+`;
+
+export const Subtitle = styled.p`
+  ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+  margin: 0;
+  margin-top: 0.1rem;
+  display: block;
 `;
 
 export const YoutubeBannerLeft = styled.div`
   width: 60%;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   span {
     margin: 0;
     color: black;
     ${expandFontToken(FONTS.HEADING_SMALL)}
   }
 
-  h2 {
+  ${Subtitle} {
     ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
-    margin: 0;
-    margin-top: 0.1rem;
   }
 
   @media (max-width: 768px) {
@@ -85,15 +92,13 @@ export const YoutubeBannerLeft = styled.div`
   }
 `;
 
-export const YoutubeBannerRight = styled.div<{
-  $isOlympicsBanner: boolean;
-}>`
+export const YoutubeBannerRight = styled.div`
   width: 40%;
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: ${({ $isOlympicsBanner }) =>
-    $isOlympicsBanner ? 'end' : 'space-evenly'};
+  justify-content: flex-end;
+  gap: 2rem;
 
   h3,
   p {
@@ -124,9 +129,11 @@ export const YoutubeBannerRight = styled.div<{
   }
 
   @media (max-width: 768px) {
-    display: block;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 3rem;
   }
 
   @keyframes play-icon-animation {
@@ -152,25 +159,24 @@ export const YoutubeBannerRight = styled.div<{
 `;
 
 export const H3Heading = styled.h3<{
-  $isOlympicsBanner?: boolean;
+  $isImage?: boolean;
 }>`
   width: max-content;
   a {
-    color: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.PURPS} !important;
     ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+    padding-left: 0.3rem;
   }
-  ${({ $isOlympicsBanner }) =>
-    $isOlympicsBanner &&
+  ${({ $isImage }) =>
+    $isImage &&
     `
     ${expandFontToken(FONTS.BUTTON_SMALL)};
-    margin:0;
+    margin:0 0 0 3rem;
     @media (max-width: 768px){
       display:flex;
+      margin: 0;
     }
   `}
-  a:hover {
-    text-decoration: underline;
-  }
 `;
 
 const animateMediaPreview = `

@@ -41,6 +41,8 @@ export type TMicrositeDocument = MicrositeDocument & {
     >;
     baseLangCategorisationMetadata: TCategorisationMetadata;
     mbType: TMbType;
+    customBanner?: Record<string, any>;
+    baseLangCustomBanner?: Record<string, any>;
   };
   subattractionsContentPageData?: Record<string, any>;
 };

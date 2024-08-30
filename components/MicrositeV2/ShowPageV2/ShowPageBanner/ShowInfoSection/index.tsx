@@ -49,14 +49,14 @@ const ShowInfoSection = ({
   const [mwebShowMoreTagsClicked, setmwebShowMoreTagsClicked] = useState(false);
   const {
     name,
-    primarySubCategory,
-    reviewsDetails,
+    primarySubCategory = {},
+    reviewsDetails = {},
     microBrandsDescriptor,
     microBrandsHighlight,
     topReviews,
     verticalImage,
-    primaryCategory,
-    primaryCity,
+    primaryCategory = {},
+    primaryCity = {},
   } = tourGroupData ?? {};
 
   const { url: verticalImageUrl, alt: verticalImageAlt } = verticalImage;
@@ -74,6 +74,7 @@ const ShowInfoSection = ({
 
   const TAG_PAGE_MAP = getTagPageMap(uid);
   const getTagUrl = (name: string) =>
+    name &&
     getTagPageLink({
       url: TAG_PAGE_MAP[name.replace('’', "'")],
       lang,
@@ -209,7 +210,7 @@ const ShowInfoSection = ({
                       <span>
                         {strings.formatString(
                           strings.RATINGS,
-                          shortenedRatingsCount
+                          shortenedRatingsCount || ''
                         )}
                       </span>
                       )
@@ -281,7 +282,7 @@ const ShowInfoSection = ({
                 </Conditional>
               </div>
             </Conditional>
-            {name.length > 46 ? (
+            {name?.length > 46 ? (
               <Tooltip
                 content={name}
                 trigger={<h1 className="title">{name}</h1>}

@@ -130,7 +130,6 @@ const getMicrositeDocument = async ({
 
         let baseLangCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
         let currentPageCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
-
         let categoryTourListV2:
           | MicrositeDocumentDataBodyTourListCategorySlice
           | undefined = undefined;
@@ -142,6 +141,15 @@ const getMicrositeDocument = async ({
             baseLangPageData?.body1[0]?.primary?.ranking ?? '';
         }
 
+        const customBanner = getSinglePrismicSlice({
+          sliceName: SLICE_TYPES.CUSTOM_BANNER,
+          slices: currentPageCategorizedToursTab,
+        });
+
+        const baseLangCustomBanner = getSinglePrismicSlice({
+          sliceName: SLICE_TYPES.CUSTOM_BANNER,
+          slices: baseLangCategorizedToursTab,
+        });
         // Base lang Fallback for CategorisedToursV1
         currentPageCategoryTourListV1 = !isCatOrSubCatPage
           ? getSinglePrismicSlice({
@@ -278,6 +286,8 @@ const getMicrositeDocument = async ({
             localisedCategoryTourListV1: isLocalizedLang
               ? baseLangCategoryTourListV1
               : currentPageCategoryTourListV1,
+            customBanner,
+            baseLangCustomBanner,
             currentPageCategoryTourListV1,
             categoryTourListV2,
             baseLangPageTitle: isLocalizedLang

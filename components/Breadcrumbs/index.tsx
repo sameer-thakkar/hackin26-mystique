@@ -23,7 +23,7 @@ const BreadcrumbsDropdown = dynamic(
 );
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
-  breadcrumbs,
+  breadcrumbs = {},
   taggedCity,
   primaryCity,
   showName = '',

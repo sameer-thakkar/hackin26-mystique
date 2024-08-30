@@ -604,7 +604,7 @@ export const getPageData = async ({
           keys: ['urlSlugs', 'urlSlug'],
         });
         const { url: _tgidDataUrl, ...tgidDataWithoutUrls } =
-          tgidDataWithoutUrlSlugs;
+          tgidDataWithoutUrlSlugs || {};
 
         const primaryCountry = tgidDataWithoutUrls?.city?.country;
         const primaryCity = tgidDataWithoutUrls?.city;

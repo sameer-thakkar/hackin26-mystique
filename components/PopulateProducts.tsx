@@ -51,6 +51,7 @@ import PercentageStamp from 'assets/percentageStamp';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
+import CustomBanner from './CustomBanner';
 
 const Product = dynamic(
   () => import(/* webpackChunkName: "Product" */ 'components/Product')
@@ -267,6 +268,8 @@ const PopulateProducts: any = (props: any) => {
     subattraction_type,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
+    customBanner,
+    baseLangCustomBanner,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -888,7 +891,34 @@ const PopulateProducts: any = (props: any) => {
       >
         <Conditional if={finalToursList?.length > 0}>
           {finalToursList?.map((tour: Record<string, any>, index: number) => {
-            return getProductCardFromTourAndIndex(tour, index);
+            const bannerIndex = Number(
+              baseLangCustomBanner?.position_index ||
+                customBanner?.position_index
+            );
+            const RenderedCustomBanner = customBanner?.position_index && (
+              <CustomBanner
+                variant={customBanner?.banner_variant}
+                ctaLabel={customBanner?.cta_label}
+                ctaUrl={customBanner?.cta_url?.url}
+                headingTitle={customBanner?.heading_title?.[0]?.text}
+                subtitle={customBanner?.subtitle?.[0]?.text}
+                mediaLink={customBanner?.media_link?.url}
+                insideCards
+              />
+            );
+            return (
+              <>
+                <Conditional if={bannerIndex === index}>
+                  {RenderedCustomBanner}
+                </Conditional>
+                {getProductCardFromTourAndIndex(tour, index)}
+                <Conditional
+                  if={bannerIndex > index && index == finalToursList.length - 1}
+                >
+                  {RenderedCustomBanner}
+                </Conditional>
+              </>
+            );
           })}
         </Conditional>
       </ProductContainer>

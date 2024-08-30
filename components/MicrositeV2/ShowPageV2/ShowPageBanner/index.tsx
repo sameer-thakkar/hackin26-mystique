@@ -32,7 +32,7 @@ const ShowPageV2Banner = ({
         breadcrumbs={breadcrumbs}
         taggedCity={taggedCity}
       />
-      <Conditional if={imageUploads.length || trailerUrl}>
+      <Conditional if={imageUploads?.length || trailerUrl}>
         <BannerBackground
           onClick={() => {
             trackEvent({

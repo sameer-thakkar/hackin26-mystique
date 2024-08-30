@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import CustomBanner from 'components/CustomBanner';
 import GoogleMap from 'components/ShowPages/GoogleMap';
 import Background from './Background';
 import Breadcrumb from './Breadcrumb';
@@ -845,6 +846,31 @@ export const sliceComponents = () => {
         <GoogleMap
           mapURL={slice.primary.google_map_url.url}
           isVenuePage={context.isVenuePage}
+        />,
+        props
+      );
+    },
+    custom_banner: (props: any) => {
+      const { slice } = props || {};
+      const {
+        primary: {
+          banner_variant,
+          cta_label,
+          cta_url,
+          heading_title,
+          subtitle,
+          media_link,
+        },
+      } = slice || { primary: {} };
+
+      return sliceWrapper(
+        <CustomBanner
+          variant={banner_variant}
+          ctaLabel={cta_label}
+          ctaUrl={cta_url?.url}
+          headingTitle={heading_title?.[0]?.text}
+          subtitle={subtitle?.[0]?.text}
+          mediaLink={media_link?.url}
         />,
         props
       );

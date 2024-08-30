@@ -18,7 +18,7 @@ import PlaySvg from 'assets/playSvg';
 
 interface VideoTypeProps {
   url: string;
-  fallbackImage: { url: string; altText?: string };
+  fallbackImage: { url?: string; altText?: string };
   isMuted?: boolean;
   shouldAutoPlay?: boolean;
   isLooped?: boolean;
@@ -239,11 +239,11 @@ const Video: React.FC<VideoTypeProps> = ({
       ref={videoContainerRef}
     >
       {children}
-      <Conditional if={fallbackImage}>
+      <Conditional if={fallbackImageUrl}>
         {/* Using a custom img component instead of video's poster attribute 
         to utilise the benefits of lazy-loading, fallback UI, etc. */}
         <Image
-          url={fallbackImageUrl}
+          url={fallbackImageUrl!}
           aspectRatio={imageAspectRatio}
           width={imageWidth}
           height={imageHeight}

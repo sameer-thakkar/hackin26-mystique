@@ -21,6 +21,14 @@ const tourListCategoryV1Gq = `
                 ...repeatFields
             }
         }
+        ...on custom_banner {
+            non-repeat {
+                ...non-repeatFields
+            }
+            repeat {
+                ...repeatFields
+            }
+        }
     }
 `;
 

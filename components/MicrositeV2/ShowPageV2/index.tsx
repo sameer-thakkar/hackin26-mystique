@@ -178,7 +178,7 @@ const LttShowPageV2 = ({
     microBrandsHighlight,
     id,
     flowType,
-    name,
+    name = '',
     primaryCategory,
     primarySubCategory,
     city,

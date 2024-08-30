@@ -1077,7 +1077,10 @@ export const ANALYTICS_PROPERTIES = {
   BOARDING_POINTS: 'Boarding Points Present',
   FOOD_MENUS_PRESENT: 'Food Menus Present',
   TAB_NAME: 'Tab Name',
+  IS_BANNER_SLICE_PRESENT: 'Is Banner Slice Present',
+  BANNER_TYPE: 'Banner Type',
 };
+export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -1314,6 +1317,7 @@ export const SLICE_TYPES = {
   REVIEW_CHIPS: 'review_chips',
   CRITICS_REVIEWS: 'critics_review',
   CONTRIBUTORS_REVIEW: 'contributors_review',
+  CUSTOM_BANNER: 'custom_banner',
 };
 
 export const CASHBACK_TYPES = {
@@ -2210,6 +2214,13 @@ export const OLYMPICS_BANNER = {
   GET_YOUR_FREE_GUIDE: 'Get your free guide',
   BLOG_BANNER: 'Olympics Blog Banner',
   BLOG_REDIRECTION: 'Blog Redirection',
+};
+
+export const CUSTOM_BANNER = {
+  VARIANTS: {
+    IMAGE_TEXT: 'Image + Text Banner',
+    VIDEO_TEXT: 'Video + Text Banner',
+  },
 };
 
 export const DEFAULT_REVIEWER_NAME = 'headout guest';

@@ -287,6 +287,8 @@ const MicrositeV1 = (props: any) => {
     footer_ref: commonFooter,
     secondary_footer: secondaryFooter,
     localisedCategoryTourListV1,
+    customBanner,
+    baseLangCustomBanner,
   } = micrositeData ?? {};
 
   const [isTourListFiltered, setIsTourListFiltered] = useState(false);
@@ -573,6 +575,9 @@ const MicrositeV1 = (props: any) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.IS_BANNER_SLICE_PRESENT]: customBanner
+        ? BOOLEAN_STATES['YES']
+        : BOOLEAN_STATES['NO'],
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: getAnalyticsPageType({
         isCityPageMB,
         isHOHO,
@@ -714,7 +719,6 @@ const MicrositeV1 = (props: any) => {
 
   const slices = contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
-
   const hasTourListContentFW: boolean = !!contentFWSlices.find(
     (slice: any) => slice.slice_type === 'tours_list'
   );
@@ -877,6 +881,8 @@ const MicrositeV1 = (props: any) => {
       isCruisesRevamp={showCruisesRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
       activeSubCat={activeSubCat}
+      customBanner={customBanner?.primary}
+      baseLangCustomBanner={baseLangCustomBanner?.primary}
     />
   );
 
@@ -906,7 +912,7 @@ const MicrositeV1 = (props: any) => {
         [ANALYTICS_PROPERTIES.SLICE_TYPE]: contentFWSlices[0]?.slice_type,
       });
     }
-  }, [isLfcIntersecting, showLFC, showLfcTimer]);
+  }, [isLfcIntersecting, showLFC, showLfcTimer, contentFWSlices]);
 
   useEffect(() => {
     if (isFooterIntersecting && showLFC && showLfcTimer) {
