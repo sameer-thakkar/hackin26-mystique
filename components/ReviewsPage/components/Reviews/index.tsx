@@ -243,8 +243,10 @@ const Reviews: React.FC<TReviewsProps> = ({
     setcriticReviewsToShow(criticReviewsToShow + 5);
   };
 
-  const tabsArray = [
-    {
+  const tabsArray = [];
+
+  if (criticReviewsData?.length) {
+    tabsArray.push({
       heading: CRITIC_REVIEWS,
       children: (
         <ReviewUI
@@ -256,8 +258,11 @@ const Reviews: React.FC<TReviewsProps> = ({
           isMobile={isMobile}
         />
       ),
-    },
-    {
+    });
+  }
+
+  if (userReviewsData?.length) {
+    tabsArray.push({
       heading: USER_REVIEWS,
       children: (
         <ReviewUI
@@ -269,8 +274,8 @@ const Reviews: React.FC<TReviewsProps> = ({
           isMobile={isMobile}
         />
       ),
-    },
-  ];
+    });
+  }
 
   if (error) {
     sendLog({
@@ -278,6 +283,10 @@ const Reviews: React.FC<TReviewsProps> = ({
       message: `Error while fetching reviews`,
     });
     return null;
+  }
+
+  if (!tabsArray.length) {
+    return <></>;
   }
 
   return (

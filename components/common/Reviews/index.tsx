@@ -128,6 +128,10 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
     }
   }, [isReviewsSectionVisible]);
 
+  if (!reviewsData?.items?.length) {
+    return <></>;
+  }
+
   return (
     <Wrapper ref={reviewRef}>
       <TitleHeader>

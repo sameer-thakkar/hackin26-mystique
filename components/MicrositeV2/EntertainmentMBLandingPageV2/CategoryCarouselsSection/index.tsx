@@ -131,6 +131,10 @@ export const CategoryCarouselSwiper = ({
     }
   };
 
+  if (!sliderList?.length) {
+    return <></>;
+  }
+
   return (
     <CategoryCarousel
       id={category.name}
