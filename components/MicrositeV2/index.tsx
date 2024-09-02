@@ -413,6 +413,11 @@ class MicrositeV2 extends Component<any, any> {
       categories = tourListCategories;
     }
 
+    const filteredCategories = categories?.filter(
+      (cat: any) =>
+        cat?.ranking?.popularity?.length || cat?.ranking?.price?.length
+    );
+
     const directCategory = this.props.router.query[QUERY_PARAMS.CATEGORY];
     if (isServer && directCategory) {
       const catRegex = new RegExp(directCategory, 'gi');
@@ -445,7 +450,7 @@ class MicrositeV2 extends Component<any, any> {
     }
 
     const categoryProps = {
-      categories,
+      categories: filteredCategories,
       active: 0,
       hideSortBySelector: hasCategoryTourList
         ? tourListCategorySortBy

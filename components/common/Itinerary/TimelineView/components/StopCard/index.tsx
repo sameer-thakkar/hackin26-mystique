@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useRecoilValue } from 'recoil';
 import { ChildSection, SECTION_TYPE, SUB_TYPES } from 'types/itinerary.type';
@@ -98,11 +98,11 @@ const StopCard = ({
   const multiPoints: MultiplePointsProps = {
     itineraryId,
     points:
-      isStart || isEnd
+      (isStart || isEnd) && subCards.length
         ? subCards.map(({ sectionDetails }) => ({
-            image: sectionDetails!.details?.mediaUrls?.[0],
-            title: sectionDetails!.details.name!,
-            timeForNextSection: sectionDetails!.details.timeForNextSection,
+            image: sectionDetails?.details?.mediaUrls?.[0] ?? '',
+            title: sectionDetails?.details.name! ?? '',
+            timeForNextSection: sectionDetails?.details.timeForNextSection ?? 0,
           }))
         : [],
     isStartPoint: isStart,
