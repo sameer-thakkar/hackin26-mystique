@@ -383,6 +383,7 @@ type TGenerateDescriptor = {
   isEntertainmentMb?: boolean;
   isShowPage?: boolean;
   primarySubCategory?: PrimarySubCategory;
+  isCombo?: boolean;
 };
 
 export const generateDescriptor = ({
@@ -391,6 +392,7 @@ export const generateDescriptor = ({
   isEntertainmentMb = false,
   isShowPage = false,
   primarySubCategory,
+  isCombo = false,
 }: TGenerateDescriptor) => {
   if (isShowPage || isEntertainmentMb) {
     if (!v2Descriptors) return [];
@@ -401,8 +403,9 @@ export const generateDescriptor = ({
 
   const headoutDescriptors = descriptors?.map((descriptor) => descriptor?.code);
   const isGuidedTour = isGuidedTourSubcategory(primarySubCategory?.id);
-
-  headoutDescriptors.push(DESCRIPTORS.DURATION);
+  if (!isCombo) {
+    headoutDescriptors.push(DESCRIPTORS.DURATION);
+  }
 
   const rankedDescriptorList = rankDescriptorList(headoutDescriptors);
   let displayLimit = MAX_DESCRIPTORS_DISPLAYED;
@@ -839,6 +842,7 @@ export const getScorpioData = async ({
         descriptors,
         lang: language,
         primarySubCategory,
+        isCombo: !!combo,
       });
       let {
         microBrandsHighlight,
