@@ -15,6 +15,7 @@ import {
   DEFAULT_PRISMIC_LANG,
   MB_CATEGORISATION,
   MICROBRANDS_URL,
+  PRISMIC_SWR_AGE,
   SHORTER_CACHE_AGE,
   X_CACHE_HEADER_KEY,
 } from 'const/index';
@@ -163,6 +164,12 @@ const getPrismicDocumentData = async (
 
     const cacheHeader = contentTypeResponse.headers.get(X_CACHE_HEADER_KEY);
     const cacheAge = contentTypeResponse.headers.get('age');
+
+    if (!shouldHaveShorterTtl)
+      res.setHeader(
+        'Cache-Control',
+        `stale-while-revalidate=${PRISMIC_SWR_AGE}`
+      );
 
     res.status(200).json({
       CMSContent,

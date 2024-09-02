@@ -1973,6 +1973,7 @@ export const ENTITY_ICONS_FOLDER_LINK =
   'https://cdn-imgix-open.headout.com/categories';
 
 export const SHORTER_CACHE_AGE = 10;
+export const PRISMIC_SWR_AGE = 14400;
 
 export const SIXTY_DAYS_CACHE = 5552000;
 export const ONE_WEEK_CACHE = 604800;
