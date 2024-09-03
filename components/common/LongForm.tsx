@@ -167,7 +167,6 @@ const LongForm = (longFormProps: TLongFormProps) => {
     content,
     isContentPage,
     trackProductCardsViewed,
-    shouldShowShoulderPageProductCardExperiment,
     isCatAndSubCatPage,
     parentLandingPageUrl,
     ...props
@@ -201,7 +200,6 @@ const LongForm = (longFormProps: TLongFormProps) => {
           isMobile,
           isContentPage,
           trackProductCardsViewed,
-          shouldShowShoulderPageProductCardExperiment,
           parentLandingPageUrl,
         }}
         defaultComponent={() => null}

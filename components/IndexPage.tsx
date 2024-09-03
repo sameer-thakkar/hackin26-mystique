@@ -196,19 +196,6 @@ const Page = (props: PageProps) => {
   });
 
   const {
-    isEligible: isShoulderPageProductCardExperimentEligible,
-    variant: shoulderPageProductExpVariant,
-    isExperimentResolving: isShoulderPageProductCardExpResolving,
-  } = useABTesting({
-    experimentId: 'SHOULDER_PAGE_PRODUCT_CARD_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => {
-      const CMSData = CMSContent?.data;
-      return !!CMSData?.shoulder_page_type;
-    },
-  });
-
-  const {
     isEligible: shouldRunCustomCTAExperiment,
     variant: customCTAExperimentVariant,
   } = useABTesting({
@@ -224,10 +211,6 @@ const Page = (props: PageProps) => {
   const shouldShowNewSubattractionsExp =
     isSubattractionsExpEligible &&
     subattractionsExpVariant == VARIANTS.TREATMENT;
-
-  const shouldShowShoulderPageProductCardExperiment =
-    isShoulderPageProductCardExperimentEligible &&
-    shoulderPageProductExpVariant === VARIANTS.TREATMENT;
 
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -366,11 +349,7 @@ const Page = (props: PageProps) => {
       // eslint-disable-next-line no-duplicate-case, no-fallthrough
       case CUSTOM_TYPES.MICROSITE: // Duplicated to treat subatraction pages as shoulder pages instead of microsites
       case CUSTOM_TYPES.CONTENT_PAGE:
-        if (
-          (isSubattractionsExpEligible && isSubattractionsExpResolving) ||
-          (isShoulderPageProductCardExperimentEligible &&
-            isShoulderPageProductCardExpResolving)
-        )
+        if (isSubattractionsExpEligible && isSubattractionsExpResolving)
           return <Loader />;
         return (
           <ContentPage
@@ -397,9 +376,6 @@ const Page = (props: PageProps) => {
             uid={uid}
             collectionData={collectionData}
             shouldShowNewSubattractionsExp={shouldShowNewSubattractionsExp}
-            shouldShowShoulderPageProductCardExperiment={
-              shouldShowShoulderPageProductCardExperiment
-            }
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:

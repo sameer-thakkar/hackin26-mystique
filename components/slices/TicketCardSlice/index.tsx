@@ -1,54 +1,17 @@
-import React, { Key, useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
-import { SwiperProps } from 'swiper/react';
-import type { Swiper as TSwiper } from 'swiper/types';
-import Conditional from 'components/common/Conditional';
 import PopulateProducts from 'components/PopulateProducts';
-import {
-  Arrows,
-  ParentTicketsTitle,
-  ProductContainer,
-  Row,
-} from 'components/ShoulderPages/Subattraction/styles';
 import useOnScreen from 'hooks/useOnScreen';
 import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
-import { csvTgidToArray, generateSidenavId, getLangObject } from 'utils/helper';
+import { csvTgidToArray, getLangObject } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { strings } from 'const/strings';
-import LttChevronLeft from 'assets/lttChevronLeft';
-import LttChevronRight from 'assets/lttChevronRight';
-import { Navigation, SwiperWrapper, Wrapper } from './styles';
-
-SwiperWrapper;
-
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
-);
-
-const SWIPER_BREAKPOINTS = {
-  500: {
-    slidesPerView: 1,
-  },
-  515: {
-    slidesPerView: 1.5,
-  },
-  650: {
-    slidesPerView: 2,
-  },
-  750: {
-    slidesPerView: 2.5,
-  },
-  1200: {
-    slidesPerView: 3,
-  },
-};
+import { Wrapper } from './styles';
 
 const TicketCard = (props: any) => {
   const {
@@ -65,8 +28,6 @@ const TicketCard = (props: any) => {
     title,
     subtext,
     trackProductCardsViewed,
-    shouldShowShoulderPageProductCardExperiment,
-    parentLandingPageUrl,
   } = props;
 
   const { body1: uncategorizedTours } = micrositeData || {};
@@ -187,13 +148,7 @@ const TicketCard = (props: any) => {
   };
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
-  const [, setActiveSwiperIndex] = useState(0);
-  const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const windowWidth = useWindowWidth();
-  const updateIndex = () => {
-    if (isMobile || !swiper) return;
-    setActiveSwiperIndex(swiper.realIndex);
-  };
 
   useEffect(() => {
     const currentIsMobile = windowWidth < 768;
@@ -201,19 +156,6 @@ const TicketCard = (props: any) => {
       setIsMobile(currentIsMobile);
     }
   }, [windowWidth]);
-
-  const swiperParams: SwiperProps = {
-    loop: false,
-    freeMode: false,
-    grabCursor: true,
-    onTouchEnd: () => {},
-    draggable: true,
-    spaceBetween: 24,
-    allowTouchMove: true,
-    onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
-    onSlideChange: () => updateIndex(),
-    slidesPerView: isMobile ? 1.05 : 1,
-  };
 
   const parentProductCards = PopulateProducts({
     asHook: true,
@@ -241,99 +183,36 @@ const TicketCard = (props: any) => {
     enableEarliestAvailability: true,
   });
 
-  const goNext = () => {
-    if (!swiper) return;
-    swiper.slideNext();
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
-      [ANALYTICS_PROPERTIES.SECTION]: 'Explore All',
-      [ANALYTICS_PROPERTIES.DIRECTION]: 'Forward',
-    });
-  };
-
-  const goPrev = () => {
-    if (!swiper) return;
-    swiper.slidePrev();
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.CHEVRON_CLICKED,
-      [ANALYTICS_PROPERTIES.SECTION]: 'Explore All',
-      [ANALYTICS_PROPERTIES.DIRECTION]: 'Backward',
-    });
-  };
-
-  const handleSeeAllCTAClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.SEE_ALL_CLICKED,
-      [ANALYTICS_PROPERTIES.CTA_TYPE]: 'See All',
-      [ANALYTICS_PROPERTIES.SECTION]: 'Product Carousel',
-    });
-  };
-
   if (!parentProductCards?.length && !orderedTours?.length && !scorpioData)
     return null;
 
   return (
     <Wrapper ref={productCarouselRef}>
-      <Conditional if={!shouldShowShoulderPageProductCardExperiment}>
-        <PopulateProducts
-          productCardsLimit={productCardsLimit}
-          currency={currency}
-          uncategorizedTours={orderedTours}
-          scorpioData={scorpioData}
-          uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
-          uid={uid}
-          currentLanguage={currentLanguage}
-          bookNowText={bookNowText}
-          readMoreText={readMoreText}
-          showLessText={showLessText}
-          productOffer={productOffer}
-          hasOffer={hasOffer}
-          togglePopup={onTogglePopup}
-          pageUrl={pageUrl}
-          isMobile={isMobile}
-          host={host}
-          mbTheme={mbTheme}
-          instantCheckout={instantCheckout}
-          enableEarliestAvailability={enableEarliestAvailability}
-          isTicketCard
-          sectionTitle={title}
-          sectionSubtext={subtext}
-          trackProductCardsViewed={trackProductCardsViewed}
-        />
-      </Conditional>
-      <Conditional if={shouldShowShoulderPageProductCardExperiment}>
-        <SwiperWrapper
-          id={generateSidenavId(title)}
-          className="swiper-container"
-        >
-          <Navigation>
-            <ParentTicketsTitle>{title}</ParentTicketsTitle>
-            <Row>
-              <Conditional if={parentLandingPageUrl}>
-                <a href={parentLandingPageUrl} onClick={handleSeeAllCTAClick}>
-                  {strings.SEE_ALL}
-                </a>
-              </Conditional>
-              <Conditional if={!isMobile}>
-                <Arrows>
-                  <LttChevronLeft
-                    onClick={goPrev}
-                    disabled={swiper?.isBeginning}
-                  />
-                  <LttChevronRight onClick={goNext} disabled={swiper?.isEnd} />
-                </Arrows>
-              </Conditional>
-            </Row>
-          </Navigation>
-          <Swiper {...swiperParams} breakpoints={SWIPER_BREAKPOINTS}>
-            {parentProductCards.map((Product: any, index: Key) => (
-              <ProductContainer key={index}>{Product}</ProductContainer>
-            ))}
-          </Swiper>
-        </SwiperWrapper>
-      </Conditional>
+      <PopulateProducts
+        productCardsLimit={productCardsLimit}
+        currency={currency}
+        uncategorizedTours={orderedTours}
+        scorpioData={scorpioData}
+        uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+        uid={uid}
+        currentLanguage={currentLanguage}
+        bookNowText={bookNowText}
+        readMoreText={readMoreText}
+        showLessText={showLessText}
+        productOffer={productOffer}
+        hasOffer={hasOffer}
+        togglePopup={onTogglePopup}
+        pageUrl={pageUrl}
+        isMobile={isMobile}
+        host={host}
+        mbTheme={mbTheme}
+        instantCheckout={instantCheckout}
+        enableEarliestAvailability={enableEarliestAvailability}
+        isTicketCard
+        sectionTitle={title}
+        sectionSubtext={subtext}
+        trackProductCardsViewed={trackProductCardsViewed}
+      />
     </Wrapper>
   );
 };
