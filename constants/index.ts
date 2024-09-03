@@ -705,8 +705,7 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_2: 'Type-2',
 };
 
-export const RIV_LOGO =
-  'https://cdn-imgix-open.headout.com/MB/RIV/dynamicHeader.riv';
+export const RIV_LOGO = 'https://cdn-imgix-open.headout.com/MB/RIV/30MRiv.riv';
 
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
