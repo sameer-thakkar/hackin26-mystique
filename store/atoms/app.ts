@@ -6,7 +6,6 @@ export const appAtom = atom({
     isMobile: false,
     host: '',
     isDev: false,
-    isStage: false,
     initialCurrency: '',
     isPageLoaded: false,
     uid: '',

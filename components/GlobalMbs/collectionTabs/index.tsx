@@ -52,8 +52,8 @@ const CollectionCard = ({
   const tabTitles = collections
     ?.map((collection) => collection?.data?.primary_category)
     ?.filter((tag, index, self) => self.indexOf(tag) === index);
-  const { isDev, host, isStage, lang } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const { isDev, host, lang } = useContext(MBContext);
+  const hostname = getHostName(isDev, host);
   const allCategoryIds = collections
     .map((collection) => collection?.data?.headout_category_id)
     ?.filter(Boolean);

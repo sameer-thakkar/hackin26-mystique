@@ -203,11 +203,6 @@ const getContentPageDocument = async ({
     });
 
     if (currentPageUid !== uid) {
-      if (host?.slice(0, 5) === 'stage') {
-        if (pageUrl) {
-          pageUrl = pageUrl.split('//')?.join('//stage-');
-        }
-      }
       return {
         redirectInfo: {
           url: pageUrl,
@@ -446,8 +441,7 @@ const getContentPageDocument = async ({
       subattractionChildPoiData = fetchedSubattractionChildPoi?.pois?.[0];
 
       if (shoulder_page_type === SHOULDER_PAGE_TYPES.SUB_ATTRACTIONS) {
-        const isStage = !!host?.includes('stage-');
-        const hostname = getHostName(isStage, !!isDev, host!);
+        const hostname = getHostName(!!isDev, host!);
         const tgidsResult = await fetchTourGroupsByCollection({
           collectionId: subattractionParentCollectionId,
           currency,

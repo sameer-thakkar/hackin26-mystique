@@ -128,7 +128,6 @@ const CustomLinkedTours = ({
   const {
     isDev,
     host,
-    isStage,
     lang,
     design,
     nakedDomain,
@@ -137,7 +136,7 @@ const CustomLinkedTours = ({
   } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
 
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   const tourListEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupsV6,
     hostname,

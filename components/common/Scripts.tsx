@@ -11,13 +11,11 @@ import { siteNameMappings } from 'const/index';
 export const TrackingScripts = ({
   isDev,
   isPreview,
-  originalHost,
 }: {
   isDev: boolean;
   isPreview: boolean;
-  originalHost: string;
 }) => {
-  const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
+  const isNonProd = isDev || isPreview;
   const GTM_CONTAINER_ID = 'GTM-5LJWNW3';
   let GTM_AUTH = isNonProd
     ? 'psi3hURmBLey31qAhn7cPA'

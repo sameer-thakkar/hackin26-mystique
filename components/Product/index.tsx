@@ -269,7 +269,6 @@ const Product = (props: any) => {
     biLink,
     bookSubdomain,
     lang,
-    isStage,
     isDev,
     sidebarModal: { addToAside, closeAside },
     redirectToHeadoutBookingFlow,
@@ -282,7 +281,7 @@ const Product = (props: any) => {
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   const [isContentOpen, toggleContentOpen] = useState<boolean>(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
@@ -667,10 +666,7 @@ const Product = (props: any) => {
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
 
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = !isDev ? url : parse(uid, true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

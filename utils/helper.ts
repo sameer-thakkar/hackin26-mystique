@@ -418,10 +418,12 @@ export const normaliseURL = (url = '') =>
 export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
 
-export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
+export const getHostName = (isDev: boolean, host: string) => {
   const isOnDemand = host.includes('mystique.dev-headout.com');
+  const isTest = host.includes('stage-microbrands.test-headout.com');
   switch (true) {
-    case (isDev && isStage) || isOnDemand:
+    case isOnDemand:
+    case isTest:
       return `https://${host}`;
     case isDev:
       return `http://${host}`;

@@ -31,11 +31,8 @@ export const useBookingURL = ({
   const currency = useRecoilValue(currencyAtom);
 
   let url = host || window.location.host;
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
+  const hostName = !isDev ? url : parse(uid, true).pathname;
 
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

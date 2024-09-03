@@ -42,7 +42,7 @@ const DescriptorList = (props: IFilteredDescriptorProps) => {
 };
 
 const PinnedCard = (props: any) => {
-  const { lang, host, isDev, isStage } = useContext(MBContext);
+  const { lang, host, isDev } = useContext(MBContext);
 
   const { productInfo, uid, showPageUid } = props;
 
@@ -131,7 +131,7 @@ const PinnedCard = (props: any) => {
                     url: LTT_TAG_PAGE_MAP[tag],
                     lang,
                     uid,
-                    isProd: !isDev && !isStage,
+                    isProd: !isDev,
                   })}
                 >
                   <span key={tag}>{tag.toUpperCase()}</span>

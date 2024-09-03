@@ -294,6 +294,10 @@ export const getHeadoutApiUrl = ({
       : url
   ) as string;
 
+  if (process.env.NEXT_PUBLIC_NODE_ENV === 'development' && isProxyCall) {
+    return finalUrl.replace('https://', 'http://');
+  }
+
   return finalUrl;
 };
 

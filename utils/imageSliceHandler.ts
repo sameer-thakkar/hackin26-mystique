@@ -96,7 +96,6 @@ const sliceHandler = async ({
   isDev,
   mediaArray,
   host,
-  isStage,
   isVideoSitemap,
   videoTitle,
   videoDescription,
@@ -106,7 +105,6 @@ const sliceHandler = async ({
   isDev?: boolean;
   mediaArray: string[] | VideoSitemap[];
   host?: string;
-  isStage?: boolean;
   isVideoSitemap?: boolean;
   videoTitle?: string;
   videoDescription?: string;
@@ -205,7 +203,7 @@ const sliceHandler = async ({
     case SLICE_TYPES.TAB_WRAPPER: {
       const slices = slice?.slices;
       slices?.forEach((slice: any) =>
-        sliceHandler({ slice, lang, isDev, mediaArray, host, isStage })
+        sliceHandler({ slice, lang, isDev, mediaArray, host })
       );
       break;
     }
@@ -246,7 +244,7 @@ const sliceHandler = async ({
       };
       const endpoint = HeadoutEndpoints.CollectionSections;
       const id = slice?.primary?.collection_id;
-      const hostname = isDev && !isStage ? `http://${host}` : `https://${host}`;
+      const hostname = isDev ? `http://${host}` : `https://${host}`;
 
       const collectionEndpoint = getHeadoutApiUrl({
         endpoint,
@@ -286,7 +284,7 @@ const sliceHandler = async ({
         };
       }, {});
 
-      const hostname = host && getHostName(!!isStage, !!isDev, host);
+      const hostname = host && getHostName(!!isDev, host);
       const params = {
         'ids[]': tgids,
         ...(lang && {

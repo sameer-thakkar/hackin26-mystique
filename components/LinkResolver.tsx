@@ -10,11 +10,7 @@ const qs = (obj: any) =>
 
 const resolveLink: any = (url: string, ctx: any) => {
   const { isDev, windowUrl } = ctx;
-  const {
-    href: linkHref,
-    host: linkHost,
-    pathname: linkPathname,
-  } = parse(url, true);
+  const { href: linkHref } = parse(url, true);
 
   const { host, query, protocol } = parse(windowUrl, true);
 
@@ -25,16 +21,6 @@ const resolveLink: any = (url: string, ctx: any) => {
     };
     return `${isDev ? 'http:' : protocol}//${host}/?${qs(updatedQuery)}`;
   }
-
-  const normalizedHost = host.replace('stage-', '');
-  if (normalizedHost !== linkHost) {
-    return url;
-  }
-
-  if (host.startsWith('stage-')) {
-    return `https://stage-${linkHost}${linkPathname}`;
-  }
-
   return url;
 };
 

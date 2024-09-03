@@ -183,8 +183,8 @@ const ComboPopup = ({
   minDuration,
   maxDuration,
 }: ComboPopupType) => {
-  const { lang, host, isDev, isStage } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const { lang, host, isDev } = useContext(MBContext);
+  const hostname = getHostName(isDev, host);
   const pageMetaData = useRecoilValue(metaAtom);
 
   const params = {
@@ -199,6 +199,7 @@ const ComboPopup = ({
     hostname,
     params,
   });
+
   const { data: tourGroupData, error } = useSWR(tourGroupEndpoint, {
     fetcher: swrFetcher,
   });

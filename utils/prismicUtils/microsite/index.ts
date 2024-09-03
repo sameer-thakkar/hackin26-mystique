@@ -68,11 +68,6 @@ const getMicrositeDocument = async ({
     });
 
     if (currentPageUid !== uid) {
-      if (host?.slice(0, 5) === 'stage') {
-        if (pageUrl) {
-          pageUrl = pageUrl.split('//').join('//stage-');
-        }
-      }
       return {
         redirectInfo: {
           url: pageUrl,

@@ -71,9 +71,6 @@ const aggregateInsights = (insights) =>
 module.exports = (env, trackInsights = false) => {
   const pagespeedFetchers = domains
     .map((domain) =>
-      env === 'stage' ? domain.replace('https://', 'https://stage-') : domain
-    )
-    .map((domain) =>
       ['mobile', 'desktop'].map(
         (strategy) =>
           `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(

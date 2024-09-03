@@ -29,8 +29,7 @@ const extractSliceImages = (
   lang: any,
   isDev: boolean,
   finalImages: string[],
-  host: string,
-  isStage: boolean
+  host: string
 ) => {
   const slices = payload?.refs?.contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
@@ -44,7 +43,6 @@ const extractSliceImages = (
       isDev,
       mediaArray: finalImages,
       host,
-      isStage,
     })
   );
 };
@@ -60,7 +58,7 @@ ImageSitemapXml.getInitialProps = async ({
   if (query.mystique_uid) {
     uid = query.mystique_uid as string;
   } else {
-    uid = req?.headers?.host?.replace('stage-', '') as string;
+    uid = req?.headers?.host as string;
   }
 
   let sitemap: string = '';
@@ -70,7 +68,6 @@ ImageSitemapXml.getInitialProps = async ({
   const { host } = req?.headers || window.location;
   const { lang } = getLangUID(req, query);
   const isDev = host?.includes('localhost');
-  const isStage = host?.includes('stage-');
 
   try {
     const { payload } = await reflect(
@@ -94,8 +91,7 @@ ImageSitemapXml.getInitialProps = async ({
         lang,
         isDev as boolean,
         finalImages,
-        host as string,
-        isStage as boolean
+        host as string
       );
     }
 

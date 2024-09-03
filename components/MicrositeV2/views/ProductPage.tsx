@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -618,10 +618,7 @@ export const MobileProductPage = (props: any) => {
 
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = !isDev ? url : parse(uid, true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
@@ -145,10 +145,7 @@ const NewVerticalsProductCard = (props: any) => {
     isFirstProduct && isCollectionMB && bannerVideo && !isNonPoi;
 
   let url = host || window.location.host;
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = !isDev ? url : parse(uid, true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

@@ -70,7 +70,6 @@ type PageProps = {
   primaryCity: any;
   currencyList: [];
   isDev: boolean;
-  isStage: boolean;
   cookies: Record<string, string>;
   isMobile: boolean;
   isCategoryV2: boolean;
@@ -149,7 +148,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       currencyList,
       host,
       isDev,
-      isStage,
       cookies = {},
       isMobile,
       uid,
@@ -296,7 +294,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isMobile,
       host,
       isDev,
-      isStage,
       initialCurrency: ssrCurrencyCode,
       isPageLoaded: false,
       uid,

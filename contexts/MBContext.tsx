@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { TCityInfo } from 'components/AirportTransfers/interface';
@@ -33,7 +33,6 @@ export const MBContext = createContext<{
   isGlobalMb: false,
   host: '',
   isDev: false,
-  isStage: false,
   bookSubdomain: 'book',
   primaryCountry: null,
   primaryCity: null,
@@ -55,7 +54,6 @@ export const MBContextProvider = (props: any) => {
     biLink,
     isGlobalMb,
     isDev,
-    isStage,
     bookSubdomain,
     primaryCountry,
     primaryCity,
@@ -137,7 +135,7 @@ export const MBContextProvider = (props: any) => {
     see_more_text: microsite?.see_more_text,
   };
   const nakedDomain = !host?.includes('localhost')
-    ? host?.replace('stage-', '').split('.').slice(1).join('.')
+    ? host?.split('.').slice(1).join('.')
     : 'headout.com';
 
   return (
@@ -163,7 +161,6 @@ export const MBContextProvider = (props: any) => {
         isGlobalMb,
         host,
         isDev,
-        isStage,
         bookSubdomain,
         primaryCountry,
         primaryCity,

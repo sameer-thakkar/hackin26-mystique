@@ -38,7 +38,6 @@ const ShowPagePricingSection = ({
 
   const {
     lang,
-    isStage,
     isDev,
     host,
     nakedDomain,
@@ -61,7 +60,7 @@ const ShowPagePricingSection = ({
   const showCashbackElement =
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   useEffect(() => {
     setButtonLoading(false);

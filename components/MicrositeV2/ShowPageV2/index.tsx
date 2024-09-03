@@ -96,12 +96,11 @@ const LttShowPageV2 = ({
     lang: language,
     isDev,
     host,
-    isStage,
     nakedDomain,
     biLink,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   const changePage = (page: any) => {
     setActivePage(page.name);

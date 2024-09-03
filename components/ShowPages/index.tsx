@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
@@ -203,8 +203,7 @@ const ShowPage = (props: any) => {
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
-  const isStage = host.includes('stage-');
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   const currency = useRecoilValue(currencyAtom);
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -556,7 +555,7 @@ const ShowPage = (props: any) => {
           tagsArray={tagsArray}
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
-          isProd={!isDev && !isStage}
+          isProd={!isDev}
         />
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner

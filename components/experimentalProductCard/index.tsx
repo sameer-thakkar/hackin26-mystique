@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
@@ -165,10 +165,7 @@ const ExperimentalProductCard = (props: any) => {
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
 
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = !isDev ? url : parse(uid, true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

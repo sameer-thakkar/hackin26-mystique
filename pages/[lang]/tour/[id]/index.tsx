@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
@@ -222,7 +222,7 @@ const ExperiencePage = ({
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
-  const { nakedDomain, isStage } = useContext(MBContext);
+  const { nakedDomain } = useContext(MBContext);
 
   const {
     name,
@@ -557,7 +557,7 @@ const ExperiencePage = ({
           tagsArray={tagsArray}
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
-          isProd={!isDev && !isStage}
+          isProd={!isDev}
         />
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner
@@ -671,9 +671,8 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
   const currency = serverCookies?.get(COOKIE.CURRENT_CURRENCY);
   const { host } = req?.headers || window?.location;
   const { lang, id } = query;
-  const isStage = host.includes('stage-');
   const isDev = host.includes('localhost');
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   let uid;
   if (isDev) {
     uid =
@@ -681,7 +680,7 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
       DEFAULT_SHOWPAGE_HOSTNAME;
   } else {
     const { host } = req ? req.headers : window.location;
-    uid = host.replace('stage-', '');
+    uid = host;
   }
   const productData = await fetchProductData({
     id,

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
@@ -39,8 +39,8 @@ const BoosterContainer = styled.span`
 
 const RatingBoosterCombo = (props: any) => {
   const { tgid, text } = props;
-  const { isDev, host, isStage, lang } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const { isDev, host, lang } = useContext(MBContext);
+  const hostname = getHostName(isDev, host);
   const tourListEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupsV6,
     hostname,

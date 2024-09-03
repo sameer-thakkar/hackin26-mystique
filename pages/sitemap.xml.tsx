@@ -77,7 +77,7 @@ export default class SitemapXml extends Component {
     if (query.mystique_uid) {
       uid = query.mystique_uid;
     } else {
-      uid = req?.headers?.host?.replace('stage-', '');
+      uid = req?.headers?.host;
     }
 
     const xmlDoc: { urlset: any; url?: any[] } = {

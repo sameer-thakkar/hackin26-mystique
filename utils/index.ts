@@ -129,9 +129,7 @@ export const getPrismicProps = ({
     pathname?.includes('sitemap')
       ? host
       : withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)
-  }`
-    .replace('stage-', '')
-    .replace(/\//g, '.');
+  }`.replace(/\//g, '.');
 
   return {
     uid,
@@ -368,7 +366,7 @@ export const createBookingURL = ({
 export const getNakedDomain = (host: string) => {
   const sliceCount = host.includes('mystique.dev-headout') ? 2 : 1;
   return !host?.includes('localhost')
-    ? host?.replace('stage-', '').split('.').slice(sliceCount).join('.')
+    ? host?.split('.').slice(sliceCount).join('.')
     : HEADOUT_NAKED_DOMAIN;
 };
 

@@ -3,14 +3,6 @@ import { Component } from 'react';
 const fullDomain = (req: any) =>
   req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
-const robotsContentForStage = () =>
-  [
-    `User-agent: Screaming Frog SEO Spider`,
-    `Disallow:`,
-    `User-agent: *`,
-    `Disallow: /`,
-  ].join('\n');
-
 const robotsContent = (domain: any) => {
   const rules = [
     `User-agent: *`,
@@ -51,9 +43,7 @@ const indexDomains = [
 export default class RobotsTxt extends Component {
   static async getInitialProps({ res, req }: any) {
     const domain = fullDomain(req);
-    let content = domain.includes('stage-')
-      ? robotsContentForStage()
-      : robotsContent(domain);
+    let content = robotsContent(domain);
     blackListNoIndex.forEach((item) => {
       if (domain.includes(item)) {
         content = tempRobotsContent;
@@ -61,9 +51,7 @@ export default class RobotsTxt extends Component {
     });
     indexDomains.forEach((item) => {
       if (domain.includes(item)) {
-        content = domain.includes('stage-')
-          ? robotsContentForStage()
-          : robotsContent(domain);
+        content = robotsContent(domain);
       }
     });
     res.setHeader('Content-type', 'text/plain');

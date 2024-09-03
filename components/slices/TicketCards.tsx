@@ -108,8 +108,8 @@ const TicketCards: React.FC<TicketCardsProps> = ({
   twoColumns = false,
 }) => {
   const [data, setData] = useState(cards);
-  const { isDev, host, isStage, lang } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const { isDev, host, lang } = useContext(MBContext);
+  const hostname = getHostName(isDev, host);
   const tgids = cards.reduce((acc, card) => {
     if (card.tgid) return [...acc, card.tgid];
     else return [...acc];

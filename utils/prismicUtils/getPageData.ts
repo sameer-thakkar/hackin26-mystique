@@ -113,10 +113,9 @@ export const getPageData = async ({
   runRankingExperiment = false,
 }: any) => {
   const { host } = req.headers || window.location;
-  const isStage = host.includes('stage-');
   const { cookies } = req;
   const { uid, lang } = getLangUID(req, query);
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   const { bypassCache } = query;
 
   try {
@@ -333,7 +332,6 @@ export const getPageData = async ({
         isDev,
         queryParams,
         mbTheme,
-        isStage,
         currencyList: await currencyListPromise,
         prismicApiCacheStatus,
         prismicDocumentTypeApiCacheStatus,
@@ -929,7 +927,6 @@ export const getPageData = async ({
         isDev,
         queryParams,
         mbTheme,
-        isStage,
         collectionDetails,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),

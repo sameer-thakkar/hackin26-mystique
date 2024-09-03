@@ -301,9 +301,9 @@ const PopulateProducts: any = (props: any) => {
     el && productsRef.current.push(el);
   };
 
-  const { isStage, isDev, host, design } = useContext(MBContext);
+  const { isDev, host, design } = useContext(MBContext);
 
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 

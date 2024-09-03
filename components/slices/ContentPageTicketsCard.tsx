@@ -501,10 +501,7 @@ const TicketCard = (props: any) => {
 
   const cardTitle = title || tourTitle;
   let url = host || window.location.host;
-  const currentHost = getDomainFromUid(uid);
-  const hostName = currentHost?.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = getDomainFromUid(uid);
   let hostSplit = hostName?.split('.');
   hostSplit?.shift();
   const bookingUrl = hostSplit?.join('.') ?? '';

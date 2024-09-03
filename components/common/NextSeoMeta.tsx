@@ -79,7 +79,6 @@ export default function PopulateMeta({
     uid: uidFromMBContext,
     isDev,
     isPreview,
-    isStage,
     host,
     lang,
     language_full,
@@ -126,15 +125,11 @@ export default function PopulateMeta({
     : false;
 
   let finalNoIndex =
-    isStage ||
-    isDev ||
-    (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
+    isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
       ? true
       : legacyBooleanCheck(noindex);
   let finalNoFollow =
-    isStage ||
-    isDev ||
-    (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
+    isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
       ? true
       : legacyBooleanCheck(noindex);
 
@@ -319,11 +314,7 @@ export default function PopulateMeta({
       <NextSeo {...metaProps} />
       {scriptTags}
       <Conditional if={!noTrack}>
-        <TrackingScripts
-          isDev={isDev}
-          isPreview={isPreview}
-          originalHost={host}
-        />
+        <TrackingScripts isDev={isDev} isPreview={isPreview} />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional

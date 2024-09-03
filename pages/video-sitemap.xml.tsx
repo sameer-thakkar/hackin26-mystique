@@ -89,7 +89,7 @@ VideoSitemapXml.getInitialProps = async ({
   if (query.mystique_uid) {
     uid = query.mystique_uid as string;
   } else {
-    uid = req?.headers?.host?.replace('stage-', '') as string;
+    uid = req?.headers?.host as string;
   }
 
   const { host } = req?.headers || window.location;

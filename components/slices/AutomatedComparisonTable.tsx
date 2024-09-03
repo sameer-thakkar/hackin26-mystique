@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
+import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
@@ -396,9 +396,8 @@ const AutomatedTourComparisonTable = ({
     biLink,
     redirectToHeadoutBookingFlow,
     isDev,
-    isStage,
   } = useContext(MBContext);
-  const currentHost = isDev && !isStage ? `http://${host}` : `https://${host}`;
+  const currentHost = isDev ? `http://${host}` : `https://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
   useLayoutEffect(() => {

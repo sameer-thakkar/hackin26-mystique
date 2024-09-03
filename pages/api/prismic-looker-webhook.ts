@@ -52,11 +52,7 @@ const getUpdatedDocuments = async ({ documentIds }: any) => {
   });
 };
 
-const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
-  const documents = isStageMode
-    ? docs?.filter((doc: any) => doc?.tags?.includes('[DEV]'))
-    : docs;
-
+const parseDocuments = async ({ documents, host }: any) => {
   const {
     [CUSTOM_TYPES.MICROSITE]: microsites = [],
     [CUSTOM_TYPES.CONTENT_PAGE]: contentPages = [],
@@ -253,7 +249,6 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
         localisedDoc: doc,
         baseLangDoc: baseLangData,
         host,
-        isStageMode,
       }),
       parent_domain: pageUrl ? getParentDomain(new URL(pageUrl)) : null,
       language,
@@ -420,8 +415,6 @@ const createStitchPostRequest = ({
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { documents: updatedDocumentIds = [] } = req?.body || {};
 
-  const { stageMode } = req.query;
-  const isStageMode = stageMode ? stageMode?.length > 0 : false;
   const { host } = req?.headers;
 
   if (!updatedDocumentIds?.length)
@@ -446,7 +439,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     hasDataToPush,
   } = await parseDocuments({
     documents,
-    isStageMode,
     host,
   });
 
@@ -470,7 +462,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const { pageDocs } = await parseDocuments({
       documents: baseLangDocuments,
-      isStageMode,
       host,
     });
     baseLangPageDocs = pageDocs;

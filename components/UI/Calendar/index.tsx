@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import dayjs, { Dayjs } from 'dayjs';
 import locale from 'dayjs/locale/en';
@@ -120,14 +120,13 @@ const Calendar = ({
 
   const {
     lang,
-    isStage,
     isDev,
     host,
     nakedDomain,
     biLink,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   const handleNextClick = () => {
     const newFirstMonth = currentMonths[currentMonths.length - 1];

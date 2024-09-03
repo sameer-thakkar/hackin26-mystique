@@ -154,7 +154,6 @@ const Page = (props: PageProps) => {
     currencySymbolMap,
     queryParams = {},
     biLink,
-    isStage,
     collectionDetails,
     bannerImageData,
     domainConfig,
@@ -342,7 +341,6 @@ const Page = (props: PageProps) => {
               bannerImageData={bannerImageData}
               pathname={pathname}
               isDev={isDev}
-              isStage={isStage}
               tgidToScroll={tgidToScroll}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}
@@ -483,7 +481,6 @@ const Page = (props: PageProps) => {
             biLink={biLink}
             isGlobalMb={isGlobalMb}
             isDev={isDev}
-            isStage={isStage}
             bookSubdomain={bookSubdomain}
             primaryCountry={primaryCountry}
             primaryCity={primaryCity}
@@ -730,11 +727,7 @@ const HeadoutSessionIdSetterComponent = () => {
     setHsid(hsid);
   };
   useEffect(() => {
-    const nakedDomain = window.location.hostname
-      .replace('stage-', '')
-      .split('.')
-      .slice(1)
-      .join('.');
+    const nakedDomain = window.location.hostname.split('.').slice(1).join('.');
     if (experimentOverride)
       Cookies.set(COOKIE.EXPERIMENT_OVERRIDE, experimentOverride as string, {
         domain: nakedDomain,

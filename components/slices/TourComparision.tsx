@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import parse from 'url-parse';
@@ -487,10 +487,7 @@ const TourComparisonTable = (props: any) => {
   const { uid, nakedDomain, biLink, lang, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
   const url = envContext.windowUrl;
-  const currentHost = !envContext.isDev ? url : parse(uid || '', true).pathname;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
+  const hostName = !envContext.isDev ? url : parse(uid || '', true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.

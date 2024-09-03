@@ -74,7 +74,6 @@ export const ProductCard = ({
     mbTheme,
     lang,
     sidebarModal: { addToAside },
-    isStage,
     isDev,
     host,
   } = useContext(MBContext);
@@ -100,7 +99,7 @@ export const ProductCard = ({
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
 
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
   const tourGroupEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupsV6,
     id: tour.tgid,

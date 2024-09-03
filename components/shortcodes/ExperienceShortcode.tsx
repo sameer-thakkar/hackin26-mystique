@@ -33,10 +33,10 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   const [scorpioData, setScorpioData] = useState<Record<string, any> | null>(
     null
   );
-  const { nakedDomain, lang, host, isDev, isStage } = useContext(MBContext);
+  const { nakedDomain, lang, host, isDev } = useContext(MBContext);
   const currencyCode = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
-  const hostname = getHostName(isStage, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   const hasTourGroupData = !!scorpioData?.[id];
 

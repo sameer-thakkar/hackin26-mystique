@@ -133,13 +133,13 @@ export const convertUidToUrl = ({
   removeLangPath?: boolean;
 }) => {
   if (!uid) return '';
-  const getUrl = (uid: string, lang: string, isStage: boolean) => {
+  const getUrl = (uid: string, lang: string) => {
     let url: string = '';
     const modUid = `${uid}.`; // add trailing . to identify end of UID
     const domain = getDomainFromUid(uid);
     if (domain) {
       const pathName = modUid.split(domain)?.filter((string) => string.length);
-      url = `https://${isStage ? 'stage-' : ''}${domain}${
+      url = `https://${domain}${
         lang !== 'en' && !removeLangPath ? `/${lang}` : ''
       }`;
       if (pathName.length) {
@@ -153,21 +153,12 @@ export const convertUidToUrl = ({
   const devUrl = `http://${hostname}/?mystique_uid=${uid}&lang=${
     getLangObject(lang)?.locale
   }`;
-  const isStage = hostname?.includes('stage-');
-  if (isStage) {
-    if (isDev) {
-      return devUrl;
-    } else {
-      const url = getUrl(uid, lang, true);
-      return url;
-    }
-  }
   if (isDev) {
     return devUrl;
   }
 
   if (uid) {
-    let url = getUrl(uid, lang, false);
+    let url = getUrl(uid, lang);
     return url;
   } else {
     return '';
@@ -225,8 +216,6 @@ export const getLogoRedirectionUrl = ({
   const domainArray = getDomainFromUid(uid)?.split('.');
   if (domainArray) domainArray[0] = 'www';
   const parentDomain = domainArray?.join('.');
-
-  const isStage = host?.includes('stage-');
   //Note: Temporary logo link override for this particular MB, till we solve for Themeparks MBs
   const isMoviePark = uid === 'moviepark.themeparkstickets.com';
   const redirectTo = isMoviePark ? uid : parentDomain;
@@ -234,10 +223,6 @@ export const getLogoRedirectionUrl = ({
   switch (true) {
     case isDev:
       return `http://${host}/?mystique_uid=${redirectTo}&lang=${
-        getLangObject(lang)?.locale
-      }`;
-    case isStage:
-      return `http://stage-microbrands.headout.com/?mystique_uid=${redirectTo}&lang=${
         getLangObject(lang)?.locale
       }`;
     case !!uid:

@@ -223,18 +223,16 @@ export const getTgids = async ({
   localisedDoc,
   baseLangDoc,
   host,
-  isStageMode,
 }: {
   localisedDoc: PrismicDocumentWithUID;
   baseLangDoc: PrismicDocumentWithUID;
   host: string;
-  isStageMode: boolean;
 }): Promise<string[]> => {
   let tgids: any[] = [];
   const { type, lang, data } = localisedDoc || {};
 
   const isDev = host.includes('localhost');
-  const hostname = getHostName(isStageMode, isDev, host);
+  const hostname = getHostName(isDev, host);
 
   if (type === CUSTOM_TYPES.MICROSITE) {
     switch (true) {

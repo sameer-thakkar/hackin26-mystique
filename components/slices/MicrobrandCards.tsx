@@ -269,8 +269,8 @@ type MicrobrandCardsProps = {
 
 const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
   const { cards, cardsContent } = props;
-  const { isDev, host, isStage, lang } = useContext(MBContext);
-  const hostname = getHostName(isStage, isDev, host);
+  const { isDev, host, lang } = useContext(MBContext);
+  const hostname = getHostName(isDev, host);
   const tgids = cards
     ?.map((card) => card.tgid)
     ?.filter((tgid) => tgid)
