@@ -40,6 +40,12 @@ export const Wrapper = styled.div`
 
   @media (max-width: 768px) {
     margin: 2rem 0;
+    :not(.swiper-initialized) .swiper-wrapper {
+      .swiper-slide {
+        width: unset;
+        margin-right: 0;
+      }
+    }
   }
 `;
 

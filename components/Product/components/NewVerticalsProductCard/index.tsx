@@ -31,7 +31,6 @@ import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
-import { truncate } from 'utils/helper';
 import {
   extractTabsFromHighlights,
   filterFromHighlights,
@@ -392,7 +391,7 @@ const NewVerticalsProductCard = (props: any) => {
             </CategoryAndRatingContainer>
             <TourTitle
               boosterTag={boosterTag}
-              cardTitle={truncate(cardTitle, 85)}
+              cardTitle={cardTitle}
               hasBorderedTitle={!hasOffer && !hasV1Booster}
               isContentOpen={isContentOpen}
               isLoading={isLoading}
