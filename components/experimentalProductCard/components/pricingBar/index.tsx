@@ -39,6 +39,7 @@ interface PricingBarProps {
   isSportsSubCategory: boolean;
   isModifiedCTA?: boolean;
   showCustomProductCardCTA?: boolean;
+  showCustomProductCardEnglishCTA?: boolean;
 }
 
 const getDiscountText = (bestDiscount: number): string => {
@@ -78,6 +79,7 @@ const PricingBar: FC<PricingBarProps> = ({
   productBookingUrl,
   isModifiedCTA,
   showCustomProductCardCTA,
+  showCustomProductCardEnglishCTA,
 }) => {
   const pricingRef = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(null) as any;
@@ -87,6 +89,8 @@ const PricingBar: FC<PricingBarProps> = ({
 
   const bookNowText = showCustomProductCardCTA
     ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+    : showCustomProductCardEnglishCTA
+    ? strings.SELECT_AN_OPTION
     : getBookNowButtonText({
         isV3Design,
         isSportsExperiment,

@@ -63,6 +63,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
+  C1_COLLECTION_EXCLUDED,
   CRUISE_CATEGORY_ID,
   CRUISES_REVAMP_UIDS,
   EMAIL_SUBCRIPTION,
@@ -287,6 +288,7 @@ const MicrositeV1 = (props: any) => {
     footer_ref: commonFooter,
     secondary_footer: secondaryFooter,
     localisedCategoryTourListV1,
+    tagged_collection,
     customBanner,
     baseLangCustomBanner,
   } = micrositeData ?? {};
@@ -373,9 +375,25 @@ const MicrositeV1 = (props: any) => {
       (lang == 'it-it' || lang == 'de-de'),
   });
 
+  const {
+    isEligible: shouldRunCustomEnglishCTAExperiment,
+    isExperimentResolving: isCustomEnglishCTAExperimentResolving,
+    variant: customCTAEnglishExperimentVariant,
+  } = useABTesting({
+    experimentId: 'C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH',
+    customEligibilityCheckFn: () =>
+      taggedMbType === MB_TYPES.C1_COLLECTION &&
+      !C1_COLLECTION_EXCLUDED.includes(Number(tagged_collection)) &&
+      (lang === 'en-us' || lang === 'en'),
+  });
+
   const showCustomProductCardCTA =
     shouldRunCustomCTAExperiment &&
     customCTAExperimentVariant === VARIANTS.TREATMENT;
+
+  const showCustomProductCardEnglishCTA =
+    shouldRunCustomEnglishCTAExperiment &&
+    customCTAEnglishExperimentVariant === VARIANTS.TREATMENT;
 
   const showCruisesRevamp =
     isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
@@ -855,6 +873,7 @@ const MicrositeV1 = (props: any) => {
       bookNowText={bookNowText}
       shouldRunCustomCTAExperiment={shouldRunCustomCTAExperiment}
       showCustomProductCardCTA={showCustomProductCardCTA}
+      showCustomProductCardEnglishCTA={showCustomProductCardEnglishCTA}
       readMoreText={readMoreText}
       showLessText={showLessText}
       productOffer={productOffer}
@@ -950,7 +969,9 @@ const MicrositeV1 = (props: any) => {
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isRankingExperimentEligible && isRankingExperimentResolving) ||
-    (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving)
+    (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
+    (shouldRunCustomEnglishCTAExperiment &&
+      isCustomEnglishCTAExperimentResolving)
   )
     return <Loader />;
 

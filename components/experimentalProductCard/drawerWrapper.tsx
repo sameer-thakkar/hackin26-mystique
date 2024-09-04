@@ -65,6 +65,7 @@ const DrawerWrapper = (props: any) => {
     reviewsDetails,
     topReviews,
     showCustomProductCardCTA,
+    showCustomProductCardEnglishCTA,
   } = props;
 
   const [activeItinerary, setActiveItinerary] = useState<Itinerary>(
@@ -145,6 +146,7 @@ const DrawerWrapper = (props: any) => {
           isSportsSubCategory={isSportsSubCategory}
           isModifiedCTA={isModifiedPopup}
           showCustomProductCardCTA={showCustomProductCardCTA}
+          showCustomProductCardEnglishCTA={showCustomProductCardEnglishCTA}
         />
       </Conditional>
       <Conditional if={drawerState !== SWIPESHEET_STATES.HIDDEN}>

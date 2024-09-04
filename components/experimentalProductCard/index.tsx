@@ -90,6 +90,7 @@ const ExperimentalProductCard = (props: any) => {
     topReviews,
     showCustomProductCardCTA,
     shouldRunCustomCTAExperiment,
+    showCustomProductCardEnglishCTA,
   } = props;
 
   const {
@@ -410,6 +411,7 @@ const ExperimentalProductCard = (props: any) => {
           reviewsDetails,
           topReviews,
           showCustomProductCardCTA,
+          showCustomProductCardEnglishCTA,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

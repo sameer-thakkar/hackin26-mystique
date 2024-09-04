@@ -1357,6 +1357,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     COMBO_HEADING: 'Experience more for less: Combo deals & city cards',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Check availability', // just for types
+  SELECT_AN_OPTION: 'Select an option',
 };
 
 export default en;

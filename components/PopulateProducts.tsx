@@ -268,6 +268,7 @@ const PopulateProducts: any = (props: any) => {
     subattraction_type,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
+    showCustomProductCardEnglishCTA = false,
     customBanner,
     baseLangCustomBanner,
   } = props;
@@ -790,6 +791,7 @@ const PopulateProducts: any = (props: any) => {
       },
       showCustomProductCardCTA,
       shouldRunCustomCTAExperiment,
+      showCustomProductCardEnglishCTA,
     };
 
     return isSmallComboCard ? (

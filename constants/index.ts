@@ -2226,3 +2226,7 @@ export const CUSTOM_BANNER = {
 export const DEFAULT_REVIEWER_NAME = 'headout guest';
 
 export const DEFAULT_TOP_REVIEWS_COUNT = 5;
+
+export const C1_COLLECTION_EXCLUDED = [
+  158, 1878, 189, 243, 254, 279, 3111, 4012, 534, 1516,
+];

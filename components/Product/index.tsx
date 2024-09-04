@@ -249,6 +249,7 @@ const Product = (props: any) => {
     horizontalProductCard = false,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
+    showCustomProductCardEnglishCTA = false,
   } = props;
 
   const {
@@ -1070,6 +1071,8 @@ const Product = (props: any) => {
         return strings.BUY_TICKETS_CTA;
       case showCustomProductCardCTA:
         return strings.CUSTOM_CTA_EXPERIMENT_TEXT;
+      case showCustomProductCardEnglishCTA:
+        return strings.SELECT_AN_OPTION;
       default:
         return strings.CHECK_AVAIL;
     }
