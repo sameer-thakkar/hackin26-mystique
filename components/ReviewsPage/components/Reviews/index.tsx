@@ -98,7 +98,9 @@ const ReviewUI: React.FC<TReviewUIProps> = ({
                       </a>
                     </Conditional>
                   </Author>
-                  <Date>{formattedDate}</Date>
+                  <Conditional if={review_date}>
+                    <Date>{formattedDate}</Date>
+                  </Conditional>
                 </TitleWrapper>
                 <Rating>
                   <Conditional if={rating}>

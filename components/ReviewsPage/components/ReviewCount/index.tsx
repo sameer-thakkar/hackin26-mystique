@@ -95,6 +95,7 @@ const ReviewCount: React.FC<TReviewCountProps> = ({
   const { REVIEWS_COUNT } = REVIEWS_PAGE;
   const floorAverageRating = Math.floor(averageRating);
   const formattedReviewCount = truncateNumber(reviewsCount);
+  if (!ratingsCount) return null;
 
   return (
     <Wrapper>
