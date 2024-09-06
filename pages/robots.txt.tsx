@@ -30,6 +30,7 @@ const blackListNoIndex = [
   'naples-tickets.co',
   'tickets-london.co.uk',
   'entradas-valencia.com',
+  'paristickets.com',
 ];
 
 const indexDomains = [
