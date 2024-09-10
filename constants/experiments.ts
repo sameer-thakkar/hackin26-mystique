@@ -20,15 +20,9 @@ const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
 const RANKING_EXPERIMENT_V2 = 'Product Rankings v2';
 const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
-const SHOULDER_PAGE_PRODUCT_CARD_EXPERIMENT =
-  'Shoulder Page Product Card Experiment';
-const ITINERARY_CONTROLLED_ROLLOUT = 'Itinerary Controlled Rollout';
-const IMAGE_QUALITY_EXPERIMENT = 'Image Quality Experiment';
-const HOHO_REVAMP = 'HOHO LP Revamp 1.3';
-const PRODUCT_CARD_ONLY_HIGHLIGHTS = 'Product Card Tabs Experiment';
 const PRODUCT_CARD_VIDEO = 'Product Card Video Experiment V1';
 const C1_COLLECTION_LTT_BROADWAY_PRODUCT_CARD_CTA_EXPERIMENT = 'DE IT CTA Copy';
-const C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH = 'EN LP CTA Copy v1';
+const C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH = 'EN LP CTA Copy v2';
 const CRUISES_REVAMP = 'Cruises Revamp Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
