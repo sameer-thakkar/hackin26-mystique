@@ -119,6 +119,8 @@ export default async function categoryTourListParserV2({
 
   const allData = categoriesWithProducts?.flat();
 
+  const [firstProductData] = allData?.[0]?.items ?? [];
+
   let pageData;
   if (!isLookerWebhookCall) {
     pageData = await getProductData({
@@ -137,6 +139,7 @@ export default async function categoryTourListParserV2({
       },
       primaryCity,
       isCategoryV2: true,
+      firstProductData,
     };
   } else {
     return { allTgids };

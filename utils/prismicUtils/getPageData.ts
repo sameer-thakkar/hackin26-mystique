@@ -70,6 +70,7 @@ import { getLangUID, getValidUrlParams } from 'utils/urlUtils';
 import {
   CATEGORY_IDS,
   CUSTOM_TYPES,
+  DESIGN,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
   RESOURCE_TYPE,
@@ -792,12 +793,25 @@ export const getPageData = async ({
           { promise: offerTgidsPromise, label: 'offerDetails' },
         ] as const);
 
-      if (hasCategoryTourListV1 && hasCategoryTourList && !isCatOrSubCatPage) {
-        minPrice = categoryTourListData.minPrice;
-        bestDiscount = categoryTourListData.bestDiscount;
+      if (
+        (hasCategoryTourListV1 || MBDesign === DESIGN.V3) &&
+        hasCategoryTourList &&
+        !isCatOrSubCatPage
+      ) {
+        minPrice = categoryTourListData?.minPrice;
+        bestDiscount = categoryTourListData?.bestDiscount;
         const [firstTGID] = categoryTourListData?.finalTgids || [];
+
+        let firstProductData;
+
+        if (MBDesign === DESIGN.V3) {
+          firstProductData = categoryTourListData?.firstProductData;
+        } else {
+          firstProductData = categoryTourListData?.scorpioData?.[firstTGID];
+        }
+
         const { primarySubCategory: firstProductSubCategory, primaryCategory } =
-          categoryTourListData.scorpioData?.[firstTGID] || {};
+          firstProductData || {};
         const subCatId = firstProductSubCategory?.id;
         const categoryId = CATEGORY_IDS?.[taggedCategory];
         const isAirportTransfersMB =
@@ -813,8 +827,7 @@ export const getPageData = async ({
 
         if (shouldFetchBannerDescriptors) {
           const { name = '', id: primaryCategoryId } = primaryCategory || {};
-          const categoryName = name.toLowerCase();
-
+         const categoryName = name.toLowerCase().replace(' &', '').replace(/\s+/g, '-');
           const descriptorsUid = `${categoryName}-${primaryCategoryId}-descriptors`;
 
           const bannerDescriptors = await getCatSubcatDescriptors({
@@ -830,6 +843,7 @@ export const getPageData = async ({
               bannerDescriptors?.subcategoryDescriptors || [];
           }
         }
+
         if (isCollectionMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -846,7 +860,7 @@ export const getPageData = async ({
             entityIds: `${categoryId}-${taggedCity}`,
           });
         }
-        collectionDetails = categoryTourListData.collectionDetails ?? {};
+        collectionDetails = categoryTourListData?.collectionDetails ?? {};
       }
 
       const { prismicTours, offerTgids } = offerDetails;
@@ -881,7 +895,7 @@ export const getPageData = async ({
               (simpleCategoryData: any, [categoryId, productGroups]: any) => {
                 const tgids: Array<number> = [];
                 const productGroupMap: TGIDProductCardMap =
-                  productGroups?.reduce(
+                  productGroups?.reduce?.(
                     (map: TGIDProductCardMap, productGroup: ProductCard) => {
                       if (productGroup.showPageUid) {
                         delete productGroup.highlights;
