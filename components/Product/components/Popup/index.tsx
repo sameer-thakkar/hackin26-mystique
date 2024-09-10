@@ -19,6 +19,7 @@ const Popup = ({
   tgid,
   scrollToSection,
   slideUp,
+  onStateChange,
 }: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -29,6 +30,7 @@ const Popup = ({
     setIsVisible(false);
     setTimeout(() => {
       setIsActive(false);
+      onStateChange?.(false);
     }, 500);
     document.body.style.overflow = 'auto';
     trackEvent({
@@ -38,10 +40,12 @@ const Popup = ({
         : MORE_DETAILS_SWIPESHEET.ACTION.OVERLAY_CLICKED,
     });
   };
+
   const open = (startingIndex = -1) => {
     setIsActive(true);
     setTimeout(() => {
       setIsVisible(true);
+      onStateChange?.(true);
     }, 100);
     document.body.style.overflow = 'hidden';
     if (startingIndex !== -1 && startingIndex !== 0)
@@ -101,7 +105,9 @@ const Popup = ({
   return (
     <Modal
       isOpen={isActive}
-      onRequestClose={() => close()}
+      onRequestClose={() => {
+        close();
+      }}
       shouldCloseOnEsc
       shouldCloseOnOverlayClick
       shouldReturnFocusAfterClose

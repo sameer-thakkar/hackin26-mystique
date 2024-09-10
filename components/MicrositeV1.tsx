@@ -76,6 +76,7 @@ import {
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
+  VIDEO_EXPERIMENT_MBS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
@@ -802,6 +803,29 @@ const MicrositeV1 = (props: any) => {
     !(taggedSubCategoryName === 'HOHO' || taggedCategoryName === 'Cruises') &&
     !!scorpioData?.itineraryData?.itineraries?.length;
 
+  const {
+    variant: videoExperimentVariant,
+    isEligible: isVideoExpEligible,
+    isExperimentResolving: isVideoExpResolving,
+  } = useABTesting({
+    experimentId: 'PRODUCT_CARD_VIDEO',
+    customEligibilityCheckFn: () =>
+      !isMobile &&
+      Object.keys(VIDEO_EXPERIMENT_MBS).includes(uid) &&
+      (lang === 'en' || lang === 'en-us'),
+    additionalEventProps: {
+      [ANALYTICS_PROPERTIES.POSITION]:
+        orderedFilteredTours.findIndex(
+          (tour: { tgid: number }) =>
+            Number(tour.tgid) ===
+            VIDEO_EXPERIMENT_MBS[uid as keyof typeof VIDEO_EXPERIMENT_MBS]
+        ) + 1,
+    },
+  });
+
+  const showVideoOnProductCard =
+    isVideoExpEligible && videoExperimentVariant === VARIANTS.TREATMENT;
+
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
     mbType: taggedMbType,
@@ -897,6 +921,7 @@ const MicrositeV1 = (props: any) => {
       isHOHORevamp={showHohoRevamp}
       isNVResolving={isCruisesExpEligible && !newVerticalsTimer}
       showItineraries={showItineraries}
+      showVideoOnProductCard={showVideoOnProductCard}
       isCruisesRevamp={showCruisesRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
       activeSubCat={activeSubCat}
@@ -968,6 +993,7 @@ const MicrositeV1 = (props: any) => {
   if (
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
+    (isVideoExpEligible && isVideoExpResolving) ||
     (isRankingExperimentEligible && isRankingExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
@@ -1135,7 +1161,7 @@ const MicrositeV1 = (props: any) => {
           }
         >
           <StaticBanner
-            bannerVideo={bannerVideo}
+            bannerVideo={showVideoOnProductCard ? null : bannerVideo}
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
             bannerSubText={bannerAndFooterSubText}

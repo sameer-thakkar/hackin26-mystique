@@ -44,6 +44,7 @@ import {
   DESIGN,
   MB_CATEGORISATION,
   THEMES,
+  VIDEO_EXPERIMENT_MBS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -266,6 +267,7 @@ const PopulateProducts: any = (props: any) => {
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
+    showVideoOnProductCard = false,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
@@ -525,10 +527,12 @@ const PopulateProducts: any = (props: any) => {
   if (subattraction_type === SUBATTRACTION_TYPE.C) {
     availableToursList = availableToursList.splice(0, 5);
   }
+
   const finalToursList =
     isNewVerticalsProductCard && isMobile
       ? newVerticalTours
       : availableToursList;
+
   const selectedDate = router.query.selectedDate;
   useEffect(() => {
     if (!productsRef.current) return;
@@ -789,6 +793,9 @@ const PopulateProducts: any = (props: any) => {
         showData: showItinerary,
         isHOHO: isHohoItinerary,
       },
+      showVideoOnProductCard:
+        showVideoOnProductCard &&
+        VIDEO_EXPERIMENT_MBS[uid as keyof typeof VIDEO_EXPERIMENT_MBS] === tgid,
       showCustomProductCardCTA,
       shouldRunCustomCTAExperiment,
       showCustomProductCardEnglishCTA,

@@ -11,4 +11,5 @@ export type TPopupProps = {
   tgid?: number | string;
   scrollToSection?: (index: number) => Promise<void>;
   slideUp?: boolean;
+  onStateChange?: (isOpen: boolean) => void;
 };

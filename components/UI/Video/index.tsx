@@ -39,7 +39,9 @@ interface VideoTypeProps {
   showPauseIcon?: boolean;
   isMobile?: boolean;
   id?: string;
+  shouldBePlayingVideo?: boolean;
   onPause?: () => void;
+  onClick?: () => void;
 }
 
 const Video: React.FC<VideoTypeProps> = ({
@@ -66,7 +68,9 @@ const Video: React.FC<VideoTypeProps> = ({
   pauseOnclick = false,
   eventTracking = true,
   id,
+  shouldBePlayingVideo = true,
   onPause = () => {},
+  onClick,
 }) => {
   const videoAutoplayInterval = useRef(null);
   const videoAutoplayTime = useRef(0);
@@ -154,7 +158,9 @@ const Video: React.FC<VideoTypeProps> = ({
 
   useEffect(() => {
     if (shouldVideoPlay) {
-      const videoElement: HTMLVideoElement = videoRef.current!;
+      const videoElement: HTMLVideoElement | null = videoRef.current;
+
+      if (!videoElement) return;
 
       const startVideoAutoPlay = () => {
         if (!hasVideoLoaded) return;
@@ -171,6 +177,13 @@ const Video: React.FC<VideoTypeProps> = ({
         videoElement.removeEventListener('loadeddata', startVideoAutoPlay);
     }
   }, [shouldVideoPlay, hasVideoLoaded]);
+
+  useEffect(() => {
+    if (!hasVideoLoaded) return;
+
+    if (shouldBePlayingVideo) playVideo();
+    else pauseVideo();
+  }, [shouldBePlayingVideo, hasVideoLoaded]);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -230,6 +243,8 @@ const Video: React.FC<VideoTypeProps> = ({
       onPause();
       pauseVideo();
     }
+
+    onClick?.();
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Modal from 'react-modal';
 import dynamic from 'next/dynamic';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
@@ -7,9 +8,11 @@ import SwiperWrapper from 'components/Swiper';
 import Image from 'UI/Image';
 import {
   CarouselContainer,
+  modalStyles,
   NextButtonContainer,
   PaginatorWrapper,
   PrevButtonContainer,
+  VideoCTA,
 } from 'UI/MediaCarousel/styles';
 import { Paginator } from 'UI/Paginator';
 import useOnScreen from 'hooks/useOnScreen';
@@ -21,8 +24,13 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
+import VideoPlayIcon from 'assets/playIcon';
 
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
+const VideoPlayer = dynamic(
+  () =>
+    import(/* webpackChunkName: "Plyr Video" */ 'components/common/VideoPlayer')
+);
 
 type MediaCarouselProps = {
   imageList: Array<{ url: string; altText: string }>;
@@ -47,6 +55,8 @@ type MediaCarouselProps = {
   hideBorderRadius?: boolean;
   useWidePaginatorActiveTab?: boolean;
   uid?: string;
+  shouldBePlayingVideo?: boolean;
+  position?: number;
   isImageQualityExperiment?: boolean;
   hideGrabCursor?: boolean;
 };
@@ -72,6 +82,8 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   isTimed = true,
   trackImage = true,
   hideBorderRadius,
+  shouldBePlayingVideo = true,
+  position,
   hideGrabCursor = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -80,7 +92,9 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     options: { threshold: 0.75 },
   });
 
+  const [modalIsOpen, setModalOpen] = useState(false);
   const [isVisibilityTracked, setIsVisibilityTracked] = useState(false);
+  const [isInvisibilityTracked, setIsInvisibilityTracked] = useState(false);
   const [swiper, setSwiperInstance] = useState<Swiper | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -117,9 +131,27 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   useEffect(() => {
     if (!isVisibilityTracked && isOnScreen) {
       trackEvent(getImageViewEventProperties({ rank: 1 }));
+      if (videoUrl && !isMobile)
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.PRODUCT_VIDEO_VIEWED,
+          [ANALYTICS_PROPERTIES.TGID]: tgid,
+          [ANALYTICS_PROPERTIES.POSITION]: position,
+        });
       setIsVisibilityTracked(true);
     }
   }, [isOnScreen]);
+
+  useEffect(() => {
+    if (!isInvisibilityTracked && !isOnScreen && isVisibilityTracked) {
+      if (videoUrl && !isMobile)
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.PRODUCT_VIDEO_OUT_OF_VIEW,
+          [ANALYTICS_PROPERTIES.TGID]: tgid,
+          [ANALYTICS_PROPERTIES.POSITION]: position,
+        });
+      setIsInvisibilityTracked(true);
+    }
+  }, [isOnScreen, isVisibilityTracked]);
 
   const swiperParams: SwiperProps = {
     lazy: {
@@ -150,6 +182,26 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
 
   const imageClassNames = `swiper-lazy ${imageId}`;
 
+  const onVideoClick = () => {
+    document.body.style.overflow = 'hidden';
+    setModalOpen(true);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.PRODUCT_VIDEO_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+    });
+  };
+
+  const closeModal = () => {
+    document.body.style.overflow = 'auto';
+    setModalOpen(false);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.VIDEO_PLAYER_CLOSED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+    });
+  };
+
   return (
     <CarouselContainer
       $backgroundColor={backgroundColor}
@@ -172,10 +224,15 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               imageWidth={imageWidth}
               imageHeight={imageHeight}
               dontLazyLoadImage={isFirstProduct}
-              shouldVideoPlay={currentIndex === 0}
+              shouldVideoPlay={currentIndex === 0 && !isMobile && isOnScreen}
+              shouldBePlayingVideo={
+                isOnScreen && !modalIsOpen && shouldBePlayingVideo
+              }
               videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
               showPauseIcon={false}
               showPlayIcon={false}
+              onClick={onVideoClick}
+              isMuted
             />
           ) : (
             <Image
@@ -199,6 +256,31 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
           );
         })}
       </SwiperWrapper>
+
+      <Conditional if={videoUrl && currentIndex === 0 && !isMobile}>
+        <VideoCTA onClick={onVideoClick}>
+          <VideoPlayIcon />
+          <p>Sneak Peek</p>
+        </VideoCTA>
+        <Conditional if={modalIsOpen}>
+          <Modal
+            style={modalStyles}
+            onRequestClose={closeModal}
+            isOpen={modalIsOpen}
+            shouldCloseOnEsc
+            shouldCloseOnOverlayClick
+            shouldReturnFocusAfterClose
+            preventScroll={true}
+          >
+            <VideoPlayer
+              videoUrl={videoUrl!}
+              closePlayer={closeModal}
+              showMuteControls
+              tgid={tgid}
+            />
+          </Modal>
+        </Conditional>
+      </Conditional>
 
       {showTimedPaginator && (
         <PaginatorWrapper bottomPosition={bottomPosition}>

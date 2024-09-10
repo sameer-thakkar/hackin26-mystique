@@ -1,4 +1,8 @@
-import styled, { css } from 'styled-components';
+import { Styles } from 'react-modal';
+import styled, { css, keyframes } from 'styled-components';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const CarouselContainer = styled.div<{
   $backgroundColor?: string;
@@ -133,3 +137,96 @@ export const PaginatorWrapper = styled.div<{ bottomPosition?: string }>`
   z-index: 2;
   margin-bottom: ${({ bottomPosition }) => bottomPosition ?? 0};
 `;
+
+const playAnimation = keyframes`
+  0% {
+      transform: translateX(-30%);
+    }
+    15% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    25% {
+      transform: translateX(-30%);
+      opacity: 0;
+    }
+    30% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-30%);
+      opacity: 1;
+    }
+`;
+
+export const VideoCTA = styled.button`
+  display: flex;
+  gap: 0.25rem;
+  z-index: 2;
+  position: absolute;
+  align-items: center;
+  justify-content: space-between;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 2rem;
+  backdrop-filter: blur(0.25rem);
+  background: #00000033;
+  border: 1px solid #ffffff1a;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+
+  p {
+    margin: 0;
+    margin-bottom: 2px;
+    padding: 0;
+    width: max-content;
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    color: ${COLORS.BRAND.WHITE};
+  }
+
+  svg {
+    height: 0.75rem;
+    width: 1.25rem;
+
+    path {
+      fill: ${COLORS.BRAND.WHITE};
+      stroke: ${COLORS.BRAND.WHITE};
+      animation-name: ${playAnimation};
+      animation-duration: 1.4s;
+      animation-iteration-count: infinite;
+      animation-delay: 250ms;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+export const modalStyles: Styles = {
+  overlay: {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    zIndex: 99,
+  },
+  content: {
+    height: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 'auto',
+    width: '100%',
+    backgroundColor: 'transparent',
+    maxWidth: '1000px',
+    boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+    zIndex: 999,
+    padding: 0,
+    inset: 0,
+    border: 0,
+  },
+};

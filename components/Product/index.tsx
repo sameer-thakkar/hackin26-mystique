@@ -86,6 +86,7 @@ import {
   extractTabsFromHighlights,
   filterFromHighlights,
   filterHighlights,
+  generateVideoExperimentVideoUrl,
   getMaxListItemsToShow,
   getProductCardLayout,
   parseInclusionsExclusions,
@@ -247,6 +248,7 @@ const Product = (props: any) => {
     isCruisesRevamp = false,
     verticalProductCard = false,
     horizontalProductCard = false,
+    showVideoOnProductCard = false,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
@@ -295,6 +297,7 @@ const Product = (props: any) => {
       index: 0,
       isForcedChange: false,
     });
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isUnScrolled, setIsUnScrolled] = useState(true);
   const [customDescriptors, setCustomDescriptors] = useState([]);
 
@@ -1456,9 +1459,11 @@ const Product = (props: any) => {
                 <MediaCarousel
                   imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                   videoUrl={
-                    (isPopup ? originalIsMobile : isMobile) &&
-                    isBannerCard &&
-                    !showThumbnailInBanner
+                    showVideoOnProductCard
+                      ? generateVideoExperimentVideoUrl(String(tgid))
+                      : (isPopup ? originalIsMobile : isMobile) &&
+                        isBannerCard &&
+                        !showThumbnailInBanner
                       ? bannerVideo
                       : null
                   }
@@ -1483,6 +1488,8 @@ const Product = (props: any) => {
                   showTimedPaginator={isNewVerticalsProductCard}
                   isTimed={!isNewVerticalsProductCard}
                   uid={uid}
+                  shouldBePlayingVideo={!isPopupOpen}
+                  position={position}
                 />
               </Conditional>
               <Conditional if={showItinerary && !isMobile}>
@@ -2069,6 +2076,7 @@ const Product = (props: any) => {
           controller={popupController}
           tgid={tgid}
           scrollToSection={scrollToSection}
+          onStateChange={setIsPopupOpen}
           slideUp={isNewVerticalsProductCard}
         >
           <PopupContainer
@@ -2082,7 +2090,14 @@ const Product = (props: any) => {
           >
             <Conditional if={images}>
               <div className="card-img">
-                <ExpandedGallery images={images} />
+                <ExpandedGallery
+                  images={images}
+                  videoUrl={
+                    showVideoOnProductCard
+                      ? generateVideoExperimentVideoUrl(String(tgid))
+                      : null
+                  }
+                />
               </div>
             </Conditional>
             {getProductCardElements({

@@ -7,7 +7,7 @@
   "author": "Aakash Goel",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "yarn prepare && concurrently \"NODE_OPTIONS='--inspect' RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=false next -p 3001\" \"panda --watch\"",
+    "dev": "yarn prepare && concurrently \"NODE_OPTIONS='--inspect --max-old-space-size=8192' RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=false next -p 3001\" \"panda --watch\"",
     "start": "NODE_OPTIONS='--max-old-space-size=3072 -r @newrelic/next' node server.js",
     "build": "next build",
     "storybook": "start-storybook -p 6006",

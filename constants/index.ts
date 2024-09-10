@@ -573,6 +573,10 @@ export const ANALYTICS_EVENTS = {
   CALENDAR_OPEN: 'Calendar Opened',
   CALENDAR_CLOSED: 'Calendar Closed',
   CALENDAR_DATE_SELECTED: 'Calendar Date Selected',
+  PRODUCT_VIDEO_VIEWED: 'Product Video Viewed',
+  PRODUCT_VIDEO_OUT_OF_VIEW: 'Product Video Out Of View',
+  PRODUCT_VIDEO_CLICKED: 'Product Video Clicked',
+  VIDEO_PLAYER_CLOSED: 'Video Player Closed',
   FILTER_APPLIED: 'Filter Applied',
   FOOD_TAB_CLICKED: 'Food Menu Tab Clicked',
   DEAD_CLICK: 'Dead Click Captured',
@@ -2214,6 +2218,16 @@ export const OLYMPICS_BANNER = {
   GET_YOUR_FREE_GUIDE: 'Get your free guide',
   BLOG_BANNER: 'Olympics Blog Banner',
   BLOG_REDIRECTION: 'Blog Redirection',
+};
+
+export const VIDEO_EXPERIMENT_MBS = {
+  'www.tickets-rome.com.colosseum': 3075,
+  'www.basilicacisterntickets.com': 13477,
+  'www.bluemosquetickets.com': 22487,
+  'www.topkapipalace-tickets.com': 13472,
+  'www.parkguell-tickets.com.home': 6705,
+  'www.hagia-sophia-tickets.com': 11984,
+  'www.pradomuseumtickets.com': 4082,
 };
 
 export const CUSTOM_BANNER = {

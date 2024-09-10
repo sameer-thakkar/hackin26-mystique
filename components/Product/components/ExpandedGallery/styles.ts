@@ -137,7 +137,21 @@ export const ExpandedGalleryContainer = styled.div<{
     width: 100%;
     transition: opacity 0.3s;
 
-    img {
+    &.plyr-container {
+      height: 20rem;
+      width: 32rem;
+
+      .plyr__controls {
+        height: 1rem;
+      }
+
+      .plyr__video-wrapper {
+        border-radius: 0;
+      }
+    }
+
+    img,
+    .plyr {
       aspect-ratio: 16/10;
     }
 

@@ -3,6 +3,9 @@ import Plyr from 'plyr';
 import { TVideoPlayerProps } from 'components/common/VideoPlayer/interface';
 import { TitleBar, VideoContainer } from 'components/common/VideoPlayer/styles';
 import Button from 'UI/Button';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import WhiteCrossArrow from 'assets/whiteCrossArrow';
 import 'plyr/dist/plyr.css';
 
@@ -10,6 +13,10 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
   videoUrl,
   videoTitle,
   closePlayer,
+  className = '',
+  showMuteControls = false,
+  playPauseThreshold = 1,
+  tgid,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playerState, setPlayerState] = useState(-1);
@@ -19,22 +26,36 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
   const ref = useRef<HTMLVideoElement>(null);
   const playButtonRef = useRef<HTMLButtonElement>(null);
   const plyr = useRef<Plyr>();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isOnScreen = useOnScreen({
+    ref: containerRef,
+    options: { threshold: playPauseThreshold },
+  });
 
   useEffect(() => {
     if (!ref.current || plyr.current) return;
+
+    let controls = [
+      'play',
+      'play-large',
+      'current-time',
+      'progress',
+      'duration',
+      'fullscreen',
+    ];
+
+    if (showMuteControls)
+      controls = [
+        ...controls.slice(0, controls.length - 1),
+        'mute',
+        controls[controls.length - 1],
+      ];
 
     const player = new Plyr(ref.current, {
       fullscreen: { fallback: false, iosNative: false },
       autoplay: true,
       muted: false,
-      controls: [
-        'play',
-        'play-large',
-        'current-time',
-        'progress',
-        'duration',
-        'fullscreen',
-      ],
+      controls,
     });
     player.source = {
       type: 'video',
@@ -69,6 +90,52 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
   }, [ref]);
 
   useEffect(() => {
+    let videoViewed = {
+      '10': false,
+      '25': false,
+      '50': false,
+      '75': false,
+      '90': false,
+      '100': false,
+    };
+
+    const interval = setInterval(() => {
+      if (!plyr.current || !plyr.current.currentTime || !plyr.current.playing)
+        return;
+
+      const { currentTime, duration } = plyr.current;
+
+      const percentageViewed = (currentTime * 100) / duration;
+      const lastVideoViewed = { ...videoViewed };
+
+      for (let index = 0; index < Object.keys(videoViewed).length; index++) {
+        const currentTrackPercent = Object.keys(videoViewed)[
+          index
+        ] as keyof typeof videoViewed;
+        if (videoViewed[currentTrackPercent]) continue;
+
+        if (percentageViewed >= Number(currentTrackPercent)) {
+          lastVideoViewed[currentTrackPercent] = true;
+        } else break;
+      }
+
+      Object.keys(lastVideoViewed).forEach((key) => {
+        const isRecorded = videoViewed[key as keyof typeof videoViewed];
+        if (!isRecorded && lastVideoViewed[key as keyof typeof videoViewed])
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.YT_VIDEO_VIEWED,
+            [ANALYTICS_PROPERTIES.PERCENTAGE_VIEWED]: key,
+            [ANALYTICS_PROPERTIES.TGID]: tgid,
+          });
+      });
+
+      videoViewed = lastVideoViewed;
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [plyr.current]);
+
+  useEffect(() => {
     if (!plyr.current) return;
     const seeking = isSeeking || plyr.current.seeking;
     if ((playerState === 2 || playerState === 0) && !seeking) {
@@ -84,12 +151,27 @@ const VideoPlayer: React.FC<TVideoPlayerProps> = ({
     };
   }, [playerState, isSeeking, plyr]);
 
+  useEffect(() => {
+    if (!plyr.current || !playPauseThreshold) return;
+
+    if (isOnScreen) plyr.current.play();
+    else plyr.current.pause();
+  }, [plyr, isOnScreen, playPauseThreshold]);
+
   return (
-    <VideoContainer>
-      <TitleBar>
-        <h3>{videoTitle}</h3>
-        <Button onClick={closePlayer}>{WhiteCrossArrow}</Button>
-      </TitleBar>
+    <VideoContainer
+      className={`${className} plyr-container`}
+      ref={containerRef}
+    >
+      {(videoTitle || closePlayer) && (
+        <TitleBar>
+          {videoTitle && <h3>{videoTitle}</h3>}
+          {closePlayer && (
+            <Button onClick={closePlayer}>{WhiteCrossArrow}</Button>
+          )}
+        </TitleBar>
+      )}
+
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video ref={ref} />
     </VideoContainer>

@@ -1,22 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
 import type { TImageGalleryController } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import { AllPhotosCta } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
 import Image from 'UI/Image';
-import Video from 'UI/Video';
 import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PRODUCT_CARD_CHILDREN_POSITIONS,
-  VIDEO_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import AllPhotos from 'assets/allPhotos';
 import type { TExpandedGalleryProps } from './interface';
 import { ExpandedGalleryContainer, GalleryViewContainer } from './styles';
+
+const VideoPlayer = dynamic(
+  import(/* webpackChunkName: "VideoPlayer" */ 'components/common/VideoPlayer')
+);
 
 const IMAGE_DIMENSIONS = [
   { height: 320, width: 512 },
@@ -26,8 +29,9 @@ const IMAGE_DIMENSIONS = [
 
 const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
   const [galleryImageIndex, setGalleryImageIndex] = useState(-1);
-  const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(0);
-  const MAX_LEN = Math.min(3, images.length);
+  const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(+!!videoUrl);
+  const [loadVideo, setLoadVideo] = useState(false);
+  const MAX_LEN = Math.min(3, images.length + +!!videoUrl);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const controller = useRef<TImageGalleryController>();
@@ -51,11 +55,18 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
     setNumberOfImagesLoaded(numberOfImagesLoaded + 1);
   };
 
+  useEffect(() => {
+    if (!videoUrl) return;
+    setTimeout(() => {
+      setLoadVideo(true);
+    }, 200);
+  }, []);
+
   if (MAX_LEN === 0) return null;
 
   const { height, width } = IMAGE_DIMENSIONS[MAX_LEN - 1];
 
-  const imagesLoaded = numberOfImagesLoaded + 1 >= MAX_LEN;
+  const imagesLoaded = numberOfImagesLoaded + 1 >= MAX_LEN - +!!videoUrl;
 
   return (
     <>
@@ -64,22 +75,28 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
         $imagesLoaded={imagesLoaded}
         ref={containerRef}
       >
-        {Array.from({ length: MAX_LEN }).map((_, index) => (
-          <Skeleton key={index} containerClassName="gallery-children" />
-        ))}
-        {images.slice(0, MAX_LEN).map((image, index) => {
-          return videoUrl && index === 0 ? (
-            <Video
-              key={videoUrl}
-              url={videoUrl}
-              fallbackImage={image}
-              imageAspectRatio={'16:9'}
-              shouldVideoPlay
-              videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
-              showPauseIcon={false}
-              showPlayIcon={false}
-            />
-          ) : (
+        {Array.from({ length: MAX_LEN - (videoUrl ? 1 : 0) }).map(
+          (_, index) => (
+            <Skeleton key={index} containerClassName="gallery-children" />
+          )
+        )}
+        {videoUrl && (
+          <>
+            <Skeleton key={2} containerClassName="gallery-children" />
+            {loadVideo ? (
+              <VideoPlayer
+                videoUrl={videoUrl}
+                className="gallery-children"
+                showMuteControls
+                playPauseThreshold={0.3}
+              />
+            ) : (
+              <Skeleton key={3} containerClassName="gallery-children" />
+            )}
+          </>
+        )}
+        {images.slice(0, MAX_LEN - (videoUrl ? 1 : 0)).map((image, index) => {
+          return (
             <Image
               className="gallery-children"
               key={image.url}

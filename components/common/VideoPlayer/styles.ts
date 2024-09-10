@@ -37,6 +37,11 @@ export const VideoContainer = styled.div`
     }
     .plyr__video-wrapper {
       border-radius: 8px;
+      overflow: hidden;
+
+      video {
+        transform: scale(1.01);
+      }
     }
   }
 `;
@@ -57,7 +62,7 @@ export const TitleBar = styled.div`
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     border: 0;
-    margin-right: 1.5rem;
+    margin: 0 1.5rem 0 auto;
     padding: 0.375rem 0.625rem;
   }
   h3 {

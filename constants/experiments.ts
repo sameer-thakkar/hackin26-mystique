@@ -20,6 +20,13 @@ const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
 const RANKING_EXPERIMENT_V2 = 'Product Rankings v2';
 const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
+const SHOULDER_PAGE_PRODUCT_CARD_EXPERIMENT =
+  'Shoulder Page Product Card Experiment';
+const ITINERARY_CONTROLLED_ROLLOUT = 'Itinerary Controlled Rollout';
+const IMAGE_QUALITY_EXPERIMENT = 'Image Quality Experiment';
+const HOHO_REVAMP = 'HOHO LP Revamp 1.3';
+const PRODUCT_CARD_ONLY_HIGHLIGHTS = 'Product Card Tabs Experiment';
+const PRODUCT_CARD_VIDEO = 'Product Card Video Experiment V1';
 const C1_COLLECTION_LTT_BROADWAY_PRODUCT_CARD_CTA_EXPERIMENT = 'DE IT CTA Copy';
 const C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH = 'EN LP CTA Copy v1';
 const CRUISES_REVAMP = 'Cruises Revamp Experiment';
@@ -32,6 +39,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
+  PRODUCT_CARD_VIDEO,
   RANKING_EXPERIMENT_V2,
   SEATMAP_EXPERIMENT,
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT,
@@ -78,6 +86,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     LTD_LP_Experiment,
     [VARIANTS.SHOWPAGE_REDIRECT, VARIANTS.CHECKOUT_REDIRECT],
     [0, 100]
+  ),
+  [PRODUCT_CARD_VIDEO]: new Experiment(
+    PRODUCT_CARD_VIDEO,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
   ),
   [RANKING_EXPERIMENT_V2]: new Experiment(
     RANKING_EXPERIMENT_V2,

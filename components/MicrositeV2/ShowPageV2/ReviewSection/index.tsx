@@ -140,8 +140,9 @@ const ReviewSection = ({
   }, [offset, reviews]);
 
   useEffect(() => {
-    if (!initialReviews?.length) fetchReviews();
-  }, []);
+    if (offset && offset > 0) return;
+    fetchReviews();
+  }, [offset]);
 
   return (
     <ReviewSectionWrapper>

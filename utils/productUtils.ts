@@ -1197,6 +1197,9 @@ export const filterHighlights = ({
   return { highlightsRichText, everyRichTextExceptHighlights };
 };
 
+export const generateVideoExperimentVideoUrl = (tgid: string | number) =>
+  `https://cdn-imgix.headout.com/media/videos/pc-video-exp/${tgid}.mp4`;
+
 export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
   let inclusionsExclusions: Record<string, any> = {
     inclusions: [],
@@ -1220,3 +1223,4 @@ export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
 
   return { inclusionsExclusions };
 };
+
