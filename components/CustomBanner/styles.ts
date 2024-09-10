@@ -68,8 +68,8 @@ export const Subtitle = styled.p`
   display: block;
 `;
 
-export const YoutubeBannerLeft = styled.div`
-  width: 60%;
+export const YoutubeBannerLeft = styled.div<{ fullWidth?: boolean }>`
+  ${(fullWidth) => !fullWidth && 'width: 60%;'}
   display: flex;
   flex-direction: column;
   justify-content: center;

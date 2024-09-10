@@ -101,7 +101,7 @@ const CustomBanner = ({
       </Conditional>
       <YoutubeBannerWrapper ref={mediaPreviewWrapperRef}>
         <YoutubeBanner insideCards={insideCards}>
-          <YoutubeBannerLeft>
+          <YoutubeBannerLeft fullWidth={!ctaLabel || !ctaUrl}>
             <span>{headingTitle}</span>
 
             <Subtitle
@@ -113,56 +113,60 @@ const CustomBanner = ({
               {subtitle}
             </Subtitle>
           </YoutubeBannerLeft>
-          <YoutubeBannerRight>
-            {/* <Conditional if={variant == VARIANTS.VIDEO_TEXT}> */}
-            <MediaPreviewWrapper isIntersecting={isIntersecting}>
-              <MediaPreview>
-                <div className="media-player-wrapper">
-                  <Conditional if={variant == VARIANTS.IMAGE_TEXT}>
-                    <Image
-                      url={mediaLink}
-                      width={WIDTH}
-                      height={HEIGHT}
-                      imageId={'media-image'}
-                      alt={headingTitle}
-                      priority
-                      fill
-                    />
-                  </Conditional>
+          <Conditional if={mediaLink || (ctaLabel && ctaUrl)}>
+            <YoutubeBannerRight>
+              <Conditional if={mediaLink}>
+                <MediaPreviewWrapper isIntersecting={isIntersecting}>
+                  <MediaPreview>
+                    <div className="media-player-wrapper">
+                      <Conditional if={variant == VARIANTS.IMAGE_TEXT}>
+                        <Image
+                          url={mediaLink}
+                          width={WIDTH}
+                          height={HEIGHT}
+                          imageId={'media-image'}
+                          alt={headingTitle}
+                          priority
+                          fill
+                        />
+                      </Conditional>
+                      <Conditional if={variant == VARIANTS.VIDEO_TEXT}>
+                        <Video
+                          url={mediaLink}
+                          imageWidth={WIDTH}
+                          imageHeight={HEIGHT}
+                          fallbackImage={{}}
+                          shouldVideoPlay
+                          dontLazyLoadImage
+                          videoPosition={VIDEO_POSITIONS.BANNER}
+                          showPauseIcon={false}
+                          showPlayIcon={false}
+                        />
+                      </Conditional>
+                    </div>
+                  </MediaPreview>
+                </MediaPreviewWrapper>
+              </Conditional>
+              <Conditional if={ctaLabel && ctaUrl}>
+                <div className="label-wrapper">
                   <Conditional if={variant == VARIANTS.VIDEO_TEXT}>
-                    <Video
-                      url={mediaLink}
-                      imageWidth={WIDTH}
-                      imageHeight={HEIGHT}
-                      fallbackImage={{}}
-                      shouldVideoPlay
-                      dontLazyLoadImage
-                      videoPosition={VIDEO_POSITIONS.BANNER}
-                      showPauseIcon={false}
-                      showPlayIcon={false}
-                    />
+                    <VideoPlayIcon />
+                  </Conditional>
+                  <H3Heading
+                    $isImage={variant == VARIANTS.IMAGE_TEXT}
+                    onClick={handleCTAClick}
+                  >
+                    <a href={ctaUrl} rel="nofollow" target="_blank">
+                      {ctaLabel}
+                    </a>
+                  </H3Heading>
+                  <Conditional if={variant == VARIANTS.IMAGE_TEXT}>
+                    <RightChevron />
                   </Conditional>
                 </div>
-              </MediaPreview>
-            </MediaPreviewWrapper>
-            {/* </Conditional> */}
-            <div className="label-wrapper">
-              <Conditional if={variant == VARIANTS.VIDEO_TEXT}>
-                <VideoPlayIcon />
               </Conditional>
-              <H3Heading
-                $isImage={variant == VARIANTS.IMAGE_TEXT}
-                onClick={handleCTAClick}
-              >
-                <a href={ctaUrl} rel="nofollow" target="_blank">
-                  {ctaLabel}
-                </a>
-              </H3Heading>
-              <Conditional if={variant == VARIANTS.IMAGE_TEXT}>
-                <RightChevron />
-              </Conditional>
-            </div>
-          </YoutubeBannerRight>
+            </YoutubeBannerRight>
+          </Conditional>
         </YoutubeBanner>
       </YoutubeBannerWrapper>
     </>
