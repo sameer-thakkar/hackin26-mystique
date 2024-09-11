@@ -2221,7 +2221,7 @@ export const OLYMPICS_BANNER = {
 };
 
 export const VIDEO_EXPERIMENT_MBS = {
-  'www.tickets-rome.com.colosseum': 3075,
+  'colosseum.tickets-rome.com': 3075,
   'www.basilicacisterntickets.com': 13477,
   'www.bluemosquetickets.com': 22487,
   'www.topkapipalace-tickets.com': 13472,
