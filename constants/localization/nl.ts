@@ -204,6 +204,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     CALL_US: 'Bel ons',
     CHAT_WITH_US: 'Chat met ons',
     COMPANY_DETAILS: 'Bedrijfsgegevens',
+    ABOUT_US: 'Over ons',
     INFORMATION: 'informatie',
     GMAPS_DISCLAIMER:
       'Alle schermafbeeldingen van plattegronden op deze pagina zijn afkomstig van Google in overeenstemming met fair use. Alle rechten op dergelijke schermafbeeldingen liggen bij het specifieke platform en het gebruik is uitsluitend bedoeld als informatie of advies.',

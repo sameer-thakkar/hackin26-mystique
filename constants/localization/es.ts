@@ -207,6 +207,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     CALL_US: 'Teléfono',
     CHAT_WITH_US: 'Chat en vivo',
     COMPANY_DETAILS: 'Sobre la empresa',
+    ABOUT_US: 'Sobre nosotros',
     INFORMATION: 'Información',
     GMAPS_DISCLAIMER:
       'Todas las imágenes de mapas que aparecen en esta página proceden de Google de acuerdo con el principio de "uso legítimo". Todos los derechos sobre dichas imágenes corresponden a la plataforma mencionada, y su uso tiene fines exclusivamente informativos u orientativos.',
@@ -221,7 +222,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     COPYRIGHT: '© Headout Inc.',
     MADE_WITH: 'Hecho con ',
     ALL_OVER_THE: ' desde todo el ',
-    TERMS_OF_USAGE: 'Términos de Uso',
+    TERMS_OF_USAGE: 'Términos de uso',
     GET_HELP_24_7: 'Atención 24/7',
     HELP_CENTER: 'Centro de asistencia',
     COMPANY: 'Empresa',

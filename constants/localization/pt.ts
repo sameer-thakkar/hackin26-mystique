@@ -205,6 +205,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     CALL_US: 'Telefone',
     CHAT_WITH_US: 'Fale conosco',
     COMPANY_DETAILS: 'Sobre a empresa',
+    ABOUT_US: 'Sobre nós',
     INFORMATION: 'Informações',
     GMAPS_DISCLAIMER:
       'Todas as imagens de mapas exibidas nesta página são provenientes do Google, de acordo com o uso justo. Todos os direitos sobre tais imagens pertencem à plataforma específica e seu uso destina-se exclusivamente a fins informativos ou orientativos.',
@@ -219,7 +220,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     COPYRIGHT: '© Headout Inc.',
     MADE_WITH: 'Feito com ',
     ALL_OVER_THE: ' para todo o ',
-    TERMS_OF_USAGE: 'Termos de Uso',
+    TERMS_OF_USAGE: 'Termos de uso',
     GET_HELP_24_7: 'ASSISTÊNCIA 24 H',
     HELP_CENTER: 'Central de atendimento',
     COMPANY: 'Empresa',

@@ -204,6 +204,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     CALL_US: 'Telefon',
     CHAT_WITH_US: 'Live-Chat',
     COMPANY_DETAILS: 'Unternehmensangaben',
+    ABOUT_US: 'Über uns',
     INFORMATION: 'Informationen',
     GMAPS_DISCLAIMER:
       'Alle Screenshots von Karten, die auf dieser Seite zu finden sind, stammen von Google in Übereinstimmung mit dem Fair Use-Prinzip. Alle Rechte an diesen Screenshots liegen bei der jeweiligen Plattform und ihre Verwendung dient ausschließlich zu Informations- und Orientierungszwecken.',
@@ -219,7 +220,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MADE_WITH: 'Made with ',
     ALL_OVER_THE: ' all over the ',
     TERMS_OF_USAGE: 'Nutzungsbedingungen',
-    GET_HELP_24_7: '24-Std. Support',
+    GET_HELP_24_7: '24-Std. support',
     HELP_CENTER: 'Hilfe',
     COMPANY: 'die Firma',
     WE_ACCEPT: 'ZAHLUNGSOPTIONEN',

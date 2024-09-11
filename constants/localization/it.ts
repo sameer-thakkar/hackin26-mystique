@@ -186,6 +186,7 @@ const it = {
     CALL_US: 'Chiamaci',
     CHAT_WITH_US: 'Chatta con noi',
     COMPANY_DETAILS: 'Dettagli sulla società',
+    ABOUT_US: 'Chi siamo',
     INFORMATION: 'Informazioni',
     GMAPS_DISCLAIMER:
       'Tutte le schermate delle mappe presenti in questa pagina provengono da Google in conformità con il principio di utilizzo legittimo. Tutti i diritti relativi a tali schermate appartengono alla piattaforma specifica e il loro utilizzo è esclusivamente a scopo informativo o orientativo.',

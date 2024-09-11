@@ -179,6 +179,7 @@ const pl = {
     CALL_US: 'Zadzwoń do nas',
     CHAT_WITH_US: 'Czatuj z nami',
     COMPANY_DETAILS: 'Dane firmy',
+    ABOUT_US: 'O nas',
     INFORMATION: 'Informacja',
     DISCLAIMER:
       'Ta strona nie jest oficjalną stroną internetową <attraction>. Jest prowadzona przez Headout, które współpracuje z operatorami atrakcji i wycieczek, aby zapewniać niezwykłe doświadczenia w kilku kliknięciach.',
