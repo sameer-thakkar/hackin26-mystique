@@ -64,10 +64,18 @@ export const IndexBox = styled.div`
   padding: 0.563rem 0;
 `;
 
-export const IndexRibbonWrapper = styled.div`
+export const IndexRibbonWrapper = styled.div<{
+  $index: number;
+}>`
   position: absolute;
   top: -6px;
   right: 0;
+  ${({ $index }) =>
+    $index > 9 &&
+    `svg {
+  text {
+  transform: translateX(-10px)
+  }}`}
 `;
 
 export const SvgWrapper = styled.div`

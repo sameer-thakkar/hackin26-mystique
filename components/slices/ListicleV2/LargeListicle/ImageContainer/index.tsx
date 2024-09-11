@@ -28,7 +28,9 @@ const ImageContainer = ({
           className="listicle-card-image"
         />
         <Conditional if={!isMobile}>
-          <IndexRibbonWrapper>{Ribbon(index + 1)}</IndexRibbonWrapper>
+          <IndexRibbonWrapper $index={index + 1}>
+            {Ribbon(index + 1)}
+          </IndexRibbonWrapper>
           <SvgWrapper>{Rect()}</SvgWrapper>
         </Conditional>
         <Conditional if={isMobile}>
