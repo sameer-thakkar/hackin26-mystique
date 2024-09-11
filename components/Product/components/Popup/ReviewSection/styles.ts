@@ -93,10 +93,14 @@ export const StyledReviewSectionContainer = styled.div`
     }
 
     ${ReviewMediaSection} {
-      width: calc(100vw - 2rem);
+      width: calc(100% + 2rem);
 
+      .swiper {
+        padding-right: 2rem;
+      }
       img,
-      .image-wrap {
+      .image-wrap,
+      .swiper-slide {
         width: 6.125rem;
         height: 8.16625rem;
       }

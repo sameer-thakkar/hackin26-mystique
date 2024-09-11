@@ -60,9 +60,13 @@ export const Title = styled.h2<{ showNewDesign?: boolean }>`
   font-weight: unset !important;
   display: block !important;
   text-align: left;
-  padding: ${({ showNewDesign }) => (showNewDesign ? '0 1rem' : '0 1rem 2rem')};
+  padding: ${({ showNewDesign }) => (showNewDesign ? '0' : '0 0 2rem')};
   ::after {
     content: unset !important;
+  }
+  @media (max-width: 768px) {
+    padding: ${({ showNewDesign }) =>
+      showNewDesign ? '0 1rem' : '0 1rem 2rem'};
   }
 `;
 
@@ -70,6 +74,7 @@ export const Review = styled.div<{ showNewDesign?: boolean }>`
   border: 1px solid ${COLORS.GRAY.G7};
   border-radius: 8px;
   height: 100%;
+  box-sizing: border-box;
   display: grid;
   min-height: 15rem;
   margin-right: ${({ showNewDesign }) => (showNewDesign ? '0' : '1.625rem')};
@@ -99,11 +104,13 @@ export const ReviewTop = styled.div`
   grid-template-columns: 2fr 1fr;
 `;
 
-export const Reviewer = styled.div`
+export const Reviewer = styled.div<{ $hasSubtext?: boolean }>`
   width: fit-content;
   display: grid;
   grid-column-gap: 16px;
-  grid-template-areas: 'image name' 'image subtext';
+  align-items: center;
+  grid-template-areas: ${({ $hasSubtext }) =>
+    $hasSubtext ? `'image name' 'image subtext'` : `'image name'`};
 `;
 
 export const ReviewerImage = styled.div`

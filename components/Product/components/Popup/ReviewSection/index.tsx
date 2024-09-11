@@ -40,7 +40,7 @@ const ReviewSection = ({
           showFetchMoreButton
           reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
-            slidesPerView: isMobile ? 3.5 : 6.3,
+            slidesPerView: isMobile ? 'auto' : 6.3,
             spaceBetween: 16,
           }}
           showSkeleton

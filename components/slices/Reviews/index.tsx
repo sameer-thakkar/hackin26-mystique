@@ -169,13 +169,13 @@ const Reviews: React.FC<ReviewsProps> = ({
         <Review key={genUniqueId()} showNewDesign={showNewDesign}>
           <ReviewContent>
             <ReviewTop>
-              <Reviewer>
+              <Reviewer $hasSubtext={reviewerSubtext}>
                 <ReviewerImage>
                   <Image url={imageUrl} alt={imageAlt} height={48} width={48} />
                 </ReviewerImage>
                 <ReviewerName>{reviewerName}</ReviewerName>
                 <ReviewerSubtext>
-                  <Conditional if={reviewerCountry}>
+                  <Conditional if={reviewerCountry && reviewerSubtext}>
                     <ReviewerCountry>
                       <Image
                         url={`${FLAGS_FOLDER_URL}${reviewerCountry}.svg`}

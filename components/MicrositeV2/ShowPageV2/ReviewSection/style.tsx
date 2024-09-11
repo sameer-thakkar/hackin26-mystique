@@ -219,6 +219,10 @@ export const ReviewMediaSection = styled.div`
     height: 15rem;
   }
   @media (max-width: 768px) {
+    margin-left: -1rem;
+    .swiper-wrapper {
+      margin-left: 1rem;
+    }
     img,
     .image-wrap {
       border-radius: 0.25rem;
