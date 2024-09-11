@@ -57,7 +57,13 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   }, [isEligible]);
 
   useEffect(() => {
-    if (!sandboxId || variant !== DEFAULT_VARIANT || isHsidSetFail || isBot)
+    if (
+      !sandboxId ||
+      variant !== DEFAULT_VARIANT ||
+      isHsidSetFail ||
+      isBot ||
+      !isEligible
+    )
       return;
 
     const eventProperties =
@@ -87,6 +93,7 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
     isBot,
     experimentOverrideVariant,
     experimentName,
+    isEligible,
   ]);
 
   return {
