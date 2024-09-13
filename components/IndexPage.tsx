@@ -21,7 +21,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { getLangUID, isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
@@ -31,7 +31,6 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   MB_CATEGORISATION,
-  RANKING_EXPERIMENT_UIDS,
   THEMES,
   TIME,
 } from 'const/index';
@@ -84,7 +83,6 @@ const Page = (props: PageProps) => {
     docsForListicles,
     collectionsInListicles,
     airportTransfersLPExperimentVariant,
-    rankingExperimentProps,
   } = props;
 
   const { tourGroupMap, ...rawCategoryTgidMap } =
@@ -108,11 +106,6 @@ const Page = (props: PageProps) => {
     ...(scorpioData && { scorpioData }),
     ...(orderedTours && { orderedTours }),
     ...(collectionVideos && { collectionVideos }),
-  };
-
-  const categoryTourListDataWithRankingExperiment = {
-    ...categoryTourListData,
-    ...rankingExperimentProps,
   };
 
   strings.setContent({
@@ -337,9 +330,6 @@ const Page = (props: PageProps) => {
               uid={uid}
               airportTransfersLPExperimentVariant={
                 airportTransfersLPExperimentVariant
-              }
-              categoryTourListDataWithRankingExperiment={
-                categoryTourListDataWithRankingExperiment
               }
               categoryDescriptors={categoryDescriptors}
               subcategoryDescriptors={subcategoryDescriptors}
@@ -572,44 +562,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   // Asynchronously get the data for microsite or content page
-  const promiseList = [
-    reflect(
-      getPageData({
-        res,
-        req,
-        query,
-        isDev,
-        localizedStrings,
-      })
-    ),
-  ];
-
-  const { uid } = getLangUID(req, query);
-
-  if (
-    (!lang || lang === 'en-us' || lang === 'en') &&
-    RANKING_EXPERIMENT_UIDS.includes(uid)
-  ) {
-    promiseList.push(
-      reflect(
-        getPageData({
-          res,
-          req,
-          query,
-          isDev,
-          localizedStrings,
-          runRankingExperiment: true,
-        })
-      )
-    );
-  }
-
-  const [responseWithoutExperiment, responseWithExperiment] = await Promise.all(
-    promiseList
+  const response = await reflect(
+    getPageData({
+      res,
+      req,
+      query,
+      isDev,
+      localizedStrings,
+    })
   );
 
-  const props = responseWithoutExperiment?.payload;
-  const rankingExperimentProps = responseWithExperiment?.payload;
+  const props = response?.payload;
 
   try {
     let url =
@@ -656,7 +619,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
-        ...(rankingExperimentProps && { rankingExperimentProps }),
         isBot,
         localizedStrings,
         serverRequestStartTimestamp,

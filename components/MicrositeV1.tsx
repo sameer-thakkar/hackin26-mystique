@@ -72,7 +72,6 @@ import {
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
-  RANKING_EXPERIMENT_UIDS,
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
@@ -214,7 +213,6 @@ const MicrositeV1 = (props: any) => {
     catAndSubCatPageData,
     isCatOrSubCatPage,
     airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
-    categoryTourListDataWithRankingExperiment,
     categoryDescriptors,
     subcategoryDescriptors,
   } = props;
@@ -418,24 +416,9 @@ const MicrositeV1 = (props: any) => {
     Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
 
   const {
-    isExperimentResolving: isRankingExperimentResolving,
-    variant: rankingExperimentVariant,
-    isEligible: isRankingExperimentEligible,
-  } = useABTesting({
-    experimentId: 'RANKING_EXPERIMENT_V2',
-    customEligibilityCheckFn: () =>
-      RANKING_EXPERIMENT_UIDS.includes(uid) &&
-      categoryTourListDataWithRankingExperiment &&
-      (lang === 'en-us' || lang === 'en'),
-  });
-
-  const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
-  } =
-    (rankingExperimentVariant === VARIANTS.TREATMENT
-      ? categoryTourListDataWithRankingExperiment
-      : categoryTourListData) || {};
+  } = categoryTourListData || {};
 
   const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -505,11 +488,6 @@ const MicrositeV1 = (props: any) => {
 
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
-
-  useEffect(() => {
-    if (rankingExperimentVariant !== VARIANTS.TREATMENT) return;
-    setOrderedFilteredTours(orderedTours);
-  }, [rankingExperimentVariant]);
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -886,11 +864,7 @@ const MicrositeV1 = (props: any) => {
       // @ts-ignore
       currency={currency}
       uncategorizedTours={finalUncategorizedTours}
-      scorpioData={
-        rankingExperimentVariant === VARIANTS.TREATMENT
-          ? categoryTourListDataWithRankingExperiment?.scorpioData
-          : scorpioData
-      }
+      scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
       currentLanguage={currentLanguage}
@@ -994,7 +968,6 @@ const MicrositeV1 = (props: any) => {
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isVideoExpEligible && isVideoExpResolving) ||
-    (isRankingExperimentEligible && isRankingExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving)

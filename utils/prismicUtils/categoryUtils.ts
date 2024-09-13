@@ -7,14 +7,12 @@ export const getCategoryData = async ({
   lang,
   cookies,
   localizedStrings,
-  runRankingExperiment,
 }: {
   productCardData: any;
   hostname: string;
   lang: string;
   cookies: any;
   localizedStrings: any;
-  runRankingExperiment: boolean;
 }) => {
   const categoryTourListData = await categoryTourListParserV1({
     shoulderPageTicketsCard: productCardData,
@@ -22,7 +20,6 @@ export const getCategoryData = async ({
     lang: lang ?? LANGUAGE_MAP.en.code,
     cookies,
     localizedStrings,
-    runRankingExperiment,
   });
   const minPrice = categoryTourListData.minPrice;
   const bestDiscount = categoryTourListData.bestDiscount;

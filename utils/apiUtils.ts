@@ -693,7 +693,6 @@ interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
   primarySubCategoryID?: NumberField | string;
-  runRankingExperiment?: boolean;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -751,7 +750,6 @@ export const fetchTourGroupsByCollection = async ({
   currency,
   cookies,
   primarySubCategoryID,
-  runRankingExperiment = false,
 }: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
@@ -765,15 +763,10 @@ export const fetchTourGroupsByCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
-    ...(runRankingExperiment && {
-      'src-version': 'v2',
-    }),
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: runRankingExperiment
-      ? HeadoutEndpoints.CollectionTourGroups
-      : HeadoutEndpoints.TourGroupListByCollectionV6,
+    endpoint: HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,
     id: collectionId,
     params,
@@ -786,12 +779,7 @@ export const fetchTourGroupsByCollection = async ({
     return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(
-      runRankingExperiment
-        ? '[fetchTourGroupsByCollectionV1]'
-        : '[fetchTGIDsByCollectionV6]',
-      error
-    );
+    console.error('[fetchTGIDsByCollectionV6]', error);
   }
 };
 

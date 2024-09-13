@@ -111,7 +111,6 @@ export const getPageData = async ({
   query,
   isDev,
   localizedStrings,
-  runRankingExperiment = false,
 }: any) => {
   const { host } = req.headers || window.location;
   const { cookies } = req;
@@ -304,7 +303,6 @@ export const getPageData = async ({
           lang: lang as string,
           localizedStrings,
           productCardData,
-          runRankingExperiment,
         });
       }
 
@@ -740,7 +738,6 @@ export const getPageData = async ({
             lang: lang ?? 'en',
             cookies,
             localizedStrings,
-            runRankingExperiment,
           });
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
           categoryTourListPromise = monthOnMonthPageParser({
@@ -827,7 +824,10 @@ export const getPageData = async ({
 
         if (shouldFetchBannerDescriptors) {
           const { name = '', id: primaryCategoryId } = primaryCategory || {};
-         const categoryName = name.toLowerCase().replace(' &', '').replace(/\s+/g, '-');
+          const categoryName = name
+            .toLowerCase()
+            .replace(' &', '')
+            .replace(/\s+/g, '-');
           const descriptorsUid = `${categoryName}-${primaryCategoryId}-descriptors`;
 
           const bannerDescriptors = await getCatSubcatDescriptors({

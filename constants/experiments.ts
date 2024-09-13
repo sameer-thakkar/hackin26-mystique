@@ -17,7 +17,6 @@ const LTD_LP_Experiment = 'LTD LP Experiment';
 const SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT =
   'Shoulder Page Section Ranking';
 const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
-const RANKING_EXPERIMENT_V2 = 'Product Rankings v2';
 const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 const PRODUCT_CARD_VIDEO = 'Product Card Video Experiment V1';
@@ -34,7 +33,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LFC_IMPACT,
   LTD_LP_Experiment,
   PRODUCT_CARD_VIDEO,
-  RANKING_EXPERIMENT_V2,
   SEATMAP_EXPERIMENT,
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT,
   SUBATTRACTIONS_EXPERIMENT,
@@ -83,11 +81,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   ),
   [PRODUCT_CARD_VIDEO]: new Experiment(
     PRODUCT_CARD_VIDEO,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
-  ),
-  [RANKING_EXPERIMENT_V2]: new Experiment(
-    RANKING_EXPERIMENT_V2,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
   ),
