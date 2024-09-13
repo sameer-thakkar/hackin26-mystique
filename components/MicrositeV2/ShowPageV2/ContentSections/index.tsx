@@ -47,7 +47,8 @@ const ContentSections = ({
   const contentSectionsRef = useRef<HTMLDivElement>(null);
   const { lang } = useContext(MBContext);
 
-  const { microBrandsHighlight, id, reviewsDetails } = tourGroupData;
+  const { microBrandsHighlight, id, reviewsDetails, topReviews } =
+    tourGroupData;
   const { ratingsCount } = reviewsDetails ?? {};
   const TABS = [
     strings.SHOW_PAGE_V2.CONTENT_TABS.ABOUT,
@@ -509,6 +510,7 @@ const ContentSections = ({
                 reviewsDetails={reviewsDetails}
                 reviewPageUrl={reviewPageUrl}
                 isMobile={isMobile}
+                initialReviews={topReviews}
               />
             </Content>
           </Conditional>
