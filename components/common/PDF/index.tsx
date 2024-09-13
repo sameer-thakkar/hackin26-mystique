@@ -22,6 +22,7 @@ const PdfPopup = ({
   isCTA = false,
   tgid,
   rank,
+  isMobile,
 }: TPdfPopup) => {
   const [isPopupActive, setisPopupActive] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -73,6 +74,14 @@ const PdfPopup = ({
     window.addEventListener('keydown', closeOnKeypress);
     return () => window.removeEventListener('keydown', closeOnKeypress);
   }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      window.onpopstate = () => {
+        closePopup();
+      };
+    }
+  }, [isPopupActive]);
 
   const isSinglePdf = pdfData?.length === 1;
   return (

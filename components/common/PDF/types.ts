@@ -8,6 +8,7 @@ export type TPdfPopup = {
   isCTA?: boolean;
   tgid: number | string;
   rank: number;
+  isMobile: boolean;
 };
 
 export type TPdfViewer = {

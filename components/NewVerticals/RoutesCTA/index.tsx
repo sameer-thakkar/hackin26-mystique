@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import PdfPopup from 'components/common/PDF';
@@ -54,6 +54,17 @@ const RoutesCTA = (props: TRoutesCTA) => {
     }
   }
 
+  useEffect(() => {
+    if (isMobile) {
+      if (isDrawerOpen) {
+        window.onpopstate = () => {
+          setIsDrawerOpen(false);
+          setIsSideDrawerOpen(false);
+        };
+      }
+    }
+  }, [isDrawerOpen, isSideDrawerOpen]);
+
   const onCTAClick = (e: any) => {
     e?.stopPropagation();
     trackEvent({
@@ -63,6 +74,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
       [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: ctaType,
     });
     if (isMobile) {
+      window.history.pushState(null, '');
       if (isMealCruise) {
         pdfPopupController.current?.open();
       } else {
@@ -128,6 +140,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
           onHide={() => {
             document.body.style.overflow = 'auto';
           }}
+          isMobile={isMobile}
         />
       </Conditional>
 

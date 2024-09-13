@@ -37,6 +37,7 @@ const MenuSection = (props: TMenuSection) => {
           rank={rank}
           controller={pdfPopupController}
           pdfData={menuData}
+          isMobile={isMobile}
           onHide={
             isMobile
               ? () => {
