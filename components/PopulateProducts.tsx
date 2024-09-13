@@ -389,7 +389,7 @@ const PopulateProducts: any = (props: any) => {
       setEarliestAvailabilityStore(earliestAvailabilityData);
       setShowEarliestAvailability(true);
     };
-    if (showNextAvailable || instantCheckout) {
+    if (instantCheckout) {
       fetchEarliestAvailability(tours);
     }
   }, []);
@@ -410,7 +410,6 @@ const PopulateProducts: any = (props: any) => {
     }
   }, [productsWrapperRef]);
 
-  const showNextAvailable = isCruisesRevamp;
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }: any) => {
       const fetchVariantPrices: Promise<any>[] = variantTgids.map(
@@ -713,7 +712,6 @@ const PopulateProducts: any = (props: any) => {
       earliestAvailability,
       showEarliestAvailability:
         earliestAvailability?.startDate && showEarliestAvailability,
-      showNextAvailable,
       tid: tour_variant_id,
       title: tour_title_override,
       descriptors: getProductDescriptors({

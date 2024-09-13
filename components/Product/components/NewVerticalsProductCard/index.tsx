@@ -73,6 +73,7 @@ const NewVerticalsProductCard = (props: any) => {
     boosterTag,
     isMobile,
     instantCheckout,
+    showNextAvailable = false,
     isTicketCard = false,
     indexPosition,
     pageType,
@@ -457,16 +458,18 @@ const NewVerticalsProductCard = (props: any) => {
                       </a>
                     </Conditional>
                   </CTABlock>
-                  <NextAvailable
-                    showSkeleton={
-                      !showEarliestAvailability &&
-                      !earliestAvailability &&
-                      !earliestAvailability?.startDate
-                    }
-                    earliestAvailability={earliestAvailability}
-                    currentLanguage={currentLanguage}
-                    showTime={isCruisesRevamp}
-                  />
+                  <Conditional if={showNextAvailable}>
+                    <NextAvailable
+                      showSkeleton={
+                        !showEarliestAvailability &&
+                        !earliestAvailability &&
+                        !earliestAvailability?.startDate
+                      }
+                      earliestAvailability={earliestAvailability}
+                      currentLanguage={currentLanguage}
+                      showTime={isCruisesRevamp}
+                    />
+                  </Conditional>
                 </Conditional>
               </CTAContainer>
             </Conditional>

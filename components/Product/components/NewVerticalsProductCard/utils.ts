@@ -108,6 +108,9 @@ export const getCustomDescriptors = ({
     const hotelTransfers =
       defaultDescriptors?.includes(DESCRIPTORS.TRANSFERS) &&
       strings.DESCRIPTORS.TRANSFERS;
+    const freeCancellation =
+      defaultDescriptors?.includes(DESCRIPTORS.FREE_CANCELLATION) &&
+      strings.DESCRIPTORS.FREE_CANCELLATION;
 
     const handleDescriptorClick = (descriptorType: DESCRIPTOR_TYPE) => {
       itineraryPopupController?.current?.open();
@@ -135,6 +138,10 @@ export const getCustomDescriptors = ({
             ? (boardingPoints as string)
             : '',
         onClick: () => handleDescriptorClick(DESCRIPTOR_TYPE.BOARDING_POINT),
+      },
+      {
+        type: 'FREE_CANCELLATION',
+        text: freeCancellation,
       },
       { type: 'MEALS_INCLUDED', text: mealOptions },
       { type: 'AUDIO_GUIDE', text: audioGuide },

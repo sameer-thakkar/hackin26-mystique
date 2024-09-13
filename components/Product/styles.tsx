@@ -3077,7 +3077,8 @@ export const newVerticalStyles = css`
   position: relative;
   .card-img {
     width: 21rem;
-    height: 13.125rem;
+    min-height: 13.125rem;
+    height: 100%;
     cursor: pointer;
   }
   .tour-tag {
@@ -3163,6 +3164,7 @@ export const newVerticalStyles = css`
       width: calc(100%);
       margin-bottom: 0.625rem;
       height: auto;
+      min-height: unset;
     }
     button.info-icon {
       padding: 0;
@@ -3210,7 +3212,6 @@ export const cruiseStyles = css`
       'category-and-rating'
       'title'
       'tour-tags'
-      'next-available'
       'price-block'
       'cta-block'
       'more-details-cta';
@@ -3224,6 +3225,9 @@ export const cruiseStyles = css`
         font-family: ${HALYARD.FONT_STACK};
         letter-spacing: 0;
       }
+    }
+    ${TourTags} {
+      margin: 0;
     }
 
     ${NextAvailableBlock} .available-text {
@@ -3252,7 +3256,6 @@ export const modifiedPopupStyles = css`
       'card-img'
       'category-and-rating'
       'title'
-      'next-available'
       'tags';
     ${PriceContainer} {
       display: none;
@@ -3263,8 +3266,8 @@ export const modifiedPopupStyles = css`
     ${TourTags} {
       gap: 0.625rem;
       flex-direction: column;
-      padding-bottom: 0;
-      margin: -0.25rem 0 0;
+      padding: 0.45rem 0 0;
+      margin: 0;
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
     }
     ${NextAvailableBlock} {
