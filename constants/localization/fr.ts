@@ -700,7 +700,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     NEW_ARRIVAL: 'Nouveautés',
     OFF_WEST_END: 'Hors West End',
     OLIVIER_WINNER: "Lauréat d'Olivier",
-    OPERA: 'Opéras',
+    OPERA: 'Opéra',
     PANTOMIMES: 'Pantomimes',
     PLAYS: 'Pièces de théâtre',
     ROMANCE: "Histoire d'amour",
