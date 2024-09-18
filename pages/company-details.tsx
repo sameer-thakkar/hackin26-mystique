@@ -51,7 +51,7 @@ const CompanyDetailsPage = (
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window?.innerWidth < 768 ?? false);
+    setIsMobile(window?.innerWidth < 768);
   }, []);
 
   const handleDropdownToggle = (elementIdentifier: any) => {
@@ -100,6 +100,7 @@ const CompanyDetailsPage = (
         dropdown={dropdown}
         handleDropdownToggle={handleDropdownToggle}
         hideLangCurrencySelector={true}
+        hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
       />
       <ContentContainer>
         <TopHeading h1>Company Details</TopHeading>

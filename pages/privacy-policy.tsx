@@ -39,7 +39,7 @@ const PrivacyPage = (
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window?.innerWidth < 768 ?? false);
+    setIsMobile(window?.innerWidth < 768);
   }, []);
 
   const handleDropdownToggle = (elementIdentifier: any) => {
@@ -116,6 +116,7 @@ const PrivacyPage = (
           dropdown={dropdown}
           handleDropdownToggle={handleDropdownToggle}
           hideLangCurrencySelector={true}
+          hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
         />
         <PrivacyContentContainer>
           <TopHeading h1>Headout&apos;s Privacy Policy</TopHeading>
@@ -123,40 +124,46 @@ const PrivacyPage = (
             <li>
               <SubHeading>Why this Privacy Policy?</SubHeading>
               <Paragraph>
-                Headout is vigilant and committed towards the protection and
-                management of User’s Personal Information. Thus, Headout has
-                implemented this Privacy Policy that aims to safeguard the
-                Personal Information of all the User(s).
-              </Paragraph>
-              <Paragraph>
-                This Policy, which is an integral part of Headout’s{' '}
-                <a href="/terms">Terms of Use</a>, describes inter alia
-                Headout’s procedures for the collection, processing, disclosure
-                and protection of the User’s Personal Information when the User
-                uses Our Platform. This Policy also intended to guide User(s)
-                about their privacy rights. Under this Policy, we have also
-                suggested how a User can contact Us in case they have any
-                issues/doubts.
-              </Paragraph>
-              <Paragraph>
-                Please note that We use User’s Personal Information to inter
-                alia provide them with the service(s) available on the Platform
-                in the best possible manner, improvise the overall usage of the
-                Platform and to carry out other processing activities outlined
-                in this Policy.
-              </Paragraph>
-              <Paragraph>
-                This Privacy Policy shall not be applicable to third-party
-                websites/apps that may be linked to Our Platform. Users are
-                requested to refer to respective third-party websites/apps&apos;
-                privacy policies to understand how their Personal Information
-                will be collected and processed by such websites/apps.
-              </Paragraph>
-              <Paragraph>
-                This Privacy Policy shall be read along with the Terms of Use
-                and all capitalized terms used, but not defined herein, shall
-                have the respective meanings as ascribed to them in the Terms of
-                Use.
+                <ol>
+                  <li>
+                    {' '}
+                    Headout is vigilant and committed towards the protection and
+                    management of User’s Personal Information. Thus, Headout has
+                    implemented this Privacy Policy that aims to safeguard the
+                    Personal Information of all the User(s).
+                  </li>
+                  <li>
+                    This Policy, which is an integral part of Headout’s{' '}
+                    <a href="/terms">Terms of Use</a>, describes inter alia
+                    Headout’s procedures for the collection, processing,
+                    disclosure and protection of the User’s Personal Information
+                    when the User uses Our Platform. This Policy also intended
+                    to guide User(s) about their privacy rights. Under this
+                    Policy, we have also suggested how a User can contact Us in
+                    case they have any issues/doubts.
+                  </li>
+                  <li>
+                    Please note that We use User’s Personal Information to inter
+                    alia provide them with the service(s) available on the
+                    Platform in the best possible manner, improvise the overall
+                    usage of the Platform and to carry out other processing
+                    activities outlined in this Policy.
+                  </li>
+                  <li>
+                    This Privacy Policy shall not be applicable to third-party
+                    websites/apps that may be linked to Our Platform. Users are
+                    requested to refer to respective third-party
+                    websites/apps&apos; privacy policies to understand how their
+                    Personal Information will be collected and processed by such
+                    websites/apps.
+                  </li>
+                  <li>
+                    This Privacy Policy shall be read along with the Terms of
+                    Use and all capitalized terms used, but not defined herein,
+                    shall have the respective meanings as ascribed to them in
+                    the Terms of Use.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -164,15 +171,22 @@ const PrivacyPage = (
                 How are You bound by the terms of this Privacy Policy?
               </SubHeading>
               <Paragraph>
-                By using or accessing the Platform, You agree to the collection
-                and use/processing of Personal Information in accordance with
-                this Privacy Policy. This collection of information is necessary
-                to provide the services on our Platform. If you do not share
-                those, we will not be in a position to provide services. In case
-                of any doubt reach out to us on{' '}
-                <a href="mailto:privacy@headout.com">privacy@headout.com</a>.
+                <ol>
+                  <li>
+                    By using or accessing the Platform, You agree to the
+                    collection and use/processing of Personal Information in
+                    accordance with this Privacy Policy. This collection of
+                    information is necessary to provide the services on our
+                    Platform. If you do not share those, we will not be in a
+                    position to provide services. In case of any doubt reach out
+                    to us on{' '}
+                    <a href="mailto:privacy@headout.com">privacy@headout.com</a>
+                    .
+                  </li>
+                </ol>
               </Paragraph>
             </li>
+
             <li>
               <SubHeading>Terms referred to in Privacy Policy</SubHeading>
               <Paragraph>
@@ -254,13 +268,18 @@ const PrivacyPage = (
                 Why does Headout collect Your Personal Information?
               </SubHeading>
               <Paragraph>
-                Headout is a platform that connects a User with the Service
-                Provider and facilitates bookings of different experiences and
-                events listed on the Platform by the Service Provider.
-                Accordingly, the Personal Information and other related
-                information are collected by Us to inter alia help Us provide
-                You the services available on the Platform and also to carry out
-                other processing activities outlined in this Policy.
+                <ol>
+                  <li>
+                    Headout is a platform that connects a User with the Service
+                    Provider and facilitates bookings of different experiences
+                    and events listed on the Platform by the Service Provider.
+                    Accordingly, the Personal Information and other related
+                    information are collected by Us to inter alia help Us
+                    provide You the services available on the Platform and also
+                    to carry out other processing activities outlined in this
+                    Policy.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -657,20 +676,25 @@ const PrivacyPage = (
             <li>
               <SubHeading>Data collection from Children</SubHeading>
               <Paragraph>
-                As per Our Terms of Use, We suggest that only a person who has
-                attained the age of majority shall make the booking on the
-                Platform. However, there could be certain scenarios where a
-                booking will be made for children by a person who has attained
-                the age of majority. For such scenarios, We would like to state
-                that at Headout We value the privacy of everyone including
-                children. If We receive the Personal Information of a child/
-                minor, We ensure that such information is processed lawfully and
-                to the extent that consent is received for processing such
-                information from a person of majority. In the event Headout
-                becomes aware that the User is a minor or below the legal age to
-                consent in the jurisdiction concerned, Headout reserves its
-                right to terminate all services to such User/ Account without
-                any prior notice.
+                <ol>
+                  <li>
+                    As per Our Terms of Use, We suggest that only a person who
+                    has attained the age of majority shall make the booking on
+                    the Platform. However, there could be certain scenarios
+                    where a booking will be made for children by a person who
+                    has attained the age of majority. For such scenarios, We
+                    would like to state that at Headout We value the privacy of
+                    everyone including children. If We receive the Personal
+                    Information of a child/ minor, We ensure that such
+                    information is processed lawfully and to the extent that
+                    consent is received for processing such information from a
+                    person of majority. In the event Headout becomes aware that
+                    the User is a minor or below the legal age to consent in the
+                    jurisdiction concerned, Headout reserves its right to
+                    terminate all services to such User/ Account without any
+                    prior notice.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -678,13 +702,18 @@ const PrivacyPage = (
                 For how long do We keep Your Personal Information?
               </SubHeading>
               <Paragraph>
-                Your Personal Information is retained on Our servers for such a
-                period as may be required to meet the purpose for which such
-                information was collected. However, We may retain Your Personal
-                Information for a longer period, if in case required by law.
-                Where Your personal data is no longer required We will ensure it
-                is either securely deleted or stored in a way which means it
-                will no longer be used by the business.
+                <ol>
+                  <li>
+                    Your Personal Information is retained on Our servers for
+                    such a period as may be required to meet the purpose for
+                    which such information was collected. However, We may retain
+                    Your Personal Information for a longer period, if in case
+                    required by law. Where Your personal data is no longer
+                    required We will ensure it is either securely deleted or
+                    stored in a way which means it will no longer be used by the
+                    business.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -692,14 +721,18 @@ const PrivacyPage = (
                 How do We protect Your Personal Information?
               </SubHeading>
               <Paragraph>
-                We have put in place reasonable security measures to keep Your
-                Personal Information guarded against any form of unauthorized
-                access. Under this process of keeping Your Personal Information
-                guarded, We have deployed security protocols as well as
-                technical and physical limitations on access. Please be assured
-                that Your Personal Information can only be accessed by
-                authorized personnel who are permitted to access Personal
-                Information in the course of their work.
+                <ol>
+                  <li>
+                    We have put in place reasonable security measures to keep
+                    Your Personal Information guarded against any form of
+                    unauthorized access. Under this process of keeping Your
+                    Personal Information guarded, We have deployed security
+                    protocols as well as technical and physical limitations on
+                    access. Please be assured that Your Personal Information can
+                    only be accessed by authorized personnel who are permitted
+                    to access Personal Information in the course of their work.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -707,9 +740,13 @@ const PrivacyPage = (
                 Where do We store Your Personal Information?
               </SubHeading>
               <Paragraph>
-                Your Personal Information is stored in personnel files or within
-                the electronic records (on servers in the USA or other
-                countries) of Headout.
+                <ol>
+                  <li>
+                    Your Personal Information is stored in personnel files or
+                    within the electronic records (on servers in the USA or
+                    other countries) of Headout.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
@@ -717,36 +754,45 @@ const PrivacyPage = (
                 Your rights towards Your Personal Information
               </SubHeading>
               <Paragraph>
-                If You have a data privacy request, such as a request to delete
-                or access Your data, please contact us at{' '}
-                <a href="mailto:privacy@headout.com">privacy@headout.com</a>. We
-                shall appropriately address Your request and respond to the same
-                within the relevant statutory timeline. You may also request a
-                copy of the information that We hold about You by sending Your
-                request by email to{' '}
-                <a href="mailto:privacy@headout.com">privacy@headout.com</a>. In
-                case You have a complaint regarding the processing of Your
-                Personal Information You can reach out to us on the same email
-                ID.
-              </Paragraph>
-              <Paragraph>
-                When handling any of these requests described above, We have the
-                right to check the identity of the requester to ensure that
-                he/she is the person entitled to make the request. In case of
-                any complaint/disputes, You have the right to contact the
-                supervisory authority of Your choice.
+                <ol>
+                  <li>
+                    If You have a data privacy request, such as a request to
+                    delete or access Your data, please contact us at{' '}
+                    <a href="mailto:privacy@headout.com">privacy@headout.com</a>
+                    . We shall appropriately address Your request and respond to
+                    the same within the relevant statutory timeline. You may
+                    also request a copy of the information that We hold about
+                    You by sending Your request by email to{' '}
+                    <a href="mailto:privacy@headout.com">privacy@headout.com</a>
+                    . In case You have a complaint regarding the processing of
+                    Your Personal Information You can reach out to us on the
+                    same email ID.
+                  </li>
+                  <li>
+                    When handling any of these requests described above, We have
+                    the right to check the identity of the requester to ensure
+                    that he/she is the person entitled to make the request. In
+                    case of any complaint/disputes, You have the right to
+                    contact the supervisory authority of Your choice.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
             <li>
               <SubHeading>Changes to Our Privacy Policy</SubHeading>
               <Paragraph>
-                We may update Our Privacy Policy from time to time. We will
-                notify You of any changes by posting the new Privacy Policy on
-                this page. We will also put a &quot;Last updated&quot; date tag
-                at the top of this Policy, whenever it stands updated. You are
-                advised to review this Privacy Policy periodically for any
-                changes. Changes to this Privacy Policy are effective when they
-                are posted on this page.
+                <ol>
+                  <li>
+                    {' '}
+                    We may update Our Privacy Policy from time to time. We will
+                    notify You of any changes by posting the new Privacy Policy
+                    on this page. We will also put a &quot;Last updated&quot;
+                    date tag at the top of this Policy, whenever it stands
+                    updated. You are advised to review this Privacy Policy
+                    periodically for any changes. Changes to this Privacy Policy
+                    are effective when they are posted on this page.
+                  </li>
+                </ol>
               </Paragraph>
             </li>
           </ol>

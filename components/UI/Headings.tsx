@@ -11,10 +11,7 @@ export const StyledTopHeading = styled.div`
   padding: 5px 20px 5px;
 `;
 
-export const TopHeading = ({
-  h1 = false,
-  children
-}: any) => {
+export const TopHeading = ({ h1 = false, children }: any) => {
   return (
     <StyledTopHeading {...(h1 && { as: 'h1' })}>{children}</StyledTopHeading>
   );
