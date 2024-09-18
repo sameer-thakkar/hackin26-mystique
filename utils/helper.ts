@@ -53,8 +53,21 @@ dayjs.extend(isSameOrBefore);
 export const withoutTrailingSlash = (url: string) =>
   url?.charAt(url?.length - 1) === '/' ? url?.substr(0, url.length - 1) : url;
 
-export const withTrailingSlash = (url: any) =>
-  url && url?.charAt(url?.length - 1) !== '/' ? `${url}/` : url;
+export const withTrailingSlash = (url: string) => {
+  if (!url) {
+    return url; // Return null or empty string if URL is null or empty
+  }
+
+  const urlParts = url.split('?');
+  const queryString = urlParts[1];
+  let path = urlParts[0];
+
+  if (path.charAt(path.length - 1) !== '/') {
+    path += '/';
+  }
+
+  return queryString ? `${path}?${queryString}` : path;
+};
 
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;

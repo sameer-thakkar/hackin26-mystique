@@ -35,22 +35,24 @@ export const getSlicesUsedInReviewsPage = (
 };
 
 export const getUICompatibleReviewsData = (
-  reviewsData: Record<string, any>[]
+  reviewsData?: Record<string, any>[]
 ) => {
-  return reviewsData.reduce((acc: Record<string, any>[], curr) => {
-    const { nonCustomerName, reviewTime, rating, content } = curr ?? {};
-    const result = {
-      author_name: nonCustomerName,
-      origin_website: null,
-      origin_website_link: null,
-      review_date: reviewTime,
-      rating: rating,
-      review: content,
-      reviewer_img_url: getRandomImage(nonCustomerName),
-    };
-    acc.push(result);
-    return acc;
-  }, []);
+  return (
+    reviewsData?.reduce((acc: Record<string, any>[], curr) => {
+      const { nonCustomerName, reviewTime, rating, content } = curr ?? {};
+      const result = {
+        author_name: nonCustomerName,
+        origin_website: null,
+        origin_website_link: null,
+        review_date: reviewTime,
+        rating: rating,
+        review: content,
+        reviewer_img_url: getRandomImage(nonCustomerName),
+      };
+      acc.push(result);
+      return acc;
+    }, []) ?? []
+  );
 };
 
 /*
