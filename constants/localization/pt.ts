@@ -708,7 +708,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SHAKESPEARE: 'Shakespeare',
     STARS_ON_STAGE: 'Estrelas no palco',
     THEATRICAL_CONCERT: 'Concerto teatral',
-    TRUE_STORY: 'História real',
+    TRUE_STORY: 'Baseado em uma história real',
     TONY_WINNER: 'Vencedor do Prêmio Tony',
     OFF_BROADWAY: 'Fora da Broadway',
   },
