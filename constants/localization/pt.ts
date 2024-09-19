@@ -701,7 +701,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     NEW_ARRIVAL: 'Novidade',
     OFF_WEST_END: 'Fora do West End',
     OLIVIER_WINNER: 'Vencedor do Olivier',
-    OPERA: 'Óperas',
+    OPERA: 'Ópera',
     PANTOMIMES: 'Pantomima',
     PLAYS: 'Peças de teatro',
     ROMANCE: 'História de amor',
