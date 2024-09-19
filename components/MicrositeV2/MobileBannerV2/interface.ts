@@ -1,3 +1,5 @@
+import { TBannerTrustBooster } from '../BannerV2TrustBooster/interface';
+
 export interface IMediaProps {
   index: number;
   item: any;
@@ -9,4 +11,6 @@ export interface IMediaProps {
 export interface IBannerProps {
   bannerImages: any[];
   allTours: any;
+  trustBoosters?: TBannerTrustBooster[];
+  isEntertainmentBanner?: boolean;
 }

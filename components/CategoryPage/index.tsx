@@ -17,6 +17,8 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
   categoryTourListData,
   primarySubCategoryId,
   browseByCategoriesRef,
+  trustBoosters = [],
+  isEntertainmentBanner = false,
 }) => {
   const { ENTERTAINMENT_MB_LANDING_PAGE } = strings;
   const { categories } = categoryProps;
@@ -38,6 +40,8 @@ const CategoryPage: React.FC<TCategoryPageProps> = ({
             : heroProps?.banners[0]?.url
         }
         breadcrumbs={breadcrumbs}
+        trustBoosters={trustBoosters}
+        isEntertainmentBanner={isEntertainmentBanner}
       />
       <CategoryPageWrapper>
         <Conditional if={!isMobile && categoriesToRender?.length > 0}>

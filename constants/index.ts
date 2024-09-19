@@ -1321,6 +1321,7 @@ export const SLICE_TYPES = {
   CRITICS_REVIEWS: 'critics_review',
   CONTRIBUTORS_REVIEW: 'contributors_review',
   CUSTOM_BANNER: 'custom_banner',
+  PAGE_TABS: 'page_tabs',
 };
 
 export const CASHBACK_TYPES = {

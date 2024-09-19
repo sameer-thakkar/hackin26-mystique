@@ -20,7 +20,7 @@ export const generateImageImgixUrl = (
     return null;
   }
 
-  if (url?.includes('nocompress')) {
+  if (url?.includes?.('nocompress')) {
     return url?.split('?')?.[0];
   }
 

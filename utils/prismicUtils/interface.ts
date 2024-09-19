@@ -100,3 +100,9 @@ export type TPrismicSubcategoryDescriptors = {
   slice_type: string;
   slice_label: any;
 };
+
+export type TPrismicTrustBooster = {
+  booster_title: string;
+  booster_description: string;
+  icon_url: Record<string, any>;
+};

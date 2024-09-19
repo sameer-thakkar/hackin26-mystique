@@ -1,4 +1,5 @@
 import { MutableRefObject } from 'react';
+import { TBannerTrustBooster } from 'components/MicrositeV2/BannerV2TrustBooster/interface';
 
 export type TMonthOnMonthPageProps = {
   heroProps: Record<string, any>;
@@ -11,4 +12,6 @@ export type TMonthOnMonthPageProps = {
   allTours: Record<string, any>;
   pageTabsSlice: Record<string, any>;
   displayMonth: string;
+  isEntertainmentBanner?: boolean;
+  bannerTrustBoosters?: TBannerTrustBooster[];
 };
