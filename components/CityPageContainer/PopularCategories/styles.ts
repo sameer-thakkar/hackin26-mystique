@@ -33,6 +33,8 @@ export const PopularCategoriesContainer = styled.div`
       z-index: -1;
       position: relative;
       border-radius: 10px;
+      height: 22rem;
+      width: 14.313rem;
     }
   }
   .prev-slide {
@@ -60,6 +62,8 @@ export const PopularCategoriesContainer = styled.div`
       border-radius: 8px;
       img {
         border-radius: 8px;
+        height: 13rem;
+        width: 9.75rem;
       }
     }
   }

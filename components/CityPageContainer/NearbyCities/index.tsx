@@ -146,6 +146,7 @@ const NearbyCities = ({
                   className="city-image"
                   fallbackImg={fallbackImgUrl}
                   fitCrop
+                  loadHigherQualityImage={true}
                 />
                 <div className="city-name">{displayName}</div>
               </a>

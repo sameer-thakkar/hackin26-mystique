@@ -47,6 +47,8 @@ export const BeyondCityContainer = styled.div`
       z-index: -1;
       position: relative;
       border-radius: 10px;
+      height: 100%;
+      width: 100%;
     }
   }
   .prev-slide {

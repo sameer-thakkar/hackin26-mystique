@@ -158,6 +158,7 @@ const TopAttractions = ({
                         fitCrop
                         priority
                         fetchPriority="high"
+                        loadHigherQualityImage={true}
                       />
                       <div className="gradient-wrapper"></div>
                       <div className="card-info-wrapper">

@@ -135,6 +135,7 @@ const CollectionCarousel: React.FC<ICollectionCarousel> = ({
                 alt={altText}
                 className="collection-image"
                 fitCrop
+                loadHigherQualityImage={true}
               />
               <a onClick={(e) => e.preventDefault()} href={url} target="_blank">
                 <Label>{label}</Label>

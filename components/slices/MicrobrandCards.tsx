@@ -175,6 +175,7 @@ export const LinkCard = (props: any) => {
               alt={altText || title}
               priority={index < 8}
               fill
+              loadHigherQualityImage={true}
             />
           </div>
           <div className="card-bottom">

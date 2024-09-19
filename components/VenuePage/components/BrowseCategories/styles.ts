@@ -92,6 +92,8 @@ export const Tile = styled.a`
   img {
     object-fit: cover;
     border-radius: 16px 16px 0 0;
+    height: 100%;
+    width: 100%;
   }
   .subcategory-image {
     height: 6.5rem;

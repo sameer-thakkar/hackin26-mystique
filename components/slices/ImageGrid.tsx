@@ -78,6 +78,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({ images, cols }) => {
             format="pjpg"
             url={image.image_url.url || image.image_source.url}
             alt={image.image_alt || image.image_source.alt}
+            loadHigherQualityImage={true}
           />
         </StyledImageBox>
       ))}

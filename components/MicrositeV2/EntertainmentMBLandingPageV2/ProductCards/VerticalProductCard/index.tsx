@@ -33,7 +33,6 @@ const VerticalProductCard = ({
   background = 'LIGHT',
   isMobile,
   isTopShowsSection = false,
-  showHigherQualityImage = false,
 }: TVerticalProductCardProps) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
@@ -127,7 +126,7 @@ const VerticalProductCard = ({
         autoCrop={true}
         className={`pinned-card-vertical-image`}
         fitCrop={true}
-        loadHigherQualityImage={showHigherQualityImage}
+        loadHigherQualityImage={true}
         height={isMobile ? 180 : 270}
         width={isMobile ? 120 : 180}
       />

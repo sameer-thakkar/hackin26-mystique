@@ -9,5 +9,4 @@ export type TCategoryPageProps = {
   categoryTourListData: Record<string, any>;
   primarySubCategoryId: number | undefined;
   browseByCategoriesRef: MutableRefObject<HTMLDivElement | null>;
-  showHigherQualityImage?: boolean;
 };

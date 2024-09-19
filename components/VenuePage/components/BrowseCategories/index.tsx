@@ -90,6 +90,7 @@ const BrowseByCategories = ({ data, isMobile }: TBrowseCategories) => {
                     width={178}
                     alt={localisedScName}
                     className="subcategory-image"
+                    loadHigherQualityImage={true}
                   />
                   <IconContainer>
                     <PillIcon $iconUrl={svgIcon} />

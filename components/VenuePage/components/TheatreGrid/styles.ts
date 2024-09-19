@@ -102,9 +102,10 @@ export const Cell = styled.div`
     border-radius: 16px 16px 0 0;
     width: 100%;
     object-fit: cover;
+    height: 100%;
   }
   .image-wrap {
-    height: auto;
+    height: 100%;
   }
   @media (max-width: 768px) {
     min-height: 29rem;

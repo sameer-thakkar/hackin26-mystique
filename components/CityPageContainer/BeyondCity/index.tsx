@@ -146,6 +146,7 @@ const NearbyCities = ({
               url={imageUrl}
               alt={imgAltText}
               fitCrop
+              loadHigherQualityImage={true}
             />
             <div className="collection-name">{heading}</div>
           </a>
@@ -155,7 +156,7 @@ const NearbyCities = ({
   );
 
   const swiperProps = {
-    spaceBetween: 7,
+    spaceBetween: 12,
     breakpoints: {
       768: {
         slidesPerView: 3.5,

@@ -530,7 +530,6 @@ export const HomePage = (props: any) => {
           allTours={allTours}
           pageTabsSlice={heroSectionSlice[0]}
           displayMonth={displayMonths}
-          showHigherQualityImage={true}
         />
       </Conditional>
       <Conditional
@@ -664,7 +663,6 @@ export const HomePage = (props: any) => {
           categoryTourListData={categoryTourListData}
           primarySubCategoryId={primarySubCategoryId}
           browseByCategoriesRef={browseByCategorySectionRef}
-          showHigherQualityImage={true}
         />
       </Conditional>
       <Conditional
@@ -763,7 +761,6 @@ export const HomePage = (props: any) => {
           browseByCategoriesRef={browseByCategorySectionRef}
           directTgid={directTgid}
           collectionId={Number(collectionId!)}
-          showHigherQualityImage={true}
         />
       </Conditional>
       {/* Don't need Breadcrumbs for Entertainment Category page and MoM Page because we have separate one in there banner*/}

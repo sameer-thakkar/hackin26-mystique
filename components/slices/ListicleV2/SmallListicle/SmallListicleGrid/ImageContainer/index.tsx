@@ -9,7 +9,14 @@ import Image from 'UI/Image';
 const ImageContainer = ({ imageUrl, index, alt }: IImageContainerProps) => {
   return (
     <ImageWrapper>
-      <Image url={imageUrl} alt={alt} height={210} width={145} fill={false} />
+      <Image
+        url={imageUrl}
+        alt={alt}
+        height={210}
+        width={145}
+        fill={false}
+        loadHigherQualityImage={true}
+      />
       <IndexWrapper>
         <IndexBox>{index}</IndexBox>
       </IndexWrapper>

@@ -74,13 +74,8 @@ export default class InternalContentCard extends PureComponent<any, any> {
         <div className="divider-1"></div>
         <div className="more-reads-section">
           {cards.map((card: any, index: number) => {
-            const {
-              heading,
-              image_link,
-              image_source,
-              subtext,
-              image_alt,
-            } = card;
+            const { heading, image_link, image_source, subtext, image_alt } =
+              card;
             return (
               <a key={index} href={card.card_cta.url}>
                 <div className="more-reads">
@@ -91,6 +86,7 @@ export default class InternalContentCard extends PureComponent<any, any> {
                       url={image_link.url || image_source.url}
                       attribution={image_source?.copyright}
                       alt={image_alt || heading}
+                      loadHigherQualityImage={true}
                     />
                   </div>
                   <div className="more-reads-text">

@@ -139,6 +139,7 @@ const PopularCategories = ({
                 alt={altText}
                 className="entity-image"
                 fitCrop
+                loadHigherQualityImage={true}
               />
               <a
                 onClick={(e) => e.preventDefault()}

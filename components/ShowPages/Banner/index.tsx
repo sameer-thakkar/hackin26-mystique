@@ -312,6 +312,7 @@ const ShowPageBanner = ({
                     fitCrop={!isShowPoster && !isMobile}
                     autoCrop={!isShowPoster && !isMobile} //TODO - revert after showpage revamp
                     blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
+                    loadHigherQualityImage={true}
                   />
                 </BannerImage>
               </Conditional>

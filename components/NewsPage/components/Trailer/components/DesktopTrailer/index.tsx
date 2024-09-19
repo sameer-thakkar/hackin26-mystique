@@ -263,6 +263,7 @@ const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
                         alt={imageUrl.altText}
                         key={index}
                         loading="lazy"
+                        loadHigherQualityImage={true}
                       />
                       <Overlay />
                     </>

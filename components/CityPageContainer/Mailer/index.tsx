@@ -133,6 +133,7 @@ const Mailer = ({
             url={EMAIL_SUBCRIPTION.BANNER_URL.CITY_PAGE}
             alt="Headout Email Subscription"
             className="image-wrapper"
+            loadHigherQualityImage={true}
           />
         </ImageContainer>
       </div>

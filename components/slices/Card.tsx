@@ -383,6 +383,7 @@ const Media = ({
             aspectRatio={aspectRatio}
             autoCrop={true}
             fill
+            loadHigherQualityImage={true}
           />
           <PLAY_ICON_JSX isVideoUrl={!!video} onClick={handlePlayIconClick} />
         </Conditional>
@@ -456,6 +457,7 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           aspectRatio={aspectRatio}
           autoCrop={false}
+          loadHigherQualityImage={true}
         />
       ) : null;
       break;

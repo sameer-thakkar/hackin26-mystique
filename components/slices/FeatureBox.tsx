@@ -84,6 +84,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
                 width={580}
                 url={imageURL}
                 alt={block.image_alt || `feature-box_${index}`}
+                loadHigherQualityImage={true}
               />
             ) : null}
           </div>

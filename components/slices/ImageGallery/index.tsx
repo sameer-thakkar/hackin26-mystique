@@ -315,6 +315,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                         onClick={() => handleImageClickOnDesktop(index)}
                         alt={image.image_alt || caption}
                         className="captioned-image"
+                        loadHigherQualityImage={true}
                       />
                       <div className="image-overlay">
                         <h4 id="title">{caption}</h4>
@@ -329,6 +330,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                       alt={image.image_alt || caption}
                       addDarkOverlay={isImageUnderCta}
                       {...(isImageUnderCta && { ref: lastVisibleImageRef })}
+                      loadHigherQualityImage={true}
                     />
                   </Conditional>
                 </React.Fragment>
@@ -357,6 +359,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                     <Image
                       url={image.linked_image?.url || image.uploaded_image?.url}
                       alt={asText(image.heading as []) || ''}
+                      loadHigherQualityImage={true}
                     />
                     <Content>
                       <div className="content-wrapper">
@@ -432,6 +435,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                       key={index}
                       url={image.linked_image?.url || image.uploaded_image?.url}
                       alt={image.image_alt || fullImageHeading}
+                      loadHigherQualityImage={true}
                     />
                   );
                 })}
@@ -489,6 +493,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                               ? 'active-slide'
                               : 'non-active-slide'
                           }
+                          loadHigherQualityImage={true}
                         />
                       </StyledImage>
                     );

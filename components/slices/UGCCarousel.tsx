@@ -625,6 +625,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                 onClick={() => {
                   window.open(url), trackRedirectToIG(index, postType);
                 }}
+                loadHigherQualityImage={true}
               />
             </MediaWrapper>
             <Description>
@@ -711,6 +712,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                     alt={card?.instagram_posts?.caption}
                     format="jpg"
                     className={'image-wrapper'}
+                    loadHigherQualityImage={true}
                   />
                   <div className="img-icon">{Instagram}</div>
                   <Conditional if={card?.instagram_posts?.postType === 'Video'}>

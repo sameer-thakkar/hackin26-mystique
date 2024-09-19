@@ -3,5 +3,4 @@ export type TVerticalProductCardProps = {
   background?: 'DARK' | 'LIGHT';
   isMobile: boolean;
   isTopShowsSection?: boolean;
-  showHigherQualityImage?: boolean;
 };

@@ -114,6 +114,7 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
                       fill
                       alt={'News Article'}
                       fetchPriority="low"
+                      loadHigherQualityImage={true}
                     />
                   </div>
                   <div className="article-info">

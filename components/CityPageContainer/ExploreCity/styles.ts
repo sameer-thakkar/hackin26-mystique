@@ -19,6 +19,8 @@ export const ExploreContainer = styled.div`
     position: relative;
     img {
       border-radius: 8px;
+      height: 15rem;
+      width: 11.25rem;
     }
   }
 
@@ -44,6 +46,10 @@ export const ExploreContainer = styled.div`
       max-width: min-content;
       .entity-name {
         padding-top: 0.25rem;
+      }
+      img {
+        height: 13rem;
+        width: 9.75rem;
       }
     }
     :not(.swiper-initialised) {

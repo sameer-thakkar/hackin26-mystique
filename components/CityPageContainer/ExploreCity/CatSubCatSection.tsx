@@ -235,6 +235,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
                   alt={altText}
                   className="entity-image"
                   fitCrop
+                  loadHigherQualityImage={true}
                 />
                 <div className="entity-name">{heading}</div>
               </a>

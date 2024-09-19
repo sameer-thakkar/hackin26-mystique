@@ -151,6 +151,7 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
                     className="banner-image"
                     aspectRatio={'16:9'}
                     priority
+                    loadHigherQualityImage={true}
                   />
                   <Tag>{FEATURED.toUpperCase()}</Tag>
                 </ImageContainer>

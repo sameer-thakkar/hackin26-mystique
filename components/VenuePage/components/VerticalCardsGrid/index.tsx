@@ -54,6 +54,7 @@ const VerticalCardsGrid: React.FC<TVerticalCardsGridProps> = (props) => {
                     height={isMobile ? 208 : 240}
                     width={isMobile ? 156 : 180}
                     alt={nearbyTheatreName}
+                    loadHigherQualityImage={true}
                   />
                 </div>
                 <div className="theatre-name">{nearbyTheatreName}</div>

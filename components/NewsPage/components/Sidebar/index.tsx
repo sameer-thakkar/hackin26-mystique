@@ -134,6 +134,7 @@ export const Sidecard: React.FC<TShowCardProps> = ({
                 fill
                 fetchPriority="high"
                 loading="eager"
+                loadHigherQualityImage={true}
               />
             </div>
             <div className="card-info">

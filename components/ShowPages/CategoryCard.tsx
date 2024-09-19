@@ -133,6 +133,7 @@ const CategoryCard = ({
         alt={name}
         width={isMobile ? 164 : 282}
         height={isMobile ? 102 : 176}
+        loadHigherQualityImage={true}
       />
       <div className="category-name">{categoryName}</div>
       <a href={redirectURL} target="_blank">

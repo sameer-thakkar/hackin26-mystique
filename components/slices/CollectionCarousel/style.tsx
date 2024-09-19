@@ -13,6 +13,8 @@ export const CardContainer = styled.div`
   padding: 0 0 2rem 0;
   .collection-image {
     img {
+      height: 15rem;
+      width: 11.25rem;
       border-radius: 4px;
     }
   }
@@ -22,6 +24,12 @@ export const CardContainer = styled.div`
     & > div {
       margin: 0;
       padding-left: 1.5rem;
+    }
+    .collection-image {
+      img {
+        height: 13rem;
+        width: 9.75rem;
+      }
     }
   }
 `;

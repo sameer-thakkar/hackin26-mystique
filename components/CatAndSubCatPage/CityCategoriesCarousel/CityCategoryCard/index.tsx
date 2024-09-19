@@ -38,6 +38,7 @@ const CityCategoryCard: React.FC<CityCategoryCardProps> = (props) => {
           fitCrop={true}
           placeholder="blur"
           draggable={false}
+          loadHigherQualityImage={true}
         />
       </ImageWrapper>
       <a

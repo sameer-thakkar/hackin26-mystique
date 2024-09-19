@@ -105,6 +105,7 @@ export const OptionJSX = ({
               height={57}
               width={38}
               alt={show.name}
+              loadHigherQualityImage={true}
             />
             <div className="show-details">
               <span> {show.name}</span>
@@ -261,6 +262,7 @@ const GridUI = ({ theatresData, hostname, language, isMobile }: TGridUi) => {
                   height={isMobile ? 153 : 163}
                   width={isMobile ? 327 : 384}
                   alt={theatreName}
+                  loadHigherQualityImage={true}
                 />
               </ImageWrapper>
               <TheatreInfo>

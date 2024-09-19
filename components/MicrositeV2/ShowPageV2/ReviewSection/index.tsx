@@ -360,6 +360,7 @@ const ReviewElement = ({
                 minFit={true}
                 width={180}
                 height={240}
+                loadHigherQualityImage={true}
               />
             ))}
           </Swiper>

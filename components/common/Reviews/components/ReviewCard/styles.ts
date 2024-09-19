@@ -59,6 +59,8 @@ export const ReviewContentWrapper = styled.div`
     border-radius: 8px;
     background-color: ${COLORS.GRAY.G7};
     img {
+      height: 100%;
+      width: 6.75rem;
       border-radius: 8px;
       object-fit: cover;
     }

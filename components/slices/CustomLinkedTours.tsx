@@ -207,6 +207,7 @@ const CustomLinkedTours = ({
                   aspectRatio={'16:10'}
                   alt={title}
                   width={isMobile ? 150 : 300}
+                  loadHigherQualityImage={true}
                 />
                 <TitlePriceCombo>
                   <Title>{title}</Title>

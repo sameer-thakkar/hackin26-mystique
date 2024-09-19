@@ -16,5 +16,4 @@ export interface ISpecialSections {
   useForcedSekeltonLoaders?: boolean;
   handleSeaAllClicked?: () => void;
   id?: string;
-  showHigherQualityImage?: boolean;
 }

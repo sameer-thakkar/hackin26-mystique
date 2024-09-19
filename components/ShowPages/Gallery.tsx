@@ -352,6 +352,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
                   width={900}
                   // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                   quality={null}
+                  loadHigherQualityImage={true}
                 />
               </ActiveImageWrapper>
             );
@@ -372,6 +373,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
                     width={200}
                     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                     quality={null}
+                    loadHigherQualityImage={true}
                   />
                 </ImageWrapper>
               );
@@ -398,6 +400,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
               width={800}
               // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
               quality={null}
+              loadHigherQualityImage={true}
             />
           </Conditional>
         </div>
@@ -416,6 +419,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
                 width={400}
                 // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                 quality={null}
+                loadHigherQualityImage={true}
               />
             </div>
             <div
@@ -431,6 +435,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
                 width={400}
                 // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                 quality={null}
+                loadHigherQualityImage={true}
               />
             </div>
           </div>

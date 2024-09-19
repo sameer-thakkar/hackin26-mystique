@@ -119,6 +119,7 @@ const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
                         width={140}
                         alt={'News Article'}
                         fetchPriority="low"
+                        loadHigherQualityImage={true}
                       />
                     </div>
                   </a>

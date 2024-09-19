@@ -124,6 +124,7 @@ const StructuredCard: React.FC<StructuredCardProps> = (props) => {
         aspectRatio="16:9"
         fitCrop={true}
         onClick={() => window.open(cardImageUrl?.url)}
+        loadHigherQualityImage={true}
       />
     </StyledCard>
   );

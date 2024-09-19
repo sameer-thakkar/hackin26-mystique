@@ -48,6 +48,7 @@ const ReviewContent = (props: any) => {
         height={173}
         alt="Experience"
         className="review-image"
+        loadHigherQualityImage={true}
       />
       <Review>
         <ReviewHeader>

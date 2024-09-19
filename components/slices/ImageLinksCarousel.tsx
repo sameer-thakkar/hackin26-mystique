@@ -191,6 +191,7 @@ const Slide = (props: any) => {
           width={280}
           height={250}
           aspectRatio="5:4"
+          loadHigherQualityImage={true}
         />
         <div>{card_title}</div>
       </a>

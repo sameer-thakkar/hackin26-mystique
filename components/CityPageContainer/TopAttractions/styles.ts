@@ -27,15 +27,14 @@ export const TextContainer = styled.div`
     padding-top: 3rem;
     color: ${COLORS.BRAND.BLACK};
     ${expandFontToken(FONTS.DISPLAY_REGULAR)}
-    background: linear-gradient(90deg, ${COLORS.BRAND.PURPS} 0%, ${
-  COLORS.TEXT.CANDY_1
-} 100%);
+    background: linear-gradient(90deg, ${COLORS.BRAND.PURPS} 0%, ${COLORS.TEXT
+      .CANDY_1} 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   @media (max-width: 768px) {
-     padding-bottom: 2rem;
+    padding-bottom: 2rem;
     .heading-wrapper {
       ${expandFontToken(FONTS.HEADING_LARGE)}
       padding: 0 0 0 1rem;
@@ -84,6 +83,8 @@ export const Card = styled.div<{ height: string; width: string }>`
         z-index: -1;
         position: relative;
         border-radius: 8px;
+        height: 100%;
+        width: 100%;
       }
     }
 

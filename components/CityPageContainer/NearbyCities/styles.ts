@@ -54,6 +54,8 @@ export const Card = styled.div<{ height: string; width: string }>`
     z-index: -1;
     position: relative;
     border-radius: 10px;
+    height: 100%;
+    width: 100%;
   }
 
   @media (max-width: 768px) {

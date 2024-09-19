@@ -112,6 +112,8 @@ export const CardContainer = styled.div`
     height: 13.4375rem;
     img {
       border-radius: 4px;
+      height: 100%;
+      width: 100%;
     }
   }
 

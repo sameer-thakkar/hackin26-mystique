@@ -63,6 +63,7 @@ const TopCollectionCard: React.FC<TopCollectionCardProps> = (props) => {
           fetchPriority={ranking < 5 ? 'high' : 'auto'}
           placeholder="blur"
           draggable={false}
+          loadHigherQualityImage={true}
         />
       </ImageWrapper>
       <Counter>{ranking + 1}</Counter>

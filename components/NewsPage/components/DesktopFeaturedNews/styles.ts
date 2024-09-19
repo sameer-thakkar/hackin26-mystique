@@ -39,6 +39,8 @@ export const FeaturedNewsContainer = styled.div`
         border-radius: 8px;
         object-position: center;
         object-fit: cover;
+        height: 100%;
+        width: 100%;
       }
     }
   }

@@ -26,6 +26,7 @@ const ImageContainer = ({
           alt={alt}
           fill={true}
           className="listicle-card-image"
+          loadHigherQualityImage={true}
         />
         <Conditional if={!isMobile}>
           <IndexRibbonWrapper $index={index + 1}>

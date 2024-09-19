@@ -106,6 +106,7 @@ const CollectionCard: React.FC<CollectionCardProps> = (props) => {
           fitCrop={true}
           placeholder="blur"
           draggable={false}
+          loadHigherQualityImage={true}
         />
         <TitleWrapper id="card-title">{displayName}</TitleWrapper>
       </ImageWrapper>

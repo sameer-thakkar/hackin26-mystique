@@ -108,6 +108,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                   url={image.linked_image?.url}
                   key={index}
                   alt={image?.image_alt || ''}
+                  loadHigherQualityImage={true}
                 />
               );
             })}

@@ -534,6 +534,7 @@ const AutomatedTourComparisonTable = ({
                         height={176}
                         width={282}
                         alt={tour.name}
+                        loadHigherQualityImage={true}
                       />
                     </div>
                   </Column>

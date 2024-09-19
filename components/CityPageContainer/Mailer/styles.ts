@@ -38,12 +38,18 @@ export const ImageContainer = styled.div`
   img {
     border-radius: 157px;
     object-fit: cover;
+    width: 36.625rem;
+    height: 19.563rem;
   }
   @media (max-width: 768px) {
     display: flex;
     .image-wrapper {
       display: flex;
       justify-content: center;
+    }
+    img {
+      width: 20.438rem;
+      height: 10.938rem;
     }
   }
 `;

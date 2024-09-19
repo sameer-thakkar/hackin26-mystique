@@ -150,6 +150,7 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
                       fill
                       alt="Show Image"
                       loading="lazy"
+                      loadHigherQualityImage={true}
                     />
                   </ImageContainer>
                   <Content>

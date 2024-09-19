@@ -193,6 +193,7 @@ const SliderAccordion = (props: any) => {
                 aspectRatio={'16:10'}
                 url={image?.url}
                 alt={image.alt}
+                loadHigherQualityImage={true}
               />
             );
           })}
@@ -206,6 +207,7 @@ const SliderAccordion = (props: any) => {
             imageId={activeAccordionImages[0]?.alt}
             url={activeAccordionImages[0]?.url}
             alt={activeAccordionImages[0]?.alt}
+            loadHigherQualityImage={true}
           />
         </SingleImage>
       )}

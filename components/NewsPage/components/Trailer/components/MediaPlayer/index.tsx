@@ -222,6 +222,7 @@ const MediaPlayer: React.FC<TMediaPlayerProps> = ({
                         width={330}
                         className="show-image"
                         alt="Show Image"
+                        loadHigherQualityImage={true}
                       />
                       <PlayIconFilled
                         onClick={() =>

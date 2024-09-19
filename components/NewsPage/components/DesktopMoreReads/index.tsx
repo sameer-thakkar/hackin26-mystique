@@ -236,6 +236,7 @@ const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
                               4) as TNumberOfImagesInCarousel
                           ].width
                         }
+                        loadHigherQualityImage={true}
                       />
                     </div>
                     <div className="content">

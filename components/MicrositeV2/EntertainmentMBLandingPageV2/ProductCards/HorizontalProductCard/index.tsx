@@ -124,6 +124,7 @@ const HorizontalProductCard = ({
         width={88}
         fitCrop
         autoCrop
+        loadHigherQualityImage={true}
       />
       <div className="image-placeholder">
         <VerticalProductImagePlaceholder $width={88} $height={131} />
