@@ -1,5 +1,3 @@
-import { TBannerTrustBooster } from '../BannerV2TrustBooster/interface';
-
 export type TCategoryPageBannerProps = {
   heading: string;
   isMobile: boolean;
@@ -7,6 +5,4 @@ export type TCategoryPageBannerProps = {
   breadcrumbs: Record<string, any>;
   isMonthOnMonthPage?: boolean;
   showTrustBoosters?: boolean;
-  trustBoosters?: TBannerTrustBooster[];
-  isEntertainmentBanner?: boolean;
 };

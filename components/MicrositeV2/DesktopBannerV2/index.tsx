@@ -99,12 +99,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
   );
 };
 
-const DesktopBannerV2 = ({
-  allTours = {},
-  bannerImages,
-  trustBoosters,
-  isEntertainmentBanner,
-}: IBannerProps) => {
+const DesktopBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -157,7 +152,7 @@ const DesktopBannerV2 = ({
   };
 
   const swiperParams: SwiperProps = {
-    loop: bannerImages?.length > 1,
+    loop: true,
     preventInteractionOnTransition: true,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     cssMode: false,
@@ -226,7 +221,7 @@ const DesktopBannerV2 = ({
                     </Conditional>
                     <Conditional if={index > 0}>
                       <p>{item?.bannerSubText}</p>
-                      <Conditional if={item?.showPageUrl?.url}>
+                      <Conditional if={item?.showPageUrl}>
                         <Button
                           className={`banner-cta-button`}
                           fillType="fill"
@@ -272,7 +267,7 @@ const DesktopBannerV2 = ({
             />
           </div>
         </div>
-        <SwiperControls $showControls={bannerImages?.length > 1}>
+        <SwiperControls>
           <div className="swiper-controls-container">
             <div
               className="prev-slide"
@@ -293,10 +288,7 @@ const DesktopBannerV2 = ({
           </div>
         </SwiperControls>
       </SwiperWrapper>
-      <TrustBooster
-        trustBoosters={trustBoosters}
-        isEntertainmentBanner={isEntertainmentBanner}
-      />
+      <TrustBooster />
     </Container>
   );
 };

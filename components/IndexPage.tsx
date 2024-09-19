@@ -162,8 +162,6 @@ const Page = (props: PageProps) => {
     theatreType,
     categoryDescriptors,
     subcategoryDescriptors,
-    isEntertainmentBanner,
-    bannerTrustBoosters,
   } = props;
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
@@ -254,8 +252,6 @@ const Page = (props: PageProps) => {
             theatreType={theatreType}
             categoryDescriptors={categoryDescriptors}
             subcategoryDescriptors={subcategoryDescriptors}
-            isEntertainmentBanner={isEntertainmentBanner}
-            bannerTrustBoosters={bannerTrustBoosters}
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -337,8 +333,6 @@ const Page = (props: PageProps) => {
               }
               categoryDescriptors={categoryDescriptors}
               subcategoryDescriptors={subcategoryDescriptors}
-              isEntertainmentBanner={isEntertainmentBanner}
-              bannerTrustBoosters={bannerTrustBoosters}
             />
           );
         }

@@ -21,10 +21,7 @@ const CategoryHeader = dynamic(
     import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
 
-const StyledMenuItem = styled.li<{
-  isNavMenuItem?: boolean;
-  isDarkMode?: boolean;
-}>`
+const StyledMenuItem = styled.li`
   padding: 12px 16px;
   ${expandFontToken('UI/Label Medium')}
   color: ${({
@@ -40,19 +37,16 @@ const StyledMenuItem = styled.li<{
   cursor: pointer;
   position: relative;
   span {
-    color: ${({ isNavMenuItem, isDarkMode }) =>
-      isDarkMode && isNavMenuItem
-        ? COLORS.BRAND.WHITE
-        : ({
-            theme: { primaryBGText },
-            // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-            isGlobalMb,
-          }) =>
-            isGlobalMb
-              ? COLORS.GRAY.G2
-              : primaryBGText
-              ? primaryBGText
-              : COLORS.GRAY.G2};
+    color: ${({
+      theme: { primaryBGText },
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) =>
+      isGlobalMb
+        ? COLORS.GRAY.G2
+        : primaryBGText
+        ? primaryBGText
+        : COLORS.GRAY.G2};
   }
   &.group-booking-cta {
     padding: 12px 16px;
@@ -72,19 +66,16 @@ const StyledMenuItem = styled.li<{
       svg {
         height: 24px;
         path {
-          stroke: ${({ isDarkMode, isNavMenuItem }) =>
-            isDarkMode && isNavMenuItem
-              ? COLORS.BRAND.WHITE
-              : ({
-                  theme: { primaryBGText },
-                  // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-                  isGlobalMb,
-                }) =>
-                  isGlobalMb
-                    ? COLORS.GRAY.G2
-                    : primaryBGText
-                    ? primaryBGText
-                    : COLORS.GRAY.G2};
+          stroke: ${({
+            theme: { primaryBGText },
+            // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+            isGlobalMb,
+          }) =>
+            isGlobalMb
+              ? COLORS.GRAY.G2
+              : primaryBGText
+              ? primaryBGText
+              : COLORS.GRAY.G2};
           stroke-width: 1.5px;
         }
       }
@@ -291,7 +282,6 @@ const Navigation = (props: any) => {
     taggedCity,
     categoryHeaderMenu,
     categoryHeaderMenuExists,
-    isDarkMode,
   } = props;
   const navigationRef = useRef(null);
   return (
@@ -317,8 +307,6 @@ const Navigation = (props: any) => {
               isMobile,
               navOpen,
               isGlobalMb,
-              isNavMenuItem: true,
-              isDarkMode,
             })
           )}
         </LazyComponent>
@@ -334,8 +322,6 @@ const Menu = ({
   isMobile,
   isGlobalMb = false,
   index,
-  isNavMenuItem,
-  isDarkMode,
 }: any) => {
   const [active, setActive] = useState(false);
   const nestedMobileInteraction = (event: any, clickedLabel: any) => {
@@ -396,8 +382,6 @@ const Menu = ({
         isGlobalMb={isGlobalMb}
         onMouseEnter={trackHeaderItem}
         index={index}
-        isNavMenuItem={isNavMenuItem}
-        isDarkMode={isDarkMode}
       >
         <NestedMenu
           ref={nestedMenuRef}
@@ -431,8 +415,6 @@ const MenuItem = (props: any) => {
     isGlobalMb = false,
     onMouseEnter,
     headerLabel,
-    isNavMenuItem,
-    isDarkMode,
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -457,8 +439,6 @@ const MenuItem = (props: any) => {
       isGlobalMb={isGlobalMb}
       id={`menu-item-${index}`}
       onMouseEnter={onMouseEnter ? onMouseEnter : null}
-      isNavMenuItem={isNavMenuItem}
-      isDarkMode={isDarkMode}
     >
       <div className={'link-element'}>
         <React.Fragment>
@@ -485,14 +465,7 @@ const MenuItem = (props: any) => {
 };
 
 const HeaderSliceHandler = (slice: any, props: any) => {
-  const {
-    index,
-    navOpen,
-    isGlobalMb = false,
-    isNavMenuItem,
-    isDarkMode,
-  } = props;
-
+  const { index, navOpen, isGlobalMb = false } = props;
   switch (slice.slice_type) {
     case 'navigation':
       return (
@@ -525,8 +498,6 @@ const HeaderSliceHandler = (slice: any, props: any) => {
           label={slice.primary.label}
           isGlobalMb={isGlobalMb}
           index={props.index}
-          isNavMenuItem={isNavMenuItem}
-          isDarkMode={isDarkMode}
         />
       );
     case 'group_booking':

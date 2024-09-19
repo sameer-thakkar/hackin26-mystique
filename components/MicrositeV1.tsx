@@ -7,6 +7,7 @@ import { asText } from '@prismicio/helpers';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
 import LastMinuteFilters from 'components/common/LastMinuteFilters';
 import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
@@ -84,12 +85,8 @@ import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
 import { TCityInfo, TTour } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
-import CommonHeader from './common/Header';
 import SubCategoryFilters from './Cruises/SubcategoryFilters';
 import { SUBCATEGORY_PILLS } from './Cruises/SubcategoryFilters/constants';
-import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
-import EntertainmentHeader from './MicrositeV2/Header';
-import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
 
 const AirportTransferProductsSection =
   dynamic<TAirportTransfersProductSectionProps>(() =>
@@ -101,6 +98,7 @@ const AirportTransferProductsSection =
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
+const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
 const CollectionCarousel = dynamic(
   () =>
@@ -217,8 +215,6 @@ const MicrositeV1 = (props: any) => {
     airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
     categoryDescriptors,
     subcategoryDescriptors,
-    isEntertainmentBanner,
-    bannerTrustBoosters,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -276,6 +272,7 @@ const MicrositeV1 = (props: any) => {
     body4: coverSlices,
     currencies_list,
     group_booking_excluded_tgids: groupBookingExcludedTgids,
+    alert_popup: alertPopupCMS,
     disclaimer: disclaimerCMS,
     theme_override: themeOverrideCMS,
     instant_checkout: instantCheckout = false,
@@ -293,7 +290,6 @@ const MicrositeV1 = (props: any) => {
     tagged_collection,
     customBanner,
     baseLangCustomBanner,
-    dropdownMenu,
   } = micrositeData ?? {};
 
   const [isTourListFiltered, setIsTourListFiltered] = useState(false);
@@ -696,6 +692,11 @@ const MicrositeV1 = (props: any) => {
   const disclaimerText = disclaimerTextCFoot || asText(disclaimerCMS);
   let groupBookingTourTitles: any = [];
 
+  let alertPopup = null;
+  if (alertPopupCMS?.id) {
+    alertPopup = alertPopupCMS;
+  }
+
   if (showGroupBooking) {
     uncategorizedToursList
       .filter(function (tour: any) {
@@ -973,88 +974,6 @@ const MicrositeV1 = (props: any) => {
   )
     return <Loader />;
 
-  const heroProps = {
-    banners: bannerImages?.reduce((accum: [], image: Record<string, any>) => {
-      const {
-        uploaded_image: {
-          url: uploadedImageUrl = '',
-          alt: uploadedImageAlt = '',
-        } = {},
-        image_src: { url: imageSrcUrl = '' } = {},
-        mobile_banner_uploaded: { url: mobileBannerUploadedUrl = '' } = {},
-        mobile_banner_url: { url: mobileBannerUrl = '' } = {},
-        interaction,
-        image_alt_: imageAlt = '',
-        onclick_url: showPageUrl,
-        main_heading: bannerHeading,
-        sub_text: bannerSubText,
-        desktop_video_link: { url: desktopVideoLink = '' } = {},
-        mobile_video_link: { url: mobileVideoLink = '' } = {},
-      } = image;
-
-      return [
-        ...accum,
-        {
-          url: uploadedImageUrl || imageSrcUrl,
-          mobile_url: mobileBannerUploadedUrl || mobileBannerUrl,
-          interaction,
-          alt: uploadedImageAlt || imageAlt,
-          showPageUrl,
-          bannerHeading,
-          bannerSubText,
-          desktopVideoLink: desktopVideoLink,
-          mobileVideoLink: mobileVideoLink,
-        },
-      ];
-    }, []),
-    coverHeading: bannerHeading,
-  };
-
-  const languageProps = {
-    uid,
-    currentLanguage,
-    languages: alternateLanguages,
-  };
-
-  const dropdownLinksArray =
-    dropdownMenu?.reduce((acc: any, item: any) => {
-      if (item.link)
-        return [...acc, { value: item.link.url, label: item.link_text }];
-      else return acc;
-    }, []) ?? [];
-
-  const overriddenHeaderData = { ...micrositeData, ...commonHeader?.data };
-  const {
-    enable_group_booking,
-    enable_buy_tickets_shortcut,
-    enable_search,
-    search_recommend_csv,
-    enable_dropdown,
-  } = overriddenHeaderData;
-
-  const headerProps = {
-    showGroupBooking: enable_group_booking === 'Yes',
-    headerLinks,
-    logoRedirectionURL:
-      getLogoRedirectionUrl({ uid, lang: currentLanguage, isDev, host }) || '/',
-    enableBuyTickets: enable_buy_tickets_shortcut === 'Yes',
-    enableSearch: enable_search === 'Yes',
-    recommendedTours:
-      (search_recommend_csv &&
-        search_recommend_csv
-          ?.split?.(',')
-          ?.map?.((tgid: any) => parseInt(tgid))) ||
-      [],
-    enableDropdownLinks: enable_dropdown === 'Yes',
-    dropdownLinks: dropdownLinksArray,
-  };
-
-  const header = {
-    ...headerProps,
-    headerSlices: commonHeader?.data?.body,
-    languageProps,
-  };
-
   return (
     <div>
       <StyledMicrositeContainer
@@ -1091,38 +1010,35 @@ const MicrositeV1 = (props: any) => {
             breadcrumbsDetails,
           }}
         />
-        <Conditional if={!isEntertainmentBanner}>
-          <CommonHeader
-            languages={alternateLanguages}
-            headerLinks={finalHeaderLinks}
-            logoUrl={logoUrl}
-            logoAltText={whiteLabelName || ''}
-            currentLanguage={currentLanguage ? currentLanguage : null}
-            uid={uid}
-            openGroupBookingModal={openGroupBookingModal}
-            isMobile={isMobile}
-            showGroupBooking={showGroupBooking}
-            logoRedirectionURL={logoRedirectionUrl || pageUrl}
-            host={host}
-            hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-            slices={finalHeaderSlices}
-            dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
-            hasDropdownLinks={
-              !isHeaderInherited && !showHohoRevamp ? hasDropdownLinks : null
-            }
-            headerCurrencies={headerCurrencies}
-            primaryCity={primaryCity}
-            taggedCity={taggedCity}
-            categoryHeaderMenu={categoryHeaderMenu}
-            categoryHeaderMenuExists={categoryHeaderMenuExists}
-            isCityPageMB={isCityPageMB}
-            isDarkTheme={showHohoRevamp}
-            isAirportTransfersMB={isAirportTransfersMB}
-          />
-        </Conditional>
+        <Header
+          languages={alternateLanguages}
+          headerLinks={finalHeaderLinks}
+          logoUrl={logoUrl}
+          logoAltText={whiteLabelName || ''}
+          currentLanguage={currentLanguage ? currentLanguage : null}
+          uid={uid}
+          openGroupBookingModal={openGroupBookingModal}
+          isMobile={isMobile}
+          showGroupBooking={showGroupBooking}
+          logoRedirectionURL={logoRedirectionUrl || pageUrl}
+          host={host}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+          slices={finalHeaderSlices}
+          dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
+          hasDropdownLinks={
+            !isHeaderInherited && !showHohoRevamp ? hasDropdownLinks : null
+          }
+          headerCurrencies={headerCurrencies}
+          primaryCity={primaryCity}
+          taggedCity={taggedCity}
+          categoryHeaderMenu={categoryHeaderMenu}
+          categoryHeaderMenuExists={categoryHeaderMenuExists}
+          isCityPageMB={isCityPageMB}
+          isDarkTheme={showHohoRevamp}
+          isAirportTransfersMB={isAirportTransfersMB}
+        />
         <Conditional
           if={
-            !isEntertainmentBanner &&
             categoryHeaderMenuExists &&
             Object.keys(categoryHeaderMenu).length > 0 &&
             !isMobile
@@ -1137,57 +1053,6 @@ const MicrositeV1 = (props: any) => {
             isMobile={false}
             showShadowOnSticky={!isAirportTransfersMB}
           />
-        </Conditional>
-        <Conditional if={isEntertainmentBanner}>
-          <EntertainmentHeader
-            {...header}
-            host={host}
-            changePage={false}
-            isMobile={isMobile}
-            allTours={orderedTours}
-            isEntertainmentMb={isEntertainmentBanner}
-            hasLanguageSelector={isEntertainmentBanner}
-            hideCurrencySelector
-            isEntertainmentMbListicle={isEntertainmentBanner}
-            logoUrl={logoUrl}
-            logoAltText={whiteLabelName || ''}
-            hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-            isCategoryPage={false}
-            isMonthOnMonthPage={false}
-            isEntertainmentLandingPageVisible={true}
-            primaryCity={primaryCity}
-            taggedCity={taggedCity as string}
-            categoryHeaderMenu={categoryHeaderMenu}
-            categoryHeaderMenuExists={categoryHeaderMenuExists}
-            uid={uid}
-            showSeatMapExperiment={false}
-            isEntertainmentBanner={isEntertainmentBanner}
-          />
-          <Conditional if={!isMobile}>
-            <CategoryHeader
-              categoryHeaderMenu={categoryHeaderMenu}
-              primaryCity={primaryCity}
-              taggedCity={taggedCity}
-              languages={alternateLanguages}
-              currentLanguage={currentLanguage}
-              isMobile={false}
-              showShadowOnSticky={!isAirportTransfersMB}
-            />
-            <DesktopBannerV2
-              allTours={orderedTours}
-              trustBoosters={bannerTrustBoosters}
-              bannerImages={heroProps.banners}
-              isEntertainmentBanner={isEntertainmentBanner}
-            />
-          </Conditional>
-          <Conditional if={isMobile}>
-            <MobileBannerV2
-              trustBoosters={bannerTrustBoosters}
-              bannerImages={heroProps.banners}
-              allTours={orderedTours}
-              isEntertainmentBanner={isEntertainmentBanner}
-            />
-          </Conditional>
         </Conditional>
         <Conditional if={showCovid19Alert && covidAlertActive}>
           <DismissAlert
@@ -1215,14 +1080,7 @@ const MicrositeV1 = (props: any) => {
           </div>
         </Conditional>
 
-        <Conditional
-          if={
-            !isEntertainmentBanner &&
-            !showNewBanner &&
-            !isCityPageMB &&
-            !isCatOrSubCatPage
-          }
-        >
+        <Conditional if={!showNewBanner && !isCityPageMB && !isCatOrSubCatPage}>
           <Banner
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
@@ -1251,7 +1109,6 @@ const MicrositeV1 = (props: any) => {
 
         <Conditional
           if={
-            !isEntertainmentBanner &&
             isAirportTransfersMB &&
             airportTransfersLPExperimentVariant === VARIANTS.TREATMENT
           }
@@ -1270,7 +1127,6 @@ const MicrositeV1 = (props: any) => {
 
         <Conditional
           if={
-            !isEntertainmentBanner &&
             showNewBanner &&
             !isCatOrSubCatPage &&
             (airportTransfersLPExperimentVariant === VARIANTS.CONTROL ||
@@ -1316,23 +1172,16 @@ const MicrositeV1 = (props: any) => {
             }}
           />
         </Conditional>
-        <Conditional
-          if={
-            !isEntertainmentBanner &&
-            mbTheme === THEMES.MIN_BLUE &&
-            !isCatOrSubCatPage
-          }
-        >
+        <Conditional if={mbTheme === THEMES.MIN_BLUE && !isCatOrSubCatPage}>
           <TextBanner bannerHeading={bannerHeading || null} />
         </Conditional>
 
+        <Conditional if={alertPopup}>
+          <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
+        </Conditional>
+
         <Conditional
-          if={
-            !isEntertainmentBanner &&
-            coverSlices?.length &&
-            !isCatOrSubCatPage &&
-            !showCruisesRevamp
-          }
+          if={coverSlices?.length && !isCatOrSubCatPage && !showCruisesRevamp}
         >
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />

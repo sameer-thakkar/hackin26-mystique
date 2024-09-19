@@ -69,7 +69,6 @@ interface IStyledHeader {
   isEntertainmentLandingPageVisible?: boolean;
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
-  $isEntertainmentBanner?: boolean;
 }
 
 export const StyledHeader = styled.div<IStyledHeader>`
@@ -106,14 +105,8 @@ export const StyledHeader = styled.div<IStyledHeader>`
       check || headerHover ? 100 : 19};
     ${({ isGlobalMb }) =>
       isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
-    ${({
-      isEntertainmentMbListicle,
-      $isPillBarSticky,
-      $isMonthOnMonthPage,
-      $isEntertainmentBanner,
-    }) =>
+    ${({ isEntertainmentMbListicle, $isPillBarSticky, $isMonthOnMonthPage }) =>
       !$isMonthOnMonthPage &&
-      !$isEntertainmentBanner &&
       (isEntertainmentMbListicle || $isPillBarSticky) &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
       background:${({ showColoredHeader }) =>
@@ -274,7 +267,12 @@ const HeaderRight = styled.div<{
   }
   .menu-item-text:not(a:has(> .menu-item-text)) {
     span.label {
-      text-wrap: nowrap;
+      ${({ isDarkMode }) => isDarkMode && `color: white;`}
+    }
+    svg {
+      path {
+        ${({ isDarkMode }) => isDarkMode && `stroke: white;`}
+      }
     }
   }
   .link-element a span.label {
@@ -456,7 +454,6 @@ interface HeaderProps {
   isVenuePage?: boolean;
   uid?: string;
   showSeatMapExperiment?: boolean;
-  isEntertainmentBanner?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -491,7 +488,6 @@ const Header: FunctionComponent<HeaderProps> = ({
   isVenuePage = false,
   uid,
   showSeatMapExperiment,
-  isEntertainmentBanner = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -667,7 +663,6 @@ const Header: FunctionComponent<HeaderProps> = ({
       isTop={scrollPos <= 80}
       $categoryHeaderMenuExists={categoryHeaderMenuExists}
       $isPillBarSticky={isPillBarSticky}
-      $isEntertainmentBanner={isEntertainmentBanner}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
@@ -774,7 +769,6 @@ const Header: FunctionComponent<HeaderProps> = ({
                   taggedCity={taggedCity}
                   categoryHeaderMenu={categoryHeaderMenu}
                   categoryHeaderMenuExists={categoryHeaderMenuExists}
-                  isDarkMode={showColoredHeader}
                 />
               </div>
             </Conditional>

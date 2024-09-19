@@ -49,8 +49,6 @@ export const Wrapper = styled.div<{ $isHOHORevamp?: boolean }>`
   .trust-booster {
     .icon {
       margin-right: 0.75rem;
-      width: 2.5rem;
-      height: 2.5rem;
     }
     display: flex;
     h3,

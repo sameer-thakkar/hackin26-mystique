@@ -1,11 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
   position: relative;
-  min-height: 22rem;
+  min-height: 25rem;
   background: #150029;
   -webkit-transform: translate3d(0, 0, 0);
   margin-bottom: 0.5rem;
@@ -207,7 +207,7 @@ export const SlideDescription = styled.div<{
   }
 `;
 
-export const SwiperControls = styled.div<{ $showControls?: boolean }>`
+export const SwiperControls = styled.div`
   position: absolute;
   top: calc(50% - 22px);
   z-index: 99;
@@ -219,50 +219,40 @@ export const SwiperControls = styled.div<{ $showControls?: boolean }>`
     height: 44px;
     width: 100%;
   }
-  ${({ $showControls }) =>
-    $showControls
-      ? css`
-          .prev-slide,
-          .next-slide {
-            pointer-events: all;
-            position: absolute;
-            z-index: 99;
-            cursor: pointer;
-            width: 2.75rem;
-            height: 2.75rem;
-            border-radius: 2.25rem;
-            background: ${COLORS.BRAND.WHITE}4D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            svg {
-              path {
-                stroke: ${COLORS.BRAND.WHITE};
-              }
-            }
+  .prev-slide,
+  .next-slide {
+    pointer-events: all;
+    position: absolute;
+    z-index: 99;
+    cursor: pointer;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 2.25rem;
+    background: ${COLORS.BRAND.WHITE}4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      path {
+        stroke: ${COLORS.BRAND.WHITE};
+      }
+    }
 
-            & {
-              :hover {
-                background: ${COLORS.BRAND.WHITE}66;
-              }
-              :active {
-                transform: scale(0.97);
-              }
-            }
-          }
-          .prev-slide {
-            left: 40px;
-          }
-          .next-slide {
-            right: 40px;
-          }
-        `
-      : css`
-          .prev-slide,
-          .next-slide {
-            display: none;
-          }
-        `}
+    & {
+      :hover {
+        background: ${COLORS.BRAND.WHITE}66;
+      }
+      :active {
+        transform: scale(0.97);
+      }
+    }
+  }
+  .prev-slide {
+    left: 40px;
+  }
+  .next-slide {
+    right: 40px;
+  }
 `;
 
 export const SlideImageWrapper = styled.div`

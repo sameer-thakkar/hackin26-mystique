@@ -134,13 +134,13 @@ function PopOver(props: IPopover) {
   const trackLanguageShown = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
-      [ANALYTICS_PROPERTIES.HEADER]: LANGUAGE_MAP[currentLanguage]?.displayName,
+      [ANALYTICS_PROPERTIES.HEADER]: LANGUAGE_MAP[currentLanguage].displayName,
       ...getCommonEventMetaData(pageMetaData),
     });
   };
 
   const languageOptions = sortedLanguages.map(({ code, url }) => ({
-    label: LANGUAGE_MAP[code as LanguagesUnion]?.displayName,
+    label: LANGUAGE_MAP[code as LanguagesUnion].displayName,
     subLabel:
       LANGUAGE_MAP_TRANSLATE_CONSTANT()[code as IPopularLanguage] ||
       LANGUAGE_MAP[code as LanguagesUnion]?.translatedName,
@@ -153,7 +153,7 @@ function PopOver(props: IPopover) {
       currentLanguage === code ? (
         <>
           {mbTheme !== THEMES.MIN_BLUE ? Globe : null}
-          {LANGUAGE_MAP[currentLanguage]?.code.toUpperCase()}
+          {LANGUAGE_MAP[currentLanguage].code.toUpperCase()}
         </>
       ) : null,
   }));
