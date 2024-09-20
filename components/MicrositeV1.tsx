@@ -1164,15 +1164,6 @@ const MicrositeV1 = (props: any) => {
             isEntertainmentBanner={isEntertainmentBanner}
           />
           <Conditional if={!isMobile}>
-            <CategoryHeader
-              categoryHeaderMenu={categoryHeaderMenu}
-              primaryCity={primaryCity}
-              taggedCity={taggedCity}
-              languages={alternateLanguages}
-              currentLanguage={currentLanguage}
-              isMobile={false}
-              showShadowOnSticky={!isAirportTransfersMB}
-            />
             <DesktopBannerV2
               allTours={orderedTours}
               trustBoosters={bannerTrustBoosters}
