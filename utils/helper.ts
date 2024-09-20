@@ -370,11 +370,11 @@ export const groupSlices = (
 };
 
 export const attachQueryParam = (
-  url: string,
+  url: string = '',
   queryString: string,
   replaceExistingParams = false
 ) => {
-  if (url.includes('?')) {
+  if (url?.includes?.('?')) {
     if (replaceExistingParams) {
       return `${url.split('?')[0]}?${queryString}`;
     }

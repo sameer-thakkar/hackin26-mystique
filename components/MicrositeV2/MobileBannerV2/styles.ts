@@ -4,7 +4,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
-  height: 19.375rem;
+  min-height: 16.375rem;
   background: #150029;
   position: relative;
   -webkit-transform: translate3d(0, 0, 0);

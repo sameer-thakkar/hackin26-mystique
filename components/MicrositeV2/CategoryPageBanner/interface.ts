@@ -1,3 +1,5 @@
+import { TPrismicTrustBooster } from 'utils/prismicUtils/interface';
+
 export type TCategoryPageBannerProps = {
   heading: string;
   isMobile: boolean;
@@ -5,4 +7,6 @@ export type TCategoryPageBannerProps = {
   breadcrumbs: Record<string, any>;
   isMonthOnMonthPage?: boolean;
   showTrustBoosters?: boolean;
+  trustBoosters?: TPrismicTrustBooster[];
+  isEntertainmentBanner?: boolean;
 };

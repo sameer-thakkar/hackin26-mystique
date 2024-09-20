@@ -3,6 +3,7 @@ import CalendarUnit from 'components/CalendarUnit';
 import Conditional from 'components/common/Conditional';
 import FabIcon from 'components/common/FabIcon';
 import CategoryPageBanner from 'components/MicrositeV2/CategoryPageBanner';
+import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
 import BrowseByCategoriesSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection';
 import CategoryCarouselsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection';
 import TopShowsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/TopShowsSection';
@@ -26,6 +27,8 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
   allTours,
   pageTabsSlice,
   displayMonth,
+  isEntertainmentBanner,
+  bannerTrustBoosters,
 }) => {
   const allowedTgids = useMemo(() => {
     const result = getAllowedTgids(displayMonth, allTours);
@@ -88,13 +91,23 @@ const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
 
   return (
     <>
-      <CategoryPageBanner
-        heading={heroProps?.banners[0]?.bannerHeading}
-        isMobile={isMobile}
-        bannerImgUrl={bannerImgUrl}
-        breadcrumbs={breadcrumbs}
-        isMonthOnMonthPage
-      />
+      <Conditional if={isEntertainmentBanner}>
+        <DesktopBannerV2
+          allTours={[]}
+          bannerImages={[heroProps?.banners[0]]}
+          trustBoosters={bannerTrustBoosters}
+        />
+      </Conditional>
+      <Conditional if={!isEntertainmentBanner}>
+        <CategoryPageBanner
+          heading={heroProps?.banners[0]?.bannerHeading}
+          isMobile={isMobile}
+          bannerImgUrl={bannerImgUrl}
+          breadcrumbs={breadcrumbs}
+          isMonthOnMonthPage
+          trustBoosters={bannerTrustBoosters}
+        />
+      </Conditional>
       <MonthOnMonthPageWrapper>
         <Conditional if={!isMobile}>
           <BrowseByCategoriesSection

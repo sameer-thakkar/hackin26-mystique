@@ -82,7 +82,12 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
   );
 };
 
-const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
+const MobileBannerV2 = ({
+  allTours = {},
+  bannerImages,
+  trustBoosters,
+  isEntertainmentBanner,
+}: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
@@ -107,13 +112,13 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
   }, [swiper, updateIndex, activeSlideIndex]);
 
   const swiperParams: SwiperProps = {
-    loop: true,
+    loop: bannerImages?.length > 1,
     preventInteractionOnTransition: true,
     slideToClickedSlide: true,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
     centeredSlides: true,
     slidesPerView: 'auto',
-    loopedSlides: bannerImages.length,
+    loopedSlides: bannerImages?.length,
     autoplay: {
       delay: swiper?.realIndex === 0 || !swiper?.realIndex ? 12000 : 2400,
       disableOnInteraction: false,
@@ -185,7 +190,11 @@ const MobileBannerV2 = ({ allTours, bannerImages }: IBannerProps) => {
           />
         </div>
       </SwiperWrapper>
-      <TrustBooster isMobile={true} />
+      <TrustBooster
+        isMobile={true}
+        trustBoosters={trustBoosters}
+        isEntertainmentBanner={isEntertainmentBanner}
+      />
     </Container>
   );
 };

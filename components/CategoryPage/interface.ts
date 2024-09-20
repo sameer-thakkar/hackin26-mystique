@@ -1,4 +1,5 @@
 import { MutableRefObject } from 'react';
+import { TPrismicTrustBooster } from 'utils/prismicUtils/interface';
 
 export type TCategoryPageProps = {
   isMobile: boolean;
@@ -9,4 +10,6 @@ export type TCategoryPageProps = {
   categoryTourListData: Record<string, any>;
   primarySubCategoryId: number | undefined;
   browseByCategoriesRef: MutableRefObject<HTMLDivElement | null>;
+  trustBoosters?: TPrismicTrustBooster[];
+  isEntertainmentBanner?: boolean;
 };

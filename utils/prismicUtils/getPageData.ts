@@ -80,6 +80,7 @@ import {
   TLANGUAGELOCALE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import { TPrismicTrustBooster } from './interface';
 import { getReviewsPageData } from './reviewsPage';
 import { getVenuePageData } from './venuePage';
 import { fetchPrismicDocument } from '.';
@@ -145,6 +146,21 @@ export const getPageData = async ({
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
     const isCatOrSubCatPagePromise = checkIfCatOrSubCatPage(CMSContent);
+
+    const { data: CMSData } = CMSContent ?? {};
+
+    const {
+      body4: bannerSlices = [],
+      is_entertainment_banner: isEntertainmentBanner,
+    } = CMSData ?? {};
+
+    const bannerTrustBoostersSlice = getSinglePrismicSlice({
+      sliceName: SLICE_TYPES.TRUST_BOOSTERS,
+      slices: bannerSlices ?? [],
+    });
+
+    const bannerTrustBoosters: TPrismicTrustBooster[] =
+      bannerTrustBoostersSlice?.items;
 
     if (redirectInfo) {
       const { url, type } = redirectInfo;
@@ -675,7 +691,7 @@ export const getPageData = async ({
       const {
         content_framework: contentFramework,
         body1,
-        body4,
+        body4: bannerSlices,
         design,
         theme,
         localisedCategoryTourListV1,
@@ -700,9 +716,16 @@ export const getPageData = async ({
 
       const isEntertainmentMbListicle =
         isEntertainmentMb && categoryTourListV2?.primary?.islisticle;
+      let pageTabs = bannerSlices?.find?.(
+        ({ slice_type }: { slice_type: string }) => slice_type === 'page_tabs'
+      );
+
+      pageTabs = getSinglePrismicSlice({
+        sliceName: SLICE_TYPES.PAGE_TABS,
+        slices: bannerSlices ?? [],
+      });
       const isLttMonthOnMonthPage =
-        isEntertainmentMbListicle &&
-        body4?.[0]?.items?.[0]?.month_label !== null;
+        isEntertainmentMbListicle && pageTabs?.items?.[0]?.month_label !== null;
 
       const isCatOrSubCatPage = await isCatOrSubCatPagePromise;
 
@@ -1169,6 +1192,8 @@ export const getPageData = async ({
       collectionData,
       isSeatingPlanPage,
       theatreType,
+      isEntertainmentBanner,
+      bannerTrustBoosters,
     };
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);

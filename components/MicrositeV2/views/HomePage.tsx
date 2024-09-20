@@ -276,6 +276,8 @@ export const HomePage = (props: any) => {
     isSeatingPlanPage,
     categoryDescriptors,
     subcategoryDescriptors,
+    isEntertainmentBanner,
+    bannerTrustBoosters,
   } = props;
   const { languageProps } = header;
   const { currentLanguage, languages } = languageProps || {};
@@ -499,7 +501,7 @@ export const HomePage = (props: any) => {
         changePage={changePage}
         isMobile={isMobile}
         allTours={allTours}
-        isEntertainmentMb={isEntertainmentMb}
+        isEntertainmentMb={isEntertainmentBanner || isEntertainmentMb}
         hasLanguageSelector={showSeatMapExperiment || hasLanguageSelector}
         hideCurrencySelector
         isEntertainmentMbListicle={isEntertainmentMbListicle}
@@ -509,7 +511,10 @@ export const HomePage = (props: any) => {
         isCategoryPage={isCategoryPage}
         isMonthOnMonthPage={isLttMonthOnMonthPage}
         isEntertainmentLandingPageVisible={
-          showLttTreatment || isCategoryPage || isLttMonthOnMonthPage
+          isEntertainmentBanner ||
+          showLttTreatment ||
+          isCategoryPage ||
+          isLttMonthOnMonthPage
         }
         primaryCity={primaryCity}
         taggedCity={taggedCity}
@@ -530,6 +535,8 @@ export const HomePage = (props: any) => {
           allTours={allTours}
           pageTabsSlice={heroSectionSlice[0]}
           displayMonth={displayMonths}
+          isEntertainmentBanner={isEntertainmentBanner}
+          bannerTrustBoosters={bannerTrustBoosters}
         />
       </Conditional>
       <Conditional
@@ -583,26 +590,35 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
-          !showSeatMapExperiment &&
           isMobile &&
-          showLttTreatment &&
-          !isCatOrSubCatPage
+          (isEntertainmentBanner ||
+            (!showSeatMapExperiment && showLttTreatment && !isCatOrSubCatPage))
         }
       >
-        <MobileBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
+        <MobileBannerV2
+          trustBoosters={bannerTrustBoosters}
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          isEntertainmentBanner={isEntertainmentBanner}
+        />
       </Conditional>
       <Conditional
         if={
-          !showSeatMapExperiment &&
           !isMobile &&
-          showLttTreatment &&
-          !isCatOrSubCatPage
+          (isEntertainmentBanner ||
+            (!showSeatMapExperiment && showLttTreatment && !isCatOrSubCatPage))
         }
       >
-        <DesktopBannerV2 bannerImages={heroProps.banners} allTours={allTours} />
+        <DesktopBannerV2
+          trustBoosters={bannerTrustBoosters}
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          isEntertainmentBanner={isEntertainmentBanner}
+        />
       </Conditional>
       <Conditional
         if={
+          !isEntertainmentBanner &&
           !showSeatMapExperiment &&
           mbTheme === THEMES.DEFAULT &&
           !isListicle &&
@@ -623,6 +639,7 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !isEntertainmentBanner &&
           !showSeatMapExperiment &&
           mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
@@ -663,6 +680,8 @@ export const HomePage = (props: any) => {
           categoryTourListData={categoryTourListData}
           primarySubCategoryId={primarySubCategoryId}
           browseByCategoriesRef={browseByCategorySectionRef}
+          trustBoosters={bannerTrustBoosters}
+          isEntertainmentBanner={isEntertainmentBanner}
         />
       </Conditional>
       <Conditional
@@ -695,7 +714,8 @@ export const HomePage = (props: any) => {
         if={
           heroSectionSlice.length &&
           !isEntertainmentMbListicle &&
-          !isCatOrSubCatPage
+          !isCatOrSubCatPage &&
+          !isEntertainmentBanner
         }
       >
         <ProductsContextProvider allTours={allTours} ready={ready}>

@@ -156,6 +156,8 @@ class MicrositeV2 extends Component<any, any> {
       theatreType,
       categoryDescriptors,
       subcategoryDescriptors,
+      isEntertainmentBanner,
+      bannerTrustBoosters,
     } = this.props;
 
     const {
@@ -604,6 +606,8 @@ class MicrositeV2 extends Component<any, any> {
             isSeatingPlanPage={isSeatingPlanPage}
             categoryDescriptors={categoryDescriptors}
             subcategoryDescriptors={subcategoryDescriptors}
+            isEntertainmentBanner={isEntertainmentBanner}
+            bannerTrustBoosters={bannerTrustBoosters}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>
