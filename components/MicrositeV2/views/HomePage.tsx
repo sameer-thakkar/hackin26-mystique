@@ -61,6 +61,8 @@ import {
   ANALYTICS_PROPERTIES,
   DESIGN,
   EMAIL_SUBCRIPTION,
+  LANGUAGE_MAP,
+  LanguagesUnion,
   PAGE_TYPES,
   THEMES,
 } from 'const/index';
@@ -334,6 +336,8 @@ export const HomePage = (props: any) => {
   const firstProduct = firstTab?.[0];
 
   const { primarySubCategory: firstProductSubCategory } = firstProduct || {};
+  const prismicLang =
+    LANGUAGE_MAP[currentLanguage as LanguagesUnion]?.locale || 'en-us';
   const bannerDescriptors = getBannerDescriptors({
     taggedMbType,
     taggedCategoryName,
@@ -341,7 +345,7 @@ export const HomePage = (props: any) => {
     firstProductSubCategory,
     categoryDescriptors,
     subcategoryDescriptors,
-    lang: currentLanguage,
+    lang: prismicLang,
     cityName: primaryCity?.displayName,
   });
 
