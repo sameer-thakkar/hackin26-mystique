@@ -224,24 +224,24 @@ const DesktopBannerV2 = ({
                         />
                       )}
                     </Conditional>
-                    <Conditional if={index > 0}>
+                    <Conditional if={item?.bannerSubText}>
                       <p>{item?.bannerSubText}</p>
-                      <Conditional if={item?.showPageUrl?.url}>
-                        <Button
-                          className={`banner-cta-button`}
-                          fillType="fill"
-                          onClick={() =>
-                            onBannerClicked(item?.showPageUrl?.url ?? '')
-                          }
-                          role="button"
-                          tabIndex={0}
-                        >
-                          {
-                            strings.ENTERTAINMENT_MB_LANDING_PAGE
-                              .GRAB_YOUR_TICKETS
-                          }
-                        </Button>
-                      </Conditional>
+                    </Conditional>
+                    <Conditional if={item?.showPageUrl?.url}>
+                      <Button
+                        className={`banner-cta-button`}
+                        fillType="fill"
+                        onClick={() =>
+                          onBannerClicked(item?.showPageUrl?.url ?? '')
+                        }
+                        role="button"
+                        tabIndex={0}
+                      >
+                        {
+                          strings.ENTERTAINMENT_MB_LANDING_PAGE
+                            .GRAB_YOUR_TICKETS
+                        }
+                      </Button>
                     </Conditional>
                   </div>
                 </SlideDescription>
