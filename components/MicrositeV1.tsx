@@ -798,6 +798,7 @@ const MicrositeV1 = (props: any) => {
             VIDEO_EXPERIMENT_MBS[uid as keyof typeof VIDEO_EXPERIMENT_MBS]
         ) + 1,
     },
+    noTrack: true,
   });
 
   const showVideoOnProductCard =
