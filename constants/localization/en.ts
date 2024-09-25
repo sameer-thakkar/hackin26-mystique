@@ -1359,6 +1359,35 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Check availability', // just for types
   SELECT_AN_OPTION: 'See options',
+
+  PRIVATE_AT_LANDING_PAGE: {
+    CITY_AIRPORT_TRANSFERS: '{0} Airport Transfers',
+    BANNER_SUBTEXT:
+      'Enjoy stress-free travel with a reliable, pre-booked airport transfer.',
+    BEST_PRICES: 'Best prices, no hidden fees',
+    BEST_PRICES_SUBTEXT:
+      'Fixed pricing with no surprises, offering you competitive rates for premium service.',
+    FREE_WAIT_TIME: 'Free wait time, no rush',
+    FREE_WAIT_TIME_SUBTEXT:
+      'Enjoy a free waiting time of 45 minutes while you claim your baggage',
+
+    COMFORTABLE_RIDE: 'Comfortable ride',
+    COMFORTABLE_RIDE_SUBTEXT:
+      'Ride in style with a fleet of top-class vehicles, driven by handpicked and trained drivers.',
+
+    FREE_CANCELLATION: 'Free cancellation',
+    FREE_CANCELLATION_SUBTEXT:
+      'Plans changed? No problem. Enjoy free cancellation and 24/7 support.',
+
+    EXCELLENCE_HEADING: 'A track record of excellence and trust',
+    ACTIVE_CITIES: 'active cities, worldwide',
+    CUSTOMERS_SERVED: 'customers served',
+    YEARS_OF_SERVICE: 'years of excellent service',
+
+    FIND_YOUR_RIDE: 'Find your perfect ride',
+    FIND_YOUR_RIDE_SUBTEXT:
+      'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
+  },
 };
 
 export default en;

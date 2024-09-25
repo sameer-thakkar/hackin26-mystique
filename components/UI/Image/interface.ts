@@ -32,4 +32,10 @@ export interface IImageProps
   fetchPriority?: 'high' | 'low' | 'auto';
   fallbackImg?: string;
   loadHigherQualityImage?: boolean;
+  // To be used with cropMode: 'focalpoint' - https://docs.imgix.com/apis/rendering/focal-point-crop
+  focalPointParams?: {
+    x?: number;
+    y?: number;
+    zoom?: number;
+  };
 }

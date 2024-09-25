@@ -61,7 +61,6 @@ export const appendInclusionExclusionHighlights = ({
           text == IGNORED_HEADINGS.AUDIO_GUIDE ||
           text == IGNORED_HEADINGS.POPULAR_ATTRACTIONS ||
           text == IGNORED_HEADINGS.STARTING_STOP ||
-          text == IGNORED_HEADINGS.TRAVEL_TIME ||
           text == IGNORED_HEADINGS.CRUISE_AUDIO_GUIDE ||
           text == IGNORED_HEADINGS.CRUISE_LIVE_ENTT ||
           text == IGNORED_HEADINGS.CRUISE_MEALS ||
@@ -79,7 +78,6 @@ export const appendInclusionExclusionHighlights = ({
         text != IGNORED_HEADINGS.FREQUENCY &&
         text != IGNORED_HEADINGS.AUDIO_GUIDE &&
         text != IGNORED_HEADINGS.POPULAR_ATTRACTIONS &&
-        text != IGNORED_HEADINGS.TRAVEL_TIME &&
         text != IGNORED_HEADINGS.STARTING_STOP &&
         text != IGNORED_HEADINGS.CRUISE_AUDIO_GUIDE &&
         text != IGNORED_HEADINGS.CRUISE_LIVE_ENTT &&

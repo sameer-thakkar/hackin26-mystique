@@ -59,6 +59,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fallbackImg = '',
     onLoadingComplete,
     loadHigherQualityImage: loadHigherQualityImageProp = false,
+    focalPointParams,
   },
   ref
 ) => {
@@ -96,7 +97,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     addDarkOverlay,
     fitCrop,
     blurFill,
-    minFit
+    minFit,
+    focalPointParams
   );
 
   defaultImageSrc = generateImageImgixUrl(
@@ -111,7 +113,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     addDarkOverlay,
     fitCrop,
     blurFill,
-    minFit
+    minFit,
+    focalPointParams
   );
 
   const fallbackImgUrl = generateImageImgixUrl(
@@ -160,6 +163,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         fill={fillImageProp}
         // @ts-ignore
         fetchpriority={fetchPriority}
+        loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
         onError={() => {
           if (fallbackImgUrl) {
             setUseFallback(true);

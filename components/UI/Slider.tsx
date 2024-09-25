@@ -98,6 +98,7 @@ const Slider = ({
   prevButton,
   parentOverflowHidden = false,
   paginationClass,
+  onSlideChange,
 }: {
   children: React.ReactNode[];
   sliderOptions?: SwiperOptions;
@@ -105,6 +106,7 @@ const Slider = ({
   prevButton?: HTMLElement | React.ReactNode | JSX.Element;
   parentOverflowHidden?: boolean;
   paginationClass?: string;
+  onSlideChange?: () => void;
 }) => {
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
@@ -127,10 +129,10 @@ const Slider = ({
     }
   };
 
-  const updateIndex = useCallback(
-    () => updateCurrentIndex((swiper as any)?.realIndex as number),
-    [swiper]
-  );
+  const updateIndex = useCallback(() => {
+    updateCurrentIndex((swiper as any)?.realIndex as number);
+    onSlideChange?.();
+  }, [swiper]);
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.

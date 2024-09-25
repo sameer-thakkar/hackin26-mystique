@@ -339,6 +339,7 @@ export const DESIGN = {
   V1: 'V1 - Horizontal Card Layout',
   V2: 'V2 - Gird Cards Layout',
   V3: 'V3 - Grid(v2) + Collapsible(v1) Layout',
+  PRIVATE_AIRPORT_TRANSFERS: 'Private Airport Transfers',
 };
 
 export const PAGETYPE = {
@@ -561,10 +562,9 @@ export const ANALYTICS_EVENTS = {
     ITINERARY_DRAWER_CTA_CLICKED: 'Itinerary Drawer CTA Clicked',
   },
   AIRPORT_TRANSFERS: {
-    SEARCH_FILTER_CLICKED: 'Search Filter Clicked',
-    SEARCH_FILTER_APPLIED: 'Search Filter Applied',
+    FIELD_CLICKED: 'Field Clicked',
+    FIELD_ADDED: 'Field Added',
     ERROR_VIEWED: 'Error Viewed',
-    SEARCH_BAR_TAB_CLICKED: 'Search Bar Tab Clicked',
     DRAWER_CTA_CLICKED: 'Drawer CTA Clicked',
     DRAWER_CLOSED: 'Drawer Closed',
   },
@@ -582,6 +582,7 @@ export const ANALYTICS_EVENTS = {
   DEAD_CLICK: 'Dead Click Captured',
   DESCRIPTOR_CLICKED: 'Descriptor Clicked',
   EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
+  EXPERIENCE_PAX_UPDATED: 'Experience PAX Updated',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -709,7 +710,8 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_2: 'Type-2',
 };
 
-export const RIV_LOGO = 'https://cdn-imgix-open.headout.com/MB/RIV/30MRiv.riv';
+export const RIV_LOGO =
+  'https://cdn-imgix-open.headout.com/MB/RIV/byHeadout.riv';
 
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
@@ -1044,13 +1046,9 @@ export const ANALYTICS_PROPERTIES = {
   SECTION_TYPE: 'Section Type',
   SLICE_TYPE: 'Slice Type',
   AIRPORT_TRANSFERS: {
-    IS_SEARCH_PRESENT: 'Is Search Present',
-    PRIVATE_TRANSFERS_PRESENT: 'Private Transfers Present',
-    NUMBER_OF_PRODUCTS: 'Number Of Products',
-    FILTER_NAME: 'Filter Name',
-    FILTER_VALUE: 'Filter Value',
+    FIELD_NAME: 'Field Name',
+    FIELD_VALUE: 'Field Value',
     ERROR_REASON: 'Error Reason',
-    TAB_NAME: 'Tab Name',
     DRAWER_TYPE: 'Drawer Type',
   },
   CONTAINER: 'Container',
@@ -1082,6 +1080,7 @@ export const ANALYTICS_PROPERTIES = {
   TAB_NAME: 'Tab Name',
   IS_BANNER_SLICE_PRESENT: 'Is Banner Slice Present',
   BANNER_TYPE: 'Banner Type',
+  PAX_COUNT: 'Pax Count',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 

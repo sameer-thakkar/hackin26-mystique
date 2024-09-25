@@ -55,7 +55,6 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
     languages = [],
     currentLanguage = '',
     isMobile,
-    showShadowOnSticky = true,
   } = props;
 
   const [expandMenu, setExpandMenu] = useState(false);
@@ -82,7 +81,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
 
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
-  const isSticky = scrollPos > 80 && showShadowOnSticky;
+  const isSticky = scrollPos > 80;
 
   useEffect(() => {
     if (!window) return;

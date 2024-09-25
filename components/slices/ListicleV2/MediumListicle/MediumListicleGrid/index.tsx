@@ -90,8 +90,8 @@ const MediumListicleGrid = ({
 
   return (
     <MediumListicleBox
-      overflow={overFlowContent}
       isSettingsOne={settingsType === SETTINGS_TYPE.SETTINGS_ONE}
+      $hasCTA={!!ctaUrl}
     >
       <ImageContainer imageUrl={imageUrl} index={index + 1} alt={alt} />
       <ContentContainer

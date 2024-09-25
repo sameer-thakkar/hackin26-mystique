@@ -4,13 +4,17 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const MediumListicleBox = styled.div<{
-  overflow: boolean;
   isSettingsOne: boolean;
+  $hasCTA: boolean;
 }>`
   border: 1px solid ${COLORS.GRAY.G6};
   display: grid;
-  grid-template-rows: ${({ isSettingsOne }) =>
-    isSettingsOne ? `214px auto 60px` : `214px auto 75px`};
+  grid-template-rows: ${({ isSettingsOne, $hasCTA }) =>
+    isSettingsOne
+      ? !$hasCTA
+        ? `176px auto auto`
+        : '176px auto 60px'
+      : `176px auto 75px`};
   border-radius: 8px;
 
   .cta-button {

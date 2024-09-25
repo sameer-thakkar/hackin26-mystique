@@ -42,7 +42,7 @@ const SwiperWrapper = dynamic(() => import('components/Swiper'));
 const SWIPER_BREAKPOINTS = {
   0: {
     slidesPerView: 1.15,
-    spaceBetween: 12,
+    spaceBetween: 4,
   },
   768: {
     slidesPerView: 2,
@@ -98,6 +98,10 @@ const Reviews: React.FC<ReviewsProps> = ({
   reviews,
   isMobile,
   showNewDesign = false,
+  swiperConfigOverride,
+  shouldTrackPageSectionView = true,
+  onSlideChange,
+  truncateLength = 300,
 }) => {
   const reviewSlides = reviews
     ?.filter((review) => !!review.review_text?.length)
@@ -145,13 +149,15 @@ const Reviews: React.FC<ReviewsProps> = ({
 
     setIsSwiperEnd(swiper?.isEnd ?? false);
     setIsSwiperStart(swiper?.isBeginning ?? false);
+
+    onSlideChange?.();
   };
 
   useEffect(() => {
-    if (isIntersecting) {
+    if (isIntersecting && shouldTrackPageSectionView) {
       trackPageSection({ section: SECTION_NAMES.REVIEWS });
     }
-  }, [isIntersecting]);
+  }, [isIntersecting, shouldTrackPageSectionView]);
 
   const getReviewSlides = () => {
     return reviewSlides?.map(
@@ -171,7 +177,13 @@ const Reviews: React.FC<ReviewsProps> = ({
             <ReviewTop>
               <Reviewer $hasSubtext={reviewerSubtext}>
                 <ReviewerImage>
-                  <Image url={imageUrl} alt={imageAlt} height={48} width={48} />
+                  <Image
+                    url={imageUrl}
+                    alt={imageAlt}
+                    height={!isMobile ? 48 : 36}
+                    width={!isMobile ? 48 : 36}
+                    loadHigherQualityImage
+                  />
                 </ReviewerImage>
                 <ReviewerName>{reviewerName}</ReviewerName>
                 <ReviewerSubtext>
@@ -180,8 +192,8 @@ const Reviews: React.FC<ReviewsProps> = ({
                       <Image
                         url={`${FLAGS_FOLDER_URL}${reviewerCountry}.svg`}
                         alt={reviewerCountry || ''}
-                        height={16}
-                        width={16}
+                        height={isMobile ? 14 : 16}
+                        width={isMobile ? 14 : 16}
                       />
                     </ReviewerCountry>
                   </Conditional>
@@ -193,7 +205,9 @@ const Reviews: React.FC<ReviewsProps> = ({
                 <RatingTime>{ratingDate}</RatingTime>
               </RatingWrapper>
             </ReviewTop>
-            <ReviewText>{truncate(reviewText || '', 300)}</ReviewText>
+            <ReviewText>
+              {truncate(reviewText || '', truncateLength)}
+            </ReviewText>
           </ReviewContent>
           <Conditional if={footerText}>
             <ReviewFooter>
@@ -232,6 +246,7 @@ const Reviews: React.FC<ReviewsProps> = ({
         loop={isMobile}
         autoplay={isMobile ? swiperAutoPlayConfig : false}
         centeredSlides={isMobile}
+        {...swiperConfigOverride}
       >
         {getReviewSlides()}
       </SwiperWrapper>

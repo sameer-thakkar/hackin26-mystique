@@ -1,8 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
 import usePlacesAutoComplete, { getGeocode } from 'use-places-autocomplete';
 import { MBContext } from 'contexts/MBContext';
+import { sendLog } from 'utils/logger';
+import { titleCase } from 'utils/stringUtils';
 
 let isScriptLoaded = false;
+
+const MAX_RETRIES = 4;
+const RETRY_DELAY = 200;
+
+const checkGeocoderAvailability = (retries = 0) => {
+  if (window.google?.maps?.Geocoder) {
+    isScriptLoaded = true;
+  } else if (retries < MAX_RETRIES) {
+    setTimeout(() => checkGeocoderAvailability(retries + 1), RETRY_DELAY);
+  } else {
+    sendLog({
+      message: 'Failed to load Google Maps Geocoder',
+    });
+  }
+};
 
 const embedGoogleMapsScript = () => {
   if (typeof window === 'undefined') return;
@@ -14,7 +31,7 @@ const embedGoogleMapsScript = () => {
   script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAoWdMfz4yF_CxxVtWK3aYBKP51fm-ivfc&libraries=places&loading=async`;
   script.async = true;
   script.onload = () => {
-    isScriptLoaded = true;
+    checkGeocoderAvailability();
   };
   document.body.appendChild(script);
 };
@@ -23,7 +40,7 @@ export const useGooglePlacesSearch = () => {
   const { primaryCity } = useContext(MBContext);
 
   const bounds = useProductCityBounds({
-    cityName: primaryCity?.name ?? '',
+    cityName: primaryCity?.name ?? titleCase(primaryCity?.cityCode ?? '') ?? '',
     countryName: primaryCity?.country?.displayName ?? '',
   });
 
@@ -66,7 +83,6 @@ const useProductCityBounds = ({
   countryName: string;
 }) => {
   const [bounds, setBounds] = useState<google.maps.LatLngBounds>();
-  ``;
 
   useEffect(() => {
     if (!cityName || !countryName) return;

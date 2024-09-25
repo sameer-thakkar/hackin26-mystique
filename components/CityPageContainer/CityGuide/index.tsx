@@ -44,15 +44,16 @@ const CityGuide = ({
   isDev,
   mbCityDisplayName,
   isMobile,
-}: ICityGuide) => {
+  shouldTrackView = true,
+}: ICityGuide & { shouldTrackView?: boolean }) => {
   const containerRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: containerRef, unobserve: true });
 
   useEffect(() => {
-    if (isIntersecting) {
+    if (isIntersecting && shouldTrackView) {
       trackPageSection({ section: SECTION_NAMES.CITY_GUIDE });
     }
-  }, [isIntersecting]);
+  }, [isIntersecting, shouldTrackView]);
 
   const travelGuideData = getTravelGuideDetails(cityGuideData) || {};
   const { uid: travelGuideUid } = travelGuideData;

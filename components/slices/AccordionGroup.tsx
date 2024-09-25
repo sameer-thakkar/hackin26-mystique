@@ -113,6 +113,15 @@ const AccordionGroup = ({
       });
       setIsTracked(true);
     }
+
+    if (sliceProps.trackingRank && isIntersecting && !isTracked) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
+        [ANALYTICS_PROPERTIES.SECTION]: 'FAQs',
+        [ANALYTICS_PROPERTIES.RANKING]: sliceProps.trackingRank,
+      });
+      setIsTracked(true);
+    }
   }, [isIntersecting]);
 
   return (

@@ -22,7 +22,7 @@
     "@formatjs/intl-locale": "^3.4.0",
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@headout/aer": "headout/aer#b4c8a2096beeeae56d79fac29a543e2c7d6c8620",
-    "@headout/eevee": "^1.2.0",
+    "@headout/eevee": "^1.4.2",
     "@headout/pixie": "^1.3.0",
     "@newrelic/next": "^0.5.1",
     "@prismicio/client": "^6.7.1",

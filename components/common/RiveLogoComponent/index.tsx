@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStateMachineInput } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { StyledRizLogoWrapper } from 'components/common/RiveLogoComponent/styles';
@@ -6,7 +6,7 @@ import { useRive } from 'hooks/useRive';
 import { RIV_LOGO } from 'const/index';
 import PoweredByHeadoutNoBorder from 'assets/poweredByHeadoutNoBorder';
 
-const RiveLogoComponent = () => {
+const RiveLogoComponent = ({ hasDarkBg = false }) => {
   const { RiveComponent, rive, isLoading, isError } = useRive({
     src: RIV_LOGO,
     stateMachines: 'stateMachine',
@@ -19,6 +19,18 @@ const RiveLogoComponent = () => {
   useStateMachineInput(rive, 'stateMachine', 'citiesA', 1);
   useStateMachineInput(rive, 'stateMachine', 'citiesB', 9);
   useStateMachineInput(rive, 'stateMachine', 'citiesC', 0);
+  const isWhiteInput = useStateMachineInput(
+    rive,
+    'stateMachine',
+    'isWhite',
+    hasDarkBg
+  );
+
+  useEffect(() => {
+    if (rive && isWhiteInput) {
+      isWhiteInput.value = hasDarkBg;
+    }
+  }, [isWhiteInput, hasDarkBg, rive]);
 
   const showFallback = isLoading || isError;
 

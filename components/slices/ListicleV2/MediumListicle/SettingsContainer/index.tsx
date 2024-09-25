@@ -35,7 +35,7 @@ const SettingsOne = ({
   } = practicalInfo || {};
   return (
     <SettingsWrapper
-      overflow={overflow}
+      overflow={overflow ? overflow : undefined}
       className="listicle-settings-container"
     >
       <Conditional if={settingsType === SETTINGS_TYPE.SETTINGS_THREE}>

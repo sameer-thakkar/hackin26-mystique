@@ -1,6 +1,6 @@
 import { generateCityPageData } from 'utils/cityPageUtils';
 import { IGenerateCityPageData } from 'utils/cityPageUtils/interface';
-import { LANGUAGE_MAP, MB_TYPES } from 'const/index';
+import { DESIGN, LANGUAGE_MAP, MB_TYPES } from 'const/index';
 
 export const getCityPageData = async ({
   mbCity,
@@ -8,10 +8,15 @@ export const getCityPageData = async ({
   mbCountry,
   cookies,
   lang,
-}: IGenerateCityPageData & { taggedMbType: string }) => {
+  mbDesign,
+}: IGenerateCityPageData & { taggedMbType: string; mbDesign: string }) => {
   let cityPageData = {};
   let isCityPageMB = false;
-  if (taggedMbType === MB_TYPES.A1_HOMEPAGE && mbCity) {
+  if (
+    (taggedMbType === MB_TYPES.A1_HOMEPAGE ||
+      mbDesign === DESIGN.PRIVATE_AIRPORT_TRANSFERS) &&
+    mbCity
+  ) {
     isCityPageMB = true;
     cityPageData = await generateCityPageData({
       mbCity,

@@ -13,7 +13,12 @@ export const generateImageImgixUrl = (
   addDarkOverlay: boolean | undefined,
   fitCrop: boolean,
   blurFill: boolean,
-  minFit: boolean
+  minFit: boolean,
+  focalPointParams?: {
+    x?: number;
+    y?: number;
+    zoom?: number; // 1 to 10
+  }
 ): string => {
   if (!url) {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
@@ -55,8 +60,9 @@ export const generateImageImgixUrl = (
     );
     imigxOptionsQueryParams.delete('fit');
     if (cropMode.includes('focalpoint')) {
-      imigxOptionsQueryParams.set('fp-x', '0.5');
-      imigxOptionsQueryParams.set('fp-y', '0.5');
+      imigxOptionsQueryParams.set('fp-x', `${focalPointParams?.x ?? 0.5}`);
+      imigxOptionsQueryParams.set('fp-y', `${focalPointParams?.y ?? 0.5}`);
+      imigxOptionsQueryParams.set('fp-z', `${focalPointParams?.zoom ?? 1}`);
     }
   }
 

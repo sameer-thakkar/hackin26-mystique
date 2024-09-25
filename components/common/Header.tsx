@@ -86,9 +86,6 @@ const StyledHeader = styled.header<{
 
   @media (max-width: 768px) {
     height: 56px;
-    ${({ $isDarkTheme }) =>
-      $isDarkTheme &&
-      `background: linear-gradient(180deg, #140029 0%, rgba(20, 0, 41, 0) 100%);`}
 
     ${({ $isSticky, $isEntertainmentMB }) =>
       !$isSticky &&
@@ -103,8 +100,14 @@ const StyledHeader = styled.header<{
       box-shadow: none;
     `}
 
-    ${({ $isEntertainmentMB, $isPillBarSticky, $isAirportTransfersMB }) =>
+    ${({
+      $isEntertainmentMB,
+      $isPillBarSticky,
+      $isAirportTransfersMB,
+      $isDarkTheme,
+    }) =>
       ($isEntertainmentMB || $isPillBarSticky || $isAirportTransfersMB) &&
+      !$isDarkTheme &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
   }
 `;
@@ -147,14 +150,13 @@ const StyledLogo = styled.div<{
   $isDarkTheme?: boolean;
   $reducedMargin?: boolean;
 }>(
-  ({ isEntertainmentMB, $isDarkTheme, $reducedMargin }) => css`
+  ({ isEntertainmentMB, $isDarkTheme }) => css`
     display: grid;
     grid-auto-flow: column;
     align-items: center;
     justify-self: left;
     justify-content: left;
     max-width: 350px;
-    height: 2rem !important;
 
     .center {
       display: flex;
@@ -188,7 +190,7 @@ const StyledLogo = styled.div<{
     @media (max-width: 768px) {
       display: grid;
       grid-auto-flow: column;
-      margin-left: ${$isDarkTheme || $reducedMargin ? '1rem' : '1.5rem'};
+      margin-left: 1rem;
 
       .image-wrap {
         padding-right: 0;
@@ -253,15 +255,16 @@ const StyledHeaderElements = styled.div<{
   }
 
   @media (max-width: 768px) {
-    margin-right: ${({ $isDarkTheme, $reducedMargin }) =>
-      $isDarkTheme || $reducedMargin ? '1rem' : '1.5rem'};
+    margin-right: 1rem;
     * {
       color: ${COLORS.GRAY.G2};
     }
   }
 `;
 
-const StyledVerticalDivider = styled.div`
+const StyledVerticalDivider = styled.div<{
+  $isAirportTransfersLandingPage?: boolean;
+}>`
   border-left: 0.063rem solid ${COLORS.LIGHT_GRAY};
   height: 2.5rem;
   margin-left: 0.375rem;
@@ -269,7 +272,23 @@ const StyledVerticalDivider = styled.div`
   @media (max-width: 768px) {
     height: 1.625rem;
     padding-bottom: 0.25rem;
+
+    ${({ $isAirportTransfersLandingPage }) =>
+      $isAirportTransfersLandingPage &&
+      `
+    margin-inline: 6.69px;
+      border-left: 0.372px solid ${COLORS.GRAY.G5};  
+      height: 1.39rem;
+
+  `}
   }
+
+  ${({ $isAirportTransfersLandingPage }) =>
+    $isAirportTransfersLandingPage &&
+    `
+    margin-inline: 9px;
+
+  `}
 `;
 
 const StyledMenuItem = styled.div`
@@ -329,6 +348,8 @@ const Header: React.FC<any> = (props) => {
     isDarkTheme = false,
     isAirportTransfersMB = false,
     hideLangCurrencySelector = false,
+    className,
+    isAirportTransfersLandingPage = false,
   } = props;
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
@@ -432,6 +453,7 @@ const Header: React.FC<any> = (props) => {
       $isAirportTransfersMB={isAirportTransfersMB}
       $isPillBarSticky={isPillBarSticky}
       $isDarkTheme={showDarkHeader}
+      className={className}
     >
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
@@ -440,6 +462,7 @@ const Header: React.FC<any> = (props) => {
             isEntertainmentMB={isEntertainmentMB}
             $isDarkTheme={showDarkHeader}
             $reducedMargin={isDarkTheme}
+            className="logo"
           >
             <Image
               url={logoUrl}
@@ -453,9 +476,16 @@ const Header: React.FC<any> = (props) => {
               fetchPriority="high"
             />
             <Conditional
-              if={hasPoweredByHeadoutLogo && !isEntertainmentMB && !isDarkTheme}
+              if={
+                (hasPoweredByHeadoutLogo &&
+                  !isEntertainmentMB &&
+                  !isDarkTheme) ||
+                isAirportTransfersLandingPage
+              }
             >
-              <StyledVerticalDivider />
+              <StyledVerticalDivider
+                $isAirportTransfersLandingPage={isAirportTransfersLandingPage}
+              />
               <DeferredComponent
                 renderPlaceholder={
                   <LogoPlaceholderWrapper>
@@ -464,11 +494,15 @@ const Header: React.FC<any> = (props) => {
                 }
                 delay={5000}
               >
-                <RiveLogoComponent />
+                <RiveLogoComponent hasDarkBg={isDarkTheme} />
               </DeferredComponent>
             </Conditional>
             <Conditional
-              if={hasPoweredByHeadoutLogo && (isEntertainmentMB || isDarkTheme)}
+              if={
+                hasPoweredByHeadoutLogo &&
+                (isEntertainmentMB || isDarkTheme) &&
+                !isAirportTransfersLandingPage
+              }
             >
               <PoweredByHeadout />
             </Conditional>

@@ -1,15 +1,33 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { isAirportTransferLandingPageAtom } from 'components/PrivateAirportTransfersLandingPage/state';
 import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
 import MediumListicleGrid from 'components/slices/ListicleV2/MediumListicle/MediumListicleGrid/index';
 import { MediumListicleWrapper } from 'components/slices/ListicleV2/MediumListicle/styles';
+import { trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
+import { ANALYTICS_PROPERTIES } from 'const/index';
 
 const MediumListicle = ({
   items,
   settings,
   listicleSectionTitle,
 }: IListicleTypeProps) => {
+  const isAirportTransferLandingPage = useRecoilValue(
+    isAirportTransferLandingPageAtom
+  );
+
+  const handleScroll = throttle(() => {
+    trackEvent({
+      eventName: 'Carousel Scrolled',
+      [ANALYTICS_PROPERTIES.SECTION]: 'How It Works',
+    });
+  }, 1000);
+
   return (
-    <MediumListicleWrapper>
+    <MediumListicleWrapper
+      onScroll={isAirportTransferLandingPage ? handleScroll : undefined}
+    >
       {items?.map((item: Experience, index: number) => {
         const {
           imageUrl,

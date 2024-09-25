@@ -2587,10 +2587,10 @@
     styled-components "^5.3.5"
     tailwindcss "npm:@tailwindcss/postcss7-compat"
 
-"@headout/eevee@^1.2.0":
-  version "1.2.0"
-  resolved "https://npm.pkg.github.com/download/@headout/eevee/1.2.0/84a77f722fe49646d8d75df0ac9d1007f26bcc3a#84a77f722fe49646d8d75df0ac9d1007f26bcc3a"
-  integrity sha512-sFTd/XFL33Y9WsAMg7aD6s/9PqktGm5wmhJNBIQkkaZOptXahe5hPOjrVeTUP5x5Wu0TFJGd3tBjUdu36jaZxA==
+"@headout/eevee@^1.4.2":
+  version "1.4.2"
+  resolved "https://npm.pkg.github.com/download/@headout/eevee/1.4.2/b5469531cb57b6e958386b03a9b28a3142a3daac#b5469531cb57b6e958386b03a9b28a3142a3daac"
+  integrity sha512-HTxMiarE/Vo/lY92p+7XBbAOV8UT2FviAFGfVgq4as7Euhb3POLLPwmK5Vk9Rj64YzgSeITpn/caD2ae6Ni4yw==
   dependencies:
     "@headout/pixie" "workspace:*"
 

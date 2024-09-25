@@ -1,5 +1,3 @@
-import { AIRPORT_TRANSFER_MB_HIGHLIGHTS_DESCRIPTORS } from './airportTransfers';
-
 export const MAX_DESCRIPTORS_DISPLAYED = 5;
 
 export const DESCRIPTOR_RANKING_LOGIC = [
@@ -21,7 +19,6 @@ export const IGNORED_HEADINGS = {
   AUDIO_GUIDE: 'audio guide DoNotTranslate',
   POPULAR_ATTRACTIONS: 'popular attractions DoNotTranslate',
   STARTING_STOP: 'starting stop DoNotTranslate',
-  TRAVEL_TIME: AIRPORT_TRANSFER_MB_HIGHLIGHTS_DESCRIPTORS.TRAVEL_TIME,
   CRUISE_AUDIO_GUIDE: 'Audioguide Cruises DoNotTranslate',
   CRUISE_LIVE_ENTT: 'Live Entertainment Cruises DoNotTranslate',
   CRUISE_MEALS: 'Meal Options Cruises DoNotTranslate',

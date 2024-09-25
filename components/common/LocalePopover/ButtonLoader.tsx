@@ -5,6 +5,7 @@ import COLORS from 'const/colors';
 type IButtonLoader = {
   isMobile?: boolean;
   isDarkMode?: boolean;
+  className?: string;
 };
 
 const coreLeadingDotsAnimation = keyframes`
@@ -53,13 +54,14 @@ const LoadingDotStyled = styled.div<{
 export const ButtonLoader = ({
   isMobile = false,
   isDarkMode = false,
+  className,
 }: IButtonLoader) => {
   return (
     <LoadingDotStyled
       $isMobile={isMobile}
       $isDarkMode={isDarkMode}
       key="loading-dots"
-      className={`core-loading-dots`}
+      className={`core-loading-dots ${className}`}
     >
       <div className="dot" key="dot-1" />
       <div className="dot" key="dot-2" />

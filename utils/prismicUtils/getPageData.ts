@@ -800,6 +800,7 @@ export const getPageData = async ({
         mbCity,
         mbCountry,
         taggedMbType,
+        mbDesign: MBDesign,
       });
       const offerTgidsPromise = extractOfferFromTourSliceTgids({
         isCatOrSubCatPage,

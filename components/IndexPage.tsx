@@ -8,6 +8,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ServerCookies from 'cookies';
 import Cookies from 'js-cookie';
 import { getAppTheme } from 'style/theme';
+import { TPrivateAirportTransfersLandingPageProps } from 'components/PrivateAirportTransfersLandingPage';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
@@ -48,6 +49,12 @@ const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 const ReviewsPage = dynamic(() => import('components/ReviewsPage'));
 const VenuePage = dynamic(() => import('components/VenuePage'));
 const NewsPage = dynamic(() => import('components/NewsPage'));
+const PrivateAirportTransfersLandingPage =
+  dynamic<TPrivateAirportTransfersLandingPageProps>(() =>
+    import('components/PrivateAirportTransfersLandingPage').then(
+      (mod) => mod.PrivateAirportTransfersLandingPage
+    )
+  );
 
 const { SUBATTRACTION_TYPE, SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
 
@@ -165,6 +172,7 @@ const Page = (props: PageProps) => {
     isEntertainmentBanner,
     bannerTrustBoosters,
   } = props;
+
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
 
@@ -423,6 +431,19 @@ const Page = (props: PageProps) => {
             domainConfig={domainConfig}
           />
         );
+
+      case CUSTOM_TYPES.MICROSITE + DESIGN.PRIVATE_AIRPORT_TRANSFERS:
+        return (
+          <PrivateAirportTransfersLandingPage
+            cmsContent={CMSContent}
+            host={host}
+            isDev={isDev}
+            domainConfig={domainConfig}
+            isMobile={isMobile}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+            cityPageParams={cityPageParams}
+          />
+        );
       default:
         return <ErrorPage statusCode={500} />;
     }
@@ -455,7 +476,16 @@ const Page = (props: PageProps) => {
             isDev={isDev}
             bookSubdomain={bookSubdomain}
             primaryCountry={primaryCountry}
-            primaryCity={primaryCity}
+            primaryCity={
+              MBDesign === DESIGN.PRIVATE_AIRPORT_TRANSFERS
+                ? {
+                    cityCode: cityPageParams?.mbLocationData?.mbCity,
+                    country: {
+                      displayName: cityPageParams?.mbLocationData?.mbCountry,
+                    },
+                  }
+                : primaryCity
+            }
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
             categoryHeaderMenu={categoryHeaderMenu}
           >

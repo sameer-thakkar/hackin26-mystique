@@ -464,7 +464,6 @@ const Listicle = (props: any) => {
         currentLanguage={currentLanguage}
         logoUrl={logoUrl}
         logoAltText={whiteLabelName || ''}
-        uid={uid}
         isMobile={isMobile}
         showGroupBooking={enableGroupBooking === 'Yes'}
         logoRedirectionURL={logoRedirectionUrl}

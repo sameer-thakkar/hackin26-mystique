@@ -119,6 +119,7 @@ export const ReviewerImage = styled.div`
   height: 48px;
   img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
   }
 `;

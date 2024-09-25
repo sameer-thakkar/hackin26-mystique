@@ -1,15 +1,15 @@
 import dynamic from 'next/dynamic';
-import {
-  HeroIllustrationContainer,
-  HeroSectionContainer,
-  HeroText,
-  MarginWrapper,
-} from 'components/AirportTransfers/HeroSection/style';
 import Conditional from 'components/common/Conditional';
 import { DescriptorWrapper } from 'components/StaticBanner/styles';
 import { getBannerDescriptorsArray } from 'components/StaticBanner/utils';
 import Image from 'UI/Image';
 import { strings } from 'const/strings';
+import {
+  HeroIllustrationContainer,
+  HeroSectionContainer,
+  HeroText,
+  MarginWrapper,
+} from './IllustrationBannerStyle';
 import { swiperParams } from '.';
 
 const Swiper = dynamic(

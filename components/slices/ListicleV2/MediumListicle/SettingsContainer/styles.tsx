@@ -4,7 +4,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const SettingsWrapper = styled.div<{
-  overflow: boolean;
+  overflow?: boolean;
 }>`
   margin: 0 1rem;
   position: relative;

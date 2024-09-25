@@ -1223,4 +1223,3 @@ export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
 
   return { inclusionsExclusions };
 };
-

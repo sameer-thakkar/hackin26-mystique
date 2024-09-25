@@ -54,8 +54,6 @@ import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
-import { AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP } from 'const/airportTransfers';
-import { BOOKING_FLOW_TYPE } from 'const/booking';
 import { VARIANTS } from 'const/experiments';
 import {
   ALLOW_IMMEDIATE_NESTING,
@@ -79,9 +77,7 @@ import {
 import { strings } from 'const/strings';
 import Location from 'assets/location';
 import { DEFAULT_MAGIC_WAND, HOVERED_MAGIC_WAND } from 'assets/magicWand';
-import { TAirportTransfersProductSectionProps } from './AirportTransfers/AirportTransferProductsSection/interface';
-import { AirportTransferHeroSection } from './AirportTransfers/HeroSection';
-import { TCityInfo, TTour } from './AirportTransfers/interface';
+import { TCityInfo } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
 import CommonHeader from './common/Header';
@@ -90,13 +86,6 @@ import { SUBCATEGORY_PILLS } from './Cruises/SubcategoryFilters/constants';
 import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
 import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
-
-const AirportTransferProductsSection =
-  dynamic<TAirportTransfersProductSectionProps>(() =>
-    import(
-      /* webpackChunkName: "AirportTransferProductsSection" */ './AirportTransfers/AirportTransferProductsSection'
-    ).then((m) => m.AirportTransferProductsSection)
-  );
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -214,7 +203,6 @@ const MicrositeV1 = (props: any) => {
     cityPageParams,
     catAndSubCatPageData,
     isCatOrSubCatPage,
-    airportTransfersLPExperimentVariant = VARIANTS.CONTROL,
     categoryDescriptors,
     subcategoryDescriptors,
     isEntertainmentBanner,
@@ -603,22 +591,6 @@ const MicrositeV1 = (props: any) => {
       )?.slice_type,
       [ANALYTICS_PROPERTIES.IS_LANDING_PAGE]:
         taggedPageType === MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE,
-      ...(isAirportTransfersMB && {
-        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:
-          isAirportTransfersSubCategory || isAirportTransfersSearchEnabledUID
-            ? BOOLEAN_STATES['YES']
-            : BOOLEAN_STATES['NO'],
-        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.NUMBER_OF_PRODUCTS]:
-          orderedFilteredTours.filter(
-            (tour: TTour) =>
-              tour.flowType !== BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
-          ).length,
-        [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.PRIVATE_TRANSFERS_PRESENT]:
-          orderedFilteredTours.filter(
-            (tour: TTour) =>
-              tour.flowType === BOOKING_FLOW_TYPE.PRIVATE_AIRPORT_TRANSFER
-          )?.length ?? 0,
-      }),
       ...(subattractionType && {
         [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,
       }),
@@ -915,13 +887,6 @@ const MicrositeV1 = (props: any) => {
     isToursAvailable &&
     isAirportTransfersMB;
 
-  const isAirportTransfersSubCategory =
-    taggedSubCategoryName === 'Airport Transfers' &&
-    taggedMbType === MB_TYPES.A1_SUB_CATEGORY;
-
-  const isAirportTransfersSearchEnabledUID =
-    !!AIRPORT_TRANSFER_SEARCH_ENABLED_UIDS_AIRPORT_MAP[uid];
-
   useEffect(() => {
     if (isLfcIntersecting && showLFC && showLfcTimer) {
       trackEvent({
@@ -941,26 +906,6 @@ const MicrositeV1 = (props: any) => {
       });
     }
   }, [isFooterIntersecting, showLFC, showLfcTimer]);
-
-  useEffect(() => {
-    if (
-      !eventsReady ||
-      !isAirportTransfersMB ||
-      !['LONDON', 'ROME'].includes(primaryCity?.cityCode)
-    )
-      return;
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-      [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]: 'Airport Transfers Landing Page',
-      [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
-        airportTransfersLPExperimentVariant,
-      [ANALYTICS_PROPERTIES.AIRPORT_TRANSFERS.IS_SEARCH_PRESENT]:
-        isAirportTransfersSubCategory || isAirportTransfersSearchEnabledUID
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
-    });
-  }, [eventsReady, isAirportTransfersMB]);
 
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
@@ -1136,7 +1081,6 @@ const MicrositeV1 = (props: any) => {
             languages={alternateLanguages}
             currentLanguage={currentLanguage}
             isMobile={false}
-            showShadowOnSticky={!isAirportTransfersMB}
           />
         </Conditional>
         <Conditional if={isEntertainmentBanner}>
@@ -1242,32 +1186,7 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={
-            !isEntertainmentBanner &&
-            isAirportTransfersMB &&
-            airportTransfersLPExperimentVariant === VARIANTS.TREATMENT
-          }
-        >
-          <AirportTransferHeroSection
-            cityName={primaryCity?.displayName}
-            isMobile={isMobile}
-            tours={orderedFilteredTours}
-            tgidScorpioDataMap={scorpioData}
-            shouldShowSearch={
-              isAirportTransfersSubCategory ||
-              isAirportTransfersSearchEnabledUID
-            }
-          />
-        </Conditional>
-
-        <Conditional
-          if={
-            !isEntertainmentBanner &&
-            showNewBanner &&
-            !isCatOrSubCatPage &&
-            (airportTransfersLPExperimentVariant === VARIANTS.CONTROL ||
-              !isAirportTransfersMB)
-          }
+          if={showNewBanner && !isCatOrSubCatPage && !isEntertainmentBanner}
         >
           <StaticBanner
             bannerVideo={showVideoOnProductCard ? null : bannerVideo}
@@ -1362,8 +1281,7 @@ const MicrositeV1 = (props: any) => {
           {tourListSection}
         </Conditional>
 
-        {showAirportTransferProducts &&
-        airportTransfersLPExperimentVariant === VARIANTS.CONTROL ? (
+        <Conditional if={showAirportTransferProducts}>
           <PopulateAirportTransfersProducts
             uncategorizedTours={orderedFilteredTours}
             isMobile={isMobile}
@@ -1372,23 +1290,6 @@ const MicrositeV1 = (props: any) => {
             sharedTransferProducts={tourListSection}
             uid={uid}
             currentLanguage={currentLanguage}
-          />
-        ) : null}
-
-        <Conditional
-          if={
-            showAirportTransferProducts &&
-            airportTransfersLPExperimentVariant === VARIANTS.TREATMENT
-          }
-        >
-          <AirportTransferProductsSection
-            isMobile={isMobile}
-            tgidScorpioDataMap={scorpioData}
-            uncategorizedTours={orderedFilteredTours}
-            enableEarliestAvailability={enableEarliestAvailability}
-            currency={currency}
-            isSubCategoryPage={isAirportTransfersSubCategory}
-            hasCategoryHeaderMenu={Object.keys(categoryHeaderMenu).length > 0}
           />
         </Conditional>
 
@@ -1420,7 +1321,6 @@ const MicrositeV1 = (props: any) => {
 
         <Conditional if={isAirportTransfersMB && longFormContent}>
           <AirportTransferLFAndStaticContent
-            airportTransferVariant={airportTransfersLPExperimentVariant}
             isMobile={isMobile}
             content={contentFWSlices}
           />
