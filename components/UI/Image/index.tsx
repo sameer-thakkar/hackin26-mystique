@@ -163,7 +163,6 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         fill={fillImageProp}
         // @ts-ignore
         fetchpriority={fetchPriority}
-        loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
         onError={() => {
           if (fallbackImgUrl) {
             setUseFallback(true);

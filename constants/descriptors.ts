@@ -23,4 +23,5 @@ export const IGNORED_HEADINGS = {
   CRUISE_LIVE_ENTT: 'Live Entertainment Cruises DoNotTranslate',
   CRUISE_MEALS: 'Meal Options Cruises DoNotTranslate',
   CRUISE_BOAT: 'Boat Type Cruises DoNotTranslate',
+  TRAVEL_TIME: 'travel time DoNotTranslate',
 };
