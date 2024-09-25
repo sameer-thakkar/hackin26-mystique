@@ -205,7 +205,7 @@ export default class CategorySlider extends Component<
       spaceBetween: 24,
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
-      loop: true,
+      loop: false,
       navigation: !isMobile
         ? {
             prevEl: '.chevron-left',
