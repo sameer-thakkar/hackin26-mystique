@@ -31,10 +31,6 @@ export const FAQSectionWrapper = styled.div`
   margin-top: 5rem;
   margin-bottom: 4rem;
 
-  & > div:first-child {
-    max-width: 63.75rem;
-  }
-
   h2 {
     ${getFontDetailsByLabel(FONTS.DISPLAY_SMALL)}
     color: ${COLORS.GRAY.G1};

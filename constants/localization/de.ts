@@ -1084,7 +1084,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     GUEST: 'Gast',
 
     ADD_GUESTS: 'Anzahl Gäste',
-    ADULT_CHILD: 'Erwachsene/Kinder',
+
     EXPLORE_TRANSFERS: 'Erkunden Sie Transfers und mehr',
     COMBOS_AND_EXTRAS: 'Kombi-Deals',
 

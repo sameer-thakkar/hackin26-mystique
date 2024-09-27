@@ -1093,7 +1093,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     GUESTS: 'Invités',
     GUEST: 'Invité',
     ADD_GUESTS: 'Ajouter invités',
-    ADULT_CHILD: 'Adulte(s)/Enfant(s)',
     EXPLORE_TRANSFERS: 'Parcourir les navettes',
     COMBOS_AND_EXTRAS: 'Combos et options',
 

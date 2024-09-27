@@ -27,7 +27,7 @@ export const PrivateTransferAirportsList = ({
 
   const { primaryCity } = useContext(MBContext);
 
-  const { data: airportsList } = usePrivateAirportTransferAirports(
+  const { data: airportsList, isLoading } = usePrivateAirportTransferAirports(
     primaryCity?.cityCode ?? ''
   );
 
@@ -47,7 +47,7 @@ export const PrivateTransferAirportsList = ({
 
   return (
     <DrawerList>
-      <Conditional if={!airportsList}>
+      <Conditional if={isLoading}>
         <ButtonLoader
           className={css({
             width: '100%!',

@@ -1150,8 +1150,6 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     GUEST: 'Guest',
     GUESTS: 'Guests',
     ADD_GUESTS: 'Add guests',
-    ADULT_CHILD: 'Adult/Child',
-
     EXPLORE_TRANSFERS: 'Explore transfers and more',
     COMBOS_AND_EXTRAS: 'Combos and extras',
 

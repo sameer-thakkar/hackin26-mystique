@@ -8,10 +8,9 @@ export const HowItWorksSection = ({
 }: {
   listicleSectionSlice: Record<string, any>;
 }) => {
-  const {
-    primary: { listicle_title, listicle_type, settings_type },
-    slices,
-  } = listicleSectionSlice;
+  const { primary, slices } = listicleSectionSlice ?? {};
+
+  const { listicle_title, listicle_type, settings_type } = primary ?? {};
 
   const ref = useTrackElementView({
     eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_SECTION_VIEWED,
@@ -20,6 +19,10 @@ export const HowItWorksSection = ({
       [ANALYTICS_PROPERTIES.RANKING]: 1,
     },
   });
+
+  if (!listicleSectionSlice) {
+    return null;
+  }
 
   return (
     <ListicleSectionStyleOverrides ref={ref}>

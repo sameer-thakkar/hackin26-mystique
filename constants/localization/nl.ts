@@ -1059,7 +1059,6 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     GUESTS: 'Gasten',
     GUEST: 'Gast',
     ADD_GUESTS: 'Gasten toevoegen',
-    ADULT_CHILD: 'Volwassenen/Kinderen',
     EXPLORE_TRANSFERS: 'Vervoer en meer',
     COMBOS_AND_EXTRAS: "Combo's en extra's",
 

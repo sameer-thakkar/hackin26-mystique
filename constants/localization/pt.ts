@@ -1092,7 +1092,6 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SELECT_TIME: 'Escolher hora',
     GUESTS: 'Hóspedes',
     GUEST: 'Hóspede',
-    ADULT_CHILD: 'Adulto(s)/Criança(s)',
     ADD_GUESTS: 'Somar hóspedes',
     EXPLORE_TRANSFERS: 'Traslados e outras experiências',
     COMBOS_AND_EXTRAS: 'Combos e adicionais',

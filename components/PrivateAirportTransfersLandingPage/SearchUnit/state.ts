@@ -89,5 +89,5 @@ export const privateTransferTimeState = atom<string | null>({
 
 export const privateTransferPaxState = atom<number>({
   key: 'privateTransferPax',
-  default: 0,
+  default: 1,
 });

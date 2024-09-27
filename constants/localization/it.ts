@@ -1082,7 +1082,6 @@ const it = {
     GUESTS: 'Ospiti',
     GUEST: 'Ospite',
     ADD_GUESTS: 'Più ospiti',
-    ADULT_CHILD: 'Adulti/Bambini',
     EXPLORE_TRANSFERS: 'Scopri i trasferimenti',
     COMBOS_AND_EXTRAS: 'Combinazioni e altro',
 

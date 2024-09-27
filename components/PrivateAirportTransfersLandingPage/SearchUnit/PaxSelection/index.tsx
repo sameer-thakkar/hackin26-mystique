@@ -29,7 +29,7 @@ export const PaxSelection = () => {
       <PaxItem
         value={pax}
         setValue={handlePaxChange}
-        label={strings.AIRPORT_TRANSFER.ADULT_CHILD}
+        label={strings.AIRPORT_TRANSFER.GUESTS}
         description=""
         min={1}
         max={AIRPORT_TRANSFERS_MAX_PAX}
