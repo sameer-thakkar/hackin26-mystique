@@ -23,6 +23,146 @@ export type BannerDocument<Lang extends string = string> =
     Lang
   >;
 
+interface BannerBoosterDocumentData {}
+
+/**
+ * Banner Descriptors document from Prismic
+ *
+ * - **API ID**: `banner_booster`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BannerBoosterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BannerBoosterDocumentData>,
+    'banner_booster',
+    Lang
+  >;
+
+/**
+ * Item in *Banner Descriptors → Category Descriptors*
+ */
+export interface BannerDescriptorsDocumentDataCategoryDescriptorsItem {
+  /**
+   * Descriptor Text field in *Banner Descriptors → Category Descriptors*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_descriptors.category_descriptors[].descriptor_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  descriptor_text: prismic.KeyTextField;
+
+  /**
+   * Descriptor Icon URL field in *Banner Descriptors → Category Descriptors*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_descriptors.category_descriptors[].descriptor_icon_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  descriptor_icon_url: prismic.LinkField;
+}
+
+/**
+ * Primary content in *Banner Descriptors → Slice zone → Subcategory Descriptors → Primary*
+ */
+export interface BannerDescriptorsDocumentDataBodyDescriptorSlicePrimary {
+  /**
+   * Subcategory ID field in *Banner Descriptors → Slice zone → Subcategory Descriptors → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Subcategory ID
+   * - **API ID Path**: banner_descriptors.body[].descriptor.primary.subcategory_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  subcategory_id: prismic.NumberField;
+}
+
+/**
+ * Item content in *Banner Descriptors → Slice zone → Subcategory Descriptors → Items*
+ */
+export interface BannerDescriptorsDocumentDataBodyDescriptorSliceItem {
+  /**
+   * Descriptor Text field in *Banner Descriptors → Slice zone → Subcategory Descriptors → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter descriptor text
+   * - **API ID Path**: banner_descriptors.body[].descriptor.items.descriptor_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  descriptor_text: prismic.KeyTextField;
+
+  /**
+   * Descriptor Icon URL field in *Banner Descriptors → Slice zone → Subcategory Descriptors → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter icon url
+   * - **API ID Path**: banner_descriptors.body[].descriptor.items.descriptor_icon_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  descriptor_icon_url: prismic.LinkField;
+}
+
+/**
+ * Slice for *Banner Descriptors → Slice zone*
+ */
+export type BannerDescriptorsDocumentDataBodyDescriptorSlice = prismic.Slice<
+  'descriptor',
+  Simplify<BannerDescriptorsDocumentDataBodyDescriptorSlicePrimary>,
+  Simplify<BannerDescriptorsDocumentDataBodyDescriptorSliceItem>
+>;
+
+type BannerDescriptorsDocumentDataBodySlice =
+  BannerDescriptorsDocumentDataBodyDescriptorSlice;
+
+/**
+ * Content for Banner Descriptors documents
+ */
+interface BannerDescriptorsDocumentData {
+  /**
+   * Category Descriptors field in *Banner Descriptors*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_descriptors.category_descriptors[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  category_descriptors: prismic.GroupField<
+    Simplify<BannerDescriptorsDocumentDataCategoryDescriptorsItem>
+  >;
+
+  /**
+   * Slice zone field in *Banner Descriptors*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_descriptors.body[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  body: prismic.SliceZone<BannerDescriptorsDocumentDataBodySlice>;
+}
+
+/**
+ * Banner Descriptors document from Prismic
+ *
+ * - **API ID**: `banner_descriptors`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BannerDescriptorsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<BannerDescriptorsDocumentData>,
+    'banner_descriptors',
+    Lang
+  >;
+
 /**
  * Item in *Common Listicle → Header Scripts*
  */
@@ -1080,6 +1220,36 @@ export interface ContentFrameworkDocumentDataBodyRichTextSliceItem {
    * - **Documentation**: https://prismic.io/docs/field#number
    */
   content_height: prismic.NumberField;
+
+  /**
+   * Image URL field in *Content Framework → Slice zone → Rich Text → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Image link embed for scorpio media. The image will be added below the rich-text content
+   * - **API ID Path**: content_framework.body[].rich_text.items.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Mobile Image URL field in *Content Framework → Slice zone → Rich Text → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Similar to Image URL field but takes precedence for mobile view
+   * - **API ID Path**: content_framework.body[].rich_text.items.mobile_image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  mobile_image_url: prismic.LinkField;
+
+  /**
+   * Image ALT field in *Content Framework → Slice zone → Rich Text → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Alt text corresponding to the above image URL(If added)
+   * - **API ID Path**: content_framework.body[].rich_text.items.image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
 }
 
 /**
@@ -5513,6 +5683,84 @@ export type ContentFrameworkDocumentDataBodyContributorsReviewSlice =
     never
   >;
 
+/**
+ * Primary content in *Content Framework → Slice zone → Custom Banner → Primary*
+ */
+export interface ContentFrameworkDocumentDataBodyCustomBannerSlicePrimary {
+  /**
+   * Banner variant field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: choose the banner variant
+   * - **Default Value**: Image + Text Banner
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.banner_variant
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_variant: prismic.SelectField<
+    'Image + Text Banner' | 'Video + Text Banner',
+    'filled'
+  >;
+
+  /**
+   * Heading field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: enter the heading value
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.heading_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading_title: prismic.TitleField;
+
+  /**
+   * Subtitle field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: enter the substitle value
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.subtitle
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  subtitle: prismic.TitleField;
+
+  /**
+   * CTA Label field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: enter the CTA Label
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.cta_label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_label: prismic.KeyTextField;
+
+  /**
+   * CTA URL field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: enter the CTA URL
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.cta_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_url: prismic.LinkField;
+
+  /**
+   * Media Link field in *Content Framework → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: photo or video url
+   * - **API ID Path**: content_framework.body[].custom_banner.primary.media_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  media_link: prismic.LinkField;
+}
+
+/**
+ * Slice for *Content Framework → Slice zone*
+ */
+export type ContentFrameworkDocumentDataBodyCustomBannerSlice = prismic.Slice<
+  'custom_banner',
+  Simplify<ContentFrameworkDocumentDataBodyCustomBannerSlicePrimary>,
+  never
+>;
+
 type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyTabWrapperStartSlice
   | ContentFrameworkDocumentDataBodyTabWrapperEndSlice
@@ -5568,7 +5816,8 @@ type ContentFrameworkDocumentDataBodySlice =
   | ContentFrameworkDocumentDataBodyReviewChipsSlice
   | ContentFrameworkDocumentDataBodyDetailedReviewSlice
   | ContentFrameworkDocumentDataBodyCriticsReviewSlice
-  | ContentFrameworkDocumentDataBodyContributorsReviewSlice;
+  | ContentFrameworkDocumentDataBodyContributorsReviewSlice
+  | ContentFrameworkDocumentDataBodyCustomBannerSlice;
 
 /**
  * Content for Content Framework documents
@@ -7223,6 +7472,8 @@ interface ContentPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -7470,6 +7721,9 @@ interface ContentPageDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
+    | 'Snowshoeing'
+    | 'Sledding'
   >;
 
   /**
@@ -10906,7 +11160,21 @@ interface EmailDocumentData {
    * - **Tab**: Footer
    * - **Documentation**: https://prismic.io/docs/field#select
    */
-  footer_type: prismic.SelectField<'Promo' | 'Transactional' | 'Nps', 'filled'>;
+  footer_type: prismic.SelectField<
+    'Promo' | 'Transactional' | 'NPS' | 'Entertainment' | 'Manual',
+    'filled'
+  >;
+
+  /**
+   * App Banner Url field in *email*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add a url only if footer type is "Manual"
+   * - **API ID Path**: email.app_banner_url
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  app_banner_url: prismic.LinkField;
 
   /**
    * Show App Store Icons field in *email*
@@ -14511,6 +14779,8 @@ interface HoCategoryContentDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -14843,6 +15113,120 @@ export type ListicleWestendDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ListicleWestendDocumentData>,
     'listicle_westend',
+    Lang
+  >;
+
+/**
+ * Item in *MB Descriptors  → Tags*
+ */
+export interface MbDescriptorsDocumentDataTagsItem {
+  /**
+   * title field in *MB Descriptors  → Tags*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mb_descriptors.tags[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * url field in *MB Descriptors  → Tags*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mb_descriptors.tags[].url
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  url: prismic.KeyTextField;
+}
+
+/**
+ * Content for MB Descriptors  documents
+ */
+interface MbDescriptorsDocumentData {
+  /**
+   * Tags field in *MB Descriptors *
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mb_descriptors.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  tags: prismic.GroupField<Simplify<MbDescriptorsDocumentDataTagsItem>>;
+}
+
+/**
+ * MB Descriptors  document from Prismic
+ *
+ * - **API ID**: `mb_descriptors`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type MbDescriptorsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<MbDescriptorsDocumentData>,
+    'mb_descriptors',
+    Lang
+  >;
+
+/**
+ * Item in *Microbrands tags → title*
+ */
+export interface MicrobrandsTagsDocumentDataTitleItem {
+  /**
+   * tag name field in *Microbrands tags → title*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add the name of the tag
+   * - **API ID Path**: microbrands_tags.title[].tag_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tag_name: prismic.KeyTextField;
+
+  /**
+   * page urls field in *Microbrands tags → title*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add urls with a comma and a space for example: a, b, c or a or a, b
+   * - **API ID Path**: microbrands_tags.title[].page_urls
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  page_urls: prismic.KeyTextField;
+}
+
+/**
+ * Content for Microbrands tags documents
+ */
+interface MicrobrandsTagsDocumentData {
+  /**
+   * title field in *Microbrands tags*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: microbrands_tags.title[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  title: prismic.GroupField<Simplify<MicrobrandsTagsDocumentDataTitleItem>>;
+}
+
+/**
+ * Microbrands tags document from Prismic
+ *
+ * - **API ID**: `microbrands_tags`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type MicrobrandsTagsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<MicrobrandsTagsDocumentData>,
+    'microbrands_tags',
     Lang
   >;
 
@@ -16116,11 +16500,104 @@ export type MicrositeDocumentDataBodyProductCardTemplatesSlice = prismic.Slice<
   never
 >;
 
+/**
+ * Primary content in *Microsite → Slice zone → Custom Banner → Primary*
+ */
+export interface MicrositeDocumentDataBodyCustomBannerSlicePrimary {
+  /**
+   * Banner variant field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: choose the banner variant
+   * - **Default Value**: Image + Text Banner
+   * - **API ID Path**: microsite.body[].custom_banner.primary.banner_variant
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_variant: prismic.SelectField<
+    'Image + Text Banner' | 'Video + Text Banner',
+    'filled'
+  >;
+
+  /**
+   * position inside product card section field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: enter the index/order of the banner inside the product cards list
+   * - **Default Value**: 0
+   * - **API ID Path**: microsite.body[].custom_banner.primary.position_index
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  position_index: prismic.SelectField<
+    '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10',
+    'filled'
+  >;
+
+  /**
+   * Heading field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: enter the heading value
+   * - **API ID Path**: microsite.body[].custom_banner.primary.heading_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading_title: prismic.TitleField;
+
+  /**
+   * Subtitle field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: enter the substitle value
+   * - **API ID Path**: microsite.body[].custom_banner.primary.subtitle
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  subtitle: prismic.TitleField;
+
+  /**
+   * CTA Label field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: enter the CTA Label
+   * - **API ID Path**: microsite.body[].custom_banner.primary.cta_label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_label: prismic.KeyTextField;
+
+  /**
+   * CTA URL field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: enter the CTA URL
+   * - **API ID Path**: microsite.body[].custom_banner.primary.cta_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_url: prismic.LinkField;
+
+  /**
+   * Media Link field in *Microsite → Slice zone → Custom Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: photo or video url
+   * - **API ID Path**: microsite.body[].custom_banner.primary.media_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  media_link: prismic.LinkField;
+}
+
+/**
+ * Slice for *Microsite → Slice zone*
+ */
+export type MicrositeDocumentDataBodyCustomBannerSlice = prismic.Slice<
+  'custom_banner',
+  Simplify<MicrositeDocumentDataBodyCustomBannerSlicePrimary>,
+  never
+>;
+
 type MicrositeDocumentDataBodySlice =
   | MicrositeDocumentDataBodyCsvRankingSlice
   | MicrositeDocumentDataBodyTourListCategorySlice
   | MicrositeDocumentDataBodyTourListCategoryV1Slice
-  | MicrositeDocumentDataBodyProductCardTemplatesSlice;
+  | MicrositeDocumentDataBodyProductCardTemplatesSlice
+  | MicrositeDocumentDataBodyCustomBannerSlice;
 
 /**
  * Primary content in *Microsite → Slice zone → Tours List → Primary*
@@ -18202,7 +18679,8 @@ interface MicrositeDocumentData {
   design: prismic.SelectField<
     | 'V1 - Horizontal Card Layout'
     | 'V2 - Gird Cards Layout'
-    | 'V3 - Grid(v2) + Collapsible(v1) Layout',
+    | 'V3 - Grid(v2) + Collapsible(v1) Layout'
+    | 'Private Airport Transfers',
     'filled'
   >;
 
@@ -18328,6 +18806,18 @@ interface MicrositeDocumentData {
   currencies_list: prismic.GroupField<
     Simplify<MicrositeDocumentDataCurrenciesListItem>
   >;
+  /**
+   * is Entertainment banner field in *Microsite*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: microsite.is_entertainment_banner
+   * - **Tab**: Header
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  is_entertainment_banner: prismic.BooleanField;
+
   /**
    * Common Header Ref field in *Microsite*
    *
@@ -19110,6 +19600,8 @@ interface MicrositeDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -19357,6 +19849,10 @@ interface MicrositeDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
+    | 'Snowboarding'
+    | 'Sledding'
+    | 'Snowshoeing'
   >;
 
   /**
@@ -19974,6 +20470,8 @@ interface NewsPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -20104,6 +20602,7 @@ interface NewsPageDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -20198,6 +20697,7 @@ interface NewsPageDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
   >;
 
   /**
@@ -21913,6 +22413,8 @@ interface ReviewsPageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -22043,6 +22545,7 @@ interface ReviewsPageDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -22137,6 +22640,7 @@ interface ReviewsPageDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
   >;
 
   /**
@@ -22907,6 +23411,8 @@ interface ShowpageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -23037,6 +23543,7 @@ interface ShowpageDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -23131,6 +23638,7 @@ interface ShowpageDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
   >;
 
   /**
@@ -23283,6 +23791,3335 @@ export type ShowpageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ShowpageDocumentData>,
     'showpage',
+    Lang
+  >;
+
+/**
+ * Primary content in *subcategory boosters → Slice zone → subcategory booster → Primary*
+ */
+export interface SubcategoryBoostersDocumentDataBodySubcategoryBoosterSlicePrimary {
+  /**
+   * subcategory id field in *subcategory boosters → Slice zone → subcategory booster → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: subcategory id
+   * - **API ID Path**: subcategory_boosters.body[].subcategory_booster.primary.subcategory_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  subcategory_id: prismic.NumberField;
+}
+
+/**
+ * Item content in *subcategory boosters → Slice zone → subcategory booster → Items*
+ */
+export interface SubcategoryBoostersDocumentDataBodySubcategoryBoosterSliceItem {
+  /**
+   * icon url field in *subcategory boosters → Slice zone → subcategory booster → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: icon url
+   * - **API ID Path**: subcategory_boosters.body[].subcategory_booster.items.icon_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  icon_url: prismic.LinkField;
+
+  /**
+   * booster name field in *subcategory boosters → Slice zone → subcategory booster → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: booster name
+   * - **API ID Path**: subcategory_boosters.body[].subcategory_booster.items.booster_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  booster_name: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *subcategory boosters → Slice zone*
+ */
+export type SubcategoryBoostersDocumentDataBodySubcategoryBoosterSlice =
+  prismic.Slice<
+    'subcategory_booster',
+    Simplify<SubcategoryBoostersDocumentDataBodySubcategoryBoosterSlicePrimary>,
+    Simplify<SubcategoryBoostersDocumentDataBodySubcategoryBoosterSliceItem>
+  >;
+
+type SubcategoryBoostersDocumentDataBodySlice =
+  SubcategoryBoostersDocumentDataBodySubcategoryBoosterSlice;
+
+/**
+ * Content for subcategory boosters documents
+ */
+interface SubcategoryBoostersDocumentData {
+  /**
+   * Slice zone field in *subcategory boosters*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subcategory_boosters.body[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  body: prismic.SliceZone<SubcategoryBoostersDocumentDataBodySlice>;
+}
+
+/**
+ * subcategory boosters document from Prismic
+ *
+ * - **API ID**: `subcategory_boosters`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SubcategoryBoostersDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SubcategoryBoostersDocumentData>,
+    'subcategory_boosters',
+    Lang
+  >;
+
+/**
+ * Item in *test-new-footer → Subject*
+ */
+export interface TestNewFooterDocumentDataSubjectItem {
+  /**
+   * variant field in *test-new-footer → Subject*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add Subject Variants.
+   * - **API ID Path**: test-new-footer.subject[].variant
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  variant: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyBannerSlicePrimary {
+  /**
+   * Banner Image Height field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select banner image height
+   * - **Default Value**: 726
+   * - **API ID Path**: test-new-footer.body[].banner.primary.banner_image_height
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_image_height: prismic.SelectField<'726' | '408' | 'Auto', 'filled'>;
+
+  /**
+   * Banner Image Upload field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].banner.primary.banner_image_uploaded
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  banner_image_uploaded: prismic.ImageField<never>;
+
+  /**
+   * Banner Image Url field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: If already uploaded on S3
+   * - **API ID Path**: test-new-footer.body[].banner.primary.banner_image_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_image_link: prismic.LinkField;
+
+  /**
+   * Banner Image ALT field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the Banner Image
+   * - **API ID Path**: test-new-footer.body[].banner.primary.banner_image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_image_alt: prismic.KeyTextField;
+
+  /**
+   * Banner Link field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].banner.primary.banner_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].banner.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].banner.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add only if ADD_UTM is set to true.
+   * - **API ID Path**: test-new-footer.body[].banner.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyBannerSlice = prismic.Slice<
+  'banner',
+  Simplify<TestNewFooterDocumentDataBodyBannerSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Text Banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyTextBannerSlicePrimary {
+  /**
+   * Title field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: (Mandatory) Banner Title. Character limit is 40
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
+  /**
+   * Promo Code field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.promo_code
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  promo_code: prismic.KeyTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Max 3 lines on mobile view
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+
+  /**
+   * Terms And Conditions field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.terms_and_conditions
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  terms_and_conditions: prismic.KeyTextField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add text for CTA
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add CTA Link
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_link: prismic.KeyTextField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+
+  /**
+   * Background Color field in *test-new-footer → Slice zone → Text Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Background Color
+   * - **Default Value**: Black
+   * - **API ID Path**: test-new-footer.body[].text_banner.primary.background_color
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  background_color: prismic.SelectField<
+    'Black' | 'Purps' | 'White' | 'Candy',
+    'filled'
+  >;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyTextBannerSlice = prismic.Slice<
+  'text_banner',
+  Simplify<TestNewFooterDocumentDataBodyTextBannerSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → RichText → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyRichtextSlicePrimary {
+  /**
+   * content field in *test-new-footer → Slice zone → RichText → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].richtext.primary.content
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  content: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyRichtextSlice = prismic.Slice<
+  'richtext',
+  Simplify<TestNewFooterDocumentDataBodyRichtextSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Product Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyProductCardsSlicePrimary {
+  /**
+   * Specific Cities field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter comma separated city names if you want the product cards to appear for those specific cities. Leave empty if common product cards. Example: ABU_DHABI,DUBAI,PARIS
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.cities
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cities: prismic.KeyTextField;
+
+  /**
+   * Specific countries field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Comma separated country names if product cards are meant for specific countries. Leave empty if common for all. Ex: INDIA,FRANCE
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.countries
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  countries: prismic.KeyTextField;
+
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add product card section title
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Description field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Small description about the section. Multi paragraphs not allowed.
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_description: prismic.RichTextField;
+
+  /**
+   * card_layout field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Card Layout
+   * - **Default Value**: 2x2 Grid
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.card_layout
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  card_layout: prismic.SelectField<'2x2 Grid' | '4x1 Grid', 'filled'>;
+
+  /**
+   * Main CTA Style field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select CTA Design
+   * - **Default Value**: Primary
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.main_cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  main_cta_style: prismic.SelectField<'Primary' | 'Secondary', 'filled'>;
+
+  /**
+   * Main CTA Text field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: This is the main CTA of the grid (overall CTA). This field is not mandatory.
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.main_cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Link field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.main_cta_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_link: prismic.KeyTextField;
+
+  /**
+   * Add BI Link field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to true.
+   * - **API ID Path**: test-new-footer.body[].product_cards.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Product Cards → Items*
+ */
+export interface TestNewFooterDocumentDataBodyProductCardsSliceItem {
+  /**
+   * tgid field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Add a single TGID
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.tgid
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  tgid: prismic.NumberField;
+
+  /**
+   * Select Product Image field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 1 - max no of images
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.select_image
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  select_image: prismic.NumberField;
+
+  /**
+   * Booster Icon field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: (Optional) Used to add icon to L1 booster
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.booster_icon
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  booster_icon: prismic.SelectField<'DISCOUNT STAMP' | 'LABEL TAG'>;
+
+  /**
+   * L1 Booster field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) Used for adding tags on the products (eg: trending, free cancellation etc). L1 has a character limit of 35.
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.l1_booster
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  l1_booster: prismic.KeyTextField;
+
+  /**
+   * Product Title field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Product title is mandatory. It has a character limit of 65
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.product_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  product_title: prismic.KeyTextField;
+
+  /**
+   * L2 Booster field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) Used to display scarcity of products. L2 has a character limit of 30.
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.l2_booster
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  l2_booster: prismic.KeyTextField;
+
+  /**
+   * Bi Link field in *test-new-footer → Slice zone → Product Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) if this field is empty it will use mail biLink
+   * - **API ID Path**: test-new-footer.body[].product_cards.items.product_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  product_bi_link: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyProductCardsSlice = prismic.Slice<
+  'product_cards',
+  Simplify<TestNewFooterDocumentDataBodyProductCardsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyProductCardsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Content Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyContentCardsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add title for Content Cards Section
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Description field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Small description about the section. Multi paragraphs not allowed.
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_description: prismic.RichTextField;
+
+  /**
+   * Card Layout field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Card Layout
+   * - **Default Value**: 2x2 Grid
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.card_layout
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  card_layout: prismic.SelectField<'2x2 Grid' | '4x1 Grid', 'filled'>;
+
+  /**
+   * Main CTA Style field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select CTA style
+   * - **Default Value**: Primary
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.main_cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  main_cta_style: prismic.SelectField<'Primary' | 'Secondary', 'filled'>;
+
+  /**
+   * Main CTA Text field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: CTA for the entire section.
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.main_cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Link field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add CTA Link
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.main_cta_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_link: prismic.KeyTextField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Content Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].content_cards.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Content Cards → Items*
+ */
+export interface TestNewFooterDocumentDataBodyContentCardsSliceItem {
+  /**
+   * Image field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image URL field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Use this field for adding image for individual cards. If the image is not on CDN only then upload it to Prismic
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Image ALT field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the Image
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
+
+  /**
+   * Card Title field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (mandatory) Title has a character limit of 65
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.card_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_title: prismic.KeyTextField;
+
+  /**
+   * L1 Booster field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) Used to add category names or tags like trending etc. Has a character limit of 25.
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.l1_booster
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  l1_booster: prismic.KeyTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (Optional)
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+
+  /**
+   * Card Link field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add link for the content card. The link can point to external website, headout website or blog.
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.card_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  card_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Content Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].content_cards.items.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyContentCardsSlice = prismic.Slice<
+  'content_cards',
+  Simplify<TestNewFooterDocumentDataBodyContentCardsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyContentCardsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Category Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCategoryCardsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add title for Content Cards Section
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Description field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Small description about the section. Multi paragraphs not allowed.
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_description: prismic.RichTextField;
+
+  /**
+   * Card Layout field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Card Layout
+   * - **Default Value**: 2x2 Grid
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.card_layout
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  card_layout: prismic.SelectField<'2x2 Grid' | '4x1 Grid', 'filled'>;
+
+  /**
+   * Main CTA Style field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select CTA style
+   * - **Default Value**: Primary
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.main_cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  main_cta_style: prismic.SelectField<'Primary' | 'Secondary', 'filled'>;
+
+  /**
+   * Main CTA Text field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: CTA for the entire section.
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.main_cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Link field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add CTA Link
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.main_cta_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_link: prismic.KeyTextField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+
+  /**
+   * City * field in *test-new-footer → Slice zone → Category Cards → Primary*
+   *
+   * - **Field Type**: Integration Fields (Catalog: `mystique--cities`)
+   * - **Placeholder**: (mandatory) Select City
+   * - **API ID Path**: test-new-footer.body[].category_cards.primary.city
+   * - **Documentation**: https://prismic.io/docs/field#integration
+   */
+  city: prismic.IntegrationField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Category Cards → Items*
+ */
+export interface TestNewFooterDocumentDataBodyCategoryCardsSliceItem {
+  /**
+   * category_id field in *test-new-footer → Slice zone → Category Cards → Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].category_cards.items.category_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  category_id: prismic.NumberField;
+
+  /**
+   * card_title field in *test-new-footer → Slice zone → Category Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].category_cards.items.card_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_title: prismic.KeyTextField;
+
+  /**
+   * Card Subtext field in *test-new-footer → Slice zone → Category Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: ...
+   * - **API ID Path**: test-new-footer.body[].category_cards.items.card_subtitle
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_subtitle: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCategoryCardsSlice = prismic.Slice<
+  'category_cards',
+  Simplify<TestNewFooterDocumentDataBodyCategoryCardsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyCategoryCardsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → City Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCityCardsSlicePrimary {
+  /**
+   * Specific Countries field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Comma separated country names if these city cards are meant for specific countries. ex: INDIA, UNITED KINGDOM
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.specific_countries
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  specific_countries: prismic.KeyTextField;
+
+  /**
+   * Section Title field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Description field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_description: prismic.RichTextField;
+
+  /**
+   * Country field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Home country of the user
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.country
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  country: prismic.KeyTextField;
+
+  /**
+   * Main CTA Style field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Primary
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.main_cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  main_cta_style: prismic.SelectField<'Primary' | 'Secondary', 'filled'>;
+
+  /**
+   * Main CTA Text field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.main_cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Link field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.main_cta_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  main_cta_link: prismic.KeyTextField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → City Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to Yes
+   * - **API ID Path**: test-new-footer.body[].city_cards.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → City Cards → Items*
+ */
+export interface TestNewFooterDocumentDataBodyCityCardsSliceItem {
+  /**
+   * city field in *test-new-footer → Slice zone → City Cards → Items*
+   *
+   * - **Field Type**: Integration Fields (Catalog: `mystique--cities`)
+   * - **Placeholder**: Select any city from the list
+   * - **API ID Path**: test-new-footer.body[].city_cards.items.city
+   * - **Documentation**: https://prismic.io/docs/field#integration
+   */
+  city: prismic.IntegrationField;
+
+  /**
+   * City Subtext field in *test-new-footer → Slice zone → City Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].city_cards.items.city_subtext
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  city_subtext: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCityCardsSlice = prismic.Slice<
+  'city_cards',
+  Simplify<TestNewFooterDocumentDataBodyCityCardsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyCityCardsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Blog Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyBlogCardsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Blog Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Subtext field in *test-new-footer → Slice zone → Blog Cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.primary.section_subtext
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_subtext: prismic.RichTextField;
+
+  /**
+   * Card Layout field in *test-new-footer → Slice zone → Blog Cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: (mandatory)
+   * - **Default Value**: 4x1 Grid
+   * - **API ID Path**: test-new-footer.body[].blog_cards.primary.card_layout
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  card_layout: prismic.SelectField<'4x1 Grid' | '3x2 Grid', 'filled'>;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Blog Cards → Items*
+ */
+export interface TestNewFooterDocumentDataBodyBlogCardsSliceItem {
+  /**
+   * Card Title field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.card_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_title: prismic.KeyTextField;
+
+  /**
+   * Image Url field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA Url field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: (mandatory)
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.cta_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_url: prismic.LinkField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Blog Cards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].blog_cards.items.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyBlogCardsSlice = prismic.Slice<
+  'blog_cards',
+  Simplify<TestNewFooterDocumentDataBodyBlogCardsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyBlogCardsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyNewsletterBannerSlicePrimary {
+  /**
+   * Newsletter Edition field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Optional- Edition number
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.newsletter_edition
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  newsletter_edition: prismic.NumberField;
+
+  /**
+   * Banner Title field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.banner_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_title: prismic.KeyTextField;
+
+  /**
+   * Banner Sub Text field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.banner_sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  banner_sub_text: prismic.RichTextField;
+
+  /**
+   * Image URL field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the Image URL
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Add Scratch Card Link field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.add_scratch_card_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_scratch_card_link: prismic.BooleanField;
+
+  /**
+   * Image field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image ALT* (DEV) field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the image
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add CTA Link
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Newsletter Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].newsletter_banner.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyNewsletterBannerSlice = prismic.Slice<
+  'newsletter_banner',
+  Simplify<TestNewFooterDocumentDataBodyNewsletterBannerSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Notice Banners → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyNoticeBannersSlicePrimary {
+  /**
+   * Banner Style field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Banner Style
+   * - **Default Value**: Default
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.banner_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_style: prismic.SelectField<
+    'Default' | 'Info' | 'Success' | 'Error',
+    'filled'
+  >;
+
+  /**
+   * heading field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: Heading for the banner
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading: prismic.TitleField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Banner Sub Text
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: CTA Text
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA link field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: CTA link
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Notice Banners → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add, only if ADD_UTM is set to YES
+   * - **API ID Path**: test-new-footer.body[].notice_banners.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyNoticeBannersSlice = prismic.Slice<
+  'notice_banners',
+  Simplify<TestNewFooterDocumentDataBodyNoticeBannersSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Help → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyHelpSectionSlicePrimary {
+  /**
+   * title field in *test-new-footer → Slice zone → Help → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: Section Title
+   * - **API ID Path**: test-new-footer.body[].help_section.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Help → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Sub text
+   * - **API ID Path**: test-new-footer.body[].help_section.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Help → Items*
+ */
+export interface TestNewFooterDocumentDataBodyHelpSectionSliceItem {
+  /**
+   * CTA Icon field in *test-new-footer → Slice zone → Help → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].help_section.items.cta_icon
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  cta_icon: prismic.ImageField<never>;
+
+  /**
+   * CTA Icon URL *(DEV) field in *test-new-footer → Slice zone → Help → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the URL for the CTA Icon
+   * - **API ID Path**: test-new-footer.body[].help_section.items.cta_icon_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_icon_url: prismic.LinkField;
+
+  /**
+   * CTA ALT* (DEV) field in *test-new-footer → Slice zone → Help → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the CTA
+   * - **API ID Path**: test-new-footer.body[].help_section.items.cta_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_alt: prismic.KeyTextField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Help → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: CTA Text
+   * - **API ID Path**: test-new-footer.body[].help_section.items.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA link field in *test-new-footer → Slice zone → Help → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add CTA Link
+   * - **API ID Path**: test-new-footer.body[].help_section.items.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyHelpSectionSlice = prismic.Slice<
+  'help_section',
+  Simplify<TestNewFooterDocumentDataBodyHelpSectionSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyHelpSectionSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → FAQs → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyFaqsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → FAQs → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: Add title
+   * - **API ID Path**: test-new-footer.body[].faqs.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_title: prismic.TitleField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → FAQs → Items*
+ */
+export interface TestNewFooterDocumentDataBodyFaqsSliceItem {
+  /**
+   * Question field in *test-new-footer → Slice zone → FAQs → Items*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: Add Question
+   * - **API ID Path**: test-new-footer.body[].faqs.items.question
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  question: prismic.TitleField;
+
+  /**
+   * Answer field in *test-new-footer → Slice zone → FAQs → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Add FAQ answer
+   * - **API ID Path**: test-new-footer.body[].faqs.items.answer
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  answer: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyFaqsSlice = prismic.Slice<
+  'faqs',
+  Simplify<TestNewFooterDocumentDataBodyFaqsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyFaqsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → App Downloads → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyAppDownloadsSlicePrimary {
+  /**
+   * Title field in *test-new-footer → Slice zone → App Downloads → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Section title
+   * - **API ID Path**: test-new-footer.body[].app_downloads.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → App Downloads → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].app_downloads.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  sub_text: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyAppDownloadsSlice = prismic.Slice<
+  'app_downloads',
+  Simplify<TestNewFooterDocumentDataBodyAppDownloadsSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Dynamic Block → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyDynamicBlockSlicePrimary {
+  /**
+   * Shortcode field in *test-new-footer → Slice zone → Dynamic Block → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Shortcodes only
+   * - **API ID Path**: test-new-footer.body[].dynamic_block.primary.shortcode
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  shortcode: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyDynamicBlockSlice = prismic.Slice<
+  'dynamic_block',
+  Simplify<TestNewFooterDocumentDataBodyDynamicBlockSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Newsletter Rating → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyNewsletterRatingSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Newsletter Rating → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add Section Title
+   * - **API ID Path**: test-new-footer.body[].newsletter_rating.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Newsletter Edition field in *test-new-footer → Slice zone → Newsletter Rating → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Add newsletter edition number
+   * - **API ID Path**: test-new-footer.body[].newsletter_rating.primary.newsletter_edition
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  newsletter_edition: prismic.NumberField;
+
+  /**
+   * Select Campaign field in *test-new-footer → Slice zone → Newsletter Rating → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Campaign Name
+   * - **API ID Path**: test-new-footer.body[].newsletter_rating.primary.select_campaign
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  select_campaign: prismic.SelectField<
+    'Dubai' | 'Tourist' | 'Singapore' | 'Westend' | 'Dubai City Guide'
+  >;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyNewsletterRatingSlice = prismic.Slice<
+  'newsletter_rating',
+  Simplify<TestNewFooterDocumentDataBodyNewsletterRatingSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Instagram Feed → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyInstagramFeedSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Instagram Feed → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add Section Title
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Instagram Feed → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add Sub text
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  sub_text: prismic.KeyTextField;
+
+  /**
+   * CTA text field in *test-new-footer → Slice zone → Instagram Feed → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add CTA text
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA URL field in *test-new-footer → Slice zone → Instagram Feed → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add IG account url
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.primary.cta_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_url: prismic.LinkField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Instagram Feed → Items*
+ */
+export interface TestNewFooterDocumentDataBodyInstagramFeedSliceItem {
+  /**
+   * Image field in *test-new-footer → Slice zone → Instagram Feed → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.items.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image URL field in *test-new-footer → Slice zone → Instagram Feed → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the Image URL
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.items.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Image ALT* (DEV) field in *test-new-footer → Slice zone → Instagram Feed → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the Image
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.items.image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
+
+  /**
+   * Instagram Post Url field in *test-new-footer → Slice zone → Instagram Feed → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].instagram_feed.items.instagram_post_url
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  instagram_post_url: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyInstagramFeedSlice = prismic.Slice<
+  'instagram_feed',
+  Simplify<TestNewFooterDocumentDataBodyInstagramFeedSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyInstagramFeedSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → User Reviews → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyUserReviewsSlicePrimary {
+  /**
+   * Tour Group ID field in *test-new-footer → Slice zone → User Reviews → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add a single TGID. Use shortcode for passing WE data
+   * - **API ID Path**: test-new-footer.body[].user_reviews.primary.tgid
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tgid: prismic.KeyTextField;
+
+  /**
+   * Section Heading field in *test-new-footer → Slice zone → User Reviews → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].user_reviews.primary.section_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_heading: prismic.KeyTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → User Reviews → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].user_reviews.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → User Reviews → Items*
+ */
+export interface TestNewFooterDocumentDataBodyUserReviewsSliceItem {
+  /**
+   * CTA Style field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select CTA Style
+   * - **Default Value**: Secondary
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  cta_style: prismic.SelectField<
+    'Secondary' | 'Primary' | 'Tertiary',
+    'filled'
+  >;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add Utm field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → User Reviews → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].user_reviews.items.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyUserReviewsSlice = prismic.Slice<
+  'user_reviews',
+  Simplify<TestNewFooterDocumentDataBodyUserReviewsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyUserReviewsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Tweets → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyTweetsSlicePrimary {
+  /**
+   * Title field in *test-new-footer → Slice zone → Tweets → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Section Title
+   * - **API ID Path**: test-new-footer.body[].tweets.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Tweets → Items*
+ */
+export interface TestNewFooterDocumentDataBodyTweetsSliceItem {
+  /**
+   * Image field in *test-new-footer → Slice zone → Tweets → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].tweets.items.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image URL* (DEV) field in *test-new-footer → Slice zone → Tweets → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the Image URL
+   * - **API ID Path**: test-new-footer.body[].tweets.items.image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  image_url: prismic.LinkField;
+
+  /**
+   * Image ALT* (DEV) field in *test-new-footer → Slice zone → Tweets → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the image
+   * - **API ID Path**: test-new-footer.body[].tweets.items.image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  image_alt: prismic.KeyTextField;
+
+  /**
+   * Tweet URL field in *test-new-footer → Slice zone → Tweets → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].tweets.items.url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  url: prismic.LinkField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyTweetsSlice = prismic.Slice<
+  'tweets',
+  Simplify<TestNewFooterDocumentDataBodyTweetsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyTweetsSliceItem>
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Single Product Card → Primary*
+ */
+export interface TestNewFooterDocumentDataBodySingleProductCardSlicePrimary {
+  /**
+   * tgid field in *test-new-footer → Slice zone → Single Product Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add a single tgid or use shortcode {field key=tgid}
+   * - **API ID Path**: test-new-footer.body[].single_product_card.primary.tgid
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tgid: prismic.KeyTextField;
+
+  /**
+   * Select Product Image field in *test-new-footer → Slice zone → Single Product Card → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 1 - max no of images
+   * - **API ID Path**: test-new-footer.body[].single_product_card.primary.select_image
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  select_image: prismic.NumberField;
+
+  /**
+   * Product Title field in *test-new-footer → Slice zone → Single Product Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional)
+   * - **API ID Path**: test-new-footer.body[].single_product_card.primary.product_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  product_title: prismic.KeyTextField;
+
+  /**
+   * L1 Booster field in *test-new-footer → Slice zone → Single Product Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) Trending etc
+   * - **API ID Path**: test-new-footer.body[].single_product_card.primary.l1_booster
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  l1_booster: prismic.KeyTextField;
+
+  /**
+   * L2 Booster field in *test-new-footer → Slice zone → Single Product Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional) This will be highlighted in green
+   * - **API ID Path**: test-new-footer.body[].single_product_card.primary.l2_booster
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  l2_booster: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodySingleProductCardSlice = prismic.Slice<
+  'single_product_card',
+  Simplify<TestNewFooterDocumentDataBodySingleProductCardSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyDiscountBannerTempSlicePrimary {
+  /**
+   * Title field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+
+  /**
+   * Cashback URL field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  url: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Discount Banner Temp → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add only if Add UTM is set to true
+   * - **API ID Path**: test-new-footer.body[].discount_banner_temp.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyDiscountBannerTempSlice =
+  prismic.Slice<
+    'discount_banner_temp',
+    Simplify<TestNewFooterDocumentDataBodyDiscountBannerTempSlicePrimary>,
+    never
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Custom Reviews → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCustomReviewsSlicePrimary {
+  /**
+   * Section Title * field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_title: prismic.RichTextField;
+
+  /**
+   * Sub Text field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  sub_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Text * field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * Main CTA Link * field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField;
+
+  /**
+   * Main CTA Style field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select CTA Style
+   * - **Default Value**: Primary
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.cta_style
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  cta_style: prismic.SelectField<'Primary' | 'Secondary', 'filled'>;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Custom Reviews → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Item content in *test-new-footer → Slice zone → Custom Reviews → Items*
+ */
+export interface TestNewFooterDocumentDataBodyCustomReviewsSliceItem {
+  /**
+   * Rating * field in *test-new-footer → Slice zone → Custom Reviews → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Rating
+   * - **Default Value**: 5
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.items.rating
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  rating: prismic.SelectField<'5' | '4' | '3' | '2' | '1', 'filled'>;
+
+  /**
+   * Review Title * field in *test-new-footer → Slice zone → Custom Reviews → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.items.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Custom Review * field in *test-new-footer → Slice zone → Custom Reviews → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].custom_reviews.items.review
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  review: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCustomReviewsSlice = prismic.Slice<
+  'custom_reviews',
+  Simplify<TestNewFooterDocumentDataBodyCustomReviewsSlicePrimary>,
+  Simplify<TestNewFooterDocumentDataBodyCustomReviewsSliceItem>
+>;
+
+/**
+ * Item content in *test-new-footer → Slice zone → Receipt Email Blocks → Items*
+ */
+export interface TestNewFooterDocumentDataBodyReceiptEmailBlocksSliceItem {
+  /**
+   * Section field in *test-new-footer → Slice zone → Receipt Email Blocks → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Section Name
+   * - **Default Value**: Text
+   * - **API ID Path**: test-new-footer.body[].receipt_email_blocks.items.section
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  section: prismic.SelectField<
+    | 'Text'
+    | 'Mini Banner'
+    | 'Receipt'
+    | 'Receipt Content'
+    | 'Support'
+    | 'Related Experiences'
+    | 'Cashback'
+    | 'City Banner'
+    | 'Free Tour',
+    'filled'
+  >;
+
+  /**
+   * content field in *test-new-footer → Slice zone → Receipt Email Blocks → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: if section is Text
+   * - **API ID Path**: test-new-footer.body[].receipt_email_blocks.items.content
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  content: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyReceiptEmailBlocksSlice =
+  prismic.Slice<
+    'receipt_email_blocks',
+    Record<string, never>,
+    Simplify<TestNewFooterDocumentDataBodyReceiptEmailBlocksSliceItem>
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyScratchCardBannerSlicePrimary {
+  /**
+   * title * field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Sub Text * field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+
+  /**
+   * Url field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  url: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Scratch Card Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].scratch_card_banner.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyScratchCardBannerSlice = prismic.Slice<
+  'scratch_card_banner',
+  Simplify<TestNewFooterDocumentDataBodyScratchCardBannerSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyPromoBannerInsertSlicePrimary {
+  /**
+   * City Name field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter city name (ex: NEW_YORK) for which promo banner needs to be displayed, if common banner, enter ALL
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.city_name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  city_name: prismic.KeyTextField;
+
+  /**
+   * included TGIDs field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: banner will appear for these TGIDs
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.included_tgids
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  included_tgids: prismic.KeyTextField;
+
+  /**
+   * included Collection IDs field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: banner will appear for these TGIDs
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.included_collection_ids
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  included_collection_ids: prismic.KeyTextField;
+
+  /**
+   * exclude for tgids field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: exclude banner for these TGIDs
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.excluded_tgids
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  excluded_tgids: prismic.KeyTextField;
+
+  /**
+   * exclude for collection IDs field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: exclude banner for these collection ids
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.excluded_collection_ids
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  excluded_collection_ids: prismic.KeyTextField;
+
+  /**
+   * Heading text field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.heading_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading_text: prismic.RichTextField;
+
+  /**
+   * Main Title Text field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.main_title_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  main_title_text: prismic.RichTextField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  cta_text: prismic.RichTextField;
+
+  /**
+   * CTA URL field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: URL for the promo banner
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.cta_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_url: prismic.LinkField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+
+  /**
+   * Banner Image field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.banner_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  banner_image: prismic.ImageField<never>;
+
+  /**
+   * banner image url field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: CDN Link for Banner Image
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.banner_image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_image_url: prismic.LinkField;
+
+  /**
+   * Banner Image ALT* (DEV) field in *test-new-footer → Slice zone → Promo Banner Insert → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the banner image
+   * - **API ID Path**: test-new-footer.body[].promo_banner_insert.primary.banner_image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_image_alt: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyPromoBannerInsertSlice = prismic.Slice<
+  'promo_banner_insert',
+  Simplify<TestNewFooterDocumentDataBodyPromoBannerInsertSlicePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodySubCategoryProductCardsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section description field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_description: prismic.KeyTextField;
+
+  /**
+   * Sub-Category ID field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.sub_category_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  sub_category_id: prismic.NumberField;
+
+  /**
+   * City field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Fetch products from this city
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.city
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  city: prismic.KeyTextField;
+
+  /**
+   * Number of cards field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: (default: 4 cards)
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.number_of_cards
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  number_of_cards: prismic.NumberField;
+
+  /**
+   * CTA Text field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA UTM Content field in *test-new-footer → Slice zone → Sub Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: UTM content for main cta
+   * - **API ID Path**: test-new-footer.body[].sub_category_product_cards.primary.cta_utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodySubCategoryProductCardsSlice =
+  prismic.Slice<
+    'sub_category_product_cards',
+    Simplify<TestNewFooterDocumentDataBodySubCategoryProductCardsSlicePrimary>,
+    never
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Category Product Cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCategoryProductCardsSlicePrimary {
+  /**
+   * Section Title field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Description field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.section_description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_description: prismic.KeyTextField;
+
+  /**
+   * Category ID field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: fetch products from this category
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.category_id
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  category_id: prismic.NumberField;
+
+  /**
+   * City field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: fetch for this city
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.city
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  city: prismic.KeyTextField;
+
+  /**
+   * number of cards field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: (default: 4)
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.number_of_cards
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  number_of_cards: prismic.NumberField;
+
+  /**
+   * CTA text field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA UTM Content field in *test-new-footer → Slice zone → Category Product Cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: UTM for the main CTA
+   * - **API ID Path**: test-new-footer.body[].category_product_cards.primary.cta_utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_utm_content: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCategoryProductCardsSlice =
+  prismic.Slice<
+    'category_product_cards',
+    Simplify<TestNewFooterDocumentDataBodyCategoryProductCardsSlicePrimary>,
+    never
+  >;
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyReactivationSliceSlice = prismic.Slice<
+  'reactivation_slice',
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Countdown → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCountdownSlicePrimary {
+  /**
+   * Title field in *test-new-footer → Slice zone → Countdown → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].countdown.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Subtext field in *test-new-footer → Slice zone → Countdown → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (Optional)
+   * - **API ID Path**: test-new-footer.body[].countdown.primary.subtext
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subtext: prismic.KeyTextField;
+
+  /**
+   * countdown link field in *test-new-footer → Slice zone → Countdown → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Link to the countdown src
+   * - **API ID Path**: test-new-footer.body[].countdown.primary.countdown_link
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  countdown_link: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCountdownSlice = prismic.Slice<
+  'countdown',
+  Simplify<TestNewFooterDocumentDataBodyCountdownSlicePrimary>,
+  never
+>;
+
+/**
+ * Item content in *test-new-footer → Slice zone → Confirmation Email Blocks → Items*
+ */
+export interface TestNewFooterDocumentDataBodyConfirmationEmailBlocksSliceItem {
+  /**
+   * Section field in *test-new-footer → Slice zone → Confirmation Email Blocks → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].confirmation_email_blocks.items.section
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  section: prismic.SelectField<
+    | 'Greetings and Tickets'
+    | 'Confirmation Summary'
+    | 'Cancellation Policy'
+    | 'Where To Go'
+    | 'KBYG Section'
+    | 'Help Section'
+  >;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyConfirmationEmailBlocksSlice =
+  prismic.Slice<
+    'confirmation_email_blocks',
+    Record<string, never>,
+    Simplify<TestNewFooterDocumentDataBodyConfirmationEmailBlocksSliceItem>
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Recommendation mail banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyRecommendationMailBannerSlicePrimary {
+  /**
+   * Main text field in *test-new-footer → Slice zone → Recommendation mail banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Banner heading
+   * - **API ID Path**: test-new-footer.body[].recommendation_mail_banner.primary.main_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  main_text: prismic.RichTextField;
+
+  /**
+   * Sub text field in *test-new-footer → Slice zone → Recommendation mail banner → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Banner subtext
+   * - **API ID Path**: test-new-footer.body[].recommendation_mail_banner.primary.sub_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_text: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyRecommendationMailBannerSlice =
+  prismic.Slice<
+    'recommendation_mail_banner',
+    Simplify<TestNewFooterDocumentDataBodyRecommendationMailBannerSlicePrimary>,
+    never
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → See more Save more banner → Primary*
+ */
+export interface TestNewFooterDocumentDataBodySeeMoreSaveMoreBannerSlicePrimary {
+  /**
+   * Booking Count field in *test-new-footer → Slice zone → See more Save more banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].see_more_save_more_banner.primary.booking_count
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  booking_count: prismic.SelectField<'1' | '2' | '3'>;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodySeeMoreSaveMoreBannerSlice =
+  prismic.Slice<
+    'see_more_save_more_banner',
+    Simplify<TestNewFooterDocumentDataBodySeeMoreSaveMoreBannerSlicePrimary>,
+    never
+  >;
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyDealOfTheDaySlice = prismic.Slice<
+  'deal_of_the_day',
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Cart Abandon Card → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyCartAbandonCardSlicePrimary {
+  /**
+   * card_title_small field in *test-new-footer → Slice zone → Cart Abandon Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].cart_abandon_card.primary.card_title_small
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_title_small: prismic.KeyTextField;
+
+  /**
+   * card_title_large field in *test-new-footer → Slice zone → Cart Abandon Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].cart_abandon_card.primary.card_title_large
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  card_title_large: prismic.KeyTextField;
+
+  /**
+   * TGID field in *test-new-footer → Slice zone → Cart Abandon Card → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].cart_abandon_card.primary.tgid
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  tgid: prismic.KeyTextField;
+
+  /**
+   * Card Bottom Text field in *test-new-footer → Slice zone → Cart Abandon Card → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: This text appears below the CTA
+   * - **API ID Path**: test-new-footer.body[].cart_abandon_card.primary.bottom_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  bottom_text: prismic.RichTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyCartAbandonCardSlice = prismic.Slice<
+  'cart_abandon_card',
+  Simplify<TestNewFooterDocumentDataBodyCartAbandonCardSlicePrimary>,
+  never
+>;
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyStandaloneDealOfTheDaySlice =
+  prismic.Slice<'standalone_deal_of_the_day', Record<string, never>, never>;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Advance booking cards → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyAdvancedBookingCardsSlicePrimary {
+  /**
+   * Section Heading field in *test-new-footer → Slice zone → Advance booking cards → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].advanced_booking_cards.primary.section_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_heading: prismic.KeyTextField;
+
+  /**
+   * Section Subtext field in *test-new-footer → Slice zone → Advance booking cards → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.body[].advanced_booking_cards.primary.section_subtext
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  section_subtext: prismic.RichTextField;
+
+  /**
+   * Card Layout field in *test-new-footer → Slice zone → Advance booking cards → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].advanced_booking_cards.primary.card_layout
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  card_layout: prismic.SelectField<'4x1 Grid' | '3x2 Grid'>;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyAdvancedBookingCardsSlice =
+  prismic.Slice<
+    'advanced_booking_cards',
+    Simplify<TestNewFooterDocumentDataBodyAdvancedBookingCardsSlicePrimary>,
+    never
+  >;
+
+/**
+ * Primary content in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+ */
+export interface TestNewFooterDocumentDataBodyImageBannerConditionalSlicePrimary {
+  /**
+   * Banner Image Height field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select banner image height
+   * - **Default Value**: 726
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.banner_image_height
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  banner_image_height: prismic.SelectField<'726' | '408' | 'Auto', 'filled'>;
+
+  /**
+   * Banner Image Upload field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.banner_image_uploaded
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  banner_image_uploaded: prismic.ImageField<never>;
+
+  /**
+   * Banner Image Url field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: If already uploaded on S3
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.banner_image_url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_image_url: prismic.LinkField;
+
+  /**
+   * Banner Image ALT field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter the ALT text for the Banner Image
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.banner_image_alt
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  banner_image_alt: prismic.KeyTextField;
+
+  /**
+   * Banner Link field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.banner_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  banner_link: prismic.LinkField;
+
+  /**
+   * Add Bi Link field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.add_bi_link
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_bi_link: prismic.BooleanField;
+
+  /**
+   * Add UTM field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.add_utm
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  add_utm: prismic.BooleanField;
+
+  /**
+   * UTM Content field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add only if ADD_UTM is set to true.
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.utm_content
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_content: prismic.KeyTextField;
+
+  /**
+   * Specific Cities field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter comma separated city names if you want the product cards to appear for those specific cities. Leave empty if common product cards. Example: ABU_DHABI,DUBAI,PARIS
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.cities
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cities: prismic.KeyTextField;
+
+  /**
+   * Specific countries field in *test-new-footer → Slice zone → Image Banner Conditional → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Comma separated country names if product cards are meant for specific countries. Leave empty if common for all. Ex: INDIA,FRANCE
+   * - **API ID Path**: test-new-footer.body[].image_banner_conditional.primary.countries
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  countries: prismic.KeyTextField;
+}
+
+/**
+ * Slice for *test-new-footer → Slice zone*
+ */
+export type TestNewFooterDocumentDataBodyImageBannerConditionalSlice =
+  prismic.Slice<
+    'image_banner_conditional',
+    Simplify<TestNewFooterDocumentDataBodyImageBannerConditionalSlicePrimary>,
+    never
+  >;
+
+type TestNewFooterDocumentDataBodySlice =
+  | TestNewFooterDocumentDataBodyBannerSlice
+  | TestNewFooterDocumentDataBodyTextBannerSlice
+  | TestNewFooterDocumentDataBodyRichtextSlice
+  | TestNewFooterDocumentDataBodyProductCardsSlice
+  | TestNewFooterDocumentDataBodyContentCardsSlice
+  | TestNewFooterDocumentDataBodyCategoryCardsSlice
+  | TestNewFooterDocumentDataBodyCityCardsSlice
+  | TestNewFooterDocumentDataBodyBlogCardsSlice
+  | TestNewFooterDocumentDataBodyNewsletterBannerSlice
+  | TestNewFooterDocumentDataBodyNoticeBannersSlice
+  | TestNewFooterDocumentDataBodyHelpSectionSlice
+  | TestNewFooterDocumentDataBodyFaqsSlice
+  | TestNewFooterDocumentDataBodyAppDownloadsSlice
+  | TestNewFooterDocumentDataBodyDynamicBlockSlice
+  | TestNewFooterDocumentDataBodyNewsletterRatingSlice
+  | TestNewFooterDocumentDataBodyInstagramFeedSlice
+  | TestNewFooterDocumentDataBodyUserReviewsSlice
+  | TestNewFooterDocumentDataBodyTweetsSlice
+  | TestNewFooterDocumentDataBodySingleProductCardSlice
+  | TestNewFooterDocumentDataBodyDiscountBannerTempSlice
+  | TestNewFooterDocumentDataBodyCustomReviewsSlice
+  | TestNewFooterDocumentDataBodyReceiptEmailBlocksSlice
+  | TestNewFooterDocumentDataBodyScratchCardBannerSlice
+  | TestNewFooterDocumentDataBodyPromoBannerInsertSlice
+  | TestNewFooterDocumentDataBodySubCategoryProductCardsSlice
+  | TestNewFooterDocumentDataBodyCategoryProductCardsSlice
+  | TestNewFooterDocumentDataBodyReactivationSliceSlice
+  | TestNewFooterDocumentDataBodyCountdownSlice
+  | TestNewFooterDocumentDataBodyConfirmationEmailBlocksSlice
+  | TestNewFooterDocumentDataBodyRecommendationMailBannerSlice
+  | TestNewFooterDocumentDataBodySeeMoreSaveMoreBannerSlice
+  | TestNewFooterDocumentDataBodyDealOfTheDaySlice
+  | TestNewFooterDocumentDataBodyCartAbandonCardSlice
+  | TestNewFooterDocumentDataBodyStandaloneDealOfTheDaySlice
+  | TestNewFooterDocumentDataBodyAdvancedBookingCardsSlice
+  | TestNewFooterDocumentDataBodyImageBannerConditionalSlice;
+
+/**
+ * Content for test-new-footer documents
+ */
+interface TestNewFooterDocumentData {
+  /**
+   * Inbox Preview Text field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: This field will set preview that appear inside the recipient's inbox
+   * - **API ID Path**: test-new-footer.inbox_preview_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  inbox_preview_text: prismic.KeyTextField;
+
+  /**
+   * Is Backend Email ? field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.isBEEmail
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  isBEEmail: prismic.BooleanField;
+
+  /**
+   * Subject field in *test-new-footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.subject[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  subject: prismic.GroupField<Simplify<TestNewFooterDocumentDataSubjectItem>>;
+
+  /**
+   * UTM Campaign field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: UTM Campaign Name
+   * - **API ID Path**: test-new-footer.utm_campaign
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  utm_campaign: prismic.KeyTextField;
+
+  /**
+   * Bi Link field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add Bi Link (optional)
+   * - **API ID Path**: test-new-footer.bi_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  bi_link: prismic.KeyTextField;
+
+  /**
+   * Branch Link field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Branch Link for Download App icons. Add only if App Download slice or footer is PROMO
+   * - **API ID Path**: test-new-footer.branch_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  branch_link: prismic.KeyTextField;
+
+  /**
+   * Show Instagram Banner field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.show_ig_banner
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_ig_banner: prismic.BooleanField;
+
+  /**
+   * Show Wanderfest Banner field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.show_wf_banner
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_wf_banner: prismic.BooleanField;
+
+  /**
+   * Slice zone field in *test-new-footer*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: test-new-footer.body[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  body: prismic.SliceZone<TestNewFooterDocumentDataBodySlice>;
+  /**
+   * Show Header field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.show_header
+   * - **Tab**: Header
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_header: prismic.BooleanField;
+
+  /**
+   * Header Type field in *test-new-footer*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Header Type
+   * - **Default Value**: Default
+   * - **API ID Path**: test-new-footer.header_type
+   * - **Tab**: Header
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  header_type: prismic.SelectField<
+    'Default' | 'Transactional' | 'Partnership',
+    'filled'
+  >;
+
+  /**
+   * Logo Url field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Use this field for  PARTNERSHIP emails or if you want to override the default logo
+   * - **API ID Path**: test-new-footer.logo_url
+   * - **Tab**: Header
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  logo_url: prismic.KeyTextField;
+  /**
+   * Footer Type field in *test-new-footer*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Footer Type
+   * - **Default Value**: Promo
+   * - **API ID Path**: test-new-footer.footer_type
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  footer_type: prismic.SelectField<
+    'Promo' | 'Entertainment' | 'Manual',
+    'filled'
+  >;
+
+  /**
+   * App banner url field in *test-new-footer*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: App banner url only if "Manual" is selected as footer type
+   * - **API ID Path**: test-new-footer.app_banner_url
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  app_banner_url: prismic.LinkField;
+
+  /**
+   * Show App Store Icons field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: test-new-footer.show_app_store_icons
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_app_store_icons: prismic.BooleanField;
+
+  /**
+   * Hide Footer Logo field in *test-new-footer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: test-new-footer.hide_logo
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  hide_logo: prismic.BooleanField;
+  /**
+   * Title field in *test-new-footer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (mandatory). You can pass dynamic values
+   * - **API ID Path**: test-new-footer.db_title
+   * - **Tab**: Discount Banner
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  db_title: prismic.RichTextField;
+
+  /**
+   * Subtext field in *test-new-footer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: (mandatory). use couponCode if the value is dynamic
+   * - **API ID Path**: test-new-footer.db_subtext
+   * - **Tab**: Discount Banner
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  db_subtext: prismic.RichTextField;
+
+  /**
+   * CTA Label field in *test-new-footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.db_cta_label
+   * - **Tab**: Discount Banner
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  db_cta_label: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *test-new-footer*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: (optional)
+   * - **API ID Path**: test-new-footer.db_cta_link
+   * - **Tab**: Discount Banner
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  db_cta_link: prismic.LinkField;
+
+  /**
+   * Background Color field in *test-new-footer*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select Background Color
+   * - **Default Value**: Black
+   * - **API ID Path**: test-new-footer.db_background_color
+   * - **Tab**: Discount Banner
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  db_background_color: prismic.SelectField<'Black', 'filled'>;
+}
+
+/**
+ * test-new-footer document from Prismic
+ *
+ * - **API ID**: `test-new-footer`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TestNewFooterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<TestNewFooterDocumentData>,
+    'test-new-footer',
     Lang
   >;
 
@@ -24305,6 +28142,8 @@ interface VenuePageDocumentData {
     | 'Aashica'
     | 'Abhay'
     | 'Aditya'
+    | 'Akanksha Panicker'
+    | 'Akansha Prakash'
     | 'Amulya Chintaluri'
     | 'Anjali'
     | 'Ansh'
@@ -24435,6 +28274,7 @@ interface VenuePageDocumentData {
     | 'Aquariums'
     | 'Walking Tours'
     | 'Guided Tours'
+    | 'Hop-On Hop-Off Tours'
     | 'HOHO'
     | 'City Tours'
     | 'Private Tours'
@@ -24529,6 +28369,7 @@ interface VenuePageDocumentData {
     | 'National Parks'
     | 'Formula 1'
     | 'Muay thai'
+    | 'Nightlife'
   >;
 
   /**
@@ -24690,6 +28531,8 @@ export type VenuePageDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | BannerDocument
+  | BannerBoosterDocument
+  | BannerDescriptorsDocument
   | CommonDataDocument
   | CommonFooterDocument
   | CommonHeaderDocument
@@ -24705,6 +28548,8 @@ export type AllDocumentTypes =
   | HohoRoutesDocument
   | LabelDocument
   | ListicleWestendDocument
+  | MbDescriptorsDocument
+  | MicrobrandsTagsDocument
   | MicrositeDocument
   | NewsPageDocument
   | NeyantaDocument
@@ -24717,6 +28562,8 @@ export type AllDocumentTypes =
   | ReviewsPageDocument
   | SafetyBannerDocument
   | ShowpageDocument
+  | SubcategoryBoostersDocument
+  | TestNewFooterDocument
   | TopAttractionsDocument
   | TourDocument
   | VenuePageDocument;
@@ -24732,6 +28579,14 @@ declare module '@prismicio/client' {
   namespace Content {
     export type {
       AllDocumentTypes,
+      BannerBoosterDocument,
+      BannerBoosterDocumentData,
+      BannerDescriptorsDocument,
+      BannerDescriptorsDocumentData,
+      BannerDescriptorsDocumentDataBodyDescriptorSliceItem,
+      BannerDescriptorsDocumentDataBodyDescriptorSlicePrimary,
+      BannerDescriptorsDocumentDataBodySlice,
+      BannerDescriptorsDocumentDataCategoryDescriptorsItem,
       BannerDocument,
       BannerDocumentData,
       CommonDataDocument,
@@ -24784,6 +28639,7 @@ declare module '@prismicio/client' {
       ContentFrameworkDocumentDataBodyComparisionTableSlicePrimary,
       ContentFrameworkDocumentDataBodyContributorsReviewSlicePrimary,
       ContentFrameworkDocumentDataBodyCriticsReviewSliceItem,
+      ContentFrameworkDocumentDataBodyCustomBannerSlicePrimary,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSliceItem,
       ContentFrameworkDocumentDataBodyCustomLinkedToursSlicePrimary,
       ContentFrameworkDocumentDataBodyDetailedReviewSliceItem,
@@ -24957,6 +28813,12 @@ declare module '@prismicio/client' {
       LabelDocumentData,
       ListicleWestendDocument,
       ListicleWestendDocumentData,
+      MbDescriptorsDocument,
+      MbDescriptorsDocumentData,
+      MbDescriptorsDocumentDataTagsItem,
+      MicrobrandsTagsDocument,
+      MicrobrandsTagsDocumentData,
+      MicrobrandsTagsDocumentDataTitleItem,
       MicrositeDocument,
       MicrositeDocumentData,
       MicrositeDocumentDataAllToursDetailedTourSliceItem,
@@ -25020,6 +28882,7 @@ declare module '@prismicio/client' {
       MicrositeDocumentDataBody4TrustBoostersSliceItem,
       MicrositeDocumentDataBodyCsvRankingSliceItem,
       MicrositeDocumentDataBodyCsvRankingSlicePrimary,
+      MicrositeDocumentDataBodyCustomBannerSlicePrimary,
       MicrositeDocumentDataBodyProductCardTemplatesSlicePrimary,
       MicrositeDocumentDataBodySlice,
       MicrositeDocumentDataBodyTourListCategorySliceItem,
@@ -25081,6 +28944,59 @@ declare module '@prismicio/client' {
       ShowpageDocument,
       ShowpageDocumentData,
       ShowpageDocumentDataTaggedContentTypeItem,
+      SubcategoryBoostersDocument,
+      SubcategoryBoostersDocumentData,
+      SubcategoryBoostersDocumentDataBodySlice,
+      SubcategoryBoostersDocumentDataBodySubcategoryBoosterSliceItem,
+      SubcategoryBoostersDocumentDataBodySubcategoryBoosterSlicePrimary,
+      TestNewFooterDocument,
+      TestNewFooterDocumentData,
+      TestNewFooterDocumentDataBodyAdvancedBookingCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyAppDownloadsSlicePrimary,
+      TestNewFooterDocumentDataBodyBannerSlicePrimary,
+      TestNewFooterDocumentDataBodyBlogCardsSliceItem,
+      TestNewFooterDocumentDataBodyBlogCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyCartAbandonCardSlicePrimary,
+      TestNewFooterDocumentDataBodyCategoryCardsSliceItem,
+      TestNewFooterDocumentDataBodyCategoryCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyCategoryProductCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyCityCardsSliceItem,
+      TestNewFooterDocumentDataBodyCityCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyConfirmationEmailBlocksSliceItem,
+      TestNewFooterDocumentDataBodyContentCardsSliceItem,
+      TestNewFooterDocumentDataBodyContentCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyCountdownSlicePrimary,
+      TestNewFooterDocumentDataBodyCustomReviewsSliceItem,
+      TestNewFooterDocumentDataBodyCustomReviewsSlicePrimary,
+      TestNewFooterDocumentDataBodyDiscountBannerTempSlicePrimary,
+      TestNewFooterDocumentDataBodyDynamicBlockSlicePrimary,
+      TestNewFooterDocumentDataBodyFaqsSliceItem,
+      TestNewFooterDocumentDataBodyFaqsSlicePrimary,
+      TestNewFooterDocumentDataBodyHelpSectionSliceItem,
+      TestNewFooterDocumentDataBodyHelpSectionSlicePrimary,
+      TestNewFooterDocumentDataBodyImageBannerConditionalSlicePrimary,
+      TestNewFooterDocumentDataBodyInstagramFeedSliceItem,
+      TestNewFooterDocumentDataBodyInstagramFeedSlicePrimary,
+      TestNewFooterDocumentDataBodyNewsletterBannerSlicePrimary,
+      TestNewFooterDocumentDataBodyNewsletterRatingSlicePrimary,
+      TestNewFooterDocumentDataBodyNoticeBannersSlicePrimary,
+      TestNewFooterDocumentDataBodyProductCardsSliceItem,
+      TestNewFooterDocumentDataBodyProductCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyPromoBannerInsertSlicePrimary,
+      TestNewFooterDocumentDataBodyReceiptEmailBlocksSliceItem,
+      TestNewFooterDocumentDataBodyRecommendationMailBannerSlicePrimary,
+      TestNewFooterDocumentDataBodyRichtextSlicePrimary,
+      TestNewFooterDocumentDataBodyScratchCardBannerSlicePrimary,
+      TestNewFooterDocumentDataBodySeeMoreSaveMoreBannerSlicePrimary,
+      TestNewFooterDocumentDataBodySingleProductCardSlicePrimary,
+      TestNewFooterDocumentDataBodySlice,
+      TestNewFooterDocumentDataBodySubCategoryProductCardsSlicePrimary,
+      TestNewFooterDocumentDataBodyTextBannerSlicePrimary,
+      TestNewFooterDocumentDataBodyTweetsSliceItem,
+      TestNewFooterDocumentDataBodyTweetsSlicePrimary,
+      TestNewFooterDocumentDataBodyUserReviewsSliceItem,
+      TestNewFooterDocumentDataBodyUserReviewsSlicePrimary,
+      TestNewFooterDocumentDataSubjectItem,
       TopAttractionsDocument,
       TopAttractionsDocumentData,
       TopAttractionsDocumentDataAttractionListItem,

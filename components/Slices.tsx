@@ -92,7 +92,9 @@ const sliceHandler = (slice: any, props: any = {}) => {
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
-      return <RichtextWithCTA childSlices={slice.items} />;
+      return (
+        <RichtextWithCTA childSlices={slice.items} isMobile={props.isMobile} />
+      );
     case 'image':
     case 'image_grid':
       return (

@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
+import { FilledLinkToWebField, RTNode } from '@prismicio/types';
 import Conditional from 'components/common/Conditional';
 import RichTextCTA from 'UI/RichTextCTA';
 import { generateSidenavId } from 'utils/helper';
@@ -10,10 +11,12 @@ import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import ChevronDown from 'assets/chevronDown';
+import type { ContentFrameworkDocumentDataBodyRichTextSliceItem } from '../../types.prismic';
 
 const Wrapper = styled.div<{
   $isExpanded: boolean;
-  $contentHeight: number;
+  $contentHeight: number | null;
+  $hasCTA: boolean;
 }>`
   position: relative;
   .rich-text {
@@ -54,12 +57,7 @@ const Wrapper = styled.div<{
   }
   @media (max-width: 768px) {
     .rich-text {
-      height: ${({
-        $isExpanded,
-        $contentHeight,
-        // @ts-expect-error TS(2339): Property '$hasCTA' does not exist on type 'Pick<De... Remove this comment to see the full error message
-        $hasCTA,
-      }) =>
+      height: ${({ $isExpanded, $contentHeight, $hasCTA }) =>
         $contentHeight && $hasCTA && !$isExpanded
           ? `${2 * $contentHeight}px`
           : '100%'};
@@ -68,69 +66,131 @@ const Wrapper = styled.div<{
   }
 `;
 
-const RichtextWithCTA = memo((props: any) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const handleClick = () => {
-    setIsExpanded(!isExpanded);
-  };
+const RichTextWithCTAItem = ({
+  isExpanded,
+  block,
+  handleClick,
+  isMobile,
+}: {
+  isExpanded: boolean;
+  block: ContentFrameworkDocumentDataBodyRichTextSliceItem;
+  handleClick: () => void;
+  isMobile: boolean;
+}) => {
+  const {
+    content_height: contentHeight,
+    cta_text,
+    text: textArray,
+    image_url,
+    mobile_image_url,
+    image_alt,
+  } = block || {};
+  const [imageId] = useState<string>(
+    (Math.random() + 1).toString(36).substring(7)
+  );
+  const imageUrl: string | null = (image_url as FilledLinkToWebField)?.url;
+  const mobileImageUrl: string | null = (
+    mobile_image_url as FilledLinkToWebField
+  )?.url;
+  const finalImageUrl: string | null = isMobile
+    ? mobileImageUrl ?? imageUrl
+    : imageUrl;
+
+  const headingArray = (textArray as RTNode[])?.reduce<string[]>((acc, el) => {
+    el?.type === 'heading2' && acc.push(el?.text);
+
+    return acc;
+  }, []);
+
+  /**
+   * Image URL parameter is added to rich-text to allow embedding scorpio media
+   * instead of Prismic's CDN image uploads.
+   *
+   * This is done ensure smooth migration of image fields from Prismic to Payload
+   * since we don't want to move prismic URLs to payload.
+   */
+  if (finalImageUrl) {
+    (textArray as RTNode[]).push({
+      type: 'image',
+      copyright: null,
+      alt: image_alt,
+      url: finalImageUrl,
+      id: imageId,
+      edit: {
+        background: 'transparent',
+        x: 0,
+        y: 0,
+        zoom: 1,
+      },
+      dimensions: {
+        width: 1200,
+        height: 750,
+      },
+    });
+  }
 
   return (
-    <>
-      {props?.childSlices?.map((block: any, index: number) => {
-        const {
-          content_height: contentHeight,
-          cta_text,
-          text: textArray,
-        } = block || {};
-        const headingArray = textArray?.reduce(
-          (acc: Array<string>, el: TRichTextArray) => {
-            if (el?.type === 'heading2') {
-              acc.push(el?.text);
-            }
-            return acc;
-          },
-          []
-        );
-
-        return (
-          <Wrapper
-            key={index}
-            $isExpanded={isExpanded}
-            $contentHeight={contentHeight}
-            // @ts-expect-error TS(2769): No overload matches this call.
-            $hasCTA={cta_text}
-          >
-            <div
-              className="rich-text"
-              id={generateSidenavId(headingArray?.[0])}
-            >
-              <PrismicRichText
-                field={textArray}
-                components={(...defaultArgs: any) =>
-                  shortCodeSerializerWithParentProps(defaultArgs, {
-                    sectionName: headingArray?.[0],
-                    sliceType: SLICE_TYPES.RICH_TEXT,
-                  })
-                }
-              />
-            </div>
-            <Conditional if={cta_text}>
-              <RichTextCTA {...block} />
-            </Conditional>
-            <Conditional if={contentHeight}>
-              <div className="fadeout" />
-              <span className="toggle">
-                <button onClick={handleClick} className="view-more">
-                  {isExpanded ? strings.SHOW_LESS_TEXT : strings.VIEW_MORE}
-                  <ChevronDown />
-                </button>
-              </span>
-            </Conditional>
-          </Wrapper>
-        );
-      })}
-    </>
+    <Wrapper
+      $isExpanded={isExpanded}
+      $contentHeight={contentHeight}
+      $hasCTA={!!cta_text}
+    >
+      <div className="rich-text" id={generateSidenavId(headingArray?.[0])}>
+        <PrismicRichText
+          field={textArray}
+          components={(...defaultArgs: any) =>
+            shortCodeSerializerWithParentProps(defaultArgs, {
+              sectionName: headingArray?.[0],
+              sliceType: SLICE_TYPES.RICH_TEXT,
+            })
+          }
+        />
+      </div>
+      <Conditional if={cta_text}>
+        <RichTextCTA {...block} />
+      </Conditional>
+      <Conditional if={contentHeight}>
+        <div className="fadeout" />
+        <span className="toggle">
+          <button onClick={handleClick} className="view-more">
+            {isExpanded ? strings.SHOW_LESS_TEXT : strings.VIEW_MORE}
+            <ChevronDown />
+          </button>
+        </span>
+      </Conditional>
+    </Wrapper>
   );
-});
+};
+
+const RichtextWithCTA = memo(
+  (props: {
+    childSlices: ContentFrameworkDocumentDataBodyRichTextSliceItem[];
+    isMobile: boolean;
+  }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const handleClick = () => {
+      setIsExpanded(!isExpanded);
+    };
+
+    return (
+      <>
+        {props?.childSlices?.map((block, index) => {
+          return (
+            <React.Fragment key={index}>
+              <RichTextWithCTAItem
+                block={block}
+                isExpanded={isExpanded}
+                handleClick={handleClick}
+                isMobile={props.isMobile}
+              />
+            </React.Fragment>
+          );
+        })}
+      </>
+    );
+  }
+);
+
 RichtextWithCTA.displayName = 'RichtextWithCTA';
+
 export default RichtextWithCTA;

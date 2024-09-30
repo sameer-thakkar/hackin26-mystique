@@ -92,9 +92,21 @@ export const catOrSubCatPageSliceComponents = () => {
 export const sliceComponents = () => {
   return {
     rich_text: (props: any) =>
-      sliceWrapper(<RichtextWithCTA childSlices={props.slice.items} />, props),
+      sliceWrapper(
+        <RichtextWithCTA
+          childSlices={props.slice.items}
+          isMobile={props.context.isMobile}
+        />,
+        props
+      ),
     rich_text_only: (props: any) =>
-      sliceWrapper(<RichtextWithCTA childSlices={props.slice.items} />, props),
+      sliceWrapper(
+        <RichtextWithCTA
+          childSlices={props.slice.items}
+          isMobile={props.context.isMobile}
+        />,
+        props
+      ),
     image: (props: any) =>
       sliceWrapper(
         <ImageGrid
