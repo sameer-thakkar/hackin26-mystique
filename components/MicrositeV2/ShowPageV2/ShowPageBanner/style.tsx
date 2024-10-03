@@ -50,6 +50,12 @@ export const BannerBackground = styled.div`
     position: absolute;
     right: 0;
   }
+  .banner-image {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   @media (max-width: 768px) {
     position: relative;
     width: 100vw;
