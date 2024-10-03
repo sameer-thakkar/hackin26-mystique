@@ -1,5 +1,5 @@
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+import type { TBreadcrumbs } from 'types/breadcrumbs';
 
 export type TShowPageV2Props = {
   CMSContent: any;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
@@ -11,9 +12,10 @@ import { strings } from 'const/strings';
 import SwipesheetCross from 'assets/swipesheetCross';
 import Conditional from '../Conditional';
 import FilterPills from './FilterPills';
-import PdfViewer from './PageView';
 import { PopupContainer } from './styles';
 import { TPdfPopup } from './types';
+
+const PdfViewer = dynamic(() => import('./PageView'));
 
 const PdfPopup = ({
   onHide,

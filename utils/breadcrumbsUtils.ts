@@ -2,7 +2,7 @@ import { createClient } from 'prismicio';
 import { predicate } from '@prismicio/client';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import type { ShowpageDocument } from 'types.prismic';
-import { SEATING_MAP } from 'components/SeatMapPage/constants';
+import { TBreadcrumbs } from 'types/breadcrumbs';
 import {
   getAlternateLanguageDocUid,
   getCategorisationMetadata,
@@ -48,13 +48,6 @@ import {
 } from 'const/index';
 import getConcertCollectionDocs from './prismicUtils/getConcertCollections';
 import { sendLog } from './logger';
-
-export type TBreadcrumbItem = {
-  level: number;
-  label: string;
-  url: string;
-};
-export type TBreadcrumbs = Record<string, TBreadcrumbItem>;
 
 const getC1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc;
@@ -1028,9 +1021,13 @@ export const getNonTgidSeatingPlanBreadcrumbs = async (
     url: `${hostUrl}/theater-seating-plan-guide/`,
   };
 
+  const seatmapLabel = await import('components/SeatMapPage/constants').then(
+    (e) => e.SEATING_MAP.breadCrumbsLabel[theatreType]
+  );
+
   breadcrumbs[`level_3`] = {
     level: 3,
-    label: SEATING_MAP.breadCrumbsLabel[theatreType],
+    label: seatmapLabel,
     url: pageUrl,
   };
 

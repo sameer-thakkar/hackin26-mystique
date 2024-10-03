@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import Script from 'next/script';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
+import type { TBreadcrumbs } from 'types/breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import { CollectionDetails } from 'components/StaticBanner/index';
-import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { getBreadcrumbLabel } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
 import { siteNameMappings } from 'const/index';

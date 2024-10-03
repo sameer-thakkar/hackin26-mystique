@@ -114,12 +114,17 @@ import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 import NewVerticalsProductCard from './components/NewVerticalsProductCard';
 import InclusionsExclusions from './components/NewVerticalsProductCard/InclusionsExclusions';
-import MenuSection from './components/NewVerticalsProductCard/MenuSection';
 import { trackDeadClick } from './utils';
 
 const SpecialGuidedTourSidePanel = dynamic(
   import(
     /* webpackChunkName: "SpecialGuidedTourSidePanel" */ 'components/Product/components/SpecialGuidedTourSidePanel'
+  )
+);
+
+const MenuSection = dynamic(
+  import(
+    /* webpackChunkName: "MenuSection" */ './components/NewVerticalsProductCard/MenuSection'
   )
 );
 

@@ -1,4 +1,4 @@
-import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+import type { TBreadcrumbs } from 'types/breadcrumbs';
 
 export type TShowInfoSectionProps = {
   tourGroupData: Record<string, any>;

@@ -1,4 +1,4 @@
-import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
+import type { TBreadcrumbs } from 'types/breadcrumbs';
 import {
   SHOULDER_TIMINGS_SCALE_ICONS,
   SHOULDER_TIMINGS_SCALE_TYPES,

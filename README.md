@@ -1,7 +1,6 @@
 # Mystique - Microbrands @ Headout
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://www.conventionalcommits.org/en/v1.0.0/)
-[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://headout.github.io/mystique/)
 
 Mystique is the tech that powers over 2500 different microbrands at Headout.
 
@@ -14,7 +13,6 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
   - [Building locally](#building-locally)
   - [Testing on Ondemand Environment (ODE)](#testing-on-ondemand-environment-ode)
   - [Contributing](#contributing)
-  - [Developing for Storybook](#developing-for-storybook)
 
 ## Development
 
@@ -162,28 +160,3 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
     - `QA Pending` / `QA Approved` - for PRs that are going through QA / have been approved by QA respectively
 
   - Squash and merge to `master` and create a new release. [Here's a Notion doc on how we make releases.](https://www.notion.so/headouthub/How-do-I-make-a-release-ebbc384f4d1840e59fd674bf8277172c#8114c53a14a245ea9d0d75f305328f3f)
-
-### Developing for Storybook
-
-> [!WARNING]  
-> We currently do not support Storybook documentation/development
-
-[Storybook documentation](https://headout.github.io/mystique/)
-
-- Run Storybook:
-
-  ```bash
-  yarn storybook
-  ```
-
-- Build Storybook:
-
-  ```bash
-  yarn build-storybook
-  ```
-
-- Deploy Storybook to Github Pages:
-
-  ```bash
-  yarn deploy-storybook
-  ```

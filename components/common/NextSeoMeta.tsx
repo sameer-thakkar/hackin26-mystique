@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
 import { useRecoilValue } from 'recoil';
+import type { TBreadcrumbs } from 'types/breadcrumbs';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
@@ -20,7 +21,6 @@ import {
   legacyBooleanCheck,
   shouldDisplayCollectionRatings,
 } from 'utils';
-import { TBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';

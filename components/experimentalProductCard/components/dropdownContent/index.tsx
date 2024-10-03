@@ -18,7 +18,6 @@ import Conditional from 'components/common/Conditional';
 import Itinerary from 'components/common/Itinerary';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
 import InclusionsExclusions from 'components/Product/components/NewVerticalsProductCard/InclusionsExclusions';
-import MenuSection from 'components/Product/components/NewVerticalsProductCard/MenuSection';
 import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
@@ -48,6 +47,12 @@ import {
   TabContent,
 } from './styles';
 import TabContainer from './tabContainer';
+
+const MenuSection = dynamic(
+  import(
+    /* webpackChunkName: "MenuSection" */ 'components/Product/components/NewVerticalsProductCard/MenuSection'
+  )
+);
 
 const ReviewSection = dynamic(
   import(
