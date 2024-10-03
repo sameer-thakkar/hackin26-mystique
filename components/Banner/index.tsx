@@ -169,6 +169,7 @@ const Banner = (props: TBannerCarouselProps) => {
               mobileUrl={bannerImages[0]?.mobileUrl}
               alt={bannerImages[0]?.alt || 'banner'}
               addDarkOverlay
+              loadHigherQualityImage={true}
             />
             <TextOverlay
               onClick={scrollTicketSection}
@@ -202,6 +203,7 @@ const Banner = (props: TBannerCarouselProps) => {
                       addDarkOverlay
                       priority={priority}
                       autoCrop={false}
+                      loadHigherQualityImage={true}
                     />
                     <TextOverlay
                       onClick={scrollTicketSection}

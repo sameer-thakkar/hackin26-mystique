@@ -275,6 +275,7 @@ const StaticBanner = ({
               alt={bannerImage?.alt}
               priority
               fill
+              loadHigherQualityImage={true}
             />
           </Conditional>
           <Conditional if={!showThumbnailInBanner && bannerVideo}>
@@ -444,6 +445,7 @@ const StaticBanner = ({
                 alt={bannerImage?.alt}
                 priority
                 fill
+                loadHigherQualityImage={true}
               />
             </Conditional>
             <Conditional if={!showThumbnailInBanner && bannerVideo}>

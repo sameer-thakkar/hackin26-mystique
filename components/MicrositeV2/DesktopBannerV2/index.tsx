@@ -92,6 +92,7 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
             width={784}
             autoCrop={false}
             className={`banner-image-${index} ${className}`}
+            loadHigherQualityImage={true}
           />
         </SlideImageWrapper>
       </Conditional>

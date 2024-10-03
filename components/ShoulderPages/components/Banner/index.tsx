@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
 import { truncate } from 'utils/helper';
 import { strings } from 'const/strings';
 import CloseIcon from 'assets/closeIcon';
@@ -85,10 +86,14 @@ const Banner = ({
           </Conditional>
         </TextContainer>
         <Conditional if={imageSrc?.url}>
-          <img
-            src={imageSrc?.url || ''}
+          <Image
+            url={imageSrc?.url || ''}
             alt={imageSrc?.alt || ''}
             className="banner-img"
+            width={584}
+            height={300}
+            loadHigherQualityImage={true}
+            autoCrop={false}
           />
         </Conditional>
       </ContentContainer>

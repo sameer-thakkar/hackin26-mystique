@@ -24,8 +24,13 @@ export const Container = styled.div`
     width: 36.5rem;
     height: 18.75rem;
     flex-shrink: 0;
-    border-radius: 20px;
-    object-fit: cover;
+
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+    }
 
     @media (max-width: 768px) {
       width: 100% !important;
@@ -89,7 +94,7 @@ export const ContentContainer = styled.div`
 
   @media (max-width: 768px) {
     width: calc(100vw - 2.5rem);
-    padding: 1rem 0 1.5rem;
+    padding: 1rem 0 1.219rem;
     min-height: 180px;
   }
 `;

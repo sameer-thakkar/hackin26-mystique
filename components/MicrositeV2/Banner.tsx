@@ -416,6 +416,7 @@ const NewBanner: React.FC<any> = (props) => {
                   alt={bannerImages[0]?.alt || 'banner'}
                   priority
                   imageId={stringIdfy(bannerImages[0].alt || '')}
+                  loadHigherQualityImage={true}
                 />
                 <Conditional if={bannerImages[0].bannerHeading}>
                   {textOverLay(bannerImages[0].bannerHeading)}
@@ -442,6 +443,7 @@ const NewBanner: React.FC<any> = (props) => {
                   });
                 }}
                 alt={bannerImages[0]?.alt || 'banner'}
+                loadHigherQualityImage={true}
               />
               <Conditional if={bannerImages[0].bannerHeading}>
                 {textOverLay(bannerImages[0].bannerHeading)}
@@ -479,6 +481,7 @@ const NewBanner: React.FC<any> = (props) => {
                           bannerImages.length - swiperDuplicateSlideCount,
                         ].includes(index)}
                         imageId={stringIdfy(image.alt || '') + index}
+                        loadHigherQualityImage={true}
                       />
                       <Conditional
                         if={image.bannerHeading && !(isLtt && index !== 0)}
@@ -503,6 +506,7 @@ const NewBanner: React.FC<any> = (props) => {
                       alt={image?.alt || 'banner'}
                       priority
                       imageId={stringIdfy(image.alt || '') + index}
+                      loadHigherQualityImage={true}
                     />
                     <Conditional if={image.bannerHeading}>
                       {textOverLay(image.bannerHeading)}

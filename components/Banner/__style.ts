@@ -23,6 +23,9 @@ export const StyledBanner = styled.div<IStyledBanner>`
   .single-slide {
     margin: 0 auto;
   }
+  .single-slide img {
+    width: 56.25rem;
+  }
 
   .image-wrapper {
     background: rgba(34, 34, 34, 0.6);
@@ -198,6 +201,9 @@ export const StyledBanner = styled.div<IStyledBanner>`
     }
     .mb-slide img {
       min-width: unset;
+    }
+    .single-slide img {
+      width: 22.5rem;
     }
     .mb-captions .mb-caption {
       justify-items: left;

@@ -5,7 +5,13 @@ const SubStopMediaCard = ({ url }: { url: string }) => {
   return (
     <StyledSubStopMediaCardContainer>
       <div className="image-container">
-        <Image url={url} alt="stop-image" height={148} width={236} />
+        <Image
+          url={url}
+          alt="stop-image"
+          height={148}
+          width={236}
+          loadHigherQualityImage={true}
+        />
       </div>
       <div className="gradient"></div>
     </StyledSubStopMediaCardContainer>

@@ -69,6 +69,7 @@ const PassByItemCard = ({
           fill
           aspectRatio="16:10"
           autoCrop={false}
+          loadHigherQualityImage={true}
         />
       )}
       <Conditional if={!hasImage && iconAvailable}>

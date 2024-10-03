@@ -46,6 +46,7 @@ const SubStopItemHeader = ({ stop }: { stop: SubStopCardProps }) => {
             fill
             aspectRatio="16:10"
             autoCrop={false}
+            loadHigherQualityImage={true}
           />
         </ThumbnailContainer>
       </Conditional>

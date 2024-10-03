@@ -210,6 +210,7 @@ const StopCard = ({
                   aspectRatio="16:10"
                   autoCrop={false}
                   onLoadingComplete={() => setImageLoaded(true)}
+                  loadHigherQualityImage={true}
                 />
                 {!imageLoaded && (
                   <Skeleton
@@ -267,6 +268,7 @@ const StopCard = ({
                     aspectRatio="15:10"
                     autoCrop={false}
                     onLoadingComplete={() => setImageLoaded(true)}
+                    loadHigherQualityImage={true}
                   />
                   {!imageLoaded && (
                     <Skeleton
@@ -402,6 +404,7 @@ const StopCard = ({
                         autoCrop={false}
                         className="sub-card-image"
                         onLoadingComplete={() => setImageLoaded(true)}
+                        loadHigherQualityImage={true}
                       />
                       {!imageLoaded && (
                         <Skeleton

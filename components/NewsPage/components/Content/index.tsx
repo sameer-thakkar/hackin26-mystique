@@ -16,6 +16,7 @@ const Banner: React.FC<TBannerProps> = ({ bannerImage }) => {
         aspectRatio="16:10"
         fill
         fetchPriority={'high'}
+        loadHigherQualityImage={true}
       />
     </div>
   );

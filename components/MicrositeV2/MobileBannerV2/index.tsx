@@ -76,6 +76,7 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
           priority={index === 0}
           autoCrop={false}
           className={`banner-image-${index}`}
+          loadHigherQualityImage={true}
         />
       </Conditional>
     </MediaContainer>

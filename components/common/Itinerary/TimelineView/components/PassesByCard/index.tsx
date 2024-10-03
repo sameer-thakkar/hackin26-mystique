@@ -81,6 +81,7 @@ const PassingBySubCard = ({
           fill
           aspectRatio="16:10"
           autoCrop={false}
+          loadHigherQualityImage={true}
         />
         <p className="passing-by-sub-card-title">{title}</p>
         <Conditional if={isLink}>
@@ -112,6 +113,7 @@ const PassingBySubCard = ({
                 aspectRatio="16:10"
                 autoCrop={false}
                 onLoadingComplete={() => setImageLoaded(true)}
+                loadHigherQualityImage={true}
               />
               {!imageLoaded && (
                 <Skeleton

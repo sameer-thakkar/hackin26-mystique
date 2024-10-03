@@ -53,6 +53,7 @@ const ShowPageV2Banner = ({
               autoCrop={false}
               className="banner-image"
               fetchPriority="high"
+              loadHigherQualityImage={true}
             />
           </Conditional>
           <Conditional if={trailerUrl}>

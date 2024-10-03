@@ -97,6 +97,7 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
                         alt={'News Article'}
                         fetchPriority="high"
                         loading="eager"
+                        loadHigherQualityImage={true}
                       />
                     </div>
                   </a>

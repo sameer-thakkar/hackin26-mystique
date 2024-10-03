@@ -659,6 +659,7 @@ const Product = (props: any) => {
           autoCrop={false}
           fitCrop={shouldCropImage}
           {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
+          loadHigherQualityImage={true}
         />
         <Conditional if={isEntertainmentMb && !productImage}>
           <span className="image-placeholder">
@@ -792,6 +793,7 @@ const Product = (props: any) => {
                 autoCrop={false}
                 fitCrop={shouldCropImage}
                 {...(shouldCropImage && { cropMode: ['faces', 'edges'] })}
+                loadHigherQualityImage={true}
               />
               <Conditional if={!productImage}>
                 <span className="image-placeholder">
