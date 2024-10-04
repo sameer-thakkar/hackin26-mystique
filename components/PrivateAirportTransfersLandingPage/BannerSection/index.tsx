@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { usePrivateAirportTransferAirports } from 'hooks/airportTransfers/useAirportsList';
@@ -5,6 +7,7 @@ import { titleCase } from 'utils/stringUtils';
 import { strings } from 'const/strings';
 import { BANNER_IMG_URL } from '../constants';
 import { PrivateTransferSearch } from '../SearchUnit/PrivateTransferSearch';
+import { privateTransferAirportState } from '../SearchUnit/state';
 import { InputsWrapper } from '../SearchUnit/style';
 import {
   containerStyle,
@@ -24,8 +27,21 @@ export const BannerSection = ({
   cityCode: string;
   isMobile: boolean;
 }) => {
-  // Premptive fetch of airport data
-  usePrivateAirportTransferAirports(cityCode);
+  const { data: airportsList } = usePrivateAirportTransferAirports(
+    cityCode ?? ''
+  );
+
+  const setSelectedAirport = useSetRecoilState(privateTransferAirportState);
+
+  useEffect(() => {
+    // If there is only one airport, set it as the selected airport
+    if (airportsList?.length === 1) {
+      setSelectedAirport({
+        name: airportsList[0].name,
+        tgid: airportsList[0].tourGroupId,
+      });
+    }
+  }, [airportsList?.length, setSelectedAirport]);
 
   const cityName = titleCase(cityCode);
 

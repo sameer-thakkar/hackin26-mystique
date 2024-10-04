@@ -354,6 +354,14 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
 
   const [isAnimating, setIsAnimating] = useState(true);
 
+  const [hasTouchedPaxField, setHasTouchedPaxField] = useState(false);
+
+  useEffect(() => {
+    if (currentStep === 'PAX') {
+      setHasTouchedPaxField(true);
+    }
+  }, [currentStep]);
+
   const goToNextStep = async (noDelayInDispatch = false) => {
     await new Promise((resolve) =>
       setTimeout(resolve, noDelayInDispatch ? 0 : 200)
@@ -399,7 +407,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
           : !!selectedLocation.addressText,
       DATE: !!selectedDate,
       TIME: !!selectedTime,
-      PAX: !!selectedPax,
+      PAX: hasTouchedPaxField,
     };
 
     const nextIncompleteStep = privateAirportTransferSearchFieldsOrder.find(
