@@ -61,19 +61,23 @@ export const BeyondCityContainer = styled.div`
 
   @media (max-width: 768px) {
     .citycards-container {
-      margin: 0 1rem;
+      margin: 0;
 
       .heading-container {
+        padding-left: 24px;
         margin-bottom: 0;
         .beyond-city-title {
           ${expandFontToken(FONTS.HEADING_LARGE)};
+          margin-bottom: 0;
         }
       }
     }
 
     .collection-image-container {
-      max-width: 9.75rem;
+      max-width: 100%;
+      height: 280px;
       border-radius: 8px;
+      margin: 0 7px;
     }
 
     .collection-name {
@@ -84,8 +88,9 @@ export const BeyondCityContainer = styled.div`
 
 export const MobileContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
-  grid-row-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 24px;
   justify-content: space-between;
   z-index: 1;
   position: relative;

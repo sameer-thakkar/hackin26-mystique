@@ -225,10 +225,10 @@ const DesktopBannerV2 = ({
                         />
                       )}
                     </Conditional>
-                    <Conditional if={item?.bannerSubText}>
+                    <Conditional if={item?.bannerSubText && index > 0}>
                       <p>{item?.bannerSubText}</p>
                     </Conditional>
-                    <Conditional if={item?.showPageUrl?.url}>
+                    <Conditional if={item?.showPageUrl?.url && index > 0}>
                       <Button
                         className={`banner-cta-button`}
                         fillType="fill"
