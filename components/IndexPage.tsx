@@ -182,6 +182,9 @@ const Page = (props: PageProps) => {
 
   const showLttSpTreatment = isLTT || isBroadway;
 
+  const CMSData =
+    CMSContent?.subattractionsContentPageData?.CMSContent?.data ||
+    CMSContent?.data;
   const {
     isEligible: isSubattractionsExpEligible,
     variant: subattractionsExpVariant,
@@ -189,17 +192,11 @@ const Page = (props: PageProps) => {
   } = useABTesting({
     experimentId: 'SUBATTRACTIONS_EXPERIMENT',
     noTrack: false,
-    customEligibilityCheckFn: () => {
-      const CMSData =
-        CMSContent?.subattractionsContentPageData?.CMSContent?.data ||
-        CMSContent?.data;
-      return (
-        CMSData?.shoulder_page_type == SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS &&
-        !!SUBATTRACTION_TYPE[
-          CMSData?.subattraction_type as keyof typeof SUBATTRACTION_TYPE
-        ]
-      );
-    },
+    customEligibilityCheckFn: () =>
+      CMSData?.shoulder_page_type == SHOULDER_PAGE_TYPE.SUB_ATTRACTIONS &&
+      !!SUBATTRACTION_TYPE[
+        CMSData?.subattraction_type as keyof typeof SUBATTRACTION_TYPE
+      ],
   });
 
   const {
@@ -227,7 +224,8 @@ const Page = (props: PageProps) => {
 
   const shouldShowNewSubattractionsExp =
     isSubattractionsExpEligible &&
-    subattractionsExpVariant == VARIANTS.TREATMENT;
+    (subattractionsExpVariant == VARIANTS.TREATMENT ||
+      CMSData?.subattraction_type === SUBATTRACTION_TYPE.A);
 
   const { eventsReady } = useRecoilValue(gtmAtom);
 
