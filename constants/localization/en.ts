@@ -257,6 +257,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     PORTUGUESE: 'Portuguese',
     NEDERLANDS: 'Dutch',
     POLISH: 'Polish',
+    RUSSIAN: 'Russian',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour available in {0}',
   LISTICLES: {

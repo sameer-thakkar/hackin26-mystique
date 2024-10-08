@@ -58,6 +58,7 @@ export const SUPPORTED_LANGUAGES = [
   'id',
   'pl',
   'ar',
+  'ru',
 ] as const;
 
 export type LanguagesUnion = (typeof SUPPORTED_LANGUAGES)[number];
@@ -77,6 +78,7 @@ export const SUPPORTED_LOCALE_MAP = {
   id: 'id-id',
   pl: 'pl-pl',
   ar: 'ar-ae',
+  ru: 'ru-ru',
 } as const;
 
 export type TLANGUAGELOCALE = (typeof SUPPORTED_LOCALE_MAP)[LanguagesUnion];
@@ -173,6 +175,12 @@ export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
     code: 'ar',
     translatedName: 'Arabic',
   },
+  ru: {
+    displayName: 'Russian',
+    locale: 'ru-ru',
+    code: 'ru',
+    translatedName: 'Russian',
+  },
 };
 
 export type IPopularLanguage =
@@ -194,6 +202,7 @@ export const LANGUAGE_CODE_MAP = {
   PT: 'pt',
   DE: 'de',
   PL: 'pl',
+  RU: 'ru',
 };
 
 export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
@@ -206,6 +215,7 @@ export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
     [LANGUAGE_CODE_MAP.NL]: strings.LANGUAGES.NEDERLANDS,
     [LANGUAGE_CODE_MAP.PT]: strings.LANGUAGES.PORTUGUESE,
     [LANGUAGE_CODE_MAP.PL]: strings.LANGUAGES.POLISH,
+    [LANGUAGE_CODE_MAP.RU]: strings.LANGUAGES.RUSSIAN,
   };
 };
 
@@ -226,6 +236,7 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'id-id': 'id',
   'pl-pl': 'pl',
   'ar-ae': 'ar',
+  'ru-ru': 'ru',
 };
 
 export const LANGUAGE_PARAMS_REGEX = new RegExp(
@@ -1168,6 +1179,7 @@ export const LOCALE_ORDER = [
   LANGUAGE_MAP.id.code,
   LANGUAGE_MAP.pl.code,
   LANGUAGE_MAP.ar.code,
+  LANGUAGE_MAP.ru.code,
 ];
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';

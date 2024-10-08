@@ -518,6 +518,7 @@ const it = {
     PORTUGUESE: 'Portoghese',
     NEDERLANDS: 'Olandese',
     POLISH: 'Polacco',
+    RUSSIAN: 'Russo',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour disponibile in {0}',
   GUIDES_BANNER: "Vivi un'esperienza autentica con le nostre guide esperte!",

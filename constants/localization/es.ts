@@ -580,6 +580,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     PORTUGUESE: 'Portugués',
     NEDERLANDS: 'Neerlandés',
     POLISH: 'Polaco',
+    RUSSIAN: 'Ruso',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Recorrido disponible en {0}',
   GUIDES_BANNER: 'Explora como un lugareño junto a nuestros guías favoritos.',

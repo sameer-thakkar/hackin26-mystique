@@ -527,6 +527,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     PORTUGUESE: 'Portugees',
     NEDERLANDS: 'Nederlands',
     POLISH: 'Pools',
+    RUSSIAN: 'Russisch',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour beschikbaar in {0}',
   GUIDES_BANNER: 'Authentieke ervaringen met onze populaire gidsen.',

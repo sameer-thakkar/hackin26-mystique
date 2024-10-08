@@ -530,6 +530,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PORTUGUESE: 'Português',
     NEDERLANDS: 'Holandês',
     POLISH: 'Polonês',
+    RUSSIAN: 'Russo',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour disponível em {0}',
   GUIDES_BANNER: 'Explore como um local com guias favoritos pelos visitantes.',

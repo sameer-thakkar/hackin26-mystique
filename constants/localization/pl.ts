@@ -229,6 +229,7 @@ const pl = {
     PORTUGUESE: 'portugalski',
     NEDERLANDS: 'holenderski',
     POLISH: 'polski',
+    RUSSIAN: 'Rosyjski',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Wycieczka dostępna w języku: {0}',
   LISTICLES: {

@@ -15,6 +15,7 @@ const dayJsLocales = {
   ar: () => import('dayjs/locale/ar'),
   id: () => import('dayjs/locale/id'),
   pl: () => import('dayjs/locale/pl'),
+  ru: () => import('dayjs/locale/ru'),
 };
 
 const langStrings: Record<LanguagesUnion, object> = {
@@ -32,6 +33,7 @@ const langStrings: Record<LanguagesUnion, object> = {
   ar: () => import(`const/localization/ar`),
   id: () => import('const/localization/id'),
   pl: () => import('const/localization/pl'),
+  ru: () => import('const/localization/ru'),
 };
 
 // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message

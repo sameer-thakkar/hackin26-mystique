@@ -526,6 +526,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     PORTUGUESE: 'Portugiesisch',
     NEDERLANDS: 'Niederländisch',
     POLISH: 'Polnisch',
+    RUSSIAN: 'Russisch',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour verfügbar in {0}',
   GUIDES_BANNER: 'Authentische Erlebnisse mit unseren beliebten Reiseleitern.',

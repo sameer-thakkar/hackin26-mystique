@@ -529,6 +529,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     PORTUGUESE: 'Portugais',
     NEDERLANDS: 'Néerlandais',
     POLISH: 'Polonais',
+    RUSSIAN: 'Russe',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Visite disponible en {0}',
   GUIDES_BANNER: 'Vivez une expérience authentique avec nos super guides.',
