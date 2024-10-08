@@ -175,11 +175,19 @@ export const SearchBox = (props: any) => {
     const opts = {
       shouldSort: true,
       threshold: 0.4,
-      keys: ['title', 'name'],
+      keys: ['title', 'name', 'baseLangTitle'],
     };
-    const searchableTours = allToursArray.filter(
-      (tour: any) => tour.available || tour.listingPrice
-    );
+    const searchableTours = allToursArray
+      ?.filter((tour: any) => tour.available || tour.listingPrice)
+      ?.map((tour: any) => {
+        const { showPageUid } = tour;
+        if (!showPageUid) return tour;
+        const baseLangTitle = showPageUid.split('.').pop().replace(/-/g, ' ');
+        return {
+          ...tour,
+          baseLangTitle,
+        };
+      });
     // @ts-expect-error TS(2322): Type 'Fuse<unknown, { shouldSort: boolean; thresho... Remove this comment to see the full error message
     fuse.current = new Fuse(searchableTours, opts);
 

@@ -93,7 +93,8 @@ export const PrivateAirportTransfersLandingPage = ({
   const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
 
   const contentFrameworkSlices =
-    (contentFramework?.data.body && groupSlices(contentFramework?.data.body)) ||
+    (contentFramework?.data?.body &&
+      groupSlices(contentFramework?.data?.body)) ||
     [];
 
   const listicleSectionSlice = contentFrameworkSlices.find(

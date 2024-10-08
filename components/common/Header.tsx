@@ -43,15 +43,28 @@ const StyledHeader = styled.header<{
   $isPillBarSticky: boolean;
   $isDarkTheme?: boolean;
   $isAirportTransfersMB: boolean;
+  $isAirportTransfersLandingPage: boolean;
 }>`
   height: 80px;
   width: 100%;
-  background-color: ${({ theme: { primaryBackground }, $isDarkTheme }) =>
-    $isDarkTheme
-      ? COLORS.PURPS.DARK_TONE_1
-      : primaryBackground
-      ? primaryBackground
-      : '#fff'};
+  background: ${({
+    theme: { primaryBackground },
+    $isDarkTheme,
+    $isAirportTransfersMB,
+    $isAirportTransfersLandingPage,
+  }) => {
+    if ($isDarkTheme) {
+      if ($isAirportTransfersMB || $isAirportTransfersLandingPage) {
+        return COLORS.PURPS.DARK_TONE_1;
+      } else {
+        return 'linear-gradient(180deg, #140029 0%, rgba(20, 0, 41, 0) 100%)';
+      }
+    } else if (primaryBackground) {
+      return primaryBackground;
+    } else {
+      return '#fff';
+    }
+  }};
   display: flex;
   z-index: 11;
   transition: all 0.2s ease-in;
@@ -451,6 +464,7 @@ const Header: React.FC<any> = (props) => {
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
       $isAirportTransfersMB={isAirportTransfersMB}
+      $isAirportTransfersLandingPage={isAirportTransfersLandingPage}
       $isPillBarSticky={isPillBarSticky}
       $isDarkTheme={showDarkHeader}
       className={className}

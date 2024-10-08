@@ -73,7 +73,7 @@ const AccordionGroup = ({
   isSideModal = false,
 }: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
-  const faqSchemaProps = accordions.map((acc) => {
+  const faqSchemaProps = accordions?.map((acc) => {
     const { heading, content } = acc || {};
     return {
       questionName: heading?.replace(ESCAPE_REGEX, ESCAPE_REPLACER),
@@ -145,7 +145,7 @@ const AccordionGroup = ({
               <Divider />
             </Conditional>
           </Conditional>
-          {accordions.map((accordion, index) => {
+          {accordions?.map((accordion, index) => {
             const content = (
               <RichContent
                 render={accordion.content}

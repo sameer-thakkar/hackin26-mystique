@@ -201,6 +201,7 @@ const ActiveImageWrapper = styled.div<{ active: boolean }>(
   img{
     border-radius: 4px;
     cursor: pointer;
+    object-fit: cover;
 
     max-width: 100%;
   }

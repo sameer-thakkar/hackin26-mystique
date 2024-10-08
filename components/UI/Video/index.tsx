@@ -294,18 +294,20 @@ const Video: React.FC<VideoTypeProps> = ({
           </div>
         </Conditional>
       </Conditional>
-      <StyledVideoContainer
-        ref={videoRef}
-        // autoPlay={shouldAutoPlay}
-        loop={isLooped}
-        muted={isMuted}
-        playsInline={true}
-        onClick={handleOnClick}
-        id={id}
-        preload="none"
-      >
-        <source data-src={url} type={'video/mp4'} />
-      </StyledVideoContainer>
+      <Conditional if={url}>
+        <StyledVideoContainer
+          ref={videoRef}
+          // autoPlay={shouldAutoPlay}
+          loop={isLooped}
+          muted={isMuted}
+          playsInline={true}
+          onClick={handleOnClick}
+          id={id}
+          preload="none"
+        >
+          <source data-src={url} type={'video/mp4'} />
+        </StyledVideoContainer>
+      </Conditional>
     </VideoContainer>
   );
 };
