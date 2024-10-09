@@ -2257,3 +2257,8 @@ export const C1_COLLECTION_EXCLUDED = [
   158, 1878, 189, 243, 254, 279, 3111, 4012, 534, 1516, 576, 1876, 1896, 325,
   1892, 1894, 220,
 ];
+
+export const harryPotterExperimentUids = [
+  'harry-potter.london-tickets.co.uk',
+  'www.london-tickets.co.uk.warner-bros-studio-tour-london',
+];

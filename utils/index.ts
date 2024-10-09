@@ -24,6 +24,7 @@ import {
   BY_HO_BRAND_SCREEN_ENABLE,
   CUSTOM_TYPES,
   DEFAULT_PRISMIC_LANG,
+  harryPotterExperimentUids,
   HEADOUT_NAKED_DOMAIN,
   LANGUAGE_MAP,
   LanguagesUnion,
@@ -1085,5 +1086,5 @@ export const containsPOIAndSeatmap = (array = []) => {
 };
 
 export const checkIfHarryPotterPage = (uid: string) => {
-  return uid === 'harry-potter.london-tickets.co.uk';
+  return harryPotterExperimentUids.includes(uid);
 };
