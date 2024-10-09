@@ -1331,7 +1331,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     SIGHTS_COVERED: 'Lugares de interés',
     MENU: 'Menú',
     BOARD_AT: 'Embarque: {0}',
-    BOARDING_POINTS_AVAILABLE: '{0} puntos de embarque',
+    BOARDING_POINTS_AVAILABLE: '{0} disponibles',
     VIEW_POPULAR_SIGHTS: 'Lugares de interés: {0} {1}',
     X_BOARDING_POINTS: '{0} puntos de embarque',
     BOARDING_POINT: 'Punto de embarque',
