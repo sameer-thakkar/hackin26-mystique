@@ -133,7 +133,6 @@ export const StyledTab = styled.div`
       `
       color: ${COLORS.TEXT.PURPS_3};
       border-bottom: 2px solid;
-      margin-bottom: -0.094rem;
       @media (max-width: 768px) {
         margin-bottom: unset;
       }

@@ -176,7 +176,7 @@ export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
     translatedName: 'Arabic',
   },
   ru: {
-    displayName: 'Russian',
+    displayName: 'Русский',
     locale: 'ru-ru',
     code: 'ru',
     translatedName: 'Russian',
