@@ -31,7 +31,10 @@ export const DatePicker = ({
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_DATE_SELECTED,
       [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: formattedDate,
-      [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: date.diff(dayjs(), 'days'),
+      [ANALYTICS_PROPERTIES.LEAD_TIME_DAYS]: date.diff(
+        dayjs().startOf('day'),
+        'day'
+      ),
     });
   };
 
