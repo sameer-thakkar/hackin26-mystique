@@ -51,7 +51,7 @@ class MystiqueDocument extends Document {
       : 'ltr';
 
     return (
-      <Html dir={textDirection}>
+      <Html dir={textDirection} lang={getLangObject(lang)?.code}>
         <Head>
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
