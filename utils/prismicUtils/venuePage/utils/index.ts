@@ -237,10 +237,12 @@ export const getLandingPageGroups = async (
         language: getHeadoutLanguagecode(lang),
         cookies,
       });
-      const showPageDocuments = await getShowPageCollectionsByTgid({
-        tgids: poiApiData?.linkedTourGroups,
-        pageSize: 100,
-      });
+      const showPageDocuments = poiApiData?.linkedTourGroups?.length
+        ? await getShowPageCollectionsByTgid({
+            tgids: poiApiData?.linkedTourGroups,
+            pageSize: 100,
+          })
+        : [];
 
       const mediaData = await fetchMediaResource({
         language: getHeadoutLanguagecode(lang),

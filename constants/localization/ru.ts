@@ -1124,7 +1124,7 @@ const ru = {
     PRIVATE_TAXIS: 'частным такси',
     BUS_TRAIN: 'Автобус/поезд',
     PRIVATE_TAXI: 'Частное такси',
-    FROM: 'С',
+    FROM: 'от',
     SELECT_PICKUP: 'Выберите место посадки',
     TO: 'До',
     SELECT_DROPOFF: 'Выберите место высадки',
