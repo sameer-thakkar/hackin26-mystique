@@ -272,6 +272,7 @@ const PopulateProducts: any = (props: any) => {
     showCustomProductCardEnglishCTA = false,
     customBanner,
     baseLangCustomBanner,
+    shouldRunHohoRevampExperiment = false,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -795,6 +796,7 @@ const PopulateProducts: any = (props: any) => {
       showCustomProductCardCTA,
       shouldRunCustomCTAExperiment,
       showCustomProductCardEnglishCTA,
+      shouldRunHohoRevampExperiment,
     };
 
     return isSmallComboCard ? (

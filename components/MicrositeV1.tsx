@@ -353,8 +353,6 @@ const MicrositeV1 = (props: any) => {
       isSubdomain && !LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS.includes(uid),
   });
 
-  const showHohoRevamp = isHOHO && isMobile;
-
   const {
     isEligible: shouldRunCustomCTAExperiment,
     isExperimentResolving: isCustomCTAExperimentResolving,
@@ -377,6 +375,17 @@ const MicrositeV1 = (props: any) => {
       !C1_COLLECTION_EXCLUDED.includes(Number(tagged_collection)) &&
       (lang === 'en-us' || lang === 'en'),
   });
+
+  const {
+    isEligible: shouldRunHohoRevampExperiment,
+    isExperimentResolving: isHohoExperimentResolving,
+    variant: hohoExperimentVariant,
+  } = useABTesting({
+    experimentId: 'HOHO_REVAMP_PARIS_BARCELONA',
+    customEligibilityCheckFn: () => isMobile && isHOHO,
+  });
+
+  const showHohoRevamp = hohoExperimentVariant === VARIANTS.CONTROL;
 
   const showCustomProductCardCTA =
     shouldRunCustomCTAExperiment &&
@@ -873,6 +882,7 @@ const MicrositeV1 = (props: any) => {
       activeSubCat={activeSubCat}
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
+      shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
     />
   );
 
@@ -915,7 +925,8 @@ const MicrositeV1 = (props: any) => {
     (isVideoExpEligible && isVideoExpResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
-      isCustomEnglishCTAExperimentResolving)
+      isCustomEnglishCTAExperimentResolving) ||
+    (shouldRunHohoRevampExperiment && isHohoExperimentResolving)
   )
     return <Loader />;
 

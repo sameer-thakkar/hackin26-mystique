@@ -20,6 +20,7 @@ import {
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
+import { VARIANTS } from 'const/experiments';
 import {
   BY_HO_BRAND_SCREEN_ENABLE,
   CUSTOM_TYPES,
@@ -243,6 +244,7 @@ type TCreateBookingUrl = {
   flowType?: string;
   showFullScreenPax?: boolean;
   showCustomCheckoutCTA?: boolean;
+  isHOHORevamp?: boolean;
 };
 
 export const createBookingURL = ({
@@ -262,6 +264,7 @@ export const createBookingURL = ({
   flowType = undefined,
   showFullScreenPax = false,
   showCustomCheckoutCTA,
+  isHOHORevamp,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -348,6 +351,12 @@ export const createBookingURL = ({
       'showCustomCheckoutCTA',
       `${showCustomCheckoutCTA}`
     );
+  if (isHOHORevamp !== undefined) {
+    urlObject.searchParams.set(
+      'showHOHORevamp',
+      isHOHORevamp ? VARIANTS.CONTROL : VARIANTS.TREATMENT
+    );
+  }
 
   if (ctaSuffix) {
     const suffixes = new URLSearchParams(ctaSuffix);

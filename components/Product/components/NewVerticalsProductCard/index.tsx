@@ -99,6 +99,7 @@ const NewVerticalsProductCard = (props: any) => {
     itineraryInfo,
     getMoreDetailsButton,
     setCustomDescriptors,
+    shouldRunHohoRevampExperiment,
   } = props;
 
   const {
@@ -227,6 +228,7 @@ const NewVerticalsProductCard = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
+    isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
   });
 
   const onMoreInfoClick = () => {

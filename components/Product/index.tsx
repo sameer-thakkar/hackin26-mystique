@@ -257,6 +257,8 @@ const Product = (props: any) => {
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
+    shouldRunHohoRevampExperiment = false,
+    isHOHORevamp,
   } = props;
 
   const {
@@ -1059,6 +1061,7 @@ const Product = (props: any) => {
     showCustomCheckoutCTA: shouldRunCustomCTAExperiment
       ? showCustomProductCardCTA
       : undefined,
+    isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
   });
 
   const onSidePanelClose = () => {
@@ -2073,6 +2076,7 @@ const Product = (props: any) => {
           onRatingsCountClick={onRatingsCountClick}
           getMoreDetailsButton={getMoreDetailsButton}
           setCustomDescriptors={setCustomDescriptors}
+          shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
         />
       </Conditional>
 
