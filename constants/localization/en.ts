@@ -169,6 +169,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     MOBILE_TICKET: 'Mobile ticket',
     SKIP_THE_LINE: 'Skip the line',
     TRANSFERS: 'Transfers included',
+    MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
+    LIVE_GUIDE: 'Live guide',
   },
   DURATION: 'Duration',
   EARLIEST_AVAILABILITY: 'Earliest availability',

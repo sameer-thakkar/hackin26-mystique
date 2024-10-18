@@ -170,6 +170,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     MOBILE_TICKET: 'Entradas en el móvil',
     SKIP_THE_LINE: 'Acceso sin colas',
     TRANSFERS: 'Traslados incluidos',
+    MULTILINGUAL_AUDIO_GUIDE: 'Audioguía multilingüe',
+    LIVE_GUIDE: 'Guía en directo',
   },
   DURATION: 'Duración',
   EARLIEST_AVAILABILITY: 'Siguiente disponible',

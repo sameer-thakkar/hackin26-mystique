@@ -1,10 +1,6 @@
 import { SECTION_TYPE } from 'types/itinerary.type';
 import { trackEvent } from 'utils/analytics';
-import {
-  getItineraryDuration,
-  getItineraryTiming,
-  isCruiseItinerary,
-} from 'utils/itinerary';
+import { isCruiseItinerary } from 'utils/itinerary';
 import { IGNORED_HEADINGS } from 'const/descriptors';
 import {
   ANALYTICS_EVENTS,
@@ -30,7 +26,6 @@ export const getCustomDescriptors = ({
   setIsItineraryDrawerOpen,
   setIsDescriptorClick,
   itineraryType,
-  lang,
   tgid,
 }: TGetCustomDescriptors) => {
   let descriptorsList: TDescriptorsList[] = [];
@@ -62,23 +57,18 @@ export const getCustomDescriptors = ({
       },
     ];
   } else if (isCruises) {
-    const {
-      firstDepartureTime = '',
-      lastDepartureTime = '',
-      duration,
-      popularAttractionsCovered = '',
-    } = itineraryDetails || {};
-    const audioGuide = descriptorsObject[IGNORED_HEADINGS.CRUISE_AUDIO_GUIDE];
+    const { popularAttractionsCovered = '' } = itineraryDetails || {};
+    const audioGuide =
+      defaultDescriptors?.includes(DESCRIPTORS.AUDIO_GUIDE) &&
+      strings.DESCRIPTORS.MULTILINGUAL_AUDIO_GUIDE;
+    const liveGuide =
+      defaultDescriptors?.includes(DESCRIPTORS.GUIDED_TOUR) &&
+      strings.DESCRIPTORS.LIVE_GUIDE;
     const liveEntertainment =
       descriptorsObject[IGNORED_HEADINGS.CRUISE_LIVE_ENTT];
     const mealOptions = descriptorsObject[IGNORED_HEADINGS.CRUISE_MEALS];
     const boatType = descriptorsObject[IGNORED_HEADINGS.CRUISE_BOAT];
-    const finalDuration = getItineraryDuration({ duration, lang });
-    const timings = getItineraryTiming({
-      firstDepartureTime,
-      lastDepartureTime,
-    });
-    const stringConnector = finalDuration && timings ? '|' : '';
+
     const totalStops = itinerarySections?.filter(
       (stop: Record<string, any>) => stop?.type === SECTION_TYPE.STOP
     )?.length;
@@ -105,12 +95,6 @@ export const getCustomDescriptors = ({
       popularAttractionsCovered,
       `<span class='clickable'>${moreString}</span>`
     );
-    const hotelTransfers =
-      defaultDescriptors?.includes(DESCRIPTORS.TRANSFERS) &&
-      strings.DESCRIPTORS.TRANSFERS;
-    const freeCancellation =
-      defaultDescriptors?.includes(DESCRIPTORS.FREE_CANCELLATION) &&
-      strings.DESCRIPTORS.FREE_CANCELLATION;
 
     const handleDescriptorClick = (descriptorType: DESCRIPTOR_TYPE) => {
       itineraryPopupController?.current?.open();
@@ -125,13 +109,6 @@ export const getCustomDescriptors = ({
 
     descriptorsList = [
       {
-        type: 'DURATION',
-        text:
-          finalDuration || timings
-            ? `${finalDuration} ${stringConnector} ${timings}`
-            : '',
-      },
-      {
         type: 'STARTING_STOP',
         text:
           totalBoardingPoints && isCruiseItinerary(itineraryType)
@@ -139,12 +116,10 @@ export const getCustomDescriptors = ({
             : '',
         onClick: () => handleDescriptorClick(DESCRIPTOR_TYPE.BOARDING_POINT),
       },
-      {
-        type: 'FREE_CANCELLATION',
-        text: freeCancellation,
-      },
+
       { type: 'MEALS_INCLUDED', text: mealOptions },
       { type: 'AUDIO_GUIDE', text: audioGuide },
+      { type: 'GUIDED_TOUR', text: liveGuide },
       { type: 'LIVE_ENTERTAINMENT', text: liveEntertainment },
       {
         type: 'ATTRACTIONS',
@@ -156,10 +131,6 @@ export const getCustomDescriptors = ({
       {
         type: 'BOAT_TYPE',
         text: boatType,
-      },
-      {
-        type: 'TRANSFERS',
-        text: hotelTransfers,
       },
     ];
   }

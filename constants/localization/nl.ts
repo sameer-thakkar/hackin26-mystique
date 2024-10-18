@@ -168,6 +168,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     MOBILE_TICKET: 'Tickets op je mobiel',
     SKIP_THE_LINE: 'Sla de rij over en bespaar tijd',
     TRANSFERS: 'Transfers inbegrepen',
+    MULTILINGUAL_AUDIO_GUIDE: 'Meertalige audiogids',
+    LIVE_GUIDE: 'Live gids',
   },
   DURATION: 'Looptijd',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',

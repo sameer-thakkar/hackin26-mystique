@@ -57,6 +57,11 @@ const RouteMap = ({
     const currentZoom = mapController.current!.map?.getZoom();
 
     const childToParent = new Map<number, number>();
+    const isSingleBoardingPoint =
+      showStartAsStop &&
+      itinerary?.sections?.filter(
+        (el) => el.type === SECTION_TYPE.START_LOCATION
+      )?.length === 1;
 
     markers = itinerary.sections.reduce((acc, section) => {
       if (section.details.name) {
@@ -120,6 +125,7 @@ const RouteMap = ({
             type: markerType,
             title: name!,
             stopNumber: stopIndex,
+            hideNumber: isSingleBoardingPoint,
           }),
           autoFly: true,
           stickyTitleVisibilityLevel: finalParentZoom,

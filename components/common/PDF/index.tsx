@@ -28,6 +28,7 @@ const PdfPopup = ({
 }: TPdfPopup) => {
   const [isPopupActive, setisPopupActive] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const openPopup = (startingIndex = 0) => {
     setisPopupActive(true);
@@ -98,26 +99,29 @@ const PdfPopup = ({
         role="button"
         tabIndex={0}
       />
-      <div className="header">
-        <div>
-          <h3 className="title">
-            {!isSinglePdf ? strings.CRUISES.FOOD_MENU : pdfData?.[0]?.name}
-          </h3>
-          <Conditional if={!isSinglePdf}>
-            <FilterPills
-              pdfData={pdfData}
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
-          </Conditional>
-        </div>
-        <button className="close-button" onClick={() => closePopup(true)}>
-          {SwipesheetCross}
-        </button>
-      </div>
       <div className="main-content">
+        <div className={`header ${isScrolled ? 'scrolled' : ''}`}>
+          <div>
+            <h3 className="title">
+              {!isSinglePdf ? strings.CRUISES.FOOD_MENU : pdfData?.[0]?.name}
+            </h3>
+            <Conditional if={!isSinglePdf}>
+              <FilterPills
+                pdfData={pdfData}
+                activeIndex={activeIndex}
+                setActiveIndex={setActiveIndex}
+              />
+            </Conditional>
+          </div>
+          <button className="close-button" onClick={() => closePopup(true)}>
+            {SwipesheetCross}
+          </button>
+        </div>
         <Conditional if={isPopupActive}>
-          <PdfViewer documentSrc={pdfData?.[activeIndex]?.url} />
+          <PdfViewer
+            documentSrc={pdfData?.[activeIndex]?.url}
+            setIsScrolled={setIsScrolled}
+          />
         </Conditional>
       </div>
     </PopupContainer>

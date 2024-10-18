@@ -8,11 +8,7 @@ import { expandFontToken } from 'const/typography';
 export const HeroSectionContainer = styled.div`
   position: relative;
   padding: 1rem 1rem 0 1rem;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(230, 209, 255, 0.5) 100%
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #f9f4ff 100%);
   border-top: 1.5px solid ${COLORS.GRAY.G7};
 
   @media (min-width: 769px) {
@@ -33,7 +29,7 @@ export const MarginWrapper = styled.div<{
   position: relative;
 
   ${DescriptorWrapper} {
-    margin-top: 1.25rem;
+    margin-top: 0.75rem;
     margin-inline: -1rem;
     width: calc(100% + 2rem);
 
@@ -165,7 +161,7 @@ export const HeroText = styled.h1<{
       background: linear-gradient(
         90deg,
         rgba(232, 209, 255, 0.8) 0%,
-        rgba(247, 239, 255, 0.8) 100%
+        rgba(252, 250, 255, 0.8) 100%
       );
     }
   }
@@ -199,6 +195,7 @@ export const HeroIllustrationContainer = styled.div<{
         display: block;
         height: 6.5rem;
         overflow: hidden;
+        border-bottom: 1px solid rgba(205, 147, 255, 0.5);
         img {
           object-fit: cover;
           transform: scale(1.13);

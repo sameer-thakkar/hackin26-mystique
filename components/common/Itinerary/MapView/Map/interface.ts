@@ -19,6 +19,7 @@ export type TNumberedMarkerIcon = {
   title: string;
   stopNumber: number | string;
   color?: string;
+  hideNumber?: boolean;
 };
 
 export type TMapController = {
@@ -50,6 +51,7 @@ export type TGetMarkerIconProps = {
   title: string;
   stopNumber: number;
   color?: string;
+  hideNumber?: boolean;
 };
 
 export type TZoomInfo = Record<

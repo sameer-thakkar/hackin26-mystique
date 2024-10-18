@@ -5,7 +5,7 @@ import { trackEvent } from 'utils/analytics';
 import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import Conditional from '../Conditional';
-import { Pill, PillsContainer, PillsSection } from './styles';
+import { Pill, PillsContainer } from './styles';
 import { TFilterPills } from './types';
 
 const Swiper = dynamic(
@@ -65,23 +65,21 @@ const FilterPills = (props: TFilterPills) => {
   };
 
   return (
-    <PillsSection>
-      <PillsContainer>
-        <Conditional if={!isMobile}>
-          <Swiper {...swiperParams}>{PillsCarousel}</Swiper>
-        </Conditional>
-        <Conditional if={isMobile}>
-          <OverflowScroll
-            unsetWrapperMargin={true}
-            unsetChildrenMargin={true}
-            unsetChildrenPadding={true}
-            gap={0.5}
-          >
-            {PillsCarousel}
-          </OverflowScroll>
-        </Conditional>
-      </PillsContainer>
-    </PillsSection>
+    <PillsContainer>
+      <Conditional if={!isMobile}>
+        <Swiper {...swiperParams}>{PillsCarousel}</Swiper>
+      </Conditional>
+      <Conditional if={isMobile}>
+        <OverflowScroll
+          unsetWrapperMargin={true}
+          unsetChildrenMargin={true}
+          unsetChildrenPadding={true}
+          gap={0.5}
+        >
+          {PillsCarousel}
+        </OverflowScroll>
+      </Conditional>
+    </PillsContainer>
   );
 };
 

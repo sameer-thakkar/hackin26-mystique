@@ -1,15 +1,8 @@
-import { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
-import classNames from 'classnames';
 import { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import TabWrapper from 'components/slices/TabWrapper';
-import { MBContext } from 'contexts/MBContext';
-import {
-  getItineraryDuration,
-  getItineraryTiming,
-  isCruiseItinerary,
-} from 'utils/itinerary';
+import { isCruiseItinerary } from 'utils/itinerary';
 import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
@@ -19,37 +12,21 @@ import {
 import { strings } from 'const/strings';
 import AttractionsCarousel from '../AttractionsCarousel';
 import BoardingPoints from '../RouteDetails/BoardingPoint';
-import { Subtext, Title } from '../RouteDetails/RouteInfo/styles';
 import HOHORouteMap from '../RouteDetails/RouteMap';
 import { Container, Wrapper } from './styles';
 
 const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
   const { isMobile } = useRecoilValue(appAtom);
-  const { lang } = useContext(MBContext);
 
   const tabsArray = itineraryData?.map((itinerary, index: number) => {
     const {
-      details: {
-        routeName = '',
-        frequency = 0,
-        firstDepartureTime = '',
-        lastDepartureTime = '',
-        duration,
-      },
+      details: { routeName = '' },
       sections,
       id: itineraryId,
       name: itineraryName,
       type,
       map: routeMapData,
     } = itinerary || {};
-
-    const timing = getItineraryTiming({
-      firstDepartureTime,
-      lastDepartureTime,
-    });
-    const stringConnector =
-      firstDepartureTime && lastDepartureTime && frequency ? '|' : '';
-    const finalDuration = getItineraryDuration({ duration, lang });
 
     return {
       children: (
@@ -74,26 +51,6 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
             />
           </Conditional>
           <BoardingPoints sectionsData={sections} />
-
-          <Conditional if={frequency}>
-            <div
-              className={classNames('frequency', finalDuration && 'bordered')}
-            >
-              <Title>{strings.HOHO.TIMINGS_FREQUENCY}</Title>
-              <Subtext>
-                {`${timing} ${stringConnector} ${strings.formatString(
-                  strings.HOHO.EVERY_X_MINS,
-                  frequency
-                )}`}
-              </Subtext>
-            </div>
-          </Conditional>
-          <Conditional if={finalDuration}>
-            <div className="duration">
-              <Title>{strings.HOHO.TOUR_DURATION}</Title>
-              <Subtext>{finalDuration}</Subtext>
-            </div>
-          </Conditional>
         </Container>
       ),
       heading: routeName || itineraryName,

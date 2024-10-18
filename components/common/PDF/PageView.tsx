@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
+import {
+  TransformComponent,
+  TransformWrapper,
+  useControls,
+} from 'react-zoom-pan-pinch';
 import { useRecoilValue } from 'recoil';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import useResizeObserver from 'hooks/useResizeObserver';
@@ -25,12 +29,14 @@ const options = {
 const MAX_WIDTH = 840;
 
 const PdfViewer = (props: TPdfViewer) => {
-  const { documentSrc } = props || {};
+  const { documentSrc, setIsScrolled } = props || {};
   const [numPages, setNumPages] = useState<number>(1);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number | string>(1);
   const [pageScale, setPageScale] = useState<number>(1);
+  const [isInitialState, setIsInitialState] = useState<boolean>(true);
   const { isMobile } = useRecoilValue(appAtom);
 
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
@@ -46,15 +52,16 @@ const PdfViewer = (props: TPdfViewer) => {
   const onDocumentLoadSuccess = ({
     numPages: nextNumPages,
   }: PDFDocumentProxy) => {
+    setIsLoaded(true);
     setNumPages(nextNumPages);
   };
 
   useEffect(() => {
-    if (!numPages) return;
+    if (!isLoaded) return;
     const options = {
       root: null,
-      rootMargin: '0% 0% -50% 0%',
-      threshold: 0.2,
+      rootMargin: isMobile ? '0% 0% -20% 0%' : '0% 0% -50% 0%',
+      threshold: isMobile ? 0.4 : 0.2,
     };
 
     const handleIntersection = (entries?: IntersectionObserverEntry[]) => {
@@ -75,6 +82,7 @@ const PdfViewer = (props: TPdfViewer) => {
   }, [numPages]);
 
   const ControlPanel = () => {
+    const { zoomIn, zoomOut, resetTransform, centerView } = useControls();
     return (
       <Controls>
         <span className="page-number">
@@ -83,9 +91,10 @@ const PdfViewer = (props: TPdfViewer) => {
         <Conditional if={!isMobile}>
           <>
             <ControlBtn
-              onClick={() =>
-                pageScale > 1 && setPageScale(pageScale - pageScale * 0.25)
-              }
+              onClick={() => {
+                pageScale > 1 && setPageScale(pageScale - pageScale * 0.25);
+                zoomOut(0.25);
+              }}
               $isDisabled={pageScale <= 1}
             >
               <span className="control-text">
@@ -96,9 +105,11 @@ const PdfViewer = (props: TPdfViewer) => {
               </span>
             </ControlBtn>
             <ControlBtn
-              onClick={() =>
-                pageScale < 2 ? setPageScale(2) : setPageScale(1)
-              }
+              onClick={() => {
+                pageScale < 2
+                  ? (setPageScale(2), centerView(2))
+                  : (setPageScale(1), resetTransform());
+              }}
             >
               <span>
                 <Conditional if={pageScale < 2}>
@@ -115,9 +126,10 @@ const PdfViewer = (props: TPdfViewer) => {
               </span>
             </ControlBtn>
             <ControlBtn
-              onClick={() =>
-                pageScale < 2 && setPageScale(pageScale + pageScale * 0.25)
-              }
+              onClick={() => {
+                pageScale < 2 && setPageScale(pageScale + pageScale * 0.25);
+                zoomIn(0.25);
+              }}
               $isDisabled={pageScale > 2}
             >
               <span className="control-text">
@@ -130,15 +142,24 @@ const PdfViewer = (props: TPdfViewer) => {
       </Controls>
     );
   };
-
   return (
-    <Container>
-      <div className="pageview-wrapper" ref={setContainerRef}>
-        <TransformWrapper
-          minScale={1}
-          maxScale={2}
-          wheel={{ smoothStep: 0.01, wheelDisabled: true }}
-        >
+    <Container
+      onScroll={(e) =>
+        setIsScrolled((e.target as HTMLDivElement).scrollTop > 20)
+      }
+      $initialState={isInitialState}
+    >
+      <TransformWrapper
+        minScale={1}
+        maxScale={2.5}
+        wheel={{ smoothStep: 0.01, wheelDisabled: true }}
+        panning={{ disabled: true }}
+        onZoom={(e) => {
+          setIsScrolled(e.state.scale > 1);
+          setIsInitialState(false);
+        }}
+      >
+        <div className="pageview-wrapper" ref={setContainerRef}>
           <TransformComponent wrapperClass="zoom-wrapper">
             <Document
               file={documentSrc}
@@ -149,7 +170,6 @@ const PdfViewer = (props: TPdfViewer) => {
               {Array.from(new Array(numPages), (_el, index) => (
                 <Page
                   key={`page_${index + 1}`}
-                  scale={pageScale}
                   pageNumber={index + 1}
                   width={
                     containerWidth
@@ -163,8 +183,8 @@ const PdfViewer = (props: TPdfViewer) => {
             </Document>
           </TransformComponent>
           <ControlPanel />
-        </TransformWrapper>
-      </div>
+        </div>
+      </TransformWrapper>
     </Container>
   );
 };

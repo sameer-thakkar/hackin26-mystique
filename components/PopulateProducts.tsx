@@ -113,7 +113,7 @@ const StyledProductsWrapper = styled.div<{
       ${({ isNewVerticalsProductCard, $hideRoundedEdge }) =>
         isNewVerticalsProductCard &&
         css`
-          ${$hideRoundedEdge && 'padding-top: 1rem;'}
+          ${$hideRoundedEdge && 'padding-top: 1.25rem;'}
           .product-card-skeleton {
             height: 28.438rem;
           }
@@ -258,11 +258,9 @@ const PopulateProducts: any = (props: any) => {
     forceMobile,
     hideHeading,
     isHOHORevamp,
-    isNVResolving,
     showItineraries = false,
     isCruisesRevamp = false,
     isNewVerticalsProductCard = false,
-    activeSubCat = 0,
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
@@ -487,13 +485,6 @@ const PopulateProducts: any = (props: any) => {
     })
     .slice(0, productCardsLimit);
 
-  if (isCruisesRevamp && activeSubCat !== 0) {
-    availableToursList = availableToursList?.filter(
-      (tour: Record<string, any>) =>
-        scorpioData[tour.tgid]?.primarySubCategory?.id === activeSubCat
-    );
-  }
-
   const nonNewVerticalIndex = availableToursList?.findIndex(
     (tour: Record<string, any>) => {
       if (isCruisesRevamp) {
@@ -631,7 +622,7 @@ const PopulateProducts: any = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB && !isCruisesRevamp
     : true;
 
-  const showLoader = productsLoading || isNVResolving;
+  const showLoader = productsLoading;
 
   const swiperParams: SwiperProps = {
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),

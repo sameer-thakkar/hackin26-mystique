@@ -3,17 +3,34 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $initialState: boolean }>`
   width: 100%;
-
+  display: grid;
+  background: rgba(17, 17, 17, 0.9);
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: calc(100vh - 5rem);
   .pageview-wrapper {
     display: grid;
     width: 100%;
-    max-width: calc(100% - 2rem);
     padding-bottom: 6rem;
     margin: auto;
     justify-items: center;
 
+    .zoom-wrapper {
+      width: 100%;
+      ${({ $initialState }) =>
+        $initialState
+          ? css`
+              display: grid;
+              justify-items: center;
+            `
+          : ''}
+    }
     .react-pdf__Document {
       display: flex;
       gap: 1.25rem;
@@ -50,21 +67,27 @@ export const PopupContainer = styled.div<{
     width: 100%;
     height: 100%;
     position: absolute;
-    background: rgba(17, 17, 17, 1);
   }
-
+  .header.scrolled {
+    background: rgba(17, 17, 17, 0.9);
+  }
   .header {
+    background: transparent;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 1.5rem 7.5rem;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 75.875rem;
-    margin: 1.5rem auto 0;
+    margin: 0;
     z-index: 15;
     .title {
       color: ${COLORS.BRAND.WHITE};
       ${expandFontToken(FONTS.HEADING_LARGE)};
-      margin: ${({ $noFilterTabs }) =>
-        $noFilterTabs ? '0 0 2.5rem' : '0 0 1rem'};
+      margin: ${({ $noFilterTabs }) => ($noFilterTabs ? '0' : '0 0 1rem')};
     }
     .close-button {
       display: inline-flex;
@@ -88,12 +111,10 @@ export const PopupContainer = styled.div<{
     display: flex;
     width: 100vw;
     margin: 0 auto;
-    overflow: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  }
+  ${Container} {
+    padding-top: ${({ $noFilterTabs }) =>
+      $noFilterTabs ? '5.75rem' : '8.625rem'};
   }
 
   @media (max-width: 768px) {
@@ -119,7 +140,6 @@ export const PopupContainer = styled.div<{
       flex-direction: column;
       height: 100%;
       justify-content: space-between;
-      padding-bottom: 2.25rem;
       justify-content: center;
     }
   }
@@ -207,10 +227,6 @@ export const Controls = styled.div`
   }
 `;
 
-export const PillsSection = styled.div`
-  padding-bottom: 1.5rem;
-`;
-
 export const PillsContainer = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -222,6 +238,7 @@ export const PillsContainer = styled.div`
   @media (max-width: 768px) {
     max-width: unset;
     margin: unset;
+    padding-bottom: 1rem;
   }
 `;
 

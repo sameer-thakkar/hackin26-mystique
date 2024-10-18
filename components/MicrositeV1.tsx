@@ -81,8 +81,6 @@ import { TCityInfo } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
 import CommonHeader from './common/Header';
-import SubCategoryFilters from './Cruises/SubcategoryFilters';
-import { SUBCATEGORY_PILLS } from './Cruises/SubcategoryFilters/constants';
 import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
 import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
@@ -216,15 +214,6 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
-  const [newVerticalsTimer, setNewVerticalsTimer] = useState(false);
-  const [activeSubCat, setActiveSubCat] = useState(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setNewVerticalsTimer(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -330,17 +319,6 @@ const MicrositeV1 = (props: any) => {
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
   const currentLanguage = getLangObject(lang).code;
-  const isCruisesExperimentMB = CRUISES_REVAMP_UIDS.includes(uid);
-
-  const {
-    isEligible: isCruisesExpEligible,
-    isExperimentResolving: isCruisesExpResolving,
-    variant: cruisesVariant,
-  } = useABTesting({
-    experimentId: 'CRUISES_REVAMP',
-    noTrack: false,
-    customEligibilityCheckFn: () => isCruisesExperimentMB,
-  });
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -395,8 +373,7 @@ const MicrositeV1 = (props: any) => {
     shouldRunCustomEnglishCTAExperiment &&
     customCTAEnglishExperimentVariant === VARIANTS.TREATMENT;
 
-  const showCruisesRevamp =
-    isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
+  const showCruisesRevamp = CRUISES_REVAMP_UIDS.includes(uid);
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -503,21 +480,6 @@ const MicrositeV1 = (props: any) => {
     showHohoRevamp,
   });
 
-  const subCatArray = finalUncategorizedTours.reduce(
-    (acc: number[], item: Record<string, any>) => {
-      const subCatId = scorpioData[item.tgid]?.primarySubCategory?.id;
-      if (!acc.includes(subCatId)) {
-        acc.push(subCatId);
-      }
-      return acc;
-    },
-    []
-  );
-
-  const subcategoryPills = SUBCATEGORY_PILLS().filter(
-    (item) => !item.subCatId || subCatArray?.includes(item.subCatId)
-  );
-
   useEffect(() => {
     if (tgidToScroll) {
       scroller.scrollTo(tgidToScroll, {
@@ -583,7 +545,7 @@ const MicrositeV1 = (props: any) => {
         defaultType: PAGE_TYPES.COLLECTION,
         isCatOrSubCatPage,
         isSubCategoryPage: isSubCategoryMicrobrand,
-        isCruises: isCruisesExpEligible,
+        isCruises: showCruisesRevamp,
       }),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
@@ -604,9 +566,6 @@ const MicrositeV1 = (props: any) => {
         [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,
       }),
       ...(showCruisesRevamp && {
-        [ANALYTICS_PROPERTIES.FILTERS_PRESENT]: subcategoryPills?.map(
-          (pill) => pill.label
-        ),
         [ANALYTICS_PROPERTIES.PRIMARY_PRODUCTS_PRESENT]:
           finalUncategorizedTours?.filter(
             (tour: Record<string, any>) =>
@@ -874,12 +833,10 @@ const MicrositeV1 = (props: any) => {
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
-      isNVResolving={isCruisesExpEligible && !newVerticalsTimer}
       showItineraries={showItineraries}
       showVideoOnProductCard={showVideoOnProductCard}
       isCruisesRevamp={showCruisesRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
-      activeSubCat={activeSubCat}
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
@@ -920,7 +877,6 @@ const MicrositeV1 = (props: any) => {
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
   if (
-    (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isVideoExpEligible && isVideoExpResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
@@ -1265,19 +1221,6 @@ const MicrositeV1 = (props: any) => {
           <F1TrustBoosters
             f1TrustBooster={getF1MBTrustBoosters(false)}
             isMobile={isMobile}
-          />
-        </Conditional>
-        <Conditional if={showCruisesRevamp && subcategoryPills?.length > 2}>
-          <SubCategoryFilters
-            isMobile={isMobile}
-            subCategoryPills={subcategoryPills}
-            setActiveSubCat={(subCatId) => {
-              setActiveSubCat(subCatId);
-              setProductsLoading(true);
-              setTimeout(() => {
-                setProductsLoading(false);
-              }, 500);
-            }}
           />
         </Conditional>
         <Conditional

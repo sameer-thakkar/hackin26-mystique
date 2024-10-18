@@ -31,6 +31,7 @@ export const getMarkerIconProps = ({
   title,
   stopNumber,
   color,
+  hideNumber,
 }: TGetMarkerIconProps) => {
   const { default: defaultIcon, start, end, passBy } = iconsSetup;
   switch (type) {
@@ -43,7 +44,9 @@ export const getMarkerIconProps = ({
       return passBy;
     case SECTION_TYPE.STOP:
       return {
-        html: renderToString(NumberedMarkerIcon({ title, stopNumber, color })),
+        html: renderToString(
+          NumberedMarkerIcon({ title, stopNumber, color, hideNumber })
+        ),
         iconSize: [32, 38] as L.PointTuple,
         iconAnchor: [16, 35] as L.PointTuple,
         tooltipAnchor: [0, -15] as L.PointTuple,

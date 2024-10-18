@@ -49,6 +49,7 @@ import {
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import InfoIconTicketCard from 'assets/infoIconTicketCard';
+import HorizontalDescriptors from './HorizontalDescriptors';
 import { getCustomDescriptors } from './utils';
 
 const NewVerticalsProductCard = (props: any) => {
@@ -179,7 +180,6 @@ const NewVerticalsProductCard = (props: any) => {
     setIsItineraryDrawerOpen,
     setIsDescriptorClick,
     itineraryType,
-    lang,
     tgid,
   });
 
@@ -414,6 +414,15 @@ const NewVerticalsProductCard = (props: any) => {
                   : () => window.open(productBookingUrl, '_self', 'noopener')
               }
             />
+            <Conditional if={isCruisesRevamp}>
+              <HorizontalDescriptors
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
+                isMobile={isMobile}
+                descriptorArray={descriptors}
+              />
+            </Conditional>
             <Conditional if={!isPopup}>
               <CTAContainer pageType={pageType}>
                 <PriceContainer pageType={pageType}>

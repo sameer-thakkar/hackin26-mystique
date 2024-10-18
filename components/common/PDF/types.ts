@@ -13,6 +13,7 @@ export type TPdfPopup = {
 
 export type TPdfViewer = {
   documentSrc: string;
+  setIsScrolled: Dispatch<SetStateAction<boolean>>;
 };
 
 export type TFilterPills = {

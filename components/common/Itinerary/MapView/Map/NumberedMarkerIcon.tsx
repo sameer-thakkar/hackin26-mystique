@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import EmptyMarker from 'assets/emptyMarkerIcon';
 import { TNumberedMarkerIcon } from './interface';
@@ -7,11 +8,14 @@ const NumberedMarkerIcon = ({
   title,
   stopNumber,
   color = COLORS.BRAND.PURPS,
+  hideNumber = false,
 }: TNumberedMarkerIcon) => {
   return (
     <IconWrapper>
       <EmptyMarker color={color} fill={color} aria-placeholder={title} />
-      <MarkerText>{stopNumber}</MarkerText>
+      <Conditional if={!hideNumber}>
+        <MarkerText>{stopNumber}</MarkerText>
+      </Conditional>
     </IconWrapper>
   );
 };

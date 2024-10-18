@@ -113,6 +113,7 @@ import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
 import NewVerticalsProductCard from './components/NewVerticalsProductCard';
+import HorizontalDescriptors from './components/NewVerticalsProductCard/HorizontalDescriptors';
 import InclusionsExclusions from './components/NewVerticalsProductCard/InclusionsExclusions';
 import { trackDeadClick } from './utils';
 
@@ -1598,7 +1599,18 @@ const Product = (props: any) => {
                 showTime={isModifiedPopup}
               />
             </Conditional>
-            <Conditional if={mbTheme === THEMES.MIN_BLUE || isPopup}>
+            <Conditional if={isModifiedPopup && isPopup}>
+              <HorizontalDescriptors
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
+                isMobile={isMobile}
+                descriptorArray={descriptors}
+              />
+            </Conditional>
+            <Conditional
+              if={!isModifiedPopup && (mbTheme === THEMES.MIN_BLUE || isPopup)}
+            >
               <ProductDescriptors
                 isLoading={isLoading}
                 customDescriptors={isModifiedPopup ? customDescriptors : []}

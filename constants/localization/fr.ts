@@ -169,6 +169,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     MOBILE_TICKET: 'Billets mobiles',
     SKIP_THE_LINE: 'Coupe-file',
     TRANSFERS: 'Navettes incluses',
+    MULTILINGUAL_AUDIO_GUIDE: 'Audioguide multilingue',
+    LIVE_GUIDE: 'Guide en personne',
   },
   DURATION: 'Durée',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',

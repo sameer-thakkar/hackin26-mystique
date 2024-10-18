@@ -156,6 +156,7 @@ const RouteInfo = (props: TRouteInfo) => {
             longitude,
             placeId,
           })}
+          hideStopNumber={true}
         />
       </Conditional>
     </>

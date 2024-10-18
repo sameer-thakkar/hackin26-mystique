@@ -603,10 +603,6 @@ export const MORE_DETAILS_SWIPESHEET = {
   },
 };
 
-export const FILTER_TYPE = {
-  SUB_CATEGORY: 'Sub-Category Filter',
-};
-
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
 };
@@ -678,6 +674,7 @@ export const DESCRIPTORS = {
   FREE_CANCELLATION: 'FREE_CANCELLATION',
   GUIDED_TOUR: 'GUIDED_TOUR',
   TRANSFERS: 'TRANSFERS',
+  AUDIO_GUIDE: 'AUDIO_GUIDE',
 };
 
 export const MICROSITE_OBJECT_KEYS = [
@@ -2184,7 +2181,7 @@ export const CRUISES_REVAMP_UIDS = [
 ];
 
 export const CRUISES_ILLUSTRATION =
-  'https://cdn-imgix-open.headout.com/MB/assets/cruise-banner.svg';
+  'https://cdn-imgix-open.headout.com/MB/assets/cruise-banner-fixed.svg';
 
 export const MEALS_SUBCAT_IDS = [1060, 1094];
 export const SUBCAT_IDS = { COMBOS: 1080 };

@@ -153,6 +153,8 @@ const ru = {
     MOBILE_TICKET: 'Мобильный билет',
     SKIP_THE_LINE: 'Без очереди',
     TRANSFERS: 'Трансферы включены',
+    MULTILINGUAL_AUDIO_GUIDE: 'Многоязычный аудиогид',
+    LIVE_GUIDE: 'Живой гид',
   },
   DURATION: 'Продолжительность',
   EARLIEST_AVAILABILITY: 'Наиболее ранняя доступность',

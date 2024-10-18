@@ -168,6 +168,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MOBILE_TICKET: 'Digitale Tickets',
     SKIP_THE_LINE: 'Schnelleinlass',
     TRANSFERS: 'Transfer inklusive',
+    MULTILINGUAL_AUDIO_GUIDE: 'Mehrsprachiger Audioguide',
+    LIVE_GUIDE: 'Live-Reiseleiter',
   },
   DURATION: 'Dauer',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',

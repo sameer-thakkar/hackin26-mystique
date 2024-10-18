@@ -142,6 +142,8 @@ const pl = {
     MOBILE_TICKET: 'Bilet mobilny',
     SKIP_THE_LINE: 'Omiń kolejkę',
     TRANSFERS: 'Transfery wliczone w cenę',
+    MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
+    LIVE_GUIDE: 'Live guide',
   },
   DURATION: 'Czas trwania',
   EARLIEST_AVAILABILITY: 'Najwcześniejszy dostępny termin',

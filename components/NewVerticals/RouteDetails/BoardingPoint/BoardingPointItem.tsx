@@ -11,11 +11,12 @@ const BoardingPointItem = (props: TBoardingPoint) => {
     stopNumber,
     stopLocation,
     isSideModal = false,
+    hideStopNumber = false,
   } = props || {};
   return (
     <Container $isSideModal={isSideModal}>
       <Title>
-        {strings.CRUISES.BOARDING_POINT} {stopNumber}
+        {strings.CRUISES.BOARDING_POINT} {!hideStopNumber ? stopNumber : ''}
       </Title>
       <StopName>{stopName}</StopName>
       <DirectionCTA

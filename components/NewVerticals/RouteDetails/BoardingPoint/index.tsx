@@ -15,6 +15,7 @@ const BoardingPoints = (props: any) => {
             stopNumber={stopNumber}
             stopLocation={stopLocation}
             isSideModal={true}
+            hideStopNumber={boardingPoints?.length === 1}
           />
         );
       })}

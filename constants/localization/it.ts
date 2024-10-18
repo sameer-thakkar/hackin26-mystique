@@ -150,6 +150,8 @@ const it = {
     MOBILE_TICKET: 'Biglietti per cellulari',
     SKIP_THE_LINE: 'Salta la Coda',
     TRANSFERS: 'Trasferimenti inclusi',
+    MULTILINGUAL_AUDIO_GUIDE: 'Audio-guida in più lingue',
+    LIVE_GUIDE: 'Guida dal vivo',
   },
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Prima disponibilità',

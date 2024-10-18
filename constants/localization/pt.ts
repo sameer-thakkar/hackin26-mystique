@@ -169,6 +169,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     MOBILE_TICKET: 'Ingressos eletrônicos',
     SKIP_THE_LINE: 'Sem filas',
     TRANSFERS: 'Inclui translado',
+    MULTILINGUAL_AUDIO_GUIDE: 'Audioguia multilíngue',
+    LIVE_GUIDE: 'Guia presencial',
   },
   DURATION: 'Duração',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',

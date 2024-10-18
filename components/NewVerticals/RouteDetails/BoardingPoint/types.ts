@@ -3,4 +3,5 @@ export type TBoardingPoint = {
   stopNumber: number;
   stopLocation: string;
   isSideModal?: boolean;
+  hideStopNumber?: boolean;
 };

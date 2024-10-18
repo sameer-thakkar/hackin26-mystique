@@ -11,6 +11,7 @@ import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import Category from 'components/Product/components/Category';
 import { GuidesBanner } from 'components/Product/components/GuidesBanner';
+import HorizontalDescriptors from 'components/Product/components/NewVerticalsProductCard/HorizontalDescriptors';
 import { NextAvailable } from 'components/Product/components/NextAvailable';
 import { ProductDescriptors } from 'components/Product/components/ProductDescriptors';
 import Ratings from 'components/Product/components/Ratings';
@@ -416,7 +417,22 @@ const MobileProductCard = (props: any) => {
                 {strings.OPEN_DATED_DESCRIPTOR}
               </OpenDatedDescriptor>
             </Conditional>
-            <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isAsideBarOverlay}>
+            <Conditional if={isModifiedPopup}>
+              <HorizontalDescriptors
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
+                isMobile={true}
+                descriptorArray={descriptorsList}
+              />
+            </Conditional>
+            <Conditional
+              if={
+                mbTheme !== THEMES.MIN_BLUE &&
+                !isAsideBarOverlay &&
+                !isModifiedPopup
+              }
+            >
               <ProductDescriptors
                 isLoading={false}
                 customDescriptors={isModifiedPopup ? customDescriptors : []}
