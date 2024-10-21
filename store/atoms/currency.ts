@@ -1,6 +1,5 @@
 import { atom } from 'recoil';
 import Cookies from 'js-cookie';
-import { getNakedDomain } from 'utils/gen';
 import { COOKIE, TIME } from 'const/index';
 
 const cookiesSideEffect =
@@ -16,7 +15,9 @@ const cookiesSideEffect =
     onSet((newValue: any, _: any, isReset: any) => {
       const host = window.location.host;
       const isDev = host?.includes('localhost');
-      const nakedDomain = getNakedDomain(host);
+      const hostParts = host.split('.');
+      hostParts.splice(0, 1, '');
+      const nakedDomain = hostParts.join('.');
 
       if (isReset) {
         Cookies.remove(COOKIE.CURRENT_CURRENCY);

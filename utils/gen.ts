@@ -163,10 +163,3 @@ export const getObjectNestingCount = (
     ...Object.values(obj).map((val) => getObjectNestingCount(val, level + 1))
   );
 };
-
-export const getNakedDomain = (host: string) => {
-  const hostParts = host?.split('.');
-  hostParts?.splice(0, 1, '');
-
-  return hostParts?.join('.');
-};

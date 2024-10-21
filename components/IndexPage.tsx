@@ -13,10 +13,9 @@ import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { fetchUserLocationCurrency } from 'utils/apiUtils';
+import { sendVariableToDataLayer } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
-import { getNakedDomain, localServerSideIsMobileCheck } from 'utils/gen';
+import { localServerSideIsMobileCheck } from 'utils/gen';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 import { sendLog } from 'utils/logger';
@@ -28,7 +27,6 @@ import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
 import {
-  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
@@ -72,7 +70,6 @@ type PageProps = {
   [k: string]: any;
 
   airportTransfersLPExperimentVariant: string;
-  countryCurrenyExperimentVariant: string | null;
 };
 
 const Page = (props: PageProps) => {
@@ -174,7 +171,6 @@ const Page = (props: PageProps) => {
     subcategoryDescriptors,
     isEntertainmentBanner,
     bannerTrustBoosters,
-    countryCurrenyExperimentVariant,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -207,16 +203,6 @@ const Page = (props: PageProps) => {
     customEligibilityCheckFn: () =>
       (isLTT || isBroadway) && (lang == 'it-it' || lang == 'de-de'),
   });
-
-  useEffect(() => {
-    if (countryCurrenyExperimentVariant) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        'Experiment Name': 'Home Currency Experiment v1',
-        'Experiment Variant': countryCurrenyExperimentVariant,
-      });
-    }
-  }, []);
 
   const showCustomBookButtonCTA =
     shouldRunCustomCTAExperiment &&
@@ -523,24 +509,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const serverCookies = new ServerCookies(req, res);
-  const countryCode = req?.headers?.['cloudfront-viewer-country'] as string;
-  const shouldSetCurrencyFromHeader =
-    typeof window === 'undefined' &&
-    !checkIfCurrencyCodeValid({
-      currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY) as string,
-    });
   const lang = getLanguageFromPathname({ pathname, query }) || 'en';
   const { host }: { host?: string } = req?.headers || window?.location;
 
-  const countryCurrencyPromise = shouldSetCurrencyFromHeader
-    ? fetchUserLocationCurrency(countryCode)
-    : Promise.resolve(null);
-
-  const [localizedStrings, countryCurrency] = await Promise.all([
-    getLocalizationLabels({ lang }),
-    countryCurrencyPromise,
-  ]);
+  const localizedStrings = await getLocalizationLabels({ lang });
 
   const serverRequestStartTimestamp = Math.floor(new Date().getTime());
   strings.setContent({
@@ -553,39 +525,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const airportTransferABExperimentVariant = 'Control'; // TODO: temporary, remove after AB test is concluded
 
-  const removeCurrencyCookie = () => {
-    delete req.cookies[COOKIE.CURRENT_CURRENCY];
-    serverCookies.set(COOKIE.CURRENT_CURRENCY);
-  };
-
-  let countryCurrenyExperimentVariant = null;
-
-  if (shouldSetCurrencyFromHeader) {
-    countryCurrenyExperimentVariant = req?.headers['x-experiment-variant'];
+  const serverCookies = new ServerCookies(req, res);
+  if (airportTransferABExperimentVariant) {
     serverCookies.set(
       'experiment-variant',
-      countryCurrenyExperimentVariant as string
+      airportTransferABExperimentVariant as string
     );
-
-    if (countryCurrenyExperimentVariant === VARIANTS.TREATMENT) {
-      if (countryCurrency) {
-        const host = req.headers.host as string;
-        const isDev = host?.includes('localhost');
-        const nakedDomain = getNakedDomain(host);
-
-        req.cookies[COOKIE.CURRENT_CURRENCY] = countryCurrency;
-        serverCookies.set(COOKIE.CURRENT_CURRENCY, countryCurrency, {
-          httpOnly: false,
-          // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
-          domain: isDev ? null : nakedDomain,
-        });
-      } else {
-        countryCurrenyExperimentVariant = null;
-        removeCurrencyCookie();
-      }
-    } else {
-      removeCurrencyCookie();
-    }
+  }
+  /**
+   * Adding window check below since `serverCookies.get` runs only on server side :/
+   */
+  if (
+    typeof window === 'undefined' &&
+    !checkIfCurrencyCodeValid({
+      currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY) as string,
+    })
+  ) {
+    delete req.cookies[COOKIE.CURRENT_CURRENCY];
+    serverCookies.set(COOKIE.CURRENT_CURRENCY);
   }
 
   let isMobile = req
@@ -691,6 +648,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         ? req.headers['referer'].split(':')[0]
         : 'https';
 
+    const countryCode = req?.headers?.['cloudfront-viewer-country'] as string;
+
     const response = {
       props: {
         ...props,
@@ -709,7 +668,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         airportTransfersLPExperimentVariant: airportTransferABExperimentVariant,
         headers: JSON.stringify(req?.headers),
         countryCode,
-        countryCurrenyExperimentVariant,
       },
     };
     const removeEmpty = (obj: any) => {

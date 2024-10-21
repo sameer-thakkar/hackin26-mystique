@@ -89,7 +89,6 @@ export enum HeadoutEndpoints {
   CollectionReviews,
   Category,
   CurrencyList,
-  CountryCurrency,
   CalendarInventory,
   CityListV2,
   DomainConfig,
@@ -128,7 +127,6 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.Banners,
   HeadoutEndpoints.DomainConfig,
   HeadoutEndpoints.CurrencyList,
-  HeadoutEndpoints.CountryCurrency,
   HeadoutEndpoints.Category,
   HeadoutEndpoints.CollectionTop,
   HeadoutEndpoints.TourGroupReviewMedias,
@@ -194,9 +192,6 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.CurrencyList:
       endpointSlug = `/api/v1/currency/list/`;
-      break;
-    case HeadoutEndpoints.CountryCurrency:
-      endpointSlug = `/api/v1/currency?country=${params?.country}`;
       break;
     case HeadoutEndpoints.CalendarInventory:
       endpointSlug = `/api/v7/tour-groups/${id}/calendar/`;
@@ -691,32 +686,6 @@ export const fetchCurrencyList = async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCurrencyList]', error);
-  }
-};
-
-export const fetchUserLocationCurrency = async (countryCode: string) => {
-  try {
-    const endpoint = getHeadoutApiUrl({
-      endpoint: HeadoutEndpoints.CountryCurrency,
-      params: {
-        country: countryCode,
-      },
-    });
-
-    const response = await fetch(endpoint);
-    const data = await response.json();
-
-    const {
-      hasSupportedCurrency,
-      currency,
-    }: { hasSupportedCurrency: boolean; currency: { code: string } } = data;
-
-    return hasSupportedCurrency ? currency?.code : null;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchUserLocationCurrency]', error);
-
-    return null;
   }
 };
 
