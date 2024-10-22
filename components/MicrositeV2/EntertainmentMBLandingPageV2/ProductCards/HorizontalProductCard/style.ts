@@ -66,6 +66,8 @@ export const Wrapper = styled.div<{
   }
 
   @media (max-width: 768px) {
+    height: unset;
+    width: unset;
     &:hover {
       transform: none;
     }
