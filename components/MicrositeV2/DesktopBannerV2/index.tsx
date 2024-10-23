@@ -225,7 +225,7 @@ const DesktopBannerV2 = ({
                         />
                       )}
                     </Conditional>
-                    <Conditional if={item?.bannerSubText && index > 0}>
+                    <Conditional if={item?.bannerSubText}>
                       <p>{item?.bannerSubText}</p>
                     </Conditional>
                     <Conditional if={item?.showPageUrl?.url && index > 0}>
