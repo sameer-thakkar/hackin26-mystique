@@ -175,6 +175,7 @@ export const SearchBox = (props: any) => {
     const opts = {
       shouldSort: true,
       threshold: 0.4,
+      distance: 150,
       keys: ['title', 'name', 'baseLangTitle'],
     };
     const searchableTours = allToursArray
