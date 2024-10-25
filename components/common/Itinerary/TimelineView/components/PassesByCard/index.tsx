@@ -147,13 +147,11 @@ const PassingBySubCard = ({
       <Conditional if={isOpen && isReducedWidthVariant}>
         <SpaceBlock $gap={'1rem'} />
         <SubStopCard
-          subSectionDetails={{
-            details: {
-              name: title,
-              mediaUrls: image ? [image] : [],
-              sameAsStartingPoint: false,
-            },
-            id: id!,
+          id={id!}
+          details={{
+            name: title,
+            mediaUrls: image ? [image] : [],
+            sameAsStartingPoint: false,
           }}
           itineraryId={itineraryId}
         />

@@ -51,6 +51,7 @@ export const sectionDataSanitizer = (
         duration: startLocations[0].details.timeSpent || 0,
         attractionsCount: startLocations[0].attractionsCount,
         activitiesCount: startLocations[0].activitiesCount,
+        location: startLocations[0].location,
       }
     : {};
 
@@ -74,6 +75,7 @@ export const sectionDataSanitizer = (
                       duration: section.details.timeSpent || 0,
                       attractionsCount: section.attractionsCount,
                       activitiesCount: section.activitiesCount,
+                      location: section.location,
                     },
                     sectionDetails: { ...section, rank: index + 1 },
                     isSubSection: false,
@@ -88,6 +90,7 @@ export const sectionDataSanitizer = (
                         child.type === CHILD_SECTION_TYPE.FOOD_AND_DRINKS
                           ? child.details.subType
                           : undefined,
+                      location: child.location,
                     },
                     subSectionDetails: {
                       ...child,
@@ -127,7 +130,7 @@ export const sectionDataSanitizer = (
                   image: stop.details.mediaUrls?.[0],
                   description: stop.details.description,
                   link: stop.location
-                    ? generateGoogleMapUrl(stop.location)
+                    ? generateGoogleMapPlacesUrl(stop.location)
                     : null,
                   type: stop.type,
                   subType: stop.details.subType,
@@ -141,12 +144,14 @@ export const sectionDataSanitizer = (
               descriptors: isHOHO
                 ? {
                     attractionsCount: stop.attractionsCount,
+                    location: stop.location,
                   }
                 : {
                     inclusion: stop.details.inclusion,
                     duration: stop.details.timeSpent || 0,
                     attractionsCount: stop.attractionsCount,
                     activitiesCount: stop.activitiesCount,
+                    location: stop.location,
                   },
               sectionDetails: {
                 ...stop,
@@ -166,6 +171,7 @@ export const sectionDataSanitizer = (
                           child.type === CHILD_SECTION_TYPE.FOOD_AND_DRINKS
                             ? child.details.subType
                             : undefined,
+                        location: child.location,
                       },
                   subSectionDetails: {
                     ...child,
@@ -223,6 +229,7 @@ export const sectionDataSanitizer = (
         duration: endLocations[0].details.timeSpent || 0,
         attractionsCount: endLocations[0].attractionsCount,
         activitiesCount: endLocations[0].activitiesCount,
+        location: endLocations[0].location,
       }
     : {};
 
@@ -254,6 +261,7 @@ export const sectionDataSanitizer = (
                         duration: section.details.timeSpent || 0,
                         attractionsCount: section.attractionsCount,
                         activitiesCount: section.activitiesCount,
+                        location: section.location,
                       },
                       position: index + 1,
                       sectionDetails: {
@@ -284,6 +292,7 @@ export const sectionDataSanitizer = (
                       duration: section.details.timeSpent || 0,
                       attractionsCount: section.attractionsCount,
                       activitiesCount: section.activitiesCount,
+                      location: section.location,
                     },
                     sectionDetails: { ...section, rank: index + 1 },
                     isSubSection: false,
@@ -298,6 +307,7 @@ export const sectionDataSanitizer = (
                         child.type === CHILD_SECTION_TYPE.FOOD_AND_DRINKS
                           ? child.details.subType
                           : undefined,
+                      location: child.location,
                     },
                     subSectionDetails: {
                       ...child,

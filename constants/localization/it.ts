@@ -1211,6 +1211,7 @@ const it = {
     TAB: 'Itinerario',
     HEADING: 'Il tuo itinerario',
     VIEW_ITINERARY: "Vedi l'itinerario",
+    VIEW_DETAILS: 'Dettagli',
     PASSES_BY_SECTION_HEADING: 'Passa per',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'In primo piano',

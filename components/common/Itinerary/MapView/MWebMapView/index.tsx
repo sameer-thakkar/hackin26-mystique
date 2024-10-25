@@ -1,18 +1,22 @@
 import { useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ChildSection, Section } from 'types/itinerary.type';
+import { ChildSection, Section, SECTION_TYPE } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { BottomSheet } from 'components/common/DraggableBottomSheet';
-import StopLabel from 'components/common/Itinerary/ItinerarySwipeSheet/components/StopLabel';
 import { TMapController } from 'components/common/Itinerary/MapView/Map/interface';
 import type { TMWebMapViewComponentProps } from 'components/common/Itinerary/MapView/MWebMapView/interface';
-import MapViewCard from 'components/common/Itinerary/MapView/MWebMapView/MapViewCard';
+import MapViewCard from 'components/common/Itinerary/MapView/MWebMapView/MapCard';
 import {
   StyledMWebMapViewContainer,
   StyledMWebMapViewStylesheetContainer,
 } from 'components/common/Itinerary/MapView/MWebMapView/styles';
+import { getStopLabelText } from 'components/common/Itinerary/StopLabel/utils';
 import { useItinerary } from 'contexts/ItineraryContext';
-import { sectionDataSanitizer } from 'utils/itinerary';
+import { debounce } from 'utils/gen';
+import {
+  checkIfItineraryHasSameStartAndEndPoint,
+  sectionDataSanitizer,
+} from 'utils/itinerary';
 import BackArrow from 'assets/backArrow';
 
 const RouteMap = dynamic(
@@ -36,6 +40,10 @@ const MWebMapView = ({
   const stopCardProps = useMemo(
     () => sectionDataSanitizer(itinerary.sections as Section[], itinerary.type),
     [itinerary]
+  );
+  const isEndpointSameAsStartPoint = useMemo(
+    () => checkIfItineraryHasSameStartAndEndPoint(stopCardProps),
+    [stopCardProps]
   );
 
   const childParentSectionMap = useMemo(() => {
@@ -62,8 +70,10 @@ const MWebMapView = ({
 
   const {
     activeItineraryStopId,
+    selectedSubStopId,
     setActiveStopIndex,
     setActiveItineraryStopId,
+    setSelectedSubStopId,
   } = useItinerary();
 
   const handleCloseBottomSheet = () => {
@@ -87,6 +97,10 @@ const MWebMapView = ({
     }
     if (sectionDetails.id === activeItineraryStopId) {
       skipZoomToMapMarker.current = false;
+    }
+
+    if (selectedSubStopId) {
+      debouncedClearActiveSubSection(selectedSubStopId, sectionDetails.id);
     }
   };
 
@@ -126,16 +140,22 @@ const MWebMapView = ({
         setActiveStopIndex(parentIndex);
         if (scrollTo) {
           scrollToMapViewCardByStopId(parentStopId);
+          setSelectedSubStopId(sectionId);
         }
       }
     }
   };
 
-  const scrollToMapViewCardByStopId = (stopId: number) => {
+  const scrollToMapViewCardByStopId = (
+    stopId: number,
+    scrollDelay: number = 0
+  ) => {
     const mapCardId = `map-view-card-${stopId}`;
-    document
-      .getElementById(mapCardId)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      document
+        .getElementById(mapCardId)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, scrollDelay);
   };
 
   const handleBackButton = () => {
@@ -147,9 +167,19 @@ const MWebMapView = ({
 
   const handleActiveMapSectionChange = (id: number) => {
     setIsMapCardsVisible(true);
+    setSelectedSubStopId(null);
     handleActiveMarkerChange(id);
     skipZoomToMapMarker.current = true;
   };
+
+  const clearActiveSubSection = (subStopId: number, parentStopId: number) => {
+    const parent = childParentSectionMap[subStopId];
+    if (parentStopId !== parent) {
+      setSelectedSubStopId(null);
+    }
+  };
+
+  const debouncedClearActiveSubSection = debounce(clearActiveSubSection, 500);
 
   if (!itinerary.map || !itinerary.map.active) return null;
 
@@ -181,6 +211,7 @@ const MWebMapView = ({
               zoomPadding={[60, 250]}
               onReset={() => setIsMapCardsVisible(false)}
               enableFreeTouchPropagation
+              mapChildToParent={false}
             />
           </div>
           <Conditional if={isMapCardsVisible}>
@@ -189,43 +220,44 @@ const MWebMapView = ({
               ref={mapCardsCarouselRef}
               id={MAP_CAROUSEL_CONTAINER_ID}
             >
-              {stopCardProps.map(({ stop, passby }, index) => (
-                <>
-                  <Conditional if={stop}>
-                    <MapViewCard
-                      key={`${stop?.sectionDetails?.id}`}
-                      {...stop}
-                      stopIndex={index}
-                      cardTag={
-                        <StopLabel
-                          stopCardProps={stopCardProps}
-                          currentStop={index}
-                          skipAnimation
-                        />
-                      }
-                      onCardInView={handleActiveMapCardChange}
-                      itineraryType={itinerary.type}
-                    />
-                  </Conditional>
-                  <Conditional if={passby}>
-                    <MapViewCard
-                      key={`${passby?.stops?.[0]?.id}`}
-                      {...passby}
-                      stopIndex={index}
-                      isPassBy
-                      cardTag={
-                        <StopLabel
-                          stopCardProps={stopCardProps}
-                          currentStop={index}
-                          skipAnimation
-                        />
-                      }
-                      onCardInView={handleActiveMapCardChange}
-                      itineraryType={itinerary.type}
-                    />
-                  </Conditional>
-                </>
-              ))}
+              {stopCardProps.map(({ stop, passby }, index) => {
+                const stopLabelText = getStopLabelText({
+                  stopCardProps,
+                  currentStop: index,
+                });
+                const isEndPoint =
+                  stop?.sectionDetails?.type === SECTION_TYPE.END_LOCATION;
+                const hideViewDetails =
+                  isEndPoint && isEndpointSameAsStartPoint;
+
+                return (
+                  <>
+                    <Conditional if={!!stop}>
+                      <MapViewCard
+                        key={`${stop?.sectionDetails?.id}`}
+                        {...stop}
+                        stopIndex={index}
+                        onCardInView={handleActiveMapCardChange}
+                        stopLabelText={stopLabelText}
+                        childParentSectionMap={childParentSectionMap}
+                        hideViewDetails={hideViewDetails}
+                      />
+                    </Conditional>
+                    <Conditional if={!!passby}>
+                      <MapViewCard
+                        key={`${passby?.stops?.[0]?.id}`}
+                        {...passby}
+                        stopIndex={index}
+                        isPassBy
+                        onCardInView={handleActiveMapCardChange}
+                        stopLabelText={stopLabelText}
+                        childParentSectionMap={childParentSectionMap}
+                        hideViewDetails={hideViewDetails}
+                      />
+                    </Conditional>
+                  </>
+                );
+              })}
             </div>
           </Conditional>
         </StyledMWebMapViewContainer>

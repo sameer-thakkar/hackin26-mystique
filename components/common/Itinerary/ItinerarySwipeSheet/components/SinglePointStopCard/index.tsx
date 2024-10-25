@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { ChildSection } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import Descriptors from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors';
-import FindDirection from 'components/common/Itinerary/TimelineView/components/StopCard/components/FindDirection';
 import type { StopCardProps } from 'components/common/Itinerary/TimelineView/components/StopCard/types';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import MediaCarousel from 'UI/MediaCarousel';
@@ -24,15 +23,16 @@ const SinglePointStopCard = ({
   stop,
   showTitle = true,
   isCurrentStop = false,
+  showLocationDescriptor = false,
 }: {
   stop: StopCardProps;
   showTitle?: boolean;
   isCurrentStop?: boolean;
+  showLocationDescriptor?: boolean;
 }) => {
   const { sectionDetails, descriptors, subCards = [] } = stop;
   const {
     details: { name, description, mediaUrls = [] },
-    location,
   } = sectionDetails!;
 
   const { highlights, nearBys } = useMemo(() => {
@@ -84,14 +84,12 @@ const SinglePointStopCard = ({
           <Conditional if={showTitle && name}>
             <StopTitle>{name}</StopTitle>
           </Conditional>
-          <Conditional if={location}>
-            <FindDirection location={location!} />
-          </Conditional>
         </StopHeadContainer>
         <Conditional if={descriptors}>
           <Descriptors
             {...descriptors}
             variant={TimelineViewComponentVariant.REDUCED_WIDTH}
+            showLocationDescriptor={showLocationDescriptor}
           />
         </Conditional>
         <Conditional if={mediaUrls.length >= 1}>

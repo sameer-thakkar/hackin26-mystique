@@ -1221,6 +1221,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TAB: 'Itinerário',
     HEADING: 'Itinerário da experiência',
     VIEW_ITINERARY: 'Ver itinerário',
+    VIEW_DETAILS: 'Ver detalhes',
     PASSES_BY_SECTION_HEADING: 'Passa por',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Destaques',

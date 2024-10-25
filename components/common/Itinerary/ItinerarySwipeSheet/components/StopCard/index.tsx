@@ -12,9 +12,11 @@ import SinglePointStopCard from '../SinglePointStopCard';
 const StopCard = ({
   stop,
   isCurrentStop = false,
+  isHOHOItinerary = false,
 }: {
   stop: StopCardProps;
   isCurrentStop: boolean;
+  isHOHOItinerary?: boolean;
 }) => {
   const { sectionDetails: { type } = {} } = stop;
 
@@ -23,7 +25,11 @@ const StopCard = ({
   return (
     <>
       <Conditional if={type === SECTION_TYPE.STOP}>
-        <SinglePointStopCard isCurrentStop={isCurrentStop} stop={stop} />
+        <SinglePointStopCard
+          isCurrentStop={isCurrentStop}
+          stop={stop}
+          showLocationDescriptor={isHOHOItinerary}
+        />
       </Conditional>
 
       <Conditional
@@ -33,6 +39,7 @@ const StopCard = ({
           <SinglePointStopCard
             isCurrentStop={isCurrentStop}
             stop={startOrEndPoints[0]}
+            showLocationDescriptor
           />
         </Conditional>
 
@@ -40,6 +47,7 @@ const StopCard = ({
           <MultiPointsStopCard
             isCurrentStop={isCurrentStop}
             stops={startOrEndPoints}
+            showLocationDescriptor
           />
         </Conditional>
       </Conditional>

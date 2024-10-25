@@ -1,0 +1,1 @@
+export const MAX_LEN_DESCRIPTION_STOP_CARD = 114;

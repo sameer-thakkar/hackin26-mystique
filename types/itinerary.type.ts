@@ -1,3 +1,5 @@
+import type { StopCardProps } from 'components/common/Itinerary/TimelineView/components/StopCard/types';
+
 export enum SECTION_TYPE {
   START_LOCATION = 'START_LOCATION',
   STOP = 'STOP',
@@ -174,3 +176,12 @@ export interface ChildSection {
 export interface ChildSectionDetails extends BaseSectionDetails {
   timeFromParent?: number;
 }
+
+export type THighlights = Omit<
+  StopCardProps,
+  'subCards' | 'position' | 'multiPointDetails' | 'subSectionDetails'
+> & {
+  subSectionDetails: ChildSection | Section;
+};
+
+export type TNearbyThings = THighlights;

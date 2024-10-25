@@ -40,6 +40,21 @@ export const NavigationButtons = styled.div`
   }
 `;
 
+export const NavigationButtonWrapper = styled.div<{
+  $isVisible?: boolean;
+}>`
+  width: ${({ $isVisible }) => ($isVisible ? '100%' : '0')};
+  transition: width 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+
+  button {
+    opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+
+    &:hover {
+      background-color: ${COLORS.PURPS.LEVEL_20};
+    }
+  }
+`;
+
 export const ItinerarySwipeSheetContainer = styled.div`
   z-index: 52;
   position: fixed;
@@ -69,9 +84,14 @@ export const ItinerarySwipeSheetContentContainer = styled.div`
 export const ContentHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 1rem;
 `;
 
-export const StopTypeTagContainer = styled.div``;
+export const StopTypeTagContainer = styled.div`
+  position: relative;
+  top: 0;
+  left: 1rem;
+`;
 
 export const SpaceBlock = styled.div<{
   $gap: string;
@@ -82,7 +102,7 @@ export const SpaceBlock = styled.div<{
 
 export const CloseButtonContainer = styled.button`
   position: relative;
-  top: 1rem;
+  top: 0;
   right: 1rem;
   margin: 0;
   border: none;

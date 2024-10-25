@@ -1222,6 +1222,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TAB: 'Itinéraire',
     HEADING: "Itinéraire de l'expérience",
     VIEW_ITINERARY: "Voir l'itinéraire",
+    VIEW_DETAILS: 'Voir les détails',
     PASSES_BY_SECTION_HEADING: 'À voir en cours de route',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Points forts',

@@ -4,6 +4,7 @@ import { TimelineViewComponentVariant } from 'components/common/Itinerary/Timeli
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
+import { ToggleContainer } from './components/DefaultHeadingContainer/styles';
 
 export const RankContainer = styled.div<{
   $isEnd?: boolean;
@@ -108,24 +109,6 @@ export const RankContainer = styled.div<{
   }
 `;
 
-export const ToggleContainer = styled.div`
-  position: absolute;
-  top: 0.375rem;
-  right: 0.375rem;
-  height: 1.25rem;
-  width: 1.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-
-  svg {
-    path {
-      stroke: ${COLORS.GRAY.G2};
-    }
-  }
-`;
-
 export const TitleContainer = styled.h5`
   ${expandFontToken(FONTS.MISC_OVERLINE_LARGE)}
   color: ${COLORS.GRAY.G2};
@@ -136,12 +119,14 @@ export const TitleContainer = styled.h5`
 export const HeadingContainer = styled.div<{
   $isSubCard?: boolean;
   $variant?: TimelineViewComponentVariant;
+  $isClickable?: boolean;
 }>`
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
   align-items: center;
   position: relative;
+  cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'auto')};
 
   .image-wrap {
     display: flex;
@@ -223,6 +208,14 @@ export const HeadingContainer = styled.div<{
         svg {
           path {
             stroke: ${COLORS.GRAY.G2};
+          }
+        }
+      }
+
+      .chevron-right-icon-container {
+        svg {
+          path {
+            stroke-width: 1;
           }
         }
       }
@@ -346,8 +339,8 @@ export const DescriptionContainer = styled.div<{
     `}
 
   .image-wrap {
-    min-width: 14.25rem;
-    max-width: 14.25rem;
+    min-width: 23.625rem;
+    max-width: 23.625rem;
     aspect-ratio: 16/10;
     display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
 
@@ -366,13 +359,6 @@ export const DescriptionContainer = styled.div<{
 
   display: ${({ $isSubCard, $isOpen }) =>
     ($isSubCard ? $isOpen : true) ? 'flex' : 'none'};
-`;
-
-export const SubStopsHeading = styled.h5`
-  ${expandFontToken(FONTS.SUBHEADING_LARGE)}
-  color: ${COLORS.GRAY.G2};
-  margin: 0 0 0.5rem;
-  padding-left: 1.25rem;
 `;
 
 export const SubCardsContainer = styled.div`
@@ -432,8 +418,8 @@ export const Container = styled.div<{
 
       ${DescriptionContainer} {
         .sub-card-image {
-          min-width: 14.25rem;
-          max-width: 14.25rem;
+          min-width: 23.625rem;
+          max-width: 23.625rem;
           aspect-ratio: 16 / 10;
           height: auto;
 
@@ -451,7 +437,7 @@ export const Container = styled.div<{
   ${({ $variant }) =>
     $variant === TimelineViewComponentVariant.REDUCED_WIDTH &&
     css`
-      padding: 0.1875rem 0.5rem 1.25rem 2.5rem;
+      padding: 0.1875rem 0.5rem 1.25rem 2.125rem;
     `};
 
   ${({ $isClickable }) =>
@@ -499,10 +485,4 @@ export const ClickableContainer = styled.div<{ $isClickable?: boolean }>`
   gap: 0.5rem;
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'auto')};
   position: relative;
-`;
-
-export const SubStopsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;

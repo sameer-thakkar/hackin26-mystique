@@ -9,8 +9,8 @@ export const StyledItineraryMapViewBanner = styled.div`
   border-radius: 12px;
   background-color: ${COLORS.BACKGROUND.FADED_PALE};
   gap: 1rem;
-  height: 3.875rem;
-  padding: 0.25rem 1rem;
+  height: 4.75rem;
+  padding: 0 1rem;
   position: relative;
   overflow: hidden;
 

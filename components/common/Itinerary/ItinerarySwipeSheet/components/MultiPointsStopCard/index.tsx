@@ -36,9 +36,11 @@ const MultiPointsStopCardHeader = (props: {
 const MultiPointsStopCard = ({
   stops,
   isCurrentStop = false,
+  showLocationDescriptor = false,
 }: {
   stops: StopCardProps[];
   isCurrentStop: boolean;
+  showLocationDescriptor?: boolean;
 }) => {
   const items = useMemo(() => {
     return stops.map((stop, index) => {
@@ -49,6 +51,7 @@ const MultiPointsStopCard = ({
             isCurrentStop={true}
             showTitle={false}
             stop={stop}
+            showLocationDescriptor={showLocationDescriptor}
           />
         ),
         defaultExpanded: index === 0 || stops.length <= 3,

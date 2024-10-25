@@ -33,6 +33,7 @@ const RouteMap = ({
   zoomPadding = [60, 60],
   enableFreeTouchPropagation = false,
   onReset,
+  mapChildToParent = true,
 }: TMapProps) => {
   const [markers, setMarkers] = useState<Array<MapMarker> | undefined>();
   const [zoomInfo, setZoomInfo] = useState<TZoomInfo>(null);
@@ -195,7 +196,9 @@ const RouteMap = ({
           });
 
           onActiveSectionChange?.(
-            childToParent.get(marker.element.id) ?? marker.element.id
+            mapChildToParent
+              ? childToParent.get(marker.element!.id) ?? marker.element!.id
+              : marker.element!.id
           );
           const isSection = Array.isArray(marker.element.childSections);
           const sectionName = isSection ? 'section' : 'childSection';

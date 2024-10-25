@@ -1,4 +1,4 @@
-import { BaseSectionDetails } from 'types/itinerary.type';
+import { BaseSectionDetails, type Location } from 'types/itinerary.type';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 
 export type Props = {
@@ -9,6 +9,8 @@ export type Props = {
   foodTypes?: BaseSectionDetails['subType'];
   variant?: TimelineViewComponentVariant;
   descriptorSize?: DescriptorSize;
+  location?: Location;
+  showLocationDescriptor?: boolean;
 };
 
 export type DescriptorProps = {

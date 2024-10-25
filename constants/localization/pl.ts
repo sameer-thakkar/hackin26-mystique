@@ -1167,6 +1167,7 @@ const pl = {
     TAB: 'Plan wycieczki',
     HEADING: 'Plan wycieczki',
     VIEW_ITINERARY: 'Wyświetl plan podróży',
+    VIEW_DETAILS: 'Wyświetl szczegóły',
     PASSES_BY_SECTION_HEADING: 'Widok na:',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Główne punkty',

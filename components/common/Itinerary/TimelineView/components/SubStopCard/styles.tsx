@@ -1,135 +1,87 @@
 import styled, { css } from 'styled-components';
-import { DescriptorContainer } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/styles';
-import { StyledNavigationArrowsContainer } from 'components/common/NavigationButtons/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const StyledSubStopCardContainer = styled.div<{
-  $hasMediaImages?: boolean;
-}>`
-  --text-color: ${({ $hasMediaImages }) =>
-    $hasMediaImages ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
-
+export const SubStopContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: calc(100% - 1rem);
+  background-color: ${COLORS.GRAY.G8};
+
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY.G6};
-  background-color: ${COLORS.BRAND.WHITE};
-  position: relative;
-  height: ${({ $hasMediaImages }) => ($hasMediaImages ? '9.25rem' : '100%')};
+  padding: 0.5rem;
 
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    z-index: 2;
-    padding: ${({ $hasMediaImages }) =>
-      $hasMediaImages ? '0.5rem' : '0.75rem'};
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-  }
+  .image-wrap {
+    height: 2.1875rem;
+    width: 3.5rem;
+    aspect-ratio: 16 / 10;
 
-  .card-heading {
-    ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
-    color: var(--text-color);
-    margin: 0 0 0.25rem;
-  }
-
-  .image-carousel {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 9.25rem;
-  }
-
-  .swiper-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: auto;
-    z-index: 3;
-
-    ${StyledNavigationArrowsContainer} {
-      margin-left: 0;
+    img {
+      height: 2.1875rem;
+      width: 3.5rem;
+      border-radius: 4px;
     }
   }
-
-  ${({ $hasMediaImages }) =>
-    $hasMediaImages &&
-    css`
-      ${DescriptorContainer} {
-        svg {
-          path {
-            stroke: var(--text-color);
-          }
-        }
-
-        .descriptor-text {
-          color: var(--text-color);
-        }
-      }
-    `}
 `;
 
-export const SpaceBlock = styled.div<{ $gap?: string }>`
-  width: 100%;
-  height: ${({ $gap }) => $gap};
-`;
-
-export const StyledSubStopMediaCardContainer = styled.div`
-  height: 9.25rem;
-  width: 100%;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-
-  .image-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  img {
-    height: 100%;
-    width: 100%;
-  }
-
-  .gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, #0d001a 0%, rgba(13, 0, 26, 0) 100%);
-  }
-`;
-
-export const StyledSubStopNavigationArrowsContainer = styled.div`
-  display: flex;
-  gap: 0.375rem;
-`;
-
-export const StyledSubStopArrowButtonContainer = styled.button`
+export const IconContainer = styled.div`
+  height: 2.1875rem;
+  width: 3.5rem;
+  border-radius: 4px;
+  background-color: ${COLORS.GRAY.G3};
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
-  border: none;
-  outline: none;
-  margin: 0;
-  border-radius: 50%;
+  flex-shrink: 0;
 
   svg {
-    height: 1rem;
-    width: 1rem;
+    path {
+      stroke: ${COLORS.BRAND.WHITE};
+    }
+  }
+`;
+
+export const SubStopContent = styled.div<{ $isClickable?: boolean }>`
+  display: grid;
+  grid-template-areas: ${({ $isClickable }) =>
+    $isClickable ? "'name arrow' 'duration arrow'" : "'name' 'duration'"};
+  ${({ $isClickable }) =>
+    $isClickable &&
+    css`
+      grid-template-columns: 1fr 0.75rem;
+    `};
+  grid-template-rows: 1fr auto;
+  column-gap: 0.5rem;
+  row-gap: 0.125rem;
+  flex-grow: 1;
+
+  .passby-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    color: ${COLORS.GRAY.G2};
+    grid-area: name;
+    line-height: 19px;
   }
 
-  &:disabled {
-    opacity: 0.5;
+  .passby-duration {
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    color: ${COLORS.GRAY.G3};
+    grid-area: duration;
+  }
+
+  .passby-arrow {
+    grid-area: arrow;
+    align-self: center;
+
+    path {
+      stroke: ${COLORS.GRAY.G2};
+    }
   }
 `;

@@ -1,8 +1,15 @@
 import React from 'react';
 import { INCLUSION, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import { Container } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/styles';
+import {
+  DescriptorSize,
+  type Props,
+} from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/types';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { getDurationInHMNotation } from 'utils/dateUtils';
+import { generateGoogleMapPlacesUrl } from 'utils/itinerary';
+import COLORS from 'const/colors';
 import { ClockSvg } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
 import Activities from 'assets/activities';
@@ -11,23 +18,9 @@ import Beverage from 'assets/beverage';
 import CheckCircle from 'assets/checkCircle';
 import CrossCircle from 'assets/crossCircle';
 import FoodAndDrink from 'assets/foodAndDrink';
+import LocationPin from 'assets/locationPin';
 import Ticket from 'assets/ticket';
-import { Container, DescriptorContainer } from './styles';
-import type { DescriptorProps, Props } from './types';
-import { DescriptorSize } from './types';
-
-const Descriptor = ({
-  icon,
-  text,
-  size = DescriptorSize.LARGE,
-}: DescriptorProps) => {
-  return (
-    <DescriptorContainer className="descriptor-container" $size={size}>
-      {icon}
-      <p className="descriptor-text">{text}</p>
-    </DescriptorContainer>
-  );
-};
+import Descriptor from './components/Descriptor';
 
 const Descriptors = ({
   inclusion,
@@ -37,6 +30,8 @@ const Descriptors = ({
   foodTypes,
   variant = TimelineViewComponentVariant.DEFAULT,
   descriptorSize = DescriptorSize.LARGE,
+  location,
+  showLocationDescriptor = true,
 }: Props) => {
   const getInclusionIcon = (label?: INCLUSION) => {
     if (!label) return null;
@@ -58,14 +53,26 @@ const Descriptors = ({
     !duration &&
     !activitiesCount &&
     !attractionsCount &&
-    !foodTypes
+    !foodTypes &&
+    !location
   )
     return null;
 
   const walkDuration = duration ? getDurationInHMNotation(duration) : '';
+  const locationUrl = location ? generateGoogleMapPlacesUrl(location) : '';
 
   return (
     <Container className="descriptors-container" $variant={variant}>
+      <Conditional if={!!location && showLocationDescriptor}>
+        <Descriptor
+          icon={<LocationPin height={12} width={12} />}
+          text={strings.ITINERARY.GET_DIRECTION}
+          color={COLORS.TEXT.CANDY_1}
+          bold
+          url={locationUrl}
+          size={descriptorSize}
+        />
+      </Conditional>
       <Conditional if={walkDuration}>
         <Descriptor
           icon={<ClockSvg />}

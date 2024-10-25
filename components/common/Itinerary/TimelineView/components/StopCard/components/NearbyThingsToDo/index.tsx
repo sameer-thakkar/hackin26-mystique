@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
-import PassByItemCard from 'components/common/Itinerary/TimelineView/components/PassByItemCard';
+import PassByItemCard from 'components/common/Itinerary/TimelineView/components/SubStopCard';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import { useSwiperArrows } from 'hooks/useSwiper';
 import { appAtom } from 'store/atoms/app';

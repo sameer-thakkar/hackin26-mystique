@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { IImageProps } from 'UI/Image/interface';
-import { generateImageImgixUrl } from 'UI/Image/util';
+import { generateImageImgixUrl, getBlurDataUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
 import { appAtom } from 'store/atoms/app';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
@@ -60,6 +60,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     onLoadingComplete,
     loadHigherQualityImage: loadHigherQualityImageProp = false,
     focalPointParams,
+    placeholder = 'empty',
   },
   ref
 ) => {
@@ -157,7 +158,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
         width={fillImageProp ? undefined : Number(calculatedWidth)}
         height={fillImageProp ? undefined : Number(calculatedHeight)}
         alt={alt}
-        placeholder={'empty'}
+        placeholder={placeholder}
         priority={priority}
         unoptimized // We use IMGIX, which does all the optimisation required. Letting Next process images will add to TTFB.
         fill={fillImageProp}
@@ -169,6 +170,11 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
           }
         }}
         onLoadingComplete={onLoadingComplete}
+        blurDataURL={
+          placeholder === 'blur'
+            ? getBlurDataUrl(calculatedWidth, calculatedHeight)
+            : undefined
+        }
       />
       <Conditional if={!!attribution}>
         <Tooltip content={attribution} trigger={InfoIcon} />

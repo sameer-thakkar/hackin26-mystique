@@ -1272,6 +1272,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TAB: 'Itinerario',
     HEADING: 'Itinerario de la experiencia',
     VIEW_ITINERARY: 'Ver itinerario',
+    VIEW_DETAILS: 'Ver detalles',
     PASSES_BY_SECTION_HEADING: 'Pasa por',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Lo más destacado',

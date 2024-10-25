@@ -1,16 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
-import { ChildSection, SECTION_TYPE, SUB_TYPES } from 'types/itinerary.type';
+import { SECTION_TYPE, SUB_TYPES } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import { SubCardHeadingContainer } from 'components/common/Itinerary/TimelineView/components/PassesByCard/styles';
-import Descriptors from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors';
-import FindDirection from 'components/common/Itinerary/TimelineView/components/StopCard/components/FindDirection';
 import MultiplePoints from 'components/common/Itinerary/TimelineView/components/StopCard/components/MultiplePoints';
-import { MultiplePointsProps } from 'components/common/Itinerary/TimelineView/components/StopCard/components/MultiplePoints/types';
 import NearbyThingsToDo from 'components/common/Itinerary/TimelineView/components/StopCard/components/NearbyThingsToDo';
 import NextDestinationTravel from 'components/common/Itinerary/TimelineView/components/StopCard/components/NextDestinationTravel';
-import SubStopCard from 'components/common/Itinerary/TimelineView/components/SubStopCard';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
@@ -18,24 +14,38 @@ import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
-import Minus from 'assets/minus';
-import Plus from 'assets/plus';
+import SubStopSection from './components/SubStopSection';
+import useStopCard from './hooks/useStopCard';
 import {
   ClickableContainer,
   Container,
   ContentContainer,
   Description,
   DescriptionContainer,
-  HeadingContainer,
   RankContainer,
   SubCardsContainer,
-  SubStopsContainer,
-  TitleContainer,
-  ToggleContainer,
 } from './styles';
 import { StopCardProps } from './types';
 
-const MAX_LEN_DESCRIPTION_STOP_CARD = 114;
+const DefaultHeadingContainer = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DefaultHeadingContainer" */ './components/DefaultHeadingContainer'
+    )
+);
+const ReducedWidthHeadingContainer = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ReducedWidthHeadingContainer" */ './components/ReducedWidthHeadingContainer'
+    )
+);
+const Descriptors = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "Descriptors" */ 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors'
+    )
+);
+
 const StopCard = ({
   descriptors,
   defaultOpen = false,
@@ -53,6 +63,7 @@ const StopCard = ({
   isHOHOItinerary,
   itineraryId,
   findDirections = false,
+  hasMultipleSubStops = false,
 }: StopCardProps & {
   itineraryId: number;
 }) => {
@@ -62,9 +73,8 @@ const StopCard = ({
     isDesktop ? defaultOpen || isActive : false
   );
   const [multiPointDefaultOpen, setMultiPointDefaultOpen] = useState(-1);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { id, type, details, location } = isSubSection
+  const { id, type, details } = isSubSection
     ? subSectionDetails!
     : sectionDetails!;
   const {
@@ -80,55 +90,41 @@ const StopCard = ({
   const showSubCardImage = hasImage && isOpen;
   const isStart = type === SECTION_TYPE.START_LOCATION;
   const isEnd = type === SECTION_TYPE.END_LOCATION;
-  const { subStops, passBys } = useMemo(() => {
-    const subStops = subCards.filter(({ subSectionDetails, isSubSection }) =>
-      isSubSection
-        ? subSectionDetails && !subSectionDetails.details.passBy
-        : true
-    );
-    const passBys = subCards
-      .filter(
-        ({ subSectionDetails }) =>
-          subSectionDetails && subSectionDetails.details.passBy
-      )
-      .map(({ subSectionDetails }) => subSectionDetails) as ChildSection[];
-    return { subStops, passBys };
-  }, []);
   const endPointIsNotSameAsStart = !sectionDetails?.details.sameAsStartingPoint;
-  const multiPoints: MultiplePointsProps = {
-    itineraryId,
-    points:
-      (isStart || isEnd) && subCards.length
-        ? subCards.map(({ sectionDetails }) => ({
-            image: sectionDetails?.details?.mediaUrls?.[0] ?? '',
-            title: sectionDetails?.details.name! ?? '',
-            timeForNextSection: sectionDetails?.details.timeForNextSection ?? 0,
-          }))
-        : [],
-    isStartPoint: isStart,
-    onItemClick: (index) => {
-      if (variant === TimelineViewComponentVariant.DEFAULT) {
-        if (index < 3) {
-          setMultiPointDefaultOpen(index);
-        }
-        setIsOpen(true);
-      } else {
-        if (index < 3) {
-          onStopSectionClick?.(subCards[index].sectionDetails!);
-        }
-      }
-    },
-  };
-  const hasMultiPoints = multiPoints.points.length > 1;
-  const handleStopSectionClick = () => {
-    if (isDesktop && !hasMultiPoints) {
-      onStopSectionClick?.(isSubSection ? subSectionDetails! : sectionDetails!);
-    }
 
-    if (!isDesktop && endPointIsNotSameAsStart && !hasMultiPoints) {
-      onStopSectionClick?.(isSubSection ? subSectionDetails! : sectionDetails!);
-    }
-  };
+  const {
+    subStops,
+    passBys,
+    allowOpen,
+    isStopSectionClickable,
+    multiPoints,
+    hasMultiPoints,
+    shouldShowNextDestinationTravel,
+    handleStopSectionClick,
+    handleSubStopSectionClick,
+  } = useStopCard({
+    itineraryId,
+    setIsOpen,
+    setMultiPointDefaultOpen,
+    subCards,
+    variant,
+    endPointIsNotSameAsStart,
+    hasImage,
+    isDesktop,
+    isHOHOItinerary,
+    isStart,
+    isEnd,
+    isSubSection,
+    isSubCard,
+    isForcedEnd,
+    onStopSectionClick,
+    sectionDetails,
+    subSectionDetails,
+  });
+
+  const isReducedVariant =
+    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
+
   useEffect(() => {
     if (defaultOpen) {
       ref.current?.scrollIntoView({
@@ -139,40 +135,10 @@ const StopCard = ({
     }
   }, []);
 
-  const isReducedVariant =
-    variant === TimelineViewComponentVariant.REDUCED_WIDTH;
-
   useEffect(() => {
     if (isReducedVariant && isDesktop) setIsOpen(hasMultiPoints || isActive);
   }, [isActive]);
 
-  const allowOpen = useMemo(() => {
-    if (!isReducedVariant) {
-      if (!endPointIsNotSameAsStart && isEnd) return false;
-      if ((isStart || isEnd) && hasMultiPoints) return false;
-      if (isSubCard && !hasImage && !description) return false;
-      if (
-        !isSubCard &&
-        !isSubSection &&
-        !hasImage &&
-        (!description || description.length - 7 < MAX_LEN_DESCRIPTION_STOP_CARD)
-      )
-        return false;
-      return true;
-    } else {
-      if (isDesktop) {
-        return (
-          (!isStart &&
-            !isEnd &&
-            !isHOHOItinerary &&
-            (!!subStops?.length || !!passBys?.length)) ||
-          ((isStart || isEnd) && !hasMultiPoints)
-        );
-      } else {
-        return !(isEnd && !endPointIsNotSameAsStart);
-      }
-    }
-  }, []);
   const subSectionHeading =
     subType?.label === SUB_TYPES.POI || subType?.label === SUB_TYPES.LANDMARK
       ? strings.ITINERARY.SUB_SECTION_HEADING.HIGHLIGHTS
@@ -180,134 +146,21 @@ const StopCard = ({
       ? strings.ITINERARY.SUB_SECTION_HEADING.NEARBY_THINGS_TO_DO
       : strings.ITINERARY.SUB_SECTION_HEADING.THINGS_TO_DO;
 
-  const DefaultHeadingContainer = () => {
-    return (
-      <>
-        <Conditional if={allowOpen}>
-          <ToggleContainer>
-            {isOpen ? <Minus /> : <Plus height={20} width={20} />}
-          </ToggleContainer>
-        </Conditional>
-        <Conditional if={(isEnd || isStart) && !isSubCard}>
-          <TitleContainer>
-            {isStart
-              ? strings.ITINERARY.STOP_CARD.TITLE.START
-              : strings.ITINERARY.STOP_CARD.TITLE.END}
-          </TitleContainer>
-        </Conditional>
-        <HeadingContainer $isSubCard={isSubCard}>
-          <Conditional if={!isSubCard && !hasMultiPoints}>
-            {hasImage && (
-              <>
-                <Image
-                  url={mediaUrls[0]}
-                  alt={name || 'stop-image'}
-                  height={20}
-                  width={32}
-                  priority
-                  fetchPriority={'high'}
-                  fill
-                  aspectRatio="16:10"
-                  autoCrop={false}
-                  onLoadingComplete={() => setImageLoaded(true)}
-                  loadHigherQualityImage={true}
-                />
-                {!imageLoaded && (
-                  <Skeleton
-                    height={20}
-                    width={32}
-                    borderRadius={4}
-                    containerClassName="sub-image-loader"
-                  />
-                )}
-              </>
-            )}
-          </Conditional>
-          <p className="stop-name">
-            {hasMultiPoints
-              ? strings.formatString(
-                  isStart
-                    ? strings.ITINERARY.STOP_CARD.MULTI_POINTS_AVAILABLE.START
-                    : strings.ITINERARY.STOP_CARD.MULTI_POINTS_AVAILABLE.END,
-                  multiPoints.points.length
-                )
-              : isSubCard
-              ? `${position}. ${name}`
-              : name}
-          </p>
-          <Conditional if={findDirections && isSubCard}>
-            <FindDirection location={location!} hoverAnimation />
-          </Conditional>
-        </HeadingContainer>
-      </>
-    );
+  const commonHeadingProps = {
+    name: name!,
+    strings,
+    variant,
+    allowOpen,
+    hasMultiPoints,
+    hasMultipleSubStops,
+    isOpen,
+    isStart,
+    isEnd,
+    isSubCard,
+    multiPoints,
+    position,
   };
-  const ReducedWidthHeadingContainer = () => {
-    return (
-      <HeadingContainer $isSubCard={isSubCard} $variant={variant}>
-        <div className="stop-heading-container">
-          <Conditional if={!hasMultiPoints && (isStart || isEnd)}>
-            <p className="stop-title">
-              {isStart
-                ? strings.ITINERARY.STOP_CARD.TITLE.START
-                : strings.ITINERARY.STOP_CARD.TITLE.END}
-            </p>
-          </Conditional>
-          <div className="stop-name-container">
-            <Conditional if={!isSubCard && !hasMultiPoints}>
-              {hasImage && (
-                <>
-                  <Image
-                    url={mediaUrls[0]}
-                    alt={name || 'stop-image'}
-                    height={isDesktop ? 20 : 16}
-                    width={isDesktop ? 32 : 24}
-                    priority
-                    fetchPriority={'high'}
-                    fill
-                    aspectRatio="15:10"
-                    autoCrop={false}
-                    onLoadingComplete={() => setImageLoaded(true)}
-                    loadHigherQualityImage={true}
-                  />
-                  {!imageLoaded && (
-                    <Skeleton
-                      height={isDesktop ? 20 : 16}
-                      width={isDesktop ? 32 : 24}
-                      borderRadius={4}
-                      containerClassName="sub-image-loader"
-                    />
-                  )}
-                </>
-              )}
-            </Conditional>
-            <p className="stop-name">
-              {hasMultiPoints
-                ? strings.formatString(
-                    isStart
-                      ? strings.ITINERARY.STOP_CARD.MULTI_POINTS_AVAILABLE.START
-                      : strings.ITINERARY.STOP_CARD.MULTI_POINTS_AVAILABLE.END,
-                    multiPoints.points.length
-                  )
-                : isSubCard
-                ? `${position}. ${name}`
-                : name}
-            </p>
-          </div>
-          <Conditional if={!endPointIsNotSameAsStart && isEnd}>
-            <p className="stop-subtext">
-              {strings.ITINERARY.START_POINT_SAME_AS_END_POINT}
-            </p>
-          </Conditional>
-        </div>
-        <Conditional if={allowOpen}>
-          <div className="toggle-icon-container">
-            {isOpen ? <Minus /> : <Plus height={20} width={20} />}
-          </div>
-        </Conditional>
-      </HeadingContainer>
-    );
-  };
+
   return (
     <Container
       $isSubCard={isSubCard}
@@ -351,31 +204,22 @@ const StopCard = ({
           $isClickable={allowOpen}
         >
           <Conditional if={!isReducedVariant}>
-            <DefaultHeadingContainer />
+            <DefaultHeadingContainer {...commonHeadingProps} />
           </Conditional>
           <Conditional if={isReducedVariant}>
-            <ReducedWidthHeadingContainer />
+            <ReducedWidthHeadingContainer
+              {...commonHeadingProps}
+              endPointIsNotSameAsStart={endPointIsNotSameAsStart}
+              isStopSectionClickable={isStopSectionClickable}
+            />
           </Conditional>
           <Conditional if={!hasMultiPoints}>
-            <Conditional if={findDirections && isReducedVariant}>
-              <FindDirection
-                location={location!}
-                hoverAnimation
-                variant={variant}
-              />
-            </Conditional>
             <Conditional if={endPointIsNotSameAsStart}>
-              <Descriptors {...descriptors} variant={variant} />
-            </Conditional>
-            <Conditional
-              if={
-                findDirections &&
-                !isSubCard &&
-                !hasMultiPoints &&
-                !isReducedVariant
-              }
-            >
-              <FindDirection location={location!} hoverAnimation />
+              <Descriptors
+                {...descriptors}
+                variant={variant}
+                showLocationDescriptor={findDirections}
+              />
             </Conditional>
             <Conditional
               if={
@@ -395,25 +239,17 @@ const StopCard = ({
                       <Image
                         url={mediaUrls[0]}
                         alt="stop-image"
-                        height={142.5}
-                        width={228}
+                        height={236}
+                        width={378}
                         priority
                         fetchPriority={'high'}
                         fill
                         aspectRatio="16:10"
                         autoCrop={false}
                         className="sub-card-image"
-                        onLoadingComplete={() => setImageLoaded(true)}
                         loadHigherQualityImage={true}
+                        placeholder="blur"
                       />
-                      {!imageLoaded && (
-                        <Skeleton
-                          height={143}
-                          width={228}
-                          borderRadius={4}
-                          containerClassName="sub-image-loader"
-                        />
-                      )}
                     </>
                   )}
                 </Conditional>
@@ -429,66 +265,17 @@ const StopCard = ({
             </Conditional>
           </Conditional>
         </ClickableContainer>
-        <Conditional
-          if={
-            subStops?.length &&
-            isReducedVariant &&
-            !isSubCard &&
-            isOpen &&
-            !hasMultiPoints
-          }
-        >
-          {subStops.map(
-            ({ subSectionDetails, descriptors, sectionDetails }) => (
-              <SubStopCard
-                key={`subStop-card-${
-                  (subSectionDetails || sectionDetails)?.id
-                }`}
-                subSectionDetails={subSectionDetails!}
-                sectionDetails={sectionDetails!}
-                descriptors={descriptors}
-                variant={variant}
-                itineraryId={itineraryId}
-              />
-            )
-          )}
-        </Conditional>
-        <Conditional
-          if={
-            (passBys?.length || subStops?.length) &&
-            isReducedVariant &&
-            !isSubCard &&
-            !hasMultiPoints &&
-            isHOHOItinerary
-          }
-        >
-          <SubStopsContainer>
-            {subStops.map(
-              ({ subSectionDetails, descriptors, sectionDetails }) => (
-                <SubStopCard
-                  key={`subStop-card-${
-                    (subSectionDetails || sectionDetails)?.id
-                  }`}
-                  subSectionDetails={subSectionDetails!}
-                  sectionDetails={sectionDetails!}
-                  descriptors={descriptors}
-                  variant={variant}
-                  isHOHOItinerary={isHOHOItinerary}
-                  itineraryId={itineraryId}
-                />
-              )
-            )}
-            {passBys.map((passBy) => (
-              <SubStopCard
-                key={`subStop-card-${passBy.id}`}
-                subSectionDetails={passBy}
-                variant={variant}
-                isHOHOItinerary={isHOHOItinerary}
-                itineraryId={itineraryId}
-              />
-            ))}
-          </SubStopsContainer>
-        </Conditional>
+        <SubStopSection
+          handleSubStopSectionClick={handleSubStopSectionClick}
+          subStops={subStops}
+          passBys={passBys}
+          itineraryId={itineraryId}
+          variant={variant}
+          isSubCard={isSubCard}
+          isOpen={isOpen}
+          hasMultiPoints={hasMultiPoints}
+          isHOHOItinerary={isHOHOItinerary}
+        />
         <Conditional
           if={
             subStops.length &&
@@ -513,6 +300,7 @@ const StopCard = ({
                 }
                 itineraryId={itineraryId}
                 onStopSectionClick={onStopSectionClick}
+                hasMultipleSubStops={subStops.length > 1}
               />
             ))}
           </SubCardsContainer>
@@ -544,13 +332,7 @@ const StopCard = ({
           />
         </Conditional>
       </ContentContainer>
-      <Conditional
-        if={
-          !(isEnd || isForcedEnd) &&
-          !isSubCard &&
-          (timeForNextSection || modeOfTravel || distanceForNextSection)
-        }
-      >
+      <Conditional if={shouldShowNextDestinationTravel}>
         <NextDestinationTravel
           timeForNextSection={timeForNextSection!}
           modeOfTravel={modeOfTravel}

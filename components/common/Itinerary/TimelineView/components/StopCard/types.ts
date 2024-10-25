@@ -24,4 +24,5 @@ export type StopCardProps = {
   isActive?: boolean;
   isHOHOItinerary?: boolean;
   findDirections?: boolean;
+  hasMultipleSubStops?: boolean;
 };

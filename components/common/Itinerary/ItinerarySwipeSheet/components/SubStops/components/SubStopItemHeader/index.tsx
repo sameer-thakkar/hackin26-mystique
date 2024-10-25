@@ -59,6 +59,7 @@ const SubStopItemHeader = ({ stop }: { stop: SubStopCardProps }) => {
           <Descriptors
             {...descriptors}
             variant={TimelineViewComponentVariant.REDUCED_WIDTH}
+            showLocationDescriptor={false}
           />
         </Conditional>
       </InfoContainer>

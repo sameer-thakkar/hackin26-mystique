@@ -6,6 +6,8 @@ interface ItineraryContextType {
   setActiveItineraryStopId: (state: number | null) => void;
   activeStopIndex: number | undefined | null;
   setActiveStopIndex: (state: number | undefined | null) => void;
+  selectedSubStopId: number | null;
+  setSelectedSubStopId: (state: number | null) => void;
   isItineraryDetailsSwipeSheetOpen: boolean;
   setIsItineraryDetailsSwipeSheetOpen: (state: boolean) => void;
   itineraryViewMode: ItineraryViewMode;
@@ -23,6 +25,9 @@ export const ItineraryProvider: React.FC<{}> = ({ children }) => {
   const [activeStopIndex, setActiveStopIndex] = useState<
     number | undefined | null
   >(null);
+  const [selectedSubStopId, setSelectedSubStopId] = useState<number | null>(
+    null
+  );
   const [
     isItineraryDetailsSwipeSheetOpen,
     setIsItineraryDetailsSwipeSheetOpen,
@@ -40,6 +45,8 @@ export const ItineraryProvider: React.FC<{}> = ({ children }) => {
         setActiveItineraryStopId,
         activeStopIndex,
         setActiveStopIndex,
+        selectedSubStopId,
+        setSelectedSubStopId,
         isItineraryDetailsSwipeSheetOpen,
         setIsItineraryDetailsSwipeSheetOpen,
         itineraryViewMode,

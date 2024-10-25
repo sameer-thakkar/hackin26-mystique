@@ -3,6 +3,9 @@ import { Section } from 'types/itinerary.type';
 import Button from '@headout/aer/src/atoms/Button';
 import Conditional from 'components/common/Conditional';
 import { BottomSheet } from 'components/common/DraggableBottomSheet';
+import StopLabel from 'components/common/Itinerary/StopLabel';
+import { EStopLabelType } from 'components/common/Itinerary/StopLabel/types';
+import { getStopLabelText } from 'components/common/Itinerary/StopLabel/utils';
 import { useItinerary } from 'contexts/ItineraryContext';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -14,7 +17,6 @@ import { strings } from 'const/strings';
 import CrossiconSvg from 'assets/crossiconSvg';
 import PassByCard from './components/PassByCard';
 import StopCard from './components/StopCard';
-import StopLabel from './components/StopLabel';
 import { TItinerarySwipeSheetProps } from './interface';
 import {
   CloseButtonContainer,
@@ -22,6 +24,7 @@ import {
   ItinerarySwipeSheetContainer,
   ItinerarySwipeSheetContentContainer,
   NavigationButtons,
+  NavigationButtonWrapper,
   PlaceholderCard,
   SpaceBlock,
   StopsContainer,
@@ -95,6 +98,11 @@ const ItinerarySwipeSheet = ({
     currentStop === stopCardProps.length - 2
       ? !isEndpointSameAsStartPoint && canShowNextButtonBaseCondition
       : canShowNextButtonBaseCondition;
+  const stopLabelText = getStopLabelText({
+    stopCardProps,
+    currentStop,
+  });
+  const isPassBy = !!stopCardProps?.[currentStop]?.passby;
 
   return (
     <Conditional if={visible}>
@@ -107,8 +115,8 @@ const ItinerarySwipeSheet = ({
             <ContentHeader>
               <StopTypeTagContainer>
                 <StopLabel
-                  stopCardProps={stopCardProps}
-                  currentStop={currentStop}
+                  labelText={stopLabelText!}
+                  type={isPassBy ? EStopLabelType.PassBy : EStopLabelType.Stop}
                 />
               </StopTypeTagContainer>
               <CloseButtonContainer onClick={handleCloseButtonClick}>
@@ -155,7 +163,7 @@ const ItinerarySwipeSheet = ({
               <Conditional if={canShowNavigationButtons}>
                 <SpaceBlock $gap={'4.25rem'} />
                 <NavigationButtons>
-                  <Conditional if={canShowPreviousButton}>
+                  <NavigationButtonWrapper $isVisible={canShowPreviousButton}>
                     <Button
                       size="medium"
                       color="purps"
@@ -165,8 +173,8 @@ const ItinerarySwipeSheet = ({
                       tabIndex={0}
                       text={strings.PREVIOUS}
                     />
-                  </Conditional>
-                  <Conditional if={canShowNextButton}>
+                  </NavigationButtonWrapper>
+                  <NavigationButtonWrapper $isVisible={canShowNextButton}>
                     <Button
                       size="medium"
                       color="purps"
@@ -176,7 +184,7 @@ const ItinerarySwipeSheet = ({
                       tabIndex={0}
                       text={strings.NEXT}
                     />
-                  </Conditional>
+                  </NavigationButtonWrapper>
                 </NavigationButtons>
               </Conditional>
             </StopsContainer>

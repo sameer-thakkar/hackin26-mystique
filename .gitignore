@@ -48,8 +48,8 @@ typings/
 *.tsbuildinfo
 
 ## Panda
-styled-system
-styled-system-studio
+styled-system/
+styled-system-studio/
 
 # Optional npm cache directory
 .npm

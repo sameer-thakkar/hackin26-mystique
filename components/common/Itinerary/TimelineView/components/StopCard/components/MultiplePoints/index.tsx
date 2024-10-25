@@ -1,6 +1,6 @@
 import React from 'react';
 import Conditional from 'components/common/Conditional';
-import PassByItemCard from 'components/common/Itinerary/TimelineView/components/PassByItemCard';
+import PassByItemCard from 'components/common/Itinerary/TimelineView/components/SubStopCard';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
 import Image from 'UI/Image';
 import { strings } from 'const/strings';

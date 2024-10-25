@@ -1174,6 +1174,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TAB: 'Reisplan',
     HEADING: 'Reisprogramma',
     VIEW_ITINERARY: 'Bekijk route',
+    VIEW_DETAILS: 'Details',
     PASSES_BY_SECTION_HEADING: 'Komt langs',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Hoogtepunten',

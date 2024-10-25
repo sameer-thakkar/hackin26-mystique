@@ -66,6 +66,20 @@ const fontFaceList = `
 		font-weight: 500;
 		font-stretch: normal;
 	}
+	
+	@font-face {
+    font-family: halyard-text;
+    src: url("https://use.typekit.net/af/2ed20c/00000000000000007735add1/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+    format("woff2"),
+    url("https://use.typekit.net/af/2ed20c/00000000000000007735add1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+    format("woff"),
+    url("https://use.typekit.net/af/2ed20c/00000000000000007735add1/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+    format("opentype");
+    font-display: auto;
+    font-style: normal;
+    font-weight: 600;
+    font-stretch: normal;
+}
 `;
 
 export const InlineFontFace: React.FC<Record<string, undefined>> = () => {

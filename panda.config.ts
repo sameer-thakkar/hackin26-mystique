@@ -9,6 +9,7 @@ export default defineConfig({
     './components/**/*.{js,jsx,ts,tsx}',
     './pages/**/*.{js,jsx,ts,tsx}',
     './node_modules/@headout/eevee/dist/atoms/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@headout/espeon/dist/**/*.{js,jsx,ts,tsx}',
   ],
   exclude: [],
   theme: {

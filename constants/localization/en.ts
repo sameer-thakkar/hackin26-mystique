@@ -1278,6 +1278,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TAB: 'Itinerary',
     HEADING: 'Experience itinerary',
     VIEW_ITINERARY: 'View Itinerary',
+    VIEW_DETAILS: 'View details',
     PASSES_BY_SECTION_HEADING: 'Passes By',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Highlights',

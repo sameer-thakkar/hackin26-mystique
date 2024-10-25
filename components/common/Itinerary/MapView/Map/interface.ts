@@ -44,6 +44,7 @@ export type TMapProps = {
   zoomPadding?: L.PointExpression;
   enableFreeTouchPropagation?: boolean;
   onReset?: () => void;
+  mapChildToParent?: boolean;
 };
 
 export type TGetMarkerIconProps = {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PassByContainer } from 'components/common/Itinerary/TimelineView/components/PassByItemCard/styles';
+import { SubStopContainer } from 'components/common/Itinerary/TimelineView/components/SubStopCard/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -48,7 +48,7 @@ export const MobileNearbyCards = styled.div`
   flex-direction: row;
   gap: 0.25rem;
 
-  ${PassByContainer} {
+  ${SubStopContainer} {
     flex-shrink: 1;
   }
 

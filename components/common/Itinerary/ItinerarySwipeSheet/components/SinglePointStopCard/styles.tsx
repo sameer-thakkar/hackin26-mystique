@@ -18,7 +18,7 @@ export const SinglePointStopCardContainer = styled.div<{
 export const StopInfoContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
-  padding: 1rem 1rem 1.5rem 1rem;
+  padding: 0.75rem 1rem 1.5rem 1rem;
   .descriptor-text {
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
     margin: 0.25rem 0 0.375rem 0;
@@ -45,7 +45,7 @@ export const StopHeadContainer = styled.div`
 `;
 
 export const StopTitle = styled.div`
-  ${expandFontToken(FONTS.HEADING_SMALL)}
+  ${expandFontToken(FONTS.HEADING_REGULAR)};
 `;
 
 export const StopDescription = styled.div`
