@@ -206,6 +206,7 @@ const Footer: React.FC<FooterProps> = ({
                       isEntertainmentMb={isEntertainmentMb}
                       isLight={isLight}
                       isLTT={isLTT}
+                      isDarkPurps={isDarkPurps}
                     >
                       <FooterHeading isLight={isLight}>
                         <span>{strings.FOOTER.GET_HELP_24_7}</span>
@@ -247,6 +248,7 @@ const Footer: React.FC<FooterProps> = ({
                       isEntertainmentMb={isEntertainmentMb}
                       isLight={isLight}
                       isLTT={isLTT}
+                      isDarkPurps={isDarkPurps}
                     >
                       <FooterHeading isLight={isLight}>
                         <span>{strings.HEADOUT}</span>
@@ -283,6 +285,7 @@ const Footer: React.FC<FooterProps> = ({
                       isEntertainmentMb={isEntertainmentMb}
                       isLight={isLight}
                       isLTT={isLTT}
+                      isDarkPurps={isDarkPurps}
                     >
                       <FooterHeading isLight={isLight}>
                         <span>{strings.FOOTER.WE_ACCEPT}</span>

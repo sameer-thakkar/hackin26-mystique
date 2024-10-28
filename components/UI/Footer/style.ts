@@ -148,6 +148,7 @@ export const LinksWrapper = styled.div<{
   isEntertainmentMb: boolean;
   isLight: boolean;
   isLTT: boolean;
+  isDarkPurps: boolean;
 }>`
   display: flex;
   flex-direction: column;
@@ -170,10 +171,10 @@ export const LinksWrapper = styled.div<{
           : theme.footer.primaryLinkColor};
     }
     .toggle_panel_button {
-      background: ${({ theme, isLight, isLTT }) =>
+      background: ${({ theme, isLight, isLTT, isDarkPurps }) =>
         isLight
           ? theme.footer.secondaryBackground
-          : isLTT
+          : isLTT || isDarkPurps
           ? theme.footer.lttBackgroundColor
           : theme.footer.primaryBackground};
       border: none;

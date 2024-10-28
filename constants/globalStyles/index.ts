@@ -92,7 +92,7 @@ export const globalStyles = defineGlobalStyles({
       marginTop: '-72px',
     },
   '.slice-wrapper + .slice-wrapper.unspace + .slice-wrapper': {
-    marginTop: '-144px',
+    marginTop: '-104px',
   },
   '.slice-wrapper:empty': { display: 'none' },
   '.swiper-pagination.swiper-pagination-bullets': {
