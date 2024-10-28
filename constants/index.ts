@@ -311,7 +311,6 @@ export const THEATRE_TYPES = {
   HIS_MAJESTYS_THEATRE: 'his-majestys-theatre',
   NOVELLO_THEATRE: 'novello-theatre',
   PRINCE_EDWARD_THEATRE: 'prince-edward-theatre',
-  THEATRE_ROYAL_DRURY_LANE: 'theatre-royal-drury-lane',
 };
 
 export const TEMPLATES = {
