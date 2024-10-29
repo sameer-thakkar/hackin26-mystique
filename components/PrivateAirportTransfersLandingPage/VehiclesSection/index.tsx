@@ -62,12 +62,8 @@ export const VehiclesSection = ({ isMobile }: { isMobile: boolean }) => {
           <div className={priceStyle}>$52.24</div>
 
           <Button
+            as="button"
             overrideStyles={{
-              // @ts-expect-error eevee types not working
-              primaryText: css.raw({
-                color: 'white',
-              }),
-              // @ts-expect-error eevee types not working
               icon: css.raw({
                 transform: 'translateY(1px)',
               }),

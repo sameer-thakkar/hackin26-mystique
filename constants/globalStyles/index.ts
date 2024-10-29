@@ -19,7 +19,7 @@ export const globalStyles = defineGlobalStyles({
     backgroundColor: '#c4c4c4',
     borderRadius: '100px',
   },
-  'li, span, p, td, div': { color: '#444' },
+  'li, p, td, div': { color: '#444' },
   'h1 > strong, h2 > strong, h3 > strong, h4 > strong, h5 > strong, h6 > strong':
     {
       fontWeight: 500,

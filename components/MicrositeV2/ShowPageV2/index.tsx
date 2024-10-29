@@ -1,7 +1,8 @@
 import { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
-import Button from '@headout/aer/src/atoms/Button';
+import { Button, Text } from '@headout/eevee';
+import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';
@@ -10,6 +11,7 @@ import { TShowPageV2Props } from 'components/MicrositeV2/ShowPageV2/interface';
 import ShowPageV2Banner from 'components/MicrositeV2/ShowPageV2/ShowPageBanner';
 import ShowPageDescriptorSection from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection';
 import ShowPagePricingSection from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection';
+import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/ticketUnavailableStyles';
 import ShowPageSeoComponents from 'components/MicrositeV2/ShowPageV2/ShowPageSeoComponents';
 import SimilarShows from 'components/MicrositeV2/ShowPageV2/SimilarShows';
 import {
@@ -32,6 +34,7 @@ import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
   getNakedDomain,
+  getTagPageMap,
 } from 'utils';
 import {
   getCommonEventMetaData,
@@ -47,6 +50,7 @@ import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BOOLEAN_STATES,
   BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
@@ -54,6 +58,7 @@ import {
   PAGETYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
+import BanSvg from 'assets/banSvg';
 import { Pricing, SavePercentElement } from './ShowPagePricingSection/style';
 
 const SearchPage: ComponentType<any> = dynamic(
@@ -86,6 +91,7 @@ const LttShowPageV2 = ({
   const { collectionName, collectionId } = pageMetaData;
 
   const [allTours, setAllTours] = useState([]);
+  const [moreShows, setMoreShows] = useState<any[]>([]);
   const [activePage, setActivePage] = useState(null);
   const [isButtonLoading, setButtonLoading] = useState(false);
 
@@ -133,6 +139,18 @@ const LttShowPageV2 = ({
     host,
     uid
   );
+
+  const {
+    TicketsUnavailableHeaderMweb,
+    TicketsUnavailableTextWrapper,
+    SvgWrapper,
+    TicketsUnavailableText,
+    TicketsUnavailableSubText,
+    MoreShowsButtonWrapper,
+    TicketsUnavailableMwebContainer,
+    TicketsUnavailableHeaderCommon,
+  } = getUnavailableTicketStylesRecipe();
+
   const dropdownLinksArray = commonHeader?.data?.dropdown_menu?.reduce(
     (acc: any, item: any) => {
       if (item.link)
@@ -200,6 +218,8 @@ const LttShowPageV2 = ({
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
   const hasDiscountElement = totalDiscount > 0 || showCashbackElement;
 
+  const LTT_TAG_PAGE_MAP = getTagPageMap(uid);
+
   useEffect(() => {
     const fetchCollection = async () => {
       const response =
@@ -230,6 +250,8 @@ const LttShowPageV2 = ({
       if (scrollTopTopButton && isMobile) {
         if (hasDiscountElement) {
           scrollTopTopButton.style.bottom = '9.25rem';
+        } else if (!finalPrice) {
+          scrollTopTopButton.style.bottom = '10rem';
         } else {
           scrollTopTopButton.style.bottom = '6rem';
         }
@@ -282,6 +304,9 @@ const LttShowPageV2 = ({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
+        [ANALYTICS_PROPERTIES.IS_SHOW_PLAYING]: listingPrice?.finalPrice
+          ? BOOLEAN_STATES.YES
+          : BOOLEAN_STATES.NO,
         ...getCommonEventMetaData(pageMetaData),
       });
     }
@@ -331,6 +356,17 @@ const LttShowPageV2 = ({
   const moreReadsSectionTrackingObject = {
     eventName: ANALYTICS_EVENTS.SHOW_PAGE_SECTION_VIEWED,
     [ANALYTICS_PROPERTIES.SECTION]: NEWS_PAGE_SECTIONS.MORE_READS,
+  };
+
+  const handleMoreShowsCTAClicked = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.SEE_MORE_SHOWS,
+      [ANALYTICS_PROPERTIES.SECTION]: 'Tickets Unavailable',
+    });
+
+    setButtonLoading(true);
+    setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
 
   return (
@@ -394,6 +430,8 @@ const LttShowPageV2 = ({
               });
               setMwebdateSelectorPopupActive(false);
             }}
+            moreShows={moreShows}
+            moreShowsCategoryUrl={LTT_TAG_PAGE_MAP[primarySubCategory?.name]}
           />
         </DateSelectorWrapper>
 
@@ -438,6 +476,7 @@ const LttShowPageV2 = ({
         cityCode={city?.code}
         isMobile={isMobile}
         allShowPagesDocuments={allShowPagesDocuments}
+        setMoreShows={setMoreShows}
       />
 
       <FaqWrapper>
@@ -465,65 +504,103 @@ const LttShowPageV2 = ({
           hasDiscount={hasDiscountElement}
           longCtaContent={strings.CHECK_AVAIL.length > 25}
         >
-          <div id="mweb-buy-button-pricing">
-            <Pricing>
-              <div className="pricing">
-                <span className="scratch-price">
-                  <span className="price-starting-from">
-                    {strings.FROM?.toLowerCase()}{' '}
+          <Conditional if={finalPrice}>
+            <div id="mweb-buy-button-pricing">
+              <Pricing>
+                <div className="pricing">
+                  <span className="scratch-price">
+                    <span className="price-starting-from">
+                      {strings.FROM?.toLowerCase()}{' '}
+                    </span>
+                    <Conditional if={originalPrice > finalPrice}>
+                      <LocalisedPrice
+                        currencyCode={currency ?? ''}
+                        lang={lang}
+                        price={originalPrice}
+                        className="original-price"
+                        truncateIfLong={true}
+                        truncateAfter={3}
+                      />
+                    </Conditional>
                   </span>
-                  <Conditional if={originalPrice > finalPrice}>
+                  <span className="price">
                     <LocalisedPrice
                       currencyCode={currency ?? ''}
                       lang={lang}
-                      price={originalPrice}
-                      className="original-price"
+                      price={finalPrice}
                       truncateIfLong={true}
                       truncateAfter={3}
                     />
-                  </Conditional>
-                </span>
-                <span className="price">
-                  <LocalisedPrice
-                    currencyCode={currency ?? ''}
-                    lang={lang}
-                    price={finalPrice}
-                    truncateIfLong={true}
-                    truncateAfter={3}
-                  />
-                  <Conditional if={totalDiscount > 0}>
-                    <SavePercentElement>
-                      {strings.formatString(
-                        strings.SAVE_PERCENT,
-                        `${totalDiscount}`
-                      )}
-                    </SavePercentElement>
-                  </Conditional>
-                  <Conditional if={totalDiscount <= 0 && showCashbackElement}>
-                    <SavePercentElement>
-                      {strings.formatString(
-                        strings.CASHBACK,
-                        `${cashbackValue}`
-                      )}
-                    </SavePercentElement>
-                  </Conditional>
-                </span>
+                    <Conditional if={totalDiscount > 0}>
+                      <SavePercentElement>
+                        {strings.formatString(
+                          strings.SAVE_PERCENT,
+                          `${totalDiscount}`
+                        )}
+                      </SavePercentElement>
+                    </Conditional>
+                    <Conditional if={totalDiscount <= 0 && showCashbackElement}>
+                      <SavePercentElement>
+                        {strings.formatString(
+                          strings.CASHBACK,
+                          `${cashbackValue}`
+                        )}
+                      </SavePercentElement>
+                    </Conditional>
+                  </span>
+                </div>
+              </Pricing>
+            </div>
+            <Button
+              tabIndex={0}
+              as="button"
+              btnType="primary"
+              onClick={checkAvailabilityClicked}
+              primaryText={
+                showCustomBookButtonCTA
+                  ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+                  : strings.CHECK_AVAIL
+              }
+              size="medium"
+              state={isButtonLoading ? 'loading' : 'default'}
+              variant="primary"
+            />
+          </Conditional>
+          <Conditional if={!finalPrice}>
+            <div className={TicketsUnavailableMwebContainer}>
+              <div
+                className={cx(
+                  TicketsUnavailableHeaderMweb,
+                  TicketsUnavailableHeaderCommon
+                )}
+              >
+                <div className={SvgWrapper}>
+                  <BanSvg />
+                </div>
+                <div className={TicketsUnavailableTextWrapper}>
+                  <Text className={TicketsUnavailableText}>
+                    {strings.SHOW_PAGE_V2.TICKETS_UNAVAILABLE}
+                  </Text>
+                  <Text className={TicketsUnavailableSubText}>
+                    {strings.SHOW_PAGE_V2.TICKETS_UNAVAILABLE_SUBTEXT}
+                  </Text>
+                </div>
               </div>
-            </Pricing>
-          </div>
-          <Button
-            tabIndex={0}
-            size="medium"
-            color="purps"
-            variant="primary"
-            isLoading={isButtonLoading}
-            onClick={checkAvailabilityClicked}
-            text={
-              showCustomBookButtonCTA
-                ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
-                : strings.CHECK_AVAIL
-            }
-          />
+              <div className={MoreShowsButtonWrapper}>
+                <Button
+                  tabIndex={0}
+                  as="anchor"
+                  href={LTT_TAG_PAGE_MAP[primarySubCategory?.name]}
+                  btnType="primary"
+                  primaryText={strings.SHOW_PAGE_V2.SEE_MORE_SHOWS}
+                  size="medium"
+                  state={isButtonLoading ? 'loading' : 'default'}
+                  variant="primary"
+                  onClick={handleMoreShowsCTAClicked}
+                />
+              </div>
+            </div>
+          </Conditional>
         </BuyButtonWrapper>
       </Conditional>
 

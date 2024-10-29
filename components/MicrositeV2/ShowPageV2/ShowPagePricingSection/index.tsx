@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import Button from '@headout/aer/src/atoms/Button';
+import { Button, Text } from '@headout/eevee';
+import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
+import HorizontalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard';
 import { TShowPagePricingSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/interface';
 import {
   BuyButtonWrapper,
@@ -10,6 +12,7 @@ import {
   SavePercentElement,
   ShowPageDateSelectorWrapper,
 } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/style';
+import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/ticketUnavailableStyles';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
@@ -25,14 +28,32 @@ import {
   CTA_TYPE,
 } from 'const/index';
 import { strings } from 'const/strings';
+import BanSvg from 'assets/banSvg';
+import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 
 const ShowPagePricingSection = ({
   tourGroupData,
   flowType,
   showCustomBookButtonText,
   shouldRunCustomCTAExperiment,
+  moreShows,
+  moreShowsCategoryUrl,
 }: TShowPagePricingSectionProps) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
+  const [isSkeletonVisible, setIsSkeletonVisible] = useState(true);
+  const [horProductCardLoadedCount, setHorProductCardLoadedCount] = useState(0);
+
+  const handleChildLoaded = () => {
+    setHorProductCardLoadedCount((prevCount) => prevCount + 1);
+  };
+
+  const totalChildren = 3;
+
+  useEffect(() => {
+    if (horProductCardLoadedCount === totalChildren) {
+      setIsSkeletonVisible(false);
+    }
+  }, [horProductCardLoadedCount, totalChildren]);
 
   const currency = useRecoilValue(currencyAtom);
 
@@ -61,6 +82,23 @@ const ShowPagePricingSection = ({
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
   const hostname = getHostName(isDev, host);
+
+  const {
+    TicketsUnavailableSection,
+    TicketsUnavailableHeaderDweb,
+    TicketsUnavailableTextWrapper,
+    SvgWrapper,
+    AlternativeShowRecommendationSection,
+    TicketsUnavailableText,
+    TicketsUnavailableSubText,
+    MustSeeHeading,
+    MoreShowsButtonWrapper,
+    TicketsUnavailableHeaderCommon,
+    ticketUnavailableDummyCard,
+    ticketUnavailableDummyText,
+    ticketUnavailableDummyHeading,
+    ticketUnavailableDummyPrice,
+  } = getUnavailableTicketStylesRecipe();
 
   useEffect(() => {
     setButtonLoading(false);
@@ -104,11 +142,22 @@ const ShowPagePricingSection = ({
     window.open(bookingUrl, '_self', 'noopener');
   };
 
+  const handleMoreShowsCTAClicked = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.SEE_MORE_SHOWS,
+      [ANALYTICS_PROPERTIES.SECTION]: 'Tickets Unavailable',
+    });
+
+    setButtonLoading(true);
+    setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
+  };
+
   return (
     <>
       <ShowPageDateSelectorWrapper>
-        <PricingSection>
-          <Conditional if={listingPrice}>
+        <Conditional if={listingPrice}>
+          <PricingSection>
             <Pricing>
               <div className="pricing">
                 <div className="scratch-price">
@@ -154,24 +203,92 @@ const ShowPagePricingSection = ({
                 </div>
               </div>
             </Pricing>
-          </Conditional>
-          <BuyButtonWrapper>
-            <Button
-              tabIndex={0}
-              size="medium"
-              color="purps"
-              variant="primary"
-              isLoading={isButtonLoading}
-              onClick={onCheckAvailabilityClicked}
-              text={
-                showCustomBookButtonText
-                  ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
-                  : strings.CHECK_AVAIL
-              }
-              disabled={!listingPrice}
-            />
-          </BuyButtonWrapper>
-        </PricingSection>
+            <BuyButtonWrapper>
+              <Button
+                tabIndex={0}
+                as="button"
+                btnType="primary"
+                onClick={onCheckAvailabilityClicked}
+                primaryText={
+                  showCustomBookButtonText
+                    ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+                    : strings.CHECK_AVAIL
+                }
+                size="medium"
+                state={isButtonLoading ? 'loading' : 'default'}
+                variant="primary"
+              />
+            </BuyButtonWrapper>
+          </PricingSection>
+        </Conditional>
+        <Conditional if={!listingPrice}>
+          <div className={TicketsUnavailableSection}>
+            <div
+              className={cx(
+                TicketsUnavailableHeaderDweb,
+                TicketsUnavailableHeaderCommon
+              )}
+            >
+              <div className={SvgWrapper}>
+                <BanSvg />
+              </div>
+              <div className={TicketsUnavailableTextWrapper}>
+                <Text className={TicketsUnavailableText}>
+                  {strings.SHOW_PAGE_V2.TICKETS_UNAVAILABLE}
+                </Text>
+                <Text className={TicketsUnavailableSubText}>
+                  {strings.SHOW_PAGE_V2.TICKETS_UNAVAILABLE_SUBTEXT}
+                </Text>
+              </div>
+            </div>
+            <div className={AlternativeShowRecommendationSection}>
+              <Text className={MustSeeHeading}>
+                {strings.SHOW_PAGE_V2.MUST_SEE_SHOWS}
+              </Text>
+              {moreShows?.map((show: Record<string, any>) => {
+                return (
+                  <HorizontalProductCard
+                    key={show.id}
+                    product={{ ...show, title: show.name }}
+                    background="LIGHT"
+                    isTopShowsSection={false}
+                    handleChildLoaded={handleChildLoaded}
+                  />
+                );
+              })}
+              <Conditional if={isSkeletonVisible}>
+                {Array.from({ length: 3 }, (_, index) => (
+                  <div
+                    className={ticketUnavailableDummyCard}
+                    key={`image-placeholder-${index}`}
+                  >
+                    <VerticalProductImagePlaceholder
+                      $width={88}
+                      $height={131}
+                    />
+                    <div className={ticketUnavailableDummyText}>
+                      <div className={ticketUnavailableDummyHeading}></div>
+                      <div className={ticketUnavailableDummyPrice}></div>
+                    </div>
+                  </div>
+                ))}
+              </Conditional>
+              <div className={MoreShowsButtonWrapper}>
+                <Button
+                  as="anchor"
+                  target="_blank"
+                  href={moreShowsCategoryUrl}
+                  btnType="black"
+                  onClick={handleMoreShowsCTAClicked}
+                  primaryText={strings.SHOW_PAGE_V2.SEE_ALL_SHOWS}
+                  state={'default'}
+                  size="medium"
+                  variant="secondary"
+                />
+              </div>
+            </div>
+          </div>
+        </Conditional>
       </ShowPageDateSelectorWrapper>
     </>
   );

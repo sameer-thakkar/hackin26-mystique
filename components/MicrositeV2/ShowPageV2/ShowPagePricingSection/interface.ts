@@ -4,4 +4,6 @@ export type TShowPagePricingSectionProps = {
   onClose?: () => void;
   showCustomBookButtonText?: boolean;
   shouldRunCustomCTAExperiment?: boolean;
+  moreShows?: any;
+  moreShowsCategoryUrl?: string;
 };

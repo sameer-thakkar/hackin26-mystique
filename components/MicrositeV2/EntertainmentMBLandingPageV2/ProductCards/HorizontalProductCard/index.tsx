@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
@@ -33,11 +33,16 @@ const HorizontalProductCard = ({
   product,
   background = 'LIGHT',
   isTopShowsSection = false,
+  handleChildLoaded,
 }: THorizontalProductCardProps) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const router = useRouter();
+
+  useEffect(() => {
+    handleChildLoaded?.();
+  }, []);
 
   if (!product) return null;
 

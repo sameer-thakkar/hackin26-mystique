@@ -885,6 +885,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       AGE_SUITABILITY_AND_GUIDELINES: 'Age & content guide',
       CAST_AND_CREATIVES: 'Cast & creatives',
     },
+    TICKETS_UNAVAILABLE: 'Tickets Unavailable',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Luckily, we have plenty more to choose from right here.',
+    MUST_SEE_SHOWS: 'More must-see shows',
+    SEE_ALL_SHOWS: 'See all shows',
+    SEE_MORE_SHOWS: 'See more shows',
   },
   HOHO: {
     HOHO: 'Hop On Hop Off Tours',

@@ -2126,15 +2126,10 @@
   dependencies:
     "@headout/pixie" "workspace:*"
 
-"@headout/pixie@^1.3.0":
+"@headout/pixie@^1.3.0", "@headout/pixie@workspace:*":
   version "1.3.0"
   resolved "https://npm.pkg.github.com/download/@headout/pixie/1.3.0/38de96c3204ffa42b8de573642f4b5cff65a9de2#38de96c3204ffa42b8de573642f4b5cff65a9de2"
   integrity sha512-+YbnRa/gQ33nyW0nMHv+9NrFfRVZVEraSYRJuPhpekDslzrGduNWc1HiVJM8dcx6PJ5MBcWvYuXJl/Gn7YrT9A==
-
-"@headout/pixie@workspace:*":
-  version "1.2.0"
-  resolved "https://npm.pkg.github.com/download/@headout/pixie/1.2.0/239863c6a3fc604243609d4af50867cbe34e9b87#239863c6a3fc604243609d4af50867cbe34e9b87"
-  integrity sha512-tBnQ9fO0l2I7e9hh+23EIDW67KQ8pmamcAZA0Iv0BIDb/FvjfGDO6wapK/baVvn214RdW9lj+g3Ny31I2oQYrA==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"

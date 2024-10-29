@@ -30,6 +30,7 @@ const SimilarShows = ({
   cityCode,
   isMobile,
   allShowPagesDocuments,
+  setMoreShows,
 }: TSimilarShowsProps) => {
   const [similarProductData, setSimilarProductData] = useState([]);
   const { lang } = useContext(MBContext);
@@ -79,15 +80,17 @@ const SimilarShows = ({
             );
           }
         });
-        setSimilarProductData(
-          filteredData.map((product: Record<string, any>) => ({
-            ...product,
-            showPageUid: allShowPagesDocuments?.find(
-              (doc: Record<string, any>) => doc.data.tgid === product.id
-            )?.uid,
-            verticalImage: verticalImagesDataMap.get(product?.id?.toString()),
-          }))
-        );
+
+        const finalData = filteredData.map((product: Record<string, any>) => ({
+          ...product,
+          showPageUid: allShowPagesDocuments?.find(
+            (doc: Record<string, any>) => doc.data.tgid === product.id
+          )?.uid,
+          verticalImage: verticalImagesDataMap.get(product?.id?.toString()),
+        }));
+        setSimilarProductData(finalData);
+
+        setMoreShows(finalData.slice(0, 3));
       }
     };
 
