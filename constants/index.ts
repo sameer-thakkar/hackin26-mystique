@@ -311,6 +311,16 @@ export const THEATRE_TYPES = {
   HIS_MAJESTYS_THEATRE: 'his-majestys-theatre',
   NOVELLO_THEATRE: 'novello-theatre',
   PRINCE_EDWARD_THEATRE: 'prince-edward-theatre',
+  PALACE_THEATRE: 'palace-theatre',
+  SONDHEIM_THEATRE: 'sondheim-theatre',
+  LONDON_COLISEUM: 'london-coliseum',
+  TROUBADOUR_WEMBLEY_PARK_THEATRE: 'troubadour-wembley-park-theatre',
+  PRINCE_OF_WALES_THEATRE: 'prince-of-wales-theatre',
+  DOMINION_THEATRE: 'dominion-theatre',
+  ADELPHI_THEATRE: 'adelphi-theatre',
+  ALDWYCH_THEATRE: 'aldwych-theatre',
+  ROYAL_ALBERT_HALL: 'royal-albert-hall',
+  APOLLO_THEATRE: 'apollo-theatre',
 };
 
 export const TEMPLATES = {
