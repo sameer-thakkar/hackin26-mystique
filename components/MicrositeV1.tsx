@@ -63,6 +63,7 @@ import {
   C1_COLLECTION_EXCLUDED,
   CRUISE_CATEGORY_ID,
   CRUISES_REVAMP_UIDS,
+  DT_LISTICLE_EXPERIMENT_UIDS,
   EMAIL_SUBCRIPTION,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_CATEGORISATION,
@@ -876,6 +877,17 @@ const MicrositeV1 = (props: any) => {
 
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
+  const {
+    isEligible: shouldRunDayTripsListicleExperiment,
+    variant: dayTripsListicleExperimentVariant,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_LISTICLE',
+    customEligibilityCheckFn: () => DT_LISTICLE_EXPERIMENT_UIDS.includes(uid),
+  });
+  const hideDtProductCards =
+    shouldRunDayTripsListicleExperiment &&
+    dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
+
   if (
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (isVideoExpEligible && isVideoExpResolving) ||
@@ -1229,7 +1241,8 @@ const MicrositeV1 = (props: any) => {
             !hasTourListContentFW &&
             isToursAvailable &&
             !isCatOrSubCatPage &&
-            !isAirportTransfersMB
+            !isAirportTransfersMB &&
+            !hideDtProductCards
           }
         >
           {tourListSection}
