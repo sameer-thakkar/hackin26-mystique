@@ -33,12 +33,14 @@ const MenuCard = ({ title, url, index, popupController }: TMenuCard) => {
           <Thumbnail pageNumber={1} width={isMobile ? 118 : 172} />
         </Document>
       </Card>
-      <p className="title">{title}</p>
-      <p className="subtext">
-        {numPages === 1
-          ? strings.formatString(strings.CRUISES.X_PAGE, numPages)
-          : strings.formatString(strings.CRUISES.X_PAGES, numPages)}
-      </p>
+      <div className="description">
+        <p className="title">{title}</p>
+        <p className="subtext">
+          {numPages === 1
+            ? strings.formatString(strings.CRUISES.X_PAGE, numPages)
+            : strings.formatString(strings.CRUISES.X_PAGES, numPages)}
+        </p>
+      </div>
     </div>
   );
 };

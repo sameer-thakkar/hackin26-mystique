@@ -46,7 +46,10 @@ export const MenuList = styled.div`
   grid-auto-flow: column;
   justify-content: flex-start;
   gap: 1rem;
-
+  .description {
+    width: 10.875rem;
+    overflow-wrap: break-word;
+  }
   p.title {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
     margin: 0.375rem 0 0.125rem;
@@ -54,6 +57,11 @@ export const MenuList = styled.div`
   p.subtext {
     margin: 0;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+  }
+  @media (max-width: 768px) {
+    .description {
+      width: 7.5rem;
+    }
   }
 `;
 
