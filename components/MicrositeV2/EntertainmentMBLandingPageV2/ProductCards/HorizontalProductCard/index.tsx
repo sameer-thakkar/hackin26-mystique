@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { THorizontalProductCardProps } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard/interface';
@@ -38,7 +37,6 @@ const HorizontalProductCard = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const router = useRouter();
 
   useEffect(() => {
     handleChildLoaded?.();
@@ -79,19 +77,6 @@ const HorizontalProductCard = ({
     }) ?? {};
 
   const onProductCardClick = () => {
-    const { destinationUrl, showPageExists } = getProductCardDestination({
-      nakedDomain,
-      lang,
-      tgid,
-      redirectToHeadoutBookingFlow,
-      currency,
-      flowType,
-      urlSlugs,
-      showPageUid,
-      isDev,
-      host,
-    });
-
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -109,17 +94,30 @@ const HorizontalProductCard = ({
         percentageSaved > 0 ? 'Scratch Price' : null,
       [ANALYTICS_PROPERTIES.L1_BOOSTER_SHOWN]: false,
     });
-
-    if (showPageExists) {
-      router.push(destinationUrl);
-    }
   };
+
+  const { destinationUrl, showPageExists } = getProductCardDestination({
+    nakedDomain,
+    lang,
+    tgid,
+    redirectToHeadoutBookingFlow,
+    currency,
+    flowType,
+    urlSlugs,
+    showPageUid,
+    isDev,
+    host,
+  });
+  const hrefAttribute = showPageExists ? { href: destinationUrl } : {};
 
   return (
     <Wrapper
       hoverEffect={!isTopShowsSection}
-      onClick={onProductCardClick}
       isVerticalImageUrlPresent={!!verticalImageUrl}
+      target="_blank"
+      onClick={onProductCardClick}
+      {...hrefAttribute}
+      rel="nofollow noopener"
     >
       <Image
         url={verticalImageUrl}

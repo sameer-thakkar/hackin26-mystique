@@ -4,7 +4,7 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Wrapper = styled.div<{
+export const Wrapper = styled.a<{
   hoverEffect: boolean;
   isVerticalImageUrlPresent: boolean;
 }>`
