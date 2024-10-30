@@ -718,7 +718,7 @@ const MicrositeV1 = (props: any) => {
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
   const showItineraries =
-    !(taggedSubCategoryName === 'HOHO' || taggedCategoryName === 'Cruises') &&
+    !(taggedCategoryName === 'Cruises') &&
     !!scorpioData?.itineraryData?.itineraries?.length;
 
   const {

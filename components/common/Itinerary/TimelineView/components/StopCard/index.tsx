@@ -265,17 +265,19 @@ const StopCard = ({
             </Conditional>
           </Conditional>
         </ClickableContainer>
-        <SubStopSection
-          handleSubStopSectionClick={handleSubStopSectionClick}
-          subStops={subStops}
-          passBys={passBys}
-          itineraryId={itineraryId}
-          variant={variant}
-          isSubCard={isSubCard}
-          isOpen={isOpen}
-          hasMultiPoints={hasMultiPoints}
-          isHOHOItinerary={isHOHOItinerary}
-        />
+        <Conditional if={!isHOHOItinerary}>
+          <SubStopSection
+            handleSubStopSectionClick={handleSubStopSectionClick}
+            subStops={subStops}
+            passBys={passBys}
+            itineraryId={itineraryId}
+            variant={variant}
+            isSubCard={isSubCard}
+            isOpen={isOpen}
+            hasMultiPoints={hasMultiPoints}
+            isHOHOItinerary={isHOHOItinerary}
+          />
+        </Conditional>
         <Conditional
           if={
             subStops.length &&
