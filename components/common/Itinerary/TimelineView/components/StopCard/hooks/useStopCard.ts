@@ -71,9 +71,9 @@ const useStopCard = ({
     points:
       isStart || isEnd
         ? subCards.map(({ sectionDetails }) => ({
-            image: sectionDetails!.details?.mediaUrls?.[0],
-            title: sectionDetails!.details.name!,
-            timeForNextSection: sectionDetails!.details.timeForNextSection,
+            image: sectionDetails?.details?.mediaUrls?.[0],
+            title: sectionDetails?.details?.name!,
+            timeForNextSection: sectionDetails?.details?.timeForNextSection,
           }))
         : [],
     isStartPoint: isStart,
@@ -90,6 +90,8 @@ const useStopCard = ({
       }
     },
   };
+
+  const hasMultiPoints = Boolean(multiPoints?.points?.length > 1);
 
   const allowOpen = useMemo(() => {
     if (!isReducedVariant) {
@@ -131,7 +133,6 @@ const useStopCard = ({
     }
   }, []);
 
-  const hasMultiPoints = multiPoints.points.length > 1;
   const isStopSectionClickable =
     (isDesktop && !hasMultiPoints) ||
     (!isDesktop && endPointIsNotSameAsStart && !hasMultiPoints);
