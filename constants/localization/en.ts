@@ -890,7 +890,6 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       'Luckily, we have plenty more to choose from right here.',
     MUST_SEE_SHOWS: 'More must-see shows',
     SEE_ALL_SHOWS: 'See all shows',
-    SEE_MORE_SHOWS: 'See more shows',
   },
   HOHO: {
     HOHO: 'Hop On Hop Off Tours',

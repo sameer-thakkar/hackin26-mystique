@@ -811,6 +811,11 @@ const it = {
       CAST_AND_CREATIVES: 'Cast e troupe',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Domande frequenti',
     },
+    TICKETS_UNAVAILABLE: 'I biglietti non sono disponibili',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Ma hai a disposizione tante altre opzioni tra cui scegliere.',
+    MUST_SEE_SHOWS: 'Altri spettacoli imperdibili',
+    SEE_ALL_SHOWS: 'Scopri tutti gli spettacoli',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guide multilingue esperte',

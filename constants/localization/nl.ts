@@ -821,6 +821,11 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'FAQs',
       CAST_AND_CREATIVES: 'Cast & creatives',
     },
+    TICKETS_UNAVAILABLE: 'Geen tickets beschikbaar',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Gelukkig vind je hier nog veel meer om uit te kiezen.',
+    MUST_SEE_SHOWS: 'Meer aanraders',
+    SEE_ALL_SHOWS: 'Bekijk alle shows',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Deskundige meertalige gidsen',

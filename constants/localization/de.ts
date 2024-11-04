@@ -821,6 +821,11 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Häufig gestellte Fragen',
       CAST_AND_CREATIVES: 'Besetzung und Crew',
     },
+    TICKETS_UNAVAILABLE: 'Tickets nicht verfügbar',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Zum Glück haben wir hier noch mehr zur Auswahl.',
+    MUST_SEE_SHOWS: 'Weitere sehenswerte Shows',
+    SEE_ALL_SHOWS: 'Alle Shows anzeigen',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Fachkundige mehrsprachige Reiseleiter',

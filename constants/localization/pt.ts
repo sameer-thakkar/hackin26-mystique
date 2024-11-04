@@ -825,6 +825,11 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       CAST_AND_CREATIVES: 'Elenco e equipe',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Perguntas frequentes',
     },
+    TICKETS_UNAVAILABLE: 'Ingressos indisponíveis',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Por sorte, temos muitas outras opções para você escolher aqui.',
+    MUST_SEE_SHOWS: 'Mais espetáculos imperdíveis',
+    SEE_ALL_SHOWS: 'Ver todos espetáculos',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guias especializados e multilíngues',

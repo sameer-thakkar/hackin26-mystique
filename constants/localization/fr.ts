@@ -824,6 +824,11 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Foire aux questions',
       CAST_AND_CREATIVES: "Les acteurs et l'équipe",
     },
+    TICKETS_UNAVAILABLE: 'Pas de billets disponibles',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      "Heureusement, nous en avons beaucoup d'autres à choisir ici.",
+    MUST_SEE_SHOWS: 'Plus de spectacles à voir',
+    SEE_ALL_SHOWS: 'Voir tous les spectacles',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guides multilingues spécialisés',

@@ -69,6 +69,14 @@ export const BannerBackground = styled.div`
       right: auto;
       left: 0;
     }
+    .banner-image {
+      img {
+        width: 100vw;
+        aspect-ratio: auto 487 / 208.714;
+        height: 13.04rem;
+        object-fit: cover;
+      }
+    }
   }
 
   @media (min-width: 1600px) {

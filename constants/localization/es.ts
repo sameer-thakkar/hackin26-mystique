@@ -875,6 +875,11 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Preguntas frecuentes',
       CAST_AND_CREATIVES: 'Reparto y equipo',
     },
+    TICKETS_UNAVAILABLE: 'No hay entradas disponibles',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Por suerte, aquí encontrarás otras opciones entre las que elegir.',
+    MUST_SEE_SHOWS: 'Espectáculos que no te puedes perder',
+    SEE_ALL_SHOWS: 'Ver todos los espectáculos',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guías multilingües expertos',
