@@ -76,7 +76,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [HOHO_REVAMP_PARIS_BARCELONA]: new Experiment(
     HOHO_REVAMP_PARIS_BARCELONA,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [0, 100]
   ),
   [LAST_MINUTE_FILTERS_EXPERIMENT]: new Experiment(
     LAST_MINUTE_FILTERS_EXPERIMENT,
