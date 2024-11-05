@@ -71,7 +71,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [HOHO_REVAMP_PARIS_BARCELONA]: new Experiment(
     HOHO_REVAMP_PARIS_BARCELONA,
