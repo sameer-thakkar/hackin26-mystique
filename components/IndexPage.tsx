@@ -538,7 +538,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     : PlatformUtils.isBot(userAgent);
 
   const lttShowPageRedirectABExperimentVariant =
-    host === 'www.london-theatre-tickets.com' && // redundant but required for query param override
+    host === 'www.london-theater-tickets.com' && // redundant but required for query param override
     ((req.headers['x-experiment-variant'] as string) ||
       query?.[COOKIE.EXPERIMENT_OVERRIDE]);
 
