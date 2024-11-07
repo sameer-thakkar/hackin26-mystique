@@ -210,7 +210,7 @@ const Page = (props: PageProps) => {
   });
 
   useEffect(() => {
-    if (lttShowPageRedirectABExperimentVariant) {
+    if (lttShowPageRedirectABExperimentVariant && Router.query?.tgid) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
         [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
