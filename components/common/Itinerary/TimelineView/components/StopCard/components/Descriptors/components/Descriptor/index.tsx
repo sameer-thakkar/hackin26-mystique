@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import Conditional from 'components/common/Conditional';
 import { DescriptorContainer } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/components/Descriptor/styles';
@@ -13,14 +14,14 @@ const Descriptor = ({
   bold = false,
   url,
 }: DescriptorProps) => {
-  const Content = ({ url }: { url?: string }) => {
+  const Content = () => {
     return (
       <DescriptorContainer
         className="descriptor-container"
         $size={size}
         $color={color}
         $bold={bold}
-        as={url ? 'a' : 'div'}
+        onClick={(e) => e.stopPropagation()}
       >
         {icon}
         <p className="descriptor-text">{text}</p>
@@ -30,12 +31,14 @@ const Descriptor = ({
   return (
     <>
       <Conditional if={url}>
-        <Link href={url!} passHref>
-          <Content url={url} />
+        <Link href={url!}>
+          <a>
+            <Content />
+          </a>
         </Link>
       </Conditional>
       <Conditional if={!url}>
-        <Content url={url} />
+        <Content />
       </Conditional>
     </>
   );

@@ -148,7 +148,7 @@ export const useDragBehavior = ({
   return { startDrag, transform };
 };
 
-const SCROLL_THRESHOLD = 80;
+const SCROLL_THRESHOLD = 100;
 
 export const useContentScroll = ({
   ref,
@@ -192,7 +192,8 @@ export const useContentScroll = ({
 
     const contentBlocks = document.querySelectorAll('.content-block');
     for (const block of contentBlocks) {
-      if (block.getBoundingClientRect().y > SCROLL_THRESHOLD) {
+      const blockTop = block.getBoundingClientRect().top;
+      if (blockTop <= SCROLL_THRESHOLD && blockTop > 0) {
         const newActiveTab = block.id;
         if (activeTab !== newActiveTab) {
           setActiveTab(newActiveTab);

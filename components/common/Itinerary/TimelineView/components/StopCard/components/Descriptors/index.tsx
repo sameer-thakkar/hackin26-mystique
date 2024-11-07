@@ -63,7 +63,7 @@ const Descriptors = ({
 
   return (
     <Container className="descriptors-container" $variant={variant}>
-      <Conditional if={!!location && showLocationDescriptor}>
+      <Conditional if={!!locationUrl && showLocationDescriptor}>
         <Descriptor
           icon={<LocationPin height={12} width={12} />}
           text={strings.ITINERARY.GET_DIRECTION}
