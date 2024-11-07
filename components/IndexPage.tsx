@@ -13,7 +13,7 @@ import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
-import { sendVariableToDataLayer } from 'utils/analytics';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
@@ -22,11 +22,16 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import {
+  convertUidToUrl,
+  isAllowedPath,
+  removePageQuery,
+} from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
 import {
+  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
@@ -89,7 +94,7 @@ const Page = (props: PageProps) => {
     categoryTourListData: legacyCategoryTourListData,
     docsForListicles,
     collectionsInListicles,
-    airportTransfersLPExperimentVariant,
+    lttShowPageRedirectABExperimentVariant,
   } = props;
 
   const { tourGroupMap, ...rawCategoryTgidMap } =
@@ -203,6 +208,18 @@ const Page = (props: PageProps) => {
     customEligibilityCheckFn: () =>
       (isLTT || isBroadway) && (lang == 'it-it' || lang == 'de-de'),
   });
+
+  useEffect(() => {
+    if (lttShowPageRedirectABExperimentVariant) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          'LTT Show Page Redirect AB Experiment',
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
+          lttShowPageRedirectABExperimentVariant,
+      });
+    }
+  }, [lttShowPageRedirectABExperimentVariant]);
 
   const showCustomBookButtonCTA =
     shouldRunCustomCTAExperiment &&
@@ -338,9 +355,6 @@ const Page = (props: PageProps) => {
               isCatOrSubCatPage={isCatOrSubCatPage}
               catAndSubCatPageData={catAndSubCatPageData}
               uid={uid}
-              airportTransfersLPExperimentVariant={
-                airportTransfersLPExperimentVariant
-              }
               categoryDescriptors={categoryDescriptors}
               subcategoryDescriptors={subcategoryDescriptors}
               isEntertainmentBanner={isEntertainmentBanner}
@@ -523,13 +537,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? req.headers['x-bot'] === 'true' || typeof query?.['bot'] !== 'undefined'
     : PlatformUtils.isBot(userAgent);
 
-  const airportTransferABExperimentVariant = 'Control'; // TODO: temporary, remove after AB test is concluded
+  const lttShowPageRedirectABExperimentVariant =
+    host === 'www.london-theatre-tickets.com' && // redundant but required for query param override
+    ((req.headers['x-experiment-variant'] as string) ||
+      query?.[COOKIE.EXPERIMENT_OVERRIDE]);
 
   const serverCookies = new ServerCookies(req, res);
-  if (airportTransferABExperimentVariant) {
+  if (lttShowPageRedirectABExperimentVariant) {
     serverCookies.set(
       'experiment-variant',
-      airportTransferABExperimentVariant as string
+      lttShowPageRedirectABExperimentVariant as string
     );
   }
   /**
@@ -665,16 +682,46 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         asPath,
         biLink,
         cookies: req?.cookies ?? {},
-        airportTransfersLPExperimentVariant: airportTransferABExperimentVariant,
+        lttShowPageRedirectABExperimentVariant:
+          lttShowPageRedirectABExperimentVariant,
         headers: JSON.stringify(req?.headers),
         countryCode,
       },
     };
+
     const removeEmpty = (obj: any) => {
       const strData = JSON.stringify(obj);
 
       return JSON.parse(strData);
     };
+
+    const redirectToShowPageIfTGID =
+      query?.tgid &&
+      !isNaN(Number(query.tgid)) &&
+      lttShowPageRedirectABExperimentVariant === VARIANTS.TREATMENT;
+
+    if (redirectToShowPageIfTGID) {
+      const product =
+        props.simplifiedCategoryTourListData?.tourGroupMap[Number(query.tgid)];
+
+      if (product) {
+        const { showPageUid } = product;
+        const destinationUrl = convertUidToUrl({
+          uid: showPageUid,
+          isDev,
+          hostname: host,
+          lang,
+        });
+
+        return removeEmpty({
+          ...response,
+          redirect: {
+            destination: destinationUrl,
+            permanent: false,
+          },
+        });
+      }
+    }
 
     return removeEmpty(response);
   } catch (error) {
