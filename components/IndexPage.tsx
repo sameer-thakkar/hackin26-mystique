@@ -688,8 +688,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         asPath,
         biLink,
         cookies: req?.cookies ?? {},
-        lttShowPageRedirectABExperimentVariant:
-          lttShowPageRedirectABExperimentVariant,
+        lttShowPageRedirectABExperimentVariant: query?.tgid
+          ? lttShowPageRedirectABExperimentVariant
+          : null,
         headers: JSON.stringify(req?.headers),
         countryCode,
       },
