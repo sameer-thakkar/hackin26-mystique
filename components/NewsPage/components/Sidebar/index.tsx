@@ -129,8 +129,8 @@ export const Sidecard: React.FC<TShowCardProps> = ({
               <Image
                 url={verticalPoster}
                 alt={name}
-                height="153"
-                width="150"
+                height="190"
+                width="125"
                 fill
                 fetchPriority="high"
                 loading="eager"

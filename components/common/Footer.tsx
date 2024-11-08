@@ -123,6 +123,7 @@ const Footer: React.FC<FooterProps> = ({
           <LinkSlicesWrapper
             isEntertainmentMb={isEntertainmentMb}
             slicesLength={slices?.length + secondarySlices?.length}
+            showGmapsDisclaimer={showGmapsDisclaimer}
             $isCatOrSubCatPage={isCatOrSubCatPage}
           >
             <Conditional if={slices?.length}>

@@ -491,7 +491,7 @@ const ModalContent = styled.div`
       : sidebarType === SIDEBAR_TYPES.SIDE_NAV
       ? `
       overflow-y: scroll;
-      height: 95%;
+      max-height: 95%;
       ::-webkit-scrollbar {
         width: 10px;
       }

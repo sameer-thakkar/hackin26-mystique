@@ -141,7 +141,6 @@ const ComparisonTableWrapper = styled.div<{
   }
   .sticky.wrapper {
     width: 100%;
-    height: 4.125rem;
     display: flex;
     align-items: center;
     ${({ $isTop }) =>
@@ -312,6 +311,9 @@ const ComparisonTableWrapper = styled.div<{
     }
     .show-two-children:nth-child(0) {
       display: grid;
+    }
+    .flat-price-block {
+      margin-top: -8px;
     }
   }
 

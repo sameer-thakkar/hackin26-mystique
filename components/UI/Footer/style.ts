@@ -207,12 +207,13 @@ export const LinkSlicesWrapper = styled.div<{
   isEntertainmentMb: boolean;
   slicesLength: number;
   $isCatOrSubCatPage: boolean;
+  showGmapsDisclaimer: boolean;
 }>`
   display: grid;
-  padding: ${({ slicesLength, $isCatOrSubCatPage }) => {
+  padding: ${({ slicesLength, $isCatOrSubCatPage, showGmapsDisclaimer }) => {
     switch (true) {
       case !slicesLength:
-        return 'none';
+        return showGmapsDisclaimer ? '0 0 2.5rem' : 'none';
       case $isCatOrSubCatPage:
         return '3.125rem 0';
       default:

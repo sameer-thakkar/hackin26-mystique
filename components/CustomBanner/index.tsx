@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
+import { useSetRecoilState } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import IFrame from 'components/shortcodes/IFrame';
 import Image from 'UI/Image';
@@ -7,6 +8,7 @@ import Video from 'UI/Video';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { isMobile } from 'utils/helper';
+import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -40,6 +42,7 @@ const CustomBanner = ({
   subtitle = '',
   insideCards,
 }: CustomBannerProps) => {
+  const setLazyLoadOverride = useSetRecoilState(lazyLoadOverrideAtom);
   const mediaPreviewWrapperRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isIntersecting = useOnScreen({
@@ -64,6 +67,12 @@ const CustomBanner = ({
     }
   }, [isIntersecting, variant, ctaUrl]);
 
+  useEffect(() => {
+    if (ctaUrl?.startsWith('#')) {
+      setLazyLoadOverride(true);
+    }
+  }, [ctaUrl, setLazyLoadOverride]);
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -72,6 +81,11 @@ const CustomBanner = ({
     e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if (ctaUrl?.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(ctaUrl);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
       [ANALYTICS_PROPERTIES.SECTION]: CUSTOM_BANNER_SLICE,
@@ -156,7 +170,11 @@ const CustomBanner = ({
                     $isImage={variant == VARIANTS.IMAGE_TEXT}
                     onClick={handleCTAClick}
                   >
-                    <a href={ctaUrl} rel="nofollow" target="_blank">
+                    <a
+                      href={ctaUrl}
+                      rel="nofollow"
+                      target={ctaUrl?.startsWith('#') ? undefined : '_blank'}
+                    >
                       {ctaLabel}
                     </a>
                   </H3Heading>
@@ -172,5 +190,4 @@ const CustomBanner = ({
     </>
   );
 };
-
 export default CustomBanner;

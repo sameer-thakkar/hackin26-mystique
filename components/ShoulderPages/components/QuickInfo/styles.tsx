@@ -51,6 +51,7 @@ export const Container = styled.main`
         .label {
           ${expandFontToken(FONTS.MISC_BOOSTER)}
           color: ${COLORS.GRAY.G4};
+          text-transform: uppercase;
         }
 
         p {

@@ -65,7 +65,7 @@ export const Card = styled.div<{
     }
     .card-info {
       position: relative;
-      flex: 2.3;
+      flex: 1.75;
       .category-and-ratings {
         display: flex;
         justify-content: space-between;
