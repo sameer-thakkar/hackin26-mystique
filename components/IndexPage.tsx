@@ -208,16 +208,22 @@ const Page = (props: PageProps) => {
     customEligibilityCheckFn: () =>
       (isLTT || isBroadway) && (lang == 'it-it' || lang == 'de-de'),
   });
-
   useEffect(() => {
-    if (lttShowPageRedirectABExperimentVariant && Router.query?.tgid) {
+    if (
+      lttShowPageRedirectABExperimentVariant ||
+      Router.query.redirect === '1'
+    ) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
         [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
           'LTT Show Page Redirect AB Experiment',
         [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
-          lttShowPageRedirectABExperimentVariant,
+          (Router.query.redirect as string) === '1'
+            ? 'Treatment'
+            : lttShowPageRedirectABExperimentVariant,
       });
+
+      removePageQuery(Router.query, 'redirect', Router.asPath);
     }
   }, [lttShowPageRedirectABExperimentVariant]);
 
@@ -713,10 +719,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           lang,
         });
 
+        const url = new URL(destinationUrl);
+
+        url.searchParams.append('redirect', '1');
+
         return removeEmpty({
           ...response,
           redirect: {
-            destination: destinationUrl,
+            destination: url.toString(),
             permanent: false,
           },
         });
