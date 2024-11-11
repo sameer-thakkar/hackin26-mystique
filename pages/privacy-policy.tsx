@@ -120,6 +120,9 @@ const PrivacyPage = (
         />
         <PrivacyContentContainer>
           <TopHeading h1>Headout&apos;s Privacy Policy</TopHeading>
+          <p>
+            <b>Last Updated:</b> 12th November 2024
+          </p>
           <ol>
             <li>
               <SubHeading>Why this Privacy Policy?</SubHeading>
@@ -756,17 +759,19 @@ const PrivacyPage = (
               <Paragraph>
                 <ol>
                   <li>
-                    If You have a data privacy request, such as a request to
-                    delete or access Your data, please contact us at{' '}
+                    If you have a data privacy request, such as accessing or
+                    deleting your data, please reach out to us at{' '}
                     <a href="mailto:privacy@headout.com">privacy@headout.com</a>
-                    . We shall appropriately address Your request and respond to
-                    the same within the relevant statutory timeline. You may
-                    also request a copy of the information that We hold about
-                    You by sending Your request by email to{' '}
-                    <a href="mailto:privacy@headout.com">privacy@headout.com</a>
-                    . In case You have a complaint regarding the processing of
-                    Your Personal Information You can reach out to us on the
-                    same email ID.
+                    . We will address your request and respond within the
+                    applicable legal timeframe. You can also request a copy of
+                    the information we hold about you by emailing the same
+                    address. For any complaints regarding the processing of your
+                    personal information, feel free to contact us at the same
+                    email id. If you have any inquiries or concerns that require
+                    the attention of our Data Protection Officer (DPO), kindly
+                    direct your request to{' '}
+                    <a href="mailto:dpo@headout.com">dpo@headout.com</a>, and
+                    our DPO will assist you accordingly
                   </li>
                   <li>
                     When handling any of these requests described above, We have
