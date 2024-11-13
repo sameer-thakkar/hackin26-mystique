@@ -631,11 +631,12 @@ const Product = (props: any) => {
             primarySubCategory,
           }),
         });
+
         window.open(
           addQueryParams(productBookingUrl, {
             variantId,
           }),
-          '_blank',
+          originalIsMobile ? '_self' : '_blank',
           'noopener'
         );
         return;

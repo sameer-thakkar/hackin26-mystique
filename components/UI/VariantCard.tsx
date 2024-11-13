@@ -344,7 +344,7 @@ const VariantCard = ({
           </div>
         </Price>
         <Conditional if={isMobile}>
-          <a href={bookUrl} target="_blank" rel="noopener">
+          <a href={bookUrl} target="_self" rel="noopener">
             <Button onClick={trackVariantSelection}>
               {strings.COMBO_VARIANT.SELECT_CTA}
             </Button>
