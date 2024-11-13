@@ -12,6 +12,7 @@ import {
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { generateSidenavId } from 'utils/helper';
+import renderShortCodes from 'utils/shortCodes';
 import { appAtom } from 'store/atoms/app';
 import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 import COLORS from 'const/colors';
@@ -108,7 +109,7 @@ const SideNavModal: React.FC<ISideNavModalProps> = ({
                   isActive(sidenavID) ? 'active' : ''
                 }`}
               >
-                {headingItem}
+                {renderShortCodes(headingItem)}
               </span>
               <Conditional if={isActive(sidenavID)}>
                 <TickSvg strokeColor={COLORS.BRAND.PURPS} />

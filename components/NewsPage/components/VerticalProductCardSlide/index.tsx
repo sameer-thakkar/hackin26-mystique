@@ -2,6 +2,7 @@ import { CategoryCarouselSwiper } from 'components/MicrositeV2/EntertainmentMBLa
 import { getShowPageUid, getVerticalImageUrl } from 'components/NewsPage/utils';
 import { strings } from 'const/strings';
 import { TVerticalProductCardSlideProps } from './interface';
+import { VerticalProductCards } from './styles';
 
 const VerticalProductCardSlide = ({
   cards = [],
@@ -31,12 +32,14 @@ const VerticalProductCardSlide = ({
   });
 
   return (
-    <CategoryCarouselSwiper
-      category={category}
-      allTours={productData}
-      isMobile={isMobile}
-      index={0}
-    />
+    <VerticalProductCards>
+      <CategoryCarouselSwiper
+        category={category}
+        allTours={productData}
+        isMobile={isMobile}
+        index={0}
+      />
+    </VerticalProductCards>
   );
 };
 
