@@ -232,6 +232,11 @@ const pl = {
     NEDERLANDS: 'holenderski',
     POLISH: 'polski',
     RUSSIAN: 'Rosyjski',
+    DANISH: 'Duński',
+    NORWEGIAN: 'Norweski',
+    ROMANIAN: 'Rumuński',
+    SWEDISH: 'Szwedzki',
+    TURKISH: 'Turecki',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Wycieczka dostępna w języku: {0}',
   LISTICLES: {

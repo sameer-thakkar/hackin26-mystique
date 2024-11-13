@@ -246,6 +246,11 @@ const ru = {
     NEDERLANDS: 'Голландский',
     POLISH: 'Польский',
     RUSSIAN: 'Русский',
+    DANISH: 'Датский',
+    NORWEGIAN: 'Норвежский',
+    ROMANIAN: 'Румынский',
+    SWEDISH: 'Шведский',
+    TURKISH: 'Турецкий',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Тур доступен на {0}',
   LISTICLES: {

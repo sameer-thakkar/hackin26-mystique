@@ -260,6 +260,11 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     NEDERLANDS: 'Dutch',
     POLISH: 'Polish',
     RUSSIAN: 'Russian',
+    DANISH: 'Danish',
+    NORWEGIAN: 'Norwegian',
+    ROMANIAN: 'Romanian',
+    SWEDISH: 'Swedish',
+    TURKISH: 'Turkish',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tour available in {0}',
   LISTICLES: {

@@ -59,6 +59,11 @@ export const SUPPORTED_LANGUAGES = [
   'pl',
   'ar',
   'ru',
+  'da',
+  'no',
+  'ro',
+  'sv',
+  'tr',
 ] as const;
 
 export type LanguagesUnion = (typeof SUPPORTED_LANGUAGES)[number];
@@ -79,6 +84,11 @@ export const SUPPORTED_LOCALE_MAP = {
   pl: 'pl-pl',
   ar: 'ar-ae',
   ru: 'ru-ru',
+  da: 'da-da',
+  no: 'no-nb',
+  ro: 'ro-ro',
+  sv: 'sv-se',
+  tr: 'tr-tr',
 } as const;
 
 export type TLANGUAGELOCALE = (typeof SUPPORTED_LOCALE_MAP)[LanguagesUnion];
@@ -181,6 +191,36 @@ export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
     code: 'ru',
     translatedName: 'Russian',
   },
+  da: {
+    displayName: 'Dansk',
+    locale: 'da-da',
+    code: 'da',
+    translatedName: 'Danish',
+  },
+  no: {
+    displayName: 'Norsk',
+    locale: 'no-nb',
+    code: 'no',
+    translatedName: 'Norwegian',
+  },
+  ro: {
+    displayName: 'Română',
+    locale: 'ro-ro',
+    code: 'ro',
+    translatedName: 'Romanian',
+  },
+  sv: {
+    displayName: 'Svenska',
+    locale: 'sv-se',
+    code: 'sv',
+    translatedName: 'Swedish',
+  },
+  tr: {
+    displayName: 'Türkçe',
+    locale: 'tr-tr',
+    code: 'tr',
+    translatedName: 'Turkish',
+  },
 };
 
 export type IPopularLanguage =
@@ -191,6 +231,11 @@ export type IPopularLanguage =
   | 'de'
   | 'fr'
   | 'pt'
+  | 'da'
+  | 'no'
+  | 'ro'
+  | 'sv'
+  | 'tr'
   | 'pl';
 
 export const LANGUAGE_CODE_MAP = {
@@ -203,6 +248,11 @@ export const LANGUAGE_CODE_MAP = {
   DE: 'de',
   PL: 'pl',
   RU: 'ru',
+  DA: 'da',
+  NO: 'no',
+  RO: 'ro',
+  SV: 'sv',
+  TR: 'tr',
 };
 
 export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
@@ -216,6 +266,11 @@ export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
     [LANGUAGE_CODE_MAP.PT]: strings.LANGUAGES.PORTUGUESE,
     [LANGUAGE_CODE_MAP.PL]: strings.LANGUAGES.POLISH,
     [LANGUAGE_CODE_MAP.RU]: strings.LANGUAGES.RUSSIAN,
+    [LANGUAGE_CODE_MAP.DA]: strings.LANGUAGES.DANISH,
+    [LANGUAGE_CODE_MAP.NO]: strings.LANGUAGES.NORWEGIAN,
+    [LANGUAGE_CODE_MAP.RO]: strings.LANGUAGES.ROMANIAN,
+    [LANGUAGE_CODE_MAP.SV]: strings.LANGUAGES.SWEDISH,
+    [LANGUAGE_CODE_MAP.TR]: strings.LANGUAGES.TURKISH,
   };
 };
 
@@ -237,6 +292,11 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'pl-pl': 'pl',
   'ar-ae': 'ar',
   'ru-ru': 'ru',
+  'da-da': 'da',
+  'no-nb': 'no',
+  'ro-ro': 'ro',
+  'sv-se': 'sv',
+  'tr-tr': 'tr',
 };
 
 export const LANGUAGE_PARAMS_REGEX = new RegExp(
@@ -1186,6 +1246,11 @@ export const LOCALE_ORDER = [
   LANGUAGE_MAP.pl.code,
   LANGUAGE_MAP.ar.code,
   LANGUAGE_MAP.ru.code,
+  LANGUAGE_MAP.da.code,
+  LANGUAGE_MAP.no.code,
+  LANGUAGE_MAP.sv.code,
+  LANGUAGE_MAP.tr.code,
+  LANGUAGE_MAP.ro.code,
 ];
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';

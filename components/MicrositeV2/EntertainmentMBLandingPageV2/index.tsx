@@ -57,7 +57,7 @@ const EntertainmentMBLandingPageV2 = ({
   const duplicateTgids: Record<number, boolean> = {};
 
   const topShows: Array<Record<string, any>> = [];
-  topShowsTgids.forEach((tgid: number) => {
+  topShowsTgids?.forEach((tgid: number) => {
     if (!duplicateTgids[tgid] && allTours[tgid]) {
       topShows.push(allTours[tgid]);
       duplicateTgids[tgid] = true;
