@@ -8,12 +8,14 @@ export const StyledTabsContainer = styled.div<{
   $markerWidth: string;
   $showLeftArrow?: boolean;
   $showRightArrow?: boolean;
+  $tabContainerWidth?: string;
 }>`
   display: flex;
   flex-direction: column;
   overflow-x: visible;
   min-width: 0;
   margin-bottom: 1rem;
+  width: ${({ $tabContainerWidth }) => $tabContainerWidth};
 
   &::-webkit-scrollbar {
     display: none;

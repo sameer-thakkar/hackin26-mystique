@@ -1,12 +1,39 @@
 import styled from 'styled-components';
+import { StyledTabsContainer } from 'UI/Tabs/styles';
 
 export const StyledItinerarySectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 
+  ${StyledTabsContainer} {
+    margin-left: -1rem;
+    padding-left: 1rem;
+
+    .tab-list-container {
+      margin-left: -1rem;
+    }
+
+    .swiper-slide:first-child {
+      padding-left: 1rem;
+    }
+  }
+
   @media only screen and (min-width: 768px) {
     max-width: calc(792px - 3rem);
+
+    ${StyledTabsContainer} {
+      margin-left: unset;
+      padding-left: unset;
+
+      .tab-list-container {
+        margin-left: unset;
+      }
+
+      .swiper-slide:first-child {
+        padding-left: unset;
+      }
+    }
   }
 `;
 

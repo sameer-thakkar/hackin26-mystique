@@ -133,6 +133,8 @@ const Itinerary = ({
             tabListItems={tabListItems}
             hideNavigationArrows={!isDesktop}
             autoFocusOnSelectedTab={!isDesktop}
+            tabContainerWidth={isDesktop ? '100%' : 'calc(100% + 2rem)'}
+            markerLeftOffset={isDesktop ? 0 : 16}
           />
         </Conditional>
         <Conditional

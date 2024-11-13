@@ -4,6 +4,8 @@ export type TTabsProps = {
   tabListItems?: TTabListItemProps[];
   autoFocusOnSelectedTab?: boolean;
   hideNavigationArrows?: boolean;
+  tabContainerWidth?: string;
+  markerLeftOffset?: number;
 };
 
 export type TTabPanelProps = {

@@ -45,6 +45,8 @@ const Tabs = ({
   children,
   autoFocusOnSelectedTab,
   hideNavigationArrows,
+  tabContainerWidth = '100%',
+  markerLeftOffset = 0,
 }: PropsWithChildren<TTabsProps>) => {
   const isDesktop = !isMobile();
   const tabsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -112,7 +114,7 @@ const Tabs = ({
         const activeTab = tabItems[tabIndex];
         const activeTabWidth = activeTab.clientWidth;
         setActiveTabMarkerMeta({
-          left: `${leftOffset + gap}px`,
+          left: `${leftOffset + gap + markerLeftOffset}px`,
           width: `${activeTabWidth}px`,
         });
       }
@@ -164,6 +166,7 @@ const Tabs = ({
       $markerWidth={width}
       $showLeftArrow={showLeftArrow}
       $showRightArrow={showRightArrow}
+      $tabContainerWidth={tabContainerWidth}
     >
       <div
         className="tab-list-container"
