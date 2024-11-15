@@ -135,8 +135,13 @@ export type TCategoryContainerProps = {
 export enum BoosterType {
   BESTSELLER = 'Best seller',
   SELLING_OUT_FAST = 'Selling out fast',
+  MUST_DO_EXP = 'Must-do experience',
 }
-
+export type TBoosterProps = {
+  type: BoosterType;
+  rank?: number;
+  isOverlay?: boolean;
+};
 export type TDiscountTagProps = {
   discount: string | number;
   showAngledTag?: boolean;

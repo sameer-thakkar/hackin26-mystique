@@ -658,6 +658,7 @@ interface IStyledProductCard {
   $hasItineraryData?: boolean;
   $forceMobile?: boolean;
   forcedMobilePopup?: boolean;
+  $isAsideBarOverlay?: boolean;
 }
 
 export const CategoryIcon = styled.div<{
@@ -859,6 +860,99 @@ const popupStyles = css`
         }
       }
     }
+  }
+`;
+const asideBarStyles = css`
+  max-height: none;
+  padding: 1.25rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 1rem;
+  border-radius: 0;
+
+  .card-img {
+    width: 28.75rem;
+    height: 15.8125rem;
+  }
+
+  ${ProductHeader} {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0.75rem;
+    width: 100%;
+
+    ${CategoryAndRatingContainer} {
+      margin-bottom: 0.25rem;
+    }
+
+    ${NextAvailableBlock} {
+      margin-top: 0.5rem;
+
+      // text type not given on figma
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1rem;
+      text-align: left;
+
+      text-transform: uppercase;
+    }
+
+    ${TourTags} {
+      margin-top: 1rem;
+      gap: 0.75rem;
+
+      .tour-tag {
+        ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+        color: ${COLORS.GRAY.G2};
+        grid-column-gap: 0.25rem;
+
+        ${CancellationPolicyHoverCard} {
+          top: 80%;
+        }
+
+        &:not(:last-child) {
+          margin: 0;
+
+          &::after {
+            content: '';
+            position: relative;
+            height: 0.25rem;
+            width: 0.25rem;
+            background-color: ${COLORS.GRAY.G5};
+            margin-left: 0.4rem;
+            border-radius: 50%;
+            transform: translateY(2px);
+          }
+        }
+      }
+    }
+
+    ${CTAContainer} {
+      position: fixed;
+      background-color: ${COLORS.BRAND.WHITE};
+      box-shadow: 0px -2px 12px 0px #5454541a;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      padding: 0.75rem 1.5rem;
+      width: 28.25rem;
+      z-index: 10;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      ${PriceContainer} {
+        .tour-price {
+          ${expandFontToken(FONTS.HEADING_REGULAR)}
+        }
+      }
+    }
+  }
+
+  ${ProductBody} {
+    padding-bottom: 8rem;
   }
 `;
 
@@ -1136,9 +1230,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     border-radius: 0;
   }
 
-  ${({ $isModifiedProductCard, $isPopup }) => {
+  ${({ $isModifiedProductCard, $isPopup, $isAsideBarOverlay }) => {
     if ($isPopup) return popupStyles;
-    if ($isModifiedProductCard) return modifiedProductCardStyles;
+    if ($isModifiedProductCard)
+      return $isAsideBarOverlay ? asideBarStyles : modifiedProductCardStyles;
     return null;
   }}
 
@@ -2658,7 +2753,7 @@ export const SidePanelStickyHeader = styled.div<{
   position: fixed;
   top: 0;
   right: 0;
-  background-color: white;
+  background-color: ${COLORS.BRAND.WHITE};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2905,6 +3000,8 @@ export const BoosterText = styled.p<{
   $transform: string;
   $borderTheme: string;
   $iconHeight: number;
+  $textColor: string;
+  $iconStyles: Record<string, number>;
 }>`
   background-color: ${({ $theme }) => $theme};
   position: relative;
@@ -2914,7 +3011,7 @@ export const BoosterText = styled.p<{
   line-height: 20px;
   letter-spacing: 0em;
   text-align: left;
-  color: ${COLORS.BRAND.WHITE};
+  color: ${({ $textColor }) => $textColor};
   margin: 0;
 
   padding: 0.125rem 0.375rem 0.125rem 0.5rem;
@@ -2938,26 +3035,31 @@ export const BoosterText = styled.p<{
   svg {
     position: absolute;
     height: ${({ $iconHeight }) => `${pxToRem($iconHeight)}rem`};
-    left: 0;
-    top: 0;
+    left: ${({ $iconStyles }) => `${$iconStyles.left}px`};
+    top: ${({ $iconStyles }) => `${$iconStyles.top}px`};
     transform: ${({ $transform }) => $transform};
   }
 `;
 
 export const BoosterContainer = styled.div<{
-  $mobileLeft: number;
+  $mobileStyles: Record<string, number>;
   $isOverlay?: boolean;
+  $rotateDeg: number;
+  $boosterStyles: Record<string, number>;
 }>`
   position: absolute;
   z-index: 1;
   box-shadow: 0px 0.125rem 0.75rem 0px #00000033;
-  transform: rotate(-4deg);
-  top: ${({ $isOverlay }) => ($isOverlay ? 4 : 0.75)}rem;
-  left: ${({ $isOverlay }) => ($isOverlay ? 2 : 1.8)}rem;
+  transform: ${({ $rotateDeg }) => $rotateDeg}deg;
+  top: ${({ $isOverlay, $boosterStyles }) =>
+    $isOverlay ? 4 : $boosterStyles.top}rem;
+  left: ${({ $isOverlay, $boosterStyles }) =>
+    $isOverlay ? 2 : $boosterStyles.left}rem;
 
   @media (max-width: 768px) {
     transform: rotate(0);
-    left: ${({ $mobileLeft }) => `${pxToRem($mobileLeft)}rem`};
+    left: ${({ $mobileStyles }) => `${pxToRem($mobileStyles.left)}rem`};
+    top: ${({ $mobileStyles }) => `${pxToRem($mobileStyles.top)}rem`};
     ${({ $isOverlay }) =>
       $isOverlay &&
       css`
@@ -2996,7 +3098,7 @@ export const PopupPricingUnit = styled.div`
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     padding: 0.75rem 2rem;
-    background-color: white;
+    background-color: ${COLORS.BRAND.WHITE};
     box-shadow: 0px -2px 8px 0px #0000001a;
 
     display: flex;

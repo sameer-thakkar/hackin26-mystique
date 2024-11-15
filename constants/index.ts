@@ -1,3 +1,4 @@
+import { BoosterType } from 'components/Product/interface';
 import { longMonthtoShort } from 'utils/dateUtils';
 import { strings } from './strings';
 
@@ -1158,6 +1159,10 @@ export const ANALYTICS_PROPERTIES = {
   IS_BANNER_SLICE_PRESENT: 'Is Banner Slice Present',
   BANNER_TYPE: 'Banner Type',
   PAX_COUNT: 'Pax Count',
+  IS_BEST_SELLING: 'Is Best Selling Present',
+  IS_SELLING_FAST: 'Is Selling Fast Present',
+  IS_MUST_DO_EXP: 'Is Must Do Experience Present',
+  NUM_OF_BOOSTER: 'Number of Booster',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
@@ -2338,3 +2343,14 @@ export const harryPotterExperimentUids = [
 export const DT_LISTICLE_EXPERIMENT_UIDS = [
   'www.tickets-rome.com.tours.day-trips-from-rome',
 ];
+
+export const BOOSTER_EXPERIMENT_UIDS = new Map([
+  [
+    'www.flamenco-show-tickets.com.barcelona',
+    new Map([[BoosterType.MUST_DO_EXP, [9373]]]),
+  ],
+  [
+    'www.flamenco-show-tickets.com.madrid',
+    new Map([[BoosterType.MUST_DO_EXP, [25508]]]),
+  ],
+]);

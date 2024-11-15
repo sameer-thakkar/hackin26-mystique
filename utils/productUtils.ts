@@ -3,6 +3,7 @@ import { RTNode } from '@prismicio/types';
 import dayjs from 'dayjs';
 import { FILTERED_HIGHLIGHTS } from 'components/HOHO/constants';
 import { headingsToRemove } from 'components/Product/components/NewVerticalsProductCard/constants';
+import { BoosterType } from 'components/Product/interface';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
 import { TCurrencyObj } from 'utils/currency';
 import {
@@ -20,6 +21,7 @@ import {
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
 import {
+  BOOSTER_EXPERIMENT_UIDS,
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   CASHBACK_TYPES,
   CRUISE_CATEGORY_ID,
@@ -1222,4 +1224,57 @@ export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
   });
 
   return { inclusionsExclusions };
+};
+
+type BoosterKeys = keyof typeof BoosterType;
+
+export const getTotalBoosters = (uid: string) => {
+  const distribution: Record<BoosterKeys, number> = {
+    BESTSELLER: 0,
+    SELLING_OUT_FAST: 0,
+    MUST_DO_EXP: 0,
+  };
+
+  const uidData = BOOSTER_EXPERIMENT_UIDS.get(uid);
+  if (!uidData) {
+    return { total: 0, distribution };
+  }
+
+  return Object.keys(BoosterType)
+    .filter((key) => isNaN(Number(key)))
+    .reduce(
+      (acc, type) => {
+        const boosterKey = BoosterType[type as BoosterKeys];
+        const count = uidData.has(boosterKey)
+          ? uidData.get(boosterKey)!.length
+          : 0;
+
+        acc.distribution[type as BoosterKeys] = count;
+        acc.total += count;
+
+        return acc;
+      },
+      {
+        distribution,
+        total: 0,
+      }
+    );
+};
+
+export const checkForBooster = (uid: string, tgid: number) => {
+  let finalType = '';
+
+  const uidData = BOOSTER_EXPERIMENT_UIDS.get(uid);
+  if (!uidData) return finalType;
+
+  Object.keys(BoosterType)
+    .filter((key) => isNaN(Number(key)))
+    .forEach((type) => {
+      const boosterKey = BoosterType[type as BoosterKeys];
+      if (uidData.has(boosterKey) && uidData.get(boosterKey)!.includes(tgid)) {
+        finalType = type;
+      }
+    });
+
+  return finalType;
 };

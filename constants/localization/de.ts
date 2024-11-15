@@ -826,6 +826,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       'Zum Glück haben wir hier noch mehr zur Auswahl.',
     MUST_SEE_SHOWS: 'Weitere sehenswerte Shows',
     SEE_ALL_SHOWS: 'Alle Shows anzeigen',
+    MUST_DO_EXP: 'Ein unbedingtes Muss',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Fachkundige mehrsprachige Reiseleiter',

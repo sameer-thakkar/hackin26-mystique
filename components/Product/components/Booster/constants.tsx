@@ -1,0 +1,78 @@
+import { BoosterType } from 'components/Product/interface';
+import { strings } from 'const/strings';
+import { Diamond, Spark, YellowDiamond } from 'assets/boosters';
+
+export const getBoosterInfo = (boosterType: BoosterType) => {
+  const BOOSTER_INFO = {
+    [BoosterType.BESTSELLER]: {
+      title: strings.HOHO.BESTSELLER,
+      icon: <Diamond />,
+      theme: '#6321AE',
+      transform: 'translate(-68%,-10%)',
+      borderTheme:
+        'linear-gradient(90deg, #B283E7 -3.09%, rgba(178, 131, 231, 0.7) 100%)',
+      iconHeight: 32,
+      mobileStyles: {
+        top: 16,
+        left: 32,
+      },
+      textColor: '#fff',
+      rotateDeg: -4,
+      iconStyles: {
+        top: 0,
+        left: 0,
+      },
+      boosterStyles: {
+        top: 0.75,
+        left: 1.8,
+      },
+    },
+    [BoosterType.SELLING_OUT_FAST]: {
+      title: strings.SHOW_PAGE_V2.SELLING_OUT_FAST,
+      icon: <Spark />,
+      theme: '#CE007C',
+      transform: 'translate(-64%,-11%)',
+      borderTheme:
+        'linear-gradient(90deg, #fdb0d5 0%, rgba(253, 176, 213, 0.7) 100%)',
+      iconHeight: 35,
+      mobileStyles: {
+        top: 16,
+        left: 28,
+      },
+      textColor: '#fff',
+      rotateDeg: -4,
+      iconStyles: {
+        top: 0,
+        left: 0,
+      },
+      boosterStyles: {
+        top: 0.75,
+        left: 1.8,
+      },
+    },
+    [BoosterType.MUST_DO_EXP]: {
+      title: strings.SHOW_PAGE_V2.MUST_DO_EXP,
+      icon: <YellowDiamond />,
+      theme: '#FFD766',
+      transform: 'translate(-68%,-10%)',
+      borderTheme: 'linear-gradient(90deg, #FFD766 -3.09%, #FFD766 100%)',
+      iconHeight: 48,
+      mobileStyles: {
+        top: 16,
+        left: 36.8,
+      },
+      textColor: '#6B2811',
+      rotateDeg: 1,
+      iconStyles: {
+        top: -6,
+        left: -1,
+      },
+      boosterStyles: {
+        top: 0.75,
+        left: 2.1,
+      },
+    },
+  };
+
+  return BOOSTER_INFO[boosterType];
+};

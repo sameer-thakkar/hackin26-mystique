@@ -48,7 +48,10 @@ import {
   groupSlices,
 } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
-import { getFinalUncategorizedTours } from 'utils/productUtils';
+import {
+  getFinalUncategorizedTours,
+  getTotalBoosters,
+} from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -60,6 +63,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
+  BOOSTER_EXPERIMENT_UIDS,
   C1_COLLECTION_EXCLUDED,
   CRUISE_CATEGORY_ID,
   CRUISES_REVAMP_UIDS,
@@ -365,6 +369,38 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showHohoRevamp = hohoExperimentVariant === VARIANTS.CONTROL;
+
+  const {
+    isEligible: isBoosterExpEligible,
+    variant: boosterExperimentVariant,
+  } = useABTesting({
+    experimentId: 'BOOSTERS_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => BOOSTER_EXPERIMENT_UIDS.has(uid),
+    additionalEventProps: () => {
+      const {
+        total,
+        distribution: {
+          BESTSELLER: bestSellerBoosterCount,
+          SELLING_OUT_FAST: sellingOutFastBoosterCount,
+          MUST_DO_EXP: mustDoExpBoosterCount,
+        },
+      } = getTotalBoosters(uid);
+
+      return {
+        [ANALYTICS_PROPERTIES.NUM_OF_BOOSTER]: total,
+        [ANALYTICS_PROPERTIES.IS_BEST_SELLING]: bestSellerBoosterCount
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+        [ANALYTICS_PROPERTIES.IS_SELLING_FAST]: sellingOutFastBoosterCount
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+        [ANALYTICS_PROPERTIES.IS_MUST_DO_EXP]: mustDoExpBoosterCount
+          ? BOOLEAN_STATES['YES']
+          : BOOLEAN_STATES['NO'],
+      };
+    },
+  });
 
   const showCustomProductCardCTA =
     shouldRunCustomCTAExperiment &&
@@ -841,6 +877,9 @@ const MicrositeV1 = (props: any) => {
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
+      showBoosters={
+        isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
+      }
     />
   );
 

@@ -841,6 +841,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   },
   SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Se agota rápido',
+    MUST_DO_EXP: 'No te lo puedes perder',
     INTERVAL: 'Intermedio',
     TWO_PART_SHOW: 'Espectáculo de dos partes',
     READ_MORE_REVIEWS: 'Leer más reseñas',
@@ -1031,6 +1032,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     USER_REVIEWS: 'Reseñas de los usuarios',
     CONTRIBUTORS_REVIEW: 'Reseña del autor',
   },
+
   HOHO: {
     HOHO: 'Billetes de autobús turístico',
     BUS_ROUTES_DETAILS: 'Rutas',

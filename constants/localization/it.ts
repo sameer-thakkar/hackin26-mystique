@@ -778,6 +778,7 @@ const it = {
   },
   SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'In rapido esaurimento',
+    MUST_DO_EXP: 'Da non perdere',
     INTERVAL: 'Intervallo',
     TWO_PART_SHOW: 'Spettacolo in due parti',
     READ_MORE_REVIEWS: 'Leggi altre recensioni',

@@ -82,6 +82,7 @@ import {
   isF1SportsExperiment,
 } from 'utils/helper';
 import {
+  checkForBooster,
   extractCancellationPolicyFromHighlights,
   extractTabsFromHighlights,
   filterFromHighlights,
@@ -112,9 +113,11 @@ import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
+import Booster from './components/Booster/Booster';
 import NewVerticalsProductCard from './components/NewVerticalsProductCard';
 import HorizontalDescriptors from './components/NewVerticalsProductCard/HorizontalDescriptors';
 import InclusionsExclusions from './components/NewVerticalsProductCard/InclusionsExclusions';
+import { BoosterType } from './interface';
 import { trackDeadClick } from './utils';
 
 const SpecialGuidedTourSidePanel = dynamic(
@@ -185,6 +188,9 @@ const Product = (props: any) => {
     ref: combosSectionRef,
     unobserve: true,
   });
+  const [boosterType, setBoosterType] = useState<
+    keyof typeof BoosterType | null
+  >(null);
   useEffect(() => {
     if (!isTracked && isCombosSectionIntersecting) {
       trackPageSection({ section: SECTION_NAMES.COMBOS });
@@ -260,6 +266,7 @@ const Product = (props: any) => {
     showCustomProductCardEnglishCTA = false,
     shouldRunHohoRevampExperiment = false,
     isHOHORevamp,
+    showBoosters = false,
   } = props;
 
   const {
@@ -475,6 +482,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     };
 
@@ -510,6 +518,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     });
     const { listingPrice } = tourPrices[tgid] ?? {};
@@ -534,6 +543,7 @@ const Product = (props: any) => {
         primaryCollection,
         primarySubCategory,
         reviewsDetails,
+        boosterType,
       }),
     });
   };
@@ -769,6 +779,12 @@ const Product = (props: any) => {
     }
   }, [isShortcodePopup]);
 
+  const boosterTypeIfShown = useMemo(() => {
+    const boosterInfo = showBoosters && checkForBooster(uid, tgid);
+    if (boosterInfo) setBoosterType(boosterInfo);
+    return boosterInfo;
+  }, [tgid, showBoosters]);
+
   const {
     highlightsRichText,
     everyRichTextExceptHighlights,
@@ -956,6 +972,7 @@ const Product = (props: any) => {
           primaryCollection,
           primarySubCategory,
           reviewsDetails,
+          boosterType,
         }),
       });
     }
@@ -1349,6 +1366,7 @@ const Product = (props: any) => {
     isLoading = false,
     isPopup = false,
     forcedMobilePopup = false,
+    isAsideBarOverlay = false,
   }) => {
     const showItinerarySection = showItinerary && (isPopup || isBot);
 
@@ -1402,10 +1420,6 @@ const Product = (props: any) => {
             (isPopup && !originalIsMobile && isPoiMwebCard)
           }
           defaultOpen={defaultOpen}
-          $isModifiedProductCard={
-            isModifiedProductCard ||
-            (isPopup && !originalIsMobile && isPoiMwebCard)
-          }
           $isPoiMwebCard={isPoiMwebCard}
           $isPopup={isPopup}
           $isSwiperCard={isSwiperCard}
@@ -1416,7 +1430,20 @@ const Product = (props: any) => {
           $isNewVerticalsProductCard={
             isNewVerticalsProductCard && !isNonNewVerticalProductCard
           }
+          $isModifiedProductCard={
+            isModifiedProductCard ||
+            (isPopup && !originalIsMobile && isPoiMwebCard) ||
+            isAsideBarOverlay
+          }
+          $isAsideBarOverlay={isAsideBarOverlay}
         >
+          <Conditional if={boosterTypeIfShown && !isPopup}>
+            <Booster
+              type={BoosterType[boosterTypeIfShown as keyof typeof BoosterType]}
+              rank={indexPosition + 1}
+              isOverlay={isMobile ? expandContent : isAsideBarOverlay}
+            />
+          </Conditional>
           <Conditional
             if={
               (isPopup ? originalIsMobile : isMobile) &&

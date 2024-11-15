@@ -858,6 +858,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   SHOW_PAGE_V2: {
     READ_MORE_REVIEWS: 'Read more reviews',
     SHOW_MORE_REVIEWS: 'Show more reviews',
+    MUST_DO_EXP: 'Must-do experience',
     ALL_PHOTOS: 'All photos',
     MORE_DATES: 'More dates',
     SELLING_OUT_FAST: 'Selling out fast',

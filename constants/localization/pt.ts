@@ -793,6 +793,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TWO_PART_SHOW: 'Espetáculo em duas partes',
     INTERVAL: 'Intervalo',
     SELLING_OUT_FAST: 'Esgota rápido',
+    MUST_DO_EXP: 'Imperdível',
     READ_MORE_REVIEWS: 'Ler mais avaliações',
     SHOW_MORE_REVIEWS: 'Mostrar mais avaliações',
     ALL_PHOTOS: 'Todas as fotos',

@@ -790,6 +790,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   },
   SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Bientôt épuisé',
+    MUST_DO_EXP: 'À ne pas manquer',
     INTERVAL: 'Entracte',
     TWO_PART_SHOW: 'Spectacle en deux parties',
     READ_MORE_REVIEWS: 'Lire plus d’avis',

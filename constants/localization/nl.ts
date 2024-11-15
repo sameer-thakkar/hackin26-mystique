@@ -787,6 +787,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
   SHOW_PAGE_V2: {
     SELLING_OUT_FAST: 'Snel uitverkocht',
+    MUST_DO_EXP: 'Niet te missen',
     INTERVAL: 'Pauze',
     TWO_PART_SHOW: 'Voorstelling in twee delen',
     READ_MORE_REVIEWS: 'Meer beoordelingen lezen',
