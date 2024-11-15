@@ -8,6 +8,7 @@ import {
 } from 'components/slices/ListicleSectionV2/styles';
 import { MBContext } from 'contexts/MBContext';
 import { getAlternateLanguageDocUid, getHeadoutLanguagelocale } from 'utils';
+import { generateSidenavId } from 'utils/helper';
 import { getExperienceType } from 'utils/listicle';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { EXPERIENCES, LANGUAGE_MAP, MB_TYPES } from 'const/index';
@@ -189,7 +190,7 @@ const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
 
   return (
     <ListicleSectionWrapper>
-      <Title>{title}</Title>
+      <Title id={generateSidenavId(title)}>{title}</Title>
       {newSlices?.length > 0 && (
         <SliceZone
           slices={newSlices}
