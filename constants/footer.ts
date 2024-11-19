@@ -85,6 +85,8 @@ export const COMPANY_DETAILS_LINK = '/company-details/';
 
 export const PRIVACY_POLICY_LINK = '/privacy-policy/';
 
+export const CANCELLATION_POLICY_LINK = '/cancellation-policy/';
+
 export const TERMS_LINK = '/terms/';
 
 export const SOCIAL_DETAILS: SocialDetail[] = [

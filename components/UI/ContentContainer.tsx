@@ -58,3 +58,37 @@ export const PrivacyContentContainer = styled.div`
     }
   }
 `;
+
+export const CancellationPolicyContentContainer = styled.div`
+  ${ContentContainerCommon}
+
+  ol {
+    margin-left: 0.5rem;
+    padding-left: 0.75rem;
+    list-style: none;
+    counter-reset: item;
+    & > li {
+      display: table;
+      margin-top: 0.5rem;
+      counter-increment: item;
+      &:before {
+        display: table-cell;
+        padding-right: 0.6rem;
+        content: counters(item, '.') '. ';
+      }
+      h2 {
+        display: inline;
+      }
+    }
+
+    & > li > p > ol > li:before {
+      content: counter(item, upper-alpha) '. ';
+      display: table-cell;
+      padding-right: 0.5625rem;
+    }
+  }
+
+  ul {
+    list-style: disc;
+  }
+`;

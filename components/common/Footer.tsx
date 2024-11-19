@@ -26,6 +26,7 @@ import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
 import {
+  CANCELLATION_POLICY_LINK,
   COMPANY_DETAILS_LINK,
   DOWNLOAD_APP_QR,
   DOWNLOAD_APP_QR_DIM,
@@ -276,6 +277,15 @@ const Footer: React.FC<FooterProps> = ({
                         <FooterListItem isLight={isLight}>
                           <a href={TERMS_LINK} rel="noopener" target="_blank">
                             {strings.FOOTER.TERMS_OF_USAGE}
+                          </a>
+                        </FooterListItem>
+                        <FooterListItem isLight={isLight}>
+                          <a
+                            href={CANCELLATION_POLICY_LINK}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            {strings.CANCELLATION_POLICY_HEADING}
                           </a>
                         </FooterListItem>
                       </ul>
