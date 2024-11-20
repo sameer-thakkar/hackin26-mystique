@@ -664,6 +664,7 @@ export const ANALYTICS_EVENTS = {
   DESCRIPTOR_CLICKED: 'Descriptor Clicked',
   EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
   EXPERIENCE_PAX_UPDATED: 'Experience PAX Updated',
+  MIXPANEL_SESSION_REPLAY: 'Mixpanel Session Replay',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1159,6 +1160,7 @@ export const ANALYTICS_PROPERTIES = {
   IS_BANNER_SLICE_PRESENT: 'Is Banner Slice Present',
   BANNER_TYPE: 'Banner Type',
   PAX_COUNT: 'Pax Count',
+  IS_SESSION_RECORDED: 'Is Session Recorded',
   IS_BEST_SELLING: 'Is Best Selling Present',
   IS_SELLING_FAST: 'Is Selling Fast Present',
   IS_MUST_DO_EXP: 'Is Must Do Experience Present',

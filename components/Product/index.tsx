@@ -1082,6 +1082,8 @@ const Product = (props: any) => {
       : undefined,
     isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
   });
+  // const productBookingUrl =
+  //   'https://mxp.deimos.dev-headout.com/book/7998/select/?currencyCode=USD&cookieBanner=false';
 
   const onSidePanelClose = () => {
     trackedToggleContent(true);

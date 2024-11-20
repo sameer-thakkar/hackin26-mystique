@@ -25,6 +25,7 @@ const C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH = 'EN LP CTA Copy v2';
 const CRUISES_REVAMP = 'Cruises Revamp Experiment';
 const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
+const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
@@ -36,6 +37,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
+  MIXPANEL_SESSION_REPLAY,
   PRODUCT_CARD_VIDEO,
   SEATMAP_EXPERIMENT,
   SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT,
@@ -92,6 +94,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     LTD_LP_Experiment,
     [VARIANTS.SHOWPAGE_REDIRECT, VARIANTS.CHECKOUT_REDIRECT],
     [0, 100]
+  ),
+  [MIXPANEL_SESSION_REPLAY]: new Experiment(
+    MIXPANEL_SESSION_REPLAY,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [95, 5]
   ),
   [PRODUCT_CARD_VIDEO]: new Experiment(
     PRODUCT_CARD_VIDEO,

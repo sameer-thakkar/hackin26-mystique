@@ -13,7 +13,7 @@ import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
-import { sendVariableToDataLayer } from 'utils/analytics';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
@@ -27,6 +27,7 @@ import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
 import {
+  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   COOKIE,
   CUSTOM_TYPES,
@@ -202,6 +203,25 @@ const Page = (props: PageProps) => {
     customEligibilityCheckFn: () =>
       (isLTT || isBroadway) && (lang == 'it-it' || lang == 'de-de'),
   });
+
+  const {
+    isEligible: isMixpanelSessionReplayEligible,
+    variant: mixpanelSessionReplayExpVariant,
+  } = useABTesting({
+    experimentId: 'MIXPANEL_SESSION_REPLAY',
+    noTrack: true,
+    customEligibilityCheckFn: () => true,
+  });
+
+  useEffect(() => {
+    if (isMixpanelSessionReplayEligible) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MIXPANEL_SESSION_REPLAY,
+        [ANALYTICS_PROPERTIES.IS_SESSION_RECORDED]:
+          mixpanelSessionReplayExpVariant === 'Treatment' ? 'Yes' : 'No',
+      });
+    }
+  }, [isMixpanelSessionReplayEligible, mixpanelSessionReplayExpVariant]);
 
   const showCustomBookButtonCTA =
     shouldRunCustomCTAExperiment &&
