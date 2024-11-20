@@ -634,7 +634,7 @@ const it = {
     TRANSPORTATION: 'Trasporti',
     FESTIVALS_EVENTS: 'Festival ed eventi',
   },
-  WHY_WATCH: 'Perché guardarlo {0}?',
+  WHY_WATCH: 'Perché guardare {0}?',
   FIND_ON_MAP: 'Mappa',
   ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
