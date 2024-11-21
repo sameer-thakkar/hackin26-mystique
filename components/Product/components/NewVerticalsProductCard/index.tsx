@@ -214,7 +214,7 @@ const NewVerticalsProductCard = (props: any) => {
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
     lang: currentLanguage,
-    currency,
+    currency: finalListingPrice?.currencyCode || currency,
     tgid,
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
     variantId: tourId,

@@ -1063,7 +1063,7 @@ const Product = (props: any) => {
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
     lang: currentLanguage,
-    currency,
+    currency: finalListingPrice?.currencyCode || currency,
     tgid,
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
     variantId: tourId,
@@ -1082,8 +1082,6 @@ const Product = (props: any) => {
       : undefined,
     isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
   });
-  // const productBookingUrl =
-  //   'https://mxp.deimos.dev-headout.com/book/7998/select/?currencyCode=USD&cookieBanner=false';
 
   const onSidePanelClose = () => {
     trackedToggleContent(true);
