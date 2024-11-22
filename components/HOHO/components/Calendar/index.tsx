@@ -53,6 +53,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     variantName,
     tourGroupName,
     onDateClick,
+    calendarDetails,
   } = props;
   const {
     lang,
@@ -89,9 +90,16 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     },
   });
 
-  let { data: calendarData } = useSWR(calendarEndpoint, {
-    fetcher: swrFetcher,
-  });
+  let { data: calendarData } = useSWR(
+    calendarDetails ? null : calendarEndpoint,
+    {
+      fetcher: swrFetcher,
+    }
+  );
+
+  if (calendarDetails) {
+    calendarData = calendarDetails;
+  }
   if (calendarData) {
     setIsLoading(false);
   }

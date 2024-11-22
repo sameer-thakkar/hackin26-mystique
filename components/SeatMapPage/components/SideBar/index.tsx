@@ -83,6 +83,7 @@ const SideBar = (props: TSideBarProps) => {
   const currencyList = useRecoilValue(currencyListAtom);
   const { host } = useRecoilValue(appAtom);
   const [timeSlotIndex, setTimeSlotIndex] = useState(0);
+  const [isTimeSelectionLoading, setIsTimeSelectionLoading] = useState(true);
   const [toursAgainstDates, setToursAgainstDates] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [showPageLink, setShowPageLink] = useState('');
@@ -187,146 +188,22 @@ const SideBar = (props: TSideBarProps) => {
         endpoint: HeadoutEndpoints.CalendarInventory,
         id: theatreShowTgid,
         params: {
-          ...(tourStartDate && { 'from-date': tourStartDate }),
-          ...(tourStartDate && {
-            'to-date': getDateXDaysAhead({
-              startDate: tourStartDate,
-              daysAhead: 7,
-            }),
-          }),
           ...(variantId && { variantId: variantId?.toString() }),
           ...(activeCurrencyCode && { currency: activeCurrencyCode }),
         },
       }),
-    [theatreShowTgid, tourStartDate, variantId, activeCurrencyCode]
+    [theatreShowTgid, variantId, activeCurrencyCode]
   );
 
   const { data: calendarData } = useSWR(calendarEndpoint, {
     fetcher: swrFetcher,
   });
 
-  useEffect(() => {
-    if (calendarData && tourDatesToShow?.length) {
-      const { dates } = calendarData;
-      const sortedInventoryDates = sortDateArray(Object.keys(dates) ?? []);
-      const [firstAvailableDateStr] = sortedInventoryDates ?? [];
-
-      const lastVisibleTourDateStr =
-        tourDatesToShow[tourDatesToShow.length - 1];
-
-      const firstAvailableDate = new Date(firstAvailableDateStr);
-      const lastVisibleTourDate = new Date(lastVisibleTourDateStr);
-
-      if (firstAvailableDate <= lastVisibleTourDate) {
-        setSelectedTourDate(firstAvailableDateStr);
-      }
-    }
-  }, [calendarData]);
-
   const computeMinInventoryMap = useCallback(() => {
     let { dates } = calendarData;
     let minInventoryMap = new Map(Object.entries(dates));
     setMinInventoryMap(minInventoryMap);
   }, [calendarData]);
-
-  useEffect(() => {
-    if (calendarData) {
-      computeMinInventoryMap();
-    }
-  }, [computeMinInventoryMap, calendarData]);
-
-  const fetchShowPageData = useCallback(async () => {
-    const showPageDocument = await prismicClient.getByType('showpage', {
-      predicates: [
-        predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.${PRISMIC_FIELD_ID.TGID}`, [
-          Number(theatreShowTgid),
-        ]),
-      ],
-    });
-    const showPageUrl = convertUidToUrl({
-      uid: showPageDocument?.results?.[0]?.uid,
-      lang,
-    });
-
-    if (showPageUrl) {
-      setShowPageLink(showPageUrl);
-    }
-  }, [theatreShowTgid, lang, prismicClient]);
-
-  useEffect(() => {
-    setIsLoading(false);
-    const { listingPrice } = calendarData?.dates[selectedTourDate] ?? {};
-    const totalAvailableTours = getTotalAvailableTours(tourDatesToShow);
-    addExperienceDateSelectedDataEvents({
-      selectedTourDate: selectedTourDate,
-      isMinPrice: listingPrice <= medianPrice,
-      totalAvailableTours,
-    });
-    fetchShowPageData();
-  }, [
-    calendarData,
-    selectedTourDate,
-    tourDatesToShow,
-    fetchShowPageData,
-    medianPrice,
-  ]);
-
-  const addCalendarToggleDataEvents = useCallback(
-    (showCalendar) => {
-      if (showCalendar) {
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.CALENDAR_OPEN,
-          [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
-          [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: experienceName,
-        });
-      } else {
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.CALENDAR_CLOSED,
-          [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
-          [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: experienceName,
-        });
-      }
-    },
-    [theatreShowTgid, experienceName]
-  );
-
-  const getTotalAvailableTours = useCallback(
-    (tourDates: string[]) => {
-      return tourDates.reduce((count, tourDate) => {
-        const isTourAvailable = Boolean(calendarData?.dates[tourDate]);
-
-        if (isTourAvailable) {
-          count += 1;
-        }
-
-        return count;
-      }, 0);
-    },
-    [calendarData]
-  );
-
-  const handleSelectTourDate = useCallback(
-    ({ isDisabled, tourDate, isMinPrice }) => {
-      if (isDisabled) {
-        return;
-      }
-
-      const totalAvailableTours = getTotalAvailableTours(tourDatesToShow);
-      setSelectedTourDate(tourDate);
-      addExperienceDateSelectedDataEvents({
-        selectedTourDate: tourDate,
-        isUser: true,
-        isMinPrice,
-        totalAvailableTours,
-      });
-    },
-    [tourDatesToShow, getTotalAvailableTours]
-  );
-
-  const handleShowCalendar = useCallback(() => {
-    setShowCalendar(true);
-    addCalendarToggleDataEvents(true);
-  }, [addCalendarToggleDataEvents]);
 
   const addExperienceDateSelectedDataEvents = useCallback(
     ({
@@ -357,6 +234,125 @@ const SideBar = (props: TSideBarProps) => {
     },
     [tourDatesToShow]
   );
+
+  useEffect(() => {
+    if (calendarData) {
+      const { dates } = calendarData;
+      const sortedInventoryDates = sortDateArray(Object.keys(dates) ?? []);
+      const [firstAvailableDateStr] = sortedInventoryDates ?? [];
+
+      if (firstAvailableDateStr) {
+        setSelectedTourDate(firstAvailableDateStr);
+        setTourStartDate(firstAvailableDateStr);
+      }
+
+      setIsLoading(false);
+    }
+  }, [calendarData]);
+
+  const getTotalAvailableTours = useCallback(
+    (tourDates: string[]) => {
+      return tourDates.reduce((count, tourDate) => {
+        const isTourAvailable = Boolean(calendarData?.dates[tourDate]);
+
+        if (isTourAvailable) {
+          count += 1;
+        }
+
+        return count;
+      }, 0);
+    },
+    [calendarData]
+  );
+
+  useEffect(() => {
+    if (calendarData) {
+      computeMinInventoryMap();
+    }
+  }, [computeMinInventoryMap, calendarData]);
+
+  const fetchShowPageData = useCallback(async () => {
+    const showPageDocument = await prismicClient.getByType('showpage', {
+      predicates: [
+        predicate.any(`my.${CUSTOM_TYPES.SHOW_PAGE}.${PRISMIC_FIELD_ID.TGID}`, [
+          Number(theatreShowTgid),
+        ]),
+      ],
+    });
+    const showPageUrl = convertUidToUrl({
+      uid: showPageDocument?.results?.[0]?.uid,
+      lang,
+    });
+
+    if (showPageUrl) {
+      setShowPageLink(showPageUrl);
+    }
+  }, [theatreShowTgid, lang, prismicClient]);
+
+  useEffect(() => {
+    const { listingPrice } = calendarData?.dates[selectedTourDate] ?? {};
+    const totalAvailableTours = getTotalAvailableTours(tourDatesToShow);
+    addExperienceDateSelectedDataEvents({
+      selectedTourDate: selectedTourDate,
+      isMinPrice: listingPrice <= medianPrice,
+      totalAvailableTours,
+    });
+    fetchShowPageData();
+  }, [
+    calendarData,
+    selectedTourDate,
+    tourDatesToShow,
+    fetchShowPageData,
+    medianPrice,
+    addExperienceDateSelectedDataEvents,
+    getTotalAvailableTours,
+  ]);
+
+  const addCalendarToggleDataEvents = useCallback(
+    (showCalendar) => {
+      if (showCalendar) {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.CALENDAR_OPEN,
+          [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
+          [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: experienceName,
+        });
+      } else {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.CALENDAR_CLOSED,
+          [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
+          [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: experienceName,
+        });
+      }
+    },
+    [theatreShowTgid, experienceName]
+  );
+
+  const handleSelectTourDate = useCallback(
+    ({ isDisabled, tourDate, isMinPrice }) => {
+      if (isDisabled) {
+        return;
+      }
+
+      const totalAvailableTours = getTotalAvailableTours(tourDatesToShow);
+      setSelectedTourDate(tourDate);
+      addExperienceDateSelectedDataEvents({
+        selectedTourDate: tourDate,
+        isUser: true,
+        isMinPrice,
+        totalAvailableTours,
+      });
+    },
+    [
+      tourDatesToShow,
+      getTotalAvailableTours,
+      addExperienceDateSelectedDataEvents,
+    ]
+  );
+
+  const handleShowCalendar = useCallback(() => {
+    setShowCalendar(true);
+    addCalendarToggleDataEvents(true);
+  }, [addCalendarToggleDataEvents]);
 
   const addCheckAvailabilityClickedDataEvents = useCallback(() => {
     trackEvent({
@@ -403,6 +399,23 @@ const SideBar = (props: TSideBarProps) => {
     isMobile,
     addCheckAvailabilityClickedDataEvents,
   ]);
+
+  const onCalendarDateClick = ({
+    date,
+  }: {
+    date: string;
+    priceTag: string;
+  }) => {
+    setTourStartDate(date);
+    setSelectedTourDate(date);
+    setIsTimeSelectionLoading(true);
+    setShowCalendar(false);
+    addExperienceDateSelectedDataEvents({
+      selectedTourDate: date,
+      isCalendar: true,
+      isUser: true,
+    });
+  };
 
   if (isMobile) {
     const localisedActualPrice = getLocalisedPrice({
@@ -585,40 +598,37 @@ const SideBar = (props: TSideBarProps) => {
                 tourGroupName={''}
                 isMobile={isMobile}
                 isActive={showCalendar}
-                onDateClick={({ date }: { date: string; priceTag: string }) => {
-                  setTourStartDate(date);
-                  setShowCalendar(false);
-                  addExperienceDateSelectedDataEvents({
-                    selectedTourDate: date,
-                    isCalendar: true,
-                    isUser: true,
-                  });
-                }}
+                onDateClick={onCalendarDateClick}
                 onClickout={() => {
                   setShowCalendar(false);
                   addCalendarToggleDataEvents(false);
                 }}
                 currency={activeCurrencyCode}
                 setIsLoading={() => {}}
+                calendarDetails={calendarData}
               />
             </HorizontalDateList>
           </Conditional>
         </DateSelection>
         <HR />
-        <TimeSelection
-          selectedTourDate={selectedTourDate}
-          tourStartDate={tourStartDate}
-          activeCurrencyCode={activeCurrencyCode}
-          currencyList={currencyList}
-          lang={lang}
-          host={host}
-          tgid={theatreShowTgid}
-          handleCheckAvailabilityClick={handleCheckAvailabilityClick}
-          timeSlotIndex={timeSlotIndex}
-          setTimeSlotIndex={setTimeSlotIndex}
-          toursAgainstDates={toursAgainstDates}
-          setToursAgainstDates={setToursAgainstDates}
-        />
+        <Conditional if={!isLoading}>
+          <TimeSelection
+            selectedTourDate={selectedTourDate}
+            tourStartDate={tourStartDate}
+            activeCurrencyCode={activeCurrencyCode}
+            currencyList={currencyList}
+            lang={lang}
+            host={host}
+            tgid={theatreShowTgid}
+            handleCheckAvailabilityClick={handleCheckAvailabilityClick}
+            timeSlotIndex={timeSlotIndex}
+            setTimeSlotIndex={setTimeSlotIndex}
+            toursAgainstDates={toursAgainstDates}
+            setToursAgainstDates={setToursAgainstDates}
+            setIsTimeSelectionLoading={setIsTimeSelectionLoading}
+            isTimeSelectionLoading={isTimeSelectionLoading}
+          />
+        </Conditional>
       </SideBarTop>
     </SideBarWrapper>
   );
@@ -637,6 +647,8 @@ const TimeSelection = (props: any) => {
     setTimeSlotIndex,
     toursAgainstDates = {},
     setToursAgainstDates,
+    isTimeSelectionLoading,
+    setIsTimeSelectionLoading,
   } = props;
 
   const availableToursDateUrl = getHeadoutApiUrl({
@@ -697,8 +709,9 @@ const TimeSelection = (props: any) => {
       const availableToursAgainstDates = getToursAgainstDates(availabilities);
 
       setToursAgainstDates(availableToursAgainstDates);
+      setIsTimeSelectionLoading(false);
     }
-  }, [tourAvailabilities, setToursAgainstDates]);
+  }, [tourAvailabilities, setToursAgainstDates, setIsTimeSelectionLoading]);
 
   const handleTourTimeSlotClick = ({
     tourIndex,
@@ -716,6 +729,10 @@ const TimeSelection = (props: any) => {
       isUser: true,
     });
   };
+
+  if (isTimeSelectionLoading) {
+    return <TimeSelectionSkeleton />;
+  }
 
   return (
     <StyledTimeSelection>
@@ -827,6 +844,25 @@ const SideBarSkeleton = () => {
           </HorizontalDateList>
         </DateSelectionSkeleton>
         <HR />
+        <StyledTimeSelection>
+          <Skeleton width="10rem" height="1.25rem" borderRadius="2px" />
+          {Array.apply(null, Array(3)).map((_item: any, index: number) => {
+            return (
+              <div key={`timeSelectionSkeleton-${index}`} className="tour-tag">
+                <Skeleton width="100%" height="3.5rem" borderRadius="2px" />
+              </div>
+            );
+          })}
+        </StyledTimeSelection>
+      </SkeletonTheme>
+    </SideBarTop>
+  );
+};
+
+const TimeSelectionSkeleton = () => {
+  return (
+    <SideBarTop>
+      <SkeletonTheme baseColor={COLORS.GRAY.G8} highlightColor={COLORS.GRAY.G6}>
         <StyledTimeSelection>
           <Skeleton width="10rem" height="1.25rem" borderRadius="2px" />
           {Array.apply(null, Array(3)).map((_item: any, index: number) => {
