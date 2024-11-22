@@ -91,6 +91,7 @@ interface DropdownContentProps {
   onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
   preventTouchEvents?: boolean;
   isModifiedPopup?: boolean;
+  showSightsCoveredItineraryLayout?: boolean;
   reviewsDetails?: Record<string, any>;
   topReviews?: TReviewMediasResponse['items'];
 }
@@ -116,6 +117,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   onActiveItineraryTabChange,
   preventTouchEvents,
   isModifiedPopup = false,
+  showSightsCoveredItineraryLayout = false,
   reviewsDetails,
   topReviews,
 }) => {
@@ -136,6 +138,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
 
   const hasItinerarySection =
     !isModifiedPopup &&
+    !showSightsCoveredItineraryLayout &&
     !!tgidItineraryData &&
     tgidItineraryData.findIndex((itinerary: TItinerary) =>
       isItineraryValid(itinerary)
@@ -149,7 +152,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
       filterHighlights({
         highlights: propHighlights,
         removeSitesVisited: false,
-        isModifiedPopup,
+        isModifiedPopup: isModifiedPopup || showSightsCoveredItineraryLayout,
       }),
     [propHighlights]
   );
@@ -261,6 +264,21 @@ const DropdownContent: FC<DropdownContentProps> = ({
           isNew: true,
           contents: [],
           type: 'itinerary',
+        },
+        ...tabs.slice(1),
+      ];
+    }
+    if (
+      showSightsCoveredItineraryLayout &&
+      finalHighlights &&
+      sections?.length
+    ) {
+      tabs = [
+        tabs[0],
+        {
+          heading: strings.CRUISES.SIGHTS_COVERED,
+          contents: [],
+          type: 'nonRichText',
         },
         ...tabs.slice(1),
       ];
@@ -399,7 +417,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
           enableDrag={true}
           cardHeight={cardHeight}
           headerHeight={headerHeight}
-          pricingHeight={pricingHeight - 82}
+          pricingHeight={pricingHeight - (isModifiedPopup ? 50 : 82)}
           hasOffers={false}
           ref={snapRef}
           tgid={tgid as string}
@@ -461,8 +479,23 @@ const DropdownContent: FC<DropdownContentProps> = ({
                       tab.heading === strings.CRUISES.SIGHTS_COVERED && details
                     }
                   >
-                    <SightsCovered itineraryData={tgidItineraryData!} />
+                    <SightsCovered
+                      itineraryData={tgidItineraryData!}
+                      isCruisesRevamp={isModifiedPopup}
+                    />
                   </Conditional>
+                </Conditional>
+                <Conditional
+                  if={
+                    showSightsCoveredItineraryLayout &&
+                    tab.heading === strings.CRUISES.SIGHTS_COVERED &&
+                    details
+                  }
+                >
+                  <SightsCovered
+                    itineraryData={tgidItineraryData!}
+                    isCruisesRevamp={isModifiedPopup}
+                  />
                 </Conditional>
                 <Conditional
                   if={tab.type === 'itinerary' && hasItinerarySection}

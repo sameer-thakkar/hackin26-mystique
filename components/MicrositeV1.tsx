@@ -1,6 +1,7 @@
 import { ComponentType, useEffect, useMemo, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
@@ -219,6 +220,7 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -318,11 +320,18 @@ const MicrositeV1 = (props: any) => {
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
 
+  const cruiseFormatTest = router.query.cruiseFormatTest;
   const productCardData =
     localisedCategoryTourListV1?.primary?.product_cards?.data ?? {};
+  const showSightsCoveredItineraryLayout =
+    localisedCategoryTourListV1?.primary?.show_sights_covered_itinerary_layout;
   const { template } = productCardData || {};
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
+  const showCruisesFormat =
+    CRUISES_REVAMP_UIDS.includes(uid) ||
+    template === TEMPLATES.CRUISES ||
+    !!cruiseFormatTest;
   const currentLanguage = getLangObject(lang).code;
 
   const {
@@ -409,8 +418,6 @@ const MicrositeV1 = (props: any) => {
   const showCustomProductCardEnglishCTA =
     shouldRunCustomEnglishCTAExperiment &&
     customCTAEnglishExperimentVariant === VARIANTS.TREATMENT;
-
-  const showCruisesRevamp = CRUISES_REVAMP_UIDS.includes(uid);
 
   const hideLFC =
     lfcExpVariant === VARIANTS.TREATMENT && isLFCImpactExpEligible;
@@ -513,7 +520,7 @@ const MicrositeV1 = (props: any) => {
   const finalUncategorizedTours = getFinalUncategorizedTours({
     orderedFilteredTours,
     scorpioData,
-    showCruisesRevamp,
+    showCruisesFormat,
     showHohoRevamp,
   });
 
@@ -582,7 +589,7 @@ const MicrositeV1 = (props: any) => {
         defaultType: PAGE_TYPES.COLLECTION,
         isCatOrSubCatPage,
         isSubCategoryPage: isSubCategoryMicrobrand,
-        isCruises: showCruisesRevamp,
+        isCruises: showCruisesFormat,
       }),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
@@ -602,7 +609,7 @@ const MicrositeV1 = (props: any) => {
       ...(subattractionType && {
         [ANALYTICS_PROPERTIES.SUBATTRACTION_TYPE]: subattractionType,
       }),
-      ...(showCruisesRevamp && {
+      ...(showCruisesFormat && {
         [ANALYTICS_PROPERTIES.PRIMARY_PRODUCTS_PRESENT]:
           finalUncategorizedTours?.filter(
             (tour: Record<string, any>) =>
@@ -866,17 +873,18 @@ const MicrositeV1 = (props: any) => {
       isPoiMwebCard={isPoiMwebCard}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
-      isModifiedProductCard={!isMobile && !showCruisesRevamp}
+      isModifiedProductCard={!isMobile && !showCruisesFormat}
       isTourListFiltered={isTourListFiltered}
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
       showItineraries={showItineraries}
       showVideoOnProductCard={showVideoOnProductCard}
-      isCruisesRevamp={showCruisesRevamp}
-      isNewVerticalsProductCard={showHohoRevamp || showCruisesRevamp}
+      isCruisesRevamp={showCruisesFormat}
+      isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
+      showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={
         isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
       }
@@ -1230,7 +1238,7 @@ const MicrositeV1 = (props: any) => {
                 ? (productCardData?.city as TCityInfo)?.city
                 : null
             }
-            isCruisesRevamp={showCruisesRevamp}
+            isCruisesRevamp={showCruisesFormat}
           />
         </Conditional>
         <Conditional
@@ -1260,7 +1268,7 @@ const MicrositeV1 = (props: any) => {
             !isEntertainmentBanner &&
             coverSlices?.length &&
             !isCatOrSubCatPage &&
-            !showCruisesRevamp
+            !showCruisesFormat
           }
         >
           <CoverSlicesWrapper>

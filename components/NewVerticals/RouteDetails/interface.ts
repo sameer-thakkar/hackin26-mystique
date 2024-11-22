@@ -11,8 +11,9 @@ export type TRouteDetails = {
   bookingUrl: string;
   setIsSideDrawerOpen: Dispatch<SetStateAction<boolean>>;
   isCruise?: boolean;
-  cruisesItineraryData?: Itinerary[];
+  itineraryData?: Itinerary[];
   isDescriptorClick?: boolean;
+  isSightsCoveredLayout?: boolean;
 };
 
 export type TItineraryLocationPoint = {

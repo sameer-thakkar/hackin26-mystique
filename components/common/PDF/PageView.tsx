@@ -7,6 +7,7 @@ import {
 } from 'react-zoom-pan-pinch';
 import { useRecoilValue } from 'recoil';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import Image from 'UI/Image';
 import useResizeObserver from 'hooks/useResizeObserver';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
@@ -18,6 +19,7 @@ import ZoomIcon from 'assets/zoomIcon';
 import Conditional from '../Conditional';
 import { Container, ControlBtn, Controls } from './styles';
 import { TPdfViewer } from './types';
+import { getExtension } from './utils';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -39,6 +41,7 @@ const PdfViewer = (props: TPdfViewer) => {
   const [isInitialState, setIsInitialState] = useState<boolean>(true);
   const { isMobile } = useRecoilValue(appAtom);
 
+  const isPdf = getExtension(documentSrc) === '.pdf';
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
 
@@ -158,29 +161,51 @@ const PdfViewer = (props: TPdfViewer) => {
           setIsScrolled(e.state.scale > 1);
           setIsInitialState(false);
         }}
+        {...(!isMobile && {
+          initialPositionX:
+            (window.innerWidth -
+              (containerWidth
+                ? Math.min(containerWidth, MAX_WIDTH)
+                : MAX_WIDTH)) /
+            2,
+        })}
       >
         <div className="pageview-wrapper" ref={setContainerRef}>
           <TransformComponent wrapperClass="zoom-wrapper">
-            <Document
-              file={documentSrc}
-              onLoadSuccess={onDocumentLoadSuccess}
-              options={options}
-              loading={<></>}
-            >
-              {Array.from(new Array(numPages), (_el, index) => (
-                <Page
-                  key={`page_${index + 1}`}
-                  pageNumber={index + 1}
-                  width={
-                    containerWidth
-                      ? Math.min(containerWidth, MAX_WIDTH)
-                      : MAX_WIDTH
-                  }
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
-                />
-              ))}
-            </Document>
+            <Conditional if={isPdf}>
+              <Document
+                file={documentSrc}
+                onLoadSuccess={onDocumentLoadSuccess}
+                options={options}
+                loading={<></>}
+              >
+                {Array.from(new Array(numPages), (_el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    width={
+                      containerWidth
+                        ? Math.min(containerWidth, MAX_WIDTH)
+                        : MAX_WIDTH
+                    }
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                  />
+                ))}
+              </Document>
+            </Conditional>
+            <Conditional if={!isPdf}>
+              <Image
+                url={documentSrc}
+                alt={documentSrc}
+                fitCrop={false}
+                autoCrop={false}
+                fetchPriority="high"
+                placeholder="blur"
+                className="pdf-img"
+                priority={true}
+              />
+            </Conditional>
           </TransformComponent>
           <ControlPanel />
         </div>

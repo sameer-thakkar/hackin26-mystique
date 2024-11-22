@@ -24,6 +24,7 @@ const HOHORouteMap = (props: TRouteMap) => {
     isOnTop = false,
     showOverlay = false,
     sectionName = '',
+    isSightsCoveredLayout = false,
   } = props;
 
   const [isEnabled, setIsEnabled] = useState(false);
@@ -92,7 +93,9 @@ const HOHORouteMap = (props: TRouteMap) => {
           itinerary={itinerary}
           onClickTrackEvent={handleClickEvent}
           onZoomTrackEvent={handleZoomEvent}
-          showStartAsStop={itinerary?.type === ItineraryType.CRUISE}
+          showStartAsStop={
+            itinerary?.type === ItineraryType.CRUISE || isSightsCoveredLayout
+          }
           enableFreeTouchPropagation
         />
         <Conditional if={showOverlay && !isEnabled}>

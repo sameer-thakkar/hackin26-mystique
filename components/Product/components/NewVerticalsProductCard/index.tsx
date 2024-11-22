@@ -342,7 +342,9 @@ const NewVerticalsProductCard = (props: any) => {
                   hideGrabCursor={true}
                 />
               </Conditional>
-              <Conditional if={experienceItineraryIds?.length}>
+              <Conditional
+                if={experienceItineraryIds?.length && itinerarySections?.length}
+              >
                 <RoutesCTA
                   tourGroupName={cardTitle}
                   tgid={tgid}
@@ -356,12 +358,12 @@ const NewVerticalsProductCard = (props: any) => {
                   isDescriptorClick={isDescriptorClick}
                   setIsDescriptorClick={setIsDescriptorClick}
                   {...(isCruisesRevamp && {
-                    cruiseData: {
+                    itineraryInfo: {
                       isCruise: isCruisesRevamp,
                       isMealCruise: MEALS_SUBCAT_IDS?.includes(
                         primarySubCategory?.id
                       ),
-                      cruisesItineraryData: itineraryInfo?.data,
+                      itineraryData: itineraryInfo?.data,
                     },
                   })}
                 />
@@ -478,7 +480,6 @@ const NewVerticalsProductCard = (props: any) => {
                       }
                       earliestAvailability={earliestAvailability}
                       currentLanguage={currentLanguage}
-                      showTime={isCruisesRevamp}
                     />
                   </Conditional>
                 </Conditional>

@@ -22,7 +22,7 @@ export const Container = styled.div<{ $isTimelineModal?: boolean }>`
 
   @media (max-width: 768px) {
     gap: 0;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     padding: 0 0 1rem;
     overflow: hidden;
     ${({ $isTimelineModal }) =>
@@ -154,6 +154,11 @@ export const DetailsWrapper = styled.div<{
   padding: 1.5rem 0 0;
   height: 100%;
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   & > :not(:last-child) {
     border-bottom: ${({ $isCruiseVariant }) =>
       $isCruiseVariant ? `1px dashed ${COLORS.GRAY.G6}` : 'none'};

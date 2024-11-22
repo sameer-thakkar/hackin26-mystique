@@ -16,4 +16,5 @@ export type TRouteMap = {
   isOnTop?: boolean;
   showOverlay?: boolean;
   sectionName: string;
+  isSightsCoveredLayout?: boolean;
 };

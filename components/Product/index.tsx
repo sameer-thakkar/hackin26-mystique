@@ -17,6 +17,8 @@ import MWebEntryPoint from 'components/common/Itinerary/MWebEntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
 import ItineraryEntryPoint from 'components/HOHO/components/RoutesCTA/EntryPoint';
 import { SECTION_NAMES } from 'components/HOHO/constants';
+import { TController as TItineraryController } from 'components/NewVerticals/RouteDetails/Popup/interface';
+import RoutesCTA from 'components/NewVerticals/RoutesCTA';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
 import { BookNowCta } from 'components/Product/components/BookNowCta';
 import Category from 'components/Product/components/Category';
@@ -182,8 +184,10 @@ const Product = (props: any) => {
   const popupController = useRef<TController>();
   const priceblockTitleContainerRef = useRef<HTMLDivElement>(null);
   const combosSectionRef = useRef<HTMLDivElement>(null);
+  const itineraryPopupController = useRef<TItineraryController>();
 
   const [isTracked, setIsTracked] = useState(false);
+  const [isItineraryDrawerOpen, setIsItineraryDrawerOpen] = useState(false);
   const isCombosSectionIntersecting = useOnScreen({
     ref: combosSectionRef,
     unobserve: true,
@@ -273,6 +277,7 @@ const Product = (props: any) => {
     data: tgidItineraryData,
     showData: showItinerary,
     isHOHO: isHohoItinerary,
+    showSightsCoveredItineraryLayout,
   } = itineraryInfo || {};
 
   const {
@@ -796,7 +801,7 @@ const Product = (props: any) => {
         highlights: finalHighlights,
         removeSitesVisited:
           showItinerary && tgidsWithSitesVisited.includes(tgid),
-        isModifiedPopup,
+        isModifiedPopup: isModifiedPopup || showSightsCoveredItineraryLayout,
       }),
     [finalHighlights]
   );
@@ -811,6 +816,22 @@ const Product = (props: any) => {
     showItinerary && tgidsWithSitesVisited.includes(tgid)
       ? [...tabs.slice(0, 2), ...tabs.slice(3)]
       : tabs;
+
+  if (showSightsCoveredItineraryLayout) {
+    tabs = [
+      ...tabs.slice(0, 2),
+      {
+        ...(sections?.length
+          ? {
+              heading: strings.CRUISES.SIGHTS_COVERED,
+              contents: [],
+              type: 'nonRichText',
+            }
+          : null),
+      },
+      ...tabs.slice(2),
+    ]?.filter((el) => Object.keys(el)?.length);
+  }
 
   if (isModifiedPopup) {
     tabs = [
@@ -911,6 +932,9 @@ const Product = (props: any) => {
               tgidItineraryData={tgidItineraryData}
               isModifiedPopup={isModifiedPopup}
               customDescriptors={customDescriptors}
+              showSightsCoveredItineraryLayout={
+                showSightsCoveredItineraryLayout
+              }
             />
           </ItineraryProvider>
         </ProductCardProvider>
@@ -1529,7 +1553,30 @@ const Product = (props: any) => {
                   position={position}
                 />
               </Conditional>
-              <Conditional if={showItinerary && !isMobile}>
+              <Conditional if={showSightsCoveredItineraryLayout}>
+                <RoutesCTA
+                  tourGroupName={cardTitle}
+                  tgid={tgid}
+                  listingPrice={finalListingPrice}
+                  bookingUrl={productBookingUrl}
+                  isMobile={isMobile}
+                  ranking={indexPosition + 1}
+                  popupController={itineraryPopupController}
+                  isDrawerOpen={isItineraryDrawerOpen}
+                  setIsDrawerOpen={setIsItineraryDrawerOpen}
+                  itineraryInfo={{
+                    isSightsCoveredLayout: showSightsCoveredItineraryLayout,
+                    itineraryData: tgidItineraryData,
+                  }}
+                />
+              </Conditional>
+              <Conditional
+                if={
+                  showItinerary &&
+                  !isMobile &&
+                  !showSightsCoveredItineraryLayout
+                }
+              >
                 <ItineraryEntryPoint
                   onClick={async () => {
                     popupController.current?.open(1);
@@ -1539,7 +1586,11 @@ const Product = (props: any) => {
                   isHOHOItinerary={isHohoItinerary}
                 />
               </Conditional>
-              <Conditional if={showItinerary && isMobile}>
+              <Conditional
+                if={
+                  showItinerary && isMobile && !showSightsCoveredItineraryLayout
+                }
+              >
                 <MWebEntryPoint
                   onClick={() => {
                     openProductCardAside({ scrollToItinerarySection: true });
@@ -1624,7 +1675,6 @@ const Product = (props: any) => {
                 forceMobileStyles={forceMobile}
                 isPopup={isPopup}
                 flexible={isOpenDated}
-                showTime={isModifiedPopup}
               />
             </Conditional>
             <Conditional if={isModifiedPopup && isPopup}>
@@ -1944,6 +1994,16 @@ const Product = (props: any) => {
                       />
                     </ItineraryProvider>
                   </Conditional>
+                  <Conditional if={showSightsCoveredItineraryLayout && details}>
+                    <PrismicRichText
+                      field={inclusionsRichText}
+                      components={shortCodeSerializer}
+                    />
+                    <SightsCovered
+                      itineraryData={tgidItineraryData!}
+                      isCruisesRevamp={isCruisesRevamp}
+                    />
+                  </Conditional>
                   <Conditional if={isModifiedPopup}>
                     <InclusionsExclusions
                       inclusionsExclusions={inclusionsExclusions}
@@ -1956,7 +2016,10 @@ const Product = (props: any) => {
                       />
                     </Conditional>
                     <Conditional if={details}>
-                      <SightsCovered itineraryData={tgidItineraryData!} />
+                      <SightsCovered
+                        itineraryData={tgidItineraryData!}
+                        isCruisesRevamp={isCruisesRevamp}
+                      />
                     </Conditional>
                     <PrismicRichText
                       field={
@@ -1971,7 +2034,9 @@ const Product = (props: any) => {
                     <PrismicRichText
                       field={
                         isPopup
-                          ? everyRichTextExceptHighlights
+                          ? showSightsCoveredItineraryLayout
+                            ? everyRichTextExceptInclusions
+                            : everyRichTextExceptHighlights
                           : highlights || []
                       }
                       components={shortCodeSerializer}

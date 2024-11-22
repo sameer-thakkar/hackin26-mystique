@@ -25,7 +25,6 @@ export const NextAvailable = ({
   isPopup,
   flexible = false,
   className,
-  showTime = false,
 }: TNextAvailableProps) => {
   if (showSkeleton)
     return (
@@ -36,8 +35,6 @@ export const NextAvailable = ({
   const earliestAvailabilityTitle = getEarliestAvailableDate({
     date: earliestAvailability?.startDate,
     currentLanguage,
-    time: earliestAvailability?.startTime,
-    showTime,
   });
   const text = flexible ? (
     strings.OPEN_DATED_DESCRIPTOR

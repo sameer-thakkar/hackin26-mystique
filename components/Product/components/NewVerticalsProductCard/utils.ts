@@ -1,4 +1,4 @@
-import { SECTION_TYPE } from 'types/itinerary.type';
+import { Section, SECTION_TYPE } from 'types/itinerary.type';
 import { trackEvent } from 'utils/analytics';
 import { isCruiseItinerary } from 'utils/itinerary';
 import { IGNORED_HEADINGS } from 'const/descriptors';
@@ -57,7 +57,12 @@ export const getCustomDescriptors = ({
       },
     ];
   } else if (isCruises) {
-    const { popularAttractionsCovered = '' } = itineraryDetails || {};
+    const {
+      popularAttractionsCovered = '',
+      meal,
+      entertainment,
+    } = itineraryDetails || {};
+
     const audioGuide =
       defaultDescriptors?.includes(DESCRIPTORS.AUDIO_GUIDE) &&
       strings.DESCRIPTORS.MULTILINGUAL_AUDIO_GUIDE;
@@ -65,27 +70,24 @@ export const getCustomDescriptors = ({
       defaultDescriptors?.includes(DESCRIPTORS.GUIDED_TOUR) &&
       strings.DESCRIPTORS.LIVE_GUIDE;
     const liveEntertainment =
+      entertainment?.name ||
       descriptorsObject[IGNORED_HEADINGS.CRUISE_LIVE_ENTT];
-    const mealOptions = descriptorsObject[IGNORED_HEADINGS.CRUISE_MEALS];
-    const boatType = descriptorsObject[IGNORED_HEADINGS.CRUISE_BOAT];
+    const mealOptions =
+      meal?.name || descriptorsObject[IGNORED_HEADINGS.CRUISE_MEALS];
 
     const totalStops = itinerarySections?.filter(
       (stop: Record<string, any>) => stop?.type === SECTION_TYPE.STOP
     )?.length;
     const upfrontStops = popularAttractionsCovered?.split(',')?.length || 0;
+
     const totalBoardingPoints = itinerarySections?.filter(
       (stop: Record<string, any>) => stop?.type === SECTION_TYPE.START_LOCATION
     )?.length;
-    const boardingPoints =
-      totalBoardingPoints === 1
-        ? strings.formatString(
-            strings.CRUISES.BOARD_AT,
-            `<span class='clickable'>${itinerarySections?.[0]?.details?.name}</span>`
-          )
-        : strings.formatString(
-            strings.CRUISES.BOARDING_POINTS_AVAILABLE,
-            `<span class='clickable'>${totalBoardingPoints} ${strings.CRUISES.BOARDING_POINTS.toLowerCase()}</span>`
-          );
+    const boardingPoints = getBoardingPointsText({
+      totalBoardingPoints,
+      itinerarySections,
+    });
+
     const moreString = strings.formatString(
       strings.CRUISES.MORE,
       String(totalStops - upfrontStops)
@@ -128,11 +130,33 @@ export const getCustomDescriptors = ({
           : '',
         onClick: () => handleDescriptorClick(DESCRIPTOR_TYPE.POPULAR_POINTS),
       },
-      {
-        type: 'BOAT_TYPE',
-        text: boatType,
-      },
     ];
   }
   return descriptorsList?.filter((item) => item.text);
+};
+
+const getBoardingPointsText = ({
+  totalBoardingPoints,
+  itinerarySections,
+}: {
+  totalBoardingPoints: number;
+  itinerarySections: Section[];
+}) => {
+  if (!totalBoardingPoints) {
+    return '';
+  }
+  if (totalBoardingPoints === 1) {
+    const bpName = itinerarySections?.[0]?.details?.name;
+    if (!bpName) {
+      return '';
+    }
+    return strings.formatString(
+      strings.CRUISES.BOARD_AT,
+      `<span class='clickable'>${bpName}</span>`
+    );
+  }
+  return strings.formatString(
+    strings.CRUISES.BOARDING_POINTS_AVAILABLE,
+    `<span class='clickable'>${totalBoardingPoints} ${strings.CRUISES.BOARDING_POINTS.toLowerCase()}</span>`
+  );
 };

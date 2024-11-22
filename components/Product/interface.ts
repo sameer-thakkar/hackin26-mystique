@@ -12,7 +12,6 @@ export type TNextAvailableProps = {
   isPopup?: boolean;
   flexible?: boolean;
   className?: string;
-  showTime?: boolean;
 };
 
 export type TBookNowCTAProps = {

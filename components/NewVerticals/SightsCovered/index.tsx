@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { Itinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import { isValidMap } from 'components/common/Itinerary/MapView/Map/utils';
 import TabWrapper from 'components/slices/TabWrapper';
 import { isCruiseItinerary } from 'utils/itinerary';
 import { appAtom } from 'store/atoms/app';
@@ -15,7 +16,13 @@ import BoardingPoints from '../RouteDetails/BoardingPoint';
 import HOHORouteMap from '../RouteDetails/RouteMap';
 import { Container, Wrapper } from './styles';
 
-const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
+const SightsCovered = ({
+  itineraryData,
+  isCruisesRevamp,
+}: {
+  itineraryData: Itinerary[];
+  isCruisesRevamp: boolean;
+}) => {
   const { isMobile } = useRecoilValue(appAtom);
 
   const tabsArray = itineraryData?.map((itinerary, index: number) => {
@@ -37,9 +44,11 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
             index={itineraryName}
             isSightsCovered={true}
             hideStopName={true}
-            excludeStopAsAttraction={!isCruiseItinerary(type)}
+            excludeStopAsAttraction={
+              isCruisesRevamp && !isCruiseItinerary(type)
+            }
           />
-          <Conditional if={sections?.length}>
+          <Conditional if={sections?.length && isValidMap(sections)}>
             <HOHORouteMap
               itinerary={itinerary}
               routeMapData={routeMapData}
@@ -48,6 +57,7 @@ const SightsCovered = ({ itineraryData }: { itineraryData: Itinerary[] }) => {
               isOnTop={true}
               showOverlay={true}
               sectionName={PRODUCT_CARD_REVAMP.PLACEMENT.MORE_DETAILS}
+              isSightsCoveredLayout={!isCruisesRevamp}
             />
           </Conditional>
           <BoardingPoints sectionsData={sections} />

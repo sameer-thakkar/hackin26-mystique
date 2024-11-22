@@ -9,7 +9,6 @@ import {
   TLANGUAGELOCALE,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { convertTo12HrFormat } from './timeUtils';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(customParseFormat);
@@ -196,21 +195,13 @@ export const getHumanReadableTime = ({
 export const getEarliestAvailableDate = ({
   date,
   currentLanguage,
-  time,
-  showTime,
 }: {
   date: any;
   currentLanguage: any;
-  time?: string;
-  showTime?: boolean;
 }) => {
   const today = dayjs().format('YYYY-MM-DD');
   const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
-  const startTime =
-    time && convertTo12HrFormat({ time, lang: currentLanguage });
 
-  if (showTime && date === today && startTime)
-    return `${strings.TODAY}, ${startTime}`;
   if (date === today) return strings.TODAY;
   if (date === tomorrow) return strings.TOMORROW;
   return (

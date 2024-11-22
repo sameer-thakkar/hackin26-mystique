@@ -401,7 +401,6 @@ const MobileProductCard = (props: any) => {
                 isDrawer={isDrawer}
                 earliestAvailability={earliestAvailability}
                 currentLanguage={currentLanguage}
-                showTime={isModifiedPopup}
               />
             </Conditional>
 

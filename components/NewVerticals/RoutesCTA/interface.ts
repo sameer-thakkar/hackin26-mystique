@@ -12,13 +12,14 @@ export type TRoutesCTA = {
   popupController: MutableRefObject<TController | undefined>;
   isDrawerOpen: boolean;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
-  isDescriptorClick: boolean;
-  setIsDescriptorClick: Dispatch<SetStateAction<boolean>>;
-  cruiseData?: TCruiseData;
+  isDescriptorClick?: boolean;
+  setIsDescriptorClick?: Dispatch<SetStateAction<boolean>>;
+  itineraryInfo?: TItineraryInfo;
 };
 
-export type TCruiseData = {
+export type TItineraryInfo = {
   isCruise?: boolean;
   isMealCruise?: boolean;
-  cruisesItineraryData?: Itinerary[];
+  isSightsCoveredLayout?: boolean;
+  itineraryData?: Itinerary[];
 };

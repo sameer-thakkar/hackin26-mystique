@@ -253,7 +253,7 @@ const RouteMap = ({
     <MapContainer onClick={handleFreeTouch} onTouchEnd={handleFreeTouch}>
       <LeafletMap
         lines={
-          isItineraryRouteActive
+          isItineraryRouteActive && !!polyline
             ? [
                 {
                   path: polyline,

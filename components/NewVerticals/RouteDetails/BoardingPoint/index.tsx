@@ -7,7 +7,7 @@ const BoardingPoints = (props: any) => {
   return (
     <>
       {boardingPoints?.map((item) => {
-        const { stopNumber, stopName, stopLocation } = item || {};
+        const { stopNumber, stopName, stopLocation, hideStop } = item || {};
         return (
           <BoardingPointItem
             key={stopNumber}
@@ -16,6 +16,7 @@ const BoardingPoints = (props: any) => {
             stopLocation={stopLocation}
             isSideModal={true}
             hideStopNumber={boardingPoints?.length === 1}
+            hideStop={hideStop}
           />
         );
       })}

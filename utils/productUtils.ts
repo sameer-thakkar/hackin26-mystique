@@ -1095,15 +1095,15 @@ export const sortNonCruises = (
 export const getFinalUncategorizedTours = ({
   orderedFilteredTours,
   scorpioData,
-  showCruisesRevamp,
+  showCruisesFormat,
   showHohoRevamp,
 }: {
   orderedFilteredTours: Record<string, any>[];
   scorpioData: Record<string, any>;
-  showCruisesRevamp: boolean;
+  showCruisesFormat: boolean;
   showHohoRevamp: boolean;
 }) => {
-  if (showCruisesRevamp) {
+  if (showCruisesFormat) {
     return sortNonCruises(orderedFilteredTours, scorpioData);
   }
   if (showHohoRevamp) {

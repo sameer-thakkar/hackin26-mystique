@@ -32,19 +32,20 @@ const RoutesCTA = (props: TRoutesCTA) => {
     bookingUrl,
     isMobile,
     ranking,
-    cruiseData,
+    itineraryInfo,
     popupController,
     isDrawerOpen,
     setIsDrawerOpen,
     isDescriptorClick,
-    setIsDescriptorClick,
+    setIsDescriptorClick = () => {},
   } = props;
   const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
-  const { isCruise, isMealCruise, cruisesItineraryData } = cruiseData || {};
+  const { isCruise, isMealCruise, itineraryData, isSightsCoveredLayout } =
+    itineraryInfo || {};
 
   let ctaText = strings.HOHO.ROUTES;
   let ctaType = en.HOHO.ROUTES;
-  if (isCruise) {
+  if (isCruise || isSightsCoveredLayout) {
     if (isMealCruise) {
       ctaText = strings.CRUISES.MENU;
       ctaType = en.CRUISES.FOOD_MENU;
@@ -101,17 +102,22 @@ const RoutesCTA = (props: TRoutesCTA) => {
               stroke={COLORS.TEXT.JOY_MUSTARD_3}
             />
           </Conditional>
-          <Conditional if={isCruise && !isMealCruise}>
+          <Conditional
+            if={(isCruise && !isMealCruise) || isSightsCoveredLayout}
+          >
             <Landmarks height={20} width={20} stroke={COLORS.TEXT.PURPS_3} />
           </Conditional>
-          <Conditional if={!isCruise}>
+          <Conditional if={!isCruise && !isSightsCoveredLayout}>
             <Route />
           </Conditional>
           <span className="routes-text">{ctaText}</span>
         </TextIconContainer>
       </Container>
       <Conditional if={!isMobile}>
-        <Popup controller={popupController} isCruise={isCruise}>
+        <Popup
+          controller={popupController}
+          decreasedHeight={isCruise || isSightsCoveredLayout}
+        >
           <RouteDetails
             closePopup={() => {
               popupController.current?.close(true);
@@ -125,8 +131,9 @@ const RoutesCTA = (props: TRoutesCTA) => {
             bookingUrl={bookingUrl}
             setIsSideDrawerOpen={setIsSideDrawerOpen}
             isCruise={isCruise}
-            cruisesItineraryData={cruisesItineraryData}
+            itineraryData={itineraryData}
             isDescriptorClick={isDescriptorClick}
+            isSightsCoveredLayout={isSightsCoveredLayout}
           />
         </Popup>
       </Conditional>
@@ -135,7 +142,7 @@ const RoutesCTA = (props: TRoutesCTA) => {
           tgid={tgid}
           rank={ranking}
           controller={pdfPopupController}
-          pdfData={cruisesItineraryData?.[0]?.details?.cruiseMenus}
+          pdfData={itineraryData?.[0]?.details?.cruiseMenus}
           isCTA={true}
           onHide={() => {
             document.body.style.overflow = 'auto';
@@ -177,8 +184,9 @@ const RoutesCTA = (props: TRoutesCTA) => {
             bookingUrl={bookingUrl}
             setIsSideDrawerOpen={setIsSideDrawerOpen}
             isCruise={isCruise}
-            cruisesItineraryData={cruisesItineraryData}
+            itineraryData={itineraryData}
             isDescriptorClick={isDescriptorClick}
+            isSightsCoveredLayout={isSightsCoveredLayout}
           />
         </Drawer>
       </Conditional>

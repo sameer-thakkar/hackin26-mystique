@@ -27,7 +27,6 @@ export const Container = styled.div<{ $initialState: boolean }>`
         $initialState
           ? css`
               display: grid;
-              justify-items: center;
             `
           : ''}
     }
@@ -37,6 +36,13 @@ export const Container = styled.div<{ $initialState: boolean }>`
       flex-direction: column;
       align-items: center;
     }
+
+    .pdf-img > img {
+      height: auto !important;
+      width: auto !important;
+      position: relative !important;
+      max-width: 52.5rem;
+    }
   }
   @media (max-width: 768px) {
     height: 100%;
@@ -44,6 +50,9 @@ export const Container = styled.div<{ $initialState: boolean }>`
       max-width: 100%;
       .zoom-wrapper {
         overflow: visible;
+      }
+      .pdf-img > img {
+        max-width: 100%;
       }
     }
   }

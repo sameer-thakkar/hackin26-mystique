@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Itinerary, SECTION_TYPE } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
+import { isValidMap } from 'components/common/Itinerary/MapView/Map/utils';
 import { SECTION_NAMES } from 'components/HOHO/constants';
 import AttractionsCarousel from 'components/NewVerticals/AttractionsCarousel';
 import { MBContext } from 'contexts/MBContext';
@@ -47,8 +48,10 @@ const RouteInfo = (props: TRouteInfo) => {
     routeData,
     isDescriptorClick,
     isCruise,
+    isSightsCoveredLayout,
   } = props;
   const { lang } = useContext(MBContext);
+  const showSightsCoveredLayout = isCruise || isSightsCoveredLayout;
 
   const totalStops = routeData?.sections?.filter(
     (stop: Record<string, any>) =>
@@ -83,7 +86,7 @@ const RouteInfo = (props: TRouteInfo) => {
     if (!showRoutesTimeline) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.ITINERARY_POPUP_VIEWED,
-        [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: isCruise
+        [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: showSightsCoveredLayout
           ? en.CRUISES.SIGHTS_COVERED
           : en.HOHO.ROUTES,
         [ANALYTICS_PROPERTIES.PLACEMENT]: isDescriptorClick
@@ -91,7 +94,7 @@ const RouteInfo = (props: TRouteInfo) => {
           : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
         [ANALYTICS_PROPERTIES.TGID]: tgid,
         [ANALYTICS_PROPERTIES.RANKING]: rank,
-        ...(isCruise && {
+        ...(showSightsCoveredLayout && {
           [ANALYTICS_PROPERTIES.BOARDING_POINTS]: boardingPoints?.join(', '),
         }),
       });
@@ -104,17 +107,21 @@ const RouteInfo = (props: TRouteInfo) => {
   } = routeSectionsData?.[0];
   const { latitude = 0, longitude = 0, placeId = '' } = location || {};
   const isCruiseType = isCruiseItinerary(type);
+  const isCruiseTypeOrSightsLayout = isCruiseType || isSightsCoveredLayout;
 
   const ExpandableSection = () => (
     <>
       <Conditional
-        if={(isCruiseType && boardingPoints?.length > 1) || !isCruiseType}
+        if={
+          (isCruiseTypeOrSightsLayout && boardingPoints?.length > 1) ||
+          !isCruiseTypeOrSightsLayout
+        }
       >
         <ExpandableSectionWrapper
           onClick={openRoutesTimeline}
-          $isCruiseVariant={isCruise}
+          $isCruiseVariant={showSightsCoveredLayout}
         >
-          <Conditional if={isCruiseType}>
+          <Conditional if={isCruiseTypeOrSightsLayout}>
             <div className="icon-text-wrapper">
               <LegendMarker className="location-pin" />
               <div>
@@ -130,7 +137,7 @@ const RouteInfo = (props: TRouteInfo) => {
               </div>
             </div>
           </Conditional>
-          <Conditional if={!isCruiseType}>
+          <Conditional if={!isCruiseTypeOrSightsLayout}>
             <div>
               <Title>{strings.HOHO.STOPS_AND_ATTRACTIONS}</Title>
               <Subtext>
@@ -146,7 +153,10 @@ const RouteInfo = (props: TRouteInfo) => {
         </ExpandableSectionWrapper>
       </Conditional>
       <Conditional
-        if={isCruise && isCruiseType && boardingPoints?.length === 1}
+        if={
+          ((isCruise && isCruiseType) || isSightsCoveredLayout) &&
+          boardingPoints?.length === 1
+        }
       >
         <BoardingPointItem
           stopNumber={1}
@@ -157,6 +167,7 @@ const RouteInfo = (props: TRouteInfo) => {
             placeId,
           })}
           hideStopNumber={true}
+          hideStop={!latitude || !longitude}
         />
       </Conditional>
     </>
@@ -186,21 +197,25 @@ const RouteInfo = (props: TRouteInfo) => {
 
   let sectionName = SECTION_NAMES.ITINERARY_DETAILS;
   if (showRoutesTimeline) {
-    if (isCruise) sectionName = en.CRUISES.BOARDING_POINTS;
+    if (showSightsCoveredLayout) sectionName = en.CRUISES.BOARDING_POINTS;
     else SECTION_NAMES.NEARBY_ATTRACTIONS;
   }
+
   const MapSection = () => (
-    <HOHORouteMap
-      routeMapData={routeMapData}
-      showRoutesTimeline={showRoutesTimeline}
-      isSideModalOpen={isSideModalOpen}
-      routeName={routeName}
-      itinerary={routeData as Itinerary}
-      showLegend={isCruise}
-      isOnTop={isCruise}
-      showOverlay={isMobile}
-      sectionName={sectionName}
-    />
+    <Conditional if={isValidMap(routeSectionsData)}>
+      <HOHORouteMap
+        routeMapData={routeMapData}
+        showRoutesTimeline={showRoutesTimeline}
+        isSideModalOpen={isSideModalOpen}
+        routeName={routeName}
+        itinerary={routeData as Itinerary}
+        showLegend={showSightsCoveredLayout}
+        isOnTop={showSightsCoveredLayout}
+        showOverlay={isMobile}
+        sectionName={sectionName}
+        isSightsCoveredLayout={isSightsCoveredLayout}
+      />
+    </Conditional>
   );
 
   const AttractionCarouselSection = () => (
@@ -209,7 +224,7 @@ const RouteInfo = (props: TRouteInfo) => {
       routeSectionsData={routeSectionsData}
       index={name}
       key={routeName}
-      hideStopName={isCruise}
+      hideStopName={showSightsCoveredLayout}
       excludeStopAsAttraction={isCruise && !isCruiseType}
     />
   );
@@ -217,7 +232,7 @@ const RouteInfo = (props: TRouteInfo) => {
   let ELEMENTS_ORDER = isMobile
     ? [ExpandableSection, TimingsSection, MapSection, AttractionCarouselSection]
     : [ExpandableSection, TimingsSection, AttractionCarouselSection];
-  if (isCruise) {
+  if (showSightsCoveredLayout) {
     ELEMENTS_ORDER = isMobile
       ? [
           MapSection,
@@ -231,7 +246,7 @@ const RouteInfo = (props: TRouteInfo) => {
   return (
     <Container $isTimelineModal={showRoutesTimeline}>
       <Conditional if={!showRoutesTimeline}>
-        <DetailsWrapper $isCruiseVariant={isCruise}>
+        <DetailsWrapper $isCruiseVariant={showSightsCoveredLayout}>
           {ELEMENTS_ORDER?.map((Component) => (
             <Component key={genUniqueId()} />
           ))}
@@ -239,10 +254,10 @@ const RouteInfo = (props: TRouteInfo) => {
       </Conditional>
       <Conditional if={showRoutesTimeline}>
         <TimelineWrapper>
-          <Conditional if={isCruiseType}>
+          <Conditional if={isCruiseTypeOrSightsLayout}>
             <BoardingPoints sectionsData={routeSectionsData} />
           </Conditional>
-          <Conditional if={!isCruiseType}>
+          <Conditional if={!isCruiseTypeOrSightsLayout}>
             <RoutesTimeline
               routeSectionsData={routeSectionsData}
               routeName={routeName}

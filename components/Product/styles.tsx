@@ -1099,7 +1099,6 @@ export const itineraryStyles = css`
   .card-img {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     position: relative;
   }
 `;

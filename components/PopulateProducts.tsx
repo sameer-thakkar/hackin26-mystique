@@ -271,6 +271,7 @@ const PopulateProducts: any = (props: any) => {
     customBanner,
     baseLangCustomBanner,
     shouldRunHohoRevampExperiment = false,
+    showSightsCoveredItineraryLayout = false,
     showBoosters = false,
   } = props;
 
@@ -779,8 +780,14 @@ const PopulateProducts: any = (props: any) => {
       horizontalProductCard,
       itineraryInfo: {
         data: tgidItineraryData,
-        showData: showItinerary,
+        showData: showItinerary && !showSightsCoveredItineraryLayout,
         isHOHO: isHohoItinerary,
+        showSightsCoveredItineraryLayout:
+          showSightsCoveredItineraryLayout &&
+          !!tgidItineraryData?.length &&
+          tgidItineraryData.findIndex((itinerary: TItinerary) =>
+            isItineraryValid(itinerary)
+          ) !== -1,
       },
       showVideoOnProductCard:
         showVideoOnProductCard &&

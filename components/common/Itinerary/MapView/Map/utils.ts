@@ -3,6 +3,7 @@ import {
   CHILD_SECTION_TYPE,
   ChildSection,
   Location as MarkerLocation,
+  Section,
   SECTION_TYPE,
 } from 'types/itinerary.type';
 import { MapMarker } from '@headout/aer/src/molecules/LeafletMap/map';
@@ -96,3 +97,8 @@ export const getChildMarkers = (
   }, [] as Array<MapMarker>);
   return childMarkers;
 };
+
+export const isValidMap = (sections: Section[]) =>
+  sections?.some(
+    (section) => section?.location?.latitude && section?.location?.longitude
+  );

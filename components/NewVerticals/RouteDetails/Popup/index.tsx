@@ -11,11 +11,11 @@ import { TController } from './interface';
 const Popup = ({
   controller,
   children,
-  isCruise,
+  decreasedHeight,
 }: {
   controller?: MutableRefObject<TController | undefined>;
   children: JSX.Element | JSX.Element[];
-  isCruise?: boolean;
+  decreasedHeight?: boolean;
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -48,7 +48,7 @@ const Popup = ({
       };
   }, []);
 
-  const minHeight = isCruise ? '550px' : '630px';
+  const minHeight = decreasedHeight ? '550px' : '630px';
   const popupStyles: Modal.Styles = {
     overlay: {
       zIndex: 100,

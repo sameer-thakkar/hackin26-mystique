@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Document, pdfjs, Thumbnail } from 'react-pdf';
 import { useRecoilValue } from 'recoil';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import Conditional from 'components/common/Conditional';
+import { getExtension } from 'components/common/PDF/utils';
+import Image from 'UI/Image';
 import { appAtom } from 'store/atoms/app';
 import { strings } from 'const/strings';
 import { Card } from './styles';
@@ -21,17 +24,36 @@ const MenuCard = ({ title, url, index, popupController }: TMenuCard) => {
   }: PDFDocumentProxy) => {
     setNumPages(nextNumPages);
   };
+  const isPdf = getExtension(url) === '.pdf';
+
   return (
     <div>
       <Card onClick={() => popupController.current?.open(index)}>
-        <Document
-          loading={<></>}
-          onLoadSuccess={onDocumentLoadSuccess}
-          file={url}
-          options={options}
-        >
-          <Thumbnail pageNumber={1} width={isMobile ? 118 : 172} />
-        </Document>
+        <Conditional if={isPdf}>
+          <Document
+            loading={<></>}
+            onLoadSuccess={onDocumentLoadSuccess}
+            file={url}
+            options={options}
+          >
+            <Thumbnail pageNumber={1} width={isMobile ? 118 : 172} />
+          </Document>
+        </Conditional>
+        <Conditional if={!isPdf}>
+          <Image
+            url={url}
+            alt={title}
+            fitCrop={false}
+            autoCrop={false}
+            fetchPriority="high"
+            placeholder="blur"
+            className="menu-card-img"
+            priority={true}
+            width={isMobile ? 118 : 172}
+            height={isMobile ? 144 : 207}
+            loadHigherQualityImage={true}
+          />
+        </Conditional>
       </Card>
       <div className="description">
         <p className="title">{title}</p>

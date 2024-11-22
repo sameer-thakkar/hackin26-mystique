@@ -12,6 +12,7 @@ export type TRouteInfo = {
   isSideModalOpen?: boolean;
   setIsHeaderSticky?: Dispatch<SetStateAction<boolean>>;
   isDescriptorClick?: boolean;
+  isSightsCoveredLayout?: boolean;
 };
 
 export type TScrollState = {

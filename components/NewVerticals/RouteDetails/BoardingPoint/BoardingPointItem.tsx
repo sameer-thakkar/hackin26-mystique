@@ -12,7 +12,9 @@ const BoardingPointItem = (props: TBoardingPoint) => {
     stopLocation,
     isSideModal = false,
     hideStopNumber = false,
+    hideStop = false,
   } = props || {};
+  if (hideStop) return null;
   return (
     <Container $isSideModal={isSideModal}>
       <Title>

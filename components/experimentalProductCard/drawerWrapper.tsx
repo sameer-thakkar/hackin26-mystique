@@ -62,6 +62,7 @@ const DrawerWrapper = (props: any) => {
     showThumbnailInBanner,
     tgidItineraryData,
     isModifiedPopup,
+    showSightsCoveredItineraryLayout,
     reviewsDetails,
     topReviews,
     showCustomProductCardCTA,
@@ -198,6 +199,7 @@ const DrawerWrapper = (props: any) => {
             onActiveItineraryTabChange={handleActiveItineraryTabChange}
             preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
             isModifiedPopup={isModifiedPopup}
+            showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
             reviewsDetails={reviewsDetails}
             topReviews={topReviews}
           >
@@ -205,7 +207,7 @@ const DrawerWrapper = (props: any) => {
           </DropdownContent>
         </BottomSheet>
       </Conditional>
-      <Conditional if={activeItinerary}>
+      <Conditional if={activeItinerary && !showSightsCoveredItineraryLayout}>
         <ItinerarySwipeSheet
           visible={isItineraryDetailsSwipeSheetOpen}
           currentLanguage={lang}
@@ -216,6 +218,7 @@ const DrawerWrapper = (props: any) => {
       <Conditional
         if={
           activeItinerary &&
+          !showSightsCoveredItineraryLayout &&
           itineraryViewMode === ItineraryViewMode.MAP &&
           !isDesktop
         }

@@ -387,6 +387,7 @@ export const THEATRE_TYPES = {
 export const TEMPLATES = {
   HOHO: 'HOHO',
   AIRPORT_TRANSFERS: 'Airport Transfers',
+  CRUISES: 'Cruises',
 };
 
 export type CUSTOM_TYPE_KEYS = keyof typeof CUSTOM_TYPES;

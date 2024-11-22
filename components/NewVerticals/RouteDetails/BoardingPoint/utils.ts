@@ -17,6 +17,7 @@ export const extractBoardingPoints = ({
           stopNumber: index + 1,
           stopName: currentObject?.details?.name,
           stopLocation: generateGoogleMapUrl({ latitude, longitude, placeId }),
+          hideStop: !latitude || !longitude,
         };
         acc.push(boardingPointData);
       }

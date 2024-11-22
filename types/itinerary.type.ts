@@ -114,6 +114,8 @@ export interface ItineraryDetails {
   lastDepartureStop?: string;
   popularAttractionsCovered?: string;
   cruiseMenus?: Record<string, any>[];
+  meal?: Record<string, any>;
+  entertainment?: Record<string, any>;
 }
 
 export interface Duration {

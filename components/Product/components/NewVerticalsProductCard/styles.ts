@@ -78,6 +78,15 @@ export const Card = styled.div`
   transform-style: preserve-3d;
   cursor: pointer;
 
+  .menu-card-img {
+    border-radius: 8px;
+    overflow: hidden;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
   ::before {
     content: '';
     position: absolute;

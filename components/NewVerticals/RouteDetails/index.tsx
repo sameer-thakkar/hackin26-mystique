@@ -46,8 +46,9 @@ const RouteDetails = (props: TRouteDetails) => {
     bookingUrl,
     setIsSideDrawerOpen,
     isCruise = false,
-    cruisesItineraryData = [],
+    itineraryData = [],
     isDescriptorClick,
+    isSightsCoveredLayout = false,
   } = props;
 
   const itineraryEndpoint = getHeadoutApiUrl({
@@ -57,20 +58,26 @@ const RouteDetails = (props: TRouteDetails) => {
       sections: 'true',
     },
   });
+  const showSightsCoveredLayout = isCruise || isSightsCoveredLayout;
 
-  let { data: itineraryData } = useSWR(!isCruise ? itineraryEndpoint : null, {
-    fetcher: swrFetcher,
-  });
-  const { itineraries } = itineraryData || {};
+  let { data: fetchedItineraryData } = useSWR(
+    !isCruise || !isSightsCoveredLayout ? itineraryEndpoint : null,
+    {
+      fetcher: swrFetcher,
+    }
+  );
+  const { itineraries } = fetchedItineraryData || {};
 
   useEffect(() => {
-    if (isCruise || itineraryData) {
+    if (showSightsCoveredLayout || fetchedItineraryData) {
       setIsLoading(false);
     }
-  }, [itineraryData]);
+  }, [fetchedItineraryData]);
 
-  const tabs = isCruise ? cruisesItineraryData : (itineraries as Itinerary[]);
-  const sectionName = isCruise
+  const tabs = showSightsCoveredLayout
+    ? itineraryData
+    : (itineraries as Itinerary[]);
+  const sectionName = showSightsCoveredLayout
     ? en.CRUISES.BOARDING_POINTS
     : SECTION_NAMES.STOPS_AND_ATTRACTIONS;
 
@@ -81,7 +88,7 @@ const RouteDetails = (props: TRouteDetails) => {
       details: { routeName = '' } = {},
     } = route || {};
 
-    const sideModalHeading = isCruise
+    const sideModalHeading = showSightsCoveredLayout
       ? tabs?.length > 1
         ? `${itineraryName}: ${strings.CRUISES.BOARDING_POINTS}`
         : strings.CRUISES.BOARDING_POINTS
@@ -110,6 +117,7 @@ const RouteDetails = (props: TRouteDetails) => {
             setIsHeaderSticky={setIsHeaderSticky}
             isDescriptorClick={isDescriptorClick}
             isCruise={isCruise}
+            isSightsCoveredLayout={isSightsCoveredLayout}
           />
           <SideModal key={routeName}>
             <MainContainer $isTimelineModal={true} $showSideModal={isOpen}>
@@ -150,6 +158,7 @@ const RouteDetails = (props: TRouteDetails) => {
                 setIsHeaderSticky={setIsHeaderSticky}
                 isDescriptorClick={isDescriptorClick}
                 isCruise={isCruise}
+                isSightsCoveredLayout={isSightsCoveredLayout}
               />
             </MainContainer>
           </SideModal>
@@ -191,7 +200,7 @@ const RouteDetails = (props: TRouteDetails) => {
       <MainContainer
         $showLoader={isLoading}
         $showSideModal={isOpen}
-        $noStickyCta={isCruise}
+        $noStickyCta={showSightsCoveredLayout}
         $noTabs={tabs?.length < 2}
       >
         <Conditional if={isLoading}>
@@ -210,7 +219,7 @@ const RouteDetails = (props: TRouteDetails) => {
             showDropShadow={true}
           />
         </Conditional>
-        <Conditional if={!isCruise && !isLoading}>
+        <Conditional if={!isCruise && !isSightsCoveredLayout && !isLoading}>
           <PricingContainer $noDiscount={!listingPrice?.bestDiscount}>
             <PopupPricingUnit>
               <CTAContainer>
