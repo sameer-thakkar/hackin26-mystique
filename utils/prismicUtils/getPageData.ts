@@ -1,5 +1,12 @@
 import { NextApiRequest } from 'next';
+import { createClient } from 'prismicio';
+import { predicate } from '@prismicio/client';
 import * as Sentry from '@sentry/nextjs';
+import { ShowpageDocument } from 'types.prismic';
+import {
+  getObject,
+  parseShowPageData,
+} from 'components/ShowPages/parseShowPage';
 import { toursTabSliceHandler } from 'components/Slices';
 import { CollectionDetails } from 'components/StaticBanner';
 import {
@@ -66,20 +73,28 @@ import {
   labeledPromiseAllSettled,
 } from 'utils/promiseUtils';
 import { setShortTTL } from 'utils/serverUtils';
-import { getLangUID, getValidUrlParams } from 'utils/urlUtils';
+import {
+  getEncodedUrlSlugs,
+  getLangUID,
+  getValidUrlParams,
+} from 'utils/urlUtils';
+import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 import {
   CATEGORY_IDS,
   CUSTOM_TYPES,
   DESIGN,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
+  PRISMIC_DEV_TAG,
   RESOURCE_TYPE,
   SLICE_TYPES,
   SUPPORTED_LOCALE_MAP,
+  TEMP_HARDCODED_PRODUCT,
   THEMES,
   TLANGUAGELOCALE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import { allShowPagesGq } from './microsite/graphQuery';
 import { TPrismicTrustBooster } from './interface';
 import { getReviewsPageData } from './reviewsPage';
 import { getVenuePageData } from './venuePage';
@@ -975,6 +990,12 @@ export const getPageData = async ({
       };
     }
     tgidsArray = [...tgidsArray];
+
+    //temporary fix for hardcoded product, will be reverted
+    if (uid === TEMP_HARDCODED_PRODUCT.UID) {
+      tgidsArray.push(TEMP_HARDCODED_PRODUCT.TGID);
+    }
+
     const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
 
     const tourGroupAPIResponsesPromise = fetchTourListV6({
@@ -1067,12 +1088,255 @@ export const getPageData = async ({
       {}
     );
 
-    const tourGroupData = tourGroupAPIResponses?.tourGroups
+    const tourGroupData = await tourGroupAPIResponses?.tourGroups
       ?.filter((tour: Record<string, any>) => {
         const { hidden } = tour ?? {};
+        //temporary fix for hardcoded product, will be reverted
+        if (
+          uid === TEMP_HARDCODED_PRODUCT.UID &&
+          tour?.id === TEMP_HARDCODED_PRODUCT.TGID
+        )
+          return true;
         return !hidden;
       })
-      ?.reduce((accum: {}, tour: Record<string, any>) => {
+      ?.reduce(async (accum: {}, tour: Record<string, any>) => {
+        //temporary fix for hardcoded product, will be reverted. god forgive me for this garbage i needed to write
+        if (
+          uid === TEMP_HARDCODED_PRODUCT.UID &&
+          tour?.id === TEMP_HARDCODED_PRODUCT.TGID
+        ) {
+          const {
+            microBrandsDescriptor,
+            descriptors: secondaryDescriptors,
+            listingPrice,
+            allTags,
+            name,
+            imageUrl,
+            id,
+            averageRating,
+            reviewCount,
+            ratingCount,
+            primaryCollection,
+            primaryCategory,
+            primarySubCategory,
+            cancellationPolicy,
+            cancellationPolicyV2,
+            reschedulePolicy,
+            ticketValidity,
+            minDuration,
+            maxDuration,
+            combo,
+            multiVariant,
+            urlSlugs,
+            media,
+            flowType,
+          } = tour || {};
+          const { displayName: collectionName } = primaryCollection || {};
+          const { displayName: primaryCategoryName } = primaryCategory || {};
+          const { displayName: primarySubCategoryName } =
+            primarySubCategory || {};
+          const {
+            urlSlugs: _primaryCategoryUrlSlugs,
+            ...primaryCategoryWithoutSlugs
+          } = primaryCategory ?? {};
+          const {
+            urlSlugs: _primarySubCategoryUrlSlugs,
+            ...primarySubCategoryWithoutSlugs
+          } = primarySubCategory ?? {};
+          const {
+            finalPrice,
+            originalPrice,
+            currencyCode,
+          }: {
+            finalPrice: number;
+            originalPrice: number;
+            currencyCode: string;
+          } = listingPrice || {};
+          const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode as keyof {}];
+          const mbDescriptors = generateDescriptor({
+            v2Descriptors: microBrandsDescriptor,
+            lang: 'en',
+            isEntertainmentMb: true,
+            primarySubCategory: primarySubCategory as PrimarySubCategory,
+          });
+          let { microBrandsHighlight } = tour ?? {};
+          microBrandsHighlight = standardizeCancellationPolicy({
+            highlights: microBrandsHighlight,
+            cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
+            reschedulePolicy,
+            ticketValidity,
+            showValidity: false,
+            lang: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+            localizedStrings,
+          });
+          const filterHighlights = [
+            localizedStrings.SHOW_PAGE.THEATRE_NAME,
+            localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
+            localizedStrings.SHOW_PAGE.DURATION,
+            localizedStrings.SHOW_PAGE.YOUR_TICKETS,
+            localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
+            localizedStrings.SHOW_PAGE.AGE_LIMIT,
+          ];
+          const { listicleSchema, hasSpecialOffer } =
+            parseShowPageData(microBrandsHighlight);
+          let listicleShowSummary, listicleWhyWatch;
+
+          for (let item of listicleSchema) {
+            const heading = item['heading'];
+            if (
+              heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH
+            ) {
+              listicleWhyWatch = item;
+            }
+            if (heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
+              listicleShowSummary = item;
+            }
+          }
+          const { detailsObjects: highlights, isSafetyBanner: hasBestSafety } =
+            getObject(microBrandsHighlight, filterHighlights) || {};
+          const { detailsObjects: reopeningDate } =
+            getObject(microBrandsHighlight, [
+              localizedStrings.SHOW_PAGE.OPENING_DATE,
+              localizedStrings.SHOW_PAGE.CLOSING_DATE,
+            ]) || {};
+          const contentBlocks: any = {
+            hidden: [],
+            left: [],
+            right: [],
+          };
+          for (const key of filterHighlights) {
+            const isLeftBlock = [
+              localizedStrings.SHOW_PAGE.THEATRE_NAME,
+              localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
+              localizedStrings.SHOW_PAGE.DURATION,
+            ].includes(key);
+            const value = highlights[key];
+            const block = {
+              label: value ? key : null,
+              content: value ? value : null,
+              align: isLeftBlock ? 'left' : 'right',
+              len: value?.length,
+              labelId: key?.toLowerCase()?.split(' ')?.join('-'),
+            };
+            isLeftBlock
+              ? contentBlocks?.left?.push(block)
+              : contentBlocks?.right?.push(block);
+          }
+          const { productImages } = media || {};
+          const [, descriptionImage] = productImages || [];
+          let verticalImagesDataMap = new Map<string, any>();
+          const mediaData = await fetchMediaResource({
+            language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+            resourceType: 'MB_EXPERIENCE',
+            entityIds: String(TEMP_HARDCODED_PRODUCT.TGID),
+          });
+          mediaData?.resourceEntityMedias?.forEach((resource) => {
+            const verticalImageData = resource.medias.find(
+              (media) => media.type === 'IMAGE'
+            );
+            if (verticalImageData) {
+              verticalImagesDataMap.set(
+                resource.resourceEntityId,
+
+                {
+                  url: verticalImageData.url,
+                  height: verticalImageData.metadata.height,
+                  width: verticalImageData.metadata.width,
+                  altText: verticalImageData.metadata.altText,
+                }
+              );
+            }
+          });
+          const verticalImage = verticalImagesDataMap.get(String(id));
+          let showpageData: Record<number, string> = {};
+          let showpages: ShowpageDocument[] | never[] = [];
+          try {
+            const prismicClient = createClient();
+            showpages = await prismicClient.getAllByType('showpage', {
+              pageSize: 100,
+              ...(lang && { lang }),
+              graphQuery: allShowPagesGq,
+              predicates: [
+                predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
+                predicate.at('my.showpage.tgid', TEMP_HARDCODED_PRODUCT.TGID),
+              ],
+            });
+          } catch (error) {
+            sendLog({
+              err: error,
+              message: '[categoryTourListParserV2] allShowPages fetch failed',
+            });
+          }
+          for (const page of showpages ?? []) {
+            const {
+              uid,
+              data: { tgid },
+            } = page || { data: {} };
+            showpageData[tgid as number] = uid;
+          }
+          const tgidsWithShowPages = Object.keys(showpageData);
+          const hasShowPageData = !!tgidsWithShowPages.length;
+
+          return {
+            ...accum,
+            [id]: {
+              title: name,
+              highlights: microBrandsHighlight,
+              primaryCollection,
+              primaryCategory: primaryCategoryWithoutSlugs,
+              primarySubCategory: primarySubCategoryWithoutSlugs,
+              descriptors: mbDescriptors,
+              secondaryDescriptors,
+              productHighlights: null,
+              cardFooter: null,
+              theater: null,
+              content_theater: null,
+              contentBlocks,
+              productImage: imageUrl,
+              descriptionImage:
+                productImages?.length > 1 ? descriptionImage?.url : imageUrl,
+              price: finalPrice,
+              flowType,
+              scratchPrice: originalPrice,
+              currencySymbol,
+              tgid: id,
+              images: productImages,
+              averageRating,
+              reviewCount,
+              ratingCount,
+              ctaBooster: null,
+              description: null,
+              available: !!listingPrice?.finalPrice,
+              overlayBooster: null,
+              vendor: null,
+              allTags,
+              reopeningDate:
+                reopeningDate[localizedStrings.SHOW_PAGE.OPENING_DATE],
+              closingDate:
+                reopeningDate[localizedStrings.SHOW_PAGE.CLOSING_DATE],
+              hasBestSafety,
+              category: {
+                collectionName,
+                primaryCategoryName,
+                primarySubCategoryName,
+              },
+              microBrandsHighlight: highlights,
+              listingPrice,
+              safetyImages: null,
+              showPageUid: hasShowPageData ? showpageData[id] : null,
+              listicleShowSummary,
+              listicleWhyWatch,
+              hasSpecialOffer,
+              minDuration,
+              maxDuration,
+              combo,
+              multiVariant,
+              urlSlugs: getEncodedUrlSlugs(urlSlugs),
+              verticalImage,
+            },
+          };
+        }
+
         const { hide_df, hide_safe } = scorpioAllTourGroupData['CMSContent']
           ?.data?.data || {
           hide_df: false,
@@ -1167,6 +1431,30 @@ export const getPageData = async ({
 
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
+
+    //temporary fix for hardcoded product, will be reverted. god forgive me for this garbage i needed to write
+    if (uid === TEMP_HARDCODED_PRODUCT.UID) {
+      scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap = {
+        ...scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap,
+        ...tourGroupData,
+      };
+      scorpioAllTourGroupData.simplifiedCategoryTourListData[
+        TEMP_HARDCODED_PRODUCT.COLLECTION_ID
+      ] = [
+        TEMP_HARDCODED_PRODUCT.TGID,
+        ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
+          TEMP_HARDCODED_PRODUCT.COLLECTION_ID
+        ],
+      ];
+      scorpioAllTourGroupData.simplifiedCategoryTourListData[
+        TEMP_HARDCODED_PRODUCT.SUBCAT_ID
+      ] = [
+        TEMP_HARDCODED_PRODUCT.TGID,
+        ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
+          TEMP_HARDCODED_PRODUCT.SUBCAT_ID
+        ],
+      ];
+    }
 
     return {
       ...categoryTourListData,

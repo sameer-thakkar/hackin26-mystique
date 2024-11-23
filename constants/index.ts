@@ -2357,3 +2357,10 @@ export const BOOSTER_EXPERIMENT_UIDS = new Map([
     new Map([[BoosterType.MUST_DO_EXP, [25508]]]),
   ],
 ]);
+
+export const TEMP_HARDCODED_PRODUCT = {
+  UID: 'www.broadway-show-tickets.com.home',
+  TGID: 30704,
+  COLLECTION_ID: 24,
+  SUBCAT_ID: 1036,
+};
