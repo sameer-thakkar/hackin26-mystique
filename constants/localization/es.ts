@@ -192,7 +192,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   },
   EXCLUSIONS: 'No incluye',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'Más de 10 millones',
+    HEADING_CUSTOMER: 'Más de {0} millones',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% seguro',
     HEADING_SUPPORT: 'Centro de atención al cliente 24/7',
@@ -241,7 +241,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   GET_CASHBACK: 'Consigue {0} % en cashback',
   GROUP_TICKETS: 'Visita en grupo',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '+20 millones de clientes',
+    MAIN_TEXT: '+{0} millones de clientes',
     SUB_TEXT: 'Tu satisfacción es nuestra prioridad. Únete a nosotros.',
   },
   HELP_CENTER: {
@@ -262,7 +262,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   NEW_ARRIVAL: 'Novedades',
   NEXT_AVAILABLE: 'Próxima disponible: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout es una marca en la que confían más de 15 millones de clientes y que ofrece una selección de las mejores experiencias. Este no es el sitio oficial de la sede de la experiencia.',
+    'Headout es una marca en la que confían más de {0} millones de clientes y que ofrece una selección de las mejores experiencias. Este no es el sitio oficial de la sede de la experiencia.',
   NO_RESULT_FOUND: 'No se ha encontrado ningún resultado',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Plan flexible: reserva sin fecha fija',
@@ -714,7 +714,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       },
       BOOK_AND_RELAX: {
         NAME: 'Reserva sencilla',
-        DESCRIPTION: '25 millones de clientes satisfechos',
+        DESCRIPTION: '{0} millones de clientes satisfechos',
       },
     },
     YOUR_PICK: 'Tu elección',
@@ -1087,7 +1087,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       },
       BOOK_RELAX: {
         NAME: 'Reserva y relájate',
-        DESCRIPTION: 'Elegido por 22 millones de viajeros',
+        DESCRIPTION: 'Elegido por {0} millones de viajeros',
       },
     },
   },

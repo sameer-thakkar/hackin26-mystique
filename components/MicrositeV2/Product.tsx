@@ -12,6 +12,7 @@ import { trackEvent } from 'utils/analytics';
 import { dateToString } from 'utils/dateUtils';
 import { checkIfLTTMB, truncate } from 'utils/helper';
 import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
+import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import COLORS from 'const/colors';
@@ -584,11 +585,12 @@ const Product = (props: any) => {
 
   const getBooster = (onlyBoosterText = false) => {
     if ((save > 0 || hasSpecialOffer) && isLTT) {
-      if (onlyBoosterText) return strings.SHOW_PAGE.SPECIAL_OFFER;
+      if (onlyBoosterText)
+        return convertEngToSentenceCase(lang, strings.SHOW_PAGE.SPECIAL_OFFER);
       return (
         <div className="overlay-booster">
           <Emoji symbol="🤑" label="glowing-star" />{' '}
-          {strings.SHOW_PAGE.SPECIAL_OFFER}
+          {convertEngToSentenceCase(lang, strings.SHOW_PAGE.SPECIAL_OFFER)}
         </div>
       );
     } else if (isNewArrival) {

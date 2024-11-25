@@ -126,6 +126,7 @@ const Footer: React.FC<FooterProps> = ({
             slicesLength={slices?.length + secondarySlices?.length}
             showGmapsDisclaimer={showGmapsDisclaimer}
             $isCatOrSubCatPage={isCatOrSubCatPage}
+            $primaryFooterExists={Boolean(slices?.length)}
           >
             <Conditional if={slices?.length}>
               <LinkSlices

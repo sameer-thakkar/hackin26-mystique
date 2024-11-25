@@ -81,7 +81,7 @@ const ar = {
   EARLIEST_AVAILABILITY: 'أقرب توافر',
   EXCLUSIONS: 'الاستثناءات',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'أكثر من 10 مليون',
+    HEADING_CUSTOMER: 'أكثر من {0} مليون',
     HEADING_RATING: '4.4/5',
     HEADING_SAFE: '100% امن',
     HEADING_SUPPORT: '24x7 خدمة العملاء',
@@ -112,7 +112,7 @@ const ar = {
   GET_CASHBACK: 'يحصل {0}% استرداد النقود',
   GROUP_TICKETS: 'تذاكر المجموعات',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ Million happy customers',
+    MAIN_TEXT: '{0}+ Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },
@@ -133,7 +133,7 @@ const ar = {
   NEW_ARRIVAL: 'وصل حديثا',
   NEXT_AVAILABLE: 'المتوفر التالي: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout هي علامة تجارية موثوق بها من قبل أكثر من 15 مليون زائر تقدم مجموعة منتقاة من أفضل التجارب. هذا ليس الموقع الرسمي للمكان.',
+    'Headout هي علامة تجارية موثوق بها من قبل أكثر من {0} مليون زائر تقدم مجموعة منتقاة من أفضل التجارب. هذا ليس الموقع الرسمي للمكان.',
   NO_RESULT_FOUND: 'لا توجد نتائج',
   OFF: 'ايقاف',
   OPEN_DATED_DESCRIPTOR: 'احجز بمرونة - لا داعي لتحديد التاريخ',

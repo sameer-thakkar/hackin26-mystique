@@ -215,7 +215,7 @@ const CustomLinkedTours = ({
                 </TitlePriceCombo>
                 <Conditional if={averageRating}>
                   <Booster>
-                    <StarFull />{' '}
+                    <StarFull fillColor={COLORS.TEXT.CANDY_1} />{' '}
                     <span>
                       {averageRating}{' '}
                       {reviewCount ? `| ${reviewCount} reviews` : ''}

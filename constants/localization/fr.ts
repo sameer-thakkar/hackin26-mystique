@@ -191,7 +191,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   },
   EXCLUSIONS: 'Non inclus',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '+ de 10 millions',
+    HEADING_CUSTOMER: '+ de {0} millions',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100 % sûr',
     HEADING_SUPPORT: "Centre d'aide 24/7",
@@ -238,7 +238,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   GET_CASHBACK: 'Recevez un cashback de {0} %',
   GROUP_TICKETS: 'Billets de groupe',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '+ de 20 millions de client·e·s',
+    MAIN_TEXT: '+ de {0} millions de client·e·s',
     SUB_TEXT:
       'La satisfaction de nos client·e·s est notre priorité. Rejoignez le club !',
   },
@@ -260,7 +260,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   NEW_ARRIVAL: 'Nouveautés',
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    "Headout est une marque de confiance qui a servi plus de 15 millions de personnes et qui propose une sélection des meilleures expériences. Ceci n'est pas le site web du lieu.",
+    "Headout est une marque de confiance qui a servi plus de {0} millions de personnes et qui propose une sélection des meilleures expériences. Ceci n'est pas le site web du lieu.",
   NO_RESULT_FOUND: 'Aucun résultat trouvé',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
@@ -663,7 +663,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       },
       BOOK_AND_RELAX: {
         NAME: 'Réservez en toute simplicité',
-        DESCRIPTION: '25 millions de spectateurs satisfaits',
+        DESCRIPTION: '{0} millions de spectateurs satisfaits',
       },
     },
     YOUR_PICK: 'Votre choix',
@@ -1035,7 +1035,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       },
       BOOK_RELAX: {
         NAME: 'Réservez et profitez',
-        DESCRIPTION: '22 millions de personnes satisfaites',
+        DESCRIPTION: '{0} millions de personnes satisfaites',
       },
     },
   },

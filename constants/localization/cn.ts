@@ -34,7 +34,7 @@ const cn = {
   GET_CASHBACK: '得到 {0}% 返现',
   GROUP_TICKETS: '团体门票',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ Million happy customers',
+    MAIN_TEXT: '{0}+ Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },

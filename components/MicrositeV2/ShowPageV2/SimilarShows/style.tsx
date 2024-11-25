@@ -17,6 +17,7 @@ export const SimilarShowsWrapper = styled.div`
   @media (max-width: 768px) {
     margin: 0;
     width: auto;
+    padding-left: 1.5rem;
     padding-bottom: 1.75rem;
     .swiper-slide {
       width: auto;

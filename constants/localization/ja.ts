@@ -35,7 +35,7 @@ const ja = {
   GET_CASHBACK: '得る {0}% キャッシュバック',
   GROUP_TICKETS: '団体チケット',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ Million happy customers',
+    MAIN_TEXT: '{0} Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },

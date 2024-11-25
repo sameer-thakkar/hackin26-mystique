@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useStateMachineInput } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { StyledRizLogoWrapper } from 'components/common/RiveLogoComponent/styles';
+import { useGuestCount } from 'hooks/useGuestCount';
 import { useRive } from 'hooks/useRive';
 import { RIV_LOGO } from 'const/index';
 import PoweredByHeadoutNoBorder from 'assets/poweredByHeadoutNoBorder';
@@ -13,9 +14,23 @@ const RiveLogoComponent = ({ hasDarkBg = false }) => {
     artboard: 'txt',
     autoplay: true,
   });
+  const { data: guestCount } = useGuestCount();
 
-  useStateMachineInput(rive, 'stateMachine', 'usersA', 3);
-  useStateMachineInput(rive, 'stateMachine', 'usersB', 0);
+  const totalServedFirstDigit = Math.floor(guestCount?.totalServed / 1e7);
+  const totalServedSecondDigit = Math.floor(guestCount?.totalServed / 1e6) % 10;
+
+  useStateMachineInput(
+    rive,
+    'stateMachine',
+    'usersA',
+    totalServedFirstDigit ?? 3
+  );
+  useStateMachineInput(
+    rive,
+    'stateMachine',
+    'usersB',
+    totalServedSecondDigit ?? 2
+  );
   useStateMachineInput(rive, 'stateMachine', 'citiesA', 1);
   useStateMachineInput(rive, 'stateMachine', 'citiesB', 9);
   useStateMachineInput(rive, 'stateMachine', 'citiesC', 0);

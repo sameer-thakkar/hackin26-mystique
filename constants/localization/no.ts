@@ -173,7 +173,7 @@ const no = {
   },
   EXCLUSIONS: 'Unntak',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'Over 10 millioner',
+    HEADING_CUSTOMER: 'Over {0} millioner',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100 % trygt',
     HEADING_SUPPORT: 'Døgnåpent hjelpesenter',
@@ -222,7 +222,7 @@ const no = {
   GET_CASHBACK: 'Få {0} % i cashback',
   GROUP_TICKETS: 'Gruppebilletter',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: 'Mer enn 20 millioner fornøyde kunder',
+    MAIN_TEXT: 'Mer enn {0} millioner fornøyde kunder',
     SUB_TEXT:
       'Kundetilfredshet er vår høyeste prioritet. Bli en av våre mange fornøyde kunder.',
   },
@@ -262,7 +262,7 @@ const no = {
   NEW_ARRIVAL: 'Nytt',
   NEXT_AVAILABLE: 'Neste tilgjengelige: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout er et varemerke som over 15 millioner gjester stoler på, og som tilbyr et kuratert utvalg av de beste opplevelsene. Dette er ikke nettstedet til arrangementsstedet.',
+    'Headout er et varemerke som over {0} millioner gjester stoler på, og som tilbyr et kuratert utvalg av de beste opplevelsene. Dette er ikke nettstedet til arrangementsstedet.',
   NO_RESULT_FOUND: 'Hmm, ingen resultater.',
   OFF: 'rabatt',
   OPEN_DATED_DESCRIPTOR:
@@ -630,7 +630,7 @@ const no = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Bestill og len deg tilbake',
-        DESCRIPTION: '25 millioner gjester har brukt oss så langt',
+        DESCRIPTION: '{0} millioner gjester har brukt oss så langt',
       },
     },
     YOUR_PICK: 'Ditt valg',
@@ -927,7 +927,7 @@ const no = {
       },
       BOOK_RELAX: {
         NAME: 'Bestill og len deg tilbake',
-        DESCRIPTION: '22 millioner gjester har brukt oss så langt',
+        DESCRIPTION: '{0} millioner gjester har brukt oss så langt',
       },
     },
   },

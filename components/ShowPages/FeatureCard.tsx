@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useGuestCount } from 'hooks/useGuestCount';
 import { FONTS } from 'const/fonts';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -47,12 +48,17 @@ const FeatureCardWrapper = styled.div`
 
 const FeatureCard = () => {
   const { FEATURE_CARD } = strings || {};
+  const { data: guestCount } = useGuestCount();
+
   return (
     <FeatureCardWrapper>
       <div>
         <div>{HappyEmoji}</div>
         <div className="feature-card-heading">
-          {FEATURE_CARD.HEADING_CUSTOMER}
+          {strings.formatString(
+            FEATURE_CARD.HEADING_CUSTOMER,
+            `${Math.floor(guestCount?.totalServed / 1e6)}`
+          )}
         </div>
         <p>{FEATURE_CARD.SUB_HEADING_CUSTOMER}</p>
       </div>

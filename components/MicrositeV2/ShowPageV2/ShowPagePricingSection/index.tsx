@@ -47,7 +47,7 @@ const ShowPagePricingSection = ({
     setHorProductCardLoadedCount((prevCount) => prevCount + 1);
   };
 
-  const totalChildren = 3;
+  const totalChildren = 2;
 
   useEffect(() => {
     if (horProductCardLoadedCount === totalChildren) {
@@ -257,7 +257,7 @@ const ShowPagePricingSection = ({
                 );
               })}
               <Conditional if={isSkeletonVisible}>
-                {Array.from({ length: 3 }, (_, index) => (
+                {Array.from({ length: totalChildren }, (_, index) => (
                   <div
                     className={ticketUnavailableDummyCard}
                     key={`image-placeholder-${index}`}

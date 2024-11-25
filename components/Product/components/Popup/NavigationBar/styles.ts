@@ -122,7 +122,7 @@ export const NavigationLink = styled.div<{ $isSelected?: boolean }>`
   ${({ $isSelected }) =>
     $isSelected
       ? css`
-          color: ${COLORS.BRAND.CANDY};
+          color: ${COLORS.CANDY.TERTIARY};
           background: #fff2f8;
         `
       : css`

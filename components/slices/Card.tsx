@@ -137,6 +137,9 @@ const StyledCard = styled.div((props) => {
       color: ${COLORS.TEXT.CANDY_1};
       word-wrap: break-word;
     }
+    span[role='button'] {
+      color: ${COLORS.TEXT.CANDY_1};
+    }
   }
   .card-content-section.link {
     padding-bottom: 42px;

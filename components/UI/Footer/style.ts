@@ -135,7 +135,7 @@ export const FooterHeading = styled.h2<{
 
   && > span {
     ${expandFontToken(FONTS.SUBHEADING_SMALL)}
-    font-family: 'halyard-display', 'sans-serif';
+    font-weight: 400;
     letter-spacing: 1.2px;
     color: ${({ theme, isLight }) =>
       isLight
@@ -208,6 +208,7 @@ export const LinkSlicesWrapper = styled.div<{
   slicesLength: number;
   $isCatOrSubCatPage: boolean;
   showGmapsDisclaimer: boolean;
+  $primaryFooterExists: boolean;
 }>`
   display: grid;
   padding: ${({ slicesLength, $isCatOrSubCatPage, showGmapsDisclaimer }) => {
@@ -222,6 +223,19 @@ export const LinkSlicesWrapper = styled.div<{
   }};
   background-color: ${COLORS.GRAY.G8};
   margin-bottom: 0;
+
+  & .secondary-footer {
+    margin-top: ${({ $primaryFooterExists, $isCatOrSubCatPage }) => {
+      switch (true) {
+        case !$primaryFooterExists:
+          return '0';
+        case !$isCatOrSubCatPage:
+          return '3.25rem';
+        default:
+          return '0';
+      }
+    }};
+  }
 
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 3rem;`}

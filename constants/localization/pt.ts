@@ -191,7 +191,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   EXCLUSIONS: 'Não inclui',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '+10 milhões',
+    HEADING_CUSTOMER: '+{0} milhões',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% seguro',
     HEADING_SUPPORT: 'Atendimento ao cliente 24h',
@@ -239,7 +239,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   GET_CASHBACK: 'Garanta {0}% de cashback',
   GROUP_TICKETS: 'Ingressos para grupos',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20 Milhões de clientes felizes',
+    MAIN_TEXT: '{0} Milhões de clientes felizes',
     SUB_TEXT:
       'A satisfação do cliente é nossa maior prioridade. Faça parte do nosso grupo.',
   },
@@ -261,7 +261,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   NEW_ARRIVAL: 'Novidade',
   NEXT_AVAILABLE: 'Próxima disponível: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
+    'A Headout já conquistou a confiança de mais de {0} milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
   NO_RESULT_FOUND: 'Não foi encontrado nenhum resultado',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
@@ -664,7 +664,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
       BOOK_AND_RELAX: {
         NAME: 'Reserve com tranquilidade',
-        DESCRIPTION: '25 milhões de clientes satisfeitos',
+        DESCRIPTION: '{0} milhões de clientes satisfeitos',
       },
     },
     YOUR_PICK: 'Sua escolha',
@@ -1036,7 +1036,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
       BOOK_RELAX: {
         NAME: 'Reserve e relaxe',
-        DESCRIPTION: '22 milhões de viajantes satisfeitos',
+        DESCRIPTION: '{0} milhões de viajantes satisfeitos',
       },
     },
   },

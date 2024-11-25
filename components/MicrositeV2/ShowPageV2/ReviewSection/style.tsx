@@ -39,7 +39,7 @@ export const RatingsCountSection = styled.div`
 `;
 export const Ratings = styled.div`
   ${expandFontToken(FONTS.DISPLAY_REGULAR)};
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   svg {
     height: 1.75rem;
     width: 1.75rem;

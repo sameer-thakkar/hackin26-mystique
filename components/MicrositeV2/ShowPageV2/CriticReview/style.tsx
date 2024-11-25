@@ -63,6 +63,9 @@ export const ReviewerDetails = styled.div`
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
       color: ${COLORS.GRAY.G2};
     }
+    a {
+      color: ${COLORS.CANDY.TERTIARY};
+    }
   }
 
   @media (max-width: 768px) {

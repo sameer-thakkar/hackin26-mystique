@@ -769,7 +769,10 @@ export const getF1MBTrustBoosters = (
       ]
     : [
         {
-          boosterHeading: strings.HAPPY_CUSTOMER.MAIN_TEXT,
+          boosterHeading: strings.formatString(
+            strings.HAPPY_CUSTOMER.MAIN_TEXT,
+            `32`
+          ) as string,
           boosterSubtext: strings.HAPPY_CUSTOMER.SUB_TEXT,
           svgIcon: SimileBooster(),
         },

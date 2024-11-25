@@ -172,7 +172,7 @@ const tr = {
   },
   EXCLUSIONS: 'Kapsam Dışındakiler',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '10 milyondan fazla',
+    HEADING_CUSTOMER: '{0} milyondan fazla',
     HEADING_RATING: '4.4/5',
     HEADING_SAFE: '%100 Güvenli',
     HEADING_SUPPORT: '7/24 Destek Merkezi',
@@ -220,7 +220,7 @@ const tr = {
   GET_CASHBACK: '%{0} Para İadesi Alın',
   GROUP_TICKETS: 'Grup Biletleri',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20 milyondan fazla mutlu müşteri',
+    MAIN_TEXT: '{0} milyondan fazla mutlu müşteri',
     SUB_TEXT:
       'Müşteri memnuniyeti en büyük önceliğimizdir. Mutlu müşterilerimizden biri olun.',
   },
@@ -260,7 +260,7 @@ const tr = {
   NEW_ARRIVAL: 'Yeni Gelenler',
   NEXT_AVAILABLE: 'En yakın tarih: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout, 15 milyondan fazla misafir tarafından güvenilen ve en iyi deneyimlerden seçilmiş bir seçki sunan bir markadır. Bu web sitesi, ziyaret alanının web sitesi değildir. ',
+    'Headout, {0} milyondan fazla misafir tarafından güvenilen ve en iyi deneyimlerden seçilmiş bir seçki sunan bir markadır. Bu web sitesi, ziyaret alanının web sitesi değildir. ',
   NO_RESULT_FOUND: 'Maalesef bir sonuç bulunamadı.',
   OFF: 'İndirim',
   OPEN_DATED_DESCRIPTOR:
@@ -631,7 +631,7 @@ const tr = {
       BOOK_AND_RELAX: {
         NAME: 'Rezervasyon yapın ve keyfini çıkarın',
         DESCRIPTION:
-          '25 milyon ziyaretçinin güvenini kazandık ve kazanmaya devam ediyoruz',
+          '{0} milyon ziyaretçinin güvenini kazandık ve kazanmaya devam ediyoruz',
       },
     },
     YOUR_PICK: 'Seçiminiz',
@@ -929,7 +929,7 @@ const tr = {
       },
       BOOK_RELAX: {
         NAME: 'Rezervasyon yapın ve keyfini çıkarın',
-        DESCRIPTION: '22 milyon konuk bize güveniyor',
+        DESCRIPTION: '{0} milyon konuk bize güveniyor',
       },
     },
   },

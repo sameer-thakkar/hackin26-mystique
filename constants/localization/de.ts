@@ -190,7 +190,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
   EXCLUSIONS: 'Nicht enthalten',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'Über 10 Millionen',
+    HEADING_CUSTOMER: 'Über {0} Millionen',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100 % sicher',
     HEADING_SUPPORT: '24-Stunden Support',
@@ -258,7 +258,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   NEW_ARRIVAL: 'Neuerscheinungen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout ist ein Unternehmen, dem über 15 Millionen Gäste vertrauen und das eine Auswahl der besten Erlebnisse bietet. Dies ist nicht die Website des Erlebnisortes.',
+    'Headout ist ein Unternehmen, dem über {0} Millionen Gäste vertrauen und das eine Auswahl der besten Erlebnisse bietet. Dies ist nicht die Website des Erlebnisortes.',
   NO_RESULT_FOUND: 'Keine Ergebnisse gefunden',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Flexibel buchen – keine Terminsauswahl nötig',
@@ -660,7 +660,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       },
       BOOK_AND_RELAX: {
         NAME: 'Einfache Buchung',
-        DESCRIPTION: '25 Millionen zufriedene Gäste',
+        DESCRIPTION: '{0} Millionen zufriedene Gäste',
       },
     },
     YOUR_PICK: 'Ihre Auswahl',
@@ -1026,7 +1026,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       },
       BOOK_RELAX: {
         NAME: 'Buchen und entspannen',
-        DESCRIPTION: '22 Millionen zufriedene Gäste',
+        DESCRIPTION: '{0} Millionen zufriedene Gäste',
       },
     },
   },

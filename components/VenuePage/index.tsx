@@ -20,6 +20,7 @@ import {
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -333,6 +334,11 @@ const VenuePage = (props: IVenuePageProps) => {
     })
     ?.join(',');
 
+  const nearbyTheatresHeading = convertEngToSentenceCase(
+    lang,
+    strings.THEATRE_PAGE.NEARBY_THEATRES
+  );
+
   return (
     <>
       <PopulateMeta
@@ -427,6 +433,7 @@ const VenuePage = (props: IVenuePageProps) => {
                 isMobile,
                 expandedLimit,
                 amenitiesDropdown,
+                lang,
               }}
             />
             <div className="show-more-cta">
@@ -473,7 +480,7 @@ const VenuePage = (props: IVenuePageProps) => {
           <VerticalCardsGrid
             data={nearbyTheatresData}
             isMobile={isMobile}
-            heading={strings.THEATRE_PAGE.NEARBY_THEATRES}
+            heading={nearbyTheatresHeading}
           />
           <Conditional if={automatedBreadcrumbsExists && isMobile}>
             <Breadcrumbs breadcrumbs={breadcrumbs} isVenuePage isMobile />

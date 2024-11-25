@@ -1,4 +1,5 @@
 import { LocalizedStrings } from 'react-localization';
+import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { amenitiesIcons } from 'const/amenitiesIcons';
 import { strings } from 'const/strings';
 
@@ -6,8 +7,14 @@ const Amenities = (props: {
   amenitiesDropdown: any;
   isMobile: boolean;
   expandedLimit: number;
+  lang?: string;
 }) => {
-  const { amenitiesDropdown: amenitiesList, isMobile, expandedLimit } = props;
+  const {
+    amenitiesDropdown: amenitiesList,
+    isMobile,
+    expandedLimit,
+    lang,
+  } = props;
   const { AMENITIES }: LocalizedStrings<any> = strings;
 
   return (
@@ -18,7 +25,12 @@ const Amenities = (props: {
             index < (isMobile ? expandedLimit : amenitiesList.length) && (
               <div className="amenity" key={index}>
                 {amenitiesIcons[amenity.amenities_list]}
-                <p key={index}>{AMENITIES[amenity.amenities_list]}</p>
+                <p key={index}>
+                  {convertEngToSentenceCase(
+                    AMENITIES[amenity.amenities_list],
+                    lang ?? ''
+                  )}
+                </p>
               </div>
             )
           );

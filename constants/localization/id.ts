@@ -200,7 +200,7 @@ const id = {
   },
   EXCLUSIONS: 'Tidak Termasuk',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '10 juta +',
+    HEADING_CUSTOMER: '{0} juta +',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% Aman',
     HEADING_SUPPORT: 'Pusat Bantuan 24 Jam 7 Hari',
@@ -242,7 +242,7 @@ const id = {
   NEW_ARRIVAL: 'Penawaran Baru',
   NEXT_AVAILABLE: 'Tersedia berikutnya: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout adalah merek yang dipercaya oleh lebih dari 15 juta tamu yang menawarkan pengalaman wisata pilihan terbaik untuk dinikmati pelanggan. Ini bukanlah situs resmi objek wisata.',
+    'Headout adalah merek yang dipercaya oleh lebih dari {0} juta tamu yang menawarkan pengalaman wisata pilihan terbaik untuk dinikmati pelanggan. Ini bukanlah situs resmi objek wisata.',
   OFF: 'Diskon',
   OPEN_DATED_DESCRIPTOR:
     'Leluasa dalam memesan. Tidak perlu menentukan tanggal',

@@ -190,7 +190,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
   EXCLUSIONS: 'Niet inbegrepen',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '10 miljoen +',
+    HEADING_CUSTOMER: '{0} miljoen +',
     HEADING_RATING: '4.4/5',
     HEADING_SAFE: '100% Veilig',
     HEADING_SUPPORT: '24/7 Ondersteuning',
@@ -237,7 +237,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   GET_CASHBACK: 'Ontvang {0}% cashback',
   GROUP_TICKETS: 'Groepskaartjes',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ Miljoen tevreden klanten',
+    MAIN_TEXT: '{0}+ Miljoen tevreden klanten',
     SUB_TEXT: 'Je tevredenheid is onze prioriteit. Sluit je bij ons aan.',
   },
   HELP_CENTER: {
@@ -257,7 +257,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   NEW_ARRIVAL: 'Nieuw',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout is een merk waarop 15 miljoen gasten vertrouwen en dat een gecureerde selectie van unieke ervaringen biedt. Dit is niet de website van de locatie.',
+    'Headout is een merk waarop {0} miljoen gasten vertrouwen en dat een gecureerde selectie van unieke ervaringen biedt. Dit is niet de website van de locatie.',
   NO_RESULT_FOUND: 'Geen resulaten gevonden',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Boek met flexibiliteit - geen datumselectie nodig',
@@ -661,7 +661,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       },
       BOOK_AND_RELAX: {
         NAME: 'Eenvoudig boeken',
-        DESCRIPTION: '25 miljoen tevreden klanten',
+        DESCRIPTION: '{0} miljoen tevreden klanten',
       },
     },
     YOUR_PICK: 'Jouw keuze',
@@ -1042,7 +1042,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       },
       BOOK_RELAX: {
         NAME: 'Boeken en ontspannen',
-        DESCRIPTION: 'Vertrouwd door 22 miljoen gasten',
+        DESCRIPTION: 'Vertrouwd door {0} miljoen gasten',
       },
     },
   },

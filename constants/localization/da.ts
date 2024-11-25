@@ -172,7 +172,7 @@ const da = {
   },
   EXCLUSIONS: 'Ikke omfattet',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '10+ millioner',
+    HEADING_CUSTOMER: '{0}+ millioner',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100 % sikkerhed',
     HEADING_SUPPORT: 'Hjælpecenter 24x7',
@@ -220,7 +220,7 @@ const da = {
   GET_CASHBACK: 'Få {0} % cashback',
   GROUP_TICKETS: 'Gruppebilletter',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ millioner glade kunder',
+    MAIN_TEXT: '{0}+ millioner glade kunder',
     SUB_TEXT:
       'Kundetilfredshed er vores højeste prioritet. Bliv en del af vores glade kundebase.',
   },
@@ -260,7 +260,7 @@ const da = {
   NEW_ARRIVAL: 'Helt ny her',
   NEXT_AVAILABLE: 'Næste mulighed: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout er et brand, som bruges af over 15 millioner gæster, og som tilbyder et kurateret udvalg af de bedste oplevelser. Dette er ikke stedets hjemmeside.',
+    'Headout er et brand, som bruges af over {0} millioner gæster, og som tilbyder et kurateret udvalg af de bedste oplevelser. Dette er ikke stedets hjemmeside.',
   NO_RESULT_FOUND: 'Hmm, der blev ikke fundet nogen resultater.',
   OFF: 'rabat',
   OPEN_DATED_DESCRIPTOR:
@@ -628,7 +628,7 @@ const da = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Book og nyd det',
-        DESCRIPTION: 'Brugt af 25 millioner gæster, og tallet vokser',
+        DESCRIPTION: 'Brugt af {0} millioner gæster, og tallet vokser',
       },
     },
     YOUR_PICK: 'Dit valg',
@@ -927,7 +927,7 @@ const da = {
       },
       BOOK_RELAX: {
         NAME: 'Book og nyd det',
-        DESCRIPTION: 'Brugt af 22 millioner gæster',
+        DESCRIPTION: 'Brugt af {0} millioner gæster',
       },
     },
   },

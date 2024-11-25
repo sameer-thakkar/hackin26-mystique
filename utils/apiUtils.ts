@@ -106,6 +106,7 @@ export enum HeadoutEndpoints {
   CollectionTourGroups,
   GeoLocateCity,
   BulkItineraries,
+  GuestCount,
 }
 
 const endPointsOnNewCDN = [
@@ -246,6 +247,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.GeoLocateCity:
       endpointSlug = `/api/tours/v2/geolocate/city`;
+      break;
+    case HeadoutEndpoints.GuestCount:
+      endpointSlug = `/api/v1/guest-count/`;
   }
 
   const shouldPointToNewCDN = endPointsOnNewCDN.includes(endpoint);

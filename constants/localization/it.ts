@@ -172,7 +172,7 @@ const it = {
   },
   EXCLUSIONS: 'Servizi esclusi',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'Oltre 10 milioni',
+    HEADING_CUSTOMER: 'Oltre {0} milioni',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% sicuro',
     HEADING_SUPPORT: 'Assistenza 24/7',
@@ -219,7 +219,7 @@ const it = {
   GET_CASHBACK: 'Ottieni {0} % di cashback',
   GROUP_TICKETS: 'Biglietti di gruppo',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20 milioni di clienti',
+    MAIN_TEXT: '{0} milioni di clienti',
     SUB_TEXT: 'La tua soddisfazione è la nostra priorità. Unisciti a noi.',
   },
   HELP_CENTER: {
@@ -240,7 +240,7 @@ const it = {
   NEW_ARRIVAL: 'Nuovi arrivi',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    "Headout è scelto da oltre 15 milioni di persone per trovare una selezione curata delle migliori esperienze. Questo non è il sito ufficiale dell'attrazione.",
+    "Headout è scelto da oltre {0} milioni di persone per trovare una selezione curata delle migliori esperienze. Questo non è il sito ufficiale dell'attrazione.",
   NO_RESULT_FOUND: 'Non è stato trovato nessun risultato',
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR:
@@ -652,7 +652,7 @@ const it = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Prenotazione semplice',
-        DESCRIPTION: '25 milioni di clienti soddisfatti',
+        DESCRIPTION: '{0} milioni di clienti soddisfatti',
       },
     },
     YOUR_PICK: 'La tua scelta',
@@ -1022,7 +1022,7 @@ const it = {
       },
       BOOK_RELAX: {
         NAME: 'Prenota e rilassati',
-        DESCRIPTION: 'Scelto da 22 milioni di persone',
+        DESCRIPTION: 'Scelto da {0} milioni di persone',
       },
     },
   },

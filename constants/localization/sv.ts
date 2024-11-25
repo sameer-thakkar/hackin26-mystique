@@ -172,7 +172,7 @@ const sv = {
   },
   EXCLUSIONS: 'Undantag',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: 'Över 10 miljoner',
+    HEADING_CUSTOMER: 'Över {0} miljoner',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100 % säker',
     HEADING_SUPPORT: 'Kundtjänst dygnet runt',
@@ -220,7 +220,7 @@ const sv = {
   GET_CASHBACK: 'Få {0} % tillbaka',
   GROUP_TICKETS: 'Gruppbiljetter',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: 'Över 20 miljoner nöjda kunder',
+    MAIN_TEXT: 'Över {0} miljoner nöjda kunder',
     SUB_TEXT:
       'Kundnöjdhet är vår högsta prioritet. Bli en del av vår nöjda kundbas.',
   },
@@ -260,7 +260,7 @@ const sv = {
   NEW_ARRIVAL: 'Nyheter',
   NEXT_AVAILABLE: 'Nästa tillgängliga: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout är varumärket som över 15 miljoner resenärer litar på och som erbjuder ett skräddarsytt urval av de bästa upplevelserna. Detta är inte resmålets webbplats.',
+    'Headout är varumärket som över {0} miljoner resenärer litar på och som erbjuder ett skräddarsytt urval av de bästa upplevelserna. Detta är inte resmålets webbplats.',
   NO_RESULT_FOUND: 'Hmm, inga resultat hittades.',
   OFF: 'Av',
   OPEN_DATED_DESCRIPTOR: 'Boka med flexibilitet – du behöver inte välja datum',
@@ -628,7 +628,7 @@ const sv = {
       },
       BOOK_AND_RELAX: {
         NAME: 'Boka och koppla av',
-        DESCRIPTION: 'Uppskattade av 25 miljoner gäster och fler därtill',
+        DESCRIPTION: 'Uppskattade av {0} miljoner gäster och fler därtill',
       },
     },
     YOUR_PICK: 'Ditt val',
@@ -926,7 +926,7 @@ const sv = {
       },
       BOOK_RELAX: {
         NAME: 'Boka och koppla av',
-        DESCRIPTION: 'Betrodd av 22 miljoner gäster',
+        DESCRIPTION: 'Betrodd av {0} miljoner gäster',
       },
     },
   },

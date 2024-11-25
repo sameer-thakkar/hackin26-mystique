@@ -236,7 +236,7 @@ const ko = {
   GET_CASHBACK: '얻다 {0}% 캐쉬백',
   GROUP_TICKETS: '그룹 티켓',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ Million happy customers',
+    MAIN_TEXT: '{0} Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },
@@ -258,7 +258,7 @@ const ko = {
   NEW_ARRIVAL: '신규 출시',
   NEXT_AVAILABLE: '다음 예약일: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    '1,500만 명 이상의 고객이 신뢰하는 Headout은 최고의 티켓과 투어를 엄선하여 제공하는 여러분의 든든한 동반자입니다. 여기는 공식 홈페이지가 아닙니다.',
+    '{0}00만 명 이상의 고객이 신뢰하는 Headout은 최고의 티켓과 투어를 엄선하여 제공하는 여러분의 든든한 동반자입니다. 여기는 공식 홈페이지가 아닙니다.',
   NO_RESULT_FOUND: '결과가 없습니다',
   OFF: '휴일',
   OPEN_DATED_DESCRIPTOR: '날짜를 선택할 필요 없이 느긋하게 예약하세요',

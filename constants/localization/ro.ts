@@ -175,7 +175,7 @@ const ro = {
   },
   EXCLUSIONS: 'Elemente excluse',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '10 milioane +',
+    HEADING_CUSTOMER: '{0} milioane +',
     HEADING_RATING: '4.4/5',
     HEADING_SAFE: '100% sigur',
     HEADING_SUPPORT: 'Centrul de asistență 24/7',
@@ -223,7 +223,7 @@ const ro = {
   GET_CASHBACK: 'Obțineți {0}% Cashback',
   GROUP_TICKETS: 'Bilete pentru grupuri',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '20+ milioane de clienți mulțumiți',
+    MAIN_TEXT: '{0}+ milioane de clienți mulțumiți',
     SUB_TEXT:
       'Satisfacția clienților este prioritatea noastră principală. Alăturați-vă bazei noastre de clienți fericiți.',
   },
@@ -257,7 +257,7 @@ const ro = {
   NEW_ARRIVAL: 'Noutăți',
   NEXT_AVAILABLE: 'Următoarea opțiune disponibilă: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout este un brand de încredere pentru pese 15 milioane de oaspeți din întreaga lume, oferind experiențe curatoriate pentru a vă bucura de cele mai bune experiențe. Acesta nu este site-ul web al locației.',
+    'Headout este un brand de încredere pentru pese {0} milioane de oaspeți din întreaga lume, oferind experiențe curatoriate pentru a vă bucura de cele mai bune experiențe. Acesta nu este site-ul web al locației.',
   NO_RESULT_FOUND: 'Hmm, nu am găsit niciun rezultat.',
   OFF: 'Reducere',
   OPEN_DATED_DESCRIPTOR:
@@ -628,7 +628,7 @@ const ro = {
       BOOK_AND_RELAX: {
         NAME: 'Rezervați și relaxați-vă',
         DESCRIPTION:
-          'Încredere acordată de 25 de milioane de oaspeți și în continuă creștere.',
+          'Încredere acordată de {0} de milioane de oaspeți și în continuă creștere.',
       },
     },
     YOUR_PICK: 'Alegerea dumneavoastră',
@@ -926,7 +926,7 @@ const ro = {
       },
       BOOK_RELAX: {
         NAME: 'Rezervați și relaxați-vă',
-        DESCRIPTION: 'De încredere pentru 22 de milioane de oaspeți',
+        DESCRIPTION: 'De încredere pentru {0} de milioane de oaspeți',
       },
     },
   },

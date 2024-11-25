@@ -201,7 +201,7 @@ const ShowInfoSection = ({
                   tabIndex={0}
                 >
                   <span className="rating">
-                    <Star color={COLORS.BRAND.CANDY} />
+                    <Star color={COLORS.TEXT.CANDY_1} />
                     {averageRating}
                   </span>
                   <Conditional if={ratingsCount > 0}>
@@ -220,7 +220,7 @@ const ShowInfoSection = ({
                 <Conditional if={topReviewContent?.length}>
                   <ReviewPopover id="review-popover">
                     <div className="header">
-                      <Star color={COLORS.BRAND.CANDY} />
+                      <Star color={COLORS.TEXT.CANDY_1} />
                       {averageRating}
                     </div>
                     <div className="review">

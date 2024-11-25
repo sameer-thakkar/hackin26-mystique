@@ -1,6 +1,7 @@
 import React from 'react';
 import { cx } from '@headout/pixie/css';
 import Image from 'UI/Image';
+import { useGuestCount } from 'hooks/useGuestCount';
 import { strings } from 'const/strings';
 import { BookmarkHeartSVG } from 'assets/airportTransfers/privateAirportTransfers';
 import { CUSTOMERS_TILE_BG_URL } from '../../constants';
@@ -17,6 +18,7 @@ import {
 } from './style';
 
 export const CustomersTile = () => {
+  const { data: guestCount } = useGuestCount();
   return (
     <div className={containerStyle}>
       <div className={customerImagesContainerStyle}>
@@ -53,7 +55,9 @@ export const CustomersTile = () => {
       />
       <BookmarkHeartSVG className={bookmarkHeartStyle} />
       <div className={contentContainerStyle}>
-        <p className={numberStyle}>30M+</p>
+        <p className={numberStyle}>
+          {guestCount ? Math.floor(guestCount?.totalServed / 1e6) : 32}M+
+        </p>
         <p className={textStyle}>
           {strings.PRIVATE_AT_LANDING_PAGE.CUSTOMERS_SERVED}
         </p>

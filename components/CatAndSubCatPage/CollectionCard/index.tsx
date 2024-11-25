@@ -120,7 +120,7 @@ const CollectionCard: React.FC<CollectionCardProps> = (props) => {
         >
           <RatingsWrapper>
             <span className="average-rating">
-              <Star color={COLORS.BRAND.CANDY} />
+              <Star color={COLORS.TEXT.CANDY_1} />
               {averageRating?.toPrecision(2)}
             </span>
             <span className="ratings-count">

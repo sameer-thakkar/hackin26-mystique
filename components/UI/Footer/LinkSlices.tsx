@@ -31,7 +31,6 @@ const FooterLinksWrapper = styled.div<{
     display: block;
   }
   &.secondary-footer {
-    ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 3.25rem;`}
     padding-bottom: 0;
     @media (max-width: 768px) {
       ${({ $isCatOrSubCatPage }) =>

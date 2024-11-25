@@ -90,7 +90,7 @@ const SimilarShows = ({
         }));
         setSimilarProductData(finalData);
 
-        setMoreShows(finalData.slice(0, 3));
+        setMoreShows(finalData.slice(0, 2));
       }
     };
 

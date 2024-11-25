@@ -4,6 +4,7 @@ import Product from 'components/MicrositeV2/Product';
 import PinnedCard from 'components/PinnedCard/pinnedCard';
 import { Container } from 'components/VenuePage/components/ShowsList/styles';
 import { MBContext } from 'contexts/MBContext';
+import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { FONTS } from 'const/fonts';
 import { LANGUAGE_MAP, LanguagesUnion } from 'const/index';
 import { expandFontToken } from 'const/typography';
@@ -30,7 +31,7 @@ const ShowsList = (props: IShowsListProps) => {
   return (
     <Conditional if={data?.length > 0}>
       <Container>
-        <h2>{heading}</h2>
+        <h2>{convertEngToSentenceCase(lang, heading)}</h2>
         <div className="wrapper">
           {data?.map((show: any, index: number) => {
             const allTours: any = {};

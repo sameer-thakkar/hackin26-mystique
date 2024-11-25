@@ -46,3 +46,16 @@ export const sentenceCase = (inputString: string = '') => {
     ? inputString.charAt(0).toUpperCase() + inputString.slice(1).toLowerCase()
     : '';
 };
+
+export const convertEngToSentenceCase = (
+  lang: string,
+  header: string
+): string => {
+  if (lang !== 'en') return header;
+
+  const words = header.split(' ');
+  for (let i = 1; i < words.length; i++) {
+    words[i] = words[i].toLowerCase();
+  }
+  return words.join(' ');
+};

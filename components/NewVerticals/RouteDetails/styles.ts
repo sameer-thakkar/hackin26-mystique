@@ -48,23 +48,24 @@ export const HeadingContainer = styled.div<{
       }
     `}
 
-    @media (max-width: 768px) {
-      padding: 1.5rem;
-      h3 {
-        ${expandFontToken(FONTS.HEADING_REGULAR)}
-      }
-      ${({ $isTimelineModal }) =>
-        $isTimelineModal &&
-        css`
-          align-items: start;
-          padding: 1rem;
-          svg {
-            margin-right: 1rem;
-            margin-top: 0.25rem;
-            width: 1.875rem;
-            padding: 0.4rem 0.5rem;
-          }
-        `}
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    h3 {
+      ${expandFontToken(FONTS.HEADING_REGULAR)}
+    }
+    ${({ $isTimelineModal }) =>
+      $isTimelineModal &&
+      css`
+        align-items: start;
+        padding: 1rem;
+        svg {
+          margin-right: 1rem;
+          margin-top: 0.25rem;
+          width: 1.875rem;
+          padding: 0.4rem 0.5rem;
+        }
+      `}
+  }
 `;
 
 export const MainContainer = styled.div<{

@@ -8,6 +8,7 @@ import {
   Wrapper,
 } from 'components/MicrositeV2/BannerV2TrustBooster/style';
 import Image from 'UI/Image';
+import { useGuestCount } from 'hooks/useGuestCount';
 import { TPrismicTrustBooster } from 'utils/prismicUtils/interface';
 import { metaAtom } from 'store/atoms/meta';
 import { V2TrustBoosters } from 'const/entertainmentMBTrustBoosters';
@@ -22,6 +23,7 @@ const TrustBooster = ({
   isEntertainmentBanner = false,
 }: TTrustBoosterProps) => {
   const { city } = useRecoilValue(metaAtom) as Record<string, any>;
+  const { data: guestCount } = useGuestCount();
 
   const formatTrustBoosters = (trustBoosters: TPrismicTrustBooster[]) => {
     return (
@@ -62,7 +64,10 @@ const TrustBooster = ({
         {
           name: strings.HOHO.TRUST_BOOSTERS.BOOK_RELAX.NAME,
           icon: V2TrustBoosters['BOOK_AND_RELAX'],
-          description: strings.HOHO.TRUST_BOOSTERS.BOOK_RELAX.DESCRIPTION,
+          description: strings.formatString(
+            strings.HOHO.TRUST_BOOSTERS.BOOK_RELAX.DESCRIPTION,
+            `${Math.floor(guestCount?.totalServed / 1e6)}`
+          ),
         },
       ];
     }
@@ -102,9 +107,11 @@ const TrustBooster = ({
         name: strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS
           .BOOK_AND_RELAX.NAME,
         icon: V2TrustBoosters['BOOK_AND_RELAX'],
-        description:
+        description: strings.formatString(
           strings.ENTERTAINMENT_MB_LANDING_PAGE.TRUST_BOOSTERS.BOOK_AND_RELAX
             .DESCRIPTION,
+          `${Math.floor(guestCount?.totalServed / 1e6)}`
+        ),
       },
     ];
   };

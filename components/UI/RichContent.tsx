@@ -9,6 +9,10 @@ export const StyledRichContent = styled.div`
   font-family: ${HALYARD.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.GRAY.G2};
+  & span[role='button'] {
+    color: ${COLORS.TEXT.CANDY_1};
+  }
+
   @media (max-width: 768px) {
     h2 {
       font-size: 16px;
