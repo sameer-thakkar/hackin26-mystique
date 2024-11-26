@@ -244,7 +244,7 @@ const ShowInfoSection = ({
                           </div>
                           <div className="user-details">
                             <span className="name">{topReviewUserName}</span>
-                            <span className="country">United kingdoms</span>
+                            <span className="country">United Kingdom</span>
                           </div>
                         </div>
                         <div className="stars">

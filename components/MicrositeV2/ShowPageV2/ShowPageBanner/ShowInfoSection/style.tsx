@@ -380,7 +380,7 @@ export const ReviewPopover = styled.div`
   flex-direction: column;
   position: absolute;
   min-width: 19.1875rem;
-  max-width: 21rem;
+  max-width: 22rem;
 
   background-color: ${COLORS.BRAND.WHITE};
   border-radius: 0.625rem;
@@ -443,6 +443,7 @@ export const ReviewPopover = styled.div`
 
       .stars {
         width: fit-content;
+        white-space: nowrap;
         svg {
           margin-right: 2px;
         }
