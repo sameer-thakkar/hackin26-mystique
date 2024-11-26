@@ -251,6 +251,7 @@ const Video: React.FC<VideoTypeProps> = ({
     <VideoContainer
       className="video-container"
       $fadeInVideo={!!url && !isVideoPaused}
+      $shouldBePlayingVideo={shouldBePlayingVideo}
       ref={videoContainerRef}
     >
       {children}

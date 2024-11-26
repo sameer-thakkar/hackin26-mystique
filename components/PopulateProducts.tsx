@@ -264,7 +264,6 @@ const PopulateProducts: any = (props: any) => {
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
-    showVideoOnProductCard = false,
     showCustomProductCardCTA = false,
     shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
@@ -790,8 +789,9 @@ const PopulateProducts: any = (props: any) => {
           ) !== -1,
       },
       showVideoOnProductCard:
-        showVideoOnProductCard &&
-        VIDEO_EXPERIMENT_MBS[uid as keyof typeof VIDEO_EXPERIMENT_MBS] === tgid,
+        VIDEO_EXPERIMENT_MBS[
+          uid as keyof typeof VIDEO_EXPERIMENT_MBS
+        ]?.includes(tgid),
       showCustomProductCardCTA,
       shouldRunCustomCTAExperiment,
       showCustomProductCardEnglishCTA,

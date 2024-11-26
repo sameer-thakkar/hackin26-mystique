@@ -16,7 +16,16 @@ const fadeInCSS = css`
   }
 `;
 
-export const VideoContainer = styled.div<{ $fadeInVideo: boolean }>`
+const imageFadeIn = css`
+  .image-wrap {
+    animation: ${fadeInAnimation} 0.6s ease-in-out forwards;
+  }
+`;
+
+export const VideoContainer = styled.div<{
+  $fadeInVideo: boolean;
+  $shouldBePlayingVideo: boolean;
+}>`
   width: 100%;
   height: 100%;
   position: relative;
@@ -29,6 +38,7 @@ export const VideoContainer = styled.div<{ $fadeInVideo: boolean }>`
   }
 
   ${({ $fadeInVideo }) => $fadeInVideo && fadeInCSS}
+  ${({ $shouldBePlayingVideo }) => $shouldBePlayingVideo && imageFadeIn}
 `;
 
 export const StyledVideoContainer = styled.video`

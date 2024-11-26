@@ -103,7 +103,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [PRODUCT_CARD_VIDEO]: new Experiment(
     PRODUCT_CARD_VIDEO,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [0, 100]
   ),
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,

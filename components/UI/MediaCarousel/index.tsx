@@ -59,6 +59,7 @@ type MediaCarouselProps = {
   position?: number;
   isImageQualityExperiment?: boolean;
   hideGrabCursor?: boolean;
+  showVideoOnProductCard?: boolean;
 };
 
 const MediaCarousel: React.FC<MediaCarouselProps> = ({
@@ -85,11 +86,12 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   shouldBePlayingVideo = true,
   position,
   hideGrabCursor = false,
+  showVideoOnProductCard = false,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
     ref: carouselRef,
-    options: { threshold: 0.75 },
+    options: { threshold: showVideoOnProductCard ? 1 : 0.75 },
   });
 
   const [modalIsOpen, setModalOpen] = useState(false);

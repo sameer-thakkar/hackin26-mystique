@@ -78,7 +78,6 @@ import {
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
-  VIDEO_EXPERIMENT_MBS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
@@ -764,30 +763,6 @@ const MicrositeV1 = (props: any) => {
     !(taggedCategoryName === 'Cruises') &&
     !!scorpioData?.itineraryData?.itineraries?.length;
 
-  const {
-    variant: videoExperimentVariant,
-    isEligible: isVideoExpEligible,
-    isExperimentResolving: isVideoExpResolving,
-  } = useABTesting({
-    experimentId: 'PRODUCT_CARD_VIDEO',
-    customEligibilityCheckFn: () =>
-      !isMobile &&
-      Object.keys(VIDEO_EXPERIMENT_MBS).includes(uid) &&
-      (lang === 'en' || lang === 'en-us'),
-    additionalEventProps: {
-      [ANALYTICS_PROPERTIES.POSITION]:
-        orderedFilteredTours.findIndex(
-          (tour: { tgid: number }) =>
-            Number(tour.tgid) ===
-            VIDEO_EXPERIMENT_MBS[uid as keyof typeof VIDEO_EXPERIMENT_MBS]
-        ) + 1,
-    },
-    noTrack: true,
-  });
-
-  const showVideoOnProductCard =
-    isVideoExpEligible && videoExperimentVariant === VARIANTS.TREATMENT;
-
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
     mbType: taggedMbType,
@@ -878,7 +853,6 @@ const MicrositeV1 = (props: any) => {
       showPopup={showPopup}
       isHOHORevamp={showHohoRevamp}
       showItineraries={showItineraries}
-      showVideoOnProductCard={showVideoOnProductCard}
       isCruisesRevamp={showCruisesFormat}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
       customBanner={customBanner?.primary}
@@ -937,7 +911,6 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (isVideoExpEligible && isVideoExpResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
@@ -1215,7 +1188,7 @@ const MicrositeV1 = (props: any) => {
           if={showNewBanner && !isCatOrSubCatPage && !isEntertainmentBanner}
         >
           <StaticBanner
-            bannerVideo={showVideoOnProductCard ? null : bannerVideo}
+            bannerVideo={bannerVideo}
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
             bannerSubText={bannerAndFooterSubText}

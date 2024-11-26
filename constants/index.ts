@@ -2312,13 +2312,7 @@ export const OLYMPICS_BANNER = {
 };
 
 export const VIDEO_EXPERIMENT_MBS = {
-  'colosseum.tickets-rome.com': 3075,
-  'www.basilicacisterntickets.com': 13477,
-  'www.bluemosquetickets.com': 22487,
-  'www.topkapipalace-tickets.com': 13472,
-  'www.parkguell-tickets.com.home': 6705,
-  'www.hagia-sophia-tickets.com': 11984,
-  'www.pradomuseumtickets.com': 4082,
+  'www.flamenco-show-tickets.com.seville': [26549, 23751],
 };
 
 export const CUSTOM_BANNER = {

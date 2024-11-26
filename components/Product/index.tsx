@@ -1518,6 +1518,7 @@ const Product = (props: any) => {
               </Conditional>
               <Conditional if={!isLoading}>
                 <MediaCarousel
+                  showVideoOnProductCard={showVideoOnProductCard}
                   imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                   videoUrl={
                     showVideoOnProductCard

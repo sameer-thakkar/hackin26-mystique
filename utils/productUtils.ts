@@ -1199,8 +1199,14 @@ export const filterHighlights = ({
   return { highlightsRichText, everyRichTextExceptHighlights };
 };
 
-export const generateVideoExperimentVideoUrl = (tgid: string | number) =>
-  `https://cdn-imgix.headout.com/media/videos/pc-video-exp/${tgid}.mp4`;
+export const generateVideoExperimentVideoUrl = (tgid: string | number) => {
+  switch (tgid) {
+    case '26549':
+      return `https://cdn-imgix.headout.com/media/videos/d4258f3d0936531f719fabe73c3e0c80-La%20Cantaora%20final.mp4`;
+    case '23751':
+      return `https://cdn-imgix.headout.com/media/videos/b35da750c42bfb316fd32722e4321d4b-las%20setas%202.mp4`;
+  }
+};
 
 export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
   let inclusionsExclusions: Record<string, any> = {
