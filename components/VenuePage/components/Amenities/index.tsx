@@ -27,8 +27,8 @@ const Amenities = (props: {
                 {amenitiesIcons[amenity.amenities_list]}
                 <p key={index}>
                   {convertEngToSentenceCase(
-                    AMENITIES[amenity.amenities_list],
-                    lang ?? ''
+                    lang ?? '',
+                    AMENITIES[amenity.amenities_list]
                   )}
                 </p>
               </div>
