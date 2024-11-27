@@ -53,6 +53,12 @@ class MystiqueDocument extends Document {
     return (
       <Html dir={textDirection} lang={getLangObject(lang)?.code}>
         <Head>
+          {process.env.NEXT_PUBLIC_ENABLE_REACT_SCAN === 'true' && (
+            <Script
+              src="https://unpkg.com/react-scan/dist/auto.global.js"
+              strategy="beforeInteractive"
+            />
+          )}
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
           <PreloadFontLinks />
