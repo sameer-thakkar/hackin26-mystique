@@ -12,7 +12,12 @@ import { TPrivateAirportTransfersLandingPageProps } from 'components/PrivateAirp
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
-import { getLanguageFromPathname, isNakedDomain, reflect } from 'utils';
+import {
+  getLanguageFromPathname,
+  getNakedDomain,
+  isNakedDomain,
+  reflect,
+} from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
@@ -540,6 +545,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     : PlatformUtils.isBot(userAgent);
 
   const serverCookies = new ServerCookies(req, res);
+
+  const channel = req.headers['x-channel'];
+  if (channel && channel !== serverCookies.get(COOKIE.CURRENT_CHANNEL)) {
+    serverCookies.set(COOKIE.CURRENT_CHANNEL, channel as string, {
+      domain: getNakedDomain(host as string),
+      expires: new Date(Date.now() + TIME.IN_DAYS * 31),
+      httpOnly: false,
+    });
+    req.cookies[COOKIE.CURRENT_CHANNEL] = channel as string; // ensures current API calls include the channel.
+  }
+
   /**
    * Adding window check below since `serverCookies.get` runs only on server side :/
    */

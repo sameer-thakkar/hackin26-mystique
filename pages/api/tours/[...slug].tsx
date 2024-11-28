@@ -21,9 +21,21 @@ const getRichTextFromHtmlContent = (properties: string) => {
 };
 
 const ToursAPI: NextApiHandler = async (req, res) => {
-  const { useTest, newCDN } = req?.query;
+  const { useTest: useTestOverride, newCDN } = req?.query;
   const cookies = new Cookies(req, res);
   const blackListQueryParams = ['slug', 'useTest', 'newCDN'];
+  const headers = new Headers();
+  const useTest =
+    useTestOverride ||
+    req?.headers?.host?.includes('test-headout') ||
+    req?.headers?.host?.includes('localhost');
+
+  const originalChannel =
+    (req.headers['x-channel'] as string) || cookies.get(COOKIE.CURRENT_CHANNEL);
+
+  if (originalChannel) {
+    headers.set('x-channel', originalChannel);
+  }
 
   const queryParamsObj = new URLSearchParams();
   const cookieCurrency = cookies.get(COOKIE.CURRENT_CURRENCY);
@@ -54,7 +66,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
     queryParamsString ? `?${queryParamsString}` : ''
   }`;
 
-  await fetch(url)
+  await fetch(url, { headers })
     .then((apiResponse) => {
       if (!apiResponse.ok) {
         sendLog({

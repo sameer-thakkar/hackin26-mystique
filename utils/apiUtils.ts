@@ -1,5 +1,6 @@
 import type { NumberField } from '@prismicio/types';
 import type { IncomingHttpHeaders } from 'http2';
+import Cookies from 'js-cookie';
 import {
   convertHttpHeadersToRegularHeaders,
   getHeadoutLanguagecode,
@@ -7,7 +8,12 @@ import {
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER, MICROBRANDS_URL, REVIEW_API_DOMAIN } from 'const/index';
+import {
+  COOKIE,
+  CUSTOM_HEADER,
+  MICROBRANDS_URL,
+  REVIEW_API_DOMAIN,
+} from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
@@ -28,7 +34,9 @@ const objectToQuery = (query: any) => {
 };
 
 export const swrFetcher = async (url: string) => {
-  const res = await fetch(url);
+  const cookies = Cookies.get();
+  const headers = constructHeaders({ cookies });
+  const res = await fetch(url, { headers });
   return res.json();
 };
 
@@ -40,6 +48,10 @@ export const constructHeaders = ({
   currentHeaders?: IncomingHttpHeaders;
 }) => {
   const headers = convertHttpHeadersToRegularHeaders(currentHeaders);
+
+  if (cookies[COOKIE.CURRENT_CHANNEL]?.length) {
+    headers.set('x-channel', cookies[COOKIE.CURRENT_CHANNEL] as string);
+  }
 
   if (cookies)
     headers.set(

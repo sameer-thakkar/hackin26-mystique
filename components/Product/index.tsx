@@ -694,7 +694,10 @@ const Product = (props: any) => {
     booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
 
-  const hostName = !isDev ? url : parse(uid, true).pathname;
+  const hostName =
+    !isDev || /(test|dev)-headout/gi.test(url)
+      ? url
+      : parse(uid, true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');

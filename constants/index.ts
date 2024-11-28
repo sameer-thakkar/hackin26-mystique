@@ -20,6 +20,7 @@ export const COOKIE = {
   SANDBOX_ID: 'h-sid',
   CASHBACK_EXP_VIEWED: 'cshbck-exp',
   CURRENT_CURRENCY: 'currentCurrency',
+  CURRENT_CHANNEL: 'currentChannel',
   EXPERIMENT_OVERRIDE: 'experimentOverride',
   CLARITY_PROJECT_ID: 'clarity-pid',
   IS_LAZY: 'is-lazy',
