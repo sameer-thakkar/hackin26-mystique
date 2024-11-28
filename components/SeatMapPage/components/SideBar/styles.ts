@@ -95,6 +95,7 @@ export const ExperienceName = styled.div<{ isMobile?: boolean }>`
   cursor: pointer;
   color: ${COLORS.GRAY.G2};
   text-decoration: underline;
+  max-width: 13.75rem;
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
 
   &:hover {
@@ -692,4 +693,10 @@ export const TourPriceInfo = styled.div`
     ${expandFontToken(FONTS.HEADING_SMALL)};
     color: ${COLORS.GRAY.G3};
   }
+`;
+
+export const GenreName = styled.p`
+  ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+  padding: 0;
+  margin: 0;
 `;

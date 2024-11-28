@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import Link from 'next/link';
 import { createClient } from 'prismicio';
 import { useRecoilValue } from 'recoil';
 import { predicate } from '@prismicio/client';
@@ -46,6 +45,7 @@ import {
   DateSelectionSkeleton,
   ExperienceName,
   FixedTourInfoBannerWrapper,
+  GenreName,
   HorizontalDateList,
   HR,
   MoreTourDates,
@@ -137,8 +137,10 @@ const SideBar = (props: TSideBarProps) => {
     listingPrice,
     startLocation = {},
     currency: productCurrencyObj,
+    primarySubCategory = {},
   } = theatreShowData ?? {};
 
+  const { displayName = '' } = primarySubCategory;
   const { code: productCurrencyCode } = productCurrencyObj ?? {};
 
   const { finalPrice, bestDiscount, cashbackType, cashbackValue } =
@@ -514,16 +516,20 @@ const SideBar = (props: TSideBarProps) => {
               <div className="product-rating">
                 <Conditional if={showRatings}>
                   <StarSvg className="star-svg" />
+                  <LSpan>{averageRating.toFixed(1)}</LSpan>
                 </Conditional>
-                <LSpan>{showRatings ? averageRating.toFixed(1) : '4.6k'}</LSpan>
+                <Conditional if={!showRatings}>
+                  <GenreName>{displayName.toUpperCase()}</GenreName>
+                </Conditional>
               </div>
               <Conditional if={ratingsPresent}>
                 <Reviews>({truncateNumber(reviewsCount)})</Reviews>
               </Conditional>
             </div>
-            <Link href={showPageLink}>
+
+            <a href={showPageLink} rel="noopener noreferrer" target={'_blank'}>
               <ExperienceName>{experienceName}</ExperienceName>
-            </Link>
+            </a>
 
             <div className="experience-location">
               <LocationPinIcon /> {startLocation.addressLine1}

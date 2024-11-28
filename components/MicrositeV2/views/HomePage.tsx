@@ -63,6 +63,7 @@ import {
   EMAIL_SUBCRIPTION,
   LANGUAGE_MAP,
   LanguagesUnion,
+  NON_AB_EXP_VENUE_PAGE_THEATRE_TYPES,
   PAGE_TYPES,
   THEMES,
 } from 'const/index';
@@ -298,6 +299,10 @@ export const HomePage = (props: any) => {
 
   const isTheatreInSeatingExperiment =
     isSeatingPlanPage && isTheatreInSeatMapExperiment(theatreType);
+  const isNonABExpVenuePageTheatre = Object.values(
+    NON_AB_EXP_VENUE_PAGE_THEATRE_TYPES
+  ).includes(theatreType);
+
   const isCollectionMicrobrand = isCollectionMB(taggedMbType);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
 
@@ -320,7 +325,8 @@ export const HomePage = (props: any) => {
     isTheatreInSeatingExperiment && SeatMapExpVariant === VARIANTS.CONTROL;
 
   const showSeatMapExperiment =
-    SeatMapExpVariant === VARIANTS.TREATMENT && isSeatMapExpEligible;
+    isNonABExpVenuePageTheatre ||
+    (SeatMapExpVariant === VARIANTS.TREATMENT && isSeatMapExpEligible);
 
   let { categoryProps } = props;
 
@@ -594,9 +600,9 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           isMobile &&
-          (isEntertainmentBanner ||
-            (!showSeatMapExperiment && showLttTreatment && !isCatOrSubCatPage))
+          (isEntertainmentBanner || (showLttTreatment && !isCatOrSubCatPage))
         }
       >
         <MobileBannerV2
@@ -608,9 +614,9 @@ export const HomePage = (props: any) => {
       </Conditional>
       <Conditional
         if={
+          !showSeatMapExperiment &&
           !isMobile &&
-          (isEntertainmentBanner ||
-            (!showSeatMapExperiment && showLttTreatment && !isCatOrSubCatPage))
+          (isEntertainmentBanner || (showLttTreatment && !isCatOrSubCatPage))
         }
       >
         <DesktopBannerV2

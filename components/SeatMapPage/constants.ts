@@ -19,6 +19,7 @@ import NovelloTheatreSvg from 'assets/novelloThetreSvg';
 import PalaceTheatreSvg from 'assets/palaceTheatre';
 import PrinceEdwardTheatreSvg from 'assets/princeEdwardTheatreSvg';
 import PrinceOfWalesTheatreSvg from 'assets/princeOfWalesTheatreSvg';
+import RadioCityMusicHallSvg from 'assets/radioCityMusicHallSvg';
 import RestRoomSvg from 'assets/restRoomSvg';
 import RoyalAlbertHallSvg from 'assets/royalAlbertHallSvg';
 import SeatIcon from 'assets/seatIcon';
@@ -281,6 +282,21 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       BANNER_ICONS: [
         {
           name: '833 seats',
+          icon: SeatIcon2,
+        },
+        {
+          name: 'Wheelchair accessible',
+          icon: WheelChairIcon,
+        },
+      ],
+    },
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: {
+      BANNER_HEADING: 'Radio City Music Hall seating chart',
+      BANNER_DESCRIPTION:
+        'With the capacity to seat over 6000 people, Radio City Music Hall is the largest indoor theater in the world. Opened in 1932, it is celebrated for its stunning Art Deco architecture and is best known for hosting the legendary Rockettes and their precision dance routines, especially during the annual Christmas Spectacular.',
+      BANNER_ICONS: [
+        {
+          name: '6,013 seats',
           icon: SeatIcon2,
         },
         {
@@ -3911,6 +3927,410 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows A-F',
       },
     },
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: {
+      'orchestra-7': {
+        blockName: 'Orchestra -  7',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  7',
+        description:
+          'Stay close to the stage and get a unique, immersive perspective of the show from this section. While Rows NN to TT offer slightly limited and angled views, rows further back provide a broader perspective of the stage and are conveniently near the lobby concessions and exits.',
+        quickInfo: [
+          { icon: SeatIcon, label: '200 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Close-up, largely unobstructed views row WW onwards',
+          },
+        ],
+        rows: 'Rows NN - U',
+      },
+      'orchestra-6': {
+        blockName: 'Orchestra -  6',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  6',
+        description:
+          'Enjoy close-up views of the Rockettes and get immersed into the holiday magic from the first few rows. Views may be slightly angled as the section is towards the side but the stage is at eye-level which ensures great views.',
+        quickInfo: [
+          { icon: SeatIcon, label: '207 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Close-up, largely unobstructed views row WW onwards',
+          },
+        ],
+        rows: 'Rows BB - W',
+      },
+      'orchestra-5': {
+        blockName: 'Orchestra -  5',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  5',
+        description:
+          "Get close-up and immersive views of the Rockettes from the first few rows. The stage is at eye-level which ensures great views from almost all rows. You can even catch confetti snowflakes if you're seated in the first few rows. Legroom reduces as you move towards the back.",
+        quickInfo: [
+          { icon: SeatIcon, label: '635 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Excellent views from row CC to row RR',
+          },
+        ],
+        rows: 'Rows AA - W',
+      },
+      'orchestra-4': {
+        blockName: 'Orchestra -  4',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  4',
+        description:
+          'This section is perfectly centered and provides great views from the stage. The front rows provide an intimate look at the frost fairies, while seats further back deliver wide-angle perspectives. Legroom becomes tighter in the rear rows.',
+        quickInfo: [
+          { icon: SeatIcon, label: '589 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Excellent, central views from all rows',
+          },
+        ],
+        rows: 'Rows BB - W',
+      },
+      'orchestra-3': {
+        blockName: 'Orchestra -  3',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  3',
+        description:
+          'The first few rows deliver close-up, immersive views of the Rockettes. Rows towards the back may seem a little far from the stage but the views are clear. Legroom decreases as you move further back.',
+        quickInfo: [
+          { icon: SeatIcon, label: '635 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Excellent views from row CC to row RR',
+          },
+        ],
+        rows: 'Rows AA - W',
+      },
+      'orchestra-2': {
+        blockName: 'Orchestra -  2',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  2',
+        description:
+          'Get close-up views of the Rockettes and feel immersed in the holiday spirit from the first few rows. Though slightly angled due to the section’s side location, the stage is at eye-level and ensures great visibility from almost all seats.',
+        quickInfo: [
+          { icon: SeatIcon, label: '207 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Close-up, largely unobstructed views row WW onwards',
+          },
+        ],
+        rows: 'Rows BB - W',
+      },
+      'orchestra-1': {
+        blockName: 'Orchestra -  1',
+        theatreSectionName: 'Orchestra',
+        theatreSectionLabel: 'Orchestra -  1',
+        description:
+          'Stay close to the stage and get a unique, immersive perspective of the show from this section. Views may be slightly limited and angled in Rows NN through TT. Rows towards the back provide a wider perspective of the stage and are closest to lobby concessions and exits.',
+        quickInfo: [
+          { icon: SeatIcon, label: '200 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Close-up, largely unobstructed views row WW onwards',
+          },
+        ],
+        rows: 'Rows NN - U',
+      },
+
+      'first-mezzanine-7': {
+        blockName: 'First Mezzanine -  7',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  7',
+        description:
+          'Directly above the Orchestra section, this section has good views that are quite similar to what you get from the back rows of Orchestra. The steep rake ensures clear visibility, though views may be slightly angled due to the section’s side positioning.',
+        quickInfo: [
+          { icon: SeatIcon, label: '108 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views; angled views towards the end of the rows',
+          },
+        ],
+        rows: 'Rows AA - L',
+      },
+      'first-mezzanine-6': {
+        blockName: 'First Mezzanine -  6',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  6',
+        description:
+          'This mezzanine offers views comparable to the Orchestra’s back rows. However, since the number of seats is limited here there is fewer chances of your views getting blocked by those in front rows due to the inclined rake. The inclined rake ensures clear visibility, and you’ll enjoy a close-up view of the frost fairies from this section.',
+        quickInfo: [
+          { icon: SeatIcon, label: '153 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views from most seats',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'first-mezzanine-5': {
+        blockName: 'First Mezzanine -  5',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  5',
+        description:
+          'This section is almost in the center and provides great views from the stage. The steeply raked rows offer great, obstruction-free views from most seats, especially in the middle. Get a close-up view of the flying frost fairies from this mezzanine.',
+        quickInfo: [
+          { icon: SeatIcon, label: '142 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great, clear views from most rows',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'first-mezzanine-4': {
+        blockName: 'First Mezzanine -  4',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  4',
+        description:
+          'Perfectly centered, this mezzanine section offers superb stage views. While the stage is at a distance, the steep rake guarantees clear, obstruction-free views from most seats, especially in the middle. Enjoy a close-up view of the flying frost fairies from this mezzanine.',
+        quickInfo: [
+          { icon: SeatIcon, label: '142 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great, central views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'first-mezzanine-3': {
+        blockName: 'First Mezzanine -  3',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  3',
+        description:
+          'This section is almost perfectly centered and provides fantastic views of the stage. The steeply raked rows offer great, obstruction-free views from most seats, especially in the middle. Get a close-up view of the flying frost fairies from this mezzanine.',
+        quickInfo: [
+          { icon: SeatIcon, label: '142 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great, clear views from most rows',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'first-mezzanine-2': {
+        blockName: 'First Mezzanine -  2',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  2',
+        description:
+          'This mezzanine offers views comparable to the Orchestra’s back rows. However, since the number of seats is limited here there is fewer chances of your views getting blocked by those in front rows due to the inclined rake. The inclined rake ensures clear visibility, and you’ll enjoy a close-up view of the frost fairies from this section.',
+        quickInfo: [
+          { icon: SeatIcon, label: '153 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great views from most seats',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'first-mezzanine-1': {
+        blockName: 'First Mezzanine -  1',
+        theatreSectionName: 'First Mezzanine',
+        theatreSectionLabel: 'First Mezzanine -  1',
+        description:
+          'Located directly above the Orchestra, this section provides views similar to the back rows of the Orchestra. The steep rake ensures clear views. Views may be slightly angled as the section is towards the side.',
+        quickInfo: [
+          { icon: SeatIcon, label: '108 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great, slightly angled views from all rows',
+          },
+        ],
+        rows: 'Rows BB - L',
+      },
+
+      'second-mezzanine-7': {
+        blockName: 'Second Mezzanine -  7',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  7',
+        description:
+          "While the stage is distant, the steep rake ensures clear visibility from most seats. Performers' faces may not be fully visible, but the choreography is easy to follow. Positioned slightly to the side, some views might be restricted.",
+        quickInfo: [
+          { icon: SeatIcon, label: '97 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows AA - K',
+      },
+      'second-mezzanine-6': {
+        blockName: 'Second Mezzanine -  6',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  6',
+        description:
+          'The Second Mezzanine offers a fantastic vantage point for watching the Rockettes’ precision dance formations. Thanks to the steep rake and distance from the stage, you get a wide-angle overview, though side seats may have slightly angled views.',
+        quickInfo: [
+          { icon: SeatIcon, label: '139 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'second-mezzanine-5': {
+        blockName: 'Second Mezzanine -  5',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  5',
+        description:
+          'This elevated section provides great views of the stage, perfect for appreciating the Rockettes’ precise dance formations. The wide-angle perspective ensures you don’t miss the grandeur of the entire stage.',
+        quickInfo: [
+          { icon: SeatIcon, label: '129 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'second-mezzanine-4': {
+        blockName: 'Second Mezzanine -  4',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  4',
+        description:
+          'Though the stage is distant, the steeply raked rows deliver unobstructed views from most seats, especially in the center. This section is perfect for watching the Rockettes’ synchronized formations with a panoramic perspective of the entire stage.',
+        quickInfo: [
+          { icon: SeatIcon, label: '109 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Great, central views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'second-mezzanine-3': {
+        blockName: 'Second Mezzanine -  3',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  3',
+        description:
+          'The Second Mezzanine provides a stunning overview of the Rockettes’ intricate formations. Its steep rake and elevated position offer clear views, though side seats may have slightly angled views.',
+        quickInfo: [
+          { icon: SeatIcon, label: '129 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'second-mezzanine-2': {
+        blockName: 'Second Mezzanine -  2',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  2',
+        description:
+          "From its elevated position, this section provides excellent visibility of the Rockettes' performances. It offers a wide-angle stage overview, ideal for appreciating the choreography and formations.",
+        quickInfo: [
+          { icon: SeatIcon, label: '139 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows A - K',
+      },
+      'second-mezzanine-1': {
+        blockName: 'Second Mezzanine -  1',
+        theatreSectionName: 'Second Mezzanine',
+        theatreSectionLabel: 'Second Mezzanine -  1',
+        description:
+          "While the stage is distant, the steep rake ensures clear visibility from most seats. Performers' faces may not be fully visible, but the choreography is easy to follow. Positioned slightly to the side, some views might be restricted.",
+        quickInfo: [
+          { icon: SeatIcon, label: '97 seats' },
+          {
+            icon: BinocularIcon,
+            label: 'Clear, wide angle views',
+          },
+        ],
+        rows: 'Rows AA - K',
+      },
+
+      'third-mezzanine-7': {
+        blockName: 'Third Mezzanine -  7',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  7',
+        description:
+          'While the stage may feel far, the steeply raked rows ensure clear views. Projections on the ceiling are visible from all sections of the Third Mezzanine. Some seats to the side may have restricted views.',
+        quickInfo: [
+          { icon: SeatIcon, label: '79 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows AA - H',
+      },
+      'third-mezzanine-6': {
+        blockName: 'Third Mezzanine -  6',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  6',
+        description:
+          "Despite being the farthest mezzanine, the limited seating creates an intimate experience. Projections on the ceiling provide an enhanced experience. Some seats may provide angled views due to the section's position.",
+        quickInfo: [
+          { icon: SeatIcon, label: '111 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows A - H',
+      },
+      'third-mezzanine-5': {
+        blockName: 'Third Mezzanine -  5',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  5',
+        description:
+          "As the farthest mezzanine, the limited seating makes for an intimate setting in this section. You can view projections overhead on the ceiling from all sections of the Third Mezzanine. The section's position may result in angled views.",
+        quickInfo: [
+          { icon: SeatIcon, label: '103 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows A - H',
+      },
+      'third-mezzanine-4': {
+        blockName: 'Third Mezzanine -  4',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  4',
+        description:
+          'Though distant, the steeply raked rows provide obstruction-free views from most seats, especially in the middle. The safety barrier may obstruct views for shorter individuals. Ceiling projections are visible from all sections.',
+        quickInfo: [
+          { icon: SeatIcon, label: '103 seats' },
+          { icon: BinocularIcon, label: 'Clear and central views' },
+        ],
+        rows: 'Rows A - H',
+      },
+      'third-mezzanine-3': {
+        blockName: 'Third Mezzanine -  3',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  3',
+        description:
+          "The Third Mezzanine offers a cozy atmosphere with limited seating despite its distance from the stage. Ceiling projections are visible throughout. The section's position may result in angled views from some seats.",
+        quickInfo: [
+          { icon: SeatIcon, label: '103 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows A - H',
+      },
+      'third-mezzanine-2': {
+        blockName: 'Third Mezzanine -  2',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  2',
+        description:
+          "The stage may feel far away but due to the steeply raked rows the views are clear. You can witness projections overhead on the ceiling from all sections of the Third Mezzanine. The section's position may result in angled views.",
+        quickInfo: [
+          { icon: SeatIcon, label: '111 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows A - H',
+      },
+      'third-mezzanine-1': {
+        blockName: 'Third Mezzanine -  1',
+        theatreSectionName: 'Third Mezzanine',
+        theatreSectionLabel: 'Third Mezzanine -  1',
+        description:
+          'While the stage may feel far, the steeply raked rows ensure clear views. Projections on the ceiling are visible from all sections of the Third Mezzanine. Some seats to the side may have restricted views.',
+        quickInfo: [
+          { icon: SeatIcon, label: '79 seats' },
+          { icon: BinocularIcon, label: 'Clear, wide angle views' },
+        ],
+        rows: 'Rows AA - H',
+      },
+    },
   },
   availableShowsTgid: {
     [THEATRE_TYPES.ABBA_ARENA]: ['20045'],
@@ -3927,7 +4347,9 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.ALDWYCH_THEATRE]: ['9162'],
     [THEATRE_TYPES.ROYAL_ALBERT_HALL]: ['28922'],
     [THEATRE_TYPES.APOLLO_THEATRE]: ['26688'],
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: ['2505'],
   },
+
   seatMapSvgs: {
     [THEATRE_TYPES.ABBA_ARENA]: AbbaSeatMapSvg,
     [THEATRE_TYPES.NOVELLO_THEATRE]: NovelloTheatreSvg,
@@ -3944,6 +4366,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.ALDWYCH_THEATRE]: AldwychTheatreSvg,
     [THEATRE_TYPES.ROYAL_ALBERT_HALL]: RoyalAlbertHallSvg,
     [THEATRE_TYPES.APOLLO_THEATRE]: ApolloTheatreSvg,
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: RadioCityMusicHallSvg,
   },
   viewBox: {
     [THEATRE_TYPES.ABBA_ARENA]: (isMobile: boolean) =>
@@ -3974,6 +4397,8 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       isMobile ? '0 0 343 600' : '0 0 607 706',
     [THEATRE_TYPES.APOLLO_THEATRE]: (isMobile: boolean) =>
       isMobile ? '0 0 342 394' : '0 0 607 693',
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: (isMobile: boolean) =>
+      isMobile ? '0 0 343 372' : '0 0 607 663',
   },
   breadCrumbsLabel: {
     [THEATRE_TYPES.ABBA_ARENA]: 'ABBA Arena Seating Plan',
@@ -3992,5 +4417,7 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.ALDWYCH_THEATRE]: 'Aldwych Theatre Seating Plan',
     [THEATRE_TYPES.ROYAL_ALBERT_HALL]: 'Royal Albert Hall Seating Plan',
     [THEATRE_TYPES.APOLLO_THEATRE]: 'Apollo Theatre Seating Plan',
+    [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]:
+      'Radio city music hall Theatre Seating Plan',
   },
 };

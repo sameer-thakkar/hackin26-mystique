@@ -367,7 +367,7 @@ export const CUSTOM_TYPES = {
   SEATING_PLAN: 'seating-plan',
 };
 
-export const THEATRE_TYPES = {
+export const THEATRE_TYPES: Record<string, string> = {
   ABBA_ARENA: 'abba-arena',
   HIS_MAJESTYS_THEATRE: 'his-majestys-theatre',
   NOVELLO_THEATRE: 'novello-theatre',
@@ -382,6 +382,11 @@ export const THEATRE_TYPES = {
   ALDWYCH_THEATRE: 'aldwych-theatre',
   ROYAL_ALBERT_HALL: 'royal-albert-hall',
   APOLLO_THEATRE: 'apollo-theatre',
+  RADIO_CITY_MUSIC_HALL: 'radio-city-music-hall',
+};
+
+export const NON_AB_EXP_VENUE_PAGE_THEATRE_TYPES: Record<string, string> = {
+  RADIO_CITY_MUSIC_HALL: 'radio-city-music-hall',
 };
 
 export const TEMPLATES = {

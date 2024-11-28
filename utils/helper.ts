@@ -1014,7 +1014,8 @@ export const isTheatreInSeatMapExperiment = (theatreType: string) => {
 };
 
 export const getSeatingPlanAndTheatreType = (uid: string) => {
-  const isSeatingPlanPage = uid.includes('seating-plan');
+  const isSeatingPlanPage =
+    uid.includes('seating-plan') || uid.includes('seating-chart');
 
   const uidSplit = uid.split('.');
   const currentTheatreType = uidSplit?.[4];
