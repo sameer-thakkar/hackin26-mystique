@@ -187,14 +187,16 @@ const Product = (props: any) => {
   const itineraryPopupController = useRef<TItineraryController>();
 
   const [isTracked, setIsTracked] = useState(false);
+  const [boosterType, setBoosterType] = useState<
+    keyof typeof BoosterType | null
+  >(null);
+
   const [isItineraryDrawerOpen, setIsItineraryDrawerOpen] = useState(false);
   const isCombosSectionIntersecting = useOnScreen({
     ref: combosSectionRef,
     unobserve: true,
   });
-  const [boosterType, setBoosterType] = useState<
-    keyof typeof BoosterType | null
-  >(null);
+
   useEffect(() => {
     if (!isTracked && isCombosSectionIntersecting) {
       trackPageSection({ section: SECTION_NAMES.COMBOS });
@@ -271,6 +273,8 @@ const Product = (props: any) => {
     shouldRunHohoRevampExperiment = false,
     isHOHORevamp,
     showBoosters = false,
+    isPopUpOnly = false,
+    onPopupClosed,
   } = props;
 
   const {
@@ -1462,7 +1466,6 @@ const Product = (props: any) => {
             (isPopup && !originalIsMobile && isPoiMwebCard) ||
             isAsideBarOverlay
           }
-          $isAsideBarOverlay={isAsideBarOverlay}
         >
           <Conditional if={boosterTypeIfShown && !isPopup}>
             <Booster
@@ -1940,11 +1943,12 @@ const Product = (props: any) => {
                 )) ||
               (!expandContent && isNewVerticalsProductCard)
             }
-            defaultOpen={defaultOpen}
+            defaultOpen={!!isPopUpOnly}
             maxHeight={maxProductBodyHeight}
             ref={collapsibleContentRef}
             $forceMobile={forceMobile}
             $isPopup={isPopup}
+            $isV3Design={isV3Design}
           >
             <Conditional
               if={
@@ -2129,6 +2133,150 @@ const Product = (props: any) => {
     }
   };
 
+  const getProductCardPopup = (defaultOpen = false) => (
+    <Popup
+      controller={popupController}
+      tgid={tgid}
+      scrollToSection={scrollToSection}
+      onStateChange={(isOpen) => {
+        setIsPopupOpen(isOpen);
+        if (!isOpen) onPopupClosed?.();
+      }}
+      slideUp={isNewVerticalsProductCard}
+      defaultOpen={defaultOpen}
+    >
+      <PopupContainer
+        onScroll={(e) => {
+          if (!e.currentTarget) return;
+          trackPopupScroll(e.currentTarget.scrollTop);
+        }}
+        ref={popupContainerRef}
+        tabIndex={0}
+        id={`product-card-popup-${tgid}`}
+      >
+        <Conditional if={images}>
+          <div className="card-img">
+            <ExpandedGallery
+              images={images}
+              videoUrl={
+                showVideoOnProductCard
+                  ? generateVideoExperimentVideoUrl(String(tgid))
+                  : null
+              }
+            />
+          </div>
+        </Conditional>
+        {getProductCardElements({
+          expandContent: isContentOpen,
+          isLoading: isProductCardLoading,
+          isPopup: true,
+        })}
+      </PopupContainer>
+      <NavigationBar
+        tabs={tabs}
+        currentActiveIndex={currentTabActiveIndexForPopup.index}
+        isVisible={!isUnScrolled}
+        onItemClick={scrollToSection}
+        isReviewsSectionPresent={reviewsDetails?.showRatings}
+        isItinerarySectionPresent={!isCruisesRevamp && showItinerary}
+        isHohoItinerary={isHohoItinerary}
+      />
+      <CloseButtonContainer>
+        <CloseButton
+          isHighlighted={isUnScrolled}
+          onClick={() => {
+            popupController.current?.close(true);
+          }}
+        />
+      </CloseButtonContainer>
+
+      <PopupPricingUnit>
+        <CTAContainer pageType={pageType}>
+          <SlideUpContainer
+            $isTitleVisible={!isUnScrolled}
+            ref={priceblockTitleContainerRef}
+          >
+            <SlideUpTitle
+              $maxWidth={priceblockTitleContainerRef?.current?.clientWidth}
+            >
+              {cardTitle}
+            </SlideUpTitle>
+          </SlideUpContainer>
+          <PriceContainer pageType={pageType}>
+            <PriceBlock
+              isMobile={isMobile}
+              isLoading={isProductCardLoading}
+              isSportsExperiment={isSportsExperiment}
+              showScratchPrice={showScratchPrice}
+              listingPrice={finalListingPrice}
+              lang={currentLanguage}
+              showSavings
+              id={tgid}
+              prefix
+              key={'price-block'}
+              wrapperRef={priceBlockWrapperRef}
+              newDiscountTagDesignProps={{ shouldPointLeft: true }}
+            />
+          </PriceContainer>
+          <Conditional if={isTicketCard && promo_code}>
+            <PromoCodeBlock
+              {...props}
+              isTicketCardDetailPopup
+              currencyCode={finalListingPrice?.currencyCode ?? ''}
+            />
+          </Conditional>
+          <CTABlock
+            isSticky={false}
+            shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
+            isTicketCard={isTicketCard}
+          >
+            <Conditional if={!isCombo}>
+              <a
+                target={originalIsMobile ? '_self' : '_blank'}
+                href={productBookingUrl}
+                rel="nofollow noreferrer"
+              >
+                <BookNowCta
+                  clickHandler={() => {
+                    sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                  }}
+                  isMobile={originalIsMobile}
+                  mbTheme={mbTheme}
+                  ctaText={getBookNowButtonText()}
+                />
+              </a>
+            </Conditional>
+            <Conditional if={isCombo}>
+              <BookNowCta
+                showLoadingState={false}
+                clickHandler={() => {
+                  popupController.current?.close();
+                  setTimeout(() => {
+                    handleShowComboPopup(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                  }, 300);
+                }}
+                isMobile={isMobile}
+                mbTheme={mbTheme}
+                ctaText={getBookNowButtonText()}
+              />
+            </Conditional>
+          </CTABlock>
+          <Conditional if={isMobile && isSpecialGuidedTour}>
+            <GuidesBanner isInSwipeSheet />
+          </Conditional>
+          <Conditional if={isOpenDated && isMobile}>
+            <OpenDatedDescriptor>
+              <Emoji symbol="😇" label="blessed-face" />{' '}
+              {strings.OPEN_DATED_DESCRIPTOR}
+            </OpenDatedDescriptor>
+          </Conditional>
+        </CTAContainer>
+      </PopupPricingUnit>
+    </Popup>
+  );
+
+  if (isPopUpOnly) return getProductCardPopup(true);
+
   const ProductCard = (
     <Container
       isV3Design={isV3Design}
@@ -2189,147 +2337,7 @@ const Product = (props: any) => {
         />
       </Conditional>
 
-      <Conditional if={showPopup}>
-        <Popup
-          controller={popupController}
-          tgid={tgid}
-          scrollToSection={scrollToSection}
-          onStateChange={setIsPopupOpen}
-          slideUp={isNewVerticalsProductCard}
-        >
-          <PopupContainer
-            onScroll={(e) => {
-              if (!e.currentTarget) return;
-              trackPopupScroll(e.currentTarget.scrollTop);
-            }}
-            ref={popupContainerRef}
-            tabIndex={0}
-            id={`product-card-popup-${tgid}`}
-          >
-            <Conditional if={images}>
-              <div className="card-img">
-                <ExpandedGallery
-                  images={images}
-                  videoUrl={
-                    showVideoOnProductCard
-                      ? generateVideoExperimentVideoUrl(String(tgid))
-                      : null
-                  }
-                />
-              </div>
-            </Conditional>
-            {getProductCardElements({
-              expandContent: isContentOpen,
-              isLoading: isProductCardLoading,
-              isPopup: true,
-            })}
-          </PopupContainer>
-          <NavigationBar
-            tabs={tabs}
-            currentActiveIndex={currentTabActiveIndexForPopup.index}
-            isVisible={!isUnScrolled}
-            onItemClick={scrollToSection}
-            isReviewsSectionPresent={reviewsDetails?.showRatings}
-            isItinerarySectionPresent={!isCruisesRevamp && showItinerary}
-            isHohoItinerary={isHohoItinerary}
-          />
-          <CloseButtonContainer>
-            <CloseButton
-              isHighlighted={isUnScrolled}
-              onClick={() => {
-                popupController.current?.close(true);
-              }}
-            />
-          </CloseButtonContainer>
-
-          <PopupPricingUnit>
-            <CTAContainer pageType={pageType}>
-              <SlideUpContainer
-                $isTitleVisible={!isUnScrolled}
-                ref={priceblockTitleContainerRef}
-              >
-                <SlideUpTitle
-                  $maxWidth={priceblockTitleContainerRef?.current?.clientWidth}
-                >
-                  {cardTitle}
-                </SlideUpTitle>
-              </SlideUpContainer>
-              <PriceContainer pageType={pageType}>
-                <PriceBlock
-                  isMobile={isMobile}
-                  isLoading={isProductCardLoading}
-                  isSportsExperiment={isSportsExperiment}
-                  showScratchPrice={showScratchPrice}
-                  listingPrice={finalListingPrice}
-                  lang={currentLanguage}
-                  showSavings
-                  id={tgid}
-                  prefix
-                  key={'price-block'}
-                  wrapperRef={priceBlockWrapperRef}
-                  newDiscountTagDesignProps={{ shouldPointLeft: true }}
-                />
-              </PriceContainer>
-              <Conditional if={isTicketCard && promo_code}>
-                <PromoCodeBlock
-                  {...props}
-                  isTicketCardDetailPopup
-                  currencyCode={finalListingPrice?.currencyCode ?? ''}
-                />
-              </Conditional>
-              <CTABlock
-                isSticky={false}
-                shouldOffset={
-                  earliestAvailability && mbTheme === THEMES.MIN_BLUE
-                }
-                isTicketCard={isTicketCard}
-              >
-                <Conditional if={!isCombo}>
-                  <a
-                    target={originalIsMobile ? '_self' : '_blank'}
-                    href={productBookingUrl}
-                    rel="nofollow noreferrer"
-                  >
-                    <BookNowCta
-                      clickHandler={() => {
-                        sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
-                      }}
-                      isMobile={originalIsMobile}
-                      mbTheme={mbTheme}
-                      ctaText={getBookNowButtonText()}
-                    />
-                  </a>
-                </Conditional>
-                <Conditional if={isCombo}>
-                  <BookNowCta
-                    showLoadingState={false}
-                    clickHandler={() => {
-                      popupController.current?.close();
-                      setTimeout(() => {
-                        handleShowComboPopup(
-                          PRODUCT_CARD_REVAMP.PLACEMENT.POPUP
-                        );
-                      }, 300);
-                    }}
-                    isMobile={isMobile}
-                    mbTheme={mbTheme}
-                    ctaText={getBookNowButtonText()}
-                  />
-                </Conditional>
-              </CTABlock>
-              <Conditional if={isMobile && isSpecialGuidedTour}>
-                <GuidesBanner isInSwipeSheet />
-              </Conditional>
-              <Conditional if={isOpenDated && isMobile}>
-                <OpenDatedDescriptor>
-                  <Emoji symbol="😇" label="blessed-face" />{' '}
-                  {strings.OPEN_DATED_DESCRIPTOR}
-                </OpenDatedDescriptor>
-              </Conditional>
-            </CTAContainer>
-          </PopupPricingUnit>
-        </Popup>
-      </Conditional>
+      <Conditional if={showPopup}>{getProductCardPopup(false)}</Conditional>
     </Container>
   );
 

@@ -47,12 +47,8 @@ const ProductCard = styled.div<{
   display: grid;
   grid-template-rows: 176px auto;
   grid-row-gap: 8px;
-  transform: translate3d(0, 0, 0);
+  cursor: pointer;
   transition: ease 0.2s;
-
-  &:hover {
-    transform: translate3d(0, -5px, 0);
-  }
 
   .product-v2-title {
     color: ${COLORS.GRAY.G2};
@@ -206,6 +202,16 @@ const ProductCard = styled.div<{
     top: 0.063rem;
     width: 12px;
     height: 12px;
+  }
+
+  @media (min-width: 768px) {
+    &:hover {
+      transform: translateY(-3px) scale(1);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.96);
+    }
   }
 
   @media (max-width: 768px) {

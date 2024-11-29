@@ -25,6 +25,7 @@ type Props = {
   showPopup?: boolean;
   ctaHasBackground?: boolean;
   showMoreDetails?: boolean;
+  isV3Design?: boolean;
 };
 
 const Highlights = ({
@@ -36,6 +37,7 @@ const Highlights = ({
   showPopup = false,
   ctaHasBackground = false,
   showMoreDetails = false,
+  isV3Design = false,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
@@ -60,6 +62,7 @@ const Highlights = ({
         ref={contentRef}
         $isOverlay={showViewMoreAsOverlay}
         $showPopup={showPopup}
+        $isV3Design={isV3Design}
       >
         <Conditional if={!isLoading}>
           <>

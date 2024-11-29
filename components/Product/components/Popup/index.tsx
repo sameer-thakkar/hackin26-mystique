@@ -20,6 +20,7 @@ const Popup = ({
   scrollToSection,
   slideUp,
   onStateChange,
+  defaultOpen = false,
 }: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -67,6 +68,10 @@ const Popup = ({
         open,
         close,
       };
+
+    if (defaultOpen) {
+      open();
+    }
   }, []);
 
   const isHarryPotterPage = checkIfHarryPotterPage(uid);

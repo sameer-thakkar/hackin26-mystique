@@ -401,18 +401,19 @@ export const ProductHeader = styled.div`
 
 export const ProductBody = styled.div<{
   hasReadMore?: boolean;
-  maxHeight?: number;
   defaultOpen?: boolean;
   collapsed?: boolean;
   $forceMobile?: boolean;
   $isPopup?: boolean;
+  maxHeight?: number;
+  $isV3Design?: boolean;
 }>`
   grid-area: body;
   display: grid;
   grid-row-gap: 8px;
   overflow-anchor: none;
+  ${({ $isV3Design }) => $isV3Design && 'margin-bottom: 8px;'}
   .tour-description {
-    padding-bottom: 1.5rem;
     cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
     ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
     p {
@@ -424,7 +425,7 @@ export const ProductBody = styled.div<{
     ${({ collapsed, defaultOpen, maxHeight }) =>
       collapsed && !defaultOpen
         ? `
-        max-height: ${maxHeight || 265}px;
+         max-height: ${maxHeight || 265}px;
         overflow: hidden;
       `
         : ''}
@@ -1380,6 +1381,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       }
     `}
   ${({ $forceMobile }) => !$forceMobile && '}'}
+
+  &:hover, &:active {
+    cursor: pointer;
+  }
 `;
 
 export const BoosterTag = styled.div`
@@ -2812,8 +2817,9 @@ export const CompactHighlightsWrapper = styled(HighlightTabsWrapper)`
 export const HighlightsPanel = styled.div<{
   $isOverlay?: boolean;
   $showPopup?: boolean;
+  $isV3Design?: boolean;
 }>`
-  max-height: 15rem;
+  max-height: ${({ $isV3Design }) => ($isV3Design ? 16 : 15)}rem;
   overflow: hidden;
   align-self: stretch;
 
@@ -2821,7 +2827,7 @@ export const HighlightsPanel = styled.div<{
     display: none;
   }
 
-  ${({ $isOverlay, $showPopup }) =>
+  ${({ $isOverlay, $showPopup, $isV3Design }) =>
     $isOverlay &&
     css`
       ::after {
@@ -2831,8 +2837,8 @@ export const HighlightsPanel = styled.div<{
         height: 100%;
         background: linear-gradient(
           to top,
-          white,
-          white ${$showPopup ? 16.5 : 10}%,
+          ${$isV3Design ? COLORS.GRAY.G8 : 'white'},
+          ${$isV3Design ? COLORS.GRAY.G8 : 'white'} ${$showPopup ? 16.5 : 10}%,
           transparent 50%
         );
         left: 0;

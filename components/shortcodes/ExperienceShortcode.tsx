@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product/index';
@@ -29,7 +28,7 @@ export type TExperienceShortcode = {
 };
 
 const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [scorpioData, setScorpioData] = useState<Record<string, any> | null>(
     null
   );
@@ -50,14 +49,14 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   const currency = currencyList?.find((c) => c.code === currencyCode);
 
   const openDrawer = useCallback(() => {
-    setIsDrawerOpen(true);
-  }, [setIsDrawerOpen]);
+    setIsPopUpOpen(true);
+  }, [setIsPopUpOpen]);
 
   const handleDrawer = useCallback(
     (isOpen: boolean = false) => {
-      setIsDrawerOpen(isOpen);
+      setIsPopUpOpen(isOpen);
     },
-    [setIsDrawerOpen]
+    [setIsPopUpOpen]
   );
 
   const childProps = useMemo(
@@ -156,27 +155,25 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
         ) : (
           text
         )}
-        <ExperienceDrawerPortal isDrawerOpen={isDrawerOpen} {...childProps} />
+        <ExperienceDrawerPortal isPopUpOpen={isPopUpOpen} {...childProps} />
       </Conditional>
     </>
   );
 };
 
 const ExperienceDrawerPortal = (props: TExperienceDrawerPortal) => {
-  const { isDrawerOpen, ...restProps } = props;
+  const { isPopUpOpen, handleShortcodeDrawer, ...restProps } = props;
 
-  if (!isDrawerOpen || !restProps?.scorpioData) {
+  if (!isPopUpOpen || !restProps?.scorpioData) {
     return null;
   }
 
   return (
-    <React.Fragment>
-      {createPortal(
-        <Product {...restProps} />,
-        document.body,
-        'experience-popup'
-      )}
-    </React.Fragment>
+    <Product
+      onPopupClosed={() => handleShortcodeDrawer(false)}
+      isPopUpOnly={isPopUpOpen}
+      {...restProps}
+    />
   );
 };
 

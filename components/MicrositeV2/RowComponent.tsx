@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { scroller } from 'react-scroll';
+import React, { useCallback, useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -55,20 +54,14 @@ export const RowComponent = (props: any) => {
     sectionIndex,
   } = props;
   // @ts-expect-error TS(2339): Property 'activeCategoryId' does not exist on type... Remove this comment to see the full error message
-  const { activeCategoryId, activeTour, clickTour, closeTour } =
-    useContext(InteractionContext) || {};
+  const { activeCategoryId, clickTour } = useContext(InteractionContext) || {};
+
   const { design } = useContext(MBContext);
   const isV3Design = design === DESIGN.V3;
   const router = useRouter();
 
   // For Mobile each section has 4 cards, so only 1 section can be in viewport. on dweb at max two rows can be on viewport on load.
   const shouldLazyLoad = isMobile ? sectionIndex >= 1 : sectionIndex >= 2;
-
-  const {
-    tgid: activeTgid,
-    section: activeSection,
-    autoScroll,
-  } = activeTour || {};
 
   const totalPreviousCardRendered =
     sectionIndex *
@@ -85,9 +78,16 @@ export const RowComponent = (props: any) => {
     return allDescriptors;
   };
 
+  const closeDescription = () => {
+    setActiveTgid(null);
+  };
+
+  const [activeTgid, setActiveTgid] = useState(null);
+
   const getV3DetailedCard = (tgid: any, index: number) => {
     const currTour = allTours[tgid];
-    if (!currTour) return null;
+    const showPopup = tgid === activeTgid;
+    if (!currTour || (!isMobile && !showPopup)) return null;
     const {
       title,
       listingPrice,
@@ -134,52 +134,43 @@ export const RowComponent = (props: any) => {
         isV3Design={isV3Design}
         position={totalPreviousCardRendered + (index + 1)}
         tourPrices={{ [tgid]: { listingPrice } }}
+        isPopUpOnly={!isMobile && showPopup}
+        isModifiedProductCard={true}
+        onPopupClosed={closeDescription}
       />
     );
   };
 
-  const handleProductClicked = (productTgid: any, event: any) => {
-    if (event.type === 'keydown') {
-      event.target.blur();
-      return;
-    }
-    if (isMobile) {
-      if (isV3Design) {
-        clickTour(productTgid, false, sectionId, false);
-        addUrlParams({
-          urlParams: { ...router.query, pid: productTgid, popup: 'details' },
-          historyState: {
-            ...window.history.state,
-            pid: productTgid,
-            popup: 'details',
-          },
-          replace: false,
-        });
-      } else {
-        props.changePage({
-          name: PAGETYPE.MOBILE_PRODUCT_PAGE,
-          tgid: productTgid,
-        });
+  const handleProductClicked = useCallback(
+    (productTgid: any, event: any) => {
+      if (event.type === 'keydown') {
+        event.target.blur();
+        return;
       }
-    } else {
-      clickTour(productTgid, false, sectionId);
-    }
-  };
-
-  const closeDescription = () => {
-    closeTour();
-  };
-
-  useEffect(() => {
-    if (!window) return;
-    if (activeTgid && autoScroll)
-      scroller.scrollTo(`${activeSection}-${activeTgid}`, {
-        duration: 750,
-        delay: 80,
-        smooth: 'easeInQuad',
-        offset: 45,
-      });
-  }, [activeTgid]);
+      if (isMobile) {
+        if (isV3Design) {
+          clickTour(productTgid, false, sectionId, false);
+          addUrlParams({
+            urlParams: { ...router.query, pid: productTgid, popup: 'details' },
+            historyState: {
+              ...window.history.state,
+              pid: productTgid,
+              popup: 'details',
+            },
+            replace: false,
+          });
+        } else {
+          props.changePage({
+            name: PAGETYPE.MOBILE_PRODUCT_PAGE,
+            tgid: productTgid,
+          });
+        }
+      } else {
+        setActiveTgid(productTgid);
+      }
+    },
+    [isMobile, isV3Design, router.query, sectionId, props.changePage]
+  );
 
   return (
     <LazyComponent target={shouldLazyLoad ? 'USER' : 'NONE'}>

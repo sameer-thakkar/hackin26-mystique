@@ -1,5 +1,5 @@
 export type TExperienceDrawerPortal = {
-  isDrawerOpen: boolean;
+  isPopUpOpen: boolean;
   tgid: string;
   showNextAvailable: boolean;
   descriptors: any;
