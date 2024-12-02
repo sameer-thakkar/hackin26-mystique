@@ -53,6 +53,11 @@ const Highlights = ({
 
   const isHarryPotterPage = checkIfHarryPotterPage(uid);
 
+  const highlightsRichText = tabs.find(
+    (tab: Record<string, unknown>) =>
+      tab.heading === strings.SHOW_PAGE.HIGHLIGHTS
+  );
+
   return (
     <CompactHighlightsWrapper
       className={className}
@@ -67,7 +72,7 @@ const Highlights = ({
         <Conditional if={!isLoading}>
           <>
             <PrismicRichText
-              field={tabs[0].contents}
+              field={highlightsRichText?.contents ?? tabs?.[0]?.contents}
               components={shortCodeSerializer}
             />
             <div className="content-crawl">
