@@ -67,6 +67,7 @@ import {
   BOOSTER_EXPERIMENT_UIDS,
   C1_COLLECTION_EXCLUDED,
   CRUISE_CATEGORY_ID,
+  CRUISE_FORMAT_SUBCAT_IDS,
   CRUISES_REVAMP_UIDS,
   DT_LISTICLE_EXPERIMENT_UIDS,
   EMAIL_SUBCRIPTION,
@@ -612,7 +613,11 @@ const MicrositeV1 = (props: any) => {
         [ANALYTICS_PROPERTIES.PRIMARY_PRODUCTS_PRESENT]:
           finalUncategorizedTours?.filter(
             (tour: Record<string, any>) =>
-              scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID
+              scorpioData[tour.tgid]?.primaryCategory?.id ===
+                CRUISE_CATEGORY_ID ||
+              CRUISE_FORMAT_SUBCAT_IDS?.includes(
+                scorpioData[tour.tgid]?.primarySubCategory?.id
+              )
           )?.length,
       }),
     });

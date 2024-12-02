@@ -25,6 +25,7 @@ import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   CASHBACK_TYPES,
   CRUISE_CATEGORY_ID,
+  CRUISE_FORMAT_SUBCAT_IDS,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
   LANGUAGE_MAP,
@@ -1084,9 +1085,11 @@ export const sortNonCruises = (
     const tourA = scorpioData[a?.tgid];
     const tourB = scorpioData[b?.tgid];
 
-    return tourA?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+    return tourA?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+      !CRUISE_FORMAT_SUBCAT_IDS?.includes(tourA?.primarySubCategory?.id)
       ? 1
-      : tourB?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+      : tourB?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+        !CRUISE_FORMAT_SUBCAT_IDS?.includes(tourB?.primarySubCategory?.id)
       ? -1
       : 0;
   });

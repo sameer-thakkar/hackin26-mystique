@@ -104,6 +104,7 @@ import {
   ANALYTICS_PROPERTIES,
   CATEGORY_IDS,
   CRUISE_CATEGORY_ID,
+  CRUISE_FORMAT_SUBCAT_IDS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   PRODUCT_CARD_REVAMP,
   SIDEBAR_TYPES,
@@ -442,7 +443,8 @@ const Product = (props: any) => {
   const isBannerCard =
     isFirstProduct && isCollectionMB && bannerVideo && !isNonPoi;
   const isNonNewVerticalProductCard = isCruisesRevamp
-    ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+    ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+      !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
     : isCombo;
   const isModifiedPopup = isCruisesRevamp && !isNonNewVerticalProductCard;
 

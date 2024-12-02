@@ -1291,7 +1291,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     MENU: 'Menu',
     BOARD_AT: 'Embarquement à {0}',
     BOARDING_POINTS_AVAILABLE: '{0} disponibles',
-    VIEW_POPULAR_SIGHTS: 'Vue de sites populaires tels que {0} {1}',
+    VIEW_POPULAR_SIGHTS: 'Voir les sites touristiques comme {0} {1}',
     X_BOARDING_POINTS: "{0} points d'embarquement",
     BOARDING_POINT: "Point d'embarquement",
     BOARDING_POINTS: "Points d'embarquement",

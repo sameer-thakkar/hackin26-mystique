@@ -41,6 +41,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CRUISE_CATEGORY_ID,
+  CRUISE_FORMAT_SUBCAT_IDS,
   DESIGN,
   MB_CATEGORISATION,
   THEMES,
@@ -490,7 +491,10 @@ const PopulateProducts: any = (props: any) => {
     (tour: Record<string, any>) => {
       if (isCruisesRevamp) {
         return (
-          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+          !CRUISE_FORMAT_SUBCAT_IDS?.includes(
+            scorpioData[tour.tgid]?.primarySubCategory?.id
+          )
         );
       } else return scorpioData[tour.tgid]?.combo;
     }
@@ -499,7 +503,10 @@ const PopulateProducts: any = (props: any) => {
     (tour: Record<string, any>) => {
       if (isCruisesRevamp) {
         return (
-          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID
+          scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+          !CRUISE_FORMAT_SUBCAT_IDS?.includes(
+            scorpioData[tour.tgid]?.primarySubCategory?.id
+          )
         );
       } else return scorpioData[tour.tgid]?.combo;
     }
@@ -509,7 +516,10 @@ const PopulateProducts: any = (props: any) => {
     (tour: Record<string, any>) => {
       if (isCruisesRevamp) {
         return (
-          scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID
+          scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID ||
+          CRUISE_FORMAT_SUBCAT_IDS?.includes(
+            scorpioData[tour.tgid]?.primarySubCategory?.id
+          )
         );
       } else return !scorpioData[tour.tgid]?.combo;
     }
@@ -551,7 +561,11 @@ const PopulateProducts: any = (props: any) => {
               }
 
               const isNonCruiseProductCard =
-                scorpioData?.[tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID;
+                scorpioData?.[tgid]?.primaryCategory?.id !==
+                  CRUISE_CATEGORY_ID &&
+                !CRUISE_FORMAT_SUBCAT_IDS?.includes(
+                  scorpioData?.[tgid]?.primarySubCategory?.id
+                );
               if (isCruisesRevamp && !isNonCruiseProductCard) {
                 trackEvent({
                   eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
@@ -750,7 +764,8 @@ const PopulateProducts: any = (props: any) => {
       isModifiedProductCard:
         isNewVerticalsProductCard &&
         (isCruisesRevamp
-          ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+          ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+            !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
           : scorpioData?.[tgid].combo) &&
         !isMobile
           ? true
@@ -759,7 +774,8 @@ const PopulateProducts: any = (props: any) => {
         isNewVerticalsProductCard &&
         isMobile &&
         (isCruisesRevamp
-          ? primaryCategory?.id !== CRUISE_CATEGORY_ID
+          ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+            !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
           : scorpioData?.[tgid].combo)
           ? true
           : isPoiMwebCard,
