@@ -1,5 +1,9 @@
 import { useMemo } from 'react';
-import type { ChildSection, Section } from 'types/itinerary.type';
+import {
+  type ChildSection,
+  type Section,
+  SECTION_TYPE,
+} from 'types/itinerary.type';
 import type { MultiplePointsProps } from 'components/common/Itinerary/TimelineView/components/StopCard/components/MultiplePoints/types';
 import { MAX_LEN_DESCRIPTION_STOP_CARD } from 'components/common/Itinerary/TimelineView/components/StopCard/constants';
 import type { StopCardProps } from 'components/common/Itinerary/TimelineView/components/StopCard/types';
@@ -70,11 +74,16 @@ const useStopCard = ({
     itineraryId,
     points:
       isStart || isEnd
-        ? subCards.map(({ sectionDetails }) => ({
-            image: sectionDetails?.details?.mediaUrls?.[0],
-            title: sectionDetails?.details?.name!,
-            timeForNextSection: sectionDetails?.details?.timeForNextSection,
-          }))
+        ? subCards
+            .filter(
+              ({ sectionDetails }) =>
+                sectionDetails?.type === SECTION_TYPE.START_LOCATION
+            )
+            .map(({ sectionDetails }) => ({
+              image: sectionDetails?.details?.mediaUrls?.[0],
+              title: sectionDetails?.details?.name!,
+              timeForNextSection: sectionDetails?.details?.timeForNextSection,
+            }))
         : [],
     isStartPoint: isStart,
     onItemClick: (index) => {

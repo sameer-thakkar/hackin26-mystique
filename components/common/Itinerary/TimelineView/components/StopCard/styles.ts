@@ -378,7 +378,7 @@ export const Container = styled.div<{
   cursor: default;
   padding: 0.1875rem 0.5rem 1.25rem 2.25rem;
   transition: all 0.3s;
-
+  outline: none;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
