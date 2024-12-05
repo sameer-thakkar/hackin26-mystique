@@ -271,6 +271,7 @@ const PopulateProducts: any = (props: any) => {
     customBanner,
     baseLangCustomBanner,
     shouldRunHohoRevampExperiment = false,
+    isRankingExperimentResolving = false,
     showSightsCoveredItineraryLayout = false,
     showBoosters = false,
   } = props;
@@ -637,13 +638,12 @@ const PopulateProducts: any = (props: any) => {
     ? !isCollectionMB && !isAirportTransfersMB && !isCruisesRevamp
     : true;
 
-  const showLoader = productsLoading;
-
   const swiperParams: SwiperProps = {
     onSwiper: (swiper: TSwiper) => setSwiperInstance(swiper),
     onTouchEnd: () => {},
     onSlideChange: () => updateIndex(),
   };
+  const showLoader = productsLoading || isRankingExperimentResolving;
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,

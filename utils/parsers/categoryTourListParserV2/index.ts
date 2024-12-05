@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs';
 import type { TCityInfo } from 'components/AirportTransfers/interface';
 import { generatePromiseForCategoryTours } from 'utils/index';
 import { sendLog } from 'utils/logger';
-import { accumulatingCategoryAndItemsData } from 'utils/parser';
+import { accumulatingCategoryAndItemsData, sortProducts } from 'utils/parser';
 import getProductData from '../utils';
 import type { TCategoryTourListParserV2 } from './interface';
 
@@ -15,6 +15,7 @@ export default async function categoryTourListParserV2({
   cookies,
   MBDesign = '',
   isLookerWebhookCall = false,
+  runRankingExperiment = false,
 }: TCategoryTourListParserV2) {
   const { primary, items: sliceItems } = tourListCategory || {};
 
@@ -24,6 +25,7 @@ export default async function categoryTourListParserV2({
   const collectionIds = new Set(
     sliceItems.map((item) => item?.collection)?.filter(Boolean)
   );
+
   const categoryIds = new Set(
     sliceItems.map((item) => item?.category)?.filter(Boolean)
   );
@@ -48,6 +50,7 @@ export default async function categoryTourListParserV2({
     lang,
     cookies,
     primarySubCategoryID,
+    runRankingExperiment,
   });
 
   let categoryPromises = generatePromiseForCategoryTours({
@@ -85,7 +88,8 @@ export default async function categoryTourListParserV2({
           accumulatingCategoryAndItemsData(
             collectionData,
             categoriesWithProducts,
-            allTgids
+            allTgids,
+            runRankingExperiment
           );
         }
 
@@ -117,11 +121,16 @@ export default async function categoryTourListParserV2({
     }
   );
 
-  const allData = categoriesWithProducts?.flat();
+  let allData = categoriesWithProducts?.flat();
+
+  if (runRankingExperiment) {
+    allData = sortProducts(allData);
+  }
 
   const [firstProductData] = allData?.[0]?.items ?? [];
 
   let pageData;
+
   if (!isLookerWebhookCall) {
     pageData = await getProductData({
       allData,

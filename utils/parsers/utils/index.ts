@@ -21,7 +21,7 @@ import { DESIGN, PRISMIC_DEV_TAG } from 'const/index';
 import { TProduct } from '../categoryTourListParserV2/interface';
 
 type TGetProductData = {
-  allData: [];
+  allData: Record<string, any>[];
   allTgids: number[][];
   lang: string;
   localizedStrings: Record<string, any>;

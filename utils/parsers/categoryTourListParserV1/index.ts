@@ -26,6 +26,7 @@ const categoryTourListParserV1 = async ({
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
+  runRankingExperiment = false,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
@@ -82,14 +83,18 @@ const categoryTourListParserV1 = async ({
           limit: String(finalLimit),
         }),
         cookies,
+        runRankingExperiment,
       });
 
       const {
         city,
         currency: currentCurrency,
+        tourGroups,
         pageData,
       } = collectionTourGroups;
-      const tourGroupsData = pageData?.items;
+      const tourGroupsData = runRankingExperiment
+        ? tourGroups
+        : pageData?.items;
 
       let filteredData = tourGroupsData;
       if (sub_category_filter) {
@@ -267,12 +272,14 @@ const categoryTourListParserV1 = async ({
       orderedTGIDRanking = [...finalRanking];
     }
 
-    const orderedTours = allTours?.sort((tourA, tourB) => {
-      return (
-        orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
-        orderedTGIDRanking?.indexOf(parseInt(tourB.id))
-      );
-    });
+    const orderedTours = runRankingExperiment
+      ? allTours
+      : allTours?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.id))
+          );
+        });
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );

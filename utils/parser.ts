@@ -14,18 +14,33 @@ export const extractTgidsFromCategories = (arr: Record<string, any>[]) =>
 export const accumulatingCategoryAndItemsData = (
   data: any,
   categoriesWithProducts: any,
-  allTgids: number[][]
+  allTgids: number[][],
+  runRankingExperiment = false
 ) => {
   const result = data.reduce((accumulator: any[], currentValue: any) => {
-    if (currentValue?.pageData?.items?.length) {
-      const { subCategory, category, collection, pageData } =
-        currentValue || {};
+    if (
+      runRankingExperiment
+        ? currentValue?.tourGroups?.length
+        : currentValue?.pageData?.items?.length
+    ) {
+      const {
+        subCategory,
+        category,
+        collection,
+        pageData,
+        tourGroups,
+        collectionId,
+      } = currentValue || {};
       const { items } = pageData || {};
       accumulator.push({
         ...(subCategory ? { subCategory } : {}),
         ...(category ? { category } : {}),
-        ...(collection ? { collection } : {}),
-        items,
+        ...(collection || collectionId
+          ? runRankingExperiment
+            ? { collection: { id: collectionId } }
+            : { collection }
+          : {}),
+        items: runRankingExperiment ? tourGroups : items,
       });
     }
     return accumulator;
@@ -96,4 +111,41 @@ export const extractFirstRichTextSliceContent = (data: Record<string, any>) => {
     }
   }
   return richTextData || '';
+};
+
+export const sortProducts = (allData: any[]) => {
+  if (!allData?.length) return allData;
+
+  // Find the first collection's items to use as reference order
+  const referenceOrder = allData.find((category) => category.collection)?.items;
+  if (!referenceOrder?.length) return allData;
+
+  // Create a map of reference order indices for O(1) lookup
+  const referenceOrderMap = new Map(
+    referenceOrder.map((item: any, index: number) => [item.id, index])
+  );
+
+  // Sort each category's items based on the reference order
+  return allData.map((category) => ({
+    ...category,
+    items: [...category.items].sort((a, b) => {
+      const indexA = referenceOrderMap.get(a.id);
+      const indexB = referenceOrderMap.get(b.id);
+
+      // If both items are in reference order, sort by their position
+      if (
+        indexA !== null &&
+        typeof indexA === 'number' &&
+        indexB !== null &&
+        typeof indexB === 'number'
+      ) {
+        return indexA - indexB;
+      }
+      // If only one item is in reference order, prioritize it
+      if (indexA !== undefined) return -1;
+      if (indexB !== undefined) return 1;
+      // If neither item is in reference order, maintain original order
+      return 0;
+    }),
+  }));
 };

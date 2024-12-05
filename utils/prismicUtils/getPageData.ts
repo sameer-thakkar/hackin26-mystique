@@ -127,6 +127,7 @@ export const getPageData = async ({
   query,
   isDev,
   localizedStrings,
+  runRankingExperiment = false,
 }: any) => {
   const { host } = req.headers || window.location;
   const { cookies } = req;
@@ -776,6 +777,7 @@ export const getPageData = async ({
             lang: lang ?? 'en',
             cookies,
             localizedStrings,
+            runRankingExperiment,
           });
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
           categoryTourListPromise = monthOnMonthPageParser({
@@ -798,6 +800,7 @@ export const getPageData = async ({
             localizedStrings,
             cookies,
             MBDesign,
+            runRankingExperiment,
           });
           const timestampDeltaForCoralogix = Date.now() - timestampForCoralogix;
           sendLog({

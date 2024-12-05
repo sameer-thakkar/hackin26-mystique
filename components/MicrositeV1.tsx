@@ -211,6 +211,8 @@ const MicrositeV1 = (props: any) => {
     subcategoryDescriptors,
     isEntertainmentBanner,
     bannerTrustBoosters,
+    isRankingExperimentResolving,
+    isNotUsingAutomatedRanking = true,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -510,6 +512,11 @@ const MicrositeV1 = (props: any) => {
 
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
+
+  useEffect(() => {
+    if (isNotUsingAutomatedRanking) return;
+    setOrderedFilteredTours(orderedTours);
+  }, [isNotUsingAutomatedRanking]);
 
   const [productsLoading, setProductsLoading] = useState(false);
 
@@ -863,6 +870,7 @@ const MicrositeV1 = (props: any) => {
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
+      isRankingExperimentResolving={isRankingExperimentResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={
         isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT

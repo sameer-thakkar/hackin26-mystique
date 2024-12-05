@@ -12,6 +12,7 @@ export type TCategoryTourListParserV2 = {
   cookies?: { [key: string]: string };
   MBDesign?: string;
   isLookerWebhookCall?: boolean;
+  runRankingExperiment?: boolean;
 };
 
 export interface ISet<T> {
