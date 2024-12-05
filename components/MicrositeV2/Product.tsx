@@ -23,6 +23,7 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
   CATEGORY_IDS,
+  INVALID_DATE,
   LANGUAGE_MAP,
   REOPENING_CATEGORIES,
   SUBCATEGORY_IDS,
@@ -552,13 +553,9 @@ const Product = (props: any) => {
   const openingDate = dateToString(
     reopeningDate,
     LANGUAGE_MAP.en.code,
-    'DD MMM, YYYY'
+    'MMM-DD-YYYY'
   );
-  const localisedOpeningDate = dateToString(
-    reopeningDate,
-    lang,
-    'DD MMM, YYYY'
-  );
+  const localisedOpeningDate = dateToString(reopeningDate, lang, 'MMM-DD-YYYY');
 
   let OPENING_ON = '';
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
@@ -739,7 +736,7 @@ const Product = (props: any) => {
             if={
               isEntertainmentMb &&
               !isBeforeToday &&
-              openingDate !== 'Invalid Date'
+              openingDate !== INVALID_DATE
             }
           >
             <div className="reopening">
@@ -848,7 +845,7 @@ const Product = (props: any) => {
                   </div>
                 </a>
                 <Conditional
-                  if={!isBeforeToday && openingDate !== 'Invalid Date'}
+                  if={!isBeforeToday && openingDate !== INVALID_DATE}
                 >
                   <div className="reopening">
                     {OPENING_ON} {localisedOpeningDate}

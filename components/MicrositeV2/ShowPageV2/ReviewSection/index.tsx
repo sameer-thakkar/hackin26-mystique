@@ -1,13 +1,8 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import type { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
@@ -37,7 +32,6 @@ import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { fetchTourGroupReviews, TReviewMediasResponse } from 'utils/apiUtils';
-import { formatDateToString } from 'utils/dateUtils';
 import { getStars } from 'utils/productUtils';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import COLORS from 'const/colors';
@@ -293,11 +287,13 @@ const ReviewElement = ({
     reviewerImgUrl,
     sourceLanguage,
   } = review;
-  const datePublished = formatDateToString(
-    new Date(reviewTime),
+
+  const datePublished = getIntlDate({
+    date: new Date(reviewTime).toString(),
+    dateFormat: 'MMM-YYYY',
     lang,
-    'MMM, YYYY'
-  );
+  });
+
   const customerFirstName = useMemo(() => {
     if (!nonCustomerName) return '';
     if (nonCustomerName.toLowerCase().trim() === DEFAULT_REVIEWER_NAME)

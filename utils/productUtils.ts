@@ -28,6 +28,7 @@ import {
   CRUISE_FORMAT_SUBCAT_IDS,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
+  INVALID_DATE,
   LANGUAGE_MAP,
   REOPENING_CATEGORIES,
   THEMES,
@@ -679,13 +680,9 @@ export const getOpeningDate = ({
   const openingDate = dateToString(
     reopeningDate,
     LANGUAGE_MAP.en.code,
-    'DD MMM, YYYY'
+    'MMM-DD-YYYY'
   );
-  const localisedOpeningDate = dateToString(
-    reopeningDate,
-    lang,
-    'DD MMM, YYYY'
-  );
+  const localisedOpeningDate = dateToString(reopeningDate, lang, 'MMM-DD-YYYY');
   let OPENING_ON = '';
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
     OPENING_ON = REOPENING_CATEGORIES.includes(categoryId)
@@ -699,7 +696,7 @@ export const getOpeningDate = ({
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
 
-  if (!isBeforeToday && openingDate !== 'Invalid Date')
+  if (!isBeforeToday && openingDate !== INVALID_DATE)
     return { localisedOpeningDate, openingDate, OPENING_ON };
 };
 export const getBoosterValueFromListingPrice = (listingPrice: any) => {

@@ -1,5 +1,6 @@
-import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { INCLUSION, SUB_TYPES } from 'types/itinerary.type';
+import { getIntlUnit } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import { Container } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/styles';
 import {
@@ -7,8 +8,8 @@ import {
   type Props,
 } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/types';
 import { TimelineViewComponentVariant } from 'components/common/Itinerary/TimelineView/interface';
-import { getDurationInHMNotation } from 'utils/dateUtils';
 import { generateGoogleMapPlacesUrl } from 'utils/itinerary';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { ClockSvg } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
@@ -33,6 +34,8 @@ const Descriptors = ({
   location,
   showLocationDescriptor = true,
 }: Props) => {
+  const { language } = useRecoilValue(appAtom);
+
   const getInclusionIcon = (label?: INCLUSION) => {
     if (!label) return null;
 
@@ -58,7 +61,16 @@ const Descriptors = ({
   )
     return null;
 
-  const walkDuration = duration ? getDurationInHMNotation(duration) : '';
+  const walkDuration = duration
+    ? getIntlUnit({
+        // @ts-expect-error
+        lang: language,
+        number: duration,
+        options: {
+          unit: 'minute',
+        },
+      })
+    : '';
   const locationUrl = location ? generateGoogleMapPlacesUrl(location) : '';
 
   return (

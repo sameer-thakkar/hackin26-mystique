@@ -68,14 +68,15 @@ export const getPoiTimingsInfo = (
   const timingTablesData = operatingSchedules?.map?.(
     (schedule: any, scheduleIndex: number) => {
       if (!schedule) return {};
-      const startMonth = new Date(schedule.startDate).toLocaleString(lang, {
+      const startMonth = new Intl.DateTimeFormat(lang, {
         day: 'numeric',
         month: 'short',
-      });
-      const endMonth = new Date(schedule.endDate).toLocaleString(lang, {
+      }).format(new Date(schedule.startDate));
+
+      const endMonth = new Intl.DateTimeFormat(lang, {
         day: 'numeric',
         month: 'short',
-      });
+      }).format(new Date(schedule.endDate));
 
       const quartersForTable = getQuartersForTable({
         startDate: schedule.startDate,

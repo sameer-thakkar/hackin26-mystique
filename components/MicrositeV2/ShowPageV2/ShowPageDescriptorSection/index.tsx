@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import { useContext, useEffect, useState } from 'react';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/interface';
 import {
@@ -8,6 +8,7 @@ import {
   SpecialOfferBanner,
 } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/stlye';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
@@ -27,6 +28,8 @@ const ShowPageDescriptorSection = ({
   const [ageSuitabilitySectionExists, setAgeSuitabilitySectionExists] =
     useState(false);
   const { offerHeading, offerText } = specialOffer ?? {};
+
+  const { lang } = useContext(MBContext);
 
   const {
     [strings.SHOW_PAGE.DURATION]: duration,
@@ -104,7 +107,13 @@ const ShowPageDescriptorSection = ({
                     {key === 'dates'
                       ? strings.formatString(
                           strings.SHOW_PAGE_V2.UNTIL_DATE,
-                          dayjs(content).format('D MMMM YYYY')
+                          getIntlDate({
+                            date: content,
+                            lang,
+                            options: {
+                              dateStyle: 'long',
+                            },
+                          })
                         )
                       : content}
                   </span>

@@ -4,6 +4,7 @@ import { createClient } from 'prismicio';
 import { useRecoilValue } from 'recoil';
 import { predicate } from '@prismicio/client';
 import useSWR from 'swr';
+import { getIntlTime } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import Calendar from 'components/HOHO/components/Calendar';
 import { getMedianPrice } from 'components/HOHO/components/Calendar/utils';
@@ -14,7 +15,6 @@ import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getLocalisedPrice } from 'utils/currency';
 import {
-  getHumanReadableTime,
   getWeekdaysShort,
   longMonthtoShort,
   sortDateArray,
@@ -749,8 +749,8 @@ const TimeSelection = (props: any) => {
             (availableTour: any, index: number) => {
               const { startTime, priceProfile, paxAvailability } =
                 availableTour ?? {};
-              const formattedStartTime = getHumanReadableTime({
-                formattedTime: startTime,
+              const formattedStartTime = getIntlTime({
+                time: startTime,
                 lang,
               });
               const { persons } = priceProfile ?? {};

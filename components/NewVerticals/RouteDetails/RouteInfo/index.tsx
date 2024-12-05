@@ -71,7 +71,11 @@ const RouteInfo = (props: TRouteInfo) => {
     map: routeMapData,
   } = routeData || {};
 
-  const timing = getItineraryTiming({ firstDepartureTime, lastDepartureTime });
+  const timing = getItineraryTiming({
+    firstDepartureTime,
+    lastDepartureTime,
+    lang,
+  });
   const stringConnector =
     firstDepartureTime && lastDepartureTime && frequency ? '|' : '';
   const finalDuration = getItineraryDuration({ duration, lang });

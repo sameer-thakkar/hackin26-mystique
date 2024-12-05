@@ -3,7 +3,9 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 import localeData from 'dayjs/plugin/localeData';
+import { getIntlDate, getIntlTime } from '@headout/espeon/utils';
 import {
+  INVALID_DATE,
   LANGUAGE_CODE_MAP,
   LOCALISED_DATE_FORMATS,
   TLANGUAGELOCALE,
@@ -18,7 +20,7 @@ dayjs.extend(localeData);
 export const dateToString = (
   date: string,
   currentLanguage = LANGUAGE_CODE_MAP.EN,
-  dateFormat = 'DD MMM YYYY'
+  dateFormat: 'DD-MM-YYYY' | 'MMM-DD-YYYY' = 'DD-MM-YYYY'
 ) => {
   const today = [dayjs().format('YYYY-MM-DD'), dayjs().format('DD-MM-YYYY')];
   const tomorrow = [
@@ -27,9 +29,17 @@ export const dateToString = (
   ];
   if (today.indexOf(date) > -1) return strings.TODAY;
   if (tomorrow.indexOf(date) > -1) return strings.TOMORROW;
-  return dayjs(date, ['DD-MM-YYYY', 'YYYY-MM-DD'])
-    .locale(currentLanguage)
-    .format(dateFormat);
+
+  const formattedDate = date ? dayjs(date).format('YYYY-MM-DD') : INVALID_DATE;
+
+  return formattedDate !== INVALID_DATE
+    ? getIntlDate({
+        date: formattedDate,
+        dateFormat,
+        // @ts-expect-error
+        lang: currentLanguage,
+      })
+    : INVALID_DATE;
 };
 
 export const isDateInThePast = (date: string) =>
@@ -40,42 +50,6 @@ export const getDurationInDays = (duration: number) =>
 
 export const getDurationInHours = (duration: number) =>
   Math.round(duration / 60);
-
-export const getDurationInHMNotation = (durationInMinutes: number) => {
-  let hours = Math.floor(durationInMinutes / 60);
-  let minutes = durationInMinutes % 60;
-
-  if (durationInMinutes <= 90) {
-    hours = 0;
-    minutes = durationInMinutes;
-  }
-
-  let durationString = '';
-
-  switch (true) {
-    case hours === 0:
-      durationString = strings.formatString(
-        strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_HOURS,
-        minutes
-      ) as string;
-      break;
-    case minutes === 0:
-      durationString = strings.formatString(
-        strings.ITINERARY.DESCRIPTORS.DURATION.WITHOUT_MINS,
-        hours
-      ) as string;
-      break;
-    default:
-      durationString = strings.formatString(
-        strings.ITINERARY.DESCRIPTORS.DURATION.FULL,
-        hours,
-        minutes
-      ) as string;
-      break;
-  }
-
-  return durationString;
-};
 
 export const isDateValid = (date: string | null) => dayjs(date).isValid();
 
@@ -151,45 +125,6 @@ export const generateNextXDays = ({
     });
   }
   return days;
-};
-
-export const getHumanReadableTime = ({
-  formattedTime,
-  lang,
-  inputFormat,
-  removeTrailingZeros = false,
-}: {
-  formattedTime: string;
-  lang?: string;
-  inputFormat?: string;
-  removeTrailingZeros?: boolean;
-  inSmallCaps?: boolean;
-}) => {
-  const format =
-    formattedTime && formattedTime?.length <= 5 ? 'HH:mm' : 'HH:mm:ss';
-  const parsedTime = dayjs(formattedTime, inputFormat ?? format, lang);
-
-  if (!parsedTime?.isValid()) {
-    return '';
-  }
-
-  let options: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: '2-digit',
-  };
-  if (removeTrailingZeros && parsedTime.minute() === 0) {
-    delete options.minute;
-  }
-
-  const formatted = new Intl.DateTimeFormat(lang, options).format(
-    parsedTime.toDate()
-  );
-
-  if (lang !== 'en-us') {
-    return formatted;
-  }
-
-  return formatted.split(' ').join('').toLowerCase();
 };
 
 export const getEarliestAvailableDate = ({
@@ -302,7 +237,6 @@ export const getOrderedMonthsBasedOnCurrentMonth = (
 export const formatOperatingDayTimings = ({
   day,
   lang,
-  removeTrailingZeros,
 }: {
   day: {
     openingTime: string;
@@ -310,29 +244,21 @@ export const formatOperatingDayTimings = ({
     lastEntryTime: string;
   };
   lang: string;
-  removeTrailingZeros?: boolean;
   useTo?: boolean;
-  inSmallCaps?: boolean;
 }): { hours: string; lastAdmission?: string } => {
-  const formattedOpeningTime = getHumanReadableTime({
-    formattedTime: day.openingTime,
+  const formattedOpeningTime = getIntlTime({
+    time: day.openingTime,
     lang,
-    removeTrailingZeros,
-    inSmallCaps: true,
   });
-  const formattedClosingTime = getHumanReadableTime({
-    formattedTime: day.closingTime,
+  const formattedClosingTime = getIntlTime({
+    time: day.closingTime,
     lang,
-    removeTrailingZeros,
-    inSmallCaps: true,
   });
   const formattedLastEntryTime =
     day.lastEntryTime &&
-    getHumanReadableTime({
-      formattedTime: day.lastEntryTime,
+    getIntlTime({
+      time: day.lastEntryTime,
       lang,
-      removeTrailingZeros,
-      inSmallCaps: true,
     });
 
   return {
@@ -420,7 +346,6 @@ export const getCurrentOperatingHours = (
           return formatOperatingDayTimings({
             day: operatingDay,
             lang,
-            removeTrailingZeros: true,
             useTo,
           });
         }

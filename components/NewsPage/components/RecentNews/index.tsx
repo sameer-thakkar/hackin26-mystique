@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import MobileMoreReads from 'components/NewsPage/components/MobileMoreReads';
 import { TRecentNewsProps } from 'components/NewsPage/components/RecentNews/interface';
@@ -17,7 +18,6 @@ import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import { truncate } from 'utils/helper';
 import { extractFirstRichTextSliceContent } from 'utils/parser';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -25,7 +25,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
-  NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
   QUERY_PARAMS,
 } from 'const/index';
@@ -117,11 +116,11 @@ const RecentNews: React.FC<TRecentNewsProps> = (props) => {
               author_name,
               content_framework_ref,
             } = data;
-            const formattedPublishedDateAndTime = formatDateToString(
-              new Date(first_publication_date),
-              'en',
-              NEWS_PAGE_DATE_FORMAT
-            );
+            const formattedPublishedDateAndTime = getIntlDate({
+              lang,
+              date: new Date(first_publication_date).toString(),
+              dateFormat: 'MMM-DD-YYYY',
+            });
             const truncatedContent = truncate(
               extractFirstRichTextSliceContent(
                 content_framework_ref?.data?.body

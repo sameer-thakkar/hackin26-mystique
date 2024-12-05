@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import { ChildSection } from 'types/itinerary.type';
+import { getIntlUnit } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
-import { getDurationInHMNotation } from 'utils/dateUtils';
+import { appAtom } from 'store/atoms/app';
 import { nearbyThingsIcon } from 'const/itinerary';
 import { strings } from 'const/strings';
 import { TailedArrowSVG } from 'assets/airportTransfers';
@@ -27,6 +29,8 @@ const SubStopCard = ({
     null
   );
 
+  const { language } = useRecoilValue(appAtom);
+
   const iconAvailable =
     subType && Object.keys(nearbyThingsIcon).includes(subType.label);
 
@@ -39,7 +43,14 @@ const SubStopCard = ({
   }, []);
 
   const walkDuration = timeFromParent
-    ? getDurationInHMNotation(timeFromParent)
+    ? getIntlUnit({
+        // @ts-expect-error
+        lang: language,
+        number: timeFromParent,
+        options: {
+          unit: 'minute',
+        },
+      })
     : '';
 
   const hasImage = !!mediaUrls?.length;

@@ -1,19 +1,18 @@
 import { useContext } from 'react';
 import { PrismicDocumentWithUID } from '@prismicio/types';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import type { TDesktopFeaturedNewsProps } from 'components/NewsPage/components/DesktopFeaturedNews/interface';
 import { FeaturedNewsContainer } from 'components/NewsPage/components/DesktopFeaturedNews/styles';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import { getLangObject, truncate } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
-  NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -68,11 +67,11 @@ const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
               let { heading, banner_image, author_name } = data;
               heading = truncate(heading, 55);
 
-              const formattedPublishedDateAndTime = formatDateToString(
-                new Date(first_publication_date),
-                'EN',
-                NEWS_PAGE_DATE_FORMAT
-              );
+              const formattedPublishedDateAndTime = getIntlDate({
+                lang,
+                date: new Date(first_publication_date).toString(),
+                dateFormat: 'MMM-DD-YYYY',
+              });
 
               const redirectionUrl = convertUidToUrl({
                 uid: article.uid,

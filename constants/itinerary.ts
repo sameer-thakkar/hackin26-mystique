@@ -4,8 +4,8 @@ import {
   ModeOfTravelOptions,
   SUB_TYPES,
 } from 'types/itinerary.type';
+import { getDurationInHmNotation, getIntlTime } from '@headout/espeon/utils';
 import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
-import { getDurationInHMNotation, getHumanReadableTime } from 'utils/dateUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
 
@@ -31,10 +31,14 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     label: strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
     icon: descriptorIcons.TOTAL_DURATION,
     fieldIdentifier: ['duration'],
-    fieldTransformer: ({ duration }) => {
+    fieldTransformer: ({ duration }, { lang }) => {
       const { hours, minutes } = duration;
       const timeInMinutes = hours * 60 + minutes;
-      return getDurationInHMNotation(timeInMinutes);
+      return getDurationInHmNotation({
+        durationInMinutes: timeInMinutes,
+        // @ts-expect-error
+        lang,
+      });
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
   },
@@ -50,8 +54,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     fieldIdentifier: ['firstDepartureTime'],
     hideIfFieldsPresent: ['firstDepartureStop'],
     fieldTransformer: ({ firstDepartureTime }, { lang }) => {
-      return getHumanReadableTime({
-        formattedTime: firstDepartureTime,
+      return getIntlTime({
+        time: firstDepartureTime,
         lang,
       });
     },
@@ -63,8 +67,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     fieldIdentifier: ['lastDepartureTime'],
     hideIfFieldsPresent: ['lastDepartureStop'],
     fieldTransformer: ({ lastDepartureTime }, { lang }) => {
-      return getHumanReadableTime({
-        formattedTime: lastDepartureTime,
+      return getIntlTime({
+        time: lastDepartureTime,
         lang,
       });
     },
@@ -103,8 +107,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       { firstDepartureStop, firstDepartureTime },
       { lang }
     ) => {
-      return `${firstDepartureStop}\nat ${getHumanReadableTime({
-        formattedTime: firstDepartureTime,
+      return `${firstDepartureStop}\nat ${getIntlTime({
+        time: firstDepartureTime,
         lang,
       })}`;
     },
@@ -115,8 +119,8 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     icon: descriptorIcons.LAST_DEPARTURE,
     fieldIdentifier: ['lastDepartureStop', 'lastDepartureTime'],
     fieldTransformer: ({ lastDepartureStop, lastDepartureTime }, { lang }) => {
-      return `${lastDepartureStop}\nat ${getHumanReadableTime({
-        formattedTime: lastDepartureTime,
+      return `${lastDepartureStop}\nat ${getIntlTime({
+        time: lastDepartureTime,
         lang,
       })}`;
     },

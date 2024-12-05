@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import { ModeOfTravelOptions } from 'types/itinerary.type';
+import { getDurationInHmNotation, getIntlUnit } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
-import { getDurationInHMNotation } from 'utils/dateUtils';
+import { appAtom } from 'store/atoms/app';
 import { motIcons } from 'const/itinerary';
 import {
   NextDestinationTravelContainer,
@@ -18,6 +20,8 @@ const NextDestinationTravel = ({
   const [TransferIcon, setTransferIcon] =
     useState<React.ComponentType<{}> | null>(null);
 
+  const { language } = useRecoilValue(appAtom);
+
   useEffect(() => {
     if (
       !modeOfTravel ||
@@ -31,7 +35,11 @@ const NextDestinationTravel = ({
   }, [modeOfTravel]);
 
   const formattedDuration = timeForNextSection
-    ? getDurationInHMNotation(timeForNextSection)
+    ? getDurationInHmNotation({
+        durationInMinutes: timeForNextSection,
+        // @ts-expect-error
+        lang: language,
+      })
     : '';
 
   const hasContent = !!(
@@ -47,7 +55,16 @@ const NextDestinationTravel = ({
         <Conditional if={hasContent}>
           <div className="duration-and-distance-container">
             <Conditional if={distanceForNextSection}>
-              <p className="distance">{distanceForNextSection} kms</p>
+              <p className="distance">
+                {getIntlUnit({
+                  // @ts-expect-error
+                  lang: language,
+                  number: distanceForNextSection,
+                  options: {
+                    unit: 'kilometer',
+                  },
+                })}
+              </p>
             </Conditional>
             <Conditional if={formattedDuration}>
               <p className="duration">{formattedDuration}</p>

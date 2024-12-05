@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
 import { IFilteredDescriptorProps } from 'components/PinnedCard/interface';
@@ -10,12 +11,15 @@ import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import { generateDescriptor, parseDescriptors } from 'utils/productUtils';
 import { convertUidToUrl, getTagPageLink } from 'utils/urlUtils';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  INVALID_DATE,
+} from 'const/index';
 import { strings } from 'const/strings';
 import Star from 'assets/star';
 
@@ -56,11 +60,18 @@ const PinnedCard = (props: any) => {
     filterHighlights
   );
 
-  const openingDate = formatDateToString(
-    new Date(detailsObjects[strings.OPENING_DATE]),
-    lang,
-    'MMM D, YYYY'
-  );
+  const openingDateString = new Date(
+    detailsObjects[strings.OPENING_DATE]
+  ).toString();
+
+  const openingDate =
+    openingDateString !== INVALID_DATE
+      ? getIntlDate({
+          lang,
+          date: new Date(openingDateString).toString(),
+          dateFormat: 'MMM-D-YYY',
+        })
+      : openingDateString;
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
 
@@ -158,7 +169,7 @@ const PinnedCard = (props: any) => {
             </Conditional>
           </div>
         </Conditional>
-        <Conditional if={!isBeforeToday && openingDate !== 'Invalid Date'}>
+        <Conditional if={!isBeforeToday && openingDate !== INVALID_DATE}>
           <span className="date">
             {strings.OPENING_ON} {openingDate}
           </span>

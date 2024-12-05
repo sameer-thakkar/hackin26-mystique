@@ -6,6 +6,7 @@ import isTodayPlugin from 'dayjs/plugin/isToday';
 import objectPlugin from 'dayjs/plugin/toObject';
 import weekdayPlugin from 'dayjs/plugin/weekday';
 import Button from '@headout/aer/src/atoms/Button';
+import { getIntlTime } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import Loader from 'components/common/Loader';
@@ -47,7 +48,6 @@ import {
   generateAllMonthsBetween,
   generateDaysInMonth,
   generateDaysInTwoMonths,
-  getHumanReadableTime,
 } from 'utils/dateUtils';
 import { getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
@@ -482,8 +482,8 @@ const Calendar = ({
                           >
                             <TimingSection>
                               <TimeSlot>
-                                {getHumanReadableTime({
-                                  formattedTime: startTime,
+                                {getIntlTime({
+                                  time: startTime,
                                   lang,
                                 })}
                               </TimeSlot>
@@ -542,8 +542,8 @@ const Calendar = ({
                         {strings.SHOW_PAGE_V2.EXPERIENCE_AVAILABLE_ONLY_AT}
                       </p>
                       <span className="time">
-                        {getHumanReadableTime({
-                          formattedTime: timeSlots?.[0]?.startTime,
+                        {getIntlTime({
+                          time: timeSlots?.[0]?.startTime,
                           lang,
                         })}
                       </span>
@@ -628,8 +628,8 @@ export const HarryPotterTwoPartTimeSlot = ({
         <div className="time">
           <div className="time-index">1</div>
           <div className="show-details">
-            {getHumanReadableTime({
-              formattedTime: startTime,
+            {getIntlTime({
+              time: startTime,
               lang,
             })}
             <div className="duration">
@@ -645,8 +645,8 @@ export const HarryPotterTwoPartTimeSlot = ({
         <div className="time">
           <div className="time-index">2</div>
           <div className="show-details">
-            {getHumanReadableTime({
-              formattedTime: partTwoTime,
+            {getIntlTime({
+              time: partTwoTime,
               lang,
             })}
             <div className="duration">

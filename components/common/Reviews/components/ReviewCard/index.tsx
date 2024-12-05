@@ -1,9 +1,9 @@
 import { useContext } from 'react';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import { RatingStars } from 'components/ReviewsPage/components/ReviewCount';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
-import { formatDateToString } from 'utils/dateUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { StarIcon } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
@@ -38,7 +38,11 @@ const ReviewContent = (props: any) => {
   const { reviewImageUrl, nonCustomerName, content, reviewTime, rating } =
     props;
 
-  const formattedTime = formatDateToString(reviewTime, 'EN', 'MMM, YYYY');
+  const formattedTime = getIntlDate({
+    date: reviewTime,
+    dateFormat: 'MMM-YYYY',
+    lang,
+  });
 
   return (
     <ReviewContentWrapper>

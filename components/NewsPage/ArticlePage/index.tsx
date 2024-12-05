@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import dynamic from 'next/dynamic';
+import { getIntlDate } from '@headout/espeon/utils';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
@@ -15,13 +17,12 @@ import {
   getTrackingObject,
   uniqueArticlesWithoutRepetition,
 } from 'components/NewsPage/utils';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
-  NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -60,6 +61,8 @@ const Trailer = dynamic(
 const ArticlePage: React.FC<TNewsPageProps> = (props) => {
   const { data: CMSContent, isMobile } = props;
 
+  const { lang } = useContext(MBContext);
+
   const {
     data,
     first_publication_date,
@@ -83,11 +86,12 @@ const ArticlePage: React.FC<TNewsPageProps> = (props) => {
     breadcrumbs,
   } = data;
 
-  const formattedPublishedDateAndTime = formatDateToString(
-    new Date(first_publication_date),
-    'EN',
-    NEWS_PAGE_DATE_FORMAT
-  );
+  const formattedPublishedDateAndTime = getIntlDate({
+    lang,
+    date: new Date(first_publication_date).toString(),
+    dateFormat: 'MMM-DD-YYYY',
+  });
+
   const uniqueArticlesWithSameTgidData = uniqueArticlesWithoutRepetition(
     featuredArticles,
     articlesWithSameTgid

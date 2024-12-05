@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import { TNewsLandingPageProps } from 'components/NewsPage/components/LPBanner/interface';
 import {
@@ -18,7 +19,6 @@ import { Paginator } from 'UI/Paginator';
 import { MBContext } from 'contexts/MBContext';
 import useWindowSize from 'hooks/useWindowSize';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import { truncate } from 'utils/helper';
 import { modulus } from 'utils/integerUtils';
 import { extractFirstRichTextSliceContent } from 'utils/parser';
@@ -26,7 +26,6 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -124,11 +123,11 @@ const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
               ),
               isMobile ? 160 : 200
             );
-            const formattedPublishedDateAndTime = formatDateToString(
-              new Date(first_publication_date),
-              'EN',
-              NEWS_PAGE_DATE_FORMAT
-            );
+            const formattedPublishedDateAndTime = getIntlDate({
+              lang,
+              date: new Date(first_publication_date).toString(),
+              dateFormat: 'MMM-DD-YYYY',
+            });
             const redirectUrl = convertUidToUrl({
               uid,
               lang,

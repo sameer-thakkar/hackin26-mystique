@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
+import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import type { TMobileFeaturedNewsProps } from 'components/NewsPage/components/MobileFeaturedNews/interface';
 import { Wrapper } from 'components/NewsPage/components/MobileFeaturedNews/styles';
@@ -10,7 +11,6 @@ import Image from 'UI/Image';
 import { Paginator } from 'UI/Paginator';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { formatDateToString } from 'utils/dateUtils';
 import { getLangObject, truncate } from 'utils/helper';
 import { extractFirstRichTextSliceContent } from 'utils/parser';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -18,7 +18,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
-  NEWS_PAGE_DATE_FORMAT,
   NEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -81,11 +80,11 @@ const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
             let { heading, banner_image } = data;
             heading = truncate(heading, 55);
 
-            const formattedPublishedDateAndTime = formatDateToString(
-              new Date(first_publication_date),
-              'EN',
-              NEWS_PAGE_DATE_FORMAT
-            );
+            const formattedPublishedDateAndTime = getIntlDate({
+              lang,
+              date: new Date(first_publication_date).toString(),
+              dateFormat: 'MMM-DD-YYYY',
+            });
 
             const redirectionUrl = convertUidToUrl({
               uid: article.uid,

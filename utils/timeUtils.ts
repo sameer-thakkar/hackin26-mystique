@@ -164,18 +164,3 @@ export const getDuration = ({
     return formatDurationToString({ hour, minute, lang });
   }
 };
-
-export const convertTo12HrFormat = ({
-  time,
-  lang = 'en',
-}: {
-  time: string;
-  lang?: string;
-}) => {
-  return new Date('2000-01-01T' + time + 'Z').toLocaleTimeString(lang, {
-    timeZone: 'UTC',
-    hour12: true,
-    hour: 'numeric',
-    minute: 'numeric',
-  });
-};

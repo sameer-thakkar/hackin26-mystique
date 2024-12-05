@@ -629,7 +629,7 @@ export const MobileProductPage = (props: any) => {
   });
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
+  const openingDate = dateToString(reopeningDate, lang, 'MMM-DD-YYYY');
   const isOpeningDateInThePast = isDateInThePast(reopeningDate);
 
   const openSafeSidebar = () => {

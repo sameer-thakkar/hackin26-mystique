@@ -2365,3 +2365,5 @@ export const TEMP_HARDCODED_PRODUCT = {
   COLLECTION_ID: 24,
   SUBCAT_ID: 1036,
 };
+
+export const INVALID_DATE = 'Invalid Date';

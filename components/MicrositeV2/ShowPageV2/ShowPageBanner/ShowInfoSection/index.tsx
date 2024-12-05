@@ -124,13 +124,9 @@ const ShowInfoSection = ({
   const openingDate = dateToString(
     reopeningDate,
     LANGUAGE_MAP.en.code,
-    'DD MMM, YYYY'
+    'MMM-DD-YYYY'
   );
-  const localisedOpeningDate = dateToString(
-    reopeningDate,
-    lang,
-    'DD MMM, YYYY'
-  );
+  const localisedOpeningDate = dateToString(reopeningDate, lang, 'MMM-DD-YYYY');
 
   let OPENING_ON = '';
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
