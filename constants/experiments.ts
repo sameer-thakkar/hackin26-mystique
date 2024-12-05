@@ -110,7 +110,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [RANKING_EXPERIMENT_V3_REVENUE]: new Experiment(
     RANKING_EXPERIMENT_V3_REVENUE,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [50, 50]
   ),
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,
