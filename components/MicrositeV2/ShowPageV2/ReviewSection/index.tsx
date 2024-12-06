@@ -107,6 +107,7 @@ const ReviewSection = ({
   const [totalNumberOfReviews, setTotalNumberOfReviews] = useState(-1);
   const [isFetching, setIsFetching] = useState(!initialReviews?.length);
   const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
+  const SCROLL_THRESHOLD = isMobile ? 115 : 150;
 
   const fetchReviews = useCallback(async () => {
     try {
@@ -124,10 +125,28 @@ const ReviewSection = ({
         nextOffset = null,
         total,
       } = reviewsResponse ?? {};
+
       setReviews([...reviews, ...newReviews]);
       setOffset(nextOffset);
       setIsFetching(false);
       if (totalNumberOfReviews === -1 && total) setTotalNumberOfReviews(total);
+
+      const firstNewReviewRef = document.querySelector(
+        `#review-item-${reviews?.length}`
+      );
+
+      if (firstNewReviewRef) {
+        const popupContainer = document.querySelector(
+          "[id*='product-card-popup'], #snapsheet-content-container"
+        );
+        const firstNewReviewPosition =
+          firstNewReviewRef.getBoundingClientRect().top - SCROLL_THRESHOLD;
+
+        popupContainer?.scrollBy({
+          top: firstNewReviewPosition,
+          behavior: 'smooth',
+        });
+      }
     } catch (error) {
       return;
     }
@@ -171,6 +190,7 @@ const ReviewSection = ({
               isMobile={isMobile}
               key={index}
               controlledSwiperParams={controlledSwiperParams}
+              index={index}
             />
           ))}
           <Conditional if={showSkeleton && isFetching}>
@@ -262,10 +282,12 @@ const ReviewElement = ({
   review,
   isMobile,
   controlledSwiperParams = {},
+  index,
 }: {
   review: TReviewMediasResponse['items'][0];
   isMobile: boolean;
   controlledSwiperParams?: SwiperProps;
+  index: number;
 }) => {
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
   const { lang } = useContext(MBContext);
@@ -302,7 +324,7 @@ const ReviewElement = ({
   }, [nonCustomerName]);
 
   return (
-    <Review>
+    <Review id={`review-item-${index}`}>
       <ReviewHeader>
         <div className="review-header">
           <div className="pfp">

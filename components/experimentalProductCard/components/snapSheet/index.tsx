@@ -108,6 +108,7 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
           ref={ref}
           $hasOffers={hasOffers}
           $preventTouchEvents={preventTouchEvents}
+          id="snapsheet-content-container"
         >
           {children}
         </Content>
