@@ -24,12 +24,12 @@ import { strings } from 'const/strings';
 
 const IMAGE_DIMENSIONS = {
   DESKTOP: {
-    WIDTH: '180',
-    HEIGHT: '240',
+    WIDTH: '200',
+    HEIGHT: '267',
   },
   MOBILE: {
-    HEIGHT: '208',
-    WIDTH: '156',
+    WIDTH: '174',
+    HEIGHT: '232',
   },
 };
 
