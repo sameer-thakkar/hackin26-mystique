@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useSetRecoilState } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import IFrame from 'components/shortcodes/IFrame';
+import { STATIC_BANNER_DIMENSIONS } from 'components/StaticBanner';
 import Image from 'UI/Image';
 import Video from 'UI/Video';
 import useOnScreen from 'hooks/useOnScreen';
@@ -18,7 +19,6 @@ import {
 } from 'const/index';
 import VideoPlayIcon from 'assets/playIcon';
 import RightChevron from 'assets/rightChevron';
-import { BANNER_DIMENSIONS } from './constants';
 import {
   H3Heading,
   IFrameWrapper,
@@ -53,8 +53,8 @@ const CustomBanner = ({
     },
   });
   const { WIDTH, HEIGHT } = isMobile()
-    ? BANNER_DIMENSIONS.MOBILE
-    : BANNER_DIMENSIONS.DESKTOP;
+    ? STATIC_BANNER_DIMENSIONS.MOBILE
+    : STATIC_BANNER_DIMENSIONS.DESKTOP;
   const { VARIANTS } = CUSTOM_BANNER;
   useEffect(() => {
     if (isIntersecting) {

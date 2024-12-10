@@ -13,8 +13,6 @@ type IFrameProps = {
   allowfullscreen?: string;
   height?: string;
   autoplay?: boolean;
-  trackVideoProgressFn?: (videoProgress: number) => void;
-  trackVideoPlayedFn?: () => void;
   shouldTrackVideoLoaded?: boolean;
 };
 
@@ -68,8 +66,6 @@ const IFrame: React.FC<IFrameProps> = ({
   allow = '',
   allowfullscreen = 'false',
   autoplay,
-  trackVideoProgressFn,
-  trackVideoPlayedFn,
   shouldTrackVideoLoaded = true,
   ...otherProps
 }) => {
@@ -77,14 +73,10 @@ const IFrame: React.FC<IFrameProps> = ({
   const [videoProgress, setVideoProgress] = useState(0);
   useEffect(() => {
     if (videoProgress) {
-      if (trackVideoProgressFn) {
-        trackVideoProgressFn(videoProgress);
-      } else {
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.YT_VIDEO_VIEWED,
-          [ANALYTICS_PROPERTIES.PERCENT_VIEWED]: `${videoProgress}%`,
-        });
-      }
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.YT_VIDEO_VIEWED,
+        [ANALYTICS_PROPERTIES.PERCENT_VIEWED]: `${videoProgress}%`,
+      });
     }
   }, [videoProgress]);
 
@@ -145,9 +137,7 @@ const IFrame: React.FC<IFrameProps> = ({
               videoId={videoId}
               onReady={trackVideoLoaded}
               onStateChange={trackVideoProgress}
-              onPlay={
-                trackVideoPlayedFn ? trackVideoPlayedFn : trackVideoPlayed
-              }
+              onPlay={trackVideoPlayed}
               opts={{
                 playerVars: {
                   ...(autoplay && { autoplay: 1 }),

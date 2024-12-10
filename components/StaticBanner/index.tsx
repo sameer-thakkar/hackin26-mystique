@@ -123,7 +123,7 @@ export type CollectionDetails = {
   videos: CollectionVideos;
 };
 
-const BANNER_DIMENSIONS = {
+export const STATIC_BANNER_DIMENSIONS = {
   DESKTOP: {
     WIDTH: 588,
     HEIGHT: 300,
@@ -188,8 +188,8 @@ const StaticBanner = ({
 
   let { averageRating = 0, ratingsCount = 0 } = finalCollectionDetails ?? {};
   const { WIDTH, HEIGHT } = isMobile
-    ? BANNER_DIMENSIONS.MOBILE
-    : BANNER_DIMENSIONS.DESKTOP;
+    ? STATIC_BANNER_DIMENSIONS.MOBILE
+    : STATIC_BANNER_DIMENSIONS.DESKTOP;
 
   if (ratingsAndReviewsData) {
     averageRating = ratingsAndReviewsData?.averageRating ?? 0;
