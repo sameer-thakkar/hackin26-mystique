@@ -1,77 +1,46 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import { SliceZone } from '@prismicio/react';
-import COLORS from 'const/colors';
-import { HALYARD } from 'const/ui-constants';
 import { sliceComponents } from './sliceManager';
 
-const StyledBackground = styled.div`
-  padding: 40px 0;
-  background: ${({
-    // @ts-expect-error TS(2339): Property 'colorProp' does not exist on type 'Pick<... Remove this comment to see the full error message
-    colorProp,
-  }) => colorProp};
-  text-align: ${({
-    // @ts-expect-error TS(2339): Property 'textCenter' does not exist on type 'Pick... Remove this comment to see the full error message
-    textCenter,
-  }) => (textCenter ? 'center' : 'initial')};
-  font-family: ${HALYARD.FONT_STACK};
-`;
-
 /**
- *`Background Section` allows you fill a slice area using color of choice from standard list of colors.
+ * Legacy settings:
+ * `Background Section` allows you to fill a slice area using color of choice from standard list of colors.
+ *  This is useful when you need to create a clear distinction between text section or other elements.
+ *  To add a `Background Section` Simply wrap your desired slice within a `Background Start` and `Background End`.
+ *  All Elements within will now be filled with the color you select inside the `Background Start` options.
  *
- * This is usefull when you need to create a clear distinction between text section or other elements.
+ *  > Structure
+ *  ```html
+ *    <background_start color="SELECTION">
+ *      <slice_a />
+ *      <slice_b />
+ *      <slice_a />
+ *    </background_end>
+ *  ```
  *
- * To add a `Background Section` Simply wrap your desired slice within a `Background Start` and `Background End`.
+ * NOTE: Update December 2024
  *
- * All Elements within will now be filled with the color you select inside the `Background Start` options.
- *
- *
- * > Structure
- *
- *```html
- *<background_start color="SELECTION">
- *  <slice_a />
- *  <slice_b />
- *  <slice_a />
- *<background_end>
- *```
- *
+ * As part of migration from prismic to payload, we are not moving background slice.
+ * To ensure Visual difference accuracy, the background slice functionality is removed and is replaced
+ * with a regular `div` element.
  */
 
 const Background = (props: any) => {
-  const {
-    childSlices: slices,
-    sliceProps,
-    color,
-    gridCenter,
-    textCenter,
-  } = props;
-
-  const colorMap = {
-    'Chalk Grey': COLORS.GRAY.G7,
-    'Light Grey': COLORS.GRAY.G8,
-  };
+  const { childSlices: slices, sliceProps } = props;
 
   const components = useMemo(() => {
     return sliceComponents();
   }, []);
 
   return (
-    <StyledBackground
-      // @ts-expect-error TS(2769): No overload matches this call.
-      colorProp={colorMap[color] || '#fff'}
-      gridCenter={gridCenter}
-      textCenter={textCenter}
-    >
+    <div>
       <SliceZone
         slices={slices}
         components={components}
         context={sliceProps}
         defaultComponent={() => null}
       />
-    </StyledBackground>
+    </div>
   );
 };
 
