@@ -54,11 +54,9 @@ const Footer: React.FC<FooterProps> = ({
   logoAlt,
   disclaimerText = '',
   hasPoweredByHeadoutLogo = true,
-  slices = [],
   themeOverride = THEMES.DEFAULT,
   secondarySlices = [],
   secondaryHeading = '',
-  primaryHeading = '',
   isEntertainmentMb = false,
   isCatOrSubCatPage = false,
   showGmapsDisclaimer = false,
@@ -114,6 +112,21 @@ const Footer: React.FC<FooterProps> = ({
     );
   };
 
+  /**
+   * Legacy setup:
+   *   Footer comprised two documents on Prismic; primary & secondary footers
+   *   They would render one below another and would hold identical UI
+   *
+   * NOTE: Update December 2024
+   *   As part of moving from Prismic to Payload, we have done a cleanup of either
+   *     1. Removing the links from primary footer
+   *     2. Moving all primary footer links to secondary footer
+   *   The idea is to maintain a single footer only.
+   *   Some documents might still have primary footer linked to the document even
+   *   though cleanup was done.
+   *   We have removed the rendering of primary footer from FE
+   */
+
   return (
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
       <StyledFooter
@@ -123,20 +136,11 @@ const Footer: React.FC<FooterProps> = ({
         <>
           <LinkSlicesWrapper
             isEntertainmentMb={isEntertainmentMb}
-            slicesLength={slices?.length + secondarySlices?.length}
+            slicesLength={secondaryHeading?.length}
             showGmapsDisclaimer={showGmapsDisclaimer}
             $isCatOrSubCatPage={isCatOrSubCatPage}
-            $primaryFooterExists={Boolean(slices?.length)}
+            $primaryFooterExists={false}
           >
-            <Conditional if={slices?.length}>
-              <LinkSlices
-                className={'primary-footer'}
-                linksTitle={primaryHeading}
-                slices={slices}
-                theme={finalThemeName}
-                isCatOrSubCatPage={isCatOrSubCatPage}
-              />
-            </Conditional>
             <Conditional if={secondarySlices?.length}>
               <LinkSlices
                 className={'secondary-footer'}
