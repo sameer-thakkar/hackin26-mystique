@@ -1605,6 +1605,7 @@ const Product = (props: any) => {
                     openProductCardAside({ scrollToItinerarySection: true });
                     trackItineraryViewCTAClick(tgidItineraryData?.[0]);
                   }}
+                  isHOHOItinerary={isHohoItinerary}
                 />
               </Conditional>
               <Conditional if={isLoading}>

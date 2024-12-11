@@ -4,7 +4,10 @@ import { strings } from 'const/strings';
 import { MapSVG } from 'assets/airportTransfers';
 import MapRouteSvg from 'assets/mapRoute';
 
-const MWebEntryPoint = ({ onClick }: TMWebEntryPointProps) => {
+const MWebEntryPoint = ({
+  onClick,
+  isHOHOItinerary = false,
+}: TMWebEntryPointProps) => {
   const handleClick = () => {
     onClick?.();
   };
@@ -17,7 +20,9 @@ const MWebEntryPoint = ({ onClick }: TMWebEntryPointProps) => {
         </div>
         <div className="entrypoint-content">
           <MapSVG />
-          <p className="cta-label">{strings.CATEGORY_HEADER.ITINERARY}</p>
+          <p className="cta-label">
+            {isHOHOItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
+          </p>
         </div>
       </div>
     </StyledMWebEntryPointContainer>

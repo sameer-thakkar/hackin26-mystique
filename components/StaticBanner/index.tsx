@@ -47,6 +47,7 @@ import { strings } from 'const/strings';
 import ChevronLeftBold from 'assets/chevronLeftBold';
 import ChevronRightIcon from 'assets/chevronRight';
 import Star from 'assets/star';
+import { COMPONENT_NAME, SECTION_NAME } from './const';
 import { IllustrationBanner } from './IllustrationBanner';
 import { getBannerDescriptorsArray } from './utils';
 
@@ -214,6 +215,13 @@ const StaticBanner = ({
   }, [eventsReady, isMobile]);
 
   const onRatingsClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.DEAD_CLICK,
+      [ANALYTICS_PROPERTIES.COMPONENT]: COMPONENT_NAME,
+      [ANALYTICS_PROPERTIES.SECTION]: SECTION_NAME,
+      [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: ratingsCount,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+    });
     if (!isHOHORevamp) return;
     const section = document.querySelector('.slice-block.reviews');
     section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
