@@ -3,14 +3,12 @@ import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import Loader from 'components/common/Loader';
 import LongForm from 'components/common/LongForm';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import DismissAlert from 'components/UI/DismissAlert';
 import SideNavModal from 'UI/SideNav';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
-import useABTesting from 'hooks/useABTesting';
 import {
   getAlternateLanguages,
   getBannerAndFooterSubtext,
@@ -34,7 +32,6 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import sideNavHandler from 'utils/sideNavUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
-import { VARIANTS } from 'const/experiments';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
@@ -474,31 +471,21 @@ const ContentPage = (props: any) => {
   ];
   const extraSideNavItems: string[] = [];
 
-  const {
-    isEligible: isPlanYourVisitCardsExpEligible,
-    variant: planYourVisitCardsExpVariant,
-    isExperimentResolving: isPlanYourVisitCardsExpResolving,
-  } = useABTesting({
-    experimentId: 'SHOULDER_PAGE_SECTION_RANKING_EXPERIMENT',
-    noTrack: true,
-    customEligibilityCheckFn: () =>
-      SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT.toLowerCase() ===
-      shoulder_page_type?.toLowerCase(),
-  });
+  const isPlanYourVisitPage =
+    SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT.toLowerCase() ===
+    shoulder_page_type?.toLowerCase();
 
-  const shouldReorderProductCardsExp =
-    isPlanYourVisitCardsExpEligible &&
-    planYourVisitCardsExpVariant == VARIANTS.TREATMENT;
-
-  if (shouldReorderProductCardsExp) {
+  if (isPlanYourVisitPage) {
     extractedProductCardsSlice = extractSliceByType({
       slices: contentFWSlices,
       sliceType:
         SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD as keyof typeof SLICE_TYPES,
     });
+
     if (extractedProductCardsSlice?.[0]?.primary?.title) {
       extraSideNavItems.push(extractedProductCardsSlice?.[0]?.primary?.title);
     }
+
     // besides reordering in the sidebar, also remove from the longform slices
     extractSliceByType({
       slices,
@@ -619,7 +606,7 @@ const ContentPage = (props: any) => {
 
   const longFormContent = [...body, ...contentFWSlices];
 
-  if (shouldReorderProductCardsExp && extractedProductCardsSlice.length) {
+  if (isPlanYourVisitPage && extractedProductCardsSlice.length) {
     longFormContent.splice(
       productCardsSlicePosition,
       0,
@@ -628,15 +615,12 @@ const ContentPage = (props: any) => {
   }
 
   const sideNavItems = [
-    ...(shouldReorderProductCardsExp ? sidenavItems?.splice(0, 2) : []),
+    ...(isPlanYourVisitPage ? sidenavItems?.splice(0, 2) : []),
     ...extraSideNavItems,
     ...sidenavItems,
   ];
 
   const PRODUCT_CARDS_LIMIT = 4;
-
-  if (isPlanYourVisitCardsExpResolving && isPlanYourVisitCardsExpEligible)
-    return <Loader />;
 
   return (
     <div className="page-wrapper">
@@ -819,10 +803,10 @@ const ContentPage = (props: any) => {
               collectionsInListicles={collectionsInListicles}
               automatedBreadcrumbsExists={automatedBreadcrumbsExists}
               isContentPage={false}
-              trackProductCardsViewed={isPlanYourVisitCardsExpEligible}
+              trackProductCardsViewed={isPlanYourVisitPage}
               parentLandingPageUrl={parentLandingPageUrl}
               {...props}
-              {...(shouldReorderProductCardsExp && {
+              {...(isPlanYourVisitPage && {
                 categoryTourListData: {
                   ...categoryTourListData,
                   productCardsLimit: PRODUCT_CARDS_LIMIT,
