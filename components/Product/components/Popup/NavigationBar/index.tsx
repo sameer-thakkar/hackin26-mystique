@@ -73,15 +73,16 @@ const NavigationBar = ({
   }, []);
 
   const reviewSectionIndex = tabs.length + (isItinerarySectionPresent ? 1 : 0);
+  const ITINERARY_TAB_INDEX = 2;
 
   const renderTabs = () => {
     const navigationTabs = [
-      ...tabs?.slice(0, 1)?.map(({ heading }, index) => (
+      ...tabs?.slice(0, ITINERARY_TAB_INDEX)?.map(({ heading }, index) => (
         <NavigationLink
-          key="navigation-bar-item-0"
-          $isSelected={currentActiveIndex === 0}
+          key={`navigation-bar-item-${index}`}
+          $isSelected={currentActiveIndex === index}
           onClick={() => onItemClick(index)}
-          data-navigation-bar-index={0}
+          data-navigation-bar-index={index}
         >
           {heading}
         </NavigationLink>
@@ -90,10 +91,10 @@ const NavigationBar = ({
     if (isItinerarySectionPresent)
       navigationTabs.push(
         <NavigationLink
-          key={`itinerary-section-${1}`}
-          $isSelected={currentActiveIndex === 1}
-          onClick={() => onItemClick(1)}
-          data-navigation-bar-index={1}
+          key={`itinerary-section-${ITINERARY_TAB_INDEX}`}
+          $isSelected={currentActiveIndex === ITINERARY_TAB_INDEX}
+          onClick={() => onItemClick(ITINERARY_TAB_INDEX)}
+          data-navigation-bar-index={ITINERARY_TAB_INDEX}
           className="navigation-link"
         >
           {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
@@ -102,8 +103,9 @@ const NavigationBar = ({
       );
 
     navigationTabs.push(
-      ...tabs?.slice(1)?.map(({ heading }, index) => {
-        const finalIndex = index + 1 + (isItinerarySectionPresent ? 1 : 0);
+      ...tabs?.slice(ITINERARY_TAB_INDEX)?.map(({ heading }, index) => {
+        const finalIndex =
+          index + ITINERARY_TAB_INDEX + (isItinerarySectionPresent ? 1 : 0);
         return (
           <NavigationLink
             key={`navigation-bar-item-${finalIndex}`}

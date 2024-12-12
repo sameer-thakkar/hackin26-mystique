@@ -246,11 +246,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
 
   useEffect(() => {
     let { tabs } = extractTabsFromHighlights(finalHighlights!) as any;
-    if (!isModifiedPopup && tabs.length >= 2) {
-      const temp = tabs[0];
-      tabs[0] = tabs[1];
-      tabs[1] = temp;
-    }
+
     tabs = tabs.map((tab: TabData) => ({
       ...tab,
       type: 'richTextField',
@@ -258,14 +254,14 @@ const DropdownContent: FC<DropdownContentProps> = ({
 
     if (hasItinerarySection && finalHighlights) {
       tabs = [
-        tabs[0],
+        ...tabs.slice(0, 2),
         {
           heading: strings.ITINERARY.TAB,
           isNew: true,
           contents: [],
           type: 'itinerary',
         },
-        ...tabs.slice(1),
+        ...tabs.slice(2),
       ];
     }
     if (

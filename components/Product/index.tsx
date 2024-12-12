@@ -800,8 +800,8 @@ const Product = (props: any) => {
   }, [tgid, showBoosters]);
 
   const {
-    highlightsRichText,
-    everyRichTextExceptHighlights,
+    highlightsAndInclusionsRichText,
+    everyRichTextExceptHighlightsAndInclusions,
     inclusionsRichText = [],
     everyRichTextExceptInclusions,
   } = useMemo(
@@ -1992,7 +1992,11 @@ const Product = (props: any) => {
                 <Conditional if={hasHighlights || isPopup || isBot}>
                   <Conditional if={!isModifiedPopup}>
                     <PrismicRichText
-                      field={isPopup ? highlightsRichText : highlights || []}
+                      field={
+                        isPopup
+                          ? highlightsAndInclusionsRichText
+                          : highlights || []
+                      }
                       components={shortCodeSerializer}
                     />
                   </Conditional>
@@ -2047,7 +2051,7 @@ const Product = (props: any) => {
                         isPopup
                           ? showSightsCoveredItineraryLayout
                             ? everyRichTextExceptInclusions
-                            : everyRichTextExceptHighlights
+                            : everyRichTextExceptHighlightsAndInclusions
                           : highlights || []
                       }
                       components={shortCodeSerializer}

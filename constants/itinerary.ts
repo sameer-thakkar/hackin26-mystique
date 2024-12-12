@@ -170,6 +170,4 @@ export const ITINERARY_MAP_BANNER_ICON_IMAGE =
 export const ITINERARY_MAP_BANNER_BG_IMAGE =
   'https://cdn-imgix.headout.com/assets/images/itinerary/itinerary-map-banner-bg.png';
 
-export const tgidsWithSitesVisited = [
-  16990, 2926, 9641, 21364, 28144, 3728, 21495, 3696, 6756, 26310,
-];
+export const tgidsWithSitesVisited = [28144, 3696, 26310];

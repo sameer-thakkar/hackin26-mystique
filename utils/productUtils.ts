@@ -1123,17 +1123,30 @@ export const filterHighlights = ({
   removeSitesVisited: boolean;
   isModifiedPopup: boolean;
 }) => {
-  const inclusionHeading = highlights.filter(
+  const nonInclusionHeading = highlights.filter(
     ({ type }: { type: string }) => type === 'heading6'
-  )[1];
-  const inclusionHeadingIndex = highlights.findIndex(
-    (element: any) => element === inclusionHeading
+  )[2];
+  const nonInclusionHeadingIndex = highlights.findIndex(
+    (element: any) => element === nonInclusionHeading
   );
 
-  const highlightsRichText = highlights.slice(0, inclusionHeadingIndex);
-  let everyRichTextExceptHighlights = highlights.slice(inclusionHeadingIndex);
+  const highlightsAndInclusionsRichText = highlights.slice(
+    0,
+    nonInclusionHeadingIndex
+  );
+  let everyRichTextExceptHighlightsAndInclusions = highlights.slice(
+    nonInclusionHeadingIndex
+  );
 
   if (isModifiedPopup) {
+    const inclusionHeading = highlights.filter(
+      ({ type }: { type: string }) => type === 'heading6'
+    )[1];
+    const inclusionHeadingIndex = highlights.findIndex(
+      (element: any) => element === inclusionHeading
+    );
+
+    let everyRichTextExceptHighlights = highlights.slice(inclusionHeadingIndex);
     const nonInclusionHeading = everyRichTextExceptHighlights.filter(
       ({ type }: { type: string }) => type === 'heading6'
     )[1];
@@ -1170,33 +1183,41 @@ export const filterHighlights = ({
     }
 
     return {
-      highlightsRichText,
-      everyRichTextExceptHighlights,
+      highlightsAndInclusionsRichText,
+      everyRichTextExceptHighlightsAndInclusions,
       inclusionsRichText,
       everyRichTextExceptInclusions,
     };
   }
 
   if (removeSitesVisited) {
-    const headings = everyRichTextExceptHighlights.filter(
+    const headings = everyRichTextExceptHighlightsAndInclusions.filter(
       ({ type }: { type: string }) => type === 'heading6'
     );
-    const sitesVisitedHeading = headings[1];
-    const nextHeading = headings[2];
-    const sitesVisitedHeadingIndex = everyRichTextExceptHighlights.findIndex(
-      (element: any) => element === sitesVisitedHeading
-    );
-    const nextHeadingIndex = everyRichTextExceptHighlights.findIndex(
-      (element: any) => element === nextHeading
-    );
+    const sitesVisitedHeading = headings[0];
+    const nextHeading = headings[1];
+    const sitesVisitedHeadingIndex =
+      everyRichTextExceptHighlightsAndInclusions.findIndex(
+        (element: any) => element === sitesVisitedHeading
+      );
+    const nextHeadingIndex =
+      everyRichTextExceptHighlightsAndInclusions.findIndex(
+        (element: any) => element === nextHeading
+      );
 
-    everyRichTextExceptHighlights = [
-      ...everyRichTextExceptHighlights.slice(0, sitesVisitedHeadingIndex),
-      ...everyRichTextExceptHighlights.slice(nextHeadingIndex),
+    everyRichTextExceptHighlightsAndInclusions = [
+      ...everyRichTextExceptHighlightsAndInclusions.slice(
+        0,
+        sitesVisitedHeadingIndex
+      ),
+      ...everyRichTextExceptHighlightsAndInclusions.slice(nextHeadingIndex),
     ];
   }
 
-  return { highlightsRichText, everyRichTextExceptHighlights };
+  return {
+    highlightsAndInclusionsRichText,
+    everyRichTextExceptHighlightsAndInclusions,
+  };
 };
 
 export const generateVideoExperimentVideoUrl = (tgid: string | number) => {
