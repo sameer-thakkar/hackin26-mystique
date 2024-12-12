@@ -7,3 +7,8 @@ export type TShowPagePricingSectionProps = {
   moreShows?: any;
   moreShowsCategoryUrl?: string;
 };
+
+export type TRiveCTAProps = {
+  onClick: () => void;
+  primaryText: string;
+};

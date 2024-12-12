@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -26,7 +26,7 @@ export const ShowPageDateSelectorWrapper = styled.div<{
 `;
 
 export const PricingSection = styled.div`
-  overflow: scroll;
+  overflow: visible;
   background-color: ${COLORS.BRAND.WHITE};
   padding: 1.5rem;
   border: 1px solid #e9e9e9;
@@ -115,3 +115,16 @@ export const BuyButtonWrapper = styled.div`
     box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.08);
   }
 `;
+
+export const RiveCtaWrapper = styled.div`
+  width: 100%;
+  height: 3rem;
+  cursor: pointer;
+`;
+
+export const riveComponentStyles: CSSProperties = {
+  position: 'absolute',
+  width: '28.5rem',
+  height: '4.375rem',
+  transform: 'translateX(-7.5rem)',
+};

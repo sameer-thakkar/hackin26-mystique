@@ -1105,3 +1105,7 @@ export const containsPOIAndSeatmap = (array = []) => {
 export const checkIfHarryPotterPage = (uid: string) => {
   return harryPotterExperimentUids.includes(uid);
 };
+
+export const checkIfLionKingPage = (uid: string) => {
+  return uid.includes('the-lion-king-tickets');
+};

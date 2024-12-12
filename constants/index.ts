@@ -799,6 +799,9 @@ export const TOUR_COMPARISION_DESIGN = {
 export const RIV_LOGO =
   'https://cdn-imgix-open.headout.com/MB/RIV/byHeadout.riv';
 
+export const RIV_CTA_LTT =
+  'https://cdn-imgix-open.headout.com/MB/RIV/lion-king-cta-ltt.riv';
+
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
 

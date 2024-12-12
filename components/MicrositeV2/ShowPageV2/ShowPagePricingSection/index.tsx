@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { Button, Text } from '@headout/eevee';
 import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
+import DeferredComponent from 'components/common/DeferredComponent';
 import HorizontalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard';
 import { TShowPagePricingSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/interface';
 import {
@@ -16,7 +17,7 @@ import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPag
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
-import { createBookingURL, getNakedDomain } from 'utils';
+import { checkIfLionKingPage, createBookingURL, getNakedDomain } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
@@ -30,6 +31,7 @@ import {
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import RiveCTA from './RiveCTA';
 
 const ShowPagePricingSection = ({
   tourGroupData,
@@ -64,6 +66,7 @@ const ShowPagePricingSection = ({
     nakedDomain,
     biLink,
     redirectToHeadoutBookingFlow,
+    uid,
   } = useContext(MBContext);
 
   const { id: tgid, listingPrice } = tourGroupData;
@@ -82,6 +85,8 @@ const ShowPagePricingSection = ({
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
   const hostname = getHostName(isDev, host);
+
+  const isLionKingPage = checkIfLionKingPage(uid);
 
   const {
     TicketsUnavailableSection,
@@ -153,6 +158,12 @@ const ShowPagePricingSection = ({
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
 
+  const buyButtonText = showCustomBookButtonText
+    ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
+    : strings.CHECK_AVAIL;
+
+  const buttonType = isButtonLoading ? 'loading' : 'default';
+
   return (
     <>
       <ShowPageDateSelectorWrapper>
@@ -204,20 +215,40 @@ const ShowPagePricingSection = ({
               </div>
             </Pricing>
             <BuyButtonWrapper>
-              <Button
-                tabIndex={0}
-                as="button"
-                btnType="primary"
-                onClick={onCheckAvailabilityClicked}
-                primaryText={
-                  showCustomBookButtonText
-                    ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
-                    : strings.CHECK_AVAIL
-                }
-                size="medium"
-                state={isButtonLoading ? 'loading' : 'default'}
-                variant="primary"
-              />
+              <Conditional if={isLionKingPage}>
+                <DeferredComponent
+                  renderPlaceholder={
+                    <Button
+                      tabIndex={0}
+                      as="button"
+                      btnType="primary"
+                      onClick={onCheckAvailabilityClicked}
+                      primaryText={buyButtonText}
+                      size="medium"
+                      state={buttonType}
+                      variant="primary"
+                    />
+                  }
+                  delay={5000}
+                >
+                  <RiveCTA
+                    onClick={onCheckAvailabilityClicked}
+                    primaryText={buyButtonText}
+                  />
+                </DeferredComponent>
+              </Conditional>
+              <Conditional if={!isLionKingPage}>
+                <Button
+                  tabIndex={0}
+                  as="button"
+                  btnType="primary"
+                  onClick={onCheckAvailabilityClicked}
+                  primaryText={buyButtonText}
+                  size="medium"
+                  state={buttonType}
+                  variant="primary"
+                />
+              </Conditional>
             </BuyButtonWrapper>
           </PricingSection>
         </Conditional>
