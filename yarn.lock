@@ -2131,10 +2131,10 @@
   dependencies:
     "@headout/pixie" "workspace:*"
 
-"@headout/espeon@^1.11.3":
-  version "1.11.3"
-  resolved "https://npm.pkg.github.com/download/@headout/espeon/1.11.3/aed34101c53e546d25cd89665359d3b8ee3afc3e#aed34101c53e546d25cd89665359d3b8ee3afc3e"
-  integrity sha512-reObQc5IKirLCRUfuZdVEYAFl7KIxsbvYqFfdxaCUO5xBJKOall3ItB+95kqf0Eed91GqGM7zNlq15NsgKW7ZA==
+"@headout/espeon@^1.11.11":
+  version "1.11.11"
+  resolved "https://npm.pkg.github.com/download/@headout/espeon/1.11.11/9453ca8c33b50b17bec9fe90d3b053ff9b2d6077#9453ca8c33b50b17bec9fe90d3b053ff9b2d6077"
+  integrity sha512-Zf2AYhtYbVXFVEaMwOJOqp0QGN7qr4zQ4uWKingdewp0hJprC7TLemfMWn56IVwr7HPmHGEG2w+uqWSOYrxA5w==
   dependencies:
     "@googlemaps/js-api-loader" "^1.16.8"
     "@googlemaps/polyline-codec" "^1.0.28"
