@@ -1588,7 +1588,7 @@ const Product = (props: any) => {
               >
                 <ItineraryEntryPoint
                   onClick={async () => {
-                    popupController.current?.open(1);
+                    popupController.current?.open(2);
                     trackedToggleContent(false);
                     trackItineraryEntrypoint();
                   }}
