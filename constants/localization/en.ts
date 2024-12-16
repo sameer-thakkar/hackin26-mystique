@@ -1340,7 +1340,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       'Your ending point would be same as your start point',
   },
   CRUISES: {
-    BANNER_HEADING: 'Cruise through {0} - Discover, dine & relax',
+    BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',
     FILTERS: {
       ALL: 'All',
       SIGHTSEEING: 'Sightseeing',

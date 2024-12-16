@@ -62,6 +62,13 @@ const cardImageAspectRatio = {
   1: '16:9',
 };
 
+const CardTitleStyles = `
+  ${expandFontToken(FONTS.HEADING_SMALL)}
+  color: ${COLORS.GRAY.G2} !important;
+  display: inline-block;
+  margin-bottom: 8px;
+`;
+
 const StyledCard = styled.div((props) => {
   // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
   const { isGlobalMb, isGpMotorTicketsMb } = props || {};
@@ -143,6 +150,9 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section.link {
     padding-bottom: 42px;
+    .title-link {
+      ${CardTitleStyles}
+    }
   }
   .swiper-pagination.swiper-pagination-bullets {
     top: unset;
@@ -162,9 +172,7 @@ const StyledCard = styled.div((props) => {
 });
 
 const Title = styled.h3`
-  ${expandFontToken('Subheading/Regular')}
-  color: ${COLORS.GRAY.G2} !important;
-  margin-bottom: 8px;
+  ${CardTitleStyles}
 `;
 
 const ImageContainer = styled.div`
@@ -596,6 +604,7 @@ const Card: React.FC<CardProps> = ({
                 as: 'a',
                 href: link.url,
                 target: link.target,
+                className: 'title-link',
               })}
               // @ts-expect-error TS(2769): No overload matches this call.
               isGlobalMb={isGlobalMb}
