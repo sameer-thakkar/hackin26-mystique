@@ -390,7 +390,7 @@ const SideBar = (props: TSideBarProps) => {
     });
 
     addCheckAvailabilityClickedDataEvents();
-    window.location.href = checkAvailabilityUrl;
+    window.open(checkAvailabilityUrl, '_blank');
   }, [
     toursAgainstDates,
     selectedTourDate,
