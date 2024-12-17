@@ -1309,6 +1309,12 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     },
     COMBO_HEADING:
       "Plus d'expériences à moindre coût : offres combo et Pass touristiques",
+    TRUST_TOOLTIP_HEADER: 'Comment recueillons-nous les avis ?',
+    TRUST_TOOLTIP_CONTENT:
+      'Les avis sont recueillis auprès de personnes qui ont réservé et vécu une expérience avec Headout.',
+    REVIEW_SECTION_HEADER: 'Les avis de nos voyageurs',
+    TRUST_VB_TAG: 'Réservation vérifiée',
+    SNAPSHOTS_SECTION_HEADER: 'Photos de nos client·e·s',
   },
 };
 export default fr;

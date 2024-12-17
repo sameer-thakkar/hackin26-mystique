@@ -1307,6 +1307,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       RESET_ZOOM: 'Redefinir zoom',
     },
     COMBO_HEADING: 'Veja mais por menos: ofertas em combos e city cards',
+    TRUST_TOOLTIP_HEADER: 'Como obtemos as avaliações?',
+    TRUST_TOOLTIP_CONTENT:
+      'As avaliações são enviadas por usuários reais que reservaram e tiveram uma experiência com a Headout.',
+    REVIEW_SECTION_HEADER: 'Avaliações de participantes',
+    TRUST_VB_TAG: 'Reserva verificada',
+    SNAPSHOTS_SECTION_HEADER: 'Fotos para os nossos clientes',
   },
 };
 export default pt;

@@ -1252,5 +1252,10 @@ const pl = {
       RESET_ZOOM: 'Reset Zoom',
     },
   },
+  TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
+  TRUST_TOOLTIP_CONTENT:
+    'Recenzje są zbierane od prawdziwych użytkowników Headout, którzy zarezerwowali u nas wycieczkę i ją odbyli.',
+  REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
+  TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
 };
 export default pl;

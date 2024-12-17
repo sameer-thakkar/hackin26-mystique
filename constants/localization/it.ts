@@ -1299,5 +1299,11 @@ const it = {
     COMBO_HEADING: 'Scopri di più e risparmia: offerte combinate e city card',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
+  TRUST_TOOLTIP_HEADER: 'Come raccogliamo le recensioni?',
+  TRUST_TOOLTIP_CONTENT:
+    'Le recensioni sono state scritte da clienti reali, che hanno prenotato la loro esperienza su Headout.',
+  REVIEW_SECTION_HEADER: 'Cosa dicono i nostri clienti',
+  TRUST_VB_TAG: 'Prenotazione verificata',
+  SNAPSHOTS_SECTION_HEADER: 'Le istantanee dei nostri ospiti',
 };
 export default it;

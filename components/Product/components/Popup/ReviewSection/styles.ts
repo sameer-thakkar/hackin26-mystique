@@ -3,12 +3,12 @@ import {
   AllReviewsButton,
   Review,
   ReviewContent,
-  ReviewHeader,
   ReviewMediaSection,
   ReviewsSection,
   ShowMoreReviewsButton,
   ViewTranslatedContentButton,
 } from 'components/MicrositeV2/ShowPageV2/ReviewSection/style';
+import { StyledReviewHeader } from 'components/Reviews/Header/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -25,6 +25,9 @@ export const StyledExternalLinkIcon = styled.span`
 export const StyledReviewSectionTitle = styled.h6`
   ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
   color: ${COLORS.GRAY.G2};
+  &#review-section-title {
+    margin-bottom: 0.125rem;
+  }
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.HEADING_SMALL)}
@@ -38,7 +41,9 @@ export const StyledReviewSectionContainer = styled.div`
 
   @media (min-width: 768px) {
     ${Review} {
-      ${ReviewHeader} {
+      width: 46.5rem;
+
+      ${StyledReviewHeader} {
         .review-header {
           .pfp {
             height: 2.5rem;
@@ -55,8 +60,7 @@ export const StyledReviewSectionContainer = styled.div`
         }
 
         .rating {
-          margin-top: 0.25rem;
-
+          margin-top: 10px;
           svg {
             width: 1rem;
             height: 1rem;
@@ -80,8 +84,8 @@ export const StyledReviewSectionContainer = styled.div`
       ${ReviewMediaSection} {
         img,
         .image-wrap {
-          width: 6.5625rem;
-          height: 8.75rem;
+          width: 8.5rem;
+          height: 11.5rem;
         }
       }
     }

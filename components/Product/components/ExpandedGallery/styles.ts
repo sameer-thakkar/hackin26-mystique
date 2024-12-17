@@ -3,6 +3,7 @@ import {
   AllPhotosCta,
   GalleryPopup,
   ImageGalleryWrapper,
+  ReviewInfo,
 } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -86,6 +87,16 @@ export const GalleryViewContainer = styled.div`
             aspect-ratio: 16/10;
           }
         }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    ${ImageGalleryWrapper} {
+      z-index: 10001; // header is 10000
+
+      ${ReviewInfo} {
+        width: calc(100vw - 1.5rem);
       }
     }
   }

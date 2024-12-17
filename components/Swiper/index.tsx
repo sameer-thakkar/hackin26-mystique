@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Autoplay,
   EffectCards,
@@ -9,6 +9,7 @@ import {
   Pagination,
 } from 'swiper';
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -23,9 +24,11 @@ export interface ISwiperWrapper extends SwiperProps {
   nextButton?: HTMLElement | React.ReactNode | JSX.Element;
   previousButton?: HTMLElement | React.ReactNode | JSX.Element;
   isFreeMode?: boolean;
+  initialSlide?: number;
 }
 
 const SwiperWrapper = (props: ISwiperWrapper) => {
+  const swiperRef = useRef<SwiperType>();
   const showPagination = props.pagination,
     showNavigation = props.navigation,
     enableAutoplay = props.autoplay,
@@ -33,8 +36,14 @@ const SwiperWrapper = (props: ISwiperWrapper) => {
     isLazy = props.lazy,
     enableCardsEffect = props.cardsEffect;
 
-  const { nextButton, previousButton, children, isFreeMode, ...restProps } =
-    props;
+  const {
+    nextButton,
+    previousButton,
+    children,
+    isFreeMode,
+    initialSlide,
+    ...restProps
+  } = props;
   const modules = [];
 
   showPagination && modules.push(Pagination);
@@ -45,8 +54,21 @@ const SwiperWrapper = (props: ISwiperWrapper) => {
   enableFadeEffect && modules.push(EffectFade);
   enableCardsEffect && modules.push(EffectCards);
 
+  useEffect(() => {
+    if (initialSlide !== undefined && swiperRef.current) {
+      swiperRef.current.slideTo(initialSlide, 0);
+    }
+  }, [initialSlide]);
+
   return (
-    <Swiper {...restProps} modules={modules}>
+    <Swiper
+      {...restProps}
+      modules={modules}
+      onSwiper={(swiper) => {
+        swiperRef.current = swiper;
+        props.onSwiper?.(swiper);
+      }}
+    >
       {children?.map((element, index) =>
         element ? <SwiperSlide key={index}>{element}</SwiperSlide> : null
       )}

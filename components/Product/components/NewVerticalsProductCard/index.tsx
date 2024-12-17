@@ -114,7 +114,7 @@ const NewVerticalsProductCard = (props: any) => {
 
   const priceBlockWrapperRef = useRef<HTMLDivElement>();
   const productRef = useRef<HTMLDivElement>(null);
-  const imgGalleryController = useRef<TImageGalleryController>();
+  const imgGalleryController = useRef<TImageGalleryController>(null);
   const itineraryPopupController = useRef<TController>();
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen] = useState(defaultOpen);

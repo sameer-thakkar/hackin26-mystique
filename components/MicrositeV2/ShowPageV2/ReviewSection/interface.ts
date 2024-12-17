@@ -1,4 +1,5 @@
 import type { SwiperProps } from 'swiper/react';
+import type { TSnapshotSectionProps } from 'components/Product/components/Popup/ReviewSection/Snapshots/interface';
 import type { TReviewMediasResponse } from 'utils/apiUtils';
 
 export type TReviewSectionProps = {
@@ -14,4 +15,6 @@ export type TReviewSectionProps = {
   controlledSwiperParams?: SwiperProps;
   externalButtonContent?: JSX.Element | JSX.Element[];
   showReviews?: boolean;
+  onImageClick?: (reviewId: string | number, localIndex: number) => void;
+  snapshotSectionProps?: TSnapshotSectionProps;
 };

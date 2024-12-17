@@ -38,4 +38,7 @@ export interface IImageProps
     y?: number;
     zoom?: number;
   };
+  dataAttributes?: {
+    [key: `data-${string}`]: string | number | boolean;
+  };
 }

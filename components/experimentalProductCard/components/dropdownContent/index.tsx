@@ -10,7 +10,6 @@ import React, {
 } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
@@ -18,6 +17,9 @@ import Conditional from 'components/common/Conditional';
 import Itinerary from 'components/common/Itinerary';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
 import InclusionsExclusions from 'components/Product/components/NewVerticalsProductCard/InclusionsExclusions';
+import type { TSnapshotSectionProps } from 'components/Product/components/Popup/ReviewSection/Snapshots/interface';
+import TrustOverlay from 'components/Product/components/Popup/ReviewSection/TrustElements/Overlay';
+import type { TReviewSectionMobileProps } from 'components/Product/components/Popup/ReviewSection/types';
 import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
@@ -30,7 +32,6 @@ import {
 } from 'utils/productUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { addUrlParams } from 'utils/urlUtils';
-import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -56,7 +57,7 @@ const MenuSection = dynamic(
 
 const ReviewSection = dynamic(
   import(
-    /* webpackChunkName: "ReviewSection" */ 'components/Product/components/Popup/ReviewSection'
+    /* webpackChunkName: "ReviewSection" */ 'components/Product/components/Popup/ReviewSection/mobile'
   )
 );
 
@@ -94,6 +95,11 @@ interface DropdownContentProps {
   showSightsCoveredItineraryLayout?: boolean;
   reviewsDetails?: Record<string, any>;
   topReviews?: TReviewMediasResponse['items'];
+  imageGalleryController?: TReviewSectionMobileProps['imageGalleryController'];
+  getReviewMediaGlobalLocation?: TReviewSectionMobileProps['getReviewMediaGlobalLocation'];
+  snapshotSectionProps?: TSnapshotSectionProps;
+  hidePricingBar?: () => void;
+  showPricingBar?: () => void;
 }
 
 const DropdownContent: FC<DropdownContentProps> = ({
@@ -120,8 +126,10 @@ const DropdownContent: FC<DropdownContentProps> = ({
   showSightsCoveredItineraryLayout = false,
   reviewsDetails,
   topReviews,
+  imageGalleryController,
+  getReviewMediaGlobalLocation,
+  snapshotSectionProps,
 }) => {
-  const { isMobile } = useRecoilValue(appAtom);
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
   const [cardHeight, setCardHeight] = useState(0);
@@ -434,7 +442,9 @@ const DropdownContent: FC<DropdownContentProps> = ({
                 <Conditional if={tab.type !== 'nonRichText'}>
                   <Heading
                     $bottomMargin={
-                      tab.type === 'itinerary'
+                      tab.type === 'reviews'
+                        ? '0'
+                        : tab.type === 'itinerary'
                         ? '1.5rem'
                         : index === 0
                         ? '0.75rem'
@@ -506,12 +516,15 @@ const DropdownContent: FC<DropdownContentProps> = ({
                 <Conditional
                   if={tab.type === 'reviews' && reviewsDetails?.showRatings}
                 >
+                  <TrustOverlay />
                   <ReviewSection
                     reviewsDetails={reviewsDetails!}
                     topReviews={topReviews}
                     tgid={tgid}
-                    isMobile={isMobile}
                     showTitle={false}
+                    imageGalleryController={imageGalleryController}
+                    getReviewMediaGlobalLocation={getReviewMediaGlobalLocation}
+                    snapshotSectionProps={snapshotSectionProps}
                   />
                 </Conditional>
               </TabContent>

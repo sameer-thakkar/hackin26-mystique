@@ -1330,6 +1330,11 @@ const ro = {
   FIND_YOUR_RIDE: 'Găsiți mașina perfectă',
   FIND_YOUR_RIDE_SUBTEXT:
     'De la microbuze pentru familii până la berline de lux, alegeți mașina care se potrivește cu bagajele și mărimea grupului dvs.',
+  TRUST_TOOLTIP_HEADER: 'Cum colectăm recenziile?',
+  TRUST_TOOLTIP_CONTENT:
+    'Recenziile sunt colectate de la utilizatorii reali Headout care au rezervat și au finalizat experiența cu noi.',
+  REVIEW_SECTION_HEADER: 'Ce spun oaspeții noștri',
+  TRUST_VB_TAG: 'Rezervare verificată',
 };
 
 export default ro;

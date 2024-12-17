@@ -108,71 +108,6 @@ export const Review = styled.div`
   margin-bottom: 2rem;
 `;
 
-export const ReviewHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-
-  .review-header {
-    display: flex;
-    width: 100%;
-    .pfp {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 3rem;
-      background-color: ${COLORS.GRAY.G2};
-      margin-right: 0.5rem;
-
-      img {
-        border-radius: 3rem;
-      }
-    }
-    .user-details {
-      flex-grow: 1;
-      .details {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.1rem;
-        .name {
-          ${expandFontToken(FONTS.HEADING_SMALL)};
-          color: ${COLORS.GRAY.G2};
-        }
-        .date {
-          ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-          color: ${COLORS.GRAY.G3};
-        }
-      }
-    }
-  }
-
-  .rating {
-    display: flex;
-    align-items: center;
-    svg {
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.12rem;
-    }
-    .rating-count {
-      margin-left: 0.25rem;
-      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
-    }
-  }
-
-  @media (max-width: 768px) {
-    .review-header {
-      .user-details {
-        .details {
-          margin-bottom: 0.35rem;
-          .name {
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const ReviewContent = styled.p`
   margin: 0;
   ${expandFontToken(FONTS.PARAGRAPH_LARGE)};
@@ -182,6 +117,12 @@ export const ReviewContent = styled.p`
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
+`;
+
+export const StyledReviewSectionHeading = styled.div`
+  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+  margin-top: 1rem;
+  color: ${COLORS.GRAY.G2};
 `;
 
 export const ViewTranslatedContentButton = styled.p`
@@ -320,4 +261,8 @@ export const ReviewSkeletonMediaContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
+`;
+
+export const SnapshotSectionContainer = styled.div`
+  border-bottom: dotted 1px ${COLORS.GRAY.G6};
 `;

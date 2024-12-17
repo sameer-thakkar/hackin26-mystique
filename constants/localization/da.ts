@@ -1357,6 +1357,12 @@ const da = {
   FIND_YOUR_RIDE: 'Find din perfekte transportmulighed',
   FIND_YOUR_RIDE_SUBTEXT:
     'Vælg en bil, der passer til jeres bagage og antal personer: Vi har alt lige fra minibusser til luksuriøse sedaner',
+  TRUST_TOOLTIP_HEADER: 'Hvordan indsamler vi anmeldelser?',
+  TRUST_TOOLTIP_CONTENT:
+    'Vores anmeldelser er indsamlet fra Headout-brugere, som har booket og gennemført deres oplevelse hos os. ',
+  REVIEW_SECTION_HEADER: 'Hvad vores gæster siger',
+  TRUST_VB_TAG: 'Bekræftet booking',
+  SNAPSHOTS_SECTION_HEADER: 'Snapshots fra vores gæster',
 };
 
 export default da;

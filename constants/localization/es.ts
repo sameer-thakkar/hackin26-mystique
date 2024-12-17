@@ -1360,6 +1360,12 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     },
     COMBO_HEADING:
       'Visita más por menos: ofertas combinadas y tarjetas urbanas',
+    TRUST_TOOLTIP_HEADER: '¿De quién recibimos las reseñas?',
+    TRUST_TOOLTIP_CONTENT:
+      'Las reseñas proceden de usuarios reales de Headout que han reservado y completado su experiencia con nosotros.',
+    REVIEW_SECTION_HEADER: 'Reseñas de viajeros/as',
+    TRUST_VB_TAG: 'Reserva verificada',
+    SNAPSHOTS_SECTION_HEADER: 'Fotos de nuestros viajeros',
   },
 };
 export default es;

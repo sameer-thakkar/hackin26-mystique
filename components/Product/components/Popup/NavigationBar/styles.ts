@@ -9,7 +9,7 @@ export const NavigationParent = styled.div<{ $isVisible?: boolean }>`
   border-top-left-radius: 12px;
   width: 100%;
   top: 0;
-  z-index: 100;
+  z-index: 1;
   height: 4rem;
   width: 49.5rem;
   overflow: hidden;

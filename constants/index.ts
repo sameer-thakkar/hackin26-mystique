@@ -672,6 +672,11 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
   EXPERIENCE_PAX_UPDATED: 'Experience PAX Updated',
   MIXPANEL_SESSION_REPLAY: 'Mixpanel Session Replay',
+  GUEST_SNAPSHOT_CLICKED: 'Guest Snapshot Clicked',
+  STORY_MODE_OPENED: 'Story Mode Opened',
+  REVIEWS_MEDIA_PREVIEWED: 'Reviews Media Previewed',
+  REVIEWS_MEDIA_SCROLLED: 'Reviews Media Scrolled',
+  STORY_MODE_CLOSED: 'Story Mode Closed',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1175,6 +1180,7 @@ export const ANALYTICS_PROPERTIES = {
   IS_SELLING_FAST: 'Is Selling Fast Present',
   IS_MUST_DO_EXP: 'Is Must Do Experience Present',
   NUM_OF_BOOSTER: 'Number of Booster',
+  CHEVRON_SCROLLED: 'Chevron Scrolled',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
@@ -2412,3 +2418,26 @@ export const TEMP_HARDCODED_PRODUCT = {
 };
 
 export const INVALID_DATE = 'Invalid Date';
+
+export const IMAGE_GALLERY_DIMENSIONS = {
+  DESKTOP: {
+    spotlight: {
+      height: 446,
+      width: 728,
+    },
+    thumbnail: {
+      height: 85,
+      width: 136,
+    },
+  },
+  MOBILE: {
+    spotlight: {
+      height: 234.375,
+      width: 412,
+    },
+    thumbnail: {
+      height: 46,
+      width: 76,
+    },
+  },
+};

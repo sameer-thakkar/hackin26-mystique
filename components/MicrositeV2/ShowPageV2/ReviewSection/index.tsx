@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
-import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import type { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
@@ -16,7 +15,6 @@ import {
   RatingsSplit,
   Review,
   ReviewContent,
-  ReviewHeader,
   ReviewMediaSection,
   ReviewSectionWrapper,
   ReviewSkeletonContainer,
@@ -25,21 +23,23 @@ import {
   ReviewUserDetailsContainer,
   ReviewUserDetailsTextContentContainer,
   ShowMoreReviewsButton,
+  SnapshotSectionContainer,
   StarCount,
+  StyledReviewSectionHeading,
   ViewTranslatedContentButton,
 } from 'components/MicrositeV2/ShowPageV2/ReviewSection/style';
+import SnapshotSection from 'components/Product/components/Popup/ReviewSection/Snapshots';
+import ReviewHeader from 'components/Reviews/Header';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { fetchTourGroupReviews, TReviewMediasResponse } from 'utils/apiUtils';
 import { getStars } from 'utils/productUtils';
-import { getRandomReviewerImage } from 'utils/reviewUtils';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
-  DEFAULT_REVIEWER_NAME,
   DEFAULT_TOP_REVIEWS_COUNT,
   LANGUAGE_SORT_ORDER,
 } from 'const/index';
@@ -91,14 +91,18 @@ const ReviewSection = ({
   showSkeleton = false,
   externalButtonContent,
   showReviews = true,
+  onImageClick,
+  snapshotSectionProps,
 }: TReviewSectionProps) => {
   const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
     initialReviews || []
   );
   const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(5);
   const { averageRating, ratingsCount, ratingsSplit } = reviewsDetails;
+
+  const shortenedAverageRating = averageRating.toFixed(1);
   const getShortenedNumber = (num: number) =>
-    num > 999 ? `${(num / 1000).toFixed(1)}k` : num;
+    num > 999 ? `${(num / 1000).toFixed(1)}K` : num;
   const shortenedRatingsCount = getShortenedNumber(ratingsCount);
   const { lang } = useContext(MBContext);
   const [offset, setOffset] = useState<number | null>(
@@ -159,10 +163,13 @@ const ReviewSection = ({
 
   return (
     <ReviewSectionWrapper>
-      <RatingsDetailsSection $showingReviewsSection={showReviews}>
+      <RatingsDetailsSection
+        $showingReviewsSection={showReviews && !snapshotSectionProps}
+      >
         <RatingsCountSection>
           <Ratings>
-            <StarFullNew fillColor={COLORS.TEXT.CANDY_1} /> {averageRating}
+            <StarFullNew fillColor={COLORS.BRAND.CANDY} />{' '}
+            {shortenedAverageRating}
           </Ratings>
           <RatingsCount>
             {strings.formatString(strings.RATINGS, shortenedRatingsCount)}
@@ -182,7 +189,19 @@ const ReviewSection = ({
           ))}
         </RatingsSplit>
       </RatingsDetailsSection>
+      <Conditional if={snapshotSectionProps}>
+        <SnapshotSectionContainer>
+          <SnapshotSection {...snapshotSectionProps!} />
+        </SnapshotSectionContainer>
+      </Conditional>
+
       <Conditional if={showReviews}>
+        <Conditional if={snapshotSectionProps}>
+          <StyledReviewSectionHeading>
+            {strings.REVIEW_SECTION_HEADER}
+          </StyledReviewSectionHeading>
+        </Conditional>
+
         <ReviewsSection>
           {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
             <ReviewElement
@@ -190,6 +209,7 @@ const ReviewSection = ({
               isMobile={isMobile}
               key={index}
               controlledSwiperParams={controlledSwiperParams}
+              onClick={onImageClick}
               index={index}
             />
           ))}
@@ -282,11 +302,13 @@ const ReviewElement = ({
   review,
   isMobile,
   controlledSwiperParams = {},
+  onClick,
   index,
 }: {
   review: TReviewMediasResponse['items'][0];
   isMobile: boolean;
   controlledSwiperParams?: SwiperProps;
+  onClick?: (reviewId: string | number, localIndex: number) => void;
   index: number;
 }) => {
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
@@ -308,47 +330,17 @@ const ReviewElement = ({
     reviewMedias,
     reviewerImgUrl,
     sourceLanguage,
+    id,
   } = review;
-
-  const datePublished = getIntlDate({
-    date: new Date(reviewTime).toString(),
-    dateFormat: 'MMM-YYYY',
-    lang,
-  });
-
-  const customerFirstName = useMemo(() => {
-    if (!nonCustomerName) return '';
-    if (nonCustomerName.toLowerCase().trim() === DEFAULT_REVIEWER_NAME)
-      return nonCustomerName;
-    return nonCustomerName?.split(' ')?.[0];
-  }, [nonCustomerName]);
 
   return (
     <Review id={`review-item-${index}`}>
-      <ReviewHeader>
-        <div className="review-header">
-          <div className="pfp">
-            <Image
-              url={
-                reviewerImgUrl ?? getRandomReviewerImage(nonCustomerName ?? '')
-              }
-              alt="reviewer"
-            />
-          </div>
-          <div className="user-details">
-            <div className="details">
-              <span className="name">
-                {customerFirstName ?? nonCustomerName}
-              </span>
-              <span className="date">{datePublished}</span>
-            </div>
-            <div className="rating">
-              {getStars(rating)}
-              <span className="rating-count">{rating}/5</span>
-            </div>
-          </div>
-        </div>
-      </ReviewHeader>
+      <ReviewHeader
+        nonCustomerName={nonCustomerName}
+        reviewerImgUrl={reviewerImgUrl}
+        reviewTime={reviewTime}
+        rating={rating}
+      />
       <ReviewContent>
         {usingTranslatedContent && translatedContent
           ? translatedContent
@@ -379,6 +371,7 @@ const ReviewElement = ({
                 width={180}
                 height={240}
                 loadHigherQualityImage={true}
+                onClick={() => onClick?.(id, index)}
               />
             ))}
           </Swiper>

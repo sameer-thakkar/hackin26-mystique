@@ -1325,6 +1325,12 @@ const sv = {
   FIND_YOUR_RIDE: 'Hitta ditt perfekta fordon',
   FIND_YOUR_RIDE_SUBTEXT:
     'Välj den bil som passar dig, ditt bagage och gruppstorleken. Vi har alltifrån familjevänliga minibussar till lyxiga sedaner.',
+  TRUST_TOOLTIP_HEADER: 'Hur samlar vi in recensioner?',
+  TRUST_TOOLTIP_CONTENT:
+    'Recensionerna samlas in från riktiga Headout-användare som har bokat och upplevt sina äventyr med oss.',
+  REVIEW_SECTION_HEADER: 'Så här säger våra gäster',
+  TRUST_VB_TAG: 'Verifierad bokning',
+  SNAPSHOTS_SECTION_HEADER: 'Ögonblicksbilder från våra gäster',
 };
 
 export default sv;

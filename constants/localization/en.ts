@@ -1402,6 +1402,14 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FIND_YOUR_RIDE_SUBTEXT:
       'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
   },
+  AGGREGATED_COUNTRIES:
+    'Guests from <strong>{0}</strong> and <strong>over {1} countries</strong> have loved this experience',
+  TRUST_TOOLTIP_HEADER: 'How do we collect reviews?',
+  TRUST_TOOLTIP_CONTENT:
+    "Reviews are collected from real Headout users who've booked and completed their experience with us.",
+  REVIEW_SECTION_HEADER: 'What our guests say',
+  TRUST_VB_TAG: 'Verified booking',
+  SNAPSHOTS_SECTION_HEADER: 'Snapshots from our guests',
 };
 
 export default en;

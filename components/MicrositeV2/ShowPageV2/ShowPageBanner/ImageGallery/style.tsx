@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledReviewHeader } from 'components/Reviews/Header/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -72,7 +73,7 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
     width: 100%;
     height: 100%;
     position: absolute;
-    background: rgba(17, 17, 17, 0.8);
+    background: rgba(0, 0, 0, 0.8);
   }
 
   .header {
@@ -140,6 +141,14 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
   .primary-section {
     padding-right: 2rem;
     border-right: solid 0.0625rem ${COLORS.GRAY.G2};
+
+    .image-wrap {
+      background: black;
+
+      img {
+        object-fit: contain;
+      }
+    }
   }
 
   .image-list-section {
@@ -202,9 +211,10 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
 
     .primary-section {
       width: 100vw;
-      height: 14.64844rem;
+      height: 23.4375rem;
       position: relative;
       margin: auto;
+
       .chevron {
         display: none;
       }
@@ -212,7 +222,11 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
 
     .image-gallery-primary {
       width: 100vw;
-      height: 14.64844rem;
+      height: 23.4375rem;
+    }
+
+    span.verified {
+      display: none;
     }
 
     .image-list-section {
@@ -228,12 +242,72 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
       column-gap: 0.5rem;
       overflow-x: auto;
       white-space: nowrap;
+      transform: translateY(1rem);
 
       .gallery-list-image {
         width: 5rem;
         height: 3.125rem;
         img {
           border-radius: 0.25rem;
+        }
+      }
+    }
+  }
+`;
+
+export const ReviewInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: -webkit-fill-available;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 1rem 1.5rem;
+
+  ${StyledReviewHeader} {
+    margin-bottom: 0;
+
+    .review-header {
+      .pfp {
+        background-color: ${COLORS.BRAND.WHITE};
+      }
+      .name {
+        color: ${COLORS.BRAND.WHITE};
+      }
+      .date {
+        color: ${COLORS.BRAND.WHITE};
+      }
+    }
+
+    .rating {
+      .rating-count {
+        color: ${COLORS.BRAND.WHITE};
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: 100%;
+    bottom: 0;
+    background: none;
+
+    ${StyledReviewHeader} {
+      .review-header {
+        grid-template-areas: 'pfp name rating' 'pfp date rating';
+        grid-template-column: auto 1fr auto;
+
+        .rating {
+          margin-top: 0;
+
+          .rating-count {
+            display: none;
+          }
         }
       }
     }

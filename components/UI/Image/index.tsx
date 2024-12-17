@@ -61,6 +61,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     loadHigherQualityImage: loadHigherQualityImageProp = false,
     focalPointParams,
     placeholder = 'empty',
+    dataAttributes,
+    onLoad,
   },
   ref
 ) => {
@@ -150,7 +152,12 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     : defaultImageSrc;
 
   return (
-    <Wrapper className={`image-wrap ${className}`} onClick={onClick} ref={ref}>
+    <Wrapper
+      className={`image-wrap ${className}`}
+      onClick={onClick}
+      ref={ref}
+      {...(dataAttributes && dataAttributes)}
+    >
       <FutureImage
         className={imageId}
         src={imgSrc}
@@ -170,6 +177,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
           }
         }}
         onLoadingComplete={onLoadingComplete}
+        onLoad={onLoad}
         blurDataURL={
           placeholder === 'blur'
             ? getBlurDataUrl(calculatedWidth, calculatedHeight)

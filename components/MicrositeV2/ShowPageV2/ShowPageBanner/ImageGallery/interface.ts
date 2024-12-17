@@ -1,7 +1,14 @@
-import { MutableRefObject } from 'react';
+import type { MutableRefObject } from 'react';
+import type { TReview } from 'types/reviews';
+
+export enum EPopupState {
+  OPEN,
+  CLOSED,
+  INITIAL,
+}
 
 export type TImageGalleryController = {
-  open: () => void;
+  open: (index?: number) => void;
   close: () => void;
 };
 
@@ -11,9 +18,11 @@ export type TImageGalleryProps = {
     alt: string;
     title?: string;
     credit?: string;
+    [key: string]: any;
   }>;
   startFrom?: number;
-  onHide?: () => void;
+  onHide?: (reviewInfo?: TReview) => void;
+  onShow?: (reviewInfo?: TReview) => void;
   showMoreButton?: boolean;
   hideFirstImageInOverlay?: boolean;
   controlBodyOverflow?: boolean;
@@ -28,5 +37,11 @@ export type TImageGalleryProps = {
       width: number;
     };
   };
-  controller?: MutableRefObject<TImageGalleryController | undefined>;
+  controller?: MutableRefObject<TImageGalleryController | null>;
+  infiniteList?: {
+    fetchNext: () => void;
+    canFetch: boolean;
+  };
+  title?: string;
+  getAssociatedReview?: (reviewId: number) => TReview | undefined;
 };

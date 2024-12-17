@@ -1,7 +1,14 @@
+import { useRef } from 'react';
 import Conditional from 'components/common/Conditional';
 import ReviewsSection from 'components/MicrositeV2/ShowPageV2/ReviewSection';
+import { TImageGalleryController } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
+import useFetchReviewMedia from 'hooks/useFetchReviewMedia';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import DiagonalArrow from 'assets/diagonalArrow';
+import TrustOverlay from './TrustElements/Overlay';
+import Gallery from './Gallery';
 import {
   StyledExternalLinkIcon,
   StyledReviewSectionContainer,
@@ -13,9 +20,18 @@ const ReviewSection = ({
   reviewsDetails,
   tgid,
   topReviews = [],
-  isMobile = false,
   showTitle = true,
 }: TReviewSectionProps) => {
+  const {
+    reviewMedias = [],
+    fetchNext: fetchNextReviewMedia,
+    canFetch: canFetchReviewMedia,
+    getAssociatedReview,
+    getReviewMediaGlobalLocation,
+  } = useFetchReviewMedia(tgid);
+
+  const imageGalleryController = useRef<TImageGalleryController>(null);
+
   const externalButtonContent = (
     <>
       {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
@@ -26,10 +42,30 @@ const ReviewSection = ({
   return (
     <>
       <Conditional if={showTitle}>
-        <StyledReviewSectionTitle data-review-section-title="true">
+        <StyledReviewSectionTitle
+          data-review-section-title="true"
+          id="review-section-title"
+        >
           {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
         </StyledReviewSectionTitle>
+        <TrustOverlay isDesktop />
       </Conditional>
+      <Gallery
+        images={reviewMedias.map((reviewMedia) => ({
+          ...reviewMedia,
+          alt: String(tgid),
+        }))}
+        infiniteList={
+          canFetchReviewMedia
+            ? {
+                fetchNext: fetchNextReviewMedia,
+                canFetch: canFetchReviewMedia,
+              }
+            : undefined
+        }
+        getAssociatedReview={getAssociatedReview}
+        controller={imageGalleryController}
+      />
       <StyledReviewSectionContainer>
         <ReviewsSection
           reviewsDetails={reviewsDetails}
@@ -40,13 +76,37 @@ const ReviewSection = ({
           showFetchMoreButton
           reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
-            slidesPerView: isMobile ? 'auto' : 6.3,
+            slidesPerView: 5,
             spaceBetween: 16,
           }}
           showSkeleton
           externalButtonContent={externalButtonContent}
-          isMobile={isMobile}
           showReviews={topReviews && topReviews.length > 0}
+          onImageClick={(reviewId, localIndex) => {
+            const globalIndex = getReviewMediaGlobalLocation?.(
+              Number(reviewId),
+              localIndex
+            );
+            imageGalleryController?.current?.open(globalIndex);
+            if (typeof globalIndex !== 'undefined')
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.GUEST_SNAPSHOT_CLICKED,
+                [ANALYTICS_PROPERTIES.RANKING]: localIndex + 1,
+                [ANALYTICS_PROPERTIES.POSITION]: 'Reviews Section',
+              });
+          }}
+          snapshotSectionProps={{
+            reviewMedias,
+            onImageClick: ({ globalIndex }) => {
+              imageGalleryController?.current?.open(globalIndex);
+            },
+            infiniteList: canFetchReviewMedia
+              ? {
+                  fetchNext: fetchNextReviewMedia,
+                  canFetch: canFetchReviewMedia,
+                }
+              : undefined,
+          }}
         />
       </StyledReviewSectionContainer>
     </>

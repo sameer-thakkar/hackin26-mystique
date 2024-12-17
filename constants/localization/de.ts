@@ -1302,6 +1302,12 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     COMBO_HEADING: 'Mehr für weniger: Kombideals und City Cards',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
+  TRUST_TOOLTIP_HEADER: 'Wie sammeln wir Bewertungen?',
+  TRUST_TOOLTIP_CONTENT:
+    'Bewertungen werden von echten Headout-Nutzern gesammelt, die ihr Erlebnis mit uns gebucht und abgeschlossen haben.',
+  REVIEW_SECTION_HEADER: 'Was unsere Gäste sagen',
+  TRUST_VB_TAG: 'Bestätigte Buchung',
+  SNAPSHOTS_SECTION_HEADER: 'Schnappschüsse von unseren Gästen',
 };
 
 export default de;

@@ -1331,6 +1331,11 @@ const tr = {
   FIND_YOUR_RIDE: 'En uygun aracı bulun',
   FIND_YOUR_RIDE_SUBTEXT:
     'Aile boyu minivanlardan lüks sedan otomobillere kadar geniş araç seçeneklerin arasında bagajınıza ve grup büyüklüğünüze uygun aracı seçin',
+  TRUST_TOOLTIP_HEADER: 'Değerlendirmeleri nasıl topluyoruz?',
+  TRUST_TOOLTIP_CONTENT:
+    "Değerlendirmeler, Headout'tan rezervasyon yaparak deneyimlerini tamamlayan gerçek kullanıcılar tarafından sağlanır.",
+  REVIEW_SECTION_HEADER: 'Konuklarımızın görüşleri',
+  TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
 };
 
 export default tr;

@@ -17,6 +17,7 @@ import MWebEntryPoint from 'components/common/Itinerary/MWebEntryPoint';
 import ExperimentalProductCard from 'components/experimentalProductCard';
 import ItineraryEntryPoint from 'components/HOHO/components/RoutesCTA/EntryPoint';
 import { SECTION_NAMES } from 'components/HOHO/constants';
+import { TImageGalleryController } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import { TController as TItineraryController } from 'components/NewVerticals/RouteDetails/Popup/interface';
 import RoutesCTA from 'components/NewVerticals/RoutesCTA';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
@@ -277,6 +278,8 @@ const Product = (props: any) => {
     isPopUpOnly = false,
     onPopupClosed,
   } = props;
+
+  const imageGalleryController = useRef<TImageGalleryController>(null);
 
   const {
     data: tgidItineraryData,
@@ -1442,7 +1445,7 @@ const Product = (props: any) => {
           isContentExpanded={expandContent}
           isTicketCard={isTicketCard}
           isMobile={isPopup ? originalIsMobile : isMobile}
-          $forceMobile={forceMobile}
+          $forceMobile={forceMobile && !isPopup}
           $isBannerCard={isBannerCard && !isSpecialGuidedTour && !isLoading}
           isV3Design={isV3Design}
           $isSwipeSheetOpen={expandContent}
@@ -2074,7 +2077,6 @@ const Product = (props: any) => {
                     reviewsDetails={reviewsDetails}
                     tgid={tgid}
                     topReviews={topReviews}
-                    isMobile={isMobile}
                   />
                 </Conditional>
               </div>
@@ -2170,6 +2172,7 @@ const Product = (props: any) => {
                   ? generateVideoExperimentVideoUrl(String(tgid))
                   : null
               }
+              controller={imageGalleryController}
             />
           </div>
         </Conditional>
@@ -2343,7 +2346,6 @@ const Product = (props: any) => {
           shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
         />
       </Conditional>
-
       <Conditional if={showPopup}>{getProductCardPopup(false)}</Conditional>
     </Container>
   );

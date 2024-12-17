@@ -127,6 +127,7 @@ export const DropdownContentContainer = styled.div<{
 `;
 
 export const TabContent = styled.div`
+  position: relative;
   padding-bottom: 0.5rem;
   background: ${COLORS.BRAND.WHITE};
   p {
@@ -151,6 +152,11 @@ export const Heading = styled.h4<{ $bottomMargin: string }>`
   color: ${COLORS.GRAY.G1};
   margin-top: 1rem;
   margin-bottom: ${({ $bottomMargin }) => $bottomMargin || '1rem'};
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
 `;
 
 export const ContentContainer = styled.div`

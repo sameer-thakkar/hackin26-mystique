@@ -1349,6 +1349,12 @@ const ru = {
       'Получите больше за меньшее: комбо-предложения и городские абонементы',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Проверить наличие',
+  TRUST_TOOLTIP_HEADER: 'Как мы собираем отзывы?',
+  TRUST_TOOLTIP_CONTENT:
+    'Отзывы собираются от реальных пользователей Headout которые забронировали и воспользовались нашим опытом.',
+  REVIEW_SECTION_HEADER: 'Что говорят наши гости',
+  TRUST_VB_TAG: 'Проверенное бронирование',
+  SNAPSHOTS_SECTION_HEADER: 'Снимки от наших гостей',
 };
 
 export default ru;

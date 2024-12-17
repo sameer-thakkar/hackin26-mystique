@@ -3,13 +3,13 @@ import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
-import type { TImageGalleryController } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import { AllPhotosCta } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  IMAGE_GALLERY_DIMENSIONS,
   PRODUCT_CARD_CHILDREN_POSITIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -27,28 +27,19 @@ const IMAGE_DIMENSIONS = [
   { height: 320, width: 512 },
 ];
 
-const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
+const ExpandedGallery = ({
+  images,
+  videoUrl,
+  controller,
+  isMobile = false,
+}: TExpandedGalleryProps) => {
   const [galleryImageIndex, setGalleryImageIndex] = useState(-1);
   const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(+!!videoUrl);
   const [loadVideo, setLoadVideo] = useState(false);
-  const MAX_LEN = Math.min(3, images.length + +!!videoUrl);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const controller = useRef<TImageGalleryController>();
 
   const close = () => {
     setGalleryImageIndex(-1);
-  };
-
-  const onClickHandler = (index: number) => {
-    if (MAX_LEN < 2) return;
-    setGalleryImageIndex(index);
-    controller.current?.open();
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.IMAGE_GALLERY.IMAGE_GALLERY_OPENED,
-      [ANALYTICS_PROPERTIES.POSITION]:
-        PRODUCT_CARD_CHILDREN_POSITIONS.MORE_DETAILS,
-    });
   };
 
   const onImageLoad = () => {
@@ -61,6 +52,19 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
       setLoadVideo(true);
     }, 200);
   }, []);
+
+  const MAX_LEN = Math.min(3, images.length + +!!videoUrl);
+
+  const onClickHandler = (index: number) => {
+    if (MAX_LEN < 2) return;
+    setGalleryImageIndex(index);
+    controller?.current?.open();
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.IMAGE_GALLERY.IMAGE_GALLERY_OPENED,
+      [ANALYTICS_PROPERTIES.POSITION]:
+        PRODUCT_CARD_CHILDREN_POSITIONS.MORE_DETAILS,
+    });
+  };
 
   if (MAX_LEN === 0) return null;
 
@@ -101,7 +105,7 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
               className="gallery-children"
               key={image.url}
               url={image.url}
-              alt={image.altText}
+              alt={image.alt}
               height={height}
               width={width}
               aspectRatio={'16:10'}
@@ -125,10 +129,7 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
       <Conditional if={MAX_LEN > 1}>
         <GalleryViewContainer>
           <ImageGallery
-            imageUploads={images.map(({ url, altText }) => ({
-              url,
-              alt: altText,
-            }))}
+            imageUploads={images}
             startFrom={galleryImageIndex}
             onHide={() => {
               close();
@@ -142,14 +143,13 @@ const ExpandedGallery = ({ images, videoUrl }: TExpandedGalleryProps) => {
             controlBodyOverflow={false}
             navigation="arrow"
             imageDimensions={{
-              spotlight: {
-                height: 446,
-                width: 728,
-              },
-              thumbnail: {
-                height: 85,
-                width: 136,
-              },
+              spotlight: isMobile
+                ? IMAGE_GALLERY_DIMENSIONS.MOBILE.spotlight
+                : IMAGE_GALLERY_DIMENSIONS.DESKTOP.spotlight,
+
+              thumbnail: isMobile
+                ? IMAGE_GALLERY_DIMENSIONS.MOBILE.thumbnail
+                : IMAGE_GALLERY_DIMENSIONS.DESKTOP.thumbnail,
             }}
             controller={controller}
           />

@@ -1259,6 +1259,12 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       RESET_ZOOM: 'Zoom terugzetten',
     },
     COMBO_HEADING: 'Meer voor minder: combideals en city cards',
+    TRUST_TOOLTIP_HEADER: 'Hoe verzamelen we reviews?',
+    TRUST_TOOLTIP_CONTENT:
+      'We gebruiken alleen reviews van echte Headout gebruikers die ervaringen bij ons hebben geboekt en uitgevoerd.',
+    REVIEW_SECTION_HEADER: 'Wat onze gasten zeggen',
+    TRUST_VB_TAG: 'Geverifieerde boeking',
+    SNAPSHOTS_SECTION_HEADER: 'Snapshots van onze gasten',
   },
 };
 export default nl;

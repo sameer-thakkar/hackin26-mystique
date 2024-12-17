@@ -1323,6 +1323,12 @@ const no = {
   FIND_YOUR_RIDE: 'Den perfekte reisemåten for deg',
   FIND_YOUR_RIDE_SUBTEXT:
     'Fra minibusser til sedaner. Velg en bil som rommer bagasjen og reisefølget.',
+  TRUST_TOOLTIP_HEADER: 'Hvordan samler vi inn anmeldelser?',
+  TRUST_TOOLTIP_CONTENT:
+    'Anmeldelser kommer fra Headout-brukere som har bestilt og fullført opplevelser med oss.',
+  REVIEW_SECTION_HEADER: 'Dette sier gjestene våre',
+  TRUST_VB_TAG: 'Verifisert bestilling',
+  SNAPSHOTS_SECTION_HEADER: 'Instantanee de la oaspeții noștri',
 };
 
 export default no;
