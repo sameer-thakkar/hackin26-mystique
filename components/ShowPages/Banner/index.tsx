@@ -377,7 +377,7 @@ const ShowPageBanner = ({
                     </span>
                     (
                     {reviewCount > 999
-                      ? `${(reviewCount / 1000).toFixed(1)}k`
+                      ? `${(reviewCount / 1000).toFixed(1)}K`
                       : reviewCount}
                     )
                   </div>
@@ -466,7 +466,7 @@ const ShowPageBanner = ({
                   </span>
                   (
                   {reviewCount > 999
-                    ? `${(reviewCount / 1000).toFixed(1)}k Reviews`
+                    ? `${(reviewCount / 1000).toFixed(1)}K Reviews`
                     : reviewCount}
                   )
                 </span>

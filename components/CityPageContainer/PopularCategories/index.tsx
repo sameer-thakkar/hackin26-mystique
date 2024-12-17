@@ -117,6 +117,7 @@ const PopularCategories = ({
             isDev,
           });
 
+          if (!imageUrl || !heading) return null;
           return (
             <div
               role="button"

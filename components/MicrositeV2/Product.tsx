@@ -692,7 +692,7 @@ const Product = (props: any) => {
               <span className="total-rating">
                 (
                 {ratingCount > 999
-                  ? `${(ratingCount / 1000).toFixed(1)}k`
+                  ? `${(ratingCount / 1000).toFixed(1)}K`
                   : ratingCount}
                 )
               </span>
@@ -826,7 +826,7 @@ const Product = (props: any) => {
                     <span className="total-rating">
                       (
                       {ratingCount > 999
-                        ? `${(ratingCount / 1000).toFixed(1)}k`
+                        ? `${(ratingCount / 1000).toFixed(1)}K`
                         : ratingCount}
                       )
                     </span>

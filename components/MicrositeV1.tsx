@@ -335,6 +335,8 @@ const MicrositeV1 = (props: any) => {
     template === TEMPLATES.CRUISES ||
     !!cruiseFormatTest;
   const currentLanguage = getLangObject(lang).code;
+  const showLastMinFilters =
+    isA1orC1MB(taggedMbType) && isMobile && !isAirportTransfersMB;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -875,6 +877,7 @@ const MicrositeV1 = (props: any) => {
       showBoosters={
         isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
       }
+      showLastMinFilters={showLastMinFilters}
     />
   );
 
@@ -1227,9 +1230,7 @@ const MicrositeV1 = (props: any) => {
             isCruisesRevamp={showCruisesFormat}
           />
         </Conditional>
-        <Conditional
-          if={isA1orC1MB(taggedMbType) && isMobile && !isAirportTransfersMB}
-        >
+        <Conditional if={showLastMinFilters}>
           <LastMinuteFilters
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}

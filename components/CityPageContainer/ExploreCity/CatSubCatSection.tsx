@@ -210,6 +210,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
             isDev,
           });
 
+          if (!imageUrl || !heading) return null;
           return (
             <div className="entity-image-container" key={uid}>
               <a

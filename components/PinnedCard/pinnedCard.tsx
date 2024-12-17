@@ -105,7 +105,7 @@ const PinnedCard = (props: any) => {
 
   const ratingCount = (reviewCount: number) => {
     return reviewCount > 999
-      ? `${(reviewCount / 1000).toFixed(1)}k`
+      ? `${(reviewCount / 1000).toFixed(1)}K`
       : reviewCount;
   };
 

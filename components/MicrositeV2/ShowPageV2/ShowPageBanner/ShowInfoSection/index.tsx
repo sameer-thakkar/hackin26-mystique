@@ -83,7 +83,7 @@ const ShowInfoSection = ({
     });
 
   const shortenedRatingsCount =
-    ratingsCount > 999 ? `${(ratingsCount / 1000).toFixed(1)}k` : ratingsCount;
+    ratingsCount > 999 ? `${(ratingsCount / 1000).toFixed(1)}K` : ratingsCount;
 
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor,

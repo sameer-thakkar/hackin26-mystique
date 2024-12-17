@@ -51,7 +51,7 @@ export const Ratings = (props: {
         <span className="review-count">
           (
           {reviewCount > 999
-            ? `${(reviewCount / 1000).toFixed(1)}k`
+            ? `${(reviewCount / 1000).toFixed(1)}K`
             : reviewCount}
           )
         </span>

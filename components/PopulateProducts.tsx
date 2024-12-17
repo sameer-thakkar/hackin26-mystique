@@ -145,14 +145,30 @@ const ticketCardDesktopDisplay = css`
   justify-content: space-between;
 `;
 
-const ProductContainer = styled.div<{
+function getMwebMargin({
+  isNotVisible,
+  $increasedMargin,
+}: Pick<TProductContainerStyles, 'isNotVisible' | '$increasedMargin'>) {
+  switch (true) {
+    case isNotVisible:
+      return '0';
+    case $increasedMargin:
+      return '1.5rem 0 1.75rem';
+    default:
+      return '0.5rem 0 1.75rem';
+  }
+}
+type TProductContainerStyles = {
   isTicketCard: boolean;
   isMobile: boolean;
   isNotVisible?: boolean;
   isNewVerticalsProductCard?: boolean;
   isCruise?: boolean;
   $noPadding?: boolean;
-}>`
+  $increasedMargin?: boolean;
+};
+
+const ProductContainer = styled.div<TProductContainerStyles>`
   ${({ isTicketCard, isMobile }) =>
     isTicketCard && !isMobile
       ? ` ${ticketCardDesktopDisplay} `
@@ -175,8 +191,8 @@ const ProductContainer = styled.div<{
   height: ${({ isNotVisible }) => (isNotVisible ? '0' : 'auto')};
 
   @media (max-width: 768px) {
-    margin-top: ${({ isNotVisible }) => (isNotVisible ? 0 : 0.5)}rem;
-    margin-bottom: ${({ isNotVisible }) => (isNotVisible ? 0 : 1.75)}rem;
+    margin: ${({ isNotVisible, $increasedMargin }) =>
+      getMwebMargin({ isNotVisible, $increasedMargin })};
     grid-row-gap: ${({ isNewVerticalsProductCard }) =>
       isNewVerticalsProductCard ? '1.5rem' : '2rem'};
 
@@ -274,6 +290,7 @@ const PopulateProducts: any = (props: any) => {
     isRankingExperimentResolving = false,
     showSightsCoveredItineraryLayout = false,
     showBoosters = false,
+    showLastMinFilters = false,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -886,7 +903,6 @@ const PopulateProducts: any = (props: any) => {
           containerClassName="product-card-skeleton-container"
         />
       </ProductContainer>
-
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional
@@ -911,6 +927,7 @@ const PopulateProducts: any = (props: any) => {
         isNewVerticalsProductCard={isNewVerticalsProductCard}
         isCruise={isCruisesRevamp}
         $noPadding={finalToursList?.length < 1}
+        $increasedMargin={!shouldShowHeading && !showLastMinFilters}
       >
         <Conditional if={finalToursList?.length > 0}>
           {finalToursList?.map((tour: Record<string, any>, index: number) => {
