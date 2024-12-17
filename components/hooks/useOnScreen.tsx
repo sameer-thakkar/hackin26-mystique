@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-interface OptionsTypes {
+export interface OptionsTypes {
   root?: Element;
   rootMargin?: string;
   threshold: number;

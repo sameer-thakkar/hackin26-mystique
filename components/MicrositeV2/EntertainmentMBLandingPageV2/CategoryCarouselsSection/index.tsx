@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
+import LazyComponent from 'components/common/LazyComponent';
 import {
   TCategoryCarouselsSection,
   TCategoryCarouselSwiperProps,
@@ -10,6 +11,7 @@ import {
 import {
   CategoriesSectionWrapper,
   CategoryCarousel,
+  LazyComponentWrapper,
   TitleRow,
 } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection/styles';
 import VerticalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard';
@@ -136,7 +138,6 @@ export const CategoryCarouselSwiper = ({
 
   return (
     <CategoryCarousel
-      id={category.name}
       className="horizontally-aligned-child"
       key={category.id}
       ref={sectionRef}
@@ -191,13 +192,21 @@ const CategoryCarouselsSection = ({
       {categoriesToRender.map((category, categoryNumber) => {
         if (category.ranking.popularity.length === 0) return null;
         return (
-          <CategoryCarouselSwiper
-            key={categoryNumber}
-            category={category}
-            allTours={allTours}
-            isMobile={isMobile}
-            index={categoryNumber}
-          />
+          <LazyComponentWrapper id={category.name} key={categoryNumber}>
+            <LazyComponent
+              options={{
+                rootMargin: '-50px',
+                threshold: 0.01,
+              }}
+            >
+              <CategoryCarouselSwiper
+                category={category}
+                allTours={allTours}
+                isMobile={isMobile}
+                index={categoryNumber}
+              />
+            </LazyComponent>
+          </LazyComponentWrapper>
         );
       })}
     </CategoriesSectionWrapper>

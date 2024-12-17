@@ -6,6 +6,10 @@ import Conditional from 'components/common/Conditional';
 import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl, getBlurDataUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
+import {
+  checkIfBroadwayMBLandingPage,
+  checkIfLTTMBLandingPage,
+} from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import InfoIcon from 'assets/infoIcon';
@@ -66,7 +70,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
   },
   ref
 ) => {
-  const { isMobile } = useRecoilValue(appAtom);
+  const { isMobile, uid } = useRecoilValue(appAtom);
+
   // Loading a lower quality image by reducing the dimensions.
   let calculatedWidth = width,
     calculatedHeight = height,
@@ -82,7 +87,9 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
       calculatedWidth = Number(height) * (widthRatio / heightRatio);
   }
 
-  const multiplier = loadHigherQualityImageProp ? 1.5 : 1;
+  const isEntMbLP =
+    checkIfLTTMBLandingPage(uid) || checkIfBroadwayMBLandingPage(uid);
+  const multiplier = isEntMbLP ? 1.25 : loadHigherQualityImageProp ? 1.5 : 1;
 
   calculatedWidth = (calculatedWidth as number) * multiplier;
   calculatedHeight = (calculatedHeight as number) * multiplier;

@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { SwiperOptions } from 'swiper';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
+import LazyComponent from 'components/common/LazyComponent';
 import Reviews from 'components/common/Reviews';
 import BrowseByCategoriesSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection';
 import CategoryCarouselsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection';
@@ -10,7 +11,9 @@ import { TLandingPageV2Props } from 'components/MicrositeV2/EntertainmentMBLandi
 import SpecialSections from 'components/MicrositeV2/EntertainmentMBLandingPageV2/SpecialSections';
 import {
   LandingPageWrapper,
+  ReviewSectionLazyWrapper,
   ReviewSectionWrapper,
+  SpecialSectionsLazyWrapper,
 } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/style';
 import TopShowsSection from 'components/MicrositeV2/EntertainmentMBLandingPageV2/TopShowsSection';
 import { TMediaData } from 'components/NewsPage/ArticlePage/interface';
@@ -205,20 +208,25 @@ const EntertainmentMBLandingPageV2 = ({
         directTgid={directTgid}
         showBrowseByCategories={false}
       />
-      <SpecialSections
-        allTours={allTours}
-        isMobile={isMobile}
-        title={strings.ENTERTAINMENT_MB_LANDING_PAGE.LAST_MINUTE_TICKETS}
-        actions={lastMinuteActions}
-        updateActions={setLastMinuteActions}
-        totalNumberOfShows={50}
-        maxNumberOfShows={20}
-        seeAllCardText="show tickets available"
-        preselectedActionName={lastMinuteActions?.[0]?.actionName}
-        hideSeeAll={true}
-        useForcedSekeltonLoaders
-        id="Last minute"
-      />
+
+      <SpecialSectionsLazyWrapper id="Last minute">
+        <LazyComponent>
+          <SpecialSections
+            allTours={allTours}
+            isMobile={isMobile}
+            title={strings.ENTERTAINMENT_MB_LANDING_PAGE.LAST_MINUTE_TICKETS}
+            actions={lastMinuteActions}
+            updateActions={setLastMinuteActions}
+            totalNumberOfShows={50}
+            maxNumberOfShows={20}
+            seeAllCardText="show tickets available"
+            preselectedActionName={lastMinuteActions?.[0]?.actionName}
+            hideSeeAll={true}
+            useForcedSekeltonLoaders
+          />
+        </LazyComponent>
+      </SpecialSectionsLazyWrapper>
+
       <CategoryCarouselsSection
         categoriesToRender={categoriesToRender.slice(
           0,
@@ -227,18 +235,31 @@ const EntertainmentMBLandingPageV2 = ({
         allTours={allTours}
         isMobile={isMobile}
       />
+
       <Conditional if={!collectionReviewsError}>
-        <ReviewSectionWrapper id="review-section-wrapper">
-          <Reviews
-            heading={strings.ENTERTAINMENT_MB_LANDING_PAGE.LOVED_BY_MILLIONS}
-            reviews={{ reviewsData: collectionReviews, mediaData }}
-            isMobile={isMobile}
-            mediaData={[]}
-            overrideSwiperProps={swiperParams}
-            trackingObject={reviewSectionViewedTrackingObject}
-          />
-        </ReviewSectionWrapper>
+        <ReviewSectionLazyWrapper>
+          <LazyComponent
+            options={{
+              rootMargin: '-50px',
+              threshold: 0.01,
+            }}
+          >
+            <ReviewSectionWrapper id="review-section-wrapper">
+              <Reviews
+                heading={
+                  strings.ENTERTAINMENT_MB_LANDING_PAGE.LOVED_BY_MILLIONS
+                }
+                reviews={{ reviewsData: collectionReviews, mediaData }}
+                isMobile={isMobile}
+                mediaData={[]}
+                overrideSwiperProps={swiperParams}
+                trackingObject={reviewSectionViewedTrackingObject}
+              />
+            </ReviewSectionWrapper>
+          </LazyComponent>
+        </ReviewSectionLazyWrapper>
       </Conditional>
+
       <CategoryCarouselsSection
         categoriesToRender={categoriesToRender.slice(
           NUMBER_OF_CATEGORIES_BEFORE_REVIEWS

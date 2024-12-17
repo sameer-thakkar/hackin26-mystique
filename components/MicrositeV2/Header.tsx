@@ -2,6 +2,7 @@ import React, {
   ComponentType,
   FocusEvent,
   FunctionComponent,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -517,6 +518,17 @@ const Header: FunctionComponent<HeaderProps> = ({
 
   const [scrollPos, setScrollPos] = useState(0);
 
+  const scrollHandler = () => {
+    setScrollPos(window.scrollY);
+
+    if (window.scrollY > 20) setHasScrolled(true);
+    else setHasScrolled(false);
+
+    if (window.scrollY > 450) setShowBuyTickets(true);
+    else setShowBuyTickets(false);
+  };
+  const throttledScrollHandler = useCallback(throttle(scrollHandler, 500), []);
+
   const handleResults = (results: any) => {
     setResults(results);
     setDisplaySearchResults(results.length > 0);
@@ -602,38 +614,10 @@ const Header: FunctionComponent<HeaderProps> = ({
     if (!window) return;
     const isMobile = window.innerWidth <= 800;
     setIsMobileDevice(isMobile);
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (window.scrollY > 20) {
-          setHasScrolled(true);
-        } else {
-          setHasScrolled(false);
-        }
-
-        if (window.pageYOffset > 450) {
-          setShowBuyTickets(true);
-        } else {
-          setShowBuyTickets(false);
-        }
-      },
-      { passive: true }
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!window) return;
-    const scrollHandler = () => {
-      setScrollPos(window.pageYOffset);
-    };
-    const throttledScrollHandler = throttle(scrollHandler, 500);
     window.addEventListener('scroll', throttledScrollHandler, {
       passive: true,
     });
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-    };
-  }, [scrollPos]);
+  }, []);
 
   const handleHamburgerClick = () => {
     toggleNav((navActive) => !navActive);

@@ -151,3 +151,10 @@ export const TitleRow = styled.div`
     }
   }
 `;
+
+export const LazyComponentWrapper = styled.div`
+  min-height: 462.5px;
+  @media (max-width: 768px) {
+    min-height: 342.5px;
+  }
+`;

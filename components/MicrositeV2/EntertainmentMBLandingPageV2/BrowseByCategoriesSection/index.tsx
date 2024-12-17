@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { TBrowseByCategoriesSection } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection/interface';
 import {
@@ -8,6 +8,7 @@ import {
   CategoryWrapper,
 } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection/style';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 import { metaAtom } from 'store/atoms/meta';
 import { ENTERTAINMENT_CATEGORIES } from 'const/entertainmentCategories';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
@@ -42,6 +43,7 @@ const BrowseByCategoriesSection = forwardRef<
     ref
   ) => {
     const pageMetaData = useRecoilValue(metaAtom);
+    const setLazyLoadOverride = useSetRecoilState(lazyLoadOverrideAtom);
 
     const [activeCategoryName, setActiveCategoryName] = useState(
       ENTERTAINMENT_CATEGORIES.top.name
@@ -184,9 +186,13 @@ const BrowseByCategoriesSection = forwardRef<
           $isActive={activeCategoryName === name && !showGridUI}
           $showGridUI={showGridUI}
           key={index}
-          onClick={() =>
-            onCategoryClicked(name, categoryChipsToAddAtTheStart.length + index)
-          }
+          onClick={() => {
+            setLazyLoadOverride(true);
+            onCategoryClicked(
+              name,
+              categoryChipsToAddAtTheStart.length + index
+            );
+          }}
           id={`pill-${name}`}
         >
           <span className="icon">{currentIcon}</span>

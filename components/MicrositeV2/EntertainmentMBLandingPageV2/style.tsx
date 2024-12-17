@@ -35,8 +35,6 @@ export const LandingPageWrapper = styled.div`
 
 export const ReviewSectionWrapper = styled.div`
   padding: 0rem;
-  margin: 4rem 0;
-  background: linear-gradient(116deg, #f2eeff 0%, #ffeaf4 97.94%);
 
   & h5,
   & h4 {
@@ -128,5 +126,24 @@ export const ReviewSectionWrapper = styled.div`
         transform: translateX(0.75rem);
       }
     }
+  }
+`;
+
+export const SpecialSectionsLazyWrapper = styled.div`
+  min-height: 757px;
+
+  @media (max-width: 768px) {
+    min-height: 464.5px;
+  }
+`;
+
+export const ReviewSectionLazyWrapper = styled.div`
+  min-height: 473px;
+  margin-bottom: 4rem;
+  background: linear-gradient(116deg, #f2eeff 0%, #ffeaf4 97.94%);
+
+  @media (max-width: 768px) {
+    min-height: 394px;
+    margin: 2rem 0 4rem;
   }
 `;

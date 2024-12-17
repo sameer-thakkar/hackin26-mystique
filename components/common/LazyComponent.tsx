@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactNode, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import useOnScreen from 'hooks/useOnScreen';
+import useOnScreen, { OptionsTypes } from 'hooks/useOnScreen';
 import { appAtom } from 'store/atoms/app';
 import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 
@@ -12,17 +12,20 @@ const PlaceHolder = styled.div``;
 type TLazyComponentProps = PropsWithChildren<{
   target?: 'BOT' | 'USER' | 'BOTH' | 'NONE';
   placeHolderHeight?: string;
+  options?: OptionsTypes;
 }>;
 
 const LazyComponent = ({
   children,
   target = 'USER',
   placeHolderHeight = DEFAULT_PLACEHOLDER_HEIGHT,
+  options,
 }: TLazyComponentProps) => {
   const lazyElementRef = useRef<HTMLDivElement>(null);
   const isIntersecting = useOnScreen({
     ref: lazyElementRef,
     unobserve: true,
+    options,
   });
   const { isBot } = useRecoilValue(appAtom);
   const overrideLazyLoading = useRecoilValue(lazyLoadOverrideAtom);
