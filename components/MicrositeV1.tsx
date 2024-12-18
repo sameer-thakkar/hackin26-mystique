@@ -79,6 +79,7 @@ import {
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
+  YARRA_CRUISE_UID,
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
@@ -330,13 +331,30 @@ const MicrositeV1 = (props: any) => {
   const { template } = productCardData || {};
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
+
+  const {
+    isEligible: isCruisesExpEligible,
+    isExperimentResolving: isCruisesExpResolving,
+    variant: cruisesVariant,
+  } = useABTesting({
+    experimentId: 'CRUISES_REVAMP',
+    noTrack: false,
+    customEligibilityCheckFn: () => YARRA_CRUISE_UID === uid,
+  });
+
+  const showCruisesFormatForYarra =
+    isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
   const showCruisesFormat =
     CRUISES_REVAMP_UIDS.includes(uid) ||
+    showCruisesFormatForYarra ||
     template === TEMPLATES.CRUISES ||
     !!cruiseFormatTest;
   const currentLanguage = getLangObject(lang).code;
   const showLastMinFilters =
-    isA1orC1MB(taggedMbType) && isMobile && !isAirportTransfersMB;
+    isA1orC1MB(taggedMbType) &&
+    isMobile &&
+    !isAirportTransfersMB &&
+    !showCruisesFormat;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -381,7 +399,8 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () => isMobile && isHOHO,
   });
 
-  const showHohoRevamp = hohoExperimentVariant === VARIANTS.CONTROL;
+  const showHohoRevamp =
+    shouldRunHohoRevampExperiment && hohoExperimentVariant === VARIANTS.CONTROL;
 
   const {
     isEligible: isBoosterExpEligible,
@@ -926,6 +945,7 @@ const MicrositeV1 = (props: any) => {
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
   if (
+    (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&

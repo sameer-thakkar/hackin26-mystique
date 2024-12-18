@@ -360,9 +360,9 @@ const NewVerticalsProductCard = (props: any) => {
                   {...(isCruisesRevamp && {
                     itineraryInfo: {
                       isCruise: isCruisesRevamp,
-                      isMealCruise: MEALS_SUBCAT_IDS?.includes(
-                        primarySubCategory?.id
-                      ),
+                      isMealCruise:
+                        MEALS_SUBCAT_IDS?.includes(primarySubCategory?.id) &&
+                        itineraryDetails?.cruiseMenus?.length,
                       itineraryData: itineraryInfo?.data,
                     },
                   })}

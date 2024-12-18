@@ -2320,6 +2320,8 @@ export const CRUISES_REVAMP_UIDS = [
   'www.bangkok-river-cruise.com',
 ];
 
+export const YARRA_CRUISE_UID = 'www.tickets-melbourne.com.yarra-river-cruises';
+
 export const CRUISES_ILLUSTRATION =
   'https://cdn-imgix-open.headout.com/MB/assets/cruise-banner-fixed.svg';
 
