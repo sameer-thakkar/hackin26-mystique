@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ChevronDown from 'assets/chevronDown';
 
 export type TChevron = {
@@ -20,14 +20,15 @@ const StyledChevron = styled.div<TChevron>`
     transform-origin: center;
   }
 
-  ${({ isActive, activeCursor = true }) => {
+  ${({ isActive }) => {
     return isActive
-      ? `
-    svg {
-        transform: rotate(0deg) scaleY(-1); 
-      }
-    cursor ${activeCursor ? `pointer` : `not-allowed`};`
-      : 'cursor: pointer;';
+      ? css`
+          svg {
+            transform: rotate(0deg) scaleY(-1);
+          }
+          cursor: pointer;
+        `
+      : '';
   }}
 `;
 

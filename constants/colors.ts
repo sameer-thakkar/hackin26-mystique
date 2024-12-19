@@ -151,6 +151,7 @@ const COLORS = {
   CHINESE_BLACK: '#150029',
   MISC: {
     FADED_WHITE: '#FFFFFF4D',
+    GREEN: '#078842',
   },
   metadata: {
     generated: 'Tue Jun 15 2021 13:18:23 GMT+0530 (India Standard Time)',

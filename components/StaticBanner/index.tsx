@@ -5,6 +5,8 @@ import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
+import { QnA } from 'components/QnA/LfcQnA/components/LfcDWebSection/components/QnaLfcDwebRow/types';
+import QnASnippetSection from 'components/QnA/QnASnippetSection';
 import {
   AverageRatingWrapper,
   BannerDisclaimerText,
@@ -57,6 +59,37 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
+interface Customer {
+  name: string;
+  profileImageUrl: string | null;
+}
+
+export interface Question {
+  id: number;
+  content: string;
+  tag: string;
+}
+
+export interface Answer {
+  content: string;
+  rating: number;
+  customer: Customer;
+  timestamp: string;
+}
+
+export interface QnAEntry<
+  T extends Question = Question,
+  U extends Answer = Answer
+> {
+  question: T;
+  answers: U[];
+}
+
+export interface QnAContainer<T extends QnAEntry = QnAEntry> {
+  type: string;
+  qna: T[];
+}
+
 type StaticBannerProps = {
   bannerHeading: string;
   bannerImages: Array<{ url: string; alt: string }>;
@@ -88,6 +121,10 @@ type StaticBannerProps = {
   id?: string;
   forceMobile?: boolean;
   isCruisesRevamp?: boolean;
+  qnaSnippets?: QnA[];
+  qnaSections?: QnAContainer[];
+  showQnaExperiment?: boolean;
+  collectionId?: number;
 };
 
 type CollectionVideo = {
@@ -172,6 +209,10 @@ const StaticBanner = ({
   forceMobile = false,
   bannerDisclaimerText,
   isCruisesRevamp = false,
+  qnaSnippets,
+  qnaSections,
+  showQnaExperiment = false,
+  collectionId,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -438,6 +479,14 @@ const StaticBanner = ({
             </InfoContainer>
           </Conditional>
         </ContentContainer>
+        <Conditional if={isMobile && showQnaExperiment}>
+          <QnASnippetSection
+            isMobile
+            qnaSnippets={qnaSnippets ?? []}
+            qnaSections={qnaSections ?? []}
+            collectionId={collectionId}
+          />
+        </Conditional>
 
         <Conditional if={!isMobile}>
           <MediaContainer

@@ -50,6 +50,7 @@ export const Tab = styled.div<{
     active ? `color: ${COLORS.TEXT.PURPS_3};` : ` border-color: transparent;`};
   transform: translateY(1px);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export const Panel = styled.div`
@@ -129,14 +130,14 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
   }, []);
 
   return (
-    <TabWrapper>
-      <TabControl>
+    <TabWrapper className="tab-wrapper">
+      <TabControl className="tabs-container">
         {tabs.map((tab, index) => (
           <Tab
             active={index === activeTab}
             key={`tab${index + 1}`}
             onClick={() => setTab(index)}
-            className="tab"
+            className={`tab ${index === activeTab && 'active-tab'}`}
           >
             {tab.header}
           </Tab>

@@ -45,6 +45,8 @@ export type TMicrositeDocument = MicrositeDocument & {
     baseLangCustomBanner?: Record<string, any>;
   };
   subattractionsContentPageData?: Record<string, any>;
+  qnaSnippets?: Record<string, any>;
+  qnaSections?: Record<string, any>;
 };
 
 export type TResolvedDocumentResponseM<T> = {

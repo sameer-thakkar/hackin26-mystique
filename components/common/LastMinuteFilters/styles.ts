@@ -125,11 +125,11 @@ export const FiltersContainer = styled.div`
 `;
 
 export const FiltersWrapper = styled.div`
-  padding: 0.7rem 0;
+  padding: 1.5rem 0 1.25rem 0;
   margin-bottom: 1rem;
   background: white;
   position: sticky;
-  top: 0px;
+  top: -25px;
   z-index: 10;
   &.sticky {
     box-shadow: 0px 4px 8px 0px #0000001f;

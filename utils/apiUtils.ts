@@ -119,6 +119,8 @@ export enum HeadoutEndpoints {
   GeoLocateCity,
   BulkItineraries,
   GuestCount,
+  QnaSnippets,
+  QnaSections,
 }
 
 const endPointsOnNewCDN = [
@@ -145,6 +147,8 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.TourGroupReviewMedias,
   HeadoutEndpoints.Collection,
   HeadoutEndpoints.GeoLocateCity,
+  HeadoutEndpoints.QnaSnippets,
+  HeadoutEndpoints.QnaSections,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -259,6 +263,12 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.GeoLocateCity:
       endpointSlug = `/api/tours/v2/geolocate/city`;
+      break;
+    case HeadoutEndpoints.QnaSnippets:
+      endpointSlug = `/api/v2/collections/${id}/qna/snippets/`;
+      break;
+    case HeadoutEndpoints.QnaSections:
+      endpointSlug = `/api/v2/collections/${id}/qna/sections/`;
       break;
     case HeadoutEndpoints.GuestCount:
       endpointSlug = `/api/v1/guest-count/`;
@@ -1669,6 +1679,49 @@ export const getCatSubcatDescriptors = async ({
     const response = await fetch(endpoint);
     const bannerDescriptors = await response.json();
     return bannerDescriptors;
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+    return {};
+  }
+};
+
+export const getQnaSnippets = async ({
+  collectionId,
+}: {
+  collectionId: string | number;
+}) => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.QnaSnippets,
+    id: collectionId,
+  });
+
+  try {
+    const response = await fetch(apiUrl);
+    const qnaSnippets = await response.json();
+    return qnaSnippets.result;
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+    return {};
+  }
+};
+
+export const getQnaSections = async ({
+  collectionId,
+}: {
+  collectionId: string | number;
+}) => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.QnaSections,
+    id: collectionId,
+  });
+  try {
+    const response = await fetch(apiUrl);
+    const qnaSections = await response.json();
+    return qnaSections.result;
   } catch (error) {
     sendLog({
       err: error,

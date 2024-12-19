@@ -1410,6 +1410,16 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   REVIEW_SECTION_HEADER: 'What our guests say',
   TRUST_VB_TAG: 'Verified booking',
   SNAPSHOTS_SECTION_HEADER: 'Snapshots from our guests',
+  SEE_MORE_RESPONSES: 'See more responses',
+  SEE_ALL_RESPONSES: 'See all responses',
+  HIDE_RESPONSES: 'Hide responses',
+  GUEST_QNA: 'Guest Q&A',
+  GUEST_IMPRESSIONS: 'Guest impressions',
+  VIEW_ALL_QNA: 'View all Q/As',
+  EXPLORE_ALL: 'Explore all',
+  EXPLORE_MORE_QUESTIONS: 'Explore more questions',
+  GUESTS: 'guests',
+  CONTRIBUTORS: 'contributors',
 };
 
 export default en;

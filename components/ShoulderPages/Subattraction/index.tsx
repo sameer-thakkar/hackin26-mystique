@@ -1,4 +1,4 @@
-import { Key, useState } from 'react';
+import React, { Children, Key, ReactNode, useState } from 'react';
 import Modal from 'react-modal';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
@@ -354,7 +354,7 @@ const SubattractionPage = ({
       </Conditional>
       <Conditional
         if={
-          parentProductCards.length &&
+          React.Children.count(parentProductCards) > 0 &&
           subattraction_type === SUBATTRACTION_TYPE.A
         }
       >
@@ -378,11 +378,15 @@ const SubattractionPage = ({
               </Conditional>
             </Row>
           </Navigation>
-          <Swiper {...swiperParams} breakpoints={SWIPER_BREAKPOINTS}>
-            {parentProductCards.map((Product: any, index: Key) => (
-              <ProductContainer key={index}>{Product}</ProductContainer>
-            ))}
-          </Swiper>
+          <Conditional if={parentProductCards}>
+            <Swiper {...swiperParams} breakpoints={SWIPER_BREAKPOINTS}>
+              {
+                Children.map(parentProductCards, (Product: any, index: Key) => (
+                  <ProductContainer key={index}>{Product}</ProductContainer>
+                )) as ReactNode[]
+              }
+            </Swiper>
+          </Conditional>
         </SwiperWrapper>
       </Conditional>
       <Conditional

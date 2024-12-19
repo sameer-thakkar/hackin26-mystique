@@ -1,4 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
@@ -52,6 +58,7 @@ import { expandFontToken } from 'const/typography';
 import PercentageStamp from 'assets/percentageStamp';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
+import QnASnippetSection from './QnA/QnASnippetSection/index';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 import CustomBanner from './CustomBanner';
 
@@ -290,6 +297,10 @@ const PopulateProducts: any = (props: any) => {
     isRankingExperimentResolving = false,
     showSightsCoveredItineraryLayout = false,
     showBoosters = false,
+    qnaSnippets,
+    qnaSections,
+    collectionId,
+    showQnaExperiment,
     showLastMinFilters = false,
   } = props;
 
@@ -876,6 +887,14 @@ const PopulateProducts: any = (props: any) => {
     );
   }
 
+  if (availableToursList.length > 1 && !isMobile && showQnaExperiment) {
+    availableToursList = [
+      ...availableToursList.slice(0, 1),
+      { showQnaExperiment },
+      ...availableToursList.slice(1),
+    ];
+  }
+
   return (
     <StyledProductsWrapper
       isLoading={showLoader}
@@ -926,40 +945,56 @@ const PopulateProducts: any = (props: any) => {
         isNotVisible={showLoader}
         isNewVerticalsProductCard={isNewVerticalsProductCard}
         isCruise={isCruisesRevamp}
-        $noPadding={finalToursList?.length < 1}
+        $noPadding={availableToursList?.length < 1}
         $increasedMargin={!shouldShowHeading && !showLastMinFilters}
       >
-        <Conditional if={finalToursList?.length > 0}>
-          {finalToursList?.map((tour: Record<string, any>, index: number) => {
-            const bannerIndex = Number(
-              baseLangCustomBanner?.position_index ||
-                customBanner?.position_index
-            );
-            const RenderedCustomBanner = customBanner?.position_index && (
-              <CustomBanner
-                variant={customBanner?.banner_variant}
-                ctaLabel={customBanner?.cta_label}
-                ctaUrl={customBanner?.cta_url?.url}
-                headingTitle={customBanner?.heading_title?.[0]?.text}
-                subtitle={customBanner?.subtitle?.[0]?.text}
-                mediaLink={customBanner?.media_link?.url}
-                insideCards
-              />
-            );
-            return (
-              <>
-                <Conditional if={bannerIndex === index}>
-                  {RenderedCustomBanner}
-                </Conditional>
-                {getProductCardFromTourAndIndex(tour, index)}
-                <Conditional
-                  if={bannerIndex > index && index == finalToursList.length - 1}
-                >
-                  {RenderedCustomBanner}
-                </Conditional>
-              </>
-            );
-          })}
+        <Conditional if={availableToursList?.length > 0}>
+          {availableToursList?.map(
+            (tour: Record<string, any>, index: number) => {
+              const bannerIndex = Number(
+                baseLangCustomBanner?.position_index ||
+                  customBanner?.position_index
+              );
+              const RenderedCustomBanner = customBanner?.position_index && (
+                <CustomBanner
+                  variant={customBanner?.banner_variant}
+                  ctaLabel={customBanner?.cta_label}
+                  ctaUrl={customBanner?.cta_url?.url}
+                  headingTitle={customBanner?.heading_title?.[0]?.text}
+                  subtitle={customBanner?.subtitle?.[0]?.text}
+                  mediaLink={customBanner?.media_link?.url}
+                  insideCards
+                />
+              );
+              if (index === 1 && !isMobile && showQnaExperiment) {
+                return (
+                  <QnASnippetSection
+                    key={index}
+                    isMobile={isMobile}
+                    qnaSnippets={qnaSnippets}
+                    qnaSections={qnaSections}
+                    collectionId={collectionId}
+                  />
+                );
+              }
+              return (
+                <>
+                  <Conditional if={bannerIndex === index}>
+                    {RenderedCustomBanner}
+                  </Conditional>
+                  {getProductCardFromTourAndIndex(tour, index)}
+                  <Conditional
+                    if={
+                      bannerIndex > index &&
+                      index == availableToursList.length - 1
+                    }
+                  >
+                    {RenderedCustomBanner}
+                  </Conditional>
+                </>
+              );
+            }
+          )}
         </Conditional>
       </ProductContainer>
       <Conditional

@@ -11,6 +11,7 @@ import {
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
 } from 'utils';
+import { getQnaSections, getQnaSnippets } from 'utils/apiUtils';
 import { checkIfCatOrSubCatPage } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import {
@@ -260,6 +261,17 @@ const getMicrositeDocument = async ({
             baseLangMicrositeData,
           });
         }
+        const qnaSnippets = await getQnaSnippets({
+          collectionId: Number(
+            baseLangCategorisationMetadata.tagged_collection
+          ),
+        });
+
+        const qnaSections = await getQnaSections({
+          collectionId: Number(
+            baseLangCategorisationMetadata?.tagged_collection
+          ),
+        });
 
         const transformedData: TMicrositeDocument = {
           ...micrositeData,
@@ -298,6 +310,8 @@ const getMicrositeDocument = async ({
             mbType: tagged_mb_type,
           },
           subattractionsContentPageData,
+          qnaSnippets: qnaSnippets || [],
+          qnaSections: qnaSections || [],
         };
 
         return {

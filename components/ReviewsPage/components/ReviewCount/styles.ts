@@ -62,7 +62,7 @@ export const VerticalSeparator = styled.div`
 
 export const RatingStarsWrapper = styled.div`
   display: flex;
-  gap: 0.25rem;
+  gap: 0.125rem;
   margin-bottom: 1rem;
 
   svg,

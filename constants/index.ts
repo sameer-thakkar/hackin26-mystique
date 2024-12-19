@@ -677,6 +677,22 @@ export const ANALYTICS_EVENTS = {
   REVIEWS_MEDIA_PREVIEWED: 'Reviews Media Previewed',
   REVIEWS_MEDIA_SCROLLED: 'Reviews Media Scrolled',
   STORY_MODE_CLOSED: 'Story Mode Closed',
+  QNA_EVENTS: {
+    QNA_BANNER_CLICKED: 'QnA Banner Clicked',
+    QNA_TAB_CLICKED: 'QnA Tab Clicked',
+    SEE_MORE_RESPONSES_CLICKED: 'See More Responses Clicked',
+    HIDE_RESPONSES_CLICKED: 'Hide Responses Clicked',
+    QUESTION_CLICKED: 'Question Clicked',
+    VIEW_MORE_QNAS_CLICKED: 'View More QnAs Clicked',
+    READ_MORE_CLICKED: 'Read More Clicked',
+    READ_LESS_CLICKED: 'Read Less Clicked',
+    QNA_VIEWED: 'QnA Viewed',
+    QNA_MODAL_OPENED: 'QnA Modal Opened',
+    QNA_MODAL_CLOSED: 'QnA Modal Closed',
+    QNA_CARDS_SCROLL: 'QnA Scroll',
+    VIEW_ALL_CTA_CLICKED: 'View All CTA Clicked',
+    QNA_BANNER_VIEWED: 'QnA Banner Viewed',
+  },
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1181,6 +1197,9 @@ export const ANALYTICS_PROPERTIES = {
   IS_MUST_DO_EXP: 'Is Must Do Experience Present',
   NUM_OF_BOOSTER: 'Number of Booster',
   CHEVRON_SCROLLED: 'Chevron Scrolled',
+  FLOW_TYPE: 'Flow Type',
+  QUESTION_RANK: 'Question Rank',
+  QUESTION_TEXT: 'Question Text',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
@@ -2263,6 +2282,14 @@ export const LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS = [
   'catacombs.tickets-paris.fr',
 ];
 
+export const QNA_EXP_UIDS = [
+  'www.pompeii-tickets.com',
+  'www.paristickets.com.eiffel-tower',
+  'www.tickets-rome.com.colosseum',
+  'www.thevaticantickets.com',
+  'www.acropolis-tickets.com',
+];
+
 export const ENTERTAINMENT_CATEGORIES = [
   'Musicals',
   'Plays',
@@ -2442,4 +2469,12 @@ export const IMAGE_GALLERY_DIMENSIONS = {
       width: 76,
     },
   },
+};
+
+export const UID_TO_COUNT_MAPPING = {
+  'www.acropolis-tickets.com': 500,
+  'www.tickets-rome.com.colosseum': 500,
+  'www.paristickets.com.eiffel-tower': 300,
+  'www.pompeii-tickets.com': 750,
+  'www.thevaticantickets.com': 1200,
 };

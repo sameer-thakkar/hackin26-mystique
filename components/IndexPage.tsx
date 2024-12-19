@@ -205,6 +205,10 @@ const Page = (props: PageProps) => {
   const CMSData =
     CMSContent?.subattractionsContentPageData?.CMSContent?.data ||
     CMSContent?.data;
+
+  const { qna: qnaSnippets } = CMSContent?.qnaSnippets || [];
+  const { sections: qnaSections } = CMSContent?.qnaSections || [];
+
   const {
     isEligible: isSubattractionsExpEligible,
     variant: subattractionsExpVariant,
@@ -388,6 +392,8 @@ const Page = (props: PageProps) => {
               subcategoryDescriptors={subcategoryDescriptors}
               isEntertainmentBanner={isEntertainmentBanner}
               bannerTrustBoosters={bannerTrustBoosters}
+              qnaSnippets={qnaSnippets}
+              qnaSections={qnaSections}
               isRankingExperimentResolving={isRankingExperimentResolving}
               isNotUsingAutomatedRanking={
                 rankingExperimentVariant !== 'Treatment'

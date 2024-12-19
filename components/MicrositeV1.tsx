@@ -12,6 +12,7 @@ import LastMinuteFilters from 'components/common/LastMinuteFilters';
 import LazyComponent from 'components/common/LazyComponent';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
+import LfcQna from 'components/QnA/LfcQnA';
 import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -76,6 +77,7 @@ import {
   MB_TYPES,
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
+  QNA_EXP_UIDS,
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
@@ -212,6 +214,8 @@ const MicrositeV1 = (props: any) => {
     subcategoryDescriptors,
     isEntertainmentBanner,
     bannerTrustBoosters,
+    qnaSnippets,
+    qnaSections,
     isRankingExperimentResolving,
     isNotUsingAutomatedRanking = true,
   } = props;
@@ -355,6 +359,22 @@ const MicrositeV1 = (props: any) => {
     isMobile &&
     !isAirportTransfersMB &&
     !showCruisesFormat;
+
+  const {
+    isEligible: isQnaExpEligible,
+    isExperimentResolving: isQnaExpResolving,
+    variant: qnaExpVariant,
+  } = useABTesting({
+    experimentId: 'QNA_EXPERIMENT',
+    customEligibilityCheckFn: () =>
+      QNA_EXP_UIDS.includes(uid) && (lang === 'en-us' || lang === 'en'),
+  });
+
+  const showQnaExperiment =
+    qnaExpVariant === VARIANTS.TREATMENT &&
+    isQnaExpEligible &&
+    qnaSections?.length &&
+    qnaSnippets?.length;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -852,6 +872,13 @@ const MicrositeV1 = (props: any) => {
     bannerImageData?.resourceEntityMedias?.[0]?.medias
   );
 
+  const qnaExperimentData = {
+    qnaSnippets: showQnaExperiment ? qnaSnippets : [],
+    qnaSections: showQnaExperiment ? qnaSections : [],
+    collectionId: collectionDetails?.id,
+    showQnaExperiment,
+  };
+
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -898,6 +925,7 @@ const MicrositeV1 = (props: any) => {
         isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
       }
       showLastMinFilters={showLastMinFilters}
+      {...qnaExperimentData}
     />
   );
 
@@ -946,6 +974,7 @@ const MicrositeV1 = (props: any) => {
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
   if (
+    (isQnaExpEligible && isQnaExpResolving) ||
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
@@ -1249,6 +1278,7 @@ const MicrositeV1 = (props: any) => {
                 : null
             }
             isCruisesRevamp={showCruisesFormat}
+            {...qnaExperimentData}
           />
         </Conditional>
         <Conditional if={showLastMinFilters}>
@@ -1345,6 +1375,14 @@ const MicrositeV1 = (props: any) => {
           <AirportTransferLFAndStaticContent
             isMobile={isMobile}
             content={contentFWSlices}
+          />
+        </Conditional>
+
+        <Conditional if={showQnaExperiment}>
+          <LfcQna
+            qnaSections={qnaExperimentData.qnaSections}
+            isMobile={isMobile}
+            collectionId={qnaExperimentData.collectionId}
           />
         </Conditional>
 

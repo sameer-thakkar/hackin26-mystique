@@ -25,6 +25,7 @@ const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const RANKING_EXPERIMENT_V3_REVENUE = 'Ranking Experiment V3 Revenue';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
+const QNA_EXPERIMENT = 'Q&A Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
@@ -38,6 +39,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LTD_LP_Experiment,
   MIXPANEL_SESSION_REPLAY,
   PRODUCT_CARD_VIDEO,
+  QNA_EXPERIMENT,
   RANKING_EXPERIMENT_V3_REVENUE,
   SEATMAP_EXPERIMENT,
   SUBATTRACTIONS_EXPERIMENT,
@@ -103,6 +105,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     PRODUCT_CARD_VIDEO,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
+  ),
+  [QNA_EXPERIMENT]: new Experiment(
+    QNA_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
   ),
   [RANKING_EXPERIMENT_V3_REVENUE]: new Experiment(
     RANKING_EXPERIMENT_V3_REVENUE,

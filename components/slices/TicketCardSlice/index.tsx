@@ -183,6 +183,7 @@ const TicketCard = (props: any) => {
     enableEarliestAvailability: true,
   });
 
+  // @ts-ignore
   if (!parentProductCards?.length && !orderedTours?.length && !scorpioData)
     return null;
 
