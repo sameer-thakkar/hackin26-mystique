@@ -67,6 +67,7 @@ import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { ItineraryProvider } from 'contexts/ItineraryContext';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
+import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { createBookingURL, isGuidedTourSubcategory } from 'utils';
@@ -100,12 +101,14 @@ import { addQueryParams } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CATEGORY_IDS,
   CRUISE_CATEGORY_ID,
   CRUISE_FORMAT_SUBCAT_IDS,
+  DESCRIPTORS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   PRODUCT_CARD_REVAMP,
   SIDEBAR_TYPES,
@@ -277,6 +280,7 @@ const Product = (props: any) => {
     showBoosters = false,
     isPopUpOnly = false,
     onPopupClosed,
+    isFlexiCancellationExperimentTriggered,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
@@ -587,6 +591,32 @@ const Product = (props: any) => {
     });
   };
 
+  const trackFlexibleCancellationPolicyHover = () => {
+    const { listingPrice } = tourPrices[tgid] ?? {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.TOOLTIP_VIEWED,
+      [ANALYTICS_PROPERTIES.TOOLTIP_TYPE]: 'Flexible Cancellation',
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+  };
+
   const trackItineraryEntrypoint = () => {
     const { listingPrice } = tourPrices[tgid] ?? {};
     const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
@@ -795,6 +825,56 @@ const Product = (props: any) => {
       onMoreDetailsClick();
     }
   }, [isShortcodePopup]);
+
+  const isProductCardVisible = useOnScreen({
+    ref: productRef,
+    unobserve: true,
+  });
+
+  const {
+    isEligible: isEligibleForFlexiCancellationExperiment,
+    variant: flexiCancellationExperimentVariant,
+  } = useABTesting({
+    experimentId: 'FLEXIBLE_CANCELLATION_EXPERIMENT',
+    customEligibilityCheckFn: () => {
+      const isFlexiCancellationProduct = descriptorsList?.some(
+        (d: string) => d === DESCRIPTORS.FLEXIBLE_CANCELLATION
+      );
+
+      const isFreeCancellationProduct = descriptorsList?.some(
+        (d: string) => d === DESCRIPTORS.FREE_CANCELLATION
+      );
+
+      const isFlexiCancellableNonFreeProduct =
+        isFlexiCancellationProduct && !isFreeCancellationProduct;
+
+      return isFlexiCancellableNonFreeProduct && !isMobile;
+    },
+    noTrack: true,
+  });
+
+  useEffect(() => {
+    if (
+      isEligibleForFlexiCancellationExperiment &&
+      !isFlexiCancellationExperimentTriggered.current &&
+      isProductCardVisible
+    ) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          EXPERIMENT_NAMES.FLEXIBLE_CANCELLATION_EXPERIMENT,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
+          flexiCancellationExperimentVariant,
+      });
+
+      isFlexiCancellationExperimentTriggered.current = true;
+    }
+  }, [
+    flexiCancellationExperimentVariant,
+    isEligibleForFlexiCancellationExperiment,
+    isFlexiCancellationExperimentTriggered,
+    isProductCardVisible,
+  ]);
 
   const boosterTypeIfShown = useMemo(() => {
     const boosterInfo = showBoosters && checkForBooster(uid, tgid);
@@ -1117,6 +1197,9 @@ const Product = (props: any) => {
       ? showCustomProductCardCTA
       : undefined,
     isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
+    cancellationInsuranceVariant: isEligibleForFlexiCancellationExperiment
+      ? flexiCancellationExperimentVariant ?? undefined
+      : undefined,
   });
 
   const onSidePanelClose = () => {
@@ -1722,6 +1805,12 @@ const Product = (props: any) => {
                 }
                 cancellationPolicy={cancellationPolicy}
                 cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
+                flexibleCancellationHoverCallBack={
+                  trackFlexibleCancellationPolicyHover
+                }
+                showFlexiCancellationDescriptor={
+                  flexiCancellationExperimentVariant === VARIANTS.TREATMENT
+                }
                 showGuidedTourDescriptor={showGuidedTourDescriptor}
                 forceMobile={forceMobile}
               />
@@ -1916,6 +2005,12 @@ const Product = (props: any) => {
                     cancellationPolicy={cancellationPolicy}
                     cancellationPolicyHoverCallBack={
                       trackCancellationPolicyHover
+                    }
+                    flexibleCancellationHoverCallBack={
+                      trackFlexibleCancellationPolicyHover
+                    }
+                    showFlexiCancellationDescriptor={
+                      flexiCancellationExperimentVariant === VARIANTS.TREATMENT
                     }
                     isMobile={isPopup ? originalIsMobile : isMobile}
                     showGuidedTourDescriptor={showGuidedTourDescriptor}

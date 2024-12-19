@@ -39,6 +39,7 @@ export type TProductDescriptors = {
   showLanguages?: boolean;
   cancellationPolicy?: string;
   cancellationPolicyHoverCallBack?: () => void;
+  flexibleCancellationHoverCallBack?: () => void;
   showIcons?: boolean;
   isMobile?: boolean;
   showGuidedTourDescriptor?: boolean;
@@ -46,6 +47,7 @@ export type TProductDescriptors = {
   allowClick?: boolean;
   forceMobile?: boolean;
   children?: React.ReactNode;
+  showFlexiCancellationDescriptor?: boolean;
 };
 
 export type TProductHighlightTabs = {

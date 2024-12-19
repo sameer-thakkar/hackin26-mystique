@@ -170,6 +170,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TRANSFERS: 'Transfer inklusive',
     MULTILINGUAL_AUDIO_GUIDE: 'Mehrsprachiger Audioguide',
     LIVE_GUIDE: 'Live-Reiseleiter',
+    FLEXIBLE_CANCELLATION: 'Flexible Stornierung',
   },
   DURATION: 'Dauer',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
@@ -1302,6 +1303,25 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     COMBO_HEADING: 'Mehr für weniger: Kombideals und City Cards',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Gegen eine geringe Gebühr können Sie die Buchung bis zu 24 Stunden vor Beginn des Erlebnisses stornieren und eine volle Rückerstattung erhalten.',
+    KNOW_MORE: 'Weitere Infos',
+    FULL_REFUND: 'Volle Rückerstattung',
+    INSTANT: 'Sofort',
+    NO_QUESTIONS: 'Bedingungslos',
+    TNC: 'Nutzungshinweise',
+    ELIGIBILITY:
+      'Berechtigung: Bei der Buchung muss die Flexible Stornierung ausgewählt und erworben werden.',
+    CANCELLATION_DEADLINE:
+      'Stornierungsfrist: Die Buchung kann bis zu 24 Stunden vor Beginn des Erlebnisses storniert werden.',
+    REFUND_AMOUNT:
+      'Erstattung: Es wird der gezahlte Buchungsbetrag (abzüglich der Gebühr für die Flexible Stornierung) erstattet.',
+    NON_TRANSFERABLE: 'Nicht übertragbar: Nur für diese Buchung gültig.',
+    GUIDELINES:
+      'Richtlinien: Die Flexible Stornierung wird ungültig, wenn das Ticket vor der Stornierung ganz oder teilweise eingelöst bzw. verwendet wird. In solchen Fällen gelten die allgemeinen Stornierungsbedingungen und es wird keine zusätzliche Rückerstattung gewährt.',
+  },
   TRUST_TOOLTIP_HEADER: 'Wie sammeln wir Bewertungen?',
   TRUST_TOOLTIP_CONTENT:
     'Bewertungen werden von echten Headout-Nutzern gesammelt, die ihr Erlebnis mit uns gebucht und abgeschlossen haben.',

@@ -152,6 +152,7 @@ const it = {
     TRANSFERS: 'Trasferimenti inclusi',
     MULTILINGUAL_AUDIO_GUIDE: 'Audio-guida in più lingue',
     LIVE_GUIDE: 'Guida dal vivo',
+    FLEXIBLE_CANCELLATION: 'Cancellazione flessibile',
   },
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Prima disponibilità',
@@ -1299,6 +1300,25 @@ const it = {
     COMBO_HEADING: 'Scopri di più e risparmia: offerte combinate e city card',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Se cancelli la tua esperienza con 24 ore di anticipo, riceverai un rimborso completo (al netto di una piccola commissione).',
+    KNOW_MORE: 'Scopri di più',
+    FULL_REFUND: 'Rimborso completo',
+    INSTANT: 'Operazione immediata',
+    NO_QUESTIONS: 'Nessuna domanda',
+    TNC: 'Termini e condizioni',
+    ELIGIBILITY:
+      'Idoneità: la cancellazione flessibile deve essere selezionata e acquistata al momento della prenotazione.',
+    CANCELLATION_DEADLINE:
+      "Termine di cancellazione: la prenotazione può essere cancellata fino a 24 ore prima dell'inizio dell'esperienza.",
+    REFUND_AMOUNT:
+      "Importo del rimborso: riceverai un rimborso dell'importo della prenotazione originariamente pagato (meno la tassa di protezione per la cancellazione).",
+    NON_TRANSFERABLE: 'Non trasferibile: vale solo per questa prenotazione.',
+    GUIDELINES:
+      "Linee guida: il piano si annulla se l'ospite riscatta o utilizza una parte del biglietto prima della cancellazione. In questi casi si applicano le politiche di cancellazione standard e non è previsto alcun rimborso aggiuntivo.",
+  },
   TRUST_TOOLTIP_HEADER: 'Come raccogliamo le recensioni?',
   TRUST_TOOLTIP_CONTENT:
     'Le recensioni sono state scritte da clienti reali, che hanno prenotato la loro esperienza su Headout.',

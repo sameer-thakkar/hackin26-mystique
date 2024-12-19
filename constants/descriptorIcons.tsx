@@ -724,9 +724,27 @@ export const boatSvg = () => {
   );
 };
 
+const shieldSVG = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.00033 14.6666C8.00033 14.6666 13.3337 11.9999 13.3337 7.99992V3.33325L8.00033 1.33325L2.66699 3.33325V7.99992C2.66699 11.9999 8.00033 14.6666 8.00033 14.6666Z"
+      stroke="#444444"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
+  FLEXIBLE_CANCELLATION: shieldSVG,
   DURATION: ClockSvg,
   INSTANT_CONFIRMATION: quickSvg,
   MOBILE_TICKET: phoneSvg,

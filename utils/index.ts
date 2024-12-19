@@ -245,6 +245,7 @@ type TCreateBookingUrl = {
   showFullScreenPax?: boolean;
   showCustomCheckoutCTA?: boolean;
   isHOHORevamp?: boolean;
+  cancellationInsuranceVariant?: string;
 };
 
 export const createBookingURL = ({
@@ -265,6 +266,7 @@ export const createBookingURL = ({
   showFullScreenPax = false,
   showCustomCheckoutCTA,
   isHOHORevamp,
+  cancellationInsuranceVariant,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -357,6 +359,13 @@ export const createBookingURL = ({
     urlObject.searchParams.set(
       'showHOHORevamp',
       isHOHORevamp ? VARIANTS.CONTROL : VARIANTS.TREATMENT
+    );
+  }
+
+  if (cancellationInsuranceVariant) {
+    urlObject.searchParams.set(
+      'cancellationInsuranceVariant',
+      cancellationInsuranceVariant
     );
   }
 

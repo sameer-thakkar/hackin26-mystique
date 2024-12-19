@@ -171,6 +171,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TRANSFERS: 'Transfers included',
     MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
     LIVE_GUIDE: 'Live guide',
+    FLEXIBLE_CANCELLATION: 'Flexible cancellation',
   },
   DURATION: 'Duration',
   EARLIEST_AVAILABILITY: 'Earliest availability',
@@ -1401,6 +1402,25 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FIND_YOUR_RIDE: 'Find your perfect ride',
     FIND_YOUR_RIDE_SUBTEXT:
       'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
+  },
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Get full refund for a small fee if you cancel 24 hours before the experience start time.',
+    KNOW_MORE: 'Know more',
+    FULL_REFUND: 'Full refund',
+    INSTANT: 'Instant',
+    NO_QUESTIONS: 'No questions asked',
+    TNC: 'Terms and conditions',
+    ELIGIBILITY:
+      'Eligibility: The Flexible cancellation plan must be selected and purchased at the time of booking.',
+    CANCELLATION_DEADLINE:
+      'Cancellation deadline: Booking can be cancelled up to 24 hours before the experience start time.',
+    REFUND_AMOUNT:
+      'Refund amount: You’ll receive a refund of the original paid booking amount (minus the cancellation protection charge). ',
+    NON_TRANSFERABLE: 'Non-Transferable: Valid for this booking only.',
+    GUIDELINES:
+      'Guidelines: This plan becomes void if the guest redeems or uses any part of the ticket before cancellation. In such cases, standard cancellation policies apply, and no additional refund will be given.',
   },
   AGGREGATED_COUNTRIES:
     'Guests from <strong>{0}</strong> and <strong>over {1} countries</strong> have loved this experience',

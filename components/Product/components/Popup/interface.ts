@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { CSSProperties, MutableRefObject } from 'react';
 
 export type TController = {
   open: (startingIndex?: number) => void;
@@ -12,5 +12,9 @@ export type TPopupProps = {
   scrollToSection?: (index: number) => Promise<void>;
   slideUp?: boolean;
   onStateChange?: (isOpen: boolean) => void;
+  styles?: {
+    content?: CSSProperties;
+    overlay?: CSSProperties;
+  };
   defaultOpen?: boolean;
 };

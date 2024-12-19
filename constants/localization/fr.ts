@@ -171,6 +171,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TRANSFERS: 'Navettes incluses',
     MULTILINGUAL_AUDIO_GUIDE: 'Audioguide multilingue',
     LIVE_GUIDE: 'Guide en personne',
+    FLEXIBLE_CANCELLATION: 'Annulation flexible',
   },
   DURATION: 'Durée',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
@@ -1315,6 +1316,26 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     REVIEW_SECTION_HEADER: 'Les avis de nos voyageurs',
     TRUST_VB_TAG: 'Réservation vérifiée',
     SNAPSHOTS_SECTION_HEADER: 'Photos de nos client·e·s',
+  },
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      "Vous serez remboursé·e intégralement, moyennant une petite somme, si vous annulez votre expérience 24 heures à l'avance.",
+    KNOW_MORE: 'En savoir plus',
+    FULL_REFUND: 'Remboursement intégral',
+    INSTANT: 'Immédiat',
+    NO_QUESTIONS: 'Sans poser de question',
+    TNC: "Conditions d'utilisation",
+    ELIGIBILITY:
+      "Éligibilité : Le programme d'annulation flexible doit être sélectionné et acheté au moment de la réservation.",
+    CANCELLATION_DEADLINE:
+      "Délai d'annulation : Les réservations peuvent être annulées jusqu'à 24 heures avant le début de l'expérience.",
+    REFUND_AMOUNT:
+      "Montant du remboursement : Vous recevrez un remboursement du montant initial de la réservation (moins les frais de protection en cas d'annulation).",
+    NON_TRANSFERABLE:
+      'Ne peut être transféré : Valable pour cette réservation uniquement.',
+    GUIDELINES:
+      "Instructions : Le programme est annulé si la personne utilise une partie du billet avant l'annulation. Dans ce cas, les politiques d'annulation standard s'appliquent et aucun remboursement supplémentaire ne sera accordé.",
   },
 };
 export default fr;

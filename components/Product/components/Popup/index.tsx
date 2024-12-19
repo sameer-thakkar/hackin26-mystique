@@ -20,6 +20,7 @@ const Popup = ({
   scrollToSection,
   slideUp,
   onStateChange,
+  styles,
   defaultOpen = false,
 }: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
@@ -85,6 +86,8 @@ const Popup = ({
       ...(isHarryPotterPage && {
         cursor: `url("${DEFAULT_MAGIC_WAND}") 0 0, auto`,
       }),
+
+      ...(styles?.overlay ?? {}),
     },
     content: {
       maxWidth: 792,
@@ -104,6 +107,8 @@ const Popup = ({
             transform: `scale(${isVisible ? 1 : 0.8})`,
             transition: 'all .5s cubic-bezier(0.7, 0, 0.3, 1)',
           }),
+
+      ...(styles?.content ?? {}),
     },
   };
 

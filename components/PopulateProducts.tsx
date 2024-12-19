@@ -321,6 +321,8 @@ const PopulateProducts: any = (props: any) => {
   const router = useRouter();
   const { isBot } = useRecoilValue(appAtom);
 
+  const isFlexiCancellationExperimentTriggered = useRef(false);
+
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const updateIndex = useCallback(() => {
@@ -858,6 +860,9 @@ const PopulateProducts: any = (props: any) => {
             {...childProps}
             showThumbnailInBanner={showThumbnailInBanner}
             nonNewVerticalIndex={nonNewVerticalIndex}
+            isFlexiCancellationExperimentTriggered={
+              isFlexiCancellationExperimentTriggered
+            }
           />
         )}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

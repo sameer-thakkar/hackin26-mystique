@@ -672,6 +672,7 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
   EXPERIENCE_PAX_UPDATED: 'Experience PAX Updated',
   MIXPANEL_SESSION_REPLAY: 'Mixpanel Session Replay',
+  POPUP_VIEWED: 'Popup Viewed',
   GUEST_SNAPSHOT_CLICKED: 'Guest Snapshot Clicked',
   STORY_MODE_OPENED: 'Story Mode Opened',
   REVIEWS_MEDIA_PREVIEWED: 'Reviews Media Previewed',
@@ -774,6 +775,7 @@ export const DESCRIPTORS = {
   GUIDED_TOUR: 'GUIDED_TOUR',
   TRANSFERS: 'TRANSFERS',
   AUDIO_GUIDE: 'AUDIO_GUIDE',
+  FLEXIBLE_CANCELLATION: 'FLEXIBLE_CANCELLATION',
 };
 
 export const MICROSITE_OBJECT_KEYS = [
@@ -1196,6 +1198,7 @@ export const ANALYTICS_PROPERTIES = {
   IS_SELLING_FAST: 'Is Selling Fast Present',
   IS_MUST_DO_EXP: 'Is Must Do Experience Present',
   NUM_OF_BOOSTER: 'Number of Booster',
+  POPUP_TYPE: 'Popup Type',
   CHEVRON_SCROLLED: 'Chevron Scrolled',
   FLOW_TYPE: 'Flow Type',
   QUESTION_RANK: 'Question Rank',

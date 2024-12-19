@@ -171,6 +171,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TRANSFERS: 'Inclui translado',
     MULTILINGUAL_AUDIO_GUIDE: 'Audioguia multilíngue',
     LIVE_GUIDE: 'Guia presencial',
+    FLEXIBLE_CANCELLATION: 'Cancelamento flexível',
   },
   DURATION: 'Duração',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
@@ -1313,6 +1314,25 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     REVIEW_SECTION_HEADER: 'Avaliações de participantes',
     TRUST_VB_TAG: 'Reserva verificada',
     SNAPSHOTS_SECTION_HEADER: 'Fotos para os nossos clientes',
+  },
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Receba reembolso total por uma pequena taxa se você cancelar dentro de 24 horas antes do início da experiência.',
+    KNOW_MORE: 'Saiba mais',
+    FULL_REFUND: 'Reembolso total',
+    INSTANT: 'Em instantes',
+    NO_QUESTIONS: 'Sem questionamentos',
+    TNC: 'Termos e condições',
+    ELIGIBILITY:
+      'Elegibilidade: o plano de cancelamento flexível deve ser selecionado e comprado no momento da reserva.',
+    CANCELLATION_DEADLINE:
+      'Prazo de cancelamento: a reserva pode ser cancelada até 24 horas antes do início da experiência.',
+    REFUND_AMOUNT:
+      'Valor do reembolso: você receberá o reembolso do valor original pago na reserva (subtraindo a taxa de proteção em caso de cancelamento).',
+    NON_TRANSFERABLE: 'Intransferível: válido apenas para esta reserva.',
+    GUIDELINES:
+      'Diretrizes: o plano se torna inválido se o cliente validar ou utilizar qualquer parte do ingresso antes do cancelamento. Nesses casos, aplicam-se as políticas de cancelamento padrão e nenhum reembolso adicional será concedido.',
   },
 };
 export default pt;

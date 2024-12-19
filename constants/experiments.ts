@@ -25,6 +25,7 @@ const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const RANKING_EXPERIMENT_V3_REVENUE = 'Ranking Experiment V3 Revenue';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
+const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const QNA_EXPERIMENT = 'Q&A Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
@@ -33,6 +34,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   CRUISES_REVAMP,
   DAY_TRIPS_LISTICLE,
+  FLEXIBLE_CANCELLATION_EXPERIMENT,
   HOHO_REVAMP_PARIS_BARCELONA,
   LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
@@ -73,6 +75,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   ),
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
+  ),
+  [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
+    FLEXIBLE_CANCELLATION_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
   ),

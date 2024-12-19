@@ -172,6 +172,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TRANSFERS: 'Traslados incluidos',
     MULTILINGUAL_AUDIO_GUIDE: 'Audioguía multilingüe',
     LIVE_GUIDE: 'Guía en directo',
+    FLEXIBLE_CANCELLATION: 'Cancelación flexible',
   },
   DURATION: 'Duración',
   EARLIEST_AVAILABILITY: 'Siguiente disponible',
@@ -1366,6 +1367,25 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     REVIEW_SECTION_HEADER: 'Reseñas de viajeros/as',
     TRUST_VB_TAG: 'Reserva verificada',
     SNAPSHOTS_SECTION_HEADER: 'Fotos de nuestros viajeros',
+  },
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Si cancelas tu experiencia con 24 horas de antelación, recibirás el reembolso íntegro a cambio de un pequeño recargo.',
+    KNOW_MORE: 'Más información',
+    FULL_REFUND: 'Reembolso completo',
+    INSTANT: 'Instantáneo',
+    NO_QUESTIONS: 'Sin condiciones',
+    TNC: 'Términos y condiciones',
+    ELIGIBILITY:
+      'Requisitos: el plan de cancelación flexible debe seleccionarse en el momento de la reserva.',
+    CANCELLATION_DEADLINE:
+      'Plazo de cancelación: la reserva se puede cancelar hasta 24 horas antes de la hora de inicio de la experiencia.',
+    REFUND_AMOUNT:
+      'Importe del reembolso: recibirás el reembolso del importe original de la reserva (menos los gastos de protección por cancelación).',
+    NON_TRANSFERABLE: 'Intransferible: válido solo para esta reserva.',
+    GUIDELINES:
+      'Normativa: el plan queda anulado si el participante canjea o utiliza cualquier parte de la entrada antes de la cancelación. En este caso, se aplicarán las políticas de cancelación habituales y no se efectuará ningún reembolso adicional.',
   },
 };
 export default es;

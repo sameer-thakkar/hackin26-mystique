@@ -170,6 +170,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TRANSFERS: 'Transfers inbegrepen',
     MULTILINGUAL_AUDIO_GUIDE: 'Meertalige audiogids',
     LIVE_GUIDE: 'Live gids',
+    FLEXIBLE_CANCELLATION: 'Flexibele annulering',
   },
   DURATION: 'Looptijd',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
@@ -1265,6 +1266,25 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     REVIEW_SECTION_HEADER: 'Wat onze gasten zeggen',
     TRUST_VB_TAG: 'Geverifieerde boeking',
     SNAPSHOTS_SECTION_HEADER: 'Snapshots van onze gasten',
+  },
+
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Je krijgt het volledige bedrag terug, tegen een kleine vergoeding, als je je belevenis 24 uur van tevoren annuleert.',
+    KNOW_MORE: 'Meer informatie',
+    FULL_REFUND: 'Volledige terugbetaling',
+    INSTANT: 'Onmiddellijk',
+    NO_QUESTIONS: 'Geen vragen',
+    TNC: 'Gebruiksvoorwaarden',
+    ELIGIBILITY:
+      'Voorwaarden: het flexibele annuleringsprogramma moet worden geselecteerd en gekocht op het moment van boeken.',
+    CANCELLATION_DEADLINE:
+      'Annuleringsperiode: boekingen kunnen tot 24 uur voor aanvang van de belevenis worden geannuleerd.',
+    REFUND_AMOUNT:
+      'Terugbetalingsbedrag: je ontvangt het oorspronkelijke boekingsbedrag terug (minus eventuele kosten voor annuleringsbescherming).',
+    NON_TRANSFERABLE: 'Niet overdraagbaar: alleen geldig voor deze boeking.',
+    GUIDELINES:
+      'Instructies: het programma wordt geannuleerd als de persoon een deel van het ticket gebruikt voor de annulering. In dit geval zijn de standaard annuleringsvoorwaarden van toepassing en wordt er geen verdere restitutie gegeven.',
   },
 };
 export default nl;
