@@ -435,7 +435,8 @@ export const getBannerSubtext = async (
         return (
           getBannerAndFooterSubtext(
             baseLangIsPoiMb,
-            baseLangBannerAndFooterCombinations
+            baseLangBannerAndFooterCombinations,
+            banner_subtext
           ) || ''
         );
       }
@@ -450,13 +451,14 @@ export const getBannerSubtext = async (
 };
 
 export const getFooterSubtext = async (
-  { type }: PrismicDocumentWithUID,
+  { type, data }: PrismicDocumentWithUID,
   baseLangIsPoiMb: boolean,
   baseLangBannerAndFooterCombinations: string,
   baseLangMbType: string,
   disclaimer: string
 ) => {
   const isCollectionMicrobrand = isCollectionMB(baseLangMbType);
+  const { banner_subtext: customBannerSubtext } = data || {};
 
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
@@ -464,7 +466,8 @@ export const getFooterSubtext = async (
       if (isCollectionMicrobrand)
         return getBannerAndFooterSubtext(
           baseLangIsPoiMb,
-          baseLangBannerAndFooterCombinations
+          baseLangBannerAndFooterCombinations,
+          customBannerSubtext
         );
       else return disclaimer;
 

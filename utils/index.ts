@@ -736,8 +736,10 @@ export const isA1orC1MB = (mbType: string | null) =>
 
 export const getBannerAndFooterSubtext = (
   baseLangIsPoiMb: boolean | null,
-  baseLangBannerAndFooterCombinations: string
+  baseLangBannerAndFooterCombinations: string,
+  customBannerSubtext?: string
 ) => {
+  if (baseLangIsPoiMb && customBannerSubtext) return customBannerSubtext;
   if (baseLangIsPoiMb) {
     switch (baseLangBannerAndFooterCombinations) {
       case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_SENSITIVE:

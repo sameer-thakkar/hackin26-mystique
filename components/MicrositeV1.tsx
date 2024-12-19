@@ -253,7 +253,7 @@ const MicrositeV1 = (props: any) => {
     attraction: attractionCMS,
     images: bannerImages,
     heading: bannerHeading,
-    banner_subtext: bannerSubtext,
+    banner_subtext: customBannerSubtext,
     banner_cta_text: bannerCtaText,
     auto_banner: autoBanner,
     hide_banner_cta: hideBannerCTA,
@@ -825,7 +825,8 @@ const MicrositeV1 = (props: any) => {
   };
   const bannerAndFooterSubText = getBannerAndFooterSubtext(
     baseLangIsPoiMb,
-    baseLangBannerAndFooterCombinations
+    baseLangBannerAndFooterCombinations,
+    customBannerSubtext
   );
   const firstProduct = orderedTgids?.[0];
   const { primarySubCategory: firstProductSubCategory } =
@@ -1198,7 +1199,7 @@ const MicrositeV1 = (props: any) => {
             bannerImages={finalBannerImages || null}
             bannerHeading={bannerHeading || null}
             bannerCtaText={bannerCtaText || null}
-            bannerSubtext={bannerSubtext}
+            bannerSubtext={customBannerSubtext}
             // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
