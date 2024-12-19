@@ -117,14 +117,14 @@ export const BuyButtonWrapper = styled.div`
 `;
 
 export const RiveCtaWrapper = styled.div`
-  width: 100%;
-  height: 3rem;
   cursor: pointer;
+  position: absolute;
+  transform: translateY(-3rem);
 `;
 
 export const riveComponentStyles: CSSProperties = {
   position: 'absolute',
-  width: '28.5rem',
+  width: '28.9rem',
   height: '4.375rem',
-  transform: 'translateX(-7.5rem)',
+  transform: 'translateX(-7.75rem)',
 };

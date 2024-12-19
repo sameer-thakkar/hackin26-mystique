@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 import { Button, Text } from '@headout/eevee';
 import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
-import DeferredComponent from 'components/common/DeferredComponent';
 import HorizontalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard';
 import { TShowPagePricingSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/interface';
 import {
@@ -215,38 +214,20 @@ const ShowPagePricingSection = ({
               </div>
             </Pricing>
             <BuyButtonWrapper>
+              <Button
+                tabIndex={0}
+                as="button"
+                btnType="primary"
+                onClick={onCheckAvailabilityClicked}
+                primaryText={buyButtonText}
+                size="medium"
+                state={buttonType}
+                variant="primary"
+              />
               <Conditional if={isLionKingPage}>
-                <DeferredComponent
-                  renderPlaceholder={
-                    <Button
-                      tabIndex={0}
-                      as="button"
-                      btnType="primary"
-                      onClick={onCheckAvailabilityClicked}
-                      primaryText={buyButtonText}
-                      size="medium"
-                      state={buttonType}
-                      variant="primary"
-                    />
-                  }
-                  delay={5000}
-                >
-                  <RiveCTA
-                    onClick={onCheckAvailabilityClicked}
-                    primaryText={buyButtonText}
-                  />
-                </DeferredComponent>
-              </Conditional>
-              <Conditional if={!isLionKingPage}>
-                <Button
-                  tabIndex={0}
-                  as="button"
-                  btnType="primary"
+                <RiveCTA
                   onClick={onCheckAvailabilityClicked}
                   primaryText={buyButtonText}
-                  size="medium"
-                  state={buttonType}
-                  variant="primary"
                 />
               </Conditional>
             </BuyButtonWrapper>
