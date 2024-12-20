@@ -5,12 +5,15 @@ import { SIZES } from 'const/ui-constants';
 
 export const CardContainer = styled.div`
   max-width: ${SIZES.MAX_WIDTH};
-  margin: 0 auto;
+  margin: 56px auto 0;
+
   .prev-slide,
   .next-slide {
     top: 7.5rem;
   }
+
   padding: 0 0 2rem 0;
+
   .collection-image {
     img {
       height: 15rem;
@@ -21,10 +24,13 @@ export const CardContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 0 0 2.5rem 0;
+    margin-top: 40px;
+
     & > div {
       margin: 0;
       padding-left: 1.5rem;
     }
+
     .collection-image {
       img {
         height: 13rem;
