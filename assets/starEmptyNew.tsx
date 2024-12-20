@@ -1,10 +1,10 @@
-const StarEmptyNew = ({ fillColor }: any) => (
+const StarEmptyNew = ({ fillColor, size = 14 }: any) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
+    width={size}
+    height={size}
     fill="none"
-    viewBox="0 0 14 14"
+    viewBox={`0 0 ${size} ${size}`}
   >
     <path
       fill={fillColor}

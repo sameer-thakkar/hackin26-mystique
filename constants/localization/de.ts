@@ -1303,7 +1303,9 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     COMBO_HEADING: 'Mehr für weniger: Kombideals und City Cards',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
-
+  REVIEW_SECTION: {
+    HEADING: 'Unsere Gäste lieben Headout',
+  },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
       'Gegen eine geringe Gebühr können Sie die Buchung bis zu 24 Stunden vor Beginn des Erlebnisses stornieren und eine volle Rückerstattung erhalten.',

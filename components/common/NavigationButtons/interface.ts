@@ -3,4 +3,7 @@ export type TNavigationButtonProps = {
   showRightArrow: boolean;
   prevSlide?: () => void;
   nextSlide?: () => void;
+  buttonSize?: TButtonSize;
 };
+
+export type TButtonSize = 'small' | 'large';

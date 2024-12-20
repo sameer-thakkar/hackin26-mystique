@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
@@ -32,6 +33,7 @@ import {
 } from 'utils/productUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { addUrlParams } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -135,6 +137,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
   const [cardHeight, setCardHeight] = useState(0);
   const [isTabClickScroll, setIsTabClickScroll] = useState(false);
   const [isActive, setActive] = useState(false);
+  const { isBot } = useRecoilValue(appAtom);
 
   const { setDrawerState, pricingHeight, headerHeight } = useProductCard();
 
@@ -525,6 +528,7 @@ const DropdownContent: FC<DropdownContentProps> = ({
                     imageGalleryController={imageGalleryController}
                     getReviewMediaGlobalLocation={getReviewMediaGlobalLocation}
                     snapshotSectionProps={snapshotSectionProps}
+                    isBot={isBot}
                   />
                 </Conditional>
               </TabContent>

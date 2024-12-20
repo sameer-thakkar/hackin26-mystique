@@ -1000,15 +1000,15 @@ export const getUniqueRandomOutputs = ({
   return selectedOutputs;
 };
 
-export const getStars = (rating: number) => {
+export const getStars = (rating: number, size = 14) => {
   const stars = [];
   for (let i = 0; i < Math.floor(rating); i++) {
-    stars.push(StarFullNew({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarFullNew({ fillColor: COLORS.BRAND.CANDY, size }));
   }
   if (rating % 1 !== 0)
-    stars.push(StarHalfNew({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarHalfNew({ fillColor: COLORS.BRAND.CANDY, size }));
   for (let i = 0; i < 5 - Math.ceil(rating); i++) {
-    stars.push(StarEmptyNew({ fillColor: COLORS.BRAND.CANDY }));
+    stars.push(StarEmptyNew({ fillColor: COLORS.BRAND.CANDY, size }));
   }
   return stars;
 };

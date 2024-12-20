@@ -49,7 +49,7 @@ export const getCollectionReviewsPromise = async (
   });
 
   const collectionReviewsTgids = getCollectionReviewsTgid(
-    collectionReviewsData?.items
+    collectionReviewsData?.result?.reviews?.items
   );
 
   const mediaData = await fetchTourGroupMedia({

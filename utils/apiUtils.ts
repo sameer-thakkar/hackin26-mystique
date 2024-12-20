@@ -8,12 +8,7 @@ import {
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import {
-  COOKIE,
-  CUSTOM_HEADER,
-  MICROBRANDS_URL,
-  REVIEW_API_DOMAIN,
-} from 'const/index';
+import { COOKIE, CUSTOM_HEADER, MICROBRANDS_URL } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
@@ -100,6 +95,8 @@ export enum HeadoutEndpoints {
   CollectionTop,
   CollectionReviews,
   Category,
+  CategoryReviews,
+  SubCategoryReviews,
   CurrencyList,
   CalendarInventory,
   CityListV2,
@@ -137,6 +134,8 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.BulkPoiList,
   HeadoutEndpoints.CollectionPoi,
   HeadoutEndpoints.CollectionReviews,
+  HeadoutEndpoints.CategoryReviews,
+  HeadoutEndpoints.SubCategoryReviews,
   HeadoutEndpoints.Media,
   HeadoutEndpoints.NearbyCityList,
   HeadoutEndpoints.Banners,
@@ -232,7 +231,13 @@ export const getHeadoutApiUrl = ({
       endpointSlug = `/api/v1/media/`;
       break;
     case HeadoutEndpoints.CollectionReviews:
-      endpointSlug = `/api/v1/collection/${id}/reviews`;
+      endpointSlug = `/api/v2/collections/${id}/reviews`;
+      break;
+    case HeadoutEndpoints.CategoryReviews:
+      endpointSlug = `/api/v3/cities/${params?.cityId}/categories/${id}/reviews`;
+      break;
+    case HeadoutEndpoints.SubCategoryReviews:
+      endpointSlug = `/api/v3/cities/${params?.cityId}/subcategories/${id}/reviews`;
       break;
     case HeadoutEndpoints.Variants:
       endpointSlug = `/api/v7/tour-groups/variants`;
@@ -373,8 +378,23 @@ interface CollectionReviewsProps extends CommonApiProps {
   collectionId: number;
   limit?: string;
   offset?: string;
-  sortOrder?: 'DESC' | 'ASC';
   language?: string;
+}
+
+interface CategoryReviewsProps extends CommonApiProps {
+  categoryId: number;
+  cityId: string;
+  limit?: string;
+  offset?: string;
+  language?: string;
+}
+
+interface SubCategoryReviewsProps extends CommonApiProps {
+  subCategoryId: number;
+  limit?: string;
+  offset?: string;
+  language?: string;
+  cityId: string;
 }
 
 export const fetchTourGroupMedia = async ({
@@ -447,16 +467,13 @@ export const fetchCollectionReviews = async ({
   cookies = {},
   limit = '10',
   offset = '0',
-  sortOrder = 'DESC',
   language = 'EN',
 }: CollectionReviewsProps) => {
   try {
     const params = {
       limit,
       offset,
-      sortOrder,
       language,
-      domain: REVIEW_API_DOMAIN,
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.CollectionReviews,
@@ -464,12 +481,81 @@ export const fetchCollectionReviews = async ({
       id: collectionId,
     });
     const headers = constructHeaders({ cookies });
-
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCollectionReviews]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+export const fetchCategoryReviews = async ({
+  categoryId,
+  cookies = {},
+  limit = '10',
+  offset = '0',
+  language = 'EN',
+  cityId,
+}: CategoryReviewsProps) => {
+  try {
+    const params = {
+      limit,
+      offset,
+      language,
+      cityId,
+    };
+    let apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CategoryReviews,
+      params,
+      id: categoryId,
+    });
+    // This is done due to limitations with passing multiple params to getHeadoutApiUrl in this case: id and cityId
+    // removed the cityId here to avoid passing extra query params to BE
+    apiUrl = apiUrl.replace(/&cityId=[^&]*/, '');
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(apiUrl, { headers });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCollectionReviews]', error);
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+export const fetchSubCategoryReviews = async ({
+  subCategoryId,
+  cookies = {},
+  limit = '10',
+  offset = '0',
+  language = 'EN',
+  cityId,
+}: SubCategoryReviewsProps) => {
+  try {
+    const params = {
+      limit,
+      offset,
+      language,
+      cityId,
+    };
+    let apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.SubCategoryReviews,
+      params,
+      id: subCategoryId,
+    });
+    // This is done due to limitations with passing multiple params to getHeadoutApiUrl in this case: id and cityId
+    // removed the cityId here to avoid passing extra query params to BE
+    apiUrl = apiUrl.replace(/&cityId=[^&]*/, '');
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(apiUrl, { headers });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchSubCategoryReviews]', error);
     sendLog({
       err: error,
     });
@@ -1407,7 +1493,6 @@ export const fetchDomainConfig = async (uid: string) => {
   };
   try {
     const response = await fetch(url, requestOptions);
-
     return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console

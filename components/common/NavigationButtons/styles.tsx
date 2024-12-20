@@ -1,12 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
+import type { TButtonSize } from './interface';
 
 export const StyledNavigationArrowsContainer = styled.div`
   margin-left: 1rem;
   display: flex;
 `;
 
-export const StyledArrowButtonContainer = styled.button`
+export const StyledArrowButtonContainer = styled.button<{
+  $size?: TButtonSize;
+}>`
   cursor: pointer;
   width: 1.5rem;
   height: 1.5rem;
@@ -53,4 +56,16 @@ export const StyledArrowButtonContainer = styled.button`
       border-color: ${COLORS.GRAY.G6};
     }
   }
+
+  ${({ $size }) =>
+    $size === 'large' &&
+    css`
+      width: 2rem;
+      height: 2rem;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    `};
 `;

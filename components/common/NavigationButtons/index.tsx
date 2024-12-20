@@ -13,10 +13,12 @@ const NavigationButtons = ({
   showRightArrow,
   prevSlide,
   nextSlide,
+  buttonSize = 'small',
 }: TNavigationButtonProps) => {
   return (
     <StyledNavigationArrowsContainer>
       <StyledArrowButtonContainer
+        $size={buttonSize}
         disabled={!showLeftArrow}
         onClick={prevSlide}
         aria-label={strings.PREVIOUS}
@@ -25,6 +27,7 @@ const NavigationButtons = ({
         <LeftArrowSvg />
       </StyledArrowButtonContainer>
       <StyledArrowButtonContainer
+        $size={buttonSize}
         disabled={!showRightArrow}
         onClick={nextSlide}
         aria-label={strings.NEXT}

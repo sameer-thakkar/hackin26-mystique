@@ -17,4 +17,5 @@ export type TReviewSectionProps = {
   showReviews?: boolean;
   onImageClick?: (reviewId: string | number, localIndex: number) => void;
   snapshotSectionProps?: TSnapshotSectionProps;
+  numberOfReviewsToShow?: number;
 };

@@ -1267,6 +1267,9 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TRUST_VB_TAG: 'Geverifieerde boeking',
     SNAPSHOTS_SECTION_HEADER: 'Snapshots van onze gasten',
   },
+  REVIEW_SECTION: {
+    HEADING: 'Miljoenen zijn dol op Headout',
+  },
 
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

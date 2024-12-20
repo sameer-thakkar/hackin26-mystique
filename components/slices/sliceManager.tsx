@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Conditional from 'components/common/Conditional';
 import CustomBanner from 'components/CustomBanner';
 import GoogleMap from 'components/ShowPages/GoogleMap';
 import Background from './Background';
@@ -67,6 +68,10 @@ const StructuredCard = dynamic(
 );
 
 const Reviews = dynamic(() => import('./Reviews'));
+const ReviewsV2 = dynamic(
+  () =>
+    import(/* webpackChunkName: "ReviewsV2" */ 'components/common/ReviewsV2')
+);
 
 export const catOrSubCatPageSliceComponents = () => {
   return {
@@ -299,13 +304,25 @@ export const sliceComponents = () => {
       ),
     reviews: (props: any) =>
       sliceWrapper(
-        <Reviews
-          title={props.slice.primary.title}
-          type={props.slice.primary.type}
-          reviews={props.slice.items}
-          isMobile={props.context.isMobile}
-          showNewDesign={props.context.isHOHORevamp}
-        />,
+        <>
+          <Conditional if={props.slice.context?.isReviewsV2Enabled}>
+            <ReviewsV2
+              reviews={props.slice.items || []}
+              collectionDetails={props.slice.context?.collectionDetails}
+              categoryId={props.slice.context?.categoryId}
+              subCategoryId={props.slice.context?.subCategoryId}
+            />
+          </Conditional>
+          <Conditional if={!props.slice.context?.isReviewsV2Enabled}>
+            <Reviews
+              title={props.slice.primary.title}
+              type={props.slice.primary.type}
+              reviews={props.slice.items}
+              isMobile={props.context.isMobile}
+              showNewDesign={props.context.isHOHORevamp}
+            />
+          </Conditional>
+        </>,
         props
       ),
     ticket_card_shoulder_page: (props: any) => {

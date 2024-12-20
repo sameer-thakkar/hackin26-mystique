@@ -1252,6 +1252,9 @@ const pl = {
       RESET_ZOOM: 'Reset Zoom',
     },
   },
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+  },
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
   TRUST_TOOLTIP_CONTENT:
     'Recenzje są zbierane od prawdziwych użytkowników Headout, którzy zarezerwowali u nas wycieczkę i ją odbyli.',

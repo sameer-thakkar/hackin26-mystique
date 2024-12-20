@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { SwiperOptions } from 'swiper';
 import useSWR from 'swr';
+import type { TReview } from 'types/reviews';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';
 import Reviews from 'components/common/Reviews';
@@ -99,7 +100,11 @@ const EntertainmentMBLandingPageV2 = ({
   });
 
   let { data: collectionReviews, error: collectionReviewsError } = useSWR<{
-    items: Record<string, any>[];
+    result: {
+      reviews: {
+        items: TReview[];
+      };
+    };
   }>(collectionReviewsApiEndpoint, {
     fetcher: swrFetcher,
   });
@@ -136,9 +141,11 @@ const EntertainmentMBLandingPageV2 = ({
   }, [data]);
 
   useEffect(() => {
-    if (!collectionReviews) return;
+    if (!collectionReviews?.result?.reviews?.items?.length) return;
 
-    const resourceEntityMedias = collectionReviews.items.map(
+    const { items: reviewItems } = collectionReviews.result.reviews ?? {};
+
+    const resourceEntityMedias = reviewItems.map(
       (review: Record<string, any>) => ({
         resourceEntityId: review.tourGroup.id,
         medias: [
@@ -186,6 +193,8 @@ const EntertainmentMBLandingPageV2 = ({
   };
 
   const theatreName = COLLECTION_ID_THEATRE_NAMES_MAP[collectionId];
+
+  const { items: reviewItems } = collectionReviews?.result?.reviews ?? {};
 
   return (
     <LandingPageWrapper>
@@ -249,7 +258,7 @@ const EntertainmentMBLandingPageV2 = ({
                 heading={
                   strings.ENTERTAINMENT_MB_LANDING_PAGE.LOVED_BY_MILLIONS
                 }
-                reviews={{ reviewsData: collectionReviews, mediaData }}
+                reviews={{ reviewsData: reviewItems, mediaData }}
                 isMobile={isMobile}
                 mediaData={[]}
                 overrideSwiperProps={swiperParams}

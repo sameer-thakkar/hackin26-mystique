@@ -42,3 +42,19 @@ type TCategorisationMetadata = {
   subattractionParentCollectionId?: string;
   subattractionChildPoiId?: string;
 };
+
+type TCollectionDetails = {
+  averageRating: number;
+  cardImageUrl: string;
+  currency: string;
+  displayName: string;
+  heroImageUrl: string;
+  id: number;
+  listingPrice: number;
+  metaDescription: string;
+  ratingsCount: number;
+  videos: Array<{
+    url: string;
+    type: string;
+  }>;
+};

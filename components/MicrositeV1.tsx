@@ -215,6 +215,11 @@ const MicrositeV1 = (props: any) => {
     subcategoryDescriptors,
     isEntertainmentBanner,
     bannerTrustBoosters,
+    collectionReviews,
+    catSubCatReviews,
+    categoryId,
+    subCategoryId,
+    botReviewsByTGID,
     qnaSnippets,
     qnaSections,
     isRankingExperimentResolving,
@@ -925,6 +930,7 @@ const MicrositeV1 = (props: any) => {
       showBoosters={
         isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
       }
+      botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
       {...qnaExperimentData}
     />
@@ -1414,6 +1420,11 @@ const MicrositeV1 = (props: any) => {
                     isHOHORevamp={showHohoRevamp}
                     isAirportTransfersMB={isAirportTransfersMB}
                     isCatAndSubCatPage={isCatOrSubCatPage}
+                    collectionReviews={collectionReviews}
+                    catSubCatReviews={catSubCatReviews}
+                    collectionDetails={collectionDetails}
+                    categoryId={categoryId}
+                    subCategoryId={subCategoryId}
                   />
                 </Conditional>
               </InteractionContextProvider>

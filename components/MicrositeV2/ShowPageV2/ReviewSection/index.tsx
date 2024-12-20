@@ -93,11 +93,14 @@ const ReviewSection = ({
   showReviews = true,
   onImageClick,
   snapshotSectionProps,
+  numberOfReviewsToShow: numberOfReviewsToShowProp = 5,
 }: TReviewSectionProps) => {
   const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
     initialReviews || []
   );
-  const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(5);
+  const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(
+    numberOfReviewsToShowProp
+  );
   const { averageRating, ratingsCount, ratingsSplit } = reviewsDetails;
 
   const shortenedAverageRating = averageRating.toFixed(1);

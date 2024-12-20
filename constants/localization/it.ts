@@ -1300,6 +1300,9 @@ const it = {
     COMBO_HEADING: 'Scopri di più e risparmia: offerte combinate e city card',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
+  REVIEW_SECTION: {
+    HEADING: 'I nostri ospiti amano Headout',
+  },
 
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

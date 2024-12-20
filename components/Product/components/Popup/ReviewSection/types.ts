@@ -8,6 +8,8 @@ export type TReviewSectionProps = {
   topReviews?: TReviewMediasResponse['items'];
   tourGroupUrl?: string;
   showTitle?: boolean;
+  showExternalButton?: boolean;
+  isBot?: boolean;
 };
 
 export type TReviewSectionMobileProps = TReviewSectionProps & {

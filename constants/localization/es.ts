@@ -1368,7 +1368,9 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TRUST_VB_TAG: 'Reserva verificada',
     SNAPSHOTS_SECTION_HEADER: 'Fotos de nuestros viajeros',
   },
-
+  REVIEW_SECTION: {
+    HEADING: 'A millones de personas les encanta viajar con nosotros',
+  },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
       'Si cancelas tu experiencia con 24 horas de antelación, recibirás el reembolso íntegro a cambio de un pequeño recargo.',

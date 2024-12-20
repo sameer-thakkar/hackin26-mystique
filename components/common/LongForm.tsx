@@ -1,13 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { SliceZone } from '@prismicio/react';
+import { hostname } from 'os';
+import type { TReview } from 'types/reviews';
 import {
   catOrSubCatPageSliceComponents,
   sliceComponents,
 } from 'components/slices/sliceManager';
+import { MBContext } from 'contexts/MBContext';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
+import {
+  MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS,
+  MBS_REVIEWS_V2_ENABLED_DOMAINS,
+} from 'const/reviews';
 import { expandFontToken } from 'const/typography';
 import { SLICE_TYPES } from 'constants/index';
 
@@ -154,6 +161,23 @@ export const StyledLongForm = styled.div<{
 
 type TLongFormProps = {
   content: Array<any>;
+  collectionReviews?: {
+    result: {
+      reviews: {
+        items: Array<TReview>;
+        total: number;
+      };
+    };
+  };
+  catSubCatReviews?: {
+    result: {
+      reviews: {
+        items: Array<TReview>;
+        total: number;
+      };
+    };
+  };
+  collectionDetails?: any;
   isVenuePage?: boolean;
   isContentPage?: boolean;
   trackProductCardsViewed?: boolean;
@@ -163,14 +187,60 @@ type TLongFormProps = {
 };
 
 const LongForm = (longFormProps: TLongFormProps) => {
+  const { uid } = useContext(MBContext);
+
   const {
     content,
     isContentPage,
     trackProductCardsViewed,
     isCatAndSubCatPage,
     parentLandingPageUrl,
+    collectionReviews,
+    catSubCatReviews,
+    collectionDetails,
+    categoryId,
+    subCategoryId,
     ...props
   } = longFormProps;
+
+  const parsedContent = useMemo(() => {
+    const isReviewsV2Enabled =
+      MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid) ||
+      MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
+
+    const reviewsSliceIndex = content.findIndex(
+      (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.REVIEWS
+    );
+
+    const finalContent = [...content];
+    const reviewsV2Slice = {
+      slice_type: SLICE_TYPES.REVIEWS,
+      primary: {
+        heading: 'Reviews',
+        hide_slice: false,
+      },
+      context: {
+        isReviewsV2Enabled: true,
+        collectionDetails,
+        categoryId,
+        subCategoryId,
+      },
+      items:
+        Object.keys(collectionReviews?.result ?? {}).length &&
+        collectionReviews?.result?.reviews?.items?.length
+          ? collectionReviews?.result?.reviews?.items
+          : catSubCatReviews?.result?.reviews?.items,
+    };
+
+    if (isReviewsV2Enabled && reviewsSliceIndex === -1) {
+      finalContent.push(reviewsV2Slice);
+    } else if (isReviewsV2Enabled && reviewsSliceIndex !== -1) {
+      finalContent[reviewsSliceIndex] = reviewsV2Slice;
+    }
+
+    return finalContent;
+  }, [content, hostname]);
+
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
 
   const faqSectionExists = content?.some(
@@ -193,7 +263,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
       $isNewsPage={isNewsPage}
     >
       <SliceZone
-        slices={content}
+        slices={parsedContent}
         components={components}
         context={{
           ...props,

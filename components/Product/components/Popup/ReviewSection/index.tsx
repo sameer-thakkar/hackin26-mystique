@@ -8,6 +8,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import DiagonalArrow from 'assets/diagonalArrow';
 import TrustOverlay from './TrustElements/Overlay';
+import { MAX_REVIEW_COUNT } from './constants';
 import Gallery from './Gallery';
 import {
   StyledExternalLinkIcon,
@@ -21,6 +22,8 @@ const ReviewSection = ({
   tgid,
   topReviews = [],
   showTitle = true,
+  showExternalButton = true,
+  isBot = false,
 }: TReviewSectionProps) => {
   const {
     reviewMedias = [],
@@ -71,8 +74,8 @@ const ReviewSection = ({
           reviewsDetails={reviewsDetails}
           tgid={tgid}
           initialReviews={topReviews}
-          numberOfReviewsToFetchAtOnce={5}
-          maximumNumberOfReviews={25}
+          numberOfReviewsToFetchAtOnce={isBot ? MAX_REVIEW_COUNT : 5}
+          maximumNumberOfReviews={MAX_REVIEW_COUNT}
           showFetchMoreButton
           reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
@@ -80,7 +83,9 @@ const ReviewSection = ({
             spaceBetween: 16,
           }}
           showSkeleton
-          externalButtonContent={externalButtonContent}
+          externalButtonContent={
+            showExternalButton ? externalButtonContent : undefined
+          }
           showReviews={topReviews && topReviews.length > 0}
           onImageClick={(reviewId, localIndex) => {
             const globalIndex = getReviewMediaGlobalLocation?.(
@@ -107,6 +112,7 @@ const ReviewSection = ({
                 }
               : undefined,
           }}
+          numberOfReviewsToShow={isBot ? MAX_REVIEW_COUNT : 5}
         />
       </StyledReviewSectionContainer>
     </>

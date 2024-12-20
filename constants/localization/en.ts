@@ -1403,7 +1403,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FIND_YOUR_RIDE_SUBTEXT:
       'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
   },
-
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+  },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
       'Get full refund for a small fee if you cancel 24 hours before the experience start time.',

@@ -297,6 +297,7 @@ const PopulateProducts: any = (props: any) => {
     isRankingExperimentResolving = false,
     showSightsCoveredItineraryLayout = false,
     showBoosters = false,
+    botReviewsByTGID = {},
     qnaSnippets,
     qnaSections,
     collectionId,
@@ -814,7 +815,8 @@ const PopulateProducts: any = (props: any) => {
       originalRank: ogIndex ? ogIndex + 1 : undefined,
       forceMobile,
       hideHeading,
-      topReviews,
+      topReviews:
+        isBot && botReviewsByTGID?.[tgid] ? botReviewsByTGID[tgid] : topReviews,
       showPopup,
       isHOHORevamp,
       isCruisesRevamp,

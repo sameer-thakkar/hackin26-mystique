@@ -20,11 +20,15 @@ import {
 } from 'utils';
 import {
   constructHeaders,
+  fetchCategoryReviews,
   fetchCollection,
   fetchCollectionList,
+  fetchCollectionReviews,
   fetchCurrencyList,
   fetchDomainConfig,
   fetchMediaResource,
+  fetchSubCategoryReviews,
+  fetchTourGroupReviews,
   fetchTourGroupsByCategory,
   fetchTourGroupSlots,
   fetchTourGroupV6,
@@ -94,6 +98,10 @@ import {
   TLANGUAGELOCALE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import {
+  MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS,
+  MBS_REVIEWS_V2_ENABLED_DOMAINS,
+} from 'const/reviews';
 import { allShowPagesGq } from './microsite/graphQuery';
 import { TPrismicTrustBooster } from './interface';
 import { getReviewsPageData } from './reviewsPage';
@@ -128,6 +136,7 @@ export const getPageData = async ({
   isDev,
   localizedStrings,
   runRankingExperiment = false,
+  isBot = false,
 }: any) => {
   const { host } = req.headers || window.location;
   const { cookies } = req;
@@ -215,11 +224,24 @@ export const getPageData = async ({
     let tgidsArray: any = [];
     let minPrice = 0;
     let bestDiscount = 0;
+    let categoryId = '';
+    let subCatId = '';
     let collectionDataPromise = Promise.resolve(
       {} as ReturnType<typeof fetchCollection>
     );
     let bannerImageDataPromise: ReturnType<typeof fetchMediaResource> =
       Promise.resolve(undefined);
+    let collectionReviewsPromise = Promise.resolve(
+      {} as ReturnType<typeof fetchCollectionReviews>
+    );
+    let catSubCatReviewsPromise = Promise.resolve(
+      {} as ReturnType<
+        typeof fetchCategoryReviews | typeof fetchSubCategoryReviews
+      >
+    );
+    let botReviewsByTGIDPromise = Promise.resolve(
+      {} as ReturnType<typeof fetchTourGroupReviews>
+    );
     let routeDetailsPromise: Promise<Record<string, any>> =
       null as unknown as Promise<any>;
     let variantsDataPromise: Promise<Record<string, any>[]> =
@@ -373,7 +395,7 @@ export const getPageData = async ({
       let ticketsData, startingPrice, currencyCode;
       const language = getHeadoutLanguagecode(lang ?? 'en-us');
       const city = CMSContent?.data?.city_name?.trim()?.split(' ')?.join('_');
-      const categoryId = CMSContent?.data?.headout_category_id;
+      categoryId = CMSContent?.data?.headout_category_id;
       const collectionId = CMSContent?.data?.headout_collection_id;
       if (collectionId) {
         const collectionData =
@@ -703,6 +725,7 @@ export const getPageData = async ({
       let categoryDescriptors: any = [],
         subcategoryDescriptors = [];
       let collectionDetails: CollectionDetails | Object = {};
+
       const { data: CMSData } = CMSContent ?? {};
       const {
         content_framework: contentFramework,
@@ -824,13 +847,34 @@ export const getPageData = async ({
         isCatOrSubCatPage,
         toursTabFirstSlice,
       });
+      const languageCode = getHeadoutLanguagecode(lang!);
 
-      const { categoryTourListData, cityPageParams, offerDetails } =
-        await labeledPromiseAllSettled([
-          { promise: categoryTourListPromise, label: 'categoryTourListData' },
-          { promise: cityPageDataPromise, label: 'cityPageParams' },
-          { promise: offerTgidsPromise, label: 'offerDetails' },
-        ] as const);
+      const isExtendedReviewsV2Enabled =
+        MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
+      const isReviewsV2Enabled = MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
+
+      collectionReviewsPromise = conditionalPromise(
+        taggedCollection && (isReviewsV2Enabled || isExtendedReviewsV2Enabled),
+        () =>
+          fetchCollectionReviews({
+            collectionId: taggedCollection,
+            cookies,
+            language: languageCode,
+            limit: isExtendedReviewsV2Enabled ? '40' : '8',
+          })
+      );
+
+      const {
+        categoryTourListData,
+        cityPageParams,
+        offerDetails,
+        collectionReviews,
+      } = await labeledPromiseAllSettled([
+        { promise: categoryTourListPromise, label: 'categoryTourListData' },
+        { promise: cityPageDataPromise, label: 'cityPageParams' },
+        { promise: offerTgidsPromise, label: 'offerDetails' },
+        { promise: collectionReviewsPromise, label: 'collectionReviews' },
+      ] as const);
 
       if (
         (hasCategoryTourListV1 || MBDesign === DESIGN.V3) &&
@@ -851,7 +895,7 @@ export const getPageData = async ({
 
         const { primarySubCategory: firstProductSubCategory, primaryCategory } =
           firstProductData || {};
-        const subCatId = firstProductSubCategory?.id;
+        subCatId = firstProductSubCategory?.id;
         const categoryId = CATEGORY_IDS?.[taggedCategory];
         const isAirportTransfersMB =
           (taggedMbType === 'Private Airport Transfers' ||
@@ -896,11 +940,27 @@ export const getPageData = async ({
             resourceType: RESOURCE_TYPE.SUB_CATEGORY_CITY,
             entityIds: `${subCatId}-${taggedCity}`,
           });
+          catSubCatReviewsPromise = conditionalPromise(
+            taggedCity && subCatId,
+            () =>
+              fetchSubCategoryReviews({
+                subCategoryId: Number(subCatId),
+                cityId: taggedCity,
+              })
+          );
         } else if (isCategoryMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.CATEGORY_CITY,
             entityIds: `${categoryId}-${taggedCity}`,
           });
+          catSubCatReviewsPromise = conditionalPromise(
+            taggedCity && categoryId,
+            () =>
+              fetchCategoryReviews({
+                categoryId: Number(categoryId),
+                cityId: taggedCity,
+              })
+          );
         }
         collectionDetails = categoryTourListData?.collectionDetails ?? {};
       }
@@ -990,6 +1050,7 @@ export const getPageData = async ({
         cityPageParams,
         categoryDescriptors,
         subcategoryDescriptors,
+        collectionReviews: collectionReviews || {},
       };
     }
     tgidsArray = [...tgidsArray];
@@ -1053,6 +1114,24 @@ export const getPageData = async ({
         })
     );
 
+    const tourGroupIds =
+      scorpioAllTourGroupData.orderedTours?.map((tour: any) => tour.tgid) || [];
+    const languageCode = getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale);
+
+    const tgidBotReviewsPromise = tourGroupIds.map((tgid: number) =>
+      fetchTourGroupReviews({
+        tgid,
+        offset: 0,
+        limit: 25,
+        filterType: 'TOP',
+        language: languageCode,
+      })
+    );
+
+    botReviewsByTGIDPromise = conditionalPromise(isBot, () =>
+      Promise.all(tgidBotReviewsPromise)
+    );
+
     const {
       tourGroupAPIResponses,
       breadcrumbs,
@@ -1065,6 +1144,8 @@ export const getPageData = async ({
       collectionData,
       collectionList,
       categoryTourListData,
+      catSubCatReviews,
+      botReviewsByTGID,
     } = await labeledPromiseAllSettled([
       {
         promise: tourGroupAPIResponsesPromise,
@@ -1080,6 +1161,8 @@ export const getPageData = async ({
       { promise: collectionDataPromise, label: 'collectionData' },
       { promise: collectionListPromise, label: 'collectionList' },
       { promise: categoryTourListDataPromise, label: 'categoryTourListData' },
+      { promise: catSubCatReviewsPromise, label: 'catSubCatReviews' },
+      { promise: botReviewsByTGIDPromise, label: 'botReviewsByTGID' },
     ] as const);
 
     const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
@@ -1090,6 +1173,20 @@ export const getPageData = async ({
       }),
       {}
     );
+
+    const botReviewsByTGIDMap = botReviewsByTGID
+      ? botReviewsByTGID?.reduce(
+          (
+            acc: Record<number, any>,
+            reviewResponse: Record<string, any>,
+            index: number
+          ) => {
+            acc[tourGroupIds[index]] = reviewResponse?.items ?? [];
+            return acc;
+          },
+          {}
+        )
+      : {};
 
     const tourGroupData = await tourGroupAPIResponses?.tourGroups
       ?.filter((tour: Record<string, any>) => {
@@ -1486,6 +1583,10 @@ export const getPageData = async ({
       theatreType,
       isEntertainmentBanner,
       bannerTrustBoosters,
+      catSubCatReviews: catSubCatReviews || {},
+      categoryId,
+      subCategoryId: subCatId,
+      botReviewsByTGID: botReviewsByTGIDMap,
     };
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);

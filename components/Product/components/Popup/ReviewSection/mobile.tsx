@@ -4,6 +4,7 @@ import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import DiagonalArrow from 'assets/diagonalArrow';
+import { MAX_REVIEW_COUNT } from './constants';
 import {
   StyledExternalLinkIcon,
   StyledReviewSectionContainer,
@@ -19,6 +20,7 @@ const ReviewSection = ({
   imageGalleryController,
   getReviewMediaGlobalLocation,
   snapshotSectionProps,
+  isBot = false,
 }: TReviewSectionMobileProps) => {
   const externalButtonContent = (
     <>
@@ -40,7 +42,7 @@ const ReviewSection = ({
           tgid={tgid}
           initialReviews={topReviews}
           numberOfReviewsToFetchAtOnce={5}
-          maximumNumberOfReviews={25}
+          maximumNumberOfReviews={isBot ? MAX_REVIEW_COUNT : 25}
           showFetchMoreButton
           reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
@@ -65,6 +67,7 @@ const ReviewSection = ({
               });
           }}
           snapshotSectionProps={snapshotSectionProps}
+          numberOfReviewsToShow={isBot ? MAX_REVIEW_COUNT : 5}
         />
       </StyledReviewSectionContainer>
     </>

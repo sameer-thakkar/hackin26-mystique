@@ -163,3 +163,11 @@ export const getObjectNestingCount = (
     ...Object.values(obj).map((val) => getObjectNestingCount(val, level + 1))
   );
 };
+
+export const onEnterKeyPress = (
+  e: React.KeyboardEvent,
+  callbackFunction: Function,
+  ...args: any[]
+) => {
+  if (e.key === 'Enter') callbackFunction(...args);
+};

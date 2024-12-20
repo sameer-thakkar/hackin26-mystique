@@ -128,8 +128,10 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
     }
   }, [isReviewsSectionVisible]);
 
-  if (!reviewsData?.items?.length) {
-    return <></>;
+  const { items: reviewItems } = reviewsData?.result?.reviews ?? {};
+
+  if (!reviewItems?.length) {
+    return null;
   }
 
   return (
@@ -151,7 +153,7 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
                 disabled={
                   Number(swiper?.activeIndex) +
                     Number(swiper?.params?.slidesPerView) >=
-                  reviewsData?.items?.length
+                  reviewItems?.length
                 }
               />
             </NavigationButtons>
@@ -164,46 +166,44 @@ const Reviews: React.FC<TReviewsProp> = (props) => {
         </Controls>
       </TitleHeader>
       <Swiper {...swiperOptions}>
-        {reviewsData?.items?.map(
-          (review: Record<string, any>, index: number) => {
-            const {
-              tourGroup,
-              nonCustomerName,
-              rating,
-              content,
-              reviewTime,
-              translatedContent,
-            } = review;
+        {reviewItems?.map((review: Record<string, any>, index: number) => {
+          const {
+            tourGroup,
+            nonCustomerName,
+            rating,
+            content,
+            reviewTime,
+            translatedContent,
+          } = review;
 
-            const verticalPosterUrl = getVerticalImageUrl(
-              mediaData?.resourceEntityMedias,
-              tourGroup?.id
-            );
+          const verticalPosterUrl = getVerticalImageUrl(
+            mediaData?.resourceEntityMedias,
+            tourGroup?.id
+          );
 
-            return (
-              <ReviewCard
-                key={index}
-                tourGroupName={tourGroup?.name}
-                tourGroupId={tourGroup?.id}
-                reviewMedia={verticalPosterUrl}
-                reviewerImgUrl={review?.reviewerImgUrl}
-                tgidToReviewsPageUidMapping={tgidToReviewsPageUidMapping}
-                customerName={nonCustomerName}
-                rating={rating}
-                content={translatedContent ?? content}
-                reviewTime={reviewTime}
-                isMobile={isMobile}
-              />
-            );
-          }
-        )}
+          return (
+            <ReviewCard
+              key={index}
+              tourGroupName={tourGroup?.name}
+              tourGroupId={tourGroup?.id}
+              reviewMedia={verticalPosterUrl}
+              reviewerImgUrl={review?.reviewerImgUrl}
+              tgidToReviewsPageUidMapping={tgidToReviewsPageUidMapping}
+              customerName={nonCustomerName}
+              rating={rating}
+              content={translatedContent ?? content}
+              reviewTime={reviewTime}
+              isMobile={isMobile}
+            />
+          );
+        })}
       </Swiper>
       <Conditional if={isMobile}>
         <div className="paginator">
           <Paginator
             tabSize={0.9375}
             dotSize={0.25}
-            totalCount={reviewsData?.items?.length}
+            totalCount={reviewItems?.length}
             activeIndex={Number(swiper?.realIndex)}
           />
         </div>

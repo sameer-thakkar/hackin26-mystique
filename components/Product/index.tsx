@@ -117,6 +117,7 @@ import {
 } from 'const/index';
 import { tgidsWithSitesVisited } from 'const/itinerary';
 import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
+import { MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS } from 'const/reviews';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
@@ -1488,7 +1489,10 @@ const Product = (props: any) => {
     isAsideBarOverlay = false,
   }) => {
     const showItinerarySection = showItinerary && (isPopup || isBot);
-
+    const showReviewSection =
+      (isBot ||
+        (originalIsMobile ? expandContent && isPoiMwebCard : isPopup)) &&
+      reviewsDetails?.showRatings;
     const mediaCarouselImageWidth = (isPopup ? originalIsMobile : isMobile)
       ? isBannerCard
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
@@ -2161,17 +2165,15 @@ const Product = (props: any) => {
                 >
                   {highlightTabs}
                 </Conditional>
-                <Conditional
-                  if={
-                    (originalIsMobile
-                      ? expandContent && isPoiMwebCard
-                      : isPopup) && reviewsDetails?.showRatings
-                  }
-                >
+                <Conditional if={showReviewSection}>
                   <ReviewSection
                     reviewsDetails={reviewsDetails}
                     tgid={tgid}
                     topReviews={topReviews}
+                    showExternalButton={
+                      !MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid)
+                    }
+                    isBot={isBot}
                   />
                 </Conditional>
               </div>

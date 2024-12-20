@@ -96,6 +96,11 @@ const Page = (props: PageProps) => {
     categoryTourListData: legacyCategoryTourListData,
     docsForListicles,
     collectionsInListicles,
+    collectionReviews = {},
+    catSubCatReviews = {},
+    botReviewsByTGID = {},
+    categoryId,
+    subCategoryId,
     rankingExperimentProps,
     uid,
   } = props;
@@ -311,6 +316,11 @@ const Page = (props: PageProps) => {
             subcategoryDescriptors={subcategoryDescriptors}
             isEntertainmentBanner={isEntertainmentBanner}
             bannerTrustBoosters={bannerTrustBoosters}
+            collectionReviews={collectionReviews}
+            catSubCatReviews={catSubCatReviews}
+            categoryId={categoryId}
+            subCategoryId={subCategoryId}
+            botReviewsByTGID={botReviewsByTGID}
             isRankingExperimentResolving={
               isRankingExperimentResolving && isRankingExperimentEligible
             }
@@ -394,6 +404,10 @@ const Page = (props: PageProps) => {
               subcategoryDescriptors={subcategoryDescriptors}
               isEntertainmentBanner={isEntertainmentBanner}
               bannerTrustBoosters={bannerTrustBoosters}
+              collectionReviews={collectionReviews}
+              catSubCatReviews={catSubCatReviews}
+              categoryId={categoryId}
+              subCategoryId={subCategoryId}
               qnaSnippets={qnaSnippets}
               qnaSections={qnaSections}
               isRankingExperimentResolving={
@@ -402,6 +416,7 @@ const Page = (props: PageProps) => {
               isNotUsingAutomatedRanking={
                 rankingExperimentVariant !== 'Treatment'
               }
+              botReviewsByTGID={botReviewsByTGID}
             />
           );
         }
@@ -662,6 +677,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       query,
       isDev,
       localizedStrings,
+      isBot,
     })
   );
 

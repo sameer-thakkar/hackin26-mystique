@@ -1315,6 +1315,9 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TRUST_VB_TAG: 'Reserva verificada',
     SNAPSHOTS_SECTION_HEADER: 'Fotos para os nossos clientes',
   },
+  REVIEW_SECTION: {
+    HEADING: 'Milhões de pessoas adoram viajar com a gente',
+  },
 
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
