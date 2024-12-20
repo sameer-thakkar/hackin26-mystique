@@ -165,7 +165,7 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
       <StyledQnaModalContainer>
         <StyledModalHeader>
           <StyledModalHeaderTop>
-            <h4>{strings.GUEST_IMPRESSIONS}</h4>
+            <h4>{strings.ASKED_AND_ANSWERED}</h4>
             <StyledCloseBtnWrapper>
               <CloseButton isHighlighted={true} onClick={close} />
             </StyledCloseBtnWrapper>

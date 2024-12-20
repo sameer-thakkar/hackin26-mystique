@@ -79,7 +79,7 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
   return (
     <StyledLfcQnaSection ref={lfcSectionRef}>
       <LfcSectionHeading>
-        <h2>{strings.GUEST_IMPRESSIONS}</h2>
+        <h2>{strings.ASKED_AND_ANSWERED}</h2>
       </LfcSectionHeading>
       <div className="lfc-qna-body-wrapper">
         <Conditional if={isMobile}>
@@ -119,7 +119,7 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
           noMargin
           coverHeaderInShadow
         >
-          <h2>{strings.GUEST_IMPRESSIONS}</h2>
+          <h2>{strings.ASKED_AND_ANSWERED}</h2>
           <SwipeableTabs tabs={tabsArray} />
         </Drawer>
       </Conditional>

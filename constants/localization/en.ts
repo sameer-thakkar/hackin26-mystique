@@ -1434,12 +1434,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   SEE_ALL_RESPONSES: 'See all responses',
   HIDE_RESPONSES: 'Hide responses',
   GUEST_QNA: 'Guest Q&A',
-  GUEST_IMPRESSIONS: 'Guest impressions',
+  ASKED_AND_ANSWERED: 'Asked and answered',
   VIEW_ALL_QNA: 'View all Q/As',
   EXPLORE_ALL: 'Explore all',
   EXPLORE_MORE_QUESTIONS: 'Explore more questions',
   GUESTS: 'guests',
-  CONTRIBUTORS: 'contributors',
+  RESPONSES: 'responses',
 };
 
 export default en;

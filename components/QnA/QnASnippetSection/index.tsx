@@ -128,7 +128,7 @@ const QnaSnippetSectionChild = ({
       </Conditional>
       <Wrapper>
         <LfcSectionHeading>
-          <h2 className="section-heading">{strings.GUEST_IMPRESSIONS}</h2>
+          <h2 className="section-heading">{strings.ASKED_AND_ANSWERED}</h2>
 
           <div className="guest-count">
             <div>
@@ -141,7 +141,7 @@ const QnaSnippetSectionChild = ({
               </p>
             </div>
 
-            <span>{strings.CONTRIBUTORS}</span>
+            <span>{strings.RESPONSES}</span>
           </div>
         </LfcSectionHeading>
 
@@ -166,7 +166,7 @@ const QnaSnippetSectionChild = ({
           noMargin
           coverHeaderInShadow
         >
-          <h2>{strings.GUEST_IMPRESSIONS}</h2>
+          <h2>{strings.ASKED_AND_ANSWERED}</h2>
           <SwipeableTabs tabs={tabsArray} />
         </Drawer>
       </Conditional>
