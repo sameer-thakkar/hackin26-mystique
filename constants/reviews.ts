@@ -7,7 +7,6 @@ export const MBS_REVIEWS_V2_ENABLED_DOMAINS = [
   'www.hagia-sophia-tickets.com',
   'www.temple-of-zeus.com',
   'www.abudhabi-tickets.com.attractions.museums-in-abu-dhabi',
-  'www.london-tickets.co.uk.attractions.city-cards-london',
   'www.hop-on-hop-off-tickets.com.paris-bus-tours',
   'www.barcelona-tickets.com.transportation.airport-transfers',
 ] as const;
@@ -16,7 +15,6 @@ export const MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS = [
   'www.bangkok-river-cruise.com',
   'www.dubai-tickets.co.cruises-in-dubai',
   'www.dubai-tickets.co.dubai-dolphinarium',
-  'www.london-tickets.co.uk.warner-bros-studio-tour-london',
   'www.paristickets.com.catacombs',
   'www.paristickets.com.disneyland-paris',
   'www.barcelona-tickets.com.park-guell',
