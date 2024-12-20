@@ -9,7 +9,7 @@ export const StyledFooter = styled.footer<{
 }>`
   width: 100%;
   display: grid;
-  ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 2.5rem;`}
+  ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 72px;`}
   border-top: 1px solid ${COLORS.GRAY.G8};
 `;
 
