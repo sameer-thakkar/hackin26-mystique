@@ -106,6 +106,18 @@ const InteractiveMap = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.classList.add('scroll-lock');
+    } else {
+      document.body.classList.remove('scroll-lock');
+    }
+
+    return () => {
+      document.body.classList.remove('scroll-lock');
+    };
+  }, [isDrawerOpen]);
+
   const mapMouseMoveFn = (event: MouseEvent) => {
     const targetElement = event.target as SVGElement;
     const sectionId = targetElement?.className?.baseVal;

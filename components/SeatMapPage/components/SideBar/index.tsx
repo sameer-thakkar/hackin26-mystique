@@ -174,7 +174,7 @@ const SideBar = (props: TSideBarProps) => {
     [tourStartDate]
   );
 
-  const { reviewsCount, showRatings, averageRating } = reviewsDetails;
+  const { reviewsCount, showRatings, averageRating = 0 } = reviewsDetails;
   const ratingsPresent = useMemo(
     () => averageRating > 0 && reviewsCount > 0 && showRatings,
     [averageRating, reviewsCount, showRatings]
@@ -516,7 +516,7 @@ const SideBar = (props: TSideBarProps) => {
               <div className="product-rating">
                 <Conditional if={showRatings}>
                   <StarSvg className="star-svg" />
-                  <LSpan>{averageRating.toFixed(1)}</LSpan>
+                  <LSpan>{averageRating?.toFixed(1)}</LSpan>
                 </Conditional>
                 <Conditional if={!showRatings}>
                   <GenreName>{displayName.toUpperCase()}</GenreName>

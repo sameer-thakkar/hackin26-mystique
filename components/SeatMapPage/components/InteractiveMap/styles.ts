@@ -17,9 +17,9 @@ export const InteractiveMapWrapper = styled.div`
 `;
 
 export const MSectionInfoWrapper = styled.div`
-  height: max-content;
-  max-height: 65vh;
-  overflow: scroll;
+  height: 70dvh;
+  overflow: hidden auto;
+  scrollbar-width: none;
 `;
 
 export const MSectionInfoContainer = styled.div`
@@ -28,8 +28,10 @@ export const MSectionInfoContainer = styled.div`
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
   padding-bottom: 2rem;
+  height: 80dvh;
+  overflow: hidden;
 `;
 
 export const SvgMapContainer = styled.div`
