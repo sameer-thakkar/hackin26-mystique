@@ -57,6 +57,7 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { VARIANTS } from 'const/experiments';
@@ -227,6 +228,7 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
+  const { isBot } = useRecoilValue(appAtom);
   const router = useRouter();
 
   useEffect(() => {
@@ -371,8 +373,7 @@ const MicrositeV1 = (props: any) => {
   });
 
   const showQnaExperiment =
-    qnaExpVariant === VARIANTS.TREATMENT &&
-    isQnaExpEligible &&
+    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) || isBot) &&
     qnaSections?.length &&
     qnaSnippets?.length;
 

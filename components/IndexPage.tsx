@@ -311,7 +311,9 @@ const Page = (props: PageProps) => {
             subcategoryDescriptors={subcategoryDescriptors}
             isEntertainmentBanner={isEntertainmentBanner}
             bannerTrustBoosters={bannerTrustBoosters}
-            isRankingExperimentResolving={isRankingExperimentResolving}
+            isRankingExperimentResolving={
+              isRankingExperimentResolving && isRankingExperimentEligible
+            }
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -394,7 +396,9 @@ const Page = (props: PageProps) => {
               bannerTrustBoosters={bannerTrustBoosters}
               qnaSnippets={qnaSnippets}
               qnaSections={qnaSections}
-              isRankingExperimentResolving={isRankingExperimentResolving}
+              isRankingExperimentResolving={
+                isRankingExperimentResolving && isRankingExperimentEligible
+              }
               isNotUsingAutomatedRanking={
                 rankingExperimentVariant !== 'Treatment'
               }
