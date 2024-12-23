@@ -367,18 +367,20 @@ const MicrositeV1 = (props: any) => {
     !isAirportTransfersMB &&
     !showCruisesFormat;
 
+  const isLangEn = lang === 'en-us' || lang === 'en';
+
   const {
     isEligible: isQnaExpEligible,
     isExperimentResolving: isQnaExpResolving,
     variant: qnaExpVariant,
   } = useABTesting({
     experimentId: 'QNA_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      QNA_EXP_UIDS.includes(uid) && (lang === 'en-us' || lang === 'en'),
+    customEligibilityCheckFn: () => QNA_EXP_UIDS.includes(uid) && isLangEn,
   });
 
   const showQnaExperiment =
-    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) || isBot) &&
+    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) ||
+      (isBot && isLangEn)) &&
     qnaSections?.length &&
     qnaSnippets?.length;
 
