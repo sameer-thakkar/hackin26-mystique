@@ -117,7 +117,10 @@ import {
 } from 'const/index';
 import { tgidsWithSitesVisited } from 'const/itinerary';
 import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
-import { MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS } from 'const/reviews';
+import {
+  MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS,
+  MBS_REVIEWS_V2_ENABLED_DOMAINS,
+} from 'const/reviews';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
@@ -1489,8 +1492,11 @@ const Product = (props: any) => {
     isAsideBarOverlay = false,
   }) => {
     const showItinerarySection = showItinerary && (isPopup || isBot);
+    const isEligibleForUGCSplitExperiment =
+      MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid) ||
+      MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
     const showReviewSection =
-      (isBot ||
+      ((isBot && isEligibleForUGCSplitExperiment) ||
         (originalIsMobile ? expandContent && isPoiMwebCard : isPopup)) &&
       reviewsDetails?.showRatings;
     const mediaCarouselImageWidth = (isPopup ? originalIsMobile : isMobile)
