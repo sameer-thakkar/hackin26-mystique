@@ -159,14 +159,15 @@ const DesktopBannerV2 = ({
 
   const swiperParams: SwiperProps = {
     loop: bannerImages?.length > 1,
+    loopedSlides: bannerImages?.length,
     preventInteractionOnTransition: true,
     onSwiper: (swiper: any) => setSwiperInstance(swiper),
-    cssMode: false,
     initialSlide: 0,
     autoplay: {
       delay: !swiper?.realIndex ? FIRST_SLIDE_DURATION : SLIDE_DURATION,
       disableOnInteraction: false,
     },
+    watchSlidesProgress: true,
   };
 
   const onBannerClicked = (showPageUrl: string) => {
