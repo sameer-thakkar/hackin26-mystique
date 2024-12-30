@@ -34,7 +34,7 @@ export const Container = styled.div`
 
     @media (max-width: 768px) {
       width: 100% !important;
-      height: 12.5rem;
+      height: unset;
     }
   }
 `;
