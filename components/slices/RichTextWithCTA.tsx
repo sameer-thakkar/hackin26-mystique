@@ -17,6 +17,7 @@ const Wrapper = styled.div<{
   $isExpanded: boolean;
   $contentHeight: number | null;
   $hasCTA: boolean;
+  $noParagraphMargin: boolean;
 }>`
   position: relative;
   .rich-text {
@@ -24,6 +25,13 @@ const Wrapper = styled.div<{
       !$isExpanded && `height: ${$contentHeight}px;`}
     ${({ $contentHeight }) => $contentHeight && `margin-bottom: -6px;`}
     ${({ $isExpanded }) => !$isExpanded && `overflow: hidden;`}
+    ${({ $noParagraphMargin }) =>
+      $noParagraphMargin &&
+      `
+      p {
+        margin: 0;
+      }
+    `}
   }
   .fadeout {
     position: absolute;
@@ -102,6 +110,10 @@ const RichTextWithCTAItem = ({
     return acc;
   }, []);
 
+  const hasIframe = textArray?.some(
+    (el) => el?.type === 'paragraph' && el?.text?.includes('{iframe')
+  );
+
   /**
    * Image URL parameter is added to rich-text to allow embedding scorpio media
    * instead of Prismic's CDN image uploads.
@@ -134,6 +146,7 @@ const RichTextWithCTAItem = ({
       $isExpanded={isExpanded}
       $contentHeight={contentHeight}
       $hasCTA={!!cta_text}
+      $noParagraphMargin={hasIframe}
     >
       <div className="rich-text" id={generateSidenavId(headingArray?.[0])}>
         <PrismicRichText
