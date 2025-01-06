@@ -73,7 +73,7 @@ const SnippetCard = ({
       </StyledAnswerCardInfoWrapper>
       <div className="answer-body">
         <Answer>{truncatedContent}</Answer>
-        <CTA>
+        <CTA className="see-more-responses-cta">
           <span>{strings.SEE_MORE_RESPONSES}</span>
           {BlackRightArrow}
         </CTA>

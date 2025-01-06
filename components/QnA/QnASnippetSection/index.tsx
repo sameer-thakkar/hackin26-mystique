@@ -116,6 +116,8 @@ const QnaSnippetSectionChild = ({
     }));
   }, [qnaSnippets]);
 
+  const isTabsVisible = tabsLabelArray.length > 1;
+
   return (
     <SnippetContainer ref={snippetRef}>
       <Conditional if={!isMobile}>
@@ -161,7 +163,7 @@ const QnaSnippetSectionChild = ({
       </Wrapper>
       <Conditional if={showDrawer && isMobile}>
         <Drawer
-          $drawerStyles={DrawerStyles}
+          $drawerStyles={DrawerStyles({ isTabsVisible })}
           closeHandler={() => setShowDrawer(false)}
           noMargin
           coverHeaderInShadow

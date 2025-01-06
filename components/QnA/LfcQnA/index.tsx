@@ -76,6 +76,8 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
     return qnaSections.map((section) => createTabItem(section));
   }, [qnaSections]);
 
+  const isTabsVisible = tabsArray.length > 1;
+
   return (
     <StyledLfcQnaSection ref={lfcSectionRef}>
       <LfcSectionHeading>
@@ -114,7 +116,7 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
       </div>
       <Conditional if={showDrawer && isMobile}>
         <Drawer
-          $drawerStyles={DrawerStyles}
+          $drawerStyles={DrawerStyles({ isTabsVisible })}
           closeHandler={() => setShowDrawer(false)}
           noMargin
           coverHeaderInShadow

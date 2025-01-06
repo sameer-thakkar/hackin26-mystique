@@ -36,7 +36,7 @@ export const LfcSectionHeading = styled.div`
 
   h2 {
     ${expandFontToken(FONTS.SEMANTIC_DISPLAY_XS)}
-    color: ${COLORS.GRAY.G1};
+    color: ${COLORS.GRAY.G2};
     margin: 0;
     padding: 0;
   }
@@ -92,8 +92,10 @@ export const LfcSectionHeading = styled.div`
     .section-heading {
       padding-left: 1.5rem;
       ${expandFontToken(FONTS.SEMANTIC_HEADING_REGULAR)};
-      font-family: 'halyard-text';
-      letter-spacing: 0;
+    }
+
+    .guest-count:before {
+      margin-right: 0.375rem;
     }
 
     .guest-count svg,
@@ -128,8 +130,6 @@ export const LfcSectionHeading = styled.div`
 
     h2 {
       ${expandFontToken(FONTS.HEADING_REGULAR)}
-      font-family: 'halyard-text';
-      letter-spacing: 0;
     }
 
     p {

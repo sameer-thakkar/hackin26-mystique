@@ -189,6 +189,10 @@ export const Card = styled.div`
     &:hover {
       box-shadow: 0px 0.25rem 12px 2px #1111111a;
     }
+
+    &:hover .see-more-responses-cta {
+      gap: 0.375rem;
+    }
   }
 
   &:active {
@@ -290,6 +294,8 @@ export const CTA = styled.div`
   display: flex;
   align-items: center;
   gap: 0.125rem;
+  transition: all 0.3s;
+
   span {
     ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
     margin: 0;
@@ -318,8 +324,13 @@ export const CTA = styled.div`
   }
 `;
 
-export const DrawerStyles = css`
-  height: 85vh;
+export const DrawerStyles = ({
+  isTabsVisible,
+}: {
+  isTabsVisible?: boolean;
+}) => css`
+  height: 80dvh;
+
   &&&& {
     grid-row-gap: 1.5rem;
   }
@@ -335,10 +346,14 @@ export const DrawerStyles = css`
     }
 
     h2 {
+      box-sizing: border-box;
       margin: 0;
       ${expandFontToken(FONTS.HEADING_SMALL)};
-      margin-bottom: 1.25rem;
-      margin-left: 1rem;
+      color: ${COLORS.GRAY.G2};
+      margin-bottom: ${isTabsVisible ? '1.25rem' : `0`};
+      border-bottom: ${isTabsVisible ? 'none' : `1px solid ${COLORS.GRAY.G6}`};
+      padding-bottom: ${isTabsVisible ? '0' : `1rem`};
+      padding-left: 1rem;
     }
 
     .tab-wrapper {
@@ -355,6 +370,7 @@ export const DrawerStyles = css`
       column-gap: 1.5rem;
       padding-left: 1rem;
       width: auto;
+      display: ${isTabsVisible ? 'grid' : `none`};
     }
 
     .tab {

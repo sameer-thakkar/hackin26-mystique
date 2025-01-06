@@ -113,6 +113,7 @@ const QnaAnswerCard = ({
       <StyledAnswerContent
         onClick={handleOnBtnClick}
         $showReadMore={showReadMoreCta}
+        $isContentTruncated={isContentTruncated}
       >
         <p ref={contentRef}>{content}</p>
         <Conditional if={isContentTruncated}>

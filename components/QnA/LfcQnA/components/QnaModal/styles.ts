@@ -26,12 +26,13 @@ export const StyledBottomSpacer = styled.div`
   width: 100%;
 `;
 
-export const StyledModalHeader = styled.div`
+export const StyledModalHeader = styled.div<{ $isTabsVisible?: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 24px 24px 0 24px;
   gap: 12px;
   border-bottom: 1px solid #e2e2e2;
+  padding-bottom: ${({ $isTabsVisible }) => ($isTabsVisible ? 0 : '20px')};
 `;
 
 export const StyledModalHeaderTop = styled.div`
@@ -45,7 +46,7 @@ export const StyledModalHeaderTop = styled.div`
   h4 {
     padding: 0;
     margin: 0;
-    color: ${COLORS.GRAY.G1};
+    color: ${COLORS.GRAY.G2};
     ${getFontDetailsByLabel(FONTS.HEADING_LARGE)};
   }
 `;
@@ -64,7 +65,10 @@ export const StyledCloseBtnWrapper = styled.div`
   }
 `;
 
-export const StyledQnaModalBody = styled.div<{ $isActiveTab?: boolean }>`
+export const StyledQnaModalBody = styled.div<{
+  $isActiveTab?: boolean;
+  $isTabsVisible?: boolean;
+}>`
   padding: 24px 24px 0 24px;
   overflow-y: auto;
   scroll-behavior: smooth;
@@ -72,7 +76,8 @@ export const StyledQnaModalBody = styled.div<{ $isActiveTab?: boolean }>`
   display: ${({ $isActiveTab }) => ($isActiveTab ? 'flex' : 'none')};
   flex-direction: column;
   gap: 24px;
-
-  height: calc(80vh - 120px);
+  height: calc(
+    80dvh - ${({ $isTabsVisible }) => ($isTabsVisible ? '120px' : '80px')}
+  );
   margin: 0em;
 `;

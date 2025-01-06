@@ -142,16 +142,18 @@ export const StyledAnswerCardInfoRight = styled.div<{
 
 export const StyledAnswerContent = styled.button<{
   $showReadMore: boolean;
+  $isContentTruncated?: boolean;
 }>`
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   -webkit-tap-highlight-color: transparent;
+  cursor: ${({ $isContentTruncated }) =>
+    $isContentTruncated ? 'pointer' : 'unset'};
 
   .plus-icon,
   .minus-icon {
@@ -173,15 +175,16 @@ export const StyledAnswerContent = styled.button<{
   .read-more {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    gap: 2px;
   }
 
   .show-less {
     ${({ $showReadMore }) =>
-      $showReadMore ? 'display: none;' : 'display: inline-block;'}
+      $showReadMore ? 'display: none;' : 'display: flex;'}
   }
   .read-more {
     ${({ $showReadMore }) =>
-      $showReadMore ? 'display: inline-block;' : 'display: none;'}
+      $showReadMore ? 'display: flex;' : 'display: none;'}
   }
 
   p {

@@ -148,6 +148,7 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
   }, [showModal]);
 
   const totalQuestionsInTab = qnaSections[activeTabIndex]?.qna?.length;
+  const isTabsVisible = tabsArray.length > 1;
 
   return (
     <ReactModal
@@ -163,18 +164,20 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
       portalClassName={`popup-qna`}
     >
       <StyledQnaModalContainer>
-        <StyledModalHeader>
+        <StyledModalHeader $isTabsVisible={isTabsVisible}>
           <StyledModalHeaderTop>
             <h4>{strings.ASKED_AND_ANSWERED}</h4>
             <StyledCloseBtnWrapper>
               <CloseButton isHighlighted={true} onClick={close} />
             </StyledCloseBtnWrapper>
           </StyledModalHeaderTop>
-          <QnaTabs
-            activeTabIndex={activeTabIndex}
-            handleTabClickFn={handleTabClickFn}
-            tabsArray={tabsArray}
-          />
+          <Conditional if={isTabsVisible}>
+            <QnaTabs
+              activeTabIndex={activeTabIndex}
+              handleTabClickFn={handleTabClickFn}
+              tabsArray={tabsArray}
+            />
+          </Conditional>
         </StyledModalHeader>
         {tabsArray.map((_, index) => {
           const scrollableRef = getScrollRef(index);
@@ -184,6 +187,7 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
               $isActiveTab={index === activeTabIndex}
               ref={scrollableRef}
               key={index}
+              $isTabsVisible={isTabsVisible}
             >
               <QnaAccordionSection
                 increaseAnswerOnLoadMore={true}
