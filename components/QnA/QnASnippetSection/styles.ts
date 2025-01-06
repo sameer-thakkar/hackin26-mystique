@@ -6,7 +6,6 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const SnippetContainer = styled.div`
-  margin-top: -1rem;
   overflow: hidden;
   width: 100vw;
   background: linear-gradient(

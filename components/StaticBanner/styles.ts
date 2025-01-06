@@ -248,8 +248,10 @@ export const BannerDisclaimerText = styled.p`
 export const DisclaimerText = styled.p<{
   hasParentChip?: boolean;
   $forceMobile?: boolean;
+  $showQnaExperiment?: boolean;
 }>`
-  margin: 1rem 1.5rem 2rem;
+  margin: 0.75rem 1.5rem 1.5rem;
+  ${({ $showQnaExperiment }) => $showQnaExperiment && `margin-bottom: 1rem;`}
   grid-area: bottom;
   ${({ $forceMobile }) =>
     $forceMobile
@@ -295,7 +297,7 @@ const handleMargin = ({
 }) => {
   if ($isNonPoi) return '0 1.5rem 0';
   else if ($showTrustBooster) return '0.5rem 1.5rem 1.5rem';
-  else return '0.5rem 1.5rem 0';
+  else return '0.375rem 1.5rem 0';
 };
 
 const handleGridArea = ({

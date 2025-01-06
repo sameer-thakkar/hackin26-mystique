@@ -437,6 +437,7 @@ const StaticBanner = ({
             <DisclaimerText
               hasParentChip={displayParentChip}
               $forceMobile={forceMobile}
+              $showQnaExperiment={showQnaExperiment}
             >
               {bannerSubTextIcon?.()}
               {bannerSubText}

@@ -125,7 +125,7 @@ export const FiltersContainer = styled.div`
 `;
 
 export const FiltersWrapper = styled.div`
-  padding: 1.5rem 0 1.25rem 0;
+  padding: 1.5rem 0 0 0;
   margin-bottom: 1rem;
   background: white;
   position: sticky;
