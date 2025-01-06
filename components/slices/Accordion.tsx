@@ -151,6 +151,9 @@ const ContentBlock = styled.div<{
     margin-bottom: 1rem;
   }
   .tabbed-info-image {
+    &:empty {
+      display: none;
+    }
     .seatmap-image,
     .legend-image {
       display: flex;
