@@ -35,13 +35,14 @@ const AboutPage = ({
   categoryTourListData,
   parentProps,
 }: IAboutPageProps) => {
-  const { featured_title: featuredTitle } = data;
+  const { featured_title: featuredTitle, collectionData } = data;
+  const { startingPrice } = collectionData?.collection || {};
   const { SHOULDER_PAGE_TYPE } = MB_CATEGORISATION;
   const { language: lang } = useRecoilValue(appAtom);
 
   poiInfo.minPrice = getLocalisedPrice({
-    price: categoryTourListData?.minPrice,
-    currencyCode: categoryTourListData?.activeCurrency?.code,
+    price: startingPrice?.listingPrice,
+    currencyCode: startingPrice?.currency,
     currencyList: useRecoilValue(currencyListAtom),
     lang,
   });
