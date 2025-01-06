@@ -28,10 +28,16 @@ export const BreadcrumbsContainer = styled.div<{
     $isCategoryPage,
     $isNewsPage,
     $isRevampedShoulderPage,
+    $isContentPage,
   }) => {
+    const uniformStyleForKirby = 'display: flex; padding: 6.5px 0 3px';
+    const uniformStyleForKirbyWithBottomMargin = `${uniformStyleForKirby}; margin:0 auto 3.5rem;`;
+
     switch (true) {
       case $isRevampedShoulderPage:
-        return 'padding: 0.5rem 0';
+        return uniformStyleForKirby;
+      case $isContentPage:
+        return uniformStyleForKirbyWithBottomMargin;
       case $isV2MB:
         return `margin: 2.5rem auto 3.5rem; padding: 0 5.46vw`;
       case $isShowPage:
@@ -45,7 +51,7 @@ export const BreadcrumbsContainer = styled.div<{
       case $isNewsPage:
         return 'margin: 2.625rem 0 0.5rem 0';
       default:
-        return 'margin: 0 auto 3.5rem; padding: 0 5.46vw';
+        return uniformStyleForKirbyWithBottomMargin;
     }
   }};
 
@@ -76,9 +82,13 @@ export const BreadcrumbsContainer = styled.div<{
       !$isCatOrSubCatPage &&
       !$isNewsPage &&
       !$isRevampedShoulderPage &&
-      `margin-bottom: 3.25rem; padding: 0 1rem`};
+      `margin-bottom: 55px; padding: 6.5px 16px 0px`};
 
     ${({ $isContentPage }) => $isContentPage && `margin-left: 0;`};
+    ${({ $isContentPage, $isRevampedShoulderPage }) =>
+      $isContentPage &&
+      !$isRevampedShoulderPage &&
+      `margin-bottom: 55px; padding-top: 6.5px;`};
     ${({ $isCategoryPage }) => $isCategoryPage && `padding: 0; margin:0;`};
     ${({ $isShowPage }) => $isShowPage && `margin: 4rem 0 0; width: 100%`};
     ${({ $isVenuePage }) => $isVenuePage && `margin: 0; width: 100%`};
@@ -108,8 +118,18 @@ export const StyledBreadcrumbLink = styled.a<{
   $isCrumbCollapsed?: boolean;
   $isCategoryPage: boolean;
   $isCatOrSubCatPage: boolean;
+  $alignStyleWithKirby: boolean;
 }>`
-  ${({ $isCrumbCollapsed }) => $isCrumbCollapsed && `display: none;`};
+  ${({ $alignStyleWithKirby, $isCrumbCollapsed }) => {
+    switch (true) {
+      case $isCrumbCollapsed:
+        return `display: none;`;
+      case $alignStyleWithKirby:
+        return `display: block`;
+      default:
+        return '';
+    }
+  }};
 
   ${StyledBreadcrumbCommon};
   text-decoration: underline;

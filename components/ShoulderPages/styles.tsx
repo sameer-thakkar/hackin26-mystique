@@ -32,7 +32,6 @@ export const StyledContentPage = styled.div`
   .slice-block p {
     ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
     color: ${COLORS.GRAY.G2};
-    margin-bottom: 1rem;
   }
 
   .slice-block.breadcrumbs + .slice-block {
@@ -113,7 +112,7 @@ export const StyledContentPage = styled.div`
     .slice-block ul {
       ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)}
     }
-    .slice-block h3,
+
     .slice-block .more-reads-text-heading,
     .products .product .product-left .product-heading {
       ${expandFontToken(FONTS.HEADING_XS)}

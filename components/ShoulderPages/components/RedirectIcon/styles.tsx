@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  bottom: -0.2rem;
+  bottom: -1px;
   width: 1.5rem;
+  max-height: 20px;
   display: inline-block;
 
   .arrow {

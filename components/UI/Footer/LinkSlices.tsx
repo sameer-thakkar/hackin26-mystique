@@ -32,10 +32,7 @@ const FooterLinksWrapper = styled.div<{
   }
   &.secondary-footer {
     padding-bottom: 0;
-    @media (max-width: 768px) {
-      ${({ $isCatOrSubCatPage }) =>
-        !$isCatOrSubCatPage && `margin-top: 1.5rem;`}
-    }
+    margin-top: 0;
   }
   .quick-links {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}

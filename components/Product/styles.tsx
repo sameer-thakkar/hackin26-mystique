@@ -281,6 +281,7 @@ export const TourTitleWrapper = styled.h2<{
   isNonPoi?: boolean;
   $isHOHORevamp?: boolean;
   $forceMobile?: boolean;
+  $isTicketCard?: boolean;
 }>`
   ${expandFontToken(FONTS.HEADING_LARGE)}
   margin: 0;
@@ -294,6 +295,9 @@ export const TourTitleWrapper = styled.h2<{
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+
+    ${({ $isTicketCard }) => $isTicketCard && `margin: 10px 0px 14.4px;`}
+
     ${({ $isHOHORevamp }) =>
       $isHOHORevamp &&
       `font-size: 18px;

@@ -14,7 +14,7 @@ import Banner from '../components/Banner';
 import ListMessageBox from '../components/ListMessageBox';
 import QuickInfo from '../components/QuickInfo';
 import { IAboutPageProps } from '../interface';
-import { PageContainer } from './styles';
+import { LongFormProductCardWrapper, PageContainer } from './styles';
 
 const Breadcrumbs = dynamic(
   () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
@@ -114,14 +114,16 @@ const AboutPage = ({
         </Conditional>
       </PageContainer>
       <Conditional if={extractedProductCardsSlice?.length}>
-        <LongForm
-          content={extractedProductCardsSlice || []}
-          {...parentProps}
-          categoryTourListData={{
-            ...categoryTourListData,
-            productCardsLimit: PRODUCT_CARDS_LIMIT,
-          }}
-        />
+        <LongFormProductCardWrapper>
+          <LongForm
+            content={extractedProductCardsSlice || []}
+            {...parentProps}
+            categoryTourListData={{
+              ...categoryTourListData,
+              productCardsLimit: PRODUCT_CARDS_LIMIT,
+            }}
+          />
+        </LongFormProductCardWrapper>
       </Conditional>
     </>
   );

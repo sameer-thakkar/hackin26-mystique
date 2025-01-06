@@ -14,3 +14,11 @@ export const PageContainer = styled.main`
     width: calc(100vw - 32px);
   }
 `;
+
+export const LongFormProductCardWrapper = styled.div`
+  margin-bottom: 56px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 52px;
+  }
+`;

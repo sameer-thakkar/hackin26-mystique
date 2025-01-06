@@ -65,6 +65,7 @@ export const TourTitle = ({
           e.stopPropagation();
           onClick();
         }}
+        $isTicketCard={isTicketCard}
         $isHOHORevamp={isHOHORevamp}
         $forceMobile={forceMobile}
       >

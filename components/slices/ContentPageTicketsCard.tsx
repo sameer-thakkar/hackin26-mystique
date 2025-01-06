@@ -52,12 +52,6 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const ProductHeader = styled.div`
-  min-height: 10rem;
-  @media (max-width: 768px) {
-  }
-`;
-
 const CloseIconWrapper = styled.div`
   width: 40px;
   height: 40px;
@@ -116,11 +110,10 @@ const MoreDetailWrapper = styled.div`
   display: flex;
   align-items: baseline;
   color: ${COLORS.TEXT.CANDY_1};
-  padding-bottom: 0.8rem;
+  margin-bottom: 50px;
+
   ${expandFontToken('Button/Medium')}
   cursor: pointer;
-  @media (max-width: 768px) {
-  }
 `;
 
 const MoreDetailsIcon = styled.div`
@@ -268,8 +261,8 @@ const PriceContainer = styled.div`
   .tour-price {
     display: flex;
     ${expandFontToken(FONTS.HEADING_REGULAR)}
-    margin-bottom: 0.4rem;
   }
+
   @media (max-width: 768px) {
     justify-self: left;
     grid-area: price-block;
@@ -282,7 +275,7 @@ const CTABlock = styled.div<{ isSticky: boolean; shouldOffset: boolean }>`
   }
   .tour-book-now-cta {
     margin: auto;
-    min-width: 13.5rem;
+    padding: 11px 16px 13px;
     width: 100%;
     display: block;
     ${expandFontToken('Button/Medium')}
@@ -695,7 +688,7 @@ const TicketCard = (props: any) => {
   const getProductCard = (expandContent: any, isFallbackSummary = false) => (
     <>
       <WrapperProductCard>
-        <ProductHeader>
+        <div>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
             {/* @ts-expect-error TS(2769): No overload matches this call. */}
@@ -734,7 +727,7 @@ const TicketCard = (props: any) => {
               <MoreDetailsIcon />
             </MoreDetailWrapper>
           </Conditional>
-        </ProductHeader>
+        </div>
         <HorizontalLine colorProp={COLORS.GRAY.G6} />
         <CTAContainer>{getCTABlock(expandContent)}</CTAContainer>
       </WrapperProductCard>

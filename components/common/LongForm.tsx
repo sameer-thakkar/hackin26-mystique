@@ -51,6 +51,9 @@ export const StyledLongForm = styled.div<{
   .slice-block div[class^='CardSection__CardGrid'] .image-wrap {
     min-height: 100%;
   }
+  .slice-block h2 {
+    margin: 0.2em 0;
+  }
   h2 {
     color: ${COLORS.GRAY.G2};
     display: inline-block;

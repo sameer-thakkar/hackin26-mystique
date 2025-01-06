@@ -222,6 +222,8 @@ const Accordion = ({
   const chevronContainerClass = classNames({
     'state-icon': true,
   });
+  const { image_source, legend_image_source } = tabData[index] || {};
+  const displayTabbedImage = !!image_source || !!legend_image_source;
 
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -295,33 +297,35 @@ const Accordion = ({
         <Conditional if={typeof content !== 'string'}>
           {content}
 
-          <div className="tabbed-info-image">
-            <Image
-              url={tabData[index]?.image_source}
-              height="500"
-              width="327"
-              className="seatmap-image"
-              alt="Seatmap"
-            />
-            <Conditional if={tabData[index]?.legend_image_source}>
+          <Conditional if={displayTabbedImage}>
+            <div className="tabbed-info-image">
               <Image
-                url={tabData[index]?.legend_image_source}
-                height="190"
+                url={tabData[index]?.image_source}
+                height="500"
                 width="327"
-                alt="Legend"
-                className="legend-image"
+                className="seatmap-image"
+                alt="Seatmap"
               />
-              <Conditional if={findBestSeatsCtaCallback}>
-                <Button
-                  fillType="fillGradient"
-                  widthProp="100%"
-                  onClick={findBestSeatsCtaCallback}
-                >
-                  {strings.THEATRE_PAGE.FIND_BEST_SEATS}
-                </Button>
+              <Conditional if={tabData[index]?.legend_image_source}>
+                <Image
+                  url={tabData[index]?.legend_image_source}
+                  height="190"
+                  width="327"
+                  alt="Legend"
+                  className="legend-image"
+                />
+                <Conditional if={findBestSeatsCtaCallback}>
+                  <Button
+                    fillType="fillGradient"
+                    widthProp="100%"
+                    onClick={findBestSeatsCtaCallback}
+                  >
+                    {strings.THEATRE_PAGE.FIND_BEST_SEATS}
+                  </Button>
+                </Conditional>
               </Conditional>
-            </Conditional>
-          </div>
+            </div>
+          </Conditional>
         </Conditional>
       </ContentBlock>
     </StyledAccordion>

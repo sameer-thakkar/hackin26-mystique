@@ -4,7 +4,6 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Wrapper = styled.div`
-  width: calc(100vw - (5.46vw * 2));
   .swiper {
     margin-left: 0;
     .avg-rating {

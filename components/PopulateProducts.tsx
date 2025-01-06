@@ -103,11 +103,15 @@ const StyledProductsWrapper = styled.div<{
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+
     @media (max-width: 768px) {
       margin: ${({ isTicketCard }) => (isTicketCard ? '0 auto' : '0 1.5rem')};
       width: auto;
     }
+
     h2 {
+      ${({ isTicketCard }) => (isTicketCard && 'margin: 0px;')};
+
       color: ${COLORS.GRAY.G2};
       ${expandFontToken(FONTS.DISPLAY_SMALL)};
       @media (max-width: 768px) {
@@ -154,11 +158,17 @@ const ticketCardDesktopDisplay = css`
 
 function getMwebMargin({
   isNotVisible,
+  isTicketCard,
   $increasedMargin,
-}: Pick<TProductContainerStyles, 'isNotVisible' | '$increasedMargin'>) {
+}: Pick<
+  TProductContainerStyles,
+  'isNotVisible' | '$increasedMargin' | 'isTicketCard'
+>) {
   switch (true) {
     case isNotVisible:
       return '0';
+    case isTicketCard:
+      return '8px 0px 0px';
     case $increasedMargin:
       return '1.5rem 0 1.75rem';
     default:
@@ -180,9 +190,18 @@ const ProductContainer = styled.div<TProductContainerStyles>`
     isTicketCard && !isMobile
       ? ` ${ticketCardDesktopDisplay} `
       : `display: grid;`}
-  grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
-  margin: ${({ isNotVisible, isCruise }) =>
-    isNotVisible ? '0' : isCruise ? '1.5rem 0 2.25rem' : '2.25rem 0'};
+  ${({ isTicketCard }) => `grid-row-gap: ${isTicketCard ? '1.5rem' : '2rem'};`}
+  margin: ${({ isNotVisible, isCruise, isTicketCard }) => {
+    if (isNotVisible) {
+      return '0';
+    } else if (isTicketCard) {
+      return '2.25rem 0 0';
+    } else if (isCruise) {
+      return '1.5rem 0 2.25rem';
+    } else {
+      return '2.25rem 0';
+    }
+  }};
   & > ${HorizontalLine} {
     border-bottom-style: dashed;
   }
@@ -198,8 +217,8 @@ const ProductContainer = styled.div<TProductContainerStyles>`
   height: ${({ isNotVisible }) => (isNotVisible ? '0' : 'auto')};
 
   @media (max-width: 768px) {
-    margin: ${({ isNotVisible, $increasedMargin }) =>
-      getMwebMargin({ isNotVisible, $increasedMargin })};
+    margin: ${({ isNotVisible, $increasedMargin, isTicketCard }) =>
+      getMwebMargin({ isNotVisible, $increasedMargin, isTicketCard })};
     grid-row-gap: ${({ isNewVerticalsProductCard }) =>
       isNewVerticalsProductCard ? '1.5rem' : '2rem'};
 

@@ -46,6 +46,8 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   const isBreadcrumbsCollapsed =
     Object.values(breadcrumbs).length > COLLAPSE_LIMIT;
 
+  const alignStyleWithKirby = isRevampedShoulderPage || isContentPage;
+
   useCaptureClickOutside(
     dropdownRef,
     () => {
@@ -101,6 +103,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 $isCatOrSubCatPage={isCatOrSubCatPage}
                 $isCrumbCollapsed={isCrumbCollapsed}
                 $isCategoryPage={isCategoryPage}
+                $alignStyleWithKirby={alignStyleWithKirby}
               >
                 {getBreadcrumbLabel({
                   label,

@@ -82,6 +82,18 @@ const SliderWrapper = styled.div`
 
 const AccordionsWrap = styled.div``;
 
+const AccordionContent = styled.div`
+  p {
+    margin-bottom: 17px;
+  }
+
+  @media (max-width: 768px) {
+    p {
+      margin-bottom: 15px;
+    }
+  }
+`;
+
 const SingleImage = styled.div`
   width: auto;
   display: grid;
@@ -227,7 +239,7 @@ const SliderAccordion = (props: any) => {
           const content = (
             <>
               {isMobile ? SliderComponent : null}
-              <div className="answer-content">
+              <AccordionContent>
                 <PrismicRichText
                   field={accordion.answer}
                   components={(...defaultArgs: any) =>
@@ -237,7 +249,7 @@ const SliderAccordion = (props: any) => {
                     })
                   }
                 />
-              </div>
+              </AccordionContent>
             </>
           );
           return (

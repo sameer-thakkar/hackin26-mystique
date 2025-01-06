@@ -24,6 +24,14 @@ const Divider = styled.div`
   border-bottom: 0.25px solid ${COLORS.GRAY.G7};
 `;
 
+// Adding this override for shoulder page styles that are added at the wrapper
+const RichContentWrapper = styled.div`
+  p {
+    font-size: 15px !important;
+    line-height: 24px !important;
+  }
+`;
+
 /**
  *
  * Accordion slice allows you to have toggle-able content, heading is visible at all times and on-click the respective content gets shown/hidden.<br>
@@ -147,13 +155,15 @@ const AccordionGroup = ({
           </Conditional>
           {accordions?.map((accordion, index) => {
             const content = (
-              <RichContent
-                render={accordion.content}
-                parentProps={{
-                  sectionName: heading,
-                  sliceType: SLICE_TYPES.ACCORDION,
-                }}
-              />
+              <RichContentWrapper>
+                <RichContent
+                  render={accordion.content}
+                  parentProps={{
+                    sectionName: heading,
+                    sliceType: SLICE_TYPES.ACCORDION,
+                  }}
+                />
+              </RichContentWrapper>
             );
             return (
               <Accordion

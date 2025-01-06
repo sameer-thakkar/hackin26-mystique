@@ -21,11 +21,22 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
   gridTemplateColumns = `repeat(${cardsInARow}, 1fr)`;
+
+  /**
+   * NOTE: ".rich-text p" margin-bottom has been removed as rich-text slice within
+   *   card-grid is used when google map embeddings are added. This CSS removes
+   *   the bottom margin that creates an empty space.
+   */
   return `
     display: grid;
     background: ${COLORS.BRAND.WHITE};
     grid-template-columns: ${gridTemplateColumns};
     grid-gap: 20px;
+
+    .rich-text p {
+      margin-bottom: 0;
+    }
+    
     @media(max-width: 768px){
       grid-template-columns: auto;
     }
@@ -111,6 +122,7 @@ const Controls = styled.div`
 
 const ExitDescription = styled.div`
   margin-top: 32px;
+
   ${({
     isGlobalMb,
     cardsInARow,

@@ -15,11 +15,8 @@ const TitleTextCombo = styled.div<{
     ${expandFontToken(FONTS.HEADING_SMALL)}
     `
         : `
-    ${expandFontToken(FONTS.HEADING_LARGE)};
+    ${expandFontToken(FONTS.HEADING_REGULAR)};
     `}
-  }
-  p {
-    ${expandFontToken('Paragraph/Large')}
   }
   display: grid;
   grid-row-gap: 0px;

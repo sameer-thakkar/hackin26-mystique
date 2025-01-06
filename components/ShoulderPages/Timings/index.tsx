@@ -20,6 +20,7 @@ import { ITimingsPageProps, ITimingsTableProps } from '../interface';
 import {
   BestTimeHeader,
   BestTimeSubHeader,
+  LongFormProductCardWrapper,
   PageContainer,
   SectionDescription,
   TabsContainer,
@@ -152,14 +153,16 @@ const TimingsPage = ({
         </Conditional>
       </PageContainer>
       <Conditional if={extractedProductCardsSlice?.length}>
-        <LongForm
-          content={extractedProductCardsSlice || []}
-          {...parentProps}
-          categoryTourListData={{
-            ...parentProps.categoryTourListData,
-            productCardsLimit: PRODUCT_CARDS_LIMIT,
-          }}
-        />
+        <LongFormProductCardWrapper>
+          <LongForm
+            content={extractedProductCardsSlice || []}
+            {...parentProps}
+            categoryTourListData={{
+              ...parentProps.categoryTourListData,
+              productCardsLimit: PRODUCT_CARDS_LIMIT,
+            }}
+          />
+        </LongFormProductCardWrapper>
       </Conditional>
       <Conditional if={poiName && (weekInfoExists || yearInfoExists)}>
         <PageContainer>

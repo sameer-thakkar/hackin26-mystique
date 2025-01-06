@@ -4,17 +4,24 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.main`
-  margin-bottom: 2.25rem;
+  margin-bottom: 56px;
+  margin-top: 32px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 52px;
+  }
 
   h2 {
     ${expandFontToken(FONTS.HEADING_REGULAR)}
+
+    margin-bottom: 16px;
   }
 
   .pairs-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.25rem 5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
     p {
       margin: 0;
@@ -32,7 +39,8 @@ export const Container = styled.main`
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 2.6rem;
+        width: 36px;
+        height: 36px;
         flex: 0 0 12px;
         box-sizing: border-box;
 

@@ -15,6 +15,7 @@ export const PageContainer = styled.main`
   }
 
   @media (max-width: 768px) {
+    margin-bottom: 52px;
     width: calc(100vw - 2rem);
   }
 `;
@@ -23,6 +24,14 @@ export const TimingsTableTabsViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+export const LongFormProductCardWrapper = styled.div`
+  margin-bottom: 56px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 52px;
+  }
 `;
 
 export const TabsContainer = styled.div`

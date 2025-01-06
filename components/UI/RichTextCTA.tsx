@@ -9,7 +9,7 @@ import ChevronLeft from 'assets/chevronLeft';
 interface StyledCTAWrapperProps {
   $isButtonCTA?: boolean;
 }
-const CTAWrapper = styled.div<StyledCTAWrapperProps>`
+const CTAWrapper = styled.p<StyledCTAWrapperProps>`
   margin-top: ${({ $isButtonCTA }) => ($isButtonCTA ? '24px' : '7px')};
   a {
     text-decoration: none;

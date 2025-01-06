@@ -4,7 +4,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
-  margin-bottom: 2.25rem;
+  margin-bottom: 56px;
   display: flex;
   padding: 1rem;
   flex-direction: column;
@@ -14,6 +14,10 @@ export const Container = styled.div`
   border-radius: 8px;
   border: 1px solid rgba(128, 0, 255, 0.05);
   background-color: ${COLORS.BACKGROUND.FLOATING_PURPS};
+
+  @media (max-width: 768px) {
+    margin-bottom: 52px;
+  }
 
   .title {
     ${expandFontToken(FONTS.HEADING_SMALL)}
