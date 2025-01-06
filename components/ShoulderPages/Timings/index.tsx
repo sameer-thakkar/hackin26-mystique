@@ -311,6 +311,7 @@ const TimingsTableTabsView = ({
             url={imageUrl ?? ''}
             alt={imageAltText ?? ''}
             autoCrop={false}
+            loadHigherQualityImage={true}
           />
         </Conditional>
       </TimingTablesContainer>

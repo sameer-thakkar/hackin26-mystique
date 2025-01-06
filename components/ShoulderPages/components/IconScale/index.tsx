@@ -26,7 +26,7 @@ const IconScale = ({ values = {}, type, lang }: IIconScaleType) => {
             )
         )}
       </Row>
-      <Row>
+      <Row id="timings-scale-legends">
         {SHOULDER_TIMINGS_SCALE_LEGENDS[type]
           // remove unused legend elements
           .filter((legend) =>

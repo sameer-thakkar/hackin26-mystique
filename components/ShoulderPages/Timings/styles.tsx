@@ -7,7 +7,7 @@ export const PageContainer = styled.main`
   width: 88.56vw;
   margin: 0 auto;
   max-width: 1200px;
-  padding-bottom: 3rem;
+  margin-bottom: 56px;
 
   .slice-wrapper {
     padding: 0.5rem 0;
@@ -142,6 +142,7 @@ export const TimingTablesContainer = styled.div`
 
   .image-wrap {
     width: unset !important;
+    line-height: 0;
   }
 
   img {

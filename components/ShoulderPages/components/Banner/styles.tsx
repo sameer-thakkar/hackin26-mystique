@@ -5,7 +5,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const Container = styled.div`
-  margin-top: -1px;
+  margin-top: 0px;
   position: relative;
   z-index: 4;
   display: flex;
@@ -94,7 +94,7 @@ export const ContentContainer = styled.div`
 
   @media (max-width: 768px) {
     width: calc(100vw - 2.5rem);
-    padding: 1rem 0 1.219rem;
+    padding: 1rem 0 1.5rem;
     min-height: 180px;
   }
 `;
