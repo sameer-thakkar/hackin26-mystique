@@ -121,10 +121,22 @@ const ShowPageBanner = ({
           !!detailsObjects[strings.SHOW_PAGE.OPENING_DATE] &&
           !!detailsObjects[strings.SHOW_PAGE.CLOSING_DATE]
         ) {
+          const openingDate = dateToString({
+            date: detailsObjects[strings.SHOW_PAGE.OPENING_DATE],
+            currentLanguage,
+            options: {
+              dateStyle: 'long',
+            },
+          });
+          const closingDate = dateToString({
+            date: detailsObjects[strings.SHOW_PAGE.CLOSING_DATE],
+            currentLanguage,
+            options: {
+              dateStyle: 'long',
+            },
+          });
           // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          showDetails['EXTENDED_VALIDITY'] = `${dateToString(
-            detailsObjects[strings.SHOW_PAGE.OPENING_DATE]
-          )} - ${dateToString(detailsObjects[strings.SHOW_PAGE.CLOSING_DATE])}`;
+          showDetails['EXTENDED_VALIDITY'] = `${openingDate} - ${closingDate}`;
         }
         break;
       case strings.SHOW_PAGE.DURATION:
@@ -182,7 +194,15 @@ const ShowPageBanner = ({
           })) ?? {};
 
         const [firstAvailableDate] = sortedInventoryDates ?? [];
-        setNextAvailable(dateToString(firstAvailableDate));
+        setNextAvailable(
+          dateToString({
+            date: firstAvailableDate,
+            currentLanguage,
+            options: {
+              dateStyle: 'long',
+            },
+          })
+        );
       } catch (e) {
         Sentry.captureException(e);
         sendLog({ err: e });

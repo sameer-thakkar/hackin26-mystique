@@ -550,12 +550,16 @@ const Product = (props: any) => {
 
   const isNewArrival = allTags.includes('NEWARRIVAL');
 
-  const openingDate = dateToString(
-    reopeningDate,
-    LANGUAGE_MAP.en.code,
-    'MMM-DD-YYYY'
-  );
-  const localisedOpeningDate = dateToString(reopeningDate, lang, 'MMM-DD-YYYY');
+  const openingDate = dateToString({
+    date: reopeningDate,
+    currentLanguage: LANGUAGE_MAP.en.code,
+    dateFormat: 'MMM-DD-YYYY',
+  });
+  const localisedOpeningDate = dateToString({
+    date: reopeningDate,
+    currentLanguage: lang,
+    dateFormat: 'MMM-DD-YYYY',
+  });
 
   let OPENING_ON = '';
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {

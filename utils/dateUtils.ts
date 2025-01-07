@@ -17,11 +17,19 @@ dayjs.extend(customParseFormat);
 dayjs.extend(duration);
 dayjs.extend(localeData);
 
-export const dateToString = (
-  date: string,
-  currentLanguage = LANGUAGE_CODE_MAP.EN,
-  dateFormat: 'DD-MM-YYYY' | 'MMM-DD-YYYY' = 'DD-MM-YYYY'
-) => {
+type TDateToString = {
+  date: string;
+  currentLanguage?: TLANGUAGELOCALE | string;
+  dateFormat?: 'DD-MM-YYYY' | 'MMM-DD-YYYY';
+  options?: Pick<Intl.DateTimeFormatOptions, 'dateStyle'>;
+};
+
+export const dateToString = ({
+  date,
+  currentLanguage = LANGUAGE_CODE_MAP.EN as TLANGUAGELOCALE,
+  dateFormat = 'DD-MM-YYYY',
+  options,
+}: TDateToString) => {
   const today = [dayjs().format('YYYY-MM-DD'), dayjs().format('DD-MM-YYYY')];
   const tomorrow = [
     dayjs().add(1, 'day').format('YYYY-MM-DD'),
@@ -38,6 +46,7 @@ export const dateToString = (
         dateFormat,
         // @ts-expect-error
         lang: currentLanguage,
+        options,
       })
     : INVALID_DATE;
 };
