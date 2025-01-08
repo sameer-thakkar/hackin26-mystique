@@ -32,6 +32,10 @@ const Wrapper = styled.div<{
         margin: 0;
       }
     `}
+
+    .block-img:has(img) {
+      line-height: 0;
+    }
   }
   .fadeout {
     position: absolute;
