@@ -194,8 +194,6 @@ const EntertainmentMBLandingPageV2 = ({
 
   const theatreName = COLLECTION_ID_THEATRE_NAMES_MAP[collectionId];
 
-  const { items: reviewItems } = collectionReviews?.result?.reviews ?? {};
-
   return (
     <LandingPageWrapper>
       <BrowseByCategoriesSection
@@ -245,7 +243,7 @@ const EntertainmentMBLandingPageV2 = ({
         isMobile={isMobile}
       />
 
-      <Conditional if={!collectionReviewsError}>
+      <Conditional if={!collectionReviewsError && collectionReviews}>
         <ReviewSectionLazyWrapper>
           <LazyComponent
             options={{
@@ -258,7 +256,7 @@ const EntertainmentMBLandingPageV2 = ({
                 heading={
                   strings.ENTERTAINMENT_MB_LANDING_PAGE.LOVED_BY_MILLIONS
                 }
-                reviews={{ reviewsData: reviewItems, mediaData }}
+                reviews={{ reviewsData: collectionReviews!, mediaData }}
                 isMobile={isMobile}
                 mediaData={[]}
                 overrideSwiperProps={swiperParams}

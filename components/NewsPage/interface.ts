@@ -1,5 +1,6 @@
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import type { ShowpageDocument } from 'types.prismic';
+import type { TReviewsComponentPayload } from 'components/common/Reviews/interface';
 import type { TLANGUAGELOCALE } from 'const/index';
 import type { TMediaData } from './ArticlePage/interface';
 
@@ -46,9 +47,7 @@ export type TNewsPageData = {
   subCategoryData: any;
   videoData: Record<string, string>;
   mediaData: TMediaData[];
-  collectionReviews: {
-    items: Record<string, any>[];
-  };
+  collectionReviews: TReviewsComponentPayload;
   newsLandingPageUrl: string;
 };
 
