@@ -204,18 +204,20 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   // Title and Text combo for the starting of the Card Section
   const EntrySection = (
-    <TitleTextCombo ref={cardSectionRef}>
-      {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
-      {description?.length ? (
-        <RichContent
-          render={description}
-          parentProps={{
-            sectionName: title,
-            sliceType: SLICE_TYPES.CARD_SECTION,
-          }}
-        />
-      ) : null}
-    </TitleTextCombo>
+    <Conditional if={title?.length || description?.length}>
+      <TitleTextCombo ref={cardSectionRef}>
+        {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
+        {description?.length ? (
+          <RichContent
+            render={description}
+            parentProps={{
+              sectionName: title,
+              sliceType: SLICE_TYPES.CARD_SECTION,
+            }}
+          />
+        ) : null}
+      </TitleTextCombo>
+    </Conditional>
   );
 
   // Rich Text for ending of the Card Section
