@@ -89,10 +89,6 @@ export const StyledContentPage = styled.div`
     padding: 0;
   }
 
-  .slice-block.rich_text p + h2 {
-    margin: 1.5rem 0 0.25rem;
-  }
-
   @media (max-width: 768px) {
     grid-row-gap: 3rem;
     .page_tabs + div {
@@ -124,9 +120,6 @@ export const StyledContentPage = styled.div`
     .slice-wrapper.slice-block {
       padding: 0 16px;
       width: calc(100% - 32px);
-    }
-    .slice-block.rich_text p + h2 {
-      margin: 1.25rem 0 0.25rem;
     }
   }
 `;
