@@ -45,6 +45,10 @@ const MicrobrandCard = styled.div`
   align-items: start;
   border-radius: 6px;
 
+  @media (max-width: 768px) {
+    grid-template-rows: 219.65px auto;
+  }
+
   ${StyledPriceBlock} {
     grid-column: 2 / 3;
     align-items: center;
@@ -227,14 +231,6 @@ export const LinkCards = (props: any) => {
 const StyledMicrobandCards = styled.div`
   max-width: 1200px;
   margin: auto;
-  .microbrand-cards-content {
-    h2 {
-      margin: 24px 0;
-    }
-  }
-  @media (max-width: 768px) {
-    margin: auto 25px;
-  }
 `;
 
 /**
