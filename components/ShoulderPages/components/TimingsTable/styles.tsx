@@ -154,6 +154,7 @@ export const TableWrapper = styled.table`
     text-transform: uppercase;
     text-align: left;
     position: relative;
+    height: 41px;
 
     ${TableRow} {
       border-bottom: 1px solid ${COLORS.GRAY.G6};
