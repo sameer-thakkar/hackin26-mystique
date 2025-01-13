@@ -122,6 +122,7 @@ const Controls = styled.div`
 
 const ExitDescription = styled.div`
   margin-top: 32px;
+  display: flex;
 
   ${({
     isGlobalMb,
