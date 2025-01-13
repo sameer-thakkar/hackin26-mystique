@@ -670,9 +670,10 @@ const ShowPage = (props: any) => {
             logoAlt={whiteLabelName || ''}
             hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
             disclaimerText={commonFooter?.data?.disclaimer_text}
-            slices={commonFooter?.data?.body || []}
+            // As of December 2024, footer displays only secondary footer Items to be consistent with Kirby
+            secondarySlices={commonFooter?.data?.body || []}
+            secondaryHeading={commonFooter?.data?.footer_heading}
             attraction={commonFooter?.data?.attraction || 'attraction'}
-            primaryHeading={commonFooter?.data?.footer_heading}
             isEntertainmentMb={true}
             isLTT={isLTT}
           />
