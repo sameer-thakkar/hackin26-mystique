@@ -698,6 +698,7 @@ export const ANALYTICS_EVENTS = {
     VIEW_ALL_CTA_CLICKED: 'View All CTA Clicked',
     QNA_BANNER_VIEWED: 'QnA Banner Viewed',
   },
+  SHOW_MORE_REDIRECT: 'Show Page Redirect',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {

@@ -402,6 +402,20 @@ const SideBar = (props: TSideBarProps) => {
     addCheckAvailabilityClickedDataEvents,
   ]);
 
+  const handleShowPageRedirect = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: theatreShowTgid,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: activeCurrencyCode,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating?.toFixed(1),
+      [ANALYTICS_PROPERTIES.NUMBER_OF_RATINGS]: truncateNumber(reviewsCount),
+      [ANALYTICS_PROPERTIES.CTA_TYPE]: ANALYTICS_EVENTS.SHOW_MORE_REDIRECT,
+      [ANALYTICS_PROPERTIES.LABEL]: experienceName,
+    });
+
+    return true;
+  };
+
   const onCalendarDateClick = ({
     date,
   }: {
@@ -527,7 +541,12 @@ const SideBar = (props: TSideBarProps) => {
               </Conditional>
             </div>
 
-            <a href={showPageLink} rel="noopener noreferrer" target={'_blank'}>
+            <a
+              onClick={handleShowPageRedirect}
+              href={showPageLink}
+              rel="noopener noreferrer"
+              target={'_blank'}
+            >
               <ExperienceName>{experienceName}</ExperienceName>
             </a>
 
