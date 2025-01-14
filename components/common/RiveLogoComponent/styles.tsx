@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 export const StyledRizLogoWrapper = styled.div`
   height: 2.5rem;
@@ -10,3 +10,8 @@ export const StyledRizLogoWrapper = styled.div`
     padding-left: 0px !important;
   }
 `;
+
+export const fallbackStyles: CSSProperties = {
+  width: 92,
+  marginLeft: 5,
+};
