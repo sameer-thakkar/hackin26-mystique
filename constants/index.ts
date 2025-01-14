@@ -375,7 +375,6 @@ export const THEATRE_TYPES: Record<string, string> = {
   PRINCE_EDWARD_THEATRE: 'prince-edward-theatre',
   PALACE_THEATRE: 'palace-theatre',
   SONDHEIM_THEATRE: 'sondheim-theatre',
-  LONDON_COLISEUM: 'london-coliseum',
   TROUBADOUR_WEMBLEY_PARK_THEATRE: 'troubadour-wembley-park-theatre',
   PRINCE_OF_WALES_THEATRE: 'prince-of-wales-theatre',
   DOMINION_THEATRE: 'dominion-theatre',

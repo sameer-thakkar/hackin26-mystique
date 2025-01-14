@@ -13,7 +13,6 @@ import DominionTheatreSvg from 'assets/dominionTheatreSvg';
 import DrinkSvg from 'assets/drinkSvg';
 import HisMajestysTheatreSvg from 'assets/hisMajestysTheatreSvg';
 import LegRoomSvg from 'assets/legRoomSvg';
-import LondonColiseumSvg from 'assets/londonColiseumSvg';
 import MovableSeatsIcon from 'assets/movableSeatsIcon';
 import NovelloTheatreSvg from 'assets/novelloThetreSvg';
 import PalaceTheatreSvg from 'assets/palaceTheatre';
@@ -147,21 +146,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       BANNER_ICONS: [
         {
           name: '1122 seats',
-          icon: SeatIcon2,
-        },
-        {
-          name: 'Wheelchair accessible',
-          icon: WheelChairIcon,
-        },
-      ],
-    },
-    [THEATRE_TYPES.LONDON_COLISEUM]: {
-      BANNER_HEADING: 'London Coliseum seating plan',
-      BANNER_DESCRIPTION:
-        "Home to the English National Opera, the London Coliseum is West End's biggest theater establishments. Since its inauguration 1904, it has impressed patrons with a variety of performances. The London Coliseum seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.",
-      BANNER_ICONS: [
-        {
-          name: '2359 seats',
           icon: SeatIcon2,
         },
         {
@@ -2105,402 +2089,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: '',
       },
     },
-    [THEATRE_TYPES.LONDON_COLISEUM]: {
-      'stalls-left': {
-        blockName: 'Left',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - Left',
-        description:
-          'Located on the first floor, closest to the stage. Pick seats in rows D-F for optimal distance and easy access to facilities. The first two rows may require craning, but provide a clear view of the stage and orchestra pit.',
-        quickInfo: [
-          { icon: SeatIcon, label: '114 seats' },
-          {
-            icon: BinocularIcon,
-            label: 'Excellent views from aisle seats',
-          },
-          { icon: LegRoomSvg, label: 'Good legroom' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Rows A-N',
-      },
-      'stalls-center': {
-        blockName: 'Center',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - Center',
-        description:
-          'Centrally located seats in rows D-L offer the best views, ideal for taking in details of the act. Rows A-B may be close to the stage and require craning, but come with a clear view of the orchestra pit.',
-        quickInfo: [
-          { icon: SeatIcon, label: '279 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows D-L' },
-          { icon: LegRoomSvg, label: 'Great legroom' },
-          { icon: AccessibilityIcon, label: 'Accessible seats in Row O' },
-        ],
-        rows: 'Rows A - Q',
-      },
-      'stalls-right': {
-        blockName: 'Right',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - Right',
-        description:
-          'Aisle seats toward the left offer the best views in this section. Seats toward the outer edge may have a side angle but the close proximity to the stage ensures amazing views throughout. Avoid front rows as the stage is quite high.',
-        quickInfo: [
-          { icon: SeatIcon, label: '114 seats' },
-          {
-            icon: BinocularIcon,
-            label: 'Excellent views from aisle seats',
-          },
-          { icon: LegRoomSvg, label: 'Good legroom' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Rows A - N',
-      },
-      'stalls-box-1-4': {
-        blockName: 'Box 1-4',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stage boxes - Stalls',
-        description:
-          'Slightly angled view close to the stage. You can enjoy excellent views by moving your seats to the optimal angle. The private space is perfect for enjoying a comfortable experience.',
-        quickInfo: [
-          { icon: SeatIcon, label: '11 seats' },
-          { icon: BinocularIcon, label: 'Great views; side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: AccessibilityIcon, label: 'Box 4 fully accessible' },
-        ],
-        rows: 'Box 1-4',
-      },
-      'dress-circle-box-9': {
-        blockName: 'Box 9',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Stage box - Dress Circle',
-        description:
-          "Located at an angle that provides clear views from all seats. High elevation is great for large productions. You can move your seats around the private space so you don't miss any part of the show.",
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great views; side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 9',
-      },
-      'stalls-box-a-c': {
-        blockName: 'Box A-C',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Boxes - Stalls',
-        description:
-          'Central views of the stage with excellent location and great sound quality. Ideal for groups, couples and those looking for a private experience.',
-        quickInfo: [
-          { icon: SeatIcon, label: '15 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: AccessibilityIcon, label: 'Fully accessible' },
-        ],
-        rows: 'Box A-C',
-      },
-      'dress-circle-box-10-11': {
-        blockName: 'Box 10-11',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Boxes - Dress Circle',
-        description:
-          'Enjoy a wide view of the production from the perfect distance. The private space is perfect to move around and enjoy the show in small groups.',
-        quickInfo: [
-          { icon: SeatIcon, label: '8 seats' },
-          { icon: BinocularIcon, label: 'Great views, side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 10-11',
-      },
-      'upper-circle-box-14-15': {
-        blockName: 'Box 14-15',
-        theatreSectionName: 'Upper Circle',
-        theatreSectionLabel: 'Boxes - Upper Circle',
-        description:
-          'Ideal for an elevated view of the stage with clear sightlines. The private box allows free movement so you can overcome the slight obstructions caused by the side angle.',
-        quickInfo: [
-          { icon: SeatIcon, label: '8 seats' },
-          { icon: BinocularIcon, label: 'Great views, side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 14-15',
-      },
-      'dress-circle-royal-box': {
-        blockName: 'Box P (Royal Box)',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Stage box - Dress Circle',
-        description:
-          'Reserved for members of the royal family, this private area offers excellent views of the stage even with a slightly angled position.',
-        quickInfo: [
-          { icon: SeatIcon, label: '6 seats' },
-          { icon: BinocularIcon, label: 'Great views, side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Royal Box',
-      },
-      'stalls-box-5-8': {
-        blockName: 'Box 5-8',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Boxes - Stalls',
-        description:
-          "Close to the stage so you don't miss any details from the act. Though slightly angled, you can move around the private box to ensure you have excellent views from all seats.",
-        quickInfo: [
-          { icon: SeatIcon, label: '11 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: AccessibilityIcon, label: 'Box 5 fully accessible' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 5-6',
-      },
-      'stalls-box-f-h': {
-        blockName: 'Box F-H',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Boxes - Stalls',
-        description:
-          'Enjoy nearly central views of the stage, especially from the front row. Perfect for small groups where you can enjoy private company and move around freely.',
-        quickInfo: [
-          { icon: SeatIcon, label: '15 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: AccessibilityIcon, label: 'Fully accessible' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box F-H',
-      },
-      'dress-circle-box-12-13': {
-        blockName: 'Box 12-13',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Boxes - Dress Circle',
-        description:
-          "Perfectly positioned with proximity to the stage and nearly central sightlines. You can move around the private box to ensure you don't miss any part of the show.",
-        quickInfo: [
-          { icon: SeatIcon, label: '8 seats' },
-          { icon: BinocularIcon, label: 'Great views, side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 12-13',
-      },
-      'upper-circle-box-16-17': {
-        blockName: 'Box 16-17',
-        theatreSectionName: 'Upper Circle',
-        theatreSectionLabel: 'Boxes - Upper Circle',
-        description:
-          "Bird's eye view of the stage without any obstructions. Some parts of the stage may be hidden due to the angled position. You may lean forward or move the seats to get a better view of the action.",
-        quickInfo: [
-          { icon: SeatIcon, label: '8 seats' },
-          { icon: BinocularIcon, label: 'Great views, side angle' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-        ],
-        rows: 'Box 16-17',
-      },
-      'dress-circle-slip-left': {
-        blockName: 'Slips',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Dress Circle - Slips left',
-        description:
-          'Affordable seats with excellent value. The view is impressive even from the side angle. There are minimal obstructions on stage left but the overall experience is not hindered.',
-        quickInfo: [
-          { icon: SeatIcon, label: '24 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-        ],
-        rows: 'Rows A - C',
-      },
-      'dress-circle-slip-right': {
-        blockName: 'Slips',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Dress Circle - Slips right',
-        description:
-          'Slightly angled view close to the stage, though there is minimal obstruction so you can enjoy a great view from any seat. Pick spots towards the end of the row for better legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '24 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-        ],
-        rows: 'Rows A - C',
-      },
-      'dress-circle-left': {
-        blockName: 'Left',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Dress Circle - Left',
-        description:
-          'Enjoy the full scale of the production from a perfect distance. Pick seats near the central aisle in rows A-E for unobstructed views. Avoid back rows as the view may be restricted due to the Upper Circle overhang.',
-        quickInfo: [
-          { icon: SeatIcon, label: '179 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows A-D' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Accessible seats in Row K' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'dress-circle-center': {
-        blockName: 'Center',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Dress Circle - Center',
-        description:
-          'Good rake ensures great views from nearly all seats. Pick spots in the first few rows for the best views of the stage. The Upper Circle overhang begins from row F and may affect views towards the back.',
-        quickInfo: [
-          { icon: SeatIcon, label: '233 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows A-D' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'dress-circle-right': {
-        blockName: 'Right',
-        theatreSectionName: 'Dress Circle',
-        theatreSectionLabel: 'Dress Circle - Right',
-        description:
-          'Optimal distance and a good rake provide good views even with a side angle. Seats near the central aisle offer an unobstructed sightline, although back rows starting from F have restricted views due to the Upper Circle overhang.',
-        quickInfo: [
-          { icon: SeatIcon, label: '179 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows A-D' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Accessible seats in Row K' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'upper-circle-left': {
-        blockName: 'Left',
-        theatreSectionName: 'Upper Circle',
-        theatreSectionLabel: 'Upper Circle - Left',
-        description:
-          "If you're on a budget, front rows are ideal for enjoying a full view of the stage without obstructions. Rows G-L may have restricted views due to the Balcony overhang. Middle seats may be cramped.",
-        quickInfo: [
-          { icon: SeatIcon, label: '192 seats' },
-          { icon: BinocularIcon, label: 'Good views in rows A-C' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'upper-circle-center': {
-        blockName: 'Center',
-        theatreSectionName: 'Upper Circle',
-        theatreSectionLabel: 'Upper Circle - Center',
-        description:
-          'Seats in rows B-E offer a decent view of the stage for a reasonable price. Back rows are affected by Balcony overhang and might feel far from the action. Aisle seats are best for comfortable legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '228 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows B-E' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'upper-circle-right': {
-        blockName: 'Right',
-        theatreSectionName: 'Upper Circle',
-        theatreSectionLabel: 'Upper Circle - Right',
-        description:
-          'Most seats in rows A-F offer great unobstructed views of the stage albeit from a distance. Though slightly angled, you can enjoy a full view of the stage. The Balcony overhang effects sightline and sound in back rows, especially H-L.',
-        quickInfo: [
-          { icon: SeatIcon, label: '192 seats' },
-          { icon: BinocularIcon, label: 'Good views in rows A-C' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Rows A-L',
-      },
-      'balcony-far-left': {
-        blockName: 'Far left',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Far left',
-        description:
-          'Excellent value for money with clear views of the stage from all seats. The side angle greatly aides the view from a high elevation. Enjoy better legroom and great acoustics.',
-        quickInfo: [
-          { icon: SeatIcon, label: '12 seats' },
-          { icon: BinocularIcon, label: 'Restricted view' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-        ],
-        rows: 'Rows A-C',
-      },
-      'balcony-mid-left': {
-        blockName: 'Mid left',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Mid left',
-        description:
-          'Rows A-B provide decent views without any obstructions. Parts of the stage are hidden from the back rows although renting binoculars can greatly aide the experience. The high rake is not ideal for persons with mobility issues.',
-        quickInfo: [
-          { icon: SeatIcon, label: '75 seats' },
-          {
-            icon: BinocularIcon,
-            label: 'Side view, front rows restricted',
-          },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-K',
-      },
-      'balcony-left': {
-        blockName: 'Left',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Left',
-        description:
-          'This section offers great value for money with a decent view from most seats. Pick rows A-D for clear views of most of the stage. Back rows may feel very distant from the stage, although renting binoculars can enhance the experience.',
-        quickInfo: [
-          { icon: SeatIcon, label: '108 seats' },
-          { icon: BinocularIcon, label: 'Decent view, best from row A-D' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-K',
-      },
-      'balcony-center': {
-        blockName: 'Center',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Center',
-        description:
-          'The compact layout of the theater ensures great views from a high elevation. Rows A-D offer comfortable seats with great sound quality. You may need to lean forward for a better view from the front rows.',
-        quickInfo: [
-          { icon: SeatIcon, label: '108 seats' },
-          { icon: BinocularIcon, label: 'Good views in rows B-D' },
-          { icon: LegRoomSvg, label: 'Average legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-K',
-      },
-      'balcony-right': {
-        blockName: 'Right',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Right',
-        description:
-          'Rows A-D offer decent views of the stage from a high elevation. Views from some seats may be restricted due to handrails, although the overall experience is not hindered. Consider binoculars for a more comprehensive view.',
-        quickInfo: [
-          { icon: SeatIcon, label: '108 seats' },
-          { icon: BinocularIcon, label: 'Decent view, best from row A-D' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-K',
-      },
-      'balcony-mid-right': {
-        blockName: 'Mid right',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Mid right',
-        description:
-          'Enjoy decent views with minimal obstructions from most seats. Front rows provide clearer views of the stage while back rows may feel very distant from the action. For better legroom, pick aisle seats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '75 seats' },
-          {
-            icon: BinocularIcon,
-            label: 'Side view, front rows restricted',
-          },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-          { icon: AccessibilityIcon, label: 'Transfer seats in Row K' },
-        ],
-        rows: 'Rows A-K',
-      },
-      'balcony-far-right': {
-        blockName: 'Far right',
-        theatreSectionName: 'Balcony',
-        theatreSectionLabel: 'Balcony - Far right',
-        description:
-          "With great sound and clear views, this section is well worth the price. The slightly angled position and high elevation ensure you don't miss any of the action. Pick aisle spots for better legroom.",
-        quickInfo: [
-          { icon: SeatIcon, label: '12 seats' },
-          { icon: BinocularIcon, label: 'Limited view from the side' },
-          { icon: LegRoomSvg, label: 'Limited legroom' },
-        ],
-        rows: 'Rows A-C',
-      },
-    },
     [THEATRE_TYPES.TROUBADOUR_WEMBLEY_PARK_THEATRE]: {
       'first-class-carriage-1': {
         blockName: 'Carriage 1',
@@ -4339,7 +3927,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: ['20498'],
     [THEATRE_TYPES.PALACE_THEATRE]: ['16816'],
     [THEATRE_TYPES.SONDHEIM_THEATRE]: ['2863'],
-    [THEATRE_TYPES.LONDON_COLISEUM]: ['7960'],
     [THEATRE_TYPES.TROUBADOUR_WEMBLEY_PARK_THEATRE]: ['24961'],
     [THEATRE_TYPES.PRINCE_OF_WALES_THEATRE]: ['2843'],
     [THEATRE_TYPES.DOMINION_THEATRE]: ['24878'],
@@ -4357,7 +3944,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.HIS_MAJESTYS_THEATRE]: HisMajestysTheatreSvg,
     [THEATRE_TYPES.PALACE_THEATRE]: PalaceTheatreSvg,
     [THEATRE_TYPES.SONDHEIM_THEATRE]: SondheimTheatreSvg,
-    [THEATRE_TYPES.LONDON_COLISEUM]: LondonColiseumSvg,
     [THEATRE_TYPES.TROUBADOUR_WEMBLEY_PARK_THEATRE]:
       TroubadourWembleyParkTheatreSvg,
     [THEATRE_TYPES.PRINCE_OF_WALES_THEATRE]: PrinceOfWalesTheatreSvg,
@@ -4381,8 +3967,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       isMobile ? '0 0 342 494' : '0 0 607 663',
     [THEATRE_TYPES.SONDHEIM_THEATRE]: (isMobile: boolean) =>
       isMobile ? '0 0 343 419' : '0 0 607 663',
-    [THEATRE_TYPES.LONDON_COLISEUM]: (isMobile: boolean) =>
-      isMobile ? '0 0 343 350' : '0 0 607 663',
     [THEATRE_TYPES.TROUBADOUR_WEMBLEY_PARK_THEATRE]: (isMobile: boolean) =>
       isMobile ? '0 0 343 314' : '0 0 607 664',
     [THEATRE_TYPES.PRINCE_OF_WALES_THEATRE]: (isMobile: boolean) =>
@@ -4407,7 +3991,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.PRINCE_EDWARD_THEATRE]: 'Prince Edward Theatre Seating Plan',
     [THEATRE_TYPES.PALACE_THEATRE]: 'Palace Theatre Seating Plan',
     [THEATRE_TYPES.SONDHEIM_THEATRE]: 'Sondheim Theatre Seating Plan',
-    [THEATRE_TYPES.LONDON_COLISEUM]: 'London Coliseum Theatre Seating Plan',
     [THEATRE_TYPES.TROUBADOUR_WEMBLEY_PARK_THEATRE]:
       'Troubadour Wembley Park Theatre Seating Plan',
     [THEATRE_TYPES.PRINCE_OF_WALES_THEATRE]:
