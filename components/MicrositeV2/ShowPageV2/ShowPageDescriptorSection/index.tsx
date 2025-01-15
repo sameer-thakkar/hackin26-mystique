@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { getIntlDate } from '@headout/espeon/utils';
 import Conditional from 'components/common/Conditional';
 import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/interface';
@@ -85,8 +86,12 @@ const ShowPageDescriptorSection = ({
     <ShowPageDescriptorSectionWrapper>
       <DescriptorsWrapper numberOfDescriptors={Object.keys(descriptors).length}>
         {Object.keys(descriptors).map((key) => {
-          const { content, icon: Icon, label } = descriptors[key];
+          let { content, icon: Icon, label } = descriptors[key];
           if (!content) return null;
+
+          if (typeof content === 'string' && content.includes('.')) {
+            content = dayjs(content, 'DD.MM.YYYY').toISOString();
+          }
           return (
             <div className="descriptor" key={key}>
               <div className="icon">
