@@ -27,7 +27,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import PlatformUtils from 'utils/platformUtils';
 import getPageData from 'utils/prismicUtils/getPageData';
-import { getLangUID, isAllowedPath, removePageQuery } from 'utils/urlUtils';
+import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { VARIANTS } from 'const/experiments';
@@ -38,7 +38,6 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   MB_CATEGORISATION,
-  RANKING_EXPERIMENT_UIDS,
   THEMES,
   TIME,
 } from 'const/index';
@@ -101,28 +100,11 @@ const Page = (props: PageProps) => {
     botReviewsByTGID = {},
     categoryId,
     subCategoryId,
-    rankingExperimentProps,
     uid,
   } = props;
 
-  const {
-    isExperimentResolving: isRankingExperimentResolving,
-    variant: rankingExperimentVariant,
-    isEligible: isRankingExperimentEligible,
-  } = useABTesting({
-    experimentId: 'RANKING_EXPERIMENT_V3_REVENUE',
-    customEligibilityCheckFn: () =>
-      RANKING_EXPERIMENT_UIDS.includes(uid) && rankingExperimentProps,
-  });
-
-  const showExperimentRankings =
-    RANKING_EXPERIMENT_UIDS.includes(uid) &&
-    rankingExperimentVariant === 'Treatment';
-
   const { tourGroupMap, ...rawCategoryTgidMap } =
-    (showExperimentRankings
-      ? rankingExperimentProps?.simplifiedCategoryTourListData
-      : simplifiedCategoryTourListData) ?? {};
+    simplifiedCategoryTourListData ?? {};
   const entityIdToursMap: { [k: string]: Array<ProductCard> } = Object.entries(
     rawCategoryTgidMap || {}
   ).reduce((acc, [catId, tgids]: any) => {
@@ -142,7 +124,6 @@ const Page = (props: PageProps) => {
     ...(orderedTours && { orderedTours }),
     ...(collectionVideos && { collectionVideos }),
     ...entityIdToursMap,
-    ...(showExperimentRankings && rankingExperimentProps),
   };
 
   strings.setContent({
@@ -291,8 +272,6 @@ const Page = (props: PageProps) => {
     switch (pageType) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
       case CUSTOM_TYPES.MICROSITE + DESIGN.V3:
-        if (isRankingExperimentEligible && isRankingExperimentResolving)
-          return <Loader />;
         return (
           <MicrositeV2
             data={CMSContent}
@@ -321,9 +300,6 @@ const Page = (props: PageProps) => {
             categoryId={categoryId}
             subCategoryId={subCategoryId}
             botReviewsByTGID={botReviewsByTGID}
-            isRankingExperimentResolving={
-              isRankingExperimentResolving && isRankingExperimentEligible
-            }
           />
         );
       case CUSTOM_TYPES.NEWS_PAGE:
@@ -410,12 +386,6 @@ const Page = (props: PageProps) => {
               subCategoryId={subCategoryId}
               qnaSnippets={qnaSnippets}
               qnaSections={qnaSections}
-              isRankingExperimentResolving={
-                isRankingExperimentResolving && isRankingExperimentEligible
-              }
-              isNotUsingAutomatedRanking={
-                rankingExperimentVariant !== 'Treatment'
-              }
               botReviewsByTGID={botReviewsByTGID}
             />
           );
@@ -681,30 +651,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   );
 
-  const { uid } = getLangUID(req, query);
   const promiseList = [response];
 
-  if (RANKING_EXPERIMENT_UIDS.includes(uid)) {
-    promiseList.push(
-      reflect(
-        getPageData({
-          res,
-          req,
-          query,
-          isDev,
-          localizedStrings,
-          runRankingExperiment: true,
-        })
-      )
-    );
-  }
-
-  const [responseWithoutExperiment, responseWithExperiment] = await Promise.all(
-    promiseList
-  );
+  const [responseWithoutExperiment] = await Promise.all(promiseList);
 
   const props = responseWithoutExperiment?.payload;
-  const rankingExperimentProps = responseWithExperiment?.payload;
 
   try {
     let url =
@@ -751,7 +702,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
-        ...(rankingExperimentProps && { rankingExperimentProps }),
         isBot,
         localizedStrings,
         serverRequestStartTimestamp,
