@@ -887,6 +887,11 @@ const MicrositeV1 = (props: any) => {
     showQnaExperiment,
   };
 
+  const longFormContentArr = [
+    ...(Array.isArray(longFormContent) ? longFormContent : []),
+    ...(Array.isArray(contentFWSlices) ? contentFWSlices : []),
+  ];
+
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -1398,24 +1403,22 @@ const MicrositeV1 = (props: any) => {
         <Conditional
           if={isA1orC1MB(taggedMbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
         >
-          <LazyComponent>
-            <CollectionCarousel
-              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
-              isMobile={isMobile}
-              primaryCity={primaryCity}
-              taggedCity={taggedCity}
-            />
-          </LazyComponent>
+          <CollectionCarousel
+            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+            isMobile={isMobile}
+            primaryCity={primaryCity}
+            taggedCity={taggedCity}
+          />
         </Conditional>
 
-        <div ref={lfcRef}>
-          <Conditional if={!hideLFC}>
-            <ProductsContextProvider ready={isReady}>
-              <InteractionContextProvider>
-                <Conditional if={longFormContent}>
+        <Conditional if={longFormContentArr?.length}>
+          <div ref={lfcRef}>
+            <Conditional if={!hideLFC}>
+              <ProductsContextProvider ready={isReady}>
+                <InteractionContextProvider>
                   <LongForm
                     tourListSection={tourListSection}
-                    content={[...longFormContent, ...contentFWSlices]}
+                    content={longFormContentArr}
                     automatedBreadcrumbsExists={automatedBreadcrumbsExists}
                     isRevampedDesign={isCatOrSubCatPage}
                     isMobile={isMobile}
@@ -1428,11 +1431,11 @@ const MicrositeV1 = (props: any) => {
                     categoryId={categoryId}
                     subCategoryId={subCategoryId}
                   />
-                </Conditional>
-              </InteractionContextProvider>
-            </ProductsContextProvider>
-          </Conditional>
-        </div>
+                </InteractionContextProvider>
+              </ProductsContextProvider>
+            </Conditional>
+          </div>
+        </Conditional>
 
         <Conditional if={isCatOrSubCatPage}>
           <LazyComponent>
@@ -1449,27 +1452,25 @@ const MicrositeV1 = (props: any) => {
           </LazyComponent>
         </Conditional>
 
-        <div ref={footerRef}>
-          <Footer
-            currentLanguage={currentLanguage}
-            attraction={footerAttractionName}
-            logoURL={logoUrl}
-            logoAlt={whiteLabelName || ''}
-            hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-            disclaimerText={
-              isCollectionMicrobrand ? bannerAndFooterSubText : disclaimerText
-            }
-            slices={!isFooterInherited ? slicesCFoot || [] : []}
-            themeOverride={footerThemeOverride}
-            secondaryHeading={footerHeadingSFoot}
-            primaryHeading={footerHeadingCFoot}
-            secondarySlices={
-              !isSecondaryFooterInherited ? slicesSFoot || [] : []
-            }
-            isCatOrSubCatPage={isCatOrSubCatPage}
-            isDarkPurps={showHohoRevamp}
-          />
-        </div>
+        <Footer
+          currentLanguage={currentLanguage}
+          attraction={footerAttractionName}
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+          disclaimerText={
+            isCollectionMicrobrand ? bannerAndFooterSubText : disclaimerText
+          }
+          slices={!isFooterInherited ? slicesCFoot || [] : []}
+          themeOverride={footerThemeOverride}
+          secondaryHeading={footerHeadingSFoot}
+          primaryHeading={footerHeadingCFoot}
+          secondarySlices={!isSecondaryFooterInherited ? slicesSFoot || [] : []}
+          isCatOrSubCatPage={isCatOrSubCatPage}
+          isDarkPurps={showHohoRevamp}
+          footerRef={footerRef}
+        />
+
         <Conditional if={hasOffer}>
           <FreeTourPopup
             popupState={freeTourPopupOpen}

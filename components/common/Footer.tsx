@@ -63,6 +63,7 @@ const Footer: React.FC<FooterProps> = ({
   isDark = false,
   isLTT = false,
   isDarkPurps = false,
+  footerRef = null,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
@@ -132,6 +133,7 @@ const Footer: React.FC<FooterProps> = ({
       <StyledFooter
         isEntertainmentMb={isEntertainmentMb}
         $isCatOrSubCatPage={isCatOrSubCatPage}
+        ref={footerRef}
       >
         <>
           <LinkSlicesWrapper

@@ -19,6 +19,7 @@ export type FooterProps = {
   isDark?: boolean;
   isLTT?: boolean;
   isDarkPurps?: boolean;
+  footerRef?: React.RefObject<HTMLDivElement>;
 };
 
 export type TLinkSlices = {

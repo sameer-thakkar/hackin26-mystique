@@ -22,6 +22,10 @@ export const CardContainer = styled.div`
     }
   }
 
+  &:has(+ footer) {
+    padding: 0;
+  }
+
   @media (max-width: 768px) {
     padding: 0 0 2.5rem 0;
     margin-top: 52px;
