@@ -1336,6 +1336,8 @@ const tr = {
     "Değerlendirmeler, Headout'tan rezervasyon yaparak deneyimlerini tamamlayan gerçek kullanıcılar tarafından sağlanır.",
   REVIEW_SECTION_HEADER: 'Konuklarımızın görüşleri',
   TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
+  AGGREGATED_COUNTRIES:
+    '<strong>{0}</strong> ve <strong>dahil olmak üzere {1} ülkeden</strong> gelen konuklar bu deneyimi çok sevdi',
 };
 
 export default tr;

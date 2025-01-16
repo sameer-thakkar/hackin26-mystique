@@ -1330,6 +1330,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   REVIEW_SECTION_HEADER: 'Was unsere Gäste sagen',
   TRUST_VB_TAG: 'Bestätigte Buchung',
   SNAPSHOTS_SECTION_HEADER: 'Schnappschüsse von unseren Gästen',
+  AGGREGATED_COUNTRIES:
+    'Gäste aus <strong>{0}</strong> und <strong>über {1} Ländern</strong> lieben dieses Erlebnis',
 };
 
 export default de;

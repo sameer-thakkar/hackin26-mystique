@@ -1328,5 +1328,7 @@ const it = {
   REVIEW_SECTION_HEADER: 'Cosa dicono i nostri clienti',
   TRUST_VB_TAG: 'Prenotazione verificata',
   SNAPSHOTS_SECTION_HEADER: 'Le istantanee dei nostri ospiti',
+  AGGREGATED_COUNTRIES:
+    'Questa esperienza è stata amata da persone provenienti dai seguenti Paesi: <strong>{0}</strong> e <strong>da oltre {1} Paesi</strong>',
 };
 export default it;

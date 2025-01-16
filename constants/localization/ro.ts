@@ -1335,6 +1335,8 @@ const ro = {
     'Recenziile sunt colectate de la utilizatorii reali Headout care au rezervat și au finalizat experiența cu noi.',
   REVIEW_SECTION_HEADER: 'Ce spun oaspeții noștri',
   TRUST_VB_TAG: 'Rezervare verificată',
+  AGGREGATED_COUNTRIES:
+    'Oaspeții din <strong>{0}</strong> și <strong>peste {1} țări</strong> au apreciat această experiență',
 };
 
 export default ro;

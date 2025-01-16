@@ -68,6 +68,7 @@ const ReviewSection = ({
           }}
           snapshotSectionProps={snapshotSectionProps}
           numberOfReviewsToShow={isBot ? MAX_REVIEW_COUNT : 5}
+          showCountriesSection
         />
       </StyledReviewSectionContainer>
     </>

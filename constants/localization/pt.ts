@@ -1337,5 +1337,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     GUIDELINES:
       'Diretrizes: o plano se torna inválido se o cliente validar ou utilizar qualquer parte do ingresso antes do cancelamento. Nesses casos, aplicam-se as políticas de cancelamento padrão e nenhum reembolso adicional será concedido.',
   },
+  AGGREGATED_COUNTRIES:
+    'Visitantes de <strong>mais de {1} países</strong>, incluindo <strong>{0}</strong>, amaram esta experiência',
 };
 export default pt;

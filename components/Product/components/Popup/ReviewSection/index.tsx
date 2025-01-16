@@ -113,6 +113,7 @@ const ReviewSection = ({
               : undefined,
           }}
           numberOfReviewsToShow={isBot ? MAX_REVIEW_COUNT : 5}
+          showCountriesSection
         />
       </StyledReviewSectionContainer>
     </>

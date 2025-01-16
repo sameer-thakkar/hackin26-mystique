@@ -3,17 +3,17 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 const LangHeights = css`
-  height: 4.5rem;
+  height: 3.125rem;
 
   &.lang-nl {
-    height: 5.75rem;
+    height: 4.75rem;
   }
 `;
 
 export const TopBorder = styled.hr`
   width: calc(100% + 3rem);
   border-top: 0.0625rem solid #e2e2e2;
-  margin-left: -1.5rem;
+  margin: 1.5rem 0 0 -1.5rem;
 `;
 
 export const WrapperContainer = styled.div<{ $hasSlideAnimation?: boolean }>`
@@ -24,7 +24,7 @@ export const WrapperContainer = styled.div<{ $hasSlideAnimation?: boolean }>`
   );
   display: flex;
   gap: 0.75rem;
-  width: calc(100% + 3rem);
+  width: 100%;
   margin-left: -1.5rem;
   position: relative;
   padding: 0 1.5rem;
@@ -55,12 +55,15 @@ export const WrapperContainer = styled.div<{ $hasSlideAnimation?: boolean }>`
   @media only screen and (min-width: 768px) {
     border-top: none;
     margin-left: 0;
-    width: 98%;
+    width: 46.5rem;
     border-radius: 0.5rem;
     align-items: center;
+    padding: 0;
+    margin-top: 1.5rem;
 
     .guest-text {
       ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+      max-width: 37.5rem;
     }
 
     .hearts-lottie {
@@ -98,21 +101,35 @@ export const CountryFlagsContainer = styled.div`
   height: 3.625rem;
   flex-direction: column;
   overflow-y: hidden;
-  min-width: 2.0313rem;
+  min-width: 2.03125rem;
+
+  .marquee_countries_wrapper li::before {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .marquee_countries_wrapper {
+      padding-left: 0;
+    }
+  }
 
   ${LangHeights}
 `;
 
-export const CountryFlagItem = styled.li`
-  margin-bottom: 0.375rem;
+export const CountryFlagItem = styled.div`
+  margin-bottom: 0.75rem;
   width: 2.0313rem;
   align-items: center;
 
   .country-flag {
     width: 1.875rem;
-    height: 1.25rem;
+    height: 1.4rem;
     margin: 0 auto;
-    border-radius: 0.0781rem;
     box-shadow: 0px 0.125px 2.5px 0px #1018280f, 0px 1.25px 3.75px 0px #1018281a;
+
+    img {
+      border-radius: 2px;
+      overflow: hidden;
+    }
   }
 `;

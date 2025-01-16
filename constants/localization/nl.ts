@@ -1289,5 +1289,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     GUIDELINES:
       'Instructies: het programma wordt geannuleerd als de persoon een deel van het ticket gebruikt voor de annulering. In dit geval zijn de standaard annuleringsvoorwaarden van toepassing en wordt er geen verdere restitutie gegeven.',
   },
+  AGGREGATED_COUNTRIES:
+    'Bezoekers uit <strong>{0}</strong> en <strong>{0} andere landen</strong> hebben genoten van deze ervaring',
 };
 export default nl;

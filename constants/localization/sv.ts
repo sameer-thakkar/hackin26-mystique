@@ -1331,6 +1331,8 @@ const sv = {
   REVIEW_SECTION_HEADER: 'Så här säger våra gäster',
   TRUST_VB_TAG: 'Verifierad bokning',
   SNAPSHOTS_SECTION_HEADER: 'Ögonblicksbilder från våra gäster',
+  AGGREGATED_COUNTRIES:
+    'Gäster från <strong>{0}</strong> och <strong>över {1} länder</strong> har älskat denna upplevelse',
 };
 
 export default sv;

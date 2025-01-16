@@ -1329,6 +1329,8 @@ const no = {
   REVIEW_SECTION_HEADER: 'Dette sier gjestene våre',
   TRUST_VB_TAG: 'Verifisert bestilling',
   SNAPSHOTS_SECTION_HEADER: 'Instantanee de la oaspeții noștri',
+  AGGREGATED_COUNTRIES:
+    'Gjester fra <strong>{0}</strong> og <strong>over {1} land</strong> har elsket denne opplevelsen',
 };
 
 export default no;

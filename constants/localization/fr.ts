@@ -1340,5 +1340,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     GUIDELINES:
       "Instructions : Le programme est annulé si la personne utilise une partie du billet avant l'annulation. Dans ce cas, les politiques d'annulation standard s'appliquent et aucun remboursement supplémentaire ne sera accordé.",
   },
+  AGGREGATED_COUNTRIES:
+    'Des personnes de <strong>{0}</strong> et <strong>plus de {1} pays</strong> ont adoré cette expérience',
 };
 export default fr;

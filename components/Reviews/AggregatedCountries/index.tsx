@@ -1,11 +1,3 @@
-/**
- * This component will be used once we
- * figure out how to get review countries
- * data in list-by api
- *
- * TODO: Handle in Phase 2 or remove code.
- */
-
 import { useContext, useEffect, useRef } from 'react';
 import Marquee from 'react-light-marquee';
 import Conditional from 'components/common/Conditional';
@@ -32,7 +24,7 @@ const AggregatedCountries = ({
   const lottieContainerRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const lang = useContext(MBContext);
+  const { lang } = useContext(MBContext);
 
   const { countries, count } = reviewCountries;
   const countryFlagUrls = countries.map(({ code }) => getCountryFlagUrl(code));

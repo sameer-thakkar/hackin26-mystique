@@ -1355,6 +1355,8 @@ const ru = {
   REVIEW_SECTION_HEADER: 'Что говорят наши гости',
   TRUST_VB_TAG: 'Проверенное бронирование',
   SNAPSHOTS_SECTION_HEADER: 'Снимки от наших гостей',
+  AGGREGATED_COUNTRIES:
+    'Гости из <strong>{0}</strong> и <strong>из более чем {1} стран</strong> в восторге от этого мероприятия',
 };
 
 export default ru;

@@ -1363,6 +1363,8 @@ const da = {
   REVIEW_SECTION_HEADER: 'Hvad vores gæster siger',
   TRUST_VB_TAG: 'Bekræftet booking',
   SNAPSHOTS_SECTION_HEADER: 'Snapshots fra vores gæster',
+  AGGREGATED_COUNTRIES:
+    'Gæster fra <strong>{0}</strong> og <strong>over {1} andre lande</strong> var vilde med denne oplevelse',
 };
 
 export default da;

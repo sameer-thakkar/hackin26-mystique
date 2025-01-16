@@ -1389,5 +1389,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     GUIDELINES:
       'Normativa: el plan queda anulado si el participante canjea o utiliza cualquier parte de la entrada antes de la cancelación. En este caso, se aplicarán las políticas de cancelación habituales y no se efectuará ningún reembolso adicional.',
   },
+  AGGREGATED_COUNTRIES:
+    'Esta experiencia le ha encantado a visitantes procedentes de <strong>{0}</strong> y <strong>de {1} países</strong> más',
 };
 export default es;

@@ -50,6 +50,13 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
+const AggregatedCountries = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "AggregatedCountries" */ 'components/Reviews/AggregatedCountries'
+    )
+);
+
 export const getTranslateButtonText = (
   usingTranslatedContent: boolean,
   sourceLanguage: string,
@@ -94,6 +101,7 @@ const ReviewSection = ({
   onImageClick,
   snapshotSectionProps,
   numberOfReviewsToShow: numberOfReviewsToShowProp = 5,
+  showCountriesSection = false,
 }: TReviewSectionProps) => {
   const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
     initialReviews || []
@@ -101,7 +109,8 @@ const ReviewSection = ({
   const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(
     numberOfReviewsToShowProp
   );
-  const { averageRating, ratingsCount, ratingsSplit } = reviewsDetails;
+  const { averageRating, ratingsCount, ratingsSplit, reviewCountries } =
+    reviewsDetails;
 
   const shortenedAverageRating = averageRating.toFixed(1);
   const getShortenedNumber = (num: number) =>
@@ -192,6 +201,15 @@ const ReviewSection = ({
           ))}
         </RatingsSplit>
       </RatingsDetailsSection>
+
+      <Conditional
+        if={showCountriesSection && reviewCountries?.countries?.length}
+      >
+        <AggregatedCountries
+          isMobile={isMobile}
+          reviewCountries={reviewCountries}
+        />
+      </Conditional>
       <Conditional if={snapshotSectionProps}>
         <SnapshotSectionContainer>
           <SnapshotSection {...snapshotSectionProps!} />
