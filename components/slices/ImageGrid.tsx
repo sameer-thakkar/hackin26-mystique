@@ -13,7 +13,7 @@ type ImageGridProps = {
   images: Array<PrismicImageObject>;
 };
 
-const StyledImageGrid = styled.div`
+const StyledImageGrid = styled.div<any>`
   display: grid;
   grid-gap: 1.5em;
   grid-template-columns: repeat(
@@ -67,7 +67,10 @@ const StyledImageBox = styled.div`
  * **Note: Either 'Image Source' or 'Image URL' is required and if left blank will break the slice**
  */
 
-const ImageGrid: React.FC<ImageGridProps> = ({ images, cols }) => {
+const ImageGrid: React.FC<React.PropsWithChildren<ImageGridProps>> = ({
+  images,
+  cols,
+}) => {
   return (
     <StyledImageGrid colsProp={cols}>
       {images.map((image, index) => (

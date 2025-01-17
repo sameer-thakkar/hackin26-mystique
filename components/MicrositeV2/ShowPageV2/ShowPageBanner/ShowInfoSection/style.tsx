@@ -51,7 +51,7 @@ export const ShowInfoSectionWrapper = styled.div`
     }
 
     ${StyledBreadcrumbLink} {
-      :hover {
+      &:hover {
         color: ${COLORS.BRAND.WHITE}CC !important;
         opacity: 1;
         text-decoration-line: underline;
@@ -202,7 +202,7 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
   .rating-section {
     padding-bottom: 0.9rem;
     z-index: 1;
-    :hover {
+    &:hover {
       #review-popover {
         display: flex;
       }
@@ -469,7 +469,7 @@ export const ReviewPopover = styled.div`
       width: 100%;
       cursor: pointer;
 
-      :hover {
+      &:hover {
         box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.3);
       }
     }

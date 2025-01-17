@@ -146,7 +146,7 @@ export const getLocalisedPrice = ({
     }
 
     return finalFormattedPrice;
-  } catch (e) {
+  } catch (e: any) {
     return '';
   }
 };
@@ -171,7 +171,7 @@ export const checkIfCurrencyCodeValid = ({
       currency: currencyCode,
     }).format(0);
     return true;
-  } catch (e) {
+  } catch (e: any) {
     return false;
   }
 };
@@ -193,7 +193,7 @@ export const getLocalisedCurrencySymbol = ({
     const currency = parts.find((c) => c.type === 'currency');
 
     return currency?.value ?? currencyCode;
-  } catch (e) {
+  } catch (e: any) {
     return '';
   }
 };

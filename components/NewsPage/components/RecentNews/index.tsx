@@ -31,7 +31,9 @@ import {
 import { strings } from 'const/strings';
 import Avatar from 'assets/avatar';
 
-const RecentNews: React.FC<TRecentNewsProps> = (props) => {
+const RecentNews: React.FC<React.PropsWithChildren<TRecentNewsProps>> = (
+  props
+) => {
   const { lang, isDev, host } = useContext(MBContext);
   const recentNewsRef = useRef(null);
   const isRecentNewsSectionVisible = useOnScreen({

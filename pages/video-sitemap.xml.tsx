@@ -148,7 +148,7 @@ VideoSitemapXml.getInitialProps = async ({
     res?.setHeader('Content-Type', 'text/xml');
     res?.write(sitemap);
     res?.end();
-  } catch (e) {
+  } catch (e: any) {
     res?.end();
   }
 };

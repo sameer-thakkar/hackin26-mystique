@@ -47,7 +47,9 @@ const Copyright = dynamic(
     import(/* webpackChunkName: "Copyright" */ 'components/common/Copyright')
 );
 
-const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
+const CategoryHeader: React.FC<React.PropsWithChildren<CategoryHeaderProps>> = (
+  props
+) => {
   const {
     categoryHeaderMenu,
     primaryCity,

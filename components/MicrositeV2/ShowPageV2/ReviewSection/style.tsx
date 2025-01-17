@@ -187,7 +187,7 @@ export const AllReviewsButton = styled.a`
   cursor: pointer;
   ${expandFontToken(FONTS.BUTTON_BIG)};
   color: ${COLORS.GRAY.G2};
-  :hover {
+  &:hover {
     box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.3);
   }
 
@@ -212,7 +212,7 @@ export const ShowMoreReviewsButton = styled.button`
   ${expandFontToken(FONTS.BUTTON_BIG)};
   color: ${COLORS.GRAY.G2};
 
-  :hover {
+  &:hover {
     box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.3);
   }
 
@@ -230,7 +230,7 @@ export const ReviewSkeletonContainer = styled.div`
   margin-bottom: 1rem;
   line-height: 0;
 
-  :not(:last-child) {
+  &:not(:last-child) {
     margin-bottom: 2rem;
   }
 

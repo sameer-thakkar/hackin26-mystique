@@ -182,7 +182,7 @@ const CardBottomContent = styled.div`
     width: 350px;
     a {
       margin-right: 16px;
-      :last-child {
+      &:last-child {
         margin-right: 0;
       }
     }
@@ -222,7 +222,7 @@ type ListicleCardProps = {
   currentLanguage: string;
 };
 
-const ListicleCard: React.FC<ListicleCardProps> = ({
+const ListicleCard: React.FC<React.PropsWithChildren<ListicleCardProps>> = ({
   isOpen: cardOpen = false,
   isMobile,
   tour,

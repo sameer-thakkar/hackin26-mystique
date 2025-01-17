@@ -32,7 +32,9 @@ interface ILinkResolver
   url?: string | null;
 }
 
-const LinkResolver: React.FC<ILinkResolver> = (props) => {
+const LinkResolver: React.FC<React.PropsWithChildren<ILinkResolver>> = (
+  props
+) => {
   const { url, children, ...restProps } = props;
 
   if (!url) {

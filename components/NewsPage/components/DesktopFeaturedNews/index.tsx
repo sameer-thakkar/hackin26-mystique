@@ -18,10 +18,9 @@ import {
 import { strings } from 'const/strings';
 import Avatar from 'assets/avatar';
 
-const DesktopFeaturedNews: React.FC<TDesktopFeaturedNewsProps> = ({
-  featuredNewsData,
-  newsLandingPageUrl,
-}) => {
+const DesktopFeaturedNews: React.FC<
+  React.PropsWithChildren<TDesktopFeaturedNewsProps>
+> = ({ featuredNewsData, newsLandingPageUrl }) => {
   const { lang, isDev, host } = useContext(MBContext);
   const { prismicContent } = featuredNewsData;
   const { FEATURED_NEWS, ALL_NEWS } = strings.NEWS_PAGE;

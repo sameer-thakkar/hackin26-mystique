@@ -104,7 +104,7 @@ const Button = styled.button<IButton>((props) => {
   ${expandFontToken('Button/Medium')}
   cursor: pointer;
   text-align: center;
-  :focus {
+  &:focus {
     outline: none;
   }
   `;

@@ -57,14 +57,14 @@ export const Arrows = styled.div`
     circle {
       stroke: rgba(121, 121, 121, 0.5);
     }
-    :not(.disabled) {
-      :hover {
+    &:not(.disabled) {
+      &:hover {
         circle {
           stroke: rgba(121, 121, 121, 0.65);
         }
       }
 
-      :active {
+      &:active {
         circle {
           stroke: rgba(121, 121, 121, 0.85);
         }

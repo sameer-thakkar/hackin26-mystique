@@ -39,7 +39,7 @@ export const StyledItem = styled.div`
   .sidenav-item.active {
     color: ${COLORS.TEXT.PURPS_3};
   }
-  :last-child {
+  &:last-child {
     margin-bottom: unset;
   }
   ${expandFontToken(FONTS.LIST_REGULAR)};
@@ -62,7 +62,7 @@ export const StyledItem = styled.div`
       border-left: none;
       background: unset;
     }
-    :last-child {
+    &:last-child {
       border-bottom: none;
       padding-bottom: 2.5rem;
     }

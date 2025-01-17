@@ -42,7 +42,7 @@ interface TabContainerProps {
   hideTitle?: boolean;
 }
 
-const Tab: FC<TabComponentProps> = ({
+const Tab: FC<React.PropsWithChildren<TabComponentProps>> = ({
   isActive,
   onClick,
   id,
@@ -61,64 +61,64 @@ const Tab: FC<TabComponentProps> = ({
   </StyledTab>
 );
 
-const TabContainer: FC<TabContainerProps> = React.forwardRef<
-  HTMLDivElement,
-  TabContainerProps
->(({ tabs, activeTab, onTabClick, hideTitle = false }, ref) => {
-  const { drawerState, title, setHeaderHeight } = useProductCard();
-  const headRef = useRef<HTMLDivElement>(null);
+const TabContainer: FC<React.PropsWithChildren<TabContainerProps>> =
+  React.forwardRef<HTMLDivElement, TabContainerProps>(
+    ({ tabs, activeTab, onTabClick, hideTitle = false }, ref) => {
+      const { drawerState, title, setHeaderHeight } = useProductCard();
+      const headRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!headRef.current) return;
-    setHeaderHeight(headRef.current.clientHeight);
-  }, [headRef]);
+      useEffect(() => {
+        if (!headRef.current) return;
+        setHeaderHeight(headRef.current.clientHeight);
+      }, [headRef]);
 
-  useEffect(() => {
-    return () => setHeaderHeight(0);
-  }, []);
+      useEffect(() => {
+        return () => setHeaderHeight(0);
+      }, []);
 
-  return (
-    <Header>
-      <StyledTabContainer
-        ref={headRef}
-        $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
-      >
-        <Conditional if={!hideTitle}>
-          <TitleContainer>
-            <Title>{title}</Title>
-            <CloseContainer
-              role="button"
-              tabIndex={0}
-              onClick={() => {
-                document.getElementById('bottomsheet-overlay')?.click();
-              }}
-            >
-              <CrossiconSvg height={'0.625rem'} width={'0.625rem'} />
-            </CloseContainer>
-          </TitleContainer>
-        </Conditional>
-        <HeaderTabs ref={ref}>
-          {tabs.map((tab, index) => (
-            <Tab
-              key={tab.heading}
-              isActive={tab.heading === activeTab}
-              onClick={() => onTabClick(tab.heading, index)}
-              id={`tab-${tab.heading}`}
-              isLastElement={index === tabs.length - 1}
-            >
-              <div className="tab-content">
-                {tab.heading}
-                <Conditional if={tab.isNew}>
-                  <NewTabTag>{strings.NEW}</NewTabTag>
-                </Conditional>
-              </div>
-            </Tab>
-          ))}
-        </HeaderTabs>
-      </StyledTabContainer>
-    </Header>
+      return (
+        <Header>
+          <StyledTabContainer
+            ref={headRef}
+            $isOpen={drawerState === SWIPESHEET_STATES.OPEN}
+          >
+            <Conditional if={!hideTitle}>
+              <TitleContainer>
+                <Title>{title}</Title>
+                <CloseContainer
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    document.getElementById('bottomsheet-overlay')?.click();
+                  }}
+                >
+                  <CrossiconSvg height={'0.625rem'} width={'0.625rem'} />
+                </CloseContainer>
+              </TitleContainer>
+            </Conditional>
+            <HeaderTabs ref={ref}>
+              {tabs.map((tab, index) => (
+                <Tab
+                  key={tab.heading}
+                  isActive={tab.heading === activeTab}
+                  onClick={() => onTabClick(tab.heading, index)}
+                  id={`tab-${tab.heading}`}
+                  isLastElement={index === tabs.length - 1}
+                >
+                  <div className="tab-content">
+                    {tab.heading}
+                    <Conditional if={tab.isNew}>
+                      <NewTabTag>{strings.NEW}</NewTabTag>
+                    </Conditional>
+                  </div>
+                </Tab>
+              ))}
+            </HeaderTabs>
+          </StyledTabContainer>
+        </Header>
+      );
+    }
   );
-});
 
 TabContainer.displayName = 'TabContainer';
 

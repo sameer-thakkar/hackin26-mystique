@@ -71,7 +71,7 @@ const Popup = ({
   };
 
   return (
-    <div onClick={(e) => e.stopPropagation()} role={'button'} tabIndex={0}>
+    <div onClick={(e: any) => e.stopPropagation()} role={'button'} tabIndex={0}>
       <Modal
         isOpen={isActive}
         onRequestClose={() => close()}

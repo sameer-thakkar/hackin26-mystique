@@ -3,7 +3,7 @@ import ReviewChips from 'components/slices/ReviewChips';
 import { TSidebarProps } from './interface';
 import { Wrapper } from './styles';
 
-const Sidebar: React.FC<TSidebarProps> = ({
+const Sidebar: React.FC<React.PropsWithChildren<TSidebarProps>> = ({
   experienceData,
   verticalImageUrl,
   showPageUid,

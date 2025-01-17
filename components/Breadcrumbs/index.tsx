@@ -22,7 +22,7 @@ const BreadcrumbsDropdown = dynamic(
     )
 );
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
+const Breadcrumbs: React.FC<React.PropsWithChildren<BreadcrumbsProps>> = ({
   breadcrumbs = {},
   taggedCity,
   primaryCity,

@@ -16,7 +16,9 @@ import { SECTIONS } from 'const/catAndSubcatPage';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 
-const TopCollectionCard: React.FC<TopCollectionCardProps> = (props) => {
+const TopCollectionCard: React.FC<
+  React.PropsWithChildren<TopCollectionCardProps>
+> = (props) => {
   const {
     id,
     name,

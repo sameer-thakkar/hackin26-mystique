@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import type { SwiperOptions } from 'swiper';
@@ -102,8 +102,8 @@ const Slider = ({
 }: {
   children: React.ReactNode[];
   sliderOptions?: SwiperOptions;
-  nextButton?: HTMLElement | React.ReactNode | JSX.Element;
-  prevButton?: HTMLElement | React.ReactNode | JSX.Element;
+  nextButton?: React.JSX.Element;
+  prevButton?: React.JSX.Element;
   parentOverflowHidden?: boolean;
   paginationClass?: string;
   onSlideChange?: () => void;

@@ -39,7 +39,7 @@ const StyledMobileSlider = styled.div`
   }
 `;
 
-const StyledContent = styled.div`
+const StyledContent = styled.div<any>`
   display: grid;
   grid-row-gap: 8px;
   h2 {
@@ -183,7 +183,7 @@ const Slide = (props: any) => {
       <a
         href={link.url}
         target={link.target}
-        onClick={(e) => desktopInteraction(e, props)}
+        onClick={(e: any) => desktopInteraction(e, props)}
       >
         <Image
           url={image.url}
@@ -243,7 +243,9 @@ type ImageLinksCarouselProps = {
  * **Note: Either 'Uploaded Image' or 'Link to Image' is required and if left blank will break the slice**
  */
 
-const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
+const ImageLinksCarousel: React.FC<
+  React.PropsWithChildren<ImageLinksCarouselProps>
+> = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
   const {

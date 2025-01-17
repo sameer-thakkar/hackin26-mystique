@@ -38,7 +38,9 @@ import { TReviewsPageProps } from './interface';
 import { PageWrapper } from './styles';
 import { getSlicesUsedInReviewsPage, getTrackingObject } from './utils';
 
-const ReviewsPage: React.FC<TReviewsPageProps> = (props) => {
+const ReviewsPage: React.FC<React.PropsWithChildren<TReviewsPageProps>> = (
+  props
+) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
   const hsid = useRecoilState(hsidAtom);
   let {

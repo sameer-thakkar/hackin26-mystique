@@ -10,13 +10,9 @@ import { SLICE_TYPES } from 'const/index';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
-const StyledSliderAccordion = styled.div`
+const StyledSliderAccordion = styled.div<any>`
   display: grid;
-  grid-template-columns: ${({
-      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-      isGlobalMb,
-    }) => (isGlobalMb ? '528px' : '1fr')} ${({
-      // @ts-expect-error TS(2339): Property 'hasImageComponent' does not exist on typ... Remove this comment to see the full error message
+  grid-template-columns: ${({ isGlobalMb }) => (isGlobalMb ? '528px' : '1fr')} ${({
       hasImageComponent,
     }) => (hasImageComponent ? `1fr` : ``)};
   grid-gap: 24px;
@@ -26,10 +22,7 @@ const StyledSliderAccordion = styled.div`
   height: max-content;
   width: 100%;
   line-height: 1.4;
-  ${({
-    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-    isGlobalMb,
-  }) =>
+  ${({ isGlobalMb }) =>
     isGlobalMb &&
     `border: none;
     grid-gap: 84px;
@@ -228,7 +221,6 @@ const SliderAccordion = (props: any) => {
 
   return (
     <StyledSliderAccordion
-      // @ts-expect-error TS(2769): No overload matches this call.
       hasImageComponent={activeAccordionImages.length}
       isGlobalMb={isGlobalMb}
     >

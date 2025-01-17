@@ -54,12 +54,9 @@ const handleCardClick = ({ id, name, rank, url }: IHandleCardClick) => {
   window.open(url, '_blank', 'noopener');
 };
 
-const CollectionCarousel: React.FC<ICollectionCarousel> = ({
-  allCollectionsData,
-  isMobile,
-  primaryCity,
-  taggedCity,
-}) => {
+const CollectionCarousel: React.FC<
+  React.PropsWithChildren<ICollectionCarousel>
+> = ({ allCollectionsData, isMobile, primaryCity, taggedCity }) => {
   const { menu: collectionsList } = allCollectionsData;
   const { HEIGHT, WIDTH } = isMobile
     ? IMAGE_DIMENSIONS.MOBILE
@@ -137,7 +134,11 @@ const CollectionCarousel: React.FC<ICollectionCarousel> = ({
                 fitCrop
                 loadHigherQualityImage={true}
               />
-              <a onClick={(e) => e.preventDefault()} href={url} target="_blank">
+              <a
+                onClick={(e: any) => e.preventDefault()}
+                href={url}
+                target="_blank"
+              >
                 <Label>{label}</Label>
               </a>
             </Card>

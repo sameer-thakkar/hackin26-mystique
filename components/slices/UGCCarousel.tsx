@@ -59,7 +59,7 @@ const SliderContainer = styled.div`
 `;
 
 const StyledSlider = styled.div`
-  :not(.swiper-initialized) .swiper-slide {
+  &:not(.swiper-initialized) .swiper-slide {
     width: auto;
     margin-right: 0.6rem;
   }
@@ -172,7 +172,7 @@ const PopupContentWrapper = styled.div`
   }
 `;
 
-const PopupCard = styled.div`
+const PopupCard = styled.div<any>`
   border-radius: 0.5rem;
   display: grid;
   grid-template-columns: 6fr repeat(2, 0) 4fr 0;
@@ -400,7 +400,9 @@ type UGCCarouselProps = {
   subHeading: string;
 };
 
-const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
+const UGCCarousel: React.FC<React.PropsWithChildren<UGCCarouselProps>> = (
+  props
+) => {
   const { cards, heading, isMobile, subHeading } = props;
   const [swiper, updateSwiper] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
@@ -576,8 +578,10 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     return (
       <PopupWrapper onClick={() => popupCloser(index)}>
         <PopupContentWrapper>
-          {/* @ts-expect-error TS(2769): No overload matches this call. */}
-          <PopupCard onClick={(e) => e.stopPropagation()} isMobile={isMobile}>
+          <PopupCard
+            onClick={(e: any) => e.stopPropagation()}
+            isMobile={isMobile}
+          >
             <WrapperHeader>
               <div>
                 <Conditional
@@ -655,7 +659,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               className="prev-slide"
               role="button"
               tabIndex={0}
-              onClick={(e) => changePopup(e, 'prev')}
+              onClick={(e: any) => changePopup(e, 'prev')}
             >
               {ChevronRightCircle}
             </div>
@@ -663,7 +667,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               className="next-slide"
               role="button"
               tabIndex={0}
-              onClick={(e) => changePopup(e, 'next')}
+              onClick={(e: any) => changePopup(e, 'next')}
             >
               {ChevronRightCircle}
             </div>

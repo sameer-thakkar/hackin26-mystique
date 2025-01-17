@@ -90,7 +90,7 @@ const InfoTimings = styled.table`
   width: 100%;
   tr {
     td {
-      :last-child {
+      &:last-child {
         text-align: center;
       }
     }
@@ -158,7 +158,7 @@ type LargeListicleProps = {
   tourData: any;
 };
 
-const LargeListicle: React.FC<LargeListicleProps> = ({
+const LargeListicle: React.FC<React.PropsWithChildren<LargeListicleProps>> = ({
   index,
   primary,
   items,

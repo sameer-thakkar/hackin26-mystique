@@ -16,7 +16,9 @@ import {
 } from 'components/MonthOnMonthPage/utils/index';
 import { sendLog } from 'utils/logger';
 
-const MonthOnMonthPage: React.FC<TMonthOnMonthPageProps> = ({
+const MonthOnMonthPage: React.FC<
+  React.PropsWithChildren<TMonthOnMonthPageProps>
+> = ({
   heroProps,
   isMobile,
   breadcrumbs,

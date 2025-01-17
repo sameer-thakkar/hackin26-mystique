@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
 
 interface ItineraryContextType {
@@ -18,7 +18,9 @@ const itineraryContext = createContext({} as ItineraryContextType);
 
 export const useItinerary = () => useContext(itineraryContext);
 
-export const ItineraryProvider: React.FC<{}> = ({ children }) => {
+export const ItineraryProvider: React.FC<
+  React.PropsWithChildren<PropsWithChildren<{}>>
+> = ({ children }) => {
   const [activeItineraryStopId, setActiveItineraryStopId] = useState<
     number | null
   >(null);

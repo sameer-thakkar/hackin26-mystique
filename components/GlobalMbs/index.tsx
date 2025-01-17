@@ -19,15 +19,19 @@ import {
 import { CUSTOM_TYPES } from 'const/index';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
-const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
-const CollectionPage: ComponentType<any> = dynamic(
+const CityPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
+  () => import('./views/CityPage')
+);
+const CollectionPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('./views/CollectionPage')
 );
-const ExperiencePage: ComponentType<any> = dynamic(
+const ExperiencePage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('./views/ExperiencePage')
 );
-const HomePage: ComponentType<any> = dynamic(() => import('./views/HomePage'));
-const LongForm: ComponentType<any> = dynamic(
+const HomePage: ComponentType<React.PropsWithChildren<any>> = dynamic(
+  () => import('./views/HomePage')
+);
+const LongForm: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('components/MicrositeV2/LongForm')
 );
 

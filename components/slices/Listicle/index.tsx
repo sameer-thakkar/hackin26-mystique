@@ -65,8 +65,11 @@ type ListicleProps = {
  *  - Right column for the Timings block in the Information Grid
  */
 
-// @ts-expect-error TS(2322): Type '({ type, data, index }: ListicleProps) => El... Remove this comment to see the full error message
-const Listicle: React.FC<ListicleProps> = ({ type = 'small', data, index }) => {
+const Listicle = ({
+  type = 'small',
+  data,
+  index,
+}: React.PropsWithChildren<ListicleProps>) => {
   const { primary, items } = data;
   const { lang } = useContext(MBContext);
   const [tourData, setTourData] = useState(null);
@@ -114,7 +117,7 @@ const Listicle: React.FC<ListicleProps> = ({ type = 'small', data, index }) => {
         />
       );
     default:
-      break;
+      return null;
   }
 };
 

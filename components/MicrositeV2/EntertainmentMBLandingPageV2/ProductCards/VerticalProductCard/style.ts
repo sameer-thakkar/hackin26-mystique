@@ -27,7 +27,7 @@ export const Wrapper = styled.div<{
         transform: translate3d(0, -5px, 0);
       }`}
 
-  :active {
+  &:active {
     transition: ease-in-out 150ms;
     transform: scale(0.98);
   }
@@ -94,7 +94,7 @@ export const Wrapper = styled.div<{
     &:hover {
       transform: none;
     }
-    :active {
+    &:active {
       transition: ease-in-out 150ms;
       transform: scale(0.98);
     }

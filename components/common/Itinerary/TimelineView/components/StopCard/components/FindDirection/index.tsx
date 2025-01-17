@@ -33,7 +33,7 @@ const FindDirection = ({
         $hoverAnimation={hoverAnimation}
         $variant={variant}
         target="_blank"
-        onClick={(e) => {
+        onClick={(e: any) => {
           e.stopPropagation();
         }}
       >

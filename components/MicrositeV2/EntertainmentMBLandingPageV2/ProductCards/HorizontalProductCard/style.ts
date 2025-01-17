@@ -15,7 +15,7 @@ export const Wrapper = styled.a<{
   height: 8.1875rem;
   transition: all ease-in-out 150ms;
 
-  :active {
+  &:active {
     img {
       box-shadow: 0px 3.92px 7.84px 0px rgba(0, 0, 0, 0.12),
         0px -0.98px 1.96px 0px rgba(0, 0, 0, 0.08);

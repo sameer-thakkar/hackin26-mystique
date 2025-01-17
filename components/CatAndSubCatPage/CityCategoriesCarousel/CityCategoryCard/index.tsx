@@ -9,7 +9,9 @@ import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
-const CityCategoryCard: React.FC<CityCategoryCardProps> = (props) => {
+const CityCategoryCard: React.FC<
+  React.PropsWithChildren<CityCategoryCardProps>
+> = (props) => {
   const { id, name, displayName, url, media, ranking, isMobile } = props;
   const { url: imageUrl, metaData: { altText = '' } = {} } = media || {};
 

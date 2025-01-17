@@ -37,7 +37,9 @@ const CityCategoriesCarousel = dynamic(
     )
 );
 
-const CatAndSubCatPage: React.FC<CatAndSubCatPageProps> = (props) => {
+const CatAndSubCatPage: React.FC<
+  React.PropsWithChildren<CatAndSubCatPageProps>
+> = (props) => {
   const { catAndSubCatPageData, breadcrumbs, primaryCity, isMobile } = props;
   const {
     isSubCategoryPage,

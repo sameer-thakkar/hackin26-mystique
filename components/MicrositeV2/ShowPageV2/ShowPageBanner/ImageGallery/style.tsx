@@ -46,7 +46,7 @@ export const AllPhotosCta = styled.button`
     width: 1rem;
   }
 
-  :hover {
+  &:hover {
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(3.5px);
   }

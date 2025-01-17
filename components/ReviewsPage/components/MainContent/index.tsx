@@ -26,7 +26,7 @@ import {
 } from 'const/index';
 import ReviewsSection from '../ReviewsSection';
 
-const MainContent: React.FC<TMainContentProps> = ({
+const MainContent: React.FC<React.PropsWithChildren<TMainContentProps>> = ({
   tgidData,
   isMobile,
   showPageData,

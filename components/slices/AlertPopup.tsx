@@ -87,7 +87,7 @@ const swiperParams: SwiperProps = {
   },
 };
 
-const AlertPopup: React.FC<AlertPopupProps> = ({
+const AlertPopup: React.FC<React.PropsWithChildren<AlertPopupProps>> = ({
   images,
   title,
   description,

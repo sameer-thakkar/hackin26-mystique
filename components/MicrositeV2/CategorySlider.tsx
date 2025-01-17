@@ -128,8 +128,7 @@ const CategorySlider = (props: any) => {
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
   const productsContext = useContext(ProductsContext);
-  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours = [], isMobile } = productsContext || {};
+  const { allTours = [], isMobile } = productsContext || ({} as any);
 
   let filteredTgids;
   const categoryDataObj = {};

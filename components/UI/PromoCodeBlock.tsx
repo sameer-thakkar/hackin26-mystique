@@ -96,7 +96,7 @@ const TooltipContainer = styled.div`
     box-shadow: 0px 0px 1px ${COLORS.GRAY.G7}, 0px 2px 8px ${COLORS.GRAY.G5};
     text-align: center;
   }
-  :hover .tooltip-text {
+  &:hover .tooltip-text {
     visibility: visible;
   }
 `;

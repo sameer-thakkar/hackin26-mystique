@@ -166,7 +166,7 @@ export const useContentScroll = ({
   const triggered = useRef(new Set()).current;
 
   const trackScrollEvent = useCallback(
-    (scrollPercentage) => {
+    (scrollPercentage: any) => {
       if (scrollPercentage) {
         if (!triggered.has(scrollPercentage)) {
           trackEvent({

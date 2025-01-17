@@ -129,7 +129,7 @@ const StyledProductsWrapper = styled.div<{
           .product-card-skeleton {
             height: 28.438rem;
           }
-          ::before {
+          &::before {
             content: '';
             position: absolute;
             background-color: ${COLORS.BRAND.WHITE};
@@ -456,7 +456,7 @@ const PopulateProducts: any = (props: any) => {
         name: 'Products Container Height Percentage',
         value: percentScrollHeight,
       });
-    } catch (e) {
+    } catch (e: any) {
       //
     }
   }, [productsWrapperRef]);
@@ -674,7 +674,7 @@ const PopulateProducts: any = (props: any) => {
         observer.disconnect();
         clearTimeout(timer);
       };
-    } catch (e) {
+    } catch (e: any) {
       //
     }
   }, [productsRef, selectedDate, trackProductCardsViewed, availableToursList]);

@@ -62,7 +62,7 @@ type MediaCarouselProps = {
   showVideoOnProductCard?: boolean;
 };
 
-const MediaCarousel: React.FC<MediaCarouselProps> = ({
+const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
   imageList = [],
   videoUrl,
   imageId = '',

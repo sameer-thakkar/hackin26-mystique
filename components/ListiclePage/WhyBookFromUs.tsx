@@ -30,14 +30,16 @@ const TextLine = styled.div`
   svg {
     margin-top: 4px;
   }
-  :last-child {
+  &:last-child {
     margin-bottom: 0;
   }
 `;
 
-const WhyBookFromUs: React.FC<{
-  data: { text_line: string }[];
-}> = ({ data }) => {
+const WhyBookFromUs: React.FC<
+  React.PropsWithChildren<{
+    data: { text_line: string }[];
+  }>
+> = ({ data }) => {
   return (
     <WhyBookFromUsWrapper>
       <Heading>{strings.LISTICLES.WHY_BOOK_FROM_US}</Heading>

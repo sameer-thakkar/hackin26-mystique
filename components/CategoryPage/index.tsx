@@ -8,7 +8,7 @@ import { LTD_COLLECTION_ID } from 'const/index';
 import { strings } from 'const/strings';
 import { CategoryPageWrapper } from './styles';
 
-const CategoryPage: React.FC<TCategoryPageProps> = ({
+const CategoryPage: React.FC<React.PropsWithChildren<TCategoryPageProps>> = ({
   isMobile,
   heroProps,
   allTours,

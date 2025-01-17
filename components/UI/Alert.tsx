@@ -59,7 +59,7 @@ type AlertProps = {
   currentLanguage?: string;
 };
 
-const Alert: React.FC<AlertProps> = ({ popupUID }) => {
+const Alert: React.FC<React.PropsWithChildren<AlertProps>> = ({ popupUID }) => {
   const [active, setActive] = useState(false);
   const [data, setData] = useState<PopupDocument | null>(null);
 

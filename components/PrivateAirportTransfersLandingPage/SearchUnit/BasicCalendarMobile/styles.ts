@@ -93,7 +93,7 @@ export const Day = styled.div<{
   ${({ $isBeforeToday }) =>
     $isBeforeToday &&
     css`
-      :hover {
+      &:hover {
         background-color: initial;
       }
       color: ${COLORS.GRAY.G5};
@@ -125,7 +125,7 @@ ${({ $isSelected }) =>
 `;
 
 export const StyledDay = styled(Day)`
-  :hover {
+  &:hover {
     background-color: ${COLORS.BACKGROUND.FLOATING_PURPS};
   }
 `;

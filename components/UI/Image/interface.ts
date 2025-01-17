@@ -1,4 +1,4 @@
-import { ImageProps } from 'next/future/image';
+import { ImageProps } from 'next/image';
 
 export type TCropMode =
   | 'top'

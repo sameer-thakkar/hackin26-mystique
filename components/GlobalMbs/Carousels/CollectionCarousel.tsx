@@ -107,12 +107,9 @@ interface CollectionCarouselProps {
   collections: any[];
 }
 
-const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
-  title,
-  subtext,
-  carouselType,
-  collections,
-}) => {
+const CollectionCarousel: FunctionComponent<
+  React.PropsWithChildren<CollectionCarouselProps>
+> = ({ title, subtext, carouselType, collections }) => {
   const { isDev, host } = useContext(MBContext);
   const FILTER_TYPE = {
     ALL: 'All',

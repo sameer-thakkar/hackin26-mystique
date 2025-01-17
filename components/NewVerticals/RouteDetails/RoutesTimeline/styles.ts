@@ -9,7 +9,7 @@ export const StopsList = styled.ol`
   counter-reset: li-count;
   margin: 0 1.5rem 1.5rem 0;
 
-  ::before {
+  &::before {
     content: '';
     position: absolute;
     width: 0.25rem;
@@ -20,7 +20,7 @@ export const StopsList = styled.ol`
     margin: 0 0 4rem -0.156rem;
   }
   @media (max-width: 768px) {
-    ::before {
+    &::before {
       margin-bottom: 3rem;
     }
   }
@@ -35,7 +35,7 @@ export const StopDetails = styled.li`
   &:first-child {
     margin-top: 1.5rem;
   }
-  ::before {
+  &::before {
     display: grid;
     align-items: center;
     content: counter(li-count);

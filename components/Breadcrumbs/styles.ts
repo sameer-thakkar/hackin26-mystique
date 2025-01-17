@@ -135,7 +135,7 @@ export const StyledBreadcrumbLink = styled.a<{
   text-decoration: underline;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     opacity: 1;
     color: ${({ $isCategoryPage }) =>
       $isCategoryPage

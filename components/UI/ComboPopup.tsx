@@ -283,7 +283,6 @@ const ComboPopup = ({
             </Conditional>
             <Conditional if={tourGroupData}>
               <Conditional if={!isMobile && !error && variants?.length > 1}>
-                {/* @ts-expect-error TS(2786): 'Carousel' cannot be used as a JSX component. */}
                 <Carousel cardsInARow={4} columnGap={24}>
                   {variantMarkup}
                 </Carousel>

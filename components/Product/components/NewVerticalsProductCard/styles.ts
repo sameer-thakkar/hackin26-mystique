@@ -87,7 +87,7 @@ export const Card = styled.div`
       object-fit: cover;
     }
   }
-  ::before {
+  &::before {
     content: '';
     position: absolute;
     border: 1px solid ${COLORS.GRAY.G6};

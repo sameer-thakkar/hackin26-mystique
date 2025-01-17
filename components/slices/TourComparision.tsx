@@ -490,8 +490,7 @@ const TourComparisonTable = (props: any) => {
   const hostName = !envContext.isDev ? url : parse(uid || '', true).pathname;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
-  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours = [] } = toursContext || {};
+  const { allTours = [] } = toursContext || ({} as any);
   const getContentNormalizedTours = (tgidArray: any) => {
     let toursArr = tgidArray.map((tgid: any) => allTours[tgid]);
     toursArr = toursArr.reduce((acc: any, tour: any, index: number) => {

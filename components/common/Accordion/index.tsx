@@ -29,7 +29,7 @@ interface AccordionProps {
   onCollapse?: (item: AccordionItemProps) => void;
 }
 
-const Accordion: FC<AccordionProps> = ({
+const Accordion: FC<React.PropsWithChildren<AccordionProps>> = ({
   items,
   containerStyles,
   containerClassName,
@@ -97,7 +97,9 @@ const Accordion: FC<AccordionProps> = ({
               </Conditional>
             </AccordionHeader>
             <AccordionBody
-              ref={(el) => (bodyRefs.current[index] = el)}
+              ref={(el: any) => {
+                bodyRefs.current[index] = el;
+              }}
               $isOpen={isOpen}
               $height={isOpen ? heights[index] : 0}
             >

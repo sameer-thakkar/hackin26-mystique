@@ -38,7 +38,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 
-const Calendar: React.FC<CalendarProps> = (props) => {
+const Calendar: React.FC<React.PropsWithChildren<CalendarProps>> = (props) => {
   const {
     isMobile,
     tgid,
@@ -205,7 +205,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       !isSecondMonth || showBothArrows ? (
         <div
           className="chevron-icon scroll-left"
-          onClick={(e) => onMonthChange(-1, e)}
+          onClick={(e: any) => onMonthChange(-1, e)}
           role="button"
           tabIndex={0}
           aria-label="Previous Month"
@@ -218,7 +218,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       isSecondMonth || showBothArrows ? (
         <div
           className="chevron-icon scroll-right"
-          onClick={(e) => onMonthChange(+1, e)}
+          onClick={(e: any) => onMonthChange(+1, e)}
           role="button"
           tabIndex={0}
           aria-label="Next Month"

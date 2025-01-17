@@ -58,7 +58,9 @@ const Trailer = dynamic(
     )
 );
 
-const ArticlePage: React.FC<TNewsPageProps> = (props) => {
+const ArticlePage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (
+  props
+) => {
   const { data: CMSContent, isMobile } = props;
 
   const { lang } = useContext(MBContext);

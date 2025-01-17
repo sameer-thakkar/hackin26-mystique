@@ -5,7 +5,9 @@ import { REVIEWS_PAGE_SECTIONS } from 'const/index';
 import Reviews from '../Reviews';
 import { TReviewsSectionProps } from './interface';
 
-const ReviewsSection: React.FC<TReviewsSectionProps> = ({
+const ReviewsSection: React.FC<
+  React.PropsWithChildren<TReviewsSectionProps>
+> = ({
   criticsReviewsRepeatableContent,
   reviewsData,
   tgidData,

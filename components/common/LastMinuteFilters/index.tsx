@@ -201,7 +201,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   }, [inventoryData]);
 
   let handleScroll: any;
-  const elRef = useCallback((filtersRef) => {
+  const elRef = useCallback((filtersRef: any) => {
     if (filtersRef !== null) {
       handleScroll = () => {
         if (window.pageYOffset + 1 >= filtersRef.offsetTop) {

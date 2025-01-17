@@ -21,7 +21,7 @@ import {
 import { TNewsPageProps } from './interface';
 import NewsLandingPage from './LandingPage';
 
-const NewsPage: React.FC<TNewsPageProps> = (props) => {
+const NewsPage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (props) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
   const hsid = useRecoilState(hsidAtom);
 

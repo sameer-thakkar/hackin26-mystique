@@ -50,7 +50,7 @@ export const variantStyles = {
   },
 };
 
-const Banner: FunctionComponent<IBannerProps> = ({
+const Banner: FunctionComponent<React.PropsWithChildren<IBannerProps>> = ({
   title,
   subText = '',
   images,

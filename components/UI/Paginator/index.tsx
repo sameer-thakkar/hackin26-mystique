@@ -85,7 +85,7 @@ export const Paginator = ({
             key={`dot` + i}
             data-num={i}
             data-active={i === activeIndex}
-            onClick={(e) => onDotClick?.(i, e)}
+            onClick={(e: any) => onDotClick?.(i, e)}
             activeSlideTimer={activeSlideTimer}
             inactiveColor={inactiveColor}
             activeColor={activeColor}

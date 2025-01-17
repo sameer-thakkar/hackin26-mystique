@@ -63,7 +63,7 @@ const StyledBreadcrumb = styled.a<{
  *  - Title for Respective Level of page
  */
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({
+const Breadcrumb: React.FC<React.PropsWithChildren<BreadcrumbProps>> = ({
   orderedLinks: links,
   shouldLastNodeBeUnderlined = true,
 }) => (

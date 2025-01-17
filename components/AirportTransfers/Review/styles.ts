@@ -77,7 +77,7 @@ export const StyledReviewCardContainer = styled.div`
 
     svg {
       width: 1rem;
-      :not(:last-child) {
+      &:not(:last-child) {
         margin-right: 0.12rem;
       }
     }
@@ -98,7 +98,7 @@ export const StyledReviewCardContainer = styled.div`
 
     .stars svg {
       width: 0.9rem;
-      :not(:last-child) {
+      &:not(:last-child) {
         margin-right: 0.1rem;
       }
     }

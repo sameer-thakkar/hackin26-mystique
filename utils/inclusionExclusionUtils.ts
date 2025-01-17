@@ -2,7 +2,7 @@ import { IGNORED_HEADINGS } from 'const/descriptors';
 import { HIGHLIGHT_TYPES } from 'const/index';
 
 const removeCurrentInclusionExclusion = (
-  highlights: Array<Highlight>,
+  highlights: Array<THighlight>,
   localizedStrings: Record<string, string>
 ) => {
   let highlightArr = [...highlights];
@@ -36,8 +36,8 @@ const removeCurrentInclusionExclusion = (
 };
 
 type TAppendInclusionExclusionHighlights = {
-  currentHighlights: Array<Highlight>;
-  inclusionExclusionHighlights: Array<Highlight>;
+  currentHighlights: Array<THighlight>;
+  inclusionExclusionHighlights: Array<THighlight>;
   localizedStrings: Record<string, any>;
 };
 
@@ -107,9 +107,9 @@ export const appendInclusionExclusionHighlights = ({
 };
 
 type TAppendInclusionExclusion = {
-  highlightArr: Array<Highlight> | any;
-  inclusions: Array<Highlight>;
-  exclusions: Array<Highlight>;
+  highlightArr: Array<THighlight> | any;
+  inclusions: Array<THighlight>;
+  exclusions: Array<THighlight>;
   localizedStrings: Record<string, any>;
 };
 
@@ -125,7 +125,7 @@ export const appendInclusionExclusion = ({
     localizedStrings
   );
 
-  let inclusionExclusionHighlights: Array<Highlight> = [];
+  let inclusionExclusionHighlights: Array<THighlight> = [];
   const inclusionItems = inclusions.length;
   const exclusionsItems = exclusions.length;
 

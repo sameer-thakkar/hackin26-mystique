@@ -33,11 +33,11 @@ export const TableContainer = styled.div<{
 
     @media (max-width: 768px) {
       ${TableRow} {
-        :not(:last-child) td {
+        &:not(:last-child) td {
           padding-bottom: 0.5rem !important;
         }
 
-        :not(:first-child) td {
+        &:not(:first-child) td {
           padding-top: 0.5rem !important;
         }
       }
@@ -64,12 +64,12 @@ export const TableContainer = styled.div<{
         overflow: visible;
         max-width: 5rem;
       
-        :first-child {
+        &:first-child {
           p {
-            :first-child {
+            &:first-child {
               opacity: 1;
             }
-            :not(:first-child) {
+            &:not(:first-child) {
               opacity: 0;
             }
           }
@@ -78,10 +78,10 @@ export const TableContainer = styled.div<{
     `
       : `
       th:first-child p {
-        :first-child {
+        &:first-child {
           opacity: 0;
         }
-        :not(:first-child) {
+        &:not(:first-child) {
           opacity: 1;
         }
       }
@@ -127,11 +127,11 @@ export const TableRow = styled.tr<{
 
   td {
     text-transform: lowercase;
-    :first-letter {
+    &:first-letter {
       text-transform: uppercase;
     }
 
-    :first-child {
+    &:first-child {
       text-transform: capitalize;
     }
 

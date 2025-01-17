@@ -56,7 +56,7 @@ export const Wrapper = styled.div<{
     -webkit-transform: translate3d(0, 0, 0) !important;
     z-index: 1;
   }
-  :not(.swiper-initialized) .swiper-wrapper {
+  &:not(.swiper-initialized) .swiper-wrapper {
     .swiper-slide {
       width: 17.625rem;
       margin-right: 1.5rem;

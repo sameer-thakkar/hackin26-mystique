@@ -46,7 +46,7 @@ export const BUFFER_DISTANCE = 20;
 
 type BANNER_ICON_TYPE = {
   name: string;
-  icon: React.FC<{ width?: string; height?: string }>;
+  icon: React.FC<React.PropsWithChildren<{ width?: string; height?: string }>>;
 };
 export type SEATING_MAP_CONTENT_TYPE = {
   BANNER_HEADING: string;

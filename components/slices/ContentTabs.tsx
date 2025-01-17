@@ -81,7 +81,7 @@ const StyledContent = styled.div`
  *
  */
 
-const ContentTabs: React.FC<ContentTabsProps> = ({
+const ContentTabs: React.FC<React.PropsWithChildren<ContentTabsProps>> = ({
   tabsArr,
   contentArr,
   sectionName,

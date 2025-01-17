@@ -46,7 +46,7 @@ const StyledSearchBox = styled.div<{
     ${expandFontToken('UI/Label Medium')};
     font-size: 1rem;
 
-    ::placeholder {
+    &::placeholder {
       opacity: 1;
       ${({ isEntertainmentMb, isDarkMode }) =>
         isEntertainmentMb && isDarkMode
@@ -214,10 +214,10 @@ export const SearchBox = (props: any) => {
         type="text"
         placeholder={strings.SEARCH}
         value={query}
-        onChange={(e) => {
+        onChange={(e: any) => {
           search(e.currentTarget.value);
         }}
-        onKeyDown={(event) => {
+        onKeyDown={(event: any) => {
           if (!onEscapePress || event.key !== 'Escape') {
             return;
           }

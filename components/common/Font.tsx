@@ -82,11 +82,15 @@ const fontFaceList = `
 }
 `;
 
-export const InlineFontFace: React.FC<Record<string, undefined>> = () => {
+export const InlineFontFace: React.FC<
+  React.PropsWithChildren<Record<string, undefined>>
+> = () => {
   return <style dangerouslySetInnerHTML={{ __html: fontFaceList }} />;
 };
 
-export const PreloadFontLinks: React.FC<Record<string, undefined>> = () => {
+export const PreloadFontLinks: React.FC<
+  React.PropsWithChildren<Record<string, undefined>>
+> = () => {
   return (
     <React.Fragment>
       {/* Preconnect to host */}

@@ -6,7 +6,9 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { TTheatreType, TVerticalCardsGridProps } from './interface';
 import { Wrapper } from './styles';
 
-const VerticalCardsGrid: React.FC<TVerticalCardsGridProps> = (props) => {
+const VerticalCardsGrid: React.FC<
+  React.PropsWithChildren<TVerticalCardsGridProps>
+> = (props) => {
   const { data, isMobile, heading } = props;
 
   const handleCardClick = (

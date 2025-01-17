@@ -24,7 +24,9 @@ const getDefaultFitlerRating = () => {
   return FILTER_RATING_TO_API_PARAM_MAPPING[option as string];
 };
 
-const SortSelector: React.FC<TSortSelectorProps> = ({ isMobile }) => {
+const SortSelector: React.FC<React.PropsWithChildren<TSortSelectorProps>> = ({
+  isMobile,
+}) => {
   const router = useRouter();
   const popupRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);

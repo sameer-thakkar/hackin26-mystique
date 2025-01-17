@@ -8,7 +8,7 @@ import {
 } from 'components/CatAndSubCatPage/Banner/styles';
 import Conditional from 'components/common/Conditional';
 
-const Banner: React.FC<BannerProps> = (props) => {
+const Banner: React.FC<React.PropsWithChildren<BannerProps>> = (props) => {
   const { pageHeading, breadcrumbs, taggedCity, primaryCity, isMobile } = props;
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs).length > 0;
 

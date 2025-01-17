@@ -5,7 +5,9 @@ import { strings } from 'const/strings';
 import { ButtonWrapper } from '../__style';
 import { ITextOverlay } from './interface';
 
-const TextOverlay: React.FC<ITextOverlay> = (props) => {
+const TextOverlay: React.FC<React.PropsWithChildren<ITextOverlay>> = (
+  props
+) => {
   const { onClick, bannerHeading, hideCTA, bannerCtaText, isFirst } = props;
 
   const onButtonClick: MouseEventHandler<'button'> = (event) => {

@@ -26,9 +26,9 @@ import { strings } from 'const/strings';
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
-const TopAttractionsCarousel: React.FC<TopAttractionsCarouselProps> = (
-  props
-) => {
+const TopAttractionsCarousel: React.FC<
+  React.PropsWithChildren<TopAttractionsCarouselProps>
+> = (props) => {
   const { attraction_list, section_heading, see_all_link, isMobile } = props;
   const swiperParams: SwiperProps = {
     loop: true,

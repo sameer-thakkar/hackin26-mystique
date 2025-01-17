@@ -10,7 +10,9 @@ import RichContent from 'UI/RichContent';
 import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 
-const FaqSection: React.FC<FaqSectionProps> = (props) => {
+const FaqSection: React.FC<React.PropsWithChildren<FaqSectionProps>> = (
+  props
+) => {
   const { faqData, isOpenOverride, useSchema } = props;
 
   return (

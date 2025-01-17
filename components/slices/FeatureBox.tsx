@@ -69,7 +69,10 @@ const StyledFeatureBox = styled.div`
  *  - Rich Text field
  */
 
-const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
+const FeatureBox: React.FC<React.PropsWithChildren<FeatureBoxProps>> = ({
+  blocks,
+  lazyLoad,
+}) => (
   <StyledFeatureBoxWrapper>
     {blocks.map((block, index) => {
       const imageURL = block.image_url.url || block.image_source.url;

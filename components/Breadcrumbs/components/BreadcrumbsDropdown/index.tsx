@@ -6,12 +6,9 @@ import {
 } from 'components/Breadcrumbs/components/BreadcrumbsDropdown/styles';
 import { getBreadcrumbLabel } from 'utils/helper';
 
-const BreadcrumbsDropdown: React.FC<BreadcrumbsDropdownProps> = ({
-  breadcrumbs,
-  mbCity,
-  showName,
-  leftOffset,
-}) => {
+const BreadcrumbsDropdown: React.FC<
+  React.PropsWithChildren<BreadcrumbsDropdownProps>
+> = ({ breadcrumbs, mbCity, showName, leftOffset }) => {
   return (
     <StyledBreadcrumbsDropdownContainer $leftOffset={leftOffset}>
       {Object.values(breadcrumbs).map((crumb, index, array) => {

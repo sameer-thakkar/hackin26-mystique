@@ -44,13 +44,13 @@ const MenuContainerCSS = css`
   border-right: 1px solid ${COLORS.GRAY.G7};
   overflow-y: scroll;
 
-  ::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background-color: transparent;
   }
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 1px;
   }
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background-color: ${COLORS.GRAY.G4};
   }
 `;
@@ -58,7 +58,7 @@ const MenuContainerCSS = css`
 const MenuItemCSS = css`
   color: ${COLORS.GRAY.G3};
 
-  :last-of-type {
+  &:last-of-type {
     margin-bottom: unset;
   }
 

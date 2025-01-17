@@ -3,7 +3,7 @@ import { strings } from 'const/strings';
 import { TReviewChipsProps } from './interface';
 import { Chip, ChipsWrapper, HeadingWrapper, Wrapper } from './styles';
 
-const ReviewChips: React.FC<TReviewChipsProps> = ({
+const ReviewChips: React.FC<React.PropsWithChildren<TReviewChipsProps>> = ({
   heading = strings.REVIEWS_PAGE.WHAT_PEOPLE_ARE_SAYING,
   backgroundImage,
   repeatableContent,

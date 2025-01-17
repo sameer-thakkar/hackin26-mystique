@@ -48,7 +48,7 @@ export const SwiperWrapper = styled.div`
         -webkit-backface-visibility: hidden;
 
         @media (max-width: 768px) {
-          :last-child {
+          &:last-child {
             padding-right: 4rem;
           }
         }

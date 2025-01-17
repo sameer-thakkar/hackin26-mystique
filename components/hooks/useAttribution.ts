@@ -66,7 +66,7 @@ const useAttribution = () => {
     let currentAttr: Array<THOAttribution> = [];
     try {
       currentAttr = JSON.parse(cookies[COOKIE.HEADOUT_ATTRIBUTION_TRACKER]);
-    } catch (e) {
+    } catch (e: any) {
       currentAttr = [];
     }
     const originalAttrLen = currentAttr.length;
@@ -146,7 +146,7 @@ const useAttribution = () => {
   useEffect(() => {
     try {
       onAttemptAttribution();
-    } catch (e) {
+    } catch (e: any) {
       //
     }
   }, [onAttemptAttribution]);

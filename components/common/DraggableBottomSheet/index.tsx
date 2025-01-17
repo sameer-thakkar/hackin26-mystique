@@ -55,7 +55,7 @@ export const BottomSheet = memo(
       lastY.current = currentY;
     }, []);
 
-    const handleDragStart = useCallback((e) => {
+    const handleDragStart = useCallback((e: any | TouchEvent | MouseEvent) => {
       setIsDragging(true);
       const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
       const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -64,7 +64,7 @@ export const BottomSheet = memo(
     }, []);
 
     const handleDragMove = useCallback(
-      (e) => {
+      (e: any | TouchEvent | MouseEvent) => {
         if (!isDragging) return;
         const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY;
         const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -79,7 +79,7 @@ export const BottomSheet = memo(
     );
 
     const handleDrawerClose = useCallback(
-      (type) => {
+      (type: string) => {
         setTranslateY(window.innerHeight);
         onCloseInit?.();
         setOverlayOpacity(0);

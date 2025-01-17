@@ -39,15 +39,15 @@ import { HALYARD } from 'const/ui-constants';
 import PoweredByHeadout from 'assets/poweredByHeadout';
 import SearchIcon from 'assets/searchIcon';
 
-const SearchBox: ComponentType<any> = dynamic(
+const SearchBox: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
   { ssr: false }
 );
-const SearchItem: ComponentType<any> = dynamic(
+const SearchItem: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('./SearchItem').then((mod) => mod.SearchItem),
   { ssr: false }
 );
-const ResponsiveSelector: ComponentType<any> = dynamic(
+const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import('components/MicrositeV2/ResponsiveSelector').then(
       (m) => m.ResponsiveSelector
@@ -460,7 +460,7 @@ interface HeaderProps {
   isEntertainmentBanner?: boolean;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({
+const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
   languageProps,
   allTours,
   host,

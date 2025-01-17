@@ -2,7 +2,7 @@ import React from 'react';
 
 const useDidUpdateEffect = (
   effectCallback: React.EffectCallback,
-  dependencyList: React.DependencyList = [] || null
+  dependencyList: React.DependencyList = []
 ) => {
   const isMountRun = React.useRef(true);
 

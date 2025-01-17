@@ -24,7 +24,7 @@ export const FilterItem = styled.div<{ $isActive: boolean }>`
     white-space: nowrap;
   }
 
-  :hover {
+  &:hover {
     background: ${COLORS.GRAY.G7};
   }
 `;

@@ -57,12 +57,12 @@ const Calendar = dynamic(() => import('components/shortcodes/Calendar'));
 const Ticket = dynamic(() => import('components/shortcodes/Ticket'));
 type ComponentType<TProps = {}> =
   | React.ComponentClass<TProps>
-  | React.FunctionComponent<TProps>
-  | React.ComponentType<TProps>;
+  | React.FunctionComponent<React.PropsWithChildren<TProps>>
+  | React.ComponentType<React.PropsWithChildren<TProps>>;
 
 interface ShortCodeDictionary {
   [key: string]: {
-    component?: ComponentType<any>;
+    component?: ComponentType<React.PropsWithChildren<any>>;
     function?: Function;
     type?: string;
   };

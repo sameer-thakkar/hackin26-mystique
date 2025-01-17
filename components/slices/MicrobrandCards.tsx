@@ -264,7 +264,9 @@ type MicrobrandCardsProps = {
   cardsContent?: any;
 };
 
-const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
+const MicrobrandCards: React.FC<
+  React.PropsWithChildren<MicrobrandCardsProps>
+> = (props) => {
   const { cards, cardsContent } = props;
   const { isDev, host, lang } = useContext(MBContext);
   const hostname = getHostName(isDev, host);

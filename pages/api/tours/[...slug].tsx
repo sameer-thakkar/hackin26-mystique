@@ -14,7 +14,7 @@ const getRichTextFromHtmlContent = (properties: string) => {
   if (!properties) return '';
 
   const markedProperties = turndownService.turndown(properties);
-  return markdownToRichtext(markedProperties)?.map((inclusion: Highlight) => ({
+  return markdownToRichtext(markedProperties)?.map((inclusion: THighlight) => ({
     ...inclusion,
     ...inclusion.content,
   }));

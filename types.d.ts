@@ -9,7 +9,7 @@ declare global {
   interface Window {
     dataLayer: Array<any>;
   }
-  interface Highlight {
+  interface THighlight {
     type: string;
     content: Object;
     spans: Array<Object>;

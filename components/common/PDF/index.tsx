@@ -90,7 +90,7 @@ const PdfPopup = ({
   return (
     <PopupContainer
       $isPopupActive={isPopupActive}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e: any) => e.stopPropagation()}
       $noFilterTabs={isSinglePdf}
     >
       <div

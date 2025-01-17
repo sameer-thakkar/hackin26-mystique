@@ -22,7 +22,9 @@ const toastContext = createContext<ToastContextType>({} as ToastContextType);
 
 export const useToast = () => useContext(toastContext);
 
-export const ToastProvider: React.FC = ({ children }) => {
+export const ToastProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const [toasts, setToasts] = useState<TSToast[]>([]);
   const { Provider: ToastContextProvider } = toastContext;
 

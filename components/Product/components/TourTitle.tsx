@@ -61,7 +61,7 @@ export const TourTitle = ({
         isPopup={isContentOpen}
         pageType={pageType}
         isNonPoi={isDrawer && !isPoiMwebCard}
-        onClick={(e) => {
+        onClick={(e: any) => {
           e.stopPropagation();
           onClick();
         }}

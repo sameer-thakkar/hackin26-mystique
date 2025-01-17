@@ -385,7 +385,7 @@ const NewVerticalsProductCard = (props: any) => {
               <Conditional if={isHOHORevamp && isMobile}>
                 <button
                   className="info-icon"
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     onMoreInfoClick();
                   }}

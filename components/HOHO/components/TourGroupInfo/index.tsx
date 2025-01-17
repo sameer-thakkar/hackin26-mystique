@@ -49,7 +49,9 @@ const MediaCarousel = dynamic(
 
 const CAROUSEL_SLIDE_NUMBER = 3;
 
-const TourGroupInfo: React.FC<TourGroupInfoProps> = (props) => {
+const TourGroupInfo: React.FC<React.PropsWithChildren<TourGroupInfoProps>> = (
+  props
+) => {
   const {
     tourGroupImage,
     tourGroupName,

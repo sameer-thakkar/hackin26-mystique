@@ -33,7 +33,10 @@ type NotesProps = {
  *
  */
 
-const Notes: React.FC<NotesProps> = ({ text, ...otherProps }) => {
+const Notes: React.FC<React.PropsWithChildren<NotesProps>> = ({
+  text,
+  ...otherProps
+}) => {
   return (
     <NotesContainer {...{ ...otherProps }}>
       <NotesContent {...otherProps}>{text}</NotesContent>

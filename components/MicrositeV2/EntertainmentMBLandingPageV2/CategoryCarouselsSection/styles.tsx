@@ -72,7 +72,7 @@ export const TitleRow = styled.div`
       user-select: none;
       -webkit-tap-highlight-color: transparent;
 
-      :hover {
+      &:hover {
         color: ${COLORS.PURPS.LEVEL_3};
       }
       svg {
@@ -91,14 +91,14 @@ export const TitleRow = styled.div`
       circle {
         stroke: rgba(121, 121, 121, 0.5);
       }
-      :not(.disabled) {
-        :hover {
+      &:not(.disabled) {
+        &:hover {
           circle {
             stroke: rgba(121, 121, 121, 0.65);
           }
         }
 
-        :active {
+        &:active {
           circle {
             stroke: rgba(121, 121, 121, 0.85);
           }
@@ -141,11 +141,11 @@ export const TitleRow = styled.div`
         height: 28px;
         box-sizing: border-box;
         vertical-align: middle;
-        :hover {
+        &:hover {
           color: ${COLORS.GRAY.G3};
         }
       }
-      :active {
+      &:active {
         transform: scale(0.98);
       }
     }

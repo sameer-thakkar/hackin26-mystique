@@ -18,7 +18,7 @@ export const ListicleSectionWrapper = styled.div`
 export const LargeListicleWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  :not(:last-child) {
+  &:not(:last-child) {
     margin-bottom: 1.25rem;
   }
 

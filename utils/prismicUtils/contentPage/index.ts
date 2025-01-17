@@ -155,7 +155,7 @@ const getPrismicParentCollectionLandingPage = async (
     return prismicClient.getByUID(selectedLandingPage.type, localizedPageUid, {
       lang: language,
     });
-  } catch (e) {
+  } catch (e: any) {
     sendLog({
       err: e,
       message: `[getPrismicParentCollectionLandingPage]`,

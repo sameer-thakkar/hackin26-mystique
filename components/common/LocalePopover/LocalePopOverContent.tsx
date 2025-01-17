@@ -14,7 +14,7 @@ function LocalePopOverContent({ section }: ILocalePopOverContent) {
             key={item.code}
             $isSelected={item.value === section.currentValue}
             {...item.itemProps}
-            onClick={(event) => {
+            onClick={(event: any) => {
               section.onClick(event, item);
             }}
           >

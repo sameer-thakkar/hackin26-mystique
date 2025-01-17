@@ -263,7 +263,7 @@ const swiperParams: SwiperProps = {
   loopedSlides: swiperDuplicateSlideCount,
 };
 
-const NewBanner: React.FC<any> = (props) => {
+const NewBanner: React.FC<React.PropsWithChildren<any>> = (props) => {
   const { bannerImages, ready, isEntertainmentMb, availableTours } = props;
   const [swiper, updateSwiper] = useState<SwiperClass>();
   const [isMounted, setMounted] = useState(false);

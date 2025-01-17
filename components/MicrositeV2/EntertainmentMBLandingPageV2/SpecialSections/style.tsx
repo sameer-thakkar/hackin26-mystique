@@ -140,12 +140,12 @@ export const TitleRow = styled.div`
       justify-content: center;
       align-items: center;
 
-      :not(.disabled) {
-        :hover {
+      &:not(.disabled) {
+        &:hover {
           border-color: ${COLORS.BRAND.WHITE}80;
         }
 
-        :active {
+        &:active {
           border-color: ${COLORS.BRAND.WHITE}A6;
         }
       }
@@ -203,7 +203,7 @@ export const TitleRow = styled.div`
         ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
         border-radius: 0.375rem;
 
-        :active {
+        &:active {
           transform: scale(0.98);
         }
       }

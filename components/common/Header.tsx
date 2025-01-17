@@ -24,7 +24,7 @@ import PoweredByHeadout from 'assets/poweredByHeadout';
 import PoweredByHeadoutNoBorder from 'assets/poweredByHeadoutNoBorder';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
-const ResponsiveSelector: ComponentType<any> = dynamic(
+const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import('components/MicrositeV2/ResponsiveSelector').then(
       (m) => m.ResponsiveSelector
@@ -84,7 +84,7 @@ const StyledHeader = styled.header<{
     !$isAirportTransfersMB &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
-  :hover {
+  &:hover {
     z-index: 99;
   }
 
@@ -242,7 +242,7 @@ const StyledHeaderElements = styled.div<{
       stroke: ${COLORS.BRAND.WHITE};
      }
      ${StyledButtonWrapper} {
-      :hover {
+      &:hover {
         background: ${COLORS.BRAND.WHITE}20;
       }
       & > *, svg > g {
@@ -334,7 +334,7 @@ const LogoPlaceholderWrapper = styled.div`
   }
 `;
 
-const Header: React.FC<any> = (props) => {
+const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   const {

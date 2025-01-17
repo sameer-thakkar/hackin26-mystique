@@ -403,7 +403,7 @@ const Media = ({
   );
 };
 
-const Card: React.FC<CardProps> = ({
+const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
   title,
   description,
   images = [],
@@ -567,7 +567,7 @@ const Card: React.FC<CardProps> = ({
           href={cta.link.url}
           // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           target={cta.link.target}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             trackClickEvent();
           }}

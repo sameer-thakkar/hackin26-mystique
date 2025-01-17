@@ -14,7 +14,7 @@ export const Container = styled.div`
     transition: all 0.15s ease-out;
   }
 
-  :hover {
+  &:hover {
     .arrow {
       right: 1px;
       top: 1px;

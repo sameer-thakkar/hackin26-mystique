@@ -7,7 +7,9 @@ import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { strings } from 'const/strings';
 import ChevronLeft from 'assets/chevronLeft';
 
-const DeepNestedMenu: React.FC<DeepNestedMenuProps> = (props) => {
+const DeepNestedMenu: React.FC<React.PropsWithChildren<DeepNestedMenuProps>> = (
+  props
+) => {
   const {
     categoryHeaderMenu,
     selectedMainMenu = { label: '' },

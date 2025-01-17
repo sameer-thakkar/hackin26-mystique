@@ -16,7 +16,7 @@ export const AccordionWrapper = styled.section<{
   grid-row-gap: ${({ isOpen }) => (isOpen ? '1rem' : 0)};
 
   transition: grid-row-gap 0.05s ease !important;
-  :focus {
+  &:focus {
     outline: none;
   }
 
@@ -34,7 +34,7 @@ export const HeaderWrapper = styled.div<{
   cursor: pointer;
   ${({ isDisabled }) =>
     isDisabled ? `svg{path{stroke:#9F9F9F;}}h2{color:#9F9F9F}` : ``}
-  :focus {
+  &:focus {
     outline: none;
   }
 `;

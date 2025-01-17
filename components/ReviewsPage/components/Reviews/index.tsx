@@ -41,7 +41,7 @@ import { strings } from 'const/strings';
 import { withTrailingSlash } from '../../../../utils/helper';
 import { TReviewsProps, TReviewUIProps } from './interface';
 
-const ReviewUI: React.FC<TReviewUIProps> = ({
+const ReviewUI: React.FC<React.PropsWithChildren<TReviewUIProps>> = ({
   repeatableContent,
   showSortBySelector,
   isLoading,
@@ -131,7 +131,7 @@ const ReviewUI: React.FC<TReviewUIProps> = ({
   );
 };
 
-const Reviews: React.FC<TReviewsProps> = ({
+const Reviews: React.FC<React.PropsWithChildren<TReviewsProps>> = ({
   criticReviewsData,
   reviewsData,
   tgid,

@@ -633,7 +633,7 @@ export const HarryPotterTwoPartTimeSlot = ({
               lang,
             })}
             <div className="duration">
-              {SandClock}
+              <SandClock />
               <p>{strings.DURATION}: 2hr 40min</p>
             </div>
           </div>
@@ -650,7 +650,7 @@ export const HarryPotterTwoPartTimeSlot = ({
               lang,
             })}
             <div className="duration">
-              {SandClock}
+              <SandClock />
               <p>{strings.DURATION}: 2hr 35min</p>
             </div>
           </div>

@@ -18,12 +18,13 @@ export const Container = styled.div`
       width: 16.875rem;
       height: auto;
     }
-    .show-image :last-child {
+    .show-image:last-child {
       margin-right: 1rem;
     }
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       width: 0;
       height: 0;
+      display: none;
     }
   }
   @media (min-width: 768px) {
@@ -41,7 +42,7 @@ export const Container = styled.div`
         margin: 2.125rem 0 0 0;
         width: 17.625rem;
       }
-      .show-image :last-child {
+      .show-image:last-child {
         margin-right: 0;
       }
     }

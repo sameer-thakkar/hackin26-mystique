@@ -92,7 +92,7 @@ dayjs.extend(relativeTime);
  *
  */
 
-const Reviews: React.FC<ReviewsProps> = ({
+const Reviews: React.FC<React.PropsWithChildren<ReviewsProps>> = ({
   type = 'regular',
   title = '',
   reviews,

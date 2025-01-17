@@ -261,7 +261,7 @@ const Drawer = ({
       (drawer as any).addEventListener('touchstart', onStart);
       (drawer as any).addEventListener('touchmove', onMove);
       (drawer as any).addEventListener('touchend', onEnd);
-    } catch (e) {
+    } catch (e: any) {
       //
     }
     return () => {
@@ -279,13 +279,13 @@ const Drawer = ({
     <DrawerContainer
       $drawerStyles={$drawerStyles}
       className={animateOut ? 'animate-out' : ''}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e: any) => e.stopPropagation()}
     >
       <div
         className={`shadow ${coverHeaderInShadow ? 'coverHeader' : ''}`}
         role="button"
         tabIndex={0}
-        onClick={(e) => {
+        onClick={(e: any) => {
           e.stopPropagation();
           close('Outside');
         }}

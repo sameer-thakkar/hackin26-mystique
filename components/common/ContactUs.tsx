@@ -85,7 +85,7 @@ const ContactUs = () => {
 };
 
 export const MobileCallUsPanelDrawer: React.FC<
-  MobileCallUsPanelDrawerProps
+  React.PropsWithChildren<MobileCallUsPanelDrawerProps>
 > = ({ onToggleMobileCallUsDrawer }) => {
   return (
     <Drawer

@@ -26,7 +26,7 @@ const CardCarouselContainer = styled.div`
     width: 36px;
     z-index: 2;
     height: 36px;
-    :after {
+    &:after {
       font-size: 12px;
     }
   }
@@ -40,7 +40,7 @@ const CardCarouselContainer = styled.div`
     z-index: 2;
     width: 36px;
     height: 36px;
-    :after {
+    &:after {
       font-size: 12px;
     }
   }

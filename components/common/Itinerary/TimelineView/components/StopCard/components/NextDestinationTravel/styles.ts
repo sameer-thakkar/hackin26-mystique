@@ -39,8 +39,8 @@ export const NextDestinationTravelContainer = styled.div`
       position: relative;
       margin: 0 !important;
 
-      :not(:last-child) {
-        ::after {
+      &:not(:last-child) {
+        &::after {
           content: '';
           position: absolute;
           height: 2px;

@@ -159,7 +159,7 @@ const FormHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     await slack.send(slackMessageObject);
 
     res.status(200).json({ status: 'Success', body: data.ticket.id });
-  } catch (e) {
+  } catch (e: any) {
     res
       .status(500)
       .json({ status: 'Error Occured', stack: e || (e as any).trace });

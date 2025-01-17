@@ -125,7 +125,9 @@ interface ExperienceProps {
   tickets?: any;
 }
 
-const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
+const ExperienceCarousel: FunctionComponent<
+  React.PropsWithChildren<ExperienceProps>
+> = ({
   cardsInARow = 4,
   experienceType,
   showSeeAll = true,

@@ -42,7 +42,9 @@ export type THEATRE_SECTION_TYPE = {
   sectionsAtTheatre?: string;
   accessibleSeating?: string;
   quickInfo: Array<{
-    icon: React.FC<{ width?: string; height?: string }>;
+    icon: React.FC<
+      React.PropsWithChildren<{ width?: string; height?: string }>
+    >;
     label: string;
   }>;
   rows: string;

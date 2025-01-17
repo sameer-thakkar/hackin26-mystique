@@ -153,7 +153,7 @@ export const MonthTitle = styled.div<{ $isSecondMonth: boolean }>`
     ${expandFontToken(FONTS.HEADING_SMALL)};
     width: 100%;
     text-align: left;
-    ::after {
+    &::after {
       content: '';
       position: absolute;
       bottom: 0.5rem;
@@ -274,7 +274,7 @@ export const Day = styled.div<{
   ${({ $isBeforeToday, $isAvailable }) =>
     ($isBeforeToday || !$isAvailable) &&
     `
-        :hover {
+        &:hover {
             background-color: initial;
         }
         color: ${COLORS.GRAY.G5};
@@ -340,7 +340,7 @@ export const TimeSlotCard = styled.div`
   border: 1px solid ${COLORS.GRAY.G6};
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background: ${COLORS.GRAY.G8};
   }
 `;

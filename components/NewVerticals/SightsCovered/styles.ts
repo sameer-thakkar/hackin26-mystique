@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { StyledTab, StyledTabWrapper } from 'components/slices/TabWrapper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -82,41 +81,35 @@ export const Wrapper = styled.div<{ $noTabs?: boolean }>`
   margin-top: 2rem;
   border-top: 1px solid ${COLORS.GRAY.G6};
   padding-top: 2rem;
-  ${StyledTabWrapper} {
-    .tabs {
-      grid-auto-columns: max-content;
-      overflow: scroll;
-      grid-column-gap: 1.5rem;
-      ${({ $noTabs }) => $noTabs && 'display: none;'}
-      svg {
-        height: 1.75rem;
-      }
-      .prev-slide {
-        margin-left: 1rem;
-      }
-      .next-slide {
-        margin-right: 1rem;
-      }
+
+  .tabs {
+    grid-auto-columns: max-content;
+    overflow: scroll;
+    grid-column-gap: 1.5rem;
+    svg {
+      height: 1.75rem;
     }
-    ${StyledTab} {
-      margin: 0;
+    .prev-slide {
+      margin-left: 1rem;
     }
+    .next-slide {
+      margin-right: 1rem;
+    }
+    ${({ $noTabs }) => $noTabs && 'display: none;'}
   }
+
   @media (max-width: 768px) {
     margin: 0;
     padding: 0;
     border: none;
-    ${StyledTabWrapper} {
-      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
-      position: relative;
-      .tabs {
-        grid-column-gap: 1rem;
-        .prev-slide,
-        .next-slide {
-          margin-left: -0.75rem;
-          margin-right: -0.75rem;
-        }
+    .tabs {
+      grid-column-gap: 1rem;
+      .prev-slide,
+      .next-slide {
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
       }
+      ${({ $noTabs }) => $noTabs && 'display: none;'}
     }
   }
 `;

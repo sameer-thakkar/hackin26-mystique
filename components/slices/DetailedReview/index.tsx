@@ -20,7 +20,9 @@ import {
   Wrapper,
 } from './styles';
 
-const DetailedReview: React.FC<TDetailedReviewProps> = ({
+const DetailedReview: React.FC<
+  React.PropsWithChildren<TDetailedReviewProps>
+> = ({
   heading = strings.REVIEWS_PAGE.REVIEW_BY_HEADOUT,
   description,
   repeatableContent,

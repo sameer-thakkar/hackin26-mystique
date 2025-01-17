@@ -106,26 +106,25 @@ export const StyledMainMenuItems = styled.div<{
   color: ${COLORS.GRAY.G3};
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
   cursor: pointer;
- 
-  svg {
-      width: 1rem;
-      height: 1rem;
-      position: relative;
-      top: 1.75px;
-      margin-right: 0.5rem;
-      pointer-events: none;
-    }
 
+  svg {
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    top: 1.75px;
+    margin-right: 0.5rem;
+    pointer-events: none;
+  }
 
   &:hover {
     color: ${COLORS.BRAND.PURPS};
-    svg path, 
+    svg path,
     svg line {
-        stroke: ${COLORS.BRAND.PURPS};
-      }   
+      stroke: ${COLORS.BRAND.PURPS};
+    }
   }
 
-  :first-of-type {
+  &:first-of-type {
     padding-left: unset;
   }
 
@@ -139,17 +138,18 @@ export const StyledMainMenuItems = styled.div<{
     border-bottom: 0.5px solid ${COLORS.GRAY.G6};
 
     &:hover {
-    color: unset;
-    svg path, 
-    svg line {
-        stroke: ${COLORS.GRAY.G3}};
+      color: unset;
+      svg path,
+      svg line {
+        stroke: ${COLORS.GRAY.G3};
       }
     }
+  }
 
-    ${({ $isMobile }) =>
-      $isMobile &&
-      `
-      :first-of-type {  
+  ${({ $isMobile }) =>
+    $isMobile &&
+    `
+      &:first-of-type {  
         padding-left: 1rem;
       }
 
@@ -166,11 +166,11 @@ export const StyledMainMenuItems = styled.div<{
       }
       `}
 
-    &.active {
-      ${({ $isExpanded, $isMobile }) =>
-        $isExpanded &&
-        $isMobile &&
-        `
+  &.active {
+    ${({ $isExpanded, $isMobile }) =>
+      $isExpanded &&
+      $isMobile &&
+      `
         &.last {
           margin-bottom: unset;
         }
@@ -178,8 +178,8 @@ export const StyledMainMenuItems = styled.div<{
         svg {
           transform: rotate(90deg);
         }
-      `} 
-    }
+      `}
+  }
 `;
 
 export const StyledNestedMenuWrapper = styled.div<{ $isVisible?: boolean }>`

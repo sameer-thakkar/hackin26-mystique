@@ -76,22 +76,23 @@ const Alert = dynamic(
   () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),
   { ssr: false }
 );
-const ResponsiveSelector: ComponentType<any> = dynamic(
+const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import(
       /* webpackChunkName: "ResponsiveSelector" */ 'components/MicrositeV2/ResponsiveSelector'
     ).then((m) => m.ResponsiveSelector),
   { ssr: false }
 );
-const ProductsWrapper: ComponentType<any> = dynamic(() =>
-  import(
-    /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
-  ).then((mod) => mod.ProductsWrapper)
+const ProductsWrapper: ComponentType<React.PropsWithChildren<any>> = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
+    ).then((mod) => mod.ProductsWrapper)
 );
-const Banner: ComponentType<any> = dynamic(
+const Banner: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
-const LongForm: ComponentType<any> = dynamic(
+const LongForm: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
 );

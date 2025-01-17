@@ -13,7 +13,9 @@ import {
 } from 'components/MicrositeV2/CategoryPageBanner/styles';
 import Image from 'UI/Image';
 
-const CategoryPageBanner: React.FC<TCategoryPageBannerProps> = ({
+const CategoryPageBanner: React.FC<
+  React.PropsWithChildren<TCategoryPageBannerProps>
+> = ({
   heading,
   bannerImgUrl,
   isMobile,

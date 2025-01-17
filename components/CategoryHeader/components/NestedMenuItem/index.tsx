@@ -8,7 +8,9 @@ import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import ChevronRight from 'assets/chevronRight';
 
-const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
+const NestedMenuItem: React.FC<React.PropsWithChildren<NestedMenuItemProps>> = (
+  props
+) => {
   const {
     menuData,
     handleSettingNestedMenu,
@@ -33,7 +35,7 @@ const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
               <a
                 href={url}
                 target="_blank"
-                onClick={(e) =>
+                onClick={(e: any) =>
                   trackHeaderMenuItemClicked({
                     eventTarget: e.target,
                     label: formattedLabel,

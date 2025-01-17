@@ -69,7 +69,7 @@ interface TabProps {
 
 const SWIPE_THRESHOLD = 50;
 
-const SwipeableTabs: FunctionComponent<TabProps> = ({
+const SwipeableTabs: FunctionComponent<React.PropsWithChildren<TabProps>> = ({
   tabs,
   defaultActiveIndex = 0,
   isCollectionCard = false,

@@ -260,7 +260,7 @@ export const Pill = styled.button<{ $isHighlighted?: boolean }>`
     $isHighlighted ? COLORS.BRAND.WHITE : COLORS.BLACK};
   color: ${({ $isHighlighted }) =>
     $isHighlighted ? COLORS.BLACK : COLORS.BRAND.WHITE};
-  :active {
+  &:active {
     transform: scale(0.98);
   }
   @media (max-width: 768px) {

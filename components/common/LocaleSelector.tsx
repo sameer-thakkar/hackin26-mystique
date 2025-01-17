@@ -91,7 +91,7 @@ export const drawerStyles = (isDarkMode?: boolean) => css`
     padding: 0 24px;
     max-height: calc(444px - 70px);
     overflow-y: scroll;
-    :after {
+    &:after {
       height: 10px;
       content: '';
       display: block;

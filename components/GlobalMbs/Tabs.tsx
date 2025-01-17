@@ -53,7 +53,7 @@ interface TabProps {
   isCollectionCard?: boolean;
 }
 
-const Tabs: FunctionComponent<TabProps> = ({
+const Tabs: FunctionComponent<React.PropsWithChildren<TabProps>> = ({
   tabs,
   defaultActiveIndex = 0,
   isCollectionCard = false,

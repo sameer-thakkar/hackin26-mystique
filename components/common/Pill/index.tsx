@@ -9,7 +9,7 @@ import {
 } from 'components/common/Pill/styles';
 import GridIcon from 'assets/gridIcon';
 
-const Pill: React.FC<PillProps> = (props) => {
+const Pill: React.FC<React.PropsWithChildren<PillProps>> = (props) => {
   const {
     iconUrl,
     label,

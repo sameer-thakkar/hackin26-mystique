@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSwiperSlide } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
@@ -44,7 +50,9 @@ interface VideoTypeProps {
   onClick?: () => void;
 }
 
-const Video: React.FC<VideoTypeProps> = ({
+const Video: React.FC<
+  React.PropsWithChildren<PropsWithChildren<VideoTypeProps>>
+> = ({
   url,
   fallbackImage,
   isLooped = true,

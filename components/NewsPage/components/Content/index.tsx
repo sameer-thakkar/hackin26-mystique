@@ -6,7 +6,9 @@ import type {
 import { Container } from 'components/NewsPage/components/Content/styles';
 import Image from 'UI/Image';
 
-const Banner: React.FC<TBannerProps> = ({ bannerImage }) => {
+const Banner: React.FC<React.PropsWithChildren<TBannerProps>> = ({
+  bannerImage,
+}) => {
   return (
     <div className="image-wrapper">
       <Image
@@ -22,7 +24,9 @@ const Banner: React.FC<TBannerProps> = ({ bannerImage }) => {
   );
 };
 
-const PageContent: React.FC<TPageContentProps> = ({ content }) => {
+const PageContent: React.FC<React.PropsWithChildren<TPageContentProps>> = ({
+  content,
+}) => {
   const { bannerImage, contentFrameworkSlices } = content;
 
   return (

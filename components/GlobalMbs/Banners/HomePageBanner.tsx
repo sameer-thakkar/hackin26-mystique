@@ -100,7 +100,7 @@ interface BannerProps {
   mbType: string;
 }
 
-const Banner: FunctionComponent<BannerProps> = ({
+const Banner: FunctionComponent<React.PropsWithChildren<BannerProps>> = ({
   title,
   subText = '',
   images,

@@ -45,10 +45,10 @@ export const PillContainer = styled.div<{
         span {
           color: ${$isHighlighted ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
         }
-        :active {
+        &:active {
           transform: scale(0.98);
         }
-        :hover {
+        &:hover {
           border: 1px solid ${COLORS.GRAY.G4};
         }
       `}

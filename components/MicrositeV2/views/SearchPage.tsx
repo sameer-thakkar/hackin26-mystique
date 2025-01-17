@@ -9,11 +9,11 @@ import { HALYARD } from 'const/ui-constants';
 import CloseWhite from 'assets/closeWhite';
 import PopulateProducts from '../PopulateProducts';
 
-const SearchBox: ComponentType<any> = dynamic(
+const SearchBox: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import('components/MicrositeV2/SearchBox').then((mod) => mod.SearchBox),
   { ssr: false }
 );
-const SearchItem: ComponentType<any> = dynamic(
+const SearchItem: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import('components/MicrositeV2/SearchItem').then((mod) => mod.SearchItem),
   { ssr: false }

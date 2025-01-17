@@ -115,7 +115,7 @@ const CardBottomContent = styled.div`
       font-size: 16px;
       line-height: 24px;
       margin-top: 0;
-      :last-child {
+      &:last-child {
         margin-bottom: 0;
       }
     }
@@ -195,7 +195,9 @@ type MediumListicleProps = {
   tourData: any;
 };
 
-const MediumListicle: React.FC<MediumListicleProps> = ({
+const MediumListicle: React.FC<
+  React.PropsWithChildren<MediumListicleProps>
+> = ({
   isOpen: cardOpen = false,
   primary,
   items,

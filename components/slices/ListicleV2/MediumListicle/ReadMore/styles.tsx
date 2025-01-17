@@ -25,7 +25,7 @@ export const ReadMoreWrapper = styled.div<{
 }>`
   display: flex;
   margin: 0 0 1rem;
-  :hover {
+  &:hover {
     cursor: pointer;
   }
 `;

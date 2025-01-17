@@ -135,7 +135,7 @@ const DesktopBannerV2 = ({
     };
   }, [swiper, updateIndex, activeSlideIndex]);
 
-  const onPrev: MouseEventHandler<HTMLElement> = (e) => {
+  const onPrev: MouseEventHandler<HTMLElement> = (e: any) => {
     e.stopPropagation();
     if (swiper !== null) {
       swiper.slidePrev();
@@ -146,7 +146,7 @@ const DesktopBannerV2 = ({
     });
   };
 
-  const onNext: MouseEventHandler<HTMLElement> = (e) => {
+  const onNext: MouseEventHandler<HTMLElement> = (e: any) => {
     e.stopPropagation();
     if (swiper !== null) {
       swiper.slideNext();

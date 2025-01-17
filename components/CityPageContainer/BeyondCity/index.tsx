@@ -48,7 +48,7 @@ const AllDayTripsBtn = ({ uid, lang, host, isDev }: IPagelinkProps) => {
   return (
     <AllDayTripsLinkContainer>
       <a
-        onClick={(e) =>
+        onClick={(e: any) =>
           trackCTA({
             event: e,
             url: allDayTripPageLink,
@@ -127,7 +127,7 @@ const NearbyCities = ({
       return (
         <div className="collection-image-container" key={id}>
           <a
-            onClick={(e) =>
+            onClick={(e: any) =>
               handleCollectionCardTracking({
                 event: e,
                 url: nearbyCollectionLink,

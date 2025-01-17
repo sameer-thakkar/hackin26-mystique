@@ -25,7 +25,7 @@ import HoveredMonth from 'assets/hoveredMonth';
 import MobileHoveredMonth from 'assets/mobileHoveredMonth';
 import Month from 'assets/month';
 
-const CalendarUnit: React.FC<TCalendarUnitProps> = ({
+const CalendarUnit: React.FC<React.PropsWithChildren<TCalendarUnitProps>> = ({
   pageTabsSlice,
   displayMonth,
   isMobile,

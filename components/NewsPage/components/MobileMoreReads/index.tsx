@@ -19,7 +19,9 @@ import {
 import { strings } from 'const/strings';
 import Avatar from 'assets/avatar';
 
-const MobileMoreReads: React.FC<TMobileMoreReadsProps> = ({
+const MobileMoreReads: React.FC<
+  React.PropsWithChildren<TMobileMoreReadsProps>
+> = ({
   content,
   showAllNewsCTA,
   heading,

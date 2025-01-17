@@ -32,7 +32,7 @@ const Title = styled.h2`
   font-size: 24px !important;
   line-height: 28px !important;
   margin: 0 0 24px 0 !important;
-  ::after {
+  &::after {
     content: unset !important;
   }
 `;
@@ -66,11 +66,9 @@ type ListicleSectionProps = {
  *
  */
 
-const ListicleSection: React.FC<ListicleSectionProps> = ({
-  type,
-  title,
-  childSlices: slices,
-}) => {
+const ListicleSection: React.FC<
+  React.PropsWithChildren<ListicleSectionProps>
+> = ({ type, title, childSlices: slices }) => {
   const components = useMemo(() => {
     return sliceComponents();
   }, []);

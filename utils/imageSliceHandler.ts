@@ -79,7 +79,7 @@ export const storeImage = ({
     } else {
       mediaArray.push(firstImage || secondImage || thirdImage);
     }
-  } catch (e) {
+  } catch (e: any) {
     /* tslint:disable:no-empty */
   }
 };
@@ -267,7 +267,7 @@ const sliceHandler = async ({
         tourGroups?.forEach((tour: { imageUrl?: string }) =>
           (mediaArray as Array<string>).push(tour?.imageUrl as string)
         );
-      } catch (e) {
+      } catch (e: any) {
         /* tslint:disable:no-empty */
       }
 
@@ -308,7 +308,7 @@ const sliceHandler = async ({
             mediaArray.push(apiTours[item]?.image);
           });
         }
-      } catch (e) {
+      } catch (e: any) {
         /* tslint:disable:no-empty */
       }
       break;

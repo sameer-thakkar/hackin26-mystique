@@ -67,7 +67,10 @@ export const MoreDetailsSideDrawer = ({
         if (closed) onClose();
       }}
     >
-      <FullHeightDrawer $closed={closed} onClick={(e) => e.stopPropagation()}>
+      <FullHeightDrawer
+        $closed={closed}
+        onClick={(e: any) => e.stopPropagation()}
+      >
         <ContentHeader>
           <div className="review-header">
             <RatingsContainer>
@@ -96,7 +99,7 @@ export const MoreDetailsSideDrawer = ({
               key={i}
               header={
                 <PrismicRichText
-                  field={[accordion.title] || []}
+                  field={[accordion.title]}
                   components={shortCodeSerializer}
                 />
               }

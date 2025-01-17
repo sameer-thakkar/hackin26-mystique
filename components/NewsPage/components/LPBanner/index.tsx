@@ -37,7 +37,9 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "LandingPageSwiper" */ 'components/Swiper')
 );
 
-const LandingPageBanner: React.FC<TNewsLandingPageProps> = (props) => {
+const LandingPageBanner: React.FC<
+  React.PropsWithChildren<TNewsLandingPageProps>
+> = (props) => {
   const isMobile = useWindowSize().width! < 768;
   const [swiper, setSwiper] = useState<TSwiper | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);

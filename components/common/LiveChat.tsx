@@ -8,7 +8,9 @@ type LiveChatProps = {
   uid?: string;
 };
 
-const LiveChat: React.FC<LiveChatProps> = ({ uid }) => {
+const LiveChat: React.FC<React.PropsWithChildren<LiveChatProps>> = ({
+  uid,
+}) => {
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = useWindowSize().width < 768;
 
@@ -25,9 +27,8 @@ const LiveChat: React.FC<LiveChatProps> = ({ uid }) => {
       let startedLoading = false;
 
       const interval = setInterval(() => {
-        const cookieBannerState = window.localStorage.getItem(
-          COOKIE_BANNER_KEY
-        );
+        const cookieBannerState =
+          window.localStorage.getItem(COOKIE_BANNER_KEY);
         const cookieBannerShown =
           cookieBannerState &&
           ['shown', 'not compliant'].includes(cookieBannerState);

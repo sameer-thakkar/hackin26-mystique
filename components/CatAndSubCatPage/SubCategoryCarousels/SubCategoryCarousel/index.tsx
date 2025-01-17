@@ -29,7 +29,9 @@ const OverflowScroll = dynamic(
   () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
-const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
+const SubCategoryCarousel: React.FC<
+  React.PropsWithChildren<SubCategoryCarouselProps>
+> = (props) => {
   const { heading, name, subCategoryPageUrl, carouselData, isMobile } = props;
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [, setActiveIndex] = useState(0);
@@ -105,7 +107,7 @@ const SubCategoryCarousel: React.FC<SubCategoryCarouselProps> = (props) => {
               href={subCategoryPageUrl}
               target="_blank"
               rel="noopener"
-              onClick={(e) =>
+              onClick={(e: any) =>
                 trackCTA({
                   event: e,
                   url: subCategoryPageUrl,

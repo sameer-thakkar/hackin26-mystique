@@ -87,7 +87,10 @@ const StyledContent = styled.div(({ active }) => {
   }
 });
 
-const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
+const ContentTabs: React.FC<React.PropsWithChildren<ContentTabsProps>> = ({
+  tabsArr,
+  contentArr,
+}) => {
   const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
   const defaultTabName = defaultTab ? defaultTab.tab_name : '';
   const [activeTabName, setActiveTab] = useState(defaultTabName);

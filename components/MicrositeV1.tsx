@@ -106,7 +106,7 @@ const CollectionCarousel = dynamic(
     )
 );
 
-const ResponsiveSelector: ComponentType<any> = dynamic(
+const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import('components/MicrositeV2/ResponsiveSelector').then(
       (m) => m.ResponsiveSelector

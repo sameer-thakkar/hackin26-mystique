@@ -61,7 +61,7 @@ import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import { Pricing, SavePercentElement } from './ShowPagePricingSection/style';
 
-const SearchPage: ComponentType<any> = dynamic(
+const SearchPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import(/* webpackChunkName: "SearchPage" */ '../views/SearchPage').then(
       (mod) => mod.SearchPage

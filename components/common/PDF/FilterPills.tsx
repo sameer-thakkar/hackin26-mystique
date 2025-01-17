@@ -44,7 +44,7 @@ const FilterPills = (props: TFilterPills) => {
     return (
       <Pill
         key={index}
-        onClick={(e) =>
+        onClick={(e: any) =>
           handlePillClick({
             event: e,
             index,

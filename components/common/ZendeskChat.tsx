@@ -8,7 +8,9 @@ interface IZendeskChat {
   isLttMonthOnMonthPage?: boolean;
 }
 
-const ZendeskChat: React.FC<IZendeskChat> = (props) => {
+const ZendeskChat: React.FC<React.PropsWithChildren<IZendeskChat>> = (
+  props
+) => {
   const { uid, isLttMonthOnMonthPage } = props;
 
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.

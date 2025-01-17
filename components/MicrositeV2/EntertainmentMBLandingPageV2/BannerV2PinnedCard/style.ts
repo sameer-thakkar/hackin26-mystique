@@ -130,7 +130,7 @@ export const Container = styled.div<{ isVerticalImageUrlPresent: boolean }>`
     align-items: center;
   }
 
-  :hover {
+  &:hover {
     transform: translateY(-2px);
     transition: 0.2s ease;
     cursor: pointer;
@@ -334,7 +334,7 @@ export const YourPickHeader = styled.div`
     }
   }
 
-  ::after {
+  &::after {
     opacity: 0;
     content: '';
     position: absolute;

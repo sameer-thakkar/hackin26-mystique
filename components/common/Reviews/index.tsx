@@ -31,7 +31,7 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
-const Reviews: React.FC<TReviewsProp> = (props) => {
+const Reviews: React.FC<React.PropsWithChildren<TReviewsProp>> = (props) => {
   const [swiper, setSwiper] = useState<TSwiper | null>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const reviewRef = useRef(null);

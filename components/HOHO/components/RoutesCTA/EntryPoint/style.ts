@@ -15,7 +15,7 @@ export const Container = styled.button`
   background-clip: padding-box;
   box-shadow: 0px 4px 4px 0px ${COLORS.BLACK}26;
   transition: bottom ease-in-out 150ms, transform ease-in-out 150ms;
-  :active {
+  &:active {
     transform: scale(0.98);
   }
   & > svg {
@@ -23,7 +23,7 @@ export const Container = styled.button`
   }
 
   @media (min-width: 768px) {
-    :hover {
+    &:hover {
       bottom: 9px;
     }
   }

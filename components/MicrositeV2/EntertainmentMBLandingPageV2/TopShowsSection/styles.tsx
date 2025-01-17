@@ -63,12 +63,12 @@ export const TopShowsWrapper = styled.div<{
     ${expandFontToken(FONTS.BUTTON_MEDIUM)};
     color: ${COLORS.GRAY.G2};
 
-    :hover {
+    &:hover {
       transition: all 100ms ease-out;
       background: ${COLORS.GRAY.G8};
     }
 
-    :active {
+    &:active {
       transform: scale(0.9583);
       border-radius: 0.475rem;
     }
@@ -98,14 +98,14 @@ export const TopShowsWrapper = styled.div<{
         margin-top: 0.75rem;
       }
       @media (min-width: 768px) {
-        :active {
+        &:active {
           transition: ease-in-out 300ms;
           transform: scale(0.98);
         }
       }
 
       ${Wrapper} {
-        :active {
+        &:active {
           transform: none;
         }
       }
@@ -157,7 +157,7 @@ export const TopShowsWrapper = styled.div<{
       position: relative;
       margin: 0 1.5rem;
       transition: ease-in-out 150ms;
-      :active {
+      &:active {
         transform: scale(0.98);
       }
     }

@@ -19,7 +19,7 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
-const RowComponent: ComponentType<any> = dynamic(() =>
+const RowComponent: ComponentType<React.PropsWithChildren<any>> = dynamic(() =>
   import(/* webpackChunkName: "RowComponent" */ './RowComponent').then(
     (mod) => mod.RowComponent
   )

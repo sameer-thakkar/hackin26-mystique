@@ -21,7 +21,7 @@ const Descriptor = ({
         $size={size}
         $color={color}
         $bold={bold}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
       >
         {icon}
         <p className="descriptor-text">{text}</p>

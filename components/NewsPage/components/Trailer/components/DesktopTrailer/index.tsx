@@ -49,7 +49,9 @@ const MediaPlayer = dynamic(
   { ssr: false }
 );
 
-const Media: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
+const Media: React.FC<
+  React.PropsWithChildren<{ videoUrl: string | undefined }>
+> = ({ videoUrl }) => {
   return (
     <>
       <Conditional if={videoUrl}>
@@ -76,7 +78,9 @@ const Media: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
   );
 };
 
-const DesktopTrailer: React.FC<TDesktopTrailerProps> = ({ content }) => {
+const DesktopTrailer: React.FC<
+  React.PropsWithChildren<TDesktopTrailerProps>
+> = ({ content }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [mainSwiper, setMainSwiperInstance] = useState<TSwiper | null>(null);
   const [thumbnailSwiper, setThumbnailSwiperInstance] =

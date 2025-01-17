@@ -15,8 +15,8 @@ const Overlay = ({
 
   return (
     <OverlayContainer
-      onClick={(e) => handleInteraction(e)}
-      onTouchStart={(e) => handleInteraction(e)}
+      onClick={(e: any) => handleInteraction(e)}
+      onTouchStart={(e: any) => handleInteraction(e)}
     >
       {strings.CRUISES.MAP_OVERLAY}
     </OverlayContainer>

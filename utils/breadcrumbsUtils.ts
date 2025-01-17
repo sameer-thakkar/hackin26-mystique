@@ -1022,7 +1022,7 @@ export const getNonTgidSeatingPlanBreadcrumbs = async (
   };
 
   const seatmapLabel = await import('components/SeatMapPage/constants').then(
-    (e) => e.SEATING_MAP.breadCrumbsLabel[theatreType]
+    (e: any) => e.SEATING_MAP.breadCrumbsLabel[theatreType]
   );
 
   breadcrumbs[`level_3`] = {

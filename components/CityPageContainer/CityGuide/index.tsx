@@ -79,7 +79,7 @@ const CityGuide = ({
           </div>
           <Conditional if={!isMobile && travelGuideLink}>
             <a
-              onClick={(e) =>
+              onClick={(e: any) =>
                 trackCTA({
                   event: e,
                   url: travelGuideLink,

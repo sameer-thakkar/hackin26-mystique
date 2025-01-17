@@ -322,7 +322,7 @@ export const StyledCashback = styled.div`
   border-radius: 10px;
   z-index: 2;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     inset: 1px;

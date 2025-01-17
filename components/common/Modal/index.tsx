@@ -42,7 +42,7 @@ const Modal = ({
   return container.current && active
     ? createPortal(
         <CoreModalContainer onClick={() => onClose()}>
-          <CoreModalContent onClick={(e) => e.stopPropagation()}>
+          <CoreModalContent onClick={(e: any) => e.stopPropagation()}>
             {children}
           </CoreModalContent>
         </CoreModalContainer>,

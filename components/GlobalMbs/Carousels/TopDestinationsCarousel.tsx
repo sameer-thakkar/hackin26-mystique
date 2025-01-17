@@ -63,7 +63,7 @@ interface TopDestinationsCarouselProps {
 }
 
 const TopDestinationsCarousel: FunctionComponent<
-  TopDestinationsCarouselProps
+  React.PropsWithChildren<TopDestinationsCarouselProps>
 > = ({ destinations, showTitle = true }) => {
   const { isDev, host } = useContext(MBContext);
   const finalCities = destinations?.filter(

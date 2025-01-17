@@ -31,7 +31,7 @@ const FooterLinksSectionWrapper = styled.div`
     color: ${COLORS.GRAY.G3};
     padding-right: 0.75rem;
     border-right: 0.063rem solid ${COLORS.GRAY.G6};
-    :last-child {
+    &:last-child {
       border-right: ${({
         // @ts-expect-error TS(2339): Property 'isLastSlice' does not exist on type 'Pic... Remove this comment to see the full error message
         isLastSlice,
@@ -45,12 +45,9 @@ const Title = styled.div`
   margin: 0 0.75rem 0.75rem 0;
 `;
 
-const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
-  links,
-  title,
-  sliceLength,
-  sliceIndex,
-}) => {
+const FooterLinksSection: React.FC<
+  React.PropsWithChildren<FooterLinksSectionProps>
+> = ({ links, title, sliceLength, sliceIndex }) => {
   const onLinkClick = (e: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.QUICK_LINKS_CLICKED,

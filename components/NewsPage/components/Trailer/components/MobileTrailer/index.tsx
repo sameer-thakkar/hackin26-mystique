@@ -35,7 +35,9 @@ const Swiper = dynamic(
     import(/* webpackChunkName: "MobileTrailerSwiper" */ 'components/Swiper')
 );
 
-const MobileTrailer: React.FC<TMobileTrailerProps> = ({ content }) => {
+const MobileTrailer: React.FC<React.PropsWithChildren<TMobileTrailerProps>> = ({
+  content,
+}) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang, isDev, host } = useContext(MBContext);

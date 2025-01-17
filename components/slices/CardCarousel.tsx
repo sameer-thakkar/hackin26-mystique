@@ -20,7 +20,7 @@ const CardCarouselContainer = styled.div`
   .swiper-button-next {
     right: 0;
     color: black;
-    :after {
+    &:after {
       font-size: 24px;
     }
   }
@@ -28,7 +28,7 @@ const CardCarouselContainer = styled.div`
     left: 0;
     color: black;
     font-size: 24px;
-    :after {
+    &:after {
       font-size: 24px;
     }
   }

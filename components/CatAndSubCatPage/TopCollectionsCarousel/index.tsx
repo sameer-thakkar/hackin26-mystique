@@ -31,9 +31,9 @@ const OverflowScroll = dynamic(
   () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
-const TopCollectionsCarousel: React.FC<TopCollectionsCarouselProps> = (
-  props
-) => {
+const TopCollectionsCarousel: React.FC<
+  React.PropsWithChildren<TopCollectionsCarouselProps>
+> = (props) => {
   const { topCollectionsCarousel, categoryData, isMobile } = props;
 
   const sectionHeading = getCatAndSubcatPageLabel({

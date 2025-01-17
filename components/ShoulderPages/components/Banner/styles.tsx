@@ -145,7 +145,7 @@ export const TextContainer = styled.div<{ $fullWidth?: boolean }>`
     vertical-align: top;
     padding: 0;
 
-    :hover {
+    &:hover {
       text-decoration: underline;
     }
   }

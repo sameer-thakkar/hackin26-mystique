@@ -147,7 +147,7 @@ const PdfViewer = (props: TPdfViewer) => {
   };
   return (
     <Container
-      onScroll={(e) =>
+      onScroll={(e: any) =>
         setIsScrolled((e.target as HTMLDivElement).scrollTop > 20)
       }
       $initialState={isInitialState}
@@ -157,7 +157,7 @@ const PdfViewer = (props: TPdfViewer) => {
         maxScale={2.5}
         wheel={{ smoothStep: 0.01, wheelDisabled: true }}
         panning={{ disabled: true }}
-        onZoom={(e) => {
+        onZoom={(e: any) => {
           setIsScrolled(e.state.scale > 1);
           setIsInitialState(false);
         }}

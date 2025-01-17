@@ -39,7 +39,7 @@ type SpotifyPlayerProps = {
  *
  */
 
-const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
+const SpotifyPlayer: React.FC<React.PropsWithChildren<SpotifyPlayerProps>> = ({
   albumid,
   height,
   ...otherProps

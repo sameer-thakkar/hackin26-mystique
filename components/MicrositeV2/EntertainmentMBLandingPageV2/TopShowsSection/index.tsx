@@ -12,12 +12,13 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 import { YourPickBackground, YourPickStar } from 'assets/yourPickBackground';
 
-const BrowseByCategoriesSection: ComponentType<any> = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "BrowseByCategoriesSection" */ 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection'
-    )
-);
+const BrowseByCategoriesSection: ComponentType<React.PropsWithChildren<any>> =
+  dynamic(
+    () =>
+      import(
+        /* webpackChunkName: "BrowseByCategoriesSection" */ 'components/MicrositeV2/EntertainmentMBLandingPageV2/BrowseByCategoriesSection'
+      )
+  );
 
 export interface ITopShowsSectionProps {
   isMobile: boolean;

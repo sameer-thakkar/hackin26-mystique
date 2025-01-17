@@ -93,7 +93,7 @@ const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
       width: 36px;
       z-index: 2;
       height: 36px;
-      :after {
+      &:after {
         font-size: 12px;
       }
     }
@@ -107,7 +107,7 @@ const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
       z-index: 2;
       width: 36px;
       height: 36px;
-      :after {
+      &:after {
         font-size: 12px;
       }
     }
@@ -381,7 +381,7 @@ const Gallery = ({ galleryArray, isMobile }: any) => {
             })}
           </Swiper>
           <CrossWrapper onClick={() => popupCloser()}>
-            {BlackCross}
+            <BlackCross />
           </CrossWrapper>
         </GalleryPopUpContentWrapper>
       </GalleryPopUpWrapper>

@@ -25,7 +25,9 @@ import {
   Wrapper,
 } from './styles';
 
-const ContributorsReview: React.FC<TContributorsReviewProps> = ({
+const ContributorsReview: React.FC<
+  React.PropsWithChildren<TContributorsReviewProps>
+> = ({
   heading,
   content,
   redirectionLink,

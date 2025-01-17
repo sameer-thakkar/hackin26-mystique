@@ -123,7 +123,7 @@ const ContentContainer = ({
                 <Tab
                   isActive={activeTabIndex === index}
                   key={index}
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     onTabChange(index);
                   }}

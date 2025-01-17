@@ -65,7 +65,7 @@ function CurrencySelectorMobile({
           type="text"
           placeholder={strings.SEARCH}
           value={searchQuery}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setSearchQuery(e.currentTarget.value);
           }}
         />

@@ -69,13 +69,15 @@ const StyledReadMore = styled.a`
   text-decoration: underline;
 `;
 
-const DismissAlert: React.FC<{
-  readMore: string;
-  keyText: string;
-  text: string;
-  handleClose: any;
-  readMoreLink: string;
-}> = ({ readMore, keyText, text, handleClose, readMoreLink }) => {
+const DismissAlert: React.FC<
+  React.PropsWithChildren<{
+    readMore: string;
+    keyText: string;
+    text: string;
+    handleClose: any;
+    readMoreLink: string;
+  }>
+> = ({ readMore, keyText, text, handleClose, readMoreLink }) => {
   return (
     <StyledAlert>
       <StyledContent>

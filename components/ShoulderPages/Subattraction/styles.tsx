@@ -109,11 +109,11 @@ export const SwiperWrapper = styled.div`
         -webkit-backface-visibility: hidden;
 
         @media (max-width: 768px) {
-          :first-child {
+          &:first-child {
             margin-left: 1.5rem;
           }
 
-          :last-child {
+          &:last-child {
             padding-right: 4rem;
           }
         }
@@ -183,7 +183,7 @@ export const Arrows = styled.div`
 
   .disabled {
     cursor: not-allowed;
-    :hover {
+    &:hover {
       fill: white;
     }
   }

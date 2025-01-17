@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FutureImage from 'next/future/image';
+import FutureImage from 'next/image';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';

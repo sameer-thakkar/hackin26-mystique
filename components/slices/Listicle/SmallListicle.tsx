@@ -63,7 +63,7 @@ const Links = styled.div`
     line-height: 22px;
     color: ${COLORS.TEXT.CANDY_1};
     margin-bottom: 4px;
-    :last-child {
+    &:last-child {
       margin-top: -4px;
     }
   }
@@ -76,7 +76,7 @@ type SmallListicleProps = {
   tourData: any;
 };
 
-const SmallListicle: React.FC<SmallListicleProps> = ({
+const SmallListicle: React.FC<React.PropsWithChildren<SmallListicleProps>> = ({
   primary,
   items,
   tourData,

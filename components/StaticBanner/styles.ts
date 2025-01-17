@@ -585,13 +585,13 @@ export const InfoContainer = styled.div`
       transition: all 0.2s ease;
     }
 
-    :hover svg,
-    :focus svg {
+    &:hover svg,
+    &:focus svg {
       right: -1.45rem;
     }
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
       text-decoration: underline;
     }
 

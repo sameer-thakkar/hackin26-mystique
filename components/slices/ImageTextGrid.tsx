@@ -37,7 +37,7 @@ const StyledComboCard = styled.div`
     color: ${COLORS.GRAY.G3};
     ${expandFontToken('Heading/Regular')}
     margin: unset;
-    ::after {
+    &::after {
       content: unset !important;
     }
   }
@@ -74,7 +74,10 @@ const StyledComboCard = styled.div`
  *  - Will take precedence over 'Image Source' alt
  */
 
-const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
+const ImageTextGrid: React.FC<React.PropsWithChildren<ImageTextProps>> = ({
+  cards,
+  cols,
+}) => (
   // @ts-expect-error TS(2769): No overload matches this call.
   <StyledWrapper colsProps={cols}>
     {cards.map((card, index) => (

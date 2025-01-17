@@ -18,10 +18,10 @@ const StyledHeaderLinksWrapper = styled.div<{ show: boolean }>`
     cursor: pointer;
     color: ${COLORS.GRAY.G2};
     text-decoration: none;
-    :hover {
+    &:hover {
       color: ${COLORS.BRAND.PURPS};
     }
-    :last-child {
+    &:last-child {
       margin-right: 0px;
     }
   }
@@ -59,7 +59,7 @@ const StyledHeaderLinksWrapper = styled.div<{ show: boolean }>`
   }
 `;
 
-const HeaderLinks: React.FC<any> = ({
+const HeaderLinks: React.FC<React.PropsWithChildren<any>> = ({
   hiddenMobile = false,
   headerLinks,
   showGroupBooking,

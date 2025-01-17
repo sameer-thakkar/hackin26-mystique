@@ -11,11 +11,13 @@ const StyledStar = styled.div`
   }) => `width: ${starSize}; height: ${starSize};`}
 `;
 
-const Star: React.FC<{
-  fillValue: number;
-  starSize: string;
-  fillColor: string;
-}> = ({ fillValue, starSize, fillColor }) => {
+const Star: React.FC<
+  React.PropsWithChildren<{
+    fillValue: number;
+    starSize: string;
+    fillColor: string;
+  }>
+> = ({ fillValue, starSize, fillColor }) => {
   let svg = <StarFull fillColor={fillColor} />;
   if (fillValue < 0.25) {
     svg = StarEmpty;

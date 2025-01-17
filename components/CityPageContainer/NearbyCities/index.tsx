@@ -127,7 +127,7 @@ const NearbyCities = ({
           return (
             <Card height={HEIGHT} width={WIDTH} key={uid}>
               <a
-                onClick={(e) =>
+                onClick={(e: any) =>
                   handleItemClick({
                     e,
                     link: cityLink,

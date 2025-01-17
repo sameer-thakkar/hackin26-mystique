@@ -64,7 +64,7 @@ const getBookNowButtonText = ({
   return strings.CHECK_AVAIL;
 };
 
-const PricingBar: FC<PricingBarProps> = ({
+const PricingBar: FC<React.PropsWithChildren<PricingBarProps>> = ({
   listingPrice,
   lang,
   showScratchPrice,

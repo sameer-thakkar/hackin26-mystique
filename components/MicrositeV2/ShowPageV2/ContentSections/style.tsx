@@ -21,12 +21,12 @@ export const ContentWrapper = styled.div`
 
   .show-description p,
   .storyline-content p {
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
       margin-bottom: 0.75rem !important;
     }
   }
   .theatre-description p {
-    :first-of-type {
+    &:first-of-type {
       margin-bottom: 0.75rem !important;
     }
   }
@@ -54,7 +54,7 @@ export const Content = styled.div`
     margin: 0;
     width: 100%;
 
-    :first-child {
+    &:first-child {
       margin: 0;
     }
 
@@ -79,7 +79,7 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     z-index: 1;
-    :first-child {
+    &:first-child {
       margin: 0 0 1rem;
     }
 

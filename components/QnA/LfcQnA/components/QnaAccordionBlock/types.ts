@@ -6,7 +6,7 @@ import {
 export type TQnaAccordionBlock = {
   isActive: boolean;
   handleClickFn: (e: React.MouseEvent<HTMLElement>) => void;
-  question: Question[];
+  question: Question['content'];
   answers: Answer[];
   onLoadMore: () => void;
   totalAnswersCount: number;

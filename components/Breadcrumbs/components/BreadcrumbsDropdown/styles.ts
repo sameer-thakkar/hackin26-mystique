@@ -27,7 +27,7 @@ export const StyledBreadcrumbsDropdownItem = styled.a`
   color: ${COLORS.GRAY.G2};
   cursor: pointer;
 
-  :hover {
+  &:hover {
     color: ${COLORS.BRAND.PURPS};
   }
 `;

@@ -161,8 +161,7 @@ const Carousel = ({
         </StyledCarousel>
       </div>
     );
-  }
-  if (isMobile) {
+  } else {
     return (
       <>
         <OverflowScroll minWidthChild="calc(100vw - 93px)" marginBottom={0}>

@@ -47,7 +47,7 @@ export const RankContainer = styled.div<{
         width: 1rem;
         color: ${COLORS.TEXT.CANDY_1};
 
-        ::after {
+        &::after {
           content: '';
           position: absolute;
           height: 1rem;
@@ -77,7 +77,7 @@ export const RankContainer = styled.div<{
           height: 0.625rem;
           width: 0.625rem;
 
-          ::after {
+          &::after {
             height: 0.625rem;
             width: 0.625rem;
           }

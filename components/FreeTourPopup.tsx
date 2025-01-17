@@ -462,10 +462,10 @@ export default class FreeTourPopup extends Component<any, any> {
 
             <div className="popupv2-contents">
               <div
-                onClick={(e) => this.handlePopup(e, 'Close', null)}
+                onClick={(e: any) => this.handlePopup(e, 'Close', null)}
                 className="close-trigger close"
                 role="button"
-                onKeyDown={(e) => this.handlePopup(e, 'Close', null)}
+                onKeyDown={(e: any) => this.handlePopup(e, 'Close', null)}
                 tabIndex={0}
               >
                 <Image
@@ -515,12 +515,12 @@ export default class FreeTourPopup extends Component<any, any> {
 
               {
                 <div
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     this.handlePopup(e, 'CTA', productOffer.data.cta_url)
                   }
                   className="close-trigger popupv2-cta"
                   role="button"
-                  onKeyDown={(e) =>
+                  onKeyDown={(e: any) =>
                     this.handlePopup(e, 'CTA', productOffer.data.cta_url)
                   }
                   tabIndex={0}
@@ -531,10 +531,10 @@ export default class FreeTourPopup extends Component<any, any> {
             </div>
           </div>
           <div
-            onClick={(e) => this.handlePopup(e, 'OutsidePopup', null)}
+            onClick={(e: any) => this.handlePopup(e, 'OutsidePopup', null)}
             className="mask close-trigger"
             role="button"
-            onKeyDown={(e) => this.handlePopup(e, 'OutsidePopup', null)}
+            onKeyDown={(e: any) => this.handlePopup(e, 'OutsidePopup', null)}
             tabIndex={0}
           ></div>
         </div>

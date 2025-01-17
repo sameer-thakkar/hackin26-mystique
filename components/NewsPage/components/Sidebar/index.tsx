@@ -60,7 +60,7 @@ export const Ratings = (props: {
   );
 };
 
-export const Sidecard: React.FC<TShowCardProps> = ({
+export const Sidecard: React.FC<React.PropsWithChildren<TShowCardProps>> = ({
   showData,
   showPageUid,
   verticalPoster,
@@ -190,7 +190,9 @@ export const Sidecard: React.FC<TShowCardProps> = ({
   );
 };
 
-const NewsPageSidebar: React.FC<TSideBarProps> = ({ content }) => {
+const NewsPageSidebar: React.FC<React.PropsWithChildren<TSideBarProps>> = ({
+  content,
+}) => {
   const { width } = useWindowSize();
   const {
     tgidMappingData,

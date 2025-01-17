@@ -91,8 +91,8 @@ const CategorySection = (props: any) => {
   } = props;
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
-  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
-  const { allTours = [] } = toursContext || {};
+  const { allTours = [] } =
+    toursContext || ({ allTours: [] } as { allTours: Array<any> });
 
   let filteredTgids: any;
   const categoryDataObj = {};

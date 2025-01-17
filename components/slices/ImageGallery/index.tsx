@@ -75,7 +75,9 @@ const Swiper = dynamic(
  *  - Allows you to credit the owner of the image.
  */
 
-const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
+const ImageGallery: React.FC<React.PropsWithChildren<ImageGalleryProps>> = (
+  props
+) => {
   const { images, heading, $isNewsPage, isMobile } = props;
 
   const [isDesktopLightboxOpen, setDesktopLightbox] = useState(false);

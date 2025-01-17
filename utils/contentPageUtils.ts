@@ -85,7 +85,7 @@ export const getDocsForListicleSlice = async ({ slices }: TListicleData) => {
               }))
         );
       });
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e);
       sendLog({ err: e, message: `[getDocsForListicleSlice]` });
     }

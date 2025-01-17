@@ -27,7 +27,7 @@ const Clarity = ({ host }: IClarityProps) => {
         if (!isProduction()) return;
         clearTimeout(timer);
       };
-    } catch (e) {
+    } catch (e: any) {
       //
     }
   }, [host]);

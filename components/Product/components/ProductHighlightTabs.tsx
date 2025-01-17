@@ -124,7 +124,7 @@ export const HighlightTabs = ({
         hasRegularHighlights={hasRegularHighlights}
       >
         <TabsWrapper
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
           className="tabs-wrapper"
         >
           <Swiper
@@ -136,7 +136,7 @@ export const HighlightTabs = ({
               <Tab
                 className={`tab ${_currentIndex == index ? 'active' : ''}`}
                 key={index}
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   trackedTabChange(index);
                 }}

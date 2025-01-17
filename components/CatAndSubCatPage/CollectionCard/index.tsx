@@ -29,7 +29,9 @@ import { strings } from 'const/strings';
 import RightArrowPointed from 'assets/rightArrowPointed';
 import Star from 'assets/star';
 
-const CollectionCard: React.FC<CollectionCardProps> = (props) => {
+const CollectionCard: React.FC<React.PropsWithChildren<CollectionCardProps>> = (
+  props
+) => {
   const {
     id,
     cardMedia,

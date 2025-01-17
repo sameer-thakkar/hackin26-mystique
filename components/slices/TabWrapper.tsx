@@ -576,7 +576,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                   key={index}
                   // @ts-expect-error TS(2769): No overload matches this call.
                   isActive={activeTabId == tabId}
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     onTabClick({
                       tabId,
                       heading: tab.heading,
@@ -601,7 +601,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 key={tabId}
                 // @ts-expect-error TS(2769): No overload matches this call.
                 isActive={index === activeTabIndex}
-                onClick={(e) =>
+                onClick={(e: any) =>
                   onTabClick({
                     tabId,
                     heading: tab.heading,
@@ -626,7 +626,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 key={index}
                 // @ts-expect-error TS(2769): No overload matches this call.
                 isActive={activeTabId === tabId}
-                onClick={(e) =>
+                onClick={(e: any) =>
                   onTabClick({
                     tabId,
                     heading: slice.primary.title,

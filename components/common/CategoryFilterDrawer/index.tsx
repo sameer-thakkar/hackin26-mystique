@@ -83,7 +83,7 @@ const CategoryFilterDrawer = ({
                 type="checkbox"
                 value={id}
                 checked={isSelected}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   changeState(+id, e.target.checked);
                 }}
               />

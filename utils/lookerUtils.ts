@@ -140,7 +140,7 @@ export const shoulderPageTicketsCheck = async ({
 export const getPageUrl = ({ uid, lang }: PrismicDocumentWithUID) => {
   try {
     return convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
-  } catch (e) {
+  } catch (e: any) {
     return null;
   }
 };

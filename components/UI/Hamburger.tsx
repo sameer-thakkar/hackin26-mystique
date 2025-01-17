@@ -72,7 +72,7 @@ const StyledHamburger = styled.div<{
   }
 `;
 
-const Hamburger: React.FC<any> = ({
+const Hamburger: React.FC<React.PropsWithChildren<any>> = ({
   isActive = false,
   onClickFn = null,
   className = '',

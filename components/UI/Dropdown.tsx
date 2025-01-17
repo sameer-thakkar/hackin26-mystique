@@ -36,7 +36,11 @@ const StyledDropdownItem = styled.div<{ active: boolean }>`
       : ``}
 `;
 
-export const DropdownItem: React.FC<any> = ({ active, children, ...props }) => {
+export const DropdownItem: React.FC<React.PropsWithChildren<any>> = ({
+  active,
+  children,
+  ...props
+}) => {
   return (
     <StyledDropdownItem active={active} {...props}>
       {children}
@@ -44,7 +48,7 @@ export const DropdownItem: React.FC<any> = ({ active, children, ...props }) => {
     </StyledDropdownItem>
   );
 };
-const Dropdown: React.FC<any> = ({
+const Dropdown: React.FC<React.PropsWithChildren<any>> = ({
   children,
   triggerElement,
   autoClose,

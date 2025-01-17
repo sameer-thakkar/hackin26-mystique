@@ -49,7 +49,7 @@ import OutlinedInfoIcon from 'assets/outlinedInfoIcon';
 import PoweredByHeadout from 'assets/poweredByHeadout';
 import WhiteBlip from 'assets/whiteBlip';
 
-const Footer: React.FC<FooterProps> = ({
+const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
   logoURL,
   logoAlt,
   disclaimerText = '',

@@ -37,18 +37,20 @@ const Child = styled.div<{
     $unsetChildrenPadding ? '0' : '10px'};
 `;
 
-const OverflowScroll: React.FC<{
-  children: React.ReactNode[];
-  minWidthChild?: string;
-  marginBottom?: number;
-  wrapperPadding?: number;
-  wrapperMargin?: number;
-  unsetWrapperMargin?: boolean;
-  unsetChildrenMargin?: boolean;
-  unsetChildrenPadding?: boolean;
-  gap?: number;
-  trackingObject?: TTrackEvent;
-}> = ({
+const OverflowScroll: React.FC<
+  React.PropsWithChildren<{
+    children: React.ReactNode[];
+    minWidthChild?: string;
+    marginBottom?: number;
+    wrapperPadding?: number;
+    wrapperMargin?: number;
+    unsetWrapperMargin?: boolean;
+    unsetChildrenMargin?: boolean;
+    unsetChildrenPadding?: boolean;
+    gap?: number;
+    trackingObject?: TTrackEvent;
+  }>
+> = ({
   children,
   minWidthChild = null,
   marginBottom = 0,

@@ -135,7 +135,7 @@ const TopAttractions = ({
               return (
                 <Card key={id} width={WIDTH} height={HEIGHT}>
                   <a
-                    onClick={(e) =>
+                    onClick={(e: any) =>
                       handleCollectionCardTracking({
                         event: e,
                         url: attractionLink,

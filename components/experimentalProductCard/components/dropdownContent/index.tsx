@@ -104,7 +104,7 @@ interface DropdownContentProps {
   showPricingBar?: () => void;
 }
 
-const DropdownContent: FC<DropdownContentProps> = ({
+const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   finalHighlights: propHighlights,
   images,
   isBannerCard,

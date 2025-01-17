@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
       }
     }
   }
-  :not(.swiper-initialized) .swiper-wrapper {
+  &:not(.swiper-initialized) .swiper-wrapper {
     .swiper-slide {
       width: 33%;
       margin-right: 1.5rem;
@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
 
   @media (max-width: 768px) {
     margin: 2rem 0;
-    :not(.swiper-initialized) .swiper-wrapper {
+    &:not(.swiper-initialized) .swiper-wrapper {
       .swiper-slide {
         width: unset;
         margin-right: 0;

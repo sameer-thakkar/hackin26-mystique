@@ -83,11 +83,11 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
 
     return (
       <SnapSheetContainer
-        onMouseDown={(e) => {
+        onMouseDown={(e: any) => {
           togglePropgation(true);
           startDrag(e.clientX, e.clientY);
         }}
-        onTouchStart={(e) => {
+        onTouchStart={(e: any) => {
           enableProgation && e.stopPropagation();
           startDrag(e.touches[0].clientX, e.touches[0].clientY);
         }}

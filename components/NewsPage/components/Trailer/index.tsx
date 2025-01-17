@@ -3,7 +3,10 @@ import DesktopTrailer from 'components/NewsPage/components/Trailer/components/De
 import MobileTrailer from 'components/NewsPage/components/Trailer/components/MobileTrailer';
 import { TTrailerProps } from 'components/NewsPage/components/Trailer/interface';
 
-const Trailer: React.FC<TTrailerProps> = ({ content, isMobile }) => {
+const Trailer: React.FC<React.PropsWithChildren<TTrailerProps>> = ({
+  content,
+  isMobile,
+}) => {
   const { trailerSectionData, showPageDocuments, tgid, videoData } = content;
 
   return (

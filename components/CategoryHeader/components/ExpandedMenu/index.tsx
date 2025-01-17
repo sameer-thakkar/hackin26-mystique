@@ -16,7 +16,9 @@ import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import ChevronRight from 'assets/chevronRight';
 
-const ExpandedMenu: React.FC<ExpandedMenuProps> = (props) => {
+const ExpandedMenu: React.FC<React.PropsWithChildren<ExpandedMenuProps>> = (
+  props
+) => {
   const { categoryHeaderMenu, isExpanded, selectedMainMenu, mbCity, isMobile } =
     props;
   const [selectedMenu, setSelectedMenu] = useState(selectedMainMenu.label);

@@ -1,7 +1,9 @@
 import { TNewsMetaProps } from 'components/NewsPage/components/NewsMeta/interface';
 import Avatar from 'assets/avatar';
 
-const NewsMeta: React.FC<TNewsMetaProps> = ({ metaContent }) => {
+const NewsMeta: React.FC<React.PropsWithChildren<TNewsMetaProps>> = ({
+  metaContent,
+}) => {
   const { heading, authorName, formattedPublishedDateAndTime } = metaContent;
   return (
     <div className="news-meta">

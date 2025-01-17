@@ -17,7 +17,9 @@ import { EMAIL_SUBCRIPTION, NEWS_PAGE_SECTIONS } from 'const/index';
 import { strings } from 'const/strings';
 import { getTrackingObject } from '../utils';
 
-const NewsLandingPage: React.FC<TNewsPageProps> = (props) => {
+const NewsLandingPage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (
+  props
+) => {
   const { data: CMSContent, isMobile } = props;
   const {
     data,

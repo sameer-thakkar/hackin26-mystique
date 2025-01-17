@@ -337,7 +337,7 @@ const Column = styled.div`
     object-fit: cover;
     border-radius: 4px;
   }
-  :not(:first-child) .block-label {
+  &:not(:first-child) .block-label {
     visibility: hidden;
   }
   @media (max-width: 768px) {
@@ -345,7 +345,7 @@ const Column = styled.div`
       width: auto;
       height: 102px;
     }
-    :not(:first-child) .block-label {
+    &:not(:first-child) .block-label {
       visibility: initial;
     }
   }

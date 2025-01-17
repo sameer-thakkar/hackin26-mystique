@@ -76,7 +76,10 @@ const StyledProductCardRight = styled.div`
  * - CTA Link
  */
 
-const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
+const FWActionCard: React.FC<React.PropsWithChildren<FWActionCardProps>> = ({
+  title,
+  cards,
+}) => {
   return (
     <>
       <h2 id={generateSidenavId(title)}>{title}</h2>

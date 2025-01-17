@@ -74,7 +74,7 @@ to {
 }
 `;
 
-export const StyledAsideModal = styled.div`
+export const StyledAsideModal = styled.div<any>`
   position: fixed;
   top: 0;
   right: 0;
@@ -95,12 +95,7 @@ export const StyledAsideModal = styled.div`
   );
   background: ${COLORS.BRAND.WHITE};
   z-index: 100;
-  ${({
-    // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
-    sidebarType,
-    // @ts-expect-error
-    shouldSlideOut,
-  }) =>
+  ${({ sidebarType, shouldSlideOut }) =>
     sidebarType === SIDEBAR_TYPES.SIDE_NAV
       ? css`
           animation: ${fadeRight('-2.5rem', '0')} 300ms ease-in-out;
@@ -163,10 +158,7 @@ export const StyledAsideModal = styled.div`
     -webkit-overflow-scrolling: touch;
     max-width: unset;
     width: unset;
-    ${({
-      // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
-      sidebarType,
-    }) => {
+    ${({ sidebarType }) => {
       switch (sidebarType) {
         case SIDEBAR_TYPES.PRODUCT_CARD:
           return `
@@ -215,20 +207,15 @@ export const StyledAsideModal = styled.div`
     }}
   }
 `;
-const Header = styled.div`
+const Header = styled.div<any>`
   display: grid;
   grid-template-columns: auto auto;
   padding-top: 20px;
   padding-bottom: 24px;
 
-  position: ${({
-    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
-    headerType,
-  }) => (headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky')};
-  ${({
-    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
-    headerType,
-  }) =>
+  position: ${({ headerType }) =>
+    headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
+  ${({ headerType }) =>
     headerType === SIDEBAR_TYPES.PRODUCT_CARD ||
     headerType === SIDEBAR_TYPES.LISTICLE_CARD
       ? `
@@ -325,10 +312,7 @@ const Header = styled.div`
       ? COLORS.BRAND.WHITE
       : 'transparent'};
   z-index: 12;
-  ${({
-    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
-    headerType,
-  }) =>
+  ${({ headerType }) =>
     headerType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
       width: calc(100% - 32px);
@@ -373,7 +357,7 @@ const Header = styled.div`
 const StyledIcon = styled.div`
   padding-top: 0.2rem;
 `;
-const CloseIcon = styled.div`
+const CloseIcon = styled.div<any>`
   justify-self: right;
   cursor: pointer;
   z-index: 999;
@@ -410,7 +394,7 @@ const CloseIcon = styled.div`
   `};
 `;
 
-const Title = styled.div`
+const Title = styled.div<any>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -456,7 +440,7 @@ const Mask = styled.div`
     display: none;
   }
 `;
-const ModalContent = styled.div`
+const ModalContent = styled.div<any>`
   ${({
     sidebarType,
     windowHeight,
@@ -726,7 +710,6 @@ const AsideModal = ({
         <>
           <Mask onClick={() => onCloseAll(closeDelay)} />
           <StyledAsideModal
-            // @ts-expect-error TS(2769): No overload matches this call.
             windowHeight={windowHeight}
             sidebarType={type}
             width={width}
@@ -735,7 +718,6 @@ const AsideModal = ({
             className={!isOpen ? 'closing-modal' : ''}
           >
             <Header
-              // @ts-expect-error TS(2769): No overload matches this call.
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
               addBg={!!title || type === SIDEBAR_TYPES.PRODUCT_CARD_EXP}
               headerType={type}
@@ -763,7 +745,6 @@ const AsideModal = ({
                 ) : (
                   <CloseIcon
                     className={'close-icon'}
-                    /* @ts-expect-error TS(2769): No overload matches this call. */
                     onClick={
                       [
                         SIDEBAR_TYPES.SIDE_NAV,
@@ -783,7 +764,6 @@ const AsideModal = ({
               </Conditional>
             </Header>
             <ModalContent
-              /* @ts-expect-error TS(2769): No overload matches this call. */
               windowHeight={windowHeight}
               sidebarType={type}
               ref={scrollRef}

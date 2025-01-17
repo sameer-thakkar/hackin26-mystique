@@ -8,7 +8,9 @@ import { trackHeaderMenuItemClicked } from 'utils/headerUtils';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
 
-const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
+const DeepNestedMenuItem: React.FC<
+  React.PropsWithChildren<DeepNestedMenuItemProps>
+> = (props) => {
   const { categoryHeaderMenu, selectedNestedMenu, mbCity } = props;
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -48,7 +50,7 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
                           <a
                             href={url}
                             target="_blank"
-                            onClick={(e) =>
+                            onClick={(e: any) =>
                               trackHeaderMenuItemClicked({
                                 eventTarget: e.target,
                                 label: formattedLabel,

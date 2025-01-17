@@ -33,7 +33,9 @@ interface RowComponentProps {
   categoryData: any[];
   ticketPages?: any[];
 }
-const RowComponent: FunctionComponent<RowComponentProps> = ({
+const RowComponent: FunctionComponent<
+  React.PropsWithChildren<RowComponentProps>
+> = ({
   setRow,
   setSectionIndex,
   sectionIndex,

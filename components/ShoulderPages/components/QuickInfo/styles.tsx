@@ -87,8 +87,8 @@ export const Container = styled.main`
           margin-left: 0.2rem;
         }
 
-        :hover .arrow,
-        :focus .arrow {
+        &:hover .arrow,
+        &:focus .arrow {
           right: 1px;
           top: 1px;
         }

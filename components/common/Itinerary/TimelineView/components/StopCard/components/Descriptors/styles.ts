@@ -44,8 +44,8 @@ export const Container = styled.div<{
   ${DescriptorContainer} {
     position: relative;
 
-    :not(:last-child) {
-      ::after {
+    &:not(:last-child) {
+      &::after {
         content: '';
         height: 0.25rem;
         width: 0.25rem;
@@ -65,8 +65,8 @@ export const Container = styled.div<{
       gap: 0.5rem 1.25rem;
 
       ${DescriptorContainer} {
-        :not(:last-child) {
-          ::after {
+        &:not(:last-child) {
+          &::after {
             right: -0.65rem;
           }
         }

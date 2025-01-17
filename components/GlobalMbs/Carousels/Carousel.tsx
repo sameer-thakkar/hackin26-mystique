@@ -83,8 +83,7 @@ interface CarouselProps {
   breakpoints?: Record<number, any>;
 }
 
-// @ts-expect-error TS(2322): Type '({ cardsInARow, spaceBetween, entrySection, ... Remove this comment to see the full error message
-const Carousel: FunctionComponent<CarouselProps> = ({
+const Carousel: FunctionComponent<React.PropsWithChildren<CarouselProps>> = ({
   cardsInARow = 1,
   spaceBetween = 24,
   entrySection,
@@ -173,18 +172,17 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       </div>
     );
   }
-  if (isMobile) {
-    return (
-      <>
-        <Conditional if={entrySection}>
-          <EntrySection>{entrySection}</EntrySection>
-        </Conditional>
-        {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
-        <OverflowScroll minWidthChild={mobileMinWidth} marginBottom={0}>
-          {children}
-        </OverflowScroll>
-      </>
-    );
-  }
+
+  return (
+    <>
+      <Conditional if={entrySection}>
+        <EntrySection>{entrySection}</EntrySection>
+      </Conditional>
+      {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
+      <OverflowScroll minWidthChild={mobileMinWidth} marginBottom={0}>
+        {children}
+      </OverflowScroll>
+    </>
+  );
 };
 export default Carousel;

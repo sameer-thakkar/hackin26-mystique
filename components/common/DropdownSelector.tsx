@@ -27,7 +27,7 @@ const StyledSelector = styled.div`
     max-height: 320px;
     overflow-y: scroll;
     z-index: 1;
-    :after {
+    &:after {
       height: 10px;
       content: '';
       display: block;

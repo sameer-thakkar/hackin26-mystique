@@ -41,10 +41,10 @@ export const CalendarGrid = styled.div`
       display: none;
     }
     a {
-      & :last-child {
+      &:last-child {
         padding-right: 1.5rem;
       }
-      & :first-child {
+      &:first-child {
         padding-left: 1.5rem;
       }
     }

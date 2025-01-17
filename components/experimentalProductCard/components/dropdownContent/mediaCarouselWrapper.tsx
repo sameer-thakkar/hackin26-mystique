@@ -28,7 +28,9 @@ interface MediaCarouselProps {
   isOpen?: boolean;
 }
 
-const MediaCarouselWrapper: FC<MediaCarouselProps> = (props) => {
+const MediaCarouselWrapper: FC<React.PropsWithChildren<MediaCarouselProps>> = (
+  props
+) => {
   const {
     images,
     isBannerCard,

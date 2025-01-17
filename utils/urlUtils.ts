@@ -170,7 +170,7 @@ export const addQueryParams = (url: string, params: Record<string, string>) => {
     let theURL;
     try {
       theURL = new URL(url);
-    } catch (e) {
+    } catch (e: any) {
       //
     }
     if (Object.keys(params).length > 0) {

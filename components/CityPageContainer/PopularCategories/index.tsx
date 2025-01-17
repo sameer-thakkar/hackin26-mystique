@@ -143,7 +143,7 @@ const PopularCategories = ({
                 loadHigherQualityImage={true}
               />
               <a
-                onClick={(e) => e.preventDefault()}
+                onClick={(e: any) => e.preventDefault()}
                 href={entityUrl}
                 target="_blank"
               >

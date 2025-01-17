@@ -22,10 +22,9 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 
-const MobileFeaturedNews: React.FC<TMobileFeaturedNewsProps> = ({
-  featuredNewsContent,
-  newsLandingPageUrl,
-}) => {
+const MobileFeaturedNews: React.FC<
+  React.PropsWithChildren<TMobileFeaturedNewsProps>
+> = ({ featuredNewsContent, newsLandingPageUrl }) => {
   const [_, setActiveSlideIdx] = useState<number>(0);
   const [swiper, setSwiperInstance] = useState<TSwiper>();
   const { host, lang, isDev } = useContext(MBContext);

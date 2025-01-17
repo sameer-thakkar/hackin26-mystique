@@ -30,7 +30,7 @@ export const ExploreContainer = styled.div`
   .next-slide {
     top: 7.5rem;
   }
-  :not(.swiper-initialised) {
+  &:not(.swiper-initialised) {
     .entity-image-container {
       width: 11.25rem;
     }
@@ -52,7 +52,7 @@ export const ExploreContainer = styled.div`
         width: 9.75rem;
       }
     }
-    :not(.swiper-initialised) {
+    &:not(.swiper-initialised) {
       .entity-image-container {
         width: 9.75rem;
       }

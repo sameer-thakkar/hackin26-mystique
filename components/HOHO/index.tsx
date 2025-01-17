@@ -23,7 +23,7 @@ const swipeDirection = {
   backward: -1,
 };
 
-const HOHOCard: React.FC<HOHOCardProps> = (props) => {
+const HOHOCard: React.FC<React.PropsWithChildren<HOHOCardProps>> = (props) => {
   const {
     isMobile,
     variants,

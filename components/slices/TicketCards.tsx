@@ -102,7 +102,7 @@ type TicketCardsProps = {
  *
  */
 
-const TicketCards: React.FC<TicketCardsProps> = ({
+const TicketCards: React.FC<React.PropsWithChildren<TicketCardsProps>> = ({
   title,
   cards,
   twoColumns = false,

@@ -43,10 +43,9 @@ const SwiperCarousel = dynamic(
  *  - Adds the CTA Link to redirect user to some other page for a corresponding image.
  */
 
-const CarouselGallery: React.FC<CarouselGalleryProps> = ({
-  images,
-  heading,
-}) => {
+const CarouselGallery: React.FC<
+  React.PropsWithChildren<CarouselGalleryProps>
+> = ({ images, heading }) => {
   const [swiper, setSwiperInstance] = useState<Swiper | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 

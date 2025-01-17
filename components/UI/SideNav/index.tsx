@@ -27,7 +27,7 @@ import DoubleChevron from 'assets/doubleChevron';
 import ListIcon from 'assets/listIcon';
 import TickSvg from 'assets/tickSvg';
 
-const SideNavModal: React.FC<ISideNavModalProps> = ({
+const SideNavModal: React.FC<React.PropsWithChildren<ISideNavModalProps>> = ({
   items = [],
   isMobile = false,
   collectionId,

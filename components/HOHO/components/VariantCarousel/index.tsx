@@ -16,7 +16,9 @@ const SINGLE_LINE_CHAR_LIMIT = {
   MOBILE: 27,
 };
 
-const VariantCarousel: React.FC<VariantCarouselProps> = (props) => {
+const VariantCarousel: React.FC<
+  React.PropsWithChildren<VariantCarouselProps>
+> = (props) => {
   const {
     isMobile,
     swiperParams,

@@ -4,11 +4,10 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 export const StyledDeepNestedMenuContainer = styled.ul`
-
   @media (max-width: 767px) {
     margin: unset;
     padding: unset;
-    
+
     li {
       padding: 0.875rem 3rem;
       color: ${COLORS.GRAY.G2};
@@ -33,7 +32,7 @@ export const StyledDeepNestedMenuContainer = styled.ul`
           color: ${COLORS.GRAY.G4A};
         }
       }
-      
+
       &.back-to-main-menu {
         padding: 0.875rem 1.25rem;
         ${expandFontToken(FONTS.SUBHEADING_LARGE)}
@@ -50,7 +49,7 @@ export const StyledDeepNestedMenuContainer = styled.ul`
         }
       }
 
-      :last-of-type {
+      &:last-of-type {
         border-bottom: none;
       }
     }

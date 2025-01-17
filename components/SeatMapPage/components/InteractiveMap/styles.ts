@@ -159,42 +159,45 @@ export const MagicLabel = styled.div<{ isFirstScroll: boolean }>`
   align-items: center;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
-  background: white;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 
   ${({ isFirstScroll }) =>
     isFirstScroll &&
-    `animation: magic-label-bg-animation 1.4s 1; background: transparent;`}}
+    `animation: magic-label-bg-animation 1.4s 1; background: transparent;`}
 
-  &:after {
+  &::after {
     position: absolute;
-    content: "";
+    content: '';
     width: 30px;
     height: 180px;
-    background: #DFBFFF;
+    background: #dfbfff;
     z-index: 0;
-    transform: rotate(65deg);
     filter: blur(2rem);
+    transform: rotate(65deg);
     left: -50%;
     ${({ isFirstScroll }) =>
-      isFirstScroll && `animation: magic-label-animation 1.5s 1;`}}
+      isFirstScroll && `animation: magic-label-animation 1.5s 1;`}
   }
 
   @keyframes magic-label-animation {
-    from {left: 0;}
-    to {left: 150%;}
+    from {
+      left: 0;
+    }
+    to {
+      left: 150%;
+    }
   }
 
   @keyframes magic-label-bg-animation {
     from {
-      color: #6600CC; 
-      background: #F8F6FF; 
+      color: #6600cc;
+      background: #f8f6ff;
     }
     to {
-      color: #6600CC; 
-      background: #F8F6FF; 
+      color: #6600cc;
+      background: #f8f6ff;
     }
   }
 
@@ -204,7 +207,7 @@ export const MagicLabel = styled.div<{ isFirstScroll: boolean }>`
     padding: 0;
     z-index: 1;
     ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
-    color: ${COLORS.GRAY.G2}
+    color: ${COLORS.GRAY.G2};
     white-space: nowrap;
   }
 

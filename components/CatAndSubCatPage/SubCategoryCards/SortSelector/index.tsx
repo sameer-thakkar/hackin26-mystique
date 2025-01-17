@@ -24,7 +24,9 @@ import { strings } from 'const/strings';
 import ChevronDown from 'assets/chevronDown';
 import ReversibleArrow from 'assets/reversibleArrow';
 
-const SortSelector: React.FC<SortSelectorProps> = (props) => {
+const SortSelector: React.FC<React.PropsWithChildren<SortSelectorProps>> = (
+  props
+) => {
   const { sortingOrder, setSortingOrder, isMobile } = props;
   const sortingOptions: Array<{
     label: string;

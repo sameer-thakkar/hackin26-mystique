@@ -30,9 +30,9 @@ const OverflowScroll = dynamic(
   () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
-const CityCategoriesCarousel: React.FC<CityCategoriesCarouselProps> = (
-  props
-) => {
+const CityCategoriesCarousel: React.FC<
+  React.PropsWithChildren<CityCategoriesCarouselProps>
+> = (props) => {
   const { cityCategoriesCarousel, isMobile } = props;
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [, setActiveIndex] = useState(0);

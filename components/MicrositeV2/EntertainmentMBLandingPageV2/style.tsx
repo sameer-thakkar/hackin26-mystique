@@ -48,20 +48,20 @@ export const ReviewSectionWrapper = styled.div`
   }
 
   svg {
-    :hover {
+    &:hover {
       fill: none;
     }
     circle {
       stroke: #79797980;
     }
-    :not(.disabled) {
-      :hover {
+    &:not(.disabled) {
+      &:hover {
         circle {
           stroke: #797979a6;
         }
       }
 
-      :active {
+      &:active {
         circle {
           stroke: #797979d9;
         }
@@ -78,7 +78,7 @@ export const ReviewSectionWrapper = styled.div`
 
     .chevron-left,
     .chevron-right {
-      :active {
+      &:active {
         transform: scale(0.98);
       }
     }

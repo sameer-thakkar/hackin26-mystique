@@ -18,8 +18,8 @@ export const TimePickerWrapper = styled.div`
   overflow: hidden;
   height: 9.375rem;
 
-  ::before,
-  ::after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -33,12 +33,12 @@ export const TimePickerWrapper = styled.div`
     pointer-events: none;
   }
 
-  ::before {
+  &::before {
     top: 0;
     background: linear-gradient(0deg, rgba(248, 248, 248, 0) 0%, #f8f8f8 100%);
   }
 
-  ::after {
+  &::after {
     bottom: 0;
     background: linear-gradient(
       180deg,

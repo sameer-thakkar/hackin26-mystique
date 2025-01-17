@@ -176,13 +176,13 @@ const NestedMenu = styled.ul<{ preventVerticalOverflow: boolean }>`
     left: unset;
     right: 100%;
   }
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 0;
   }
-  ::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     border-radius: 8;
   }
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background: ${COLORS.GRAY.G6};
     border-radius: 5px;
     height: 106px;

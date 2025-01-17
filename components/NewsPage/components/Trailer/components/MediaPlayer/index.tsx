@@ -43,7 +43,7 @@ const Swiper = dynamic(
   () => import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')
 );
 
-const MediaPlayer: React.FC<TMediaPlayerProps> = ({
+const MediaPlayer: React.FC<React.PropsWithChildren<TMediaPlayerProps>> = ({
   trailerData,
   showPageDocuments,
   videoData,

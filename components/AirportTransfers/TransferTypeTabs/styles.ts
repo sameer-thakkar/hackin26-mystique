@@ -24,7 +24,7 @@ export const StyledTabsContainer = styled.div<{
 
   position: relative;
 
-  ::before {
+  &::before {
     content: '';
     height: 0.125rem;
     background-color: ${COLORS.TEXT.PURPS_3};
@@ -40,7 +40,7 @@ export const StyledTabsContainer = styled.div<{
   @media (max-width: 768px) {
     justify-content: center;
 
-    ::before {
+    &::before {
       left: ${({ $activeTab }) =>
         $activeTab === 'first' ? 0 : 'calc(50% + .75rem)'};
       width: ${({ $activeTab }) => ($activeTab ? 'calc(50% - .75rem)' : '0')};
@@ -57,7 +57,7 @@ export const Tab = styled.div<{
 
   cursor: pointer;
 
-  :first-of-type {
+  &:first-of-type {
     margin-right: 3rem;
   }
 
@@ -68,7 +68,7 @@ export const Tab = styled.div<{
 
     padding-bottom: 0.62rem;
 
-    :first-of-type {
+    &:first-of-type {
       margin-right: 1.5rem;
     }
   }

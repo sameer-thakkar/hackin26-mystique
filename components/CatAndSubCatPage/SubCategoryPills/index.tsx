@@ -40,7 +40,9 @@ const OverflowScroll = dynamic(
   () => import(/* webpackChunkName: "OverflowScroll" */ 'UI/OverflowScroll')
 );
 
-const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
+const SubCategoryPills: React.FC<
+  React.PropsWithChildren<SubCategoryPillsProps>
+> = (props) => {
   const { subCategoryPills, subCategoryData, isSubCategoryPage, isMobile } =
     props;
   const { id: subCategoryId } = subCategoryData || {};
@@ -176,7 +178,7 @@ const SubCategoryPills: React.FC<SubCategoryPillsProps> = (props) => {
         target="_blank"
         rel="noopener"
         key={id}
-        onClick={(e) =>
+        onClick={(e: any) =>
           handlePillClick({
             event: e,
             id: id,

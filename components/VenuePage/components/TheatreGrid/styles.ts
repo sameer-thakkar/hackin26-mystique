@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    :last-child {
+    &:last-child {
       margin-bottom: 0;
     }
     img,

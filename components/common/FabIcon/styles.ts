@@ -30,7 +30,7 @@ export const FabWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    :hover {
+    &:hover {
       min-width: fit-content;
       padding-right: 1.2rem;
       border-radius: 2.5rem;

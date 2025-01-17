@@ -58,11 +58,9 @@ const PARAGRAPH_LENGTH = {
   3: 70,
 } as const;
 
-const DesktopMoreReads: React.FC<TDesktopMoreReadsProps> = ({
-  content,
-  handleCtaClick,
-  trackingObject,
-}) => {
+const DesktopMoreReads: React.FC<
+  React.PropsWithChildren<TDesktopMoreReadsProps>
+> = ({ content, handleCtaClick, trackingObject }) => {
   const {
     uniqueArticlesWithSameTgidData,
     featuredArticles,

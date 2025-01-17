@@ -56,7 +56,7 @@ export const localisedRelativeTimeFormat = ({
     return formatToParts
       ? rtf.formatToParts(value, unit) || []
       : rtf.format(value, unit);
-  } catch (e) {
+  } catch (e: any) {
     return '';
   }
 };

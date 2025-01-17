@@ -95,7 +95,9 @@ const getAttractionsAndRouteInfo = (desc: string | null, lang: string) => {
   }
 };
 
-const VariantCard: React.FC<VariantCardProps> = (props) => {
+const VariantCard: React.FC<React.PropsWithChildren<VariantCardProps>> = (
+  props
+) => {
   const {
     variantName,
     variantListingPrice,

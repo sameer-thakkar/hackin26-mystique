@@ -7,7 +7,9 @@ import TheatreGrid from '../components/TheatreGrid';
 import { TVenueLandingPage } from './interface';
 import { PageWrapper } from './styles';
 
-const VenueLandingPage: React.FC<TVenueLandingPage> = ({
+const VenueLandingPage: React.FC<
+  React.PropsWithChildren<TVenueLandingPage>
+> = ({
   isMobile,
   heading,
   breadcrumbs,

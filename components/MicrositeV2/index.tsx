@@ -18,19 +18,19 @@ import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
 import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 
-const HomePage: ComponentType<any> = dynamic(() =>
+const HomePage: ComponentType<React.PropsWithChildren<any>> = dynamic(() =>
   import(/* webpackChunkName: "HomePage" */ './views/HomePage').then(
     (mod) => mod.HomePage
   )
 );
-const SearchPage: ComponentType<any> = dynamic(
+const SearchPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import(/* webpackChunkName: "SearchPage" */ './views/SearchPage').then(
       (mod) => mod.SearchPage
     ),
   { ssr: false }
 );
-const MobileProductPage: ComponentType<any> = dynamic(
+const MobileProductPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
     import(
       /* webpackChunkName: "MobileProductPage" */ './views/ProductPage'

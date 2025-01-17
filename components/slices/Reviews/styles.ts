@@ -4,7 +4,7 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const StyledReviews = styled.div`
+export const StyledReviews = styled.div<any>`
   width: 100%;
   position: relative;
   .next-slide {
@@ -61,7 +61,7 @@ export const Title = styled.h2<{ showNewDesign?: boolean }>`
   display: block !important;
   text-align: left;
   padding: ${({ showNewDesign }) => (showNewDesign ? '0' : '0 0 2rem')};
-  ::after {
+  &::after {
     content: unset !important;
   }
   @media (max-width: 768px) {

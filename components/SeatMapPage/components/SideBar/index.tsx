@@ -214,7 +214,7 @@ const SideBar = (props: TSideBarProps) => {
       isCalendar,
       isMinPrice,
       totalAvailableTours,
-    }) => {
+    }: any) => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIENCE_DATE_SELECTED,
         [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: selectedTourDate,
@@ -311,7 +311,7 @@ const SideBar = (props: TSideBarProps) => {
   ]);
 
   const addCalendarToggleDataEvents = useCallback(
-    (showCalendar) => {
+    (showCalendar: any) => {
       if (showCalendar) {
         trackEvent({
           eventName: ANALYTICS_EVENTS.CALENDAR_OPEN,
@@ -330,7 +330,7 @@ const SideBar = (props: TSideBarProps) => {
   );
 
   const handleSelectTourDate = useCallback(
-    ({ isDisabled, tourDate, isMinPrice }) => {
+    ({ isDisabled, tourDate, isMinPrice }: any) => {
       if (isDisabled) {
         return;
       }

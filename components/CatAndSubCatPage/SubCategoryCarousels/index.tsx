@@ -2,7 +2,9 @@ import React from 'react';
 import { SubCategoryCarouselsProps } from 'components/CatAndSubCatPage/SubCategoryCarousels/interface';
 import SubCategoryCarousel from 'components/CatAndSubCatPage/SubCategoryCarousels/SubCategoryCarousel';
 
-const SubCategoryCarousels: React.FC<SubCategoryCarouselsProps> = (props) => {
+const SubCategoryCarousels: React.FC<
+  React.PropsWithChildren<SubCategoryCarouselsProps>
+> = (props) => {
   const { subCategoryCarousels, isMobile } = props;
 
   return (

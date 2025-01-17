@@ -40,7 +40,9 @@ const StyledChevron = styled.div`
   }
 `;
 
-const Breadcrumb: React.FC<IBreadcrumb> = ({ links }) => {
+const Breadcrumb: React.FC<React.PropsWithChildren<IBreadcrumb>> = ({
+  links,
+}) => {
   const itemListElements = links?.map((link, index: number) => {
     const { url: item, text: name } = link;
     const position = index + 1;

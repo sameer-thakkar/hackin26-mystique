@@ -18,7 +18,9 @@ import { getCatAndSubcatPageLabel } from 'utils/helper';
 import { PRICING, SECTIONS, SORTING_ORDER } from 'const/catAndSubcatPage';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
-const SubCategoryCards: React.FC<SubCategoryCardsProps> = (props) => {
+const SubCategoryCards: React.FC<
+  React.PropsWithChildren<SubCategoryCardsProps>
+> = (props) => {
   const {
     subCategoryCards,
     subCategoryCardsRanking,

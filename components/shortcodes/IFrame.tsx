@@ -59,7 +59,7 @@ const StyledContainer = styled.div`
  *
  */
 
-const IFrame: React.FC<IFrameProps> = ({
+const IFrame: React.FC<React.PropsWithChildren<IFrameProps>> = ({
   name,
   src,
   frameborder = 0,

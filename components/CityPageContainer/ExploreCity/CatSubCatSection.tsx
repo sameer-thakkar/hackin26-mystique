@@ -164,7 +164,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
         <h3 className="entity-header">{heading}</h3>
         <Conditional if={ctaUid}>
           <a
-            onClick={(e) =>
+            onClick={(e: any) =>
               trackCTA({
                 event: e,
                 url: ctaUrl,
@@ -214,7 +214,7 @@ const CatSubCatSection = (props: ICatSubCatSectionProps) => {
           return (
             <div className="entity-image-container" key={uid}>
               <a
-                onClick={(e) =>
+                onClick={(e: any) =>
                   handleCardClick({
                     event: e,
                     url: entityUrl,

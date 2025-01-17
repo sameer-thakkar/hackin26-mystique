@@ -2834,7 +2834,7 @@ export const HighlightsPanel = styled.div<{
   ${({ $isOverlay, $showPopup, $isV3Design }) =>
     $isOverlay &&
     css`
-      ::after {
+      &::after {
         content: '';
         position: absolute;
         width: 100%;
@@ -3265,7 +3265,7 @@ export const newVerticalStyles = css`
     box-shadow: 0px 2px 8px 0px #0000001a;
     border-radius: 16px;
     transition: transform ease-in-out 300ms;
-    :active:not(:focus-within) {
+    &:active:not(:focus-within) {
       transform: scale(0.98);
     }
 
@@ -3344,7 +3344,7 @@ export const cruiseStyles = css`
     }
   }
   @media (max-width: 768px) {
-    :active:not(:focus-within) {
+    &:active:not(:focus-within) {
       transform: unset;
     }
     grid-template-areas:

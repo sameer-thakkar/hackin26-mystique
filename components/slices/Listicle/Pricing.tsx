@@ -34,7 +34,7 @@ type PricingProps = {
   currentLanguage?: string;
 };
 
-const Pricing: React.FC<PricingProps> = ({
+const Pricing: React.FC<React.PropsWithChildren<PricingProps>> = ({
   floatRight = false,
   listingPrice,
 }) => {

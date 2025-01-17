@@ -1,7 +1,7 @@
 import CheckIcon from 'assets/check';
 
 const Check = () => {
-  return <>{CheckIcon}</>;
+  return <CheckIcon />;
 };
 
 export default Check;

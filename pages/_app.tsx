@@ -240,7 +240,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
         const { displayName } = primaryCollection ?? {};
         primaryCollectionName = displayName;
       }
-    } catch (e) {
+    } catch (e: any) {
       captureException(e, {
         tags: {
           [SENTRY_TAGS.EXCEPTION_TYPE]: 'Init Recoil Product Missing',

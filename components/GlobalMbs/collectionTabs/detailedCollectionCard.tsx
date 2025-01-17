@@ -246,182 +246,176 @@ interface DetailedCollectionCardProps {
 const DetailedCollectionCard = forwardRef<
   HTMLDivElement,
   DetailedCollectionCardProps
->(
-  // @ts-expect-error TS(2345): Argument of type '({ data, isMobile, clickHandler,... Remove this comment to see the full error message
-  ({ data, isMobile, clickHandler, price, currency, ticketURL }, ref) => {
-    const {
-      data: {
-        microbrand_url: microbrand,
-        images,
-        descriptors,
-        supply,
-        collection_name: name,
-        headout_collection_id: collectionId,
-        headout_category_id: categoryId,
-        collection_overview: overview,
-        location,
-        suggested_duration: duration,
-        timings,
-      },
-    } = data || {};
-    const { isDev, host, lang } = useContext(MBContext);
-    const currencyList = useRecoilValue(currencyListAtom);
+>(({ data, isMobile, clickHandler, price, currency, ticketURL }, ref) => {
+  const {
+    data: {
+      microbrand_url: microbrand,
+      images,
+      descriptors,
+      supply,
+      collection_name: name,
+      headout_collection_id: collectionId,
+      headout_category_id: categoryId,
+      collection_overview: overview,
+      location,
+      suggested_duration: duration,
+      timings,
+    },
+  } = data || {};
+  const { isDev, host, lang } = useContext(MBContext);
+  const currencyList = useRecoilValue(currencyListAtom);
 
-    const localisedPrice =
-      price && currency
-        ? getLocalisedPrice({
-            price: Number(price),
-            currencyCode: currency,
-            lang,
-            currencyList,
-          })
-        : null;
+  const localisedPrice =
+    price && currency
+      ? getLocalisedPrice({
+          price: Number(price),
+          currencyCode: currency,
+          lang,
+          currencyList,
+        })
+      : null;
 
-    const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
-    const descriptorMarkup = descriptors?.map(
-      (descriptor: any, index: number) => (
-        <div className="descriptor" key={index}>
-          {descriptor?.tag}
+  const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
+  const descriptorMarkup = descriptors?.map(
+    (descriptor: any, index: number) => (
+      <div className="descriptor" key={index}>
+        {descriptor?.tag}
+      </div>
+    )
+  );
+
+  const ticketLink = ticketURL
+    ? convertUidToUrl({ uid: ticketURL })
+    : undefined;
+  const hasTicketsPage =
+    (collectionId || categoryId) && supply === 'Direct' && ticketLink;
+
+  const TicketsMarkup = (
+    <TicketsWrapper>
+      <Conditional if={price}>
+        <div className="price-wrapper">
+          <div className="text">Tickets start from</div>
+          <div className="price">{localisedPrice}</div>
         </div>
-      )
-    );
+      </Conditional>
 
-    const ticketLink = ticketURL
-      ? convertUidToUrl({ uid: ticketURL })
-      : undefined;
-    const hasTicketsPage =
-      (collectionId || categoryId) && supply === 'Direct' && ticketLink;
-
-    const TicketsMarkup = (
-      <TicketsWrapper>
-        <Conditional if={price}>
-          <div className="price-wrapper">
-            <div className="text">Tickets start from</div>
-            <div className="price">{localisedPrice}</div>
-          </div>
-        </Conditional>
-
-        <div className="cta-wrapper">
-          <Conditional if={hasTicketsPage}>
-            <a href={ticketLink} className="cta primary">
-              {strings.BANNER_CTA}
-            </a>
-          </Conditional>
-          <a
-            href={
-              data.uid
-                ? convertUidToUrl({ uid: data.uid, isDev, hostname: host })
-                : microbrand
-                ? getValidUrl(microbrand?.trim())
-                : ''
-            }
-            className="cta secondary"
-          >
-            More Details
+      <div className="cta-wrapper">
+        <Conditional if={hasTicketsPage}>
+          <a href={ticketLink} className="cta primary">
+            {strings.BANNER_CTA}
           </a>
-        </div>
-      </TicketsWrapper>
-    );
-
-    const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
-    const cardMarkup = (
-      <Wrapper isMobile={isMobile} id="collection-card-details" ref={ref}>
-        <Conditional if={isMobile}>
-          <div className="image-wrapper">
-            <Image
-              url={imageUrl}
-              aspectRatio={globalMbAR}
-              autoCrop={false}
-              width={800}
-              height={400}
-              alt={name}
-            />
-          </div>
         </Conditional>
-        <div className="content-wrapper">
-          <div className="title-wrapper">
-            <div className="title">{name}</div>
-            <Conditional if={descriptors?.length}>
-              <DescriptorWrapper>{descriptorMarkup}</DescriptorWrapper>
-            </Conditional>
-          </div>
-          <Conditional if={overview}>
-            <div className="description">
-              {overview ? asText(overview) : ''}
-            </div>
+        <a
+          href={
+            data.uid
+              ? convertUidToUrl({ uid: data.uid, isDev, hostname: host })
+              : microbrand
+              ? getValidUrl(microbrand?.trim())
+              : ''
+          }
+          className="cta secondary"
+        >
+          More Details
+        </a>
+      </div>
+    </TicketsWrapper>
+  );
+
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
+  const cardMarkup = (
+    <Wrapper isMobile={isMobile} id="collection-card-details" ref={ref}>
+      <Conditional if={isMobile}>
+        <div className="image-wrapper">
+          <Image
+            url={imageUrl}
+            aspectRatio={globalMbAR}
+            autoCrop={false}
+            width={800}
+            height={400}
+            alt={name}
+          />
+        </div>
+      </Conditional>
+      <div className="content-wrapper">
+        <div className="title-wrapper">
+          <div className="title">{name}</div>
+          <Conditional if={descriptors?.length}>
+            <DescriptorWrapper>{descriptorMarkup}</DescriptorWrapper>
           </Conditional>
-          <div className="info">
-            <div className="column">
-              <Conditional if={location}>
-                <div>
-                  <strong>Address: </strong>
-                  {location ? asText(location) : ''}
-                </div>
-              </Conditional>
-              <Conditional if={duration}>
-                <div>
-                  <strong>Duration: </strong>
-                  {duration}
-                </div>
-              </Conditional>
-            </div>
-            <div className="column">
-              <Conditional if={timings}>
-                <div>
-                  <strong>Timings: </strong>
-                </div>
-                <div>
-                  <PrismicRichText
-                    field={timings}
-                    components={shortCodeSerializer}
-                  />
-                </div>
-              </Conditional>
-            </div>
-          </div>
-          {!isMobile && TicketsMarkup}
         </div>
-        <Conditional if={!isMobile}>
-          <div className="image-wrapper">
-            <Image
-              url={imageUrl}
-              aspectRatio={globalMbAR}
-              autoCrop={false}
-              width={800}
-              height={400}
-              alt={name}
-            />
-            <Conditional if={!isMobile}>
-              <CloseButton
-                onClick={(e) => {
-                  clickHandler && clickHandler(e);
-                }}
-              >
-                {CloseWhite}
-              </CloseButton>
+        <Conditional if={overview}>
+          <div className="description">{overview ? asText(overview) : ''}</div>
+        </Conditional>
+        <div className="info">
+          <div className="column">
+            <Conditional if={location}>
+              <div>
+                <strong>Address: </strong>
+                {location ? asText(location) : ''}
+              </div>
+            </Conditional>
+            <Conditional if={duration}>
+              <div>
+                <strong>Duration: </strong>
+                {duration}
+              </div>
             </Conditional>
           </div>
-        </Conditional>
-      </Wrapper>
-    );
-
-    if (!isMobile) {
-      return <>{cardMarkup}</>;
-    }
-    if (isMobile) {
-      return (
-        <Modal>
-          <div className="modal-body">
-            <div className="modal-container">
-              {cardMarkup}
-              {TicketsMarkup}
-            </div>
+          <div className="column">
+            <Conditional if={timings}>
+              <div>
+                <strong>Timings: </strong>
+              </div>
+              <div>
+                <PrismicRichText
+                  field={timings}
+                  components={shortCodeSerializer}
+                />
+              </div>
+            </Conditional>
           </div>
-        </Modal>
-      );
-    }
+        </div>
+        {!isMobile && TicketsMarkup}
+      </div>
+      <Conditional if={!isMobile}>
+        <div className="image-wrapper">
+          <Image
+            url={imageUrl}
+            aspectRatio={globalMbAR}
+            autoCrop={false}
+            width={800}
+            height={400}
+            alt={name}
+          />
+          <Conditional if={!isMobile}>
+            <CloseButton
+              onClick={(e: any) => {
+                clickHandler && clickHandler(e);
+              }}
+            >
+              {CloseWhite}
+            </CloseButton>
+          </Conditional>
+        </div>
+      </Conditional>
+    </Wrapper>
+  );
+
+  if (!isMobile) {
+    return <>{cardMarkup}</>;
   }
-);
+
+  return (
+    <Modal>
+      <div className="modal-body">
+        <div className="modal-container">
+          {cardMarkup}
+          {TicketsMarkup}
+        </div>
+      </div>
+    </Modal>
+  );
+});
 
 DetailedCollectionCard.displayName = 'DetailedCollectionCard';
 

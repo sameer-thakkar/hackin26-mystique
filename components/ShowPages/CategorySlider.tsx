@@ -54,7 +54,7 @@ const CardCarouselContainer = styled.div`
     border-radius: 50%;
     width: 10px;
     height: 20px;
-    :after {
+    &:after {
       font-size: 12px;
     }
   }
@@ -67,7 +67,7 @@ const CardCarouselContainer = styled.div`
     border-radius: 50%;
     width: 10px;
     height: 20px;
-    :after {
+    &:after {
       font-size: 12px;
     }
   }

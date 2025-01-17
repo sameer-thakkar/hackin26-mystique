@@ -78,7 +78,7 @@ const SubscriptionForm = ({
               className="email-input"
               type="email"
               value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              onChange={(e: any) => setUserEmail(e.target.value)}
               placeholder={EMAIL_FIELD_PLACEHOLDER}
             />
             <Conditional if={isErr}>

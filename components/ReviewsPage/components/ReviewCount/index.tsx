@@ -22,10 +22,9 @@ import {
   Wrapper,
 } from './styles';
 
-export const RatingStars: React.FC<TRatingStarsProps> = ({
-  averageRating,
-  isComponentVisible = true,
-}) => {
+export const RatingStars: React.FC<
+  React.PropsWithChildren<TRatingStarsProps>
+> = ({ averageRating, isComponentVisible = true }) => {
   const totalRatingsArray = [1, 2, 3, 4, 5];
 
   return (
@@ -48,7 +47,7 @@ export const RatingStars: React.FC<TRatingStarsProps> = ({
   );
 };
 
-const RatingSplit: React.FC<TRatingSplitProps> = ({
+const RatingSplit: React.FC<React.PropsWithChildren<TRatingSplitProps>> = ({
   ratingsSplit,
   ratingsCount,
 }) => {
@@ -83,7 +82,7 @@ const RatingSplit: React.FC<TRatingSplitProps> = ({
   );
 };
 
-const ReviewCount: React.FC<TReviewCountProps> = ({
+const ReviewCount: React.FC<React.PropsWithChildren<TReviewCountProps>> = ({
   averageRating,
   ratingsCount,
   reviewsCount,

@@ -168,7 +168,7 @@ export const SlideDescription = styled.div<{
         ${expandFontToken(FONTS.DISPLAY_REGULAR)};
         margin-bottom: 0.75rem;
 
-        ::after {
+        &::after {
           content: "";
           display: flex;
           height: 1px;
@@ -195,11 +195,11 @@ export const SlideDescription = styled.div<{
       border-radius: 0.5rem;
 
       & {
-        :hover {
+        &:hover {
           background-color: ${COLORS.BRAND.WHITE}E6;
         }
 
-        :active {
+        &:active {
           transform: scale(0.97);
         }
       }
@@ -242,10 +242,10 @@ export const SwiperControls = styled.div<{ $showControls?: boolean }>`
             }
 
             & {
-              :hover {
+              &:hover {
                 background: ${COLORS.BRAND.WHITE}66;
               }
-              :active {
+              &:active {
                 transform: scale(0.97);
               }
             }

@@ -26,7 +26,9 @@ import Duration from 'assets/duration';
 import Frequency from 'assets/frequency';
 import Timings from 'assets/timings';
 
-const StructuredCard: React.FC<StructuredCardProps> = (props) => {
+const StructuredCard: React.FC<React.PropsWithChildren<StructuredCardProps>> = (
+  props
+) => {
   const {
     introText,
     outroText,

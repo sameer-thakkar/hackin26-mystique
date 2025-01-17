@@ -56,7 +56,7 @@ export const StyledPopOverWrapper = styled.div<{ $isOpen?: boolean }>`
   flex-shrink: 0;
   z-index: 11;
 
-  :after {
+  &:after {
     height: 10px;
     content: '';
     display: block;

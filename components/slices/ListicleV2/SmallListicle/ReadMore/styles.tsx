@@ -8,7 +8,7 @@ export const ReadMoreWrapper = styled.div`
   ${expandFontToken(FONTS.UI_LABEL_SMALL)};
   margin: 0 0 0.625rem 0.625rem;
 
-  :hover {
+  &:hover {
     cursor: pointer;
   }
 `;

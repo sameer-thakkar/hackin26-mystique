@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { SWIPESHEET_STATES } from 'const/productCard';
 
 interface ProductContextType {
@@ -30,10 +36,14 @@ const productCardContext = createContext({} as ProductContextType);
 
 export const useProductCard = () => useContext(productCardContext);
 
-export const ProductCardProvider: React.FC<{
-  drawerDefault?: string;
-  onDrawerStateChanged?: (state: string) => void;
-}> = ({
+export const ProductCardProvider: React.FC<
+  React.PropsWithChildren<
+    PropsWithChildren<{
+      drawerDefault?: string;
+      onDrawerStateChanged?: (state: string) => void;
+    }>
+  >
+> = ({
   children,
   drawerDefault = SWIPESHEET_STATES.HIDDEN,
   onDrawerStateChanged,

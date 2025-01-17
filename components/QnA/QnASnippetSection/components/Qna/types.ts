@@ -1,7 +1,7 @@
 export type TAccordionBlock = {
   isActive: boolean;
   handleClickFn: (e: any) => void;
-  question: Record<string, any>;
+  question: string;
   answers: Record<string, any>;
   onLoadMore: () => void;
   onHideMore: () => void;

@@ -14,7 +14,9 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { EXPERIENCES, LANGUAGE_MAP, MB_TYPES } from 'const/index';
 import { sliceComponents } from '../sliceManager';
 
-const ListicleSectionV2: React.FC<IListicleSectionProps> = ({
+const ListicleSectionV2: React.FC<
+  React.PropsWithChildren<IListicleSectionProps>
+> = ({
   type,
   settings,
   title,

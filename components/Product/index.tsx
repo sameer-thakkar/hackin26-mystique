@@ -510,14 +510,14 @@ const Product = (props: any) => {
 
     element.addEventListener(
       'click',
-      (e) => trackDeadClick(e, extraProps),
+      (e: any) => trackDeadClick(e, extraProps),
       false
     );
 
     return () =>
       element?.removeEventListener(
         'click',
-        (e) => trackDeadClick(e, extraProps),
+        (e: any) => trackDeadClick(e, extraProps),
         false
       );
   }, [productRef]);
@@ -2078,7 +2078,7 @@ const Product = (props: any) => {
                   !isModifiedProductCard &&
                   !isPopup &&
                   showPopup
-                    ? (e) => {
+                    ? (e: any) => {
                         e.stopPropagation();
                         if (showPopup) {
                           setIsUnScrolled(true);
@@ -2258,7 +2258,7 @@ const Product = (props: any) => {
       defaultOpen={defaultOpen}
     >
       <PopupContainer
-        onScroll={(e) => {
+        onScroll={(e: any) => {
           if (!e.currentTarget) return;
           trackPopupScroll(e.currentTarget.scrollTop);
         }}

@@ -45,7 +45,7 @@ const CardGrid = styled.div(({ cardsInARow }) => {
 
 const CardCarousel = styled.div`
   position: relative;
-  :not(.swiper-initialized) .swiper-wrapper {
+  &:not(.swiper-initialized) .swiper-wrapper {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
@@ -120,7 +120,7 @@ const Controls = styled.div`
   }
 `;
 
-const ExitDescription = styled.div`
+const ExitDescription = styled.div<{ isGlobalMb: any; cardsInARow: any }>`
   margin-top: 32px;
   display: flex;
 
@@ -180,7 +180,7 @@ type CardSectionProps = {
  * After this, keep adding intermediate <a href="https://headout.github.io/mystique/?path=/docs/slices-card--with-link-cta">Card slices</a> and then close the Section with a 'Card Section End' slice.
  */
 
-const CardSection: React.FC<CardSectionProps> = ({
+const CardSection: React.FC<React.PropsWithChildren<CardSectionProps>> = ({
   childSlices: slices,
   cardsInARow,
   sectionType,

@@ -306,7 +306,7 @@ function PopOver(props: IPopover) {
                 }
               >
                 <StyledHeaderItem
-                  onClick={(event) => {
+                  onClick={(event: any) => {
                     onChangeTab(event, index);
                   }}
                   $isActive={activeTabIndex === index}
