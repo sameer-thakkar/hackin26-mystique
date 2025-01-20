@@ -405,3 +405,34 @@ export const getNMonthsFromNow = (n: number) => {
     return dayjs().add(i, 'month');
   });
 };
+
+export function convertDateToIsoDate(date: string) {
+  // Try parsing with common formats
+  const formats = [
+    'MM/DD/YYYY',
+    'DD/MM/YYYY',
+    'YYYY/MM/DD',
+    'MM-DD-YYYY',
+    'DD-MM-YYYY',
+    'YYYY-MM-DD',
+    'DD.MM.YYYY',
+    'MM.DD.YYYY',
+    'YYYY.MM.DD',
+  ];
+
+  // Try each format until one works
+  for (const format of formats) {
+    const parsed = dayjs(date, format, true);
+    if (parsed.isValid()) {
+      return parsed.format('YYYY-MM-DD');
+    }
+  }
+
+  // If no format matches, try letting Day.js auto-parse
+  const parsed = dayjs(date);
+  if (parsed.isValid()) {
+    return parsed.format('YYYY-MM-DD');
+  }
+
+  return INVALID_DATE;
+}

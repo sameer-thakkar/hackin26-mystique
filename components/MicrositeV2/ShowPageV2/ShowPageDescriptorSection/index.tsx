@@ -10,10 +10,12 @@ import {
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { convertDateToIsoDate } from 'utils/dateUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  INVALID_DATE,
   PERMANENT_SHOWS_TGIDS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -87,6 +89,7 @@ const ShowPageDescriptorSection = ({
         {Object.keys(descriptors).map((key) => {
           const { content, icon: Icon, label } = descriptors[key];
           if (!content) return null;
+
           return (
             <div className="descriptor" key={key}>
               <div className="icon">
@@ -104,11 +107,12 @@ const ShowPageDescriptorSection = ({
                   })}
                 >
                   <span>
-                    {key === 'dates'
+                    {key === 'dates' &&
+                    convertDateToIsoDate(content) !== INVALID_DATE
                       ? strings.formatString(
                           strings.SHOW_PAGE_V2.UNTIL_DATE,
                           getIntlDate({
-                            date: content,
+                            date: convertDateToIsoDate(content),
                             lang,
                             options: {
                               dateStyle: 'long',
