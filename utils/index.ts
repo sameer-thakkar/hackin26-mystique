@@ -264,7 +264,6 @@ export const createBookingURL = ({
   ctaSuffix = '',
   flowType = undefined,
   showFullScreenPax = false,
-  showCustomCheckoutCTA,
   isHOHORevamp,
   cancellationInsuranceVariant,
 }: TCreateBookingUrl) => {
@@ -350,11 +349,6 @@ export const createBookingURL = ({
   if (showFullScreenPax)
     urlObject.searchParams.set('showFullScreenPax', 'true');
 
-  if (showCustomCheckoutCTA !== undefined)
-    urlObject.searchParams.set(
-      'showCustomCheckoutCTA',
-      `${showCustomCheckoutCTA}`
-    );
   if (isHOHORevamp !== undefined) {
     urlObject.searchParams.set(
       'showHOHORevamp',

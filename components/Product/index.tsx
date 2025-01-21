@@ -276,8 +276,6 @@ const Product = (props: any) => {
     verticalProductCard = false,
     horizontalProductCard = false,
     showVideoOnProductCard = false,
-    showCustomProductCardCTA = false,
-    shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
     shouldRunHohoRevampExperiment = false,
     isHOHORevamp,
@@ -1204,9 +1202,6 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
-    showCustomCheckoutCTA: shouldRunCustomCTAExperiment
-      ? showCustomProductCardCTA
-      : undefined,
     isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
     cancellationInsuranceVariant: isEligibleForFlexiCancellationExperiment
       ? flexiCancellationExperimentVariant ?? undefined
@@ -1229,8 +1224,6 @@ const Product = (props: any) => {
         return strings.SELECT_SECTION;
       case isGpMotorTicketsMb && isSportsSubCategory:
         return strings.BUY_TICKETS_CTA;
-      case showCustomProductCardCTA:
-        return strings.CUSTOM_CTA_EXPERIMENT_TEXT;
       case showCustomProductCardEnglishCTA:
         return strings.SELECT_AN_OPTION;
       default:

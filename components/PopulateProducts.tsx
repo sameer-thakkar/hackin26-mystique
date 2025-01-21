@@ -325,8 +325,6 @@ const PopulateProducts: any = (props: any) => {
     horizontalProductCard = false,
     verticalProductCard = false,
     subattraction_type,
-    showCustomProductCardCTA = false,
-    shouldRunCustomCTAExperiment = false,
     showCustomProductCardEnglishCTA = false,
     customBanner,
     baseLangCustomBanner,
@@ -890,8 +888,6 @@ const PopulateProducts: any = (props: any) => {
         VIDEO_EXPERIMENT_MBS[
           uid as keyof typeof VIDEO_EXPERIMENT_MBS
         ]?.includes(tgid),
-      showCustomProductCardCTA,
-      shouldRunCustomCTAExperiment,
       showCustomProductCardEnglishCTA,
       shouldRunHohoRevampExperiment,
       showBoosters,

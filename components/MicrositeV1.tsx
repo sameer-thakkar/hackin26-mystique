@@ -409,17 +409,6 @@ const MicrositeV1 = (props: any) => {
   });
 
   const {
-    isEligible: shouldRunCustomCTAExperiment,
-    isExperimentResolving: isCustomCTAExperimentResolving,
-    variant: customCTAExperimentVariant,
-  } = useABTesting({
-    experimentId: 'C1_COLLECTION_LTT_BROADWAY_PRODUCT_CARD_CTA_EXPERIMENT',
-    customEligibilityCheckFn: () =>
-      taggedMbType === MB_TYPES.C1_COLLECTION &&
-      (lang == 'it-it' || lang == 'de-de'),
-  });
-
-  const {
     isEligible: shouldRunCustomEnglishCTAExperiment,
     isExperimentResolving: isCustomEnglishCTAExperimentResolving,
     variant: customCTAEnglishExperimentVariant,
@@ -474,10 +463,6 @@ const MicrositeV1 = (props: any) => {
       };
     },
   });
-
-  const showCustomProductCardCTA =
-    shouldRunCustomCTAExperiment &&
-    customCTAExperimentVariant === VARIANTS.TREATMENT;
 
   const showCustomProductCardEnglishCTA =
     shouldRunCustomEnglishCTAExperiment &&
@@ -949,8 +934,6 @@ const MicrositeV1 = (props: any) => {
       uid={uid}
       currentLanguage={currentLanguage}
       bookNowText={bookNowText}
-      shouldRunCustomCTAExperiment={shouldRunCustomCTAExperiment}
-      showCustomProductCardCTA={showCustomProductCardCTA}
       showCustomProductCardEnglishCTA={showCustomProductCardEnglishCTA}
       readMoreText={readMoreText}
       showLessText={showLessText}
@@ -1054,7 +1037,6 @@ const MicrositeV1 = (props: any) => {
     (isQnaExpEligible && isQnaExpResolving) ||
     (isCruisesExpEligible && isCruisesExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
-    (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||

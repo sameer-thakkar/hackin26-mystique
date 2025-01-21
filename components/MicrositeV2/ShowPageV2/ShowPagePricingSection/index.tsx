@@ -35,8 +35,6 @@ import RiveCTA from './RiveCTA';
 const ShowPagePricingSection = ({
   tourGroupData,
   flowType,
-  showCustomBookButtonText,
-  shouldRunCustomCTAExperiment,
   moreShows,
   moreShowsCategoryUrl,
 }: TShowPagePricingSectionProps) => {
@@ -116,9 +114,6 @@ const ShowPagePricingSection = ({
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
-    showCustomCheckoutCTA: shouldRunCustomCTAExperiment
-      ? showCustomBookButtonText
-      : undefined,
   });
 
   useHistoryTraversal({
@@ -157,9 +152,7 @@ const ShowPagePricingSection = ({
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
 
-  const buyButtonText = showCustomBookButtonText
-    ? strings.CUSTOM_CTA_EXPERIMENT_TEXT
-    : strings.CHECK_AVAIL;
+  const buyButtonText = strings.CHECK_AVAIL;
 
   const buttonType = isButtonLoading ? 'loading' : 'default';
 
