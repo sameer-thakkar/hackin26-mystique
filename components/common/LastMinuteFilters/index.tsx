@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
@@ -23,12 +23,10 @@ import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { currencyAtom } from 'store/atoms/currency';
-import { hsidAtom } from 'store/atoms/hsid';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
+import { SinglePillFilters } from './SinglePillFilters/index';
 
 const LastMinuteFilters = (props: ILastMinuteFilters) => {
   const {
@@ -36,18 +34,19 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     setOrderedFilteredTours,
     setProductsLoading,
     changeTourListFilterStatus,
+    singlePillUI: isSinglePillUI,
+    poiFilteredTours,
   } = props;
-  const [showFilters, setShowFilters] = useState<boolean | null>(null);
   const [
     selectedDateTimeFilterButtonIndex,
     setSelectedDateTimeFilterButtonIndex,
   ] = useState(0);
   const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] =
     useState(false);
+
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];
-
   const currency = useRecoilValue(currencyAtom);
 
   const dateTimeFilters = [
@@ -67,24 +66,6 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       value: formatDateToString(addDays(new Date(), 1), 'en', 'YYYY-MM-DD'),
     },
   ];
-
-  const [hsid] = useRecoilState(hsidAtom);
-
-  useEffect(() => {
-    let timerId: NodeJS.Timeout;
-    if (hsid) {
-      const showLastMinuteFilters =
-        getABTestingVariant({
-          expName: EXPERIMENT_NAMES.LAST_MINUTE_FILTERS_EXPERIMENT,
-          hsid,
-          noTrack: true,
-        }) === VARIANTS.TREATMENT;
-      setShowFilters(showLastMinuteFilters);
-    } else {
-      timerId = setTimeout(() => setShowFilters(true), 2000);
-    }
-    return () => clearTimeout(timerId);
-  }, [hsid]);
 
   const inventoryEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CalendarInventoryForTourGroupList,
@@ -200,24 +181,9 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     }
   }, [inventoryData]);
 
-  let handleScroll: any;
-  const elRef = useCallback((filtersRef: any) => {
-    if (filtersRef !== null) {
-      handleScroll = () => {
-        if (window.pageYOffset + 1 >= filtersRef.offsetTop) {
-          filtersRef.classList.add('sticky');
-        } else {
-          filtersRef.classList.remove('sticky');
-        }
-      };
-      window.addEventListener('scroll', handleScroll);
-    }
-  }, []);
-
   let productsLoadingTimer: NodeJS.Timeout | null = null;
   useEffect(() => {
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       if (productsLoadingTimer) {
         clearTimeout(productsLoadingTimer!);
       }
@@ -247,28 +213,46 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     }
   };
 
-  if (showFilters === false || error) {
+  if (error) {
     return null;
   }
-  // Experiment state is loading
-  else if (showFilters === null || !data) {
+
+  const isLoading = !data && !error;
+
+  if (isLoading) {
     return (
       <SkeletonWrapper>
-        {dateTimeFilters.map((_filter, index) => (
+        {Array.from({
+          length: dateTimeFilters.length + (isSinglePillUI ? 2 : 0),
+        }).map((_filter, index) => (
           <Skeleton
             height="2rem"
             key={index}
-            width="5rem"
-            style={{ margin: '0 0.5rem 0.5rem', borderRadius: '1.5rem' }}
+            width={index === 0 ? '6rem' : '5rem'}
+            style={{ borderRadius: '1.5rem' }}
           />
         ))}
       </SkeletonWrapper>
     );
   }
 
+  if (isSinglePillUI && inventoryData && !isLoading) {
+    return (
+      <FiltersWrapper $isSticky>
+        <SinglePillFilters
+          poiFilteredTours={poiFilteredTours ?? []}
+          inventoryData={inventoryData}
+          dateTimeFilters={dateTimeFilters}
+          selectedDateTimeFilterIndex={selectedDateTimeFilterButtonIndex}
+          onFilterChange={onFilterChange}
+        />
+      </FiltersWrapper>
+    );
+  }
+
   return (
     <>
-      <FiltersWrapper ref={elRef}>
+      <FiltersWrapper>
         {inventoryData && (
           <FiltersContainer>
             {dateTimeFilters.map((filter, index) => (

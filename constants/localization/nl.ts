@@ -1289,6 +1289,27 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     GUIDELINES:
       'Instructies: het programma wordt geannuleerd als de persoon een deel van het ticket gebruikt voor de annulering. In dit geval zijn de standaard annuleringsvoorwaarden van toepassing en wordt er geen verdere restitutie gegeven.',
   },
+
+  FILTERS: {
+    DATE_SELECTION: 'Datum',
+    DEALS: 'Deals',
+    ENTRY_TICKETS: 'Toegangstickets',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Topper',
+    SPECIAL_DEAL: 'Speciale deal',
+  },
+
+  OTHER_EXPERIENCES: 'Andere ervaringen',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Haal alles uit {0}',
+    TOP_EXPERIENCE_PICKS: 'Topervaringen',
+    EXPERIENCES: 'Meer dan {0} ervaringen',
+    CITY_YOUR_WAY: '{0}, op jouw manier!',
+    DISCOVER_MORE: 'Ontdek meer',
+  },
   AGGREGATED_COUNTRIES:
     'Bezoekers uit <strong>{0}</strong> en <strong>{0} andere landen</strong> hebben genoten van deze ervaring',
 };

@@ -1,4 +1,5 @@
 export interface CollectionItem {
+  collectionId: number;
   url: string;
   label: string;
   collectionData: Record<string, any>;

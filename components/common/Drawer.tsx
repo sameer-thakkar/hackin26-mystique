@@ -181,7 +181,7 @@ const Drawer = ({
   customHeader,
 }: {
   closeHandler?: Function;
-  contents?: JSX.Element;
+  contents?: (closeHandler: () => void) => JSX.Element;
   className?: string;
   heading?: string;
   children?: React.ReactNode;
@@ -202,6 +202,9 @@ const Drawer = ({
   const close = (reason: string) => {
     if (slideOutOnClose) {
       setAnimateOut(true);
+      if (drawerRef.current) {
+        (drawerRef.current as HTMLElement).style.transform = `translateY(100%)`;
+      }
       setTimeout(() => closeHandler?.(reason), 300);
     } else {
       closeHandler?.(reason);
@@ -226,7 +229,9 @@ const Drawer = ({
   }, []);
 
   useEffect(() => {
-    if (!drawerRef.current) return;
+    if (!drawerRef.current) {
+      return;
+    }
     const drawer = drawerRef.current;
     const onStart = (e: any) => {
       const [touch] = e.changedTouches;
@@ -247,6 +252,10 @@ const Drawer = ({
       const [touch] = e.changedTouches;
       const currentYTouchPos = touch.clientY;
       const delta = currentYTouchPos - (drawer as any).prevDragPos;
+      if (delta === 0) {
+        // if the user just taps the screen, don't close the drawer
+        return;
+      }
       if (delta > SWIPE_DOWN_THRESHOLD_PX) {
         (drawer as any).style.transform = `translateY(100%)`;
         setTimeout(() => {
@@ -269,7 +278,7 @@ const Drawer = ({
       (drawer as any).removeEventListener('touchmove', onMove);
       (drawer as any).removeEventListener('touchend', onEnd);
     };
-  }, []);
+  }, [mounted]);
 
   if (!mounted) {
     return null;
@@ -323,7 +332,9 @@ const Drawer = ({
           </HeadingContainer>
         )}
 
-        <CoreDrawerText>{contents || children}</CoreDrawerText>
+        <CoreDrawerText>
+          {(contents && contents(() => close(''))) || children}
+        </CoreDrawerText>
       </DrawerWrapper>
     </DrawerContainer>,
     container ?? document.body

@@ -995,14 +995,14 @@ const modifiedProductCardMwebCss = css<{
 }>`
   grid-row-gap: ${({ $isDrawer }) => ($isDrawer ? '0.8rem' : '1rem')};
   padding: ${({ $isDrawer }) => ($isDrawer ? '1rem 16px 0 16px' : '0.75rem')};
-  overflow: hidden;
+  overflow: initial;
   position: relative;
 
   .card-img {
     height: initial;
     max-height: initial;
     aspect-ratio: 16/10;
-    margin: -0.75rem -1rem -0.5rem;
+    margin: -0.75rem -0.75rem -0.5rem;
   }
 
   ${TitleWrapper} {
@@ -1312,7 +1312,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }
 
   .card-img {
-    width: calc(100% + 2rem);
+    width: calc(100% + 1.5rem);
     height: auto;
     max-height: none;
     aspect-ratio: 16/10;
@@ -3048,6 +3048,10 @@ export const BoosterText = styled.p<{
     top: ${({ $iconStyles }) => `${$iconStyles.top}px`};
     transform: ${({ $transform }) => $transform};
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 export const BoosterContainer = styled.div<{
@@ -3059,11 +3063,14 @@ export const BoosterContainer = styled.div<{
   position: absolute;
   z-index: 1;
   box-shadow: 0px 0.125rem 0.75rem 0px #00000033;
-  transform: ${({ $rotateDeg }) => $rotateDeg}deg;
+  transform: rotate(${({ $rotateDeg }) => $rotateDeg}deg);
   top: ${({ $isOverlay, $boosterStyles }) =>
     $isOverlay ? 4 : $boosterStyles.top}rem;
   left: ${({ $isOverlay, $boosterStyles }) =>
     $isOverlay ? 2 : $boosterStyles.left}rem;
+
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 
   @media (max-width: 768px) {
     transform: rotate(0);

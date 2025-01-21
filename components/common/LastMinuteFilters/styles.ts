@@ -124,13 +124,21 @@ export const FiltersContainer = styled.div`
   }
 `;
 
-export const FiltersWrapper = styled.div`
-  padding: 1.5rem 0 0 0;
+export const FiltersWrapper = styled.div<{ $isSticky?: boolean }>`
+  padding: 1.5rem 0 1.25rem 0;
   margin-bottom: 1rem;
   background: white;
   position: sticky;
   top: -25px;
   z-index: 10;
+
+  ${({ $isSticky }) =>
+    $isSticky &&
+    css`
+      padding: 0.7rem 0;
+      top: 56px;
+      margin-bottom: 0;
+    `}
   &.sticky {
     box-shadow: 0px 4px 8px 0px #0000001f;
   }
@@ -163,6 +171,9 @@ export const DrawerBody = styled.div`
 `;
 
 export const SkeletonWrapper = styled.div`
-  margin: 1rem 1.5rem;
+  margin: 0 1.5rem;
+  padding-block: 0.65rem;
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;

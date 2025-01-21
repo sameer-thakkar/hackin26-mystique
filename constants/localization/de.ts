@@ -1330,6 +1330,27 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   REVIEW_SECTION_HEADER: 'Was unsere Gäste sagen',
   TRUST_VB_TAG: 'Bestätigte Buchung',
   SNAPSHOTS_SECTION_HEADER: 'Schnappschüsse von unseren Gästen',
+
+  FILTERS: {
+    DATE_SELECTION: 'Datum auswählen',
+    DEALS: 'Deals',
+    ENTRY_TICKETS: 'Eintrittskarten',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Bestbewertet',
+    SPECIAL_DEAL: 'Sonderangebot',
+  },
+
+  OTHER_EXPERIENCES: 'Andere Erfahr``ungen',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Erleben Sie {0}',
+    TOP_EXPERIENCE_PICKS: 'Top-Erlebnisse',
+    EXPERIENCES: 'Über {0} Erlebnisse',
+    CITY_YOUR_WAY: '{0} für Sie!',
+    DISCOVER_MORE: 'Mehr entdecken',
+  },
   AGGREGATED_COUNTRIES:
     'Gäste aus <strong>{0}</strong> und <strong>über {1} Ländern</strong> lieben dieses Erlebnis',
 };

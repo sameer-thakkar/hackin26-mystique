@@ -1328,6 +1328,27 @@ const it = {
   REVIEW_SECTION_HEADER: 'Cosa dicono i nostri clienti',
   TRUST_VB_TAG: 'Prenotazione verificata',
   SNAPSHOTS_SECTION_HEADER: 'Le istantanee dei nostri ospiti',
+
+  FILTERS: {
+    DATE_SELECTION: 'Seleziona una data',
+    DEALS: 'Offerte',
+    ENTRY_TICKETS: 'Ingressi',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'I più scelti',
+    SPECIAL_DEAL: 'Offerte speciali',
+  },
+
+  OTHER_EXPERIENCES: 'Altre esperienze',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Scopri il meglio a {0}',
+    TOP_EXPERIENCE_PICKS: 'Esperienze top',
+    EXPERIENCES: 'Oltre {0} esperienze',
+    CITY_YOUR_WAY: '{0} a modo tuo!',
+    DISCOVER_MORE: 'Scopri di più',
+  },
   AGGREGATED_COUNTRIES:
     'Questa esperienza è stata amata da persone provenienti dai seguenti Paesi: <strong>{0}</strong> e <strong>da oltre {1} Paesi</strong>',
 };

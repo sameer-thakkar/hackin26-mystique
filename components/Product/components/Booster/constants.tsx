@@ -1,6 +1,12 @@
 import { BoosterType } from 'components/Product/interface';
 import { strings } from 'const/strings';
-import { Diamond, Spark, YellowDiamond } from 'assets/boosters';
+import {
+  DealPercentIconSVG,
+  Diamond,
+  HeartIconSVG,
+  Spark,
+  YellowDiamond,
+} from 'assets/boosters';
 
 export const getBoosterInfo = (boosterType: BoosterType) => {
   const BOOSTER_INFO = {
@@ -70,6 +76,52 @@ export const getBoosterInfo = (boosterType: BoosterType) => {
       boosterStyles: {
         top: 0.75,
         left: 2.1,
+      },
+    },
+
+    [BoosterType.TOP_RATED]: {
+      title: strings.BOOSTERS.TOP_RATED,
+      icon: <HeartIconSVG />,
+      theme: '#CE007C',
+      transform: 'translate(-68%,-9%)',
+      borderTheme: 'initial',
+      iconHeight: 28,
+      mobileStyles: {
+        top: 12,
+        left: 7,
+      },
+      textColor: '#fff',
+      rotateDeg: -4,
+      iconStyles: {
+        top: 0,
+        left: -1,
+      },
+      boosterStyles: {
+        top: 1,
+        left: 2.2,
+      },
+    },
+
+    [BoosterType.SPECIAL_DEAL]: {
+      title: strings.BOOSTERS.SPECIAL_DEAL,
+      icon: <DealPercentIconSVG />,
+      theme: '#088943',
+      transform: 'translate(-68%,-10%)',
+      iconHeight: 30,
+      borderTheme: 'initial',
+      mobileStyles: {
+        top: 12,
+        left: 7,
+      },
+      textColor: '#fff',
+      rotateDeg: -4,
+      iconStyles: {
+        top: 0,
+        left: -1,
+      },
+      boosterStyles: {
+        top: 1,
+        left: 2.2,
       },
     },
   };

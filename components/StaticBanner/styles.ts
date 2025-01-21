@@ -248,9 +248,12 @@ export const BannerDisclaimerText = styled.p`
 export const DisclaimerText = styled.p<{
   hasParentChip?: boolean;
   $forceMobile?: boolean;
+  $reducedMargin?: boolean;
   $showQnaExperiment?: boolean;
 }>`
-  margin: 0.75rem 1.5rem 1.5rem;
+  margin: ${({ $reducedMargin }) =>
+    $reducedMargin ? '1rem 1.5rem 0.75rem' : '0.75rem 1.5rem 1.5rem'};
+
   ${({ $showQnaExperiment }) => $showQnaExperiment && `margin-bottom: 1rem;`}
   grid-area: bottom;
   ${({ $forceMobile }) =>

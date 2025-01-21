@@ -118,6 +118,7 @@ export enum HeadoutEndpoints {
   GuestCount,
   QnaSnippets,
   QnaSections,
+  CollectionProductCards,
 }
 
 const endPointsOnNewCDN = [
@@ -148,6 +149,7 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.GeoLocateCity,
   HeadoutEndpoints.QnaSnippets,
   HeadoutEndpoints.QnaSections,
+  HeadoutEndpoints.CollectionProductCards,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -277,6 +279,10 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.GuestCount:
       endpointSlug = `/api/v1/guest-count/`;
+      break;
+    case HeadoutEndpoints.CollectionProductCards:
+      endpointSlug = `/api/v2/collections/${id}/product-cards/`;
+      break;
   }
 
   const shouldPointToNewCDN = endPointsOnNewCDN.includes(endpoint);
@@ -1074,6 +1080,7 @@ export const fetchCollectionTop = async ({
     params,
     id: null,
   });
+
   const headers = constructHeaders({ cookies });
   try {
     const response = await fetch(finalUrl, {

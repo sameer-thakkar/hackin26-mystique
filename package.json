@@ -88,7 +88,7 @@
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@next/bundle-analyzer": "^10.0.7",
-    "@pandacss/dev": "0.39.1",
+    "@pandacss/dev": "0.39.2",
     "@prismicio/types": "^0.2.8",
     "@regalstreak/conventional-release-notes": "^1.1.0",
     "@types/cookies": "^0.7.7",
@@ -142,5 +142,6 @@
       "pre-commit": "yarn lint && pretty-quick --staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

@@ -1442,6 +1442,27 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   EXPLORE_MORE_QUESTIONS: 'Explore more questions',
   GUESTS: 'guests',
   RESPONSES: 'responses',
+
+  FILTERS: {
+    DATE_SELECTION: 'Date selection',
+    DEALS: 'Deals',
+    ENTRY_TICKETS: 'Entry tickets',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Top rated',
+    SPECIAL_DEAL: 'Special deal',
+  },
+
+  OTHER_EXPERIENCES: 'Other experiences',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Make the most of {0}',
+    TOP_EXPERIENCE_PICKS: 'Top experience picks',
+    EXPERIENCES: '{0}+ experiences',
+    CITY_YOUR_WAY: '{0}, your way!',
+    DISCOVER_MORE: 'Discover more',
+  },
 };
 
 export default en;

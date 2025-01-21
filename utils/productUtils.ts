@@ -1260,7 +1260,7 @@ export const parseInclusionsExclusions = (richText: Record<string, any>[]) => {
 type BoosterKeys = keyof typeof BoosterType;
 
 export const getTotalBoosters = (uid: string) => {
-  const distribution: Record<BoosterKeys, number> = {
+  const distribution: Record<string, number> = {
     BESTSELLER: 0,
     SELLING_OUT_FAST: 0,
     MUST_DO_EXP: 0,

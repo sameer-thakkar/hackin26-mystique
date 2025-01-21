@@ -1340,6 +1340,27 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     GUIDELINES:
       "Instructions : Le programme est annulé si la personne utilise une partie du billet avant l'annulation. Dans ce cas, les politiques d'annulation standard s'appliquent et aucun remboursement supplémentaire ne sera accordé.",
   },
+
+  FILTERS: {
+    DATE_SELECTION: 'Sélectionner une date',
+    DEALS: 'Offres',
+    ENTRY_TICKETS: "Billets d'entrée",
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Très bien noté',
+    SPECIAL_DEAL: 'Offres spéciales',
+  },
+
+  OTHER_EXPERIENCES: 'Autres expériences',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Profitez au mieux de {0}',
+    TOP_EXPERIENCE_PICKS: 'Meilleures expériences',
+    EXPERIENCES: '{0}+ expériences',
+    CITY_YOUR_WAY: '{0} à votre façon',
+    DISCOVER_MORE: 'En voir plus',
+  },
   AGGREGATED_COUNTRIES:
     'Des personnes de <strong>{0}</strong> et <strong>plus de {1} pays</strong> ont adoré cette expérience',
 };

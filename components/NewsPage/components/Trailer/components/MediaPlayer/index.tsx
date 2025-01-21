@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import Conditional from 'components/common/Conditional';
-import VideoPlayer from 'components/common/VideoPlayer';
 import { TMediaPlayerProps } from 'components/NewsPage/components/Trailer/components/MediaPlayer/interface';
 import {
   BackgroundCircle,
@@ -38,6 +37,10 @@ import LttChevronLeft from 'assets/lttChevronLeft';
 import LttChevronRight from 'assets/lttChevronRight';
 import PlayIconFilled from 'assets/playIconFilled';
 import RightTailHeadArrow from 'assets/rightTailHeadArrow';
+
+const VideoPlayer = dynamic(() => import('components/common/VideoPlayer'), {
+  ssr: false,
+});
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "MediaPlayerSwiper" */ 'components/Swiper')

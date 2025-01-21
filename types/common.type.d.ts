@@ -47,6 +47,7 @@ type TCollectionDetails = {
   averageRating: number;
   cardImageUrl: string;
   currency: string;
+  experienceCount: number;
   displayName: string;
   heroImageUrl: string;
   id: number;
@@ -57,4 +58,13 @@ type TCollectionDetails = {
     url: string;
     type: string;
   }>;
+  startingPrice: {
+    listingPrice: number;
+    currency: string;
+    bestDiscount: number;
+  };
+  ratingsInfo: {
+    averageRating: number;
+    ratingsCount: number;
+  };
 };

@@ -1,3 +1,4 @@
+import { TTour } from 'components/AirportTransfers/interface';
 import { getCategoryMap } from 'utils/productUtils';
 
 export interface ILastMinuteFilters {
@@ -7,6 +8,8 @@ export interface ILastMinuteFilters {
   isProductCardPhase1ExpTreatment?: boolean;
   categoryInfo?: ReturnType<typeof getCategoryMap>;
   changeTourListFilterStatus?: (state: boolean) => void;
+  singlePillUI?: boolean;
+  poiFilteredTours?: TTour[];
 }
 
 export type TOnFilterChangeParams = {

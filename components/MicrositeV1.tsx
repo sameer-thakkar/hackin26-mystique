@@ -91,10 +91,23 @@ import { TCityInfo } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
 import CommonHeader from './common/Header';
+import { POIFilters } from './common/POIFilters';
+import { TPOIFilterType } from './common/POIFilters/constant';
+import { poiFiltersWrapperStyle } from './common/POIFilters/styles';
+import {
+  filterToursByPOIFilter,
+  getAvailablePOIFilterTypes,
+} from './common/POIFilters/utils';
 import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
 import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
+import { ICollectionCarousel } from './slices/CollectionCarousel/interface';
 
+const POICollectionsSection = dynamic<ICollectionCarousel>(() =>
+  import(
+    /* webpackChunkName: "POICollectionsSection" */ './POICollectionsSection'
+  ).then((m) => m.POICollectionsSection)
+);
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -562,6 +575,24 @@ const MicrositeV1 = (props: any) => {
   const [orderedFilteredTours, setOrderedFilteredTours] =
     useState(orderedTours);
 
+  const [activePOIFilter, setActivePOIFilter] = useState<TPOIFilterType | null>(
+    null
+  );
+
+  const { filteredOutTours, filteredTours: finalOrderedFilteredTours } =
+    useMemo(() => {
+      return filterToursByPOIFilter(
+        orderedFilteredTours,
+        activePOIFilter,
+        scorpioData
+      );
+    }, [orderedFilteredTours, scorpioData, activePOIFilter]);
+
+  const poiFilterTypes = useMemo(
+    () => getAvailablePOIFilterTypes(orderedTours, scorpioData),
+    [orderedTours.length]
+  );
+
   useEffect(() => {
     if (isNotUsingAutomatedRanking) return;
     setOrderedFilteredTours(orderedTours);
@@ -574,7 +605,7 @@ const MicrositeV1 = (props: any) => {
     : [];
 
   const finalUncategorizedTours = getFinalUncategorizedTours({
-    orderedFilteredTours,
+    orderedFilteredTours: finalOrderedFilteredTours,
     scorpioData,
     showCruisesFormat,
     showHohoRevamp,
@@ -798,6 +829,15 @@ const MicrositeV1 = (props: any) => {
     isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
   const isNonPoiCollectionMB = isNonPoiMB && isCollectionMicrobrand;
 
+  const {
+    isEligible: isPOIFiltersExpEligible,
+    isExperimentResolving: isPOIFiltersExpResolving,
+    variant: poiFiltersVariant,
+  } = useABTesting({
+    experimentId: 'POI_FILTERS_EXPERIMENT',
+    customEligibilityCheckFn: () => !isNonPoiMB && !QNA_EXP_UIDS.includes(uid),
+  });
+
   const showPopupNonPOI =
     !isMobile &&
     ((isNonPoiMB &&
@@ -887,6 +927,11 @@ const MicrositeV1 = (props: any) => {
     showQnaExperiment,
   };
 
+  const isPOIFiltersEnabled =
+    poiFilterTypes?.size > 1 &&
+    isPOIFiltersExpEligible &&
+    poiFiltersVariant === VARIANTS.TREATMENT;
+
   const longFormContentArr = [
     ...(Array.isArray(longFormContent) ? longFormContent : []),
     ...(Array.isArray(contentFWSlices) ? contentFWSlices : []),
@@ -896,7 +941,9 @@ const MicrositeV1 = (props: any) => {
     <PopulateProducts
       // @ts-ignore
       currency={currency}
+      scrollOnLoading={isNonPoiMB || poiFilterTypes.size <= 1}
       uncategorizedTours={finalUncategorizedTours}
+      filteredOutTours={filteredOutTours}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
@@ -935,11 +982,27 @@ const MicrositeV1 = (props: any) => {
       isRankingExperimentResolving={isRankingExperimentResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={
-        isBoosterExpEligible && boosterExperimentVariant === VARIANTS.TREATMENT
+        (isBoosterExpEligible &&
+          boosterExperimentVariant === VARIANTS.TREATMENT) ||
+        isPOIFiltersEnabled
       }
+      isPOIFiltersEnabled={isPOIFiltersEnabled}
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
       {...qnaExperimentData}
+      // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
+      poiCollectionsSection={
+        isPOIFiltersEnabled ? (
+          <LazyComponent>
+            <POICollectionsSection
+              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+              isMobile={isMobile}
+              primaryCity={primaryCity}
+              taggedCity={taggedCity}
+            />
+          </LazyComponent>
+        ) : null
+      }
     />
   );
 
@@ -994,7 +1057,8 @@ const MicrositeV1 = (props: any) => {
     (shouldRunCustomCTAExperiment && isCustomCTAExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
-    (shouldRunHohoRevampExperiment && isHohoExperimentResolving)
+    (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
+    (isPOIFiltersExpEligible && isPOIFiltersExpResolving)
   )
     return <Loader />;
 
@@ -1142,7 +1206,7 @@ const MicrositeV1 = (props: any) => {
             categoryHeaderMenuExists={categoryHeaderMenuExists}
             isCityPageMB={isCityPageMB}
             isDarkTheme={showHohoRevamp}
-            isAirportTransfersMB={isAirportTransfersMB}
+            hideHeaderBoxShadow={isAirportTransfersMB || isPOIFiltersEnabled}
           />
         </Conditional>
         <Conditional
@@ -1292,18 +1356,44 @@ const MicrositeV1 = (props: any) => {
                 : null
             }
             isCruisesRevamp={showCruisesFormat}
+            reducedMwebMarginOnDisclaimer={isPOIFiltersEnabled}
             {...qnaExperimentData}
           />
         </Conditional>
-        <Conditional if={showLastMinFilters}>
-          <LastMinuteFilters
-            setOrderedFilteredTours={setOrderedFilteredTours}
-            orderedTours={orderedTours}
-            setProductsLoading={setProductsLoading}
-            changeTourListFilterStatus={(state) => {
-              if (state !== isTourListFiltered) setIsTourListFiltered(state);
-            }}
-          />
+        <Conditional if={isA1orC1MB(taggedMbType) && !isAirportTransfersMB}>
+          <div className={poiFiltersWrapperStyle} id="POI_FILTERS">
+            <Conditional if={isMobile}>
+              <LastMinuteFilters
+                setOrderedFilteredTours={setOrderedFilteredTours}
+                orderedTours={orderedTours}
+                setProductsLoading={setProductsLoading}
+                changeTourListFilterStatus={(state) => {
+                  if (state !== isTourListFiltered)
+                    setIsTourListFiltered(state);
+                }}
+                singlePillUI={isPOIFiltersEnabled}
+                poiFilteredTours={
+                  filterToursByPOIFilter(
+                    orderedTours,
+                    activePOIFilter,
+                    scorpioData
+                  )?.filteredTours
+                }
+              />
+            </Conditional>
+
+            <Conditional if={isPOIFiltersEnabled}>
+              <POIFilters
+                isMobile={isMobile}
+                activeFilter={activePOIFilter}
+                setActiveFilter={setActivePOIFilter}
+                inventoryFilteredTours={orderedFilteredTours}
+                scorpioData={scorpioData}
+                setProductsLoading={setProductsLoading}
+                existingFilterTypes={poiFilterTypes}
+              />
+            </Conditional>
+          </div>
         </Conditional>
         <Conditional
           if={
@@ -1401,7 +1491,11 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={isA1orC1MB(taggedMbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
+          if={
+            isA1orC1MB(taggedMbType) &&
+            categoryHeaderMenu.CITY_ATTRACTIONS &&
+            !isPOIFiltersEnabled
+          }
         >
           <CollectionCarousel
             allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}

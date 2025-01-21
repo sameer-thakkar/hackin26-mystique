@@ -11,7 +11,6 @@ export const VARIANTS = {
 };
 
 const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
-const LAST_MINUTE_FILTERS_EXPERIMENT = 'Last Minute Filters Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
 const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
@@ -26,6 +25,7 @@ const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
 const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const QNA_EXPERIMENT = 'Q&A Experiment';
+const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
@@ -35,10 +35,10 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   DAY_TRIPS_LISTICLE,
   FLEXIBLE_CANCELLATION_EXPERIMENT,
   HOHO_REVAMP_PARIS_BARCELONA,
-  LAST_MINUTE_FILTERS_EXPERIMENT,
   LFC_IMPACT,
   LTD_LP_Experiment,
   MIXPANEL_SESSION_REPLAY,
+  POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
   QNA_EXPERIMENT,
   SEATMAP_EXPERIMENT,
@@ -86,11 +86,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
   ),
-  [LAST_MINUTE_FILTERS_EXPERIMENT]: new Experiment(
-    LAST_MINUTE_FILTERS_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [0, 100]
-  ),
+
   [LFC_IMPACT]: new Experiment(
     LFC_IMPACT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
@@ -105,6 +101,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     MIXPANEL_SESSION_REPLAY,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [95, 5]
+  ),
+  [POI_FILTERS_EXPERIMENT]: new Experiment(
+    POI_FILTERS_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
   ),
   [PRODUCT_CARD_VIDEO]: new Experiment(
     PRODUCT_CARD_VIDEO,

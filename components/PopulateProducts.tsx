@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -18,6 +17,7 @@ import {
   type Itinerary as TItinerary,
   ItineraryType,
 } from 'types/itinerary.type';
+import { Text } from '@headout/eevee';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
@@ -39,6 +39,7 @@ import {
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
+import { getPOIBooster } from 'utils/poiBoosterUtils';
 import { getProductDescriptors } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
@@ -58,6 +59,7 @@ import { expandFontToken } from 'const/typography';
 import PercentageStamp from 'assets/percentageStamp';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
+import { CardLoadingSkeleton } from './Product/components/CardLoadingSkeleton';
 import QnASnippetSection from './QnA/QnASnippetSection/index';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 import CustomBanner from './CustomBanner';
@@ -110,7 +112,7 @@ const StyledProductsWrapper = styled.div<{
     }
 
     h2 {
-      ${({ isTicketCard }) => (isTicketCard && 'margin: 0px;')};
+      ${({ isTicketCard }) => isTicketCard && 'margin: 0px;'};
 
       color: ${COLORS.GRAY.G2};
       ${expandFontToken(FONTS.DISPLAY_SMALL)};
@@ -172,7 +174,7 @@ function getMwebMargin({
     case $increasedMargin:
       return '1.5rem 0 1.75rem';
     default:
-      return '0.5rem 0 1.75rem';
+      return '0.6875rem 0 1.75rem';
   }
 }
 type TProductContainerStyles = {
@@ -216,6 +218,14 @@ const ProductContainer = styled.div<TProductContainerStyles>`
   visibility: ${({ isNotVisible }) => (isNotVisible ? 'hidden' : 'visible')};
   height: ${({ isNotVisible }) => (isNotVisible ? '0' : 'auto')};
 
+  .poi-filtered-out-products {
+    width: 75rem;
+    min-width: max-content;
+    margin-inline: auto;
+    margin-top: 10px;
+    margin-bottom: -0.5rem;
+  }
+
   @media (max-width: 768px) {
     margin: ${({ isNotVisible, $increasedMargin, isTicketCard }) =>
       getMwebMargin({ isNotVisible, $increasedMargin, isTicketCard })};
@@ -232,6 +242,14 @@ const ProductContainer = styled.div<TProductContainerStyles>`
       margin: 0 1.5rem;
       height: 33.75rem;
       border-radius: 0.75rem;
+    }
+
+    .poi-filtered-out-products {
+      width: auto;
+      margin-inline: 1.5rem;
+      margin-block: 0;
+      margin-bottom: -0.75rem;
+      letter-spacing: unset;
     }
   }
 `;
@@ -322,6 +340,7 @@ const PopulateProducts: any = (props: any) => {
     collectionId,
     showQnaExperiment,
     showLastMinFilters = false,
+    poiCollectionsSection,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -537,6 +556,18 @@ const PopulateProducts: any = (props: any) => {
       );
     })
     .slice(0, productCardsLimit);
+
+  const availableFilteredOutTours = props.filteredOutTours?.filter(
+    (tour: any) => {
+      const checkIfScorpioHighlightsExist =
+        scorpioData[tour.tgid]?.isMBHighlightsExist;
+      return (
+        !!scorpioData[tour.tgid]?.available &&
+        (checkIfScorpioHighlightsExist ||
+          tour?.tour_description_override?.length)
+      );
+    }
+  );
 
   const nonNewVerticalIndex = availableToursList?.findIndex(
     (tour: Record<string, any>) => {
@@ -864,6 +895,9 @@ const PopulateProducts: any = (props: any) => {
       showCustomProductCardEnglishCTA,
       shouldRunHohoRevampExperiment,
       showBoosters,
+      poiBooster: props.isPOIFiltersEnabled
+        ? getPOIBooster(tgid, scorpioData)
+        : null,
     };
 
     return isSmallComboCard ? (
@@ -935,18 +969,11 @@ const PopulateProducts: any = (props: any) => {
         isMobile={isMobile || forceMobile}
         isNotVisible={!showLoader}
       >
-        <Skeleton
-          className="product-card-skeleton"
-          containerClassName="product-card-skeleton-container"
-        />
-        <Skeleton
-          className="product-card-skeleton"
-          containerClassName="product-card-skeleton-container"
-        />
-        <Skeleton
-          className="product-card-skeleton"
-          containerClassName="product-card-skeleton-container"
-        />
+        <CardLoadingSkeleton isMobile={isMobile} />
+
+        <CardLoadingSkeleton isMobile={isMobile} />
+
+        <CardLoadingSkeleton isMobile={isMobile} />
       </ProductContainer>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
@@ -1003,6 +1030,19 @@ const PopulateProducts: any = (props: any) => {
                   />
                 );
               }
+
+              if (
+                index === 3 &&
+                poiCollectionsSection &&
+                availableFilteredOutTours.length === 0
+              ) {
+                return (
+                  <>
+                    {poiCollectionsSection}
+                    {getProductCardFromTourAndIndex(tour, index)}
+                  </>
+                );
+              }
               return (
                 <>
                   <Conditional if={bannerIndex === index}>
@@ -1021,6 +1061,46 @@ const PopulateProducts: any = (props: any) => {
               );
             }
           )}
+        </Conditional>
+
+        <Conditional
+          if={
+            poiCollectionsSection &&
+            availableToursList?.length < 5 &&
+            !availableFilteredOutTours.length
+          }
+        >
+          {poiCollectionsSection}
+        </Conditional>
+
+        <Conditional if={availableFilteredOutTours?.length}>
+          <>
+            <Text
+              textStyle={
+                isMobile
+                  ? 'Semantics/Heading/Medium'
+                  : 'Semantics/Display/Small'
+              }
+              mx={'space.24'}
+              className="poi-filtered-out-products"
+            >
+              {strings.OTHER_EXPERIENCES}
+            </Text>
+
+            {availableFilteredOutTours?.map(
+              (tour: Record<string, any>, index: number) => {
+                if (index === 1) {
+                  return (
+                    <>
+                      {poiCollectionsSection}
+                      {getProductCardFromTourAndIndex(tour, index)}
+                    </>
+                  );
+                }
+                return getProductCardFromTourAndIndex(tour, index);
+              }
+            )}
+          </>
         </Conditional>
       </ProductContainer>
       <Conditional

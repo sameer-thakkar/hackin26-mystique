@@ -42,7 +42,7 @@ const StyledHeader = styled.header<{
   $isEntertainmentMB: boolean;
   $isPillBarSticky: boolean;
   $isDarkTheme?: boolean;
-  $isAirportTransfersMB: boolean;
+  $hideHeaderBoxShadow: boolean;
   $isAirportTransfersLandingPage: boolean;
 }>`
   height: 80px;
@@ -50,11 +50,11 @@ const StyledHeader = styled.header<{
   background: ${({
     theme: { primaryBackground },
     $isDarkTheme,
-    $isAirportTransfersMB,
+    $hideHeaderBoxShadow,
     $isAirportTransfersLandingPage,
   }) => {
     if ($isDarkTheme) {
-      if ($isAirportTransfersMB || $isAirportTransfersLandingPage) {
+      if ($hideHeaderBoxShadow || $isAirportTransfersLandingPage) {
         return COLORS.PURPS.DARK_TONE_1;
       } else {
         return 'linear-gradient(180deg, #140029 0%, rgba(20, 0, 41, 0) 100%)';
@@ -75,13 +75,13 @@ const StyledHeader = styled.header<{
     $isEntertainmentMB,
     $isSticky,
     $isPillBarSticky,
-    $isAirportTransfersMB,
+    $hideHeaderBoxShadow,
   }) =>
     !$isTop &&
     !$isEntertainmentMB &&
     !$isPillBarSticky &&
     $isSticky &&
-    !$isAirportTransfersMB &&
+    !$hideHeaderBoxShadow &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
   &:hover {
@@ -116,12 +116,12 @@ const StyledHeader = styled.header<{
     ${({
       $isEntertainmentMB,
       $isPillBarSticky,
-      $isAirportTransfersMB,
+      $hideHeaderBoxShadow,
       $isDarkTheme,
     }) =>
-      ($isEntertainmentMB || $isPillBarSticky || $isAirportTransfersMB) &&
+      ($isEntertainmentMB || $isPillBarSticky || $hideHeaderBoxShadow) &&
       !$isDarkTheme &&
-      `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
+      `border-bottom: 1px solid ${COLORS.GRAY.G7};`}
   }
 `;
 
@@ -359,7 +359,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
     categoryHeaderMenu,
     categoryHeaderMenuExists = false,
     isDarkTheme = false,
-    isAirportTransfersMB = false,
+    hideHeaderBoxShadow = false,
     hideLangCurrencySelector = false,
     className,
     isAirportTransfersLandingPage = false,
@@ -463,7 +463,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
       $isSticky={isHeaderSticky}
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
-      $isAirportTransfersMB={isAirportTransfersMB}
+      $hideHeaderBoxShadow={hideHeaderBoxShadow}
       $isAirportTransfersLandingPage={isAirportTransfersLandingPage}
       $isPillBarSticky={isPillBarSticky}
       $isDarkTheme={showDarkHeader}

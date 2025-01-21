@@ -11,7 +11,13 @@ export default defineConfig({
     './node_modules/@headout/eevee/dist/atoms/**/*.{js,jsx,ts,tsx}',
     './node_modules/@headout/espeon/dist/**/*.{js,jsx,ts,tsx}',
   ],
-  exclude: [],
+  exclude: [
+    '**/*.d.ts',
+    '**/*/types.{js,jsx,ts,tsx}',
+    './pages/api/**/*.{js,jsx,ts,tsx}',
+    './app/src/(utils|api|hooks)/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@headout/espeon/dist/(constants|hooks|types|utils)/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {},
   },

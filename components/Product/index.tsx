@@ -549,6 +549,11 @@ const Product = (props: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      ...(showBoosters && {
+        [ANALYTICS_PROPERTIES.BOOSTER_NAME]: props.poiBooster
+          ? BoosterType[props.poiBooster as keyof typeof BoosterType]
+          : null,
+      }),
       [ANALYTICS_PROPERTIES.DISCOUNT]:
         isScratchPriceEnabled && originalPrice > finalPrice,
       [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
@@ -881,10 +886,12 @@ const Product = (props: any) => {
   ]);
 
   const boosterTypeIfShown = useMemo(() => {
-    const boosterInfo = showBoosters && checkForBooster(uid, tgid);
+    const boosterInfo =
+      showBoosters && (checkForBooster(uid, tgid) || props.poiBooster);
+
     if (boosterInfo) setBoosterType(boosterInfo);
     return boosterInfo;
-  }, [tgid, showBoosters]);
+  }, [tgid, showBoosters, props.poiBooster, uid]);
 
   const {
     highlightsAndInclusionsRichText,

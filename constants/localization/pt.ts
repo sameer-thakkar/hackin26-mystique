@@ -1337,6 +1337,27 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     GUIDELINES:
       'Diretrizes: o plano se torna inválido se o cliente validar ou utilizar qualquer parte do ingresso antes do cancelamento. Nesses casos, aplicam-se as políticas de cancelamento padrão e nenhum reembolso adicional será concedido.',
   },
+
+  FILTERS: {
+    DATE_SELECTION: 'Escolha a data',
+    DEALS: 'Ofertas',
+    ENTRY_TICKETS: 'Ingressos',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Favorito',
+    SPECIAL_DEAL: 'Oferta especial',
+  },
+
+  OTHER_EXPERIENCES: 'Outras experiências',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Aproveite o melhor de {0}',
+    TOP_EXPERIENCE_PICKS: 'Melhores experiências',
+    EXPERIENCES: 'Mais de {0} atrações',
+    CITY_YOUR_WAY: '{0} do seu jeito',
+    DISCOVER_MORE: 'Descobrir mais',
+  },
   AGGREGATED_COUNTRIES:
     'Visitantes de <strong>mais de {1} países</strong>, incluindo <strong>{0}</strong>, amaram esta experiência',
 };

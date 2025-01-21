@@ -1389,6 +1389,27 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     GUIDELINES:
       'Normativa: el plan queda anulado si el participante canjea o utiliza cualquier parte de la entrada antes de la cancelación. En este caso, se aplicarán las políticas de cancelación habituales y no se efectuará ningún reembolso adicional.',
   },
+
+  FILTERS: {
+    DATE_SELECTION: 'Selecciona una fecha',
+    DEALS: 'Ofertas',
+    ENTRY_TICKETS: 'Entradas',
+  },
+
+  BOOSTERS: {
+    TOP_RATED: 'Mejor valorado',
+    SPECIAL_DEAL: 'Oferta especial',
+  },
+
+  OTHER_EXPERIENCES: 'Otras experiencias',
+
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Lo más destacado: {0}',
+    TOP_EXPERIENCE_PICKS: 'Mejores experiencias',
+    EXPERIENCES: 'Más de {0} experiencias',
+    CITY_YOUR_WAY: 'Descubre {0}',
+    DISCOVER_MORE: 'Ver más',
+  },
   AGGREGATED_COUNTRIES:
     'Esta experiencia le ha encantado a visitantes procedentes de <strong>{0}</strong> y <strong>de {1} países</strong> más',
 };

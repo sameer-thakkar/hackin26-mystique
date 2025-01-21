@@ -125,6 +125,7 @@ type StaticBannerProps = {
   qnaSections?: QnAContainer[];
   showQnaExperiment?: boolean;
   collectionId?: number;
+  reducedMwebMarginOnDisclaimer?: boolean;
 };
 
 type CollectionVideo = {
@@ -213,6 +214,7 @@ const StaticBanner = ({
   qnaSections,
   showQnaExperiment = false,
   collectionId,
+  reducedMwebMarginOnDisclaimer = false,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -437,6 +439,7 @@ const StaticBanner = ({
             <DisclaimerText
               hasParentChip={displayParentChip}
               $forceMobile={forceMobile}
+              $reducedMargin={reducedMwebMarginOnDisclaimer}
               $showQnaExperiment={showQnaExperiment}
             >
               {bannerSubTextIcon?.()}
