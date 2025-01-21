@@ -1250,6 +1250,7 @@ const Product = (props: any) => {
         setIsUnScrolled(true);
         popupController.current?.open();
       }}
+      productRef={productRef}
     />
   ) : (
     <HighlightTabs

@@ -17,6 +17,11 @@ import ChevronLeftCircle from 'assets/chevronLeftCircle';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
+/**
+ * NOTE: ".rich-text p" margin-bottom has been removed as rich-text slice within
+ *   card-grid is used when google map embeddings are added. This CSS removes
+ *   the bottom margin that creates an empty space.
+ */
 // @ts-expect-error TS(2339): Property 'cardsInARow' does not exist on type 'Pic... Remove this comment to see the full error message
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;

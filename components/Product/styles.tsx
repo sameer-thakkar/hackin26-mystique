@@ -1109,6 +1109,20 @@ export const itineraryStyles = css`
 `;
 
 export const StyledProductCard = styled.div<IStyledProductCard>`
+  height: ${({
+    isTicketCard,
+    isV3Design,
+    isMobile,
+    $isNewVerticalsProductCard,
+    $isPopup,
+  }) =>
+    $isPopup ||
+    $isNewVerticalsProductCard ||
+    isTicketCard ||
+    isV3Design ||
+    isMobile
+      ? 'max-content'
+      : '344px'};
   ${({ collapsed, defaultOpen, isMobile, $isPopup }) =>
     collapsed && !defaultOpen && !isMobile && !$isPopup
       ? `
@@ -1388,6 +1402,23 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   &:hover, &:active {
     cursor: pointer;
+  }
+
+  .card-img {
+    height: ${({
+      isTicketCard,
+      isV3Design,
+      isMobile,
+      $isNewVerticalsProductCard,
+      $isPopup,
+    }) =>
+      $isPopup ||
+      $isNewVerticalsProductCard ||
+      isTicketCard ||
+      isV3Design ||
+      isMobile
+        ? '100%'
+        : '344px'};
   }
 `;
 

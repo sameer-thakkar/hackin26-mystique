@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
@@ -26,6 +26,7 @@ type Props = {
   ctaHasBackground?: boolean;
   showMoreDetails?: boolean;
   isV3Design?: boolean;
+  productRef?: React.RefObject<HTMLDivElement>;
 };
 
 const Highlights = ({
@@ -38,16 +39,27 @@ const Highlights = ({
   ctaHasBackground = false,
   showMoreDetails = false,
   isV3Design = false,
+  productRef,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [showViewMoreAsOverlay, setShowViewMoreAsOverlay] = useState(false);
   const { uid } = useRecoilValue(appAtom);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setShowViewMoreAsOverlay(
-        contentRef.current.querySelector('ul')!.offsetHeight >= 240
+    let totalOffset = 0;
+
+    if (productRef && productRef?.current) {
+      const titleElem = productRef.current?.querySelector(
+        "[data-card-section='Title']"
       );
+      if (titleElem) {
+        totalOffset += (titleElem as HTMLElement).offsetHeight;
+      }
+    }
+
+    if (contentRef.current) {
+      totalOffset += contentRef.current.querySelector('ul')!.offsetHeight;
+      setShowViewMoreAsOverlay(totalOffset >= 240);
     }
   }, []);
 
