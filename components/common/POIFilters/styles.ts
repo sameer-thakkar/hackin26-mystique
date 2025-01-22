@@ -29,17 +29,19 @@ export const poiFiltersWrapperStyle = css({
   },
 
   '@media (min-width: 768px)': {
-    '@media (min-width: 768px)': {
-      maxWidth: '75rem',
-      marginX: 'auto',
-      marginTop: '2.25rem',
-      marginBottom: '-12px',
+    maxWidth: '75rem',
+    marginX: 'auto',
+    marginTop: '2.25rem',
+    marginBottom: '-12px',
 
-      position: 'static',
+    position: 'static',
 
-      '&.sticky': {
-        borderBottom: 'none',
-      },
+    '&.sticky': {
+      borderBottom: 'none',
+    },
+
+    '&[data-enable-sticky="false"]': {
+      display: 'none',
     },
   },
 });
