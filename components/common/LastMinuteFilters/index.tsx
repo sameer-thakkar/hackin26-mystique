@@ -16,6 +16,7 @@ import {
   FilterButton,
   FiltersContainer,
   FiltersWrapper,
+  FiltersWrapperTreatment,
   Footer,
   SkeletonWrapper,
 } from 'components/common/LastMinuteFilters/styles';
@@ -238,7 +239,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
 
   if (isSinglePillUI && inventoryData && !isLoading) {
     return (
-      <FiltersWrapper $isSticky>
+      <FiltersWrapperTreatment $isSticky>
         <SinglePillFilters
           poiFilteredTours={poiFilteredTours ?? []}
           inventoryData={inventoryData}
@@ -246,7 +247,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
           selectedDateTimeFilterIndex={selectedDateTimeFilterButtonIndex}
           onFilterChange={onFilterChange}
         />
-      </FiltersWrapper>
+      </FiltersWrapperTreatment>
     );
   }
 

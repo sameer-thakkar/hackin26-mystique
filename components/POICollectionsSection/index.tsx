@@ -199,6 +199,7 @@ export const POICollectionsSection = ({
         <DiscoverMoreDrawer
           collectionsList={collectionsList}
           onClose={() => setIsDiscoverMoreDrawerOpen(false)}
+          cityName={mbCity}
         />
       </Conditional>
     </section>

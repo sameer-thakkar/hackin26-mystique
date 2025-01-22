@@ -16,6 +16,7 @@ import {
 export const DiscoverMoreDrawer = ({
   onClose,
   collectionsList,
+  cityName,
 }: TDiscoverMoreDrawerProps) => {
   return (
     <Drawer
@@ -38,7 +39,10 @@ export const DiscoverMoreDrawer = ({
     >
       <div className={drawerBodyStyles}>
         <Text className={headerTextStyles}>
-          {strings.POI_COLLECTIONS_SECTION.CITY_YOUR_WAY}
+          {strings.formatString(
+            strings.POI_COLLECTIONS_SECTION.CITY_YOUR_WAY,
+            cityName
+          )}
         </Text>
 
         <MustSeeAttractionsSVG

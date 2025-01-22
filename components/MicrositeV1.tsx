@@ -1343,7 +1343,11 @@ const MicrositeV1 = (props: any) => {
           />
         </Conditional>
         <Conditional if={isA1orC1MB(taggedMbType) && !isAirportTransfersMB}>
-          <div className={poiFiltersWrapperStyle} id="POI_FILTERS">
+          <div
+            className={poiFiltersWrapperStyle}
+            id="POI_FILTERS"
+            data-enable-sticky={isPOIFiltersEnabled}
+          >
             <Conditional if={isMobile}>
               <LastMinuteFilters
                 setOrderedFilteredTours={setOrderedFilteredTours}

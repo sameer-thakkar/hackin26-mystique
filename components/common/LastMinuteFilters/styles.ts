@@ -124,7 +124,7 @@ export const FiltersContainer = styled.div`
   }
 `;
 
-export const FiltersWrapper = styled.div<{ $isSticky?: boolean }>`
+export const FiltersWrapperTreatment = styled.div<{ $isSticky?: boolean }>`
   padding: 1.5rem 0 1.25rem 0;
   margin-bottom: 1rem;
   background: white;
@@ -142,6 +142,11 @@ export const FiltersWrapper = styled.div<{ $isSticky?: boolean }>`
   &.sticky {
     box-shadow: 0px 4px 8px 0px #0000001f;
   }
+`;
+
+export const FiltersWrapper = styled(FiltersWrapperTreatment)`
+  padding: 1.5rem 0 0 0;
+  margin-bottom: 1rem;
 `;
 
 export const Footer = styled.div`

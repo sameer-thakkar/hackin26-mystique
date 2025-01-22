@@ -379,7 +379,7 @@ const PopulateProducts: any = (props: any) => {
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
   useEffect(() => {
-    if (!isCruisesRevamp && productsLoading) {
+    if (!isCruisesRevamp && productsLoading && !props.isPOIFiltersEnabled) {
       scroller.scrollTo('products-container', {
         duration: 600,
         offset: -120,

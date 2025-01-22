@@ -3,6 +3,7 @@ import { Text } from '@headout/eevee';
 import { css } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import Drawer, { PanelAnchor } from 'components/common/Drawer';
+import { scrollToProductsContainerTop } from 'components/common/POIFilters/utils';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -61,6 +62,8 @@ export const SinglePillFilters = ({
     setTimeout(() => {
       closeHandler();
     }, 200);
+
+    scrollToProductsContainerTop(true);
   };
 
   const isDateAvailable = (date: string | null) => {
