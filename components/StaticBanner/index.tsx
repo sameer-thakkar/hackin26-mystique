@@ -195,7 +195,6 @@ const StaticBanner = ({
   bannerSubText,
   shouldDisplayTrustBoosters,
   isNonPoiMB = false,
-  isNonPoiCollectionMB = false,
   bannerDescriptors,
   cityName,
   isHOHO,
@@ -224,7 +223,7 @@ const StaticBanner = ({
       ? `<span class='bold-city'>${cityName}</span><br/>${strings.HOHO.HOHO}`
       : bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0] || {};
-  const hideBanner = !isHOHO && isNonPoiCollectionMB && !bannerVideo;
+  const hideBanner = !isHOHO && isNonPoiMB && !bannerVideo;
 
   const finalCollectionDetails = isHOHORevamp
     ? { averageRating: 4.3, ratingsCount: 5193 }
