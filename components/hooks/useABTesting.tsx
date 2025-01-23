@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { appAtom } from 'store/atoms/app';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
-import { EXPERIMENT_NAMES, EXPERIMENTS } from 'const/experiments';
+import { EXPERIMENT_NAMES, EXPERIMENTS, VARIANTS } from 'const/experiments';
 import { QUERY_PARAMS } from 'const/index';
 
 const DEFAULT_VARIANT = 'DEFAULT_VARIANT';
@@ -35,7 +35,16 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   const fullRolloutVariant =
     experimentObject?.bucketName[fullRolloutIndex] || '';
 
-  const experimentOverrideVariant = experimentOverride as string;
+  let experimentOverrideVariant = null;
+  if (experimentOverride === VARIANTS.CONTROL)
+    experimentOverrideVariant = VARIANTS.CONTROL;
+  else if (
+    typeof experimentOverride === 'string' &&
+    experimentOverride.substring(0, 3).toLowerCase() ===
+      experimentNameKey.substring(0, 3).toLowerCase()
+    // Here we are comparing the first 3 letters of the experiment name to the override experiment query
+  )
+    experimentOverrideVariant = experimentOverride.substring(4);
   const [variant, setVariant] = React.useState<string | null>(
     experimentOverrideVariant || fullRolloutVariant || DEFAULT_VARIANT
   );

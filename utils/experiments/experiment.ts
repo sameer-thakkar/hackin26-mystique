@@ -5,6 +5,7 @@ import {
   numberOfSetBits as numberOfSetBitsfromIntegerUtils,
 } from 'utils/integerUtils';
 import { getQueryObject } from 'utils/urlUtils';
+import { VARIANTS } from 'const/experiments';
 import { COOKIE } from 'const/index';
 
 class Experiment {
@@ -86,13 +87,17 @@ class Experiment {
         ? getQueryObject(window?.location)?.[COOKIE.EXPERIMENT_OVERRIDE] ??
           Cookies.get(COOKIE.EXPERIMENT_OVERRIDE)
         : null;
-    if (experimentOverride && this.bucketName?.includes?.(experimentOverride))
-      return experimentOverride;
+    let experimentOverrideVariant = null;
+    if (experimentOverride === VARIANTS.CONTROL)
+      experimentOverrideVariant = VARIANTS.CONTROL;
     else if (
-      experimentOverride &&
-      this.bucketName?.includes?.(experimentOverride.replaceAll('_', ' '))
+      typeof experimentOverride === 'string' &&
+      experimentOverride.substring(0, 3).toLowerCase() ===
+        this.experimentName.substring(0, 3).toLowerCase()
+      // Here we are comparing the first 3 letters of the experiment name to the override experiment query
     )
-      return experimentOverride.replaceAll('_', ' ');
+      experimentOverrideVariant = experimentOverride.substring(4);
+    if (experimentOverrideVariant) return experimentOverride;
     let bucket = this.bucketName[0];
     if (uniqueId !== null) {
       const hsidString = atob(uniqueId);
