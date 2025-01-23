@@ -82,13 +82,13 @@ export const BreadcrumbsContainer = styled.div<{
       !$isCatOrSubCatPage &&
       !$isNewsPage &&
       !$isRevampedShoulderPage &&
-      `margin-bottom: 55px; padding: 6.5px 16px 0px`};
+      `margin-bottom: 52px; padding: 6.5px 16px 0px`};
 
     ${({ $isContentPage }) => $isContentPage && `margin-left: 0;`};
     ${({ $isContentPage, $isRevampedShoulderPage }) =>
       $isContentPage &&
       !$isRevampedShoulderPage &&
-      `margin-bottom: 55px; padding-top: 6.5px;`};
+      `margin-bottom: 52px; padding-top: 6.5px;`};
     ${({ $isCategoryPage }) => $isCategoryPage && `padding: 0; margin:0;`};
     ${({ $isShowPage }) => $isShowPage && `margin: 4rem 0 0; width: 100%`};
     ${({ $isVenuePage }) => $isVenuePage && `margin: 0; width: 100%`};
