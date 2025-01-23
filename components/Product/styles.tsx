@@ -1417,7 +1417,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       isTicketCard ||
       isV3Design ||
       isMobile
-        ? '100%'
+        ? 'auto'
         : '344px'};
   }
 `;
