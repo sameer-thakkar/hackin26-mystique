@@ -25,6 +25,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     hideIfFieldsPresent?: string[];
     getIcon?: (value: Record<string, any>) => () => JSX.Element;
     getLabel?: (value: Record<string, any>) => string;
+    qaMarker: string;
   }
 > = {
   [ItineraryDescriptorsTypes.TOTAL_DURATION]: {
@@ -41,12 +42,14 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       });
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
+    qaMarker: 'itinerary-total-duration',
   },
   [ItineraryDescriptorsTypes.FREQUENCY]: {
     label: strings.ITINERARY.DESCRIPTORS.FREQUENCY,
     icon: descriptorIcons.FREQUENCY,
     fieldIdentifier: ['frequency'],
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FREQUENCY,
+    qaMarker: 'itinerary-frequency',
   },
   [ItineraryDescriptorsTypes.FIRST_DEPARTURE_TIME]: {
     label: strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE_TIME,
@@ -60,6 +63,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       });
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE_TIME,
+    qaMarker: 'itinerary-first-departure-time',
   },
   [ItineraryDescriptorsTypes.LAST_DEPARTURE_TIME]: {
     label: strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE_TIME,
@@ -73,6 +77,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       });
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE_TIME,
+    qaMarker: 'itinerary-last-departure-time',
   },
   [ItineraryDescriptorsTypes.FOOD_AND_DRINKS]: {
     label: strings.ITINERARY.DESCRIPTORS.FOOD_AND_DRINKS,
@@ -84,6 +89,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       window.open(url);
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FOOD_AND_DRINKS,
+    qaMarker: 'itinerary-food-and-drinks',
   },
   [ItineraryDescriptorsTypes.MODE_OF_TRANSPORT]: {
     label: strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
@@ -98,6 +104,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       return modeOfTravel.localisedLabel;
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.MODE_OF_TRANSPORT,
+    qaMarker: 'itinerary-mode-of-transport',
   },
   [ItineraryDescriptorsTypes.FIRST_DEPARTURE]: {
     label: strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE,
@@ -113,6 +120,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       })}`;
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.FIRST_DEPARTURE,
+    qaMarker: 'itinerary-first-departure',
   },
   [ItineraryDescriptorsTypes.LAST_DEPARTURE]: {
     label: strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE,
@@ -125,6 +133,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       })}`;
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.LAST_DEPARTURE,
+    qaMarker: 'itinerary-last-departure',
   },
 };
 

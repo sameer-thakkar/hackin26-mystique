@@ -10,6 +10,7 @@ const SubSection = ({
   cards,
   childParentSectionMap,
   hasAdditionalContent,
+  onCardClick,
 }: TSubSectionProps) => {
   const { setActiveItineraryStopId, selectedSubStopId, setSelectedSubStopId } =
     useItinerary();
@@ -18,6 +19,7 @@ const SubSection = ({
     const parentSectionId = childParentSectionMap[subStopId];
     setSelectedSubStopId(subStopId);
     setActiveItineraryStopId(parentSectionId);
+    onCardClick?.(subStopId);
   };
 
   const mapViewCardStyles = mapViewCardStylesRecipe({

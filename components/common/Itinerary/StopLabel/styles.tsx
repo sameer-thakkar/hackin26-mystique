@@ -12,6 +12,7 @@ export const stopLabelStylesRecipe = sva({
       padding:
         'token(spacing.space.4) token(spacing.space.8) token(spacing.space.6)',
       background: 'core.purps.700',
+      flexShrink: 0,
     },
     text: {
       letterSpacing: 'ls.4',

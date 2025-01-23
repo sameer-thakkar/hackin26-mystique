@@ -12,4 +12,5 @@ export type TSubSectionProps = {
     }[];
   childParentSectionMap: Record<number, number>;
   hasAdditionalContent?: boolean;
+  onCardClick?: (subStopId: number) => void;
 };

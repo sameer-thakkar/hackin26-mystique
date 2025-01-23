@@ -105,7 +105,6 @@ const MultiplePoints = ({
         <SinglePointContainer $showMoreSection onClick={() => onItemClick(3)}>
           <p className="show-more-count">
             {strings.formatString(strings.ITINERARY.MORE, points.length - 3)}
-            more
           </p>
         </SinglePointContainer>
       </Conditional>

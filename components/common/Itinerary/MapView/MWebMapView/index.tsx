@@ -172,6 +172,15 @@ const MWebMapView = ({
     skipZoomToMapMarker.current = true;
   };
 
+  const handleNearbyCardClick = (payload: {
+    sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>;
+    subStopId: number;
+  }) => {
+    mapController.current?.zoomIntoSection?.({
+      childSection: payload.sectionDetails as ChildSection,
+    });
+  };
+
   const clearActiveSubSection = (subStopId: number, parentStopId: number) => {
     const parent = childParentSectionMap[subStopId];
     if (parentStopId !== parent) {
@@ -241,6 +250,7 @@ const MWebMapView = ({
                         stopLabelText={stopLabelText}
                         childParentSectionMap={childParentSectionMap}
                         hideViewDetails={hideViewDetails}
+                        onNearbyCardClick={handleNearbyCardClick}
                       />
                     </Conditional>
                     <Conditional if={!!passby}>

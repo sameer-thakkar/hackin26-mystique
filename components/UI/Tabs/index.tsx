@@ -47,6 +47,7 @@ const Tabs = ({
   hideNavigationArrows,
   tabContainerWidth = '100%',
   markerLeftOffset = 0,
+  dataQAMarker,
 }: PropsWithChildren<TTabsProps>) => {
   const isDesktop = !isMobile();
   const tabsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -167,6 +168,7 @@ const Tabs = ({
       $showLeftArrow={showLeftArrow}
       $showRightArrow={showRightArrow}
       $tabContainerWidth={tabContainerWidth}
+      data-qa-marker={dataQAMarker}
     >
       <div
         className="tab-list-container"

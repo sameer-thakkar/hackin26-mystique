@@ -23,6 +23,7 @@ const ItineraryDescriptors = ({
     onCTAClick,
     getIcon,
     getLabel,
+    qaMarker,
   } = ITINERARY_DESCRIPTORS_DATA[type];
 
   const getValueObject = () => {
@@ -41,7 +42,10 @@ const ItineraryDescriptors = ({
   };
 
   return (
-    <StyledItineraryDescriptorsContainer $componentType={componentType}>
+    <StyledItineraryDescriptorsContainer
+      $componentType={componentType}
+      data-qa-marker={qaMarker}
+    >
       {Icon && (
         <div className="descriptor-icon-container">
           <div className="icon">

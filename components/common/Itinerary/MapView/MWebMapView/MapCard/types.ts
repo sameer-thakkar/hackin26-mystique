@@ -12,6 +12,10 @@ export type TMapViewCardProps = Partial<StopCardProps> &
     stopLabelText?: string;
     childParentSectionMap: Record<number, number>;
     hideViewDetails?: boolean;
+    onNearbyCardClick?: (args: {
+      sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>;
+      subStopId: number;
+    }) => void;
   };
 
 export type TMapViewCardButtonProps = {

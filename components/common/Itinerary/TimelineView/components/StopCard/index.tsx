@@ -310,6 +310,7 @@ const StopCard = ({
         <Conditional
           if={
             hasMultiPoints &&
+            !isMobile &&
             (!isOpen || isReducedVariant) &&
             endPointIsNotSameAsStart
           }

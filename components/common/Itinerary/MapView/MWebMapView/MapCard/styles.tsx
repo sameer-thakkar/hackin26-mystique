@@ -4,13 +4,13 @@ export const mapViewCardStylesRecipe = sva({
   slots: [
     'root',
     'card',
+    'headingContainer',
     'heading',
     'nearbyThingsContainer',
     'nearbyThingsHeading',
     'nearbyThingsCarousel',
     'ctaContainer',
     'cta',
-    'stopLabelContainer',
   ],
   base: {
     root: {
@@ -47,10 +47,19 @@ export const mapViewCardStylesRecipe = sva({
       border: '1px solid token(colors.semantic.surface.light.grey.1)',
       borderRadius: 'radius.12',
     },
+    headingContainer: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: 'space.8',
+      marginBottom: 'space.8',
+    },
     heading: {
       textStyle: 'Semantics/Heading/Regular',
       color: 'core.grey.800',
-      margin: '0 0 token(spacing.space.8)',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      margin: '0',
+      whiteSpace: 'nowrap',
     },
     nearbyThingsContainer: {
       display: 'flex',
@@ -80,11 +89,6 @@ export const mapViewCardStylesRecipe = sva({
       display: 'flex',
       gap: 'space.4',
       alignItems: 'center',
-    },
-    stopLabelContainer: {
-      position: 'absolute',
-      top: 'space.12',
-      right: 'space.12',
     },
   },
 });

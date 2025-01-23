@@ -38,6 +38,7 @@ const MapViewCard = ({
   stopLabelText,
   childParentSectionMap,
   hideViewDetails = false,
+  onNearbyCardClick,
 }: TMapViewCardProps) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const { details, id: stopId } = sectionDetails ?? {};
@@ -77,6 +78,13 @@ const MapViewCard = ({
     setIsItineraryDetailsSwipeSheetOpen(true);
   };
 
+  const handleNearbyCardClick = (subStopId: number) => {
+    onNearbyCardClick?.({
+      sectionDetails: sectionDetails!,
+      subStopId,
+    });
+  };
+
   const hasDescriptors = descriptors
     ? checkIfDescriptorsExist(descriptors)
     : false;
@@ -102,16 +110,18 @@ const MapViewCard = ({
       id={`map-view-card-${isPassBy ? passById : stopId}`}
     >
       <div className={mapViewCardStyles.card} style={mapCardDynamicStyles}>
-        <Conditional if={!!stopLabelText}>
-          <div className={mapViewCardStyles.stopLabelContainer}>
+        <div className={mapViewCardStyles.headingContainer}>
+          <h3 className={mapViewCardStyles.heading}>
+            {isPassBy ? title : name}
+          </h3>
+          <Conditional if={!!stopLabelText}>
             <StopLabel
               labelText={stopLabelText!}
               type={isPassBy ? EStopLabelType.PassBy : EStopLabelType.Stop}
             />
-          </div>
-        </Conditional>
+          </Conditional>
+        </div>
 
-        <h3 className={mapViewCardStyles.heading}>{isPassBy ? title : name}</h3>
         <Conditional if={!!descriptors}>
           <Descriptors
             {...descriptors}
@@ -121,6 +131,7 @@ const MapViewCard = ({
         </Conditional>
         <Conditional if={!!highlights?.length}>
           <SubSection
+            onCardClick={handleNearbyCardClick}
             heading={strings.ITINERARY.SUB_SECTION_HEADING.HIGHLIGHTS}
             cards={highlights}
             childParentSectionMap={childParentSectionMap}
@@ -129,6 +140,7 @@ const MapViewCard = ({
         </Conditional>
         <Conditional if={!!nearbyThings?.length && !highlights.length}>
           <SubSection
+            onCardClick={handleNearbyCardClick}
             heading={strings.ITINERARY.SUB_SECTION_HEADING.NEARBY_THINGS_TO_DO}
             cards={nearbyThings}
             childParentSectionMap={childParentSectionMap}

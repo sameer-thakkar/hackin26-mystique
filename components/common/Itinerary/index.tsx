@@ -119,9 +119,13 @@ const Itinerary = ({
   };
 
   return (
-    <>
+    <div data-qa-marker="itinerary">
       <Conditional if={showTitle}>
-        <h6 id="itinerary-section-title" data-itinerary-section-title="true">
+        <h6
+          id="itinerary-section-title"
+          data-itinerary-section-title="true"
+          data-qa-marker="itinerary-section-title"
+        >
           {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
         </h6>
       </Conditional>
@@ -135,6 +139,7 @@ const Itinerary = ({
             autoFocusOnSelectedTab={!isDesktop}
             tabContainerWidth={isDesktop ? '100%' : 'calc(100% + 2rem)'}
             markerLeftOffset={isDesktop ? 0 : 16}
+            dataQAMarker="itinerary-route-tabs"
           />
         </Conditional>
         <Conditional
@@ -149,6 +154,7 @@ const Itinerary = ({
               $isVisible={itineraryItem.id === activeItineraryData?.id}
               key={itineraryItem.id}
               $hasTabs={itineraryData?.length > 1}
+              data-qa-marker="itinerary-descriptors-carousel"
             >
               <ItineraryDescriptorsCarousel
                 itinerary={itineraryItem}
@@ -198,7 +204,7 @@ const Itinerary = ({
       <Conditional if={itineraryViewMode === ItineraryViewMode.MAP}>
         {activeItineraryData && <MapView itinerary={activeItineraryData} />}
       </Conditional>
-    </>
+    </div>
   );
 };
 

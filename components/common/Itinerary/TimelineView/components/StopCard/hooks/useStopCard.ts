@@ -76,8 +76,7 @@ const useStopCard = ({
       isStart || isEnd
         ? subCards
             .filter(
-              ({ sectionDetails }) =>
-                sectionDetails?.type === SECTION_TYPE.START_LOCATION
+              ({ sectionDetails }) => sectionDetails?.type !== SECTION_TYPE.STOP
             )
             .map(({ sectionDetails }) => ({
               image: sectionDetails?.details?.mediaUrls?.[0],
@@ -143,8 +142,7 @@ const useStopCard = ({
   }, []);
 
   const isStopSectionClickable =
-    (isDesktop && !hasMultiPoints) ||
-    (!isDesktop && endPointIsNotSameAsStart && !hasMultiPoints);
+    (isDesktop && !hasMultiPoints) || (!isDesktop && allowOpen);
 
   const handleStopSectionClick = () => {
     if (isStopSectionClickable) {

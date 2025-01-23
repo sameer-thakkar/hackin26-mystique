@@ -6,6 +6,7 @@ export type TTabsProps = {
   hideNavigationArrows?: boolean;
   tabContainerWidth?: string;
   markerLeftOffset?: number;
+  dataQAMarker?: string;
 };
 
 export type TTabPanelProps = {
