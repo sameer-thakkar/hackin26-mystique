@@ -20,7 +20,7 @@ export const SectionHeading = styled.div`
   border-left: 0.25rem solid ${COLORS.GRAY.G2};
 
   h2 {
-    margin-left: 1rem;
+    margin-left: 1rem !important;
     ${expandFontToken(FONTS.DISPLAY_SMALL)}
     color: ${COLORS.GRAY.G2};
   }
