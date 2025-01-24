@@ -52,6 +52,8 @@ export const mapViewCardStylesRecipe = sva({
       alignItems: 'flex-start',
       gap: 'space.8',
       marginBottom: 'space.8',
+      justifyContent: 'space-between',
+      width: '100%',
     },
     heading: {
       textStyle: 'Semantics/Heading/Regular',
