@@ -97,7 +97,7 @@ class Experiment {
       // Here we are comparing the first 3 letters of the experiment name to the override experiment query
     )
       experimentOverrideVariant = experimentOverride.substring(4);
-    if (experimentOverrideVariant) return experimentOverride;
+    if (experimentOverrideVariant) return experimentOverrideVariant;
     let bucket = this.bucketName[0];
     if (uniqueId !== null) {
       const hsidString = atob(uniqueId);
