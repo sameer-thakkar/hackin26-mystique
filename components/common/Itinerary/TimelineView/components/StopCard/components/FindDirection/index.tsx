@@ -27,7 +27,7 @@ const FindDirection = ({
   const showText = typeof show === 'boolean' ? show : show.text;
 
   return (
-    <Link href={url} passHref>
+    <Link href={url} passHref legacyBehavior>
       <Container
         $iconOnly={!showText && showIcon}
         $hoverAnimation={hoverAnimation}

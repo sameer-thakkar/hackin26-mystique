@@ -1221,7 +1221,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     HEADING: 'Erlebnisplan',
     VIEW_ITINERARY: 'Plan anzeigen',
     VIEW_DETAILS: 'Details anzeigen',
-    PASSES_BY_SECTION_HEADING: 'Entlang der Route',
+    PASSES_BY_SECTION_HEADING: 'Teil der Route',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Highlights',
       NEARBY_THINGS_TO_DO: 'Erlebnisse in der Nähe',

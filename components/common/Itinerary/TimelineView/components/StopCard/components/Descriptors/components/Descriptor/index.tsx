@@ -21,7 +21,6 @@ const Descriptor = ({
         $size={size}
         $color={color}
         $bold={bold}
-        onClick={(e: any) => e.stopPropagation()}
       >
         {icon}
         <p className="descriptor-text">{text}</p>
@@ -32,9 +31,7 @@ const Descriptor = ({
     <>
       <Conditional if={url}>
         <Link href={url!}>
-          <a>
-            <Content />
-          </a>
+          <Content />
         </Link>
       </Conditional>
       <Conditional if={!url}>

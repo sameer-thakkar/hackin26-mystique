@@ -124,7 +124,7 @@ const PassingBySubCard = ({
                 />
               )}
               <Conditional if={!description && link}>
-                <Link href={link!} passHref>
+                <Link href={link!} passHref legacyBehavior>
                   <Cta>
                     CTA copy <TailedArrowSVG />
                   </Cta>
