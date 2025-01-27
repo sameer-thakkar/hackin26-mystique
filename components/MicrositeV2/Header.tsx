@@ -136,7 +136,6 @@ export const StyledHeader = styled.div<IStyledHeader>`
       width: 100vw;
       top: 0;
       display: block;
-      background-color: #150029;
       height: 320px;
       @media (max-width: 789px) {
         height:200px;

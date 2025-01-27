@@ -512,6 +512,10 @@ export const StoreLinks = styled.div<{
         ? theme.footer.secondaryHeadingColor
         : theme.footer.primaryHeadingColor};
   }
+  & img {
+    width: 84px;
+    height: 84px;
+  }
 
   & .image-wrap {
     width: auto;
