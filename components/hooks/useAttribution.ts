@@ -3,7 +3,6 @@ import { NextRouter, useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { getNakedDomain } from 'utils';
 import { partialObjectEquals } from 'utils/prismicUtils/objectUtils';
-import { replacePageQuery } from 'utils/urlUtils';
 import { COOKIE, QUERY_PARAMS, TIME } from 'const/index';
 
 type THOAttribution = {
@@ -27,7 +26,6 @@ const useAttribution = () => {
    */
   const routerRef = useRef<NextRouter>(router);
   const onAttemptAttribution = useCallback(() => {
-    const { query: routerQuery } = routerRef.current;
     const cookies = Cookies.get();
     const { search, host, href } = location;
     const { referrer } = document;
@@ -35,6 +33,12 @@ const useAttribution = () => {
     const searchParams = new URLSearchParams(search ?? '?');
     const ci = searchParams.get(QUERY_PARAMS.ATRIBUTION_CHANNEL_ID);
     const cm = searchParams.get(QUERY_PARAMS.ATRIBUTION_CHANNEL_META);
+    const googleCampaignId = searchParams.get(QUERY_PARAMS.GOOGLE_CAMPAIGN_ID);
+    const facebookCampaignId = searchParams.get(
+      QUERY_PARAMS.FACEBOOK_CAMPAIGN_ID
+    );
+    const bingCampaignId = searchParams.get(QUERY_PARAMS.BING_CAMPAIGN_ID);
+
     const currentHost = getNakedDomain(host);
     /**
      * PS: is likely direct traffic, not guaranteed.
@@ -43,19 +47,17 @@ const useAttribution = () => {
     const isDirectTraffic = !referrer?.length;
     const isInlinkTraffic = referrer?.includes(currentHost);
 
-    // Remove query params from URL
-    if (ci || cm) {
-      delete routerQuery[QUERY_PARAMS.ATRIBUTION_CHANNEL_ID];
-      delete routerQuery[QUERY_PARAMS.ATRIBUTION_CHANNEL_META];
-      searchParams.delete(QUERY_PARAMS.ATRIBUTION_CHANNEL_ID);
-      searchParams.delete(QUERY_PARAMS.ATRIBUTION_CHANNEL_META);
-      const query: Record<string, any> = {};
-      const params = searchParams.entries();
-      Array.from(params).forEach(([key, value]) => {
-        query[key] = value;
-      });
-      replacePageQuery(query, location.pathname);
-    }
+    const campaignIdsMap = {
+      ...(googleCampaignId && {
+        [QUERY_PARAMS.GOOGLE_CAMPAIGN_ID]: googleCampaignId,
+      }),
+      ...(facebookCampaignId && {
+        [QUERY_PARAMS.FACEBOOK_CAMPAIGN_ID]: facebookCampaignId,
+      }),
+      ...(bingCampaignId && {
+        [QUERY_PARAMS.BING_CAMPAIGN_ID]: bingCampaignId,
+      }),
+    };
 
     if (BLACK_LISTED_ROUTES.some((partialRoute) => href.includes(partialRoute)))
       return;
@@ -81,6 +83,7 @@ const useAttribution = () => {
           ...(cm && { cm }),
           lp: queryStrippedHref,
           ts: Date.now(),
+          ...campaignIdsMap,
         });
         break;
 
@@ -92,6 +95,7 @@ const useAttribution = () => {
           ...(cm && { cm }),
           lp: queryStrippedHref,
           ts: Date.now(),
+          ...campaignIdsMap,
         });
         break;
 
@@ -101,6 +105,7 @@ const useAttribution = () => {
           lp: queryStrippedHref,
           ts: Date.now(),
           ref: referrer,
+          ...campaignIdsMap,
         });
         break;
 
@@ -109,6 +114,7 @@ const useAttribution = () => {
         currentAttr.push({
           lp: queryStrippedHref,
           ts: Date.now(),
+          ...campaignIdsMap,
         });
     }
 

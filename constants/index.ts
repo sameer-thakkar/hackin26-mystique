@@ -1279,6 +1279,9 @@ export const QUERY_PARAMS = {
   FILTER_REVIEWS: 'filter-reviews',
   ATRIBUTION_CHANNEL_ID: 'ci',
   ATRIBUTION_CHANNEL_META: 'cm',
+  GOOGLE_CAMPAIGN_ID: 'gclid',
+  FACEBOOK_CAMPAIGN_ID: 'fbclid',
+  BING_CAMPAIGN_ID: 'msclkid',
 };
 
 export const LOCALE_ORDER = [
