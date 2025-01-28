@@ -88,8 +88,11 @@ class Experiment {
           Cookies.get(COOKIE.EXPERIMENT_OVERRIDE)
         : null;
     let experimentOverrideVariant = null;
-    if (experimentOverride === VARIANTS.CONTROL)
-      experimentOverrideVariant = VARIANTS.CONTROL;
+    if (
+      experimentOverride === VARIANTS.CONTROL ||
+      experimentOverride === VARIANTS.TREATMENT
+    )
+      experimentOverrideVariant = experimentOverride;
     else if (
       typeof experimentOverride === 'string' &&
       experimentOverride.substring(0, 3).toLowerCase() ===
