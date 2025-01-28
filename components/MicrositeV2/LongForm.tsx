@@ -16,7 +16,7 @@ const StyledLongform = styled.div<{
   margin-top: 48px;
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 72px;
+  grid-row-gap: 56px;
   margin-bottom: 72px;
   ${({ noBorder }) =>
     noBorder &&

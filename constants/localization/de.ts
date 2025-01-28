@@ -738,7 +738,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     LONDON_THEATRE_NEWS: 'London Theatre News',
     BROADWAY_SHOW_NEWS: 'Broadway News',
     NEWS_PAGE: 'Aktuelles',
-    REVIEWS_PAGE_BANNER_HEADING: 'Rezensionen für {0}',
+    REVIEWS_PAGE_BANNER_HEADING: '{0} Rezensionen',
   },
   AMENITIES: {
     Restaurant: 'Restaurant',
@@ -955,9 +955,11 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
         'Deals und Neuigkeiten der Theaterwelt direkt zu Ihrem Posteingang',
       SUBHEADING: `Abonnieren Sie unseren Newsletter, um Neuigkeiten und Angebote für Shows vor allen anderen zu erhalten!`,
     },
+    REVIEWS: 'Bewertungen',
+    SHOW_ALL_REVIEWS: 'Alle Bewertungen anzeigen',
   },
   REVIEWS_PAGE: {
-    BANNER_HEADING: 'Rezensionen für {0}',
+    BANNER_HEADING: '{0} Rezensionen',
     REVIEWS_COUNT: '{0} Rezensionen',
     AWESOME: 'Ausgezeichnet',
     GOOD: 'Gut',

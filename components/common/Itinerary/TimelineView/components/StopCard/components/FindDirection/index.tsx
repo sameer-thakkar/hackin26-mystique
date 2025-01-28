@@ -32,7 +32,6 @@ const FindDirection = ({
         $iconOnly={!showText && showIcon}
         $hoverAnimation={hoverAnimation}
         $variant={variant}
-        target="_blank"
         onClick={(e: any) => {
           e.stopPropagation();
         }}

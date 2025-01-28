@@ -144,6 +144,7 @@ export const SubCardHeadingContainer = styled.div<{
           width: 1.625rem;
         }
       `}
+  }
 `;
 
 export const SubCardContentTextContainer = styled.div`

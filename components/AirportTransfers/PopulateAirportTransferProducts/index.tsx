@@ -57,7 +57,7 @@ export const PopulateAirportTransfersProducts = ({
     );
   });
 
-  const cityCountryString = `${city.city}, ${city.country}`;
+  const cityCountryString = `${city.displayName}, ${city.country.displayName}`;
 
   const privateTransfersProductsList =
     availableToursList?.filter(

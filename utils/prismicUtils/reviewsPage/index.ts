@@ -9,7 +9,6 @@ import {
 } from 'utils/apiUtils';
 import { getNewsPageBreadcrumbs as getReviewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { getBreadcrumbLabel } from 'utils/helper';
-import { sentenceCase } from 'utils/stringUtils';
 import { REVIEWS_PAGE_BANNER_HEADING } from 'const/breadcrumbs';
 import {
   CUSTOM_TYPE_VALUES,
@@ -153,13 +152,11 @@ export const getReviewsPageData = async (
    * heading field in reviews page doc.
    **/
   if (breadcrumbsData['level_4']) {
-    breadcrumbsData['level_4'].label = sentenceCase(
-      getBreadcrumbLabel({
-        label: REVIEWS_PAGE_BANNER_HEADING,
-        mbCity: '',
-        showName: tgidData.name,
-      })
-    );
+    breadcrumbsData['level_4'].label = getBreadcrumbLabel({
+      label: REVIEWS_PAGE_BANNER_HEADING,
+      mbCity: '',
+      showName: tgidData.name,
+    });
   }
   const newsLandingPageUrl = getNewsLandingPageUrl(
     newsLandingPageData?.results,

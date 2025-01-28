@@ -34,7 +34,9 @@ const ExpandedGallery = ({
   isMobile = false,
 }: TExpandedGalleryProps) => {
   const [galleryImageIndex, setGalleryImageIndex] = useState(-1);
-  const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(+!!videoUrl);
+  const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(
+    Number(!!videoUrl)
+  );
   const [loadVideo, setLoadVideo] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +45,7 @@ const ExpandedGallery = ({
   };
 
   const onImageLoad = () => {
-    setNumberOfImagesLoaded(numberOfImagesLoaded + 1);
+    setNumberOfImagesLoaded((prevState) => prevState + 1);
   };
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const ExpandedGallery = ({
     }, 200);
   }, []);
 
-  const MAX_LEN = Math.min(3, images.length + +!!videoUrl);
+  const MAX_LEN = Math.min(3, images.length + Number(!!videoUrl));
 
   const onClickHandler = (index: number) => {
     if (MAX_LEN < 2) return;
@@ -70,7 +72,7 @@ const ExpandedGallery = ({
 
   const { height, width } = IMAGE_DIMENSIONS[MAX_LEN - 1];
 
-  const imagesLoaded = numberOfImagesLoaded + 1 >= MAX_LEN - +!!videoUrl;
+  const imagesLoaded = numberOfImagesLoaded + 1 >= MAX_LEN - Number(!!videoUrl);
 
   return (
     <>
@@ -84,21 +86,19 @@ const ExpandedGallery = ({
             <Skeleton key={index} containerClassName="gallery-children" />
           )
         )}
-        {videoUrl && (
-          <>
-            <Skeleton key={2} containerClassName="gallery-children" />
-            {loadVideo ? (
-              <VideoPlayer
-                videoUrl={videoUrl}
-                className="gallery-children"
-                showMuteControls
-                playPauseThreshold={0.3}
-              />
-            ) : (
-              <Skeleton key={3} containerClassName="gallery-children" />
-            )}
-          </>
-        )}
+        <Conditional if={videoUrl}>
+          <Skeleton key={2} containerClassName="gallery-children" />
+          {loadVideo ? (
+            <VideoPlayer
+              videoUrl={videoUrl || ''}
+              className="gallery-children"
+              showMuteControls
+              playPauseThreshold={0.3}
+            />
+          ) : (
+            <Skeleton key={3} containerClassName="gallery-children" />
+          )}
+        </Conditional>
         {images.slice(0, MAX_LEN - (videoUrl ? 1 : 0)).map((image, index) => {
           return (
             <Image
@@ -116,7 +116,7 @@ const ExpandedGallery = ({
               fetchPriority={'high'}
               fill
               onClick={() => onClickHandler(index)}
-              onLoadingComplete={() => onImageLoad()}
+              onLoad={() => onImageLoad()}
             />
           );
         })}

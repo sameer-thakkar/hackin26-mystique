@@ -109,7 +109,6 @@ type StaticBannerProps = {
     averageRating: number;
     ratingsCount: number;
   };
-  city?: string | null;
   subattractionParentChip?: {
     url?: string;
     title?: string;
@@ -126,6 +125,7 @@ type StaticBannerProps = {
   showQnaExperiment?: boolean;
   collectionId?: number;
   reducedMwebMarginOnDisclaimer?: boolean;
+  isAirportTransfersMB?: boolean;
 };
 
 type CollectionVideo = {
@@ -200,7 +200,6 @@ const StaticBanner = ({
   isHOHO,
   isHOHORevamp,
   ratingsAndReviewsData,
-  city,
   subattractionParentChip,
   extraPairs = {},
   onTimingsClick,
@@ -214,6 +213,7 @@ const StaticBanner = ({
   showQnaExperiment = false,
   collectionId,
   reducedMwebMarginOnDisclaimer = false,
+  isAirportTransfersMB = false,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -271,8 +271,8 @@ const StaticBanner = ({
 
   let bannerHeadingWithCityName = null;
 
-  if (city) {
-    bannerHeadingWithCityName = `<span class='airport-transfers'>${city}</span> ${bannerHeading}`;
+  if (isAirportTransfersMB && cityName) {
+    bannerHeadingWithCityName = `<span class='airport-transfers'>${cityName}</span> ${bannerHeading}`;
   }
   const displayParentChip =
     !!subattractionParentChip?.url && !!subattractionParentChip?.title;

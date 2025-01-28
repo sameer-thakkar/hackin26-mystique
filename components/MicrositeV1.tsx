@@ -87,7 +87,6 @@ import {
 import { strings } from 'const/strings';
 import Location from 'assets/location';
 import { DEFAULT_MAGIC_WAND, HOVERED_MAGIC_WAND } from 'assets/magicWand';
-import { TCityInfo } from './AirportTransfers/interface';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
 import CommonHeader from './common/Header';
@@ -1332,13 +1331,9 @@ const MicrositeV1 = (props: any) => {
             isHOHORevamp={showHohoRevamp}
             isHOHO={isHOHO}
             cityName={primaryCity?.displayName}
-            city={
-              isAirportTransfersMB
-                ? (productCardData?.city as TCityInfo)?.city
-                : null
-            }
             isCruisesRevamp={showCruisesFormat}
             reducedMwebMarginOnDisclaimer={isPOIFiltersEnabled}
+            isAirportTransfersMB={isAirportTransfersMB}
             {...qnaExperimentData}
           />
         </Conditional>
@@ -1428,7 +1423,7 @@ const MicrositeV1 = (props: any) => {
             uncategorizedTours={orderedFilteredTours}
             isMobile={isMobile}
             scorpioData={scorpioData}
-            city={productCardData?.city as TCityInfo}
+            city={primaryCity}
             sharedTransferProducts={tourListSection}
             uid={uid}
             currentLanguage={currentLanguage}
