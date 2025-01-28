@@ -8,6 +8,9 @@ declare global {
 
   interface Window {
     dataLayer: Array<any>;
+    Trustpilot?: {
+      loadFromElement: (element: Element | null) => void;
+    };
   }
   interface THighlight {
     type: string;

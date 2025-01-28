@@ -1,21 +1,11 @@
-import React from 'react';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
-import {
-  NumberHighlighterSVG,
-  TrustPilotRatingSVG,
-  TrustPilotSVG,
-} from 'assets/airportTransfers/privateAirportTransfers';
 import { TRUSTPILOT_IMAGE_BG_URL } from '../../constants';
+import TrustpilotWidget from '../TrustPilotWidget';
 import {
   backgroundImageStyle,
   containerStyle,
-  contentContainerStyle,
-  desktopBgSvgStyle,
   mobileBgSvgStyle,
-  ratingStarsStyle,
-  ratingStyle,
-  trustPilotLogoStyle,
 } from './style';
 
 export const TrustpilotTile = ({ isMobile }: { isMobile: boolean }) => {
@@ -33,17 +23,6 @@ export const TrustpilotTile = ({ isMobile }: { isMobile: boolean }) => {
     >
       <div className={containerStyle}>
         <svg
-          width="391"
-          height="241"
-          viewBox="0 0 391 241"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className={desktopBgSvgStyle}
-        >
-          <path d="M391 0C187 23.5823 35 161.5 0 241V0H391Z" fill="#15243A" />
-        </svg>
-
-        <svg
           width="164"
           height="100%"
           viewBox="0 0 164 140"
@@ -57,7 +36,6 @@ export const TrustpilotTile = ({ isMobile }: { isMobile: boolean }) => {
             fill="#15243A"
           />
         </svg>
-
         <Image
           url={TRUSTPILOT_IMAGE_BG_URL}
           alt="Trustpilot"
@@ -71,17 +49,10 @@ export const TrustpilotTile = ({ isMobile }: { isMobile: boolean }) => {
             zoom: 1.2,
           }}
         />
-
-        <TrustPilotSVG className={trustPilotLogoStyle} />
-
-        <div className={contentContainerStyle}>
-          <div className={ratingStyle}>
-            4.3
-            <NumberHighlighterSVG />
-          </div>
-
-          <TrustPilotRatingSVG className={ratingStarsStyle} />
-        </div>
+        <TrustpilotWidget
+          isMobile={isMobile}
+          height={isMobile ? '80px' : '112px'}
+        />
       </div>
     </a>
   );
