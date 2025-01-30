@@ -126,16 +126,6 @@ const StopCard = ({
     variant === TimelineViewComponentVariant.REDUCED_WIDTH;
 
   useEffect(() => {
-    if (defaultOpen) {
-      ref.current?.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'center',
-      });
-    }
-  }, []);
-
-  useEffect(() => {
     if (isReducedVariant && isDesktop) setIsOpen(hasMultiPoints || isActive);
   }, [isActive]);
 

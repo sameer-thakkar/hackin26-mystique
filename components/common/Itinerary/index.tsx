@@ -119,7 +119,7 @@ const Itinerary = ({
   };
 
   return (
-    <div data-qa-marker="itinerary">
+    <>
       <Conditional if={showTitle}>
         <h6
           id="itinerary-section-title"
@@ -204,7 +204,7 @@ const Itinerary = ({
       <Conditional if={itineraryViewMode === ItineraryViewMode.MAP}>
         {activeItineraryData && <MapView itinerary={activeItineraryData} />}
       </Conditional>
-    </div>
+    </>
   );
 };
 
