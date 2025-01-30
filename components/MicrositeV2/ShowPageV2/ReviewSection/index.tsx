@@ -242,7 +242,7 @@ const ReviewSection = ({
         </ReviewsSection>
         <Conditional
           if={
-            ((isMobile && !reviewPageUrl) || showFetchMoreButton) &&
+            (isMobile || showFetchMoreButton) &&
             numberOfReviewsToShow <
               (totalNumberOfReviews === -1
                 ? maximumNumberOfReviews
@@ -266,7 +266,15 @@ const ReviewSection = ({
         </Conditional>
 
         <Conditional
-          if={!showFetchMoreButton && reviewPageUrl && reviews.length > 0}
+          if={
+            reviewPageUrl &&
+            (!(isMobile || showFetchMoreButton) ||
+              numberOfReviewsToShow >=
+                (totalNumberOfReviews === -1
+                  ? maximumNumberOfReviews
+                  : Math.min(totalNumberOfReviews, maximumNumberOfReviews))) &&
+            reviews.length >= DEFAULT_TOP_REVIEWS_COUNT
+          }
         >
           <AllReviewsButton
             href={reviewPageUrl}

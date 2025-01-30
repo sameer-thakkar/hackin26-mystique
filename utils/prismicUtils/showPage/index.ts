@@ -1,23 +1,8 @@
 import { createClient } from 'prismicio';
-import { predicate } from '@prismicio/client';
-import { NumberField } from '@prismicio/types';
 import { documentUidUpdateRedirectHandler } from 'utils';
 import getShowPageCollections from 'utils/prismicUtils/getShowPageCollections';
-import { CUSTOM_TYPES, PRISMIC_DEV_TAG, PRISMIC_FIELD_ID } from 'const/index';
+import { CUSTOM_TYPES } from 'const/index';
 import { showpageGq } from './graphQuery';
-
-const getPrismicReviewsPageByTgid = (tgid: NumberField) => {
-  const prismicClient = createClient();
-  return prismicClient.getByType('reviews_page', {
-    predicates: [
-      predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
-      predicate.at(
-        `my.${CUSTOM_TYPES.REVIEWS_PAGE}.${PRISMIC_FIELD_ID.TGID}`,
-        tgid as number
-      ),
-    ],
-  });
-};
 
 const getShowPage = async ({ req, lang, uid, isDev, host }: any) => {
   const prismicClient = createClient({ req });
@@ -25,10 +10,6 @@ const getShowPage = async ({ req, lang, uid, isDev, host }: any) => {
     lang,
     graphQuery: showpageGq,
   });
-
-  const relatedShowPage = (
-    (await getPrismicReviewsPageByTgid(showpage?.data?.tgid)) || {}
-  )?.results?.[0];
 
   const { uid: currentPageUid } = showpage ?? {};
 
@@ -57,7 +38,6 @@ const getShowPage = async ({ req, lang, uid, isDev, host }: any) => {
           data: { tgid },
           uid,
         })),
-        relatedShowPage,
       },
       ContentType: CUSTOM_TYPES.SHOW_PAGE,
     };

@@ -43,7 +43,6 @@ const ContentSections = ({
   tourGroupData,
   name,
   isMobile,
-  reviewPageUrl,
 }: TContentSectionsProps) => {
   const contentSectionsRef = useRef<HTMLDivElement>(null);
   const { lang } = useContext(MBContext);
@@ -74,6 +73,9 @@ const ContentSections = ({
   const whyWatchSection = (highlightsSection as any)?.tab_content?.filter?.(
     (content: any) => content.type === HIGHLIGHT_TYPES.LIST_ITEM
   );
+  const reviewPageUrl = (highlightsSection as any)?.tab_content?.slice?.(
+    -1
+  )?.[0]?.spans?.[0]?.data?.url;
 
   const { [strings.SHOW_PAGE.THEATRE_NAME]: theatreName, theatrePageUrl } =
     detailsObjects || {};

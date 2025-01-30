@@ -16,5 +16,4 @@ export type TShowPageV2Props = {
   primaryCity: any;
   categoryHeaderMenu: any;
   breadcrumbs: TBreadcrumbs;
-  reviewPageUrl?: string;
 };
