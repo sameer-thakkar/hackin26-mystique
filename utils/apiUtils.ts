@@ -8,7 +8,12 @@ import {
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { COOKIE, CUSTOM_HEADER, MICROBRANDS_URL } from 'const/index';
+import {
+  COOKIE,
+  CUSTOM_HEADER,
+  MICROBRANDS_URL,
+  QNA_EXP_UIDS,
+} from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
 import { simplifySlotData } from './inventoryUtils';
@@ -1779,45 +1784,46 @@ export const getCatSubcatDescriptors = async ({
   }
 };
 
-export const getQnaSnippets = async ({
+export const getQnaData = async ({
   collectionId,
+  uid,
 }: {
   collectionId: string | number;
+  uid: string;
 }) => {
-  const apiUrl = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.QnaSnippets,
-    id: collectionId,
-  });
-
   try {
-    const response = await fetch(apiUrl);
-    const qnaSnippets = await response.json();
-    return qnaSnippets.result;
-  } catch (error) {
-    sendLog({
-      err: error,
-    });
-    return {};
-  }
-};
+    const isUidPartOfQnaExp = QNA_EXP_UIDS.includes(uid);
+    if (!isUidPartOfQnaExp) {
+      return {
+        qnaSnippets: [],
+        qnaSections: [],
+      };
+    }
 
-export const getQnaSections = async ({
-  collectionId,
-}: {
-  collectionId: string | number;
-}) => {
-  const apiUrl = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.QnaSections,
-    id: collectionId,
-  });
-  try {
-    const response = await fetch(apiUrl);
-    const qnaSections = await response.json();
-    return qnaSections.result;
-  } catch (error) {
-    sendLog({
-      err: error,
+    const qnaSnippetsApiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.QnaSnippets,
+      id: collectionId,
     });
-    return {};
+    const qnaSectionsApiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.QnaSections,
+      id: collectionId,
+    });
+
+    const [qnaSnippetsResponse, qnaSectionsResponse] = await Promise.all([
+      fetch(qnaSnippetsApiUrl),
+      fetch(qnaSectionsApiUrl),
+    ]);
+
+    const qnaSnippets = await qnaSnippetsResponse.json();
+    const qnaSections = await qnaSectionsResponse.json();
+    return {
+      qnaSnippets: qnaSnippets?.result ?? [],
+      qnaSections: qnaSections?.result ?? [],
+    };
+  } catch (error) {
+    return {
+      qnaSnippets: [],
+      qnaSections: [],
+    };
   }
 };

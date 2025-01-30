@@ -11,7 +11,6 @@ import {
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
 } from 'utils';
-import { getQnaSections, getQnaSnippets } from 'utils/apiUtils';
 import { checkIfCatOrSubCatPage } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import {
@@ -30,6 +29,7 @@ import {
 import getContentPageDocument from '../contentPage';
 import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
+import { getQnaData } from './../../apiUtils';
 import type {
   TMicrositeDocument,
   TResolvedDocumentResponseM,
@@ -261,16 +261,12 @@ const getMicrositeDocument = async ({
             baseLangMicrositeData,
           });
         }
-        const qnaSnippets = await getQnaSnippets({
-          collectionId: Number(
-            baseLangCategorisationMetadata.tagged_collection
-          ),
-        });
 
-        const qnaSections = await getQnaSections({
+        const { qnaSnippets, qnaSections } = await getQnaData({
           collectionId: Number(
             baseLangCategorisationMetadata?.tagged_collection
           ),
+          uid,
         });
 
         const transformedData: TMicrositeDocument = {
