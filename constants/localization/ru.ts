@@ -220,7 +220,7 @@ const ru = {
   FREE_CANCELLATION: 'Бесплатная отмена бронирования',
   FREE_CANCELLATION_SUBTEXT:
     'Мы понимаем, что планы могут меняться. Отмените бесплатно до 72 часов до начала мероприятия.',
-  FROM: 'С',
+  FROM: 'от',
   GET_CASHBACK: 'Получите кешбэк {0} %',
   GROUP_TICKETS: 'Групповые билеты',
   HAPPY_CUSTOMER: {
@@ -1224,7 +1224,7 @@ const ru = {
     ALSO_KNOWN_AS: 'Также известно как',
     FOUNDED_ON: 'Дата основания',
     FOUNDED_BY: 'Кто основал:',
-    FROM: 'С',
+    FROM: 'от',
     CLOSED_TODAY: 'Сегодня закрыто',
     TODAY: 'Сегодня',
     CLOSED: 'Закрыто',

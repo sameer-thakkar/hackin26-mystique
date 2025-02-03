@@ -216,7 +216,7 @@ const tr = {
   FREE_CANCELLATION: 'Ücretsiz İptal',
   FREE_CANCELLATION_SUBTEXT:
     'Planlar değişebilir; etkinlikten 72 saat öncesine kadar ücretsiz iptal etme fırsatı.',
-  FROM: 'Kalkış noktası',
+  FROM: 'Başlangıç fiyatı',
   GET_CASHBACK: '%{0} Para İadesi Alın',
   GROUP_TICKETS: 'Grup Biletleri',
   HAPPY_CUSTOMER: {
@@ -1130,7 +1130,7 @@ const tr = {
     PRIVATE_TAXIS: 'özel taksi',
     BUS_TRAIN: 'Otobüs/Tren',
     PRIVATE_TAXI: 'Özel Taksi',
-    FROM: 'Kalkış noktası',
+    FROM: 'Başlangıç fiyatı',
     SELECT_PICKUP: 'Servis kalkış noktası seçin',
     TO: 'Varış noktası',
     SELECT_DROPOFF: 'Servis varış noktası seçin',
@@ -1222,7 +1222,7 @@ const tr = {
     ALSO_KNOWN_AS: 'Diğer Adıyla',
     FOUNDED_ON: 'Kurulma Tarihi',
     FOUNDED_BY: 'Kurucusu',
-    FROM: 'Kalkış noktası',
+    FROM: 'Başlangıç fiyatı',
     CLOSED_TODAY: 'Bugün kapalı',
     TODAY: 'Bugün',
     CLOSED: 'Kapalı',
