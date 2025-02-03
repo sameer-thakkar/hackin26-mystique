@@ -13,11 +13,6 @@ export const poiFiltersWrapperStyle = css({
   },
   boxSizing: 'border-box',
   height: '100%',
-
-  '&[data-enable-sticky="true"]': {
-    position: 'sticky',
-    top: '56px', // 56px is the height of the header
-  },
   background: 'white',
   zIndex: 10,
   paddingTop: '5px',
@@ -26,6 +21,13 @@ export const poiFiltersWrapperStyle = css({
   '&.sticky': {
     borderBottom: '1px solid',
     borderBottomColor: 'semantic.dividers.dark',
+  },
+
+  '@media (max-width: 768px)': {
+    '&[data-enable-sticky="true"]': {
+      position: 'sticky',
+      top: '56px', // 56px is the height of the header
+    },
   },
 
   '@media (min-width: 768px)': {
