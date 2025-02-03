@@ -1326,7 +1326,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }
 
   .card-img {
-    width: calc(100% + 1.5rem);
+    ${({ $isPoiMwebCard }) => $isPoiMwebCard && `width: calc(100% + 1.5rem);`}
     height: auto;
     max-height: none;
     aspect-ratio: 16/10;
