@@ -98,7 +98,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [POI_FILTERS_EXPERIMENT]: new Experiment(
     POI_FILTERS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [PRODUCT_CARD_VIDEO]: new Experiment(
     PRODUCT_CARD_VIDEO,
