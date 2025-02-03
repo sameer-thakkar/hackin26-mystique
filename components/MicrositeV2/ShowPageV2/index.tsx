@@ -225,6 +225,7 @@ const LttShowPageV2 = ({
           collectionId: collectionId!,
           limit: String(allShowPagesDocuments?.length ?? '600'),
           currency: currency ?? '',
+          language: currentLanguage,
         })) ?? {};
       const { pageData } = response;
       const allTours = pageData?.items?.map((tour: Record<string, any>) => ({
