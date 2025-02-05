@@ -1351,5 +1351,44 @@ const it = {
   },
   AGGREGATED_COUNTRIES:
     'Questa esperienza è stata amata da persone provenienti dai seguenti Paesi: <strong>{0}</strong> e <strong>da oltre {1} Paesi</strong>',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT: `Evita lo stress di pianificare il viaggio: all'itinerario, alle guide e ai trasporti ci pensiamo noi. A te non resta altro che esplorare.`,
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Con Headout, prenoti senza stress',
+      CURATED_EXPERIENCES: {
+        TITLE: 'Esperienze selezionate con cura, facilmente prenotabili.',
+        DESCRIPTION: 'Trasferimenti, pasti, guide... organizziamo tutto noi.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Scopri la tua destinazione insieme a una guida esperta.',
+        DESCRIPTION:
+          'Con le nostre guide, scopri storie incredibili in ogni luogo.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Approfitta della massima flessibilità per il tuo viaggio',
+        DESCRIPTION:
+          'Sappiamo che esistono gli imprevisti: ecco perché la cancellazione è gratuita e la riprogrammazione è facile.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: 'Assistenza sempre disponibile per te',
+        DESCRIPTION:
+          'Approfitta della massima tranquillità, perché puoi sempre scriverci o chiamarci.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: 'Ci hanno scelto {0} milioni di turisti',
+        SUBTITLE_WITH_REVIEWS: 'Leggi le recensioni oneste dei viaggiatori',
+        SUBTITLE_WITHOUT_REVIEWS: 'Ti offriamo la migliore esperienza',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Perché scegliere noi?',
+        SUBTITLE: 'Viaggia senza stress. Scopri come.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Scopri più destinazioni a partire da {0}',
+  },
 };
 export default it;

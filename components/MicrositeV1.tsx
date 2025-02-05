@@ -60,6 +60,7 @@ import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
+import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
 import { VARIANTS } from 'const/experiments';
 import {
   ALLOW_IMMEDIATE_NESTING,
@@ -165,6 +166,13 @@ const CatAndSubCatPage = dynamic(
     )
 );
 
+const DayTripsCollectionPage = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DayTripsCollectionPage" */ 'components/DayTripsCollection'
+    )
+);
+
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
 `;
@@ -236,6 +244,7 @@ const MicrositeV1 = (props: any) => {
     qnaSections,
     isRankingExperimentResolving,
     isNotUsingAutomatedRanking = true,
+    bannerV3Data,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -328,6 +337,7 @@ const MicrositeV1 = (props: any) => {
     shoulder_page_type: shoulderPageType,
     subattraction_type: subattractionType,
     tagged_page_type: taggedPageType,
+    tagged_collection: _taggedCollection,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -662,6 +672,9 @@ const MicrositeV1 = (props: any) => {
         isSubCategoryPage: isSubCategoryMicrobrand,
         isCruises: showCruisesFormat,
       }),
+      ...(revampedDayTripsCollection
+        ? { [ANALYTICS_PROPERTIES.LAYOUT_TYPE]: 'Day Trips' }
+        : {}),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
@@ -1032,6 +1045,20 @@ const MicrositeV1 = (props: any) => {
     shouldRunDayTripsListicleExperiment &&
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
+  const {
+    isEligible: shouldRunDayTripsCollectionExperiment,
+    variant: dayTripsCollectionExperimentVariant,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_COLLECTION',
+    customEligibilityCheckFn: () => DAY_TRIPS_COLLECTION_MBS.includes(uid),
+  });
+
+  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
+  const revampedDayTripsCollection =
+    shouldRunDayTripsCollectionExperiment &&
+    dayTripsCollectionExperimentVariant === VARIANTS.TREATMENT &&
+    isDayTripCollectionPage;
+
   if (
     (isQnaExpEligible && isQnaExpResolving) ||
     (isCruisesExpEligible && isCruisesExpResolving) ||
@@ -1310,7 +1337,12 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={showNewBanner && !isCatOrSubCatPage && !isEntertainmentBanner}
+          if={
+            showNewBanner &&
+            !isCatOrSubCatPage &&
+            !isEntertainmentBanner &&
+            !revampedDayTripsCollection
+          }
         >
           <StaticBanner
             bannerVideo={bannerVideo}
@@ -1337,7 +1369,65 @@ const MicrositeV1 = (props: any) => {
             {...qnaExperimentData}
           />
         </Conditional>
-        <Conditional if={isA1orC1MB(taggedMbType) && !isAirportTransfersMB}>
+        <Conditional if={revampedDayTripsCollection}>
+          <DayTripsCollectionPage
+            collection={collectionDetails}
+            isMobile={isMobile}
+            primaryCity={primaryCity}
+            currency={currency}
+            lang={lang}
+            collectionReviews={collectionReviews}
+            banners={bannerV3Data}
+            categoryTourListData={categoryTourListData}
+            uncategorizedTours={finalUncategorizedTours}
+            scorpioData={scorpioData}
+            uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+            uid={uid}
+            currentLanguage={currentLanguage}
+            bookNowText={bookNowText}
+            showCustomProductCardEnglishCTA={showCustomProductCardEnglishCTA}
+            readMoreText={readMoreText}
+            showLessText={showLessText}
+            productOffer={productOffer}
+            hasOffer={hasOffer}
+            togglePopup={onTogglePopup}
+            pageUrl={pageUrl}
+            host={host}
+            mbTheme={mbTheme}
+            instantCheckout={instantCheckout}
+            enableEarliestAvailability={enableEarliestAvailability}
+            bannerVideo={bannerVideo}
+            isCollectionMB={isCollectionMicrobrand}
+            productsLoading={productsLoading}
+            isPoiMwebCard={isPoiMwebCard}
+            isNonPoi={isNonPoiMB}
+            isAirportTransfersMB={isAirportTransfersMB}
+            isModifiedProductCard={!isMobile && !showCruisesFormat}
+            isTourListFiltered={isTourListFiltered}
+            showPopup={showPopup}
+            isHOHORevamp={showHohoRevamp}
+            showItineraries={showItineraries}
+            isCruisesRevamp={showCruisesFormat}
+            isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
+            customBanner={customBanner?.primary}
+            baseLangCustomBanner={baseLangCustomBanner?.primary}
+            shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
+            isRankingExperimentResolving={isRankingExperimentResolving}
+            showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
+            showBoosters={
+              isBoosterExpEligible &&
+              boosterExperimentVariant === VARIANTS.TREATMENT
+            }
+            micrositeData={micrositeData}
+          />
+        </Conditional>
+        <Conditional
+          if={
+            isA1orC1MB(taggedMbType) &&
+            !isAirportTransfersMB &&
+            !revampedDayTripsCollection
+          }
+        >
           <div
             className={poiFiltersWrapperStyle}
             id="POI_FILTERS"
@@ -1412,7 +1502,8 @@ const MicrositeV1 = (props: any) => {
             isToursAvailable &&
             !isCatOrSubCatPage &&
             !isAirportTransfersMB &&
-            !hideDtProductCards
+            !hideDtProductCards &&
+            !revampedDayTripsCollection
           }
         >
           {tourListSection}
@@ -1501,6 +1592,7 @@ const MicrositeV1 = (props: any) => {
                     isAirportTransfersMB={isAirportTransfersMB}
                     isCatAndSubCatPage={isCatOrSubCatPage}
                     collectionReviews={collectionReviews}
+                    isDayTrips={revampedDayTripsCollection}
                     catSubCatReviews={catSubCatReviews}
                     collectionDetails={collectionDetails}
                     categoryId={categoryId}

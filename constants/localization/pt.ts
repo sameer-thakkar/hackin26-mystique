@@ -1360,5 +1360,45 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   AGGREGATED_COUNTRIES:
     'Visitantes de <strong>mais de {1} países</strong>, incluindo <strong>{0}</strong>, amaram esta experiência',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT: `Esqueça o estresse antes de viajar. Nós cuidamos de todos os detalhes: itinerário, traslados confortáveis e guias. É a melhor forma de fazer turismo sem complicar sua vida.`,
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Faça sua reserva sem estresse com a Headout',
+      CURATED_EXPERIENCES: {
+        TITLE: 'É mais fácil de decidir com experiências escolhidas a dedo.',
+        DESCRIPTION:
+          'Cuidamos de todos os detalhes para que você faça uma viagem inesquecível.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Viva a viagem pelos olhos de um especialista local.',
+        DESCRIPTION:
+          'Nossos guias trazem ricas informações e histórias memoráveis para cada viagem.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Aproveite com tranquilidade e o máximo de flexibilidade',
+        DESCRIPTION:
+          'Imprevistos acontecem, mas oferecemos cancelamento e reagendamento gratuito.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: 'Atendimento 24 h à sua disposição sempre',
+        DESCRIPTION:
+          'Nossa equipe está disponível para te ajudar por telefone ou e-mail.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: 'Mais de {0}M de viajantes satisfeitos',
+        SUBTITLE_WITH_REVIEWS: 'Leia as avaliações dos nossos viajantes',
+        SUBTITLE_WITHOUT_REVIEWS: 'Oferecemos a melhor experiência',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Por que fazer sua reserva conosco?',
+        SUBTITLE: 'Viajar ficou mais fácil. Descubra mais.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Descubra mais destinos saindo de {0}',
+  },
 };
 export default pt;

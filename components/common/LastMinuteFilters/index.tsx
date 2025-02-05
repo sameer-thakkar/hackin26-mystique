@@ -253,29 +253,31 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
 
   return (
     <>
-      <FiltersWrapper>
-        {inventoryData && (
-          <FiltersContainer>
-            {dateTimeFilters.map((filter, index) => (
-              <FilterButton
-                key={index}
-                onClick={() =>
-                  onFilterChange({
-                    dateTimeFilter: {
-                      clickedIndex: index,
-                      isUserAction: true,
-                      deSelect: index === selectedDateTimeFilterButtonIndex,
-                    },
-                  })
-                }
-                isSelected={index === selectedDateTimeFilterButtonIndex}
-              >
-                <span>{filter.display_name}</span>
-              </FilterButton>
-            ))}
-          </FiltersContainer>
-        )}
-      </FiltersWrapper>
+      <Conditional if={inventoryData}>
+        <FiltersWrapper>
+          {inventoryData && (
+            <FiltersContainer>
+              {dateTimeFilters.map((filter, index) => (
+                <FilterButton
+                  key={index}
+                  onClick={() =>
+                    onFilterChange({
+                      dateTimeFilter: {
+                        clickedIndex: index,
+                        isUserAction: true,
+                        deSelect: index === selectedDateTimeFilterButtonIndex,
+                      },
+                    })
+                  }
+                  isSelected={index === selectedDateTimeFilterButtonIndex}
+                >
+                  <span>{filter.display_name}</span>
+                </FilterButton>
+              ))}
+            </FiltersContainer>
+          )}
+        </FiltersWrapper>
+      </Conditional>
       <Conditional if={noAvailabilityDrawerOpen}>
         <Drawer
           $drawerStyles={drawerStyles}

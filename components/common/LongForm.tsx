@@ -186,6 +186,7 @@ type TLongFormProps = {
   trackProductCardsViewed?: boolean;
   isCatAndSubCatPage?: boolean;
   isRevampedDesign?: boolean;
+  isDayTrips?: boolean;
   [k: string]: any;
 };
 
@@ -199,6 +200,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
     isCatAndSubCatPage,
     parentLandingPageUrl,
     collectionReviews,
+    isDayTrips,
     catSubCatReviews,
     collectionDetails,
     categoryId,
@@ -207,9 +209,10 @@ const LongForm = (longFormProps: TLongFormProps) => {
   } = longFormProps;
 
   const parsedContent = useMemo(() => {
-    const isReviewsV2Enabled =
-      MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid) ||
-      MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
+    const isReviewsV2Enabled = isDayTrips
+      ? false
+      : MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid) ||
+        MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
 
     const reviewsSliceIndex = content.findIndex(
       (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.REVIEWS
@@ -223,7 +226,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
         hide_slice: false,
       },
       context: {
-        isReviewsV2Enabled: true,
+        isReviewsV2Enabled,
         collectionDetails,
         categoryId,
         subCategoryId,
@@ -242,7 +245,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
     }
 
     return finalContent;
-  }, [content, hostname]);
+  }, [content, hostname, isDayTrips]);
 
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
 

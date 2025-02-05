@@ -181,6 +181,7 @@ const Page = (props: PageProps) => {
     subcategoryDescriptors,
     isEntertainmentBanner,
     bannerTrustBoosters,
+    bannerV3Data,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -350,6 +351,7 @@ const Page = (props: PageProps) => {
               toursList={toursList}
               collectionDetails={collectionDetails}
               bannerImageData={bannerImageData}
+              bannerV3Data={bannerV3Data}
               pathname={pathname}
               isDev={isDev}
               tgidToScroll={tgidToScroll}

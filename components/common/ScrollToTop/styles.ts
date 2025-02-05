@@ -5,6 +5,7 @@ import { DEFAULT_MAGIC_WAND, HOVERED_MAGIC_WAND } from 'assets/magicWand';
 export const StyledButton = styled.div<{
   $isLttMonthOnMonthPage: boolean;
   $isHarryPotterPage?: boolean;
+  $isDayTripsCollection?: boolean;
 }>`
   display: inline-block;
   position: fixed;
@@ -28,6 +29,8 @@ export const StyledButton = styled.div<{
     &:hover {
       cursor: url("${HOVERED_MAGIC_WAND}") 10 8, auto !important;
     }`}
+
+  ${({ $isDayTripsCollection }) => $isDayTripsCollection && `display: none;`}
 
   @media (max-width: 768px) {
     bottom: ${({ $isLttMonthOnMonthPage }) =>

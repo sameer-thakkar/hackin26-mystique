@@ -20,8 +20,10 @@ import {
 } from 'utils';
 import {
   constructHeaders,
+  fetchBannersV3,
   fetchCategoryReviews,
   fetchCollection,
+  fetchCollectionBasicInfo,
   fetchCollectionList,
   fetchCollectionReviews,
   fetchCurrencyList,
@@ -231,6 +233,8 @@ export const getPageData = async ({
     );
     let bannerImageDataPromise: ReturnType<typeof fetchMediaResource> =
       Promise.resolve(undefined);
+    let bannerV3DataPromise: ReturnType<typeof fetchBannersV3> =
+      Promise.resolve(undefined);
     let collectionReviewsPromise = Promise.resolve(
       {} as ReturnType<typeof fetchCollectionReviews>
     );
@@ -254,6 +258,10 @@ export const getPageData = async ({
     let categoryTourListDataPromise = Promise.resolve(
       {} as ReturnType<typeof getCategoryData>
     );
+
+    let collectionBasicInfo = {} as Awaited<
+      ReturnType<typeof fetchCollectionBasicInfo>
+    >;
 
     const queryParams = getQueryparams(req);
 
@@ -790,6 +798,26 @@ export const getPageData = async ({
         hasCategoryTourListV1 ||
         Object.keys(categoryCarouselCF || {})?.length;
 
+      if (isCollectionMB(taggedMbType) && taggedCollection) {
+        collectionBasicInfo = await fetchCollectionBasicInfo({
+          collectionId: taggedCollection,
+        });
+      }
+
+      const isDayTripCollection =
+        isCollectionMB(taggedMbType) &&
+        taggedCollection &&
+        collectionBasicInfo?.type === 'DAY_TRIP';
+
+      // if (isDayTripCollection) {
+      //   categoryTourListPromise = dayTripCollectionParser({
+      //     collectionId: taggedCollection,
+      //     lang: lang ?? 'en',
+      //     hostname,
+      //     localizedStrings,
+      //     currency: cookies?.[COOKIE.CURRENT_CURRENCY] || 'USD',
+      //   });
+      // } else
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
           categoryTourListPromise = categoryTourListParserV1({
@@ -854,7 +882,10 @@ export const getPageData = async ({
       const isReviewsV2Enabled = MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
 
       collectionReviewsPromise = conditionalPromise(
-        taggedCollection && (isReviewsV2Enabled || isExtendedReviewsV2Enabled),
+        taggedCollection &&
+          (isDayTripCollection ||
+            isReviewsV2Enabled ||
+            isExtendedReviewsV2Enabled),
         () =>
           fetchCollectionReviews({
             collectionId: taggedCollection,
@@ -930,6 +961,15 @@ export const getPageData = async ({
           }
         }
 
+        if (isDayTripCollection) {
+          bannerV3DataPromise = fetchBannersV3({
+            id: taggedCollection,
+            mediaResourceType: 'COLLECTION_BANNER',
+            platform: 'ALL',
+          }).then(({ result: { banners = [] } = {} }) => {
+            return banners;
+          });
+        }
         if (isCollectionMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -1043,7 +1083,11 @@ export const getPageData = async ({
         isDev,
         queryParams,
         mbTheme,
-        collectionDetails,
+        collectionDetails: {
+          ...collectionDetails,
+          type: collectionBasicInfo?.type,
+          id: taggedCollection,
+        },
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
@@ -1139,6 +1183,7 @@ export const getPageData = async ({
       currencyList,
       domainConfig,
       bannerImageData,
+      bannerV3Data,
       variantsData,
       routeDetails,
       collectionData,
@@ -1152,6 +1197,7 @@ export const getPageData = async ({
         label: 'tourGroupAPIResponses',
       },
       { promise: bannerImageDataPromise, label: 'bannerImageData' },
+      { promise: bannerV3DataPromise, label: 'bannerV3Data' },
       { promise: breadcrumbsPromise, label: 'breadcrumbs' },
       { promise: catAndSubCatPageDataPromise, label: 'catAndSubCatPageData' },
       { promise: currencyListPromise, label: 'currencyList' },
@@ -1561,6 +1607,7 @@ export const getPageData = async ({
       ...scorpioAllTourGroupData,
       collectionList,
       bannerImageData,
+      bannerV3Data,
       variantsData,
       routeDetails,
       ...(activeCurrency && { activeCurrency }),

@@ -7,6 +7,7 @@ export type TReviewsV2Props = {
   collectionDetails?: TCollectionDetails;
   categoryId?: string;
   subCategoryId?: string;
+  shouldFocusProductCardOnCTAClick?: boolean;
 };
 
 export type TUseReviewsV2Props = {

@@ -1312,5 +1312,45 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
   AGGREGATED_COUNTRIES:
     'Bezoekers uit <strong>{0}</strong> en <strong>{0} andere landen</strong> hebben genoten van deze ervaring',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT: `Vergeet de stress van het reizen. Wij zorgen voor alle details: routebeschrijving, comfortabel vervoer en gidsen. Het is de beste manier om een bezoek te brengen zonder gedoe.`,
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Met Headout boek je met een gerust hart',
+      CURATED_EXPERIENCES: {
+        TITLE:
+          'Het is makkelijker om te beslissen met zorgvuldig uitgekozen ervaringen.',
+        DESCRIPTION:
+          'Wij zorgen voor elk detail om je een onvergetelijke reis te bezorgen.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Ervaar de reis door de ogen van een lokale expert.',
+        DESCRIPTION:
+          'Onze gidsen brengen rijke informatie en bijzondere verhalen mee op elke reis.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Geniet van gemoedsrust en maximale flexibiliteit',
+        DESCRIPTION:
+          'Onvoorziene gevallen gebeuren, maar wij bieden gratis annulering en herschikking.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: '24-uurs service altijd tot je beschikking',
+        DESCRIPTION: 'Ons team staat telefonisch of per e-mail voor je klaar.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: 'Meer dan {0} miljoen reizigers houden van ons',
+        SUBTITLE_WITH_REVIEWS: 'Ontdek wat onze reizigers te zeggen hebben',
+        SUBTITLE_WITHOUT_REVIEWS: 'We bieden de best mogelijke ervaring',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Waarom bij ons boeken?',
+        SUBTITLE: 'Reis met een gerust hart. Lees meer.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Ontdek meer bestemmingen vanuit {0}',
+  },
 };
 export default nl;

@@ -28,6 +28,7 @@ const ReviewsV2 = ({
   collectionDetails,
   categoryId,
   subCategoryId,
+  shouldFocusProductCardOnCTAClick = true,
 }: TReviewsV2Props) => {
   const { isMobile } = useRecoilValue(appAtom);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,6 +112,9 @@ const ReviewsV2 = ({
                 collectionDetails={collectionDetails}
                 categoryId={categoryId}
                 subCategoryId={subCategoryId}
+                shouldFocusProductCardOnCTAClick={
+                  shouldFocusProductCardOnCTAClick
+                }
               />
             ))}
           </Swiper>
@@ -126,6 +130,9 @@ const ReviewsV2 = ({
                 {...reviewItem}
                 onImageClick={handleReviewImageClick}
                 collectionDetails={collectionDetails}
+                shouldFocusProductCardOnCTAClick={
+                  shouldFocusProductCardOnCTAClick
+                }
               />
             ))}
           </div>

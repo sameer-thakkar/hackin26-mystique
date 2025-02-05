@@ -1403,6 +1403,47 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     FIND_YOUR_RIDE_SUBTEXT:
       'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
   },
+  VIEW_ALL_EXPERIENCES: 'View all experiences',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT: `Skip the stress of planning. We cover every detail - curated itinerary, comfortable transfers and expert guides. It's the best way to see the sights without the hassle.`,
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Book stress free with Headout',
+      CURATED_EXPERIENCES: {
+        TITLE: 'Simple decision making with carefully chosen experiences. ',
+        DESCRIPTION:
+          'We handle every detail from transfers to meals so you have a memorable trip.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Experience the trip through the eyes of a local expert.',
+        DESCRIPTION:
+          'Our guides bring rich insights and memorable stories to every journey.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Enjoy peace of mind with maximum flexibility ',
+        DESCRIPTION:
+          'Life happens, but we’ve got you covered with free cancellations or easy reschedule.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: '24x7 support available for you at all times',
+        DESCRIPTION:
+          'Travel with peace of mind knowing that our team is just a call or message away.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: '{0}M+ travellers love us',
+        SUBTITLE_WITH_REVIEWS: 'Read real reviews from real travellers',
+        SUBTITLE_WITHOUT_REVIEWS: 'Delivering best in class experience',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Why book with us?',
+        SUBTITLE: 'Hassle-free trips. Find out how.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Explore more destinations from {0}',
+  },
   REVIEW_SECTION: {
     HEADING: 'Millions love heading out with us',
   },

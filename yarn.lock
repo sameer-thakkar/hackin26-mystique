@@ -2953,12 +2953,12 @@
     styled-components "^5.3.5"
     tailwindcss "npm:@tailwindcss/postcss7-compat"
 
-"@headout/eevee@2.1.4":
-  version "2.1.4"
-  resolved "https://npm.pkg.github.com/download/@headout/eevee/2.1.4/f986bc5d815548cf6d91822fa859c4d8d8e8bdff#f986bc5d815548cf6d91822fa859c4d8d8e8bdff"
-  integrity sha512-BFVpXxm8Wb5EKREBa7nltw6bO8b8QzfIi3A6qBxZk67HTvNgJ86AccpN+NQCpj7HbTDSB+f1VAPEXkh3t96tRw==
+"@headout/eevee@2.2.6":
+  version "2.2.6"
+  resolved "https://npm.pkg.github.com/download/@headout/eevee/2.2.6/ff0bf74d61ddef14a07a88c73c0da68c7abb6585#ff0bf74d61ddef14a07a88c73c0da68c7abb6585"
+  integrity sha512-KKuXZ5MlKxDnI6lGc0YNx6H6Q+PvSJMT0oICe2mtzNW+xc4PtN/dwuNuysxnD9jHTIoloFHBZHMvvGvHDQSs0Q==
   dependencies:
-    "@headout/pixie" "workspace:*"
+    "@headout/pixie" "1.4.1"
 
 "@headout/espeon@^1.11.11":
   version "1.11.11"
@@ -2978,10 +2978,10 @@
     react-scroll "^1.9.0"
     swiper "^11.1.12"
 
-"@headout/pixie@^1.3.0", "@headout/pixie@workspace:*":
-  version "1.3.0"
-  resolved "https://npm.pkg.github.com/download/@headout/pixie/1.3.0/38de96c3204ffa42b8de573642f4b5cff65a9de2#38de96c3204ffa42b8de573642f4b5cff65a9de2"
-  integrity sha512-+YbnRa/gQ33nyW0nMHv+9NrFfRVZVEraSYRJuPhpekDslzrGduNWc1HiVJM8dcx6PJ5MBcWvYuXJl/Gn7YrT9A==
+"@headout/pixie@1.4.1":
+  version "1.4.1"
+  resolved "https://npm.pkg.github.com/download/@headout/pixie/1.4.1/6772eaff6222e87d4df7378a95343b1959f11f68#6772eaff6222e87d4df7378a95343b1959f11f68"
+  integrity sha512-J7gqvIra8Es5YXa6cPytwG3+N0EjTItGeSGvSiE1ieAuDlkfXHHn7ICghlmEG1LjImrYTQaa5VFuZfb2clC1DA==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"

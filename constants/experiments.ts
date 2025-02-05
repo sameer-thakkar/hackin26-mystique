@@ -22,6 +22,7 @@ const CRUISES_REVAMP = 'Yarra River - Cruises Revamp Experiment';
 const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
+const DAY_TRIPS_COLLECTION = 'Day Trips Collection Experiment';
 const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const QNA_EXPERIMENT = 'Q&A Experiment';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
@@ -30,6 +31,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   CRUISES_REVAMP,
+  DAY_TRIPS_COLLECTION,
   DAY_TRIPS_LISTICLE,
   FLEXIBLE_CANCELLATION_EXPERIMENT,
   HOHO_REVAMP_PARIS_BARCELONA,
@@ -63,6 +65,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     CRUISES_REVAMP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
+  ),
+  [DAY_TRIPS_COLLECTION]: new Experiment(
+    DAY_TRIPS_COLLECTION,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
   ),
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,

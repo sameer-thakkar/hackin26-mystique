@@ -229,6 +229,7 @@ export const ReviewHeader = styled.div<{ $hasCountryDetails?: boolean }>`
     white-space: nowrap;
     grid-area: name;
     margin-bottom: 0;
+    margin-top: 0;
   }
 
   @media (max-width: 768px) {

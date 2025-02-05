@@ -283,6 +283,7 @@ const Product = (props: any) => {
     isPopUpOnly = false,
     onPopupClosed,
     isFlexiCancellationExperimentTriggered,
+    scrollToIndex = -1,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
@@ -2257,6 +2258,7 @@ const Product = (props: any) => {
       }}
       slideUp={isNewVerticalsProductCard}
       defaultOpen={defaultOpen}
+      scrollToIndex={scrollToIndex}
     >
       <PopupContainer
         onScroll={(e: any) => {

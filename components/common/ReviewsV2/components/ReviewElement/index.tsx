@@ -38,6 +38,7 @@ const ReviewElement = (props: TReviewElementProps) => {
     nonCustomerCountryName,
     useTranslatedContent,
     tourGroup,
+    shouldFocusProductCardOnCTAClick = true,
   } = props;
 
   const reviewContentRef = useRef<HTMLDivElement>(null);
@@ -156,7 +157,9 @@ const ReviewElement = (props: TReviewElementProps) => {
         <Conditional if={tourGroup}>
           <StyledBottomCTAContainer
             onClick={handleBottomCTAClick}
-            $isClickable={isProductCardPresent}
+            $isClickable={
+              shouldFocusProductCardOnCTAClick && isProductCardPresent
+            }
           >
             <StyledCTAText
               className="block"
@@ -164,7 +167,9 @@ const ReviewElement = (props: TReviewElementProps) => {
             >
               {tourGroup?.urlText}
             </StyledCTAText>
-            <Conditional if={isProductCardPresent}>
+            <Conditional
+              if={shouldFocusProductCardOnCTAClick && isProductCardPresent}
+            >
               <div className="arrow-right">
                 <ArrowRight />
               </div>

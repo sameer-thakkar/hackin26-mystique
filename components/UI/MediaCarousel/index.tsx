@@ -60,6 +60,10 @@ type MediaCarouselProps = {
   isImageQualityExperiment?: boolean;
   hideGrabCursor?: boolean;
   showVideoOnProductCard?: boolean;
+  showNavigation?: boolean;
+  disableOnInteraction?: boolean;
+  onSwiper?: (swiper: Swiper) => void;
+  onSlideChange?: (swiper: Swiper) => void;
 };
 
 const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
@@ -87,6 +91,10 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
   position,
   hideGrabCursor = false,
   showVideoOnProductCard = false,
+  showNavigation = true,
+  disableOnInteraction = false,
+  onSwiper,
+  onSlideChange,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -110,6 +118,7 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
     if (swiper !== null) {
       const slideIndex = swiper.realIndex;
       setCurrentIndex(slideIndex);
+      onSlideChange?.(swiper);
       if (trackImage && tgid) {
         trackEvent(getImageViewEventProperties({ rank: slideIndex + 1 }));
       }
@@ -173,13 +182,17 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
     autoplay: enableAutoplay
       ? {
           delay: 3000,
+          disableOnInteraction: disableOnInteraction,
         }
       : false,
     speed: 600,
     grabCursor: !hideGrabCursor && imageList.length > 1,
     preloadImages: false,
     onSlideChangeTransitionStart: updateIndex,
-    onSwiper: (swiper) => setSwiperInstance(swiper),
+    onSwiper: (swiper) => {
+      setSwiperInstance(swiper);
+      onSwiper?.(swiper);
+    },
   };
 
   const imageClassNames = `swiper-lazy ${imageId}`;
@@ -307,7 +320,7 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
           />
         </PaginatorWrapper>
       )}
-      <Conditional if={imageList.length > 1 && !isMobile}>
+      <Conditional if={imageList.length > 1 && !isMobile && showNavigation}>
         <PrevButtonContainer onClick={onPrev}>
           <button className={'navigation-button'}>{ChevronLeftCircle}</button>
         </PrevButtonContainer>

@@ -8,7 +8,7 @@ export default defineConfig({
   include: [
     './components/**/*.{js,jsx,ts,tsx}',
     './pages/**/*.{js,jsx,ts,tsx}',
-    './node_modules/@headout/eevee/dist/atoms/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@headout/eevee/dist/**/*.{js,jsx,ts,tsx}',
     './node_modules/@headout/espeon/dist/**/*.{js,jsx,ts,tsx}',
   ],
   exclude: [
@@ -23,5 +23,15 @@ export default defineConfig({
   },
   outdir: 'styled-system',
   importMap: ['@headout/pixie'],
+  jsxFramework: 'react',
   globalCss: globalStyles,
+  staticCss: {
+    css: [
+      {
+        properties: {
+          WebkitLineClamp: ['1', '2', '3', '4', '5', '6', '7'],
+        },
+      },
+    ],
+  },
 });

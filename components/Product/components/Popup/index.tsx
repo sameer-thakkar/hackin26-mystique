@@ -22,10 +22,11 @@ const Popup = ({
   onStateChange,
   styles,
   defaultOpen = false,
+  scrollToIndex = -1,
 }: TPopupProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [startingIndex, setStartingIndex] = useState(-1);
+  const [startingIndex, setStartingIndex] = useState(scrollToIndex);
   const { uid } = useRecoilValue(appAtom);
 
   const close = (isButton = false) => {

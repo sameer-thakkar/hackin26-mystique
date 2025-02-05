@@ -1355,6 +1355,46 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
   AGGREGATED_COUNTRIES:
     'Gäste aus <strong>{0}</strong> und <strong>über {1} Ländern</strong> lieben dieses Erlebnis',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT: `Planungsstress gehört der Vergangenheit an! Wir kümmern uns um jedes Detail – eine maßgeschneiderte Reiseroute, bequeme Transfers und fachkundige Reiseleiter.`,
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Stressfrei buchen mit Headout',
+      CURATED_EXPERIENCES: {
+        TITLE: 'Einfache Entscheidungsfindung mit kuratierten Erlebnissen.',
+        DESCRIPTION:
+          'Wir kümmern uns um jedes Detail, um Ihre Reise unvergesslich zu machen.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Reisen mit lokalen Experten.',
+        DESCRIPTION:
+          'Unsere Reiseleiter bringen wertvolle Einblicke und Geschichten in jede Reise ein.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Sorgenfrei bei maximaler Flexibilität',
+        DESCRIPTION:
+          'Planänderung? Wir bieten kostenlose Stornierung oder einfache Umbuchung.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: 'Kundenservice rund um die Uhr',
+        DESCRIPTION:
+          'Unser Team ist jederzeit nur einen Anruf oder eine Nachricht entfernt.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: 'Mehr als {0} Millionen Reisende lieben uns',
+        SUBTITLE_WITH_REVIEWS: 'Echte Bewertungen von echten Reisenden',
+        SUBTITLE_WITHOUT_REVIEWS: 'Wir bieten die besten Erlebnisse',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Warum bei uns buchen?',
+        SUBTITLE: 'Problemlos Reisen. Hier erfahren Sie mehr.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Weitere Reiseziele ab {0}',
+  },
 };
 
 export default de;

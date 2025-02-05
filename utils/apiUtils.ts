@@ -96,6 +96,7 @@ export enum HeadoutEndpoints {
   TourGroupReviewsV2,
   TourGroupReviewMedias,
   Collection,
+  CollectionBasicInfo,
   CollectionSections,
   CollectionTop,
   CollectionReviews,
@@ -108,6 +109,7 @@ export enum HeadoutEndpoints {
   DomainConfig,
   ProductV6,
   Banners,
+  BannersV3,
   CalendarInventoryForTourGroupList,
   NearbyCityList,
   Media,
@@ -118,12 +120,13 @@ export enum HeadoutEndpoints {
   ItinerariesByTGID,
   BulkExperienceItineraries,
   CollectionTourGroups,
+  CollectionProductCards,
+  CollectionCardsByCityCodeAndSubCategoryId,
   GeoLocateCity,
   BulkItineraries,
   GuestCount,
   QnaSnippets,
   QnaSections,
-  CollectionProductCards,
 }
 
 const endPointsOnNewCDN = [
@@ -135,6 +138,9 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.TourGroupReviewsV2,
   HeadoutEndpoints.CityListV2,
   HeadoutEndpoints.CollectionTourGroups,
+  HeadoutEndpoints.CollectionProductCards,
+  HeadoutEndpoints.CollectionCardsByCityCodeAndSubCategoryId,
+  HeadoutEndpoints.CollectionBasicInfo,
   HeadoutEndpoints.BulkExperienceItineraries,
   HeadoutEndpoints.ItinerariesByTGID,
   HeadoutEndpoints.BulkPoiList,
@@ -145,6 +151,7 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.Media,
   HeadoutEndpoints.NearbyCityList,
   HeadoutEndpoints.Banners,
+  HeadoutEndpoints.BannersV3,
   HeadoutEndpoints.DomainConfig,
   HeadoutEndpoints.CurrencyList,
   HeadoutEndpoints.Category,
@@ -162,11 +169,13 @@ export const getHeadoutApiUrl = ({
   hostname,
   params,
   id,
+  urlParams,
 }: {
   endpoint: HeadoutEndpoints;
   hostname?: THost;
   params?: { [_key: string]: string };
   id?: string | number | null;
+  urlParams?: { [_key: string]: string };
 }) => {
   let endpointSlug;
 
@@ -204,6 +213,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.Collection:
       endpointSlug = `/api/tours/v1/collection/`;
       break;
+    case HeadoutEndpoints.CollectionBasicInfo:
+      endpointSlug = `/api/v1/collection/${id}/basic-info/`;
+      break;
     case HeadoutEndpoints.CollectionSections:
       endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
@@ -227,6 +239,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.Banners:
       endpointSlug = `/api/v2/banners/`;
+      break;
+    case HeadoutEndpoints.BannersV3:
+      endpointSlug = `/api/v3/banners/`;
       break;
     case HeadoutEndpoints.CalendarInventoryForTourGroupList:
       endpointSlug = `/api/v7/tour-groups/calendar/`;
@@ -267,6 +282,12 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.CollectionTourGroups:
       endpointSlug = `/api/tours/v1/collection/${id}/tour-groups/`;
       break;
+    case HeadoutEndpoints.CollectionProductCards:
+      endpointSlug = `/api/v2/collections/${id}/product-cards/`;
+      break;
+    case HeadoutEndpoints.CollectionCardsByCityCodeAndSubCategoryId:
+      endpointSlug = `/api/v3/cities/${urlParams?.cityCode}/subcategories/${urlParams?.subCategoryId}/collection-cards`;
+      break;
     case HeadoutEndpoints.CityListV2:
       endpointSlug = `/api/tours/v2/city/list`;
       break;
@@ -285,9 +306,6 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.GuestCount:
       endpointSlug = `/api/v1/guest-count/`;
       break;
-    case HeadoutEndpoints.CollectionProductCards:
-      endpointSlug = `/api/v2/collections/${id}/product-cards/`;
-      break;
   }
 
   const shouldPointToNewCDN = endPointsOnNewCDN.includes(endpoint);
@@ -301,7 +319,7 @@ export const getHeadoutApiUrl = ({
   let url: string;
 
   if (hostname) {
-    url = `${hostname}${endpointSlug}`;
+    url = withTrailingSlash(`${hostname}${endpointSlug}`);
   } else {
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
 
@@ -1784,6 +1802,34 @@ export const getCatSubcatDescriptors = async ({
   }
 };
 
+type TFetchCollectionBasicInfo = {
+  collectionId: string;
+};
+
+type TFetchCollectionBasicInfoResponse = {
+  type?: 'DAY_TRIP' | 'GENERIC' | 'POI';
+  id?: string;
+};
+
+export const fetchCollectionBasicInfo = async ({
+  collectionId,
+}: TFetchCollectionBasicInfo): Promise<TFetchCollectionBasicInfoResponse> => {
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CollectionBasicInfo,
+    id: collectionId,
+  });
+
+  try {
+    const res = await fetch(apiUrl);
+    return await res.json();
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+    return {};
+  }
+};
+
 export const getQnaData = async ({
   collectionId,
   uid,
@@ -1825,5 +1871,72 @@ export const getQnaData = async ({
       qnaSnippets: [],
       qnaSections: [],
     };
+  }
+};
+
+export const fetchProductCardsByCollectionId = async ({
+  collectionId,
+  language,
+  currency = 'USD',
+  limit = 9,
+  offset = 0,
+}: {
+  collectionId: string;
+  language: string;
+  currency: string;
+  limit?: number;
+  offset?: number;
+}) => {
+  const productCardsEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CollectionProductCards,
+    params: {
+      limit: limit.toString(),
+      offset: offset.toString(),
+      platform: 'ALL',
+      ...(language && {
+        language,
+      }),
+      ...(currency && {
+        currency: currency,
+      }),
+    },
+    id: collectionId,
+  });
+
+  try {
+    const res = await fetch(productCardsEndpoint);
+    return await res.json();
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+export const fetchBannersV3 = async ({
+  id,
+  mediaResourceType,
+  platform = 'ALL',
+}: {
+  id: string;
+  mediaResourceType: string;
+  platform?: string;
+}) => {
+  const bannerEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.BannersV3,
+    params: {
+      entityId: id,
+      mediaResourceType,
+      platform,
+    },
+  });
+
+  try {
+    const res = await fetch(bannerEndpoint);
+    return await res.json();
+  } catch (error) {
+    sendLog({
+      err: error,
+    });
   }
 };

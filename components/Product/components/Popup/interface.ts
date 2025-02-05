@@ -17,4 +17,5 @@ export type TPopupProps = {
     overlay?: CSSProperties;
   };
   defaultOpen?: boolean;
+  scrollToIndex?: number;
 };
