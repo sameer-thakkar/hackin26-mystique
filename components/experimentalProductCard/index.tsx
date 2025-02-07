@@ -86,6 +86,8 @@ const ExperimentalProductCard = (props: any) => {
     tgidItineraryData,
     scrollToItinerarySection = false,
     isModifiedPopup = false,
+    isModifiedCombo = false,
+    showCruisesCombosRevamp = false,
     showSightsCoveredItineraryLayout = false,
     customDescriptors = [],
     topReviews,
@@ -367,6 +369,7 @@ const ExperimentalProductCard = (props: any) => {
         scrollToItinerarySection={scrollToItinerarySection}
         isModifiedPopup={isModifiedPopup}
         customDescriptors={customDescriptors}
+        showCruisesCombosRevamp={showCruisesCombosRevamp}
       />
     );
   };
@@ -409,6 +412,7 @@ const ExperimentalProductCard = (props: any) => {
           hideCloseButton: hideDrawerCloseButton,
           tgidItineraryData,
           isModifiedPopup,
+          isModifiedCombo,
           showSightsCoveredItineraryLayout,
           reviewsDetails,
           topReviews,

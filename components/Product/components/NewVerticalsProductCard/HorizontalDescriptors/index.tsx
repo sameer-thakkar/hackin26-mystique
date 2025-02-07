@@ -1,3 +1,4 @@
+import { DESCRIPTORS } from 'const/index';
 import { ProductDescriptors } from '../../ProductDescriptors';
 import { HORIZONTAL_DESCRIPTORS } from './const';
 import { HorizontalTags } from './styles';
@@ -9,10 +10,18 @@ const HorizontalDescriptors = ({
   lang,
   isMobile,
   descriptorArray,
+  modifyAudioGuideDescriptor = false,
 }: THorizontalDescriptors) => {
-  const filteredDescriptors = descriptorArray?.filter((item) =>
-    HORIZONTAL_DESCRIPTORS?.includes(item)
-  );
+  const filteredDescriptors = descriptorArray?.reduce((acc, item) => {
+    if (HORIZONTAL_DESCRIPTORS?.includes(item)) {
+      acc.push(item);
+    }
+    if (modifyAudioGuideDescriptor && item === DESCRIPTORS.AUDIO_GUIDE) {
+      acc.push(DESCRIPTORS.MULTILINGUAL_AUDIO_GUIDE);
+    }
+    return acc;
+  }, [] as string[]);
+
   const finalDescriptors = filteredDescriptors?.sort(
     (a, b) =>
       HORIZONTAL_DESCRIPTORS.indexOf(a) - HORIZONTAL_DESCRIPTORS.indexOf(b)

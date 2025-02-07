@@ -321,6 +321,7 @@ const PopulateProducts: any = (props: any) => {
     isHOHORevamp,
     showItineraries = false,
     isCruisesRevamp = false,
+    showCruisesCombosRevamp = false,
     isNewVerticalsProductCard = false,
     horizontalProductCard = false,
     verticalProductCard = false,
@@ -569,7 +570,7 @@ const PopulateProducts: any = (props: any) => {
 
   const nonNewVerticalIndex = availableToursList?.findIndex(
     (tour: Record<string, any>) => {
-      if (isCruisesRevamp) {
+      if (isCruisesRevamp && !showCruisesCombosRevamp) {
         return (
           scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
           !CRUISE_FORMAT_SUBCAT_IDS?.includes(
@@ -581,7 +582,7 @@ const PopulateProducts: any = (props: any) => {
   );
   const nonNewVerticalTours = availableToursList?.filter(
     (tour: Record<string, any>) => {
-      if (isCruisesRevamp) {
+      if (isCruisesRevamp && !showCruisesCombosRevamp) {
         return (
           scorpioData[tour.tgid]?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
           !CRUISE_FORMAT_SUBCAT_IDS?.includes(
@@ -594,7 +595,7 @@ const PopulateProducts: any = (props: any) => {
 
   const newVerticalTours = availableToursList?.filter(
     (tour: Record<string, any>) => {
-      if (isCruisesRevamp) {
+      if (isCruisesRevamp && !showCruisesCombosRevamp) {
         return (
           scorpioData[tour.tgid]?.primaryCategory?.id === CRUISE_CATEGORY_ID ||
           CRUISE_FORMAT_SUBCAT_IDS?.includes(
@@ -658,7 +659,11 @@ const PopulateProducts: any = (props: any) => {
                 });
               }
 
-              if (isCruisesRevamp && isNonCruiseProductCard) {
+              if (
+                isCruisesRevamp &&
+                !showCruisesCombosRevamp &&
+                isNonCruiseProductCard
+              ) {
                 const {
                   primaryCategory,
                   primaryCollection,
@@ -842,7 +847,7 @@ const PopulateProducts: any = (props: any) => {
       isNonPoi,
       isModifiedProductCard:
         isNewVerticalsProductCard &&
-        (isCruisesRevamp
+        (isCruisesRevamp && !showCruisesCombosRevamp
           ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
             !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
           : scorpioData?.[tgid].combo) &&
@@ -852,7 +857,7 @@ const PopulateProducts: any = (props: any) => {
       isPoiMwebCard:
         isNewVerticalsProductCard &&
         isMobile &&
-        (isCruisesRevamp
+        (isCruisesRevamp && !showCruisesCombosRevamp
           ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
             !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
           : scorpioData?.[tgid].combo)
@@ -868,6 +873,7 @@ const PopulateProducts: any = (props: any) => {
       showPopup,
       isHOHORevamp,
       isCruisesRevamp,
+      showCruisesCombosRevamp,
       isNewVerticalsProductCard,
       isSwiperCard,
       isBot,
@@ -1101,6 +1107,7 @@ const PopulateProducts: any = (props: any) => {
       </ProductContainer>
       <Conditional
         if={
+          !showCruisesCombosRevamp &&
           isNewVerticalsProductCard &&
           (isMobile || clientIsMobile) &&
           nonNewVerticalTours?.length

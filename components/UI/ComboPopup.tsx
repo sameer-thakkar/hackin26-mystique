@@ -17,7 +17,7 @@ import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import BlackColorClose from 'assets/blackColorClose';
 
-const PopupWrapper = styled.div`
+export const PopupWrapper = styled.div`
   z-index: 16;
   width: 100vw;
   height: 100%;

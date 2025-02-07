@@ -83,7 +83,6 @@ import {
   SLICE_TYPES,
   TEMPLATES,
   THEMES,
-  YARRA_CRUISE_UID,
 } from 'const/index';
 import { strings } from 'const/strings';
 import Location from 'assets/location';
@@ -366,20 +365,19 @@ const MicrositeV1 = (props: any) => {
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
 
   const {
-    isEligible: isCruisesExpEligible,
-    isExperimentResolving: isCruisesExpResolving,
-    variant: cruisesVariant,
+    isEligible: isCruisesCombosExpEligible,
+    isExperimentResolving: isCruisesCombosExpResolving,
+    variant: cruisesCombosVariant,
   } = useABTesting({
-    experimentId: 'CRUISES_REVAMP',
+    experimentId: 'CRUISES_COMBO_REVAMP',
     noTrack: false,
-    customEligibilityCheckFn: () => YARRA_CRUISE_UID === uid,
+    customEligibilityCheckFn: () => CRUISES_REVAMP_UIDS.includes(uid),
   });
 
-  const showCruisesFormatForYarra =
-    isCruisesExpEligible && cruisesVariant === VARIANTS.TREATMENT;
+  const showCruisesCombosRevamp =
+    isCruisesCombosExpEligible && cruisesCombosVariant === VARIANTS.TREATMENT;
   const showCruisesFormat =
     CRUISES_REVAMP_UIDS.includes(uid) ||
-    showCruisesFormatForYarra ||
     template === TEMPLATES.CRUISES ||
     !!cruiseFormatTest;
   const currentLanguage = getLangObject(lang).code;
@@ -601,7 +599,7 @@ const MicrositeV1 = (props: any) => {
   const finalUncategorizedTours = getFinalUncategorizedTours({
     orderedFilteredTours: finalOrderedFilteredTours,
     scorpioData,
-    showCruisesFormat,
+    sortNonCruiseTours: showCruisesFormat && !showCruisesCombosRevamp,
     showHohoRevamp,
   });
 
@@ -970,6 +968,7 @@ const MicrositeV1 = (props: any) => {
       isHOHORevamp={showHohoRevamp}
       showItineraries={showItineraries}
       isCruisesRevamp={showCruisesFormat}
+      showCruisesCombosRevamp={showCruisesCombosRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
@@ -1061,7 +1060,7 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isQnaExpEligible && isQnaExpResolving) ||
-    (isCruisesExpEligible && isCruisesExpResolving) ||
+    (isCruisesCombosExpEligible && isCruisesCombosExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
@@ -1425,6 +1424,7 @@ const MicrositeV1 = (props: any) => {
           if={
             isA1orC1MB(taggedMbType) &&
             !isAirportTransfersMB &&
+            !showCruisesFormat &&
             !revampedDayTripsCollection
           }
         >

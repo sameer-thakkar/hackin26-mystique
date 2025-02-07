@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 import { ButtonContainer as PopupCloseButtonContainer } from 'components/Product/components/Popup/CloseButton/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import { PopupWrapper } from 'UI/ComboPopup';
 import { CarouselContainer } from 'UI/MediaCarousel/styles';
 import { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { StlyedSplit } from 'UI/Split';
@@ -3372,6 +3373,16 @@ export const cruiseStyles = css`
     ${TourTags} {
       margin-bottom: 0.25rem;
     }
+    ${ProductBody} {
+      grid-area: tour-tags;
+      ${HighlightTabsWrapper} {
+        margin: 0;
+        overflow: hidden;
+      }
+      ${ViewMoreButton} {
+        margin: 0;
+      }
+    }
     ${StyledPriceBlock} {
       .tour-price {
         font-size: 24px;
@@ -3379,6 +3390,11 @@ export const cruiseStyles = css`
     }
     ${TourTitleWrapper} {
       font-size: 24px;
+    }
+    ${PopupWrapper} {
+      ${TourTags} {
+        grid-area: unset;
+      }
     }
   }
   @media (max-width: 768px) {

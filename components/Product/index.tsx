@@ -272,6 +272,7 @@ const Product = (props: any) => {
     isBot = false,
     itineraryInfo,
     isNewVerticalsProductCard = false,
+    showCruisesCombosRevamp = false,
     isCruisesRevamp = false,
     verticalProductCard = false,
     horizontalProductCard = false,
@@ -452,9 +453,13 @@ const Product = (props: any) => {
   const isFirstProduct = indexPosition === 0;
   const isBannerCard =
     isFirstProduct && isCollectionMB && bannerVideo && !isNonPoi;
-  const isNonNewVerticalProductCard = isCruisesRevamp
-    ? primaryCategory?.id !== CRUISE_CATEGORY_ID &&
-      !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id)
+  const isNonCruiseProduct =
+    primaryCategory?.id !== CRUISE_CATEGORY_ID &&
+    !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id);
+  const isNonNewVerticalProductCard = showCruisesCombosRevamp
+    ? false
+    : isCruisesRevamp
+    ? isNonCruiseProduct
     : isCombo;
   const isModifiedPopup = isCruisesRevamp && !isNonNewVerticalProductCard;
 
@@ -904,6 +909,7 @@ const Product = (props: any) => {
         removeSitesVisited:
           showItinerary && tgidsWithSitesVisited.includes(tgid),
         isModifiedPopup: isModifiedPopup || showSightsCoveredItineraryLayout,
+        isModifiedCombo: showCruisesCombosRevamp && isNonCruiseProduct,
       }),
     [finalHighlights]
   );
@@ -911,7 +917,9 @@ const Product = (props: any) => {
   let { highlights, tabs } = originalIsMobile
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(
-        isModifiedPopup ? everyRichTextExceptInclusions : finalHighlights
+        isModifiedPopup && !isNonCruiseProduct
+          ? everyRichTextExceptInclusions
+          : finalHighlights
       );
 
   tabs =
@@ -937,7 +945,7 @@ const Product = (props: any) => {
 
   if (isModifiedPopup) {
     tabs = [
-      {
+      !isNonCruiseProduct && {
         heading: strings.INCLUSIONS,
         contents: [],
         type: 'nonRichText',
@@ -1033,6 +1041,8 @@ const Product = (props: any) => {
               scrollToItinerarySection={scrollToItinerarySection}
               tgidItineraryData={tgidItineraryData}
               isModifiedPopup={isModifiedPopup}
+              isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
+              showCruisesCombosRevamp={showCruisesCombosRevamp}
               customDescriptors={customDescriptors}
               showSightsCoveredItineraryLayout={
                 showSightsCoveredItineraryLayout
@@ -1792,6 +1802,7 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isMobile={isMobile}
                 descriptorArray={descriptors}
+                modifyAudioGuideDescriptor={showCruisesCombosRevamp}
               />
             </Conditional>
             <Conditional
@@ -2100,7 +2111,14 @@ const Product = (props: any) => {
                   />
                 </Conditional>
                 <Conditional if={hasHighlights || isPopup || isBot}>
-                  <Conditional if={!isModifiedPopup}>
+                  <Conditional
+                    if={
+                      !isModifiedPopup ||
+                      (isModifiedPopup &&
+                        showCruisesCombosRevamp &&
+                        isNonCruiseProduct)
+                    }
+                  >
                     <PrismicRichText
                       field={
                         isPopup
@@ -2408,7 +2426,8 @@ const Product = (props: any) => {
           isNewVerticalsProductCard &&
           isNonNewVerticalProductCard &&
           !isMobile &&
-          indexPosition === nonNewVerticalIndex
+          indexPosition === nonNewVerticalIndex &&
+          !showCruisesCombosRevamp
         }
       >
         <h2 className="combo-section-heading" ref={combosSectionRef}>
@@ -2422,7 +2441,8 @@ const Product = (props: any) => {
           !isNewVerticalsProductCard ||
           (isNewVerticalsProductCard &&
             isNonNewVerticalProductCard &&
-            !isMobile) ||
+            !isMobile &&
+            !showCruisesCombosRevamp) ||
           (isNewVerticalsProductCard &&
             isNonNewVerticalProductCard &&
             isMobile &&
@@ -2450,6 +2470,24 @@ const Product = (props: any) => {
           getMoreDetailsButton={getMoreDetailsButton}
           setCustomDescriptors={setCustomDescriptors}
           shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
+          handleShowComboPopup={handleShowComboPopup}
+          comboPopup={
+            <Conditional
+              if={!isMobile && isComboWithMultiVariant && showComboVariant}
+            >
+              <ComboPopup
+                productTitle={cardTitle}
+                l1Booster={boosterTag}
+                tgid={tgid}
+                isMobile={originalIsMobile}
+                closeHandler={handleCloseComboPopup}
+                descriptors={descriptorsList}
+                bookingUrl={productBookingUrl}
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+              />
+            </Conditional>
+          }
         />
       </Conditional>
       <Conditional if={showPopup}>{getProductCardPopup(false)}</Conditional>

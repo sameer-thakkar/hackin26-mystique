@@ -15,6 +15,7 @@ export type TGetCustomDescriptors = {
   setIsDescriptorClick: Dispatch<SetStateAction<boolean>>;
   itineraryType: ItineraryType;
   tgid: number | string;
+  isCruisesCombosRevamp?: boolean;
 };
 
 export type TDescriptorsList = {

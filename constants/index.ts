@@ -781,6 +781,7 @@ export const DESCRIPTORS = {
   TRANSFERS: 'TRANSFERS',
   AUDIO_GUIDE: 'AUDIO_GUIDE',
   FLEXIBLE_CANCELLATION: 'FLEXIBLE_CANCELLATION',
+  MULTILINGUAL_AUDIO_GUIDE: 'MULTILINGUAL_AUDIO_GUIDE',
 };
 
 export const MICROSITE_OBJECT_KEYS = [
@@ -2387,12 +2388,11 @@ export const CRUISE_FORMAT_SUBCAT_IDS = [1108, 1068];
 export const CRUISES_REVAMP_UIDS = [
   'www.seine-river-cruises.com',
   'www.canal-cruise-amsterdam.com',
-  'www.chaophrayacruises.com',
   'www.thames-river-cruise.com',
-  'www.bangkok-river-cruise.com',
+  'bootstour.berlin-tickets.com',
+  'www.budapest-river-cruises.com',
+  'www.tickets-melbourne.com.yarra-river-cruises',
 ];
-
-export const YARRA_CRUISE_UID = 'www.tickets-melbourne.com.yarra-river-cruises';
 
 export const CRUISES_ILLUSTRATION =
   'https://cdn-imgix-open.headout.com/MB/assets/cruise-banner-fixed.svg';

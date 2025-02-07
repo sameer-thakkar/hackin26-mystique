@@ -1099,15 +1099,15 @@ export const sortNonCruises = (
 export const getFinalUncategorizedTours = ({
   orderedFilteredTours,
   scorpioData,
-  showCruisesFormat,
+  sortNonCruiseTours,
   showHohoRevamp,
 }: {
   orderedFilteredTours: Record<string, any>[];
   scorpioData: Record<string, any>;
-  showCruisesFormat: boolean;
+  sortNonCruiseTours: boolean;
   showHohoRevamp: boolean;
 }) => {
-  if (showCruisesFormat) {
+  if (sortNonCruiseTours) {
     return sortNonCruises(orderedFilteredTours, scorpioData);
   }
   if (showHohoRevamp) {
@@ -1122,10 +1122,12 @@ export const filterHighlights = ({
   highlights,
   removeSitesVisited = false,
   isModifiedPopup = false,
+  isModifiedCombo = false,
 }: {
   highlights: Array<any>;
   removeSitesVisited: boolean;
   isModifiedPopup: boolean;
+  isModifiedCombo: boolean;
 }) => {
   const nonInclusionHeading = highlights.filter(
     ({ type }: { type: string }) => type === 'heading6'
@@ -1151,6 +1153,7 @@ export const filterHighlights = ({
     );
 
     let everyRichTextExceptHighlights = highlights.slice(inclusionHeadingIndex);
+    const highlightsRichText = highlights.slice(0, inclusionHeadingIndex);
     const nonInclusionHeading = everyRichTextExceptHighlights.filter(
       ({ type }: { type: string }) => type === 'heading6'
     )[1];
@@ -1173,7 +1176,7 @@ export const filterHighlights = ({
       ({ type, text }: { type: string; text: string }) =>
         type === 'heading6' && !headingsToRemove?.includes(text)
     );
-    if (headingToRemove?.length) {
+    if (!isModifiedCombo && headingToRemove?.length) {
       const headingToRemoveIndex = everyRichTextExceptInclusions.findIndex(
         (element: any) => element === headingToRemove?.[0]
       );
@@ -1187,7 +1190,9 @@ export const filterHighlights = ({
     }
 
     return {
-      highlightsAndInclusionsRichText,
+      highlightsAndInclusionsRichText: isModifiedCombo
+        ? highlightsRichText
+        : highlightsAndInclusionsRichText,
       everyRichTextExceptHighlightsAndInclusions,
       inclusionsRichText,
       everyRichTextExceptInclusions,

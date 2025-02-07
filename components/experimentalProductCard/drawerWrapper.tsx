@@ -71,6 +71,7 @@ const DrawerWrapper = (props: any) => {
     showThumbnailInBanner,
     tgidItineraryData,
     isModifiedPopup,
+    isModifiedCombo,
     showSightsCoveredItineraryLayout,
     reviewsDetails,
     topReviews,
@@ -258,6 +259,7 @@ const DrawerWrapper = (props: any) => {
             onActiveItineraryTabChange={handleActiveItineraryTabChange}
             preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
             isModifiedPopup={isModifiedPopup}
+            isModifiedCombo={isModifiedCombo}
             showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
             reviewsDetails={reviewsDetails}
             topReviews={topReviews}

@@ -27,6 +27,7 @@ export const getCustomDescriptors = ({
   setIsDescriptorClick,
   itineraryType,
   tgid,
+  isCruisesCombosRevamp = false,
 }: TGetCustomDescriptors) => {
   let descriptorsList: TDescriptorsList[] = [];
 
@@ -64,6 +65,7 @@ export const getCustomDescriptors = ({
     } = itineraryDetails || {};
 
     const audioGuide =
+      !isCruisesCombosRevamp &&
       defaultDescriptors?.includes(DESCRIPTORS.AUDIO_GUIDE) &&
       strings.DESCRIPTORS.MULTILINGUAL_AUDIO_GUIDE;
     const liveGuide =

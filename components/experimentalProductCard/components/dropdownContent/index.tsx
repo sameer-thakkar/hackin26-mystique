@@ -94,6 +94,7 @@ interface DropdownContentProps {
   onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
   preventTouchEvents?: boolean;
   isModifiedPopup?: boolean;
+  isModifiedCombo?: boolean;
   showSightsCoveredItineraryLayout?: boolean;
   reviewsDetails?: Record<string, any>;
   topReviews?: TReviewMediasResponse['items'];
@@ -125,6 +126,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   onActiveItineraryTabChange,
   preventTouchEvents,
   isModifiedPopup = false,
+  isModifiedCombo = false,
   showSightsCoveredItineraryLayout = false,
   reviewsDetails,
   topReviews,
@@ -164,14 +166,16 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
         highlights: propHighlights,
         removeSitesVisited: false,
         isModifiedPopup: isModifiedPopup || showSightsCoveredItineraryLayout,
+        isModifiedCombo: isModifiedCombo,
       }),
     [propHighlights]
   );
   const { inclusionsExclusions } =
     parseInclusionsExclusions(inclusionsRichText);
-  const finalHighlights = isModifiedPopup
-    ? everyRichTextExceptInclusions
-    : propHighlights;
+  const finalHighlights =
+    isModifiedPopup && !isModifiedCombo
+      ? everyRichTextExceptInclusions
+      : propHighlights;
   const adjustContainerScroll = useCallback(
     (targetElement: any, container: any) => {
       if (!targetElement || !container) return;
@@ -310,6 +314,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
       setTabs(
         (prevTabs) =>
           [
+            ...(isModifiedCombo ? prevTabs?.slice(0, 1) : []),
             {
               heading: strings.INCLUSIONS,
               contents: [],
@@ -333,7 +338,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
                   }
                 : null),
             },
-            ...prevTabs,
+            ...(isModifiedCombo ? prevTabs?.slice(2) : prevTabs),
           ]?.filter((el) => Object.keys(el)?.length) as TabData[]
       );
     }

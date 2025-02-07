@@ -21,6 +21,7 @@ import {
   CTABlock,
   CTAContainer,
   PriceContainer,
+  ProductBody,
   ProductHeader,
   StyledProductCard,
   ViewMoreButton,
@@ -42,6 +43,8 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  CRUISE_CATEGORY_ID,
+  CRUISE_FORMAT_SUBCAT_IDS,
   MEALS_SUBCAT_IDS,
   PRODUCT_CARD_REVAMP,
   THEMES,
@@ -49,6 +52,7 @@ import {
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import InfoIconTicketCard from 'assets/infoIconTicketCard';
+import Highlights from '../Highlights';
 import HorizontalDescriptors from './HorizontalDescriptors';
 import { getCustomDescriptors } from './utils';
 
@@ -97,10 +101,13 @@ const NewVerticalsProductCard = (props: any) => {
     onRatingsCountClick,
     isHOHORevamp,
     isCruisesRevamp,
+    showCruisesCombosRevamp,
     itineraryInfo,
     getMoreDetailsButton,
     setCustomDescriptors,
     shouldRunHohoRevampExperiment,
+    handleShowComboPopup,
+    comboPopup,
   } = props;
 
   const {
@@ -168,6 +175,10 @@ const NewVerticalsProductCard = (props: any) => {
     scorpioData.highlights,
     FILTERED_HIGHLIGHTS()
   );
+  const isCruisesProduct =
+    primaryCategory?.id === CRUISE_CATEGORY_ID ||
+    CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id);
+  const showModifiedCombos = showCruisesCombosRevamp && !isCruisesProduct;
 
   const descriptorsList = getCustomDescriptors({
     isHOHO: isHOHORevamp,
@@ -181,6 +192,7 @@ const NewVerticalsProductCard = (props: any) => {
     setIsDescriptorClick,
     itineraryType,
     tgid,
+    isCruisesCombosRevamp: showCruisesCombosRevamp,
   });
 
   useEffect(() => {
@@ -423,6 +435,7 @@ const NewVerticalsProductCard = (props: any) => {
                 lang={currentLanguage}
                 isMobile={isMobile}
                 descriptorArray={descriptors}
+                modifyAudioGuideDescriptor={showCruisesCombosRevamp}
               />
             </Conditional>
             <Conditional if={!isPopup}>
@@ -470,6 +483,20 @@ const NewVerticalsProductCard = (props: any) => {
                         />
                       </a>
                     </Conditional>
+                    <Conditional if={isCombo}>
+                      <BookNowCta
+                        clickHandler={() =>
+                          handleShowComboPopup(
+                            expandContent
+                              ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
+                              : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                          )
+                        }
+                        isMobile={isMobile}
+                        mbTheme={mbTheme}
+                        ctaText={strings.CHECK_AVAIL}
+                      />
+                    </Conditional>
                   </CTABlock>
                   <Conditional if={showNextAvailable}>
                     <NextAvailable
@@ -489,25 +516,44 @@ const NewVerticalsProductCard = (props: any) => {
           <Conditional if={!isMobile && !isAsideBarOverlay && !isPopup}>
             <HorizontalLine colorProp={COLORS.CANDY.LIGHT_TONE_1} />
           </Conditional>
-          <ProductDescriptors
-            isLoading={isLoading}
-            customDescriptors={descriptorsList}
-            allowClick={true}
-            pageType={pageType}
-            minDuration={minDuration}
-            maxDuration={maxDuration}
-            lang={currentLanguage}
-            isCombo={isCombo}
-            isGpMotorTicketsMb={false}
-            showLanguages={(!isMobile || expandContent) && isSpecialGuidedTour}
-            uid={uid}
-            horizontal={isPoiMwebCard}
-            showIcons={!isPoiMwebCard}
-            cancellationPolicy={'cancellationPolicy'}
-            isMobile={isMobile}
-            showGuidedTourDescriptor={false}
-          />
-          <Conditional if={!isMobile}>
+          <Conditional if={!isMobile && showModifiedCombos}>
+            <ProductBody hasReadMore={true} collapsed={true} maxHeight={172}>
+              <div className="tour-description">
+                <Highlights
+                  hasRegularHighlights={true}
+                  tabs={tabs}
+                  showPopup={false}
+                  showMoreDetails={true}
+                  onClick={onMoreInfoClick}
+                  productRef={productRef}
+                />
+              </div>
+            </ProductBody>
+          </Conditional>
+          <Conditional if={!showModifiedCombos}>
+            <ProductDescriptors
+              isLoading={isLoading}
+              customDescriptors={descriptorsList}
+              allowClick={true}
+              pageType={pageType}
+              minDuration={minDuration}
+              maxDuration={maxDuration}
+              lang={currentLanguage}
+              isCombo={isCombo}
+              isGpMotorTicketsMb={false}
+              showLanguages={
+                (!isMobile || expandContent) && isSpecialGuidedTour
+              }
+              uid={uid}
+              horizontal={isPoiMwebCard}
+              showIcons={!isPoiMwebCard}
+              cancellationPolicy={'cancellationPolicy'}
+              isMobile={isMobile}
+              showGuidedTourDescriptor={false}
+            />
+          </Conditional>
+
+          <Conditional if={!isMobile && !showModifiedCombos}>
             <ViewMoreButton $noMargin={true} onClick={onMoreInfoClick}>
               {strings.MORE_DETAILS}
               <ChevronRight
@@ -534,6 +580,7 @@ const NewVerticalsProductCard = (props: any) => {
               controller={imgGalleryController}
             />
           </Conditional>
+          <Conditional if={!isPopup}>{comboPopup}</Conditional>
         </StyledProductCard>
       </>
     );
