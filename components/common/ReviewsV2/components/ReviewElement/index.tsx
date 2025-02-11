@@ -163,7 +163,9 @@ const ReviewElement = (props: TReviewElementProps) => {
           >
             <StyledCTAText
               className="block"
-              $isClickable={isProductCardPresent}
+              $isClickable={
+                shouldFocusProductCardOnCTAClick && isProductCardPresent
+              }
             >
               {tourGroup?.urlText}
             </StyledCTAText>

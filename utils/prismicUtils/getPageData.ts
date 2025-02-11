@@ -58,6 +58,7 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import categoryTourListParserV1 from 'utils/parsers/categoryTourListParserV1';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2';
+import { dayTripCollectionParser } from 'utils/parsers/dayTripCollectionParser';
 import monthOnMonthPageParser from 'utils/parsers/monthOnMonthPageParser';
 import { getCategoryData } from 'utils/prismicUtils/categoryUtils';
 import { getCityPageData } from 'utils/prismicUtils/cityUtils';
@@ -85,8 +86,10 @@ import {
   getValidUrlParams,
 } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
+import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
 import {
   CATEGORY_IDS,
+  COOKIE,
   CUSTOM_TYPES,
   DESIGN,
   LANGUAGE_MAP,
@@ -257,6 +260,10 @@ export const getPageData = async ({
 
     let categoryTourListDataPromise = Promise.resolve(
       {} as ReturnType<typeof getCategoryData>
+    );
+
+    let dayTripCollectionDataPromise = Promise.resolve(
+      {} as ReturnType<typeof dayTripCollectionParser>
     );
 
     let collectionBasicInfo = {} as Awaited<
@@ -807,17 +814,23 @@ export const getPageData = async ({
       const isDayTripCollection =
         isCollectionMB(taggedMbType) &&
         taggedCollection &&
-        collectionBasicInfo?.type === 'DAY_TRIP';
+        collectionBasicInfo?.type === 'DAY_TRIP' &&
+        DAY_TRIPS_COLLECTION_MBS.includes(uid);
 
-      // if (isDayTripCollection) {
-      //   categoryTourListPromise = dayTripCollectionParser({
-      //     collectionId: taggedCollection,
-      //     lang: lang ?? 'en',
-      //     hostname,
-      //     localizedStrings,
-      //     currency: cookies?.[COOKIE.CURRENT_CURRENCY] || 'USD',
-      //   });
-      // } else
+      if (isDayTripCollection) {
+        const primaryCityCurrency =
+          localisedCategoryTourListV1?.primary?.product_cards?.data?.city
+            ?.currency?.code;
+        dayTripCollectionDataPromise = dayTripCollectionParser({
+          collectionId: taggedCollection,
+          lang: lang ?? 'en',
+          hostname,
+          localizedStrings,
+          currency:
+            cookies?.[COOKIE.CURRENT_CURRENCY] || primaryCityCurrency || 'USD',
+          micrositeData: microsite,
+        });
+      }
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
           categoryTourListPromise = categoryTourListParserV1({
@@ -1189,6 +1202,7 @@ export const getPageData = async ({
       collectionData,
       collectionList,
       categoryTourListData,
+      dayTripCollectionData,
       catSubCatReviews,
       botReviewsByTGID,
     } = await labeledPromiseAllSettled([
@@ -1207,6 +1221,7 @@ export const getPageData = async ({
       { promise: collectionDataPromise, label: 'collectionData' },
       { promise: collectionListPromise, label: 'collectionList' },
       { promise: categoryTourListDataPromise, label: 'categoryTourListData' },
+      { promise: dayTripCollectionDataPromise, label: 'dayTripCollectionData' },
       { promise: catSubCatReviewsPromise, label: 'catSubCatReviews' },
       { promise: botReviewsByTGIDPromise, label: 'botReviewsByTGID' },
     ] as const);
@@ -1634,6 +1649,7 @@ export const getPageData = async ({
       categoryId,
       subCategoryId: subCatId,
       botReviewsByTGID: botReviewsByTGIDMap,
+      dayTripCollectionData,
     };
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);

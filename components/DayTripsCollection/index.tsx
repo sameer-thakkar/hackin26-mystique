@@ -1,11 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import dynamic from 'next/dynamic';
 import { Button } from '@headout/eevee';
 import LazyComponent from 'components/common/LazyComponent';
 import ChevronUp from 'components/Espeon/Assets/ChevronUp';
 import { useGuestCount } from 'hooks/useGuestCount';
 import { trackEvent } from 'utils/analytics';
-import { dayTripCollectionParser } from 'utils/parsers/dayTripCollectionParser';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -54,16 +59,32 @@ const DayTripsCollectionPage = (props: any) => {
     isMobile,
     collectionReviews,
     collection,
-    lang,
-    currency,
-    micrositeData,
+    dayTripCollectionData: dayTripCollectionDataProps,
   } = props;
   const isDesktop = !isMobile;
-  const collectionReviewItems = collectionReviews?.result?.reviews?.items || [];
+  const collectionReviewItems = useMemo(
+    () => collectionReviews?.result?.reviews?.items || [],
+    [collectionReviews]
+  );
 
   const [showFloatingActionButton, setShowFloatingActionButton] =
     useState(false);
-  const [dayTripCollectionData, setDayTripCollectionData] = useState<any>(null);
+
+  const dayTripCollectionData = useMemo(() => {
+    if (!dayTripCollectionDataProps) return null;
+
+    const { collectionDetails, orderedTours, scorpioData } =
+      dayTripCollectionDataProps;
+    return {
+      collection: collectionDetails,
+      categoryTourListData: {
+        orderedTours,
+        scorpioData,
+      },
+      scorpioData,
+    };
+  }, [dayTripCollectionDataProps]);
+
   const { data: guestCount } = useGuestCount();
 
   const experiencesSectionRef = useRef<HTMLDivElement>(null);
@@ -84,26 +105,6 @@ const DayTripsCollectionPage = (props: any) => {
     }
   }, [isDesktop]);
 
-  const fetchData = useCallback(async () => {
-    const { collectionDetails, orderedTours, scorpioData } =
-      await dayTripCollectionParser({
-        collectionId: collection?.id,
-        lang,
-        hostname: window.location.origin,
-        localizedStrings: strings,
-        currency,
-        micrositeData,
-      });
-    setDayTripCollectionData({
-      collection: collectionDetails,
-      categoryTourListData: {
-        orderedTours,
-        scorpioData,
-      },
-      scorpioData,
-    });
-  }, [collection?.id, lang, currency]);
-
   useEffect(() => {
     if (showFloatingActionButton && !fabViewedEventTriggered.current) {
       fabViewedEventTriggered.current = true;
@@ -114,10 +115,23 @@ const DayTripsCollectionPage = (props: any) => {
     }
   }, [showFloatingActionButton, fabViewedEventTriggered]);
 
-  useEffect(() => {
-    if (!collection?.id) return;
-    fetchData();
-  }, [collection, fetchData]);
+  const hasReviews = collectionReviewItems.length > 0;
+
+  const childProps = useMemo(
+    () => ({
+      ...props,
+      ...dayTripCollectionData,
+    }),
+    [props, dayTripCollectionData]
+  );
+
+  const experiencesSectionProps = useMemo(
+    () => ({
+      ...childProps,
+      setShowFloatingActionButton,
+    }),
+    [childProps, setShowFloatingActionButton]
+  );
 
   if (
     !collection?.id ||
@@ -125,18 +139,6 @@ const DayTripsCollectionPage = (props: any) => {
     !dayTripCollectionData?.collection
   )
     return null;
-
-  const hasReviews = collectionReviewItems.length > 0;
-
-  const childProps = {
-    ...props,
-    ...dayTripCollectionData,
-  };
-
-  const experiencesSectionProps = {
-    ...childProps,
-    setShowFloatingActionButton,
-  };
 
   const styles = dayTripsCollectionPageRecipe({
     isDesktop,

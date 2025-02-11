@@ -1384,7 +1384,7 @@ const MicrositeV1 = (props: any) => {
             uid={uid}
             currentLanguage={currentLanguage}
             bookNowText={bookNowText}
-            showCustomProductCardEnglishCTA={showCustomProductCardEnglishCTA}
+            showCustomProductCardEnglishCTA={false} // explicitly passing false to avoid showing the custom product card english cta
             readMoreText={readMoreText}
             showLessText={showLessText}
             productOffer={productOffer}
@@ -1418,6 +1418,7 @@ const MicrositeV1 = (props: any) => {
               boosterExperimentVariant === VARIANTS.TREATMENT
             }
             micrositeData={micrositeData}
+            dayTripCollectionData={props.dayTripCollectionData}
           />
         </Conditional>
         <Conditional

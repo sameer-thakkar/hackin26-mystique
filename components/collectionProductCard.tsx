@@ -266,6 +266,7 @@ const CollectionProductCardComponent = (props: Props) => {
     pageType,
     isPoiMwebCard: true,
     flowType: productCardInfo?.flowType,
+    earliestAvailability: productCardInfo?.earliestAvailability,
     ...mbContext,
   };
 
@@ -393,6 +394,8 @@ const CollectionProductCardComponent = (props: Props) => {
     reviewsDetails,
     topReviews,
     isMobile: !isDesktop,
+    flowType: productCardInfo?.flowType,
+    earliestAvailability: productCardInfo?.earliestAvailability,
     itineraryInfo: {
       data: tgidItineraryData,
       showData: showItinerary && !showSightsCoveredItineraryLayout,

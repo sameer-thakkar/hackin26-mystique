@@ -27,6 +27,7 @@ export const useReviewElement = ({
   onImageClick,
   sourceLanguage,
   currentLanguage = 'en',
+  shouldFocusProductCardOnCTAClick = false,
 }: TUseReviewElementProps) => {
   const [reviewContent, setReviewContent] = useState(
     useTranslatedContent ? translatedContent : content
@@ -65,7 +66,7 @@ export const useReviewElement = ({
   };
 
   const handleBottomCTAClick = () => {
-    if (isProductCardPresent) {
+    if (isProductCardPresent && shouldFocusProductCardOnCTAClick) {
       const productCard = document.querySelector(
         `[data-tgid="${tourGroup?.id}"]`
       );

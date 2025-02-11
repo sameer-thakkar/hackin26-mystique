@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { withRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 import {
   type Itinerary as TItinerary,
   ItineraryType,
@@ -19,6 +20,7 @@ import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
+import { currencyAtom } from 'store/atoms/currency';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -56,6 +58,7 @@ interface Props {
 }
 
 const FullWidthProductCardComponent = (props: Props) => {
+  const currency = useRecoilValue(currencyAtom);
   const [isTrackerInitialized, setIsTrackerInitialized] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
@@ -132,15 +135,7 @@ const FullWidthProductCardComponent = (props: Props) => {
     });
   };
 
-  const {
-    lang,
-    redirectToHeadoutBookingFlow,
-    currency,
-    flowType,
-    host,
-    isDev,
-    uid,
-  } = mbContext;
+  const { lang, redirectToHeadoutBookingFlow, host, isDev, uid } = mbContext;
   let url = host || window.location.host;
   const hostName =
     !isDev || /(test|dev)-headout/gi.test(url)
@@ -156,7 +151,9 @@ const FullWidthProductCardComponent = (props: Props) => {
     tgid: productId,
     redirectToHeadoutBookingFlow,
     currency,
-    flowType,
+    variantId: productCardInfo?.listingPrice?.tourId,
+    date: productCardInfo?.earliestAvailability,
+    flowType: productCardInfo?.flowType,
   });
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
@@ -255,6 +252,8 @@ const FullWidthProductCardComponent = (props: Props) => {
     reviewsDetails,
     topReviews,
     isMobile: false,
+    flowType: productCardInfo?.flowType,
+    earliestAvailability: productCardInfo?.earliestAvailability,
     itineraryInfo: {
       data: tgidItineraryData,
       showData: showItinerary && !showSightsCoveredItineraryLayout,

@@ -32,4 +32,5 @@ export type TUseReviewElementProps = {
     reviewId: number;
     reviewMedia: TImageGalleryReviewMedia[];
   }) => void;
+  shouldFocusProductCardOnCTAClick?: boolean;
 } & TReview;

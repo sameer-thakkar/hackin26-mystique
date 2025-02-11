@@ -182,6 +182,7 @@ const Page = (props: PageProps) => {
     isEntertainmentBanner,
     bannerTrustBoosters,
     bannerV3Data,
+    dayTripCollectionData,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -376,6 +377,7 @@ const Page = (props: PageProps) => {
               qnaSnippets={qnaSnippets}
               qnaSections={qnaSections}
               botReviewsByTGID={botReviewsByTGID}
+              dayTripCollectionData={dayTripCollectionData}
             />
           );
         }
