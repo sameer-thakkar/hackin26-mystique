@@ -983,14 +983,11 @@ const PopulateProducts: any = (props: any) => {
             if={
               !hideHeading &&
               availableToursList?.length &&
-              (sectionTitle || strings.TOUR_LIST_HEADING)
+              sectionTitle &&
+              isTicketCard
             }
           >
-            <h2
-              id={generateSidenavId(sectionTitle || strings.TOUR_LIST_HEADING)}
-            >
-              {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
-            </h2>
+            <h2 id={generateSidenavId(sectionTitle)}>{sectionTitle}</h2>
           </Conditional>
         </div>
       </Conditional>
