@@ -7,7 +7,4 @@ export const DAY_TRIPS_COLLECTION_MBS = [
   'greatoceanroad.tickets-melbourn.com',
   'batucaves.malaysia-tickets.com', // 3813
   'www.phiphi-islands-tours.com', // 2405
-  'www.moreton-island-tours.com', // 2844
-  'www.rottnestislandtours.com', // 4417
-  'www.bruny-island-tours.com', // 4341
 ];
