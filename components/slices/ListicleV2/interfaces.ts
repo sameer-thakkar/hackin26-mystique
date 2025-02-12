@@ -4,6 +4,7 @@ export interface IListicleTypeProps {
   listicleSectionTitle: string;
   type?: string;
   settings?: string;
+  enforceParentIndex?: boolean;
 }
 
 export interface IDataEventProps {

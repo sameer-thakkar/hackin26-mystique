@@ -79,6 +79,7 @@ const ProductCard = styled.div<{
     grid-gap: 0;
     height: max-content;
     margin-top: 12px;
+
     .discount {
       ${expandFontToken('UI/Label Small (Heavy)')};
       color: ${COLORS.TEXT.BEACH};
@@ -109,6 +110,7 @@ const ProductCard = styled.div<{
     &:before {
       content: unset;
     }
+
     &:after {
       height: 24px;
     }
@@ -133,6 +135,7 @@ const ProductCard = styled.div<{
     grid-row: 2;
     display: flex;
     align-items: center;
+
     span {
       color: ${COLORS.GRAY.G3};
     }
@@ -195,7 +198,14 @@ const ProductCard = styled.div<{
     .rating-number {
       margin-right: 0.125rem;
       color: ${COLORS.TEXT.CANDY_1};
+
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
     }
+  }
+
+  .total-rating {
+    margin: 1px 0;
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
   }
 
   .avg-rating svg {
@@ -686,10 +696,10 @@ const Product = (props: any) => {
           <div className="rating">
             <Conditional if={averageRating}>
               <span className="avg-rating">
+                <Star color={COLORS.TEXT.CANDY_1} />
                 <span className="rating-number">
                   {averageRating?.toFixed?.(1)}
                 </span>
-                <Star color={COLORS.TEXT.CANDY_1} />
               </span>
             </Conditional>
             <Conditional if={ratingCount}>
@@ -820,10 +830,10 @@ const Product = (props: any) => {
                 <div className="rating">
                   <Conditional if={averageRating}>
                     <span className="avg-rating">
+                      <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
                       <span className="rating-number">
                         {averageRating.toFixed?.(1)}
                       </span>
-                      <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
                     </span>
                   </Conditional>
                   <Conditional if={ratingCount}>

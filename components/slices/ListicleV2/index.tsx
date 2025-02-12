@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
 import LargeListicle from 'components/slices/ListicleV2/LargeListicle/index';
@@ -63,7 +63,7 @@ const ListicleV2 = ({
     })}`;
   };
 
-  const getTabData = (data: Record<any, any>) => {
+  const getTabData = useCallback((data: Record<any, any>) => {
     const tabData = Object.entries(data)
       .filter((item) => LISTICLE_TAB_FIELDS.includes(item[0]))
       .map((item) => item[1]);
@@ -73,75 +73,84 @@ const ListicleV2 = ({
         if (index % 2 === 0) return { title: item, text: tabData[index + 1] };
       })
       .filter((item) => item?.title || item?.text);
-  };
+  }, []);
 
-  const getListicleData = (listicleData: Array<any>): Experience[] => {
-    return listicleData?.map((data: Record<any, any>): Experience => {
-      const {
-        collection_id,
-        card_heading,
-        cta_text,
-        descriptor_tag_one,
-        descriptor_tag_two,
-        descriptor_tag_three,
-        rich_text,
-        category,
-        subcategory,
-        cta_link,
-        card_image,
-        card_image_alt_text,
-      } = data || {};
-
-      const { url } = card_image || {};
-      const { url: ctaUrl } = cta_link || {};
-
-      const experienceType = getExperienceType(data) as string;
-      return {
-        experienceId: collection_id,
-        experienceType,
-        heading: card_heading,
-        imageUrl: url?.split('//')[1] || '',
-        imageAlt: card_image_alt_text,
-        ctaText: getCTAText(cta_text),
-        ctaUrl,
-        categoryTags: [
+  const getListicleData = useCallback(
+    (listicleData: Array<any>): Experience[] => {
+      return listicleData?.map((data: Record<any, any>): Experience => {
+        const {
+          collection_id,
+          card_heading,
+          cta_text,
           descriptor_tag_one,
           descriptor_tag_two,
           descriptor_tag_three,
-        ],
-        richTextData: rich_text,
-        experienceName:
-          experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
-        practicalInfo: getPracticalInfo(data),
-        tabData: getTabData(data) as Array<LargeListicleTabData>,
-      };
-    });
-  };
+          rich_text,
+          category,
+          subcategory,
+          cta_link,
+          card_image,
+          card_image_alt_text,
+        } = data || {};
+
+        const { url } = card_image || {};
+        const { url: ctaUrl } = cta_link || {};
+
+        const experienceType = getExperienceType(data) as string;
+        return {
+          experienceId: collection_id,
+          experienceType,
+          heading: card_heading,
+          imageUrl: url?.split('//')[1] || '',
+          imageAlt: card_image_alt_text,
+          ctaText: getCTAText(cta_text),
+          ctaUrl,
+          categoryTags: [
+            descriptor_tag_one,
+            descriptor_tag_two,
+            descriptor_tag_three,
+          ],
+          richTextData: rich_text,
+          experienceName:
+            experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
+          practicalInfo: getPracticalInfo(data),
+          tabData: getTabData(data) as Array<LargeListicleTabData>,
+        };
+      });
+    },
+    [getCTAText, getPracticalInfo, getTabData]
+  );
+
+  const listicleItems = getListicleData(items) || [];
+  const enforceParentIndex = listicleItems?.length <= 1;
 
   switch (type) {
     case LISTICLE_TYPE.LARGE:
       return (
         <LargeListicle
-          items={getListicleData(items) || []}
+          items={listicleItems}
           listicleSectionTitle={listicleSectionTitle}
           index={index}
+          enforceParentIndex={enforceParentIndex}
         />
       );
     case LISTICLE_TYPE.MEDIUM:
       return (
         <MediumListicle
-          items={getListicleData(items) || []}
+          items={listicleItems}
           settings={settings}
           listicleSectionTitle={listicleSectionTitle}
           index={index}
+          enforceParentIndex={enforceParentIndex}
         />
       );
     case LISTICLE_TYPE.SMALL:
       return (
         <SmallListicle
-          items={getListicleData(items) || []}
+          items={listicleItems}
           listicleSectionTitle={listicleSectionTitle}
           index={index}
+          enforceParentIndex={enforceParentIndex}
         />
       );
     default:

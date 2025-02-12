@@ -80,7 +80,7 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
     display: flex;
     justify-content: space-between;
     width: 75.875rem;
-    margin: 4.31rem auto 0;
+    margin: 6rem auto 0;
     z-index: 15;
 
     .all-photos {

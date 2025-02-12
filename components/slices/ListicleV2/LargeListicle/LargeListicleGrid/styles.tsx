@@ -7,6 +7,10 @@ export const LargeListicleGridWrapper = styled.div`
   border-radius: 16px;
   border: 1px solid ${COLORS.GRAY.G6};
   background: ${COLORS.BRAND.WHITE};
+
+  &:not(:last-child) {
+    margin-bottom: 1.25rem;
+  }
 `;
 
 export const LargeListicleBox = styled.div<{ isModalOpen: boolean }>`

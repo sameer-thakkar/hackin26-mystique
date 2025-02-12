@@ -61,3 +61,7 @@ export const getLocalizationLabels = async ({
   const localeStrings = await langStrings[lang]();
   return defaultsDeep(localeStrings.default, EN);
 };
+
+export const isEnglishLanguage = (lang: string) => {
+  return ['en-us', 'en'].includes(lang);
+};

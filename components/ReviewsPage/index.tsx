@@ -34,6 +34,7 @@ import {
   REVIEWS_PAGE_SECTIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { isEnglishLanguage } from '../../utils/localizationUtils';
 import { TReviewsPageProps } from './interface';
 import { PageWrapper } from './styles';
 import { getSlicesUsedInReviewsPage, getTrackingObject } from './utils';
@@ -131,9 +132,10 @@ const ReviewsPage: React.FC<React.PropsWithChildren<TReviewsPageProps>> = (
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
-  const bannerHeading = titleCase(
-    strings.formatString(BANNER_HEADING, name) as string
-  );
+  const formattedHeading = strings.formatString(BANNER_HEADING, name) as string;
+  const bannerHeading = isEnglishLanguage(lang)
+    ? titleCase(formattedHeading)
+    : formattedHeading;
 
   useEffect(() => {
     if (!eventsReady) return;

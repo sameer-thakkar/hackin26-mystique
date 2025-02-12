@@ -949,6 +949,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     LOAD_MORE: 'Weitere Artikel laden',
     TRAILERS: 'Alle Trailer',
     GET_YOUR_TICKETS: 'Tickets buchen',
+    RECENT_NEWS: 'Aktuelle News',
     POPULAR_SHOWS: 'Beliebte Shows',
     MAILER: {
       HEADING:

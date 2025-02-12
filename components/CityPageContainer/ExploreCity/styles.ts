@@ -96,7 +96,7 @@ export const SeeAllWrapper = styled.span`
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
     svg {
-      margin: 0.15rem 1rem 0 0.2rem;
+      margin: 0.1rem 1rem 0 0.2rem;
       height: 0.75rem;
       width: 0.75rem;
     }

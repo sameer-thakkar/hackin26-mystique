@@ -12,6 +12,8 @@ const MediumListicle = ({
   items,
   settings,
   listicleSectionTitle,
+  index: parentIndex,
+  enforceParentIndex,
 }: IListicleTypeProps) => {
   const isAirportTransferLandingPage = useRecoilValue(
     isAirportTransferLandingPageAtom
@@ -49,7 +51,7 @@ const MediumListicle = ({
               alt={imageAlt}
               settingsType={settings as string}
               imageUrl={imageUrl ? `https://${imageUrl}` : ''}
-              index={index}
+              index={enforceParentIndex ? parentIndex : index}
               heading={heading}
               categoryTags={categoryTags}
               richTextData={richTextData}

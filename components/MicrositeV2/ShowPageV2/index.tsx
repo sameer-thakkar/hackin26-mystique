@@ -526,8 +526,6 @@ const LttShowPageV2 = ({
                       currencyCode={currency ?? ''}
                       lang={lang}
                       price={finalPrice}
-                      truncateIfLong={true}
-                      truncateAfter={3}
                     />
                     <Conditional if={totalDiscount > 0}>
                       <SavePercentElement>

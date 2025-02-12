@@ -3,7 +3,12 @@ import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
 import SmallListicleGrid from 'components/slices/ListicleV2/SmallListicle/SmallListicleGrid';
 import { SmallListicleWrapper } from 'components/slices/ListicleV2/SmallListicle/styles';
 
-const SmallListicle = ({ items, listicleSectionTitle }: IListicleTypeProps) => {
+const SmallListicle = ({
+  items,
+  listicleSectionTitle,
+  index: parentIndex,
+  enforceParentIndex,
+}: IListicleTypeProps) => {
   return (
     <SmallListicleWrapper>
       {items?.map((item: Experience, index: number) => {
@@ -25,7 +30,7 @@ const SmallListicle = ({ items, listicleSectionTitle }: IListicleTypeProps) => {
             <SmallListicleGrid
               alt={imageAlt}
               imageUrl={imageUrl ? `https://${imageUrl}` : ''}
-              index={index}
+              index={enforceParentIndex ? parentIndex : index}
               heading={heading}
               categoryTags={categoryTags[0] || ''}
               richTextData={richTextData}
