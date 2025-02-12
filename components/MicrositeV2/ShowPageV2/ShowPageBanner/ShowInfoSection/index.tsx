@@ -164,6 +164,7 @@ const ShowInfoSection = ({
           primaryCity={primaryCity}
           isMobile={isMobile}
           showName={name}
+          isShowPage
         />
       </Conditional>
       <Hero $isImageAvailable={!!verticalImageUrl}>
@@ -175,10 +176,10 @@ const ShowInfoSection = ({
             priority
             height={isMobile ? 180 : 267}
             width={isMobile ? 120 : 178}
-            autoCrop={true}
+            autoCrop
             className={`banner-vertical-image`}
             fetchPriority="high"
-            fitCrop={true}
+            fitCrop
           />
           <span className="image-placeholder">
             <VerticalProductImagePlaceholder
@@ -237,9 +238,9 @@ const ShowInfoSection = ({
                               priority
                               height={37}
                               width={37}
-                              autoCrop={true}
+                              autoCrop
                               fetchPriority="high"
-                              fitCrop={true}
+                              fitCrop
                             />
                           </div>
                           <div className="user-details">

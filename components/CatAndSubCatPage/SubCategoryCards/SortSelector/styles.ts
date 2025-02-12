@@ -60,7 +60,7 @@ export const SelectorDropdown = styled.div`
     0px 0px 1px 0px rgba(0, 0, 0, 0.1);
 `;
 
-export const DrawerStyles = css`
+export const drawerStyles = css`
   height: 24rem;
 
   ${HeadingContainer} {
@@ -76,6 +76,10 @@ export const DrawerStyles = css`
   ${Separator} {
     display: none;
   }
+`;
+
+export const drawerWrapperStyles = css`
+  grid-template-rows: auto 1fr;
 `;
 
 export const DrawerContentWrapper = styled.div`

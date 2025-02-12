@@ -11,6 +11,7 @@ import CloseIcon from 'assets/closeIcon';
 const DrawerWrapper = styled.div<{
   $noMargin?: boolean;
   $hasHeading?: boolean;
+  $drawerWrapperStyles?: any;
 }>`
   background: ${COLORS.BRAND.WHITE};
   border-radius: 20px 20px 0px 0px;
@@ -19,6 +20,8 @@ const DrawerWrapper = styled.div<{
   display: grid;
   margin-top: auto;
   grid-row-gap: ${({ $hasHeading }) => ($hasHeading ? '24px' : '0')};
+  ${({ $drawerWrapperStyles }) => $drawerWrapperStyles}
+
   z-index: 1000;
   height: 100%;
   align-content: flex-start;
@@ -172,6 +175,7 @@ const Drawer = ({
   children,
   noMargin = false,
   $drawerStyles,
+  $drawerWrapperStyles,
   container = null,
   hideSeparator = false,
   slideOutOnClose = false,
@@ -187,6 +191,7 @@ const Drawer = ({
   children?: React.ReactNode;
   noMargin?: boolean;
   $drawerStyles?: any;
+  $drawerWrapperStyles?: any;
   container?: HTMLElement | null;
   hideSeparator?: boolean;
   slideOutOnClose?: boolean;
@@ -304,6 +309,7 @@ const Drawer = ({
         $hasHeading={heading?.length}
         className={`${className || ''}`}
         $noMargin={noMargin}
+        $drawerWrapperStyles={$drawerWrapperStyles}
         ref={drawerRef}
       >
         {customHeader ? (

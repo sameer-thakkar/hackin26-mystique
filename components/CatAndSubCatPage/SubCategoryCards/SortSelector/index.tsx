@@ -8,7 +8,8 @@ import {
   DrawerContentWrapper,
   DrawerControls,
   DrawerFilters,
-  DrawerStyles,
+  drawerStyles,
+  drawerWrapperStyles,
   SelectorDropdown,
   SelectorFilter,
   SortSelectorContainer,
@@ -98,7 +99,8 @@ const SortSelector: React.FC<React.PropsWithChildren<SortSelectorProps>> = (
       </Conditional>
       <Conditional if={isDropdownOpen && isMobile}>
         <Drawer
-          $drawerStyles={DrawerStyles}
+          $drawerStyles={drawerStyles}
+          $drawerWrapperStyles={drawerWrapperStyles}
           closeHandler={() => setIsDropdownOpen(false)}
           heading={strings.CAT_SUBCAT_PAGE.FILTERS}
           noMargin

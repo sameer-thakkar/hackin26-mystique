@@ -543,7 +543,7 @@ const ShowPage = (props: any) => {
           host={host}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           slices={finalHeaderSlices}
-          isEntertainmentMB={true}
+          isEntertainmentMB
         />
         <ShowPageBanner
           tgid={tgid}
@@ -560,7 +560,7 @@ const ShowPage = (props: any) => {
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
-            isShowPage={true}
+            isShowPage
             specialOffer={specialOffer}
           />
         </Conditional>
@@ -580,7 +580,7 @@ const ShowPage = (props: any) => {
                 };
               })}
               heading={''}
-              useSchema={true}
+              useSchema
               isOpenOverride={false}
             />
           ) : (
@@ -610,7 +610,7 @@ const ShowPage = (props: any) => {
                     };
                   })}
                   heading={''}
-                  useSchema={true}
+                  useSchema
                   isOpenOverride={false}
                 />
               </ComponentWrapper>
@@ -630,7 +630,7 @@ const ShowPage = (props: any) => {
             <AccordionGroup
               accordions={faqSchema}
               heading={faqHeading}
-              useSchema={true}
+              useSchema
             />
           </LazyComponent>
           <Conditional if={customerReviews.length}>
@@ -658,7 +658,7 @@ const ShowPage = (props: any) => {
             <Breadcrumbs
               breadcrumbs={breadcrumbs}
               showName={name}
-              isShowPage={true}
+              isShowPage
               isMobile={isMobile}
             />
           </LazyComponent>
@@ -674,7 +674,7 @@ const ShowPage = (props: any) => {
             secondarySlices={commonFooter?.data?.body || []}
             secondaryHeading={commonFooter?.data?.footer_heading}
             attraction={commonFooter?.data?.attraction || 'attraction'}
-            isEntertainmentMb={true}
+            isEntertainmentMb
             isLTT={isLTT}
           />
         </LazyComponent>
