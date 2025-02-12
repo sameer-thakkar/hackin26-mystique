@@ -114,7 +114,6 @@ type TGetProductCardLayout = {
   showGuidesLabel?: boolean;
   showAvailabilityInLanguagesText?: boolean;
   isModifiedProductCard?: boolean;
-  isPoiMwebCard?: boolean;
   hideNextAvailable?: boolean;
 };
 
@@ -129,7 +128,6 @@ export const getProductCardLayout = ({
   showGuidesLabel = false,
   showAvailabilityInLanguagesText = false,
   isModifiedProductCard = false,
-  isPoiMwebCard = false,
   hideNextAvailable = false,
 }: TGetProductCardLayout) => {
   let layout: {
@@ -198,14 +196,14 @@ export const getProductCardLayout = ({
           'title',
           isOpenDated && 'open-dated-descriptor',
           hasOffer && 'offer',
-          isPoiMwebCard && 'tags',
+          !isTicketCard && 'tags',
           !hideNextAvailable &&
             !isTicketCard &&
             !isOpenDated &&
             !showAvailabilityInTitle &&
             'next-available',
           'price-block',
-          !isPoiMwebCard && 'tags',
+          isTicketCard && 'tags',
           showGuidesLabel && 'guides-banner-wrapper',
           showAvailabilityInLanguagesText && 'tour-available-in-languages-area',
           isTicketCard && hasPromoCode && 'promo-block',

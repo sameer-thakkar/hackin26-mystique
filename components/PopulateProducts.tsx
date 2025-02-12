@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -79,7 +73,7 @@ const Swiper = dynamic(
 
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;
-  isTicketCard?: boolean;
+  $isTicketCard?: boolean;
   isNewVerticalsProductCard?: boolean;
   $hideRoundedEdge?: boolean;
 }>`
@@ -107,13 +101,12 @@ const StyledProductsWrapper = styled.div<{
     width: 100%;
 
     @media (max-width: 768px) {
-      margin: ${({ isTicketCard }) => (isTicketCard ? '0 auto' : '0 1.5rem')};
+      margin: ${({ $isTicketCard }) => ($isTicketCard ? '0 auto' : '0 1.5rem')};
       width: auto;
     }
 
     h2 {
-      ${({ isTicketCard }) => isTicketCard && 'margin: 0px;'};
-
+      ${({ $isTicketCard }) => $isTicketCard && 'margin: 0px;'};
       color: ${COLORS.GRAY.G2};
       ${expandFontToken(FONTS.DISPLAY_SMALL)};
       @media (max-width: 768px) {
@@ -160,16 +153,16 @@ const ticketCardDesktopDisplay = css`
 
 function getMwebMargin({
   isNotVisible,
-  isTicketCard,
+  $isTicketCard,
   $increasedMargin,
 }: Pick<
   TProductContainerStyles,
-  'isNotVisible' | '$increasedMargin' | 'isTicketCard'
+  'isNotVisible' | '$increasedMargin' | '$isTicketCard'
 >) {
   switch (true) {
     case isNotVisible:
       return '0';
-    case isTicketCard:
+    case $isTicketCard:
       return '8px 0px 0px';
     case $increasedMargin:
       return '1.5rem 0 1.75rem';
@@ -178,7 +171,7 @@ function getMwebMargin({
   }
 }
 type TProductContainerStyles = {
-  isTicketCard: boolean;
+  $isTicketCard: boolean;
   isMobile: boolean;
   isNotVisible?: boolean;
   isNewVerticalsProductCard?: boolean;
@@ -188,15 +181,16 @@ type TProductContainerStyles = {
 };
 
 const ProductContainer = styled.div<TProductContainerStyles>`
-  ${({ isTicketCard, isMobile }) =>
-    isTicketCard && !isMobile
+  ${({ $isTicketCard, isMobile }) =>
+    $isTicketCard && !isMobile
       ? ` ${ticketCardDesktopDisplay} `
       : `display: grid;`}
-  ${({ isTicketCard }) => `grid-row-gap: ${isTicketCard ? '1.5rem' : '2rem'};`}
-  margin: ${({ isNotVisible, isCruise, isTicketCard }) => {
+  ${({ $isTicketCard }) =>
+    `grid-row-gap: ${$isTicketCard ? '1.5rem' : '2rem'};`}
+  margin: ${({ isNotVisible, isCruise, $isTicketCard }) => {
     if (isNotVisible) {
       return '0';
-    } else if (isTicketCard) {
+    } else if ($isTicketCard) {
       return '2.25rem 0 0';
     } else if (isCruise) {
       return '1.5rem 0 2.25rem';
@@ -227,8 +221,8 @@ const ProductContainer = styled.div<TProductContainerStyles>`
   }
 
   @media (max-width: 768px) {
-    margin: ${({ isNotVisible, $increasedMargin, isTicketCard }) =>
-      getMwebMargin({ isNotVisible, $increasedMargin, isTicketCard })};
+    margin: ${({ isNotVisible, $increasedMargin, $isTicketCard }) =>
+      getMwebMargin({ isNotVisible, $increasedMargin, $isTicketCard })};
     grid-row-gap: ${({ isNewVerticalsProductCard }) =>
       isNewVerticalsProductCard ? '1.5rem' : '2rem'};
 
@@ -960,14 +954,14 @@ const PopulateProducts: any = (props: any) => {
   return (
     <StyledProductsWrapper
       isLoading={showLoader}
-      isTicketCard={isTicketCard}
+      $isTicketCard={isTicketCard}
       isNewVerticalsProductCard={isNewVerticalsProductCard}
       id="products-container"
       ref={productsWrapperRef}
       $hideRoundedEdge={isCruisesRevamp}
     >
       <ProductContainer
-        isTicketCard={isTicketCard}
+        $isTicketCard={isTicketCard}
         isMobile={isMobile || forceMobile}
         isNotVisible={!showLoader}
       >
@@ -992,7 +986,7 @@ const PopulateProducts: any = (props: any) => {
         </div>
       </Conditional>
       <ProductContainer
-        isTicketCard={isTicketCard}
+        $isTicketCard={isTicketCard}
         isMobile={isMobile || forceMobile}
         isNotVisible={showLoader}
         isNewVerticalsProductCard={isNewVerticalsProductCard}

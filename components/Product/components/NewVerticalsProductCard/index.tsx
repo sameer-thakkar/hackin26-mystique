@@ -212,7 +212,7 @@ const NewVerticalsProductCard = (props: any) => {
       hasOffer,
       hasV1Booster,
       mbTheme,
-      isTicketCard: isTicketCard,
+      isTicketCard,
       hasPromoCode: promo_code,
       isOpenDated,
       showAvailabilityInTitle: false,
@@ -220,7 +220,6 @@ const NewVerticalsProductCard = (props: any) => {
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard: true,
-      isPoiMwebCard: true,
     });
 
   const productBookingUrl = createBookingURL({
@@ -301,7 +300,7 @@ const NewVerticalsProductCard = (props: any) => {
         <StyledProductCard
           layout={layout({ isContentExpanded: expandContent })}
           isContentExpanded={expandContent}
-          isTicketCard={isTicketCard}
+          $isTicketCard={false}
           isMobile={isMobile}
           $isBannerCard={isBannerCard && !isSpecialGuidedTour && !isLoading}
           isV3Design={isV3Design}
@@ -462,7 +461,7 @@ const NewVerticalsProductCard = (props: any) => {
                     shouldOffset={
                       earliestAvailability && mbTheme === THEMES.MIN_BLUE
                     }
-                    isTicketCard={isTicketCard}
+                    $isTicketCard={isTicketCard}
                   >
                     <Conditional if={!isCombo}>
                       <a
@@ -545,8 +544,8 @@ const NewVerticalsProductCard = (props: any) => {
                 (!isMobile || expandContent) && isSpecialGuidedTour
               }
               uid={uid}
-              horizontal={isPoiMwebCard}
-              showIcons={!isPoiMwebCard}
+               horizontal={isPopup ? true : !isTicketCard && isMobile}
+            showIcons={isTicketCard || !isMobile}
               cancellationPolicy={'cancellationPolicy'}
               isMobile={isMobile}
               showGuidedTourDescriptor={false}

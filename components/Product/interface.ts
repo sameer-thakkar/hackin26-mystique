@@ -88,7 +88,7 @@ export type TSpecialGuidedTourSidePanelProps = {
   isShortcodePopup?: boolean;
 };
 
-export type TTourTittleProps = {
+export type TTourTitleProps = {
   isContentOpen?: boolean;
   pageType?: string;
   isLoading?: boolean;
@@ -105,7 +105,6 @@ export type TTourTittleProps = {
   currentLanguage?: any;
   isExperimentalCard?: boolean;
   isDrawer?: boolean;
-  isPoiMwebCard?: boolean;
   showInfoIcon?: boolean;
   onClick?: () => void;
   isHOHORevamp?: boolean;

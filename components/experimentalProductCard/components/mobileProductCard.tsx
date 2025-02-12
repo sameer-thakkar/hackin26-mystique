@@ -1,10 +1,4 @@
-import React, {
-  memo,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
 import Conditional from 'components/common/Conditional';
@@ -221,7 +215,7 @@ const MobileProductCard = (props: any) => {
         id={tgid}
         layout={layout}
         isContentExpanded={expandContent}
-        isTicketCard={isTicketCard}
+        $isTicketCard={isTicketCard}
         isMobile={true}
         $isBannerCard={isBannerCard && !isSpecialGuidedTour}
         isV3Design={isV3Design}
@@ -273,11 +267,6 @@ const MobileProductCard = (props: any) => {
           <CategoryAndRatingContainer
             $isDrawer={isDrawer}
             $isExperimentalCard={true}
-            $isNonPOICardWithRatings={
-              !isPoiMwebCard &&
-              !isModifiedProductCard &&
-              reviewsDetails?.showRatings
-            }
           >
             <Conditional if={isPoiMwebCard || isModifiedProductCard}>
               <Category
@@ -294,7 +283,6 @@ const MobileProductCard = (props: any) => {
           </CategoryAndRatingContainer>
           <TourTitle
             boosterTag={boosterTag}
-            isPoiMwebCard={isPoiMwebCard}
             cardTitle={cardTitle}
             hasBorderedTitle={hasBorderedTitle}
             isContentOpen={isContentOpen}
@@ -322,8 +310,8 @@ const MobileProductCard = (props: any) => {
               lang={currentLanguage}
               isCombo={isCombo}
               isGpMotorTicketsMb={isGpMotorTicketsMb}
-              showIcons={!isPoiMwebCard}
-              horizontal={isPoiMwebCard ? true : isAsideBarOverlay}
+              showIcons={isTicketCard}
+              horizontal={isTicketCard ? true : isAsideBarOverlay}
             />
           </Conditional>
           <Conditional if={hasV1Booster}>
@@ -358,8 +346,7 @@ const MobileProductCard = (props: any) => {
               $isDrawer={isDrawer}
               $isExperimentalCard={true}
               pageType={pageType}
-              $isPoiMwebCard={isPoiMwebCard}
-              $showNextAvailable={showNextAvailable}
+              $isTicketCard={isTicketCard}
             >
               <PriceBlock
                 isMobile={true}
@@ -446,8 +433,8 @@ const MobileProductCard = (props: any) => {
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
                 showLanguages={expandContent && isSpecialGuidedTour}
                 uid={uid}
-                horizontal={isPoiMwebCard}
-                showIcons={!isPoiMwebCard}
+                horizontal={!isTicketCard}
+                showIcons={isTicketCard}
                 cancellationPolicy={cancellationPolicy}
                 cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
                 isMobile={true}

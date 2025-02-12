@@ -1085,7 +1085,6 @@ const Product = (props: any) => {
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
-      isPoiMwebCard,
       hideNextAvailable: !showNextAvailable,
     });
 
@@ -1548,7 +1547,7 @@ const Product = (props: any) => {
         <StyledProductCard
           layout={layout({ isContentExpanded: expandContent })}
           isContentExpanded={expandContent}
-          isTicketCard={isTicketCard}
+          $isTicketCard={isTicketCard}
           isMobile={isPopup ? originalIsMobile : isMobile}
           $forceMobile={forceMobile && !isPopup}
           $isBannerCard={isBannerCard && !isSpecialGuidedTour && !isLoading}
@@ -1819,13 +1818,8 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isCombo={isCombo}
                 isGpMotorTicketsMb={isGpMotorTicketsMb}
-                horizontal={
-                  isPoiMwebCard
-                    ? isPopup
-                      ? originalIsMobile
-                      : isMobile
-                    : isPopup && !isModifiedPopup
-                }
+                horizontal={isPopup ? true : !isTicketCard && isMobile}
+                showIcons={isTicketCard || !isMobile}
                 cancellationPolicy={cancellationPolicy}
                 cancellationPolicyHoverCallBack={trackCancellationPolicyHover}
                 flexibleCancellationHoverCallBack={
@@ -1869,8 +1863,7 @@ const Product = (props: any) => {
                 <PriceContainer
                   pageType={pageType}
                   $forceMobile={forceMobile}
-                  $isPoiMwebCard={isPoiMwebCard}
-                  $showNextAvailable={showNextAvailable}
+                  $isTicketCard={isTicketCard}
                 >
                   <PriceBlock
                     isMobile={isPopup ? originalIsMobile : isMobile}
@@ -1900,7 +1893,7 @@ const Product = (props: any) => {
                     shouldOffset={
                       earliestAvailability && mbTheme === THEMES.MIN_BLUE
                     }
-                    isTicketCard={isTicketCard}
+                    $isTicketCard={isTicketCard}
                     $forceMobile={forceMobile}
                   >
                     <Conditional if={!isCombo}>
@@ -2023,8 +2016,8 @@ const Product = (props: any) => {
                       isSpecialGuidedTour
                     }
                     uid={uid}
-                    horizontal={isPoiMwebCard}
-                    showIcons={!isPoiMwebCard}
+                    horizontal={isPopup ? true : !isTicketCard && isMobile}
+                    showIcons={isTicketCard || !isMobile}
                     cancellationPolicy={cancellationPolicy}
                     cancellationPolicyHoverCallBack={
                       trackCancellationPolicyHover
@@ -2362,7 +2355,7 @@ const Product = (props: any) => {
           <CTABlock
             isSticky={false}
             shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
-            isTicketCard={isTicketCard}
+            $isTicketCard={isTicketCard}
           >
             <Conditional if={!isCombo}>
               <a

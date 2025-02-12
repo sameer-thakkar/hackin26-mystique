@@ -279,7 +279,6 @@ export const PRODUCT_CARD_IMAGE_DIMENSIONS = {
 export const TourTitleWrapper = styled.h2<{
   isPopup?: boolean;
   pageType?: string;
-  isNonPoi?: boolean;
   $isHOHORevamp?: boolean;
   $forceMobile?: boolean;
   $isTicketCard?: boolean;
@@ -287,7 +286,6 @@ export const TourTitleWrapper = styled.h2<{
   ${expandFontToken(FONTS.HEADING_LARGE)}
   margin: 0;
   max-width: 768px;
-  ${({ isNonPoi }) => isNonPoi && `margin-top: -1.5rem; margin-bottom: 1rem;`}
   svg {
     margin: 0 0 -0.125rem 0.375rem;
     cursor: pointer;
@@ -532,7 +530,7 @@ export const CTAContainer = styled.div<{
 `;
 
 export const CTABlock = styled.div<{
-  isTicketCard?: boolean;
+  $isTicketCard?: boolean;
   isSticky: boolean;
   shouldOffset?: boolean;
   $forceMobile?: boolean;
@@ -573,8 +571,7 @@ export const PriceContainer = styled.div<{
   $forceMobile?: boolean;
   pageType?: string;
   $isDrawer?: boolean;
-  $isPoiMwebCard?: boolean;
-  $showNextAvailable?: boolean;
+  $isTicketCard?: boolean;
 }>`
   justify-self: center;
   display: grid;
@@ -606,10 +603,8 @@ export const PriceContainer = styled.div<{
   }
 
   @media only screen and (max-width: 768px) {
-    margin-top: ${({ $isPoiMwebCard, $showNextAvailable }) =>
-      !$isPoiMwebCard && !$showNextAvailable ? '1.25rem' : '0'};
-    padding-bottom: ${({ $isPoiMwebCard, $showNextAvailable }) =>
-      !$isPoiMwebCard && !$showNextAvailable ? '0.25rem' : '0'};
+    margin-top: ${({ $isTicketCard }) => ($isTicketCard ? '1.25rem' : '0')};
+    padding-bottom: ${({ $isTicketCard }) => ($isTicketCard ? '0.25rem' : '0')};
   }
 
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}
@@ -639,7 +634,7 @@ export const PriceContainer = styled.div<{
 `;
 
 interface IStyledProductCard {
-  isTicketCard: boolean;
+  $isTicketCard: boolean;
   isMobile: boolean;
   isV3Design?: boolean;
   layout?: any;
@@ -717,7 +712,6 @@ export const StyledCategoryContainer = styled.div<{
 export const CategoryAndRatingContainer = styled.div<{
   $isExperimentalCard?: boolean;
   $isDrawer?: boolean;
-  $isNonPOICardWithRatings?: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -727,8 +721,6 @@ export const CategoryAndRatingContainer = styled.div<{
     !$isDrawer ? `margin-bottom: -0.25rem;` : `margin-bottom: -0.75rem;`}
   ${({ $isExperimentalCard, $isDrawer }) =>
     $isExperimentalCard && !$isDrawer && `margin-top: 0.25rem;`};
-  ${({ $isNonPOICardWithRatings }) =>
-    $isNonPOICardWithRatings && `margin-bottom: 1rem;`};
 
   @media (min-width: 768px) {
     justify-content: flex-start;
@@ -1111,7 +1103,7 @@ export const itineraryStyles = css`
 
 export const StyledProductCard = styled.div<IStyledProductCard>`
   height: ${({
-    isTicketCard,
+    $isTicketCard,
     isV3Design,
     isMobile,
     $isNewVerticalsProductCard,
@@ -1119,7 +1111,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }) =>
     $isPopup ||
     $isNewVerticalsProductCard ||
-    isTicketCard ||
+    $isTicketCard ||
     isV3Design ||
     isMobile
       ? 'max-content'
@@ -1133,10 +1125,10 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
       : ''}
   background-color: ${({ isV3Design }) =>
     isV3Design ? 'transparent' : COLORS.BRAND.WHITE};
-  padding: ${({ isTicketCard, theme }) =>
-    isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile, isV3Design, $isDrawer }) =>
-    (!isTicketCard || isMobile) &&
+  padding: ${({ $isTicketCard, theme }) =>
+    $isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
+  ${({ $isTicketCard, theme, isMobile, isV3Design, $isDrawer }) =>
+    (!$isTicketCard || isMobile) &&
     !isV3Design &&
     !$isDrawer &&
     `border: ${theme.productCards.border};
@@ -1217,8 +1209,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
-  ${({ isTicketCard, $forceMobile }) =>
-    isTicketCard ? null : cardImageStyles($forceMobile)}
+  ${({ $isTicketCard, $forceMobile }) =>
+    $isTicketCard ? null : cardImageStyles($forceMobile)}
   ${({ $isNewVerticalsProductCard, $isCruise, $isModifiedPopup }) =>
     $isNewVerticalsProductCard &&
     css`
@@ -1237,8 +1229,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     `} 
 
   grid-template-rows: min-content min-content min-content;
-  grid-template-columns: ${({ isTicketCard }) =>
-    isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
+  grid-template-columns: ${({ $isTicketCard }) =>
+    $isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
   grid-auto-rows: min-content;
   column-gap: 1.5rem;
   @media (max-width: 768px) {
@@ -1274,8 +1266,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}
     padding: ${({ theme }) => theme.productCards.padding.mobile};
   margin: 0
-    ${({ theme: { theme }, isTicketCard, $isDrawer, $isSwiperCard }) =>
-      getMargin({ theme, isTicketCard, $isDrawer, $isSwiperCard })};
+    ${({ theme: { theme }, $isTicketCard, $isDrawer, $isSwiperCard }) =>
+      getMargin({ theme, $isTicketCard, $isDrawer, $isSwiperCard })};
   grid-template-areas: ${({ layout }) =>
     layout.mobile.map((row: any) => `'${row}'`)};
   grid-template-areas: ${({ layout, $isExperimentalCard, $isDrawer }) =>
@@ -1304,8 +1296,8 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
   .more-details {
     margin-left: 0;
     margin-bottom: 0;
-    ${({ isTicketCard }) =>
-      isTicketCard &&
+    ${({ $isTicketCard }) =>
+      $isTicketCard &&
       `
           padding: 0.75rem;
           background-color: ${COLORS.GRAY.G7};
@@ -1385,7 +1377,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     }
   }
 
-  ${({ $isPoiMwebCard }) => $isPoiMwebCard && modifiedProductCardMwebCss}
+  ${({ $isTicketCard }) => !$isTicketCard && modifiedProductCardMwebCss}
 
   ${({ $isBannerCard }) =>
     $isBannerCard &&
@@ -1407,7 +1399,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
 
   .card-img {
     height: ${({
-      isTicketCard,
+      $isTicketCard,
       isV3Design,
       isMobile,
       $isNewVerticalsProductCard,
@@ -1415,7 +1407,7 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     }) =>
       $isPopup ||
       $isNewVerticalsProductCard ||
-      isTicketCard ||
+      $isTicketCard ||
       isV3Design ||
       isMobile
         ? 'auto'
@@ -3188,7 +3180,7 @@ export const PopupPricingUnit = styled.div`
     }
   }
 `;
-function getMargin({ theme, isTicketCard, $isDrawer, $isSwiperCard }: any) {
+function getMargin({ theme, $isTicketCard, $isDrawer, $isSwiperCard }: any) {
   if ($isDrawer) {
     return '0';
   }
@@ -3196,9 +3188,9 @@ function getMargin({ theme, isTicketCard, $isDrawer, $isSwiperCard }: any) {
   switch (true) {
     case $isSwiperCard:
       return '1rem';
-    case theme !== THEMES.MIN_BLUE && !isTicketCard:
+    case theme !== THEMES.MIN_BLUE && !$isTicketCard:
       return '1.5rem';
-    case isTicketCard:
+    case $isTicketCard:
       return '0';
     default:
       return '24px';
@@ -3426,6 +3418,7 @@ export const cruiseStyles = css`
       ${expandFontToken(FONTS.PARAGRAPH_REGULAR)}
       margin: 0;
       grid-row-gap: 0.375rem;
+      white-space: wrap;
     }
     ${NextAvailableBlock} .available-text {
       color: ${COLORS.GRAY.G2} !important;

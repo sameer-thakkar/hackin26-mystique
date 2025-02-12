@@ -213,7 +213,6 @@ const ExperimentalProductCard = (props: any) => {
       showAvailabilityInLanguagesText:
         !isContentExpanded && isSpecialGuidedTour && isMobile,
       isModifiedProductCard,
-      isPoiMwebCard,
       hideNextAvailable: !showNextAvailable,
     });
 

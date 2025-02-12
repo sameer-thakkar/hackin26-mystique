@@ -1,9 +1,8 @@
-import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import { NextAvailable } from 'components/Product/components/NextAvailable';
-import { TTourTittleProps } from 'components/Product/interface';
+import { TTourTitleProps } from 'components/Product/interface';
 import {
   BoosterTag,
   OpenDatedDescriptor,
@@ -32,12 +31,11 @@ export const TourTitle = ({
   currentLanguage,
   isExperimentalCard,
   isDrawer,
-  isPoiMwebCard,
   showInfoIcon,
   onClick = () => null,
   isHOHORevamp,
   forceMobile,
-}: TTourTittleProps) => {
+}: TTourTitleProps) => {
   return (
     <TitleWrapper
       $isTicketCard={isTicketCard}
@@ -60,7 +58,6 @@ export const TourTitle = ({
         data-card-section={CARD_SECTION_MARKERS.TITLE}
         isPopup={isContentOpen}
         pageType={pageType}
-        isNonPoi={isDrawer && !isPoiMwebCard}
         onClick={(e: any) => {
           e.stopPropagation();
           onClick();
