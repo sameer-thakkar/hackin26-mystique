@@ -8,7 +8,7 @@ export const ShowPageBannerWrapper = styled.div`
   position: relative;
   background: -webkit-linear-gradient(
     0deg,
-    ${COLORS.BACKGROUND.LTT_INDIGO} calc(100vw - 43.6875rem),
+    ${COLORS.BACKGROUND.LTT_INDIGO} calc(100vw - 42.6875rem),
     rgba(21, 0, 41, 0) 75%
   );
   div {
@@ -30,7 +30,7 @@ export const ShowPageBannerWrapper = styled.div`
   @media (min-width: 1600px) {
     background: -webkit-linear-gradient(
       0deg,
-      ${COLORS.BACKGROUND.LTT_INDIGO} 40vw,
+      ${COLORS.BACKGROUND.LTT_INDIGO} 45.5vw,
       rgba(21, 0, 41, 0) 70%
     );
   }

@@ -49,7 +49,7 @@ export const BannerContent = styled.div`
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  margin: 0.25rem 0 3.25rem 0;
+  margin: 0 0 3.25rem;
   @media (max-width: 768px) {
     margin: 1rem 0;
   }

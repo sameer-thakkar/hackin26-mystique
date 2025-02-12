@@ -315,7 +315,10 @@ const Drawer = ({
         {customHeader ? (
           customHeader(() => close('Close Icon'))
         ) : (
-          <HeadingContainer $hasHeading={!!heading?.length}>
+          <HeadingContainer
+            className="heading-container"
+            $hasHeading={!!heading?.length}
+          >
             <Conditional if={!hideCrossIcon || showPanelAnchor}>
               <PanelAnchor />
             </Conditional>

@@ -163,7 +163,7 @@ export const H3Heading = styled.h3<{
 }>`
   width: max-content;
   a {
-    color: ${COLORS.BRAND.PURPS} !important;
+    color: ${COLORS.TEXT.PURPS_3} !important;
     ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
     padding-left: 0.3rem;
   }

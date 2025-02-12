@@ -155,6 +155,9 @@ export const Footer = styled.div`
 `;
 
 export const drawerStyles = css`
+  .heading-container {
+    grid-template-columns: 1fr;
+  }
   .no-availability__drawer {
     height: auto;
     & > div:first-child {
