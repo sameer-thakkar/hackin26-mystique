@@ -1411,12 +1411,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     WHY_WITH_HO: {
       TITLE: 'Book stress free with Headout',
       CURATED_EXPERIENCES: {
-        TITLE: 'Simple decision making with carefully chosen experiences. ',
+        TITLE: 'Simple decision making with carefully chosen experiences',
         DESCRIPTION:
           'We handle every detail from transfers to meals so you have a memorable trip.',
       },
       EXPERT_GUIDES: {
-        TITLE: 'Experience the trip through the eyes of a local expert.',
+        TITLE: 'Experience the trip through the eyes of a local expert',
         DESCRIPTION:
           'Our guides bring rich insights and memorable stories to every journey.',
       },

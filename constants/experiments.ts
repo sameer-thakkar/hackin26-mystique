@@ -69,7 +69,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [DAY_TRIPS_COLLECTION]: new Experiment(
     DAY_TRIPS_COLLECTION,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [80, 20]
   ),
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,
