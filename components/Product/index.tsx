@@ -847,6 +847,7 @@ const Product = (props: any) => {
   const {
     isEligible: isEligibleForFlexiCancellationExperiment,
     variant: flexiCancellationExperimentVariant,
+    isExperimentResolving,
   } = useABTesting({
     experimentId: 'FLEXIBLE_CANCELLATION_EXPERIMENT',
     customEligibilityCheckFn: () => {
@@ -870,7 +871,8 @@ const Product = (props: any) => {
     if (
       isEligibleForFlexiCancellationExperiment &&
       !isFlexiCancellationExperimentTriggered.current &&
-      isProductCardVisible
+      isProductCardVisible &&
+      !isExperimentResolving
     ) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
@@ -887,6 +889,7 @@ const Product = (props: any) => {
     isEligibleForFlexiCancellationExperiment,
     isFlexiCancellationExperimentTriggered,
     isProductCardVisible,
+    isExperimentResolving,
   ]);
 
   const boosterTypeIfShown = useMemo(() => {
