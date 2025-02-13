@@ -83,6 +83,7 @@ const Descriptors = ({
           bold
           url={locationUrl}
           size={descriptorSize}
+          dataQAMarker="qaid-itinerary-stop-card-location-descriptor"
         />
       </Conditional>
       <Conditional if={walkDuration}>
@@ -102,6 +103,7 @@ const Descriptors = ({
             ) as string
           }
           size={descriptorSize}
+          dataQAMarker="qaid-itinerary-stop-card-attractions-count-descriptor"
         />
       </Conditional>
       <Conditional if={activitiesCount}>
@@ -114,6 +116,7 @@ const Descriptors = ({
             ) as string
           }
           size={descriptorSize}
+          dataQAMarker="qaid-itinerary-stop-card-activities-count-descriptor"
         />
       </Conditional>
       <Conditional if={foodTypes}>
@@ -127,6 +130,7 @@ const Descriptors = ({
           }
           text={foodTypes?.localisedLabel}
           size={descriptorSize}
+          dataQAMarker="qaid-itinerary-stop-card-food-and-drinks-descriptor"
         />
       </Conditional>
       <Conditional if={inclusion}>
@@ -134,6 +138,7 @@ const Descriptors = ({
           icon={getInclusionIcon(inclusion?.label)}
           text={inclusion?.localisedLabel}
           size={descriptorSize}
+          dataQAMarker="qaid-itinerary-stop-card-inclusion-descriptor"
         />
       </Conditional>
     </Container>

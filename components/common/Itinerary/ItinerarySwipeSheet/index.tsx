@@ -106,7 +106,10 @@ const ItinerarySwipeSheet = ({
 
   return (
     <Conditional if={visible}>
-      <ItinerarySwipeSheetContainer ref={bottomSheetContentRef}>
+      <ItinerarySwipeSheetContainer
+        ref={bottomSheetContentRef}
+        data-qa-marker="qaid-itinerary-swipe-sheet-section"
+      >
         <BottomSheet
           sheetHeight="80%"
           onCloseCompletion={handleCloseSwipeSheet}

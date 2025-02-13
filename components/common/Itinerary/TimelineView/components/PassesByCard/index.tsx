@@ -213,7 +213,11 @@ const PassesByCard = ({
   const isDesktop = !isMobile();
 
   return (
-    <Container $variant={variant} $isCruiseItinerary={isCruiseItinerary}>
+    <Container
+      $variant={variant}
+      $isCruiseItinerary={isCruiseItinerary}
+      data-qa-marker="qaid-itinerary-pass-by-card"
+    >
       <Conditional if={!(isCruiseItinerary && !isDesktop)}>
         <Heading $variant={variant}>
           {strings.ITINERARY.PASSES_BY_SECTION_HEADING}

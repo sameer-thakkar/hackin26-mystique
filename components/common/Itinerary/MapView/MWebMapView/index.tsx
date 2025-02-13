@@ -193,7 +193,10 @@ const MWebMapView = ({
   if (!itinerary.map || !itinerary.map.active) return null;
 
   return (
-    <StyledMWebMapViewStylesheetContainer ref={bottomSheetContainerRef}>
+    <StyledMWebMapViewStylesheetContainer
+      ref={bottomSheetContainerRef}
+      data-qa-marker="qaid-itinerary-map-view-mweb-section"
+    >
       <BottomSheet
         sheetHeight={'100%'}
         onCloseCompletion={handleCloseBottomSheet}

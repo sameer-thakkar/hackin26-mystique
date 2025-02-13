@@ -7,4 +7,5 @@ export type DescriptorProps = {
   color?: string;
   bold?: boolean;
   url?: string;
+  dataQAMarker?: string;
 };

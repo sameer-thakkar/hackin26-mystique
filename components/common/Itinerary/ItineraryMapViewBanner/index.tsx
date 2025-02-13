@@ -17,7 +17,10 @@ const ItineraryMapViewBanner = ({
   };
 
   return (
-    <StyledItineraryMapViewBanner onClick={handleClick}>
+    <StyledItineraryMapViewBanner
+      onClick={handleClick}
+      data-qa-marker="qaid-itinerary-map-view-banner"
+    >
       <div className="content">
         <span className="label">
           {strings.ITINERARY.VIEW_EXPERIENCE_MAPPED_OUT}

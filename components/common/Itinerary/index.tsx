@@ -124,86 +124,88 @@ const Itinerary = ({
         <h6
           id="itinerary-section-title"
           data-itinerary-section-title="true"
-          data-qa-marker="itinerary-section-title"
+          data-qa-marker="qaid-itinerary-section-title"
         >
           {isHohoItinerary ? strings.HOHO.ROUTES : strings.ITINERARY.TAB}
         </h6>
       </Conditional>
-      <StyledItinerarySectionContainer>
-        <Conditional if={itineraryData?.length > 1}>
-          <Tabs
-            activeTab={activeTab}
-            onChangeTab={handleTabChange}
-            tabListItems={tabListItems}
-            hideNavigationArrows={!isDesktop}
-            autoFocusOnSelectedTab={!isDesktop}
-            tabContainerWidth={isDesktop ? '100%' : 'calc(100% + 2rem)'}
-            markerLeftOffset={isDesktop ? 0 : 16}
-            dataQAMarker="itinerary-route-tabs"
-          />
-        </Conditional>
+      <div data-qa-marker="itinerary">
+        <StyledItinerarySectionContainer>
+          <Conditional if={itineraryData?.length > 1}>
+            <Tabs
+              activeTab={activeTab}
+              onChangeTab={handleTabChange}
+              tabListItems={tabListItems}
+              hideNavigationArrows={!isDesktop}
+              autoFocusOnSelectedTab={!isDesktop}
+              tabContainerWidth={isDesktop ? '100%' : 'calc(100% + 2rem)'}
+              markerLeftOffset={isDesktop ? 0 : 16}
+              dataQAMarker="qaid-itinerary-route-tabs"
+            />
+          </Conditional>
+          <Conditional
+            if={
+              activeItineraryData &&
+              !!Object.keys(activeItineraryData.details)?.length &&
+              itineraryDescriptorTypes?.length
+            }
+          >
+            {itinerariesToRender.map((itineraryItem) => (
+              <Block
+                $isVisible={itineraryItem.id === activeItineraryData?.id}
+                key={itineraryItem.id}
+                $hasTabs={itineraryData?.length > 1}
+                data-qa-marker="qaid-itinerary-descriptors-carousel"
+              >
+                <ItineraryDescriptorsCarousel
+                  itinerary={itineraryItem}
+                  lang={lang}
+                />
+              </Block>
+            ))}
+          </Conditional>
+          <SpaceBlock $gap={'1.5rem'} />
+          <Conditional if={isDesktop && hasMapView}>
+            <ItineraryViewSwitch
+              viewMode={itineraryViewMode}
+              onChangeViewMode={handleViewChange}
+            />
+            <SpaceBlock $gap={'2rem'} />
+          </Conditional>
+          <Conditional if={!isDesktop && hasMapView}>
+            <ItineraryMapViewBanner
+              onClick={() => handleViewChange(ItineraryViewMode.MAP)}
+            />
+            <SpaceBlock $gap={'2rem'} />
+          </Conditional>
+        </StyledItinerarySectionContainer>
         <Conditional
           if={
             activeItineraryData &&
-            !!Object.keys(activeItineraryData.details)?.length &&
-            itineraryDescriptorTypes?.length
+            itineraryViewMode === ItineraryViewMode.TIMELINE
           }
         >
           {itinerariesToRender.map((itineraryItem) => (
             <Block
               $isVisible={itineraryItem.id === activeItineraryData?.id}
               key={itineraryItem.id}
-              $hasTabs={itineraryData?.length > 1}
-              data-qa-marker="itinerary-descriptors-carousel"
             >
-              <ItineraryDescriptorsCarousel
+              <TimelineView
                 itinerary={itineraryItem}
-                lang={lang}
+                variant={
+                  isDesktop && itineraryViewMode === ItineraryViewMode.TIMELINE
+                    ? TimelineViewComponentVariant.DEFAULT
+                    : TimelineViewComponentVariant.REDUCED_WIDTH
+                }
+                onStopSectionClick={handleStopSectionClick}
               />
             </Block>
           ))}
         </Conditional>
-        <SpaceBlock $gap={'1.5rem'} />
-        <Conditional if={isDesktop && hasMapView}>
-          <ItineraryViewSwitch
-            viewMode={itineraryViewMode}
-            onChangeViewMode={handleViewChange}
-          />
-          <SpaceBlock $gap={'2rem'} />
+        <Conditional if={itineraryViewMode === ItineraryViewMode.MAP}>
+          {activeItineraryData && <MapView itinerary={activeItineraryData} />}
         </Conditional>
-        <Conditional if={!isDesktop && hasMapView}>
-          <ItineraryMapViewBanner
-            onClick={() => handleViewChange(ItineraryViewMode.MAP)}
-          />
-          <SpaceBlock $gap={'2rem'} />
-        </Conditional>
-      </StyledItinerarySectionContainer>
-      <Conditional
-        if={
-          activeItineraryData &&
-          itineraryViewMode === ItineraryViewMode.TIMELINE
-        }
-      >
-        {itinerariesToRender.map((itineraryItem) => (
-          <Block
-            $isVisible={itineraryItem.id === activeItineraryData?.id}
-            key={itineraryItem.id}
-          >
-            <TimelineView
-              itinerary={itineraryItem}
-              variant={
-                isDesktop && itineraryViewMode === ItineraryViewMode.TIMELINE
-                  ? TimelineViewComponentVariant.DEFAULT
-                  : TimelineViewComponentVariant.REDUCED_WIDTH
-              }
-              onStopSectionClick={handleStopSectionClick}
-            />
-          </Block>
-        ))}
-      </Conditional>
-      <Conditional if={itineraryViewMode === ItineraryViewMode.MAP}>
-        {activeItineraryData && <MapView itinerary={activeItineraryData} />}
-      </Conditional>
+      </div>
     </>
   );
 };

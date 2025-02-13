@@ -25,12 +25,15 @@ const DefaultHeadingContainer = ({
   return (
     <>
       <Conditional if={allowOpen}>
-        <ToggleContainer>
+        <ToggleContainer data-qa-marker="qaid-itinerary-stop-card-toggle-icon">
           {isOpen ? <Minus /> : <Plus height={20} width={20} />}
         </ToggleContainer>
       </Conditional>
       <Conditional if={(isEnd || isStart) && !isSubCard}>
-        <TitleContainer $isClickable={isStopSectionClickable}>
+        <TitleContainer
+          $isClickable={isStopSectionClickable}
+          data-qa-marker="qaid-itinerary-stop-card-title"
+        >
           {isStart
             ? strings.ITINERARY.STOP_CARD.TITLE.START
             : strings.ITINERARY.STOP_CARD.TITLE.END}

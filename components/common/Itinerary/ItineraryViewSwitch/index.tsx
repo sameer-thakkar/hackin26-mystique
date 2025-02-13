@@ -33,7 +33,7 @@ const ItineraryViewSwitch = ({
   const checked = activeViewMode === ItineraryViewMode.MAP;
 
   return (
-    <StyledItineraryViewSwitchContainer>
+    <StyledItineraryViewSwitchContainer data-qa-marker="qaid-itinerary-view-toggle">
       <span className={classNames('label timeline', !checked && 'active')}>
         {strings.ITINERARY.TIMELINE_VIEW}
       </span>

@@ -42,7 +42,10 @@ const ReducedWidthHeadingContainer = ({
           </p>
         </Conditional>
         <div className="stop-name-container">
-          <p className="stop-name">
+          <p
+            className="stop-name"
+            data-qa-marker="qaid-itinerary-stop-card-title"
+          >
             {hasMultiPoints
               ? strings.formatString(
                   isStart
@@ -62,7 +65,10 @@ const ReducedWidthHeadingContainer = ({
         </Conditional>
       </div>
       <Conditional if={allowOpen && isDesktop}>
-        <div className="toggle-icon-container">
+        <div
+          className="toggle-icon-container"
+          data-qa-marker="qaid-itinerary-stop-card-toggle-icon"
+        >
           {isOpen ? <Minus /> : <Plus height={20} width={20} />}
         </div>
       </Conditional>

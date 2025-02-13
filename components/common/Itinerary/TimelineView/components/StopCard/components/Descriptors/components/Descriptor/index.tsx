@@ -13,6 +13,7 @@ const Descriptor = ({
   color = COLORS.GRAY.G2,
   bold = false,
   url,
+  dataQAMarker,
 }: DescriptorProps) => {
   const Content = () => {
     return (
@@ -21,6 +22,7 @@ const Descriptor = ({
         $size={size}
         $color={color}
         $bold={bold}
+        data-qa-marker={dataQAMarker}
       >
         {icon}
         <p className="descriptor-text">{text}</p>

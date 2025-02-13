@@ -67,7 +67,11 @@ const TimelineView = ({
   const isCruiseItinerary = checkIfCruiseItinerary(itinerary.type);
 
   return (
-    <StyledTimelineViewContainer $variant={variant} ref={timelineContainerRef}>
+    <StyledTimelineViewContainer
+      $variant={variant}
+      ref={timelineContainerRef}
+      data-qa-marker="qaid-timeline-view"
+    >
       {stopCardProps.map(({ stop, passby }, stopIndex) =>
         passby ? (
           <PassesByCard

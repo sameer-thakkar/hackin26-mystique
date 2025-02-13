@@ -549,7 +549,7 @@ export const fetchCategoryReviews = async ({
     return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchCollectionReviews]', error);
+    console.error('[fetchCategoryReviews]', error);
     sendLog({
       err: error,
     });

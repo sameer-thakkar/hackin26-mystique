@@ -162,6 +162,7 @@ const StopCard = ({
       onClick={handleStopSectionClick}
       id={`itinerary-card-${itineraryId}-${id}`}
       $isClickable={allowOpen}
+      data-qa-marker="qaid-itinerary-stop-card"
     >
       <ContentContainer onClick={handleStopSectionClick} $variant={variant}>
         <Conditional if={!isSubCard && position !== null}>
