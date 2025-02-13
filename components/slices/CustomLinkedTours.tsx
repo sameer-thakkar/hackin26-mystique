@@ -13,6 +13,7 @@ import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { DESIGN, SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
@@ -135,6 +136,7 @@ const CustomLinkedTours = ({
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
+  const hsid = useRecoilValue(hsidAtom);
 
   const hostname = getHostName(isDev, host);
   const tourListEndpoint = getHeadoutApiUrl({
@@ -165,6 +167,7 @@ const CustomLinkedTours = ({
       biLink,
       redirectToHeadoutBookingFlow,
       flowType,
+      hsid,
     });
   const headingId = content?.map((el: TRichTextArray) => {
     if (el.type === 'heading2') return generateSidenavId(el.text);

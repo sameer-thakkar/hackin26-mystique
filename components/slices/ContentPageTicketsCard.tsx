@@ -23,6 +23,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { getDomainFromUid } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
@@ -530,6 +531,8 @@ const TicketCard = (props: any) => {
   let { listingPrice } = tourPrices[tgid];
   listingPrice = tourListingPrice;
 
+  const hsid = useRecoilValue(hsidAtom);
+
   if (isFetched && !listingPrice) return null;
   const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
@@ -557,6 +560,7 @@ const TicketCard = (props: any) => {
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
     flowType,
+    hsid,
   });
 
   const handleCloseComboPopup = () => {

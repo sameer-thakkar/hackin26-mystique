@@ -62,6 +62,7 @@ import {
 } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import {
   ALLOW_IMMEDIATE_NESTING,
@@ -336,6 +337,8 @@ const ExperiencePage = ({
     setIsMobile(width <= 768);
   }, [width]);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useEffect(() => {
     const reviewTourGroup = async () => {
       const data = await fetchTourGroupReviews({
@@ -434,6 +437,7 @@ const ExperiencePage = ({
     tgid: id,
     currency,
     flowType,
+    hsid,
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 

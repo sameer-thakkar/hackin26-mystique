@@ -27,6 +27,7 @@ import {
   shortCodeSerializerWithParentProps,
 } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -94,6 +95,7 @@ const DetailedProductCard = (props: any) => {
     isDev,
     hostname: host,
   });
+  const hsid = useRecoilValue(hsidAtom);
   const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = parseV2ProductDescriptors({
     hasCategoryTourList,
@@ -255,6 +257,7 @@ const DetailedProductCard = (props: any) => {
                 biLink,
                 redirectToHeadoutBookingFlow,
                 flowType,
+                hsid,
               }),
               '_blank',
               'noopener'

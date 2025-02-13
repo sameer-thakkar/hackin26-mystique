@@ -757,6 +757,7 @@ export const getProductCardDestination = ({
   showPageUidForVenuePage,
   isDev = false,
   host,
+  hsid,
 }: any) => {
   const bookingURL = createBookingURL({
     nakedDomain,
@@ -765,6 +766,7 @@ export const getProductCardDestination = ({
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
+    hsid,
   });
   let destinationUrl = bookingURL;
   if (shouldUseDynamicShowPage()) {

@@ -4,6 +4,7 @@ import parse from 'url-parse';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 
 export const useBookingURL = ({
   tourGroupId,
@@ -28,6 +29,7 @@ export const useBookingURL = ({
     lang,
   } = useContext(MBContext);
 
+  const hsid = useRecoilValue(hsidAtom);
   const currency = useRecoilValue(currencyAtom);
 
   let url = host || window.location.host;
@@ -51,6 +53,7 @@ export const useBookingURL = ({
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaSuffix ?? '',
     flowType: flowType,
+    hsid,
   });
 
   return productBookingUrl;

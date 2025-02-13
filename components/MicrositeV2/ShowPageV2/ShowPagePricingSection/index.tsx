@@ -20,6 +20,7 @@ import { checkIfLionKingPage, createBookingURL, getNakedDomain } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -106,6 +107,8 @@ const ShowPagePricingSection = ({
     setButtonLoading(false);
   }, []);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain || getNakedDomain(hostname),
     lang,
@@ -114,6 +117,7 @@ const ShowPagePricingSection = ({
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
+    hsid,
   });
 
   useHistoryTraversal({

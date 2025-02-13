@@ -205,6 +205,7 @@ const VenuePage = (props: IVenuePageProps) => {
     redirectToHeadoutBookingFlow,
     currency,
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
+    hsid,
   });
 
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs ?? {})?.length > 0;

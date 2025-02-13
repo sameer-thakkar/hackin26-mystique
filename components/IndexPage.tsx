@@ -755,6 +755,12 @@ const HeadoutSessionIdSetterComponent = () => {
           console.warn(
             '[localStorage] hsid-ensurer failure, Unsupported Browser'
           );
+
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.HSID_SET_FAIL,
+            url: window?.location?.href,
+          });
+
           /**
            * hsid will also be null when third-party cookie is blocked or api fails, use a global state for that
            */

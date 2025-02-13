@@ -99,6 +99,7 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { addQueryParams } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
@@ -867,6 +868,8 @@ const Product = (props: any) => {
     noTrack: true,
   });
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useEffect(() => {
     if (
       isEligibleForFlexiCancellationExperiment &&
@@ -1219,6 +1222,7 @@ const Product = (props: any) => {
     cancellationInsuranceVariant: isEligibleForFlexiCancellationExperiment
       ? flexiCancellationExperimentVariant ?? undefined
       : undefined,
+    hsid,
   });
 
   const onSidePanelClose = () => {

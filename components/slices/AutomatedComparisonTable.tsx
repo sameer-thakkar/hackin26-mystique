@@ -1,5 +1,6 @@
 import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
 import Button from '@headout/aer/src/atoms/Button';
@@ -17,6 +18,7 @@ import { generateSidenavId } from 'utils/helper';
 import { getCancellationPolicyString } from 'utils/productUtils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -402,6 +404,8 @@ const AutomatedTourComparisonTable = ({
   const currentHost = isDev ? `http://${host}` : `https://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useLayoutEffect(() => {
     if (!window) return;
 
@@ -582,6 +586,7 @@ const AutomatedTourComparisonTable = ({
                         tgid: tour.id,
                         biLink,
                         redirectToHeadoutBookingFlow,
+                        hsid,
                       }),
                     },
                   };
@@ -690,6 +695,7 @@ const AutomatedTourComparisonTable = ({
                       flowType: tour.flowType,
                       biLink,
                       redirectToHeadoutBookingFlow,
+                      hsid,
                     }),
                   },
                 };

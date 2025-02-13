@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
 import { getProductCardDestination } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { PAGETYPE } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 import CloseWhite from 'assets/closeWhite';
@@ -33,6 +34,7 @@ export const SearchPage = (props: any) => {
   const { nakedDomain, isDev, host, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+  const hsid = useRecoilValue(hsidAtom);
 
   const searchItemClick = (
     productTgid: any,
@@ -51,6 +53,7 @@ export const SearchPage = (props: any) => {
       showPageUid,
       isDev,
       host,
+      hsid,
     });
     window.open(destinationUrl, '_self', 'noopener');
   };

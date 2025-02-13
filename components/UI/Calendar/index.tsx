@@ -52,6 +52,7 @@ import {
 import { getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -245,6 +246,8 @@ const Calendar = ({
     }
   }, [sortedInventoryDates]);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const onTimeSlotClick = (
     selectedTime: string,
     index: number,
@@ -281,6 +284,7 @@ const Calendar = ({
         startDate: selectedDate,
         startTime: selectedTime,
       },
+      hsid,
     });
 
     window.open(bookingUrl, '_self', 'noopener');

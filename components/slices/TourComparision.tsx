@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
@@ -12,6 +13,7 @@ import ProductsContext from 'contexts/Products';
 import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -481,6 +483,8 @@ const TourComparisonTable = (props: any) => {
     designType = 'Type-1',
     showImage = true,
   } = props;
+
+  const hsid = useRecoilValue(hsidAtom);
   const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
@@ -613,6 +617,7 @@ const TourComparisonTable = (props: any) => {
                       flowType: tour.flowType,
                       biLink,
                       redirectToHeadoutBookingFlow,
+                      hsid,
                     }),
                   },
                 };
@@ -730,6 +735,7 @@ const TourComparisonTable = (props: any) => {
                     tgid: tour.tgid,
                     biLink,
                     redirectToHeadoutBookingFlow,
+                    hsid,
                   }),
                 },
               };

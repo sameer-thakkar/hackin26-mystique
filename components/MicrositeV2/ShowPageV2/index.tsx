@@ -46,6 +46,7 @@ import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
@@ -278,6 +279,8 @@ const LttShowPageV2 = ({
     }
   }, [mwebDateSelectorPopupActive]);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useEffect(() => {
     if (eventsReady) {
       sendVariablesToDataLayer({
@@ -320,6 +323,7 @@ const LttShowPageV2 = ({
       redirectToHeadoutBookingFlow,
       currency,
       flowType,
+      hsid,
     });
 
     trackEvent({

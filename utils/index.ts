@@ -246,6 +246,7 @@ type TCreateBookingUrl = {
   showCustomCheckoutCTA?: boolean;
   isHOHORevamp?: boolean;
   cancellationInsuranceVariant?: string;
+  hsid?: any;
 };
 
 export const createBookingURL = ({
@@ -266,6 +267,7 @@ export const createBookingURL = ({
   showFullScreenPax = false,
   isHOHORevamp,
   cancellationInsuranceVariant,
+  hsid,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -373,6 +375,10 @@ export const createBookingURL = ({
     isMobile &&
     BY_HO_BRAND_SCREEN_ENABLE.includes(urlObject?.hostname || urlObject?.host);
   if (brandScreenEnabled) urlObject.searchParams.set('byHO', 'true');
+
+  if (hsid) {
+    urlObject.searchParams.set('hsid', hsid);
+  }
 
   urlObject.searchParams.set('cookieBanner', 'false');
 

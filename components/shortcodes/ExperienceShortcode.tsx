@@ -15,6 +15,7 @@ import { getHostName, isMobile } from 'utils/helper';
 import { getScorpioData } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { LOG_LEVELS } from 'const/logs';
 import { strings } from 'const/strings';
@@ -36,6 +37,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   const currencyCode = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
   const hostname = getHostName(isDev, host);
+  const hsid = useRecoilValue(hsidAtom);
 
   const hasTourGroupData = !!scorpioData?.[id];
 
@@ -44,6 +46,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
     lang,
     tgid: id,
     currency: currencyCode,
+    hsid,
   });
 
   const currency = currencyList?.find((c) => c.code === currencyCode);

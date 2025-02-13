@@ -699,6 +699,7 @@ export const ANALYTICS_EVENTS = {
     QNA_BANNER_VIEWED: 'QnA Banner Viewed',
   },
   SHOW_MORE_REDIRECT: 'Show Page Redirect',
+  HSID_SET_FAIL: 'HSID Set Failed',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {

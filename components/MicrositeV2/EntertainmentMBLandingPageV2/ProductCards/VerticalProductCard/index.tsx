@@ -21,6 +21,7 @@ import {
   getProductCardDestination,
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -37,6 +38,8 @@ const VerticalProductCard = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+
+  const hsid = useRecoilValue(hsidAtom);
 
   if (!product) return null;
 
@@ -55,6 +58,7 @@ const VerticalProductCard = ({
     urlSlugs,
     verticalImage,
   } = product;
+
   const { cashbackType } = listingPrice ?? {};
   const { url: verticalImageUrl } = verticalImage ?? {};
   const {
@@ -86,6 +90,7 @@ const VerticalProductCard = ({
       showPageUid,
       isDev,
       host,
+      hsid,
     });
 
     trackEvent({

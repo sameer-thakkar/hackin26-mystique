@@ -21,6 +21,7 @@ import {
   getProductCardDestination,
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -37,6 +38,8 @@ const HorizontalProductCard = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+
+  const hsid = useRecoilValue(hsidAtom);
 
   useEffect(() => {
     handleChildLoaded?.();
@@ -107,6 +110,7 @@ const HorizontalProductCard = ({
     showPageUid,
     isDev,
     host,
+    hsid,
   });
   const hrefAttribute = showPageExists ? { href: destinationUrl } : {};
 

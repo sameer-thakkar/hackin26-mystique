@@ -33,6 +33,7 @@ import {
   formatToDay,
 } from 'utils/dateUtils';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -170,6 +171,8 @@ const Calendar: React.FC<React.PropsWithChildren<CalendarProps>> = (props) => {
   }, [calendarData]);
   const inventoryListsMap = getDateLists();
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useEffect(() => {
     if (calendarData) {
       computeMinInventoryMap();
@@ -270,6 +273,7 @@ const Calendar: React.FC<React.PropsWithChildren<CalendarProps>> = (props) => {
         biLink,
         bookSubdomain,
         showFullScreenPax: true,
+        hsid,
       }),
       isMobile ? '_self' : '_blank',
       'noopener'

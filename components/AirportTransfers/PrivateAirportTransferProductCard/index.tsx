@@ -13,6 +13,7 @@ import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { ClockSvg, StarIcon } from 'const/descriptorIcons';
 import {
@@ -62,6 +63,7 @@ export const PrivateAirportTranferProductCard = ({
     useState(false);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const hsid = useRecoilValue(hsidAtom);
 
   const { title, averageRating, ratingCount, images, listingPrice } =
     scorpioData;
@@ -99,6 +101,7 @@ export const PrivateAirportTranferProductCard = ({
     redirectToHeadoutBookingFlow,
     ctaSuffix: tour.cta_url_suffix ?? '',
     flowType: tour.flowType,
+    hsid,
   });
 
   const { finalPrice, localSymbol } = listingPrice;

@@ -21,6 +21,7 @@ import { trackEvent } from 'utils/analytics';
 import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -78,6 +79,7 @@ const FullWidthProductCardComponent = (props: Props) => {
     isSpecialGuidedTour,
   } = props;
 
+  const hsid = useRecoilValue(hsidAtom);
   const mbContext = useContext(MBContext);
 
   useEffect(() => {
@@ -154,6 +156,7 @@ const FullWidthProductCardComponent = (props: Props) => {
     variantId: productCardInfo?.listingPrice?.tourId,
     date: productCardInfo?.earliestAvailability,
     flowType: productCardInfo?.flowType,
+    hsid,
   });
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {

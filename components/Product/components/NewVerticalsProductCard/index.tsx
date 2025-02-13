@@ -38,6 +38,7 @@ import {
   getProductCardLayout,
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
@@ -195,6 +196,8 @@ const NewVerticalsProductCard = (props: any) => {
     isCruisesCombosRevamp: showCruisesCombosRevamp,
   });
 
+  const hsid = useRecoilValue(hsidAtom);
+
   useEffect(() => {
     setCustomDescriptors(descriptorsList);
   }, []);
@@ -240,6 +243,7 @@ const NewVerticalsProductCard = (props: any) => {
     ctaSuffix: ctaUrlSuffix,
     flowType,
     isHOHORevamp: shouldRunHohoRevampExperiment ? isHOHORevamp : undefined,
+    hsid,
   });
 
   const onMoreInfoClick = () => {

@@ -15,6 +15,7 @@ import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
 import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { FONTS } from 'const/fonts';
@@ -434,6 +435,8 @@ const Product = (props: any) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, uid } =
     useContext(MBContext);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   // @ts-expect-error TS(2339): Property 'sliceData' does not exist on type '{}'.
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -502,7 +505,9 @@ const Product = (props: any) => {
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
+    hsid,
   });
+
   let showPageUrl = bookingURL;
   if (shouldUseDynamicShowPage()) {
     showPageUrl = getFormattedUrlSlug(urlSlugs, lang);

@@ -19,6 +19,7 @@ import {
   getProductCardLayout,
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
@@ -95,6 +96,8 @@ const ExperimentalProductCard = (props: any) => {
     shouldRunCustomCTAExperiment,
     showCustomProductCardEnglishCTA,
   } = props;
+
+  const hsid = useRecoilValue(hsidAtom);
 
   const {
     mbTheme,
@@ -236,6 +239,7 @@ const ExperimentalProductCard = (props: any) => {
     showCustomCheckoutCTA: shouldRunCustomCTAExperiment
       ? showCustomProductCardCTA
       : undefined,
+    hsid,
   });
 
   const croppingExcludedSubCats = [

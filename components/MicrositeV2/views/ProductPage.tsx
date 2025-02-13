@@ -17,6 +17,7 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
@@ -684,6 +685,8 @@ export const MobileProductPage = (props: any) => {
       : strings.OPENING_ON;
   }
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
   const onCheckAvailabilityClick = () => {
     window.open(
@@ -694,6 +697,7 @@ export const MobileProductPage = (props: any) => {
         biLink,
         redirectToHeadoutBookingFlow,
         flowType: tour.flowType,
+        hsid,
       }),
       '_blank',
       'noopener'

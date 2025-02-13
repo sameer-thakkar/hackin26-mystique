@@ -26,6 +26,7 @@ import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
@@ -510,6 +511,8 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
     results.length > 0
   );
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const showColoredHeader =
     (isEntertainmentLandingPageVisible || !!showSeatMapExperiment) &&
     !hasScrolled &&
@@ -565,6 +568,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
       tgid,
       redirectToHeadoutBookingFlow,
       flowType,
+      hsid,
     });
     const showPageUrl = showPageUid
       ? convertUidToUrl({ uid: showPageUid, hostname: host, lang })

@@ -24,6 +24,7 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -375,6 +376,8 @@ const SideBar = (props: TSideBarProps) => {
     finalPrice,
   ]);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const handleCheckAvailabilityClick = useCallback(() => {
     const selectedTour = toursAgainstDates[selectedTourDate]?.[timeSlotIndex];
     const { startTime } = selectedTour ?? {};
@@ -387,6 +390,7 @@ const SideBar = (props: TSideBarProps) => {
       isMobile,
       nakedDomain: 'london-theater-tickets.com',
       redirectToHeadoutBookingFlow: false,
+      hsid,
     });
 
     addCheckAvailabilityClickedDataEvents();

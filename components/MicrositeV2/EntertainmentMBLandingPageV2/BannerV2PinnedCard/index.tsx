@@ -24,6 +24,7 @@ import {
   getProductCardDestination,
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
@@ -41,6 +42,8 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
   const currency = useRecoilValue(currencyAtom);
   const pinnedCard = useRef<HTMLDivElement>(null);
   const [isButtonLoading, setButtonLoading] = useState(false);
+
+  const hsid = useRecoilValue(hsidAtom);
 
   useEffect(() => {
     const scrollToCenter = () => {
@@ -139,6 +142,7 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: TPinnedCardProps) => {
       showPageUid,
       isDev,
       host,
+      hsid,
     });
     const { cashbackType } = listingPrice;
 

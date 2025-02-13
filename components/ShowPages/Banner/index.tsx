@@ -32,6 +32,7 @@ import { dateToString } from 'utils/dateUtils';
 import { sendLog } from 'utils/logger';
 import { getTagPageLink } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
@@ -84,6 +85,8 @@ const ShowPageBanner = ({
   const { nakedDomain, biLink, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
 
+  const hsid = useRecoilValue(hsidAtom);
+
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain || getNakedDomain(hostname),
     lang: currentLanguage,
@@ -92,6 +95,7 @@ const ShowPageBanner = ({
     redirectToHeadoutBookingFlow,
     currency,
     flowType,
+    hsid,
   });
 
   const [isButtonLoading, setButtonLoading] = useState(false);
