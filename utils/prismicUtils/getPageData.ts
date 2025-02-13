@@ -97,6 +97,7 @@ import {
   PRISMIC_DEV_TAG,
   RESOURCE_TYPE,
   SLICE_TYPES,
+  SUBCATEGORY_IDS,
   SUPPORTED_LOCALE_MAP,
   TEMP_HARDCODED_PRODUCT,
   THEMES,
@@ -405,7 +406,6 @@ export const getPageData = async ({
         prismicDocumentTypeApiCacheStatus,
       };
     }
-
     if (ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION) {
       let ticketsData, startingPrice, currencyCode;
       const language = getHeadoutLanguagecode(lang ?? 'en-us');
@@ -761,6 +761,7 @@ export const getPageData = async ({
         tagged_mb_type: taggedMbType,
         tagged_category: taggedCategory,
         tagged_collection: taggedCollection,
+        tagged_sub_category: taggedSubCategory,
         tagged_city: taggedCity,
       } = baseLangCategorisationMetadata || {};
 
@@ -893,7 +894,8 @@ export const getPageData = async ({
       const isExtendedReviewsV2Enabled =
         MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
       const isReviewsV2Enabled = MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
-
+      categoryId = CATEGORY_IDS?.[taggedCategory];
+      subCatId = SUBCATEGORY_IDS?.[taggedSubCategory];
       collectionReviewsPromise = conditionalPromise(
         taggedCollection &&
           (isDayTripCollection ||
@@ -908,18 +910,39 @@ export const getPageData = async ({
           })
       );
 
+      if (taggedCity && categoryId) {
+        catSubCatReviewsPromise = conditionalPromise(
+          taggedCity && categoryId,
+          () =>
+            fetchCategoryReviews({
+              categoryId: Number(categoryId),
+              cityId: taggedCity,
+            })
+        );
+      } else if (taggedCity && subCatId) {
+        catSubCatReviewsPromise = conditionalPromise(
+          taggedCity && subCatId,
+          () =>
+            fetchSubCategoryReviews({
+              subCategoryId: Number(subCatId),
+              cityId: taggedCity,
+            })
+        );
+      }
+
       const {
         categoryTourListData,
         cityPageParams,
         offerDetails,
         collectionReviews,
+        catSubCatReviews,
       } = await labeledPromiseAllSettled([
         { promise: categoryTourListPromise, label: 'categoryTourListData' },
         { promise: cityPageDataPromise, label: 'cityPageParams' },
         { promise: offerTgidsPromise, label: 'offerDetails' },
         { promise: collectionReviewsPromise, label: 'collectionReviews' },
+        { promise: catSubCatReviewsPromise, label: 'catSubCatReviews' },
       ] as const);
-
       if (
         (hasCategoryTourListV1 || MBDesign === DESIGN.V3) &&
         hasCategoryTourList &&
@@ -993,27 +1016,11 @@ export const getPageData = async ({
             resourceType: RESOURCE_TYPE.SUB_CATEGORY_CITY,
             entityIds: `${subCatId}-${taggedCity}`,
           });
-          catSubCatReviewsPromise = conditionalPromise(
-            taggedCity && subCatId,
-            () =>
-              fetchSubCategoryReviews({
-                subCategoryId: Number(subCatId),
-                cityId: taggedCity,
-              })
-          );
         } else if (isCategoryMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.CATEGORY_CITY,
             entityIds: `${categoryId}-${taggedCity}`,
           });
-          catSubCatReviewsPromise = conditionalPromise(
-            taggedCity && categoryId,
-            () =>
-              fetchCategoryReviews({
-                categoryId: Number(categoryId),
-                cityId: taggedCity,
-              })
-          );
         }
         collectionDetails = categoryTourListData?.collectionDetails ?? {};
       }
@@ -1108,6 +1115,7 @@ export const getPageData = async ({
         categoryDescriptors,
         subcategoryDescriptors,
         collectionReviews: collectionReviews || {},
+        catSubCatReviews: catSubCatReviews || {},
       };
     }
     tgidsArray = [...tgidsArray];
@@ -1203,7 +1211,6 @@ export const getPageData = async ({
       collectionList,
       categoryTourListData,
       dayTripCollectionData,
-      catSubCatReviews,
       botReviewsByTGID,
     } = await labeledPromiseAllSettled([
       {
@@ -1222,7 +1229,6 @@ export const getPageData = async ({
       { promise: collectionListPromise, label: 'collectionList' },
       { promise: categoryTourListDataPromise, label: 'categoryTourListData' },
       { promise: dayTripCollectionDataPromise, label: 'dayTripCollectionData' },
-      { promise: catSubCatReviewsPromise, label: 'catSubCatReviews' },
       { promise: botReviewsByTGIDPromise, label: 'botReviewsByTGID' },
     ] as const);
 
@@ -1645,7 +1651,6 @@ export const getPageData = async ({
       theatreType,
       isEntertainmentBanner,
       bannerTrustBoosters,
-      catSubCatReviews: catSubCatReviews || {},
       categoryId,
       subCategoryId: subCatId,
       botReviewsByTGID: botReviewsByTGIDMap,

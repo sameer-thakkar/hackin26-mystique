@@ -544,8 +544,8 @@ const NewVerticalsProductCard = (props: any) => {
                 (!isMobile || expandContent) && isSpecialGuidedTour
               }
               uid={uid}
-               horizontal={isPopup ? true : !isTicketCard && isMobile}
-            showIcons={isTicketCard || !isMobile}
+              horizontal={isPopup ? true : !isTicketCard && isMobile}
+              showIcons={isTicketCard || !isMobile}
               cancellationPolicy={'cancellationPolicy'}
               isMobile={isMobile}
               showGuidedTourDescriptor={false}
