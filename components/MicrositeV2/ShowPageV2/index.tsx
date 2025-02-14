@@ -432,7 +432,7 @@ const LttShowPageV2 = ({
               setMwebdateSelectorPopupActive(false);
             }}
             moreShows={moreShows}
-            moreShowsCategoryUrl={LTT_TAG_PAGE_MAP[primarySubCategory?.name]}
+            primarySubCategory={primarySubCategory}
           />
         </DateSelectorWrapper>
 

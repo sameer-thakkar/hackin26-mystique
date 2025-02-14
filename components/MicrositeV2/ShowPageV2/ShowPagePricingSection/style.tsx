@@ -119,12 +119,20 @@ export const BuyButtonWrapper = styled.div`
 export const RiveCtaWrapper = styled.div`
   cursor: pointer;
   position: absolute;
-  transform: translateY(-3rem);
+  width: 32rem;
+  height: 7.5rem;
+  transform: translate(-5.5rem, -4.7rem);
+
+  // to handle layout shift breakpoint of pricing section
+  @media screen and (max-width: 1367px) {
+    width: 29rem;
+    height: 7.5rem;
+    transform: translate(-5rem, -4.8rem);
+  }
 `;
 
 export const riveComponentStyles: CSSProperties = {
   position: 'absolute',
-  width: '28.9rem',
-  height: '4.375rem',
-  transform: 'translateX(-7.75rem)',
+  width: '100%',
+  height: '100%',
 };

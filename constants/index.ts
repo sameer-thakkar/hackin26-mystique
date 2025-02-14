@@ -826,11 +826,13 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_2: 'Type-2',
 };
 
+export const RIVE_CONTENT_TYPE = 'binary/octet-stream';
+
 export const RIV_LOGO =
   'https://cdn-imgix-open.headout.com/MB/RIV/byHeadout.riv';
 
-export const RIV_CTA_LTT =
-  'https://cdn-imgix-open.headout.com/MB/RIV/lion-king-cta-ltt.riv';
+export const RIV_CTA_LTT_BASE =
+  'https://cdn-imgix-open.headout.com/MB/RIV/CTA/ltt-cta-';
 
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';

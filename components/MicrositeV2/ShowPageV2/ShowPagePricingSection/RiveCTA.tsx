@@ -1,32 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alignment, Fit, Layout } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { useRive } from 'hooks/useRive';
-import { RIV_CTA_LTT } from 'const/index';
+import { RIV_CTA_LTT_BASE, RIVE_CONTENT_TYPE } from 'const/index';
 import { TRiveCTAProps } from './interface';
 import { riveComponentStyles, RiveCtaWrapper } from './style';
 
-const RiveCTA = ({ onClick, primaryText }: TRiveCTAProps) => {
-  const { RiveComponent, rive, isLoading, isError } = useRive({
-    src: RIV_CTA_LTT,
-    stateMachines: 'State Machine 1',
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-    autoplay: true,
-  });
+const COMMON_RIVE_PATH = `${RIV_CTA_LTT_BASE}all.riv`;
 
-  const showFallback = isLoading || isError;
-  rive?.setTextRunValue('CTA Text', primaryText);
+const checkFileResponse = async (url: string) => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.headers.get('content-type');
+  } catch (error) {
+    return null;
+  }
+};
+
+const RiveShowPageCTA = ({
+  onClick,
+  primaryText,
+  tgid,
+  primarySubCatId,
+}: TRiveCTAProps) => {
+  const sources = [
+    `${RIV_CTA_LTT_BASE}tgid-${tgid}.riv`,
+    `${RIV_CTA_LTT_BASE}subcat-${primarySubCatId}.riv`,
+    COMMON_RIVE_PATH,
+  ];
+
+  const [riveSrc, setRiveSrc] = useState<string | null>(null);
+  const [isSrcDetermined, setIsSrcDetermined] = useState(false);
+
+  useEffect(() => {
+    const determineRiveSource = async () => {
+      for (const src of sources) {
+        if (
+          src === COMMON_RIVE_PATH ||
+          (await checkFileResponse(src)) === RIVE_CONTENT_TYPE
+        ) {
+          setRiveSrc(src);
+          break;
+        }
+      }
+      setIsSrcDetermined(true);
+    };
+
+    determineRiveSource();
+  }, []);
+
+  const { RiveComponent, rive, isLoading, isError } = useRive(
+    isSrcDetermined && riveSrc
+      ? {
+          src: riveSrc,
+          stateMachines: 'stateMachine',
+          artboard: 'artboard',
+          layout: new Layout({
+            fit: Fit.FitWidth,
+            alignment: Alignment.Center,
+          }),
+          autoplay: true,
+        }
+      : null
+  );
+
+  const showFallback = isLoading || isError || !riveSrc;
+  rive?.setTextRunValue('ctaText', primaryText);
 
   return (
-    <RiveCtaWrapper>
-      <Conditional if={!showFallback}>
+    <Conditional if={!showFallback}>
+      <RiveCtaWrapper>
         <RiveComponent onClick={onClick} style={riveComponentStyles} />
-      </Conditional>
-    </RiveCtaWrapper>
+      </RiveCtaWrapper>
+    </Conditional>
   );
 };
 
-export default RiveCTA;
+export default RiveShowPageCTA;

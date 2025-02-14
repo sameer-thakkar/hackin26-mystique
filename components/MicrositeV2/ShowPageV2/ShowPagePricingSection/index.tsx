@@ -16,7 +16,7 @@ import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPag
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
-import { checkIfLionKingPage, createBookingURL, getNakedDomain } from 'utils';
+import { createBookingURL, getNakedDomain, getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
@@ -31,13 +31,13 @@ import {
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
-import RiveCTA from './RiveCTA';
+import RiveShowPageCTA from './RiveCTA';
 
 const ShowPagePricingSection = ({
   tourGroupData,
   flowType,
   moreShows,
-  moreShowsCategoryUrl,
+  primarySubCategory,
 }: TShowPagePricingSectionProps) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = useState(true);
@@ -84,8 +84,6 @@ const ShowPagePricingSection = ({
 
   const hostname = getHostName(isDev, host);
 
-  const isLionKingPage = checkIfLionKingPage(uid);
-
   const {
     TicketsUnavailableSection,
     TicketsUnavailableHeaderDweb,
@@ -125,6 +123,9 @@ const ShowPagePricingSection = ({
       setButtonLoading(false);
     },
   });
+
+  const LTT_TAG_PAGE_MAP = getTagPageMap(uid);
+  const moreShowsCategoryUrl = LTT_TAG_PAGE_MAP[primarySubCategory?.name];
 
   const onCheckAvailabilityClicked = () => {
     const hasDiscountElement = totalDiscount > 0 || showCashbackElement;
@@ -219,12 +220,12 @@ const ShowPagePricingSection = ({
                 state={buttonType}
                 variant="primary"
               />
-              <Conditional if={isLionKingPage}>
-                <RiveCTA
-                  onClick={onCheckAvailabilityClicked}
-                  primaryText={buyButtonText}
-                />
-              </Conditional>
+              <RiveShowPageCTA
+                onClick={onCheckAvailabilityClicked}
+                primaryText={buyButtonText}
+                tgid={tgid}
+                primarySubCatId={primarySubCategory?.id}
+              />
             </BuyButtonWrapper>
           </PricingSection>
         </Conditional>

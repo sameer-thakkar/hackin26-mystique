@@ -3,10 +3,12 @@ export type TShowPagePricingSectionProps = {
   flowType: string;
   onClose?: () => void;
   moreShows?: any;
-  moreShowsCategoryUrl?: string;
+  primarySubCategory?: Record<string, any>;
 };
 
 export type TRiveCTAProps = {
   onClick: () => void;
   primaryText: string;
+  tgid: string;
+  primarySubCatId: string;
 };
