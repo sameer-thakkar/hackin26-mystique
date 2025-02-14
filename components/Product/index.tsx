@@ -950,12 +950,7 @@ const Product = (props: any) => {
   }
 
   if (isModifiedPopup) {
-    tabs = [
-      !isNonCruiseProduct && {
-        heading: strings.INCLUSIONS,
-        contents: [],
-        type: 'nonRichText',
-      },
+    const customSections = [
       {
         ...(details?.cruiseMenus?.length
           ? {
@@ -974,8 +969,24 @@ const Product = (props: any) => {
             }
           : null),
       },
-      ...tabs,
-    ]?.filter((el) => Object.keys(el)?.length);
+    ];
+    if (!isNonCruiseProduct) {
+      tabs = [
+        {
+          heading: strings.INCLUSIONS,
+          contents: [],
+          type: 'nonRichText',
+        },
+        ...customSections,
+        ...tabs,
+      ]?.filter((el) => Object.keys(el)?.length);
+    } else if (isNonCruiseProduct) {
+      tabs = [
+        ...tabs?.slice(0, 2),
+        ...customSections,
+        ...tabs?.slice(2),
+      ]?.filter((el) => Object.keys(el)?.length);
+    }
   }
 
   const { inclusionsExclusions } =
@@ -1574,6 +1585,7 @@ const Product = (props: any) => {
           ref={productRef}
           $hasItineraryData={showItinerary}
           $isModifiedPopup={isModifiedPopup}
+          $isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
           $isNewVerticalsProductCard={
             isNewVerticalsProductCard && !isNonNewVerticalProductCard
           }
@@ -2471,6 +2483,7 @@ const Product = (props: any) => {
           setCustomDescriptors={setCustomDescriptors}
           shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
           handleShowComboPopup={handleShowComboPopup}
+          isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
           comboPopup={
             <Conditional
               if={!isMobile && isComboWithMultiVariant && showComboVariant}

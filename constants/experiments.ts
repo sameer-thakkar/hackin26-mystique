@@ -64,7 +64,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [CRUISES_COMBO_REVAMP]: new Experiment(
     CRUISES_COMBO_REVAMP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [50, 50]
   ),
   [DAY_TRIPS_COLLECTION]: new Experiment(
     DAY_TRIPS_COLLECTION,

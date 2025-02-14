@@ -655,6 +655,7 @@ interface IStyledProductCard {
   $isNewVerticalsProductCard?: boolean;
   $isCruise?: boolean;
   $isModifiedPopup?: boolean;
+  $isModifiedCombo?: boolean;
   $isSwiperCard?: boolean;
   $hasItineraryData?: boolean;
   $forceMobile?: boolean;
@@ -842,8 +843,6 @@ const popupStyles = css`
 
         &.inclusions-heading {
           margin-top: 0;
-          padding-top: 2rem;
-          border-top: 1px solid ${COLORS.GRAY.G6};
         }
         &.sights-covered-heading {
           visibility: hidden;
@@ -3344,7 +3343,9 @@ export const newVerticalStyles = css`
   }
 `;
 
-export const cruiseStyles = css`
+export const cruiseStyles = css<{
+  $isModifiedCombo?: boolean;
+}>`
   @media (min-width: 768px) {
     grid-template-areas:
       'card-img category-and-rating line cta-combo'
@@ -3383,6 +3384,9 @@ export const cruiseStyles = css`
     ${TourTitleWrapper} {
       font-size: 24px;
     }
+    ${TitleWrapper} {
+      margin-bottom: 0;
+    }
     ${PopupWrapper} {
       ${TourTags} {
         grid-area: unset;
@@ -3398,7 +3402,7 @@ export const cruiseStyles = css`
       'category-and-rating'
       'title'
       'horizontal-tags'
-      'tour-tags'
+      ${({ $isModifiedCombo }) => !$isModifiedCombo && "'tour-tags'"}
       'price-block'
       'cta-block'
       'more-details-cta';
@@ -3428,12 +3432,29 @@ export const cruiseStyles = css`
       margin-bottom: 0.125rem;
     }
     ${PriceContainer} {
-      margin: 0.75rem 0 0;
+      margin: ${({ $isModifiedCombo }) =>
+        $isModifiedCombo ? '0.125rem 0 0' : '0.75rem 0 0'};
     }
   }
 `;
 
-export const modifiedPopupStyles = css`
+export const modifiedPopupStyles = css<{
+  $isModifiedCombo?: boolean;
+}>`
+  ${ProductBody} {
+    border-top: 1px solid ${COLORS.GRAY.G6};
+    .tour-description {
+      .inclusions-heading {
+        ${({ $isModifiedCombo }) => $isModifiedCombo && 'margin-top: 2rem;'}
+      }
+
+      h6 {
+        &:first-child {
+          padding-top: 2rem;
+        }
+      }
+    }
+  }
   ${TourTags} {
     margin: 0.5rem 0;
   }
@@ -3444,16 +3465,18 @@ export const modifiedPopupStyles = css`
   }
   @media (max-width: 768px) {
     grid-template-areas:
-      'card-img'
       'category-and-rating'
       'title'
       'horizontal-tags';
-    grid-row-gap: 0.75rem;
+    grid-row-gap: 0;
     ${PriceContainer} {
       display: none;
     }
-    ${TourTitleWrapper}, ${TitleWrapper} {
+    ${TourTitleWrapper} {
       margin-bottom: 0;
+    }
+    ${TitleWrapper} {
+      margin: 0 0 0.75rem;
     }
     ${TourTitleWrapper} {
       font-size: 21px;
@@ -3466,6 +3489,9 @@ export const modifiedPopupStyles = css`
     }
     ${TourTags} {
       margin: 0 0 0.25rem 0 !important;
+      .tour-tag {
+        font-size: 14px !important;
+      }
     }
     ${NextAvailableBlock} {
       margin-top: -0.5rem;

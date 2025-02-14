@@ -109,6 +109,7 @@ const NewVerticalsProductCard = (props: any) => {
     shouldRunHohoRevampExperiment,
     handleShowComboPopup,
     comboPopup,
+    isModifiedCombo,
   } = props;
 
   const {
@@ -318,6 +319,7 @@ const NewVerticalsProductCard = (props: any) => {
           ref={productRef}
           $isNewVerticalsProductCard={true}
           $isCruise={isCruisesRevamp}
+          $isModifiedCombo={isModifiedCombo}
           onClick={() => {
             isHOHORevamp && isMobile
               ? (window.open(productBookingUrl, '_self', 'noopener'),

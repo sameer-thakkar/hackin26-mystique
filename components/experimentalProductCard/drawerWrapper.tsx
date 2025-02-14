@@ -70,6 +70,7 @@ const DrawerWrapper = (props: any) => {
     trackDrawerOpen,
     showThumbnailInBanner,
     tgidItineraryData,
+    showItinerary,
     isModifiedPopup,
     isModifiedCombo,
     showSightsCoveredItineraryLayout,
@@ -255,6 +256,7 @@ const DrawerWrapper = (props: any) => {
             trackDrawerOpen={trackDrawerOpen}
             hasOffers={showScratchPrice && !!discountText.length}
             tgidItineraryData={tgidItineraryData}
+            showItinerary={showItinerary}
             lang={lang}
             onActiveItineraryTabChange={handleActiveItineraryTabChange}
             preventTouchEvents={isItineraryDetailsSwipeSheetOpen}

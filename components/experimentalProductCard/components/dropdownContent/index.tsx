@@ -90,6 +90,7 @@ interface DropdownContentProps {
   trackDrawerOpen: () => void;
   hideCloseButton?: boolean;
   tgidItineraryData?: TItinerary[];
+  showItinerary?: boolean;
   lang: LanguagesUnion;
   onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
   preventTouchEvents?: boolean;
@@ -122,6 +123,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   trackDrawerOpen,
   hideCloseButton = false,
   tgidItineraryData,
+  showItinerary = true,
   lang,
   onActiveItineraryTabChange,
   preventTouchEvents,
@@ -150,6 +152,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   const router = useRouter();
 
   const hasItinerarySection =
+    showItinerary &&
     !isModifiedPopup &&
     !showSightsCoveredItineraryLayout &&
     !!tgidItineraryData &&

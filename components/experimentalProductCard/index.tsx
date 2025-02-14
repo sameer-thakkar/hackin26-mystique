@@ -84,6 +84,7 @@ const ExperimentalProductCard = (props: any) => {
     showThumbnailInBanner,
     showJustDrawer = false,
     hideDrawerCloseButton = false,
+    itineraryInfo,
     tgidItineraryData,
     scrollToItinerarySection = false,
     isModifiedPopup = false,
@@ -202,6 +203,7 @@ const ExperimentalProductCard = (props: any) => {
   const hasV1Booster = booster && asText(booster as []).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
+  const showItinerary = itineraryInfo?.showData;
 
   const layout = ({ isContentExpanded }: { isContentExpanded?: boolean }) =>
     getProductCardLayout({
@@ -414,6 +416,7 @@ const ExperimentalProductCard = (props: any) => {
           showThumbnailInBanner,
           hideCloseButton: hideDrawerCloseButton,
           tgidItineraryData,
+          showItinerary,
           isModifiedPopup,
           isModifiedCombo,
           showSightsCoveredItineraryLayout,
