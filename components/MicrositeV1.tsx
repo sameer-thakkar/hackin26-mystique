@@ -1044,15 +1044,18 @@ const MicrositeV1 = (props: any) => {
     shouldRunDayTripsListicleExperiment &&
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
+  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
+
   const {
     isEligible: shouldRunDayTripsCollectionExperiment,
     variant: dayTripsCollectionExperimentVariant,
+    isExperimentResolving: isDayTripsCollectionExperimentResolving,
   } = useABTesting({
     experimentId: 'DAY_TRIPS_COLLECTION',
-    customEligibilityCheckFn: () => DAY_TRIPS_COLLECTION_MBS.includes(uid),
+    customEligibilityCheckFn: () =>
+      isDayTripCollectionPage && DAY_TRIPS_COLLECTION_MBS.includes(uid),
   });
 
-  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
   const revampedDayTripsCollection =
     shouldRunDayTripsCollectionExperiment &&
     dayTripsCollectionExperimentVariant === VARIANTS.TREATMENT &&
@@ -1065,7 +1068,9 @@ const MicrositeV1 = (props: any) => {
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
-    (isPOIFiltersExpEligible && isPOIFiltersExpResolving)
+    (isPOIFiltersExpEligible && isPOIFiltersExpResolving) ||
+    (shouldRunDayTripsCollectionExperiment &&
+      isDayTripsCollectionExperimentResolving)
   )
     return <Loader />;
 
