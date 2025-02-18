@@ -630,7 +630,9 @@ const MicrositeV1 = (props: any) => {
   } = useABTesting({
     experimentId: 'DAY_TRIPS_COLLECTION',
     customEligibilityCheckFn: () =>
-      isDayTripCollectionPage && DAY_TRIPS_COLLECTION_MBS.includes(uid),
+      !isMobile &&
+      isDayTripCollectionPage &&
+      DAY_TRIPS_COLLECTION_MBS.includes(uid),
     additionalEventProps: () => {
       const productCardIds = getFilteredTgids(dayTripCollectionData);
       return {

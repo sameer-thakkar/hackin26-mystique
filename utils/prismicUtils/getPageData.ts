@@ -806,14 +806,13 @@ export const getPageData = async ({
         hasCategoryTourListV1 ||
         Object.keys(categoryCarouselCF || {})?.length;
 
-      if (isCollectionMB(taggedMbType) && taggedCollection) {
+      if (taggedCollection) {
         collectionBasicInfo = await fetchCollectionBasicInfo({
           collectionId: taggedCollection,
         });
       }
 
       const isDayTripCollection =
-        isCollectionMB(taggedMbType) &&
         taggedCollection &&
         collectionBasicInfo?.type === 'DAY_TRIP' &&
         DAY_TRIPS_COLLECTION_MBS.includes(uid);
