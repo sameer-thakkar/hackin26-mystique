@@ -97,6 +97,7 @@ import {
   filterToursByPOIFilter,
   getAvailablePOIFilterTypes,
 } from './common/POIFilters/utils';
+import { getFilteredTgids } from './DayTripsCollection/utils';
 import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
 import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
@@ -244,6 +245,7 @@ const MicrositeV1 = (props: any) => {
     isRankingExperimentResolving,
     isNotUsingAutomatedRanking = true,
     bannerV3Data,
+    dayTripCollectionData,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -636,8 +638,42 @@ const MicrositeV1 = (props: any) => {
     }
   }, []);
 
+  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
+
+  const {
+    isEligible: shouldRunDayTripsCollectionExperiment,
+    variant: dayTripsCollectionExperimentVariant,
+    isExperimentResolving: isDayTripsCollectionExperimentResolving,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_COLLECTION',
+    customEligibilityCheckFn: () =>
+      isDayTripCollectionPage && DAY_TRIPS_COLLECTION_MBS.includes(uid),
+    additionalEventProps: () => {
+      const productCardIds = getFilteredTgids(dayTripCollectionData);
+      return {
+        [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: productCardIds.length,
+      };
+    },
+  });
+
+  const revampedDayTripsCollection =
+    shouldRunDayTripsCollectionExperiment &&
+    dayTripsCollectionExperimentVariant === VARIANTS.TREATMENT &&
+    isDayTripCollectionPage;
+
   useEffect(() => {
     if (!eventsReady) return;
+    if (isDayTripCollectionPage && isDayTripsCollectionExperimentResolving)
+      return;
+    let numberOfProducts = orderedTgids?.length ?? 0;
+    let tgids = orderedTgids;
+
+    if (revampedDayTripsCollection) {
+      const productCardIds = getFilteredTgids(dayTripCollectionData);
+      tgids = productCardIds;
+      numberOfProducts = tgids?.length ?? 0;
+    }
+
     const renderedBaseLangPageTitle =
       renderShortCodes(baseLangPageTitle)?.join?.('');
 
@@ -674,13 +710,13 @@ const MicrositeV1 = (props: any) => {
         ? { [ANALYTICS_PROPERTIES.LAYOUT_TYPE]: 'Day Trips' }
         : {}),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+      [ANALYTICS_PROPERTIES.TGIDS]: tgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
       [ANALYTICS_PROPERTIES.IS_DATE_FILTER]:
         isA1orC1MB(taggedMbType) && isMobile
           ? BOOLEAN_STATES['YES']
           : BOOLEAN_STATES['NO'],
-      [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: orderedTgids?.length ?? 0,
+      [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: numberOfProducts,
       [ANALYTICS_PROPERTIES.NUMBER_OF_SLICES]: contentFWSlices?.length ?? 0,
       [ANALYTICS_PROPERTIES.FIRST_SLICE_TYPE]: contentFWSlices?.find(
         (slice: Record<string, any>) =>
@@ -703,7 +739,12 @@ const MicrositeV1 = (props: any) => {
           )?.length,
       }),
     });
-  }, [eventsReady]);
+  }, [
+    eventsReady,
+    isDayTripsCollectionExperimentResolving,
+    revampedDayTripsCollection,
+    isDayTripCollectionPage,
+  ]);
 
   const uncategorizedToursHeading = hasTours
     ? isCategorisedTours
@@ -1043,23 +1084,6 @@ const MicrositeV1 = (props: any) => {
   const hideDtProductCards =
     shouldRunDayTripsListicleExperiment &&
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
-
-  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
-
-  const {
-    isEligible: shouldRunDayTripsCollectionExperiment,
-    variant: dayTripsCollectionExperimentVariant,
-    isExperimentResolving: isDayTripsCollectionExperimentResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_COLLECTION',
-    customEligibilityCheckFn: () =>
-      isDayTripCollectionPage && DAY_TRIPS_COLLECTION_MBS.includes(uid),
-  });
-
-  const revampedDayTripsCollection =
-    shouldRunDayTripsCollectionExperiment &&
-    dayTripsCollectionExperimentVariant === VARIANTS.TREATMENT &&
-    isDayTripCollectionPage;
 
   if (
     (isQnaExpEligible && isQnaExpResolving) ||
@@ -1423,7 +1447,7 @@ const MicrositeV1 = (props: any) => {
               boosterExperimentVariant === VARIANTS.TREATMENT
             }
             micrositeData={micrositeData}
-            dayTripCollectionData={props.dayTripCollectionData}
+            dayTripCollectionData={dayTripCollectionData}
           />
         </Conditional>
         <Conditional

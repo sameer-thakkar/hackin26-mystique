@@ -74,3 +74,12 @@ export const canShowFullWidthCards = (
 ) => {
   return hasValidHighlightedTGID || totalItems <= MAX_FULL_WIDTH_PRODUCT_CARDS;
 };
+
+export const getFilteredTgids = (dayTripCollectionData: any = {}) => {
+  const { orderedTours = [], scorpioData = {} } = dayTripCollectionData;
+  const productCardIds = orderedTours
+    .map((tour: any) => tour?.id)
+    .filter((id: number) => id && scorpioData[id]?.listingPrice?.finalPrice);
+
+  return productCardIds;
+};
