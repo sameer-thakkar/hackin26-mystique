@@ -57,7 +57,6 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
-import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
@@ -255,7 +254,6 @@ const MicrositeV1 = (props: any) => {
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
-  const { isBot } = useRecoilValue(appAtom);
   const router = useRouter();
 
   useEffect(() => {
@@ -389,22 +387,7 @@ const MicrositeV1 = (props: any) => {
     !isAirportTransfersMB &&
     !showCruisesFormat;
 
-  const isLangEn = lang === 'en-us' || lang === 'en';
-
-  const {
-    isEligible: isQnaExpEligible,
-    isExperimentResolving: isQnaExpResolving,
-    variant: qnaExpVariant,
-  } = useABTesting({
-    experimentId: 'QNA_EXPERIMENT',
-    customEligibilityCheckFn: () => QNA_EXP_UIDS.includes(uid) && isLangEn,
-  });
-
-  const showQnaExperiment =
-    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) ||
-      (isBot && isLangEn)) &&
-    qnaSections?.length &&
-    qnaSnippets?.length;
+  const showQnaExperiment = false;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -1086,7 +1069,6 @@ const MicrositeV1 = (props: any) => {
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
   if (
-    (isQnaExpEligible && isQnaExpResolving) ||
     (isCruisesCombosExpEligible && isCruisesCombosExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&

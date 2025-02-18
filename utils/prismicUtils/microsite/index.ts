@@ -29,7 +29,6 @@ import {
 import getContentPageDocument from '../contentPage';
 import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
-import { getQnaData } from './../../apiUtils';
 import type {
   TMicrositeDocument,
   TResolvedDocumentResponseM,
@@ -262,13 +261,6 @@ const getMicrositeDocument = async ({
           });
         }
 
-        const { qnaSnippets, qnaSections } = await getQnaData({
-          collectionId: Number(
-            baseLangCategorisationMetadata?.tagged_collection
-          ),
-          uid,
-        });
-
         const transformedData: TMicrositeDocument = {
           ...micrositeData,
           data: {
@@ -306,8 +298,8 @@ const getMicrositeDocument = async ({
             mbType: tagged_mb_type,
           },
           subattractionsContentPageData,
-          qnaSnippets: qnaSnippets || [],
-          qnaSections: qnaSections || [],
+          qnaSnippets: [],
+          qnaSections: [],
         };
 
         return {
