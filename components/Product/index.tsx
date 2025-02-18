@@ -875,7 +875,8 @@ const Product = (props: any) => {
       isEligibleForFlexiCancellationExperiment &&
       !isFlexiCancellationExperimentTriggered.current &&
       isProductCardVisible &&
-      !isExperimentResolving
+      !isExperimentResolving &&
+      !!flexiCancellationExperimentVariant
     ) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
