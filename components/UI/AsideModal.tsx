@@ -598,7 +598,12 @@ const AsideModal = ({
       // Saving scroll and hiding body is required for iOS compatability,
       // fixed elements break, they move from their position after partial scroll (browser hides its header)
       // to avoid this we removed position: fixed, and let the sidebar live in regular scroll flow.
-      window.scrollTo(0, 0);
+
+      const { popup } = window.history?.state ?? {};
+
+      if (popup === 'combo') {
+        window.scrollTo(0, 0);
+      }
     }
     if (active) {
       toggleModalBgClass(true);

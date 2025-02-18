@@ -8,6 +8,7 @@ export const useBodyScrollLock = (lockScroll: boolean = false) => {
         document.body.classList.add('scroll-lock-without-overlay');
       } else {
         document.body.style.touchAction = '';
+        document.body.style.overflow = '';
         document.body.classList.remove('scroll-lock-without-overlay');
       }
     }
