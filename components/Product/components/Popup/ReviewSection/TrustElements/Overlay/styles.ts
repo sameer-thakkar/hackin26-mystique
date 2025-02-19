@@ -10,6 +10,7 @@ export const StyledOverlayHeading = styled.div`
   position: relative;
   cursor: pointer;
   align-items: center;
+  width: max-content;
 
   .title {
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)}

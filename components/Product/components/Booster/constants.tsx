@@ -68,7 +68,7 @@ export const getBoosterInfo = (boosterType: BoosterType) => {
         left: 36.8,
       },
       textColor: '#6B2811',
-      rotateDeg: 1,
+      rotateDeg: -4,
       iconStyles: {
         top: -6,
         left: -1,

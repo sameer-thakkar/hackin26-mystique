@@ -2151,10 +2151,6 @@ const Product = (props: any) => {
                     </ItineraryProvider>
                   </Conditional>
                   <Conditional if={showSightsCoveredItineraryLayout && details}>
-                    <PrismicRichText
-                      field={inclusionsRichText}
-                      components={shortCodeSerializer}
-                    />
                     <SightsCovered
                       itineraryData={tgidItineraryData!}
                       isCruisesRevamp={isCruisesRevamp}

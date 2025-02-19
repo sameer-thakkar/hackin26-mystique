@@ -288,13 +288,13 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
       sections?.length
     ) {
       tabs = [
-        tabs[0],
+        ...tabs.slice(0, 2),
         {
           heading: strings.CRUISES.SIGHTS_COVERED,
           contents: [],
           type: 'nonRichText',
         },
-        ...tabs.slice(1),
+        ...tabs.slice(2),
       ];
     }
     if (reviewSectionLoaded) {
