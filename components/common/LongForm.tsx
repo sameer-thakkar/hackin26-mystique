@@ -4,11 +4,13 @@ import { useRecoilValue } from 'recoil';
 import { SliceZone } from '@prismicio/react';
 import { hostname } from 'os';
 import type { TReview } from 'types/reviews';
+import { ICollectionCarousel } from 'components/slices/CollectionCarousel/interface';
 import {
   catOrSubCatPageSliceComponents,
   sliceComponents,
 } from 'components/slices/sliceManager';
 import { MBContext } from 'contexts/MBContext';
+import { moveElement } from 'utils/arrayUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import {
@@ -187,8 +189,11 @@ type TLongFormProps = {
   isCatAndSubCatPage?: boolean;
   isRevampedDesign?: boolean;
   isDayTrips?: boolean;
+  isDesertSafariMB?: boolean;
   [k: string]: any;
-};
+} & Partial<
+  Pick<ICollectionCarousel, 'allCollectionsData' | 'primaryCity' | 'taggedCity'>
+>;
 
 const LongForm = (longFormProps: TLongFormProps) => {
   const { uid } = useContext(MBContext);
@@ -205,8 +210,14 @@ const LongForm = (longFormProps: TLongFormProps) => {
     collectionDetails,
     categoryId,
     subCategoryId,
+    isDesertSafariMB,
+    allCollectionsData,
+    primaryCity,
+    taggedCity,
     ...props
   } = longFormProps;
+
+  const { isRevampedDesign, isVenuePage, isNewsPage } = props;
 
   const parsedContent = useMemo(() => {
     const isReviewsV2Enabled = isDayTrips
@@ -218,7 +229,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
       (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.REVIEWS
     );
 
-    const finalContent = [...content];
+    let finalContent = [...content];
     const reviewsV2Slice = {
       slice_type: SLICE_TYPES.REVIEWS,
       primary: {
@@ -238,16 +249,47 @@ const LongForm = (longFormProps: TLongFormProps) => {
           : catSubCatReviews?.result?.reviews?.items,
     };
 
+    const thingToDoCarouselSlice = {
+      slice_type: SLICE_TYPES.COLLECTION_CAROUSEL,
+      primary: {
+        isTtdCarousel: true,
+        allCollectionsData: allCollectionsData,
+        primaryCity: primaryCity,
+        taggedCity: taggedCity,
+        hide_slice: false,
+      },
+    };
+
     if (isReviewsV2Enabled && reviewsSliceIndex === -1) {
       finalContent.push(reviewsV2Slice);
     } else if (isReviewsV2Enabled && reviewsSliceIndex !== -1) {
       finalContent[reviewsSliceIndex] = reviewsV2Slice;
     }
 
+    if (isDesertSafariMB) {
+      const finalReviewSliceIndex = finalContent.findIndex(
+        (slice: Record<string, any>) =>
+          slice?.slice_type === SLICE_TYPES.REVIEWS
+      );
+      finalContent = moveElement({
+        arr: finalContent,
+        fromIndex: finalReviewSliceIndex,
+        toIndex: 0,
+      });
+
+      const finalFaqSliceIndex = finalContent.findIndex(
+        (slice: Record<string, any>) =>
+          slice?.slice_type === SLICE_TYPES.ACCORDION
+      );
+      finalContent = [
+        ...finalContent.slice(0, finalFaqSliceIndex),
+        thingToDoCarouselSlice,
+        ...finalContent.slice(finalFaqSliceIndex),
+      ];
+    }
+
     return finalContent;
   }, [content, hostname, isDayTrips]);
-
-  const { isRevampedDesign, isVenuePage, isNewsPage } = props;
 
   const faqSectionExists = content?.some(
     (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.ACCORDION

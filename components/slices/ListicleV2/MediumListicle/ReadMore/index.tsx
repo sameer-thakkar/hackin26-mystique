@@ -13,7 +13,7 @@ const ReadMore = ({ text, onClick, icon, settings, index }: IReadMoreProps) => {
   const [top, setTop] = useState(0);
 
   useLayoutEffect(() => {
-    const imageHeight = 214;
+    const imageHeight = 176;
     const listicleContentContainer = document.querySelector(
       `.medium-listicle-container-${index}`
     );

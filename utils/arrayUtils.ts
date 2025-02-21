@@ -51,3 +51,28 @@ export const arrayMedian = (arr: Array<any>) => {
 
 export const isSubsetArray = (parentArray: any[], childArray: any[]) =>
   childArray.every((element) => parentArray.includes(element));
+
+export const moveElement = ({
+  arr,
+  fromIndex,
+  toIndex,
+}: {
+  arr: Array<any>;
+  fromIndex: number;
+  toIndex: number;
+}) => {
+  const result = [...arr];
+
+  if (
+    fromIndex < 0 ||
+    fromIndex >= arr.length ||
+    toIndex < 0 ||
+    toIndex >= arr.length
+  ) {
+    return result;
+  }
+
+  const [element] = result.splice(fromIndex, 1);
+  result.splice(toIndex, 0, element);
+  return result;
+};

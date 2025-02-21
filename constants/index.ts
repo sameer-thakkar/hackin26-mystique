@@ -1498,6 +1498,7 @@ export const SLICE_TYPES = {
   CONTRIBUTORS_REVIEW: 'contributors_review',
   CUSTOM_BANNER: 'custom_banner',
   PAGE_TABS: 'page_tabs',
+  COLLECTION_CAROUSEL: 'collection_carousel',
 };
 
 export const CASHBACK_TYPES = {
@@ -2519,3 +2520,5 @@ export const UID_TO_COUNT_MAPPING = {
   'www.pompeii-tickets.com': 750,
   'www.thevaticantickets.com': 1200,
 };
+
+export const DUBAI_DESERT_SAFARI = 'www.desert-safari-dxb.com';

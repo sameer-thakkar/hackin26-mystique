@@ -12,6 +12,7 @@ export interface ICollectionCarousel {
   allCollectionsData: {
     menu: Record<string, CollectionItem>;
   };
+  isLfcComponent?: boolean;
 }
 
 export interface IHandleCardClick {

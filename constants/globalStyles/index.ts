@@ -48,6 +48,10 @@ export const globalStyles = defineGlobalStyles({
   },
   '.scroll-blur': { filter: 'blur(2.5rem)' },
   '@media (max-width: 768px)': {
+    '.slice-wrapper.slice-block.collection_carousel': {
+      padding: 0,
+      width: '100vw',
+    },
     '.slice-wrapper.ugc_carousel': {
       maxWidth: 'unset !important',
       overflowX: 'hidden',

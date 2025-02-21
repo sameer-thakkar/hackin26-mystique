@@ -88,7 +88,7 @@ export const TableContainer = styled.div<{
     `}
 `;
 
-export const TableHeaderCell = styled.th`
+export const TableHeaderCell = styled.th<{ $isCollapsible?: boolean }>`
   ${expandFontToken(FONTS.MISC_BOOSTER)}
   font-size: 0.75rem;
   padding: 0.25rem 1rem;
@@ -96,6 +96,7 @@ export const TableHeaderCell = styled.th`
   transition: all 0.3s ease-in-out;
   position: relative;
 
+  ${({ $isCollapsible }) => $isCollapsible && `cursor: pointer;`}
   p {
     position: absolute;
     transition: all 0.3s ease-in-out;

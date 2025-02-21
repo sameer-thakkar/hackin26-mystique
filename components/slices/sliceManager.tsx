@@ -72,6 +72,12 @@ const ReviewsV2 = dynamic(
   () =>
     import(/* webpackChunkName: "ReviewsV2" */ 'components/common/ReviewsV2')
 );
+const ThingsToDoCollectionCarousel = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
+    )
+);
 
 export const catOrSubCatPageSliceComponents = () => {
   return {
@@ -811,7 +817,7 @@ export const sliceComponents = () => {
 
       const experienceCarouselTitle =
         context?.isGlobalCollection && experience_type === 'Tickets'
-          ? `${context?.collectionName} ${title}`
+          ? `${context?.collectionName} ${title ?? ''}`
           : title;
 
       return sliceWrapper(
@@ -829,15 +835,27 @@ export const sliceComponents = () => {
 
     collection_carousel: (props: any) => {
       const { slice, context } = props || {};
-
       return sliceWrapper(
-        <CollectionCarousel
-          title={slice?.primary?.carousel_title}
-          subtext={slice?.primary?.carousel_subtext}
-          carouselType={slice?.primary?.carousel_type}
-          showSeeAll={slice?.primary?.show_see_all}
-          {...context}
-        />,
+        <>
+          <Conditional if={slice.primary?.isTtdCarousel}>
+            <ThingsToDoCollectionCarousel
+              allCollectionsData={slice.primary?.allCollectionsData}
+              isMobile={context?.isMobile}
+              primaryCity={slice.primary?.primaryCity}
+              taggedCity={slice.primary?.taggedCity}
+              isLfcComponent={true}
+            />
+          </Conditional>
+          <Conditional if={!slice.primary?.isTtdCarousel}>
+            <CollectionCarousel
+              title={slice?.primary?.carousel_title}
+              subtext={slice?.primary?.carousel_subtext}
+              carouselType={slice?.primary?.carousel_type}
+              showSeeAll={slice?.primary?.show_see_all}
+              {...context}
+            />
+          </Conditional>
+        </>,
         props
       );
     },

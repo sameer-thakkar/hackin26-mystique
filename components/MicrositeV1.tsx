@@ -72,6 +72,7 @@ import {
   CRUISE_FORMAT_SUBCAT_IDS,
   CRUISES_REVAMP_UIDS,
   DT_LISTICLE_EXPERIMENT_UIDS,
+  DUBAI_DESERT_SAFARI,
   EMAIL_SUBCRIPTION,
   LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS,
   MB_CATEGORISATION,
@@ -371,6 +372,7 @@ const MicrositeV1 = (props: any) => {
   const { template } = productCardData || {};
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
+  const isDesertSafariMB = uid === DUBAI_DESERT_SAFARI;
 
   const {
     isEligible: isCruisesCombosExpEligible,
@@ -1591,7 +1593,11 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={isA1orC1MB(taggedMbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
+          if={
+            isA1orC1MB(taggedMbType) &&
+            !isDesertSafariMB &&
+            categoryHeaderMenu.CITY_ATTRACTIONS
+          }
         >
           <CollectionCarousel
             allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
@@ -1621,6 +1627,10 @@ const MicrositeV1 = (props: any) => {
                     collectionDetails={collectionDetails}
                     categoryId={categoryId}
                     subCategoryId={subCategoryId}
+                    isDesertSafariMB={isDesertSafariMB}
+                    allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+                    primaryCity={primaryCity}
+                    taggedCity={taggedCity}
                   />
                 </InteractionContextProvider>
               </ProductsContextProvider>

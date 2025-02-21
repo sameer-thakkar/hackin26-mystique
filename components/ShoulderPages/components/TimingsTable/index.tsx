@@ -37,7 +37,7 @@ const TimingsTable = ({
           <thead>
             <TableRow isCollapsed={isCollapsed} onClick={toggleCollapse}>
               {columns?.map((column, index) => (
-                <TableHeaderCell key={index}>
+                <TableHeaderCell key={index} $isCollapsible={!hideCollapse}>
                   <Conditional if={index === 0}>
                     <p>{`${columns[0].label} ${strings.CONTENT_PAGE.TIMINGS}`}</p>
                     <p>{`${strings.CONTENT_PAGE.DAYS} (${columns[0].label})`}</p>

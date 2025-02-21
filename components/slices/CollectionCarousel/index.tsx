@@ -56,7 +56,13 @@ const handleCardClick = ({ id, name, rank, url }: IHandleCardClick) => {
 
 const CollectionCarousel: React.FC<
   React.PropsWithChildren<ICollectionCarousel>
-> = ({ allCollectionsData, isMobile, primaryCity, taggedCity }) => {
+> = ({
+  allCollectionsData,
+  isMobile,
+  primaryCity,
+  taggedCity,
+  isLfcComponent = false,
+}) => {
   const { menu: collectionsList } = allCollectionsData;
   const { HEIGHT, WIDTH } = isMobile
     ? IMAGE_DIMENSIONS.MOBILE
@@ -92,7 +98,7 @@ const CollectionCarousel: React.FC<
   const mbCity = titleCase(primaryCity?.displayName || taggedCity || '');
 
   return (
-    <CardContainer ref={containerRef}>
+    <CardContainer ref={containerRef} $isLfcComponent={isLfcComponent}>
       <Heading>
         {strings.formatString(strings.COLLECTION_SLICE_HEADING, mbCity)}
       </Heading>

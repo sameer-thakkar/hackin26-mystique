@@ -602,7 +602,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       const experienceCarouselTitle =
         props?.isGlobalCollection &&
         slice?.primary?.experience_type === 'Tickets'
-          ? `${props?.collectionName} ${slice?.primary?.title}`
+          ? `${props?.collectionName} ${slice?.primary?.title ?? ''}`
           : slice?.primary?.title;
       return (
         <ExperienceCarousel

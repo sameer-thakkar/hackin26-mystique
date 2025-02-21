@@ -3,7 +3,7 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
-export const CardContainer = styled.div`
+export const CardContainer = styled.div<{ $isLfcComponent: boolean }>`
   max-width: ${SIZES.MAX_WIDTH};
   margin: 56px auto 0;
 
@@ -28,7 +28,7 @@ export const CardContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 0 0 2.5rem 0;
-    margin-top: 52px;
+    margin-top: ${({ $isLfcComponent }) => ($isLfcComponent ? '0' : '52px')};
 
     & > div {
       margin: 0;
@@ -49,10 +49,12 @@ export const Card = styled.div`
 `;
 
 export const Heading = styled.h3`
-  ${expandFontToken(FONTS.HEADING_LARGE)};
-  @media (max-width: 768px) {
-    padding-left: 1.5rem;
-    ${expandFontToken(FONTS.HEADING_SMALL)};
+  && {
+    ${expandFontToken(FONTS.HEADING_LARGE)};
+    @media (max-width: 768px) {
+      padding-left: 1.5rem;
+      ${expandFontToken(FONTS.HEADING_SMALL)};
+    }
   }
 `;
 

@@ -185,6 +185,13 @@ const ProductContainer = styled.div<TProductContainerStyles>`
     $isTicketCard && !isMobile
       ? ` ${ticketCardDesktopDisplay} `
       : `display: grid;`}
+
+  ${({ $isTicketCard, isMobile }) =>
+    $isTicketCard &&
+    isMobile &&
+    css`
+      max-width: calc(100vw - 32px);
+    `}
   ${({ $isTicketCard }) =>
     `grid-row-gap: ${$isTicketCard ? '1.5rem' : '2rem'};`}
   margin: ${({ isNotVisible, isCruise, $isTicketCard }) => {
