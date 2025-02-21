@@ -995,6 +995,7 @@ const modifiedProductCardMwebCss = css<{
     max-height: initial;
     aspect-ratio: 16/10;
     margin: -0.75rem -0.75rem -0.5rem;
+    width: calc(100% + 24px);
   }
 
   ${TitleWrapper} {
