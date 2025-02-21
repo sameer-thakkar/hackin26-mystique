@@ -21,9 +21,11 @@ import {
 const getA2CatMBMenu = async ({
   lang,
   categorisationMetadata,
+  currency,
 }: {
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
+  currency?: string;
 }): Promise<Record<string, any>> => {
   const shoulderPageDocsPromise = getShoulderPageDocs({
     categorisationMetadata,
@@ -70,6 +72,7 @@ const getA2CatMBMenu = async ({
   const cityAttractionsMenuPromise = generateCityAttractionsMenu({
     categorisationMetadata,
     lang,
+    currency,
   });
 
   const cityToursMenuPromise = generateSubCategoryMenu({

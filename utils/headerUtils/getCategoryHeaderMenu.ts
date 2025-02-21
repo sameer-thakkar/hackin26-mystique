@@ -1,4 +1,4 @@
-import { CUSTOM_TYPES, MB_CATEGORISATION } from 'const/index';
+import { COOKIE, CUSTOM_TYPES, MB_CATEGORISATION } from 'const/index';
 import getA2CatMBMenu from './getA2CatMBMenu';
 import getA2SubcatMBMenu from './getA2SubcatMBMenu';
 import getCollectionMBMenu from './getCollectionMBMenu';
@@ -8,12 +8,15 @@ const getCategoryHeaderMenu = async ({
   doc,
   lang,
   ContentType,
+  cookies,
 }: {
   doc: Record<string, any>;
   lang: string;
   ContentType: string | undefined;
+  cookies?: Record<string, any>;
 }) => {
   if (!doc || !ContentType) return {};
+  const currency = cookies?.[COOKIE.CURRENT_CURRENCY];
 
   const { data } = doc ?? {};
 
@@ -62,6 +65,7 @@ const getCategoryHeaderMenu = async ({
       categoryHeaderMenu = await getCollectionMBMenu({
         lang,
         categorisationMetadata,
+        currency,
       });
       break;
     case MB_CATEGORISATION.MB_TYPE.A1_HOMEPAGE:
@@ -71,18 +75,21 @@ const getCategoryHeaderMenu = async ({
       categoryHeaderMenu = await getNonCollectionMBMenu({
         lang,
         categorisationMetadata,
+        currency,
       });
       break;
     case MB_CATEGORISATION.MB_TYPE.A2_CATEGORY:
       categoryHeaderMenu = await getA2CatMBMenu({
         lang,
         categorisationMetadata,
+        currency,
       });
       break;
     case MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY:
       categoryHeaderMenu = await getA2SubcatMBMenu({
         lang,
         categorisationMetadata,
+        currency,
       });
       break;
     default:

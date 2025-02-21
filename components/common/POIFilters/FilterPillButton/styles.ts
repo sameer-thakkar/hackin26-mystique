@@ -26,6 +26,8 @@ export const filterPillButtonStyles = css({
 
   '&[data-disabled="true"]': {
     backgroundColor: 'semantic.surface.light.grey.2',
+    cursor: 'default',
+    borderColor: 'semantic.dividers.primary',
 
     '& svg path': {
       stroke: 'semantic.text.disabled',
@@ -53,6 +55,7 @@ export const filterPillButtonStyles = css({
 
       '&[data-disabled="true"]': {
         borderColor: 'semantic.dividers.dark',
+        cursor: 'default',
       },
     },
 

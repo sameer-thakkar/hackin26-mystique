@@ -1348,7 +1348,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   },
 
   BOOSTERS: {
-    TOP_RATED: 'Très bien noté',
+    MOST_LOVED: 'Favori',
     SPECIAL_DEAL: 'Offres spéciales',
   },
 

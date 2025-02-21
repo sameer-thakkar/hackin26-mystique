@@ -1341,7 +1341,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
 
   BOOSTERS: {
-    TOP_RATED: 'Bestbewertet',
+    MOST_LOVED: 'Am beliebtesten',
     SPECIAL_DEAL: 'Sonderangebot',
   },
 

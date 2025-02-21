@@ -22,9 +22,11 @@ import {
 const getCollectionMBMenu = async ({
   lang,
   categorisationMetadata,
+  currency,
 }: {
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
+  currency?: string;
 }): Promise<Record<string, any>> => {
   const { tagged_city, tagged_collection } = categorisationMetadata;
 
@@ -87,6 +89,7 @@ const getCollectionMBMenu = async ({
   const cityAttractionsMenuPromise = generateCityAttractionsMenu({
     categorisationMetadata,
     lang,
+    currency,
   });
 
   const cityToursMenuPromise = generateSubCategoryMenu({

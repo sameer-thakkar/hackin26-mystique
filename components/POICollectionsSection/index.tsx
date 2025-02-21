@@ -53,7 +53,8 @@ export const POICollectionsSection = ({
   const mbCity = titleCase(primaryCity?.displayName || taggedCity || '');
 
   const collectionsList = Object.values(collectionsMap)
-    .filter((c) => c.collectionData.experienceCount > 0)
+    .filter((c) => c.collectionData.experienceCount > 2)
+    .filter((c) => c.collectionData.ratingsInfo.ratingsCount > 50)
     .slice(0, MAX_COLLECTIONS_TO_SHOW);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -86,11 +87,11 @@ export const POICollectionsSection = ({
           collectionData: { cardImageUrl, cardMedia },
         } = collectionDetails;
 
-        const { url: mediaImageUrl, metadata: { imageAltText = '' } = {} } =
+        const { url: mediaImageUrl, metadata: { altText = '' } = {} } =
           cardMedia || {};
 
         const imageUrl = mediaImageUrl || cardImageUrl;
-        const altText = imageAltText || label;
+        const imageAltText = altText || label;
 
         return (
           <POICard
@@ -99,7 +100,7 @@ export const POICollectionsSection = ({
             label={label}
             collectionData={collectionDetails?.collectionData as any}
             imageUrl={imageUrl}
-            altText={altText}
+            altText={imageAltText}
             index={index}
             isOnScreen={isOnScreen}
           />

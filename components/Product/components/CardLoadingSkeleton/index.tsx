@@ -12,10 +12,11 @@ export const CardLoadingSkeleton = ({
       <div
         className={css({
           maxWidth: '600px',
+          width: 'calc(100vw - 32px)',
+          margin: 'auto',
           borderRadius: 'radius.16',
           border: '1px solid',
           borderColor: 'core.grey.300',
-          marginX: 'space.24',
           boxSizing: 'border-box',
 
           '& .react-loading-skeleton': {

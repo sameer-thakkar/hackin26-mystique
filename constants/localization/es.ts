@@ -1397,7 +1397,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   },
 
   BOOSTERS: {
-    TOP_RATED: 'Mejor valorado',
+    MOST_LOVED: 'Más popular',
     SPECIAL_DEAL: 'Oferta especial',
   },
 

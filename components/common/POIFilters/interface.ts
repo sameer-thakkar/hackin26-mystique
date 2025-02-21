@@ -10,4 +10,6 @@ export type TPOIFilterProps = {
   inventoryFilteredTours: TTour[];
   scorpioData: Record<string, TScorpioData>;
   setProductsLoading: (loading: boolean) => void;
+  allTours: TTour[];
+  isTourListFiltered: boolean;
 };

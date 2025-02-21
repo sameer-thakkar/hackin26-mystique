@@ -1,14 +1,12 @@
 import { BoosterType } from 'components/Product/interface';
 import { strings } from 'const/strings';
-import {
-  DealPercentIconSVG,
-  Diamond,
-  HeartIconSVG,
-  Spark,
-  YellowDiamond,
-} from 'assets/boosters';
+import { Diamond, Spark, YellowDiamond } from 'assets/boosters';
+import { BoosterRiveIcon } from './BoosterRiveIcon';
 
-export const getBoosterInfo = (boosterType: BoosterType) => {
+export const getBoosterInfo = (
+  boosterType: BoosterType,
+  shouldAnimateBooster?: boolean
+) => {
   const BOOSTER_INFO = {
     [BoosterType.BESTSELLER]: {
       title: strings.HOHO.BESTSELLER,
@@ -79,9 +77,14 @@ export const getBoosterInfo = (boosterType: BoosterType) => {
       },
     },
 
-    [BoosterType.TOP_RATED]: {
-      title: strings.BOOSTERS.TOP_RATED,
-      icon: <HeartIconSVG />,
+    [BoosterType.MOST_LOVED]: {
+      title: strings.BOOSTERS.MOST_LOVED,
+      icon: (
+        <BoosterRiveIcon
+          artboard="mostLoved"
+          shouldAnimateBooster={shouldAnimateBooster}
+        />
+      ),
       theme: '#CE007C',
       transform: 'translate(-68%,-9%)',
       borderTheme: 'initial',
@@ -94,7 +97,7 @@ export const getBoosterInfo = (boosterType: BoosterType) => {
       rotateDeg: -4,
       iconStyles: {
         top: 0,
-        left: -1,
+        left: 0,
       },
       boosterStyles: {
         top: 1,
@@ -104,7 +107,12 @@ export const getBoosterInfo = (boosterType: BoosterType) => {
 
     [BoosterType.SPECIAL_DEAL]: {
       title: strings.BOOSTERS.SPECIAL_DEAL,
-      icon: <DealPercentIconSVG />,
+      icon: (
+        <BoosterRiveIcon
+          artboard="specialDeal"
+          shouldAnimateBooster={shouldAnimateBooster}
+        />
+      ),
       theme: '#088943',
       transform: 'translate(-68%,-10%)',
       iconHeight: 30,

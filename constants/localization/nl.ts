@@ -1297,7 +1297,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
 
   BOOSTERS: {
-    TOP_RATED: 'Topper',
+    MOST_LOVED: 'Populairst',
     SPECIAL_DEAL: 'Speciale deal',
   },
 

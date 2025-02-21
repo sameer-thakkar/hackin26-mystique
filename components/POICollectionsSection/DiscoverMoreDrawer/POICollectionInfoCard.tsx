@@ -91,6 +91,7 @@ export const POICollectionInfoCard = ({
       ref={ref}
       className={cardContainerStyles}
       href={url}
+      target="_blank"
       onClick={() => {
         trackEvent({
           eventName: ANALYTICS_EVENTS.COLLECTION_CARD_CLICKED,
@@ -115,9 +116,7 @@ export const POICollectionInfoCard = ({
           })}
         />
 
-        <Text className={descriptionTextStyles}>
-          {collectionData?.longFormContent ?? collectionData?.metaDescription}
-        </Text>
+        <Text className={descriptionTextStyles}>{collectionData?.subtext}</Text>
 
         <div className={priceSectionStyles}>
           <Text

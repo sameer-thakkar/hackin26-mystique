@@ -3072,6 +3072,14 @@ export const BoosterText = styled.p<{
     transform: ${({ $transform }) => $transform};
   }
 
+  .rive-icon-container {
+    position: absolute;
+    display: flex;
+    left: ${({ $iconStyles }) => `${$iconStyles.left}px`};
+    top: ${({ $iconStyles }) => `${$iconStyles.top}px`};
+    transform: ${({ $transform }) => $transform};
+  }
+
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }

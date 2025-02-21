@@ -1491,7 +1491,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   },
 
   BOOSTERS: {
-    TOP_RATED: 'Top rated',
+    MOST_LOVED: 'Most loved',
     SPECIAL_DEAL: 'Special deal',
   },
 

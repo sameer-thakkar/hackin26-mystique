@@ -16,9 +16,11 @@ import { getMenuName, getMenuUrl } from '.';
 const generateCityAttractionsMenu = async ({
   categorisationMetadata,
   lang,
+  currency,
 }: {
   categorisationMetadata: TCategorisationMetadata;
   lang: string;
+  currency?: string;
 }) => {
   try {
     const {
@@ -35,6 +37,7 @@ const generateCityAttractionsMenu = async ({
         city: mbCity || '',
         limit: 20,
         language: getHeadoutLanguagecode(lang),
+        currency,
       })) || {};
 
     const topCollectionsIds = topCollectionsData?.items?.map(

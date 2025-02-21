@@ -25,6 +25,7 @@ import {
   poiCardStyles,
   priceSectionStyles,
   ratingsContainerStyles,
+  removeHoverStylesWhenNoDescription,
   textContainerStyles,
 } from './styles';
 
@@ -48,7 +49,7 @@ export const POICard = ({
   index,
   isOnScreen,
 }: TPOICardProps) => {
-  const { startingPrice, metaDescription, ratingsInfo, experienceCount } =
+  const { startingPrice, subtext, ratingsInfo, experienceCount } =
     collectionData;
 
   const { lang } = useContext(MBContext);
@@ -87,9 +88,12 @@ export const POICard = ({
 
   return (
     <a
-      className={poiCardStyles}
+      className={cx(
+        poiCardStyles,
+        subtext ? '' : removeHoverStylesWhenNoDescription
+      )}
       href={url}
-      target={isMobile ? '_self' : '_blank'}
+      target="_blank"
       onClick={() => {
         trackEvent({
           eventName: ANALYTICS_EVENTS.COLLECTION_CARD_CLICKED,
@@ -171,7 +175,7 @@ export const POICard = ({
 
           <Conditional if={!isMobile}>
             <Text className={cx('description', descriptionTextStyles)}>
-              {metaDescription}
+              {subtext}
             </Text>
           </Conditional>
 

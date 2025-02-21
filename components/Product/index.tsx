@@ -337,6 +337,7 @@ const Product = (props: any) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isUnScrolled, setIsUnScrolled] = useState(true);
   const [customDescriptors, setCustomDescriptors] = useState([]);
+  const [shouldAnimateBooster, setShouldAnimateBooster] = useState(false);
 
   const [popupScrollTracker, setPopupScrollTracker] = useState({
     25: false,
@@ -1595,9 +1596,22 @@ const Product = (props: any) => {
             (isPopup && !originalIsMobile && isPoiMwebCard) ||
             isAsideBarOverlay
           }
+          onMouseOver={() => {
+            setShouldAnimateBooster(true);
+          }}
+          onMouseLeave={() => {
+            setShouldAnimateBooster(false);
+          }}
+          onFocus={() => {
+            setShouldAnimateBooster(true);
+          }}
+          onBlur={() => {
+            setShouldAnimateBooster(false);
+          }}
         >
           <Conditional if={boosterTypeIfShown && !isPopup}>
             <Booster
+              shouldAnimateBooster={shouldAnimateBooster}
               type={BoosterType[boosterTypeIfShown as keyof typeof BoosterType]}
               rank={indexPosition + 1}
               isOverlay={isMobile ? expandContent : isAsideBarOverlay}

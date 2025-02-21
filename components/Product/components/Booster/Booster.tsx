@@ -6,7 +6,12 @@ import { TBoosterProps } from '../../interface';
 import { BoosterContainer, BoosterText } from '../../styles';
 import { getBoosterInfo } from './constants';
 
-const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
+const Booster = ({
+  type,
+  rank,
+  isOverlay = false,
+  shouldAnimateBooster,
+}: TBoosterProps) => {
   const {
     icon,
     title,
@@ -19,7 +24,7 @@ const Booster = ({ type, rank, isOverlay = false }: TBoosterProps) => {
     rotateDeg,
     iconStyles,
     boosterStyles,
-  } = getBoosterInfo(type);
+  } = getBoosterInfo(type, shouldAnimateBooster);
 
   const ref = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({ ref, unobserve: true });

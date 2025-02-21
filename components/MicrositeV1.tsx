@@ -326,6 +326,14 @@ const MicrositeV1 = (props: any) => {
     unobserve: true,
   });
 
+  const isLfcInView = useOnScreen({
+    ref: lfcRef,
+  });
+
+  const isFooterInView = useOnScreen({
+    ref: footerRef,
+  });
+
   const { isCityPageMB, cityPageData, mbLocationData } = cityPageParams || {};
 
   const {
@@ -856,7 +864,10 @@ const MicrositeV1 = (props: any) => {
     variant: poiFiltersVariant,
   } = useABTesting({
     experimentId: 'POI_FILTERS_EXPERIMENT',
-    customEligibilityCheckFn: () => !isNonPoiMB && !QNA_EXP_UIDS.includes(uid),
+    customEligibilityCheckFn: () =>
+      !isNonPoiMB &&
+      !QNA_EXP_UIDS.includes(uid) &&
+      !DAY_TRIPS_COLLECTION_MBS.includes(uid),
   });
 
   const showPopupNonPOI =
@@ -949,9 +960,7 @@ const MicrositeV1 = (props: any) => {
   };
 
   const isPOIFiltersEnabled =
-    poiFilterTypes?.size > 1 &&
-    isPOIFiltersExpEligible &&
-    poiFiltersVariant === VARIANTS.TREATMENT;
+    isPOIFiltersExpEligible && poiFiltersVariant === VARIANTS.TREATMENT;
 
   const longFormContentArr = [
     ...(Array.isArray(longFormContent) ? longFormContent : []),
@@ -1009,6 +1018,7 @@ const MicrositeV1 = (props: any) => {
       isPOIFiltersEnabled={isPOIFiltersEnabled}
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
+      activePOIFilter={activePOIFilter}
       {...qnaExperimentData}
       // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
       poiCollectionsSection={
@@ -1445,7 +1455,9 @@ const MicrositeV1 = (props: any) => {
           <div
             className={poiFiltersWrapperStyle}
             id="POI_FILTERS"
-            data-enable-sticky={isPOIFiltersEnabled}
+            data-enable-sticky={
+              isPOIFiltersEnabled && !isLfcInView && !isFooterInView
+            }
           >
             <Conditional if={isMobile}>
               <LastMinuteFilters
@@ -1476,6 +1488,8 @@ const MicrositeV1 = (props: any) => {
                 scorpioData={scorpioData}
                 setProductsLoading={setProductsLoading}
                 existingFilterTypes={poiFilterTypes}
+                isTourListFiltered={isTourListFiltered}
+                allTours={orderedTours}
               />
             </Conditional>
           </div>
@@ -1577,11 +1591,7 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={
-            isA1orC1MB(taggedMbType) &&
-            categoryHeaderMenu.CITY_ATTRACTIONS &&
-            !isPOIFiltersEnabled
-          }
+          if={isA1orC1MB(taggedMbType) && categoryHeaderMenu.CITY_ATTRACTIONS}
         >
           <CollectionCarousel
             allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}

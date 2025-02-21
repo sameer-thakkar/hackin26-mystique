@@ -20,9 +20,11 @@ import {
 const getNonCollectionMBMenu = async ({
   lang,
   categorisationMetadata,
+  currency,
 }: {
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
+  currency?: string;
 }): Promise<Record<string, any>> => {
   const categoryApiData = await fetchCategory({
     language: getHeadoutLanguagecode(lang),
@@ -47,6 +49,7 @@ const getNonCollectionMBMenu = async ({
   const topThingsToDoMenuPromise = generateCityAttractionsMenu({
     categorisationMetadata,
     lang,
+    currency,
   });
 
   const cityToursMenuPromise = generateSubCategoryMenu({

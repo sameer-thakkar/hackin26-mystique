@@ -144,3 +144,32 @@ export const scrollToProductsContainerTop = (isMobile: boolean) => {
     behavior: 'smooth',
   });
 };
+
+export const isJustOneFilter = (existingFilterTypes: Set<TPOIFilterType>) => {
+  return existingFilterTypes.size === 1;
+};
+
+export const hasLessThanThreeTours = (inventoryFilteredTours: TTour[]) => {
+  return inventoryFilteredTours.length < 3;
+};
+
+export const hasFiltersAndAllToursSatisfyAllFilters = (
+  inventoryFilteredTours: TTour[],
+  existingFilterTypes: Set<TPOIFilterType>,
+  scorpioData: Record<string, TScorpioData>
+) => {
+  return inventoryFilteredTours.every((tour) => {
+    return Array.from(existingFilterTypes).every((filter) => {
+      switch (filter) {
+        case FILTER_TYPES.DEALS:
+          return isDiscountedProduct(tour, scorpioData);
+        case FILTER_TYPES.GUIDED_TOURS:
+          return isTourCategory(tour, scorpioData, 'Guided Tours');
+        case FILTER_TYPES.ENTRY_TICKETS:
+          return isTourCategory(tour, scorpioData, 'Tickets');
+        default:
+          return false;
+      }
+    });
+  });
+};

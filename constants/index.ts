@@ -2262,6 +2262,9 @@ export const siteNameMappings = new Map<string, string>([
 export const BOOSTER_RIVE_LOCATION =
   'https://cdn-imgix.headout.com/mb/boosters_4.riv';
 
+export const MOST_LOVED_AND_SPECIAL_DEAL_BOOSTER_LOCATION =
+  'https://cdn-imgix-open.headout.com/MB/RIV/most_loved_and_special_deal-2.riv';
+
 export const PRODUCT_CARD_CHILDREN_POSITIONS = {
   MORE_DETAILS: 'More Details',
 };

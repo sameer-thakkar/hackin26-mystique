@@ -1336,7 +1336,7 @@ const it = {
   },
 
   BOOSTERS: {
-    TOP_RATED: 'I più scelti',
+    MOST_LOVED: 'Il più scelto',
     SPECIAL_DEAL: 'Offerte speciali',
   },
 

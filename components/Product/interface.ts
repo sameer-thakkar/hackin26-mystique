@@ -136,13 +136,14 @@ export enum BoosterType {
   BESTSELLER = 'Best seller',
   SELLING_OUT_FAST = 'Selling out fast',
   MUST_DO_EXP = 'Must-do experience',
-  TOP_RATED = 'Top rated',
+  MOST_LOVED = 'Most loved',
   SPECIAL_DEAL = 'Special deal',
 }
 export type TBoosterProps = {
   type: BoosterType;
   rank?: number;
   isOverlay?: boolean;
+  shouldAnimateBooster?: boolean;
 };
 export type TDiscountTagProps = {
   discount: string | number;

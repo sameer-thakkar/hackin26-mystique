@@ -1,6 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { debounce, throttle } from '@headout/espeon/utils';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import en from 'const/localization/en';
 import { strings } from 'const/strings';
@@ -12,6 +14,9 @@ import { TPOIFilterProps } from './interface';
 import { filtersContainerStyles, separatorStyle } from './styles';
 import {
   getAvailablePOIFilterTypes,
+  hasFiltersAndAllToursSatisfyAllFilters,
+  hasLessThanThreeTours,
+  isJustOneFilter,
   scrollToProductsContainerTop,
 } from './utils';
 
@@ -23,11 +28,15 @@ export const POIFilters = ({
   inventoryFilteredTours,
   scorpioData,
   setProductsLoading,
+  allTours,
+  isTourListFiltered,
 }: TPOIFilterProps) => {
   const availableFilterTypes = useMemo(
     () => getAvailablePOIFilterTypes(inventoryFilteredTours, scorpioData),
     [inventoryFilteredTours.length]
   );
+
+  const { lang } = useContext(MBContext);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -67,11 +76,32 @@ export const POIFilters = ({
     };
   }, [isMobile]);
 
-  const hasOnlyOneFilterType =
-    Object.values(existingFilterTypes).filter(Boolean).length === 1;
+  const shouldNotHaveShownFiltersOnUnfilteredTours =
+    isJustOneFilter(existingFilterTypes) ||
+    hasLessThanThreeTours(allTours) ||
+    hasFiltersAndAllToursSatisfyAllFilters(
+      allTours,
+      existingFilterTypes,
+      scorpioData
+    );
 
-  if (hasOnlyOneFilterType) {
-    return null;
+  const hideFiltersOnFilteredTours =
+    isJustOneFilter(existingFilterTypes) ||
+    hasLessThanThreeTours(inventoryFilteredTours) ||
+    hasFiltersAndAllToursSatisfyAllFilters(
+      inventoryFilteredTours,
+      existingFilterTypes,
+      scorpioData
+    );
+
+  if (isTourListFiltered) {
+    if (shouldNotHaveShownFiltersOnUnfilteredTours) {
+      return null;
+    }
+  } else {
+    if (hideFiltersOnFilteredTours) {
+      return null;
+    }
   }
 
   const toggleFilter = (filterType: TPOIFilterType) => {
@@ -117,7 +147,10 @@ export const POIFilters = ({
       <Conditional if={existingFilterTypes.has(FILTER_TYPES.GUIDED_TOURS)}>
         <FilterPillButton
           icon={<GuidedToursIconSVG />}
-          text={strings.CATEGORY_HEADER.GUIDED_TOURS}
+          text={convertEngToSentenceCase(
+            lang,
+            strings.CATEGORY_HEADER.GUIDED_TOURS
+          )}
           isSelected={activeFilter === FILTER_TYPES.GUIDED_TOURS}
           onClick={() => {
             toggleFilter(FILTER_TYPES.GUIDED_TOURS);

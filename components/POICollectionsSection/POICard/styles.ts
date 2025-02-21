@@ -34,6 +34,33 @@ export const poiCardStyles = css({
   },
 });
 
+export const removeHoverStylesWhenNoDescription = css({
+  '@media (min-width: 768px)': {
+    _hover: {
+      '& .text-container': {
+        height: '50%',
+        paddingTop: 'space.16',
+
+        '& .description': {
+          maxHeight: 0,
+        },
+      },
+
+      '& img': {
+        transform: 'scale(1.2)',
+        transition: 'transform 0.15s ease-in-out',
+      },
+
+      '& .inner-card-first': {
+        top: '-8px',
+      },
+      '& .inner-card-second': {
+        top: '-14px',
+      },
+    },
+  },
+});
+
 export const dummyInnerFirstCardStyles = css({
   position: 'absolute',
   top: '-5px',
@@ -132,7 +159,7 @@ export const textContainerStyles = css({
 
   '@media (min-width: 768px)': {
     background:
-      'linear-gradient(190.23deg, rgba(21, 1, 42, 0) 14.63%, #15012A 74.25%)',
+      'linear-gradient(185.23deg, rgba(21, 1, 42, 0) 14.63%, #15012A 74.25%)',
     padding: 'space.16',
     paddingTop: 'space.80',
     height: '50%',

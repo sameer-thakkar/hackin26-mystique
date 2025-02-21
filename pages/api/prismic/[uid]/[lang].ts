@@ -24,7 +24,7 @@ const getPrismicDocumentData = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { query, headers } = req;
+  const { query, headers, cookies } = req;
   const { host } = headers ?? window.location;
   const { uid, lang, isDev } = query as unknown as {
     uid: string;
@@ -110,6 +110,7 @@ const getPrismicDocumentData = async (
           doc: baseLangMicrositeDoc,
           lang: lang || DEFAULT_PRISMIC_LANG,
           ContentType,
+          cookies,
         })
     );
 

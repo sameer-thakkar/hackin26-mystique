@@ -334,6 +334,7 @@ const PopulateProducts: any = (props: any) => {
     showQnaExperiment,
     showLastMinFilters = false,
     poiCollectionsSection,
+    activePOIFilter,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -1027,7 +1028,8 @@ const PopulateProducts: any = (props: any) => {
               if (
                 index === 3 &&
                 poiCollectionsSection &&
-                availableFilteredOutTours.length === 0
+                !activePOIFilter &&
+                availableToursList?.length > 4
               ) {
                 return (
                   <>
@@ -1059,8 +1061,7 @@ const PopulateProducts: any = (props: any) => {
         <Conditional
           if={
             poiCollectionsSection &&
-            availableToursList?.length < 5 &&
-            !availableFilteredOutTours.length
+            (availableToursList?.length <= 4 || activePOIFilter)
           }
         >
           {poiCollectionsSection}
@@ -1082,14 +1083,6 @@ const PopulateProducts: any = (props: any) => {
 
             {availableFilteredOutTours?.map(
               (tour: Record<string, any>, index: number) => {
-                if (index === 1) {
-                  return (
-                    <>
-                      {poiCollectionsSection}
-                      {getProductCardFromTourAndIndex(tour, index)}
-                    </>
-                  );
-                }
                 return getProductCardFromTourAndIndex(tour, index);
               }
             )}

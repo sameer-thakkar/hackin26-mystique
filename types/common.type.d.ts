@@ -67,4 +67,5 @@ type TCollectionDetails = {
     averageRating: number;
     ratingsCount: number;
   };
+  subtext: string;
 };
