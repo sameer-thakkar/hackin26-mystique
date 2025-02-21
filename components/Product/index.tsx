@@ -873,7 +873,7 @@ const Product = (props: any) => {
   useEffect(() => {
     if (
       isEligibleForFlexiCancellationExperiment &&
-      !isFlexiCancellationExperimentTriggered.current &&
+      !isFlexiCancellationExperimentTriggered?.current &&
       isProductCardVisible &&
       !isExperimentResolving &&
       !!flexiCancellationExperimentVariant
