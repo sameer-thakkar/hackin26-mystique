@@ -1788,7 +1788,7 @@ export const getCatSubcatDescriptors = async ({
   host: string;
 }) => {
   const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
-  const endpoint = `${domain}/api/prismic/get-banner-descriptors/${descriptorsUid}/${lang}`;
+  const endpoint = `${domain}/api/prismic/get-banner-descriptors/${descriptorsUid}/${lang}/`;
 
   try {
     const response = await fetch(endpoint);
