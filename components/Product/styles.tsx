@@ -293,7 +293,32 @@ export const TourTitleWrapper = styled.h2<{
   ${({ $isHOHORevamp }) => $isHOHORevamp && hohoFont}
 
   @media (max-width: 768px) {
-    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+    ${({ $isTicketCard }) => {
+      if (!$isTicketCard) {
+        return expandFontToken(FONTS.HEADING_PRODUCT_CARD);
+      }
+
+      /**
+       * Unfortunately we have to resort to hard-coding instead of taking from font-config.
+       * The below font corresponds to FONTS.HEADING_SMALL.
+       *
+       * Someone thought it'll be a great idea to override styles for `TourTitleWrapper`
+       * everywhere except within the actual component by passing props and keeping it maintainable.
+       *
+       * The fonts for h2 element are overridden on page container, then slice container, then parents
+       * to this element and finally here.
+       * It is daunting to figure out specificity, hence adding "!important" here.
+       */
+      return `
+          font-family: halyard-display, sans-serif !important;
+          font-size: 18px !important;
+          font-weight: 500 !important;
+          font-style: normal !important;
+          font-feature-settings: normal !important;
+          line-height: 24px !important;
+          letter-spacing: 0.6px !important;
+        `;
+    }}
 
     ${({ $isTicketCard }) => $isTicketCard && `margin: 10px 0px 14.4px;`}
 
