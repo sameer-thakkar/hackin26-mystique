@@ -85,10 +85,15 @@ export const BreadcrumbsContainer = styled.div<{
       `margin-bottom: 52px; padding: 6.5px 16px 0px`};
 
     ${({ $isContentPage }) => $isContentPage && `margin-left: 0;`};
-    ${({ $isContentPage, $isRevampedShoulderPage }) =>
-      $isContentPage &&
-      !$isRevampedShoulderPage &&
-      `margin-bottom: 52px; padding-top: 6.5px;`};
+    ${({ $isContentPage, $isRevampedShoulderPage }) => {
+      if (!$isContentPage) {
+        return '';
+      }
+
+      return !$isRevampedShoulderPage
+        ? `margin-bottom: 52px; padding-top: 6.5px;`
+        : `padding-bottom: 0;`;
+    }};
     ${({ $isCategoryPage }) => $isCategoryPage && `padding: 0; margin:0;`};
     ${({ $isShowPage }) => $isShowPage && `margin: 4rem 0 0; width: 100%`};
     ${({ $isVenuePage }) => $isVenuePage && `margin: 0; width: 100%`};
