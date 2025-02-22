@@ -136,6 +136,9 @@ const StyledCard = styled.div((props) => {
     h3 {
       ${expandFontToken('Heading/Small')}
     }
+    h4 {
+      margin: 0 0 8px;
+    }
     p {
       margin-bottom: ${isGlobalMb ? 0 : '16px'};
       color:  ${isGlobalMb ? COLORS.GRAY.G3 : 'inherit'};

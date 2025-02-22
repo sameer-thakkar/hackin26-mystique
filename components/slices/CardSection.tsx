@@ -129,6 +129,10 @@ const ExitDescription = styled.div<{ isGlobalMb: any; cardsInARow: any }>`
   margin-top: 32px;
   display: flex;
 
+  h4 {
+    margin: 0 0 8px;
+  }
+
   ${({
     isGlobalMb,
     cardsInARow,
