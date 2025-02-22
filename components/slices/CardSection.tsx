@@ -231,17 +231,18 @@ const CardSection: React.FC<React.PropsWithChildren<CardSectionProps>> = ({
   );
 
   // Rich Text for ending of the Card Section
-  const ExitSection = exitDescription?.length ? (
-    <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
-      <RichContent
-        render={exitDescription}
-        parentProps={{
-          sectionName: title,
-          sliceType: SLICE_TYPES.CARD_SECTION,
-        }}
-      />
-    </ExitDescription>
-  ) : null;
+  const ExitSection =
+    exitDescription?.length && exitDescription[0]?.text?.length > 0 ? (
+      <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
+        <RichContent
+          render={exitDescription}
+          parentProps={{
+            sectionName: title,
+            sliceType: SLICE_TYPES.CARD_SECTION,
+          }}
+        />
+      </ExitDescription>
+    ) : null;
 
   useEffect(() => {
     if (isSeatMapExpControlAndEligible && index === 2 && isIntersecting) {
