@@ -4,6 +4,7 @@ import { globalStyles } from 'const/globalStyles';
 
 export default defineConfig({
   preflight: false,
+  lightningcss: true,
   presets: [Preset],
   include: [
     './components/**/*.{js,jsx,ts,tsx}',
@@ -13,9 +14,9 @@ export default defineConfig({
   ],
   exclude: [
     '**/*.d.ts',
-    '**/*/types.{js,jsx,ts,tsx}',
+    '**/*/(interface|interfaces|type|types|util|utils|constant|constants).{js,jsx,ts,tsx}',
+    './components/hooks/**/*.{js,jsx,ts,tsx}',
     './pages/api/**/*.{js,jsx,ts,tsx}',
-    './app/src/(utils|api|hooks)/**/*.{js,jsx,ts,tsx}',
     './node_modules/@headout/espeon/dist/(constants|hooks|types|utils)/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {

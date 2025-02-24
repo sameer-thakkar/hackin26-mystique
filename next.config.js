@@ -53,6 +53,13 @@ const nextConfig = {
   swcMinify: false,
   // Compression responsibility is offloaded to Cloudfront.
   compress: false,
+  compiler: {
+    styledComponents: true,
+  },
+  experimental: {
+    esmExternals: true,
+  },
+
   headers: async () => {
     return [
       {
@@ -78,6 +85,24 @@ const nextConfig = {
         },
       };
     }
+
+    config.module.rules.push({
+      test: /\.(js|jsx|ts|tsx)$/,
+      include: [/node_modules\/@headout\/aer/, /node_modules\/@headout\/eevee/],
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-react', '@babel/preset-typescript'],
+            plugins: [
+              '@babel/plugin-transform-runtime',
+              ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+            ],
+          },
+        },
+      ],
+    });
+
     config.module.rules.push({
       test: /\.wasm$/,
       type: 'asset/resource',
@@ -95,5 +120,7 @@ const nextConfig = {
 };
 
 module.exports = withTM(
-  withSentryConfig(nextConfig, SentryWebpackPluginOptions)
+  process.env.NEXT_PUBLIC_NODE_ENV === 'production'
+    ? withSentryConfig(nextConfig, SentryWebpackPluginOptions)
+    : nextConfig
 );

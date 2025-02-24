@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { constructHeaders } from 'utils/apiUtils';
+import { constructHeaders, getPrismicProxyDomain } from 'utils/apiUtils';
 import { getDocsForListicleSlice } from 'utils/contentPageUtils';
 import getCategoryHeaderMenu from 'utils/headerUtils/getCategoryHeaderMenu';
 import { checkIfCategoryHeaderExists } from 'utils/helper';
@@ -14,7 +14,6 @@ import {
   CUSTOM_TYPES,
   DEFAULT_PRISMIC_LANG,
   MB_CATEGORISATION,
-  MICROBRANDS_URL,
   PRISMIC_SWR_AGE,
   SHORTER_CACHE_AGE,
   X_CACHE_HEADER_KEY,
@@ -39,7 +38,7 @@ const getPrismicDocumentData = async (
 
   params.sort();
 
-  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const domain = getPrismicProxyDomain({ isDev, host: host! });
   const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
 
   let contentTypeResponse: Response;

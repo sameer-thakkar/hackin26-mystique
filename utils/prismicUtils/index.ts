@@ -1,5 +1,5 @@
 import { createClient } from 'prismicio';
-import { constructHeaders } from 'utils/apiUtils';
+import { constructHeaders, getPrismicProxyDomain } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import getContentPageDocument from 'utils/prismicUtils/contentPage';
@@ -11,7 +11,7 @@ import getMicrositeDocument from 'utils/prismicUtils/microsite';
 import { getNewsPageDocument } from 'utils/prismicUtils/NewsPage';
 import getShowPage from 'utils/prismicUtils/showPage';
 import getVenuePageDocument from 'utils/prismicUtils/venuePage';
-import { MICROBRANDS_URL, X_CACHE_HEADER_KEY } from 'const/index';
+import { X_CACHE_HEADER_KEY } from 'const/index';
 import type {
   TDocumentResponse,
   TFetchBannerDescriptors,
@@ -152,7 +152,7 @@ export const fetchPrismicDocument = async ({
   params.sort();
   const paramsString = params.toString();
 
-  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const domain = getPrismicProxyDomain({ isDev, host });
   const endpoint = `${domain}/api/prismic/${uid}/${lang}/?${paramsString}`;
 
   const response = (await fetch(endpoint, {

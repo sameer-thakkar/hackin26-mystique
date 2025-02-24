@@ -1,11 +1,12 @@
 import { createClient } from 'prismicio';
 import { AlternateLanguage, KeyTextField } from '@prismicio/types';
 import { getHeadoutLanguagecode } from 'utils';
+import { getPrismicProxyDomain } from 'utils/apiUtils';
 import { getUID } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import { convertUidToUrl, sanitizeURL } from 'utils/urlUtils';
-import { DEFAULT_PRISMIC_LANG, MICROBRANDS_URL } from 'const/index';
+import { DEFAULT_PRISMIC_LANG } from 'const/index';
 import { AllDocumentContentTypes } from './interface';
 
 type TGetDocContentType = {
@@ -56,7 +57,7 @@ export const getDocContentType = async ({
   host,
   isDev,
 }: TGetDocContentType) => {
-  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const domain = getPrismicProxyDomain({ isDev, host: host! });
   const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
   let contentTypeResponse: Response;
   try {

@@ -30,7 +30,10 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
   SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
   ZENDESK_GRP_BKNG_TOKEN=#Zendesk Group Booking Token
   NEXT_PUBLIC_HEADOUT_DOMAIN=https://www.headout.com
+  NEXT_PUBLIC_USE_PRISMIC_FROM_CDN=true
   ```
+
+(`NEXT_PUBLIC_USE_PRISMIC_FROM_CDN` is used to determine if the Prismic client should be fetched from the CDN or nextjs' own server.)
 
 - Install dependencies (please use only `yarn` and NOT `npm`):
 

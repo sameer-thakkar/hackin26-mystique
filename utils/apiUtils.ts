@@ -1776,6 +1776,17 @@ export const fetchBulkPoisInfo = async ({
   }
 };
 
+export const getPrismicProxyDomain = ({
+  isDev,
+  host,
+}: {
+  isDev: boolean;
+  host: string;
+}) =>
+  isDev && process.env.NEXT_PUBLIC_USE_PRISMIC_FROM_CDN !== 'true'
+    ? `http://${host}`
+    : MICROBRANDS_URL;
+
 export const getCatSubcatDescriptors = async ({
   descriptorsUid,
   lang,
@@ -1787,7 +1798,7 @@ export const getCatSubcatDescriptors = async ({
   isDev: boolean;
   host: string;
 }) => {
-  const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+  const domain = getPrismicProxyDomain({ isDev, host });
   const endpoint = `${domain}/api/prismic/get-banner-descriptors/${descriptorsUid}/${lang}/`;
 
   try {

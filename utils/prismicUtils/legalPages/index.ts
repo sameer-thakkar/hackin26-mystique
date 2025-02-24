@@ -1,15 +1,11 @@
 import { GetServerSidePropsContext } from 'next';
 import { createClient } from 'prismicio';
 import * as Sentry from '@sentry/nextjs';
-import { fetchDomainConfig } from 'utils/apiUtils';
+import { fetchDomainConfig, getPrismicProxyDomain } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import { getDomainFromUid, getLangUID } from 'utils/urlUtils';
-import {
-  CUSTOM_TYPES,
-  DEFAULT_PRISMIC_LANG,
-  MICROBRANDS_URL,
-} from 'const/index';
+import { CUSTOM_TYPES, DEFAULT_PRISMIC_LANG } from 'const/index';
 import { globalHomepagStaticPageGq, micrositeStaticPageGq } from './graphQuery';
 
 export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
@@ -110,7 +106,7 @@ const getLegalPageData = async ({ req, query }: GetServerSidePropsContext) => {
       ? (query.mystique_uid as string)
       : (getDomainFromUid(prodUid) as string);
 
-    const domain = isDev ? `http://${host}` : MICROBRANDS_URL;
+    const domain = getPrismicProxyDomain({ isDev, host: host! });
     const endpoint = `${domain}/api/prismic/get-document-type/${uid}/`;
 
     const contentType = await fetch(endpoint).then((res) => res.json());
