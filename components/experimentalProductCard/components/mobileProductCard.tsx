@@ -36,6 +36,7 @@ import {
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
+import { SNAP_SHEET_TRANSITION_DURATION } from './snapSheet/constants';
 import { ScaledCard } from './styles';
 
 const MobileProductCard = (props: any) => {
@@ -117,6 +118,38 @@ const MobileProductCard = (props: any) => {
     setSnapDrawerConfig,
   } = useProductCard();
 
+  const handleSnapSheetExpand = ({
+    tabId,
+    transformOffset,
+  }: {
+    tabId: string;
+    transformOffset: number;
+  }) => {
+    setDrawerState(SWIPESHEET_STATES.EXPANDED);
+
+    const config = {
+      isMountedOnTop: true,
+      transform: `translate3d(0px, ${transformOffset}px, 0px)`,
+      isCompleted: false,
+    };
+
+    setSnapDrawerConfig(config);
+
+    // Click the tab
+    setTimeout(() => {
+      document.getElementById(tabId)?.click();
+    }, 0);
+
+    // Complete the transition
+    setTimeout(() => {
+      setSnapDrawerConfig({
+        ...config,
+        isCompleted: true,
+        transform: null,
+      });
+    }, SNAP_SHEET_TRANSITION_DURATION + 100); // 300ms for transition + 100ms extra
+  };
+
   useLayoutEffect(() => {
     if (!router || !productRef.current) return;
     const { selection } = router.query;
@@ -143,24 +176,11 @@ const MobileProductCard = (props: any) => {
     if (scrollToItinerarySection) {
       setDrawerState(SWIPESHEET_STATES.OPEN);
       timeout = setTimeout(() => {
-        setDrawerState(SWIPESHEET_STATES.EXPANDED);
-
-        const config = {
-          isMountedOnTop: true,
-          transform: 'translate3d(0px, -99px, 0px)',
-          isCompleted: false,
-        };
-        setSnapDrawerConfig(config);
-        setTimeout(() => {
-          const elemId = `tab-${strings.ITINERARY.TAB}`;
-          document.getElementById(elemId)?.click();
-          setSnapDrawerConfig({
-            ...config,
-            isCompleted: true,
-            transform: null,
-          });
-        }, 0);
-      }, 300);
+        handleSnapSheetExpand({
+          tabId: `tab-${strings.ITINERARY.TAB}`,
+          transformOffset: -99,
+        });
+      }, 0);
     }
 
     return () => clearTimeout(timeout);
@@ -185,22 +205,10 @@ const MobileProductCard = (props: any) => {
     setDrawerState(SWIPESHEET_STATES.OPEN);
 
     setTimeout(() => {
-      setDrawerState(SWIPESHEET_STATES.EXPANDED);
-      const config = {
-        isMountedOnTop: true,
-        transform: 'translate3d(0px, -60px, 0px)',
-        isCompleted: false,
-      };
-      setSnapDrawerConfig(config);
-      setTimeout(() => {
-        const elemId = `tab-${strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}`;
-        document.getElementById(elemId)?.click();
-        setSnapDrawerConfig({
-          ...config,
-          isCompleted: true,
-          transform: null,
-        });
-      }, 0);
+      handleSnapSheetExpand({
+        tabId: `tab-${strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}`,
+        transformOffset: -60,
+      });
     }, 0);
   };
 

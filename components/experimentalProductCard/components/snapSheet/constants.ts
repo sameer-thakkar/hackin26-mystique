@@ -1,0 +1,1 @@
+export const SNAP_SHEET_TRANSITION_DURATION = 300;
