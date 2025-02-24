@@ -80,6 +80,7 @@ const WrapperPopupProductCard = styled.div<{
     isMainCard || isMobile ? 'auto' : 'auto 40px'};
   overflow: hidden;
   background: ${COLORS.BRAND.WHITE};
+  max-height: 80vh;
   @media (max-width: 768px) {
     ${({ isMobile }) => (!isMobile ? 'margin: 0 16px;' : 'border: 0;')};
   }

@@ -1793,10 +1793,19 @@ export const Tab = styled.div`
 
 export const HeightAnimator = styled.div`
   transition: height 0.5s ease-in-out;
+
+  && > div {
+    height: 100%;
+    max-height: 62vh;
+    overflow-y: hidden;
+  }
 `;
 
 export const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
+  height: 100%;
+  overflow-y: auto;
+
   ${({ pageType }) =>
     pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
       ? `
