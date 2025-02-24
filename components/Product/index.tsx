@@ -418,6 +418,7 @@ const Product = (props: any) => {
           ),
           onCloseCallback: () => {
             trackedToggleContent(true);
+            onPopupClosed?.();
           },
           type: SIDEBAR_TYPES.PRODUCT_CARD,
           tgid: tgid,
@@ -662,6 +663,7 @@ const Product = (props: any) => {
 
   const handleCloseComboPopup = () => {
     setShowComboVariant(false);
+    onPopupClosed?.();
     if (!originalIsMobile) {
       document.body.style.overflow = 'auto';
     }
@@ -1046,6 +1048,7 @@ const Product = (props: any) => {
           onDrawerStateChanged={(drawerState: string) => {
             if (drawerState === SWIPESHEET_STATES.HIDDEN) {
               closeAside();
+              onPopupClosed?.();
             }
           }}
         >
@@ -1073,6 +1076,7 @@ const Product = (props: any) => {
       type: SIDEBAR_TYPES.PRODUCT_CARD,
       onCloseCallback: () => {
         trackedToggleContent(true);
+        onPopupClosed?.();
         if (isShortcodePopup) {
           handleShortcodeDrawer(false);
         }
@@ -2432,7 +2436,7 @@ const Product = (props: any) => {
     </Popup>
   );
 
-  if (isPopUpOnly) return getProductCardPopup(true);
+  if (isPopUpOnly && !isMobile) return getProductCardPopup(true);
 
   const ProductCard = (
     <Container
