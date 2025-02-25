@@ -8,7 +8,7 @@ export const SlideInTimelineViewContainer = styled.div<{ $isHidden?: boolean }>`
   height: calc(100% - 2rem);
   width: 16.25rem;
   overflow-y: auto;
-  z-index: 2;
+  z-index: 1;
   background-color: white;
   padding: 1rem 0.75rem;
   transition: transform 0.3s;

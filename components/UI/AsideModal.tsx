@@ -436,9 +436,6 @@ const Mask = styled.div`
   height: 100vw;
   background: rgba(0, 0, 0, 0.4);
   z-index: 90;
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 const ModalContent = styled.div<any>`
   ${({

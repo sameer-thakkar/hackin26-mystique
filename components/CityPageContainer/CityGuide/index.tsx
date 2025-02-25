@@ -8,7 +8,11 @@ import {
   ICityGuide,
   IGuideCardClick,
 } from 'components/CityPageContainer/interface';
-import { trackCTA, trackPageSection } from 'components/CityPageContainer/utils';
+import {
+  filterDuplicateCityGuides,
+  trackCTA,
+  trackPageSection,
+} from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import useOnScreen from 'hooks/useOnScreen';
 import { getHeadoutLanguagecode } from 'utils';
@@ -55,7 +59,8 @@ const CityGuide = ({
     }
   }, [isIntersecting, shouldTrackView]);
 
-  const travelGuideData = getTravelGuideDetails(cityGuideData) || {};
+  const filteredCityGuideData = filterDuplicateCityGuides(cityGuideData);
+  const travelGuideData = getTravelGuideDetails(filteredCityGuideData) || {};
   const { uid: travelGuideUid } = travelGuideData;
   let travelGuideLink = '';
   if (travelGuideUid) {
@@ -67,6 +72,7 @@ const CityGuide = ({
     });
   }
 
+  if (filteredCityGuideData?.length < 2) return null;
   return (
     <CityGuideContainer ref={containerRef}>
       <div>
@@ -109,7 +115,7 @@ const CityGuide = ({
         </Conditional>
       </div>
       <CityGuideItemsContainer>
-        {cityGuideData.map((guideItem, index) => {
+        {filteredCityGuideData.map((guideItem, index) => {
           const { uid, primaryTag } = guideItem;
           const { displayName, description, IconSvg } = GUIDE_MAP()[primaryTag];
           const guideLink = convertUidToUrl({

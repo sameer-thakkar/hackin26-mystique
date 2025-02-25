@@ -6,6 +6,7 @@ import {
   RESOURCE_ASSET_TYPE,
 } from 'const/index';
 import {
+  CityGuideObject,
   ICollectionCardTracking,
   ICtyPageBannerData,
   IgetCatSubCatMedia,
@@ -117,4 +118,16 @@ export const getCatSubCatMedia = (obj: IgetCatSubCatMedia) => {
   }
 
   return { imageUrl, altText };
+};
+
+export const filterDuplicateCityGuides = (cityGuideData: CityGuideObject[]) => {
+  const tagCounts = cityGuideData?.reduce(
+    (acc: Record<string, number>, { primaryTag }) => {
+      acc[primaryTag] = (acc[primaryTag] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
+  return cityGuideData?.filter(({ primaryTag }) => tagCounts[primaryTag] === 1);
 };

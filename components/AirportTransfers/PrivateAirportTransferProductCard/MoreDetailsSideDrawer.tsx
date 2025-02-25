@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PrismicRichText } from '@prismicio/react';
 import Button from '@headout/aer/src/atoms/Button';
+import Conditional from 'components/common/Conditional';
 import { SidePanelOverlay } from 'components/Product/styles';
 import { SavedTag } from 'UI/PriceBlock';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -53,7 +54,7 @@ export const MoreDetailsSideDrawer = ({
     };
   }, [closed]);
 
-  const { finalPrice, localSymbol } = listingPrice;
+  const { finalPrice, localSymbol, bestDiscount } = listingPrice || {};
 
   const accordionFormattedData = formatDataForAccordion(highlights);
 
@@ -121,7 +122,11 @@ export const MoreDetailsSideDrawer = ({
             <span>
               {localSymbol} {finalPrice}
             </span>
-            <SavedTag>Save 5 %</SavedTag>
+            <Conditional if={bestDiscount > 0}>
+              <SavedTag>
+                {strings.formatString(strings.SAVE_PERCENT, `${bestDiscount}`)}
+              </SavedTag>
+            </Conditional>
           </div>
 
           <a
