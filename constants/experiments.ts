@@ -22,7 +22,8 @@ const CRUISES_COMBO_REVAMP = 'Cruises Revamp Experiment For Combos';
 const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
-const DAY_TRIPS_COLLECTION = 'Day Trips Collection Experiment';
+const DAY_TRIPS_COLLECTION_DWEB = 'Day Trips Collection Experiment DWeb';
+const DAY_TRIPS_COLLECTION_MWEB = 'Day Trips Collection Experiment MWeb';
 const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const QNA_EXPERIMENT = 'Q&A Experiment';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
@@ -31,7 +32,8 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   BOOSTERS_EXPERIMENT,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   CRUISES_COMBO_REVAMP,
-  DAY_TRIPS_COLLECTION,
+  DAY_TRIPS_COLLECTION_DWEB,
+  DAY_TRIPS_COLLECTION_MWEB,
   DAY_TRIPS_LISTICLE,
   FLEXIBLE_CANCELLATION_EXPERIMENT,
   HOHO_REVAMP_PARIS_BARCELONA,
@@ -66,8 +68,13 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
   ),
-  [DAY_TRIPS_COLLECTION]: new Experiment(
-    DAY_TRIPS_COLLECTION,
+  [DAY_TRIPS_COLLECTION_DWEB]: new Experiment(
+    DAY_TRIPS_COLLECTION_DWEB,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
+  ),
+  [DAY_TRIPS_COLLECTION_MWEB]: new Experiment(
+    DAY_TRIPS_COLLECTION_MWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [80, 20]
   ),

@@ -14,6 +14,7 @@ export const productCardStyles = sva({
     'descriptorsList',
     'headerAnchor',
     'itineraryCTA',
+    'ctaContainer',
   ],
   base: {
     mainWrapper: {
@@ -98,6 +99,12 @@ export const productCardStyles = sva({
         },
       },
     },
+    ctaContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 'space.8',
+      mt: 'space.16',
+    },
   },
   variants: {
     isDesktop: {
@@ -111,9 +118,6 @@ export const productCardStyles = sva({
           border: '1px solid',
           borderColor: 'semantic.dividers.dark',
           top: '0',
-          _hover: {
-            top: ['-0.1875rem'],
-          },
         },
         descriptorsList: {
           maxWidth: '[22.375rem]',
@@ -145,5 +149,20 @@ export const productCardStyles = sva({
         },
       },
     },
+    isCardClickable: { true: {}, false: {} },
   },
+  compoundVariants: [
+    {
+      isCardClickable: true,
+      isDesktop: true,
+      css: {
+        mainWrapper: {
+          cursor: 'pointer',
+          _hover: {
+            top: ['-0.1875rem'],
+          },
+        },
+      },
+    },
+  ],
 });

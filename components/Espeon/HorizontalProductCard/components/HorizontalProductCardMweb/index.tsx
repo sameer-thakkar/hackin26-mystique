@@ -36,6 +36,8 @@ export const HorizontalProductCardMweb = ({
   onMoreInfoClick,
   onItineraryCTAClick,
   showItineraryCTA = false,
+  isCardClickable = true,
+  ctas = [],
 }: THorizontalProductCardMweb) => {
   const [cardShrinked, setCardShrinked] = useState(false);
 
@@ -98,7 +100,8 @@ export const HorizontalProductCardMweb = ({
     highlights: highlightsStyle,
     headerAnchor,
     itineraryCTA,
-  } = productCardStyles({ isDesktop, overrideDescriptors });
+    ctaContainer,
+  } = productCardStyles({ isDesktop, overrideDescriptors, isCardClickable });
 
   // const hasItineraries = !!itineraries?.length;
 
@@ -108,9 +111,13 @@ export const HorizontalProductCardMweb = ({
       className={cx(mainWrapper, cardShrinked && 'shrinked')}
       role="link"
       tabIndex={0}
-      onClick={onCardClick}
-      onTouchStart={() => setCardShrinked(true)}
-      onTouchEnd={() => setCardShrinked(false)}
+      {...(isCardClickable
+        ? {
+            onClick: onCardClick,
+            onTouchStart: () => setCardShrinked(true),
+            onTouchEnd: () => setCardShrinked(false),
+          }
+        : {})}
       // onMouseDown={() => setCardShrinked(true)}
       // onMouseUp={() => setCardShrinked(false)}
       aria-label={`View ${name} details`}
@@ -255,6 +262,12 @@ export const HorizontalProductCardMweb = ({
           className={pricingSection}
         />
       </div>
+
+      <Conditional if={ctas?.length}>
+        <div className={ctaContainer}>
+          {ctas?.map((CtaComponent) => CtaComponent)}
+        </div>
+      </Conditional>
     </div>
   );
 };

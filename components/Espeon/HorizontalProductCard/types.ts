@@ -55,4 +55,6 @@ export type THorizontalProductCardDweb = THorizontalProductCardComponent & {
 export type THorizontalProductCardMweb = THorizontalProductCardComponent & {
   onMoreInfoClick?: React.MouseEventHandler<HTMLButtonElement>;
   isDesktop?: boolean;
+  isCardClickable?: boolean;
+  ctas?: React.ReactNode[];
 };

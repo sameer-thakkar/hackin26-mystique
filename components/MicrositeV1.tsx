@@ -634,11 +634,11 @@ const MicrositeV1 = (props: any) => {
   const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
 
   const {
-    isEligible: shouldRunDayTripsCollectionExperiment,
-    variant: dayTripsCollectionExperimentVariant,
-    isExperimentResolving: isDayTripsCollectionExperimentResolving,
+    isEligible: shouldRunDayTripsCollectionExperimentDWeb,
+    variant: dayTripsCollectionExperimentDWebVariant,
+    isExperimentResolving: isDayTripsCollectionExperimentDWebResolving,
   } = useABTesting({
-    experimentId: 'DAY_TRIPS_COLLECTION',
+    experimentId: 'DAY_TRIPS_COLLECTION_DWEB',
     customEligibilityCheckFn: () =>
       !isMobile &&
       isDayTripCollectionPage &&
@@ -651,14 +651,44 @@ const MicrositeV1 = (props: any) => {
     },
   });
 
-  const revampedDayTripsCollection =
-    shouldRunDayTripsCollectionExperiment &&
-    dayTripsCollectionExperimentVariant === VARIANTS.TREATMENT &&
+  const {
+    isEligible: shouldRunDayTripsCollectionExperimentMWeb,
+    variant: dayTripsCollectionExperimentMwebVariant,
+    isExperimentResolving: isDayTripsCollectionExperimentMWebResolving,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_COLLECTION_MWEB',
+    customEligibilityCheckFn: () =>
+      isMobile &&
+      isDayTripCollectionPage &&
+      DAY_TRIPS_COLLECTION_MBS.includes(uid),
+    additionalEventProps: () => {
+      const productCardIds = getFilteredTgids(dayTripCollectionData);
+      return {
+        [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: productCardIds.length,
+      };
+    },
+  });
+
+  const revampedDayTripsCollectionDweb =
+    shouldRunDayTripsCollectionExperimentDWeb &&
+    dayTripsCollectionExperimentDWebVariant === VARIANTS.TREATMENT &&
     isDayTripCollectionPage;
+
+  const revampedDayTripsCollectionMweb =
+    shouldRunDayTripsCollectionExperimentMWeb &&
+    dayTripsCollectionExperimentMwebVariant === VARIANTS.TREATMENT &&
+    isDayTripCollectionPage;
+
+  const revampedDayTripsCollection =
+    revampedDayTripsCollectionDweb || revampedDayTripsCollectionMweb;
 
   useEffect(() => {
     if (!eventsReady) return;
-    if (isDayTripCollectionPage && isDayTripsCollectionExperimentResolving)
+    if (
+      isDayTripCollectionPage &&
+      (isDayTripsCollectionExperimentDWebResolving ||
+        isDayTripsCollectionExperimentMWebResolving)
+    )
       return;
     let numberOfProducts = orderedTgids?.length ?? 0;
     let tgids = orderedTgids;
@@ -736,7 +766,8 @@ const MicrositeV1 = (props: any) => {
     });
   }, [
     eventsReady,
-    isDayTripsCollectionExperimentResolving,
+    isDayTripsCollectionExperimentDWebResolving,
+    isDayTripsCollectionExperimentMWebResolving,
     revampedDayTripsCollection,
     isDayTripCollectionPage,
   ]);
@@ -1089,8 +1120,10 @@ const MicrositeV1 = (props: any) => {
       isCustomEnglishCTAExperimentResolving) ||
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
     (isPOIFiltersExpEligible && isPOIFiltersExpResolving) ||
-    (shouldRunDayTripsCollectionExperiment &&
-      isDayTripsCollectionExperimentResolving)
+    (shouldRunDayTripsCollectionExperimentDWeb &&
+      isDayTripsCollectionExperimentDWebResolving) ||
+    (shouldRunDayTripsCollectionExperimentMWeb &&
+      isDayTripsCollectionExperimentMWebResolving)
   )
     return <Loader />;
 

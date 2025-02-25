@@ -119,6 +119,8 @@ const ExperiencesSection = (props: any) => {
             }
             collectionsInfo={collection}
             scorpioData={scorpioData}
+            isCardClickable={false}
+            showCtas={true}
             {...props}
           />
         ))}
@@ -143,6 +145,8 @@ const ExperiencesSection = (props: any) => {
               }
               collectionsInfo={collection}
               scorpioData={scorpioData}
+              isCardClickable={false}
+              showCtas={true}
               {...props}
             />
           ))}

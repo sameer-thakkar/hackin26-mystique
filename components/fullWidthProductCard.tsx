@@ -257,6 +257,7 @@ const FullWidthProductCardComponent = (props: Props) => {
     isMobile: false,
     flowType: productCardInfo?.flowType,
     earliestAvailability: productCardInfo?.earliestAvailability,
+    isScratchPriceEnabled: true,
     itineraryInfo: {
       data: tgidItineraryData,
       showData: showItinerary && !showSightsCoveredItineraryLayout,

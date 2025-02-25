@@ -5,20 +5,26 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import {
   type Itinerary as TItinerary,
   ItineraryType,
 } from 'types/itinerary.type';
+import parse from 'url-parse';
+import { Button } from '@headout/eevee';
 import { HorizontalProductCardMweb } from 'components/Espeon/HorizontalProductCard/components/HorizontalProductCardMweb';
 import Product from 'components/Product';
 import { ItineraryProvider } from 'contexts/ItineraryContext';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
+import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
+import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { hsidAtom } from 'store/atoms/hsid';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import {
@@ -58,13 +64,19 @@ interface Props {
   scorpioData: Record<string, any>;
   collectionsInfo?: any;
   isSpecialGuidedTour?: boolean;
+  isCardClickable?: boolean;
+  showCtas?: boolean;
 }
 
 interface Currency {
   code: string;
 }
 
+const REGEX_TEST_DEV_HEADOUT = /(test|dev)-headout/gi;
+
 const CollectionProductCardComponent = (props: Props) => {
+  const currency = useRecoilValue(currencyAtom);
+  const hsid = useRecoilValue(hsidAtom);
   const [isTrackerInitialized, setIsTrackerInitialized] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [showItineraryPopup, setShowItineraryPopup] = useState(false);
@@ -77,7 +89,6 @@ const CollectionProductCardComponent = (props: Props) => {
 
   const {
     productCardInfo: productCardInfoProps,
-    lang,
     cityInfo,
     currentCityCode,
     userPickPinnedCard = false,
@@ -90,6 +101,8 @@ const CollectionProductCardComponent = (props: Props) => {
     scorpioData,
     id,
     isSpecialGuidedTour,
+    isCardClickable = true,
+    showCtas = false,
   } = props;
 
   let productCardInfo = productCardInfoProps;
@@ -109,8 +122,12 @@ const CollectionProductCardComponent = (props: Props) => {
 
   const mbContext = useContext(MBContext);
   const {
+    lang,
     isDev,
     sidebarModal: { addToAside, closeAside },
+    redirectToHeadoutBookingFlow,
+    host,
+    uid,
   } = mbContext;
 
   const trackCardContentClicked = (section?: string) => {
@@ -166,7 +183,9 @@ const CollectionProductCardComponent = (props: Props) => {
     carouselImageTrackState.current[index] = true;
   }, []);
 
-  const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+  const showMoreDetails: React.MouseEventHandler<
+    HTMLDivElement | HTMLButtonElement
+  > = (event) => {
     event.stopPropagation();
     event.preventDefault();
 
@@ -215,6 +234,55 @@ const CollectionProductCardComponent = (props: Props) => {
       [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
       ...placementProperty,
     });
+  };
+
+  const getMoreDetailsCTA = () => {
+    return (
+      <Button
+        as="button"
+        variant="tertiary"
+        size="medium"
+        onClick={showMoreDetails}
+        primaryText={strings.MORE_DETAILS}
+      />
+    );
+  };
+
+  const getCheckAvailabilityCTA = () => {
+    let url = host || window.location.host;
+    const hostName =
+      !isDev || REGEX_TEST_DEV_HEADOUT.test(url)
+        ? url
+        : parse(uid, true).pathname;
+    let hostSplit = hostName.split('.');
+    hostSplit.shift();
+    const domain = hostSplit.join('.');
+
+    const bookingURL = createBookingURL({
+      nakedDomain: domain,
+      lang,
+      tgid: productId,
+      redirectToHeadoutBookingFlow,
+      currency,
+      variantId: productCardInfo?.listingPrice?.tourId,
+      date: productCardInfo?.earliestAvailability,
+      flowType: productCardInfo?.flowType,
+      hsid,
+    });
+    return (
+      <Link
+        href={bookingURL!}
+        target={isDesktop ? '_blank' : '_self'}
+        rel={isDesktop ? 'noopener noreferrer' : undefined}
+      >
+        <Button
+          as="button"
+          variant="primary"
+          size="medium"
+          primaryText={strings.CHECK_AVAIL}
+        />
+      </Link>
+    );
   };
 
   if (!productCardInfo) return null;
@@ -266,6 +334,7 @@ const CollectionProductCardComponent = (props: Props) => {
     pageType,
     isPoiMwebCard: true,
     flowType: productCardInfo?.flowType,
+    isScratchPriceEnabled: true,
     earliestAvailability: productCardInfo?.earliestAvailability,
     ...mbContext,
   };
@@ -396,6 +465,7 @@ const CollectionProductCardComponent = (props: Props) => {
     isMobile: !isDesktop,
     flowType: productCardInfo?.flowType,
     earliestAvailability: productCardInfo?.earliestAvailability,
+    isScratchPriceEnabled: true,
     itineraryInfo: {
       data: tgidItineraryData,
       showData: showItinerary && !showSightsCoveredItineraryLayout,
@@ -450,13 +520,15 @@ const CollectionProductCardComponent = (props: Props) => {
           },
         }}
         productCardPosition={productCardPosition}
-        onCardClick={handleClick}
+        onCardClick={showMoreDetails}
         onSwiperChange={trackMediaSwiper}
         showMetaLabel={showMetaLabel}
         overrideDescriptors={overrideDescriptors}
         onMoreInfoClick={onInfoClick ? handleMoreInfo : undefined}
         showItineraryCTA={showItinerary}
         onItineraryCTAClick={handleItineraryCTAClick}
+        isCardClickable={isCardClickable}
+        ctas={showCtas ? [getCheckAvailabilityCTA(), getMoreDetailsCTA()] : []}
       />
 
       <Conditional if={isDesktop && (isPopUpOpen || showItineraryPopup)}>

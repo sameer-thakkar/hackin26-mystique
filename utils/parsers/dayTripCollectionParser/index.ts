@@ -103,7 +103,9 @@ export const dayTripCollectionParser = async (props: {
   const {
     primary: {
       locale_exclusions: localeExclusions,
-      product_cards: { data: { exclusions: commonExclusions } = {} } = {},
+      product_cards: {
+        data: { exclusions: commonExclusions, limit: productCardsLimit } = {},
+      } = {},
     } = {},
   } = micrositeData?.body?.[0] || {};
   const { instant_checkout: instantCheckout = false } = micrositeData ?? {};
@@ -123,6 +125,7 @@ export const dayTripCollectionParser = async (props: {
         collectionId,
         language: langCode,
         currency: currentCurrency,
+        limit: productCardsLimit,
       }),
     ]);
 
