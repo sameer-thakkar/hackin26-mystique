@@ -621,6 +621,12 @@ const ContentPage = (props: any) => {
   ];
 
   const PRODUCT_CARDS_LIMIT = 4;
+  const showGmapsDisclaimer =
+    !!shoulder_page_type &&
+    [
+      SHOULDER_PAGE_TYPE.DIRECTIONS.toLowerCase(),
+      SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT.toLowerCase(),
+    ].includes(shoulder_page_type.toLowerCase());
 
   return (
     <div className="page-wrapper">
@@ -831,10 +837,7 @@ const ContentPage = (props: any) => {
         secondarySlices={secondaryFooter?.data?.body || []}
         primaryHeading={commonFooter?.data?.footer_heading}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
-        showGmapsDisclaimer={
-          shoulder_page_type === SHOULDER_PAGE_TYPE.DIRECTIONS ||
-          shoulder_page_type === SHOULDER_PAGE_TYPE.PLAN_YOUR_VISIT
-        }
+        showGmapsDisclaimer={showGmapsDisclaimer}
         isLTT={isLTT}
       />
     </div>

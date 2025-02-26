@@ -214,7 +214,7 @@ const CardSection: React.FC<React.PropsWithChildren<CardSectionProps>> = ({
 
   // Title and Text combo for the starting of the Card Section
   const EntrySection = (
-    <Conditional if={title?.length || description?.length}>
+    <Conditional if={title?.length || description?.[0]?.text?.length > 0}>
       <TitleTextCombo ref={cardSectionRef}>
         {title && <h2 id={generateSidenavId(title)}>{title}</h2>}
         {description?.length ? (

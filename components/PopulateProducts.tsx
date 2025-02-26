@@ -19,7 +19,7 @@ import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
-import { isMBDesign, legacyBooleanCheck } from 'utils';
+import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
 import {
   getProductCommonProperties,
   sendVariableToDataLayer,
@@ -798,6 +798,9 @@ const PopulateProducts: any = (props: any) => {
     const isHohoItinerary =
       showItinerary && tgidItineraryData[0].type === ItineraryType.HOHO;
 
+    const isGuidedTour =
+      isSpecialGuidedTour || isGuidedTourSubcategory(primarySubCategory?.id);
+
     const childProps = {
       tgid,
       earliestAvailability,
@@ -807,7 +810,7 @@ const PopulateProducts: any = (props: any) => {
       title: tour_title_override,
       descriptors: getProductDescriptors({
         descriptors: scorpioData?.[tgid]?.descriptors,
-        filterOut: isSpecialGuidedTour ? ['GUIDED_TOUR', 'AUDIO_GUIDE'] : null,
+        filterOut: isGuidedTour ? ['GUIDED_TOUR', 'AUDIO_GUIDE'] : null,
       }),
       highlights: tour_description_override,
       scorpioData: scorpioData?.[tgid],
