@@ -54,7 +54,9 @@ const nextConfig = {
   // Compression responsibility is offloaded to Cloudfront.
   compress: false,
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      displayName: true,
+    },
   },
   experimental: {
     esmExternals: true,
