@@ -18,7 +18,7 @@ import { HALYARD } from 'const/ui-constants';
 import BlackColorClose from 'assets/blackColorClose';
 
 export const PopupWrapper = styled.div`
-  z-index: 16;
+  z-index: 99999;
   width: 100vw;
   height: 100%;
   position: fixed;
