@@ -142,3 +142,5 @@ pnpm-lock.yaml
 # yalc
 .yalc
 yalc.lock
+
+.npmrc

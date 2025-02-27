@@ -9,13 +9,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Setup npm config
+        run: |
+          echo "registry=https://registry.yarnpkg.com/" > .npmrc
+          echo "@headout:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          echo "always-auth=true" >> .npmrc
+
       - name: Install dependencies
         run: |
           git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
           yarn add -D semantic-release@19.0.5 @regalstreak/conventional-release-notes --frozen-lockfile
+
       - name: Release
         env:
           # I'm using PAT instead of GHA token so that the CI/CD workflow can be triggered for the new release tag

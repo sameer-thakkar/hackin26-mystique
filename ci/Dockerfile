@@ -1,4 +1,4 @@
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 ARG APP_ENV
 ARG SLACK_GRP_BKNG_WEBHOOK
 ARG ZENDESK_GRP_BKNG_TOKEN

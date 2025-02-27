@@ -1,0 +1,12 @@
+# ignore all hidden files
+.*
+
+# restore these hidden files
+!.next
+!.env.local
+!.env.test
+!.env.production
+
+.next/cache
+
+node_modules_all
