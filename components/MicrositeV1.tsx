@@ -1637,6 +1637,7 @@ const MicrositeV1 = (props: any) => {
           if={
             isA1orC1MB(taggedMbType) &&
             !isDesertSafariMB &&
+            !isPOIFiltersEnabled &&
             categoryHeaderMenu.CITY_ATTRACTIONS
           }
         >
