@@ -379,7 +379,6 @@ export const THEATRE_TYPES: Record<string, string> = {
   DOMINION_THEATRE: 'dominion-theatre',
   ADELPHI_THEATRE: 'adelphi-theatre',
   ALDWYCH_THEATRE: 'aldwych-theatre',
-  ROYAL_ALBERT_HALL: 'royal-albert-hall',
   APOLLO_THEATRE: 'apollo-theatre',
   RADIO_CITY_MUSIC_HALL: 'radio-city-music-hall',
 };

@@ -20,11 +20,9 @@ import PrinceEdwardTheatreSvg from 'assets/princeEdwardTheatreSvg';
 import PrinceOfWalesTheatreSvg from 'assets/princeOfWalesTheatreSvg';
 import RadioCityMusicHallSvg from 'assets/radioCityMusicHallSvg';
 import RestRoomSvg from 'assets/restRoomSvg';
-import RoyalAlbertHallSvg from 'assets/royalAlbertHallSvg';
 import SeatIcon from 'assets/seatIcon';
 import SeatIcon2 from 'assets/seatIcon2';
 import SondheimTheatreSvg from 'assets/sondheimTheatre';
-import SwivelSeatsIcon from 'assets/swivelSeats';
 import TroubadourWembleyParkTheatreSvg from 'assets/troubadourWembleyParkSvg';
 import ValueForMoneyIcon from 'assets/valueForMoneyIcon';
 import WalkingTours from 'assets/walkingTours';
@@ -236,21 +234,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       BANNER_ICONS: [
         {
           name: '1498 seats',
-          icon: SeatIcon2,
-        },
-        {
-          name: 'Wheelchair accessible',
-          icon: WheelChairIcon,
-        },
-      ],
-    },
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: {
-      BANNER_HEADING: 'Royal Albert Hall seating plan',
-      BANNER_DESCRIPTION:
-        "One of London's legendary performance venues, the Royal Albert Hall is incredibly versatile, credited with hosting everything from the Proms and concerts to circus and ballet. The Royal Albert Hall seating plan guide will help you locate the best seats based on both the view and cost-effectiveness.",
-      BANNER_ICONS: [
-        {
-          name: '5271 seats',
           icon: SeatIcon2,
         },
         {
@@ -2969,345 +2952,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
         rows: 'Rows D-L',
       },
     },
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: {
-      'ringside-east-a': {
-        blockName: 'A',
-        theatreSectionName: 'Ringside East',
-        theatreSectionLabel: 'Ringside - East left',
-        description:
-          'Closest seats to the stage, right below the performance area. Enjoy an intimate experience as performers often interact with audience members in this section. Front rows may require craning for elevated acts.',
-        quickInfo: [
-          { icon: SeatIcon, label: '175 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows B-D' },
-        ],
-        rows: 'Rows A - J',
-      },
-      'ringside-east-b': {
-        blockName: 'B',
-        theatreSectionName: 'Ringside East',
-        theatreSectionLabel: 'Ringside - East right',
-        description:
-          'Experience the act up close with a chance to interact with the performers. The section offers premium views of the performance from right below the stage. May require craning for aerial stunts.',
-        quickInfo: [
-          { icon: SeatIcon, label: '175 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows B-D' },
-        ],
-        rows: 'Rows A - J',
-      },
-      'stalls-g': {
-        blockName: 'G',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - East left',
-        description:
-          'Flexible swivel seats allow you to move around and follow the action as the act progresses. Best views in the house at an elevated height with close proximity to the stage.',
-        quickInfo: [
-          { icon: SeatIcon, label: '110 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'stalls-h': {
-        blockName: 'H',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - East center',
-        description:
-          'Get the best of everything with these premium-view seats close to the stage. Enjoy every detail of the show from the elevated height and follow along with the swivel seats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '109 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'stalls-j': {
-        blockName: 'J',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - East right',
-        description:
-          'The swivel seats allow you to stay close to the action even with a slightly angled view. Raked seats have an elevated height that is great for large-scale productions.',
-        quickInfo: [
-          { icon: SeatIcon, label: '36 seats' },
-          { icon: BinocularIcon, label: 'Great views, slightly angled' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'ringside-west-c': {
-        blockName: 'C',
-        theatreSectionName: 'Ringside West',
-        theatreSectionLabel: 'Ringside - West left',
-        description:
-          'Front-row seats where you can enjoy a close view and potential performer interaction. Aerial or high-wire acts may require craning. Comfortable seats with premium pricing.',
-        quickInfo: [
-          { icon: SeatIcon, label: '174 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows B-D' },
-        ],
-        rows: 'Rows A - J',
-      },
-      'ringside-west-d': {
-        blockName: 'D',
-        theatreSectionName: 'Ringside West',
-        theatreSectionLabel: 'Ringside - West right',
-        description:
-          'Experience performances up close with premium stage-level views. You may have to occassionally glance upwards during large-scale productions.',
-        quickInfo: [
-          { icon: SeatIcon, label: '174 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from rows B-D' },
-        ],
-        rows: 'Rows A - J',
-      },
-      'stalls-o': {
-        blockName: 'O',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - West right',
-        description:
-          'Versatile swivel seating enables optimal viewing angles throughout the show. Raked height and close proximity to the stage allow amazing views from all rows.',
-        quickInfo: [
-          { icon: SeatIcon, label: '110 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'stalls-m': {
-        blockName: 'M',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - West center',
-        description:
-          'Premium views of the stage allow you to enjoy a wide view from an optimal distance. Track the full performance with special swivel seats. Comfortably close to the action.',
-        quickInfo: [
-          { icon: SeatIcon, label: '111 seats' },
-          { icon: BinocularIcon, label: 'Excellent views from all seats' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'stalls-l': {
-        blockName: 'L',
-        theatreSectionName: 'Stalls',
-        theatreSectionLabel: 'Stalls - West left',
-        description:
-          'Clear views of the stage for a comparatively lower price. Enjoy the full production from an optimal distance. The side angle can be mitigated as you rotate to a comfortable eyeline with the swivel seats.',
-        quickInfo: [
-          { icon: SeatIcon, label: '38 seats' },
-          { icon: BinocularIcon, label: 'Great views, slightly angled' },
-          { icon: LegRoomSvg, label: 'Spacious legroom' },
-          { icon: SwivelSeatsIcon, label: 'Swivel seats' },
-        ],
-        rows: 'Rows 1 - 4',
-      },
-      'loggia-east': {
-        blockName: 'LOG East',
-        theatreSectionName: 'Loggia',
-        theatreSectionLabel: 'Loggia - East',
-        description:
-          'Best for a comfortable and flexible experience. Great views of the stage from most angles. Some boxes may have restricted views due to pillars.',
-        quickInfo: [
-          { icon: SeatIcon, label: '104 seats' },
-          { icon: BinocularIcon, label: 'Great views, some restricted' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: CouchSvg, label: 'Plush chairs' },
-        ],
-        rows: 'Boxes 02 - 14',
-      },
-      'loggia-center': {
-        blockName: 'LOG Center',
-        theatreSectionName: 'Loggia',
-        theatreSectionLabel: 'Loggia - Center',
-        description:
-          'Book the full box or pick a single seat for an unbeatable private viewing experience. Great for groups and offers excellent unobstructed views from all seats. You may have to compromise on legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '32 seats' },
-          { icon: BinocularIcon, label: 'Unobstructed central views' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: CouchSvg, label: 'Plush chairs' },
-        ],
-        rows: 'Boxes 23 - 26',
-      },
-      'loggia-west': {
-        blockName: 'LOG West',
-        theatreSectionName: 'Loggia',
-        theatreSectionLabel: 'Loggia - West',
-        description:
-          'For a private experience, choose seats in the Loggia boxes. From an elevated height, the seats offer a great view but you may have to compromise on legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '112 seats' },
-          { icon: BinocularIcon, label: 'Great views, some restricted' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: CouchSvg, label: 'Plush chairs' },
-        ],
-        rows: 'Boxes 27 - 40',
-      },
-      'grand-tier-east': {
-        blockName: 'East',
-        theatreSectionName: 'Grand tier',
-        theatreSectionLabel: 'Grand tier - East',
-        description:
-          'Great view of the stage from a slightly tilted angle. Excellent for large productions. Groups can enjoy a private viewing experience with free roaming space.',
-        quickInfo: [
-          { icon: SeatIcon, label: '168 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Boxes 03 - 16',
-      },
-      'grand-tier-west': {
-        blockName: 'West',
-        theatreSectionName: 'Grand tier',
-        theatreSectionLabel: 'Grand tier - West',
-        description:
-          'Enjoy a private viewing experience with great views for reasonable prices. The tilted angle does not affect the wide view of the stage. Excellent for large productions.',
-        quickInfo: [
-          { icon: SeatIcon, label: '156 seats' },
-          { icon: BinocularIcon, label: 'Great views' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: Wineries, label: 'Easy access to bar' },
-        ],
-        rows: 'Boxes 29 - 41',
-      },
-      'second-tier-east': {
-        blockName: 'East',
-        theatreSectionName: '2nd tier',
-        theatreSectionLabel: '2nd tier - East',
-        description:
-          'Unobstructed view of the full action with flexible seating. Comfortable seating and great acoustics. Boxes towards the end may be less favorable due to the side angle.',
-        quickInfo: [
-          { icon: SeatIcon, label: '173 seats' },
-          { icon: BinocularIcon, label: 'Panoramic views' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: LegRoomSvg, label: 'Good legroom' },
-        ],
-        rows: 'Boxes 07 - 37',
-      },
-      'second-tier-west': {
-        blockName: 'West',
-        theatreSectionName: '2nd tier',
-        theatreSectionLabel: '2nd tier - West',
-        description:
-          'Keep up with the full scale of the production with unobstructed views and great acoustics. Enjoy the comfortable and flexible seating in the intimate 5 to 8 seater boxes.',
-        quickInfo: [
-          { icon: SeatIcon, label: '160 seats' },
-          { icon: BinocularIcon, label: 'Panoramic views' },
-          { icon: MovableSeatsIcon, label: 'Movable seats' },
-          { icon: LegRoomSvg, label: 'Good legroom' },
-        ],
-        rows: 'Boxes 55 - 84',
-      },
-      'rausing-circle-p': {
-        blockName: 'P',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - East P',
-        description:
-          'Rows 2-5 offer good views at lower prices. Great seats to enjoy large scale productions although you may compromise on legroom. Some seats may have limited views due to handrails.',
-        quickInfo: [
-          { icon: SeatIcon, label: '107 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-q': {
-        blockName: 'Q',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - East Q',
-        description:
-          'The front rows give an angled and restricted view of the stage. The raked seats higher up ensure unobstructed views even from back rows. Seats in the back may feel far from the action.',
-        quickInfo: [
-          { icon: SeatIcon, label: '131 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-r': {
-        blockName: 'R',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - East R',
-        description:
-          'Experience large productions from high up with amazing acoustics and decent legroom. The elevation may be too high for some although the seats are comfortable.',
-        quickInfo: [
-          { icon: SeatIcon, label: '189 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-          { icon: LegRoomSvg, label: 'Limited legroom.' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-s': {
-        blockName: 'S',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - East S',
-        description:
-          'Seats towards the edge are close to the center and offer great views for lower prices. Rows 2-3 are best for a wide view of the action. Pick seats in the aisles for better legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '141 seats' },
-          { icon: BinocularIcon, label: 'Great aerial views' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-          { icon: RestRoomSvg, label: 'Easy access to washrooms' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-y': {
-        blockName: 'Y',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - West Y',
-        description:
-          'Comfortable seats with a good rake that ensures unobstructed sightlines. Front rows offer good views even with a slightly tilted angle.',
-        quickInfo: [
-          { icon: SeatIcon, label: '121 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-          { icon: LegRoomSvg, label: 'Limited legroom.' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-x': {
-        blockName: 'X',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - West X',
-        description:
-          'Good view of the stage from a side angle, especially for large-scale productions. The comfortable seat and decent sightline are well worth the low price tag.',
-        quickInfo: [
-          { icon: SeatIcon, label: '155 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-w': {
-        blockName: 'W',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - West W',
-        description:
-          'Front rows and a good rake make for unobstructed sightlines. You may have to lean in to take in the details. Some seats may have limited views due to handrails. Pick aisle seats for better legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '157 seats' },
-          { icon: BinocularIcon, label: 'Best views from rows 1-3' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-      'rausing-circle-v': {
-        blockName: 'V',
-        theatreSectionName: 'Rausing circle',
-        theatreSectionLabel: 'Rausing circle - West V',
-        description:
-          'Nearly central view of the action from an elevated height. Great acoustics and unobstructed views make it a great deal for the price. Seats are arranged in a tight space, but offer good legroom.',
-        quickInfo: [
-          { icon: SeatIcon, label: '145 seats' },
-          { icon: BinocularIcon, label: 'Great aerial views' },
-          { icon: ValueForMoneyIcon, label: 'Value for money' },
-        ],
-        rows: 'Rows 1 - 7',
-      },
-    },
     [THEATRE_TYPES.APOLLO_THEATRE]: {
       'stalls-front': {
         blockName: 'Front',
@@ -3932,7 +3576,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.DOMINION_THEATRE]: ['24878'],
     [THEATRE_TYPES.ADELPHI_THEATRE]: ['13402'],
     [THEATRE_TYPES.ALDWYCH_THEATRE]: ['9162'],
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: ['28922'],
     [THEATRE_TYPES.APOLLO_THEATRE]: ['26688'],
     [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: ['2505'],
   },
@@ -3950,7 +3593,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.DOMINION_THEATRE]: DominionTheatreSvg,
     [THEATRE_TYPES.ADELPHI_THEATRE]: AdelphiTheatreSvg,
     [THEATRE_TYPES.ALDWYCH_THEATRE]: AldwychTheatreSvg,
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: RoyalAlbertHallSvg,
     [THEATRE_TYPES.APOLLO_THEATRE]: ApolloTheatreSvg,
     [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: RadioCityMusicHallSvg,
   },
@@ -3977,8 +3619,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
       isMobile ? '0 0 342 389' : '0 0 607 664',
     [THEATRE_TYPES.ALDWYCH_THEATRE]: (isMobile: boolean) =>
       isMobile ? '0 0 342 394' : '0 0 607 665',
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: (isMobile: boolean) =>
-      isMobile ? '0 0 343 600' : '0 0 607 706',
     [THEATRE_TYPES.APOLLO_THEATRE]: (isMobile: boolean) =>
       isMobile ? '0 0 342 394' : '0 0 607 693',
     [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]: (isMobile: boolean) =>
@@ -3998,7 +3638,6 @@ export const SEATING_MAP: SEATING_MAP_TYPE = {
     [THEATRE_TYPES.DOMINION_THEATRE]: 'Dominion Theatre Seating Plan',
     [THEATRE_TYPES.ADELPHI_THEATRE]: 'Adelphi Theatre Seating Plan',
     [THEATRE_TYPES.ALDWYCH_THEATRE]: 'Aldwych Theatre Seating Plan',
-    [THEATRE_TYPES.ROYAL_ALBERT_HALL]: 'Royal Albert Hall Seating Plan',
     [THEATRE_TYPES.APOLLO_THEATRE]: 'Apollo Theatre Seating Plan',
     [THEATRE_TYPES.RADIO_CITY_MUSIC_HALL]:
       'Radio city music hall Theatre Seating Plan',
