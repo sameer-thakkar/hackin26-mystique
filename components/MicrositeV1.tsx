@@ -42,7 +42,9 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import {
+  checkIfBroadwayMB,
   checkIfCategoryHeaderExists,
+  checkIfLTTMB,
   csvTgidToArray,
   findVideoUrlFromMediaData,
   getBannerDescriptors,
@@ -82,6 +84,7 @@ import {
   QNA_EXP_UIDS,
   SLICE_TYPES,
   TEMPLATES,
+  TGIDS_WITH_CANCELLATION_INSURANCE,
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -900,6 +903,11 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () =>
       !isNonPoiMB &&
       !QNA_EXP_UIDS.includes(uid) &&
+      !checkIfLTTMB(uid) &&
+      !checkIfBroadwayMB(uid) &&
+      !orderedTgids?.some((tgid: number) =>
+        TGIDS_WITH_CANCELLATION_INSURANCE.includes(tgid)
+      ) &&
       !DAY_TRIPS_COLLECTION_MBS.includes(uid),
   });
 

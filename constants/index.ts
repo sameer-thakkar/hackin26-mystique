@@ -2522,3 +2522,7 @@ export const UID_TO_COUNT_MAPPING = {
 };
 
 export const DUBAI_DESERT_SAFARI = 'www.desert-safari-dxb.com';
+
+export const TGIDS_WITH_CANCELLATION_INSURANCE = [
+  7148, 846, 7654, 11899, 16959, 16156, 24878, 18288,
+];
