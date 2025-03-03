@@ -76,7 +76,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [DAY_TRIPS_COLLECTION_MWEB]: new Experiment(
     DAY_TRIPS_COLLECTION_MWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [80, 20]
+    [50, 50]
   ),
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,
