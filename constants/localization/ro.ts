@@ -1337,6 +1337,24 @@ const ro = {
   TRUST_VB_TAG: 'Rezervare verificată',
   AGGREGATED_COUNTRIES:
     'Oaspeții din <strong>{0}</strong> și <strong>peste {1} țări</strong> au apreciat această experiență',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Cel mai relevant',
+      MOST_RECENT: 'Cel mai recent',
+      SORT_BY: 'Sortare după',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stele',
+      EQUAL_TO_3: '3 stele',
+      LESS_THAN_3: '< 3 stele',
+      WITH_IMAGES: 'Cu imagini',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'Nu am găsit recenzii care să corespundă filtrelor.',
+      CTA: 'Toate recenziile',
+    },
+  },
 };
 
 export default ro;

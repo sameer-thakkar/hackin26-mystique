@@ -1319,6 +1319,22 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     'Les avis sont recueillis auprès de personnes qui ont réservé et vécu une expérience avec Headout.',
   REVIEW_SECTION: {
     HEADING: 'Des millions de personnes adorent partir avec nous',
+    SORTING: {
+      MOST_RELEVANT: 'Le plus pertinent',
+      MOST_RECENT: 'Le plus récent',
+      SORT_BY: 'Trier par',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ étoiles',
+      EQUAL_TO_3: '3 étoiles',
+      LESS_THAN_3: '< 3 étoiles',
+      WITH_IMAGES: 'Avec images',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        "Aucun commentaire n'a été trouvé pour les filtres sélectionnés.",
+      CTA: 'Voir tous les commentaires',
+    },
   },
 
   FLEXIBLE_CANCELLATION: {

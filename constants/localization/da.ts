@@ -1365,6 +1365,25 @@ const da = {
   SNAPSHOTS_SECTION_HEADER: 'Snapshots fra vores gæster',
   AGGREGATED_COUNTRIES:
     'Gæster fra <strong>{0}</strong> og <strong>over {1} andre lande</strong> var vilde med denne oplevelse',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Mest relevant',
+      MOST_RECENT: 'Seneste',
+      SORT_BY: 'Sortér efter',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stjerner',
+      EQUAL_TO_3: '3 stjerner',
+      LESS_THAN_3: '< 3 stjerner',
+      WITH_IMAGES: 'Med billeder',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Vi kunne ikke finde nogen anmeldelser, der passer til dine filtre.',
+      CTA: 'Vis alle anmeldelser',
+    },
+  },
 };
 
 export default da;

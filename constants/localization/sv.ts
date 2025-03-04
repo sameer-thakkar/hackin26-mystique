@@ -1333,6 +1333,25 @@ const sv = {
   SNAPSHOTS_SECTION_HEADER: 'Ögonblicksbilder från våra gäster',
   AGGREGATED_COUNTRIES:
     'Gäster från <strong>{0}</strong> och <strong>över {1} länder</strong> har älskat denna upplevelse',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Mest relevant',
+      MOST_RECENT: 'Senaste',
+      SORT_BY: 'Sortera efter',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stjärnor',
+      EQUAL_TO_3: '3 stjärnor',
+      LESS_THAN_3: '< 3 stjärnor',
+      WITH_IMAGES: 'Med bilder',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Vi kunde inte hitta recensioner som matchar ditt valda filter.',
+      CTA: 'Visa alla recensioner',
+    },
+  },
 };
 
 export default sv;

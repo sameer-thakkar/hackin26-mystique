@@ -1302,6 +1302,21 @@ const it = {
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
   REVIEW_SECTION: {
     HEADING: 'I nostri ospiti amano Headout',
+    SORTING: {
+      MOST_RELEVANT: 'Più rilevanti',
+      MOST_RECENT: 'Più recenti',
+      SORT_BY: 'Ordina per',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stelle',
+      EQUAL_TO_3: '3 stelle',
+      LESS_THAN_3: '< 3 stelle',
+      WITH_IMAGES: 'Con immagini',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'Non abbiamo trovato recensioni per i filtri selezionati.',
+      CTA: 'Vedi le recensioni',
+    },
   },
 
   FLEXIBLE_CANCELLATION: {

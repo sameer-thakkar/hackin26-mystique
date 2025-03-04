@@ -1254,6 +1254,22 @@ const pl = {
   },
   REVIEW_SECTION: {
     HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Najistotniejsze',
+      MOST_RECENT: 'Ostatnie',
+      SORT_BY: 'Sortuj według',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ gwiazdki',
+      EQUAL_TO_3: '3 gwiazdki',
+      LESS_THAN_3: '< 3 gwiazdki',
+      WITH_IMAGES: 'Z obrazami',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Nie udało się znaleźć recenzji pasujących do wybranych filtrów.',
+      CTA: 'Pokaż wszystkie',
+    },
   },
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
   TRUST_TOOLTIP_CONTENT:

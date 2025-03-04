@@ -1269,6 +1269,22 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     'We gebruiken alleen reviews van echte Headout gebruikers die ervaringen bij ons hebben geboekt en uitgevoerd.',
   REVIEW_SECTION: {
     HEADING: 'Miljoenen zijn dol op Headout',
+    SORTING: {
+      MOST_RELEVANT: 'Meest relevant',
+      MOST_RECENT: 'Meest recent',
+      SORT_BY: 'Sorteren op',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ sterren',
+      EQUAL_TO_3: '3 sterren',
+      LESS_THAN_3: '< 3 sterren',
+      WITH_IMAGES: 'Met afbeeldingen',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Er zijn geen beoordelingen die aan je geselecteerde filters voldoen.',
+      CTA: 'Alle beoordelingen',
+    },
   },
 
   FLEXIBLE_CANCELLATION: {

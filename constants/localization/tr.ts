@@ -1338,6 +1338,24 @@ const tr = {
   TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
   AGGREGATED_COUNTRIES:
     '<strong>{0}</strong> ve <strong>dahil olmak üzere {1} ülkeden</strong> gelen konuklar bu deneyimi çok sevdi',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'En alakalı',
+      MOST_RECENT: 'En güncel',
+      SORT_BY: 'Sırala',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ yıldız',
+      EQUAL_TO_3: '3 yıldız',
+      LESS_THAN_3: '< 3 yıldız',
+      WITH_IMAGES: 'Fotoğraflı',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'Seçtiğiniz filtrelere uygun yorum bulamadık.',
+      CTA: 'Tüm yorumları gör',
+    },
+  },
 };
 
 export default tr;

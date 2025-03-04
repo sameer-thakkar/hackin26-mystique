@@ -1308,6 +1308,22 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
   REVIEW_SECTION: {
     HEADING: 'Unsere Gäste lieben Headout',
+    SORTING: {
+      MOST_RELEVANT: 'Relevanteste',
+      MOST_RECENT: 'Neueste',
+      SORT_BY: 'Sortieren nach',
+    },
+    FILTERING: {
+      GREATER_THAN_4: 'Ab 4 Sternen',
+      EQUAL_TO_3: '3 Sterne',
+      LESS_THAN_3: 'Unter 3 Sternen',
+      WITH_IMAGES: 'Mit Fotos',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Wir konnten keine Bewertungen für die gewählten Filter finden.',
+      CTA: 'Alle anzeigen',
+    },
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

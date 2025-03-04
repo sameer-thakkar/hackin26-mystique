@@ -697,6 +697,9 @@ export const ANALYTICS_EVENTS = {
     QNA_BANNER_VIEWED: 'QnA Banner Viewed',
   },
   SHOW_MORE_REDIRECT: 'Show Page Redirect',
+  REVIEW_SORT_BY_CLICKED: 'Review Sort By Clicked',
+  REVIEW_FILTER_CLICKED: 'Review Filter Clicked',
+  SORT_BY_POPUP_SHOWN: 'Sort By Popup Shown',
   HSID_SET_FAIL: 'HSID Set Failed',
 };
 
@@ -1247,6 +1250,10 @@ export const ANALYTICS_PROPERTIES = {
   FLOW_TYPE: 'Flow Type',
   QUESTION_RANK: 'Question Rank',
   QUESTION_TEXT: 'Question Text',
+  FILTER_CRITERIA: 'Filter Criteria',
+  NUMBER_OF_REVIEWS: 'Number Of Reviews',
+  IS_SELECTED: 'Is Selected',
+  SORTING_CRITERA: 'Sort Criteria',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 

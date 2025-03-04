@@ -1317,6 +1317,21 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     'As avaliações são enviadas por usuários reais que reservaram e tiveram uma experiência com a Headout.',
   REVIEW_SECTION: {
     HEADING: 'Milhões de pessoas adoram viajar com a gente',
+    SORTING: {
+      MOST_RELEVANT: 'Mais relevante',
+      MOST_RECENT: 'Mais recente',
+      SORT_BY: 'Classificar por',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4 estrelas ou mais',
+      EQUAL_TO_3: '3 estrelas',
+      LESS_THAN_3: 'Menos de 3 estrelas',
+      WITH_IMAGES: 'Com imagens',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'Não encontramos avaliações com os filtros selecionados.',
+      CTA: 'Ver todas avaliações',
+    },
   },
 
   FLEXIBLE_CANCELLATION: {

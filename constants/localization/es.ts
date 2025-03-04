@@ -1370,6 +1370,21 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     'Las reseñas proceden de usuarios reales de Headout que han reservado y completado su experiencia con nosotros.',
   REVIEW_SECTION: {
     HEADING: 'A millones de personas les encanta viajar con nosotros',
+    SORTING: {
+      MOST_RELEVANT: 'Más relevante',
+      MOST_RECENT: 'Más reciente',
+      SORT_BY: 'Ordenar por',
+    },
+    FILTERING: {
+      GREATER_THAN_4: 'Más de 4 estrellas',
+      EQUAL_TO_3: '3 estrellas',
+      LESS_THAN_3: 'Menos de 3 estrellas',
+      WITH_IMAGES: 'Con fotos',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'No hay reseñas que coincidan con los filtros seleccionados',
+      CTA: 'Ver las reseñas',
+    },
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

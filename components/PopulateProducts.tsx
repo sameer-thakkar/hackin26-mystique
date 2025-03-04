@@ -778,7 +778,7 @@ const PopulateProducts: any = (props: any) => {
       showItineraries || isCruisesRevamp
         ? experienceItineraryIds.reduce(
             (acc: Array<TItinerary>, id: string) => {
-              const itinerary = itineraryDataMap[id];
+              const itinerary = itineraryDataMap?.[id];
               if (itinerary && isItineraryValid(itinerary)) {
                 acc.push(itinerary);
               }

@@ -1,6 +1,7 @@
 import type { NumberField } from '@prismicio/types';
 import type { IncomingHttpHeaders } from 'http2';
 import Cookies from 'js-cookie';
+import { EReviewRatingFilter, EReviewSortType } from 'types/reviews';
 import {
   convertHttpHeadersToRegularHeaders,
   getHeadoutLanguagecode,
@@ -127,6 +128,7 @@ export enum HeadoutEndpoints {
   GuestCount,
   QnaSnippets,
   QnaSections,
+  TourGroupReviewsV6,
 }
 
 const endPointsOnNewCDN = [
@@ -162,6 +164,7 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.QnaSnippets,
   HeadoutEndpoints.QnaSections,
   HeadoutEndpoints.CollectionProductCards,
+  HeadoutEndpoints.TourGroupReviewsV6,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -305,6 +308,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.GuestCount:
       endpointSlug = `/api/v1/guest-count/`;
+      break;
+    case HeadoutEndpoints.TourGroupReviewsV6:
+      endpointSlug = `/api/v6/tour-groups/${id}/reviews/`;
       break;
   }
 
@@ -1163,6 +1169,67 @@ export const fetchCategory = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     sendLog({ err: error });
+  }
+};
+
+export const fetchTourGroupReviewsV6 = async ({
+  tgid,
+  limit = 10,
+  offset = 0,
+  sortType = EReviewSortType.MOST_RELEVANT,
+  ratingFilter = null,
+  hasMediaFilter = true,
+  language = 'EN',
+  hostname,
+}: {
+  tgid: string | number;
+  limit?: number;
+  offset?: number;
+  sortType?: EReviewSortType;
+  ratingFilter?: EReviewRatingFilter | null;
+  hasMediaFilter?: boolean;
+  language?: string;
+  hostname?: string;
+}) => {
+  const params = {
+    language,
+    ...(limit && {
+      limit: `${limit}`,
+    }),
+    ...(offset && {
+      offset: `${offset}`,
+    }),
+    ...(ratingFilter && {
+      'rating-filter': ratingFilter,
+    }),
+    ...(sortType && {
+      'sort-type': sortType,
+    }),
+    ...(hasMediaFilter && {
+      'media-filter': 'true',
+    }),
+  };
+
+  const url = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupReviewsV6,
+    id: tgid,
+    params,
+    hostname,
+  });
+
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupReviewsV6] -  tgid is required - ${tgid}`,
+    });
+  }
+
+  try {
+    const res = await fetch(url);
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourGroupReviewsV6]', error);
   }
 };
 

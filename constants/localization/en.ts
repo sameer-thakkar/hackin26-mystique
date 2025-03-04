@@ -1446,6 +1446,21 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   },
   REVIEW_SECTION: {
     HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Most Relevant',
+      MOST_RECENT: 'Most Recent',
+      SORT_BY: 'Sort by',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stars',
+      EQUAL_TO_3: '3 stars',
+      LESS_THAN_3: '<3 stars',
+      WITH_IMAGES: 'With Images',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: "We couldn't find reviews matching your selected filters.",
+      CTA: 'Show all reviews',
+    },
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

@@ -1357,6 +1357,24 @@ const ru = {
   SNAPSHOTS_SECTION_HEADER: 'Снимки от наших гостей',
   AGGREGATED_COUNTRIES:
     'Гости из <strong>{0}</strong> и <strong>из более чем {1} стран</strong> в восторге от этого мероприятия',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Самые актуальные',
+      MOST_RECENT: 'Самые новые',
+      SORT_BY: 'Сортировать по',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ звёзд',
+      EQUAL_TO_3: '3 звезды',
+      LESS_THAN_3: '< 3 звёзд',
+      WITH_IMAGES: 'С картинками',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: 'Мы не смогли найти отзывы по вашим фильтрам.',
+      CTA: 'Показать все отзывы',
+    },
+  },
 };
 
 export default ru;

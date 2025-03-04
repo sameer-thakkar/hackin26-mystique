@@ -1331,6 +1331,25 @@ const no = {
   SNAPSHOTS_SECTION_HEADER: 'Instantanee de la oaspeții noștri',
   AGGREGATED_COUNTRIES:
     'Gjester fra <strong>{0}</strong> og <strong>over {1} land</strong> har elsket denne opplevelsen',
+  REVIEW_SECTION: {
+    HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Mest relevant',
+      MOST_RECENT: 'Nyest',
+      SORT_BY: 'Sorter etter',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stjerner',
+      EQUAL_TO_3: '3 stjerner',
+      LESS_THAN_3: '< 3 stjerner',
+      WITH_IMAGES: 'Med bilder',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING:
+        'Vi fant ingen anmeldelser som samsvarer med filtrene du valgte.',
+      CTA: 'Vis alle anmeldelser',
+    },
+  },
 };
 
 export default no;

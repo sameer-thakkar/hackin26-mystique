@@ -1,5 +1,3 @@
-import { TPaginationParams } from 'ReduxTypes/generics';
-
 export type TReviewMedia = {
   url: string;
   fileType: string;
@@ -38,8 +36,6 @@ export type TReview = {
   tourGroup?: TTourGroupInfo;
 };
 
-export type TResponse = TPaginationParams<TReview>;
-
 export type TReducedReviewWithMedia = {
   id?: number;
   nonCustomerName: string;
@@ -53,3 +49,14 @@ export type TReducedReviewWithMedia = {
   nonCustomerCountryCode?: string | null;
   nonCustomerCountryName?: string | null;
 };
+
+export enum EReviewRatingFilter {
+  GREATER_THAN_4 = 'GE_4',
+  EQUAL_TO_3 = 'EQ_3',
+  LESS_THAN_3 = 'LT_3',
+}
+
+export enum EReviewSortType {
+  MOST_RELEVANT = 'MOST_RELEVANT',
+  MOST_RECENT = 'MOST_RECENT',
+}

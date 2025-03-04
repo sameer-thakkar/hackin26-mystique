@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
+import { EReviewRatingFilter, EReviewSortType } from 'types/reviews';
 import Conditional from 'components/common/Conditional';
 import type { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
@@ -29,11 +30,14 @@ import {
   ViewTranslatedContentButton,
 } from 'components/MicrositeV2/ShowPageV2/ReviewSection/style';
 import SnapshotSection from 'components/Product/components/Popup/ReviewSection/Snapshots';
+import EmptyState from 'components/Reviews/EmptyState';
+import ReviewFilterAndSorter from 'components/Reviews/Filters';
 import ReviewHeader from 'components/Reviews/Header';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { fetchTourGroupReviews, TReviewMediasResponse } from 'utils/apiUtils';
+import { fetchTourGroupReviewsV6, TReviewMediasResponse } from 'utils/apiUtils';
 import { getStars } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import {
@@ -109,6 +113,12 @@ const ReviewSection = ({
   const [numberOfReviewsToShow, setNumberOfReviewsToShow] = useState(
     numberOfReviewsToShowProp
   );
+  const [reviewRatingFilter, setReviewRatingFilter] =
+    useState<EReviewRatingFilter | null>(null);
+  const [reviewSortType, setReviewSortType] = useState<EReviewSortType>(
+    EReviewSortType.MOST_RELEVANT
+  );
+  const [hasMediaFilter, setHasMediaFilter] = useState<boolean>(false);
   const { averageRating, ratingsCount, ratingsSplit, reviewCountries } =
     reviewsDetails;
 
@@ -120,7 +130,6 @@ const ReviewSection = ({
   const [offset, setOffset] = useState<number | null>(
     !initialReviews ? 0 : Math.max(5, initialReviews?.length || 0)
   );
-  const [totalNumberOfReviews, setTotalNumberOfReviews] = useState(-1);
   const [isFetching, setIsFetching] = useState(!initialReviews?.length);
   const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
   const SCROLL_THRESHOLD = isMobile ? 115 : 150;
@@ -129,26 +138,29 @@ const ReviewSection = ({
     try {
       if (offset === null || offset >= maximumNumberOfReviews) return;
       setIsFetching(true);
-      const reviewsResponse = await fetchTourGroupReviews({
+      const reviewsResponse = await fetchTourGroupReviewsV6({
         tgid,
         offset,
         limit: numberOfReviewsToFetchAtOnce,
-        filterType: 'TOP',
-        language: lang,
+        ratingFilter: reviewRatingFilter,
+        hasMediaFilter,
+        sortType: reviewSortType,
+        language: getHeadoutLanguagecode(lang),
       });
+
+      setIsFetching(false);
+
       const {
-        items: newReviews = [],
-        nextOffset = null,
-        total,
+        result: { reviews: receivedReviews },
       } = reviewsResponse ?? {};
 
-      setReviews([...reviews, ...newReviews]);
-      setOffset(nextOffset);
-      setIsFetching(false);
-      if (totalNumberOfReviews === -1 && total) setTotalNumberOfReviews(total);
+      const { items: newReviews = [], nextOffset = null } = receivedReviews;
+
+      const updatedReviews =
+        offset === 0 ? newReviews : [...reviews, ...newReviews];
 
       const firstNewReviewRef = document.querySelector(
-        `#review-item-${reviews?.length}`
+        `#review-item-${updatedReviews?.length}`
       );
 
       if (firstNewReviewRef) {
@@ -163,15 +175,29 @@ const ReviewSection = ({
           behavior: 'smooth',
         });
       }
+
+      setReviews(updatedReviews);
+      setOffset(nextOffset);
     } catch (error) {
       return;
     }
-  }, [offset, reviews]);
+  }, [offset, reviews, hasMediaFilter, reviewRatingFilter, reviewSortType]);
 
   useEffect(() => {
-    if (offset && offset > 0) return;
     fetchReviews();
-  }, [offset]);
+  }, [hasMediaFilter, reviewRatingFilter, reviewSortType]);
+
+  const {
+    exposeSorting = false,
+    exposeFiltering = false,
+    exposeLoadMore = false,
+  } = reviewsDetails?.displayConfig ?? {};
+
+  const showLoadMoreButton =
+    (isMobile || showFetchMoreButton) &&
+    numberOfReviewsToShow < maximumNumberOfReviews &&
+    reviews.length >= DEFAULT_TOP_REVIEWS_COUNT &&
+    exposeLoadMore;
 
   return (
     <ReviewSectionWrapper>
@@ -223,6 +249,44 @@ const ReviewSection = ({
           </StyledReviewSectionHeading>
         </Conditional>
 
+        <Conditional if={exposeFiltering || exposeSorting}>
+          <ReviewFilterAndSorter
+            isDesktop={!isMobile}
+            currentRatingFilter={reviewRatingFilter}
+            showOnlyReviewsWithMedia={hasMediaFilter}
+            currentSortType={reviewSortType}
+            onSortTypeChange={(sortType) => {
+              setOffset(0);
+              setNumberOfReviewsToShow(numberOfReviewsToShowProp);
+              setReviewSortType(sortType);
+            }}
+            onFilterChange={({ rating, withImages }) => {
+              setOffset(0);
+              setNumberOfReviewsToShow(numberOfReviewsToShowProp);
+              setReviewRatingFilter(rating);
+              setHasMediaFilter(withImages);
+            }}
+            productDetails={{
+              tgid,
+              reviewsDetails,
+              isDesktop: !isMobile,
+              numberOfReviews: reviews?.length ?? 0,
+            }}
+          />
+        </Conditional>
+
+        <Conditional if={reviews.length === 0 && !isFetching}>
+          <EmptyState
+            onClick={() => {
+              // move to default state
+              setOffset(0);
+              setReviewRatingFilter(null);
+              setHasMediaFilter(false);
+              setReviewSortType(EReviewSortType.MOST_RELEVANT);
+            }}
+          />
+        </Conditional>
+
         <ReviewsSection>
           {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
             <ReviewElement
@@ -240,16 +304,7 @@ const ReviewSection = ({
             ))}
           </Conditional>
         </ReviewsSection>
-        <Conditional
-          if={
-            (isMobile || showFetchMoreButton) &&
-            numberOfReviewsToShow <
-              (totalNumberOfReviews === -1
-                ? maximumNumberOfReviews
-                : Math.min(totalNumberOfReviews, maximumNumberOfReviews)) &&
-            reviews.length >= DEFAULT_TOP_REVIEWS_COUNT
-          }
-        >
+        <Conditional if={showLoadMoreButton}>
           <ShowMoreReviewsButton
             onClick={() => {
               setNumberOfReviewsToShow(numberOfReviewsToShow + 5);
@@ -266,15 +321,7 @@ const ReviewSection = ({
         </Conditional>
 
         <Conditional
-          if={
-            reviewPageUrl &&
-            (!(isMobile || showFetchMoreButton) ||
-              numberOfReviewsToShow >=
-                (totalNumberOfReviews === -1
-                  ? maximumNumberOfReviews
-                  : Math.min(totalNumberOfReviews, maximumNumberOfReviews))) &&
-            reviews.length >= DEFAULT_TOP_REVIEWS_COUNT
-          }
+          if={reviewPageUrl && !showLoadMoreButton && reviews.length > 0}
         >
           <AllReviewsButton
             href={reviewPageUrl}

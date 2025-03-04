@@ -4,7 +4,7 @@ import type { TSnapshotSectionProps } from './Snapshots/interface';
 
 export type TReviewSectionProps = {
   reviewsDetails: Record<string, any>;
-  tgid: string | number;
+  tgid: string;
   topReviews?: TReviewMediasResponse['items'];
   tourGroupUrl?: string;
   showTitle?: boolean;

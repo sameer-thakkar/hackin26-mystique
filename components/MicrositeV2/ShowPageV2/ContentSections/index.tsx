@@ -511,6 +511,7 @@ const ContentSections = ({
                 reviewPageUrl={reviewPageUrl}
                 isMobile={isMobile}
                 initialReviews={topReviews}
+                showFetchMoreButton
               />
             </Content>
           </Conditional>
