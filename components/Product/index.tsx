@@ -284,8 +284,10 @@ const Product = (props: any) => {
     showBoosters = false,
     isPopUpOnly = false,
     onPopupClosed,
+    onPopupOpened,
     isFlexiCancellationExperimentTriggered,
     scrollToIndex = -1,
+    fireCardClickEvent = true,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
@@ -536,20 +538,22 @@ const Product = (props: any) => {
         }
       : {};
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.POSITION]: position,
-      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-      'Div Type': 'product-list',
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-        reviewsDetails,
-        boosterType,
-      }),
-    });
+    if (fireCardClickEvent) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.POSITION]: position,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+        'Div Type': 'product-list',
+        ...getProductCommonProperties({
+          primaryCategory,
+          primaryCollection,
+          primarySubCategory,
+          reviewsDetails,
+          boosterType,
+        }),
+      });
+    }
     const { listingPrice } = tourPrices[tgid] ?? {};
     const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
 
@@ -2301,6 +2305,7 @@ const Product = (props: any) => {
         onStateChange={(isOpen) => {
           setIsPopupOpen(isOpen);
           if (!isOpen) onPopupClosed?.();
+          if (isOpen) onPopupOpened?.();
         }}
         slideUp={isNewVerticalsProductCard}
         defaultOpen={defaultOpen}

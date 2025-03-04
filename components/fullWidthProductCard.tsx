@@ -92,9 +92,11 @@ const FullWidthProductCardComponent = (props: Props) => {
 
   const trackCardContentClicked = (section?: string) => {
     let eventsData = {
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      eventName: ANALYTICS_EVENTS.MORE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: Number(productId),
       [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.ACTION]: 'Expand',
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: COLLECTION_PAGE.HIGHLIGHTS,
     };
 
     if (section) {
@@ -109,6 +111,7 @@ const FullWidthProductCardComponent = (props: Props) => {
       eventsData = {
         ...eventsData,
         ...{
+          [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
           [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
           [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
           [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
@@ -162,13 +165,51 @@ const FullWidthProductCardComponent = (props: Props) => {
   const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();
     event.preventDefault();
+
+    const { ratings: { value: averageRating } = {}, listingPrice } =
+      productCardInfo;
+    const { id: collectionId, name: collectionName } = collectionsInfo || {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: Number(productId),
+      [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.FULL_WIDTH,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+    });
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Collection',
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.TGID]: Number(productId),
+      [ANALYTICS_PROPERTIES.CITY]: productCardInfo?.cityCode,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.FULL_WIDTH,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
+    });
+
     window.open(bookingURL, '_blank', 'noopener');
   };
 
   const handleMoreInfoClick = (e: MouseEventHandler) => {
     setShowPopup(true);
     onMoreInfoClick?.(e);
-    trackCardContentClicked('More Info');
+    trackCardContentClicked();
   };
 
   const handleItineraryCTAClick: React.MouseEventHandler<HTMLButtonElement> = (
@@ -177,6 +218,34 @@ const FullWidthProductCardComponent = (props: Props) => {
     event.stopPropagation();
     event.preventDefault();
     setShowItineraryPopup(true);
+
+    const { ratings: { value: averageRating } = {}, listingPrice } =
+      productCardInfo;
+    const { id: collectionId, name: collectionName } = collectionsInfo || {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+    const { type: itineraryType, map: itineraryMap } =
+      tgidItineraryData?.[0] || {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.ITINERARY.VIEW_ITINERARY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Collection',
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.TGID]: Number(productId),
+      [ANALYTICS_PROPERTIES.CITY]: productCardInfo?.cityCode,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.FULL_WIDTH,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
+      [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: itineraryType,
+      [ANALYTICS_PROPERTIES.HAS_MAP]: itineraryMap?.active,
+    });
   };
 
   const productScorpioData = scorpioData[productId];

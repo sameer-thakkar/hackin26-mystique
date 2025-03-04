@@ -103,6 +103,7 @@ const CollectionProductCardComponent = (props: Props) => {
     isSpecialGuidedTour,
     isCardClickable = true,
     showCtas = false,
+    collectionsInfo,
   } = props;
 
   let productCardInfo = productCardInfoProps;
@@ -130,16 +131,13 @@ const CollectionProductCardComponent = (props: Props) => {
     uid,
   } = mbContext;
 
-  const trackCardContentClicked = (section?: string) => {
+  const trackCardContentClicked = (eventName?: string) => {
     let eventsData = {
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      eventName: eventName || ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: Number(productId),
       [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: COLLECTION_PAGE.HIGHLIGHTS,
     };
-
-    if (section) {
-      eventsData['Card Area Clicked'] = section;
-    }
 
     if (pageType === PAGE_TYPES.DAY_TRIPS_COLLECTION) {
       const {
@@ -153,6 +151,7 @@ const CollectionProductCardComponent = (props: Props) => {
       eventsData = {
         ...eventsData,
         ...{
+          [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
           [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
           [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
           [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
@@ -194,8 +193,6 @@ const CollectionProductCardComponent = (props: Props) => {
     } else {
       openProductCardAside({ scrollToItinerarySection: false });
     }
-
-    trackCardContentClicked();
   };
 
   const handleItineraryCTAClick: React.MouseEventHandler<HTMLButtonElement> = (
@@ -209,6 +206,34 @@ const CollectionProductCardComponent = (props: Props) => {
     } else {
       openProductCardAside({ scrollToItinerarySection: true });
     }
+
+    const { ratings: { value: averageRating } = {}, listingPrice } =
+      productCardInfo;
+    const { id: collectionId, name: collectionName } = collectionsInfo || {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+    const { type: itineraryType, map: itineraryMap } =
+      tgidItineraryData?.[0] || {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.ITINERARY.VIEW_ITINERARY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Collection',
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.TGID]: Number(productId),
+      [ANALYTICS_PROPERTIES.CITY]: productCardInfo?.cityCode,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.GRID,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
+      [ANALYTICS_PROPERTIES.ITINERARY_TYPE]: itineraryType,
+      [ANALYTICS_PROPERTIES.HAS_MAP]: itineraryMap?.active,
+    });
   };
 
   const handleMoreInfo: React.MouseEventHandler<HTMLButtonElement> = (
@@ -228,10 +253,42 @@ const CollectionProductCardComponent = (props: Props) => {
           [ANALYTICS_PROPERTIES.PLACEMENT]: placement,
         }
       : {};
+    const { ratings: { value: averageRating } = {}, listingPrice } =
+      productCardInfo;
+    const { id: collectionId, name: collectionName } = collectionsInfo || {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
     trackEvent({
-      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: Number(productId),
       [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.GRID,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+      ...placementProperty,
+    });
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: 'Collection',
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: productCardPosition,
+      [ANALYTICS_PROPERTIES.RANKING]: productCardPosition,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: productCardInfo.name,
+      [ANALYTICS_PROPERTIES.TGID]: Number(productId),
+      [ANALYTICS_PROPERTIES.CITY]: productCardInfo?.cityCode,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: LAYOUT_STYLE.GRID,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: collectionName,
+      [ANALYTICS_PROPERTIES.AVERAGE_RATING]: averageRating,
+      [ANALYTICS_PROPERTIES.SECTION]: COLLECTION_PAGE.CURATED_EXPERIENCES,
       ...placementProperty,
     });
   };
@@ -274,6 +331,9 @@ const CollectionProductCardComponent = (props: Props) => {
         href={bookingURL!}
         target={isDesktop ? '_blank' : '_self'}
         rel={isDesktop ? 'noopener noreferrer' : undefined}
+        onClick={() => {
+          sendBookNowEvent();
+        }}
       >
         <Button
           as="button"
@@ -466,6 +526,8 @@ const CollectionProductCardComponent = (props: Props) => {
     flowType: productCardInfo?.flowType,
     earliestAvailability: productCardInfo?.earliestAvailability,
     isScratchPriceEnabled: true,
+    position: productCardPosition,
+    fireCardClickEvent: !isCardClickable,
     itineraryInfo: {
       data: tgidItineraryData,
       showData: showItinerary && !showSightsCoveredItineraryLayout,
@@ -538,6 +600,13 @@ const CollectionProductCardComponent = (props: Props) => {
           onPopupClosed={() => {
             setIsPopUpOpen(false);
             setShowItineraryPopup(false);
+          }}
+          onPopupOpened={() => {
+            if (showCtas) {
+              trackCardContentClicked(ANALYTICS_EVENTS.MORE_DETAILS_VIEWED);
+            } else {
+              trackCardContentClicked(ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED);
+            }
           }}
           scrollToIndex={showItineraryPopup ? 2 : -1}
         />
