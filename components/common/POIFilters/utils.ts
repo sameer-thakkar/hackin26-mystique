@@ -173,3 +173,47 @@ export const hasFiltersAndAllToursSatisfyAllFilters = (
     });
   });
 };
+
+export const shouldShowFilters = ({
+  existingFilterTypes,
+  allTours,
+  scorpioData,
+  inventoryFilteredTours,
+  isTourListFiltered,
+}: {
+  existingFilterTypes: Set<TPOIFilterType>;
+  allTours: TTour[];
+  scorpioData: Record<string, TScorpioData>;
+  inventoryFilteredTours: TTour[];
+  isTourListFiltered: boolean;
+}) => {
+  const shouldNotHaveShownFiltersOnUnfilteredTours =
+    isJustOneFilter(existingFilterTypes) ||
+    hasLessThanThreeTours(allTours) ||
+    hasFiltersAndAllToursSatisfyAllFilters(
+      allTours,
+      existingFilterTypes,
+      scorpioData
+    );
+
+  const hideFiltersOnFilteredTours =
+    isJustOneFilter(existingFilterTypes) ||
+    hasLessThanThreeTours(inventoryFilteredTours) ||
+    hasFiltersAndAllToursSatisfyAllFilters(
+      inventoryFilteredTours,
+      existingFilterTypes,
+      scorpioData
+    );
+
+  if (isTourListFiltered) {
+    if (shouldNotHaveShownFiltersOnUnfilteredTours) {
+      return false;
+    }
+  } else {
+    if (hideFiltersOnFilteredTours) {
+      return false;
+    }
+  }
+
+  return true;
+};

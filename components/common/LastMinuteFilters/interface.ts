@@ -1,8 +1,9 @@
-import { TTour } from 'components/AirportTransfers/interface';
+import { TScorpioData, TTour } from 'components/AirportTransfers/interface';
 import { getCategoryMap } from 'utils/productUtils';
+import { TPOIFilterType } from '../POIFilters/constant';
 
 export interface ILastMinuteFilters {
-  orderedTours: Record<string, any>[];
+  orderedTours: TTour[];
   setOrderedFilteredTours: Function;
   setProductsLoading: Function;
   isProductCardPhase1ExpTreatment?: boolean;
@@ -10,6 +11,10 @@ export interface ILastMinuteFilters {
   changeTourListFilterStatus?: (state: boolean) => void;
   singlePillUI?: boolean;
   poiFilteredTours?: TTour[];
+  existingFilterTypes?: Set<TPOIFilterType>;
+  scorpioData?: Record<string, TScorpioData>;
+  inventoryFilteredTours?: TTour[];
+  isTourListFiltered?: boolean;
 }
 
 export type TOnFilterChangeParams = {

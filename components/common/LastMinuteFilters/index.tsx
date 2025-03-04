@@ -27,6 +27,7 @@ import { addDays, formatDateToString } from 'utils/dateUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
+import { shouldShowFilters } from '../POIFilters/utils';
 import { SinglePillFilters } from './SinglePillFilters/index';
 
 const LastMinuteFilters = (props: ILastMinuteFilters) => {
@@ -37,6 +38,10 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     changeTourListFilterStatus,
     singlePillUI: isSinglePillUI,
     poiFilteredTours,
+    existingFilterTypes,
+    scorpioData,
+    inventoryFilteredTours,
+    isTourListFiltered,
   } = props;
   const [
     selectedDateTimeFilterButtonIndex,
@@ -237,7 +242,19 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     );
   }
 
-  if (isSinglePillUI && inventoryData && !isLoading) {
+  let shouldRenderPOIFilters = false;
+
+  if (existingFilterTypes && scorpioData && inventoryFilteredTours) {
+    shouldRenderPOIFilters = shouldShowFilters({
+      existingFilterTypes: existingFilterTypes,
+      allTours: orderedTours,
+      scorpioData: scorpioData,
+      inventoryFilteredTours: inventoryFilteredTours,
+      isTourListFiltered: isTourListFiltered ?? false,
+    });
+  }
+
+  if (isSinglePillUI && inventoryData && !isLoading && shouldRenderPOIFilters) {
     return (
       <FiltersWrapperTreatment $isSticky>
         <SinglePillFilters

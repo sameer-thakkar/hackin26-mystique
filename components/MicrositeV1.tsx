@@ -1506,12 +1506,16 @@ const MicrositeV1 = (props: any) => {
               <LastMinuteFilters
                 setOrderedFilteredTours={setOrderedFilteredTours}
                 orderedTours={orderedTours}
+                scorpioData={scorpioData}
                 setProductsLoading={setProductsLoading}
+                inventoryFilteredTours={orderedFilteredTours}
                 changeTourListFilterStatus={(state) => {
                   if (state !== isTourListFiltered)
                     setIsTourListFiltered(state);
                 }}
                 singlePillUI={isPOIFiltersEnabled}
+                existingFilterTypes={poiFilterTypes}
+                isTourListFiltered={isTourListFiltered}
                 poiFilteredTours={
                   filterToursByPOIFilter(
                     orderedTours,

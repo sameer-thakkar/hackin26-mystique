@@ -145,8 +145,8 @@ export const FiltersWrapperTreatment = styled.div<{ $isSticky?: boolean }>`
 `;
 
 export const FiltersWrapper = styled(FiltersWrapperTreatment)`
-  padding: 1.5rem 0 0 0;
-  margin-bottom: 1rem;
+  padding: 0.7rem 0 0 0;
+  margin-bottom: 0.7rem;
 `;
 
 export const Footer = styled.div`

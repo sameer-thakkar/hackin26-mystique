@@ -14,10 +14,8 @@ import { TPOIFilterProps } from './interface';
 import { filtersContainerStyles, separatorStyle } from './styles';
 import {
   getAvailablePOIFilterTypes,
-  hasFiltersAndAllToursSatisfyAllFilters,
-  hasLessThanThreeTours,
-  isJustOneFilter,
   scrollToProductsContainerTop,
+  shouldShowFilters,
 } from './utils';
 
 export const POIFilters = ({
@@ -76,33 +74,15 @@ export const POIFilters = ({
     };
   }, [isMobile]);
 
-  const shouldNotHaveShownFiltersOnUnfilteredTours =
-    isJustOneFilter(existingFilterTypes) ||
-    hasLessThanThreeTours(allTours) ||
-    hasFiltersAndAllToursSatisfyAllFilters(
-      allTours,
-      existingFilterTypes,
-      scorpioData
-    );
+  const shouldRenderFilters = shouldShowFilters({
+    existingFilterTypes,
+    allTours,
+    scorpioData,
+    inventoryFilteredTours,
+    isTourListFiltered,
+  });
 
-  const hideFiltersOnFilteredTours =
-    isJustOneFilter(existingFilterTypes) ||
-    hasLessThanThreeTours(inventoryFilteredTours) ||
-    hasFiltersAndAllToursSatisfyAllFilters(
-      inventoryFilteredTours,
-      existingFilterTypes,
-      scorpioData
-    );
-
-  if (isTourListFiltered) {
-    if (shouldNotHaveShownFiltersOnUnfilteredTours) {
-      return null;
-    }
-  } else {
-    if (hideFiltersOnFilteredTours) {
-      return null;
-    }
-  }
+  if (!shouldRenderFilters) return null;
 
   const toggleFilter = (filterType: TPOIFilterType) => {
     setProductsLoading(true);
