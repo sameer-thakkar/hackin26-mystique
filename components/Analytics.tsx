@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useAttribution from 'hooks/useAttribution';
 import useReportVitals from 'hooks/useReportVitals';
 import { sendVariableToDataLayer } from 'utils/analytics';
@@ -16,7 +16,7 @@ import {
 
 const Analytics = ({ contentType, cmsContent }: any) => {
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
-  const hsid = useRecoilState(hsidAtom);
+  const hsid = useRecoilValue(hsidAtom);
   const [appState, setAppState] = useRecoilState(appAtom);
 
   useReportVitals();
