@@ -11,7 +11,7 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
   - [Developing](#developing)
   - [Generating Prismic Types](#generating-prismic-types)
   - [Building locally](#building-locally)
-  - [Testing on Ondemand Environment (ODE)](#testing-on-ondemand-environment-ode)
+  - [Testing on On-demand Environment (ODE)](#testing-on-ondemand-environment-ode)
   - [Contributing](#contributing)
 
 ## Development

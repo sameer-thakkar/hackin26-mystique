@@ -157,7 +157,7 @@ export const SlideDescription = styled.div<{
       display: inline-block;
       max-width: ${({ index }) =>
         index === 0 ? `31.1875rem;` : `25.9375rem;`};
-      margin: 0;
+      margin: 0 0 12px 0;
       color: ${COLORS.BRAND.WHITE};
       ${({ index }) =>
         index === 0
