@@ -1493,11 +1493,19 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   HIDE_RESPONSES: 'Hide responses',
   GUEST_QNA: 'Guest Q&A',
   ASKED_AND_ANSWERED: 'Asked & answered',
+  ADVICE_FROM_TRAVELLERS: 'Advice from {0} travelers',
   VIEW_ALL_QNA: 'View all Q/As',
   EXPLORE_ALL: 'Explore all',
   EXPLORE_MORE_QUESTIONS: 'Explore more questions',
   GUESTS: 'guests',
   RESPONSES: 'responses',
+  ADVICE: 'Advice from {0} travelers',
+  REAL_TIPS:
+    'Real tips from real people who’ve been there, <span>done that!<span>',
+  GENUINE_TIPS: 'Genuine tips from those who’ve been there',
+  SEE_ALL_Q: 'See all Q/A',
+  ANSWERS_COUNT: '{0} answers',
+  SEE_ALL_QNA: 'See all Q&A',
 
   FILTERS: {
     DATE_SELECTION: 'Date selection',

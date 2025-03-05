@@ -9,11 +9,18 @@ import {
   useState,
 } from 'react';
 import ReactModal from 'react-modal';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import CloseButton from 'components/Product/components/Popup/CloseButton';
 import { QnaContext } from 'contexts/QnaContext';
+import { truncateNumber } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { appAtom } from 'store/atoms/app';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  UID_TO_COUNT_MAPPING,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { QNA_MODAL } from '../../constants';
 import { getInitialVisibleQuestionsCount, scrollToBottom } from '../../utils';
@@ -40,6 +47,7 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
   const [visibleQuestionsCount, setVisibleQuestionsCount] = useState<
     Record<number, number>
   >(initialVisibleQuestionsCount);
+  const { uid } = useRecoilValue(appAtom);
 
   const scrollRefs = useRef<Record<number, RefObject<HTMLDivElement>>>({});
   const popupStyles = {
@@ -166,7 +174,14 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
       <StyledQnaModalContainer>
         <StyledModalHeader $isTabsVisible={isTabsVisible}>
           <StyledModalHeaderTop>
-            <h4>{strings.ASKED_AND_ANSWERED}</h4>
+            <h4>
+              {strings.formatString(
+                strings.ADVICE_FROM_TRAVELLERS,
+                `${truncateNumber(
+                  UID_TO_COUNT_MAPPING[uid as keyof typeof UID_TO_COUNT_MAPPING]
+                ).toUpperCase()}+`
+              )}
+            </h4>
             <StyledCloseBtnWrapper>
               <CloseButton isHighlighted={true} onClick={close} />
             </StyledCloseBtnWrapper>
@@ -210,8 +225,6 @@ const QnaModal = ({ qnaSections, tabsArray }: TQnaModal) => {
             </StyledQnaModalBody>
           );
         })}
-
-        <div className="footer-overlay" />
       </StyledQnaModalContainer>
     </ReactModal>
   );

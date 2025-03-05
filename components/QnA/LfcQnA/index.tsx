@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import SwipeableTabs from 'components/common/SwipeableTabs';
@@ -6,23 +7,31 @@ import { QnAContainer } from 'components/StaticBanner';
 import { MBContext } from 'contexts/MBContext';
 import { QnaContext, QnaContextProvider } from 'contexts/QnaContext';
 import useOnScreen from 'hooks/useOnScreen';
+import { truncateNumber } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName } from 'utils/helper';
 import { sentenceCase } from 'utils/stringUtils';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { appAtom } from 'store/atoms/app';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  UID_TO_COUNT_MAPPING,
+} from 'const/index';
 import { strings } from 'const/strings';
+import { UNDERLINE } from 'assets/underline';
 import { createTabItem } from '../QnASnippetSection';
 import { DrawerStyles } from '../QnASnippetSection/styles';
 import LfcDWebSection from './components/LfcDWebSection';
 import QnaAccordionSection from './components/QnaAccordionSection';
 import QnaModal from './components/QnaModal';
+import {
+  Heading,
+  InfoCopy,
+  UnderlinedText,
+} from './components/QnaSnippet2.0/styles';
 import ViewAllBtn from './components/ViewAllBtn';
 import { QNA_LFC_SECTION } from './constants';
-import {
-  CrawlableContent,
-  LfcSectionHeading,
-  StyledLfcQnaSection,
-} from './styles';
+import { CrawlableContent, StyledLfcQnaSection } from './styles';
 import { TLfcQnaProps } from './types';
 import { getQnaCommonDataEvents } from './utils';
 
@@ -31,6 +40,7 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
     useContext(QnaContext);
   const { lang, isDev, host } = useContext(MBContext);
   const mbName = getHostName(isDev, host);
+  const { uid } = useRecoilValue(appAtom);
 
   const lfcSectionRef = useRef<HTMLDivElement>(null);
 
@@ -80,9 +90,25 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
 
   return (
     <StyledLfcQnaSection ref={lfcSectionRef}>
-      <LfcSectionHeading>
-        <h2>{strings.ASKED_AND_ANSWERED}</h2>
-      </LfcSectionHeading>
+      <Heading>
+        {strings.formatString(
+          strings.ADVICE,
+          <UnderlinedText>
+            <span className="blue">
+              {truncateNumber(
+                UID_TO_COUNT_MAPPING[uid as keyof typeof UID_TO_COUNT_MAPPING]
+              ).toUpperCase()}
+              +
+            </span>
+            {UNDERLINE}
+          </UnderlinedText>
+        )}
+        <InfoCopy
+          dangerouslySetInnerHTML={{
+            __html: strings.REAL_TIPS,
+          }}
+        />
+      </Heading>
       <div className="lfc-qna-body-wrapper">
         <Conditional if={isMobile}>
           <QnaAccordionSection
@@ -121,7 +147,14 @@ const LfcQnaChild = ({ qnaSections, isMobile, collectionId }: TLfcQnaProps) => {
           noMargin
           coverHeaderInShadow
         >
-          <h2>{strings.ASKED_AND_ANSWERED}</h2>
+          <h2>
+            {strings.formatString(
+              strings.ADVICE_FROM_TRAVELLERS,
+              `${truncateNumber(
+                UID_TO_COUNT_MAPPING[uid as keyof typeof UID_TO_COUNT_MAPPING]
+              ).toUpperCase()}+`
+            )}
+          </h2>
           <SwipeableTabs tabs={tabsArray} />
         </Drawer>
       </Conditional>

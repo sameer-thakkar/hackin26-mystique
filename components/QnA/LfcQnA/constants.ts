@@ -3,7 +3,7 @@ import COLORS from 'const/colors';
 export const MIN_VISIBLE_ANSWER_COUNT = 2;
 
 export const QNA_LFC_SECTION = 'QnA LFC Section';
-export const QNA_SNIPPET_SECTION = 'QnA Snippet Section';
+export const QNA_SNIPPET_SECTION = 'QnA Snippet';
 export const QNA_MODAL = 'QnA Modal';
 export const QNA_DRAWER = 'QnA Drawer';
 export const ANSWER_AUTO_SCROLL_BUFFER = 10;

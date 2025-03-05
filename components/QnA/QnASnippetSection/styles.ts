@@ -134,6 +134,12 @@ export const CardContainer = styled.div`
     margin: 0;
     overflow: visible;
 
+    && {
+      .snippet-card:hover {
+        box-shadow: 0px 0.25rem 12px 2px #1111111a, 0px 1px 8px 0px #1111110d;
+      }
+    }
+
     &::after {
       display: none;
     }
@@ -181,16 +187,7 @@ export const Card = styled.div`
       height: 100%;
     }
 
-    :hover {
-      box-shadow: 0px 0.25rem 12px 2px #1111111a;
-      box-shadow: 0px 1px 8px 0px #1111110d;
-    }
-
-    &:hover {
-      box-shadow: 0px 0.25rem 12px 2px #1111111a;
-    }
-
-    &:hover .see-more-responses-cta {
+    .see-more-responses-cta:hover {
       gap: 0.375rem;
     }
   }
@@ -329,7 +326,7 @@ export const DrawerStyles = ({
 }: {
   isTabsVisible?: boolean;
 }) => css`
-  height: 80dvh;
+  height: 85dvh;
 
   &&&& {
     grid-row-gap: 1.5rem;

@@ -142,6 +142,7 @@ export const HeadingContainer = styled.div<{ $hasHeading?: boolean }>`
     margin-left: auto;
     grid-column: 2 / 3;
     grid-row: 1;
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 
@@ -222,11 +223,13 @@ const Drawer = ({
     if (liveChatZIndex) {
       liveChatContainer.style.zIndex = '19';
     }
+    document.body.style.overflow = 'hidden';
     document.body.classList.add('scroll-lock', 'no-shadow');
     setMounted(true);
 
     return () => {
       document.body.classList.remove('scroll-lock', 'no-shadow');
+      document.body.style.overflow = 'auto';
       if (liveChatZIndex) {
         liveChatContainer.style.zIndex = liveChatZIndex;
       }

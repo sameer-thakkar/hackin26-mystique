@@ -147,7 +147,7 @@ jobs:
       - name: Warmup Assets from S3 🪣
         run: |
           node ./ci/scripts/warmup-cache.js
-        if: matrix.env == 'production'
+        # if: matrix.env == 'production'
 
       - name: Prepare Node Modules required during Runtime
         run: |

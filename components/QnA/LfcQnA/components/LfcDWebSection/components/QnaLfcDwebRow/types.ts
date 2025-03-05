@@ -9,6 +9,8 @@ export interface Customer {
   id: string;
   name: string;
   profileImageUrl: string | null;
+  countryCode: string;
+  countryName: string;
 }
 
 export interface Answer {
@@ -27,4 +29,5 @@ export interface Question {
 export interface QnA {
   question: Question;
   answer: Answer;
+  totalAnswersCount: number;
 }

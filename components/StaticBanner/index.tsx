@@ -6,7 +6,6 @@ import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import { QnA } from 'components/QnA/LfcQnA/components/LfcDWebSection/components/QnaLfcDwebRow/types';
-import QnASnippetSection from 'components/QnA/QnASnippetSection';
 import {
   AverageRatingWrapper,
   BannerDisclaimerText,
@@ -208,10 +207,7 @@ const StaticBanner = ({
   forceMobile = false,
   bannerDisclaimerText,
   isCruisesRevamp = false,
-  qnaSnippets,
-  qnaSections,
   showQnaExperiment = false,
-  collectionId,
   reducedMwebMarginOnDisclaimer = false,
   isAirportTransfersMB = false,
 }: StaticBannerProps) => {
@@ -482,14 +478,6 @@ const StaticBanner = ({
             </InfoContainer>
           </Conditional>
         </ContentContainer>
-        <Conditional if={isMobile && showQnaExperiment}>
-          <QnASnippetSection
-            isMobile
-            qnaSnippets={qnaSnippets ?? []}
-            qnaSections={qnaSections ?? []}
-            collectionId={collectionId}
-          />
-        </Conditional>
 
         <Conditional if={!isMobile}>
           <MediaContainer

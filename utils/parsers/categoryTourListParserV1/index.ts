@@ -91,7 +91,7 @@ const categoryTourListParserV1 = async ({
         currency: currentCurrency,
         tourGroups,
         pageData,
-      } = collectionTourGroups;
+      } = collectionTourGroups ?? {};
       const tourGroupsData = runRankingExperiment
         ? tourGroups
         : pageData?.items;

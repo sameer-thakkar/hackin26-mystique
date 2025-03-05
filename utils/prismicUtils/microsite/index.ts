@@ -11,6 +11,7 @@ import {
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
 } from 'utils';
+import { getQnaData } from 'utils/apiUtils';
 import { checkIfCatOrSubCatPage } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import {
@@ -26,6 +27,7 @@ import {
   MICROSITE_STRING_KEYS,
   SLICE_TYPES,
 } from 'const/index';
+import { LOG_LEVELS } from 'const/logs';
 import getContentPageDocument from '../contentPage';
 import getCanonicalLinkFromBaseLangData from '../getCanonicalLink';
 import type { TGetDocument, TRedirectInfo } from '../interface';
@@ -122,6 +124,13 @@ const getMicrositeDocument = async ({
           currentPageData,
           baseLangCategorisationMetadata
         );
+
+        const { qnaSnippets, qnaSections } = await getQnaData({
+          collectionId: Number(
+            baseLangCategorisationMetadata?.tagged_collection
+          ),
+          uid,
+        });
 
         let baseLangCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
         let currentPageCategoryTourListV1: MicrositeDocumentDataBodyTourListCategoryV1Slice;
@@ -261,6 +270,13 @@ const getMicrositeDocument = async ({
           });
         }
 
+        sendLog({
+          level: LOG_LEVELS.INFO,
+          message: `collectionId:${Number(
+            baseLangCategorisationMetadata?.tagged_collection
+          )}  uid: ${uid}`,
+        });
+
         const transformedData: TMicrositeDocument = {
           ...micrositeData,
           data: {
@@ -298,8 +314,8 @@ const getMicrositeDocument = async ({
             mbType: tagged_mb_type,
           },
           subattractionsContentPageData,
-          qnaSnippets: [],
-          qnaSections: [],
+          qnaSnippets: qnaSnippets,
+          qnaSections: qnaSections,
         };
 
         return {

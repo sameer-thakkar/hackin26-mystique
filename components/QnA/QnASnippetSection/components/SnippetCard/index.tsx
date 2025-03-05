@@ -52,7 +52,7 @@ const SnippetCard = ({
   }, [isCardIntersecting]);
 
   return (
-    <Card ref={cardRef} onClick={handleCardClick}>
+    <Card ref={cardRef} onClick={handleCardClick} className="snippet-card">
       <Tag $bgColor={bgColor} $textColor={textColor}>
         {tag}
       </Tag>

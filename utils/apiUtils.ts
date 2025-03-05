@@ -332,7 +332,7 @@ export const getHeadoutApiUrl = ({
     /**
      * NOTE:
      * Ensure that all API endpoints are ending with a trailing slash "/"
-     * This is being done to prevent creating duplicate records on CDN.
+     * This is being done to prevent creating duplicate reads on CDN.
      */
     url = withTrailingSlash(
       `https://${
@@ -1917,6 +1917,11 @@ export const getQnaData = async ({
 }) => {
   try {
     const isUidPartOfQnaExp = QNA_EXP_UIDS.includes(uid);
+    sendLog({
+      level: LOG_LEVELS.INFO,
+      message: `isUidPartOfQnaExp: ${isUidPartOfQnaExp}`,
+    });
+
     if (!isUidPartOfQnaExp) {
       return {
         qnaSnippets: [],
@@ -1928,9 +1933,18 @@ export const getQnaData = async ({
       endpoint: HeadoutEndpoints.QnaSnippets,
       id: collectionId,
     });
+
+    sendLog({
+      level: LOG_LEVELS.INFO,
+      message: `qnaSnippetsApiUrl: ${qnaSnippetsApiUrl}`,
+    });
     const qnaSectionsApiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.QnaSections,
       id: collectionId,
+    });
+    sendLog({
+      level: LOG_LEVELS.INFO,
+      message: `qnaSectionsApiUrl: ${qnaSectionsApiUrl}`,
     });
 
     const [qnaSnippetsResponse, qnaSectionsResponse] = await Promise.all([
@@ -1940,6 +1954,14 @@ export const getQnaData = async ({
 
     const qnaSnippets = await qnaSnippetsResponse.json();
     const qnaSections = await qnaSectionsResponse.json();
+    sendLog({
+      level: LOG_LEVELS.INFO,
+      message: `qnaSnippets: ${qnaSnippets}`,
+    });
+    sendLog({
+      level: LOG_LEVELS.INFO,
+      message: `qnaSections: ${qnaSections}`,
+    });
     return {
       qnaSnippets: qnaSnippets?.result ?? [],
       qnaSections: qnaSections?.result ?? [],

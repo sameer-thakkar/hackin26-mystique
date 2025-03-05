@@ -70,7 +70,6 @@ export const generateCityPageData = async ({
     nearbyTopCollectionsData,
     categoriesData,
   ] = handleSettledPromiseResults(allPromiseSettledResults);
-
   return {
     cityTopCollectionsData,
     cityPageBannerData,

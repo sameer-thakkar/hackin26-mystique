@@ -152,6 +152,7 @@ const COLORS = {
   MISC: {
     FADED_WHITE: '#FFFFFF4D',
     GREEN: '#078842',
+    LAVENDER: '#f7f7ff',
   },
   metadata: {
     generated: 'Tue Jun 15 2021 13:18:23 GMT+0530 (India Standard Time)',

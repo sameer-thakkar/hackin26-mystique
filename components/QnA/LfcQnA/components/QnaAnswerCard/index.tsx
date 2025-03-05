@@ -91,6 +91,8 @@ const QnaAnswerCard = ({
             className="reviewer-image"
             url={customerImgUrl ?? getRandomReviewerImage(customerName)}
             alt="critic"
+            height={36}
+            width={36}
           />
         </StyledImgWrapper>
         <StyledAnswerCardInfoRight>

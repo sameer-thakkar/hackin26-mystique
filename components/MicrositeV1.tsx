@@ -59,6 +59,7 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
@@ -106,6 +107,7 @@ import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
 import { ICollectionCarousel } from './slices/CollectionCarousel/interface';
 
+const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
 const POICollectionsSection = dynamic<ICollectionCarousel>(() =>
   import(
     /* webpackChunkName: "POICollectionsSection" */ './POICollectionsSection'
@@ -151,7 +153,7 @@ const CityPageContainer = dynamic(
 const Banner = dynamic(
   () => import(/* webpackChunkName: "Banner" */ 'components/Banner')
 );
-const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
+
 const CategoryHeader = dynamic(
   () =>
     import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
@@ -259,6 +261,7 @@ const MicrositeV1 = (props: any) => {
   const windowWidth = useWindowWidth();
   const [showLfcTimer, setShowLfcTimer] = useState(false);
   const router = useRouter();
+  const { isBot } = useRecoilValue(appAtom);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -400,7 +403,22 @@ const MicrositeV1 = (props: any) => {
     !isAirportTransfersMB &&
     !showCruisesFormat;
 
-  const showQnaExperiment = false;
+  const isLangEn = lang === 'en-us' || lang === 'en';
+
+  const {
+    isEligible: isQnaExpEligible,
+    isExperimentResolving: isQnaExpResolving,
+    variant: qnaExpVariant,
+  } = useABTesting({
+    experimentId: 'QNA_EXPERIMENT',
+    customEligibilityCheckFn: () => QNA_EXP_UIDS.includes(uid) && isLangEn,
+  });
+
+  const showQnaExperiment =
+    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) ||
+      (isBot && isLangEn)) &&
+    qnaSections?.length &&
+    qnaSnippets?.length;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -1035,6 +1053,7 @@ const MicrositeV1 = (props: any) => {
       bannerVideo={bannerVideo}
       isCollectionMB={isCollectionMicrobrand}
       productsLoading={productsLoading}
+      setProductsLoading={setProductsLoading}
       isPoiMwebCard={isPoiMwebCard}
       isNonPoi={isNonPoiMB}
       isAirportTransfersMB={isAirportTransfersMB}
@@ -1050,6 +1069,7 @@ const MicrositeV1 = (props: any) => {
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
       isRankingExperimentResolving={isRankingExperimentResolving}
+      isQnaExpResolving={isQnaExpResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={
         (isBoosterExpEligible &&
@@ -1122,6 +1142,7 @@ const MicrositeV1 = (props: any) => {
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
   if (
+    (isQnaExpEligible && isQnaExpResolving) ||
     (isCruisesCombosExpEligible && isCruisesCombosExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
@@ -1366,7 +1387,6 @@ const MicrositeV1 = (props: any) => {
             />
           </div>
         </Conditional>
-
         <Conditional
           if={
             !isEntertainmentBanner &&

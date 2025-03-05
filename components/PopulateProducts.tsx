@@ -17,6 +17,7 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
+import { QnaContextProvider } from 'contexts/QnaContext';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -54,7 +55,8 @@ import PercentageStamp from 'assets/percentageStamp';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { CardLoadingSkeleton } from './Product/components/CardLoadingSkeleton';
-import QnASnippetSection from './QnA/QnASnippetSection/index';
+import UpdatedQnaSnippet from './QnA/LfcQnA/components/QnaSnippet2.0';
+import UpdatedQnaSnippetDweb from './QnA/LfcQnA/components/QnaSnippet2.0DWeb';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 import CustomBanner from './CustomBanner';
 
@@ -257,6 +259,9 @@ const ProductContainer = styled.div<TProductContainerStyles>`
 
 const ProductWrapper = styled.div`
   flex: 0 49%;
+  @media (max-width: 768px) {
+    min-height: 20rem;
+  }
 `;
 
 const CombosContainer = styled.div`
@@ -1023,15 +1028,25 @@ const PopulateProducts: any = (props: any) => {
                   insideCards
                 />
               );
-              if (index === 1 && !isMobile && showQnaExperiment) {
+              if (index === 1 && showQnaExperiment) {
                 return (
-                  <QnASnippetSection
-                    key={index}
-                    isMobile={isMobile}
-                    qnaSnippets={qnaSnippets}
-                    qnaSections={qnaSections}
-                    collectionId={collectionId}
-                  />
+                  <QnaContextProvider key={index}>
+                    <Conditional if={isMobile}>
+                      <UpdatedQnaSnippet
+                        qnaSnippets={qnaSnippets}
+                        qnaSections={qnaSections}
+                        collectionId={collectionId}
+                      />
+                    </Conditional>
+                    <Conditional if={!isMobile}>
+                      <UpdatedQnaSnippetDweb
+                        key={index}
+                        qnaSnippets={qnaSnippets}
+                        qnaSections={qnaSections}
+                        collectionId={collectionId}
+                      />
+                    </Conditional>
+                  </QnaContextProvider>
                 );
               }
 
