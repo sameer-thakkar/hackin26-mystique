@@ -2342,10 +2342,10 @@ export const LFC_IMPACT_EXPERIMENT_EXCLUDED_UIDS = [
 
 export const QNA_EXP_UIDS = [
   'www.pompeii-tickets.com',
-  // 'www.paristickets.com.eiffel-tower',
-  // 'www.tickets-rome.com.colosseum',
-  // 'www.thevaticantickets.com',
-  // 'www.acropolis-tickets.com'
+  'www.paristickets.com.eiffel-tower',
+  'www.tickets-rome.com.colosseum',
+  'www.thevaticantickets.com',
+  'www.acropolis-tickets.com',
 ];
 
 export const ENTERTAINMENT_CATEGORIES = [
