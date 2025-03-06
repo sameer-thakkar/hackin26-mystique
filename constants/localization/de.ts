@@ -1283,7 +1283,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       COMBOS: 'Kombitickets',
     },
     MAP_OVERLAY: 'Verschieben Sie die Karte durch Klicken oder Tippen',
-    SIGHTS_COVERED: 'Sehens- würdigkeiten',
+    SIGHTS_COVERED: 'Wahr- zeichen',
     MENU: 'Speise- karte',
     BOARD_AT: 'Boarding: {0}',
     BOARDING_POINTS_AVAILABLE: '{0} mögliche Einstiegsstellen',
