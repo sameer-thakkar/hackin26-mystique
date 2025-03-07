@@ -453,6 +453,11 @@ export const ReviewPopover = styled.div`
     .review-content {
       ${expandFontToken(FONTS.PARAGRAPH_SMALL)};
       color: ${COLORS.GRAY.G2};
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
     }
 
     .read-more {

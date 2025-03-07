@@ -1,4 +1,3 @@
-import React from 'react';
 import { contentContainer, paragraph, subHeading, topHeading } from './styles';
 
 const TermsAndConditions = () => {
@@ -139,14 +138,14 @@ const TermsAndConditions = () => {
         <ol>
           <li>
             These Terms of Use together with the{' '}
-            <a href="https://www.headout.com/privacy-policy/">Privacy Policy</a>
-            , constitute a binding contract between the User and Headout. These
-            Terms of Use govern inter alia usage of any Sales Channel by the
-            User including but not limited to Platform/Website. Headout operates
-            the Platform/Website that allows inter alia (a) Suppliers to offer
-            Experiences/Services listed on the Platform to the User(s); and (b)
-            the conclusion of contracts directly between User(s) and the
-            Suppliers of such Services.
+            <a href="/privacy-policy/">Privacy Policy</a>, constitute a binding
+            contract between the User and Headout. These Terms of Use govern
+            inter alia usage of any Sales Channel by the User including but not
+            limited to Platform/Website. Headout operates the Platform/Website
+            that allows inter alia (a) Suppliers to offer Experiences/Services
+            listed on the Platform to the User(s); and (b) the conclusion of
+            contracts directly between User(s) and the Suppliers of such
+            Services.
           </li>
           <li>
             Headout is not a travel or tour agency and does not provide such

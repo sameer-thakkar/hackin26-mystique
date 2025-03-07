@@ -1353,7 +1353,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   FILTERS: {
     DATE_SELECTION: 'Datum auswählen',
     DEALS: 'Deals',
-    ENTRY_TICKETS: 'Eintrittskarten',
+    ENTRY_TICKETS: 'Eintrittstickets',
   },
 
   BOOSTERS: {
@@ -1361,7 +1361,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     SPECIAL_DEAL: 'Sonderangebot',
   },
 
-  OTHER_EXPERIENCES: 'Andere Erfahr``ungen',
+  OTHER_EXPERIENCES: 'Weitere Erlebnisse',
 
   POI_COLLECTIONS_SECTION: {
     MAKE_THE_MOST_OF_CITY: 'Erleben Sie {0}',

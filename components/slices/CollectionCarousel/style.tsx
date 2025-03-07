@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
@@ -61,6 +62,7 @@ export const Heading = styled.h3`
 export const Label = styled.div`
   padding-top: 0.375rem;
   ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+  color: ${COLORS.GRAY.G2};
 
   word-wrap: break-word;
   width: 11.25rem;

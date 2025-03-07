@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ThemeProvider } from 'styled-components';
 import { getAppTheme } from 'style/theme';
@@ -137,7 +137,7 @@ const PrivacyPage = (
                   </li>
                   <li>
                     This Policy, which is an integral part of Headout’s{' '}
-                    <a href="/terms">Terms of Use</a>, describes inter alia
+                    <a href="/terms/">Terms of Use</a>, describes inter alia
                     Headout’s procedures for the collection, processing,
                     disclosure and protection of the User’s Personal Information
                     when the User uses Our Platform. This Policy also intended
@@ -258,7 +258,7 @@ const PrivacyPage = (
                   </li>
                   <li>
                     <b>Website</b> refers to{' '}
-                    <a href="https://headout.com">www.headout.com</a>
+                    <a href="https://www.headout.com/">www.headout.com</a>
                   </li>
                   <li>
                     <b>You/Your</b> shall mean the User.

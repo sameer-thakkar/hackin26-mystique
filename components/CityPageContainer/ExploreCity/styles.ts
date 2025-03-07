@@ -13,6 +13,7 @@ export const ExploreContainer = styled.div`
   }
   .entity-name {
     ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+    color: ${COLORS.GRAY.G2};
   }
 
   .entity-image-container {
