@@ -1503,7 +1503,6 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   REAL_TIPS:
     'Real tips from real people who’ve been there, <span>done that!<span>',
   GENUINE_TIPS: 'Genuine tips from those who’ve been there',
-  SEE_ALL_Q: 'See all Q/A',
   ANSWERS_COUNT: '{0} answers',
   SEE_ALL_QNA: 'See all Q&A',
 

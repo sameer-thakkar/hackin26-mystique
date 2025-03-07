@@ -139,7 +139,7 @@ const UpdatedQnaSnippetDweb = ({
 
           <Navigation>
             <SeeAll onClick={() => setShowModal(true)}>
-              {strings.SEE_ALL_Q}
+              {strings.SEE_ALL_QNA}
             </SeeAll>
             <Arrows>
               <LttChevronLeft onClick={goPrev} disabled={activeSlideIdx <= 0} />
