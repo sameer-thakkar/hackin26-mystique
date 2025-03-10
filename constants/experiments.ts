@@ -122,7 +122,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [QNA_EXPERIMENT]: new Experiment(
     QNA_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [80, 20]
+    [100, 0]
   ),
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,
