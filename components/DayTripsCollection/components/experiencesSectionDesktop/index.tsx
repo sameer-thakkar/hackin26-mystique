@@ -196,6 +196,7 @@ const ExperiencesSection = (props: any) => {
               pageType: PAGE_TYPES.DAY_TRIPS_COLLECTION,
               collectionsInfo: collection,
               scorpioData,
+              showCtas: true,
               ...props,
             }))}
             columns={3}
@@ -224,6 +225,7 @@ const ExperiencesSection = (props: any) => {
                   pageType: PAGE_TYPES.DAY_TRIPS_COLLECTION,
                   collectionsInfo: collection,
                   scorpioData,
+                  showCtas: true,
                   ...props,
                 })
               )}

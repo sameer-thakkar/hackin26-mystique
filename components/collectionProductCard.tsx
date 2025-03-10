@@ -331,7 +331,8 @@ const CollectionProductCardComponent = (props: Props) => {
         href={bookingURL!}
         target={isDesktop ? '_blank' : '_self'}
         rel={isDesktop ? 'noopener noreferrer' : undefined}
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           sendBookNowEvent();
         }}
       >
