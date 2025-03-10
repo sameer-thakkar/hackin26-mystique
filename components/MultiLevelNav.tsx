@@ -280,6 +280,10 @@ const HeadingMenu = styled(StyledMenuItem)`
   }
 `;
 
+type TExtendedSlice = Slice & {
+  slices: Slice[];
+};
+
 const Navigation = (props: any) => {
   const {
     slices,
@@ -360,8 +364,10 @@ const Menu = ({
   const preventVerticalOverflow = useMemo(
     () =>
       !isMobile &&
-      !!(slices as Slice[])?.find(
-        (slice) => slice?.slice_type === 'nested_menu' && !!slice?.items?.length
+      !!(slices as TExtendedSlice[])?.find(
+        (slice) =>
+          (slice?.slice_type === 'nested_menu' && !!slice?.items?.length) ||
+          !!slice?.slices?.length
       ),
     [slices]
   );

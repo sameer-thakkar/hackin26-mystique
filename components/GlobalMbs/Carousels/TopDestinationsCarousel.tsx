@@ -1,11 +1,13 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { MBContext } from 'contexts/MBContext';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { FALLBACK_IMAGES } from 'const/index';
 
@@ -33,7 +35,7 @@ const StyledCard = styled.a`
   }
   @media (max-width: 768px) {
     img {
-      width: 100%;
+      width: 100% !important;
     }
   }
 `;
@@ -47,6 +49,7 @@ const TextWrapper = styled.div`
     font-weight: 600;
     line-height: 20px;
     letter-spacing: 0.5px;
+    color: ${COLORS.GRAY.G2};
   }
   .country {
     font-size: 14px;
@@ -66,6 +69,8 @@ const TopDestinationsCarousel: FunctionComponent<
   React.PropsWithChildren<TopDestinationsCarouselProps>
 > = ({ destinations, showTitle = true }) => {
   const { isDev, host } = useContext(MBContext);
+  const { isMobile } = useRecoilValue(appAtom);
+
   const finalCities = destinations?.filter(
     (destination) =>
       destination?.data?.city_name && destination?.data?.body?.length
@@ -104,7 +109,7 @@ const TopDestinationsCarousel: FunctionComponent<
   });
   return (
     <Wrapper>
-      <Carousel cardsInARow={6} entrySection={entrySection}>
+      <Carousel cardsInARow={isMobile ? 2.5 : 6} entrySection={entrySection}>
         {cardMarkup}
       </Carousel>
     </Wrapper>
