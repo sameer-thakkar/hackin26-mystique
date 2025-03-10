@@ -35,6 +35,16 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
 
 (`NEXT_PUBLIC_USE_PRISMIC_FROM_CDN` is used to determine if the Prismic client should be fetched from the CDN or nextjs' own server.)
 
+- Create a `.npmrc` file with the following content in the root of the repository. Replace the npm auth token with the actual token - get this from any developer.
+
+  ```bash
+  registry=https://registry.yarnpkg.com/	
+
+  @headout:registry=https://npm.pkg.github.com	
+  //npm.pkg.github.com/:_authToken={NPM_AUTH_TOKEN}
+  always-auth=true
+  ```
+
 - Install dependencies (please use only `yarn` and NOT `npm`):
 
   ```bash
