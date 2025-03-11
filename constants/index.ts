@@ -2479,6 +2479,7 @@ export const harryPotterExperimentUids = [
   'harry-potter.london-tickets.co.uk',
   'www.london-tickets.co.uk.warner-bros-studio-tour-london',
   'www.tickets-tokyo.com.warner-bros-studio-tour',
+  'harry-potter-studio.tickets-tokyo.com',
 ];
 
 export const DT_LISTICLE_EXPERIMENT_UIDS = [
