@@ -39,14 +39,20 @@ export const getUICompatibleReviewsData = (
 ) => {
   return (
     reviewsData?.reduce((acc: Record<string, any>[], curr) => {
-      const { nonCustomerName, reviewTime, rating, content } = curr ?? {};
+      const {
+        nonCustomerName,
+        reviewTime,
+        rating,
+        content,
+        translatedContent,
+      } = curr ?? {};
       const result = {
         author_name: nonCustomerName,
         origin_website: null,
         origin_website_link: null,
         review_date: reviewTime,
         rating: rating,
-        review: content,
+        review: translatedContent || content,
         reviewer_img_url: getRandomImage(nonCustomerName),
       };
       acc.push(result);
