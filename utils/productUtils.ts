@@ -1314,3 +1314,19 @@ export const checkForBooster = (uid: string, tgid: number) => {
 
   return finalType;
 };
+
+export const isVideoOnProductCardVisibleFn = ({
+  showVideoOnProductCard,
+  productCardIndex,
+  showBoosters,
+}: {
+  showVideoOnProductCard: boolean;
+  productCardIndex: number;
+  showBoosters: boolean;
+}) => {
+  if (showBoosters) {
+    return productCardIndex > 0 && showVideoOnProductCard;
+  }
+
+  return showVideoOnProductCard;
+};

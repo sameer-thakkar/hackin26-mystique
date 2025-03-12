@@ -1,3 +1,4 @@
+import { BoosterType } from 'components/Product/interface';
 import { longMonthtoShort } from 'utils/dateUtils';
 import { strings } from './strings';
 
@@ -2486,7 +2487,12 @@ export const DT_LISTICLE_EXPERIMENT_UIDS = [
   'www.tickets-rome.com.tours.day-trips-from-rome',
 ];
 
-export const BOOSTER_EXPERIMENT_UIDS = new Map();
+export const BOOSTER_EXPERIMENT_UIDS = new Map([
+  [
+    'www.flamenco-show-tickets.com.seville',
+    new Map([[BoosterType.MUST_DO_EXP, [26549]]]),
+  ],
+]);
 
 export const TEMP_HARDCODED_PRODUCT = {
   UID: 'www.broadway-show-tickets.com.home',

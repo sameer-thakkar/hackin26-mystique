@@ -10,7 +10,6 @@ export const VARIANTS = {
   TREATMENT: 'Treatment',
 };
 
-const BOOSTERS_EXPERIMENT = 'POI Card Booster Experiment';
 const LFC_IMPACT = 'LFC Impact';
 const LTD_LP_Experiment = 'LTD LP Experiment';
 const VIDEO_THUMBNAIL_IN_BANNER = 'MB Banner Video Experiment';
@@ -29,7 +28,6 @@ const QNA_EXPERIMENT = 'Q&A Experiment v2';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
-  BOOSTERS_EXPERIMENT,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   CRUISES_COMBO_REVAMP,
   DAY_TRIPS_COLLECTION_DWEB,
@@ -53,11 +51,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
  * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
  */
 export const EXPERIMENTS: Record<string, Experiment> = {
-  [BOOSTERS_EXPERIMENT]: new Experiment(
-    BOOSTERS_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
-  ),
   [C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH]: new Experiment(
     C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],

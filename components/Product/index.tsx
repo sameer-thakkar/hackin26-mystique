@@ -94,6 +94,7 @@ import {
   generateVideoExperimentVideoUrl,
   getMaxListItemsToShow,
   getProductCardLayout,
+  isVideoOnProductCardVisibleFn,
   parseInclusionsExclusions,
 } from 'utils/productUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -1558,6 +1559,12 @@ const Product = (props: any) => {
         ? PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.modified.height
         : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height;
 
+    const isVideoOnProductCardVisible = isVideoOnProductCardVisibleFn({
+      showBoosters: !!boosterTypeIfShown,
+      showVideoOnProductCard,
+      productCardIndex: indexPosition,
+    });
+
     const trackItineraryViewCTAClick = (activeItineraryData: TItinerary) => {
       const hasMapView = activeItineraryData?.map?.active;
 
@@ -1675,10 +1682,10 @@ const Product = (props: any) => {
               </Conditional>
               <Conditional if={!isLoading}>
                 <MediaCarousel
-                  showVideoOnProductCard={showVideoOnProductCard}
+                  showVideoOnProductCard={isVideoOnProductCardVisible}
                   imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
                   videoUrl={
-                    showVideoOnProductCard
+                    isVideoOnProductCardVisible
                       ? generateVideoExperimentVideoUrl(String(tgid))
                       : (isPopup ? originalIsMobile : isMobile) &&
                         isBannerCard &&

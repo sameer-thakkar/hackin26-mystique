@@ -52,10 +52,7 @@ import {
   groupSlices,
 } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
-import {
-  getFinalUncategorizedTours,
-  getTotalBoosters,
-} from 'utils/productUtils';
+import { getFinalUncategorizedTours } from 'utils/productUtils';
 import renderShortCodes from 'utils/shortCodes';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -455,37 +452,7 @@ const MicrositeV1 = (props: any) => {
   const showHohoRevamp =
     shouldRunHohoRevampExperiment && hohoExperimentVariant === VARIANTS.CONTROL;
 
-  const {
-    isEligible: isBoosterExpEligible,
-    variant: boosterExperimentVariant,
-  } = useABTesting({
-    experimentId: 'BOOSTERS_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => BOOSTER_EXPERIMENT_UIDS.has(uid),
-    additionalEventProps: () => {
-      const {
-        total,
-        distribution: {
-          BESTSELLER: bestSellerBoosterCount,
-          SELLING_OUT_FAST: sellingOutFastBoosterCount,
-          MUST_DO_EXP: mustDoExpBoosterCount,
-        },
-      } = getTotalBoosters(uid);
-
-      return {
-        [ANALYTICS_PROPERTIES.NUM_OF_BOOSTER]: total,
-        [ANALYTICS_PROPERTIES.IS_BEST_SELLING]: bestSellerBoosterCount
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
-        [ANALYTICS_PROPERTIES.IS_SELLING_FAST]: sellingOutFastBoosterCount
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
-        [ANALYTICS_PROPERTIES.IS_MUST_DO_EXP]: mustDoExpBoosterCount
-          ? BOOLEAN_STATES['YES']
-          : BOOLEAN_STATES['NO'],
-      };
-    },
-  });
+  const isBoosterExpEligible = BOOSTER_EXPERIMENT_UIDS.has(uid);
 
   const showCustomProductCardEnglishCTA =
     shouldRunCustomEnglishCTAExperiment &&
@@ -1071,11 +1038,7 @@ const MicrositeV1 = (props: any) => {
       isRankingExperimentResolving={isRankingExperimentResolving}
       isQnaExpResolving={isQnaExpResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
-      showBoosters={
-        (isBoosterExpEligible &&
-          boosterExperimentVariant === VARIANTS.TREATMENT) ||
-        isPOIFiltersEnabled
-      }
+      showBoosters={isBoosterExpEligible || isPOIFiltersEnabled}
       isPOIFiltersEnabled={isPOIFiltersEnabled}
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
@@ -1499,10 +1462,7 @@ const MicrositeV1 = (props: any) => {
             shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
             isRankingExperimentResolving={isRankingExperimentResolving}
             showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
-            showBoosters={
-              isBoosterExpEligible &&
-              boosterExperimentVariant === VARIANTS.TREATMENT
-            }
+            showBoosters={isBoosterExpEligible}
             micrositeData={micrositeData}
             dayTripCollectionData={dayTripCollectionData}
           />
