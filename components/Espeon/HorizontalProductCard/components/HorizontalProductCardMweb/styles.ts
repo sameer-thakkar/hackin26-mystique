@@ -114,7 +114,6 @@ export const productCardStyles = sva({
           maxWidth: '[22.375rem]',
           paddingBottom: 'space.16',
           flex: 1,
-          cursor: 'pointer',
           border: '1px solid',
           borderColor: 'semantic.dividers.dark',
           top: '0',
