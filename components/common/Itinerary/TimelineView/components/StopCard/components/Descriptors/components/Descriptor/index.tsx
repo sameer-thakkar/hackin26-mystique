@@ -32,7 +32,7 @@ const Descriptor = ({
   return (
     <>
       <Conditional if={url}>
-        <Link href={url!}>
+        <Link href={url!} target="_blank">
           <Content />
         </Link>
       </Conditional>
