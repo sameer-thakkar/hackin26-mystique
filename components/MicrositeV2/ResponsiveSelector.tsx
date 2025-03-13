@@ -181,13 +181,15 @@ export const ResponsiveSelector = (props: any) => {
     isMobile,
     onChange,
     customClassName = '',
-    options,
+    options: optionsProp,
     icon,
     iconPosition,
     toggleIcon = true,
     addPadding = false,
   } = props;
 
+  // Sometimes we get options with value as undefined
+  const options = optionsProp.filter((option: any) => Boolean(option.value));
   const [toggleActive, setToggleActive] = useState(false);
   const [current, setCurrent] = useState(currentSelectionIndex || 0);
 
