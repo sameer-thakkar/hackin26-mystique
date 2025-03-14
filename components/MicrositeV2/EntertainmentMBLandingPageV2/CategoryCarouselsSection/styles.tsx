@@ -51,6 +51,7 @@ export const TitleRow = styled.div`
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
     color: ${COLORS.GRAY.G2};
     margin: 0%;
+    margin-left: 5.46vw;
   }
 
   .controls {

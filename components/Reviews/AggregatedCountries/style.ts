@@ -110,6 +110,7 @@ export const CountryFlagsContainer = styled.div`
   @media (max-width: 768px) {
     .marquee_countries_wrapper {
       padding-left: 0;
+      margin-top: 0;
     }
   }
 
