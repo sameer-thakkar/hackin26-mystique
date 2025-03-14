@@ -14,7 +14,7 @@ export const getCollectionReviewsTgid = (
   collectionReviews: Record<string, any>[]
 ) => {
   const collectionReviewsTgid: Set<number> = new Set();
-  collectionReviews.forEach((review) => {
+  collectionReviews?.forEach((review) => {
     if (review?.tourGroup?.id) collectionReviewsTgid.add(review.tourGroup.id);
   });
   return Array.from(collectionReviewsTgid);

@@ -482,6 +482,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     ABOUT_CONCERT: 'Das Konzert',
     PROGRAM: 'Programm',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sortieren nach',
   THEATRE: 'Theater',
   THEATRE_PAGE: {

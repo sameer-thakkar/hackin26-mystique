@@ -8,6 +8,7 @@ import {
   fetchTourGroupV6,
 } from 'utils/apiUtils';
 import { getNewsPageBreadcrumbs as getReviewsPageBreadcrumbs } from 'utils/breadcrumbsUtils';
+import { getCityListData } from 'utils/cityPageUtils/nearbyCities';
 import { getBreadcrumbLabel } from 'utils/helper';
 import { REVIEWS_PAGE_BANNER_HEADING } from 'const/breadcrumbs';
 import {
@@ -121,6 +122,12 @@ export const getReviewsPageData = async (
     hostname
   );
 
+  const cityListDataPromise = getCityListData({
+    cookies,
+    mbCity: tagged_city,
+    lang,
+  });
+
   const allPromiseSettledResults = await Promise.allSettled([
     breadcrumbsPromise,
     tgidDataPromise,
@@ -130,6 +137,7 @@ export const getReviewsPageData = async (
     featuredNewsArticlesPromise,
     newsArticlesWithSameTgidPromise,
     newsLandingPagePromise,
+    cityListDataPromise,
     collectionReviewsPromise,
     popularShowsPromise,
   ]);
@@ -143,6 +151,7 @@ export const getReviewsPageData = async (
     featuredNewsArticlesData,
     newsArticlesWithSameTgidData,
     newsLandingPageData,
+    cityListData,
     collectionReviewsData,
     popularShowsData,
   ] = handleSettledPromiseResults(allPromiseSettledResults);
@@ -169,6 +178,10 @@ export const getReviewsPageData = async (
     uid
   );
 
+  const primaryCity = cityListData?.get(tagged_city);
+  const primaryCountry = primaryCity?.country;
+  const activeCurrency = primaryCountry?.currency?.code;
+
   return {
     CMSContent: {
       ...CMSContent,
@@ -183,6 +196,9 @@ export const getReviewsPageData = async (
       collectionReviewsData,
       popularShowsData,
     },
+    ...(primaryCity && { primaryCity }),
+    ...(primaryCountry && { primaryCountry }),
+    ...(activeCurrency && { activeCurrency }),
     uid,
     host,
     ContentType,

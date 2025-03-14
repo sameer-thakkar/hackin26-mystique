@@ -70,14 +70,18 @@ const getLangBasedCitiesData = ({
   );
 };
 
-const getCityListData = async ({ cookies, mbCity, lang }: IGetCityListData) => {
+export const getCityListData = async ({
+  cookies,
+  mbCity,
+  lang,
+}: IGetCityListData) => {
   const { cities } = await fetchNearbyCityList({
     cookies,
     params: { ...(lang && { language: getHeadoutLanguagecode(lang) }) },
     cityCode: mbCity,
   });
   const cityDataMap = new Map();
-  cities.forEach((city: Record<string, any>, index: number) => {
+  cities?.forEach((city: Record<string, any>, index: number) => {
     const { cityCode } = city;
     cityDataMap.set(cityCode, { ...city, computedRank: index + 1 });
   });

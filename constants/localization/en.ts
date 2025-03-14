@@ -561,6 +561,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     ABOUT_CONCERT: 'About Concert',
     PROGRAM: 'Program',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sort by',
   SPECIAL_OFFER: 'Special Offer',
   THEATRE: 'Theatre',
@@ -1447,15 +1448,15 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   REVIEW_SECTION: {
     HEADING: 'Millions love heading out with us',
     SORTING: {
-      MOST_RELEVANT: 'Most Relevant',
-      MOST_RECENT: 'Most Recent',
+      MOST_RELEVANT: 'Most relevant',
+      MOST_RECENT: 'Most recent',
       SORT_BY: 'Sort by',
     },
     FILTERING: {
       GREATER_THAN_4: '4+ stars',
       EQUAL_TO_3: '3 stars',
       LESS_THAN_3: '<3 stars',
-      WITH_IMAGES: 'With Images',
+      WITH_IMAGES: 'With images',
     },
     EMPTY_STATE: {
       SUB_HEADING: "We couldn't find reviews matching your selected filters.",

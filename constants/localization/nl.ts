@@ -483,6 +483,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     ABOUT_CONCERT: 'Het Concert',
     PROGRAM: 'Programma',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sorteer',
   THEATRE: 'Theater',
   THEATRE_PAGE: {

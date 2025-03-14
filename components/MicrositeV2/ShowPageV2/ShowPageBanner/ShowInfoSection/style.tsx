@@ -226,6 +226,8 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
     .review-count {
       ${expandFontToken(FONTS.UI_LABEL_LARGE)};
       color: ${COLORS.GRAY.G4};
+      display: flex;
+      align-items: center;
       span {
         text-decoration: underline;
         color: ${COLORS.GRAY.G4};

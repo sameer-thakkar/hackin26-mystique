@@ -475,6 +475,7 @@ const it = {
     ABOUT_CONCERT: 'Il concerto',
     PROGRAM: 'Programma',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Ordina per',
   THEATRE: 'Teatro',
   THEATRE_PAGE: {

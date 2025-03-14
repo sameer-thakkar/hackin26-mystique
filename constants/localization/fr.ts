@@ -486,6 +486,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     ABOUT_CONCERT: 'Le concert',
     PROGRAM: 'Programme',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Trier par',
   THEATRE: 'Théâtre',
   THEATRE_PAGE: {

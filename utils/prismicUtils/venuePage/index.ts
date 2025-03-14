@@ -1,12 +1,8 @@
 import { createClient } from 'prismicio';
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import {
-  getHeadoutLanguagecode,
-  getSinglePrismicSlice,
-  handleSettledPromiseResults,
-} from 'utils';
-import { fetchCollection } from 'utils/apiUtils';
+import { getSinglePrismicSlice, handleSettledPromiseResults } from 'utils';
 import { getVenuePageBreadcrumbs } from 'utils/breadcrumbsUtils';
+import { getCityListData } from 'utils/cityPageUtils/nearbyCities';
 import { sendLog } from 'utils/logger';
 import {
   CUSTOM_TYPE_VALUES,
@@ -167,11 +163,10 @@ export const getVenuePageData = async (
       uid
     );
 
-    const collectionDataPromise = fetchCollection({
-      collectionId: taggedCollection,
-      hostname,
+    const cityListDataPromise = getCityListData({
       cookies,
-      language: getHeadoutLanguagecode(lang),
+      mbCity: taggedCity,
+      lang,
     });
 
     const allPromiseSettledResults = await Promise.allSettled([
@@ -181,7 +176,7 @@ export const getVenuePageData = async (
       landingPageGroupsPromise,
       popularShowsPromise,
       browseCategoriesPromise,
-      collectionDataPromise,
+      cityListDataPromise,
     ]);
 
     const [
@@ -191,13 +186,13 @@ export const getVenuePageData = async (
       landingPageData,
       popularShowsData,
       browseCategoriesData,
-      collectionData,
+      cityListData,
     ] = handleSettledPromiseResults(allPromiseSettledResults, uid, true);
 
     const { availableShowsData, allShowPageUids, inventorySlotData } =
       showsData ?? {};
 
-    const primaryCity = collectionData?.city;
+    const primaryCity = cityListData?.get(taggedCity);
     const primaryCountry = primaryCity?.country;
     const activeCurrency = primaryCountry?.currency?.code;
 

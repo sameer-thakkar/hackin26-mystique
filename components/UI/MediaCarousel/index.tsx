@@ -23,6 +23,7 @@ import {
   CAROUSEL_UNITS,
   VIDEO_POSITIONS,
 } from 'const/index';
+import { strings } from 'const/strings';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
 import VideoPlayIcon from 'assets/playIcon';
 
@@ -275,7 +276,7 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
       <Conditional if={videoUrl && currentIndex === 0 && !isMobile}>
         <VideoCTA onClick={onVideoClick}>
           <VideoPlayIcon />
-          <p>Sneak Peek</p>
+          <p>{strings.SNEAK_PEEK}</p>
         </VideoCTA>
         <Conditional if={modalIsOpen}>
           <Modal

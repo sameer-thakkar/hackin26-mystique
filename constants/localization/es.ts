@@ -536,6 +536,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     ABOUT_CONCERT: 'El concierto',
     PROGRAM: 'Programa',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Ordenar por',
   THEATRE: 'Teatro',
   THEATRE_PAGE: {
