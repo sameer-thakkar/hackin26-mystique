@@ -1,6 +1,11 @@
 import { createClient } from 'prismicio';
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import { getSinglePrismicSlice, handleSettledPromiseResults } from 'utils';
+import {
+  getHeadoutLanguagecode,
+  getSinglePrismicSlice,
+  handleSettledPromiseResults,
+} from 'utils';
+import { fetchCollection } from 'utils/apiUtils';
 import { getVenuePageBreadcrumbs } from 'utils/breadcrumbsUtils';
 import { sendLog } from 'utils/logger';
 import {
@@ -162,6 +167,13 @@ export const getVenuePageData = async (
       uid
     );
 
+    const collectionDataPromise = fetchCollection({
+      collectionId: taggedCollection,
+      hostname,
+      cookies,
+      language: getHeadoutLanguagecode(lang),
+    });
+
     const allPromiseSettledResults = await Promise.allSettled([
       allShowsDataPromise,
       breadcrumbsPromise,
@@ -169,6 +181,7 @@ export const getVenuePageData = async (
       landingPageGroupsPromise,
       popularShowsPromise,
       browseCategoriesPromise,
+      collectionDataPromise,
     ]);
 
     const [
@@ -178,10 +191,15 @@ export const getVenuePageData = async (
       landingPageData,
       popularShowsData,
       browseCategoriesData,
+      collectionData,
     ] = handleSettledPromiseResults(allPromiseSettledResults, uid, true);
 
     const { availableShowsData, allShowPageUids, inventorySlotData } =
       showsData ?? {};
+
+    const primaryCity = collectionData?.city;
+    const primaryCountry = primaryCity?.country;
+    const activeCurrency = primaryCountry?.currency?.code;
 
     return {
       CMSContent: {
@@ -194,6 +212,9 @@ export const getVenuePageData = async (
         popularShowsData,
         browseCategoriesData,
       },
+      ...(primaryCity && { primaryCity }),
+      ...(primaryCountry && { primaryCountry }),
+      ...(activeCurrency && { activeCurrency }),
       uid,
       ContentType,
       lang,

@@ -115,7 +115,7 @@ export const Container = styled.div`
   }
 `;
 
-export const FooterHeading = styled.h2<{
+export const FooterHeading = styled.p<{
   isLight: boolean;
 }>`
   position: relative;
