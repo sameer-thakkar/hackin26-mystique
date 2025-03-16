@@ -54,6 +54,7 @@ const VenueLandingPage: React.FC<
           isMobile={isMobile}
           mediaData={popularShowsData?.mediaData?.resourceEntityMedias}
           showPageDocuments={popularShowsData?.showPageDocuments}
+          keepTitlePadding={true}
         />
       </Conditional>
     </>

@@ -4,4 +4,5 @@ export type TVerticalProductCardSlideProps = {
   mediaData: Record<string, any>[];
   showPageDocuments: Record<string, any>[];
   seeAllUrl?: string;
+  keepTitlePadding?: boolean;
 };

@@ -10,6 +10,7 @@ const VerticalProductCardSlide = ({
   mediaData,
   showPageDocuments,
   seeAllUrl,
+  keepTitlePadding = false,
 }: TVerticalProductCardSlideProps) => {
   const productData = JSON.parse(JSON.stringify(cards));
   const { NEWS_PAGE } = strings;
@@ -32,7 +33,7 @@ const VerticalProductCardSlide = ({
   });
 
   return (
-    <VerticalProductCards>
+    <VerticalProductCards $keepTitlePadding={keepTitlePadding}>
       <CategoryCarouselSwiper
         category={category}
         allTours={productData}
