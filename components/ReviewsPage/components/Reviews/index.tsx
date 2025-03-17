@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
 import dayjs from 'dayjs';
@@ -23,6 +23,7 @@ import { getUICompatibleReviewsData } from 'components/ReviewsPage/utils';
 import TabWrapper from 'components/slices/TabWrapper';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
 import { useIsFirstRender } from 'hooks/useIsFirstRender';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
@@ -139,6 +140,7 @@ const Reviews: React.FC<React.PropsWithChildren<TReviewsProps>> = ({
   trackingObject,
 }) => {
   const router = useRouter();
+  const { lang = 'en' } = useContext(MBContext);
   const sliceRef = useRef(null);
   const isFirstRender = useIsFirstRender();
   const [reviewEndpoint, setReviewEndpoint] = useState<string | null>(null);
@@ -188,6 +190,7 @@ const Reviews: React.FC<React.PropsWithChildren<TReviewsProps>> = ({
               'sort-type': filterRatingParamValue['sort-type'],
               'sort-order': filterRatingParamValue['sort-order'],
               limit: '5',
+              language: lang,
             }),
         },
       });

@@ -9,6 +9,8 @@ export const filterContainerStyles = css({
 
   '@media (max-width: 768px)': {
     width: '[100%]',
+    // The reviews filter in mobile is taking 1px extra width, so we need to subtract it to remove it.
+    maxWidth: 'calc(100% - 4px)',
     marginLeft: '-space.24',
     padding: '1px 24px',
     height: '[52px]',

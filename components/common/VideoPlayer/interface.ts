@@ -6,4 +6,5 @@ export type TVideoPlayerProps = {
   showMuteControls?: boolean;
   playPauseThreshold?: number;
   tgid?: string | number;
+  onPlayerReady?: () => void;
 };

@@ -9,4 +9,5 @@ export type TExpandedGalleryProps = {
   videoUrl?: string | null;
   controller?: TImageGalleryProps['controller'];
   isMobile?: boolean;
+  onVideoPlayerReady?: () => void;
 };

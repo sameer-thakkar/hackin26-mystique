@@ -32,6 +32,7 @@ const ExpandedGallery = ({
   videoUrl,
   controller,
   isMobile = false,
+  onVideoPlayerReady,
 }: TExpandedGalleryProps) => {
   const [galleryImageIndex, setGalleryImageIndex] = useState(-1);
   const [numberOfImagesLoaded, setNumberOfImagesLoaded] = useState(
@@ -90,6 +91,7 @@ const ExpandedGallery = ({
           <Skeleton key={2} containerClassName="gallery-children" />
           {loadVideo ? (
             <VideoPlayer
+              onPlayerReady={onVideoPlayerReady}
               videoUrl={videoUrl || ''}
               className="gallery-children"
               showMuteControls

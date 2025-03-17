@@ -2303,6 +2303,19 @@ const Product = (props: any) => {
     }
   };
 
+  const onVideoPlayerReady = () => {
+    // adding a the overflow hidden to fix plyr video player issue
+    // https://github.com/sampotts/plyr/issues/2417
+    if (isPopupOpen) {
+      // If the popup is open, the plyr would have removed the overflow hidden, so we need are adding it back
+      // This is a hack to fix the issue
+      // The else case would be handled by the popup component itself
+      setTimeout(() => {
+        document.body.style.overflow = 'hidden';
+      }, 200);
+    }
+  };
+
   const getProductCardPopup = (defaultOpen = false) => (
     <>
       <Popup
@@ -2330,6 +2343,7 @@ const Product = (props: any) => {
           <Conditional if={images}>
             <div className="card-img">
               <ExpandedGallery
+                onVideoPlayerReady={onVideoPlayerReady}
                 images={images}
                 videoUrl={
                   showVideoOnProductCard

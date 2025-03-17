@@ -266,7 +266,7 @@ export const BuyButtonWrapper = styled.div<{
   hasDiscount?: boolean;
   longCtaContent?: boolean;
 }>`
-  padding: 0.75rem 1.5rem 1rem;
+  padding: 0.75rem 1rem 1rem;
   background-color: ${COLORS.BRAND.WHITE};
   border-radius: 0 0 1rem 1rem;
   box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.08);

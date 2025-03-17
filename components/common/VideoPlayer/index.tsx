@@ -13,6 +13,7 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
   videoUrl,
   videoTitle,
   closePlayer,
+  onPlayerReady,
   className = '',
   showMuteControls = false,
   playPauseThreshold = 1,
@@ -70,6 +71,8 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
           },
         ],
       };
+
+      onPlayerReady?.();
     };
 
     initialisePlyr();

@@ -12,10 +12,10 @@ export const CityGuideContainer = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    .travel-guide-heading{
+    .travel-guide-heading {
       ${expandFontToken(FONTS.DISPLAY_REGULAR)}
     }
-    
+
     .travel-guide-link {
       display: flex;
       ${expandFontToken(FONTS.HEADING_REGULAR)}
@@ -24,28 +24,25 @@ export const CityGuideContainer = styled.div`
       border-radius: 25px;
       align-items: center;
       padding: 0.2rem 1rem;
-      
+
       .travel-guide-text {
         margin-left: 0.5rem;
       }
     }
 
     @media (max-width: 768px) {
-      .travel-guide-heading{
+      .travel-guide-heading {
         ${expandFontToken(FONTS.HEADING_LARGE)};
         margin-bottom: 2rem;
-      }  
+      }
     }
-    
   }
 
   .travel-guide-description {
     max-width: 40rem;
     margin: 1rem 0 1.5rem 0;
     ${expandFontToken(FONTS.PARAGRAPH_MEDIUM)};
-    color: ${COLORS.GRAY.G2}
-      
-
+    color: ${COLORS.GRAY.G2};
   }
 
   @media (max-width: 768px) {
@@ -76,6 +73,7 @@ export const CityGuideItemsContainer = styled.div`
 
     .item-name {
       ${expandFontToken(FONTS.HEADING_LARGE)};
+      color: ${COLORS.GRAY.G2};
     }
 
     .item-line {
