@@ -259,9 +259,6 @@ const ProductContainer = styled.div<TProductContainerStyles>`
 
 const ProductWrapper = styled.div`
   flex: 0 49%;
-  @media (max-width: 768px) {
-    min-height: 20rem;
-  }
 `;
 
 const CombosContainer = styled.div`
