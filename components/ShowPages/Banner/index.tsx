@@ -91,6 +91,7 @@ const ShowPageBanner = ({
     nakedDomain: nakedDomain || getNakedDomain(hostname),
     lang: currentLanguage,
     tgid: tgid,
+    refererCollectionId: pageMetaData?.collectionId,
     biLink: biLink,
     redirectToHeadoutBookingFlow,
     currency,

@@ -14,6 +14,7 @@ import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -490,6 +491,8 @@ const TourComparisonTable = (props: any) => {
   const toursContext = useContext(ProductsContext);
   const { uid, nakedDomain, biLink, lang, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
+
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const url = envContext.windowUrl;
   const hostName = !envContext.isDev ? url : parse(uid || '', true).pathname;
   let hostSplit = hostName.split('.');
@@ -618,6 +621,7 @@ const TourComparisonTable = (props: any) => {
                       biLink,
                       redirectToHeadoutBookingFlow,
                       hsid,
+                      refererCollectionId,
                     }),
                   },
                 };
@@ -736,6 +740,7 @@ const TourComparisonTable = (props: any) => {
                     biLink,
                     redirectToHeadoutBookingFlow,
                     hsid,
+                    refererCollectionId,
                   }),
                 },
               };

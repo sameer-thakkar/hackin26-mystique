@@ -694,6 +694,7 @@ export const MobileProductPage = (props: any) => {
         nakedDomain: bookingUrl,
         lang: currentLanguage,
         tgid,
+        refererCollectionId: pageMetaData?.collectionId,
         biLink,
         redirectToHeadoutBookingFlow,
         flowType: tour.flowType,

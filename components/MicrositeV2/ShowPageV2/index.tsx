@@ -319,6 +319,7 @@ const LttShowPageV2 = ({
       nakedDomain: nakedDomain || getNakedDomain(hostname),
       lang: language,
       tgid,
+      refererCollectionId: pageMetaData?.collectionId,
       biLink: biLink,
       redirectToHeadoutBookingFlow,
       currency,

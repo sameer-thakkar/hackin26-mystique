@@ -14,6 +14,7 @@ import { trackEvent } from 'utils/analytics';
 import { extractTabsFromHighlights } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { ClockSvg, StarIcon } from 'const/descriptorIcons';
 import {
@@ -72,6 +73,7 @@ export const PrivateAirportTranferProductCard = ({
     useContext(MBContext);
 
   const currency = useRecoilValue(currencyAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -92,6 +94,7 @@ export const PrivateAirportTranferProductCard = ({
     lang: currentLanguage,
     currency,
     tgid: tour.tgid,
+    refererCollectionId,
     promoCode: null,
     tourId: String(listingPrice.tourId),
     biLink,

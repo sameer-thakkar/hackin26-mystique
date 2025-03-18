@@ -22,6 +22,7 @@ import { isItineraryValid } from 'utils/itinerary';
 import { getProductDescriptors } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -81,6 +82,7 @@ const FullWidthProductCardComponent = (props: Props) => {
 
   const hsid = useRecoilValue(hsidAtom);
   const mbContext = useContext(MBContext);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
 
   useEffect(() => {
     if (!isTrackerInitialized) setIsTrackerInitialized(true);
@@ -160,6 +162,7 @@ const FullWidthProductCardComponent = (props: Props) => {
     date: productCardInfo?.earliestAvailability,
     flowType: productCardInfo?.flowType,
     hsid,
+    refererCollectionId,
   });
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {

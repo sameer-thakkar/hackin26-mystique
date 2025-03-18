@@ -566,6 +566,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
       nakedDomain,
       lang,
       tgid,
+      refererCollectionId: pageMetaData?.collectionId,
       redirectToHeadoutBookingFlow,
       flowType,
       hsid,

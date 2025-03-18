@@ -5,6 +5,7 @@ import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 
 export const useBookingURL = ({
   tourGroupId,
@@ -30,6 +31,7 @@ export const useBookingURL = ({
   } = useContext(MBContext);
 
   const hsid = useRecoilValue(hsidAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
 
   let url = host || window.location.host;
@@ -54,6 +56,7 @@ export const useBookingURL = ({
     ctaSuffix: ctaSuffix ?? '',
     flowType: flowType,
     hsid,
+    refererCollectionId,
   });
 
   return productBookingUrl;

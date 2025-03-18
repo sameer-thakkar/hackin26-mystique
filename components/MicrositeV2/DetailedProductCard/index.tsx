@@ -258,6 +258,7 @@ const DetailedProductCard = (props: any) => {
                 redirectToHeadoutBookingFlow,
                 flowType,
                 hsid,
+                refererCollectionId: pageMetaData?.collectionId,
               }),
               '_blank',
               'noopener'

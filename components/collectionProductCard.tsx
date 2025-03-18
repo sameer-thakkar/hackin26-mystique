@@ -25,6 +25,7 @@ import { getProductDescriptors } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import {
@@ -108,6 +109,8 @@ const CollectionProductCardComponent = (props: Props) => {
 
   let productCardInfo = productCardInfoProps;
 
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
+
   useEffect(() => {
     if (!isTrackerInitialized) setIsTrackerInitialized(true);
   }, []);
@@ -122,6 +125,7 @@ const CollectionProductCardComponent = (props: Props) => {
   );
 
   const mbContext = useContext(MBContext);
+
   const {
     lang,
     isDev,
@@ -321,6 +325,7 @@ const CollectionProductCardComponent = (props: Props) => {
       tgid: productId,
       redirectToHeadoutBookingFlow,
       currency,
+      refererCollectionId,
       variantId: productCardInfo?.listingPrice?.tourId,
       date: productCardInfo?.earliestAvailability,
       flowType: productCardInfo?.flowType,

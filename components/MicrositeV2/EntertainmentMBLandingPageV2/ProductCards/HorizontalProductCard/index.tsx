@@ -22,6 +22,7 @@ import {
 } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -38,6 +39,8 @@ const HorizontalProductCard = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
 
   const hsid = useRecoilValue(hsidAtom);
 
@@ -103,6 +106,7 @@ const HorizontalProductCard = ({
     nakedDomain,
     lang,
     tgid,
+    refererCollectionId,
     redirectToHeadoutBookingFlow,
     currency,
     flowType,

@@ -34,6 +34,7 @@ import {
 } from 'utils/dateUtils';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -65,6 +66,7 @@ const Calendar: React.FC<React.PropsWithChildren<CalendarProps>> = (props) => {
   } = useContext(MBContext);
 
   const currencyList = useRecoilValue(currencyListAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const [currVisibleMonth, setCurrVisibleMonth] = useState(null);
   const [nextVisibleMonth, setNextVisibleMonth] = useState(null);
   const [minInventoryMap, setMinInventoryMap] = useState<Map<
@@ -265,6 +267,7 @@ const Calendar: React.FC<React.PropsWithChildren<CalendarProps>> = (props) => {
         lang,
         currency,
         tgid,
+        refererCollectionId,
         variantId: String(variantId),
         tourId: String(tourId),
         date: { startDate: date, startTime: 'FLEXIBLE_START_TIME' },

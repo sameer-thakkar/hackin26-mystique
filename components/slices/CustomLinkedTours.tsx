@@ -14,6 +14,7 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { DESIGN, SLICE_TYPES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
@@ -136,6 +137,7 @@ const CustomLinkedTours = ({
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const { isMobile } = useRecoilValue(appAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const hsid = useRecoilValue(hsidAtom);
 
   const hostname = getHostName(isDev, host);
@@ -164,6 +166,7 @@ const CustomLinkedTours = ({
       nakedDomain,
       lang,
       tgid,
+      refererCollectionId,
       biLink,
       redirectToHeadoutBookingFlow,
       flowType,

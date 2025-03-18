@@ -438,6 +438,7 @@ const ExperiencePage = ({
     currency,
     flowType,
     hsid,
+    refererCollectionId: pageMetaData?.collectionId,
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 

@@ -748,6 +748,7 @@ export const getProductCardDestination = ({
   nakedDomain,
   lang,
   tgid,
+  refererCollectionId,
   redirectToHeadoutBookingFlow,
   currency,
   flowType,
@@ -767,6 +768,7 @@ export const getProductCardDestination = ({
     currency,
     flowType,
     hsid,
+    refererCollectionId,
   });
   let destinationUrl = bookingURL;
   if (shouldUseDynamicShowPage()) {

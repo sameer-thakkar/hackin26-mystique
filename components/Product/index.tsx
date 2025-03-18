@@ -1228,6 +1228,7 @@ const Product = (props: any) => {
     lang: currentLanguage,
     currency: finalListingPrice?.currencyCode || currency,
     tgid,
+    refererCollectionId: pageMetaData?.collectionId,
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
     variantId: tourId,
     biLink,

@@ -553,6 +553,7 @@ const TicketCard = (props: any) => {
     lang: currentLanguage,
     currency,
     tgid,
+    refererCollectionId: pageMetaData?.collectionId,
     variantId: tourId,
     biLink,
     date: instantCheckout && earliestAvailability ? earliestAvailability : null,

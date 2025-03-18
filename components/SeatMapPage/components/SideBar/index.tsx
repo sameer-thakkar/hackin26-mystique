@@ -25,6 +25,7 @@ import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -83,6 +84,7 @@ const SideBar = (props: TSideBarProps) => {
   const headerCurrency = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
   const { host } = useRecoilValue(appAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const [timeSlotIndex, setTimeSlotIndex] = useState(0);
   const [isTimeSelectionLoading, setIsTimeSelectionLoading] = useState(true);
   const [toursAgainstDates, setToursAgainstDates] = useState<any>({});
@@ -391,6 +393,7 @@ const SideBar = (props: TSideBarProps) => {
       nakedDomain: 'london-theater-tickets.com',
       redirectToHeadoutBookingFlow: false,
       hsid,
+      refererCollectionId,
     });
 
     addCheckAvailabilityClickedDataEvents();

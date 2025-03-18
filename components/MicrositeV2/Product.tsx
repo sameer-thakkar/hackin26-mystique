@@ -16,6 +16,7 @@ import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { FONTS } from 'const/fonts';
@@ -432,6 +433,7 @@ const Product = (props: any) => {
     showPageUid: showPageUidForVenuePage,
   } = props;
   const currency = useRecoilValue(currencyAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, uid } =
     useContext(MBContext);
 
@@ -502,6 +504,7 @@ const Product = (props: any) => {
     nakedDomain,
     lang,
     tgid,
+    refererCollectionId,
     redirectToHeadoutBookingFlow,
     currency,
     flowType,

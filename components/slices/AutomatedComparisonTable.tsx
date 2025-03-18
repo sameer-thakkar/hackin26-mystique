@@ -19,6 +19,7 @@ import { getCancellationPolicyString } from 'utils/productUtils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -392,6 +393,7 @@ const AutomatedTourComparisonTable = ({
   const [isNamesRowTop, setNamesRowTop] = useState(false);
   const [isButtonLoading, setButtonLoading] = useState(-1);
   const namesRowRef = useRef<HTMLDivElement>(null);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
 
   const {
     lang,
@@ -584,6 +586,7 @@ const AutomatedTourComparisonTable = ({
                         nakedDomain,
                         lang,
                         tgid: tour.id,
+                        refererCollectionId,
                         biLink,
                         redirectToHeadoutBookingFlow,
                         hsid,
@@ -696,6 +699,7 @@ const AutomatedTourComparisonTable = ({
                       biLink,
                       redirectToHeadoutBookingFlow,
                       hsid,
+                      refererCollectionId,
                     }),
                   },
                 };

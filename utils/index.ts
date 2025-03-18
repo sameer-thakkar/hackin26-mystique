@@ -247,6 +247,7 @@ type TCreateBookingUrl = {
   isHOHORevamp?: boolean;
   cancellationInsuranceVariant?: string;
   hsid?: any;
+  refererCollectionId?: string | number;
 };
 
 export const createBookingURL = ({
@@ -268,6 +269,7 @@ export const createBookingURL = ({
   isHOHORevamp,
   cancellationInsuranceVariant,
   hsid,
+  refererCollectionId,
 }: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -344,6 +346,12 @@ export const createBookingURL = ({
 
     date?.startTime && urlObject.searchParams.set('time', date?.startTime);
   }
+
+  if (refererCollectionId)
+    urlObject.searchParams.set(
+      'refererCollectionId',
+      String(refererCollectionId)
+    );
 
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);

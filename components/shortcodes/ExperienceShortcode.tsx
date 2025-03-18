@@ -16,6 +16,7 @@ import { getScorpioData } from 'utils/productUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { LOG_LEVELS } from 'const/logs';
 import { strings } from 'const/strings';
@@ -36,6 +37,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
   const { nakedDomain, lang, host, isDev } = useContext(MBContext);
   const currencyCode = useRecoilValue(currencyAtom);
   const currencyList = useRecoilValue(currencyListAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const hostname = getHostName(isDev, host);
   const hsid = useRecoilValue(hsidAtom);
 
@@ -45,6 +47,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
     nakedDomain,
     lang,
     tgid: id,
+    refererCollectionId,
     currency: currencyCode,
     hsid,
   });

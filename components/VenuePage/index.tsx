@@ -24,6 +24,7 @@ import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import { amenitiesIcons } from 'const/amenitiesIcons';
 import { BOOKING_FLOW_TYPE } from 'const/booking';
 import {
@@ -63,6 +64,7 @@ const VenuePage = (props: IVenuePageProps) => {
   } = useContext(MBContext);
   const hsid = useRecoilValue(hsidAtom);
   const currency = useRecoilValue(currencyAtom);
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
 
   const {
     host,
@@ -206,6 +208,7 @@ const VenuePage = (props: IVenuePageProps) => {
     currency,
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
     hsid,
+    refererCollectionId,
   });
 
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs ?? {})?.length > 0;
