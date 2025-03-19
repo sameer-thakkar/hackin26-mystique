@@ -21,6 +21,7 @@ import { MBContext } from 'contexts/MBContext';
 import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { generateDescriptor, getStars } from 'utils/productUtils';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import { getTagPageLink } from 'utils/urlUtils';
@@ -82,8 +83,7 @@ const ShowInfoSection = ({
       isProd: !isDev,
     });
 
-  const shortenedRatingsCount =
-    ratingsCount > 999 ? `${(ratingsCount / 1000).toFixed(1)}K` : ratingsCount;
+  const localizedRatingsCount = getLocalizedCount(ratingsCount, lang);
 
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor,
@@ -211,7 +211,7 @@ const ShowInfoSection = ({
                       <span>
                         {strings.formatString(
                           strings.RATINGS,
-                          shortenedRatingsCount || ''
+                          localizedRatingsCount || ''
                         )}
                       </span>
                       )

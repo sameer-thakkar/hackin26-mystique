@@ -33,9 +33,10 @@ import { withShortcodes } from 'utils/helper';
 import {
   getF1MBTrustBoosters,
   shouldDisplayCollectionRatings,
-  truncateNumber,
 } from 'utils/index';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { titleCase } from 'utils/stringUtils';
+import { appAtom } from 'store/atoms/app';
 import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
 import {
@@ -212,6 +213,7 @@ const StaticBanner = ({
   isAirportTransfersMB = false,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
+  const { language } = useRecoilValue(appAtom);
 
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
   const bannerHeading =
@@ -402,9 +404,7 @@ const StaticBanner = ({
               $hasParentChip={displayParentChip}
               className="ratings-wrapper"
             >
-              <Star
-                color={showNonPoiDesign ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1}
-              />
+              <Star color={COLORS.TEXT.CANDY_1} />
               <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
                 {averageRating?.toPrecision(2)}
               </AverageRatingWrapper>
@@ -412,7 +412,7 @@ const StaticBanner = ({
                 (
                 {strings.formatString(
                   strings.RATINGS,
-                  truncateNumber(ratingsCount).toUpperCase()
+                  getLocalizedCount(ratingsCount, language)
                 )}
                 )
               </RatingCountWrapper>

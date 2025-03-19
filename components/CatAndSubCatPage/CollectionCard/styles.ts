@@ -88,7 +88,7 @@ export const RatingsWrapper = styled.div`
 
   .ratings-count {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-    color: ${COLORS.GRAY.G4};
+    color: ${COLORS.BRAND.CANDY};
   }
 
   svg {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import classNames from 'classnames';
-import { checkIfHarryPotterPage, truncateNumber } from 'utils';
+import { checkIfHarryPotterPage } from 'utils';
 import { isSafari as checkForSafari } from 'utils/helper';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
@@ -16,7 +17,7 @@ const Ratings = ({
   onRatingsCountClick,
 }: TRatingsContainerProps) => {
   const [isSafari, setIsSafari] = useState(false);
-  const { uid } = useRecoilValue(appAtom);
+  const { uid, language } = useRecoilValue(appAtom);
 
   useEffect(() => {
     setIsSafari(checkForSafari());
@@ -42,7 +43,7 @@ const Ratings = ({
       >
         {showRatings ? averageRating?.toFixed(1) : strings.NEW}
       </span>
-      {showRatings && (
+      {showRatings && ratingsCount && (
         <span
           className="rating-count"
           onClick={onRatingsCountClick}
@@ -54,7 +55,7 @@ const Ratings = ({
         >
           (
           <span className={classNames({ underline: onRatingsCountClick })}>
-            {truncateNumber(ratingsCount).toUpperCase()}
+            {getLocalizedCount(ratingsCount, language)}
           </span>
           )
         </span>

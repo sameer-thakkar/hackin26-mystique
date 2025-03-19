@@ -65,3 +65,15 @@ export const getLocalizationLabels = async ({
 export const isEnglishLanguage = (lang: string) => {
   return ['en-us', 'en'].includes(lang);
 };
+
+export const getLocalizedCount = (count: number, lang = 'en') => {
+  const formatter = new Intl.NumberFormat(lang, {
+    maximumFractionDigits: 0,
+
+    minimumFractionDigits: 0,
+
+    useGrouping: true,
+  });
+
+  return formatter.format(count);
+};

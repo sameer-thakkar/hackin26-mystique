@@ -364,8 +364,7 @@ export const RatingsWrapper = styled.div<{
 export const AverageRatingWrapper = styled.span<{
   $isNonPoi?: boolean;
 }>`
-  color: ${({ $isNonPoi }) =>
-    $isNonPoi ? COLORS.GRAY.G1 : COLORS.TEXT.CANDY_1};
+  color: ${COLORS.TEXT.CANDY_1};
   margin: 0 0.1875rem 0 0.125rem;
   ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
 
@@ -380,7 +379,7 @@ export const RatingCountWrapper = styled.span<{
 }>`
   display: block;
   margin-top: 1px;
-  color: ${COLORS.GRAY.G3};
+  color: ${COLORS.BRAND.CANDY};
   ${expandFontToken(FONTS.UI_LABEL_SMALL)};
   @media (min-width: 768px) {
     margin: 0;

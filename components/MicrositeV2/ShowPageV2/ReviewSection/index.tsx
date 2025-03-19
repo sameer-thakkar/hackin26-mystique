@@ -38,6 +38,7 @@ import { MBContext } from 'contexts/MBContext';
 import { getHeadoutLanguagecode } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { fetchTourGroupReviewsV6, TReviewMediasResponse } from 'utils/apiUtils';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { getStars } from 'utils/productUtils';
 import COLORS from 'const/colors';
 import {
@@ -125,8 +126,8 @@ const ReviewSection = ({
   const shortenedAverageRating = averageRating.toFixed(1);
   const getShortenedNumber = (num: number) =>
     num > 999 ? `${(num / 1000).toFixed(1)}K` : num;
-  const shortenedRatingsCount = getShortenedNumber(ratingsCount);
   const { lang } = useContext(MBContext);
+  const localizedRatingsCount = getLocalizedCount(ratingsCount, lang);
   const [offset, setOffset] = useState<number | null>(
     !initialReviews ? 0 : Math.max(5, initialReviews?.length || 0)
   );
@@ -210,7 +211,7 @@ const ReviewSection = ({
             {shortenedAverageRating}
           </Ratings>
           <RatingsCount>
-            {strings.formatString(strings.RATINGS, shortenedRatingsCount)}
+            {strings.formatString(strings.RATINGS, localizedRatingsCount)}
           </RatingsCount>
         </RatingsCountSection>
         <RatingsSplit>

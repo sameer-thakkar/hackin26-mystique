@@ -16,12 +16,9 @@ import {
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
-import {
-  getHeadoutLanguagecode,
-  shouldDisplayCollectionRatings,
-  truncateNumber,
-} from 'utils';
+import { getHeadoutLanguagecode, shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
@@ -126,7 +123,7 @@ const CollectionCard: React.FC<React.PropsWithChildren<CollectionCardProps>> = (
               {averageRating?.toPrecision(2)}
             </span>
             <span className="ratings-count">
-              ({truncateNumber(ratingsCount).toUpperCase()})
+              ({getLocalizedCount(ratingsCount, language)})
             </span>
           </RatingsWrapper>
         </Conditional>

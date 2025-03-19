@@ -52,7 +52,7 @@ export const Ratings = styled.div`
 `;
 export const RatingsCount = styled.div`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
-  color: ${COLORS.GRAY.G3};
+  color: ${COLORS.BRAND.CANDY};
   @media (max-width: 768px) {
     display: none;
   }
