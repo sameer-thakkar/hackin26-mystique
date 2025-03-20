@@ -313,7 +313,7 @@ const Product = (props: any) => {
     bookSubdomain,
     lang,
     isDev,
-    sidebarModal: { addToAside, closeAside },
+    sidebarModal: { addToAside, closeAside, resetAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
 
@@ -723,31 +723,34 @@ const Product = (props: any) => {
       document.body.style.overflow = 'hidden';
     }
     if (isMobile && isComboWithMultiVariant) {
-      addToAside({
-        width: '100vw',
-        children: (
-          <ComboPopup
-            productTitle={cardTitle}
-            l1Booster={boosterTag}
-            tgid={tgid}
-            isMobile={originalIsMobile}
-            closeHandler={handleCloseComboPopup}
-            descriptors={descriptorsList}
-            bookingUrl={productBookingUrl}
-            minDuration={minDuration}
-            maxDuration={maxDuration}
-          />
-        ),
-        type: SIDEBAR_TYPES.COMBO_VARIANT,
-        onCloseCallback: () => handleCloseComboPopup(),
-        history: {
-          enable: true,
-          params: {
-            pid: tgid,
-            popup: 'combo',
+      resetAside();
+      setTimeout(() => {
+        addToAside({
+          width: '100vw',
+          children: (
+            <ComboPopup
+              productTitle={cardTitle}
+              l1Booster={boosterTag}
+              tgid={tgid}
+              isMobile={originalIsMobile}
+              closeHandler={handleCloseComboPopup}
+              descriptors={descriptorsList}
+              bookingUrl={productBookingUrl}
+              minDuration={minDuration}
+              maxDuration={maxDuration}
+            />
+          ),
+          type: SIDEBAR_TYPES.COMBO_VARIANT,
+          onCloseCallback: () => handleCloseComboPopup(),
+          history: {
+            enable: true,
+            params: {
+              pid: tgid,
+              popup: 'combo',
+            },
           },
-        },
-      });
+        });
+      }, 200);
     }
   };
 

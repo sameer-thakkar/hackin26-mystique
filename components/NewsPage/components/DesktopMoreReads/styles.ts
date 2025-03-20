@@ -101,6 +101,9 @@ export const Wrapper = styled.div<{
       object-fit: cover;
     }
   }
+  .content {
+    color: ${COLORS.GRAY.G3};
+  }
 
   ${({ $noOfArticles }) => {
     switch (true) {

@@ -433,7 +433,7 @@ const Mask = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   z-index: 90;
 `;
