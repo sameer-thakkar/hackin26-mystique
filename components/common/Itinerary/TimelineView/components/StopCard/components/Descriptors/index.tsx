@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { INCLUSION, SUB_TYPES } from 'types/itinerary.type';
-import { getIntlUnit } from '@headout/espeon/utils';
+import { getIntlUnit } from '@headout/espeon/utils/units';
 import Conditional from 'components/common/Conditional';
 import { Container } from 'components/common/Itinerary/TimelineView/components/StopCard/components/Descriptors/styles';
 import {
@@ -63,7 +63,6 @@ const Descriptors = ({
 
   const walkDuration = duration
     ? getIntlUnit({
-        // @ts-expect-error
         lang: language,
         number: duration,
         options: {

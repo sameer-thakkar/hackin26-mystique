@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { ChildSection } from 'types/itinerary.type';
-import { getIntlUnit } from '@headout/espeon/utils';
+import { getIntlUnit } from '@headout/espeon/utils/units';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { appAtom } from 'store/atoms/app';
@@ -44,7 +44,6 @@ const SubStopCard = ({
 
   const walkDuration = timeFromParent
     ? getIntlUnit({
-        // @ts-expect-error
         lang: language,
         number: timeFromParent,
         options: {

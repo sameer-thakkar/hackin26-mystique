@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { PrismicDocumentWithUID } from '@prismicio/types';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import type { TDesktopFeaturedNewsProps } from 'components/NewsPage/components/DesktopFeaturedNews/interface';
 import { FeaturedNewsContainer } from 'components/NewsPage/components/DesktopFeaturedNews/styles';

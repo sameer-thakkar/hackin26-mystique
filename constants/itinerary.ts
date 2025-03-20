@@ -4,7 +4,10 @@ import {
   ModeOfTravelOptions,
   SUB_TYPES,
 } from 'types/itinerary.type';
-import { getDurationInHmNotation, getIntlTime } from '@headout/espeon/utils';
+import {
+  getDurationInHmNotation,
+  getIntlTime,
+} from '@headout/espeon/utils/time';
 import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
@@ -37,7 +40,6 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
       const timeInMinutes = hours * 60 + minutes;
       return getDurationInHmNotation({
         durationInMinutes: timeInMinutes,
-        // @ts-expect-error
         lang,
       });
     },

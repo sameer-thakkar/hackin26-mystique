@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo } from 'react';
-import { debounce, throttle } from '@headout/espeon/utils';
+import { debounce, throttle } from '@headout/espeon/utils/common';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { convertEngToSentenceCase } from 'utils/stringUtils';

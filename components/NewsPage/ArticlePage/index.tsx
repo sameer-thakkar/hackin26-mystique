@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import dynamic from 'next/dynamic';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LazyComponent from 'components/common/LazyComponent';

@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'react';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { getStars } from 'utils/productUtils';

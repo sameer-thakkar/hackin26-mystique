@@ -7,7 +7,7 @@ import {
   Section,
   SECTION_TYPE,
 } from 'types/itinerary.type';
-import { getIntlTime } from '@headout/espeon/utils';
+import { getIntlTime } from '@headout/espeon/utils/time';
 import { ItineraryDescriptorsTypes } from 'components/common/Itinerary/ItineraryDescriptors/interface';
 import { PassesByCardProps } from 'components/common/Itinerary/TimelineView/components/PassesByCard/types';
 import { StopCardProps } from 'components/common/Itinerary/TimelineView/components/StopCard/types';

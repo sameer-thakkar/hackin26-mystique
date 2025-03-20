@@ -43,7 +43,11 @@ const internalRewrites = [
   },
 ];
 
-const withTM = moduleTranspiler(['@headout/aer', '@headout/eevee']);
+const withTM = moduleTranspiler([
+  '@headout/aer',
+  '@headout/eevee',
+  '@headout/espeon',
+]);
 
 /**
  * @type {import('next').NextConfig}

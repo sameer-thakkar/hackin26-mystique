@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import type { TMobileFeaturedNewsProps } from 'components/NewsPage/components/MobileFeaturedNews/interface';
 import { Wrapper } from 'components/NewsPage/components/MobileFeaturedNews/styles';

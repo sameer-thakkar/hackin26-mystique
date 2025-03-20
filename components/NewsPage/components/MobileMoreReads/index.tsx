@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import { TMobileMoreReadsProps } from 'components/NewsPage/components/MobileMoreReads/interface';
 import { Wrapper } from 'components/NewsPage/components/MobileMoreReads/styles';

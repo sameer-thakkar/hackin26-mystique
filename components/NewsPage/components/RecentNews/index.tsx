@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import MobileMoreReads from 'components/NewsPage/components/MobileMoreReads';
 import { TRecentNewsProps } from 'components/NewsPage/components/RecentNews/interface';

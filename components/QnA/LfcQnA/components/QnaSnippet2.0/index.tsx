@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
 import { Button, Text } from '@headout/eevee';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import SwipeableTabs from 'components/common/SwipeableTabs';

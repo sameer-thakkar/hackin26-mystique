@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { ModeOfTravelOptions } from 'types/itinerary.type';
-import { getDurationInHmNotation, getIntlUnit } from '@headout/espeon/utils';
+import { getDurationInHmNotation } from '@headout/espeon/utils/time';
+import { getIntlUnit } from '@headout/espeon/utils/units';
 import Conditional from 'components/common/Conditional';
 import { appAtom } from 'store/atoms/app';
 import { motIcons } from 'const/itinerary';
@@ -37,7 +38,6 @@ const NextDestinationTravel = ({
   const formattedDuration = timeForNextSection
     ? getDurationInHmNotation({
         durationInMinutes: timeForNextSection,
-        // @ts-expect-error
         lang: language,
       })
     : '';
@@ -57,7 +57,6 @@ const NextDestinationTravel = ({
             <Conditional if={distanceForNextSection}>
               <p className="distance">
                 {getIntlUnit({
-                  // @ts-expect-error
                   lang: language,
                   number: distanceForNextSection,
                   options: {

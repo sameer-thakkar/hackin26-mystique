@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import type {
   TDesktopMoreReadsProps,

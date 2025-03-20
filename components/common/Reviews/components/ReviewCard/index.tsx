@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { getIntlDate } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import { RatingStars } from 'components/ReviewsPage/components/ReviewCount';
 import Image from 'UI/Image';

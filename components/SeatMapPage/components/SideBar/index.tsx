@@ -4,7 +4,7 @@ import { createClient } from 'prismicio';
 import { useRecoilValue } from 'recoil';
 import { predicate } from '@prismicio/client';
 import useSWR from 'swr';
-import { getIntlTime } from '@headout/espeon/utils';
+import { getIntlTime } from '@headout/espeon/utils/time';
 import Conditional from 'components/common/Conditional';
 import Calendar from 'components/HOHO/components/Calendar';
 import { getMedianPrice } from 'components/HOHO/components/Calendar/utils';

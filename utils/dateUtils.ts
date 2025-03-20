@@ -3,7 +3,8 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 import localeData from 'dayjs/plugin/localeData';
-import { getIntlDate, getIntlTime } from '@headout/espeon/utils';
+import { getIntlDate } from '@headout/espeon/utils/date';
+import { getIntlTime } from '@headout/espeon/utils/time';
 import {
   INVALID_DATE,
   LANGUAGE_CODE_MAP,
@@ -44,7 +45,6 @@ export const dateToString = ({
     ? getIntlDate({
         date: formattedDate,
         dateFormat,
-        // @ts-expect-error
         lang: currentLanguage,
         options,
       })
