@@ -3,6 +3,7 @@ import { createClient } from 'prismicio';
 import type { AlternateLanguage, NumberField } from '@prismicio/types';
 import dayjs from 'dayjs';
 import type { IncomingHttpHeaders } from 'http';
+import Cookies from 'js-cookie';
 import { ShowpageDocument } from 'types.prismic';
 import { VideoMetaInfo } from 'components/common/Scripts';
 import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
@@ -271,6 +272,7 @@ export const createBookingURL = ({
   hsid,
   refererCollectionId,
 }: TCreateBookingUrl) => {
+  const experimentOverride = Cookies.get('experimentOverride');
   const bookingFlowSubdomain =
     bookSubdomain &&
     typeof bookSubdomain === 'string' &&
@@ -389,6 +391,10 @@ export const createBookingURL = ({
   }
 
   urlObject.searchParams.set('cookieBanner', 'false');
+
+  if (experimentOverride) {
+    urlObject.searchParams.set('experimentOverride', experimentOverride);
+  }
 
   return urlObject.toString();
 };
