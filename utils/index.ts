@@ -396,6 +396,8 @@ export const createBookingURL = ({
     urlObject.searchParams.set('experimentOverride', experimentOverride);
   }
 
+  urlObject.searchParams.set('showSplashScreen', 'true');
+
   return urlObject.toString();
 };
 
