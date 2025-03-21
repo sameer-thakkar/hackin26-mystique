@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { StyleSheetManager } from 'styled-components';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { captureException } from '@sentry/nextjs';
@@ -23,6 +24,7 @@ import { dynamicPolyfillIntlRelativeTime } from 'utils/timeUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { lazyLoadOverrideAtom } from 'store/atoms/lazy';
 import { localeLoaderAtom } from 'store/atoms/localeLoader';
 import { metaAtom } from 'store/atoms/meta';
 import { shortcodesAtom } from 'store/atoms/shortcodes';
@@ -115,7 +117,7 @@ const getCurrencyCode = ({
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
   const { lang: locale, CMSContent, countryCode } = pageProps;
-
+  const router = useRouter();
   const { data } = CMSContent || {};
   const { categoryTourListV2, is_entertainment_mb, body4 } = data || {};
   const isEntertainmentMbListicle =
@@ -306,6 +308,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);
     set(localeLoaderAtom, false);
+    set(lazyLoadOverrideAtom, !!router.query.overrideLazyLoad);
   };
   const { host } = pageProps;
   const isHarryPotterPage = checkIfHarryPotterPage(pageProps?.uid);
