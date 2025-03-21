@@ -7,6 +7,7 @@ import DeferredComponent from 'components/common/DeferredComponent';
 import { StyledButtonWrapper } from 'components/common/LocalePopover/styles';
 import LocaleSelector from 'components/common/LocaleSelector';
 import HeaderLinks from 'components/HeaderLinks';
+import RamadanTheming from 'components/RamadanTheming';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
@@ -364,6 +365,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
     className,
     isAirportTransfersLandingPage = false,
   } = props;
+
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const pageMetaData = useRecoilValue(metaAtom);
   const headerLanguages = languages?.length
@@ -536,6 +538,10 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
           $isDarkTheme={showDarkHeader}
           $reducedMargin={isDarkTheme}
         >
+          <Conditional if={!isMobile && !hasDropdownLinks}>
+            <RamadanTheming variant="header" />
+          </Conditional>
+
           <Conditional if={!slices && headerLinks}>
             <HeaderLinks
               headerLinks={headerLinks}

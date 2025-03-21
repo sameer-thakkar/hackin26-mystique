@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
 import { AllPhotosCta } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
+import RamadanTheming from 'components/RamadanTheming';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -82,6 +83,8 @@ const ExpandedGallery = ({
         $imagesLoaded={imagesLoaded}
         ref={containerRef}
       >
+        <RamadanTheming variant="desktop" />
+
         {Array.from({ length: MAX_LEN - (videoUrl ? 1 : 0) }).map(
           (_, index) => (
             <Skeleton key={index} containerClassName="gallery-children" />

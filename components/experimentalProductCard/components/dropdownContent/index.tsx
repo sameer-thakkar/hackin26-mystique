@@ -21,6 +21,7 @@ import InclusionsExclusions from 'components/Product/components/NewVerticalsProd
 import type { TSnapshotSectionProps } from 'components/Product/components/Popup/ReviewSection/Snapshots/interface';
 import TrustOverlay from 'components/Product/components/Popup/ReviewSection/TrustElements/Overlay';
 import type { TReviewSectionMobileProps } from 'components/Product/components/Popup/ReviewSection/types';
+import RamadanTheming from 'components/RamadanTheming';
 import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
@@ -410,6 +411,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
         onTabClick={handleTabClick}
         hideTitle={isModifiedPopup}
       />
+      <RamadanTheming variant="mobile" />
       <MediaCarouselWrapper
         {...{
           images,
