@@ -1462,6 +1462,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       SUB_HEADING: "We couldn't find reviews matching your selected filters.",
       CTA: 'Show all reviews',
     },
+    VERIFIED_REVIEW: 'Verified Partner Review',
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
@@ -1485,7 +1486,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     'Guests from <strong>{0}</strong> and <strong>over {1} countries</strong> have loved this experience',
   TRUST_TOOLTIP_HEADER: 'How do we collect reviews?',
   TRUST_TOOLTIP_CONTENT:
-    "Reviews are collected from real Headout users who've booked and completed their experience with us.",
+    "These ratings include verified reviews from both Headout guests and our trusted partners who operate this experience locally. All reviews come from real travelers who've taken this experience.",
   REVIEW_SECTION_HEADER: 'What our guests say',
   TRUST_VB_TAG: 'Verified booking',
   SNAPSHOTS_SECTION_HEADER: 'Snapshots from our guests',

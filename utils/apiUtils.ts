@@ -742,6 +742,7 @@ export interface TReviewMediasResponse {
     nonCustomerCountryCode: any;
     sourceLanguage: string;
     nonCustomerCountryName: any;
+    source: 'CUSTOMER' | 'TOURLANDISH' | 'PARTNER';
   }>;
   nextUrl: string;
   prevUrl: string;

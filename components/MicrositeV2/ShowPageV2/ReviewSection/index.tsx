@@ -400,6 +400,7 @@ const ReviewElement = ({
     reviewerImgUrl,
     sourceLanguage,
     id,
+    source,
   } = review;
 
   return (
@@ -409,6 +410,7 @@ const ReviewElement = ({
         reviewerImgUrl={reviewerImgUrl}
         reviewTime={reviewTime}
         rating={rating}
+        isPartner={source === 'PARTNER'}
       />
       <ReviewContent>
         {usingTranslatedContent && translatedContent

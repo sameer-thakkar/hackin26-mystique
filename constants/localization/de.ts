@@ -1325,6 +1325,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
         'Wir konnten keine Bewertungen für die gewählten Filter finden.',
       CTA: 'Alle anzeigen',
     },
+    VERIFIED_REVIEW: 'Verifizierte Partnerrezension',
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
@@ -1346,7 +1347,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   },
   TRUST_TOOLTIP_HEADER: 'Wie sammeln wir Bewertungen?',
   TRUST_TOOLTIP_CONTENT:
-    'Bewertungen werden von echten Headout-Nutzern gesammelt, die ihr Erlebnis mit uns gebucht und abgeschlossen haben.',
+    'Dies sind geprüfte Rezensionen von Headout Gästen sowie von unseren zuverlässigen Partnern, die dieses Erlebnis vor Ort anbieten. Alle Rezensionen stammen von echten Reisenden, die an diesem Erlebnis teilgenommen haben.',
   REVIEW_SECTION_HEADER: 'Was unsere Gäste sagen',
   TRUST_VB_TAG: 'Bestätigte Buchung',
   SNAPSHOTS_SECTION_HEADER: 'Schnappschüsse von unseren Gästen',

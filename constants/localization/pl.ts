@@ -1270,10 +1270,11 @@ const pl = {
         'Nie udało się znaleźć recenzji pasujących do wybranych filtrów.',
       CTA: 'Pokaż wszystkie',
     },
+    VERIFIED_REVIEW: 'Zweryfikowana opinia partnera',
   },
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
   TRUST_TOOLTIP_CONTENT:
-    'Recenzje są zbierane od prawdziwych użytkowników Headout, którzy zarezerwowali u nas wycieczkę i ją odbyli.',
+    'Te oceny zawierają zweryfikowane recenzje zarówno od klientów Headout, jak i naszych zaufanych partnerów, którzy obsługują tę aktywność na miejscu. Wszystkie recenzje pochodzą od prawdziwych podróżników, którzy wzięli udział w tej aktywności.',
   REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
   TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
 };

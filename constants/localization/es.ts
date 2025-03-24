@@ -1368,7 +1368,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   },
   TRUST_TOOLTIP_HEADER: '¿De quién recibimos las reseñas?',
   TRUST_TOOLTIP_CONTENT:
-    'Las reseñas proceden de usuarios reales de Headout que han reservado y completado su experiencia con nosotros.',
+    'Se trata de reseñas verificadas de personas que han disfrutado de la experiencia de Headout y de nuestros socios de confianza que ofrecen esta experiencia in situ. Todas las reseñas proceden de personas reales que han participado en la experiencia.',
   REVIEW_SECTION: {
     HEADING: 'A millones de personas les encanta viajar con nosotros',
     SORTING: {
@@ -1386,6 +1386,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       SUB_HEADING: 'No hay reseñas que coincidan con los filtros seleccionados',
       CTA: 'Ver las reseñas',
     },
+    VERIFIED_REVIEW: 'Reseña de socio verificada',
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

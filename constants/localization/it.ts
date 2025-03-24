@@ -1318,6 +1318,7 @@ const it = {
       SUB_HEADING: 'Non abbiamo trovato recensioni per i filtri selezionati.',
       CTA: 'Vedi le recensioni',
     },
+    VERIFIED_REVIEW: 'Recensione verificata del partner',
   },
 
   FLEXIBLE_CANCELLATION: {
@@ -1340,7 +1341,7 @@ const it = {
   },
   TRUST_TOOLTIP_HEADER: 'Come raccogliamo le recensioni?',
   TRUST_TOOLTIP_CONTENT:
-    'Le recensioni sono state scritte da clienti reali, che hanno prenotato la loro esperienza su Headout.',
+    "Le valutazioni includono recensioni verificate sia da ospiti Headout che da partner di fiducia che gestiscono l'esperienza in loco. Tutte le recensioni provengono da viaggiatori reali che hanno partecipato a questa esperienza.",
   REVIEW_SECTION_HEADER: 'Cosa dicono i nostri clienti',
   TRUST_VB_TAG: 'Prenotazione verificata',
   SNAPSHOTS_SECTION_HEADER: 'Le istantanee dei nostri ospiti',

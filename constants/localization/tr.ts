@@ -1333,7 +1333,7 @@ const tr = {
     'Aile boyu minivanlardan lüks sedan otomobillere kadar geniş araç seçeneklerin arasında bagajınıza ve grup büyüklüğünüze uygun aracı seçin',
   TRUST_TOOLTIP_HEADER: 'Değerlendirmeleri nasıl topluyoruz?',
   TRUST_TOOLTIP_CONTENT:
-    "Değerlendirmeler, Headout'tan rezervasyon yaparak deneyimlerini tamamlayan gerçek kullanıcılar tarafından sağlanır.",
+    'Değerlendirmeler, Headout konuklarının ve bu deneyimi yerel olarak sunan güvenilir iş ortaklarımızın doğrulanmış yorumlarını içerir. Tüm yorumlar, bu deneyimi gerçekten deneyimlemiş gezginlerden alınmıştır.',
   REVIEW_SECTION_HEADER: 'Konuklarımızın görüşleri',
   TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
   AGGREGATED_COUNTRIES:
@@ -1355,6 +1355,7 @@ const tr = {
       SUB_HEADING: 'Seçtiğiniz filtrelere uygun yorum bulamadık.',
       CTA: 'Tüm yorumları gör',
     },
+    VERIFIED_REVIEW: 'Doğrulanmış ortak incelemesi',
   },
 };
 

@@ -1315,7 +1315,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   TRUST_TOOLTIP_HEADER: 'Como obtemos as avaliações?',
   TRUST_TOOLTIP_CONTENT:
-    'As avaliações são enviadas por usuários reais que reservaram e tiveram uma experiência com a Headout.',
+    'Essas avaliações incluem comentários verificados de clientes tanto da Headout quanto de nossos parceiros de confiança que operam essa experiência no local. Todas as avaliações são de viajantes reais que participaram dessa experiência.',
   REVIEW_SECTION: {
     HEADING: 'Milhões de pessoas adoram viajar com a gente',
     SORTING: {
@@ -1333,6 +1333,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       SUB_HEADING: 'Não encontramos avaliações com os filtros selecionados.',
       CTA: 'Ver todas avaliações',
     },
+    VERIFIED_REVIEW: 'Avaliação de parceiro verificada',
   },
 
   FLEXIBLE_CANCELLATION: {

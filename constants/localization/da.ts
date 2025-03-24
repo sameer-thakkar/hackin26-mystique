@@ -1359,7 +1359,7 @@ const da = {
     'Vælg en bil, der passer til jeres bagage og antal personer: Vi har alt lige fra minibusser til luksuriøse sedaner',
   TRUST_TOOLTIP_HEADER: 'Hvordan indsamler vi anmeldelser?',
   TRUST_TOOLTIP_CONTENT:
-    'Vores anmeldelser er indsamlet fra Headout-brugere, som har booket og gennemført deres oplevelse hos os. ',
+    'Vurderingerne omfatter verificerede anmeldelser fra både Headout-gæster og vores betroede partnere, der driver oplevelsen lokalt. Alle anmeldelser kommer fra rigtige rejsende, der har deltaget i oplevelsen.',
   REVIEW_SECTION_HEADER: 'Hvad vores gæster siger',
   TRUST_VB_TAG: 'Bekræftet booking',
   SNAPSHOTS_SECTION_HEADER: 'Snapshots fra vores gæster',
@@ -1383,6 +1383,7 @@ const da = {
         'Vi kunne ikke finde nogen anmeldelser, der passer til dine filtre.',
       CTA: 'Vis alle anmeldelser',
     },
+    VERIFIED_REVIEW: 'Verificeret partneranmeldelse',
   },
 };
 

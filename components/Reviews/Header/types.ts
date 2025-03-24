@@ -3,4 +3,5 @@ export type TReviewHeaderProps = {
   nonCustomerName: string;
   rating: number;
   reviewTime: number;
+  isPartner?: boolean;
 };

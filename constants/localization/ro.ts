@@ -1332,7 +1332,7 @@ const ro = {
     'De la microbuze pentru familii până la berline de lux, alegeți mașina care se potrivește cu bagajele și mărimea grupului dvs.',
   TRUST_TOOLTIP_HEADER: 'Cum colectăm recenziile?',
   TRUST_TOOLTIP_CONTENT:
-    'Recenziile sunt colectate de la utilizatorii reali Headout care au rezervat și au finalizat experiența cu noi.',
+    'Aceste evaluări includ recenzii verificate atât de la oaspeții Headout, cât și de la partenerii noștri de încredere la nivel local. Toate recenziile provin de la călători reali.',
   REVIEW_SECTION_HEADER: 'Ce spun oaspeții noștri',
   TRUST_VB_TAG: 'Rezervare verificată',
   AGGREGATED_COUNTRIES:
@@ -1354,6 +1354,7 @@ const ro = {
       SUB_HEADING: 'Nu am găsit recenzii care să corespundă filtrelor.',
       CTA: 'Toate recenziile',
     },
+    VERIFIED_REVIEW: 'Recenzie verificată a partenerului',
   },
 };
 

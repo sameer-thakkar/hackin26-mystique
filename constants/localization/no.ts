@@ -1325,7 +1325,7 @@ const no = {
     'Fra minibusser til sedaner. Velg en bil som rommer bagasjen og reisefølget.',
   TRUST_TOOLTIP_HEADER: 'Hvordan samler vi inn anmeldelser?',
   TRUST_TOOLTIP_CONTENT:
-    'Anmeldelser kommer fra Headout-brukere som har bestilt og fullført opplevelser med oss.',
+    'Disse vurderingene inkluderer verifiserte anmeldelser fra både Headout-gjester og de lokale partnerne våre som leder disse opplevelsene. Alle anmeldelsene kommer fra ekte reisende som har deltatt på opplevelsen.',
   REVIEW_SECTION_HEADER: 'Dette sier gjestene våre',
   TRUST_VB_TAG: 'Verifisert bestilling',
   SNAPSHOTS_SECTION_HEADER: 'Instantanee de la oaspeții noștri',
@@ -1349,6 +1349,7 @@ const no = {
         'Vi fant ingen anmeldelser som samsvarer med filtrene du valgte.',
       CTA: 'Vis alle anmeldelser',
     },
+    VERIFIED_REVIEW: 'Verifisert partneranmeldelse',
   },
 };
 

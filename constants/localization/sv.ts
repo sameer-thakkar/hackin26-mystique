@@ -1327,7 +1327,7 @@ const sv = {
     'Välj den bil som passar dig, ditt bagage och gruppstorleken. Vi har alltifrån familjevänliga minibussar till lyxiga sedaner.',
   TRUST_TOOLTIP_HEADER: 'Hur samlar vi in recensioner?',
   TRUST_TOOLTIP_CONTENT:
-    'Recensionerna samlas in från riktiga Headout-användare som har bokat och upplevt sina äventyr med oss.',
+    'Betygen innefattar verifierade recensioner från både Headouts gäster och våra betrodda partners som driver upplevelserna lokalt. Alla recensioner kommer från verkliga resenärer som har deltagit i upplevelsen.',
   REVIEW_SECTION_HEADER: 'Så här säger våra gäster',
   TRUST_VB_TAG: 'Verifierad bokning',
   SNAPSHOTS_SECTION_HEADER: 'Ögonblicksbilder från våra gäster',
@@ -1351,6 +1351,7 @@ const sv = {
         'Vi kunde inte hitta recensioner som matchar ditt valda filter.',
       CTA: 'Visa alla recensioner',
     },
+    VERIFIED_REVIEW: 'Verifierad partnerrecension',
   },
 };
 

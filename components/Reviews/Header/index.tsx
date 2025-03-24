@@ -14,6 +14,7 @@ const ReviewHeader = ({
   nonCustomerName,
   reviewTime,
   rating,
+  isPartner = false,
 }: TReviewHeaderProps) => {
   const customerFirstName = useMemo(() => {
     if (!nonCustomerName) return '';
@@ -44,7 +45,11 @@ const ReviewHeader = ({
         <div className="name">{customerFirstName ?? nonCustomerName}</div>
         <div className="date">
           {datePublished}
-          <span className="verified">{strings.TRUST_VB_TAG}</span>
+          <span className="verified">
+            {isPartner
+              ? strings.REVIEW_SECTION.VERIFIED_REVIEW
+              : strings.TRUST_VB_TAG}
+          </span>
         </div>
         <div className="rating">
           {getStars(rating)}

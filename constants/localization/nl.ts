@@ -1267,7 +1267,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   },
   TRUST_TOOLTIP_HEADER: 'Hoe verzamelen we reviews?',
   TRUST_TOOLTIP_CONTENT:
-    'We gebruiken alleen reviews van echte Headout gebruikers die ervaringen bij ons hebben geboekt en uitgevoerd.',
+    'Dit zijn geverifieerde beoordelingen van Headout-gasten en onze vertrouwde partners die deze ervaring lokaal aanbieden. Alle beoordelingen zijn van echte reizigers die hebben deelgenomen aan deze ervaring.',
   REVIEW_SECTION: {
     HEADING: 'Miljoenen zijn dol op Headout',
     SORTING: {
@@ -1286,6 +1286,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
         'Er zijn geen beoordelingen die aan je geselecteerde filters voldoen.',
       CTA: 'Alle beoordelingen',
     },
+    VERIFIED_REVIEW: 'Geverifieerde partnerbeoordeling',
   },
 
   FLEXIBLE_CANCELLATION: {
