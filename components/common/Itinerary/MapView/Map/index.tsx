@@ -284,7 +284,7 @@ const RouteMap = ({
         }
         markers={markers}
         interactionBlockingOverlayText={interactionBlockingOverlayText}
-        maxZoomLevel={15}
+        maxZoomLevel={18}
         showZoomControls={false}
         onMapLoad={(map, reset, calculateBounds) => {
           if (map && reset && mapController && !mapController?.current) {
