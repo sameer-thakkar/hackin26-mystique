@@ -2476,6 +2476,8 @@ export const C1_COLLECTION_EXCLUDED = [
   1892, 1894, 220,
 ];
 
+export const BOOSTER_HEADOUT_EXCLUSIVE_TGIDS = [29712];
+
 export const harryPotterExperimentUids = [
   'harry-potter.london-tickets.co.uk',
   'www.london-tickets.co.uk.warner-bros-studio-tour-london',

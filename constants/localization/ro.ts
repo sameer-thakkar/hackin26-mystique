@@ -25,6 +25,11 @@ const ro = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout este un partener autorizat și de încredere al locației, oferind o selecție curatorială a celor mai bune experiențe pentru a vă bucura de această atracție.',
   BOOK_NOW_CTA: 'Rezervați acum',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Exclusiv Headout',
+  },
   BUY_TICKETS_CTA: 'Cumpărați bilete',
   CANCELLATION_POLICY: {
     CANCELLABLE:

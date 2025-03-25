@@ -1361,6 +1361,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
   BOOSTERS: {
     MOST_LOVED: 'Am beliebtesten',
     SPECIAL_DEAL: 'Sonderangebot',
+    HEADOUT_EXCLUSIVE: 'Headout exklusiv',
   },
 
   OTHER_EXPERIENCES: 'Weitere Erlebnisse',

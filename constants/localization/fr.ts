@@ -1368,6 +1368,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   BOOSTERS: {
     MOST_LOVED: 'Favori',
     SPECIAL_DEAL: 'Offres spéciales',
+    HEADOUT_EXCLUSIVE: 'Exclusivité Headout',
   },
 
   OTHER_EXPERIENCES: 'Autres expériences',

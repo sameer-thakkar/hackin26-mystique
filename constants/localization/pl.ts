@@ -26,6 +26,11 @@ const pl = {
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję.',
   BOOK_NOW_CTA: 'Zarezerwuj teraz',
   BUY_TICKETS_CTA: 'Kup bilety',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Tylko na Headout',
+  },
   CANCELLATION_POLICY: {
     CANCELLABLE:
       'Możesz anulować te bilety do {0} godzin przed rozpoczęciem aktywności, aby uzyskać pełen zwrot.',

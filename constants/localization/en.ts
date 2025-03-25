@@ -1517,6 +1517,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   BOOSTERS: {
     MOST_LOVED: 'Most loved',
     SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Headout Exclusive',
   },
 
   OTHER_EXPERIENCES: 'Other experiences',

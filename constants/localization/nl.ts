@@ -1317,6 +1317,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   BOOSTERS: {
     MOST_LOVED: 'Populairst',
     SPECIAL_DEAL: 'Speciale deal',
+    HEADOUT_EXCLUSIVE: 'Exclusief bij Headout',
   },
 
   OTHER_EXPERIENCES: 'Andere ervaringen',

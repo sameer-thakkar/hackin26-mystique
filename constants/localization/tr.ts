@@ -24,6 +24,11 @@ const tr = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout, bu turistik mekanın tadını çıkarmanız için en iyi deneyimlerden oluşan bir seçki sunan tesisin yetkili ve güvenilir bir ortağıdır.',
   BOOK_NOW_CTA: 'Hemen rezervasyon yapın',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: "Sadece Headout'ta",
+  },
   BUY_TICKETS_CTA: 'Bilet Satın Al',
   CANCELLATION_POLICY: {
     CANCELLABLE:

@@ -1355,6 +1355,7 @@ const it = {
   BOOSTERS: {
     MOST_LOVED: 'Il più scelto',
     SPECIAL_DEAL: 'Offerte speciali',
+    HEADOUT_EXCLUSIVE: 'Un’esclusiva Headout',
   },
 
   OTHER_EXPERIENCES: 'Altre esperienze',

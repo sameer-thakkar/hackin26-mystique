@@ -987,6 +987,8 @@ const MicrositeV1 = (props: any) => {
     ...(Array.isArray(contentFWSlices) ? contentFWSlices : []),
   ];
 
+  const showBoosters = isBoosterExpEligible || isPOIFiltersEnabled;
+
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -1032,7 +1034,7 @@ const MicrositeV1 = (props: any) => {
       isRankingExperimentResolving={isRankingExperimentResolving}
       isQnaExpResolving={isQnaExpResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
-      showBoosters={isBoosterExpEligible || isPOIFiltersEnabled}
+      showBoosters={showBoosters}
       isPOIFiltersEnabled={isPOIFiltersEnabled}
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}

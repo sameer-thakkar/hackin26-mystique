@@ -1416,6 +1416,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
   BOOSTERS: {
     MOST_LOVED: 'Más popular',
     SPECIAL_DEAL: 'Oferta especial',
+    HEADOUT_EXCLUSIVE: 'Exclusivo de Headout',
   },
 
   OTHER_EXPERIENCES: 'Otras experiencias',

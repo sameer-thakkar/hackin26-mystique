@@ -24,6 +24,11 @@ const no = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout er en autorisert og betrodd partner for arrangementsstedet, og tilbyr kuraterte opplevelser for å gjøre besøket på denne attraksjonen best mulig.',
   BOOK_NOW_CTA: 'Bestill nå',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Eksklusivt hos Headout',
+  },
   BUY_TICKETS_CTA: 'Kjøp billetter',
   CANCELLATION_POLICY: {
     CANCELLABLE:

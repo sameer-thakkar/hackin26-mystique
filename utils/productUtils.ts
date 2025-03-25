@@ -1299,10 +1299,17 @@ export const getTotalBoosters = (uid: string) => {
     );
 };
 
-export const checkForBooster = (uid: string, tgid: number) => {
+export const checkForBooster = ({
+  uid,
+  tgid,
+}: {
+  uid: string;
+  tgid: number;
+}) => {
   let finalType = '';
 
   const uidData = BOOSTER_EXPERIMENT_UIDS.get(uid);
+
   if (!uidData) return finalType;
 
   Object.keys(BoosterType)

@@ -24,6 +24,11 @@ const ru = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout — авторизованный и надежный партнер локации. Мы подбираем уникальные впечатления, чтобы вы могли максимально насладиться этой достопримечательностью.',
   BOOK_NOW_CTA: 'Забронировать сейчас',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Эксклюзивно на Headout',
+  },
   BUY_TICKETS_CTA: 'Купить билеты',
   CANCELLATION_POLICY: {
     CANCELLABLE:

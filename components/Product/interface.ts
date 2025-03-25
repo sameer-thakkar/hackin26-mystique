@@ -138,6 +138,7 @@ export enum BoosterType {
   MUST_DO_EXP = 'Must-do experience',
   MOST_LOVED = 'Most loved',
   SPECIAL_DEAL = 'Special deal',
+  HEADOUT_EXCLUSIVE = 'Headout Exclusive',
 }
 export type TBoosterProps = {
   type: BoosterType;

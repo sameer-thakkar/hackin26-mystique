@@ -132,6 +132,30 @@ export const getBoosterInfo = (
         left: 2.2,
       },
     },
+
+    [BoosterType.HEADOUT_EXCLUSIVE]: {
+      title: strings.BOOSTERS.HEADOUT_EXCLUSIVE,
+      icon: <Diamond />,
+      theme: '#6321AE',
+      transform: 'translate(-68%,-10%)',
+      borderTheme:
+        'linear-gradient(90deg, #B283E7 -3.09%, rgba(178, 131, 231, 0.7) 100%)',
+      iconHeight: 32,
+      mobileStyles: {
+        top: 16,
+        left: 32,
+      },
+      textColor: '#fff',
+      rotateDeg: -4,
+      iconStyles: {
+        top: 0,
+        left: 0,
+      },
+      boosterStyles: {
+        top: 0.75,
+        left: 1.8,
+      },
+    },
   };
 
   return BOOSTER_INFO[boosterType];

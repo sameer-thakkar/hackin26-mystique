@@ -107,6 +107,7 @@ import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BOOSTER_HEADOUT_EXCLUSIVE_TGIDS,
   CATEGORY_IDS,
   CRUISE_CATEGORY_ID,
   CRUISE_FORMAT_SUBCAT_IDS,
@@ -908,10 +909,18 @@ const Product = (props: any) => {
   ]);
 
   const boosterTypeIfShown = useMemo(() => {
-    const boosterInfo =
-      showBoosters && (checkForBooster(uid, tgid) || props.poiBooster);
+    const headoutExclusiveTgids = BOOSTER_HEADOUT_EXCLUSIVE_TGIDS.some(
+      (exclusiveTgid) => exclusiveTgid === tgid
+    );
+
+    const headoutExclusiveKey: keyof typeof BoosterType = 'HEADOUT_EXCLUSIVE';
+
+    const boosterInfo = headoutExclusiveTgids
+      ? headoutExclusiveKey
+      : showBoosters && (checkForBooster({ uid, tgid }) || props.poiBooster);
 
     if (boosterInfo) setBoosterType(boosterInfo);
+
     return boosterInfo;
   }, [tgid, showBoosters, props.poiBooster, uid]);
 

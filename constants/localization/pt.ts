@@ -1364,6 +1364,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   BOOSTERS: {
     MOST_LOVED: 'Mais curtido',
     SPECIAL_DEAL: 'Oferta especial',
+    HEADOUT_EXCLUSIVE: 'Exclusivo da Headout',
   },
 
   OTHER_EXPERIENCES: 'Outras experiências',
