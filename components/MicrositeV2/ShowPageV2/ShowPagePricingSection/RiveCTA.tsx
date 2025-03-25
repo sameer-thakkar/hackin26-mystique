@@ -22,6 +22,7 @@ const RiveShowPageCTA = ({
   primaryText,
   tgid,
   primarySubCatId,
+  onRiveVisible,
 }: TRiveCTAProps) => {
   const sources = [
     `${RIV_CTA_LTT_BASE}tgid-${tgid}.riv`,
@@ -66,6 +67,12 @@ const RiveShowPageCTA = ({
 
   const showFallback = isLoading || isError || !riveSrc;
   rive?.setTextRunValue('ctaText', primaryText);
+
+  useEffect(() => {
+    setTimeout(() => {
+      onRiveVisible(!showFallback);
+    }, 1000);
+  }, [showFallback, onRiveVisible]);
 
   return (
     <Conditional if={!showFallback}>

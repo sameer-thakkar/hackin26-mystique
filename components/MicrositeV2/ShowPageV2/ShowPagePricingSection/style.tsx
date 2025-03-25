@@ -109,6 +109,11 @@ export const BuyButtonWrapper = styled.div`
   margin-top: 1.5rem;
   position: relative;
   z-index: 1;
+
+  &.withRive {
+    padding-top: 48px;
+  }
+
   @media (max-width: 768px) {
     padding: 0.88rem 1.5rem;
     border-radius: 0;

@@ -43,6 +43,7 @@ const ShowPagePricingSection = ({
   const [isButtonLoading, setButtonLoading] = useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = useState(true);
   const [horProductCardLoadedCount, setHorProductCardLoadedCount] = useState(0);
+  const [isRiveVisible, setIsRiveVisible] = useState(false);
 
   const handleChildLoaded = () => {
     setHorProductCardLoadedCount((prevCount) => prevCount + 1);
@@ -212,19 +213,22 @@ const ShowPagePricingSection = ({
                 </div>
               </div>
             </Pricing>
-            <BuyButtonWrapper>
-              <Button
-                tabIndex={0}
-                as="button"
-                btnType="primary"
-                onClick={onCheckAvailabilityClicked}
-                primaryText={buyButtonText}
-                size="medium"
-                state={buttonType}
-                variant="primary"
-              />
+            <BuyButtonWrapper className={isRiveVisible ? 'withRive' : ''}>
+              <Conditional if={!isRiveVisible}>
+                <Button
+                  tabIndex={0}
+                  as="button"
+                  btnType="primary"
+                  onClick={onCheckAvailabilityClicked}
+                  primaryText={buyButtonText}
+                  size="medium"
+                  state={buttonType}
+                  variant="primary"
+                />
+              </Conditional>
               <RiveShowPageCTA
                 onClick={onCheckAvailabilityClicked}
+                onRiveVisible={(status: boolean) => setIsRiveVisible(status)}
                 primaryText={buyButtonText}
                 tgid={tgid}
                 primarySubCatId={primarySubCategory?.id}

@@ -8,6 +8,7 @@ export type TShowPagePricingSectionProps = {
 
 export type TRiveCTAProps = {
   onClick: () => void;
+  onRiveVisible: (status: boolean) => void;
   primaryText: string;
   tgid: string;
   primarySubCatId: string;
