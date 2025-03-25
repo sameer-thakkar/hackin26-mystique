@@ -214,6 +214,7 @@ const Page = (props: PageProps) => {
   const {
     isEligible: isMixpanelSessionReplayEligible,
     variant: mixpanelSessionReplayExpVariant,
+    isExperimentResolving: isMixpanelSessionReplayExpResolving,
   } = useABTesting({
     experimentId: 'MIXPANEL_SESSION_REPLAY',
     noTrack: true,
@@ -221,14 +222,21 @@ const Page = (props: PageProps) => {
   });
 
   useEffect(() => {
-    if (isMixpanelSessionReplayEligible) {
+    if (
+      isMixpanelSessionReplayEligible &&
+      !isMixpanelSessionReplayExpResolving
+    ) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MIXPANEL_SESSION_REPLAY,
         [ANALYTICS_PROPERTIES.IS_SESSION_RECORDED]:
-          mixpanelSessionReplayExpVariant === 'Treatment' ? 'Yes' : 'No',
+          mixpanelSessionReplayExpVariant === VARIANTS.TREATMENT ? 'Yes' : 'No',
       });
     }
-  }, [isMixpanelSessionReplayEligible, mixpanelSessionReplayExpVariant]);
+  }, [
+    isMixpanelSessionReplayEligible,
+    isMixpanelSessionReplayExpResolving,
+    mixpanelSessionReplayExpVariant,
+  ]);
 
   const shouldShowNewSubattractionsExp =
     isSubattractionsExpEligible &&
