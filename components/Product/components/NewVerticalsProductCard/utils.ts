@@ -90,13 +90,17 @@ export const getCustomDescriptors = ({
       itinerarySections,
     });
 
-    const moreString = strings.formatString(
-      strings.CRUISES.MORE,
-      String(totalStops - upfrontStops)
-    );
+    const moreStopsAvailable = totalStops - upfrontStops;
+    const moreString =
+      moreStopsAvailable > 0
+        ? strings.formatString(strings.CRUISES.MORE, String(moreStopsAvailable))
+        : '';
+
     const popularAttractions = strings.formatString(
       strings.CRUISES.VIEW_POPULAR_SIGHTS,
-      popularAttractionsCovered,
+      moreStopsAvailable > 0
+        ? popularAttractionsCovered
+        : `<span class='clickable'>${popularAttractionsCovered}</span>`,
       `<span class='clickable'>${moreString}</span>`
     );
 

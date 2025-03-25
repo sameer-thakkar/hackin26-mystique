@@ -1062,7 +1062,7 @@ const modifiedProductCardMwebCss = css<{
       &:not(:last-child) {
         margin: 0;
 
-        &::after {
+        &:not(.custom-descriptor) &::after {
           content: '';
           position: relative;
           height: 0.25rem;

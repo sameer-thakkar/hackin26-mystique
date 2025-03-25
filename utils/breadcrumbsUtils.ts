@@ -201,6 +201,10 @@ const getA1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     };
   }
 
+  if (Object.keys(breadcrumbs).length < pathArray.length + 1) {
+    return {};
+  }
+
   return breadcrumbs;
 };
 

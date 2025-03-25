@@ -262,7 +262,9 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
       [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
-      [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
+      [ANALYTICS_PROPERTIES.COUNTRY]:
+        baseLangCategorisationMetadata?.tagged_country ||
+        primaryCity?.country?.displayName,
       [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
       [ANALYTICS_PROPERTIES.LANGUAGE]: getLangObject(lang).code,
       [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,

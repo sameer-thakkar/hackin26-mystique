@@ -92,7 +92,7 @@ export const ProductDescriptors = ({
               <div
                 key={`descriptor-${index}`}
                 data-card-section={CARD_SECTION_MARKERS.DESCRIPTORS}
-                className={'tour-tag'}
+                className={'tour-tag custom-descriptor'}
                 dangerouslySetInnerHTML={{
                   __html: descriptorContent,
                 }}

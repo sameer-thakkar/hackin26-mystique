@@ -153,6 +153,7 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section.link {
     padding-bottom: 42px;
+    color: ${COLORS.GRAY.G2};
     .title-link {
       ${CardTitleStyles}
     }

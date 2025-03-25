@@ -141,6 +141,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   const dateFieldRef = useRef<HTMLDivElement>(null);
   const timeFieldRef = useRef<HTMLDivElement>(null);
   const paxFieldRef = useRef<HTMLDivElement>(null);
+  const searchUnitContainerRef = useRef<HTMLDivElement>(null);
 
   useCaptureClickOutside(airportFieldRef, () => {
     if (isAirportFieldFocused && !isMobile) {
@@ -252,6 +253,19 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
       type: 'SET',
       payload: 'DATE',
     });
+
+    setTimeout(() => {
+      if (!searchUnitContainerRef.current || isMobile) return;
+
+      const searchUnitContainerRect =
+        searchUnitContainerRef.current.getBoundingClientRect();
+      const targetPosition = searchUnitContainerRect.top + window.scrollY - 100;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }, 150);
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.AIRPORT_TRANSFERS.FIELD_CLICKED,
@@ -457,6 +471,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   return (
     <>
       <LocationInputsContainer
+        ref={searchUnitContainerRef}
         $direction={direction}
         $hasError={
           isMobile
