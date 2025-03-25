@@ -44,7 +44,7 @@ const RamadanTheming = ({ variant }: TRamadanProps) => {
 
   const excludeHolidayTheming = useMemo(() => {
     return shouldExcludeHolidayTheming(
-      primaryCity?.country.code,
+      primaryCity?.country?.code,
       primaryCity?.cityCode,
       ...RAMADAN_CONFIG
     );
