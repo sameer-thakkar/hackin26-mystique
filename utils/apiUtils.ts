@@ -841,7 +841,7 @@ interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
   primarySubCategoryID?: NumberField | string;
-  useAutomatedRankings?: boolean;
+  runRankingExperiment?: boolean;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -899,7 +899,7 @@ export const fetchTourGroupsByCollection = async ({
   currency,
   cookies,
   primarySubCategoryID,
-  useAutomatedRankings = false,
+  runRankingExperiment = false,
 }: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
@@ -913,14 +913,14 @@ export const fetchTourGroupsByCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
-    ...(useAutomatedRankings && {
+    ...(runRankingExperiment && {
       'src-version': 'v3',
     }),
   };
 
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: useAutomatedRankings
+    endpoint: runRankingExperiment
       ? HeadoutEndpoints.CollectionTourGroups
       : HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,

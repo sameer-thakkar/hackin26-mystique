@@ -26,6 +26,7 @@ const categoryTourListParserV1 = async ({
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
+  runRankingExperiment = false,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
@@ -82,15 +83,18 @@ const categoryTourListParserV1 = async ({
           limit: String(finalLimit),
         }),
         cookies,
-        useAutomatedRankings: true,
+        runRankingExperiment,
       });
 
       const {
         city,
         currency: currentCurrency,
         tourGroups,
+        pageData,
       } = collectionTourGroups ?? {};
-      const tourGroupsData = tourGroups;
+      const tourGroupsData = runRankingExperiment
+        ? tourGroups
+        : pageData?.items;
 
       let filteredData = tourGroupsData;
       if (sub_category_filter) {
@@ -256,8 +260,26 @@ const categoryTourListParserV1 = async ({
         primaryCity = additionalTours.cities[0];
       }
     }
+    const tgidsWithHORanking = allTours
+      ?.map((tour) => tour.id)
+      ?.filter((tgid) => !finalRanking?.includes(tgid));
+    let orderedTGIDRanking: any;
+    if (finalRanking?.length && tgidsWithHORanking?.length) {
+      orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
+    } else if (tgidsWithHORanking?.length) {
+      orderedTGIDRanking = [...tgidsWithHORanking];
+    } else {
+      orderedTGIDRanking = [...finalRanking];
+    }
 
-    const orderedTours = allTours;
+    const orderedTours = runRankingExperiment
+      ? allTours
+      : allTours?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.id))
+          );
+        });
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );

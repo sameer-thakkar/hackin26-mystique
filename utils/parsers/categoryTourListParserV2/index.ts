@@ -15,6 +15,7 @@ export default async function categoryTourListParserV2({
   cookies,
   MBDesign = '',
   isLookerWebhookCall = false,
+  runRankingExperiment = false,
 }: TCategoryTourListParserV2) {
   const { primary, items: sliceItems } = tourListCategory || {};
 
@@ -49,7 +50,7 @@ export default async function categoryTourListParserV2({
     lang,
     cookies,
     primarySubCategoryID,
-    useAutomatedRankings: true,
+    runRankingExperiment,
   });
 
   let categoryPromises = generatePromiseForCategoryTours({
@@ -88,7 +89,7 @@ export default async function categoryTourListParserV2({
             collectionData,
             categoriesWithProducts,
             allTgids,
-            true
+            runRankingExperiment
           );
         }
 
@@ -120,7 +121,11 @@ export default async function categoryTourListParserV2({
     }
   );
 
-  const allData = sortProducts(categoriesWithProducts?.flat());
+  let allData = categoriesWithProducts?.flat();
+
+  if (runRankingExperiment) {
+    allData = sortProducts(allData);
+  }
 
   const [firstProductData] = allData?.[0]?.items ?? [];
 

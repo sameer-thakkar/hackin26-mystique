@@ -540,7 +540,7 @@ type TGeneratePromiseForCategoryTours = {
   lang: string;
   primarySubCategoryID?: NumberField;
   cookies?: Record<string, string>;
-  useAutomatedRankings?: boolean;
+  runRankingExperiment?: boolean;
 };
 
 export const generatePromiseForCategoryTours = ({
@@ -553,7 +553,7 @@ export const generatePromiseForCategoryTours = ({
   lang,
   cookies,
   primarySubCategoryID,
-  useAutomatedRankings = false,
+  runRankingExperiment = false,
 }: TGeneratePromiseForCategoryTours) => {
   const allPromises = arr?.map(async (catId) => {
     let promise;
@@ -566,7 +566,7 @@ export const generatePromiseForCategoryTours = ({
           language: getHeadoutLanguagecode(lang),
           cookies,
           ...(primarySubCategoryID && { primarySubCategoryID }),
-          useAutomatedRankings,
+          runRankingExperiment,
         });
         break;
       case isCategory:

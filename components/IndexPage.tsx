@@ -637,7 +637,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const response = await reflect(
+  const response = reflect(
     getPageData({
       res,
       req,
@@ -648,7 +648,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   );
 
-  const props = response?.payload;
+  const promiseList = [response];
+
+  const [responseWithoutExperiment] = await Promise.all(promiseList);
+
+  const props = responseWithoutExperiment?.payload;
 
   try {
     let url =

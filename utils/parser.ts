@@ -15,11 +15,11 @@ export const accumulatingCategoryAndItemsData = (
   data: any,
   categoriesWithProducts: any,
   allTgids: number[][],
-  useAutomatedRankings = false
+  runRankingExperiment = false
 ) => {
   const result = data.reduce((accumulator: any[], currentValue: any) => {
     if (
-      useAutomatedRankings
+      runRankingExperiment
         ? currentValue?.tourGroups?.length
         : currentValue?.pageData?.items?.length
     ) {
@@ -36,11 +36,11 @@ export const accumulatingCategoryAndItemsData = (
         ...(subCategory ? { subCategory } : {}),
         ...(category ? { category } : {}),
         ...(collection || collectionId
-          ? useAutomatedRankings
+          ? runRankingExperiment
             ? { collection: { id: collectionId } }
             : { collection }
           : {}),
-        items: useAutomatedRankings ? tourGroups : items,
+        items: runRankingExperiment ? tourGroups : items,
       });
     }
     return accumulator;
