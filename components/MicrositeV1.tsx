@@ -879,6 +879,7 @@ const MicrositeV1 = (props: any) => {
     variant: poiFiltersVariant,
   } = useABTesting({
     experimentId: 'POI_FILTERS_EXPERIMENT',
+    noTrack: true,
     customEligibilityCheckFn: () =>
       !isNonPoiMB &&
       !QNA_EXP_UIDS.includes(uid) &&
