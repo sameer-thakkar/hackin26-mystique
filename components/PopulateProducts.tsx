@@ -1,4 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -18,6 +24,7 @@ import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
 import { QnaContextProvider } from 'contexts/QnaContext';
+import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -32,12 +39,14 @@ import {
   fetchInventory,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
+import { checkDropsBannerEligibility } from 'utils/dropsUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
 import { getProductDescriptors } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -52,12 +61,14 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import PercentageStamp from 'assets/percentageStamp';
+import { DropsExitIntent } from './AppDrops/components/DropsExitIntent';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { CardLoadingSkeleton } from './Product/components/CardLoadingSkeleton';
 import UpdatedQnaSnippet from './QnA/LfcQnA/components/QnaSnippet2.0';
 import UpdatedQnaSnippetDweb from './QnA/LfcQnA/components/QnaSnippet2.0DWeb';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
+import DropsBanner from './AppDrops';
 import CustomBanner from './CustomBanner';
 
 const Product = dynamic(
@@ -378,8 +389,21 @@ const PopulateProducts: any = (props: any) => {
   };
 
   const { isDev, host, design } = useContext(MBContext);
-
   const hostname = getHostName(isDev, host);
+  const {
+    isEligible: isEligibleForDropsBanner,
+    isExperimentResolving: isDropsBannerExperimentResolving,
+    variant: dropsBannerExperimentVariant,
+  } = useABTesting({
+    experimentId: 'DROPS_BANNER_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => checkDropsBannerEligibility(uid),
+  });
+
+  const shouldShowDropsBanner =
+    isEligibleForDropsBanner &&
+    dropsBannerExperimentVariant === VARIANTS.TREATMENT &&
+    !isDropsBannerExperimentResolving;
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -1060,6 +1084,30 @@ const PopulateProducts: any = (props: any) => {
                   </>
                 );
               }
+
+              /*
+               Render DROPS banner after the first card only
+              */
+              if (index === 0 && shouldShowDropsBanner) {
+                return (
+                  <>
+                    <Conditional if={bannerIndex === index}>
+                      {RenderedCustomBanner}
+                    </Conditional>
+                    {getProductCardFromTourAndIndex(tour, index)}
+                    <DropsBanner />
+                    <Conditional
+                      if={
+                        bannerIndex > index &&
+                        index == availableToursList.length - 1
+                      }
+                    >
+                      {RenderedCustomBanner}
+                    </Conditional>
+                  </>
+                );
+              }
+
               return (
                 <>
                   <Conditional if={bannerIndex === index}>
@@ -1151,6 +1199,9 @@ const PopulateProducts: any = (props: any) => {
             inactiveColor={`${COLORS.BLACK}20`}
           />
         </CombosContainer>
+      </Conditional>
+      <Conditional if={shouldShowDropsBanner}>
+        <DropsExitIntent />
       </Conditional>
     </StyledProductsWrapper>
   );

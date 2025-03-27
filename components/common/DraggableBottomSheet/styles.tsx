@@ -30,6 +30,7 @@ export const Sheet = styled.div<{
   $sheetHeight: string;
   $translateY: number;
   $roundedBorder?: boolean;
+  $hidePill?: boolean;
 }>`
   position: fixed;
   top: auto;
@@ -44,6 +45,8 @@ export const Sheet = styled.div<{
   box-shadow: 0 -0.2rem 1rem rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: ${({ $roundedBorder }) => ($roundedBorder ? '1rem' : '0')};
+  border-radius: 10px;
+  overflow: ${({ $hidePill }) => ($hidePill ? 'initial !important' : 'hidden')};
 `;
 
 export const GrabBar = styled.div<{

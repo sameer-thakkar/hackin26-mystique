@@ -9,6 +9,7 @@ export const CoreModalContainer = styled.div<{
   position: fixed;
   display: flex;
   justify-content: center;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -17,7 +18,6 @@ export const CoreModalContainer = styled.div<{
   z-index: 999;
   transition: all 0.2s ease 0s;
   background: rgba(0, 0, 0, 0.5);
-  align-items: flex-start;
 `;
 
 export const CoreModalContent = styled.div`
@@ -31,7 +31,7 @@ export const CoreModalContent = styled.div`
   min-height: auto;
   box-shadow: none;
   background: none;
-  margin: 10vh auto auto;
+  margin: 0;
 
   @media (max-width: 768px) {
     background: ${COLORS.BRAND.WHITE};
@@ -46,6 +46,7 @@ export const CoreModalContent = styled.div`
     width: 100%;
     bottom: 0;
     position: absolute;
+    margin: 0;
 
     @keyframes enter {
       from {

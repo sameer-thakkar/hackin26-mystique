@@ -13,6 +13,7 @@ export const BottomSheet = memo(
     snapHeight,
     dragLimit = 100,
     roundedBorder = false,
+    hidePill = false,
   }: {
     children: React.ReactNode;
     onCloseCompletion?: (type: string) => void;
@@ -21,6 +22,7 @@ export const BottomSheet = memo(
     snapHeight?: string;
     dragLimit?: number;
     roundedBorder?: boolean;
+    hidePill?: boolean;
   }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [translateY, setTranslateY] = useState(1000);
@@ -127,20 +129,23 @@ export const BottomSheet = memo(
           $sheetHeight={sheetHeight}
           $translateY={translateY}
           $roundedBorder={roundedBorder}
-          className="sheet-container"
+          $hidePill={hidePill}
+          className={'sheet-container'}
         >
-          <GrabBar
-            {...(drawerState === SWIPESHEET_STATES.EXPANDED
-              ? eventHandlers
-              : {})}
-            $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
-            $snapHeight={snapHeight}
-            className="grab-bar"
-          >
-            <GrabIndicator
+          {!hidePill && (
+            <GrabBar
+              {...(drawerState === SWIPESHEET_STATES.EXPANDED
+                ? eventHandlers
+                : {})}
               $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
-            />
-          </GrabBar>
+              $snapHeight={snapHeight}
+              className="grab-bar"
+            >
+              <GrabIndicator
+                $isScrolled={drawerState === SWIPESHEET_STATES.EXPANDED}
+              />
+            </GrabBar>
+          )}
 
           <div className="sheet-content">{children}</div>
         </Sheet>

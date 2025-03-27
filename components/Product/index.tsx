@@ -78,6 +78,7 @@ import {
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getEarliestAvailableDate } from 'utils/dateUtils';
+import { storeDropsExitIntentAvailabilityClicked } from 'utils/dropsUtils';
 import { debounce } from 'utils/gen';
 import {
   checkIfGpMotorTicketsMB,
@@ -586,6 +587,8 @@ const Product = (props: any) => {
         boosterType,
       }),
     });
+    // store the click event for drops exit intent
+    storeDropsExitIntentAvailabilityClicked();
   };
 
   const trackCancellationPolicyHover = () => {

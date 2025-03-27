@@ -529,6 +529,8 @@ export const ANALYTICS_EVENTS = {
     CARD_DESCRIPTOR_CLICKED: 'Card Descriptor Clicked',
   },
   PRODUCT_CARD_IMAGE_VIEWED: 'Product Card Image Viewed',
+  DROPS_BANNER_SHOWN: 'Drops Banner Shown',
+  DROPS_BANNER_CTA_CLICKED: 'Drops Banner CTA Clicked',
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
   VIDEO_AUTOPLAY_FAILED: 'Video Autoplay Failed',
   SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
@@ -1255,6 +1257,8 @@ export const ANALYTICS_PROPERTIES = {
   NUMBER_OF_REVIEWS: 'Number Of Reviews',
   IS_SELECTED: 'Is Selected',
   SORTING_CRITERA: 'Sort Criteria',
+  QR_CODE_SHOWN: 'QR Code Shown',
+  DOWNLOAD_CTA_SHOWN: 'Download CTA Shown',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
@@ -2541,3 +2545,6 @@ export const DUBAI_DESERT_SAFARI = 'www.desert-safari-dxb.com';
 export const TGIDS_WITH_CANCELLATION_INSURANCE = [
   7148, 846, 7654, 11899, 16959, 16156, 24878, 18288,
 ];
+
+export const TRUE = 'TRUE';
+export const FALSE = 'FALSE';

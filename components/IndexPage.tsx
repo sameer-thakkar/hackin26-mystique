@@ -76,6 +76,7 @@ type PageProps = {
   [k: string]: any;
 
   airportTransfersLPExperimentVariant: string;
+  countryCode: string;
 };
 
 const Page = (props: PageProps) => {
@@ -98,6 +99,7 @@ const Page = (props: PageProps) => {
     collectionReviews = {},
     catSubCatReviews = {},
     botReviewsByTGID = {},
+    countryCode,
     categoryId,
     subCategoryId,
     uid,
@@ -525,6 +527,7 @@ const Page = (props: PageProps) => {
             }
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
             categoryHeaderMenu={categoryHeaderMenu}
+            userCountry={countryCode}
           >
             <Analytics cmsContent={CMSContent} contentType={ContentType} />
             {Component}

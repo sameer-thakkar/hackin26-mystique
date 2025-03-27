@@ -5,15 +5,12 @@ const tw = {
     '從得到認證的運營商提供的不同景點門票、套票以及導覽團中為您作出最優選擇',
   SANITARY_ALERT: {
     KEY_TEXT: '您的安全是我們最優先考慮的事項',
-    TEXT:
-      '為了提升衛生水平，我們頻繁使用消毒液為表面進行了全面性的消毒，同時避免人群過度聚集。',
+    TEXT: '為了提升衛生水平，我們頻繁使用消毒液為表面進行了全面性的消毒，同時避免人群過度聚集。',
   },
   COVID19_ALERT: {
     KEY_TEXT: '疫情期間更新',
-    TEXT:
-      '您是我們最在意的對象。請您在幫助中心中的靈活取消政策中查詢最新資訊。',
-    LINK:
-      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
+    TEXT: '您是我們最在意的對象。請您在幫助中心中的靈活取消政策中查詢最新資訊。',
+    LINK: 'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: '了解更多',
   BANNER_CTA: '購買門票',
