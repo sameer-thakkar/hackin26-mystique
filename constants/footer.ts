@@ -38,7 +38,7 @@ export const CONTACT_ICONS = {
 };
 
 export const HEADOUT_ADDRESS =
-  '© Headout Inc, 82 Nassau St #60351 New York, NY 10038';
+  'Headout Inc, 82 Nassau St #60351 New York, NY 10038';
 
 export const DOWNLOAD_APP_QR =
   'https://cdn-imgix-open.headout.com/headout-connect/app_download.svg';

@@ -340,7 +340,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                   <div className="white-line" />
                   <div className="super-brand-logo">
                     {WhiteBlip}
-                    <span className="address">{HEADOUT_ADDRESS}</span>
+                    <span className="address">{`© 2014-${new Date().getFullYear()} ${HEADOUT_ADDRESS}`}</span>
                   </div>
                   <SocialLinks
                     className="social-links"
