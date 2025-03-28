@@ -69,9 +69,11 @@ const RiveShowPageCTA = ({
   rive?.setTextRunValue('ctaText', primaryText);
 
   useEffect(() => {
-    setTimeout(() => {
-      onRiveVisible(!showFallback);
-    }, 1000);
+    if (rive) {
+      setTimeout(() => {
+        onRiveVisible(!showFallback);
+      }, 1000);
+    }
   }, [showFallback, onRiveVisible]);
 
   return (
