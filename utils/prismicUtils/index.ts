@@ -153,6 +153,7 @@ export const fetchPrismicDocument = async ({
   const paramsString = params.toString();
 
   const domain = getPrismicProxyDomain({ isDev, host });
+
   const endpoint = `${domain}/api/prismic/${uid}/${lang}/?${paramsString}`;
 
   const response = (await fetch(endpoint, {

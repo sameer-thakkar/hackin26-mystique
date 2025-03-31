@@ -1,6 +1,9 @@
 import Conditional from 'components/common/Conditional';
+import LongForm from 'components/common/LongForm';
 import VenueLandingPageBanner from 'components/MicrositeV2/CategoryPageBanner';
 import VerticalProductCardSlide from 'components/NewsPage/components/VerticalProductCardSlide';
+import { InteractionContextProvider } from 'contexts/Interaction';
+import { ProductsContextProvider } from 'contexts/Products';
 import { THEATRE_LANDING_PAGE_ILLUSTRATION } from 'const/index';
 import BrowseByCategories from '../components/BrowseCategories';
 import TheatreGrid from '../components/TheatreGrid';
@@ -18,6 +21,7 @@ const VenueLandingPage: React.FC<
   browseCategoriesData,
   hostname,
   language,
+  contentFrameworkData,
 }) => {
   return (
     <>
@@ -56,6 +60,17 @@ const VenueLandingPage: React.FC<
           showPageDocuments={popularShowsData?.showPageDocuments}
           keepTitlePadding={true}
         />
+      </Conditional>
+      <Conditional if={contentFrameworkData}>
+        <ProductsContextProvider ready={false}>
+          <InteractionContextProvider>
+            <LongForm
+              content={contentFrameworkData?.data?.body ?? []}
+              isMobile={isMobile}
+              isVenuePage
+            />
+          </InteractionContextProvider>
+        </ProductsContextProvider>
       </Conditional>
     </>
   );

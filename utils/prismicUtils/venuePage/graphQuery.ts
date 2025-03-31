@@ -2,6 +2,11 @@ export const venuePageGq = `
     {
         venue_page {
             ...venue_pageFields
+            content_framework {
+                ...on content_framework {
+                    ...content_frameworkFields
+                }
+            }
             header_ref {
                 ...on common_header {
                     ...common_headerFields

@@ -1,3 +1,5 @@
+import { ContentFrameworkDocument } from 'types.prismic';
+
 export type TVenueLandingPage = {
   heading: string;
   isMobile: boolean;
@@ -7,4 +9,5 @@ export type TVenueLandingPage = {
   browseCategoriesData: Record<string, any>;
   hostname: string;
   language: string;
+  contentFrameworkData?: ContentFrameworkDocument;
 };

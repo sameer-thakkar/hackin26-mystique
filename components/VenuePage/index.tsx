@@ -93,6 +93,8 @@ const VenuePage = (props: IVenuePageProps) => {
     alternate_languages,
   } = data;
 
+  const { content_framework } = CMSContent ?? {};
+
   const {
     seatingCapacity,
     mobileBanner,
@@ -501,6 +503,7 @@ const VenuePage = (props: IVenuePageProps) => {
           browseCategoriesData={browseCategoriesData}
           hostname={host}
           language={lang}
+          contentFrameworkData={content_framework}
         />
       </Conditional>
       <Footer
