@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { NextPageContext } from 'next';
 import { createClient } from 'prismicio';
 import builder from 'xmlbuilder';
+import { isSubdomain } from 'utils/index';
 import { sendLog } from 'utils/logger';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { CUSTOM_TYPES, DEFAULT_PRISMIC_LANG } from 'constants/index';
@@ -94,10 +95,13 @@ export default class SitemapXml extends Component {
 
     try {
       const prismicClient = createClient();
-      const documents = await prismicClient.getAllByTag(uid as string, {
-        pageSize: 100,
-        lang: DEFAULT_PRISMIC_LANG,
-      });
+      const isSubdomainHost = isSubdomain(uid as string);
+      const documents = isSubdomainHost
+        ? []
+        : await prismicClient.getAllByTag(uid as string, {
+            pageSize: 100,
+            lang: DEFAULT_PRISMIC_LANG,
+          });
 
       documents
         .filter((doc: any) =>

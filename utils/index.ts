@@ -427,6 +427,11 @@ export const isNakedDomain = (host: string) => {
   return parts.length === getMatchingNakedDomainPartsLength(host);
 };
 
+export const isSubdomain = (host: string) => {
+  const subdomain = host.split('.')[0];
+  return subdomain !== 'www';
+};
+
 export const getHeadoutLanguagecode = (prismicLangCode: string) => {
   return (
     LANGUAGE_MAP[
