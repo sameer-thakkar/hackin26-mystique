@@ -126,14 +126,21 @@ const PricingBar: FC<React.PropsWithChildren<PricingBarProps>> = ({
       $hasDropShadow={isModifiedCTA}
     >
       <Conditional
-        if={isModifiedCTA && showScratchPrice && listingPrice.bestDiscount > 0}
+        if={
+          isModifiedCTA &&
+          showScratchPrice &&
+          !!Object.keys(listingPrice).length &&
+          listingPrice?.bestDiscount > 0
+        }
       >
         <SavingsStrip>
           <Emoji symbol="🤑" label="money-mouth-face" />
-          {strings.formatString(
-            strings.SAVE_UPTO_PERCENT,
-            listingPrice.bestDiscount
-          )}
+          {typeof listingPrice?.bestDiscount === 'number'
+            ? strings.formatString(
+                strings.SAVE_UPTO_PERCENT,
+                listingPrice?.bestDiscount
+              )
+            : ''}
         </SavingsStrip>
       </Conditional>
       <PriceElements $hasSavings={false} $isModifiedCTA={isModifiedCTA}>

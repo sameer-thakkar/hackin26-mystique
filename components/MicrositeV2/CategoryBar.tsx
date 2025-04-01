@@ -59,6 +59,13 @@ const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
   padding-top: 2.25rem;
   padding-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '0.75rem' : '1.25rem'};
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   .tabs-wrap {
     margin: 0;
     padding: 0;
@@ -70,7 +77,7 @@ const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
     position: relative;
   }
   .tab {
-    ${expandFontToken('Heading/Large')}
+    ${expandFontToken('UI/Label Large (Heavy)')}
     color: ${COLORS.GRAY.G2};
     text-align: center;
     cursor: pointer;
@@ -128,7 +135,7 @@ const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
     }
 
     .tab {
-      ${expandFontToken('Heading/Product Card')}
+      ${expandFontToken('UI/Label Large (Heavy)')}
     }
 
     .filter-wrapper {

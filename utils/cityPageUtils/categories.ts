@@ -186,7 +186,7 @@ const getPopularSubCategoriesData = async ({
         }
       );
 
-      if (results?.length > 3) {
+      if (results?.length >= 3) {
         const isBaselang = lang === SUPPORTED_LOCALE_MAP.en;
         const getUid = isBaselang ? getUidFromRootLevel : getUidFromAltLangData;
         results.forEach((item: PrismicDocumentWithUID) => {

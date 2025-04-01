@@ -141,7 +141,7 @@ const StyledCard = styled.div((props) => {
     }
     p {
       margin-bottom: ${isGlobalMb ? 0 : '16px'};
-      color:  ${isGlobalMb ? COLORS.GRAY.G3 : 'inherit'};
+      color:  ${COLORS.GRAY.G3};
     }
     a {
       color: ${COLORS.TEXT.CANDY_1};

@@ -122,27 +122,33 @@ const ImageGallery = ({
   }, [popupState]);
 
   useEffect(() => {
-    const closeCalendarOnEscapePressed = (event: KeyboardEvent) => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (popupState !== EPopupState.OPEN) return;
+
       if (event.key === 'Escape') {
         closePopup();
-      } else if (event.key === 'ArrowRight') {
+      } else if (
+        event.key === 'ArrowRight' &&
+        swiper &&
+        activeIndex < imageUploads.length - 1
+      ) {
         moveNext();
-      } else if (event.key === 'ArrowLeft') {
+      } else if (event.key === 'ArrowLeft' && swiper && activeIndex > 0) {
         movePrev();
       }
     };
-    window.addEventListener('keydown', closeCalendarOnEscapePressed);
 
-    return () =>
-      window.removeEventListener('keydown', closeCalendarOnEscapePressed);
-  }, []);
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [popupState, swiper, activeIndex, imageUploads.length]);
 
   const onListImageClicked = (index: number) => {
     swiper?.slideTo(index);
   };
 
   const moveNext = () => {
-    swiper?.slideNext();
+    if (!swiper) return;
+    swiper.slideNext();
     if (review)
       trackEvent({
         eventName: ANALYTICS_EVENTS.REVIEWS_MEDIA_SCROLLED,
@@ -152,7 +158,8 @@ const ImageGallery = ({
   };
 
   const movePrev = () => {
-    swiper?.slidePrev();
+    if (!swiper) return;
+    swiper.slidePrev();
     if (review)
       trackEvent({
         eventName: ANALYTICS_EVENTS.REVIEWS_MEDIA_SCROLLED,
