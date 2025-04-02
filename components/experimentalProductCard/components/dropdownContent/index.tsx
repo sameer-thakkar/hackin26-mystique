@@ -26,7 +26,7 @@ import { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
 import type { TReviewMediasResponse } from 'utils/apiUtils';
-import { isItineraryValid } from 'utils/itinerary';
+import { isHOHOItinerary, isItineraryValid } from 'utils/itinerary';
 import {
   extractTabsFromHighlights,
   filterHighlights,
@@ -164,6 +164,10 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
 
   const { details, sections } = tgidItineraryData?.[0] || {};
 
+  const isHohoItinerary = tgidItineraryData?.reduce((acc, itinerary) => {
+    return acc || isHOHOItinerary(itinerary.type);
+  }, false);
+
   const { inclusionsRichText = [], everyRichTextExceptInclusions } = useMemo(
     () =>
       filterHighlights({
@@ -275,7 +279,9 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
       tabs = [
         ...tabs.slice(0, 2),
         {
-          heading: strings.ITINERARY.TAB,
+          heading: isHohoItinerary
+            ? strings.HOHO.ROUTES
+            : strings.ITINERARY.TAB,
           isNew: true,
           contents: [],
           type: 'itinerary',
@@ -465,7 +471,9 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
                     }
                   >
                     {tab.type === 'itinerary'
-                      ? strings.ITINERARY.HEADING
+                      ? isHohoItinerary
+                        ? strings.HOHO.ROUTES
+                        : strings.ITINERARY.HEADING
                       : tab.heading}
                   </Heading>
                 </Conditional>
