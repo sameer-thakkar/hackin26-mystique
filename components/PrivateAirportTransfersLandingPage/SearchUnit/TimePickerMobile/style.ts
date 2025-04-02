@@ -82,8 +82,10 @@ export const ScrollableColumn = styled.div`
 
   scroll-snap-type: y mandatory;
   // hide scroll
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
   }
 `;
 

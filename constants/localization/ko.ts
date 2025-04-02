@@ -9,6 +9,7 @@ const ko = {
     SUB_TEXT: 'Authentic experiences from trusted and verified partners',
   },
   AVAILABLE: '예약 가능',
+  BACK: '뒤로가기',
   BANNER_CTA: '티켓 구매',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

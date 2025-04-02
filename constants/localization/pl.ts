@@ -11,6 +11,7 @@ const pl = {
   },
   REVIEWS: 'ocen(-y)',
   AVAILABLE: 'Dostępne',
+  BACK: 'Wstecz',
   BANNER_CTA: 'Kup bilety',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

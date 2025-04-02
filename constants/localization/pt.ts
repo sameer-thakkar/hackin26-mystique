@@ -9,6 +9,7 @@ const pt = {
     SUB_TEXT: 'Experiências reais de parceiros confiáveis e verificados.',
   },
   AVAILABLE: 'Disponível',
+  BACK: 'Voltar',
   BANNER_CTA: 'Faça sua reserva',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

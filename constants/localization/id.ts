@@ -4,6 +4,7 @@ const id = {
     PRODUCT_SUFFIX: 'dengan Panduan Audio',
   },
   AVAILABLE: 'Tersedia',
+  BACK: 'Kembali',
   BANNER_CTA: 'Beli tiket',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

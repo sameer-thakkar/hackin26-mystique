@@ -10,6 +10,7 @@ const sv = {
   },
   REVIEWS: 'recensioner',
   AVAILABLE: 'Tillgänglig',
+  BACK: 'Tillbaka',
   BANNER_CTA: 'Köp biljetter',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

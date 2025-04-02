@@ -9,6 +9,7 @@ const ar = {
     SUB_TEXT: 'Authentic experiences from trusted and verified partners',
   },
   AVAILABLE: 'متوفر',
+  BACK: 'عودة',
   BANNER_CTA: 'اشتري التذاكر',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

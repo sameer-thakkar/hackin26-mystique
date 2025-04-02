@@ -9,6 +9,7 @@ const fr = {
     SUB_TEXT: 'Expériences authentiques de partenaires fiables et vérifiés.',
   },
   AVAILABLE: 'Disponible',
+  BACK: 'Retour',
   BANNER_CTA: 'Voir nos offres',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

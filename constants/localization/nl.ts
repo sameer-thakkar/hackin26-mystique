@@ -10,6 +10,7 @@ const nl = {
       'Authentieke ervaringen geleverd door geverifieerde en betrouwbare partners.',
   },
   AVAILABLE: 'Beschikbaar',
+  BACK: 'Terug',
   BANNER_CTA: 'Koop kaartjes',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

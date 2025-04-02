@@ -10,6 +10,7 @@ const da = {
   },
   REVIEWS: 'anmeldelser',
   AVAILABLE: 'Der er stadig billetter',
+  BACK: 'Tilbage',
   BANNER_CTA: 'Køb billetter',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

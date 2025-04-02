@@ -1,4 +1,11 @@
-import { useContext, useEffect, useReducer, useRef, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import Button from '@headout/aer/src/atoms/Button';
@@ -62,6 +69,7 @@ import {
 
 export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   const [hasSearched, setHasSearched] = useState(false);
+  const [hasTouchedPaxField, setHasTouchedPaxField] = useState(false);
 
   const { lang } = useContext(MBContext);
 
@@ -121,7 +129,9 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
 
   const dateTimeFieldError = dateFieldError || timeFieldError;
 
-  const paxFieldError = hasSearched && currentStep !== 'PAX' && !selectedPax;
+  const paxFieldError =
+    hasSearched &&
+    ((currentStep !== 'PAX' && !selectedPax) || !hasTouchedPaxField);
 
   const hasAnyError =
     airportFieldError ||
@@ -341,7 +351,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
         locationData: selectedLocation,
         pickupDate: selectedDate ?? '',
         pickupTime: selectedTime ?? '',
-        pax: selectedPax,
+        pax: hasTouchedPaxField ? selectedPax : 0,
       })
     )
       return;
@@ -367,8 +377,6 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   };
 
   const [isAnimating, setIsAnimating] = useState(true);
-
-  const [hasTouchedPaxField, setHasTouchedPaxField] = useState(false);
 
   useEffect(() => {
     if (currentStep === 'PAX') {
@@ -467,6 +475,23 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   };
 
   const DrawerContent = getDrawerContent(currentStep, direction);
+
+  const currentStepNumber =
+    privateAirportTransferSearchFieldsOrder.indexOf(currentStep);
+  const numberOfSteps = privateAirportTransferSearchFieldsOrder.length;
+  const isLastStep = useMemo(() => {
+    return currentStepNumber === numberOfSteps - 1;
+  }, [currentStepNumber]);
+
+  const handleNextClick = (isLastStep: boolean) => {
+    if (!isLastStep) {
+      goToNextStep(true);
+      return;
+    }
+    handleSearchButtonClick();
+    dispatch({ type: 'NEXT' });
+    setIsAnimating(true);
+  };
 
   return (
     <>
@@ -635,7 +660,9 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
           topLabel={strings.AIRPORT_TRANSFER.GUESTS}
           onClick={handlePaxFieldClick}
           isFocused={currentStep === 'PAX'}
-          value={getPaxFieldText(selectedPax, strings)}
+          value={
+            hasTouchedPaxField ? getPaxFieldText(selectedPax, strings) : ''
+          }
           error={paxFieldError}
           className="pvt-pax-field"
         />
@@ -694,7 +721,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
 
           <BottomDrawerNavigation
             handleBackClick={goToPrevStep}
-            handleNextClick={() => goToNextStep(true)}
+            handleNextClick={() => handleNextClick(isLastStep)}
             isNextDisabled={
               !isCurrentStepComplete(currentStep, direction, {
                 airport: selectedAirport.name ?? '',

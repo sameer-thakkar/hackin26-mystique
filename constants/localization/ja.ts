@@ -5,6 +5,7 @@ const ja = {
     SUB_TEXT: 'Authentic experiences from trusted and verified partners',
   },
   AVAILABLE: '予約可能',
+  BACK: '戻る',
   BANNER_CTA: 'チケットを購入',
   BOOK_NOW_CTA: '今すぐ予約',
   CLOSE: '閉じる',

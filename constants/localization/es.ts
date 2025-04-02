@@ -10,6 +10,7 @@ const es = {
       'Experiencias auténticas proporcionadas por socios autorizados y de confianza.',
   },
   AVAILABLE: 'Disponible',
+  BACK: 'Atrás',
   BANNER_CTA: 'Comprar entradas',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

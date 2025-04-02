@@ -169,7 +169,7 @@ const StyledListItem = styled.li<{
 
   @media (min-width: 769px) {
     border-bottom: none;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     column-gap: 0.75rem;
     cursor: pointer;
 

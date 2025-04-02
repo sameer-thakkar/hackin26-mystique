@@ -10,6 +10,7 @@ const no = {
   },
   REVIEWS: 'anmeldelser',
   AVAILABLE: 'Tilgjengelig',
+  BACK: 'Tilbake',
   BANNER_CTA: 'Kjøp billetter',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

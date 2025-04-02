@@ -10,6 +10,7 @@ const en = {
   },
   REVIEWS: 'reviews',
   AVAILABLE: 'Available',
+  BACK: 'Back',
   BANNER_CTA: 'Buy tickets',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

@@ -11,6 +11,7 @@ const ro = {
   },
   REVIEWS: 'recenzii',
   AVAILABLE: 'Disponibil',
+  BACK: 'Înapoi',
   BANNER_CTA: 'Cumpărați bilete',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:

@@ -10,6 +10,7 @@ const ru = {
   },
   REVIEWS: 'отзывы',
   AVAILABLE: 'Доступно',
+  BACK: 'НАЗАД',
   BANNER_CTA: 'Купить билеты',
   BANNER_FOOTER_SUBTEXT: {
     NON_PARTNERED_NON_SENSITIVE:
