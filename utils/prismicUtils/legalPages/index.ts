@@ -2,10 +2,13 @@ import { GetServerSidePropsContext } from 'next';
 import { createClient } from 'prismicio';
 import * as Sentry from '@sentry/nextjs';
 import { fetchDomainConfig, getPrismicProxyDomain } from 'utils/apiUtils';
+import { getLangObject } from 'utils/helper';
+import { getLocalizationLabels } from 'utils/localizationUtils';
 import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import { getDomainFromUid, getLangUID } from 'utils/urlUtils';
 import { CUSTOM_TYPES, DEFAULT_PRISMIC_LANG } from 'const/index';
+import { strings } from 'const/strings';
 import { globalHomepagStaticPageGq, micrositeStaticPageGq } from './graphQuery';
 
 export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
@@ -124,6 +127,15 @@ const getLegalPageData = async ({ req, query }: GetServerSidePropsContext) => {
         response = await getStaticPageGlobalMB({ uid });
         break;
     }
+
+    const localizedStrings = await getLocalizationLabels({
+      lang: getLangObject(lang || 'en-us')?.code || 'en',
+    });
+
+    strings.setContent({
+      default: localizedStrings,
+    });
+
     return {
       props: {
         ...response,
@@ -131,6 +143,7 @@ const getLegalPageData = async ({ req, query }: GetServerSidePropsContext) => {
         uid,
         lang,
         isDev,
+        localizedStrings,
       },
     };
   } catch (error) {

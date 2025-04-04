@@ -1409,5 +1409,672 @@ const it = {
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Scopri più destinazioni a partire da {0}',
   },
+  PRIVACY_POLICY_CONTENT: {
+    title: 'Headout: Informativa sulla privacy',
+    lastUpdated: '31 marzo 2025',
+    sections: [
+      {
+        title: 'Perché questa Informativa sulla privacy?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Headout si impegna attivamente nella protezione e nella gestione dei Tuoi Dati Personali. A tal proposito Headout ha implementato questa Informativa sulla privacy che mira a salvaguardare i Tuoi Dati Personali.',
+              },
+              {
+                text: 'La presente Informativa descrive, tra le altre cose, le procedure di Headout per la raccolta, la gestione, la divulgazione e la protezione dei Tuoi Dati Personali quando Tu i.) accedi al nostro Sito web www.headout.com in qualità di Utente o alla nostra applicazione mobile ("Piattaforma"), o ii.) accedi in qualità di Partner di Fornitura a https://hub.headout.com/ ("Headout Hub") o iii.) accedi in qualità di Partner Affiliato a https://partner.headout.com/affiliate/ ("Piattaforma per i Partner di Headout") o iv.) accedi in qualità di Partner Creatore al nostro sito per creatori ("Piattaforma per i Creatori")[Piattaforma, Piattaforma dei Partner di Fornitura, Piattaforma per Partner Affiliati e Piattaforma per i Creatori saranno insieme denominate "Piattaforma Headout"]. La presente Informativa ha anche lo scopo di informarti sui Tuoi diritti in materia di privacy. Nell\'ambito di questa Informativa suggeriamo anche le modalità con cui Tu puoi contattarci nel caso in cui Tu abbia problemi/dubbi.',
+              },
+              {
+                text: "Si prega di notare che Noi utilizziamo i tuoi Dati Personali per fornirti, tra le altre cose, i servizi disponibili sulla Piattaforma Headout nel modo più efficiente possibile, per migliorare l'utilizzo complessivo della Piattaforma e per svolgere altre attività di gestione descritte nella presente Informativa.",
+              },
+              {
+                text: 'La presente Informativa sulla privacy non sarà applicabile ai siti web/applicazioni per dispositivi mobili di terzi che possono essere collegati alla Piattaforma Headout. Gli Utenti sono pregati di consultare le informative sulla privacy dei rispettivi siti web/applicazioni per dispositivi mobili di terzi per capire come i loro Dati Personali saranno raccolti e gestiti da tali siti web/applicazioni per dispositivi mobili.',
+              },
+              {
+                text: 'La presente Informativa sulla privacy deve essere letta insieme ai Termini di Servizio, al Contratto per i Partner di Fornitura, ai Termini per i Partner Affiliati e ai Termini per i Creatori e tutti i termini in maiuscolo utilizzati, ma non definiti nel presente documento, avranno il rispettivo significato loro attribuito nei suddetti Termini. In caso di qualsiasi coincidenza o non conformità dei termini di interpretazione, la decisione finale spetterà sempre a Headout e non ti sarà permesso di interpretare i termini a tua discrezione.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          'Che tipo di vincoli ti vengono imposti con i termini di questa Informativa sulla privacy?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Quando utilizzi o accedi alla Piattaforma, tu acconsenti alla raccolta e all'utilizzo/al trattamento di Dati Personali in conformità con la presente Informativa sulla privacy. Questa raccolta di dati è necessaria per fornire i servizi sulla Piattaforma Headout. In caso di dubbi, ci puoi contattare al seguente indirizzo e-mail:privacy@headout.com.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Termini a cui si fa riferimento nell'Informativa sulla privacy",
+        content: [
+          {
+            type: 'paragraph',
+            items: [
+              {
+                text: 'Ai fini della presente Informativa sulla privacy:',
+              },
+            ],
+          },
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Per Account si intende un account unico creato per la Tua persona sulla Piattaforma Headout che permette di accedere al Nostro servizio o a parti del Nostro servizio.',
+              },
+              {
+                text: 'Per Società (indicata come "Headout", "la Società", "Noi", "Ci" o "Nostro" nella presente Informativa) si intende Headout Inc., le sue società affiliate o sussidiarie e/o qualsiasi altra società di capitali collegate a Headout.',
+              },
+              {
+                text: 'I Cookie sono piccoli file collocati dalla Piattaforma Headout sul Tuo computer, sul Tuo dispositivo mobile o su qualsiasi altro dispositivo che contiene i Tuoi dettagli della cronologia di navigazione, oltre ad avere molti altri usi.',
+              },
+              {
+                text: 'Per Dispositivo si intende qualsiasi dispositivo che possa essere utilizzato per accedere alla Piattaforma Headout, come un computer, un telefono cellulare o un tablet.',
+              },
+              {
+                text: 'Per Dati Personali si intendono tutte le informazioni che ti riguardano e che contribuiscono alla tua identificazione. I Dati Personali vengono condivisi da Te durante la fruizione dei servizi disponibili sulla Piattaforma Headout. Headout raccoglie questi dati allo scopo di fornirti i servizi disponibili sulla Piattaforma Headout e per adempiere ai suoi diversi obblighi legali. Per informazioni dettagliate si prega di fare riferimento al punto 5 (Quali tipi di dati vengono raccolti da Headout?).',
+              },
+              {
+                text: 'Per Informativa sulla privacy/Informativa si intende il presente documento e gli emendamenti che possono essere apportati al presente documento in futuro. Ciò include anche qualsiasi altro documento che Headout potrà redigere in futuro in relazione a questa Informativa.',
+              },
+              {
+                text: 'Per Piattaforme di Social Media si intendono piattaforme come Facebook, Instagram, ecc. che vengono utilizzate per comunicare con la Società in diversi ambiti e/o per creare un account di accesso sulla Piattaforma Headout.',
+              },
+              {
+                text: 'Per Fornitori di Servizi si intendono i Venditori/Partner di Fornitura che caricano Inserzioni nella Piattaforma Headout, compresi le società affiliate e altri partner commerciali.',
+              },
+              {
+                text: "Per Fornitori Terzi si intendono società o persone terze che possono essere ingaggiate dalla Società per garantire il funzionamento regolare e senza errori della Piattaforma Headout. Queste terze parti possono anche essere ingaggiate dalla Società per facilitare l'utilizzo dei servizi disponibili sulla Piattaforma Headout attraverso pratiche come l'analisi del Tuo utilizzo della Piattaforma Headout.",
+              },
+              {
+                text: 'Per Utente si intende qualsiasi persona che visita/mostra interesse/utilizza qualsiasi Servizio disponibile sulla Piattaforma.',
+              },
+              {
+                text: 'Per Sito Web si intende www.headout.com.',
+              },
+              {
+                text: "Per Utente/Dell'Utente si intende l'Utente, il Fornitore di Servizi e il Partner Creatore.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Perché Headout raccoglie i Tuoi Dati Personali?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'I Dati Personali e le altre informazioni correlate sono raccolti da Noi, tra le altre cose, per aiutarci a fornirti i servizi disponibili sulla Piattaforma Headout e per svolgere altre attività di gestione descritte nella presente Informativa.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Che tipo di informazioni vengono raccolte da Headout?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dati Personali:',
+                subItems: [
+                  {
+                    text: 'I Dati Personali relativi alla Tua persona che raccogliamo dipendono da diverse variabili, tra cui, a titolo esemplificativo, il contesto delle Tue interazioni con Noi, i prodotti, i servizi e le funzioni che utilizzi, la Tua ubicazione e le leggi in vigore. I Dati Personali da Noi raccolti possono essere suddivisi in due categorie: i Dati Personali Non Identificabili e i Dati Personali Identificabili.',
+                  },
+                  {
+                    text: 'I "Dati Personali Non Identificabili" sono informazioni che non possono essere utilizzate per identificare la Tua persona o una persona in particolare. Questi dati potrebbero anche essere di natura anonima. Questi dati includono, a titolo esemplificativo ma non esaustivo, dati aggregati relativi all\'utilizzo dei servizi disponibili sulla Piattaforma, indirizzi IP mascherati, ecc.\nI "Dati Personali Identificabili" sono le informazioni che identificano personalmente la Tua persona e che possono essere utilizzate per riconoscere o rintracciare la Tua identità. Questi dati vengono raccolti da Noi anche per fornire alla Tua persona l\'accesso a determinate funzioni della Piattaforma Headout. Questi dati includono, a titolo esemplificativo ma non esaustivo, informazioni come il nome, il numero di previdenza sociale, la data e il luogo di nascita, il numero di telefono, l\'indirizzo, l\'ID e-mail, i dettagli di pagamento/carta, ecc.',
+                  },
+                ],
+              },
+              {
+                text: 'Informazioni automatizzate:',
+                subItems: [
+                  {
+                    text: 'Quando accedi alla Piattaforma Headout, alcune delle Tue informazioni vengono acquisite automaticamente. Queste informazioni automatizzate acquisite da Noi rientrano nella categoria dei Dati Personali Non Identificabili. Di seguito sono indicati i principali tipi di informazioni che vengono acquisite automaticamente:',
+                    bulletPoints: [
+                      "Informazioni sul dispositivo, come il browser utilizzato per accedere alla Piattaforma Headout, il dispositivo utilizzato per accedere alla Piattaforma Headout, il sistema operativo, il numero di versione dell'applicazione, ecc.",
+                      'Anche le informazioni IP vengono acquisite quando Tu accedi alla Piattaforma Headout.',
+                      "Informazioni comportamentali, ad esempio le Tue modalità di accesso alla Piattaforma Headout, a quali sezioni della Piattaforma Headout scegli di accedere, la durata dell'accesso, ecc.",
+                      'Data e ora del Tuo accesso alla Piattaforma Headout.',
+                    ],
+                  },
+                  {
+                    text: 'Tutte le suddette informazioni acquisite automaticamente vengono utilizzate per i seguenti scopi:',
+                    bulletPoints: [
+                      'Per garantire la sicurezza dei nostri sistemi informatici, ad esempio per difenderci da attacchi specifici ai nostri sistemi e per riconoscere i modelli di attacco;',
+                      "Per bilanciare il carico, ossia per distribuire l'accesso alla Piattaforma Headout su diversi dispositivi e poter offrire i tempi di caricamento più rapidi;",
+                      'Per comprendere i Tuoi dati demografici, i Tuoi interessi e il Tuo comportamento in modo da poter fornirti i servizi migliori;',
+                      "Qualora vi siano elementi concreti che indichino la flagranza di reato, per consentire l'avvio di un'azione penale, la prevenzione di danni o per infliggere una punizione legale;",
+                    ],
+                  },
+                ],
+              },
+              {
+                text: 'Cookie:',
+                subItems: [
+                  {
+                    text: 'Inoltre, utilizziamo anche diversi tipi di Cookie per monitorare il Tuo utilizzo della Piattaforma Headout e per memorizzare alcune informazioni che ci aiutano a fornirti servizi più personalizzati. Alcuni Cookie possono essere installati sul Tuo Dispositivo in relazione al Tuo utilizzo di qualsiasi servizio disponibile sulla Piattaforma Headout.',
+                  },
+                  {
+                    text: 'In linea di massima, Noi utilizziamo due diversi tipi di tecnologie in questo ambito, ossia:',
+                    bulletPoints: [
+                      'Cookie o Cookie del Browser: un piccolo file che viene automaticamente collocato sul Tuo Dispositivo quando accedi alla Piattaforma Headout. Puoi impostare il Tuo browser in modo che rifiuti tutti i Cookie o che segnali quando un Cookie deve essere salvato. Se Tu non accetti i nostri Cookie, potresti non essere in grado di utilizzare alcune parti della Piattaforma Headout.',
+                      "Web beacon. Chiamati anche clear gif, pixel tag e single-pixel gif, vengono allegati in varie sezioni della Piattaforma Headout e delle nostre e-mail e ci permettono di monitorare e comprendere l'attività degli Utenti.",
+                    ],
+                  },
+                  {
+                    text: 'Questi Cookie memorizzati sul Tuo Dispositivo possono essere "Persistenti" o "di Sessione". I Cookie Persistenti sono quelli che rimangono sul Tuo Dispositivo anche quando vai offline, mentre i Cookie di Sessione vengono eliminati automaticamente non appena decidi di chiudere il Tuo browser web.',
+                  },
+                  {
+                    text: 'Utilizziamo sia i Cookie di Sessione che quelli Persistenti per le finalità indicate di seguito:',
+                    bulletPoints: [
+                      "Cookie Necessari/Essenziali\nTipo: Cookie di Sessione\nScopo: questi Cookie sono essenziali per consentire alla Tua persona di accedere a diverse sezioni della Piattaforma Headout e, se Tu decidi di non consentirne l'utilizzo, potresti non essere in grado di accedere ai servizi disponibili sulla Piattaforma Headout. Questi Cookie ci aiutano inoltre a verificare la Tua identità e a prevenire qualsiasi tipo di attività fraudolenta sulla Piattaforma Headout.",
+                      "Informativa sui Cookie / Notifica di Accettazione dei Cookie\nTipo: Cookie Persistenti\nScopo: questi Cookie controllano se hai hanno accettato l'uso dei Cookie.",
+                      "Cookie di Funzionalità\nTipo: Cookie Persistenti\nScopo: questi Cookie ci permettono di ricordare le scelte che fai quando utilizzi la Piattaforma Headout, come ad esempio ricordare i Tuoi dati di accesso o la Tua preferenza di lingua. Lo scopo principale di questi Cookie è fornire alla Tua persona un'esperienza più personalizzata ogni volta che utilizzi la Piattaforma Headout.",
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          'Per cosa utilizziamo i tuoi Dati Personali e con chi li condividiamo?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "I Tuoi Dati Personali raccolti durante il Tuo accesso alla Piattaforma Headout sono utilizzati solo per scopi leciti e con l'obiettivo di fornire i servizi. Noi non vendiamo o diamo in prestito queste informazioni a nessuno e non condividiamo i tuoi Dati con terze parti, se non diversamente previsto dalle leggi in vigore e specificato nella presente Informativa sulla privacy e/o se non necessario per soddisfare la tua richiesta. Nel caso in cui uno qualsiasi dei Tuoi Dati venga condiviso con terzi in conformità con la presente Informativa sulla privacy, e nel caso in cui tali terzi elaborino tali informazioni, lo stesso avverrà in conformità con le rispettive Informative sulla privacy. Ti chiediamo di consultare le informative sulla privacy di tali terze parti in modo proattivo.",
+              },
+              {
+                text: 'I Tuoi Dati Personali raccolti vengono utilizzati nei modi che elenchiamo di seguito:',
+                subItems: [
+                  {
+                    text: "Ai fini della prenotazione: Noi utilizziamo i Tuoi Dati Personali, che possono includere il Tuo nome e nomi dei viaggiatori che ti accompagnano, l'ID e-mail, i dettagli di pagamento, ecc. per garantire che tutte le prenotazioni effettuate sulla Piattaforma Headout possano essere completate e fruite in modo soddisfacente.",
+                  },
+                  {
+                    text: "Per scopi di marketing: Noi conduciamo campagne di marketing e promozionali insieme ai Fornitori di Servizi e/o ad altre terze parti e possiamo utilizzare i Dati Personali, che possono includere nome, e-mail, contatti, ecc. per garantire che i benefici richiesti siano trasferiti agli Utenti nell'ambito di tali campagne di marketing e promozionali. Inoltre, gli Utenti potrebbero ricevere e-mail/notifiche relative a campagne di marketing, newsletter, programmi di ricompensa e promozioni esclusive che propongono offerte speciali. In conformità a quanto dichiarato in questa sezione, utilizzeremo i contenuti inviati dai Creatori di Contenuti anche per svolgere attività promozionali per Headout.",
+                  },
+                  {
+                    text: 'Servizio clienti: Headout utilizza anche le informazioni fornite dai Fornitori di Servizi (che possono includere Dati Personali) per fornire ogni tipo di servizio di assistenza. Ciò può includere, a titolo esemplificativo ma non esaustivo, la risposta a richieste, domande o dubbi dei Fornitori di Servizi o degli Utenti.',
+                  },
+                  {
+                    text: "Registrazione e scopi amministrativi: Headout utilizza anche i contatti e i dati finanziari per gestire in modo efficiente l'accordo commerciale con il Fornitore di Servizi. Qualsiasi informazione, compresi il nome e l'indirizzo di un Fornitore di Servizi, sarà utilizzata in conformità alla presente Informativa e al contratto stipulato con il Fornitore di Servizi.",
+                  },
+                  {
+                    text: 'Per altri motivi: possiamo anche utilizzare i Tuoi Dati Personali per diversi altri motivi, che includono, a titolo esemplificativo ma non esaustivo:',
+                    bulletPoints: [
+                      'Fornire, mantenere e migliorare i nostri servizi;',
+                      'Metterci in contatto con la Tua persona per diversi scopi, tra cui, a titolo esemplificativo ma non esaustivo, per informarti su eventuali aggiornamenti relativi ai servizi della Piattaforma Headout di cui vuoi usufruire;',
+                      'Qualsiasi modifica apportata alla Piattaforma Headout;',
+                      'Per esigenze di servizio al Cliente;',
+                      'Per la ricerca di recensioni sui servizi;',
+                      'A scopo di sondaggio;',
+                      'Per scopi bancari.',
+                      'Per qualsiasi altro scopo al fine di fornirti il servizio migliore possibile.',
+                    ],
+                  },
+                ],
+              },
+              {
+                text: "Condividiamo i Tuoi Dati con varie terze parti, incluse parti in paesi terzi al di fuori degli Stati Uniti d'America, per gli scopi indicati di seguito:",
+                subItems: [
+                  {
+                    text: 'Con i Fornitori di Servizi: possiamo condividere i Dati Personali degli Utenti con i Fornitori di Servizi per offrire agli Utenti determinati prodotti, servizi o promozioni.',
+                  },
+                  {
+                    text: "Con Fornitori Terzi: possiamo condividere i Tuoi Dati Personali con Fornitori Terzi per monitorare e analizzare l'uso del Nostro Servizio, per contattarti o per avviare le misure atte a fornire i Nostri servizi alla Tua persona.",
+                  },
+                  {
+                    text: "Con le società affiliate: possiamo condividere i Tuoi Dati Personali con le nostre società affiliate, nel qual caso richiederemo a tali società affiliate di rispettare la presente Informativa sulla privacy. Gli affiliati comprendono la Nostra società madre e qualsiasi altra filiale, partner di joint venture o altre società che controlliamo o che sono sotto controllo comune con Noi. A titolo di riferimento, l'elenco delle Nostre filiali con cui possiamo condividere i Tuoi Dati Personali nell'ambito delle operazioni sono:",
+                    bulletPoints: [
+                      'Tourlandish Online Ventures Private Limited',
+                      'Headout Europe GmbH',
+                      'Headout Events Tickets LLC',
+                      'Headout UK Limited',
+                    ],
+                  },
+                  {
+                    text: "Con i partner di pagamento: per completare una prenotazione sulla Piattaforma Headout, ti sarà richiesto di effettuare un pagamento o di condividere con Noi i tuoi dati finanziari, come ad esempio i dati del conto bancario o della carta di pagamento. Gestiremo i Dati Personali pertinenti richiesti in ciascun caso in base ai servizi della Piattaforma Headout di cui vuoi avvalerti. Allo stesso modo, alcuni dei Tuoi Dati Personali saranno gestiti da parti che assistono nell'elaborazione del pagamento, inclusi, ma non solo, gateway di pagamento, partner bancari o qualsiasi altra terza parte che possa essere coinvolta in tale processo.",
+                  },
+                  {
+                    text: "Con un'azienda: Noi possiamo condividere o trasferire i Tuoi Dati Personali con un'azienda in relazione a, o durante le trattative di, qualsiasi fusione, vendita di beni della Società, finanziamento o acquisizione di tutta o parte della Nostra attività da parte di un'altra azienda.",
+                  },
+                  {
+                    text: "Con altri Utenti: quando l'Utente condivide i Dati Personali o interagisce in altro modo in pubblico con altri Utenti sulla Piattaforma o su altre piattaforme di terze parti/social media, tali informazioni possono essere visualizzate da tutti gli Utenti e possono essere diffuse pubblicamente fuori dalla Piattaforma. Se l'Utente interagisce con altri Utenti o si registra attraverso piattaforme di terze parti/social media, i contatti dell'Utente sulle piattaforme di terze parti/social media possono vedere il nome dell'Utente, il suo profilo, le sue immagini e la descrizione della sua attività.",
+                  },
+                  {
+                    text: 'Oltre ai casi elencati qui sopra, i Tuoi Dati Personali possono essere ulteriormente divulgati, se necessario:',
+                    bulletPoints: [
+                      'Per legge, per ordine del tribunale, per qualsiasi autorità di controllo o in riferimento a qualsiasi scopo legale;',
+                      'Per scopi di verifica e controlli di conformità;',
+                      'Per qualsiasi altro scopo che sia nel Tuo interesse più ampio in qualità di Utente.',
+                    ],
+                  },
+                ],
+              },
+              {
+                text: "Alcune delle terze parti e dei venditori possono scegliere di conservare alcuni dei Tuoi Dati Personali. Tuttavia, ciò avviene per scopi limitati al fine di fornirti servizi in conformità con la presente Informativa o con qualsiasi altro termine che possa essere applicabile alla Tua persona in virtù di accordi separati stipulati da Headout con la Tua persona. Si prega di notare che queste terze parti/venditori ci hanno informato di essere conformi alle rispettive leggi sulla privacy e di disporre di un'informativa dettagliata sulla privacy. Se desideri informarti su queste terze parti/venditori, puoi fare una richiesta scrivendo all'indirizzo e-mail privacy@headout; cercheremo di soddisfare tali richieste nel miglior modo possibile.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Contenuti generati dagli Utenti e piattaforme di social media:',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Tutti i contenuti caricati, inviati e/o pubblicati dagli Utenti, compresi, a titolo esemplificativo ma non esaustivo, le recensioni, le valutazioni, le chat o le discussioni sulla Piattaforma o su qualsiasi piattaforma di social media, sono definiti collettivamente \"Contenuti dell'Utente\". L'Utente sarà l'unico responsabile dell'autenticità e della correttezza di tutti i Contenuti dell'Utente.",
+              },
+              {
+                text: "I Contenuti dell'Utente pubblicati da un Utente sono visibili agli altri Utenti che accedono alla Piattaforma o alla piattaforma di social media in cui sono stati pubblicati tali Contenuti dell'Utente. L'Utente accetta di non avere alcuna obiezione in merito.",
+              },
+              {
+                text: "Noi possiamo consentire agli Utenti di creare un account sulla Piattaforma utilizzando i loro account personali di social media come Facebook, Google ecc. In questo caso, potremmo acquisire alcuni dei dati personali dell'Utente dal suo account sui social media, come il suo nome, cognome, indirizzo e-mail, numero di telefono, ecc.",
+              },
+              {
+                text: 'Inoltre, quando Tu interagisci con Noi sui social media o attraverso i Nostri post, possiamo raccogliere ed elaborare le informazioni che ci fornisci durante tali interazioni. Questo può accadere quando Tu "metti Mi piace", "Condividi" o "Retwitti" un post, lasci un commento o invii altri contenuti sulla nostra piattaforma di social media. Il trattamento dei dati a questo proposito avviene in conformità con le leggi sulla privacy e per fornire alla Tua persona i migliori servizi possibili. Si prega di notare che in caso di utilizzo di piattaforme di social media, verranno rispettate anche le normative sulla privacy di tali piattaforme di social media e le impostazioni sulla privacy che hai selezionato su tali piattaforme di social media.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Raccolta di Dati sui Minori',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Come delineato dai Nostri Termini di Servizio, Noi consigliamo di effettuare la prenotazione sulla Piattaforma solo a persone che abbiano raggiunto la maggiore età. Tuttavia, potrebbero verificarsi alcune situazioni in cui la prenotazione verrà effettuata per i minori da una persona che ha raggiunto la maggiore età. In questi casi, Noi desideriamo affermare che Headout attribuisce grande importanza alla privacy di tutti, compresi i minori. Se riceviamo i Dati Personali di un bambino/minore, ci assicuriamo che tali informazioni siano trattate in modo lecito e nella misura in cui riceviamo il consenso al trattamento di tali informazioni da parte di una persona che ha raggiunto la maggiore età. Nel caso in cui Headout venga a conoscenza del fatto che l'Utente è minorenne o che non ha raggiunto l'età del consenso nella giurisdizione interessata, Headout si riserva il diritto di interrompere tutti i servizi a tale Utente/Account senza alcun preavviso.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Per quanto tempo conserviamo i Tuoi Dati Personali?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'I Tuoi Dati Personali vengono conservati sui nostri server per il periodo necessario a soddisfare lo scopo per cui sono stati raccolti. Tuttavia, Noi possiamo conservare i Tuoi Dati Personali per un periodo più lungo, se richiesto dalla legge. Di seguito è riportato un programma di conservazione dei dati che offre ulteriori dettagli sul periodo di conservazione per ciascuna categoria di informazioni raccolte:',
+                tableData: {
+                  headers: ['Informazioni', 'Periodo di conservazione'],
+                  rows: [
+                    [
+                      'Dati di prenotazione, dati di check-in, dati sulle richieste speciali',
+                      "Per tutto il tempo in cui l'Utente rimane un cliente",
+                    ],
+                    [
+                      "Dettagli di contatto dell'Utente",
+                      "Per tutto il tempo in cui l'Utente rimane un cliente",
+                    ],
+                    [
+                      'Informazioni sul pagamento',
+                      "Per tutto il tempo necessario all'elaborazione della transazione/prenotazione, comprese eventuali domande.",
+                    ],
+                    [
+                      'Registri di sistema',
+                      '10 anni o un periodo più lungo, se richiesto',
+                    ],
+                    [
+                      'Informazioni relative ai Partner di Fornitura o a qualsiasi altra terza parte che abbia avuto rapporti commerciali con Noi.',
+                      'Fino alla scadenza del contratto o per un periodo di 7 anni, se successivo.',
+                    ],
+                  ],
+                },
+              },
+              {
+                text: 'Il periodo di conservazione può variare nel caso in cui Tu decida di esercitare i diritti previsti dalla clausola 12 riportata qui di seguito.',
+              },
+              {
+                text: "In caso di dubbi o se ritieni che ci sia una categoria di informazioni non coperta dal programma di conservazione di cui sopra, puoi scrivere al nostro DPO all'indirizzo e-mail dpo@headout.com.",
+              },
+              {
+                text: "Nel caso in cui i Tuoi Dati Personali non siano più necessari, ci assicureremo che vengano cancellati in modo sicuro o conservati in un formato tale da non essere più utilizzati dall'azienda.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Come proteggiamo i Tuoi Dati Personali?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Abbiamo messo in atto misure di sicurezza ragionevoli per proteggere i Tuoi Dati Personali da qualsiasi forma di accesso non autorizzato. Nell'ambito di questo processo di protezione dei Tuoi Dati Personali abbiamo implementato protocolli di sicurezza e restrizioni tecniche e fisiche all'accesso. Ti garantiamo che i Tuoi Dati Personali sono accessibili solo al personale autorizzato che ha il permesso di accedere ai Dati Personali nell'ambito del proprio lavoro.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Dove conserviamo i Tuoi Dati Personali?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'I Tuoi Dati Personali sono conservati negli archivi del personale o nei registri elettronici (su server negli Stati Uniti o in altri paesi) di Headout.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'I Tuoi diritti relativi ai Tuoi Dati Personali',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Se hai una richiesta che riguarda la privacy, per esempio relativa all'accesso ai tuoi dati o alla cancellazione degli stessi, ci puoi contattare all'indirizzo e-mail privacy@headout.com. Noi esamineremo la Tua richiesta e risponderemo entro i tempi previsti dalla legge. Puoi anche richiedere una copia dei dati in nostro possesso che riguardano la Tua persona inviando un'e-mail allo stesso indirizzo. Per qualsiasi reclamo relativo al trattamento dei Tuoi Dati Personali, ti preghiamo di non esitare a contattarci allo stesso indirizzo e-mail. In caso di richieste o dubbi che richiedano l'attenzione del nostro Responsabile della Protezione dei Dati (DPO), ti preghiamo di indirizzare la richiesta all'indirizzo e-mail dpo@headout.com e il nostro DPO offrirà assistenza al riguardo. Nel gestire una qualsiasi delle richieste sopra descritte, abbiamo il diritto di verificare l'identità del richiedente per assicurarci che sia la persona autorizzata a fare la richiesta. In caso di reclami/controversie, hai il diritto di contattare l'autorità di vigilanza di tua scelta.",
+              },
+              {
+                text: "Inoltre, come previsto dalla legge, hai a disposizione i seguenti diritti. Per esercitare questi diritti, puoi presentare una richiesta scrivendoci all'indirizzo e-mail privacy@headout.com:",
+                subItems: [
+                  {
+                    text: 'Diritto di accesso alle informazioni: hai il diritto di richiedere, in qualsiasi momento, un riepilogo completo dei Dati Personali in nostro possesso che riguardano la Tua persona.',
+                  },
+                  {
+                    text: 'Diritto di rettifica dei dati inesatti: se ritieni che i Tuoi Dati Personali che conserviamo siano errati o incompleti, puoi richiederne la tempestiva correzione.',
+                  },
+                  {
+                    text: 'Diritto alla cancellazione: hai il diritto di chiederci di cancellare i Tuoi Dati Personali quando non sono più necessari per il loro scopo originario, quando sono stati elaborati illegalmente o se sussiste un obbligo legale di cancellazione.',
+                  },
+                  {
+                    text: "Diritto di limitazione di trattamento: puoi richiedere che limitiamo il trattamento dei Tuoi Dati Personali alle condizioni specificate dalla legge. Questo diritto può essere invocato, ad esempio, se contesti l'accuratezza dei Tuoi Dati o se hai bisogno che vengano conservati al solo scopo di stabilire, esercitare o difendere i tuoi diritti legali.",
+                  },
+                  {
+                    text: 'Diritto alla portabilità dei dati: hai il diritto di ricevere i Dati Personali che ci hai fornito in un formato strutturato, comunemente utilizzato e leggibile a macchina, che ti consenta di trasferire tali dati a un altro fornitore di servizi.',
+                  },
+                  {
+                    text: "Diritto di opposizione: puoi opporti, in qualsiasi momento e per motivi specifici alla Tua situazione, al trattamento dei Tuoi Dati Personali. In tali casi, interromperemo l'elaborazione dei Tuoi Dati, a meno che non possiamo dimostrare l'esistenza di validi motivi legittimi per continuare a utilizzarli o che siano necessari per l'esercizio o la difesa di diritti legali.",
+                  },
+                  {
+                    text: "Diritto di revoca del consenso: hai il diritto di revocare in qualsiasi momento il consenso che hai dato in precedenza per l'elaborazione dei tuoi Dati Personali.",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          "Interpretazione dell'Informativa sulla privacy e delle sue modifiche",
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: "Poiché la presente Informativa sulla privacy è comunemente applicabile a tutti i nostri Utenti, Partner di Fornitura, Partner Affiliati, Partner Creatori, eccetera, essa deve essere sempre interpretata con i [Termini di Servizio], il [Contratto dei Partner di Fornitura], i [Termini per i Partner Affiliati] e i [Termini per i Partner Creatori] per una migliore comprensione e interpretazione. In caso di discrepanze, incongruenze o conflitti tra la versione inglese di questa Informativa e qualsiasi traduzione, la versione inglese farà fede e regolerà l'interpretazione e l'applicazione della stessa.",
+              },
+              {
+                text: 'Possiamo aggiornare la nostra Informativa sulla privacy periodicamente. Ti notificheremo riguardo qualsiasi modifica con la pubblicazione della nuova Informativa sulla privacy su questa pagina. Metteremo anche un\'etichetta provvista di data e della scritta "Ultimo aggiornamento" nella parte superiore di questa Informativa ogni volta che viene aggiornata. Si consiglia di rivedere periodicamente la presente Informativa sulla privacy per informarsi su eventuali modifiche. Le modifiche alla presente Informativa sulla privacy entrano in vigore quando vengono pubblicate su questa pagina.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  TERMS_OF_USE_CONTENT: {
+    title: 'Headout - Termini di Servizio',
+    introduction:
+      'I presenti Termini di Servizio saranno in vigore a partire dalla data di ultimo aggiornamento sopra indicata ("Termini di Servizio").',
+    lastUpdated: '31 marzo 2025',
+    sections: [
+      {
+        title: 'Definizioni',
+        items: [
+          "Informazioni aggiuntive: Headout può richiedere alcune informazioni sull'Utente e su tutte le altre persone che sono destinate a far parte della Prenotazione, per valutare l'ammissibilità del completamento della Prenotazione e/o della fornitura dei Servizi coinvolti.",
+          "Prenotare/ Prenotazione: questi termini descrivono l'atto di prenotare un Servizio da parte dell'Utente sulla Piattaforma/Sito web Headout.",
+          "Conferma della Prenotazione: comprende un voucher/biglietto di conferma della Prenotazione e un'e-mail di conferma emessa da Headout dopo il completamento del pagamento di una Prenotazione da parte dell'Utente.",
+          'Esperienze/ Servizi: comprende visite turistiche, attività ricreative, biglietti per attrazioni e altri servizi turistici e di intrattenimento.',
+          "Headout/ Noi: Headout Inc. è una società del Delaware, con sede all'indirizzo 82 Nassau St #60351 New York, NY 10038 e comprende le sue società affiliate, i suoi gruppi/società correlate, i suoi successori e cessionari.",
+          "Account Headout: l'account creato da qualsiasi Utente al momento della registrazione sulla Piattaforma/Sito web di Headout.",
+          "Credenziali dell'Account Headout: indica l'ID di accesso e la password impostati da qualsiasi Utente durante la creazione di un Account Headout.",
+          "Crediti Headout: sono crediti di prenotazione validi per l'esecuzione di prenotazioni future sulla Piattaforma. Questi possono essere acquisiti dall'Utente (o dagli Utenti) come rimborso a fronte di una prenotazione o di un servizio cancellato, attraverso campagne di marketing mirate o altri meccanismi che Headout può stabilire a sua discrezione. I Crediti Headout sono disponibili solo per gli Utenti che dispongono di un Account Headout valido.",
+          "Forum Interattivi: indica i forum di discussione, le bacheche, i servizi di recensione o altri forum dove Tu e altri utenti del Sito web potete pubblicare Contenuti dell'Utente.",
+          'Inserzione: ogni Esperienza o Servizio pubblicato sulla Piattaforma.',
+          'Piattaforma/Sito web: La piattaforma di prenotazione su Internet di Headout accessibile tramite il sito www.headout.com. Include anche siti web correlati, siti web affiliati e partner, applicazioni per dispositivi mobili, strumenti, piattaforme, account di social media collegati o altri servizi.',
+          'Informativa sulla privacy: documento legale che regola i termini di privacy di Headout.',
+          "Importo di rimborso: indica l'importo elaborato/rimborsato da un Fornitore in caso di cancellazione della Prenotazione.",
+          'Canale di vendita: comprende i siti web di Headout, le applicazioni per dispositivi mobili, gli addetti alle vendite, i call center, le filiali, gli agenti, ecc.',
+          'Fornitori: comprende il fornitore finale di servizi, ossia tour operator, organizzatori di attività, attrazioni, agenzie di viaggio e fornitori di biglietti.',
+          "Termini di Servizio del Fornitore: i termini e le condizioni specificati dal Fornitore che regoleranno la fornitura dei Servizi offerti dal Fornitore e l'utilizzo dei Servizi.",
+          "Termini di Servizio: un documento legale che regola l'utilizzo di qualsiasi Canale di vendita da parte dell'Utente.",
+          'Siti web di terzi: indica i siti web gestiti da soggetti diversi da Headout.',
+          'Utente/ Tu/ Tuo: qualsiasi persona che visita/ mostra interesse/ usufruisce di qualsiasi Servizio disponibile sulla Piattaforma di Headout o attraverso uno dei suoi canali di vendita.',
+          "Contenuti dell'Utente: indica qualsiasi contenuto pubblicato da un Utente sulla Piattaforma in diversi modi, tra cui, a titolo esemplificativo ma non esaustivo, la scrittura di recensioni, la creazione di post, il caricamento e la pubblicazione di foto o video, la formulazione di commenti o suggerimenti, l'invio di idee, la valutazione dei contributi di altri Utenti e l'invio di altri contributi simili al Sito web e/o a Headout. I Contenuti dell'Utente sono visibili a tutti gli Utenti della Piattaforma.",
+          'Contenuti del Sito web: indica i contenuti e le informazioni disponibili sul Sito web, tra cui, a titolo esemplificativo ma non esaustivo, messaggi, dati, informazioni, testi, musica, suoni, foto, grafici, video, mappe, icone, software, codici o altro materiale.',
+        ],
+      },
+      {
+        title: 'INTRODUZIONE',
+        items: [
+          "Questi Termini di Servizio, unitamente all'Informativa sulla privacy, costituiscono un contratto vincolante tra l'Utente e Headout. Questi Termini di Servizio regolano, tra le altre cose, l'utilizzo di qualsiasi Canale di vendita da parte dell'Utente, incluso, ma non limitato, alla Piattaforma/Sito web. Headout gestisce la Piattaforma/Sito web che consente, tra le altre cose, (a) ai Fornitori di offrire agli Utenti le Esperienze/Servizi pubblicati sulla Piattaforma; e (b) la conclusione di contratti direttamente tra gli Utenti e i Fornitori di tali Servizi.",
+          "Headout non è un'agenzia di viaggi o un agenzia turistica e non fornisce tali Esperienze o Servizi autonomamente. Quando un Utente prenota un'Esperienza o un Servizio sulla Piattaforma, l'Utente acquista lo stesso direttamente dal Fornitore. Headout, attraverso la sua Piattaforma, si limita a facilitare l'acquisto di biglietti per le Esperienze. Headout non agisce inoltre come agente dell'Utente, a nessun titolo, se non nella misura in cui facilita il processo di pagamento dell'Utente ai Fornitori.",
+        ],
+      },
+      {
+        title: 'ACCESSO E UTILIZZO DELLA PIATTAFORMA',
+        items: [
+          "L'Utente accetta tutte le condizioni indicate nei Termini di Servizio, senza alcuna modifica, quando accede, si registra e/o effettua una Prenotazione sulla Piattaforma. L'Utente dichiara di aver letto e compreso i Termini di Servizio. In tutte le Prenotazioni, si riterrà che la persona che effettua la Prenotazione abbia accettato i presenti Termini di Servizio a nome di tutte le persone indicate nella Prenotazione.",
+          'Headout può aggiornare i presenti Termini di Servizio periodicamente. La versione aggiornata entrerà in vigore a partire dalla data di pubblicazione, a meno che non sia specificato diversamente. Se le modifiche/aggiornamenti ai presenti Termini di Servizio riducono i Tuoi diritti o aumentano le Tue responsabilità, Headout pubblicherà un avviso al riguardo sul Sito web di Headout o informerà i suoi Utenti via e-mail. Continuando a utilizzare la Piattaforma dopo che Headout ha apportato modifiche ai presenti Termini di Servizio, Tu accetti di rispettare tali modifiche e gli obblighi che ne conseguono. Se trovi inaccettabile uno qualsiasi dei termini menzionati in questo documento, non dovrai utilizzare o accedere alla Piattaforma di Headout.',
+          "Come condizione per l'utilizzo della Piattaforma, Tu dichiari e garantisci che: (i) tutte le informazioni fornite da Te nel corso dell'utilizzo della Piattaforma e/o della compilazione di una Prenotazione sono vere, accurate, attuali e complete, e (ii) tu hai almeno 18 anni.",
+          "Se Tu, in quanto minorenne, desideri effettuare una Prenotazione sulla Piattaforma, hai l'obbligo di garantire che tale Prenotazione sia effettuata solo da una persona che abbia raggiunto la maggiore età (genitori, fratelli o tutore legale).",
+          "Il Tuo utilizzo del Sito web e l'effettuazione di Prenotazioni sono consentiti solo per uso personale e non commerciale e/o per effettuare richieste legittime di Prenotazione delle Esperienze offerte sul Sito web. Tu accetti di non utilizzare il Sito web per effettuare richieste di Prenotazioni che siano speculative, false o fraudolente. Nel caso in cui Headout venga a conoscenza di tali casi, Headout avrà il diritto di cancellare tali prenotazioni e l'Utente non avrà il diritto di richiedere alcun risarcimento a Headout.",
+          'Inoltre Tu dichiari e garantisci che (a) il Tuo Account Headout non è attualmente sospeso e che Headout non ha in precedenza precluso il tuo utilizzo del Sito web; (b) Tu non stai operando per conto di un concorrente di Headout; (c) Tu non creerai più di un Account Headout; e (d) Tu hai pieno potere e autorità per stipulare questo accordo legalmente vincolante con Headout e nel farlo non violerai nessun altro accordo di cui sei parte.',
+          "Ci riserviamo il diritto, a nostra esclusiva discrezione, di negare l'accesso al Sito web a chiunque, in qualsiasi momento e per qualsiasi motivo, tra cui, a titolo esemplificativo ma non esaustivo, la violazione dei presenti Termini di Servizio.",
+          "Con l'accesso e l'uso del Sito web, Tu accetti e riconosci che Headout non si fa garante di alcuna Inserzione o Contenuto del Sito e che Headout non può garantire l'accuratezza degli stessi. Tu accetti inoltre che Headout si limita a fornire una piattaforma commerciale e non è un fornitore effettivo di alcuna Esperienza. Tu, pertanto, accedi e utilizzi il Sito web a Tuo rischio e pericolo.",
+          "Potrebbe essere necessario creare un Account Headout e fornire le Tue informazioni per utilizzare alcune funzioni del Sito web, anche quando effettui una Prenotazione. Tu hai la responsabilità del mantenimento della riservatezza delle Credenziali del Tuo Account Headout. Tu sei anche l'unico responsabile di tutte le attività (incluse le Prenotazioni) che si verificano in relazione al Tuo Account Headout. Tu accetti di notificarci immediatamente riguardo qualsiasi uso non autorizzato del Tuo Account Headout inviando un'e-mail a support@headout.com. Tu accetti inoltre che, in caso di utilizzo non autorizzato del Tuo Account Headout, non solleverai alcuna richiesta di risarcimento nei confronti di Headout. In qualità di Utente del Sito web, Tu comprendi e accetti che né Headout né i suoi affiliati saranno responsali nei Tuoi confronti o nei confronti di altri per eventuali prenotazioni non autorizzate effettuate utilizzando il Tuo Account Headout e/o le Tue Credenziali dell'Account Headout. Nel caso in cui Tu noti un uso non autorizzato del Tuo Account Headout, dovrai immediatamente (1) cambiare le Credenziali dell'Account Headout e (2) informare Headout di tale uso non autorizzato.",
+          "Possiamo interrompere o sospendere l'accesso al Tuo Account Headout o la Tua capacità di utilizzare il Sito web, in tutto o in parte, a nostra esclusiva discrezione, per qualsiasi motivo o senza motivo, e senza preavviso o responsabilità di alcun tipo. Ad esempio, possiamo chiudere o sospendere il Tuo Account Headout o la Tua capacità di utilizzare il Sito Web, se fai un uso improprio del Sito Web. Qualsiasi cessazione o sospensione di questo tipo potrebbe impedirti di accedere al Tuo Account Headout, al Sito web, ai Contenuti degli Utenti, ai Contenuti del Sito web e/o a qualsiasi altra informazione correlata, tra cui, a titolo esemplificativo ma non esaustivo, le Tue Prenotazioni attive.",
+          "Tu puoi sospendere il Tuo Account Headout in qualsiasi momento contattandoci per richiedere la disabilitazione del Tuo Account Headout e interrompendo il Tuo utilizzo di qualsiasi parte del Sito web. Se Tu sospendi il Tuo Account Headout, possiamo continuare a visualizzare i Tuoi Contenuti dell'Utente pubblicati in precedenza e non abbiamo alcun obbligo di rimuovere tali Contenuti dell'Utente.",
+        ],
+      },
+      {
+        title: 'RICERCA E PRENOTAZIONE SU HEADOUT',
+        items: [
+          'Tu puoi cercare le Esperienze utilizzando le varie opzioni disponibili sul Sito web o utilizzando filtri basati su criteri come il tipo di Esperienza, la destinazione del viaggio, ecc. I risultati della ricerca si basano sulla loro pertinenza ai tuoi termini di ricerca e su altri criteri.',
+          "Quando prenoti una Inserzione, Tu accetti di pagare il prezzo indicato nell'Inserzione, le tasse applicabili e le altre spese applicabili, come la commissione di servizio di Headout e qualsiasi altra tassa/onere identificato durante il check-out. Il prezzo di ciascuna Inserzione sarà indicato come prezzo per una singola persona, se non diversamente specificato. I prezzi si basano sulla tariffa specificata dal Fornitore che ha reso disponibile l'Inserzione in questione sulla Piattaforma. Headout non determina il prezzo delle Inserzioni. I prezzi saranno indicati nella valuta da Te prescelta durante l'utilizzo del Sito web. Qualsiasi conversione di valuta necessaria per effettuare il pagamento della Prenotazione sarà effettuata al tasso determinato da Headout. I prezzi indicati in un'Inserzione sono soggetti a modifiche senza preavviso fino a quando non viene effettuata una Prenotazione.",
+          "I servizi inclusi in una Prenotazione sono determinati dal Fornitore. I prezzi indicati in un'Inserzione comprendono solo i servizi specificatamente indicati nella pagina dell'Inserzione.",
+          "Anche se i presenti Termini di Servizio regolano il Tuo utilizzo del Sito web e la Tua richiesta di Prenotazione, la fornitura dei Servizi da parte del Fornitore e il Tuo utilizzo dei Servizi saranno invece regolati dai Termini di Servizio del Fornitore. I Termini di Servizio del Fornitore possono essere specificati nell'Inserzione, comunicati alla Tua persona dopo il completamento della Prenotazione, oppure essere disponibili sul sito web del Fornitore o dell'Esperienza interessata. Tu accetti di leggere, comprendere e di rispettare gli obblighi legali dei Termini di Servizio del Fornitore prima di usufruire dei Servizi concordati nell'ambito di una Prenotazione. A prescindere da quanto dichiarato qui sopra, se i Termini di Servizio del Fornitore entrano in conflitto con i presenti Termini di Servizio in relazione al Tuo rapporto giuridico con Headout, faranno fede i Termini di Servizio di questo documento. Le Tue interazioni con i Fornitori vengono condotte a Tuo rischio e pericolo.",
+          'Tu accetti e riconosci inoltre che Headout non sarà responsabile nei Tuoi confronti o nei confronti di qualsiasi altra persona per eventuali perdite, spese, danni (compresi i danni alla proprietà) o lesioni causati da (i) mancata comunicazione dei Termini di Servizio del Fornitore; (ii) la Tua mancata lettura e comprensione dei Termini di Servizio del Fornitore; (iii) la violazione dei Termini di Servizio del Fornitore da parte del Fornitore; (iv) qualsiasi errore, difetto o imprecisione nei Termini di Servizio del Fornitore; o (v) qualsiasi altro atto, omissione, errore, dichiarazione, garanzia, violazione o negligenza di un Fornitore.',
+          "La Prenotazione di alcune Inserzioni richiede l'ottemperanza di determinati prerequisiti o criteri per stabilire la Tua idoneità a Prenotare l'Inserzione e a usufruire dei relativi Servizi. Tu sei tenuto a leggere e comprendere i prerequisiti o i criteri che fanno parte dei Termini di Servizio del Fornitore. Possiamo anche richiedere alcune Informazioni aggiuntive per valutare l'idoneità dell'Utente a completare la Prenotazione e/o a ottenere i relativi Servizi. Tu accetti di fornire le Informazioni Aggiuntive in modo accurato. Se una Prenotazione viene completata sulla base di Informazioni Aggiuntive inesatte e il Fornitore ritiene che Tu non abbia i requisiti per ottenere i Servizi, Headout non sarà responsabile di eventuali perdite, danni o costi sostenuti dalla Tua persona in relazione a tale Prenotazione. Headout non avrà inoltre l'obbligo di rimborsare il prezzo della Prenotazione, se Tu non sei in grado di ottenere i Servizi dal Fornitore nel caso in cui il Fornitore ritenga che tu non abbia i requisiti per usufruire degli stessi.",
+          "Quando Tu completi il pagamento di una Prenotazione, Headout emette una Conferma di Prenotazione. Al completamento del pagamento di una Prenotazione, si forma un contratto bipartito per la fornitura e l'acquisto dei Servizi direttamente tra la Tua persona e il Fornitore.",
+          "Oltre ai presenti Termini di Servizio, l'Utente deve anche leggere le Domande Frequenti (FAQ) disponibili nella sezione 'Aiuto' (Help) del Sito web di Headout per acquisire una comprensione completa dei servizi forniti da Headout. L'Utente accetta di essere vincolato dal contenuto di tali FAQ oltre che dai presenti Termini di Servizio.",
+        ],
+      },
+      {
+        title: 'PAGAMENTI',
+        items: [
+          "Quando effettui una Prenotazione, Headout raccoglie le Tue informazioni di pagamento ed elabora il pagamento per garantire che il prezzo pagato da Te per la Prenotazione sia trasferito e depositato sul conto del Fornitore, a seguito della deduzione delle eventuali commissioni di Headout. In tal modo, Headout ha la responsabilità limitata di riscuotere il pagamento dall'Utente e di trasferirlo al Fornitore. Per effettuare o confermare una Prenotazione è richiesto il pagamento completo, se non diversamente specificato.",
+          "Il valore della Prenotazione può essere soggetto a dazi, commissioni per le transazioni estere, cambio di valuta o altre commissioni applicabili nel Tuo paese di residenza. La Tua banca o la Tua società di carte di pagamento possono convertire il pagamento nella valuta locale (del Tuo paese di residenza) e possono addebitare delle commissioni con conseguenti differenze tra l'importo visualizzato nell'Inserzione e l'importo finale che ti viene addebitato. Headout consiglia di mettersi in contatto con la Tua banca o la Tua società emittente della carta di credito in caso di domande sulla conversione di valuta o sulle commissioni applicabili.",
+          "I Crediti Headout possono essere utilizzati dagli Utenti registrati di Headout per effettuare prenotazioni future. I Crediti Headout non sono trasferibili e non possono essere rimborsati o riscattati in contanti. Headout si riserva il diritto di apportare modifiche alle condizioni di utilizzo dei Crediti Headout, tra cui, a titolo esemplificativo e non esaustivo, il loro valore, il loro utilizzo e la loro validità, senza alcun preavviso o comunicazione. Nel caso in cui Headout scopra che tu stai utilizzando in modo improprio i Crediti Headout con l'intento di causare una perdita illegittima a Headout e al contempo generare un guadagno per la Tua persona, Headout avrà tutti i diritti di adottare le misure opportune, tra cui, a titolo esemplificativo ma non esaustivo, lo storno dei Crediti Headout e la disattivazione dell'Account Headout.",
+          "Headout è una piattaforma commerciale online, pertanto non può emettere una fattura fiscale per la Prenotazione effettuata da un Utente. Tuttavia, su richiesta scritta dell'Utente, Headout può emettere una ricevuta di pagamento per una Prenotazione completata. Tale ricevuta includerà dettagli come, a titolo esemplificativo ma non esaustivo, l'importo pagato, gli eventuali Crediti Headout applicati, il nome dell'ospite e i dettagli del tour in questione. L'Utente può richiedere una ricevuta contattando l'indirizzo e-mail support@headout.com; Headout si impegnerà a rilasciare la ricevuta entro ventiquattro (24) ore dalla ricezione della richiesta. Headout si riserva il diritto di determinare il formato e il contenuto della ricevuta a sua esclusiva discrezione.",
+        ],
+      },
+      {
+        title: 'CANCELLAZIONI E MODIFICHE DELLA PRENOTAZIONE',
+        items: [
+          "Una volta completata una Prenotazione, non potrai apportarvi modifiche o cancellarla per richiedere un rimborso, a meno che non sia indicato diversamente nell'Inserzione o nei Termini di Servizio del Fornitore applicabili a tale Inserzione.",
+          "Tutte le questioni relative alla cancellazione e alle modifiche delle Prenotazioni sono decise e/o determinate dal Fornitore. Dato che l'acquisto dell'Esperienza è un contratto tra la Tua persona e il Fornitore, Headout non definisce i termini di cancellazione/modifica delle Prenotazioni né prende alcuna decisione in merito alla cancellazione/modifica delle Prenotazioni, a meno che non venga concordato diversamente tra Headout e il Fornitore interessato.",
+          "In base alle condizioni di cancellazione/modifica stabilite nell'Inserzione o nei Termini di Servizio del Fornitore, Tu puoi: (i) scegliere di cancellare o modificare una Prenotazione; oppure (ii) contattare Headout utilizzando i dettagli di contatto specificati nella Conferma di Prenotazione per informarti sulle opzioni disponibili per la cancellazione/modifica di una Prenotazione. Headout può, al ricevimento di tale richiesta, se necessario, contattare il Fornitore interessato e ottenere informazioni o chiedere conferma prima della cancellazione/modifica di una Prenotazione.",
+          "Se hai cancellato/modificato una Prenotazione in base ai termini indicati nel presente documento e in base ai termini di cancellazione del Fornitore, Headout ti rimborserà l'importo applicabile, previa ricezione dell'Importo di rimborso da parte del Fornitore. Headout chiarisce che in nessun caso Headout pagherà alla Tua persona l'Importo di rimborso finché non lo riceverà dal Fornitore. Una volta che Headout avrà ricevuto l'Importo di rimborso dal Fornitore, Headout si impegnerà a avviare il processo di rimborso entro sette (7) giorni dal ricevimento dell'importo da parte del Fornitore. Normalmente, Headout invia l'Importo di rimborso alla fonte di pagamento originale. Tuttavia, nel caso in cui la fonte di pagamento originale non sia disponibile, puoi scegliere di ricevere il rimborso sotto forma di Crediti Headout sul Tuo Account Headout. Questi Crediti Headout non sono trasferibili né possono essere rimborsati o riscattati sotto forma di denaro contante. Come indicato in precedenza, al momento non è possibile utilizzare parzialmente i Crediti Headout per effettuare una prenotazione. Headout si riserva il diritto di apportare modifiche ai termini di utilizzo dei Crediti Headout, tra cui, a titolo esemplificativo e non esaustivo, il valore, l'utilizzo e la validità, senza alcun preavviso o informazione.",
+          "Se effettui una Prenotazione utilizzando un codice promozionale, o se accetti uno sconto o un prezzo in offerta speciale durante il processo di check-out, potresti incorrere nell'annullamento del Tuo sconto o del prezzo in offerta speciale se scegli di cancellare/modificare la Tua Prenotazione. Headout ti invierà qualsiasi rimborso si renda necessario dopo aver corretto lo sconto o l'offerta speciale di cui hai usufruito al momento della Prenotazione.",
+          "Non sono previsti rimborsi dopo l'inizio di un'Esperienza, o in relazione a qualsiasi pacchetto di Esperienza, alloggio, pasti o altri Servizi di cui tu abbia iniziato a usufruire.",
+          "Un Fornitore può apportare modifiche a una Prenotazione dopo il Tuo acquisto: tali modifiche possono riguardare, a titolo esemplificativo e non esaustivo, il prezzo, le inclusioni, la copertura, i requisiti di età e/o a qualsiasi altra caratteristica e/o requisito dell'Esperienza. Headout si adopererà per comunicarti tali modifiche al più presto, non appena ne verrà a conoscenza. I Tuoi diritti, in merito a tali modifiche, nei confronti del Fornitore saranno disciplinati dai Termini di Servizio del Fornitore. Headout non sarà responsabile verso di Te o qualsiasi altra persona per eventuali perdite, spese, costi, danni o infortuni derivanti da o relativi a tali modifiche apportate alla Prenotazione.",
+          "In seguito a tali modifiche, se il Fornitore cancella la Prenotazione o ti consente di cancellarla, Headout si impegnerà a inviare l'Importo di rimborso ricevuto dal Fornitore entro sette (7) giorni della ricezione di tale importo inviato dal Fornitore. Se il Fornitore ti consente di cambiare la Prenotazione a seguito delle modifiche, qualsiasi informazione che riceveremo al riguardo ti sarà comunicata non appena ne verremo a conoscenza. Headout non sarà responsabile nei Tuoi confronti o nei confronti di qualsiasi altra persona per eventuali perdite, spese, costi o danni derivanti da o riguardanti (i) l'impossibilità di modificare la Tua Prenotazione, (ii) la mancata comunicazione da parte del Fornitore a Noi o alla Tua persona in merito alla modifica della Prenotazione, o (iii) i Servizi usufruiti in seguito alla modifica della Prenotazione.",
+          'Possiamo decidere, a nostra esclusiva discrezione, che sia necessario o auspicabile ritirare i Nostri Servizi, con conseguente annullamento della polizza di cancellazione del Fornitore, per la protezione dei Nostri interessi, degli interessi del Fornitore e/o dei Tuoi interessi. Possiamo anche decidere, a nostra esclusiva discrezione, di accordarti il rimborso di una parte o della totalità degli importi che ti sono stati addebitati. Tu accetti che Noi non avremo alcuna responsabilità per tali cancellazioni o rimborsi.',
+          "In qualsiasi caso riguardante la cancellazione di una Prenotazione, Tu accetti e comprendi che Headout sarà responsabile dell'invio dell'Importo di rimborso della Prenotazione solo dopo aver ricevuto lo stesso dal Fornitore. Tu accetti inoltre che tutte le responsabilità nei confronti di qualsiasi Prenotazione siano imputabili al Fornitore. Headout non si assume altre responsabilità di alcun tipo, inclusi, a titolo esemplificativo ma non esaustivo, i casi di perdite indirette in cui puoi incorrere.",
+        ],
+      },
+      {
+        title: "LA TUA RESPONSABILITÀ E L'ASSUNZIONE DEL RISCHIO",
+        items: [
+          "Tu sei responsabile delle Tue azioni e omissioni e sei anche responsabile delle azioni e omissioni di chiunque partecipi all'Esperienza. Per esempio, ciò significa che: (i) Tu sei responsabile di lasciare la sede di un'Esperienza nelle stesse condizioni o sostanzialmente nelle stesse condizioni in cui si trovava al Tuo arrivo; (ii) Tu devi agire con integrità, trattare le altre persone nella sede dell'Esperienza con rispetto, rispettare sempre tutte le leggi in vigore e i termini o le regole eventualmente stabiliti dal Fornitore. La mancata osservanza delle leggi locali in vigore o dei termini stabiliti dal Fornitore può comportare la richiesta da parte del Fornitore di abbandonare/uscire dall'Esperienza o dall'attrazione o qualsiasi altra azione prevista dalla legge.",
+          "Tu riconosci che le attività che seguono la Prenotazione comportano rischi intrinseci e di conseguenza accetti, nella misura massima consentita dalle leggi in vigore, di assumerti l'intero rischio derivante dal Tuo accesso e utilizzo della Piattaforma, dalla partecipazione a qualsiasi Esperienza, da qualsiasi altra interazione che Tu possa avere con altre persone nel luogo dell'Esperienza o online. Ciò significa che Tu hai la responsabilità di analizzare e capire che l'Esperienza da Te scelta per la Prenotazione è confacente alla Tua persona sia in termini di mezzi che di modalità. Per esempio, le Esperienze possono comportare il rischio di malattie, lesioni fisiche, disabilità o morte, e Tu ti assumi liberamente e volontariamente tali rischi scegliendo di partecipare a tali Esperienze.",
+        ],
+      },
+      {
+        title: 'ATTIVITÀ VIETATE SUL SITO WEB',
+        items: [
+          "I Contenuti del Sito web, così come l'infrastruttura utilizzata per fornire tale Contenuti del Sito web, sono di Nostra proprietà o ci sono stati concessi sulla base di una licenza valida. Tu accetti di non modificare, copiare, distribuire, trasmettere, mostrare, eseguire, riprodurre, pubblicare, concedere in licenza, creare opere derivate, trasferire, vendere o rivendere qualsiasi Contenuto del Sito web, o qualsiasi prodotto o servizio ottenuto da o attraverso il Sito web. Qualsiasi altro utilizzo dei Contenuti del Sito web, dei prodotti e/o dei servizi richiede la previa autorizzazione scritta di Headout.",
+          {
+            text: 'Inoltre, Tu accetti di non adoperarti per e non consentire ad altri di:',
+            subItems: [
+              'utilizzare il Sito web o i Contenuti del Sito web per qualsiasi scopo commerciale o illegale',
+              'accedere, monitorare o copiare qualsiasi Contenuto del Sito web utilizzando robot, spider, scraper o altri mezzi automatizzati o qualsiasi processo manuale per accedere, estrarre, indicizzare, recuperare o utilizzare in altro modo il Sito web o qualsiasi Contenuto del Sito web per qualsiasi scopo senza il nostro esplicito permesso scritto',
+              "violare le restrizioni del Sito web o aggirare o eludere altre misure impiegate per impedire o limitare l'accesso al Sito web",
+              'intraprendere qualsiasi azione che imponga o possa imporre, a nostro giudizio, un volume di richieste irragionevole o sproporzionato sulla nostra infrastruttura o che comporti un eccessiva quantità di traffico sul Sito web',
+              'effettuare operazioni di "framing", realizzare "copie in mirror" o incorporare in altro modo qualsiasi parte del Sito in qualsiasi altro sito web senza la nostra preventiva autorizzazione scritta',
+              'tentare di modificare, tradurre, adattare, modificare, decompilare, disassemblare o decodificare qualsiasi software associato al Sito web',
+              "utilizzare il Sito web per minacciare, perseguitare, truffare, provocare, molestare o incitare alla molestia di un'altra persona, o interferire in altro modo con l'uso del Sito web da parte di un altro Utente",
+              'utilizzare il Sito web per promuovere il bigottismo o la discriminazione nei confronti di persone che appartengono a gruppi protetti',
+              'utilizzare il Sito web per violare qualsiasi diritto di terzi, compreso qualsiasi abuso di fiducia, di copyright, del marchio, del brevetto, del segreto commerciale, del diritto morale, del diritto alla privacy, del diritto della personalità o di qualsiasi altro diritto di proprietà intellettuale o di proprietà',
+              'utilizzare il Sito web per inviare o trasmettere pornografia o contenuti illegali',
+              'utilizzare il Sito web per richiedere informazioni personali a minori o per nuocere o minacciare di nuocere a qualsiasi persona, compresi i minori',
+              'tentare di ottenere un accesso non autorizzato al Sito web, agli Account degli Utenti, ai sistemi informatici o alle reti collegate al Sito web tramite pirateria informatica, decrittazione/violazione delle password o qualsiasi altro mezzo',
+              'utilizzare il Sito web per trasmettere virus informatici, worm, Trojan horse o qualsiasi software destinato a danneggiare o alterare un sistema informatico',
+              'utilizzare qualsiasi dispositivo, software o routine che interferisca con il corretto funzionamento del Sito web, o che tenti in altro modo di interferire con il corretto funzionamento del Sito web',
+              'utilizzare il Sito web per violare la sicurezza di qualsiasi rete informatica, decrittare password o codici di crittografia di sicurezza',
+              'interrompere o interferire con la sicurezza del Sito web o danneggiarlo in altro modo',
+              "rimuovere, eludere, disattivare, danneggiare o interferire in altro modo con le funzioni di sicurezza del Sito web, con le funzioni che impediscono o limitano l'uso o la copia dei Contenuti del Sito web, o con le funzioni che impongono limitazioni all'uso del Sito web",
+              "pubblicare sul sito web qualsiasi contenuto che violi o sia specificamente proibito dalle leggi degli Stati Uniti d'America o dalle leggi locali del paese da cui si accede al Sito web.",
+            ],
+          },
+        ],
+      },
+      {
+        title: 'ATTIVITÀ FRAUDOLENTE',
+        items: [
+          "Noi applichiamo una politica di tolleranza zero per qualsiasi attività fraudolenta. In alcune occasioni, quando Noi sospettiamo il verificarsi di una transazione fraudolenta, possiamo contattarti per richiedere ulteriori informazioni al fine di verificare la legittimità della Tua prenotazione e assicurarci che non sia associata ad alcuna attività fraudolenta. Se Tu scegli di non fornire le informazioni richieste, ci riserviamo il diritto di cancellare la Tua prenotazione. Ti preghiamo di notare che tali provvedimenti sono messi in atto rigorosamente nell'interesse di tutti gli Utenti e dei Fornitori e che Headout non sarà responsabile di tali cancellazioni.",
+          "I truffatori possono utilizzare diverse tecniche di phishing per ottenere informazioni personali e riservate, compresi i dati di pagamento delle persone, con l'intenzione di truffarle. Queste tecniche di phishing possono comportare la creazione di siti web falsi, messaggi, e-mail e altro ancora. Ti consigliamo vivamente di fare sempre molta attenzione e di informarti su questi metodi di phishing. Se ti imbatti o diventi vittima di tali tentativi di phishing a nome di Headout, ti chiediamo gentilmente di segnalare tempestivamente tali attività all'indirizzo orm@headout.com. Ti invitiamo inoltre a segnalare immediatamente tali transazioni alla Tua banca o a qualsiasi altra autorità come richiesto dalla legge.",
+        ],
+      },
+      {
+        title: 'COMUNICAZIONI ELETTRONICHE',
+        items: [
+          "Quando Tu utilizzi il Sito web di Headout, o invii a Noi e-mail, messaggi di testo e altre comunicazioni dal Tuo dispositivo desktop o mobile, entri in comunicazione con Noi elettronicamente e accetti che noi possiamo comunicare con Te in vari modi, ad esempio tramite e-mail, notifiche push nell'applicazione mobile o pubblicando avvisi e messaggi sul Sito web.",
+          "Tu puoi annullare l'iscrizione alle e-mail di marketing inviando una richiesta all'indirizzo e-mail support@headout.com. Qualsiasi richiesta di questo tipo verrà esaminata entro sette (7) giorni lavorativi dal ricevimento della richiesta. Tuttavia, Headout può continuare a inviarti messaggi che esulano dagli scopi di marketing, come i messaggi relativi a Prenotazioni attive di imminente fruizione.",
+          "Tu dovrai tenere Headout indenne da qualsiasi tipo di perdita, spesa, costo, danno o lesione derivante da o riguardante qualsiasi azione intrapresa da qualsiasi autorità locale di regolamentazione delle telecomunicazioni, o da qualsiasi altra autorità, a seguito di qualsiasi reclamo illegittimo sollevato dall'Utente in relazione alle comunicazioni di cui sopra o a causa di informazioni di contatto errate fornite dall'Utente per qualsiasi motivo.",
+        ],
+      },
+      {
+        title: 'CONTENUTI',
+        items: [
+          "Tu e gli altri utenti del Sito web potete pubblicare o inviare alcuni Contenuti dell'Utente a Headout o sul suo Sito web. Noi possiamo utilizzare tali Contenuti dell'Utente in numerosi modi, tra cui, a titolo esemplificativo ma non esaustivo, la visualizzazione sul Sito web, la riformattazione, la traduzione in altre lingue, la modifica per migliorarne chiarezza ed esattezza grammaticale, l'integrazione in pubblicità e altri progetti, la creazione di opere derivate, la promozione e distribuzione. Accetti inoltre che Headout possa contattarti per pubblicare recensioni e/o registrare video o immagini delle esperienze che hai prenotato, ma ciò è completamente facoltativo. Nel caso in cui tu accetti di condividere tali Contenuti dell'Utente con Headout, Headout avrà il diritto illimitato di utilizzare, riutilizzare o riprodurre tali Contenuti dell'Utente sulla propria Piattaforma. Nessun compenso ti sarà dovuto da parte di Headout per tali Contenuti dell'Utente.",
+          "Con l'invio di Contenuti dell'Utente, Tu concedi a Headout e alle sue consociate e/o affiliate il diritto a livello globale, non esclusivo, esente da royalty, interamente pagato, perpetuo, trasferibile, irrevocabile e completamente sub-licenziabile di (a) utilizzare, riprodurre, modificare, adattare, tradurre, distribuire, pubblicare, creare opere derivate e visualizzare pubblicamente e presentare tali Contenuti dell'Utente in tutto il mondo con qualsiasi mezzo di comunicazione, attualmente conosciuto o concepito in futuro, per qualsiasi scopo; e (b) utilizzare il nome da Te inviato in relazione a tali Contenuti dell'Utente. Tu riconosci che Headout può scegliere, a nostra discrezione, di fornire informazioni sull'origine dei Tuoi Contenuti dell'Utente. Tu riconosci e accetti che i Contenuti dell'Utente non sono riservati e non implicano diritti di proprietà. Se viene stabilito che Tu mantieni i diritti morali (compresi i diritti di attribuzione o di integrità) sul Contenuto dell'Utente, Tu dichiari che (a) non richiedi l'utilizzo di informazioni di identificazione personale in relazione al Contenuto dell'Utente, o a qualsiasi lavoro derivato o aggiornamento dello stesso; (b) non hai alcuna obiezione alla pubblicazione, all'uso, alla modifica, alla cancellazione e allo sfruttamento del Contenuto dell'Utente da parte di Headout o dei suoi licenziatari, successori e cessionari; (c) Tu rinunci per sempre e accetti di non chiedere risarcimento o di rivendicare qualsiasi diritto morale di un autore attinente a qualsiasi Contenuto dell'Utente; e (d) Tu esoneri per sempre Headout, e i suoi licenziatari, successori e cessionari, da qualsiasi richiesta di risarcimento che Tu potresti altrimenti presentare nei confronti di Headout sulla base di tali diritti morali.",
+          "Il Sito web contiene anche alcuni Forum Interattivi: Tu sei l'unico responsabile per il Tuo utilizzo di tali Forum Interattivi. Tu accetti di utilizzare tali Forum Interattivi a Tuo rischio e pericolo. Utilizzando tali Forum interattivi, Tu accetti esplicitamente di non pubblicare, caricare, trasmettere, distribuire, archiviare, creare o pubblicare in altro modo attraverso il Sito Web qualsiasi Contenuto dell'Utente che comprenda o includa:",
+          {
+            text: 'contenuti illegali, calunniosi, diffamatori, osceni, pornografici, indecenti, lascivi, scabrosi, molesti, minacciosi, invasivi della privacy o dei diritti della personalità, ingiuriosi, provocatori, fraudolenti o di natura altrimenti discutibile;',
+            subItems: [
+              'contenuti illegali, calunniosi, diffamatori, osceni, pornografici, indecenti, lascivi, scabrosi, molesti, minacciosi, invasivi della privacy o dei diritti della personalità, ingiuriosi, provocatori, fraudolenti o di natura altrimenti discutibile',
+              'contenuti che costituiscano, incoraggino o forniscano istruzioni per un reato penale, violino i diritti di qualsiasi parte, creino in altro modo responsabilità legale o violino qualsiasi legge in vigore',
+              "contenuti che possano violare brevetti, marchi, segreti commerciali, diritto d'autore o altri diritti intellettuali o di proprietà di qualsiasi parte",
+              "contenuti che tentano di impersonare individui o un'entità o che altrimenti rappresentano falsamente la Tua affiliazione con una persona o un'entità, incluso Headout",
+              'informazioni private di terzi, compresi, a titolo esemplificativo e non esaustivo, nome, indirizzo, numero di telefono, indirizzo e-mail e numero di carta di credito',
+              'Virus, dati corrotti o altri file dannosi o distruttivi',
+              "contenuti che non sono correlati all'argomento dell'Area Interattiva (o delle Aree Interattive) in cui tali Contenuti dell'Utente sono pubblicati; oppure",
+              "contenuti o link a contenuti che, a giudizio esclusivo di Headout (i) violano le precedenti sottosezioni del presente documento, (ii) sono di natura deplorevole, (iii) limitano o inibiscono l'uso o il gradimento delle Aree Interattive o del Sito web da parte di qualsiasi altra persona, e/o (iv) possono causare danni o responsabilità legali di qualsiasi tipo a Headout o ai suoi affiliati o agli Utenti del Sito web.",
+            ],
+          },
+          "Tu sei l'unico responsabile dei Contenuti dell'Utente inviati dalla Tua persona. Tu ti assumi tutti i rischi associati a tali Contenuti dell'Utente, compreso l'affidamento di chiunque sulla loro accuratezza, completezza o utilità, o qualsiasi divulgazione da parte Tua di informazioni che ti rendono personalmente identificabile in tali Contenuti dell'Utente. Tu dichiari di essere il proprietario, o di avere i permessi necessari per utilizzare e autorizzare l'uso, di tali Contenuti dell'Utente come descritto nel presente documento. Tu non puoi insinuare che tali Contenuti dell'Utente siano in alcun modo sponsorizzati o approvati da Headout.",
+          "L'Utente sarà l'unico responsabile di qualsiasi Contenuto dell'Utente pubblicato, memorizzato o caricato sulla Piattaforma, o di qualsiasi perdita o danno ad esso correlato. L'Utente accetta di non pubblicare alcun Contenuto dell'Utente che possa costituire diffamazione, calunnia, negligenza, falsità, oscenità, pornografia, blasfemia o che violi la legge in qualsiasi modo. Nel caso in cui Headout sia ritenuta responsabile da un tribunale o da un'autorità governativa per qualsiasi Contenuto dell'Utente che Tu hai pubblicato sul Sito web, Tu accetti di tenere Headout indenne da qualsiasi perdita e/o danno subito da Headout.",
+          "Headout può controllare, modificare o monitorare i Contenuti dell'Utente. Headout si riserva il diritto, a sua assoluta discrezione, di rimuovere, filtrare, tradurre o modificare senza preavviso qualsiasi Contenuto dell'Utente in qualsiasi momento e per qualsiasi motivo, e/o di far eseguire tali azioni da terzi per suo conto; Tu sei l'unico responsabile della creazione di copie di backup e di rimpiazzi dei Tuoi Contenuti dell'Utente a Tuo esclusivo costo e spesa. Headout non ha alcun obbligo di conservare o fornirti copie dei tuoi Contenuti dell'Utente.",
+          "Se un Utente qualsiasi identifica un Contenuto sulla piattaforma Headout come illegale o in violazione delle leggi vigenti, tale Utente può presentare un reclamo scritto all'indirizzo e-mail legal@headout.com. Al ricevimento di tale reclamo, Headout si impegnerà al massimo per esaminare e risolvere il problema entro 3 giorni lavorativi. Headout comunicherà al reclamante la sua decisione entro il medesimo lasso di tempo. Headout si riserva il diritto di intraprendere qualsiasi azione ritenuta appropriata, inclusa, a titolo esemplificativo, la rimozione o la modifica dei contenuti segnalati.",
+          "Se un Utente è danneggiato da un'azione di moderazione dei contenuti intrapresa da Headout, l'Utente può presentare una contestazione tramite l'invio di una richiesta scritta all'indirizzo e-mail legal@headout.com entro sei (6) mesi dalla data di tale azione. Headout esaminerà la richiesta e comunicherà la sua decisione all'Utente. Se l'Utente non è soddisfatto della decisione di Headout, può ricorrere a metodi alternativi di risoluzione delle controversie, secondo quanto previsto dalle leggi in vigore.",
+          "Qualsiasi utilizzo da parte Tua dei Forum Interattivi o di altre parti del Sito web in violazione di quanto sopra indicato viola i presenti Termini di Servizio e può comportare, tra l'altro, la cessazione o la sospensione dei Tuoi diritti di utilizzo dei Forum Interattivi, del Sito web e/o la chiusura del Tuo Account Headout.",
+        ],
+      },
+      {
+        title: 'LINK A SITI WEB DI TERZI',
+        items: [
+          "Il Sito web può contenere collegamenti ipertestuali a Siti web di terzi. Tali collegamenti ipertestuali sono forniti solo a titolo di riferimento per l'Utente. La loro presenza sul Sito web non implica alcuna approvazione da parte di Headout del materiale presente su tali Siti web di terzi né alcuna associazione con i loro operatori. Non controlliamo i Siti web di terzi e non siamo responsabili dei loro contenuti, né del rispetto della privacy o delle altre pratiche di coloro che li possiedono e li gestiscono. È Tua esclusiva responsabilità assicurarti che i collegamenti ipertestuali che selezioni e/o il software che scarichi da tali siti web di terze parti siano privi di virus.",
+          'In alcuni casi, su un sito web di terzi ti verrà chiesto se desideri collegare il Tuo profilo alla Piattaforma Headout. Tale scelta è del tutto facoltativa. Se decidi di collegare i Tuoi profili e, in seguito, desideri disattivare tali collegamenti, devi contattare il sito web di terze parti interessato.',
+          "Potresti notare la presenza di alcuni link a siti web di terzi disponibili sul Sito web di Headout. Se l'Utente accede a tali link, lo fa a suo rischio e pericolo e Headout non è responsabile di eventuali perdite o danni subiti in seguito all'accesso a tali link e alla condivisione volontaria di informazioni personali su tali link. Gli Utenti saranno vincolati dai Termini di Servizio e dalla Informativa sulla privacy di tali siti web di terzi e sono invitati a prendere visione di tali termini.",
+        ],
+      },
+      {
+        title: 'CONFORMITÀ AL DIGITAL MILLENNIUM COPYRIGHT ACT',
+        items: [
+          "Se ritieni che il Tuo lavoro sia stato copiato sul nostro Sito web, o su qualsiasi altro Nostro sistema o rete, in modo tale da costituire una violazione del diritto d'autore, ti preghiamo di contattarci all'indirizzo IP@headout.com. Quando invii un avviso ai sensi del presente articolo riguardo una presunta violazione, ti preghiamo di fornire le seguenti informazioni a Headout:",
+          {
+            text: 'La notifica deve includere:',
+            subItems: [
+              "Una firma elettronica o fisica della persona autorizzata ad agire per conto del titolare del diritto d'autore",
+              "Una descrizione dell'opera protetta dal diritto d'autore che sostieni sia stato violato",
+              "Una descrizione della posizione all'interno del Sito web del materiale che l'Utente ritiene costituisca una violazione",
+              'Il Tuo indirizzo, numero di telefono e indirizzo e-mail',
+              "Una dichiarazione da parte Tua dove affermi di agire in buona fede e di ritenere che il presunto utilizzo non sia autorizzato dal proprietario del diritto d'autore, dal suo agente o dalla legge",
+              "Una dichiarazione da parte Tua, resa sotto pena di falsa testimonianza, dove affermi che le informazioni di cui sopra nella Tua notifica sono accurate e che Tu sei il proprietario del diritto d'autore o sei autorizzato ad agire per conto del proprietario del diritto d'autore.",
+            ],
+          },
+          'Headout risponderà solo alle comunicazioni che rispettano sostanzialmente i requisiti di cui sopra. Noi esamineremo il Tuo reclamo e ti comunicheremo i risultati del controllo tramite il metodo di contatto che hai utilizzato per inviarci il tuo avviso.',
+          "Per garantire che la Tua notifica sia conforme ai requisiti del Digital Millennium Copyright Act, si veda l'articolo 17 U.S.C. § 512(c)(3).",
+        ],
+      },
+      {
+        title: 'ESCLUSIONE DI GARANZIE E LIMITAZIONE DI RESPONSABILITÀ',
+        items: [
+          "NOI FORNIAMO LA PIATTAFORMA E TUTTI I CONTENUTI DEL SITO WEB \"COSÌ COME SONO\" SENZA GARANZIE DI ALCUN TIPO ED ESCLUDIAMO OGNI TIPO DI GARANZIA, SIA ESPRESSA CHE IMPLICITA. AD ESEMPIO: (I) NOI NON CONFERMIAMO NÉ GARANTIAMO L'ESISTENZA, LA CONDOTTA, LE PRESTAZIONI, LA SICUREZZA, LA QUALITÀ, LA LEGALITÀ O L'IDONEITÀ DI QUALSIASI FORNITORE, INSERZIONE O ESPERIENZA; (II) NOI NON GARANTIAMO LE PRESTAZIONI O L'ASSENZA DI INTERRUZIONI DEL SITO WEB; E (III) NOI NON GARANTIAMO CHE I CONTROLLI DI VERIFICA, DELL'IDENTITÀ O DELLE ORIGINI CONDOTTI SULLE INSERZIONI O SUI FORNITORI (SE PRESENTI) IDENTIFICHINO COMPORTAMENTI SCORRETTI PASSATI O PREVENGANO COMPORTAMENTI SCORRETTI FUTURI. LE ESCLUSIONI DI RESPONSABILITÀ CONTENUTE NEI PRESENTI TERMINI DI SERVIZIO SI APPLICANO NELLA MISURA MASSIMA CONSENTITA DALLA LEGGE. SE TU HAI DIRITTI O GARANZIE LEGALI ALLE QUALI NOI NON POSSIAMO SOTTRARCI, LA DURATA DI TALI DIRITTI O GARANZIE RICHIESTI DALLA LEGGE SARÀ LIMITATA ALLA MASSIMA MISURA CONSENTITA DALLA LEGGE.",
+          "NONOSTANTE QUANTO CONTENUTO NEL PRESENTE DOCUMENTO, IN NESSUN CASO HEADOUT SARÀ RESPONSABILE NEI CONFRONTI DELL'UTENTE O DI QUALSIASI ALTRA PARTE PER DANNI CONSEGUENTI, INDIRETTI, SPECIALI O PUNITIVI DERIVANTI DA VIOLAZIONE DI CONTRATTO, ILLECITO CIVILE (INCLUSA LA NEGLIGENZA) O ALTRO, INDIPENDENTEMENTE DAL FATTO CHE TALI DANNI FOSSERO PREVEDIBILI E CHE HEADOUT SIA STATA O MENO AVVISATA DELLA POSSIBILITÀ DI TALI DANNI.",
+          "LA RESPONSABILITÀ COMPLESSIVA DI HEADOUT AI SENSI DEI PRESENTI TERMINI DI SERVIZIO NON SUPERERÀ L'IMPORTO CHE HAI PAGATO A HEADOUT IN RELAZIONE ALLA PRENOTAZIONE CHE COSTITUISCE L'OGGETTO DI UN RECLAMO AI SENSI DEL PRESENTE DOCUMENTO. LE ESCLUSIONI DI RESPONSABILITÀ E LE LIMITAZIONI PREVISTE DA QUESTA CLAUSOLA TROVERANNO APPLICAZIONE A PRESCINDERE DAL MANCATO ADEMPIMENTO DELLO SCOPO ESSENZIALE DI QUALSIASI RIMEDIO LIMITATO E NELLA MISURA MASSIMA CONSENTITA DALLE LEGGI IN VIGORE.",
+        ],
+      },
+      {
+        title: 'INDENNIZZO',
+        items: [
+          'Tu accetti di difendere, indennizzare e tenere indenni Headout, le sue controllate e affiliate, e ciascuno dei loro rispettivi funzionari, direttori, agenti, dipendenti, co-brander, fornitori, inserzionisti e partner da e contro ogni rivendicazione, responsabilità, danno, perdita, azione, causa legale, procedimento ed esborso incluse, senza limitazione, le spese legali e contabili che derivino da (i) la Tua violazione dei presenti Termini di Servizio; (ii) il Tuo uso della Piattaforma, incluso, a titolo esemplificativo ma non esaustivo, il Tuo uso per prenotare o partecipare a qualsiasi Esperienza; (iii) qualsiasi rivendicazione che qualsiasi contenuto o altro materiale fornito da Te violi i diritti di terzi; (iv) qualsiasi azione illegale o fraudolenta da parte Tua.',
+          'Headout, a sua esclusiva discrezione, può assumere la difesa e il controllo esclusivi di qualsiasi questione altrimenti oggetto di risarcimento da parte Tua, e in tal caso Tu collaborerai alla difesa di tali rivendicazioni.',
+        ],
+      },
+      {
+        title: "LEGGE APPLICABILE; ARBITRATO; RINUNCIA ALL'AZIONE COLLETTIVA",
+        items: [
+          'Legge Applicabile: i presenti Termini di Servizio ed i relativi diritti delle parti saranno regolati e interpretati in conformità con le leggi dello Stato di New York, USA, escludendo le disposizioni sul conflitto di leggi.',
+          "ARBITRATO: TU ACCETTI CHE EVENTUALI CONTROVERSIE, RIVENDICAZIONI O CAUSE LEGALI DERIVANTI DA O RELATIVE AI PRESENTI TERMINI, ALLA TUA RELAZIONE CON HEADOUT O ALL'USO DELLA PIATTAFORMA (COLLETTIVAMENTE, \"CONTROVERSIE\") SARANNO RISOLTE DEFINITIVAMENTE ED ESCLUSIVAMENTE ATTRAVERSO ARBITRATO VINCOLANTE INDIVIDUALE E NON ATTRAVERSO ALCUNA AZIONE LEGALE O PROCEDIMENTO AMMINISTRATIVO. L'ARBITRATO SI SVOLGERÀ NELLA CITTÀ DI NEW YORK, STATO DI NEW YORK, USA, E SARÀ AMMINISTRATO DALL'AMERICAN ARBITRATION ASSOCIATION (\"AAA\") IN CONFORMITÀ CON LE REGOLE DI ARBITRATO COMMERCIALE DELL'AAA E LE PROCEDURE SUPPLEMENTARI PER LE CONTROVERSIE RELATIVE AI CONSUMATORI. L'ARBITRO APPLICHERÀ LE LEGGI DELLO STATO DI NEW YORK COERENTEMENTE CON IL FEDERAL ARBITRATION ACT E LE LEGGI APPLICABILI IN MATERIA DI PRESCRIZIONE, E RISPETTERÀ I PRIVILEGI LEGALI RICONOSCIUTI DALLA LEGGE. TU ACCETTI E RICONOSCI CHE: (a) IL FEDERAL ARBITRATION ACT, 9 U.S.C. §§ 1-16 SI APPLICA AI PRESENTI TERMINI DI SERVIZIO; (b) I PRESENTI TERMINI DI SERVIZIO COMPORTANO UN'OPERAZIONE DI COMMERCIO INTERSTATALE; (c) LA PRESENTE CLAUSOLA RIGUARDANTE LA RISOLUZIONE DELLE CONTROVERSIE SOPRAVVIVERÀ ALLA RISOLUZIONE DEI PRESENTI TERMINI DI SERVIZIO; E (d) LA PRESENTE DISPOSIZIONE SULL'ARBITRATO COSTITUISCE UN ACCORDO SCRITTO SOGGETTO AL FEDERAL ARBITRATION ACT.",
+          "RINUNCIA ALL'AZIONE COLLETTIVA: NELLA MISURA MASSIMA CONSENTITA DALLE LEGGI APPLICABILI, TU E HEADOUT RINUNCIATE CIASCUNO AL DIRITTO DI INIZIARE O PARTECIPARE A QUALSIASI AZIONE COLLETTIVA (COME PARTE DI UN ARBITRATO DI CLASSE O PROCEDIMENTO GIUDIZIARIO) E LA CAPACITÀ DI CERCARE RIMEDI SU BASE COLLETTIVA. TU COMPRENDI CHE, SALVO QUANTO DIVERSAMENTE CONCORDATO PER ISCRITTO TRA TE E HEADOUT, TU E HEADOUT POTETE CIASCUNO PRESENTARE RIVENDICAZIONI CONTRO L'ALTRO SOLO A TITOLO INDIVIDUALE E NON COME ATTORE O MEMBRO IN QUALSIASI PRESUNTA AZIONE O PROCEDIMENTO RAPPRESENTATIVO O COLLETTIVO.",
+          "RINUNCIA A GIURIA: TU ACCETTI E RICONOSCI DI AVER LETTO E COMPRESO ATTENTAMENTE LA PRESENTE CLAUSOLA RIGUARDANTE LA RISOLUZIONE DELLE CONTROVERSIE E DI AVER AVUTO L'OPPORTUNITÀ DI CONSULTARE UN AVVOCATO. FATTO SALVO QUANTO PREVISTO DI SEGUITO, TU RINUNCI VOLONTARIAMENTE E CONSAPEVOLMENTE, NELLA MISURA MASSIMA CONSENTITA DALLE LEGGI APPLICABILI, AL TUO DIRITTO A UN PROCESSO CON GIURIA PER QUANTO RIGUARDA QUALSIASI CONTROVERSIA DERIVANTE DA O RELATIVA AI PRESENTI TERMINI.",
+          "OPT-OUT: SE SEI UN NUOVO UTENTE DELLA PIATTAFORMA, TU PUOI SCEGLIERE DI NON ADERIRE ALLA CLAUSOLA DI ARBITRATO INVIANDO UN'EMAIL A HEADOUT ALL'INDIRIZZO ARBITRATION.OPT.OUT@HEADOUT.COM ENTRO TRENTA (30) GIORNI DALLA DATA IN CUI TI SEI REGISTRATO PER UTILIZZARE LA PIATTAFORMA. LA TUA EMAIL DEVE INCLUDERE IL TUO NOME E COGNOME, L'INDIRIZZO EMAIL ASSOCIATO AL TUO ACCOUNT E UNA DICHIARAZIONE CHIARA CHE TU VUOI DISATTIVARE LA CLAUSOLA DI ARBITRATO.",
+        ],
+      },
+      {
+        title: 'TERMINI GENERALI',
+        items: [
+          'I presenti Termini di Servizio e qualsiasi diritto e licenza concessi ai sensi del presente documento, non possono essere trasferiti o ceduti da Te, ma possono essere ceduti da Headout senza restrizioni.',
+          "I presenti Termini di Servizio, insieme a qualsiasi documento che sia espressamente incorporato come riferimento, costituiscono l'intero accordo tra Te e Headout relativamente al Tuo utilizzo della Piattaforma e sostituiscono tutti gli accordi precedenti o contemporanei, sia orali che scritti, tra Te e Headout.",
+          'Tu sei tenuto a rispettare tutte le leggi locali, statali, nazionali e internazionali applicabili, gli statuti, le ordinanze, le regole, i regolamenti e le altre normative dei paesi in cui operi o usi o accedi alla Piattaforma.',
+          "Headout può, in qualsiasi momento e senza preavviso, interrompere o modificare qualsiasi aspetto della Piattaforma, tra cui, a titolo esemplificativo ma non esaustivo, il contenuto, la disponibilità e l'attrezzatura necessaria per l'accesso o l'utilizzo.",
+          "Nessuna rinuncia da parte di Headout a qualsiasi termine o condizione stabiliti nei presenti Termini di Servizio sarà considerata un'ulteriore o continua rinuncia a tale termine o condizione o una rinuncia a qualsiasi altro termine o condizione, e qualsiasi mancato esercizio da parte di Headout di un diritto o disposizione ai sensi dei presenti Termini di Servizio non costituirà una rinuncia a tale diritto o disposizione.",
+          'Se qualsiasi disposizione dei presenti Termini di Servizio è ritenuta da un tribunale o da un altro tribunale della giurisdizione competente invalida, illegale o inapplicabile per qualsiasi motivo, tale disposizione sarà eliminata o limitata nella misura minima tale che le restanti disposizioni dei presenti Termini di Servizio continueranno ad essere in pieno vigore ed effetto.',
+          'I presenti Termini di Servizio, e qualsiasi diritto e licenza qui concessi, non possono essere trasferiti o ceduti da Te, ma possono essere assegnati da Headout senza restrizioni.',
+          'I presenti Termini di Servizio sono destinati esclusivamente a beneficio delle parti e non sono destinati a conferire diritti di terze parti beneficiarie a nessun altro individuo o entità.',
+        ],
+      },
+    ],
+  },
 };
 export default it;

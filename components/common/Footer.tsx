@@ -24,6 +24,8 @@ import {
 } from 'UI/Footer/style';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { isProduction } from 'utils/gen';
+import { addLanguageParamToUrl } from 'utils/urlUtils';
 import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
 import {
   CANCELLATION_POLICY_LINK,
@@ -65,7 +67,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
   isDarkPurps = false,
   footerRef = null,
 }) => {
-  const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
+  const { mbTheme = THEMES.DEFAULT, lang } = useContext(MBContext);
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const [isMobileCallUsDrawer, setIsMobileCallUsDrawer] = useState(false);
@@ -112,6 +114,8 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
       'toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=560,height=490'
     );
   };
+
+  const isProd = isProduction();
 
   /**
    * Legacy setup:
@@ -265,7 +269,13 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                       <ul className="links">
                         <FooterListItem isLight={isLight}>
                           <a
-                            href={COMPANY_DETAILS_LINK}
+                            href={
+                              addLanguageParamToUrl({
+                                url: COMPANY_DETAILS_LINK,
+                                lang,
+                                isProd,
+                              }) || COMPANY_DETAILS_LINK
+                            }
                             rel="noopener"
                             target="_blank"
                           >
@@ -274,7 +284,13 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                         </FooterListItem>
                         <FooterListItem isLight={isLight}>
                           <a
-                            href={PRIVACY_POLICY_LINK}
+                            href={
+                              addLanguageParamToUrl({
+                                url: PRIVACY_POLICY_LINK,
+                                lang,
+                                isProd,
+                              }) || PRIVACY_POLICY_LINK
+                            }
                             rel="noopener"
                             target="_blank"
                           >
@@ -282,7 +298,17 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                           </a>
                         </FooterListItem>
                         <FooterListItem isLight={isLight}>
-                          <a href={TERMS_LINK} rel="noopener" target="_blank">
+                          <a
+                            href={
+                              addLanguageParamToUrl({
+                                url: TERMS_LINK,
+                                lang,
+                                isProd,
+                              }) || TERMS_LINK
+                            }
+                            rel="noopener"
+                            target="_blank"
+                          >
                             {strings.FOOTER.TERMS_OF_USAGE}
                           </a>
                         </FooterListItem>
