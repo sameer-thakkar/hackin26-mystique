@@ -293,7 +293,7 @@ export const createBookingURL = ({
     addTrailingSlash = false;
 
   // on Mobile, we have intermediate Pax Selection step.
-  bookingStageSuffix = isMobile && date ? 'select/pax' : '';
+  bookingStageSuffix = isMobile && !!date?.startDate ? 'select/pax' : '';
 
   switch (flowType) {
     case BOOKING_FLOW_TYPE.SEATMAP_IFRAME:
