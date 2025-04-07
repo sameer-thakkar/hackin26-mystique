@@ -245,7 +245,6 @@ const MicrositeV1 = (props: any) => {
     qnaSnippets,
     qnaSections,
     isRankingExperimentResolving,
-    isNotUsingAutomatedRanking = true,
     bannerV3Data,
     dayTripCollectionData,
   } = props;
@@ -567,11 +566,6 @@ const MicrositeV1 = (props: any) => {
     () => getAvailablePOIFilterTypes(orderedTours, scorpioData),
     [orderedTours.length]
   );
-
-  useEffect(() => {
-    if (isNotUsingAutomatedRanking) return;
-    setOrderedFilteredTours(orderedTours);
-  }, [isNotUsingAutomatedRanking]);
 
   const [productsLoading, setProductsLoading] = useState(false);
 

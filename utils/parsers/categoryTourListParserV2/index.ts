@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import type { TCityInfo } from 'components/AirportTransfers/interface';
+import { fetchCityInfo } from 'utils/apiUtils';
 import { generatePromiseForCategoryTours } from 'utils/index';
 import { sendLog } from 'utils/logger';
 import { accumulatingCategoryAndItemsData, sortProducts } from 'utils/parser';
@@ -15,7 +16,6 @@ export default async function categoryTourListParserV2({
   cookies,
   MBDesign = '',
   isLookerWebhookCall = false,
-  runRankingExperiment = false,
 }: TCategoryTourListParserV2) {
   const { primary, items: sliceItems } = tourListCategory || {};
 
@@ -50,7 +50,7 @@ export default async function categoryTourListParserV2({
     lang,
     cookies,
     primarySubCategoryID,
-    runRankingExperiment,
+    useAutomatedRankings: true,
   });
 
   let categoryPromises = generatePromiseForCategoryTours({
@@ -74,58 +74,64 @@ export default async function categoryTourListParserV2({
     primarySubCategoryID,
   });
 
+  const cityData = await fetchCityInfo({
+    cityCode: city,
+    language: lang,
+    hostname,
+  });
+
   let collectionData = Promise.all(collectionPromises);
   let categoryData = Promise.all(categoryPromises);
   let subCategoryData = Promise.all(subCategoryPromises);
 
-  await Promise.all([collectionData, categoryData, subCategoryData]).then(
-    (response) => {
-      try {
-        const [collectionData, categoryData, subCategoryData] = response;
-        if (collectionData.length) {
-          primaryCity = collectionData?.[0]?.city;
-          currencyObject = collectionData?.[0]?.currency;
-          accumulatingCategoryAndItemsData(
-            collectionData,
-            categoriesWithProducts,
-            allTgids,
-            runRankingExperiment
-          );
-        }
-
-        if (categoryData.length) {
-          primaryCity = categoryData?.[0]?.city;
-          currencyObject = categoryData?.[0]?.currency;
-          accumulatingCategoryAndItemsData(
-            categoryData,
-            categoriesWithProducts,
-            allTgids
-          );
-        }
-
-        if (subCategoryData.length) {
-          primaryCity = subCategoryData?.[0]?.city;
-          currencyObject = categoryData?.[0]?.currency;
-          accumulatingCategoryAndItemsData(
-            subCategoryData,
-            categoriesWithProducts,
-            allTgids
-          );
-        }
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-        Sentry.captureException(err);
-        sendLog({ err, message: `[categoryTourListParserV2]` });
+  await Promise.all([
+    collectionData,
+    categoryData,
+    subCategoryData,
+    cityData,
+  ]).then((response) => {
+    try {
+      const [collectionData, categoryData, subCategoryData, cityData] =
+        response;
+      if (collectionData.length) {
+        primaryCity = cityData?.result?.city;
+        currencyObject = collectionData?.[0]?.currency;
+        accumulatingCategoryAndItemsData(
+          collectionData,
+          categoriesWithProducts,
+          allTgids,
+          true
+        );
       }
+
+      if (categoryData.length) {
+        primaryCity = categoryData?.[0]?.city;
+        currencyObject = categoryData?.[0]?.currency;
+        accumulatingCategoryAndItemsData(
+          categoryData,
+          categoriesWithProducts,
+          allTgids
+        );
+      }
+
+      if (subCategoryData.length) {
+        primaryCity = subCategoryData?.[0]?.city;
+        currencyObject = categoryData?.[0]?.currency;
+        accumulatingCategoryAndItemsData(
+          subCategoryData,
+          categoriesWithProducts,
+          allTgids
+        );
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      Sentry.captureException(err);
+      sendLog({ err, message: `[categoryTourListParserV2]` });
     }
-  );
+  });
 
-  let allData = categoriesWithProducts?.flat();
-
-  if (runRankingExperiment) {
-    allData = sortProducts(allData);
-  }
+  const allData = sortProducts(categoriesWithProducts?.flat());
 
   const [firstProductData] = allData?.[0]?.items ?? [];
 

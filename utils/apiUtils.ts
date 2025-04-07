@@ -129,6 +129,7 @@ export enum HeadoutEndpoints {
   QnaSnippets,
   QnaSections,
   TourGroupReviewsV6,
+  CityInfo,
 }
 
 const endPointsOnNewCDN = [
@@ -165,6 +166,7 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.QnaSections,
   HeadoutEndpoints.CollectionProductCards,
   HeadoutEndpoints.TourGroupReviewsV6,
+  HeadoutEndpoints.CityInfo,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -311,6 +313,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupReviewsV6:
       endpointSlug = `/api/v6/tour-groups/${id}/reviews/`;
+      break;
+    case HeadoutEndpoints.CityInfo:
+      endpointSlug = `/api/tours/v3/cities/${id}/`;
       break;
   }
 
@@ -841,7 +846,7 @@ interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
   primarySubCategoryID?: NumberField | string;
-  runRankingExperiment?: boolean;
+  useAutomatedRankings?: boolean;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -899,7 +904,7 @@ export const fetchTourGroupsByCollection = async ({
   currency,
   cookies,
   primarySubCategoryID,
-  runRankingExperiment = false,
+  useAutomatedRankings = false,
 }: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
@@ -913,14 +918,14 @@ export const fetchTourGroupsByCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-ids': String(primarySubCategoryID),
     }),
-    ...(runRankingExperiment && {
+    ...(useAutomatedRankings && {
       'src-version': 'v3',
     }),
   };
 
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
-    endpoint: runRankingExperiment
+    endpoint: useAutomatedRankings
       ? HeadoutEndpoints.CollectionTourGroups
       : HeadoutEndpoints.TourGroupListByCollectionV6,
     hostname,
@@ -2036,6 +2041,37 @@ export const fetchBannersV3 = async ({
     const res = await fetch(bannerEndpoint);
     return await res.json();
   } catch (error) {
+    sendLog({
+      err: error,
+    });
+  }
+};
+
+interface IFetchCityInfoProps extends CommonApiProps {
+  cityCode: string;
+  language?: string;
+}
+
+export const fetchCityInfo = async ({
+  cityCode,
+  language = 'en',
+  hostname,
+}: IFetchCityInfoProps) => {
+  const cityInfoEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CityInfo,
+    id: cityCode,
+    params: {
+      lang: language,
+    },
+    hostname,
+  });
+
+  try {
+    const res = await fetch(cityInfoEndpoint);
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCityInfo]', error);
     sendLog({
       err: error,
     });

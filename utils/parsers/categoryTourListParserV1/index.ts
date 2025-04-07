@@ -5,6 +5,7 @@ import type {
 } from 'components/StaticBanner';
 import { getHeadoutLanguagecode } from 'utils';
 import {
+  fetchCityInfo,
   fetchCollectionList,
   fetchTourGroupsByCategory,
   fetchTourGroupsByCollection,
@@ -26,7 +27,6 @@ const categoryTourListParserV1 = async ({
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
-  runRankingExperiment = false,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
@@ -83,18 +83,22 @@ const categoryTourListParserV1 = async ({
           limit: String(finalLimit),
         }),
         cookies,
-        runRankingExperiment,
+        useAutomatedRankings: true,
       });
 
       const {
-        city,
+        city: cityCode,
         currency: currentCurrency,
         tourGroups,
-        pageData,
       } = collectionTourGroups ?? {};
-      const tourGroupsData = runRankingExperiment
-        ? tourGroups
-        : pageData?.items;
+
+      const cityInfo = await fetchCityInfo({
+        language,
+        cityCode,
+        hostname,
+      });
+
+      const tourGroupsData = tourGroups;
 
       let filteredData = tourGroupsData;
       if (sub_category_filter) {
@@ -109,7 +113,7 @@ const categoryTourListParserV1 = async ({
         );
       }
 
-      primaryCity = city;
+      primaryCity = cityInfo?.result?.city;
       currency = currentCurrency;
       tourData.push(...filteredData);
 
@@ -260,26 +264,8 @@ const categoryTourListParserV1 = async ({
         primaryCity = additionalTours.cities[0];
       }
     }
-    const tgidsWithHORanking = allTours
-      ?.map((tour) => tour.id)
-      ?.filter((tgid) => !finalRanking?.includes(tgid));
-    let orderedTGIDRanking: any;
-    if (finalRanking?.length && tgidsWithHORanking?.length) {
-      orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
-    } else if (tgidsWithHORanking?.length) {
-      orderedTGIDRanking = [...tgidsWithHORanking];
-    } else {
-      orderedTGIDRanking = [...finalRanking];
-    }
 
-    const orderedTours = runRankingExperiment
-      ? allTours
-      : allTours?.sort((tourA, tourB) => {
-          return (
-            orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
-            orderedTGIDRanking?.indexOf(parseInt(tourB.id))
-          );
-        });
+    const orderedTours = allTours;
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );
