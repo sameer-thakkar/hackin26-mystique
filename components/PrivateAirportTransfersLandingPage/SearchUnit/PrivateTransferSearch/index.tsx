@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
-import { Button } from '@headout/eevee';
+import Button from '@headout/aer/src/atoms/Button';
 import { css, cx } from '@headout/pixie/css';
 import { SlideInAnimate } from 'components/AirportTransfers/SlideInAnimate';
 import Conditional from 'components/common/Conditional';
@@ -70,7 +70,6 @@ import {
 export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
   const [hasSearched, setHasSearched] = useState(false);
   const [hasTouchedPaxField, setHasTouchedPaxField] = useState(false);
-  const [isLoading, toggleLoading] = useState(false);
 
   const { lang } = useContext(MBContext);
 
@@ -354,11 +353,8 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
         pickupTime: selectedTime ?? '',
         pax: hasTouchedPaxField ? selectedPax : 0,
       })
-    ) {
-      toggleLoading(false);
-      dispatch({ type: 'NEXT' });
+    )
       return;
-    }
 
     const privateTransferSearchParams = new URLSearchParams({
       locationData: JSON.stringify(selectedLocation),
@@ -370,12 +366,9 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
         PASSENGERS: selectedPax,
         LUGGAGE: 0,
       }),
-      showMwebSearchResultsScreen: 'true',
     });
 
     const urlWithPrivateTransferSearchQuery = `${productBookingURL}&${privateTransferSearchParams.toString()}`;
-
-    toggleLoading(true);
 
     window.open(
       urlWithPrivateTransferSearchQuery,
@@ -495,8 +488,9 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
       goToNextStep(true);
       return;
     }
-
     handleSearchButtonClick();
+    dispatch({ type: 'NEXT' });
+    setIsAnimating(true);
   };
 
   return (
@@ -693,14 +687,11 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
         }}
       >
         <Button
-          as="button"
-          btnType="primary"
-          width={'100%'}
           onClick={handleSearchButtonClick}
-          primaryText={strings.SEARCH}
           size={isMobile ? 'medium' : 'large'}
-          state={isLoading ? 'loading' : 'default'}
+          color="purps"
           variant="primary"
+          text={strings.SEARCH}
           className="private-search-button"
         />
       </div>
@@ -744,7 +735,6 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
               currentStep
             )}
             numberOfSteps={privateAirportTransferSearchFieldsOrder.length}
-            isLoading={isLoading}
           />
         </BottomDrawer>
       </Conditional>
