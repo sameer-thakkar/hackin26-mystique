@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@headout/aer/src/atoms/Button';
+import { Button } from '@headout/eevee';
 import { css } from '@headout/pixie/css';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
@@ -12,12 +12,14 @@ export const BottomDrawerNavigation = ({
   isNextDisabled,
   numberOfSteps,
   currentStepNumber,
+  isLoading,
 }: {
   handleBackClick: () => void;
   handleNextClick: () => void;
   isNextDisabled: boolean;
   numberOfSteps: number;
   currentStepNumber: number;
+  isLoading?: boolean;
 }) => {
   const isLastStep = currentStepNumber === numberOfSteps - 1;
 
@@ -34,30 +36,33 @@ export const BottomDrawerNavigation = ({
 
       <div className={NavigationButtonContainerStyles}>
         <Button
+          as="button"
+          btnType="primary"
           onClick={handleBackClick}
           width={isLastStep ? '3rem' : '100%'}
-          size="medium"
-          variant="tertiary"
-          color="purps"
-          aria-label={strings.BACK}
-          text={isLastStep ? '' : strings.BACK}
           icon={
             isLastStep ? (
               <BackArrow stroke={COLORS.TEXT.PURPS_3} width={16} />
             ) : null
           }
+          primaryText={isLastStep ? '' : strings.BACK}
+          size="medium"
+          state="default"
+          variant="tertiary"
           className="navigation-button"
         />
 
         <Button
+          as="button"
+          btnType="primary"
+          width={'100%'}
           disabled={isNextDisabled}
           onClick={handleNextClick}
-          width={'100%'}
+          primaryText={isLastStep ? strings.SEARCH : strings.NEXT}
           size="medium"
-          color="purps"
+          state={isLoading ? 'loading' : 'default'}
           variant="primary"
-          text={isLastStep ? strings.SEARCH : strings.NEXT}
-          className="navigation-button"
+          className="navigation-button primary"
         />
       </div>
     </Navigation>
@@ -117,4 +122,16 @@ const ProgressRectangle = styled.span<{
 const NavigationButtonContainerStyles = css({
   display: 'flex',
   gap: '0.75rem',
+
+  '& button': {
+    '& span': {
+      color: `semantic.text.primary !important`,
+    },
+  },
+
+  '& .primary': {
+    '& span': {
+      color: `semantic.surface.light.white !important`,
+    },
+  },
 });
