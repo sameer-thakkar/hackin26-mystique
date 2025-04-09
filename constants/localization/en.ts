@@ -1542,12 +1542,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       STEP_1: 'Download the Headout app',
       STEP_2: 'Join daily at',
       STEP_2_HIGHLIGHT: '5pm,',
-      STEP_2_PART_1: 'win your experience',
+      STEP_2_PART_1: 'GST (Dubai Standard Time), win your experience',
       STEP_3: 'Book now, travel anytime',
       QR_SCAN_TEXT: 'Scan QR to download',
     },
     EXIT_INTENT: {
-      TITLE: 'Walk away now, pay more later. Grab AED 49 deals on the app',
+      TITLE: 'Walk away now, pay more later: Grab AED 49 deals on the app',
       DESCRIPTION:
         'Participate and win steal deals for Dubai Dolphinarium, Miracle Garden, Yacht Cruises, and much more.',
       CTA_TEXT: 'Explore Deals',

@@ -7,6 +7,7 @@ export const stepsRecipe = sva({
     'iconContainer',
     'highlightedText',
     'textLineImage',
+    'timeTextStyle',
   ],
   base: {
     container: {
@@ -38,6 +39,9 @@ export const stepsRecipe = sva({
       position: 'absolute',
       bottom: '-4px',
       right: '0',
+    },
+    timeTextStyle: {
+      maxWidth: '260px',
     },
   },
   variants: {

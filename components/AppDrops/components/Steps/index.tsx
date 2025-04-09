@@ -51,6 +51,7 @@ export const Steps = ({
           as="span"
           textStyle={'Semantics/UI Label/Small'}
           color={'core.candy.600'}
+          className={styles.timeTextStyle}
         >
           {translations.STEP_2}
           <span className={styles.highlightedText}>
