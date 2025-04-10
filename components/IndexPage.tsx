@@ -185,6 +185,7 @@ const Page = (props: PageProps) => {
     bannerTrustBoosters,
     bannerV3Data,
     dayTripCollectionData,
+    similarityBasedRankingExperimentControlTgids,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -360,6 +361,9 @@ const Page = (props: PageProps) => {
               offerData={CMSContent.offerData}
               host={host}
               toursList={toursList}
+              similarityBasedRankingExperimentControlTgids={
+                similarityBasedRankingExperimentControlTgids
+              }
               collectionDetails={collectionDetails}
               bannerImageData={bannerImageData}
               bannerV3Data={bannerV3Data}

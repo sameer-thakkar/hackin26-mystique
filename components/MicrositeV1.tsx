@@ -80,6 +80,8 @@ import {
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
   QNA_EXP_UIDS,
+  RANKING_EXPERIMENT_UUIDS,
+  RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT,
   SLICE_TYPES,
   TEMPLATES,
   TGIDS_WITH_CANCELLATION_INSURANCE,
@@ -247,6 +249,7 @@ const MicrositeV1 = (props: any) => {
     isRankingExperimentResolving,
     bannerV3Data,
     dayTripCollectionData,
+    similarityBasedRankingExperimentControlTgids,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const currency = useRecoilValue(currencyAtom);
@@ -397,6 +400,28 @@ const MicrositeV1 = (props: any) => {
     customEligibilityCheckFn: () => QNA_EXP_UIDS.includes(uid) && isLangEn,
   });
 
+  const {
+    isEligible: isEligibleForSimilarityBasedRankingExperiment,
+    isExperimentResolving: isSimilarityBasedRankingExperimentResolving,
+    variant: similarityBasedRankingExperimentVariant,
+  } = useABTesting({
+    experimentId: 'SIMILARITY_BASED_RANKING_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => {
+      return RANKING_EXPERIMENT_UUIDS.includes(uid);
+    },
+  });
+
+  const isSimilarityBasedRankingExperimentTreatment =
+    isEligibleForSimilarityBasedRankingExperiment &&
+    similarityBasedRankingExperimentVariant === VARIANTS.TREATMENT &&
+    !isSimilarityBasedRankingExperimentResolving;
+
+  const isSimilarityBasedRankingExperimentControl =
+    isEligibleForSimilarityBasedRankingExperiment &&
+    similarityBasedRankingExperimentVariant === VARIANTS.CONTROL &&
+    !isSimilarityBasedRankingExperimentResolving;
+
   const showQnaExperiment =
     ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) ||
       (isBot && isLangEn)) &&
@@ -516,6 +541,38 @@ const MicrositeV1 = (props: any) => {
   ]);
 
   const orderedTours = useMemo(() => {
+    // Create a map for O(1) lookups of tours by TGID
+    const tourMap = orderedUncategorizedTours.reduce(
+      (map: Record<string, any>, tour: any) => {
+        map[tour.tgid] = tour;
+        return map;
+      },
+      {}
+    );
+
+    if (isSimilarityBasedRankingExperimentTreatment) {
+      const orderedTgids =
+        RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT[uid];
+
+      // Create a new array following the exact order in orderedTgids
+      // Only include tours that exist in both collections
+      const sortedTours = orderedTgids
+        .map((tgid) => tourMap[tgid])
+        .filter((tour) => tour !== undefined);
+
+      return sortedTours;
+    }
+
+    if (isSimilarityBasedRankingExperimentControl) {
+      // Create a new array following the exact order in similarityBasedRankingExperimentControlTgids
+      // Only include tours that exist in both collections
+      const sortedTours = orderedUncategorizedTours.filter((tour: any) =>
+        similarityBasedRankingExperimentControlTgids.includes(tour.tgid)
+      );
+
+      return sortedTours;
+    }
+
     return isCategorisedTours || tgidToScroll
       ? orderedUncategorizedTours
       : orderedTGIDRanking?.length
@@ -527,10 +584,14 @@ const MicrositeV1 = (props: any) => {
         })
       : orderedUncategorizedTours;
   }, [
+    isSimilarityBasedRankingExperimentControl,
+    isSimilarityBasedRankingExperimentTreatment,
+    similarityBasedRankingExperimentControlTgids,
     isCategorisedTours,
     tgidToScroll,
     orderedUncategorizedTours,
     orderedTGIDRanking,
+    uid,
   ]);
 
   const [orderedFilteredTours, setOrderedFilteredTours] =

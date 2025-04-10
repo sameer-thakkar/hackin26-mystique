@@ -1042,6 +1042,7 @@ export const getPageData = async ({
         scorpioData,
         orderedTours,
         collectionVideos,
+        similarityBasedRankingExperimentControlTgids,
         ...rawCategories
       } = categoryTourListData ?? {};
 
@@ -1089,6 +1090,7 @@ export const getPageData = async ({
           scorpioData,
           orderedTours,
           collectionVideos,
+          similarityBasedRankingExperimentControlTgids,
         }),
         isCategoryV2,
         ContentType,

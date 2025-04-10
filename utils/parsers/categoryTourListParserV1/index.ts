@@ -15,7 +15,11 @@ import {
 import { csvTgidToArray } from 'utils/helper';
 import { sendLog } from 'utils/logger';
 import { getScorpioData, getSingleAriesTag } from 'utils/productUtils';
-import { DEFAULT_PRISMIC_LANG } from 'const/index';
+import {
+  DEFAULT_PRISMIC_LANG,
+  RANKING_EXPERIMENT_TGIDS,
+  RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT,
+} from 'const/index';
 import type { TCategoryTourListParserV1 } from './interface';
 
 const categoryTourListParserV1 = async ({
@@ -265,12 +269,54 @@ const categoryTourListParserV1 = async ({
       }
     }
 
+    const isCollectionSimilarityBasedRankingExperiment =
+      collection && RANKING_EXPERIMENT_TGIDS.includes(collection);
+
+    if (isCollectionSimilarityBasedRankingExperiment) {
+      const tgidsToFetch =
+        RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT[
+          String(collection)
+        ];
+      const additionalTours = await fetchTourListV6({
+        hostname,
+        language,
+        tgids: tgidsToFetch,
+        cookies,
+      });
+      if (additionalTours?.tourGroups?.length) {
+        const allToursWithAdditionalTours = [
+          ...tourData,
+          ...additionalTours?.tourGroups,
+        ];
+        // Keep only unique tours based on ID, preserving the first occurrence
+        const getUniqueTours = (tours: any[]) => {
+          const seen = new Set();
+          return tours.filter((tour) => {
+            const tourId = tour?.id || tour?.tgid;
+            if (seen.has(tourId)) {
+              return false; // Skip this tour as we've seen it before
+            }
+            seen.add(tourId);
+            return true; // Keep this tour as it's the first occurrence
+          });
+        };
+
+        allTours = getUniqueTours(allToursWithAdditionalTours);
+
+        if (!primaryCity && additionalTours?.cities?.length) {
+          primaryCity = additionalTours.cities[0];
+        }
+      }
+    }
+
     const orderedTours = allTours;
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );
 
-    const sliceIndex = shoulderPageLimit || limit || 10;
+    const sliceIndex = isCollectionSimilarityBasedRankingExperiment
+      ? finalTours?.length
+      : shoulderPageLimit || limit || 10;
 
     const repeatableObj = finalTours
       ?.slice(0, sliceIndex)
@@ -302,6 +348,7 @@ const categoryTourListParserV1 = async ({
         };
         return [...acc, finalObj];
       }, []);
+
     const allMultiVariantTgids = repeatableObj
       .filter((tour: any) => tour.variantId)
       .map((tour: any) => tour.tgid);
@@ -338,6 +385,7 @@ const categoryTourListParserV1 = async ({
       collectionVideos,
       finalTgids,
       minPrice,
+      similarityBasedRankingExperimentControlTgids: intialTgids,
       bestDiscount,
     };
   } else {
