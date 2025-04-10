@@ -276,7 +276,6 @@ const Product = (props: any) => {
     isBot = false,
     itineraryInfo,
     isNewVerticalsProductCard = false,
-    showCruisesCombosRevamp = false,
     isCruisesRevamp = false,
     verticalProductCard = false,
     horizontalProductCard = false,
@@ -464,11 +463,7 @@ const Product = (props: any) => {
   const isNonCruiseProduct =
     primaryCategory?.id !== CRUISE_CATEGORY_ID &&
     !CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id);
-  const isNonNewVerticalProductCard = showCruisesCombosRevamp
-    ? false
-    : isCruisesRevamp
-    ? isNonCruiseProduct
-    : isCombo;
+  const isNonNewVerticalProductCard = !isCruisesRevamp && isCombo;
   const isModifiedPopup = isCruisesRevamp && !isNonNewVerticalProductCard;
 
   const params = {
@@ -939,7 +934,7 @@ const Product = (props: any) => {
         removeSitesVisited:
           showItinerary && tgidsWithSitesVisited.includes(tgid),
         isModifiedPopup: isModifiedPopup || showSightsCoveredItineraryLayout,
-        isModifiedCombo: showCruisesCombosRevamp && isNonCruiseProduct,
+        isModifiedCombo: isCruisesRevamp && isNonCruiseProduct,
       }),
     [finalHighlights]
   );
@@ -1083,8 +1078,8 @@ const Product = (props: any) => {
               scrollToItinerarySection={scrollToItinerarySection}
               tgidItineraryData={tgidItineraryData}
               isModifiedPopup={isModifiedPopup}
-              isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
-              showCruisesCombosRevamp={showCruisesCombosRevamp}
+              isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
+              isCruisesRevamp={isCruisesRevamp}
               customDescriptors={customDescriptors}
               showSightsCoveredItineraryLayout={
                 showSightsCoveredItineraryLayout
@@ -1618,7 +1613,7 @@ const Product = (props: any) => {
           ref={productRef}
           $hasItineraryData={showItinerary}
           $isModifiedPopup={isModifiedPopup}
-          $isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
+          $isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
           $isNewVerticalsProductCard={
             isNewVerticalsProductCard && !isNonNewVerticalProductCard
           }
@@ -1866,7 +1861,7 @@ const Product = (props: any) => {
                 lang={currentLanguage}
                 isMobile={isMobile}
                 descriptorArray={descriptors}
-                modifyAudioGuideDescriptor={showCruisesCombosRevamp}
+                modifyAudioGuideDescriptor={isCruisesRevamp}
               />
             </Conditional>
             <Conditional
@@ -2172,9 +2167,7 @@ const Product = (props: any) => {
                   <Conditional
                     if={
                       !isModifiedPopup ||
-                      (isModifiedPopup &&
-                        showCruisesCombosRevamp &&
-                        isNonCruiseProduct)
+                      (isModifiedPopup && isNonCruiseProduct)
                     }
                   >
                     <PrismicRichText
@@ -2518,7 +2511,7 @@ const Product = (props: any) => {
           isNonNewVerticalProductCard &&
           !isMobile &&
           indexPosition === nonNewVerticalIndex &&
-          !showCruisesCombosRevamp
+          !isCruisesRevamp
         }
       >
         <h2 className="combo-section-heading" ref={combosSectionRef}>
@@ -2533,7 +2526,7 @@ const Product = (props: any) => {
           (isNewVerticalsProductCard &&
             isNonNewVerticalProductCard &&
             !isMobile &&
-            !showCruisesCombosRevamp) ||
+            !isCruisesRevamp) ||
           (isNewVerticalsProductCard &&
             isNonNewVerticalProductCard &&
             isMobile &&
@@ -2562,7 +2555,7 @@ const Product = (props: any) => {
           setCustomDescriptors={setCustomDescriptors}
           shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
           handleShowComboPopup={handleShowComboPopup}
-          isModifiedCombo={showCruisesCombosRevamp && isNonCruiseProduct}
+          isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
           comboPopup={
             <Conditional
               if={!isMobile && isComboWithMultiVariant && showComboVariant}

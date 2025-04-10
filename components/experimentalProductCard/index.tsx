@@ -89,7 +89,7 @@ const ExperimentalProductCard = (props: any) => {
     scrollToItinerarySection = false,
     isModifiedPopup = false,
     isModifiedCombo = false,
-    showCruisesCombosRevamp = false,
+    isCruisesRevamp = false,
     showSightsCoveredItineraryLayout = false,
     customDescriptors = [],
     topReviews,
@@ -375,7 +375,7 @@ const ExperimentalProductCard = (props: any) => {
         scrollToItinerarySection={scrollToItinerarySection}
         isModifiedPopup={isModifiedPopup}
         customDescriptors={customDescriptors}
-        showCruisesCombosRevamp={showCruisesCombosRevamp}
+        isCruisesRevamp={isCruisesRevamp}
       />
     );
   };

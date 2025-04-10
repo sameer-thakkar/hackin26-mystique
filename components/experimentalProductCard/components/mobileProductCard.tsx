@@ -102,7 +102,7 @@ const MobileProductCard = (props: any) => {
     scrollToItinerarySection,
     isModifiedPopup,
     customDescriptors,
-    showCruisesCombosRevamp,
+    isCruisesRevamp,
   } = props as any;
 
   const [discountText, setDiscountText] = useState('');
@@ -419,7 +419,7 @@ const MobileProductCard = (props: any) => {
                 lang={currentLanguage}
                 isMobile={true}
                 descriptorArray={descriptorsList}
-                modifyAudioGuideDescriptor={showCruisesCombosRevamp}
+                modifyAudioGuideDescriptor={isCruisesRevamp}
               />
             </Conditional>
             <Conditional

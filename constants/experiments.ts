@@ -17,7 +17,6 @@ const SEATMAP_EXPERIMENT = 'Venue Seats Page Revamp';
 const SUBATTRACTIONS_EXPERIMENT = 'Sub-Attractions Page Revamp';
 const PRODUCT_CARD_VIDEO = 'Product Card Video Experiment V1';
 const C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH = 'EN LP CTA Copy v2';
-const CRUISES_COMBO_REVAMP = 'Cruises Revamp Experiment For Combos';
 const HOHO_REVAMP_PARIS_BARCELONA = 'HOHO Mweb v3';
 const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
@@ -30,7 +29,6 @@ const DROPS_BANNER_EXPERIMENT = 'Drops Banner Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
-  CRUISES_COMBO_REVAMP,
   DAY_TRIPS_COLLECTION_DWEB,
   DAY_TRIPS_COLLECTION_MWEB,
   DAY_TRIPS_LISTICLE,
@@ -57,11 +55,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
-  ),
-  [CRUISES_COMBO_REVAMP]: new Experiment(
-    CRUISES_COMBO_REVAMP,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
   ),
   [DAY_TRIPS_COLLECTION_DWEB]: new Experiment(
     DAY_TRIPS_COLLECTION_DWEB,

@@ -375,19 +375,6 @@ const MicrositeV1 = (props: any) => {
   const isHOHO = template === TEMPLATES.HOHO;
   const isAirportTransfersMB = template === TEMPLATES.AIRPORT_TRANSFERS;
   const isDesertSafariMB = uid === DUBAI_DESERT_SAFARI;
-
-  const {
-    isEligible: isCruisesCombosExpEligible,
-    isExperimentResolving: isCruisesCombosExpResolving,
-    variant: cruisesCombosVariant,
-  } = useABTesting({
-    experimentId: 'CRUISES_COMBO_REVAMP',
-    noTrack: false,
-    customEligibilityCheckFn: () => CRUISES_REVAMP_UIDS.includes(uid),
-  });
-
-  const showCruisesCombosRevamp =
-    isCruisesCombosExpEligible && cruisesCombosVariant === VARIANTS.TREATMENT;
   const showCruisesFormat =
     CRUISES_REVAMP_UIDS.includes(uid) ||
     template === TEMPLATES.CRUISES ||
@@ -575,8 +562,6 @@ const MicrositeV1 = (props: any) => {
 
   const finalUncategorizedTours = getFinalUncategorizedTours({
     orderedFilteredTours: finalOrderedFilteredTours,
-    scorpioData,
-    sortNonCruiseTours: showCruisesFormat && !showCruisesCombosRevamp,
     showHohoRevamp,
   });
 
@@ -1027,7 +1012,6 @@ const MicrositeV1 = (props: any) => {
       isHOHORevamp={showHohoRevamp}
       showItineraries={showItineraries}
       isCruisesRevamp={showCruisesFormat}
-      showCruisesCombosRevamp={showCruisesCombosRevamp}
       isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
       customBanner={customBanner?.primary}
       baseLangCustomBanner={baseLangCustomBanner?.primary}
@@ -1103,7 +1087,6 @@ const MicrositeV1 = (props: any) => {
 
   if (
     (isQnaExpEligible && isQnaExpResolving) ||
-    (isCruisesCombosExpEligible && isCruisesCombosExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||

@@ -102,7 +102,6 @@ const NewVerticalsProductCard = (props: any) => {
     onRatingsCountClick,
     isHOHORevamp,
     isCruisesRevamp,
-    showCruisesCombosRevamp,
     itineraryInfo,
     getMoreDetailsButton,
     setCustomDescriptors,
@@ -180,7 +179,7 @@ const NewVerticalsProductCard = (props: any) => {
   const isCruisesProduct =
     primaryCategory?.id === CRUISE_CATEGORY_ID ||
     CRUISE_FORMAT_SUBCAT_IDS?.includes(primarySubCategory?.id);
-  const showModifiedCombos = showCruisesCombosRevamp && !isCruisesProduct;
+  const showModifiedCombos = isCruisesRevamp && !isCruisesProduct;
 
   const descriptorsList = getCustomDescriptors({
     isHOHO: isHOHORevamp,
@@ -194,7 +193,6 @@ const NewVerticalsProductCard = (props: any) => {
     setIsDescriptorClick,
     itineraryType,
     tgid,
-    isCruisesCombosRevamp: showCruisesCombosRevamp,
   });
 
   const hsid = useRecoilValue(hsidAtom);
@@ -441,7 +439,7 @@ const NewVerticalsProductCard = (props: any) => {
                 lang={currentLanguage}
                 isMobile={isMobile}
                 descriptorArray={descriptors}
-                modifyAudioGuideDescriptor={showCruisesCombosRevamp}
+                modifyAudioGuideDescriptor={isCruisesRevamp}
               />
             </Conditional>
             <Conditional if={!isPopup}>

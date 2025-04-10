@@ -24,8 +24,6 @@ import {
   BOOSTER_EXPERIMENT_UIDS,
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   CASHBACK_TYPES,
-  CRUISE_CATEGORY_ID,
-  CRUISE_FORMAT_SUBCAT_IDS,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
   INVALID_DATE,
@@ -1080,38 +1078,13 @@ export const sortCombos = (tours: Record<string, any>[]) => {
   );
 };
 
-export const sortNonCruises = (
-  tours: Record<string, any>[],
-  scorpioData: Record<string, any>
-) => {
-  return tours.sort((a, b) => {
-    const tourA = scorpioData[a?.tgid];
-    const tourB = scorpioData[b?.tgid];
-
-    return tourA?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
-      !CRUISE_FORMAT_SUBCAT_IDS?.includes(tourA?.primarySubCategory?.id)
-      ? 1
-      : tourB?.primaryCategory?.id !== CRUISE_CATEGORY_ID &&
-        !CRUISE_FORMAT_SUBCAT_IDS?.includes(tourB?.primarySubCategory?.id)
-      ? -1
-      : 0;
-  });
-};
-
 export const getFinalUncategorizedTours = ({
   orderedFilteredTours,
-  scorpioData,
-  sortNonCruiseTours,
   showHohoRevamp,
 }: {
   orderedFilteredTours: Record<string, any>[];
-  scorpioData: Record<string, any>;
-  sortNonCruiseTours: boolean;
   showHohoRevamp: boolean;
 }) => {
-  if (sortNonCruiseTours) {
-    return sortNonCruises(orderedFilteredTours, scorpioData);
-  }
   if (showHohoRevamp) {
     return sortCombos(orderedFilteredTours);
   }
