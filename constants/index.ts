@@ -1860,6 +1860,7 @@ export const SUBCATEGORY_IDS: Record<string, string> = {
   'Train Tickets': '1133',
   'Train Passes': '1139',
   'Shared Airport Transfers': '1145',
+  HOHO: '1011',
 };
 
 export const CATEGORY_IDS: Record<string, string> = {

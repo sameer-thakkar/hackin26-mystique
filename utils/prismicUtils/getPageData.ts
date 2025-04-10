@@ -906,16 +906,7 @@ export const getPageData = async ({
           })
       );
 
-      if (taggedCity && categoryId) {
-        catSubCatReviewsPromise = conditionalPromise(
-          taggedCity && categoryId,
-          () =>
-            fetchCategoryReviews({
-              categoryId: Number(categoryId),
-              cityId: taggedCity,
-            })
-        );
-      } else if (taggedCity && subCatId) {
+      if (taggedCity && subCatId) {
         catSubCatReviewsPromise = conditionalPromise(
           taggedCity && subCatId,
           () =>
@@ -924,8 +915,16 @@ export const getPageData = async ({
               cityId: taggedCity,
             })
         );
+      } else if (taggedCity && categoryId) {
+        catSubCatReviewsPromise = conditionalPromise(
+          taggedCity && categoryId,
+          () =>
+            fetchCategoryReviews({
+              categoryId: Number(categoryId),
+              cityId: taggedCity,
+            })
+        );
       }
-
       const {
         categoryTourListData,
         cityPageParams,
@@ -939,6 +938,7 @@ export const getPageData = async ({
         { promise: collectionReviewsPromise, label: 'collectionReviews' },
         { promise: catSubCatReviewsPromise, label: 'catSubCatReviews' },
       ] as const);
+
       if (
         (hasCategoryTourListV1 || MBDesign === DESIGN.V3) &&
         hasCategoryTourList &&
