@@ -75,7 +75,7 @@ export const FooterLegalWrapper = styled.div<{
       grid-area: disclaimer;
       padding-bottom: 1rem;
       color: ${({ theme, isLight }) =>
-        isLight ? theme.footer.secondaryColor : theme.footer.primaryColor};
+        isLight ? theme.footer.secondaryLinkColor : theme.footer.primaryColor};
     }
 
     @media (max-width: 768px) {
@@ -120,23 +120,13 @@ export const FooterHeading = styled.p<{
 }>`
   position: relative;
   text-transform: uppercase;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.2rem;
   margin: 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 0.0625rem;
-    width: 7.5rem;
-    background: linear-gradient(90deg, #666 0%, rgba(255, 255, 255, 0));
-  }
 
   && > span {
     ${expandFontToken(FONTS.SUBHEADING_SMALL)}
     font-weight: 400;
-    letter-spacing: 1.2px;
+    letter-spacing: 0.6px;
     color: ${({ theme, isLight }) =>
       isLight
         ? theme.footer.secondaryHeadingColor
@@ -422,34 +412,13 @@ export const FooterListItem = styled.li<{
     margin-top: 0.24rem;
   }
 
-  & path {
-    stroke: ${({ theme, isLight }) =>
+  & svg {
+    height: 0.75rem;
+    width: 0.75rem;
+    color: ${({ theme, isLight }) =>
       isLight
         ? theme.footer.secondaryLinkColor
         : theme.footer.primaryLinkColor};
-  }
-
-  & #help-icon {
-    & path:first-child {
-      fill: ${({ theme, isLight }) =>
-        isLight
-          ? theme.footer.secondaryLinkColor
-          : theme.footer.primaryLinkColor};
-      stroke: transparent;
-    }
-    & path {
-      fill: transparent;
-      stroke: ${({ theme, isLight }) =>
-        isLight
-          ? theme.footer.secondaryLinkColor
-          : theme.footer.primaryLinkColor};
-    }
-    & ellipse {
-      fill: ${({ theme, isLight }) =>
-        isLight
-          ? theme.footer.secondaryLinkColor
-          : theme.footer.primaryLinkColor};
-    }
   }
 
   &:hover {
@@ -460,33 +429,11 @@ export const FooterListItem = styled.li<{
           ? theme.footer.secondaryLinkHoverColor
           : theme.footer.primaryLinkHoverColor};
     }
-    path {
-      stroke: ${({ theme, isLight }) =>
+    svg {
+      color: ${({ theme, isLight }) =>
         isLight
           ? theme.footer.secondaryLinkHoverColor
           : theme.footer.primaryLinkHoverColor};
-    }
-    & #help-icon {
-      & path:first-child {
-        fill: ${({ theme, isLight }) =>
-          isLight
-            ? theme.footer.secondaryLinkHoverColor
-            : theme.footer.primaryLinkHoverColor};
-        stroke: transparent;
-      }
-      & path {
-        fill: transparent;
-        stroke: ${({ theme, isLight }) =>
-          isLight
-            ? theme.footer.secondaryLinkHoverColor
-            : theme.footer.primaryLinkHoverColor};
-      }
-      & ellipse {
-        fill: ${({ theme, isLight }) =>
-          isLight
-            ? theme.footer.secondaryLinkHoverColor
-            : theme.footer.primaryLinkHoverColor};
-      }
     }
   }
 `;

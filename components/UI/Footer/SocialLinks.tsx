@@ -6,7 +6,7 @@ import { SOCIAL_DETAILS, SOCIAL_LINKS } from 'const/footer';
 const StyledSocialLinks = styled.ul`
   display: flex;
   justify-content: flex-start;
-  gap: 0.3rem;
+  gap: 0.1875rem;
   align-items: center;
   padding-left: 0;
 `;
@@ -21,12 +21,12 @@ const SocialIcon = styled.li<{
   height: 1.867rem;
 
   & svg {
-    fill: ${({ theme, isLight }) =>
-      isLight ? theme.footer.secondaryColor : theme.footer.primaryColor};
+    color: ${({ theme, isLight }) =>
+      isLight ? theme.footer.secondaryLinkColor : theme.footer.primaryColor};
   }
 
   &:hover svg {
-    fill: ${({ theme, isLight }) =>
+    color: ${({ theme, isLight }) =>
       isLight
         ? theme.footer.secondaryLinkHoverColor
         : theme.footer.primaryLinkHoverColor};

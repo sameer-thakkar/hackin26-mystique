@@ -4,7 +4,7 @@ import { PAYMENT_CARD_ICONS } from 'const/footer';
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 2.33rem);
+  grid-template-columns: repeat(6, 2.33rem);
 `;
 
 const GridItem = styled.div`
