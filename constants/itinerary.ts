@@ -36,12 +36,24 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
     icon: descriptorIcons.TOTAL_DURATION,
     fieldIdentifier: ['duration'],
     fieldTransformer: ({ duration }, { lang }) => {
-      const { hours, minutes } = duration;
-      const timeInMinutes = hours * 60 + minutes;
-      return getDurationInHmNotation({
-        durationInMinutes: timeInMinutes,
+      const { minHours, minMinutes, maxHours, maxMinutes } = duration;
+      const minTimeInMinutes = minHours * 60 + minMinutes;
+      const minDurationString = getDurationInHmNotation({
+        durationInMinutes: minTimeInMinutes,
         lang,
       });
+      let maxDurationString = '';
+      if (typeof maxHours === 'number' && typeof maxMinutes === 'number') {
+        const maxTimeInMinutes = maxHours * 60 + maxMinutes;
+        maxDurationString = getDurationInHmNotation({
+          durationInMinutes: maxTimeInMinutes,
+          lang,
+        });
+      }
+
+      return maxDurationString
+        ? `${minDurationString} - ${maxDurationString}`
+        : minDurationString;
     },
     getLabel: () => strings.ITINERARY.DESCRIPTORS.TOTAL_DURATION,
     qaMarker: 'itinerary-total-duration',
