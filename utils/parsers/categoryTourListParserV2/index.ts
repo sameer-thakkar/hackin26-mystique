@@ -3,7 +3,7 @@ import type { TCityInfo } from 'components/AirportTransfers/interface';
 import { fetchCityInfo } from 'utils/apiUtils';
 import { generatePromiseForCategoryTours } from 'utils/index';
 import { sendLog } from 'utils/logger';
-import { accumulatingCategoryAndItemsData, sortProducts } from 'utils/parser';
+import { accumulatingCategoryAndItemsData } from 'utils/parser';
 import getProductData from '../utils';
 import type { TCategoryTourListParserV2 } from './interface';
 
@@ -131,7 +131,7 @@ export default async function categoryTourListParserV2({
     }
   });
 
-  const allData = sortProducts(categoriesWithProducts?.flat());
+  const allData = categoriesWithProducts?.flat();
 
   const [firstProductData] = allData?.[0]?.items ?? [];
 
