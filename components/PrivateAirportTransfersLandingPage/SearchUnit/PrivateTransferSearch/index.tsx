@@ -395,6 +395,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
     const handlePageShow = () => {
       if (toggleLoading) {
         toggleLoading(false);
+        dispatch({ type: 'RESET' });
       }
     };
 
@@ -510,7 +511,6 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
       return;
     }
     handleSearchButtonClick();
-    dispatch({ type: 'NEXT' });
     setIsAnimating(true);
   };
 
@@ -583,7 +583,9 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
             placeholder={
               isLocationFieldFocused
                 ? direction === 'FROM_AIRPORT'
-                  ? strings.AIRPORT_TRANSFER.ENTER_DESTINATION
+                  ? isMobile
+                    ? strings.AIRPORT_TRANSFER.SELECT_DROPOFF
+                    : strings.AIRPORT_TRANSFER.ENTER_DESTINATION
                   : strings.AIRPORT_TRANSFER.ENTER_PICKUP
                 : locationFieldPlaceholderText
             }
@@ -759,6 +761,7 @@ export const PrivateTransferSearch = ({ isMobile }: { isMobile: boolean }) => {
               currentStep
             )}
             numberOfSteps={privateAirportTransferSearchFieldsOrder.length}
+            isLoading={isLoading}
           />
         </BottomDrawer>
       </Conditional>

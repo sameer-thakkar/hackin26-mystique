@@ -39,7 +39,7 @@ export const BottomDrawerNavigation = ({
           as="button"
           btnType="primary"
           onClick={handleBackClick}
-          width={isLastStep ? '3rem' : '100%'}
+          width={isLastStep ? '3.7rem' : '100%'}
           icon={
             isLastStep ? (
               <BackArrow stroke={COLORS.TEXT.PURPS_3} width={16} />
@@ -60,7 +60,9 @@ export const BottomDrawerNavigation = ({
           onClick={handleNextClick}
           primaryText={isLastStep ? strings.SEARCH : strings.NEXT}
           size="medium"
-          state={isLoading ? 'loading' : 'default'}
+          state={
+            isNextDisabled ? 'disabled' : isLoading ? 'loading' : 'default'
+          }
           variant="primary"
           className="navigation-button primary"
         />
@@ -97,7 +99,7 @@ const Navigation = styled.div`
   }
 
   .navigation-button {
-    transition: width 150ms ease-in-out;
+    transition: width 150ms cubic-bezier(0.3, 1, 0.7, 1);
 
     span {
       display: flex;
