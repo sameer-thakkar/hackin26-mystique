@@ -2,6 +2,7 @@ import {
   ComponentType,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -459,16 +460,37 @@ export const HomePage = (props: any) => {
     }
   }, [eventsReady]);
 
-  useEffect(() => {
-    const observeCategoriesSection = () => {
-      const top =
-        browseByCategorySectionRef.current?.getBoundingClientRect?.()?.top ?? 0;
-      setIsCategoriesSectionSticking(top === (isMobile ? 61 : 80));
-    };
-    window.addEventListener('scroll', observeCategoriesSection);
+  useLayoutEffect(() => {
+    if (!window) return;
 
-    return () => window.removeEventListener('scroll', observeCategoriesSection);
-  }, []);
+    const observeCategoriesSection = () => {
+      if (!browseByCategorySectionRef.current) return;
+
+      const browseByCategorySectionPos =
+        browseByCategorySectionRef.current.getBoundingClientRect().top;
+      const SCROLL_CUTOFF = isMobile ? 61 : 80;
+
+      if (
+        isCategoriesSectionSticking &&
+        browseByCategorySectionPos > SCROLL_CUTOFF
+      ) {
+        setIsCategoriesSectionSticking(false);
+      }
+      if (
+        !isCategoriesSectionSticking &&
+        browseByCategorySectionPos <= SCROLL_CUTOFF
+      ) {
+        setIsCategoriesSectionSticking(true);
+      }
+    };
+
+    window.addEventListener('scroll', observeCategoriesSection, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', observeCategoriesSection);
+    };
+  }, [isCategoriesSectionSticking]);
 
   const finalSlices = heroSectionSlice.filter(
     (slice: any) => slice?.slice_type

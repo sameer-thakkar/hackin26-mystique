@@ -27,6 +27,7 @@ const Popup = ({
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [startingIndex, setStartingIndex] = useState(scrollToIndex);
+  const [trackScroll, setTrackScroll] = useState(false);
   const { uid } = useRecoilValue(appAtom);
 
   const close = (isButton = false) => {
@@ -44,7 +45,7 @@ const Popup = ({
     });
   };
 
-  const open = (startingIndex = -1) => {
+  const open = (startingIndex = -1, shouldTrackScroll = true) => {
     setIsActive(true);
     setTimeout(() => {
       setIsVisible(true);
@@ -53,12 +54,15 @@ const Popup = ({
     document.body.style.overflow = 'hidden';
     if (startingIndex !== -1 && startingIndex !== 0)
       setStartingIndex(startingIndex);
+    if (shouldTrackScroll) {
+      setTrackScroll(shouldTrackScroll);
+    }
   };
 
   const onAfterOpen = () => {
     if (startingIndex !== -1) {
       setTimeout(() => {
-        scrollToSection?.(startingIndex);
+        scrollToSection?.(startingIndex, trackScroll);
         setStartingIndex(-1);
       }, 150);
     }

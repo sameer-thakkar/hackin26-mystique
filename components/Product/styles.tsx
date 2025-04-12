@@ -1418,10 +1418,6 @@ export const StyledProductCard = styled.div<IStyledProductCard>`
     `}
   ${({ $forceMobile }) => !$forceMobile && '}'}
 
-  &:hover, &:active {
-    cursor: pointer;
-  }
-
   .card-img {
     height: ${({
       $isTicketCard,

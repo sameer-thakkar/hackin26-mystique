@@ -174,28 +174,27 @@ const StyledLogo = styled.div<{
 
     .center {
       display: flex;
-      padding-top: 0.25rem;
+      ${!isEntertainmentMB && `padding-top: 0.25rem;`};
     }
 
     .image-wrap {
-      padding-right: 7px;
+      padding-right: ${isEntertainmentMB ? `12px` : `7px`};
       span {
         position: relative !important;
       }
       img {
-        height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`} !important;
+        height: 40px !important;
         position: relative !important;
         max-width: ${isEntertainmentMB ? '10.625rem' : '100%'};
         width: unset !important;
         object-fit: contain;
-        padding-top: ${isEntertainmentMB && `4.5px`};
         ${$isDarkTheme &&
         `filter: invert(100%) hue-rotate(196deg) saturate(7);`};
       }
     }
 
     svg {
-      height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`};
+      height: 40px;
       width: auto;
       margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
       ${$isDarkTheme && `filter: invert(50%) brightness(2);`};
@@ -207,15 +206,15 @@ const StyledLogo = styled.div<{
       margin-left: 1rem;
 
       .image-wrap {
-        padding-right: 0;
+        padding-right: ${isEntertainmentMB ? `7px` : `0px`};
         img {
-          height: ${isEntertainmentMB ? `20px` : `26px`} !important;
+          height: ${isEntertainmentMB ? `32px` : `26px`} !important;
         }
       }
 
       svg {
-        height: ${isEntertainmentMB ? `20px` : `26px`};
-        width: 67px;
+        height: ${isEntertainmentMB ? `32px` : `26px`};
+        width: ${isEntertainmentMB ? `auto` : `67px`};
       }
     }
   `

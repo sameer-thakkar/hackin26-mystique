@@ -326,8 +326,8 @@ const HeaderLeft = styled.div<IHeaderLeft>`
     align-items: center;
     padding: ${({ isGlobalMb, isEntertainmentMb }) =>
       isGlobalMb || isEntertainmentMb ? '0' : '8px'};
-    margin-right: 16px;
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 36px;`}
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb && `height: 40px; margin-right: 16px;`}
 
     .center {
       display: flex;
@@ -335,23 +335,26 @@ const HeaderLeft = styled.div<IHeaderLeft>`
 
     span {
       width: initial !important;
-      height: initial !important;
+      height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '40px' : '36px'} !important;
     }
 
     img {
       ${({ isDarkMode }) =>
         isDarkMode && `filter: invert(1) hue-rotate(193deg) brightness(3);`}
-      height: 36px !important;
+      height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '40px' : '36px'} !important;
       margin: 0;
       max-width: 160px !important;
       width: auto !important;
-      padding-right: 5px !important;
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-right: 5px;`}
       position: relative !important;
       object-fit: contain;
     }
   }
+
   .poweredBy svg {
-    height: 36px;
+    height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '40px' : '36px')};
     width: auto;
     ${({ isDarkMode }) =>
       isDarkMode &&
@@ -364,19 +367,29 @@ const HeaderLeft = styled.div<IHeaderLeft>`
     .header-logo {
       padding: ${({ isGlobalMb, isEntertainmentMb }) =>
         isGlobalMb || isEntertainmentMb ? '0' : '4px'};
-      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 20px;`}
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 32px;`}
       img {
         position: relative !important;
         height: ${({ isGlobalMb, isEntertainmentMb }) => {
-          const height = isGlobalMb ? 36 : isEntertainmentMb ? 20 : 24;
+          const height = isGlobalMb ? 36 : isEntertainmentMb ? 32 : 24;
           return `${height}px !important;`;
         }};
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `width: 87px !important;`}
+        ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-right: 0px;`}
+      }
+
+      span {
+        height: ${({ isGlobalMb, isEntertainmentMb }) => {
+          const height = isGlobalMb ? 36 : isEntertainmentMb ? 32 : 24;
+          return `${height}px !important;`;
+        }};
       }
     }
+
     .poweredBy svg {
-      height: 24px;
+      height: ${({ isGlobalMb, isEntertainmentMb }) => {
+        const height = isGlobalMb ? 36 : isEntertainmentMb ? 32 : 24;
+        return `${height}px;`;
+      }};
     }
   }
 `;

@@ -303,7 +303,7 @@ const ContentPage = (props: any) => {
     subattraction_type,
   } = (baseLangCategorisationMetadata as TCategorisationMetadata) || {};
   // @ts-ignore
-  const { design: mbDesign } = {
+  const { design: mbDesign, is_entertainment_mb: isEntertainmentMB } = {
     ...CMSData,
     ...micrositeData,
   };
@@ -394,6 +394,7 @@ const ContentPage = (props: any) => {
     image_url,
     images,
   } = CMSData ?? {};
+
   const featuredImage = {
     url: featured_image_link?.url || featured_image?.url,
     alt: featured_image_alt || featured_image?.alt,
@@ -684,6 +685,7 @@ const ContentPage = (props: any) => {
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
         categoryHeaderMenuExists={categoryHeaderMenuExists}
+        isEntertainmentMB={isEntertainmentMB}
       />
       <Conditional
         if={

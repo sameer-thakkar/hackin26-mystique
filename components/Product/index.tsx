@@ -1397,7 +1397,7 @@ const Product = (props: any) => {
     });
   };
 
-  const scrollToSection = async (index: number) => {
+  const scrollToSection = async (index: number, shouldTrack = true) => {
     if (!popupContainerRef.current) return;
 
     try {
@@ -1414,7 +1414,7 @@ const Product = (props: any) => {
       });
 
       setCurrentTabActiveIndexForPopup({
-        index: index,
+        index,
         isForcedChange: true,
       });
 
@@ -1423,20 +1423,22 @@ const Product = (props: any) => {
           `#description-heading-pos-${index}`
         )!.innerText;
 
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-        [ANALYTICS_PROPERTIES.TGID]: tgid,
-        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
-        [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-        [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
-        ...getCommonEventMetaData(pageMetaData),
-        ...getProductCommonProperties({
-          primaryCategory,
-          primaryCollection,
-          primarySubCategory,
-        }),
-      });
+      if (shouldTrack) {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+          [ANALYTICS_PROPERTIES.TGID]: tgid,
+          [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+          [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+          [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+          [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+          ...getCommonEventMetaData(pageMetaData),
+          ...getProductCommonProperties({
+            primaryCategory,
+            primaryCollection,
+            primarySubCategory,
+          }),
+        });
+      }
     } catch (error) {
       return;
     }
@@ -1527,7 +1529,7 @@ const Product = (props: any) => {
       tabs.length + (showItinerary && !isCruisesRevamp ? 1 : 0);
 
     if (!isPopup) {
-      popupController.current?.open(numberOfSections);
+      popupController.current?.open(numberOfSections, false);
       trackedToggleContent(false);
     } else {
       if (!popupContainerRef.current) return;

@@ -42,7 +42,7 @@ export const MainContainer = styled.div<{
       $isOnTop &&
       css`
         && {
-          border-bottom: none;
+          border-bottom: none !important;
         }
       `}
   }

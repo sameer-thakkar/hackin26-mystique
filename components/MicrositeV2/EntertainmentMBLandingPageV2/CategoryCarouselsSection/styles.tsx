@@ -119,7 +119,9 @@ export const TitleRow = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 1.5rem;
+    width: calc(100% - (5.46vw * 2));
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
     padding: 0 1.5rem;
 
     .title {

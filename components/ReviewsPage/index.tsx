@@ -308,6 +308,7 @@ const ReviewsPage: React.FC<React.PropsWithChildren<TReviewsPageProps>> = (
         hasPoweredByHeadoutLogo
         isEntertainmentLandingPageVisible
         isReviewsPage
+        isEntertainmentMb
       />
       <ReviewsPageBanner
         isMobile={isMobile}

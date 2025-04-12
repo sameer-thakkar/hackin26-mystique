@@ -795,7 +795,7 @@ const it = {
     READ_MORE: 'Leggi di più',
     RATINGS_AND_REVIEWS: 'Valutazioni e recensioni',
     READ_DETAILED_REVIEWS: 'Leggi recensioni complete',
-    UNTIL_DATE: 'Fino {0}',
+    UNTIL_DATE: '{0}',
     AVAILABLE_TIME: 'Orario disponibile',
     EXPERIENCE_AVAILABLE_ONLY_AT:
       "Questa esperienza è disponibile solo nell'orario di seguito",
