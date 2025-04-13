@@ -144,7 +144,7 @@ export const dialogDiscountTagPadding = css({
 
 export const dialogRiveContainer = css({
   height: '13.375rem',
-  width: '29.75rem',
+  width: '19.75rem',
   scale: '1.2',
   alignSelf: 'flex-end',
   marginBottom: '-32px',
