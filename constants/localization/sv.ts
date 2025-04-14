@@ -58,6 +58,7 @@ const sv = {
   CATEGORY_SLIDER_HEADING:
     'Kunder som bokade denna föreställning tittade också på',
   CHECK_AVAIL: 'Kontrollera tillgänglighet',
+  SELECT_SEATS: 'Välj platser',
   CITY_PAGE: {
     BANNER_TITLE: 'Upplev det bästa av',
     TOP_ATTRACTIONS: 'De bästa sevärdheterna',

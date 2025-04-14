@@ -48,6 +48,7 @@ const id = {
   CATEGORY_SLIDER_HEADING:
     'Pelanggan yang Memesan Pertunjukan Ini Juga Menonton',
   CHECK_AVAIL: 'Periksa ketersediaan',
+  SELECT_SEATS: 'Select Seats',
   CLOSE: 'Tutup',
   COMBO_VARIANT: {
     SELECT_CTA: 'Pilih',

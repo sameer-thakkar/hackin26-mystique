@@ -60,6 +60,7 @@ const pl = {
   CATEGORY_SLIDER_HEADING:
     'Klienci, którzy zarezerwowali ten spektakl, wyświetlili również',
   CHECK_AVAIL: 'Sprawdź dostępność',
+  SELECT_SEATS: 'Wybierz miejsca',
   CITY_PAGE: {
     BANNER_TITLE: 'Doświadcz tego, co do zaoferowania ma',
     TOP_ATTRACTIONS: 'Najpopularniejsze atrakcje',

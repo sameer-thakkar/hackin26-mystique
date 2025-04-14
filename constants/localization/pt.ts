@@ -53,6 +53,7 @@ const pt = {
   CATEGORY_SLIDER_HEADING:
     'Os clientes que reservaram esta experiência também viram',
   CHECK_AVAIL: 'Verificar disponibilidade',
+  SELECT_SEATS: 'Escolher assentos',
   CITY_PAGE: {
     BANNER_TITLE: 'Experimente o melhor de',
     TOP_ATTRACTIONS: 'Melhores atrações',

@@ -57,6 +57,7 @@ const tr = {
     'Bu deneyim için rezervasyon yaptığınızda <strong>%{0}</strong> para iadesi alacaksınız. Para iadeniz otomatik olarak Headout hesabınıza yatırılır ve Headout ile gelecekte yapacağınız rezervasyonlarda kullanılabilir.',
   CATEGORY_SLIDER_HEADING: 'Bu Gösteriyi Seçen Müşterilerin İnceledikleri',
   CHECK_AVAIL: 'Rezervasyon ara',
+  SELECT_SEATS: 'Koltuk seç',
   CITY_PAGE: {
     BANNER_TITLE: 'En iyi deneyimleri yaşayacağınız adres',
     TOP_ATTRACTIONS: 'En Popüler Yerler',

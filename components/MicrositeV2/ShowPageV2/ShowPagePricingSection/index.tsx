@@ -15,13 +15,15 @@ import {
 import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/ticketUnavailableStyles';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
+import useABTesting from 'hooks/useABTesting';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import { createBookingURL, getNakedDomain, getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { getHostName } from 'utils/helper';
+import { checkIfLTTMB, getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -161,9 +163,24 @@ const ShowPagePricingSection = ({
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
 
-  const buyButtonText = strings.CHECK_AVAIL;
+  const {
+    variant: lttCTAExperimentVariant,
+    isExperimentResolving,
+    isEligible,
+  } = useABTesting({
+    experimentId: EXPERIMENT_NAMES.LTT_CTA_COPY_EXPERIMENT,
+    customEligibilityCheckFn: () => checkIfLTTMB(uid),
+  });
 
-  const buttonType = isButtonLoading ? 'loading' : 'default';
+  const buyButtonText =
+    lttCTAExperimentVariant === VARIANTS.TREATMENT
+      ? strings.SELECT_SEATS
+      : strings.CHECK_AVAIL;
+
+  const buttonType =
+    (isEligible && isExperimentResolving) || isButtonLoading
+      ? 'loading'
+      : 'default';
 
   return (
     <>

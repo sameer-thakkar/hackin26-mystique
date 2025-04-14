@@ -59,6 +59,7 @@ const no = {
   CATEGORY_SLIDER_HEADING:
     'Kunder som bestilte denne forestillingen så også på',
   CHECK_AVAIL: 'Sjekk tilgjengelighet',
+  SELECT_SEATS: 'Velg seter',
   CITY_PAGE: {
     BANNER_TITLE: 'Opplev det beste i',
     TOP_ATTRACTIONS: 'De beste attraksjonene',

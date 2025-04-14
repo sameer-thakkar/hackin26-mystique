@@ -53,6 +53,7 @@ const nl = {
     'Je krijgt <strong>{0}%</strong> cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
   CATEGORY_SLIDER_HEADING: 'Bezoekers die deze show boekten, bekeken ook',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
+  SELECT_SEATS: 'Kies je zitplaats',
   CITY_PAGE: {
     BANNER_TITLE: 'Ervaar het beste van',
     TOP_ATTRACTIONS: 'Topbezienswaardigheden',

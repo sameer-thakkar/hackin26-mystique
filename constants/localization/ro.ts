@@ -60,6 +60,7 @@ const ro = {
   CATEGORY_SLIDER_HEADING:
     'Clienții care au rezervat acest spectacol au mai explorat și...',
   CHECK_AVAIL: 'Verificați disponibilitatea',
+  SELECT_SEATS: 'Selectați locurile',
   CITY_PAGE: {
     BANNER_TITLE: 'Descoperă cele mai bune experiențe din',
     TOP_ATTRACTIONS: 'Atracții de top',

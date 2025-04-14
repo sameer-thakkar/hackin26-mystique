@@ -54,6 +54,7 @@ const it = {
   CATEGORY_SLIDER_HEADING:
     'I clienti che hanno prenotato questo spettacolo hanno visto anche',
   CHECK_AVAIL: 'Verifica disponibilità',
+  SELECT_SEATS: 'Scegli i posti',
   CITY_PAGE: {
     BANNER_TITLE: 'Scopri il meglio di',
     TOP_ATTRACTIONS: 'Le attrazioni top',

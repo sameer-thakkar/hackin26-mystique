@@ -53,6 +53,7 @@ const fr = {
   CATEGORY_SLIDER_HEADING:
     'Les client·es qui ont réservé ce spectacle ont également vu',
   CHECK_AVAIL: 'Vérifier la disponibilité',
+  SELECT_SEATS: 'Choisir les sièges',
   CITY_PAGE: {
     BANNER_TITLE: 'Meilleures offres pour les expériences à',
     TOP_ATTRACTIONS: 'Meilleures attractions',

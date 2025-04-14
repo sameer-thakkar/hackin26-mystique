@@ -59,6 +59,7 @@ const ru = {
   CATEGORY_SLIDER_HEADING:
     'Клиенты, забронировавшие это шоу, также просмотрели',
   CHECK_AVAIL: 'Проверить наличие',
+  SELECT_SEATS: 'Select Seats',
   CITY_PAGE: {
     BANNER_TITLE: 'Откройте для себя',
     TOP_ATTRACTIONS: 'Главные достопримечательности',
@@ -855,7 +856,7 @@ const ru = {
     SELECT_TIME_SLOT: 'Выберите временной слот',
     SELECT_TIME_SLOT_ERROR: 'Выберите временной слот, чтобы продолжить',
     PRICE_STARTING_FROM: 'Цены на места начинаются от',
-    SELECT_SEATS: 'Выберите места',
+    SELECT_SEATS: 'Выбрать места',
     READ_MORE: 'Читать далее',
     RATINGS_AND_REVIEWS: 'Рейтинги и отзывы',
     READ_DETAILED_REVIEWS: 'Читайте подробные отзывы',

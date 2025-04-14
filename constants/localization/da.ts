@@ -58,6 +58,7 @@ const da = {
     'Du får <strong>{0}&nbsp;%</strong> cashback, når du booker denne oplevelse. Din cashback vil automatisk blive indsat på din Headout-konto og kan bruges til enhver fremtidig booking med Headout.',
   CATEGORY_SLIDER_HEADING: 'Kunder, der bookede dette show, har også set',
   CHECK_AVAIL: 'Tjek billetter',
+  SELECT_SEATS: 'Vælg pladser',
   CITY_PAGE: {
     BANNER_TITLE: 'De bedste oplevelser i',
     TOP_ATTRACTIONS: 'De vigtigste seværdigheder',

@@ -52,6 +52,7 @@ const de = {
   CATEGORY_SLIDER_HEADING:
     'Was sich Zuschauer dieser Show noch angesehen haben',
   CHECK_AVAIL: 'Verfügbarkeit prüfen',
+  SELECT_SEATS: 'Plätze auswählen',
   CITY_PAGE: {
     BANNER_TITLE: 'Erleben Sie die Highlights von',
     TOP_ATTRACTIONS: 'Top-Attraktionen',
