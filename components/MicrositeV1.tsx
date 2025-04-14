@@ -601,6 +601,10 @@ const MicrositeV1 = (props: any) => {
     null
   );
 
+  useEffect(() => {
+    setOrderedFilteredTours(orderedTours);
+  }, [orderedTours]);
+
   const { filteredOutTours, filteredTours: finalOrderedFilteredTours } =
     useMemo(() => {
       return filterToursByPOIFilter(
