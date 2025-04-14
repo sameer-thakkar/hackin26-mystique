@@ -23,7 +23,7 @@ import { checkIfLTTMB, getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -168,7 +168,7 @@ const ShowPagePricingSection = ({
     isExperimentResolving,
     isEligible,
   } = useABTesting({
-    experimentId: EXPERIMENT_NAMES.LTT_CTA_COPY_EXPERIMENT,
+    experimentId: 'LTT_CTA_COPY_EXPERIMENT',
     customEligibilityCheckFn: () => checkIfLTTMB(uid),
   });
 
