@@ -83,9 +83,7 @@ const StyledCard = styled.div((props) => {
     ? '180px'
     : '245px';
   let finalCardImgHeight;
-  if (isGpMotorTicketsMb) {
-    finalCardImgHeight = 'unset';
-  } else if (isGlobalMb) {
+  if (isGlobalMb) {
     finalCardImgHeight = cardImgHeight;
   } else {
     finalCardImgHeight = `${styles.img.height}px`;

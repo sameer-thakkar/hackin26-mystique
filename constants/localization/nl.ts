@@ -1205,7 +1205,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
         END: '{0} eindpunten beschikbaar',
       },
     },
-    GET_DIRECTION: 'Cómo llegar',
+    GET_DIRECTION: 'Routebeschrijving',
     DESCRIPTORS: {
       DURATION: {
         FULL: '{0} uur {1} minuten',

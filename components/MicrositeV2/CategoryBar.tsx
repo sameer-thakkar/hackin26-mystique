@@ -42,7 +42,7 @@ const StyledCategoryBar = styled.div<{
   @media (max-width: 768px) {
     margin-left: -1rem;
     margin-right: -1rem;
-    top: ${({ $isEntertainmentMb }) => ($isEntertainmentMb ? '30px' : '56px')};
+    top: ${({ $isEntertainmentMb }) => ($isEntertainmentMb ? '60px' : '56px')};
     background: ${COLORS.BRAND.WHITE};
   }
 `;
