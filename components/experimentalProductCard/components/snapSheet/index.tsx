@@ -1,5 +1,7 @@
 import React, { forwardRef, memo, RefObject, useEffect, useState } from 'react';
 import { useProductCard } from 'contexts/productCardContext';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import { useContentScroll, useDragBehavior } from './hooks';
 import { Content, SnapSheetContainer } from './styles';
@@ -69,6 +71,20 @@ const SnapSheet = forwardRef<HTMLDivElement, SnapSheetProps>(
       activeTab,
       setActiveTab,
     });
+
+    useEffect(() => {
+      if (!activeTab) return;
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MORE_DETAILS_SECTION_TAB_VIEWED,
+        [ANALYTICS_PROPERTIES.TAB_NAME]: activeTab,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.NAVIGATION_TYPE]: isTabClickScroll
+          ? 'Click'
+          : 'Scroll',
+      });
+    }, [activeTab]);
+
     useEffect(() => {
       if (isSnapDrawerMountingComplete || !isSnapDrawerMountedToTop) {
         setFinalSnapSheetTransform(transform);

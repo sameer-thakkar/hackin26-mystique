@@ -2373,12 +2373,13 @@ const Product = (props: any) => {
         </PopupContainer>
         <NavigationBar
           tabs={tabs}
-          currentActiveIndex={currentTabActiveIndexForPopup.index}
+          currentActiveIndexInfo={currentTabActiveIndexForPopup}
           isVisible={!isUnScrolled}
           onItemClick={scrollToSection}
           isReviewsSectionPresent={reviewsDetails?.showRatings}
           isItinerarySectionPresent={!isCruisesRevamp && showItinerary}
           isHohoItinerary={isHohoItinerary}
+          tgid={tgid}
         />
         <CloseButtonContainer>
           <CloseButton

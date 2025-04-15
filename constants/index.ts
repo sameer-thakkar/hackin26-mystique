@@ -552,6 +552,7 @@ export const ANALYTICS_EVENTS = {
   DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
   MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',
   MORE_DETAILS_SECTION_VIEWED: 'More Details Section Viewed',
+  MORE_DETAILS_SECTION_TAB_VIEWED: 'More Details Section Tab Viewed',
   CITY_CARD_CLICKED: 'City Card Clicked',
   COLLECTION_CARD_CLICKED: 'Collection Card Clicked',
   SUBCAT_CARD_CLICKED: 'Sub-Category Card Clicked',
@@ -1259,6 +1260,7 @@ export const ANALYTICS_PROPERTIES = {
   SORTING_CRITERA: 'Sort Criteria',
   QR_CODE_SHOWN: 'QR Code Shown',
   DOWNLOAD_CTA_SHOWN: 'Download CTA Shown',
+  NAVIGATION_TYPE: 'Navigation Type',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
