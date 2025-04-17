@@ -12,6 +12,7 @@ import { TPrivateAirportTransfersLandingPageProps } from 'components/PrivateAirp
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
+import { useGetAndSetExperiments } from 'hooks/useGetAndSetExperiments';
 import {
   getLanguageFromPathname,
   getNakedDomain,
@@ -192,6 +193,8 @@ const Page = (props: PageProps) => {
   const isBroadway = checkIfBroadwayMB(uid);
 
   const showLttSpTreatment = isLTT || isBroadway;
+
+  useGetAndSetExperiments();
 
   const CMSData =
     CMSContent?.subattractionsContentPageData?.CMSContent?.data ||
@@ -556,7 +559,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   const lang = getLanguageFromPathname({ pathname, query }) || 'en';
-  const { host }: { host?: string } = req?.headers || window?.location;
+  const {
+    host,
+  }: {
+    host?: string;
+  } = req?.headers || window?.location;
 
   const localizedStrings = await getLocalizationLabels({ lang });
 

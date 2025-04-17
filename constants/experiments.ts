@@ -26,6 +26,7 @@ const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const QNA_EXPERIMENT = 'Q&A Experiment v2';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
 const DROPS_BANNER_EXPERIMENT = 'Drops Banner Experiment';
+const MB_AA_TEST = 'mb_aa_test';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
@@ -41,6 +42,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LFC_IMPACT,
   LTD_LP_Experiment,
   LTT_CTA_COPY_EXPERIMENT,
+  MB_AA_TEST,
   MIXPANEL_SESSION_REPLAY,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,

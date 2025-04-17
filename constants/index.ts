@@ -2093,6 +2093,8 @@ export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 
 export const X_CACHE_HEADER_KEY = 'x-cache' as const;
 
+export const EXPERIMENT_GROUP_COOKIE_KEY = 'headout-exp-group' as const;
+
 export const CALENDAR_UNIT = 'calendar-unit';
 
 function capitalizeFirstLetter(word: string | null) {
@@ -2542,6 +2544,16 @@ export const UID_TO_COUNT_MAPPING = {
   'www.pompeii-tickets.com': 750,
   'www.thevaticantickets.com': 1200,
 };
+
+export const AA_TEST_TGIDs = [
+  'www.theauschwitztours.com',
+  'www.alcazar-seville-tickets.com',
+  'www.oceanografictickets.com',
+  'www.hagia-sophia-tickets.com',
+  'www.wantelope-canyon-tours.com',
+  'www.pradomuseumtickets.com',
+  'www.doge-palace-tickets.com',
+];
 
 export const DUBAI_DESERT_SAFARI = 'www.desert-safari-dxb.com';
 

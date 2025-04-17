@@ -88,6 +88,7 @@ import {
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
 import {
+  AA_TEST_TGIDs,
   CATEGORY_IDS,
   COOKIE,
   CUSTOM_TYPES,
@@ -793,6 +794,9 @@ export const getPageData = async ({
       let categoryTourListPromise: Promise<Record<string, any>> = {} as Promise<
         Record<string, any>
       >;
+      let categoryTourListPromiseWithAATestEnabled: Promise<
+        Record<string, any>
+      > = {} as Promise<Record<string, any>>;
       const hasCategoryTourListV1 = Object.keys(
         localisedCategoryTourListV1 || {}
       )?.length;
@@ -832,6 +836,27 @@ export const getPageData = async ({
       }
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
+          // same list but additional call
+          const { uid } = getLangUID(req, query);
+          const shouldMakeAdditionalCall = AA_TEST_TGIDs.includes(uid);
+
+          if (shouldMakeAdditionalCall) {
+            categoryTourListPromiseWithAATestEnabled = categoryTourListParserV1(
+              {
+                micrositeProductCardSliceWithData: localisedCategoryTourListV1,
+                currentMicrositeProductCardSliceWithData:
+                  currentPageCategoryTourListV1,
+                hostname,
+                lang: lang ?? 'en',
+                cookies,
+                localizedStrings,
+              }
+            );
+          } else {
+            // immediately resolve if MBs not in the provided list
+            Promise.resolve(categoryTourListPromiseWithAATestEnabled);
+          }
+
           categoryTourListPromise = categoryTourListParserV1({
             micrositeProductCardSliceWithData: localisedCategoryTourListV1,
             currentMicrositeProductCardSliceWithData:
@@ -933,6 +958,10 @@ export const getPageData = async ({
         catSubCatReviews,
       } = await labeledPromiseAllSettled([
         { promise: categoryTourListPromise, label: 'categoryTourListData' },
+        {
+          promise: categoryTourListPromiseWithAATestEnabled,
+          label: 'categoryTourListDataWithAATestEnabled',
+        },
         { promise: cityPageDataPromise, label: 'cityPageParams' },
         { promise: offerTgidsPromise, label: 'offerDetails' },
         { promise: collectionReviewsPromise, label: 'collectionReviews' },

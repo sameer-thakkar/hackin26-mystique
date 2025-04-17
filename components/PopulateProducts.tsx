@@ -25,6 +25,7 @@ import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
 import { QnaContextProvider } from 'contexts/QnaContext';
 import useABTesting from 'hooks/useABTesting';
+import { useIsMBAaTestEnabled } from 'hooks/useIsMBAaTestEnabled';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -355,6 +356,8 @@ const PopulateProducts: any = (props: any) => {
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
   const clientWidth = useWindowWidth();
   const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
+
+  const { isExpGroupLoading } = useIsMBAaTestEnabled();
 
   const productsRef = useRef([]);
   productsRef.current = [];
@@ -699,7 +702,8 @@ const PopulateProducts: any = (props: any) => {
     onTouchEnd: () => {},
     onSlideChange: () => updateIndex(),
   };
-  const showLoader = productsLoading || isRankingExperimentResolving;
+  const showLoader =
+    productsLoading || isRankingExperimentResolving || isExpGroupLoading;
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
