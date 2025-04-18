@@ -60,3 +60,21 @@ export enum EReviewSortType {
   MOST_RELEVANT = 'MOST_RELEVANT',
   MOST_RECENT = 'MOST_RECENT',
 }
+
+export type TCalculatedRatings = {
+  collection: {
+    averageRating: number;
+    ratingsCount: number;
+  };
+  tourGroups: {
+    [key: string]: {
+      reviewsDetails: {
+        ratingsCount: number;
+        averageRating: number;
+        ratingsSplit: {
+          [key: string]: number;
+        };
+      };
+    };
+  };
+};

@@ -2693,3 +2693,27 @@ export const RANKING_EXPERIMENT_UUIDS = Object.keys(
 export const RANKING_EXPERIMENT_TGIDS = [
   4012, 189, 325, 4973, 243, 220, 1456, 1455, 2862, 253, 4054,
 ];
+
+export const CALCULATED_RATINGS_KEYS = [
+  'disneyland.paristickets.com',
+  'keukenhof.tickets-amsterdam.com',
+  'montserrat.barcelona-tickets.com',
+  'notre-dame.tickets-paris.fr',
+  'sagradafamilia.barcelona-tickets.com.home',
+  'www.antelope-canyon-tours.com',
+  'www.dubai-tickets.co.desert-safari-dubai',
+  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours',
+  'www.hop-on-hop-off-tickets.com.singapore-bus-tours',
+  'www.milford-sound-cruises.co.nz',
+  'www.mount-fuji.com',
+  'www.phillip-island-tours.com.phillip-island-penguin-parade-tickets',
+  'www.rottnestislandtours.com',
+  'www.seine-river-cruises.com',
+  'www.st-peters-basilica-tickets.com',
+  'www.stonehenge-london-tours.com',
+  'www.thames-river-cruise.com',
+  'www.theauschwitztours.com',
+  'www.ticket-madrid.com.santiago-bernabeu',
+  'www.tickets-liverpool.com.anfield-stadium',
+  'www.wieliczka-salt-mine-tours.com',
+];

@@ -30,6 +30,7 @@ const MB_AA_TEST = 'mb_aa_test';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
+const PRODUCT_RATINGS_EXPERIMENT = 'Product Ratings Experiment';
 const BRAND_LOADER_EXP = 'New Loader Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
@@ -48,6 +49,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   MIXPANEL_SESSION_REPLAY,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
+  PRODUCT_RATINGS_EXPERIMENT,
   QNA_EXPERIMENT,
   SEATMAP_EXPERIMENT,
   SIMILARITY_BASED_RANKING_EXPERIMENT,
@@ -100,7 +102,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
   ),
-
   [LFC_IMPACT]: new Experiment(
     LFC_IMPACT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
@@ -130,6 +131,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     PRODUCT_CARD_VIDEO,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
+  ),
+  [PRODUCT_RATINGS_EXPERIMENT]: new Experiment(
+    PRODUCT_RATINGS_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
   ),
   [QNA_EXPERIMENT]: new Experiment(
     QNA_EXPERIMENT,

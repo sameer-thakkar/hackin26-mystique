@@ -1,10 +1,18 @@
-import { ComponentType, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ComponentType,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
+import type { TCalculatedRatings } from 'types/reviews';
 import Mailer from 'components/CityPageContainer/Mailer';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
@@ -41,6 +49,7 @@ import {
   sendVariableToDataLayer,
   trackEvent,
 } from 'utils/analytics';
+import { fetchRatings } from 'utils/apiUtils';
 import {
   checkIfBroadwayMB,
   checkIfCategoryHeaderExists,
@@ -68,6 +77,7 @@ import {
   BOOLEAN_STATES,
   BOOSTER_EXPERIMENT_UIDS,
   C1_COLLECTION_EXCLUDED,
+  CALCULATED_RATINGS_KEYS,
   CRUISE_CATEGORY_ID,
   CRUISE_FORMAT_SUBCAT_IDS,
   CRUISES_REVAMP_UIDS,
@@ -227,7 +237,7 @@ const MicrositeV1 = (props: any) => {
     serverRequestStartTimestamp,
     categoryTourListData,
     domainConfig,
-    collectionDetails,
+    collectionDetails: collectionDetailsFromProps,
     bannerImageData,
     primaryCity,
     categoryHeaderMenu,
@@ -261,6 +271,11 @@ const MicrositeV1 = (props: any) => {
   const [showLfcTimer, setShowLfcTimer] = useState(false);
   const router = useRouter();
   const { isBot } = useRecoilValue(appAtom);
+
+  const [collectionDetails, setCollectionDetails] = useState(
+    collectionDetailsFromProps
+  );
+  const [areRatingsUpdated, setAreRatingsUpdated] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -1150,6 +1165,60 @@ const MicrositeV1 = (props: any) => {
     shouldRunDayTripsListicleExperiment &&
     dayTripsListicleExperimentVariant === VARIANTS.TREATMENT;
 
+  const {
+    isEligible: shouldRunProductRatingsExperiment,
+    isExperimentResolving: isProductRatingsExperimentResolving,
+    variant: productRatingsVariant,
+  } = useABTesting({
+    experimentId: 'PRODUCT_RATINGS_EXPERIMENT',
+    customEligibilityCheckFn: () => CALCULATED_RATINGS_KEYS.includes(uid),
+  });
+
+  const isProductRatingsEnabled =
+    shouldRunProductRatingsExperiment &&
+    productRatingsVariant === VARIANTS.TREATMENT;
+
+  const updateRatings = useCallback(async () => {
+    try {
+      const ratings = await fetchRatings({ uid });
+      if (ratings?.data) {
+        const { tourGroups, collection } = ratings.data as TCalculatedRatings;
+
+        // Update scorpioData with ratings
+        if (tourGroups) {
+          Object.keys(tourGroups).forEach((tourGroupId) => {
+            const { reviewsDetails } = tourGroups[tourGroupId];
+            if (scorpioData?.[tourGroupId]) {
+              scorpioData[tourGroupId].reviewsDetails = {
+                ...scorpioData[tourGroupId].reviewsDetails,
+                ...reviewsDetails,
+              };
+            }
+          });
+        }
+
+        // Update collection details
+        if (collection) {
+          setCollectionDetails((collectionDetails: any) => ({
+            ...collectionDetails,
+            ...collection,
+          }));
+        }
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error fetching ratings:', error);
+    } finally {
+      setAreRatingsUpdated(true);
+    }
+  }, [uid, collectionDetailsFromProps, scorpioData]);
+
+  useEffect(() => {
+    if (isProductRatingsEnabled && !areRatingsUpdated) {
+      updateRatings();
+    }
+  }, [isProductRatingsEnabled, updateRatings, areRatingsUpdated]);
+
   if (
     (isQnaExpEligible && isQnaExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
@@ -1160,7 +1229,10 @@ const MicrositeV1 = (props: any) => {
     (shouldRunDayTripsCollectionExperimentDWeb &&
       isDayTripsCollectionExperimentDWebResolving) ||
     (shouldRunDayTripsCollectionExperimentMWeb &&
-      isDayTripsCollectionExperimentMWebResolving)
+      isDayTripsCollectionExperimentMWebResolving) ||
+    (shouldRunProductRatingsExperiment &&
+      isProductRatingsExperimentResolving &&
+      !areRatingsUpdated)
   )
     return <Loader />;
 
@@ -1278,8 +1350,8 @@ const MicrositeV1 = (props: any) => {
             bannerImages: finalBannerImages,
             faviconUrl,
             logoUrl: logoUrl,
-            collectionDetails,
             breadcrumbsDetails,
+            collectionDetails,
           }}
         />
         <Conditional if={!isEntertainmentBanner}>
