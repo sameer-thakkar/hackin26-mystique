@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
 import { AllPhotosCta } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/style';
-import RamadanTheming from 'components/RamadanTheming';
 import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -20,6 +19,14 @@ import { ExpandedGalleryContainer, GalleryViewContainer } from './styles';
 
 const VideoPlayer = dynamic(
   import(/* webpackChunkName: "VideoPlayer" */ 'components/common/VideoPlayer')
+);
+
+const HolidayTheming = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: 'Holiday Theming' */ 'components/HolidayTheming'
+    ),
+  { ssr: false }
 );
 
 const IMAGE_DIMENSIONS = [
@@ -83,8 +90,6 @@ const ExpandedGallery = ({
         $imagesLoaded={imagesLoaded}
         ref={containerRef}
       >
-        <RamadanTheming variant="desktop" />
-
         {Array.from({ length: MAX_LEN - (videoUrl ? 1 : 0) }).map(
           (_, index) => (
             <Skeleton key={index} containerClassName="gallery-children" />
@@ -125,6 +130,8 @@ const ExpandedGallery = ({
             />
           );
         })}
+
+        <HolidayTheming variant="desktop" />
         <Conditional if={imagesLoaded && images.length > 3}>
           <AllPhotosCta onClick={() => onClickHandler(0)}>
             {AllPhotos} {strings.SHOW_PAGE_V2.ALL_PHOTOS}

@@ -1,4 +1,9 @@
-import { defineGlobalStyles } from '@pandacss/dev';
+import { defineGlobalStyles, defineKeyframes } from '@pandacss/dev';
+import {
+  float,
+  floatHalf,
+  floatReverse,
+} from 'components/HolidayTheming/ParticleEffect/styles';
 
 export const globalStyles = defineGlobalStyles({
   '*': {
@@ -116,4 +121,10 @@ export const globalStyles = defineGlobalStyles({
     background: '#fff !important',
   },
   '.hidden': { display: 'none' },
+});
+
+export const keyframeTokens = defineKeyframes({
+  float,
+  floatHalf,
+  floatReverse,
 });

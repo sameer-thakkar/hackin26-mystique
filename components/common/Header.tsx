@@ -7,7 +7,6 @@ import DeferredComponent from 'components/common/DeferredComponent';
 import { StyledButtonWrapper } from 'components/common/LocalePopover/styles';
 import LocaleSelector from 'components/common/LocaleSelector';
 import HeaderLinks from 'components/HeaderLinks';
-import RamadanTheming from 'components/RamadanTheming';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
@@ -34,6 +33,14 @@ const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
 );
 const RiveLogoComponent = dynamic(
   () => import('components/common/RiveLogoComponent/index'),
+  { ssr: false }
+);
+
+const HolidayTheming = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: 'Holiday Theming' */ 'components/HolidayTheming'
+    ),
   { ssr: false }
 );
 
@@ -538,7 +545,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
           $reducedMargin={isDarkTheme}
         >
           <Conditional if={!isMobile && !hasDropdownLinks}>
-            <RamadanTheming variant="header" />
+            <HolidayTheming variant="header" />
           </Conditional>
 
           <Conditional if={!slices && headerLinks}>

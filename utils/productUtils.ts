@@ -1312,26 +1312,3 @@ export const isVideoOnProductCardVisibleFn = ({
 
   return showVideoOnProductCard;
 };
-
-export const shouldExcludeHolidayTheming = (
-  country?: string | null,
-  city?: string | null,
-  includedCountries?: string[],
-  startDate?: string,
-  endDate?: string
-) => {
-  if (city?.toUpperCase() === 'KRAKOW' || !country) return true;
-  const today = dayjs();
-  if (
-    !!startDate &&
-    !!endDate &&
-    !(today.isAfter(startDate, 'day') && today.isBefore(endDate, 'day'))
-  ) {
-    return true;
-  }
-  return (
-    !!country &&
-    !!includedCountries?.length &&
-    !includedCountries.includes(country)
-  );
-};

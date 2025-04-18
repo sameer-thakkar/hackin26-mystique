@@ -1,6 +1,6 @@
 import { defineConfig } from '@pandacss/dev';
 import Preset from '@headout/eevee/tokens';
-import { globalStyles } from 'const/globalStyles';
+import { globalStyles, keyframeTokens } from 'const/globalStyles';
 
 export default defineConfig({
   preflight: false,
@@ -20,7 +20,11 @@ export default defineConfig({
     './node_modules/@headout/espeon/dist/(constants|hooks|types|utils)/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        ...keyframeTokens,
+      },
+    },
   },
   outdir: 'styled-system',
   importMap: ['@headout/pixie'],

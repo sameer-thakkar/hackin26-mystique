@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import MediaCarousel from 'UI/MediaCarousel';
 import { useProductCard } from 'contexts/productCardContext';
@@ -14,6 +15,14 @@ import { MEDIA_CAROUSEL_IMAGE_LIMIT } from 'const/index';
 import { SWIPESHEET_STATES } from 'const/productCard';
 import CrossiconSvg from 'assets/crossiconSvg';
 import { CloseIconWrapper, ImageContainer } from './styles';
+
+const HolidayTheming = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: 'Holiday Theming' */ 'components/HolidayTheming'
+    ),
+  { ssr: false }
+);
 
 interface MediaCarouselProps {
   images: string[];
@@ -95,6 +104,7 @@ const MediaCarouselWrapper: FC<React.PropsWithChildren<MediaCarouselProps>> = (
         isTimed={false}
         hideBorderRadius={true}
       />
+      <HolidayTheming variant="mobile" />
     </ImageContainer>
   );
 };
