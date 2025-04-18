@@ -1363,6 +1363,7 @@ const ro = {
     },
     VERIFIED_REVIEW: 'Recenzie verificată a partenerului',
   },
+  POWERED_BY: 'furnizat de',
 };
 
 export default ro;

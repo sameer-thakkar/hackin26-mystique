@@ -2136,5 +2136,6 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       },
     ],
   },
+  POWERED_BY: 'patrocinado por',
 };
 export default es;

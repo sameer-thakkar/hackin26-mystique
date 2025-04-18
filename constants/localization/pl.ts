@@ -1946,6 +1946,7 @@ const pl = {
       },
     ],
   },
+  POWERED_BY: 'obsługiwane przez',
 };
 
 export default pl;

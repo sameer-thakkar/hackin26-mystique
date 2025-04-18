@@ -1363,6 +1363,7 @@ const tr = {
     },
     VERIFIED_REVIEW: 'Doğrulanmış ortak incelemesi',
   },
+  POWERED_BY: 'powered by',
 };
 
 export default tr;

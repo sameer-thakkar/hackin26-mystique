@@ -1358,6 +1358,7 @@ const no = {
     },
     VERIFIED_REVIEW: 'Verifisert partneranmeldelse',
   },
+  POWERED_BY: 'levert av',
 };
 
 export default no;

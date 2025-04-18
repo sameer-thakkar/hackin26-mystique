@@ -1360,6 +1360,7 @@ const sv = {
     },
     VERIFIED_REVIEW: 'Verifierad partnerrecension',
   },
+  POWERED_BY: 'drivs av',
 };
 
 export default sv;

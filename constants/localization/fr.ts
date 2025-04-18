@@ -2114,5 +2114,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       },
     ],
   },
+  POWERED_BY: 'opéré par',
 };
 export default fr;

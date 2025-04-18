@@ -2098,6 +2098,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       },
     ],
   },
+  POWERED_BY: 'powered by',
 };
 
 export default de;

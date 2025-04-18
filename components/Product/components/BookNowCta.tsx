@@ -2,7 +2,11 @@ import { useState } from 'react';
 import Button from '@headout/aer/src/atoms/Button';
 import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
+import { SvgLoader } from 'components/SvgPageLoader';
+import useABTesting from 'hooks/useABTesting';
+import { useBodyScrollLock } from 'hooks/useBodyScrollLock';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
+import { VARIANTS } from 'const/experiments';
 import { BUTTON_LOADING_DURATION, THEMES } from 'const/index';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import BackArrow from 'assets/backArrow';
@@ -30,6 +34,18 @@ export const BookNowCta = ({
       setIsLoading(false);
     },
   });
+
+  const isLoadersExperiment =
+    useABTesting({
+      experimentId: 'BRAND_LOADER_EXP',
+    }).variant === VARIANTS.TREATMENT;
+
+  useBodyScrollLock(isLoadersExperiment && showLoadingState && isLoading);
+
+  if (isLoadersExperiment && showLoadingState && isLoading) {
+    return <SvgLoader />;
+  }
+
   return (
     <ButtonContainer
       $isExperimentalCard={isExperimentalCard}

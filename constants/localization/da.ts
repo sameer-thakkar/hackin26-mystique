@@ -1392,6 +1392,7 @@ const da = {
     },
     VERIFIED_REVIEW: 'Verificeret partneranmeldelse',
   },
+  POWERED_BY: 'fra',
 };
 
 export default da;

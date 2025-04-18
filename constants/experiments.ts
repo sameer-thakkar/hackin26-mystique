@@ -30,8 +30,10 @@ const MB_AA_TEST = 'mb_aa_test';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
+const BRAND_LOADER_EXP = 'New Loader Experiment';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
+  BRAND_LOADER_EXP,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   DAY_TRIPS_COLLECTION_DWEB,
   DAY_TRIPS_COLLECTION_MWEB,
@@ -58,6 +60,11 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
  * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
  */
 export const EXPERIMENTS: Record<string, Experiment> = {
+  [BRAND_LOADER_EXP]: new Experiment(
+    BRAND_LOADER_EXP,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
+  ),
   [C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH]: new Experiment(
     C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],

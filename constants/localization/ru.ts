@@ -1383,6 +1383,7 @@ const ru = {
     },
     VERIFIED_REVIEW: 'Проверенный отзыв партнера',
   },
+  POWERED_BY: 'на основе',
 };
 
 export default ru;

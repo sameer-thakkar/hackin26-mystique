@@ -2083,5 +2083,6 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
     ],
   },
+  POWERED_BY: 'operado por',
 };
 export default pt;

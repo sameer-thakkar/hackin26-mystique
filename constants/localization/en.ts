@@ -2218,6 +2218,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       },
     ],
   },
+  POWERED_BY: 'powered by',
 };
 
 export default en;

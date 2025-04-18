@@ -2077,5 +2077,6 @@ const it = {
       },
     ],
   },
+  POWERED_BY: 'con tecnologia',
 };
 export default it;

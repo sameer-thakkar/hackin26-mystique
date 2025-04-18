@@ -2054,5 +2054,6 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       },
     ],
   },
+  POWERED_BY: 'powered by',
 };
 export default nl;
