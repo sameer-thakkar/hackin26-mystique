@@ -201,10 +201,6 @@ const getA1CollectionBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
     };
   }
 
-  if (Object.keys(breadcrumbs).length < pathArray.length + 1) {
-    return {};
-  }
-
   return breadcrumbs;
 };
 
@@ -730,6 +726,11 @@ export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
 
     default:
       breadcrumbs = {};
+  }
+
+  const pathArray = getSanitizedPathArray(url);
+  if (Object.keys(breadcrumbs).length < pathArray.length + 1) {
+    return {};
   }
 
   return breadcrumbs;
