@@ -1,8 +1,8 @@
 // App links
 export const DROPS_MOBILE_BANNER_LINK =
-  'https://headout.app.link/drops-mb-banner';
+  'https://headout.app.link/drops-mweb-mb-banner';
 export const DROPS_MOBILE_EXIT_INTENT_LINK =
-  'https://headout.app.link/drops-mb-intent';
+  'https://headout.app.link/drops-mweb-mb-intent';
 
 // Image and asset URLs
 export const DROPS_LOGO_URL =

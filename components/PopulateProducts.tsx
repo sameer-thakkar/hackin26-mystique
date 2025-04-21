@@ -17,7 +17,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import useABTesting from 'hooks/useABTesting';
 import { useIsMBAaTestEnabled } from 'hooks/useIsMBAaTestEnabled';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
@@ -36,7 +35,6 @@ import { getPOIBooster } from 'utils/poiBoosterUtils';
 import { getProductDescriptors } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -375,20 +373,8 @@ const PopulateProducts: any = (props: any) => {
 
   const { isDev, host, design } = useContext(MBContext);
   const hostname = getHostName(isDev, host);
-  const {
-    isEligible: isEligibleForDropsBanner,
-    isExperimentResolving: isDropsBannerExperimentResolving,
-    variant: dropsBannerExperimentVariant,
-  } = useABTesting({
-    experimentId: 'DROPS_BANNER_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => checkDropsBannerEligibility(uid),
-  });
 
-  const shouldShowDropsBanner =
-    isEligibleForDropsBanner &&
-    dropsBannerExperimentVariant === VARIANTS.TREATMENT &&
-    !isDropsBannerExperimentResolving;
+  const shouldShowDropsBanner = checkDropsBannerEligibility(uid);
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
