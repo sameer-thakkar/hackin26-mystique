@@ -126,7 +126,6 @@ export enum HeadoutEndpoints {
   GeoLocateCity,
   BulkItineraries,
   GuestCount,
-  QnaSnippets,
   QnaSections,
   TourGroupReviewsV6,
   CityInfo,
@@ -162,7 +161,6 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.TourGroupReviewMedias,
   HeadoutEndpoints.Collection,
   HeadoutEndpoints.GeoLocateCity,
-  HeadoutEndpoints.QnaSnippets,
   HeadoutEndpoints.QnaSections,
   HeadoutEndpoints.CollectionProductCards,
   HeadoutEndpoints.TourGroupReviewsV6,
@@ -301,9 +299,6 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.GeoLocateCity:
       endpointSlug = `/api/tours/v2/geolocate/city`;
-      break;
-    case HeadoutEndpoints.QnaSnippets:
-      endpointSlug = `/api/v2/collections/${id}/qna/snippets/`;
       break;
     case HeadoutEndpoints.QnaSections:
       endpointSlug = `/api/v2/collections/${id}/qna/sections/`;
@@ -1930,20 +1925,10 @@ export const getQnaData = async ({
 
     if (!isUidPartOfQnaExp) {
       return {
-        qnaSnippets: [],
         qnaSections: [],
       };
     }
 
-    const qnaSnippetsApiUrl = getHeadoutApiUrl({
-      endpoint: HeadoutEndpoints.QnaSnippets,
-      id: collectionId,
-    });
-
-    sendLog({
-      level: LOG_LEVELS.INFO,
-      message: `qnaSnippetsApiUrl: ${qnaSnippetsApiUrl}`,
-    });
     const qnaSectionsApiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.QnaSections,
       id: collectionId,
@@ -1953,28 +1938,18 @@ export const getQnaData = async ({
       message: `qnaSectionsApiUrl: ${qnaSectionsApiUrl}`,
     });
 
-    const [qnaSnippetsResponse, qnaSectionsResponse] = await Promise.all([
-      fetch(qnaSnippetsApiUrl),
-      fetch(qnaSectionsApiUrl),
-    ]);
+    const [qnaSectionsResponse] = await Promise.all([fetch(qnaSectionsApiUrl)]);
 
-    const qnaSnippets = await qnaSnippetsResponse.json();
     const qnaSections = await qnaSectionsResponse.json();
-    sendLog({
-      level: LOG_LEVELS.INFO,
-      message: `qnaSnippets: ${qnaSnippets}`,
-    });
     sendLog({
       level: LOG_LEVELS.INFO,
       message: `qnaSections: ${qnaSections}`,
     });
     return {
-      qnaSnippets: qnaSnippets?.result ?? [],
       qnaSections: qnaSections?.result ?? [],
     };
   } catch (error) {
     return {
-      qnaSnippets: [],
       qnaSections: [],
     };
   }

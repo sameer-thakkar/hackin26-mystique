@@ -200,7 +200,6 @@ const Page = (props: PageProps) => {
     CMSContent?.subattractionsContentPageData?.CMSContent?.data ||
     CMSContent?.data;
 
-  const { qna: qnaSnippets } = CMSContent?.qnaSnippets || [];
   const { sections: qnaSections } = CMSContent?.qnaSections || [];
 
   const {
@@ -391,7 +390,6 @@ const Page = (props: PageProps) => {
               catSubCatReviews={catSubCatReviews}
               categoryId={categoryId}
               subCategoryId={subCategoryId}
-              qnaSnippets={qnaSnippets}
               qnaSections={qnaSections}
               botReviewsByTGID={botReviewsByTGID}
               dayTripCollectionData={dayTripCollectionData}

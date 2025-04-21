@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -23,7 +17,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import { QnaContextProvider } from 'contexts/QnaContext';
 import useABTesting from 'hooks/useABTesting';
 import { useIsMBAaTestEnabled } from 'hooks/useIsMBAaTestEnabled';
 import useOnScreen from 'hooks/useOnScreen';
@@ -62,8 +55,6 @@ import { DropsExitIntent } from './AppDrops/components/DropsExitIntent';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { CardLoadingSkeleton } from './Product/components/CardLoadingSkeleton';
-import UpdatedQnaSnippet from './QnA/LfcQnA/components/QnaSnippet2.0';
-import UpdatedQnaSnippetDweb from './QnA/LfcQnA/components/QnaSnippet2.0DWeb';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
 import DropsBanner from './AppDrops';
 import CustomBanner from './CustomBanner';
@@ -344,10 +335,6 @@ const PopulateProducts: any = (props: any) => {
     showSightsCoveredItineraryLayout = false,
     showBoosters = false,
     botReviewsByTGID = {},
-    qnaSnippets,
-    qnaSections,
-    collectionId,
-    showQnaExperiment,
     showLastMinFilters = false,
     poiCollectionsSection,
     activePOIFilter,
@@ -920,14 +907,6 @@ const PopulateProducts: any = (props: any) => {
     );
   }
 
-  if (availableToursList.length > 1 && !isMobile && showQnaExperiment) {
-    availableToursList = [
-      ...availableToursList.slice(0, 1),
-      { showQnaExperiment },
-      ...availableToursList.slice(1),
-    ];
-  }
-
   return (
     <StyledProductsWrapper
       isLoading={showLoader}
@@ -989,28 +968,6 @@ const PopulateProducts: any = (props: any) => {
                   insideCards
                 />
               );
-              if (index === 1 && showQnaExperiment) {
-                return (
-                  <QnaContextProvider key={index}>
-                    <Conditional if={isMobile}>
-                      <UpdatedQnaSnippet
-                        qnaSnippets={qnaSnippets}
-                        qnaSections={qnaSections}
-                        collectionId={collectionId}
-                      />
-                    </Conditional>
-                    <Conditional if={!isMobile}>
-                      <UpdatedQnaSnippetDweb
-                        key={index}
-                        qnaSnippets={qnaSnippets}
-                        qnaSections={qnaSections}
-                        collectionId={collectionId}
-                      />
-                    </Conditional>
-                  </QnaContextProvider>
-                );
-              }
-
               if (
                 index === 3 &&
                 poiCollectionsSection &&

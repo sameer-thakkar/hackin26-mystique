@@ -254,7 +254,6 @@ const MicrositeV1 = (props: any) => {
     categoryId,
     subCategoryId,
     botReviewsByTGID,
-    qnaSnippets,
     qnaSections,
     isRankingExperimentResolving,
     bannerV3Data,
@@ -406,14 +405,9 @@ const MicrositeV1 = (props: any) => {
 
   const isLangEn = lang === 'en-us' || lang === 'en';
 
-  const {
-    isEligible: isQnaExpEligible,
-    isExperimentResolving: isQnaExpResolving,
-    variant: qnaExpVariant,
-  } = useABTesting({
-    experimentId: 'QNA_EXPERIMENT',
-    customEligibilityCheckFn: () => QNA_EXP_UIDS.includes(uid) && isLangEn,
-  });
+  const showQnaExperiment =
+    ((QNA_EXP_UIDS.includes(uid) && isLangEn) || (isBot && isLangEn)) &&
+    qnaSections?.length;
 
   const {
     isEligible: isEligibleForSimilarityBasedRankingExperiment,
@@ -436,12 +430,6 @@ const MicrositeV1 = (props: any) => {
     isEligibleForSimilarityBasedRankingExperiment &&
     similarityBasedRankingExperimentVariant === VARIANTS.CONTROL &&
     !isSimilarityBasedRankingExperimentResolving;
-
-  const showQnaExperiment =
-    ((qnaExpVariant === VARIANTS.TREATMENT && isQnaExpEligible) ||
-      (isBot && isLangEn)) &&
-    qnaSections?.length &&
-    qnaSnippets?.length;
 
   const {
     isEligible: isLFCImpactExpEligible,
@@ -1039,7 +1027,6 @@ const MicrositeV1 = (props: any) => {
   );
 
   const qnaExperimentData = {
-    qnaSnippets: showQnaExperiment ? qnaSnippets : [],
     qnaSections: showQnaExperiment ? qnaSections : [],
     collectionId: collectionDetails?.id,
     showQnaExperiment,
@@ -1097,7 +1084,6 @@ const MicrositeV1 = (props: any) => {
       baseLangCustomBanner={baseLangCustomBanner?.primary}
       shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
       isRankingExperimentResolving={isRankingExperimentResolving}
-      isQnaExpResolving={isQnaExpResolving}
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={showBoosters}
       isPOIFiltersEnabled={isPOIFiltersEnabled}
@@ -1220,7 +1206,6 @@ const MicrositeV1 = (props: any) => {
   }, [isProductRatingsEnabled, updateRatings, areRatingsUpdated]);
 
   if (
-    (isQnaExpEligible && isQnaExpResolving) ||
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||

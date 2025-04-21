@@ -5,7 +5,6 @@ import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
-import { QnA } from 'components/QnA/LfcQnA/components/LfcDWebSection/components/QnaLfcDwebRow/types';
 import {
   AverageRatingWrapper,
   BannerDisclaimerText,
@@ -120,7 +119,6 @@ type StaticBannerProps = {
   id?: string;
   forceMobile?: boolean;
   isCruisesRevamp?: boolean;
-  qnaSnippets?: QnA[];
   qnaSections?: QnAContainer[];
   showQnaExperiment?: boolean;
   collectionId?: number;

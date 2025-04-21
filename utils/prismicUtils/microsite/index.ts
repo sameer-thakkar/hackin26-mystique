@@ -125,7 +125,7 @@ const getMicrositeDocument = async ({
           baseLangCategorisationMetadata
         );
 
-        const { qnaSnippets, qnaSections } = await getQnaData({
+        const { qnaSections } = await getQnaData({
           collectionId: Number(
             baseLangCategorisationMetadata?.tagged_collection
           ),
@@ -314,7 +314,6 @@ const getMicrositeDocument = async ({
             mbType: tagged_mb_type,
           },
           subattractionsContentPageData,
-          qnaSnippets: qnaSnippets,
           qnaSections: qnaSections,
         };
 
