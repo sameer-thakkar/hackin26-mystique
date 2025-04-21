@@ -23,7 +23,6 @@ const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
 const DAY_TRIPS_COLLECTION_DWEB = 'Day Trips Collection Experiment v2';
 const DAY_TRIPS_COLLECTION_MWEB = 'Day Trips Collection Experiment MWeb';
 const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
-const QNA_EXPERIMENT = 'Q&A Experiment v2';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
 const MB_AA_TEST = 'mb_aa_test';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
@@ -48,7 +47,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
   PRODUCT_RATINGS_EXPERIMENT,
-  QNA_EXPERIMENT,
   SEATMAP_EXPERIMENT,
   SIMILARITY_BASED_RANKING_EXPERIMENT,
   SUBATTRACTIONS_EXPERIMENT,
@@ -127,11 +125,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   ),
   [PRODUCT_RATINGS_EXPERIMENT]: new Experiment(
     PRODUCT_RATINGS_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
-  ),
-  [QNA_EXPERIMENT]: new Experiment(
-    QNA_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
   ),
