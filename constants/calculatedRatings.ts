@@ -36,13 +36,13 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
       '10209': {
         reviewsDetails: {
           ratingsCount: 23190,
-          averageRating: 4.6,
+          averageRating: 4.7,
           ratingsSplit: {
-            '1': 348,
-            '2': 116,
-            '3': 1855,
-            '4': 4638,
-            '5': 16233,
+            '1': 278,
+            '2': 186,
+            '3': 812,
+            '4': 4522,
+            '5': 17393,
           },
         },
       },
@@ -121,66 +121,6 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
       },
     },
   },
-  'montserrat.barcelona-tickets.com': {
-    collection: {
-      averageRating: 4.8,
-      ratingsCount: 13373,
-    },
-    tourGroups: {
-      '3769': {
-        reviewsDetails: {
-          ratingsCount: 3157,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 16,
-            '2': 9,
-            '3': 32,
-            '4': 606,
-            '5': 2494,
-          },
-        },
-      },
-      '8805': {
-        reviewsDetails: {
-          ratingsCount: 3675,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 44,
-            '2': 29,
-            '3': 129,
-            '4': 717,
-            '5': 2756,
-          },
-        },
-      },
-      '17854': {
-        reviewsDetails: {
-          ratingsCount: 4192,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 63,
-            '2': 21,
-            '3': 335,
-            '4': 838,
-            '5': 2934,
-          },
-        },
-      },
-      '18732': {
-        reviewsDetails: {
-          ratingsCount: 3543,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 18,
-            '2': 11,
-            '3': 35,
-            '4': 680,
-            '5': 2799,
-          },
-        },
-      },
-    },
-  },
   'notre-dame.tickets-paris.fr': {
     collection: {
       averageRating: 4.3,
@@ -241,61 +181,61 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
       },
     },
   },
-  'sagradafamilia.barcelona-tickets.com.home': {
+  'www.seine-river-cruises.com': {
     collection: {
-      averageRating: 4.7,
-      ratingsCount: 53674,
+      averageRating: 4.4,
+      ratingsCount: 68514,
     },
     tourGroups: {
-      '9497': {
+      '5691': {
         reviewsDetails: {
-          ratingsCount: 2576,
+          ratingsCount: 2280,
           averageRating: 4.7,
           ratingsSplit: {
-            '1': 31,
-            '2': 21,
-            '3': 90,
-            '4': 502,
-            '5': 1932,
-          },
-        },
-      },
-      '10117': {
-        reviewsDetails: {
-          ratingsCount: 6077,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 36,
-            '2': 12,
-            '3': 73,
-            '4': 486,
-            '5': 5469,
-          },
-        },
-      },
-      '17925': {
-        reviewsDetails: {
-          ratingsCount: 8981,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 54,
+            '1': 27,
             '2': 18,
-            '3': 108,
-            '4': 718,
-            '5': 8083,
+            '3': 80,
+            '4': 445,
+            '5': 1710,
           },
         },
       },
-      '18350': {
+      '5730': {
         reviewsDetails: {
-          ratingsCount: 33837,
+          ratingsCount: 30930,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 155,
+            '2': 93,
+            '3': 309,
+            '4': 5939,
+            '5': 24435,
+          },
+        },
+      },
+      '7944': {
+        reviewsDetails: {
+          ratingsCount: 8284,
           averageRating: 4.6,
           ratingsSplit: {
-            '1': 508,
-            '2': 169,
-            '3': 2707,
-            '4': 6767,
-            '5': 23686,
+            '1': 124,
+            '2': 41,
+            '3': 663,
+            '4': 1657,
+            '5': 5799,
+          },
+        },
+      },
+      '23284': {
+        reviewsDetails: {
+          ratingsCount: 1124,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 13,
+            '2': 9,
+            '3': 39,
+            '4': 219,
+            '5': 843,
           },
         },
       },
@@ -361,429 +301,61 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
       },
     },
   },
-  'www.dubai-tickets.co.desert-safari-dubai': {
-    collection: {
-      averageRating: 4.9,
-      ratingsCount: 84974,
-    },
-    tourGroups: {
-      '3941': {
-        reviewsDetails: {
-          ratingsCount: 2049,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 10,
-            '2': 6,
-            '3': 20,
-            '4': 393,
-            '5': 1619,
-          },
-        },
-      },
-      '25117': {
-        reviewsDetails: {
-          ratingsCount: 8427,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 51,
-            '2': 17,
-            '3': 101,
-            '4': 674,
-            '5': 7584,
-          },
-        },
-      },
-      '25198': {
-        reviewsDetails: {
-          ratingsCount: 21450,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 129,
-            '2': 43,
-            '3': 257,
-            '4': 1716,
-            '5': 19305,
-          },
-        },
-      },
-      '32028': {
-        reviewsDetails: {
-          ratingsCount: 14862,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 89,
-            '2': 30,
-            '3': 178,
-            '4': 1189,
-            '5': 13376,
-          },
-        },
-      },
-    },
-  },
-  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours': {
-    collection: {
-      averageRating: 4.4,
-      ratingsCount: 5548,
-    },
-    tourGroups: {
-      '18242': {
-        reviewsDetails: {
-          ratingsCount: 272,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 3,
-            '2': 2,
-            '3': 10,
-            '4': 53,
-            '5': 204,
-          },
-        },
-      },
-      '21566': {
-        reviewsDetails: {
-          ratingsCount: 855,
-          averageRating: 4.2,
-          ratingsSplit: {
-            '1': 26,
-            '2': 17,
-            '3': 86,
-            '4': 299,
-            '5': 428,
-          },
-        },
-      },
-    },
-  },
-  'www.hop-on-hop-off-tickets.com.singapore-bus-tours': {
-    collection: {
-      averageRating: 4.4,
-      ratingsCount: 5548,
-    },
-    tourGroups: {
-      '10005': {
-        reviewsDetails: {
-          ratingsCount: 2230,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 40,
-            '2': 49,
-            '3': 89,
-            '4': 691,
-            '5': 1360,
-          },
-        },
-      },
-      '25594': {
-        reviewsDetails: {
-          ratingsCount: 960,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 17,
-            '2': 21,
-            '3': 38,
-            '4': 298,
-            '5': 586,
-          },
-        },
-      },
-    },
-  },
-  'www.milford-sound-cruises.co.nz': {
+  'www.tickets-liverpool.com.anfield-stadium': {
     collection: {
       averageRating: 4.7,
-      ratingsCount: 4352,
+      ratingsCount: 8988,
     },
     tourGroups: {
-      '18103': {
+      '14552': {
         reviewsDetails: {
-          ratingsCount: 612,
+          ratingsCount: 8337,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 50,
+            '2': 17,
+            '3': 100,
+            '4': 667,
+            '5': 7503,
+          },
+        },
+      },
+      '25414': {
+        reviewsDetails: {
+          ratingsCount: 11,
           averageRating: 4.8,
           ratingsSplit: {
-            '1': 3,
-            '2': 2,
-            '3': 6,
-            '4': 118,
-            '5': 483,
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 2,
+            '5': 9,
           },
         },
       },
-      '18125': {
+      '25965': {
         reviewsDetails: {
-          ratingsCount: 516,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 3,
-            '2': 2,
-            '3': 5,
-            '4': 99,
-            '5': 408,
-          },
-        },
-      },
-      '23887': {
-        reviewsDetails: {
-          ratingsCount: 1250,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 15,
-            '2': 10,
-            '3': 44,
-            '4': 244,
-            '5': 938,
-          },
-        },
-      },
-      '26901': {
-        reviewsDetails: {
-          ratingsCount: 1180,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 6,
-            '2': 4,
-            '3': 12,
-            '4': 227,
-            '5': 932,
-          },
-        },
-      },
-    },
-  },
-  'www.mount-fuji.com': {
-    collection: {
-      averageRating: 4.8,
-      ratingsCount: 34826,
-    },
-    tourGroups: {
-      '19001': {
-        reviewsDetails: {
-          ratingsCount: 7860,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 39,
-            '2': 24,
-            '3': 79,
-            '4': 1509,
-            '5': 6209,
-          },
-        },
-      },
-      '29474': {
-        reviewsDetails: {
-          ratingsCount: 17030,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 85,
-            '2': 51,
-            '3': 170,
-            '4': 3270,
-            '5': 13454,
-          },
-        },
-      },
-      '32281': {
-        reviewsDetails: {
-          ratingsCount: 2480,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 30,
-            '2': 20,
-            '3': 87,
-            '4': 484,
-            '5': 1860,
-          },
-        },
-      },
-      '32990': {
-        reviewsDetails: {
-          ratingsCount: 6302,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 95,
-            '2': 32,
-            '3': 504,
-            '4': 1260,
-            '5': 4411,
-          },
-        },
-      },
-    },
-  },
-  'www.phillip-island-tours.com.phillip-island-penguin-parade-tickets': {
-    collection: {
-      averageRating: 4.4,
-      ratingsCount: 9982,
-    },
-    tourGroups: {
-      '10549': {
-        reviewsDetails: {
-          ratingsCount: 1898,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 19,
-            '2': 38,
-            '3': 209,
-            '4': 493,
-            '5': 1139,
-          },
-        },
-      },
-      '13942': {
-        reviewsDetails: {
-          ratingsCount: 2521,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 25,
-            '2': 50,
-            '3': 277,
-            '4': 655,
-            '5': 1513,
-          },
-        },
-      },
-      '24243': {
-        reviewsDetails: {
-          ratingsCount: 209,
+          ratingsCount: 160,
           averageRating: 4.8,
           ratingsSplit: {
             '1': 1,
-            '2': 1,
+            '2': 0,
             '3': 2,
-            '4': 40,
-            '5': 165,
+            '4': 31,
+            '5': 126,
           },
         },
       },
-      '26270': {
+      '28986': {
         reviewsDetails: {
-          ratingsCount: 903,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 5,
-            '2': 3,
-            '3': 9,
-            '4': 173,
-            '5': 713,
-          },
-        },
-      },
-    },
-  },
-  'www.rottnestislandtours.com': {
-    collection: {
-      averageRating: 4.7,
-      ratingsCount: 4138,
-    },
-    tourGroups: {
-      '22490': {
-        reviewsDetails: {
-          ratingsCount: 876,
+          ratingsCount: 15,
           averageRating: 4.7,
           ratingsSplit: {
-            '1': 11,
-            '2': 7,
-            '3': 31,
-            '4': 171,
-            '5': 657,
-          },
-        },
-      },
-      '22492': {
-        reviewsDetails: {
-          ratingsCount: 574,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 3,
-            '2': 2,
-            '3': 6,
-            '4': 110,
-            '5': 453,
-          },
-        },
-      },
-      '24683': {
-        reviewsDetails: {
-          ratingsCount: 1044,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 13,
-            '2': 8,
-            '3': 37,
-            '4': 204,
-            '5': 783,
-          },
-        },
-      },
-      '32259': {
-        reviewsDetails: {
-          ratingsCount: 1068,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 13,
-            '2': 9,
-            '3': 37,
-            '4': 208,
-            '5': 801,
-          },
-        },
-      },
-    },
-  },
-  'www.seine-river-cruises.com': {
-    collection: {
-      averageRating: 4.4,
-      ratingsCount: 68514,
-    },
-    tourGroups: {
-      '5691': {
-        reviewsDetails: {
-          ratingsCount: 2280,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 41,
-            '2': 50,
-            '3': 91,
-            '4': 707,
-            '5': 1391,
-          },
-        },
-      },
-      '5730': {
-        reviewsDetails: {
-          ratingsCount: 30930,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 464,
-            '2': 155,
-            '3': 2474,
-            '4': 6186,
-            '5': 21651,
-          },
-        },
-      },
-      '7944': {
-        reviewsDetails: {
-          ratingsCount: 8284,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 149,
-            '2': 182,
-            '3': 331,
-            '4': 2568,
-            '5': 5053,
-          },
-        },
-      },
-      '23284': {
-        reviewsDetails: {
-          ratingsCount: 1124,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 11,
-            '2': 22,
-            '3': 124,
-            '4': 292,
-            '5': 674,
+            '1': 0,
+            '2': 0,
+            '3': 1,
+            '4': 3,
+            '5': 11,
           },
         },
       },
@@ -849,301 +421,121 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
       },
     },
   },
-  'www.stonehenge-london-tours.com': {
-    collection: {
-      averageRating: 4.5,
-      ratingsCount: 20341,
-    },
-    tourGroups: {
-      '2926': {
-        reviewsDetails: {
-          ratingsCount: 3872,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 70,
-            '2': 85,
-            '3': 155,
-            '4': 1200,
-            '5': 2362,
-          },
-        },
-      },
-      '9641': {
-        reviewsDetails: {
-          ratingsCount: 2025,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 20,
-            '2': 41,
-            '3': 223,
-            '4': 527,
-            '5': 1215,
-          },
-        },
-      },
-      '10675': {
-        reviewsDetails: {
-          ratingsCount: 2093,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 31,
-            '2': 10,
-            '3': 167,
-            '4': 419,
-            '5': 1465,
-          },
-        },
-      },
-      '27283': {
-        reviewsDetails: {
-          ratingsCount: 1723,
-          averageRating: 4.7,
-          ratingsSplit: {
-            '1': 21,
-            '2': 14,
-            '3': 60,
-            '4': 336,
-            '5': 1292,
-          },
-        },
-      },
-    },
-  },
-  'www.thames-river-cruise.com': {
+  'www.hop-on-hop-off-tickets.com.singapore-bus-tours': {
     collection: {
       averageRating: 4.4,
-      ratingsCount: 28318,
+      ratingsCount: 5548,
     },
     tourGroups: {
-      '2959': {
+      '10005': {
         reviewsDetails: {
-          ratingsCount: 1576,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 24,
-            '2': 8,
-            '3': 126,
-            '4': 315,
-            '5': 1103,
-          },
-        },
-      },
-      '10612': {
-        reviewsDetails: {
-          ratingsCount: 4575,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 46,
-            '2': 92,
-            '3': 503,
-            '4': 1190,
-            '5': 2745,
-          },
-        },
-      },
-      '10613': {
-        reviewsDetails: {
-          ratingsCount: 15509,
+          ratingsCount: 2230,
           averageRating: 4.5,
           ratingsSplit: {
-            '1': 279,
-            '2': 341,
-            '3': 620,
-            '4': 4808,
-            '5': 9460,
+            '1': 40,
+            '2': 49,
+            '3': 89,
+            '4': 691,
+            '5': 1360,
           },
         },
       },
-      '28935': {
+      '18242': {
         reviewsDetails: {
-          ratingsCount: 1730,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 31,
-            '2': 38,
-            '3': 69,
-            '4': 536,
-            '5': 1055,
-          },
-        },
-      },
-    },
-  },
-  'www.theauschwitztours.com': {
-    collection: {
-      averageRating: 4.6,
-      ratingsCount: 26695,
-    },
-    tourGroups: {
-      '10427': {
-        reviewsDetails: {
-          ratingsCount: 22382,
-          averageRating: 4.6,
-          ratingsSplit: {
-            '1': 336,
-            '2': 112,
-            '3': 1791,
-            '4': 4476,
-            '5': 15667,
-          },
-        },
-      },
-      '14281': {
-        reviewsDetails: {
-          ratingsCount: 1488,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 9,
-            '2': 6,
-            '3': 19,
-            '4': 364,
-            '5': 1496,
-          },
-        },
-      },
-      '15406': {
-        reviewsDetails: {
-          ratingsCount: 8789,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 158,
-            '2': 193,
-            '3': 352,
-            '4': 2725,
-            '5': 5361,
-          },
-        },
-      },
-      '20489': {
-        reviewsDetails: {
-          ratingsCount: 937,
+          ratingsCount: 272,
           averageRating: 4.7,
           ratingsSplit: {
-            '1': 11,
-            '2': 7,
-            '3': 33,
-            '4': 183,
-            '5': 703,
+            '1': 3,
+            '2': 2,
+            '3': 10,
+            '4': 53,
+            '5': 204,
+          },
+        },
+      },
+      '21566': {
+        reviewsDetails: {
+          ratingsCount: 855,
+          averageRating: 4.2,
+          ratingsSplit: {
+            '1': 26,
+            '2': 17,
+            '3': 86,
+            '4': 299,
+            '5': 428,
+          },
+        },
+      },
+      '25594': {
+        reviewsDetails: {
+          ratingsCount: 960,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 17,
+            '2': 21,
+            '3': 38,
+            '4': 298,
+            '5': 586,
           },
         },
       },
     },
   },
-  'www.ticket-madrid.com.santiago-bernabeu': {
-    collection: {
-      averageRating: 4.4,
-      ratingsCount: 16640,
-    },
-    tourGroups: {
-      '3646': {
-        reviewsDetails: {
-          ratingsCount: 14311,
-          averageRating: 4.3,
-          ratingsSplit: {
-            '1': 429,
-            '2': 358,
-            '3': 1360,
-            '4': 4580,
-            '5': 7585,
-          },
-        },
-      },
-      '23095': {
-        reviewsDetails: {
-          ratingsCount: 7600,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 137,
-            '2': 167,
-            '3': 304,
-            '4': 2356,
-            '5': 4636,
-          },
-        },
-      },
-      '25255': {
-        reviewsDetails: {
-          ratingsCount: 7526,
-          averageRating: 4.4,
-          ratingsSplit: {
-            '1': 75,
-            '2': 151,
-            '3': 828,
-            '4': 1957,
-            '5': 4516,
-          },
-        },
-      },
-      '29283': {
-        reviewsDetails: {
-          ratingsCount: 124,
-          averageRating: 4.5,
-          ratingsSplit: {
-            '1': 2,
-            '2': 3,
-            '3': 5,
-            '4': 38,
-            '5': 76,
-          },
-        },
-      },
-    },
-  },
-  'www.tickets-liverpool.com.anfield-stadium': {
+  'sagradafamilia.barcelona-tickets.com.home': {
     collection: {
       averageRating: 4.7,
-      ratingsCount: 8988,
+      ratingsCount: 53674,
     },
     tourGroups: {
-      '14552': {
+      '9497': {
         reviewsDetails: {
-          ratingsCount: 8337,
-          averageRating: 4.9,
-          ratingsSplit: {
-            '1': 50,
-            '2': 17,
-            '3': 100,
-            '4': 667,
-            '5': 7503,
-          },
-        },
-      },
-      '25414': {
-        reviewsDetails: {
-          ratingsCount: 11,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 0,
-            '2': 0,
-            '3': 0,
-            '4': 2,
-            '5': 9,
-          },
-        },
-      },
-      '25965': {
-        reviewsDetails: {
-          ratingsCount: 160,
-          averageRating: 4.8,
-          ratingsSplit: {
-            '1': 1,
-            '2': 0,
-            '3': 2,
-            '4': 31,
-            '5': 126,
-          },
-        },
-      },
-      '28986': {
-        reviewsDetails: {
-          ratingsCount: 15,
+          ratingsCount: 2576,
           averageRating: 4.7,
           ratingsSplit: {
-            '1': 0,
-            '2': 0,
-            '3': 1,
-            '4': 3,
-            '5': 11,
+            '1': 31,
+            '2': 21,
+            '3': 90,
+            '4': 502,
+            '5': 1932,
+          },
+        },
+      },
+      '10117': {
+        reviewsDetails: {
+          ratingsCount: 6077,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 36,
+            '2': 12,
+            '3': 73,
+            '4': 486,
+            '5': 5469,
+          },
+        },
+      },
+      '17925': {
+        reviewsDetails: {
+          ratingsCount: 8981,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 54,
+            '2': 18,
+            '3': 108,
+            '4': 718,
+            '5': 8083,
+          },
+        },
+      },
+      '18350': {
+        reviewsDetails: {
+          ratingsCount: 33837,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 508,
+            '2': 169,
+            '3': 2707,
+            '4': 6767,
+            '5': 23686,
           },
         },
       },
@@ -1204,6 +596,940 @@ export const CALCULATED_RATINGS: Record<string, TCalculatedRatings> = {
             '3': 274,
             '4': 1527,
             '5': 5873,
+          },
+        },
+      },
+    },
+  },
+  'www.thames-river-cruise.com': {
+    collection: {
+      averageRating: 4.4,
+      ratingsCount: 28318,
+    },
+    tourGroups: {
+      '2959': {
+        reviewsDetails: {
+          ratingsCount: 1576,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 24,
+            '2': 8,
+            '3': 126,
+            '4': 315,
+            '5': 1103,
+          },
+        },
+      },
+      '10612': {
+        reviewsDetails: {
+          ratingsCount: 4575,
+          averageRating: 4.4,
+          ratingsSplit: {
+            '1': 46,
+            '2': 92,
+            '3': 503,
+            '4': 1190,
+            '5': 2745,
+          },
+        },
+      },
+      '10613': {
+        reviewsDetails: {
+          ratingsCount: 15509,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 279,
+            '2': 341,
+            '3': 620,
+            '4': 4808,
+            '5': 9460,
+          },
+        },
+      },
+      '28935': {
+        reviewsDetails: {
+          ratingsCount: 1730,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 26,
+            '2': 9,
+            '3': 138,
+            '4': 346,
+            '5': 1211,
+          },
+        },
+      },
+    },
+  },
+  'www.ticket-madrid.com.santiago-bernabeu': {
+    collection: {
+      averageRating: 4.4,
+      ratingsCount: 16640,
+    },
+    tourGroups: {
+      '3646': {
+        reviewsDetails: {
+          ratingsCount: 14311,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 172,
+            '2': 114,
+            '3': 501,
+            '4': 2791,
+            '5': 10733,
+          },
+        },
+      },
+      '23095': {
+        reviewsDetails: {
+          ratingsCount: 7600,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 137,
+            '2': 167,
+            '3': 304,
+            '4': 2356,
+            '5': 4636,
+          },
+        },
+      },
+      '25255': {
+        reviewsDetails: {
+          ratingsCount: 7526,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 113,
+            '2': 38,
+            '3': 602,
+            '4': 1505,
+            '5': 5268,
+          },
+        },
+      },
+      '29283': {
+        reviewsDetails: {
+          ratingsCount: 124,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 2,
+            '2': 3,
+            '3': 5,
+            '4': 38,
+            '5': 76,
+          },
+        },
+      },
+    },
+  },
+  'www.milford-sound-cruises.co.nz': {
+    collection: {
+      averageRating: 4.7,
+      ratingsCount: 4352,
+    },
+    tourGroups: {
+      '18103': {
+        reviewsDetails: {
+          ratingsCount: 612,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 3,
+            '2': 2,
+            '3': 6,
+            '4': 118,
+            '5': 483,
+          },
+        },
+      },
+      '18125': {
+        reviewsDetails: {
+          ratingsCount: 516,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 3,
+            '2': 2,
+            '3': 5,
+            '4': 99,
+            '5': 408,
+          },
+        },
+      },
+      '23887': {
+        reviewsDetails: {
+          ratingsCount: 1250,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 15,
+            '2': 10,
+            '3': 44,
+            '4': 244,
+            '5': 938,
+          },
+        },
+      },
+      '26901': {
+        reviewsDetails: {
+          ratingsCount: 1180,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 6,
+            '2': 4,
+            '3': 12,
+            '4': 227,
+            '5': 932,
+          },
+        },
+      },
+    },
+  },
+  'www.rottnestislandtours.com': {
+    collection: {
+      averageRating: 4.7,
+      ratingsCount: 4138,
+    },
+    tourGroups: {
+      '22490': {
+        reviewsDetails: {
+          ratingsCount: 876,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 11,
+            '2': 7,
+            '3': 31,
+            '4': 171,
+            '5': 657,
+          },
+        },
+      },
+      '22492': {
+        reviewsDetails: {
+          ratingsCount: 574,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 3,
+            '2': 2,
+            '3': 6,
+            '4': 110,
+            '5': 453,
+          },
+        },
+      },
+      '24683': {
+        reviewsDetails: {
+          ratingsCount: 1044,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 13,
+            '2': 8,
+            '3': 37,
+            '4': 204,
+            '5': 783,
+          },
+        },
+      },
+      '32259': {
+        reviewsDetails: {
+          ratingsCount: 1068,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 13,
+            '2': 9,
+            '3': 37,
+            '4': 208,
+            '5': 801,
+          },
+        },
+      },
+    },
+  },
+  'www.phillip-island-tours.com.phillip-island-penguin-parade-tickets': {
+    collection: {
+      averageRating: 4.4,
+      ratingsCount: 9982,
+    },
+    tourGroups: {
+      '10549': {
+        reviewsDetails: {
+          ratingsCount: 1898,
+          averageRating: 4.4,
+          ratingsSplit: {
+            '1': 19,
+            '2': 38,
+            '3': 209,
+            '4': 493,
+            '5': 1139,
+          },
+        },
+      },
+      '13942': {
+        reviewsDetails: {
+          ratingsCount: 2521,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 45,
+            '2': 55,
+            '3': 101,
+            '4': 782,
+            '5': 1538,
+          },
+        },
+      },
+      '24243': {
+        reviewsDetails: {
+          ratingsCount: 209,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 1,
+            '2': 0,
+            '3': 3,
+            '4': 17,
+            '5': 188,
+          },
+        },
+      },
+      '26270': {
+        reviewsDetails: {
+          ratingsCount: 903,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 5,
+            '2': 3,
+            '3': 9,
+            '4': 173,
+            '5': 713,
+          },
+        },
+      },
+    },
+  },
+  'www.theauschwitztours.com': {
+    collection: {
+      averageRating: 4.6,
+      ratingsCount: 26695,
+    },
+    tourGroups: {
+      '10427': {
+        reviewsDetails: {
+          ratingsCount: 22382,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 269,
+            '2': 179,
+            '3': 783,
+            '4': 4364,
+            '5': 16787,
+          },
+        },
+      },
+      '14281': {
+        reviewsDetails: {
+          ratingsCount: 1488,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 9,
+            '2': 6,
+            '3': 19,
+            '4': 364,
+            '5': 1496,
+          },
+        },
+      },
+      '15406': {
+        reviewsDetails: {
+          ratingsCount: 8789,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 132,
+            '2': 44,
+            '3': 703,
+            '4': 1758,
+            '5': 6152,
+          },
+        },
+      },
+      '20489': {
+        reviewsDetails: {
+          ratingsCount: 937,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 11,
+            '2': 7,
+            '3': 33,
+            '4': 183,
+            '5': 703,
+          },
+        },
+      },
+    },
+  },
+  'www.dubai-tickets.co.desert-safari-dubai': {
+    collection: {
+      averageRating: 4.9,
+      ratingsCount: 84974,
+    },
+    tourGroups: {
+      '3941': {
+        reviewsDetails: {
+          ratingsCount: 2049,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 10,
+            '2': 6,
+            '3': 20,
+            '4': 393,
+            '5': 1619,
+          },
+        },
+      },
+      '25117': {
+        reviewsDetails: {
+          ratingsCount: 8427,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 51,
+            '2': 17,
+            '3': 101,
+            '4': 674,
+            '5': 7584,
+          },
+        },
+      },
+      '25198': {
+        reviewsDetails: {
+          ratingsCount: 21450,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 129,
+            '2': 43,
+            '3': 257,
+            '4': 1716,
+            '5': 19305,
+          },
+        },
+      },
+      '32028': {
+        reviewsDetails: {
+          ratingsCount: 14862,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 89,
+            '2': 30,
+            '3': 178,
+            '4': 1189,
+            '5': 13376,
+          },
+        },
+      },
+    },
+  },
+  'montserrat.barcelona-tickets.com': {
+    collection: {
+      averageRating: 4.8,
+      ratingsCount: 13373,
+    },
+    tourGroups: {
+      '3769': {
+        reviewsDetails: {
+          ratingsCount: 3157,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 16,
+            '2': 9,
+            '3': 32,
+            '4': 606,
+            '5': 2494,
+          },
+        },
+      },
+      '8805': {
+        reviewsDetails: {
+          ratingsCount: 3675,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 44,
+            '2': 29,
+            '3': 129,
+            '4': 717,
+            '5': 2756,
+          },
+        },
+      },
+      '17854': {
+        reviewsDetails: {
+          ratingsCount: 4192,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 63,
+            '2': 21,
+            '3': 335,
+            '4': 838,
+            '5': 2934,
+          },
+        },
+      },
+      '18732': {
+        reviewsDetails: {
+          ratingsCount: 3543,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 18,
+            '2': 11,
+            '3': 35,
+            '4': 680,
+            '5': 2799,
+          },
+        },
+      },
+    },
+  },
+  'www.mount-fuji.com': {
+    collection: {
+      averageRating: 4.8,
+      ratingsCount: 34826,
+    },
+    tourGroups: {
+      '19001': {
+        reviewsDetails: {
+          ratingsCount: 7860,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 39,
+            '2': 24,
+            '3': 79,
+            '4': 1509,
+            '5': 6209,
+          },
+        },
+      },
+      '29474': {
+        reviewsDetails: {
+          ratingsCount: 17030,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 85,
+            '2': 51,
+            '3': 170,
+            '4': 3270,
+            '5': 13454,
+          },
+        },
+      },
+      '32281': {
+        reviewsDetails: {
+          ratingsCount: 2480,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 30,
+            '2': 20,
+            '3': 87,
+            '4': 484,
+            '5': 1860,
+          },
+        },
+      },
+      '32990': {
+        reviewsDetails: {
+          ratingsCount: 6302,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 95,
+            '2': 32,
+            '3': 504,
+            '4': 1260,
+            '5': 4411,
+          },
+        },
+      },
+    },
+  },
+  'www.stonehenge-london-tours.com': {
+    collection: {
+      averageRating: 4.5,
+      ratingsCount: 20341,
+    },
+    tourGroups: {
+      '2926': {
+        reviewsDetails: {
+          ratingsCount: 3872,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 70,
+            '2': 85,
+            '3': 155,
+            '4': 1200,
+            '5': 2362,
+          },
+        },
+      },
+      '9641': {
+        reviewsDetails: {
+          ratingsCount: 2025,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 24,
+            '2': 16,
+            '3': 71,
+            '4': 395,
+            '5': 1519,
+          },
+        },
+      },
+      '10675': {
+        reviewsDetails: {
+          ratingsCount: 2093,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 31,
+            '2': 10,
+            '3': 167,
+            '4': 419,
+            '5': 1465,
+          },
+        },
+      },
+      '27283': {
+        reviewsDetails: {
+          ratingsCount: 1723,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 21,
+            '2': 14,
+            '3': 60,
+            '4': 336,
+            '5': 1292,
+          },
+        },
+      },
+    },
+  },
+  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours': {
+    collection: {
+      averageRating: 4.4,
+      ratingsCount: 55484,
+    },
+    tourGroups: {
+      '7677': {
+        reviewsDetails: {
+          ratingsCount: 1402,
+          averageRating: 4.5,
+          ratingsSplit: {
+            '1': 25,
+            '2': 31,
+            '3': 56,
+            '4': 435,
+            '5': 855,
+          },
+        },
+      },
+      '15088': {
+        reviewsDetails: {
+          ratingsCount: 238,
+          averageRating: 4.4,
+          ratingsSplit: {
+            '1': 2,
+            '2': 5,
+            '3': 26,
+            '4': 62,
+            '5': 143,
+          },
+        },
+      },
+    },
+  },
+  'www.pompeii-tickets.com.pompeii-volcano-mount-vesuvius-tickets': {
+    collection: {
+      averageRating: 4.6,
+      ratingsCount: 5396,
+    },
+    tourGroups: {
+      '15984': {
+        reviewsDetails: {
+          ratingsCount: 1302,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 7,
+            '2': 4,
+            '3': 13,
+            '4': 250,
+            '5': 1029,
+          },
+        },
+      },
+      '23345': {
+        reviewsDetails: {
+          ratingsCount: 284,
+          averageRating: 4.6,
+          ratingsSplit: {
+            '1': 4,
+            '2': 1,
+            '3': 23,
+            '4': 57,
+            '5': 198,
+          },
+        },
+      },
+      '24623': {
+        reviewsDetails: {
+          ratingsCount: 480,
+          averageRating: 4.2,
+          ratingsSplit: {
+            '1': 14,
+            '2': 10,
+            '3': 48,
+            '4': 168,
+            '5': 240,
+          },
+        },
+      },
+      '25914': {
+        reviewsDetails: {
+          ratingsCount: 396,
+          averageRating: 4.3,
+          ratingsSplit: {
+            '1': 12,
+            '2': 10,
+            '3': 38,
+            '4': 127,
+            '5': 210,
+          },
+        },
+      },
+      '29234': {
+        reviewsDetails: {
+          ratingsCount: 1464,
+          averageRating: 4.3,
+          ratingsSplit: {
+            '1': 44,
+            '2': 37,
+            '3': 139,
+            '4': 468,
+            '5': 776,
+          },
+        },
+      },
+    },
+  },
+  'www.chichen-itza-tickets.com': {
+    collection: {
+      averageRating: 4.7,
+      ratingsCount: 2194,
+    },
+    tourGroups: {
+      '12516': {
+        reviewsDetails: {
+          ratingsCount: 752,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 5,
+            '2': 2,
+            '3': 9,
+            '4': 60,
+            '5': 677,
+          },
+        },
+      },
+      '12517': {
+        reviewsDetails: {
+          ratingsCount: 713,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 4,
+            '2': 2,
+            '3': 7,
+            '4': 137,
+            '5': 563,
+          },
+        },
+      },
+      '14655': {
+        reviewsDetails: {
+          ratingsCount: 699,
+          averageRating: 4.4,
+          ratingsSplit: {
+            '1': 7,
+            '2': 14,
+            '3': 77,
+            '4': 182,
+            '5': 419,
+          },
+        },
+      },
+      '32432': {
+        reviewsDetails: {
+          ratingsCount: 753,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 5,
+            '2': 2,
+            '3': 9,
+            '4': 60,
+            '5': 678,
+          },
+        },
+      },
+    },
+  },
+  'rome-to-pompeii.pompeii-tickets.com': {
+    collection: {
+      averageRating: 4.7,
+      ratingsCount: 9777,
+    },
+    tourGroups: {
+      '8850': {
+        reviewsDetails: {
+          ratingsCount: 3744,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 45,
+            '2': 30,
+            '3': 131,
+            '4': 730,
+            '5': 2808,
+          },
+        },
+      },
+      '10955': {
+        reviewsDetails: {
+          ratingsCount: 2064,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 10,
+            '2': 6,
+            '3': 21,
+            '4': 396,
+            '5': 1631,
+          },
+        },
+      },
+      '16990': {
+        reviewsDetails: {
+          ratingsCount: 2560,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 13,
+            '2': 8,
+            '3': 26,
+            '4': 492,
+            '5': 2022,
+          },
+        },
+      },
+    },
+  },
+  'www.zakopane-tickets.com.zakopane-thermal-baths': {
+    collection: {
+      averageRating: 4.9,
+      ratingsCount: 5003,
+    },
+    tourGroups: {
+      '13625': {
+        reviewsDetails: {
+          ratingsCount: 420,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 3,
+            '2': 1,
+            '3': 5,
+            '4': 34,
+            '5': 378,
+          },
+        },
+      },
+      '14273': {
+        reviewsDetails: {
+          ratingsCount: 3880,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 19,
+            '2': 12,
+            '3': 39,
+            '4': 745,
+            '5': 3065,
+          },
+        },
+      },
+      '18875': {
+        reviewsDetails: {
+          ratingsCount: 448,
+          averageRating: 4.9,
+          ratingsSplit: {
+            '1': 3,
+            '2': 1,
+            '3': 5,
+            '4': 36,
+            '5': 403,
+          },
+        },
+      },
+      '32959': {
+        reviewsDetails: {
+          ratingsCount: 26,
+          averageRating: 5,
+          ratingsSplit: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 1,
+            '5': 25,
+          },
+        },
+      },
+    },
+  },
+  'www.niagara-tours.com.niagara-falls-tours.toronto-to-niagara-falls-tours': {
+    collection: {
+      averageRating: 4.8,
+      ratingsCount: 3582,
+    },
+    tourGroups: {
+      '26962': {
+        reviewsDetails: {
+          ratingsCount: 835,
+          averageRating: 4.7,
+          ratingsSplit: {
+            '1': 10,
+            '2': 7,
+            '3': 29,
+            '4': 163,
+            '5': 626,
+          },
+        },
+      },
+      '27624': {
+        reviewsDetails: {
+          ratingsCount: 1560,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 8,
+            '2': 5,
+            '3': 16,
+            '4': 300,
+            '5': 1232,
+          },
+        },
+      },
+      '32728': {
+        reviewsDetails: {
+          ratingsCount: 83,
+          averageRating: 5,
+          ratingsSplit: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 3,
+            '5': 80,
+          },
+        },
+      },
+      '32729': {
+        reviewsDetails: {
+          ratingsCount: 1104,
+          averageRating: 4.8,
+          ratingsSplit: {
+            '1': 6,
+            '2': 3,
+            '3': 11,
+            '4': 212,
+            '5': 872,
           },
         },
       },

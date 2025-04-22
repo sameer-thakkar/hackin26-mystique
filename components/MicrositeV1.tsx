@@ -103,6 +103,7 @@ import { DEFAULT_MAGIC_WAND, HOVERED_MAGIC_WAND } from 'assets/magicWand';
 import { AirportTransferLFAndStaticContent } from './AirportTransfers/LongFormAndStaticContent';
 import { PopulateAirportTransfersProducts } from './AirportTransfers/PopulateAirportTransferProducts';
 import CommonHeader from './common/Header';
+import PageLoader from './common/PageLoader';
 import { POIFilters } from './common/POIFilters';
 import { TPOIFilterType } from './common/POIFilters/constant';
 import { poiFiltersWrapperStyle } from './common/POIFilters/styles';
@@ -170,9 +171,7 @@ const CategoryHeader = dynamic(
 const Breadcrumbs = dynamic(
   () => import(/* webpackChunkName: "Breadcrumbs" */ 'components/Breadcrumbs')
 );
-const Loader = dynamic(
-  () => import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
-);
+
 const CatAndSubCatPage = dynamic(
   () =>
     import(
@@ -1167,6 +1166,7 @@ const MicrositeV1 = (props: any) => {
   const updateRatings = useCallback(async () => {
     try {
       const ratings = await fetchRatings({ uid });
+
       if (ratings?.data) {
         const { tourGroups, collection } = ratings.data as TCalculatedRatings;
 
@@ -1190,20 +1190,27 @@ const MicrositeV1 = (props: any) => {
             ...collection,
           }));
         }
+
+        // Set areRatingsUpdated to true after all updates
+        // moves the function call to the end of the event loop
+        setTimeout(() => {
+          setAreRatingsUpdated(true);
+        }, 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error fetching ratings:', error);
-    } finally {
+      // Even if there's an error, we should mark the ratings as updated
+      // to avoid getting stuck in loading state
       setAreRatingsUpdated(true);
     }
   }, [uid, collectionDetailsFromProps, scorpioData]);
 
   useEffect(() => {
-    if (isProductRatingsEnabled && !areRatingsUpdated) {
+    if (isProductRatingsEnabled && !isProductRatingsExperimentResolving) {
       updateRatings();
     }
-  }, [isProductRatingsEnabled, updateRatings, areRatingsUpdated]);
+  }, [isProductRatingsEnabled, isProductRatingsExperimentResolving]);
 
   if (
     (isLFCImpactExpEligible && isLFCExperimentResolving) ||
@@ -1216,10 +1223,10 @@ const MicrositeV1 = (props: any) => {
     (shouldRunDayTripsCollectionExperimentMWeb &&
       isDayTripsCollectionExperimentMWebResolving) ||
     (shouldRunProductRatingsExperiment &&
-      isProductRatingsExperimentResolving &&
-      !areRatingsUpdated)
+      (isProductRatingsExperimentResolving ||
+        (isProductRatingsEnabled && !areRatingsUpdated)))
   )
-    return <Loader />;
+    return <PageLoader showBouncingLoader={false} />;
 
   const heroProps = {
     banners: bannerImages?.reduce((accum: [], image: Record<string, any>) => {
