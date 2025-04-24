@@ -27,6 +27,7 @@ export const COOKIE = {
   CONSENT_POLICY_STATE: 'consent-state',
   HEADOUT_ATTRIBUTION_TRACKER: 'h-attr',
   LANG: 'content_lang',
+  MIXPANEL_REPLAY: 'mixpanel-replay',
 };
 
 export const TIME = {

@@ -231,10 +231,16 @@ const Page = (props: PageProps) => {
       isMixpanelSessionReplayEligible &&
       !isMixpanelSessionReplayExpResolving
     ) {
+      const isSessionRecorded =
+        mixpanelSessionReplayExpVariant === VARIANTS.TREATMENT ? 'Yes' : 'No';
       trackEvent({
         eventName: ANALYTICS_EVENTS.MIXPANEL_SESSION_REPLAY,
-        [ANALYTICS_PROPERTIES.IS_SESSION_RECORDED]:
-          mixpanelSessionReplayExpVariant === VARIANTS.TREATMENT ? 'Yes' : 'No',
+        [ANALYTICS_PROPERTIES.IS_SESSION_RECORDED]: isSessionRecorded,
+      });
+      Cookies.set(COOKIE.MIXPANEL_REPLAY, isSessionRecorded, {
+        domain: getNakedDomain(host),
+        path: '/',
+        expires: TIME.IN_YEARS,
       });
     }
   }, [
