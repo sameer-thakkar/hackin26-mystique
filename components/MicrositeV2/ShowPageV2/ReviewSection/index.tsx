@@ -195,7 +195,7 @@ const ReviewSection = ({
   } = reviewsDetails?.displayConfig ?? {};
 
   const showLoadMoreButton =
-    (isMobile || showFetchMoreButton) &&
+    ((isMobile && !reviewPageUrl) || showFetchMoreButton) &&
     numberOfReviewsToShow < maximumNumberOfReviews &&
     reviews.length >= DEFAULT_TOP_REVIEWS_COUNT &&
     exposeLoadMore;
