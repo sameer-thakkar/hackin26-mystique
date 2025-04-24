@@ -169,22 +169,19 @@ const PricingBar: FC<React.PropsWithChildren<PricingBarProps>> = ({
         </Conditional>
         <ButtonWrapper ref={widthRef}>
           {!isCombo ? (
-            <a
-              target="_self"
-              href={productBookingUrl}
-              rel="nofollow noreferrer"
-            >
-              <BookNowCta
-                clickHandler={() => {
-                  sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET);
-                }}
-                isMobile={true}
-                width={'100%'}
-                mbTheme={mbTheme}
-                isExperimentalCard={true}
-                ctaText={bookNowText}
-              />
-            </a>
+            <BookNowCta
+              clickHandler={() => {
+                sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET);
+              }}
+              isMobile={true}
+              width={'100%'}
+              mbTheme={mbTheme}
+              isExperimentalCard={true}
+              ctaText={bookNowText}
+              bookingUrl={productBookingUrl}
+              anchorTarget="_self"
+              anchorRel="nofollow noreferrer"
+            />
           ) : (
             <BookNowCta
               clickHandler={() =>

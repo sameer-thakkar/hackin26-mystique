@@ -237,20 +237,17 @@ const RouteDetails = (props: TRouteDetails) => {
                   />
                 </PriceContainer>
                 <CTABlock isSticky={false}>
-                  <a
-                    target={isMobile ? '_self' : '_blank'}
-                    href={bookingUrl}
-                    rel="nofollow noreferrer"
-                  >
-                    <BookNowCta
-                      clickHandler={() => {
-                        sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
-                      }}
-                      isMobile={isMobile}
-                      ctaText={strings.CHECK_AVAIL}
-                      showLoadingState={false}
-                    />
-                  </a>
+                  <BookNowCta
+                    clickHandler={() => {
+                      sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                    }}
+                    isMobile={isMobile}
+                    ctaText={strings.CHECK_AVAIL}
+                    showLoadingState={false}
+                    bookingUrl={bookingUrl}
+                    anchorTarget={isMobile ? '_self' : '_blank'}
+                    anchorRel="nofollow noreferrer"
+                  />
                 </CTABlock>
               </CTAContainer>
             </PopupPricingUnit>

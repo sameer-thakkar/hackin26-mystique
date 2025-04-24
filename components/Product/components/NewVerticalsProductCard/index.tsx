@@ -469,23 +469,21 @@ const NewVerticalsProductCard = (props: any) => {
                     $isTicketCard={isTicketCard}
                   >
                     <Conditional if={!isCombo}>
-                      <a
-                        target={isMobile ? '_self' : '_blank'}
-                        href={productBookingUrl}
-                      >
-                        <BookNowCta
-                          clickHandler={() => {
-                            sendBookNowEvent(
-                              PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
-                              false,
-                              descriptorsList
-                            );
-                          }}
-                          isMobile={isMobile}
-                          mbTheme={mbTheme}
-                          ctaText={strings.CHECK_AVAIL}
-                        />
-                      </a>
+                      <BookNowCta
+                        clickHandler={() => {
+                          sendBookNowEvent(
+                            PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD,
+                            false,
+                            descriptorsList
+                          );
+                        }}
+                        isMobile={isMobile}
+                        mbTheme={mbTheme}
+                        ctaText={strings.CHECK_AVAIL}
+                        bookingUrl={productBookingUrl}
+                        anchorTarget={isMobile ? '_self' : '_blank'}
+                        anchorRel="nofollow noreferrer"
+                      />
                     </Conditional>
                     <Conditional if={isCombo}>
                       <BookNowCta

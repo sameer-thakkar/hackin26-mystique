@@ -23,6 +23,9 @@ export type TBookNowCTAProps = {
   width?: string;
   showLoadingState?: boolean;
   isExperimentalCard?: boolean;
+  bookingUrl?: string;
+  anchorTarget?: string;
+  anchorRel?: string;
 };
 
 export type TProductDescriptors = {

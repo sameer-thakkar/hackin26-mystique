@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Button from '@headout/aer/src/atoms/Button';
 import { TBookNowCTAProps } from 'components/Product/interface';
 import { ButtonContainer } from 'components/Product/styles';
@@ -20,33 +21,42 @@ export const BookNowCta = ({
   isInSidePanel,
   showLoadingState = true,
   isExperimentalCard,
+  bookingUrl,
+  anchorTarget,
+  anchorRel,
 }: TBookNowCTAProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const handleButtonClick = () => {
-    if (isMobile) {
-      setIsLoading(true);
-      setTimeout(() => setIsLoading(false), BUTTON_LOADING_DURATION);
-    }
-    clickHandler?.();
-  };
+
   useHistoryTraversal({
     action: () => {
       setIsLoading(false);
     },
   });
 
-  const isLoadersExperiment =
-    useABTesting({
-      experimentId: 'BRAND_LOADER_EXP',
-    }).variant === VARIANTS.TREATMENT;
+  const { variant: isLoadersExperiment } = useABTesting({
+    experimentId: 'BRAND_LOADER_EXP',
+    customEligibilityCheckFn: () => Boolean(isMobile),
+  });
 
-  useBodyScrollLock(isLoadersExperiment && showLoadingState && isLoading);
+  const isLoadersExperimentEnabled = isLoadersExperiment === VARIANTS.TREATMENT;
 
-  if (isLoadersExperiment && showLoadingState && isLoading) {
-    return <SvgLoader />;
+  useBodyScrollLock(
+    isLoadersExperimentEnabled && showLoadingState && isLoading
+  );
+
+  const handleButtonClick = async () => {
+    if (isMobile) {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), BUTTON_LOADING_DURATION);
+    }
+    clickHandler?.();
+  };
+
+  if (isLoadersExperimentEnabled && showLoadingState && isLoading) {
+    return createPortal(<SvgLoader />, document.body);
   }
 
-  return (
+  const buttonComponent = (
     <ButtonContainer
       $isExperimentalCard={isExperimentalCard}
       $isInSidePanel={isInSidePanel}
@@ -66,4 +76,13 @@ export const BookNowCta = ({
       />
     </ButtonContainer>
   );
+
+  if (bookingUrl) {
+    return (
+      <a href={bookingUrl} target={anchorTarget} rel={anchorRel}>
+        {buttonComponent}
+      </a>
+    );
+  }
+  return buttonComponent;
 };

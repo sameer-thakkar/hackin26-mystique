@@ -1959,25 +1959,22 @@ const Product = (props: any) => {
                     $forceMobile={forceMobile}
                   >
                     <Conditional if={!isCombo}>
-                      <a
-                        target={originalIsMobile ? '_self' : '_blank'}
-                        href={productBookingUrl}
-                      >
-                        <BookNowCta
-                          clickHandler={() =>
-                            sendBookNowEvent(
-                              horizontalProductCard || verticalProductCard
-                                ? typeOfProductCard
-                                : expandContent
-                                ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
-                                : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
-                            )
-                          }
-                          isMobile={originalIsMobile}
-                          mbTheme={mbTheme}
-                          ctaText={getBookNowButtonText()}
-                        />
-                      </a>
+                      <BookNowCta
+                        clickHandler={() =>
+                          sendBookNowEvent(
+                            horizontalProductCard || verticalProductCard
+                              ? typeOfProductCard
+                              : expandContent
+                              ? PRODUCT_CARD_REVAMP.PLACEMENT.SWIPESHEET
+                              : PRODUCT_CARD_REVAMP.PLACEMENT.PRODUCT_CARD
+                          )
+                        }
+                        isMobile={originalIsMobile}
+                        mbTheme={mbTheme}
+                        ctaText={getBookNowButtonText()}
+                        bookingUrl={productBookingUrl}
+                        anchorTarget={originalIsMobile ? '_self' : '_blank'}
+                      />
                     </Conditional>
                     <Conditional if={isCombo}>
                       <BookNowCta
@@ -2431,20 +2428,17 @@ const Product = (props: any) => {
               $isTicketCard={isTicketCard}
             >
               <Conditional if={!isCombo}>
-                <a
-                  target={originalIsMobile ? '_self' : '_blank'}
-                  href={productBookingUrl}
-                  rel="nofollow noreferrer"
-                >
-                  <BookNowCta
-                    clickHandler={() => {
-                      sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
-                    }}
-                    isMobile={originalIsMobile}
-                    mbTheme={mbTheme}
-                    ctaText={getBookNowButtonText()}
-                  />
-                </a>
+                <BookNowCta
+                  clickHandler={() => {
+                    sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);
+                  }}
+                  isMobile={originalIsMobile}
+                  mbTheme={mbTheme}
+                  ctaText={getBookNowButtonText()}
+                  bookingUrl={productBookingUrl}
+                  anchorTarget={originalIsMobile ? '_self' : '_blank'}
+                  anchorRel="nofollow noreferrer"
+                />
               </Conditional>
               <Conditional if={isCombo}>
                 <BookNowCta

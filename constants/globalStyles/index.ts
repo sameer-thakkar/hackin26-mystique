@@ -4,6 +4,10 @@ import {
   floatHalf,
   floatReverse,
 } from 'components/HolidayTheming/ParticleEffect/styles';
+import {
+  rotateSvgPageLoaderDashOffset,
+  rotateSvgPageLoaderGroup,
+} from 'components/SvgPageLoader';
 
 export const globalStyles = defineGlobalStyles({
   '*': {
@@ -127,4 +131,6 @@ export const keyframeTokens = defineKeyframes({
   float,
   floatHalf,
   floatReverse,
+  rotateSvgPageLoaderGroup,
+  rotateSvgPageLoaderDashOffset,
 });
