@@ -469,7 +469,6 @@ export const Descriptor = styled.div`
   display: flex;
   gap: 0.375rem;
   flex: 0 0 auto;
-  width: max-content;
   margin-bottom: 1rem;
   ${expandFontToken(FONTS.UI_LABEL_LARGE)};
 
