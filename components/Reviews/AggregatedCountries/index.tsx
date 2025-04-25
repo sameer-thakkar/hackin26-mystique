@@ -11,12 +11,23 @@ import type { TAggregatedCountriesProps } from './interface';
 import {
   CountryFlagItem,
   CountryFlagsContainer,
+  EmptyReviewContainer,
   TopBorder,
   WrapperContainer,
 } from './style';
 import { getCountryFlagUrl } from './utils';
 
-const AggregatedCountries = ({
+const AggregatedCountries = (props: TAggregatedCountriesProps) => {
+  const { reviewCountries } = props;
+
+  if (reviewCountries.count <= 5) {
+    return <EmptyReviewContainer />;
+  }
+
+  return <CountriesReviewSummary {...props} />;
+};
+
+const CountriesReviewSummary = ({
   slideAnimation,
   reviewCountries,
   isMobile = false,

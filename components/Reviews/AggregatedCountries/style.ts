@@ -10,6 +10,10 @@ const LangHeights = css`
   }
 `;
 
+export const EmptyReviewContainer = styled.div`
+  height: 1rem;
+`;
+
 export const TopBorder = styled.hr`
   width: calc(100% + 3rem);
   border-top: 0.0625rem solid #e2e2e2;
