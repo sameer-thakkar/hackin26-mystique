@@ -53,7 +53,7 @@ const en = {
     'You will receive <strong>{0}%</strong> cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
   CHECK_AVAIL: 'Check availability',
-  SELECT_SEATS: 'Select Seats',
+  SELECT_SEATS: 'Select seats',
   CITY_PAGE: {
     BANNER_TITLE: 'Experience the best of',
     TOP_ATTRACTIONS: 'Top attractions',
