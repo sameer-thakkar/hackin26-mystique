@@ -309,7 +309,25 @@ const categoryTourListParserV1 = async ({
       }
     }
 
-    const orderedTours = allTours;
+    const tgidsWithHORanking = allTours
+      ?.map((tour) => tour.id)
+      ?.filter((tgid) => !finalRanking?.includes(tgid));
+    let orderedTGIDRanking: any;
+    if (finalRanking?.length && tgidsWithHORanking?.length) {
+      orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
+    } else if (tgidsWithHORanking?.length) {
+      orderedTGIDRanking = [...tgidsWithHORanking];
+    } else {
+      orderedTGIDRanking = [...finalRanking];
+    }
+
+    const orderedTours = allTours?.sort((tourA, tourB) => {
+      return (
+        orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
+        orderedTGIDRanking?.indexOf(parseInt(tourB.id))
+      );
+    });
+
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );
