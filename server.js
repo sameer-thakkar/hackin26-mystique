@@ -11,6 +11,25 @@ const TIME = {
   SECONDS_IN_HOUR: 60 * 60,
 };
 
+const SPECIAL_TLDS = ['co.uk'];
+const getMatchingNakedDomainPartsLength = (domain) => {
+  const [tld, ..._other] =
+    new RegExp('(' + SPECIAL_TLDS.join('|') + ')', 'g').exec(domain) || [];
+  const tldPartsLength = tld ? tld.split('.').length : 1;
+  return tldPartsLength + 1; // +1, to account for domain name.
+};
+
+const isNakedDomain = (host) => {
+  const parts = host.split('.');
+  return parts.length === getMatchingNakedDomainPartsLength(host);
+};
+
+const getQueryString = (query) =>
+  Object.entries(query)
+    .map(([key, val]) => `${key}=${val}`)
+    .join('&')
+    .trim();
+
 const removeScripts = (html) => {
   // Regular expression pattern to match script tags
   const scriptTagPattern = /<script[\s\S]*?>[\s\S\n]*?<\/script>/gi;
@@ -31,6 +50,23 @@ const getByteLength = (payload) =>
 
 app.prepare().then(() => {
   const server = express();
+
+  // Naked Domain to WWW Redirect.
+  server.use((req, res, next) => {
+    const { headers, query, path } = req;
+    const { host } = headers;
+    const isDev = !!query.mystique_uid;
+    const queryString = getQueryString(query);
+
+    if (!isDev && isNakedDomain(host)) {
+      const redirectURL = `https://www.${host}${path}${
+        queryString ? `?${queryString}` : ''
+      }`;
+      return res.redirect(301, redirectURL);
+    }
+
+    next();
+  });
 
   server.use((req, res, next) => {
     const originalEnd = res.end;

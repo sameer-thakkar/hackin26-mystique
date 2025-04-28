@@ -13,12 +13,7 @@ import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import { useGetAndSetExperiments } from 'hooks/useGetAndSetExperiments';
-import {
-  getLanguageFromPathname,
-  getNakedDomain,
-  isNakedDomain,
-  reflect,
-} from 'utils';
+import { getLanguageFromPathname, getNakedDomain, reflect } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { localServerSideIsMobileCheck } from 'utils/gen';
@@ -626,21 +621,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? !!query.previewSession
     : window.location.search.includes('previewSession');
   const { bi: biLink } = query;
-  // Naked Domain to WWW Redirect.
-  if (!isDev && req) {
-    if (isNakedDomain(host as string)) {
-      const redirectURL = `https://www.${host}${pathname}${
-        queryParamsString ? `?${queryParamsString}` : ''
-      }`;
-
-      return {
-        redirect: {
-          destination: redirectURL,
-          statusCode: 301,
-        },
-      };
-    }
-  }
 
   if (query?.amp) {
     const queryParams = new URLSearchParams(queryParamsString);
