@@ -6,7 +6,7 @@ export const HO_CONTACT_NUMBERS = [
   },
   {
     countryName: '🇫🇷  France',
-    phoneNumber: '+33644632370',
+    phoneNumber: '+33755537735',
     ctaType: 'France phone number',
   },
   {
@@ -16,7 +16,7 @@ export const HO_CONTACT_NUMBERS = [
   },
   {
     countryName: '🇪🇸  Spain',
-    phoneNumber: '+34518890338',
+    phoneNumber: '+34931227339',
     ctaType: 'Spain phone number',
   },
   {
@@ -43,5 +43,15 @@ export const HO_CONTACT_NUMBERS = [
     countryName: '🇵🇱  Poland',
     phoneNumber: '+48729087896',
     ctaType: 'Poland phone number',
+  },
+  {
+    countryName: '🇮🇹  Italy',
+    phoneNumber: '+39 02 8689 1704',
+    ctaType: 'Italy phone number',
+  },
+  {
+    countryName: '🇵🇹  Portugal',
+    phoneNumber: '+351300057144',
+    ctaType: 'Portugal phone number',
   },
 ];
