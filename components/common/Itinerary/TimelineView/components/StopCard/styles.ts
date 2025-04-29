@@ -255,15 +255,18 @@ export const Description = styled.div<{
   .description-text {
     color: ${COLORS.GRAY.G2};
     z-index: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: ${({ $isOpen }) => ($isOpen ? 15 : 2)};
+    overflow: hidden;
+    ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+    color: ${COLORS.GRAY.G3};
+    transition: color 0.3s;
 
-    p {
-      display: -webkit-box;
-      -webkit-line-clamp: ${({ $isOpen }) => ($isOpen ? 7 : 1)};
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+    * {
       color: ${COLORS.GRAY.G3};
-      transition: color 0.3s;
+      ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+      list-style: 'inside';
     }
   }
 
