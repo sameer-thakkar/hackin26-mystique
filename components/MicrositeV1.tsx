@@ -414,7 +414,7 @@ const MicrositeV1 = (props: any) => {
     variant: similarityBasedRankingExperimentVariant,
   } = useABTesting({
     experimentId: 'SIMILARITY_BASED_RANKING_EXPERIMENT',
-    noTrack: false,
+    noTrack: true,
     customEligibilityCheckFn: () => {
       return RANKING_EXPERIMENT_UUIDS.includes(uid);
     },
