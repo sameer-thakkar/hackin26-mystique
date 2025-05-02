@@ -2,7 +2,7 @@
 // We're not installing all packages on the Github workflow to save on some precious build minutes
 
 module.exports = {
-  branches: ['master'],
+  branches: ['main'],
   plugins: [
     [
       '@semantic-release/commit-analyzer',

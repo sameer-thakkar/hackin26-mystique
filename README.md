@@ -172,4 +172,4 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
     - `DO NOT MERGE` - for PRs that are ready for review but should not be merged yet
     - `QA Pending` / `QA Approved` - for PRs that are going through QA / have been approved by QA respectively
 
-  - Squash and merge to `master` and create a new release. [Here's a Notion doc on how we make releases.](https://www.notion.so/headouthub/How-do-I-make-a-release-ebbc384f4d1840e59fd674bf8277172c#8114c53a14a245ea9d0d75f305328f3f)
+  - Squash and merge to `main` and create a new release. [Here's a Notion doc on how we make releases.](https://www.notion.so/headouthub/How-do-I-make-a-release-ebbc384f4d1840e59fd674bf8277172c#8114c53a14a245ea9d0d75f305328f3f)
