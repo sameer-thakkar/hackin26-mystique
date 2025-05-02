@@ -16,7 +16,7 @@ export const Container = styled.div`
   background: linear-gradient(
       180deg,
       rgba(233, 238, 255, 0) 0%,
-      rgba(235, 218, 255, 0.5) 100%
+      rgb(248, 246, 255) 100%
     ),
     #fff;
 

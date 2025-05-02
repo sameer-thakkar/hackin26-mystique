@@ -52,7 +52,7 @@ export const StyledReviewHeader = styled.div`
           height: 4px;
           width: 4px;
           border-radius: 50px;
-          background: #f0f0f0;
+          background: ${COLORS.GRAY.G3};
         }
       }
     }

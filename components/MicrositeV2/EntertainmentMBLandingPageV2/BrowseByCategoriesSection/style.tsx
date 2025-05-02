@@ -95,10 +95,10 @@ export const CategoryWrapper = styled.div<{
      padding: 0.38rem 0.75rem 0.38rem 0.5rem;
      margin: 0 0 0 0.75rem;
      
-     &:first-of-type {
+     &:first-child {
        margin-left: 1.5rem;
      }
-     &:last-of-type {
+     &:last-child {
        margin-right: 1.5rem;
      }
      .icon {
