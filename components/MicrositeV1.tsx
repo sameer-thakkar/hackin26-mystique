@@ -126,12 +126,6 @@ const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
-const CollectionCarousel = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "CollectionCarousel" */ 'components/slices/CollectionCarousel'
-    )
-);
 
 const ResponsiveSelector: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
@@ -1010,16 +1004,14 @@ const MicrositeV1 = (props: any) => {
       {...qnaExperimentData}
       // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
       poiCollectionsSection={
-        isPOIFiltersEnabled ? (
-          <LazyComponent>
-            <POICollectionsSection
-              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
-              isMobile={isMobile}
-              primaryCity={primaryCity}
-              taggedCity={taggedCity}
-            />
-          </LazyComponent>
-        ) : null
+        <LazyComponent>
+          <POICollectionsSection
+            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+            isMobile={isMobile}
+            primaryCity={primaryCity}
+            taggedCity={taggedCity}
+          />
+        </LazyComponent>
       }
     />
   );
@@ -1580,22 +1572,6 @@ const MicrositeV1 = (props: any) => {
             qnaSections={qnaExperimentData.qnaSections}
             isMobile={isMobile}
             collectionId={qnaExperimentData.collectionId}
-          />
-        </Conditional>
-
-        <Conditional
-          if={
-            isA1orC1MB(taggedMbType) &&
-            !isDesertSafariMB &&
-            !isPOIFiltersEnabled &&
-            categoryHeaderMenu.CITY_ATTRACTIONS
-          }
-        >
-          <CollectionCarousel
-            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
-            isMobile={isMobile}
-            primaryCity={primaryCity}
-            taggedCity={taggedCity}
           />
         </Conditional>
 
