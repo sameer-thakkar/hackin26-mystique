@@ -111,7 +111,6 @@ import {
   filterToursByPOIFilter,
   getAvailablePOIFilterTypes,
 } from './common/POIFilters/utils';
-import { getFilteredTgids } from './DayTripsCollection/utils';
 import DesktopBannerV2 from './MicrositeV2/DesktopBannerV2';
 import EntertainmentHeader from './MicrositeV2/Header';
 import MobileBannerV2 from './MicrositeV2/MobileBannerV2';
@@ -176,13 +175,6 @@ const CatAndSubCatPage = dynamic(
   () =>
     import(
       /* webpackChunkName: "CatAndSubCatPage" */ 'components/CatAndSubCatPage'
-    )
-);
-
-const DayTripsCollectionPage = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "DayTripsCollectionPage" */ 'components/DayTripsCollection'
     )
 );
 
@@ -255,8 +247,6 @@ const MicrositeV1 = (props: any) => {
     botReviewsByTGID,
     qnaSections,
     isRankingExperimentResolving,
-    bannerV3Data,
-    dayTripCollectionData,
     similarityBasedRankingExperimentControlTgids,
   } = props;
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -665,73 +655,10 @@ const MicrositeV1 = (props: any) => {
     }
   }, []);
 
-  const isDayTripCollectionPage = collectionDetails.type === 'DAY_TRIP';
-
-  const {
-    isEligible: shouldRunDayTripsCollectionExperimentDWeb,
-    variant: dayTripsCollectionExperimentDWebVariant,
-    isExperimentResolving: isDayTripsCollectionExperimentDWebResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_COLLECTION_DWEB',
-    customEligibilityCheckFn: () =>
-      !isMobile &&
-      isDayTripCollectionPage &&
-      DAY_TRIPS_COLLECTION_MBS.includes(uid),
-    additionalEventProps: () => {
-      const productCardIds = getFilteredTgids(dayTripCollectionData);
-      return {
-        [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: productCardIds.length,
-      };
-    },
-  });
-
-  const {
-    isEligible: shouldRunDayTripsCollectionExperimentMWeb,
-    variant: dayTripsCollectionExperimentMwebVariant,
-    isExperimentResolving: isDayTripsCollectionExperimentMWebResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_COLLECTION_MWEB',
-    customEligibilityCheckFn: () =>
-      isMobile &&
-      isDayTripCollectionPage &&
-      DAY_TRIPS_COLLECTION_MBS.includes(uid),
-    additionalEventProps: () => {
-      const productCardIds = getFilteredTgids(dayTripCollectionData);
-      return {
-        [ANALYTICS_PROPERTIES.NUMBER_OF_PRODUCTS]: productCardIds.length,
-      };
-    },
-  });
-
-  const revampedDayTripsCollectionDweb =
-    shouldRunDayTripsCollectionExperimentDWeb &&
-    dayTripsCollectionExperimentDWebVariant === VARIANTS.TREATMENT &&
-    isDayTripCollectionPage;
-
-  const revampedDayTripsCollectionMweb =
-    shouldRunDayTripsCollectionExperimentMWeb &&
-    dayTripsCollectionExperimentMwebVariant === VARIANTS.TREATMENT &&
-    isDayTripCollectionPage;
-
-  const revampedDayTripsCollection =
-    revampedDayTripsCollectionDweb || revampedDayTripsCollectionMweb;
-
   useEffect(() => {
     if (!eventsReady) return;
-    if (
-      isDayTripCollectionPage &&
-      (isDayTripsCollectionExperimentDWebResolving ||
-        isDayTripsCollectionExperimentMWebResolving)
-    )
-      return;
     let numberOfProducts = orderedTgids?.length ?? 0;
     let tgids = orderedTgids;
-
-    if (revampedDayTripsCollection) {
-      const productCardIds = getFilteredTgids(dayTripCollectionData);
-      tgids = productCardIds;
-      numberOfProducts = tgids?.length ?? 0;
-    }
 
     const renderedBaseLangPageTitle =
       renderShortCodes(baseLangPageTitle)?.join?.('');
@@ -765,9 +692,6 @@ const MicrositeV1 = (props: any) => {
         isSubCategoryPage: isSubCategoryMicrobrand,
         isCruises: showCruisesFormat,
       }),
-      ...(revampedDayTripsCollection
-        ? { [ANALYTICS_PROPERTIES.LAYOUT_TYPE]: 'Day Trips' }
-        : {}),
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: tgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
@@ -798,13 +722,7 @@ const MicrositeV1 = (props: any) => {
           )?.length,
       }),
     });
-  }, [
-    eventsReady,
-    isDayTripsCollectionExperimentDWebResolving,
-    isDayTripsCollectionExperimentMWebResolving,
-    revampedDayTripsCollection,
-    isDayTripCollectionPage,
-  ]);
+  }, [eventsReady]);
 
   const uncategorizedToursHeading = hasTours
     ? isCategorisedTours
@@ -1218,10 +1136,6 @@ const MicrositeV1 = (props: any) => {
       isCustomEnglishCTAExperimentResolving) ||
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
     (isPOIFiltersExpEligible && isPOIFiltersExpResolving) ||
-    (shouldRunDayTripsCollectionExperimentDWeb &&
-      isDayTripsCollectionExperimentDWebResolving) ||
-    (shouldRunDayTripsCollectionExperimentMWeb &&
-      isDayTripsCollectionExperimentMWebResolving) ||
     (shouldRunProductRatingsExperiment &&
       (isProductRatingsExperimentResolving ||
         (isProductRatingsEnabled && !areRatingsUpdated)))
@@ -1494,12 +1408,7 @@ const MicrositeV1 = (props: any) => {
         </Conditional>
 
         <Conditional
-          if={
-            showNewBanner &&
-            !isCatOrSubCatPage &&
-            !isEntertainmentBanner &&
-            !revampedDayTripsCollection
-          }
+          if={showNewBanner && !isCatOrSubCatPage && !isEntertainmentBanner}
         >
           <StaticBanner
             bannerVideo={bannerVideo}
@@ -1526,62 +1435,11 @@ const MicrositeV1 = (props: any) => {
             {...qnaExperimentData}
           />
         </Conditional>
-        <Conditional if={revampedDayTripsCollection}>
-          <DayTripsCollectionPage
-            collection={collectionDetails}
-            isMobile={isMobile}
-            primaryCity={primaryCity}
-            currency={currency}
-            lang={lang}
-            collectionReviews={collectionReviews}
-            banners={bannerV3Data}
-            categoryTourListData={categoryTourListData}
-            uncategorizedTours={finalUncategorizedTours}
-            scorpioData={scorpioData}
-            uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
-            uid={uid}
-            currentLanguage={currentLanguage}
-            bookNowText={bookNowText}
-            showCustomProductCardEnglishCTA={false} // explicitly passing false to avoid showing the custom product card english cta
-            readMoreText={readMoreText}
-            showLessText={showLessText}
-            productOffer={productOffer}
-            hasOffer={hasOffer}
-            togglePopup={onTogglePopup}
-            pageUrl={pageUrl}
-            host={host}
-            mbTheme={mbTheme}
-            instantCheckout={instantCheckout}
-            enableEarliestAvailability={enableEarliestAvailability}
-            bannerVideo={bannerVideo}
-            isCollectionMB={isCollectionMicrobrand}
-            productsLoading={productsLoading}
-            isPoiMwebCard={isPoiMwebCard}
-            isNonPoi={isNonPoiMB}
-            isAirportTransfersMB={isAirportTransfersMB}
-            isModifiedProductCard={!isMobile && !showCruisesFormat}
-            isTourListFiltered={isTourListFiltered}
-            showPopup={showPopup}
-            isHOHORevamp={showHohoRevamp}
-            showItineraries={showItineraries}
-            isCruisesRevamp={showCruisesFormat}
-            isNewVerticalsProductCard={showHohoRevamp || showCruisesFormat}
-            customBanner={customBanner?.primary}
-            baseLangCustomBanner={baseLangCustomBanner?.primary}
-            shouldRunHohoRevampExperiment={shouldRunHohoRevampExperiment}
-            isRankingExperimentResolving={isRankingExperimentResolving}
-            showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
-            showBoosters={isBoosterExpEligible}
-            micrositeData={micrositeData}
-            dayTripCollectionData={dayTripCollectionData}
-          />
-        </Conditional>
         <Conditional
           if={
             isA1orC1MB(taggedMbType) &&
             !isAirportTransfersMB &&
-            !showCruisesFormat &&
-            !revampedDayTripsCollection
+            !showCruisesFormat
           }
         >
           <div
@@ -1666,8 +1524,7 @@ const MicrositeV1 = (props: any) => {
             isToursAvailable &&
             !isCatOrSubCatPage &&
             !isAirportTransfersMB &&
-            !hideDtProductCards &&
-            !revampedDayTripsCollection
+            !hideDtProductCards
           }
         >
           {tourListSection}
@@ -1757,7 +1614,6 @@ const MicrositeV1 = (props: any) => {
                     isAirportTransfersMB={isAirportTransfersMB}
                     isCatAndSubCatPage={isCatOrSubCatPage}
                     collectionReviews={collectionReviews}
-                    isDayTrips={revampedDayTripsCollection}
                     catSubCatReviews={catSubCatReviews}
                     collectionDetails={collectionDetails}
                     categoryId={categoryId}

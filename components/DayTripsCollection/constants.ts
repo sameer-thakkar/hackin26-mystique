@@ -1,1 +1,0 @@
-export const MAX_FULL_WIDTH_PRODUCT_CARDS = 5;

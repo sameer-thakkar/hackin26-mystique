@@ -8,11 +8,9 @@ import ChevronDown from 'assets/chevronDown';
 const ScrollToTop = ({
   $isLttMonthOnMonthPage,
   $isHarryPotterPage,
-  $isDayTripsCollection,
 }: {
   $isLttMonthOnMonthPage: boolean;
   $isHarryPotterPage?: boolean;
-  $isDayTripsCollection?: boolean;
 }) => {
   const [showButton, setShowButton] = useState(false);
 
@@ -47,7 +45,6 @@ const ScrollToTop = ({
         onClick={() => handleScroll()}
         $isLttMonthOnMonthPage={$isLttMonthOnMonthPage}
         $isHarryPotterPage={$isHarryPotterPage}
-        $isDayTripsCollection={$isDayTripsCollection}
       >
         <ChevronDown />
       </StyledButton>

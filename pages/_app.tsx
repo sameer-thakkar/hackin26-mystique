@@ -86,7 +86,6 @@ type PageProps = {
   minPrice?: number;
   domainConfig?: Record<string, any>;
   countryCode?: string;
-  collectionDetails?: any;
 };
 
 interface IGetCurrencyCode {
@@ -327,9 +326,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
           <ScrollToTop
             $isHarryPotterPage={isHarryPotterPage}
             $isLttMonthOnMonthPage={isLttMonthOnMonthPage}
-            $isDayTripsCollection={
-              pageProps?.collectionDetails?.type === 'DAY_TRIP'
-            }
           />
           <Conditional if={!isLttMonthOnMonthPage}>
             <ZendeskChat

@@ -673,7 +673,6 @@ export const ANALYTICS_EVENTS = {
   DESCRIPTOR_CLICKED: 'Descriptor Clicked',
   EXPERIENCE_CARD_VIEWED: 'Experience Card Viewed',
   EXPERIENCE_PAX_UPDATED: 'Experience PAX Updated',
-  STICKY_ACTION_BUTTON_CLICKED: 'Sticky Action Button Clicked',
   MIXPANEL_SESSION_REPLAY: 'Mixpanel Session Replay',
   REVIEW_LOC: 'Translate Review Link Clicked',
   REVIEWS_CAROUSEL_SCROLLED: 'Reviews Carousel Scrolled',
@@ -1057,38 +1056,6 @@ export const REOPENING_CATEGORIES: number[] = [3159];
 
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 
-export const COLLECTION_PAGE = {
-  ABOUT_POI: 'About Poi',
-  WHY_VISIT: 'Why Visit',
-  HIGHLIGHTS: 'Highlights',
-  DID_YOU_KNOW: 'Did you know?',
-  PLAN_YOUR_VISIT: 'Plan Your Visit',
-  GETTING_THERE_TAB: 'Getting there',
-  ENTRANCES_TAB: 'Entrances',
-  TIMINGS_TAB: 'Timings',
-  AMENITIES_TAB: 'Amenities',
-  ACCESSIBILITY_TAB: 'Accessibility',
-  RESCTRICTED_ITEMS_TAB: 'Restricted Items',
-  DRESS_CODE_TAB: 'Dress code',
-  GUEST_GUIDELINES_TAB: 'Guest guidelines',
-  BUS_STOP: 'Bus stop',
-  METRO_STATION: 'Metro station',
-  TRAIN_STATION: 'Train station',
-  PARKING: 'Parking',
-  TRAM_STATION: 'Tram station',
-  ADDRESS: 'Address',
-  CURATED_EXPERIENCES: 'Curated Experiences',
-  WHY_DAY_TRIPS_WITH_HO: 'Why Day Trips with Headout',
-  OTHER_DESTINATIONS: 'Other Destinations',
-  REVIEWS: 'Reviews',
-  FLOATING_ACTION_BUTTON: 'Sticky Action Button',
-};
-
-export const LAYOUT_STYLE = {
-  FULL_WIDTH: 'Full Width',
-  GRID: 'Grid',
-};
-
 export const ANALYTICS_PROPERTIES = {
   DURATION: 'Duration',
   COMPONENT_NAME: 'Component Name',
@@ -1100,7 +1067,6 @@ export const ANALYTICS_PROPERTIES = {
   VARIANT_ID: 'Variant ID',
   VARIANT_NAME: 'Variant Name',
   PAGE_TYPE: 'Page Type',
-  LAYOUT_TYPE: 'Layout Type',
   COLLECTION_ID: 'Collection ID',
   HEADER: 'Header',
   OPTION_TEXT: 'Option Text',
@@ -1241,8 +1207,6 @@ export const ANALYTICS_PROPERTIES = {
   IS_BANNER_SLICE_PRESENT: 'Is Banner Slice Present',
   BANNER_TYPE: 'Banner Type',
   PAX_COUNT: 'Pax Count',
-  LINK_TYPE: 'Link Type',
-  LAYOUT_STYLE: 'Layout Style',
   IS_SESSION_RECORDED: 'Is Session Recorded',
   IS_BEST_SELLING: 'Is Best Selling Present',
   IS_SELLING_FAST: 'Is Selling Fast Present',
@@ -1267,7 +1231,6 @@ export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
-  DAY_TRIPS_COLLECTION: 'Day Trips Collection Page',
   CONTENT_PAGE: 'Content Page',
   SHOW_PAGE: 'Show Page',
   VENUE_PAGE: 'Venue Page',
@@ -1724,11 +1687,6 @@ export const SETTINGS_TYPE = {
   SETTINGS_ONE: 'SettingsOne',
   SETTINGS_TWO: 'SettingsTwo',
   SETTINGS_THREE: 'SettingsThree',
-};
-
-export const COLLECTION_TYPE = {
-  POI: 'POI',
-  DAY_TRIPS: 'Day Trips',
 };
 
 export const GLOBAL_MB_ENABLED_DOMAINS = ['themeparkstickets.com'];

@@ -20,10 +20,8 @@ import {
 } from 'utils';
 import {
   constructHeaders,
-  fetchBannersV3,
   fetchCategoryReviews,
   fetchCollection,
-  fetchCollectionBasicInfo,
   fetchCollectionList,
   fetchCollectionReviews,
   fetchCurrencyList,
@@ -58,7 +56,6 @@ import { sendLog } from 'utils/logger';
 import { traceError } from 'utils/logutils';
 import categoryTourListParserV1 from 'utils/parsers/categoryTourListParserV1';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2';
-import { dayTripCollectionParser } from 'utils/parsers/dayTripCollectionParser';
 import monthOnMonthPageParser from 'utils/parsers/monthOnMonthPageParser';
 import { getCategoryData } from 'utils/prismicUtils/categoryUtils';
 import { getCityPageData } from 'utils/prismicUtils/cityUtils';
@@ -86,11 +83,9 @@ import {
   getValidUrlParams,
 } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
-import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
 import {
   AA_TEST_TGIDs,
   CATEGORY_IDS,
-  COOKIE,
   CUSTOM_TYPES,
   DESIGN,
   LANGUAGE_MAP,
@@ -237,8 +232,6 @@ export const getPageData = async ({
     );
     let bannerImageDataPromise: ReturnType<typeof fetchMediaResource> =
       Promise.resolve(undefined);
-    let bannerV3DataPromise: ReturnType<typeof fetchBannersV3> =
-      Promise.resolve(undefined);
     let collectionReviewsPromise = Promise.resolve(
       {} as ReturnType<typeof fetchCollectionReviews>
     );
@@ -262,14 +255,6 @@ export const getPageData = async ({
     let categoryTourListDataPromise = Promise.resolve(
       {} as ReturnType<typeof getCategoryData>
     );
-
-    let dayTripCollectionDataPromise = Promise.resolve(
-      {} as ReturnType<typeof dayTripCollectionParser>
-    );
-
-    let collectionBasicInfo = {} as Awaited<
-      ReturnType<typeof fetchCollectionBasicInfo>
-    >;
 
     const queryParams = getQueryparams(req);
 
@@ -809,31 +794,6 @@ export const getPageData = async ({
         hasCategoryTourListV1 ||
         Object.keys(categoryCarouselCF || {})?.length;
 
-      if (taggedCollection) {
-        collectionBasicInfo = await fetchCollectionBasicInfo({
-          collectionId: taggedCollection,
-        });
-      }
-
-      const isDayTripCollection =
-        taggedCollection &&
-        collectionBasicInfo?.type === 'DAY_TRIP' &&
-        DAY_TRIPS_COLLECTION_MBS.includes(uid);
-
-      if (isDayTripCollection) {
-        const primaryCityCurrency =
-          localisedCategoryTourListV1?.primary?.product_cards?.data?.city
-            ?.currency?.code;
-        dayTripCollectionDataPromise = dayTripCollectionParser({
-          collectionId: taggedCollection,
-          lang: lang ?? 'en',
-          hostname,
-          localizedStrings,
-          currency:
-            cookies?.[COOKIE.CURRENT_CURRENCY] || primaryCityCurrency || 'USD',
-          micrositeData: microsite,
-        });
-      }
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
           // same list but additional call
@@ -918,10 +878,7 @@ export const getPageData = async ({
       categoryId = CATEGORY_IDS?.[taggedCategory];
       subCatId = SUBCATEGORY_IDS?.[taggedSubCategory];
       collectionReviewsPromise = conditionalPromise(
-        taggedCollection &&
-          (isDayTripCollection ||
-            isReviewsV2Enabled ||
-            isExtendedReviewsV2Enabled),
+        taggedCollection && (isReviewsV2Enabled || isExtendedReviewsV2Enabled),
         () =>
           fetchCollectionReviews({
             collectionId: taggedCollection,
@@ -1022,15 +979,6 @@ export const getPageData = async ({
           }
         }
 
-        if (isDayTripCollection) {
-          bannerV3DataPromise = fetchBannersV3({
-            id: taggedCollection,
-            mediaResourceType: 'COLLECTION_BANNER',
-            platform: 'ALL',
-          }).then(({ result: { banners = [] } = {} }) => {
-            return banners;
-          });
-        }
         if (isCollectionMB(taggedMbType)) {
           bannerImageDataPromise = fetchMediaResource({
             resourceType: RESOURCE_TYPE.COLLECTION_VIDEO,
@@ -1132,7 +1080,6 @@ export const getPageData = async ({
         mbTheme,
         collectionDetails: {
           ...collectionDetails,
-          type: collectionBasicInfo?.type,
           id: taggedCollection,
         },
         ...(primaryCity && { primaryCity }),
@@ -1231,13 +1178,11 @@ export const getPageData = async ({
       currencyList,
       domainConfig,
       bannerImageData,
-      bannerV3Data,
       variantsData,
       routeDetails,
       collectionData,
       collectionList,
       categoryTourListData,
-      dayTripCollectionData,
       botReviewsByTGID,
     } = await labeledPromiseAllSettled([
       {
@@ -1245,7 +1190,6 @@ export const getPageData = async ({
         label: 'tourGroupAPIResponses',
       },
       { promise: bannerImageDataPromise, label: 'bannerImageData' },
-      { promise: bannerV3DataPromise, label: 'bannerV3Data' },
       { promise: breadcrumbsPromise, label: 'breadcrumbs' },
       { promise: catAndSubCatPageDataPromise, label: 'catAndSubCatPageData' },
       { promise: currencyListPromise, label: 'currencyList' },
@@ -1255,7 +1199,6 @@ export const getPageData = async ({
       { promise: collectionDataPromise, label: 'collectionData' },
       { promise: collectionListPromise, label: 'collectionList' },
       { promise: categoryTourListDataPromise, label: 'categoryTourListData' },
-      { promise: dayTripCollectionDataPromise, label: 'dayTripCollectionData' },
       { promise: botReviewsByTGIDPromise, label: 'botReviewsByTGID' },
     ] as const);
 
@@ -1655,7 +1598,6 @@ export const getPageData = async ({
       ...scorpioAllTourGroupData,
       collectionList,
       bannerImageData,
-      bannerV3Data,
       variantsData,
       routeDetails,
       ...(activeCurrency && { activeCurrency }),
@@ -1681,7 +1623,6 @@ export const getPageData = async ({
       categoryId,
       subCategoryId: subCatId,
       botReviewsByTGID: botReviewsByTGIDMap,
-      dayTripCollectionData,
     };
   } catch (error) {
     const { uid, lang } = getLangUID(req, query);
