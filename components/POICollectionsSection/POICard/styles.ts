@@ -132,7 +132,7 @@ export const cardImageStyles = css({
   zIndex: -1,
 
   '& img': {
-    objectFit: 'contain',
+    objectFit: 'cover',
     height: '100%',
     width: '100%',
   },
