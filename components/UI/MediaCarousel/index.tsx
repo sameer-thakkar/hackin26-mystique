@@ -165,6 +165,17 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
     }
   }, [isOnScreen, isVisibilityTracked]);
 
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.querySelector('body')?.classList.add('scroll-lock');
+    } else {
+      document.querySelector('body')?.classList.remove('scroll-lock');
+    }
+    return () => {
+      document.querySelector('body')?.classList.remove('scroll-lock');
+    };
+  }, [modalIsOpen]);
+
   const swiperParams: SwiperProps = {
     lazy: {
       enabled: true,

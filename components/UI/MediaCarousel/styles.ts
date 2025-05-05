@@ -214,7 +214,7 @@ export const modalStyles: Styles = {
     zIndex: 99,
   },
   content: {
-    height: 'auto',
+    height: 'fit-content',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

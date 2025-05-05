@@ -93,7 +93,6 @@ export const CategoryWrapper = styled.div<{
         : `
      width: min-content;
      padding: 0.38rem 0.75rem 0.38rem 0.5rem;
-     margin: 0 0 0 0.75rem;
      
      &:first-child {
        margin-left: 1.5rem;
@@ -181,6 +180,12 @@ const nonGridUiCategoriesSection = css`
     }
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .categories::after {
+    content: '';
+    display: block;
+    min-width: 0.75rem;
   }
 `;
 
