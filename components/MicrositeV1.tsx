@@ -1004,14 +1004,16 @@ const MicrositeV1 = (props: any) => {
       {...qnaExperimentData}
       // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
       poiCollectionsSection={
-        <LazyComponent>
-          <POICollectionsSection
-            allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
-            isMobile={isMobile}
-            primaryCity={primaryCity}
-            taggedCity={taggedCity}
-          />
-        </LazyComponent>
+        isPOIFiltersEnabled ? (
+          <LazyComponent>
+            <POICollectionsSection
+              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+              isMobile={isMobile}
+              primaryCity={primaryCity}
+              taggedCity={taggedCity}
+            />
+          </LazyComponent>
+        ) : null
       }
     />
   );
@@ -1573,6 +1575,24 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
             collectionId={qnaExperimentData.collectionId}
           />
+        </Conditional>
+
+        <Conditional
+          if={
+            isA1orC1MB(taggedMbType) &&
+            !isDesertSafariMB &&
+            !isPOIFiltersEnabled &&
+            categoryHeaderMenu.CITY_ATTRACTIONS
+          }
+        >
+          <LazyComponent>
+            <POICollectionsSection
+              allCollectionsData={categoryHeaderMenu.CITY_ATTRACTIONS}
+              isMobile={isMobile}
+              primaryCity={primaryCity}
+              taggedCity={taggedCity}
+            />
+          </LazyComponent>
         </Conditional>
 
         <Conditional if={longFormContentArr?.length}>
