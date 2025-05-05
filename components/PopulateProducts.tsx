@@ -676,7 +676,8 @@ const PopulateProducts: any = (props: any) => {
     onSlideChange: () => updateIndex(),
   };
   const showLoader =
-    productsLoading || isRankingExperimentResolving || isExpGroupLoading;
+    !isBot &&
+    (productsLoading || isRankingExperimentResolving || isExpGroupLoading);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
@@ -913,6 +914,7 @@ const PopulateProducts: any = (props: any) => {
 
         <CardLoadingSkeleton isMobile={isMobile} />
       </ProductContainer>
+
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional
