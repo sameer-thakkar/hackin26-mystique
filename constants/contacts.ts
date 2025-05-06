@@ -16,12 +16,12 @@ export const HO_CONTACT_NUMBERS = [
   },
   {
     countryName: '🇪🇸  Spain',
-    phoneNumber: '+34931227339',
+    phoneNumber: '+34 930 34 94 65',
     ctaType: 'Spain phone number',
   },
   {
     countryName: '🇦🇺  Australia',
-    phoneNumber: '+61 3 7066 3969',
+    phoneNumber: '+61 489 072 695',
     ctaType: 'Australia phone number',
   },
   {
@@ -31,7 +31,7 @@ export const HO_CONTACT_NUMBERS = [
   },
   {
     countryName: '🇸🇬  Singapore',
-    phoneNumber: '+6531580736',
+    phoneNumber: '+65 3135 1295',
     ctaType: 'Singapore phone number',
   },
   {
@@ -46,7 +46,7 @@ export const HO_CONTACT_NUMBERS = [
   },
   {
     countryName: '🇮🇹  Italy',
-    phoneNumber: '+39 02 8689 1704',
+    phoneNumber: '+39 02 4013 6894',
     ctaType: 'Italy phone number',
   },
   {
