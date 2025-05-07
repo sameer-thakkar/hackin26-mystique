@@ -1924,7 +1924,7 @@ export const fetchCityInfo = async ({
     endpoint: HeadoutEndpoints.CityInfo,
     id: cityCode,
     params: {
-      lang: language,
+      language,
     },
     hostname,
   });
