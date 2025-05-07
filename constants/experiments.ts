@@ -74,12 +74,12 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [DAY_TRIPS_VIDEO_DWEB]: new Experiment(
     DAY_TRIPS_VIDEO_DWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [80, 20]
   ),
   [DAY_TRIPS_VIDEO_MWEB]: new Experiment(
     DAY_TRIPS_VIDEO_MWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [80, 20]
   ),
   [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
     FLEXIBLE_CANCELLATION_EXPERIMENT,

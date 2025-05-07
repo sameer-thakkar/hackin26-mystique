@@ -68,23 +68,23 @@ export const DAY_TRIPS_COLLECTION_MBS_VIDEOS = {
   'www.stonehenge-london-tours.com': {
     // London to Stonehenge (CE ID: 212)
     thumbnail:
-      'https://cdn-imgix.headout.com/media/images/9c464e6052516e0ac74d6467e11250f6-london%20to%20stonehenge%20and%20bath%20tn%202.png',
+      'https://cdn-imgix.headout.com/media/images/1e27cbf01983ee430dddb679dce9d0a3-london%20to%20stonehenge%20tn1.png',
     previewVideo:
-      'https://headout-videos-hls.imgix.video/a736a11c8ad964465d0ed09900d1f811-London%20to%20Bath_preview_720p.mp4?fm=hls',
+      'https://headout-videos-hls.imgix.video/823ffffa08aaf514ac1cf15febcbeebb-London%20to%20Stonehenge_preview_720p.mp4?fm=hls',
     video720:
-      'https://headout-videos-hls.imgix.video/ae9e4ddd44abee3a994220c239ac50ed-London%20to%20Bath%20day%20trips_720p.mp4?fm=hls',
+      'https://headout-videos-hls.imgix.video/aa0cfc14ee9a023d244e32c6fcb71d22-London%20to%20Stonehenge%20Day%20trips_720p.mp4?fm=hls',
     video1080:
-      'https://headout-videos-hls.imgix.video/3971d5e8679325f0150e717ac2f9d429-London%20to%20Bath%20day%20trips_1080p.mp4?fm=hls',
+      'https://headout-videos-hls.imgix.video/5c675e96dda639c181c0435bfd148825-London%20to%20Stonehenge%20Day%20trips_1080p.mp4?fm=hls',
   },
   // 'London to Stonehenge + Bath (CE ID: 212)': {
   //   thumbnail:
-  //     'https://cdn-imgix.headout.com/media/images/1e27cbf01983ee430dddb679dce9d0a3-london%20to%20stonehenge%20tn1.png',
+  //     'https://cdn-imgix.headout.com/media/images/9c464e6052516e0ac74d6467e11250f6-london%20to%20stonehenge%20and%20bath%20tn%202.png',
   //   previewVideo:
-  //     'https://headout-videos-hls.imgix.video/823ffffa08aaf514ac1cf15febcbeebb-London%20to%20Stonehenge_preview_720p.mp4?fm=hls',
+  //     'https://headout-videos-hls.imgix.video/a736a11c8ad964465d0ed09900d1f811-London%20to%20Bath_preview_720p.mp4?fm=hls',
   //   video720:
-  //     'https://headout-videos-hls.imgix.video/aa0cfc14ee9a023d244e32c6fcb71d22-London%20to%20Stonehenge%20Day%20trips_720p.mp4?fm=hls',
+  //     'https://headout-videos-hls.imgix.video/ae9e4ddd44abee3a994220c239ac50ed-London%20to%20Bath%20day%20trips_720p.mp4?fm=hls',
   //   video1080:
-  //     'https://headout-videos-hls.imgix.video/5c675e96dda639c181c0435bfd148825-London%20to%20Stonehenge%20Day%20trips_1080p.mp4?fm=hls',
+  //     'https://headout-videos-hls.imgix.video/3971d5e8679325f0150e717ac2f9d429-London%20to%20Bath%20day%20trips_1080p.mp4?fm=hls',
   // },
 } as Record<
   string,
