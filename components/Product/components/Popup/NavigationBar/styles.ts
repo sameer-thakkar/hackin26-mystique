@@ -3,13 +3,17 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
+/* z-index is set to 3 
+  as descriptors-carousel-controls are on z-index 2
+  and controls should not be shown on top of the navigation bar
+*/
 export const NavigationParent = styled.div<{ $isVisible?: boolean }>`
   position: absolute;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
   width: 100%;
   top: 0;
-  z-index: 1;
+  z-index: 3;
   height: 4rem;
   width: 49.5rem;
   overflow: hidden;
