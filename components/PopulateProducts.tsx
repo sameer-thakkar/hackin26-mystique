@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -68,6 +69,36 @@ const TicketCard = dynamic(
 );
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
+
+const DayTripsVideoBannerDesktop = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DayTripsVideoBannerDesktop" */ './DayTripsVideoBannerDesktop'
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div style={{ height: '331px', width: '1200px', margin: 'auto' }}>
+        <Skeleton height={'100%'} width={'100%'} />
+      </div>
+    ),
+  }
+);
+
+const DayTripsVideoBannerMobile = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DayTripsVideoBannerMobile" */ './DayTripsVideoBannerMobile'
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div style={{ height: '300px', width: '100%' }}>
+        <Skeleton height={'100%'} width={'100%'} />
+      </div>
+    ),
+  }
 );
 
 const StyledProductsWrapper = styled.div<{
@@ -336,6 +367,8 @@ const PopulateProducts: any = (props: any) => {
     showLastMinFilters = false,
     poiCollectionsSection,
     activePOIFilter,
+    shouldShowDayTripsVideoBanner,
+    collectionDetails,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -981,6 +1014,40 @@ const PopulateProducts: any = (props: any) => {
                     </Conditional>
                     {getProductCardFromTourAndIndex(tour, index)}
                     <DropsBanner />
+                    <Conditional
+                      if={
+                        bannerIndex > index &&
+                        index == availableToursList.length - 1
+                      }
+                    >
+                      {RenderedCustomBanner}
+                    </Conditional>
+                  </>
+                );
+              }
+
+              /*
+               Render Day Trips Video banner after the second card only
+              */
+              if (index === 1 && shouldShowDayTripsVideoBanner) {
+                return (
+                  <>
+                    <Conditional if={bannerIndex === index}>
+                      {RenderedCustomBanner}
+                    </Conditional>
+                    {getProductCardFromTourAndIndex(tour, index)}
+                    <Conditional if={!isMobile}>
+                      <DayTripsVideoBannerDesktop
+                        uid={uid}
+                        collectionId={collectionDetails?.id}
+                      />
+                    </Conditional>
+                    <Conditional if={isMobile}>
+                      <DayTripsVideoBannerMobile
+                        uid={uid}
+                        collectionId={collectionDetails?.id}
+                      />
+                    </Conditional>
                     <Conditional
                       if={
                         bannerIndex > index &&

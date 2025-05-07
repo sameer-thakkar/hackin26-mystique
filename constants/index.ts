@@ -705,6 +705,10 @@ export const ANALYTICS_EVENTS = {
   REVIEW_FILTER_CLICKED: 'Review Filter Clicked',
   SORT_BY_POPUP_SHOWN: 'Sort By Popup Shown',
   HSID_SET_FAIL: 'HSID Set Failed',
+  DT_VIDEO_PLAYED: 'Video Played',
+  DT_VIDEO_VIEWED: 'Video Viewed',
+  DT_VIDEO_PLAYER_OPENED: 'Video Player Opened',
+  DT_VIDEO_PLAYER_CLOSED: 'Video Player Closed',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1226,6 +1230,8 @@ export const ANALYTICS_PROPERTIES = {
   QR_CODE_SHOWN: 'QR Code Shown',
   DOWNLOAD_CTA_SHOWN: 'Download CTA Shown',
   NAVIGATION_TYPE: 'Navigation Type',
+  PLAY_TYPE: 'Play Type',
+  VIEW_TYPE: 'View Type',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 

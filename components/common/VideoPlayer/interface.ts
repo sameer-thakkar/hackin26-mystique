@@ -1,3 +1,5 @@
+import type Plyr from 'plyr';
+
 export type TVideoPlayerProps = {
   videoUrl: string;
   videoTitle?: string;
@@ -6,5 +8,8 @@ export type TVideoPlayerProps = {
   showMuteControls?: boolean;
   playPauseThreshold?: number;
   tgid?: string | number;
-  onPlayerReady?: () => void;
+  onPlayerReady?: (plyr: Plyr) => void;
+  isHls?: boolean;
+  playerProps?: Plyr.Options;
+  playsinline?: boolean;
 };

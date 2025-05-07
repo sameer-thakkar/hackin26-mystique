@@ -28,6 +28,8 @@ const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
 const PRODUCT_RATINGS_EXPERIMENT = 'Product Ratings Experiment';
 const BRAND_LOADER_EXP = 'New Loader Experiment';
+const DAY_TRIPS_VIDEO_DWEB = 'Day Trips Video Experiment DWeb';
+const DAY_TRIPS_VIDEO_MWEB = 'Day Trips Video Experiment MWeb';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BRAND_LOADER_EXP,
@@ -66,6 +68,16 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   ),
   [DAY_TRIPS_LISTICLE]: new Experiment(
     DAY_TRIPS_LISTICLE,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
+  ),
+  [DAY_TRIPS_VIDEO_DWEB]: new Experiment(
+    DAY_TRIPS_VIDEO_DWEB,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
+  ),
+  [DAY_TRIPS_VIDEO_MWEB]: new Experiment(
+    DAY_TRIPS_VIDEO_MWEB,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
   ),

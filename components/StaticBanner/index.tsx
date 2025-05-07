@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
+import { DayTripsVideoPlayerSection } from 'components/DayTripsVideoPlayer/types';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import {
@@ -38,6 +40,7 @@ import { titleCase } from 'utils/stringUtils';
 import { appAtom } from 'store/atoms/app';
 import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
+import { DAY_TRIPS_COLLECTION_MBS_VIDEOS } from 'const/daytrips';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -56,6 +59,20 @@ const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
+const DayTripsVideoPlayer = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "DayTripsVideoPlayer" */ 'components/DayTripsVideoPlayer'
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div style={{ height: '300px', aspectRatio: '16/9' }}>
+        <Skeleton height={'100%'} width={'100%'} />
+      </div>
+    ),
+  }
 );
 
 interface Customer {
@@ -124,6 +141,8 @@ type StaticBannerProps = {
   collectionId?: number;
   reducedMwebMarginOnDisclaimer?: boolean;
   isAirportTransfersMB?: boolean;
+  isDayTrip?: boolean;
+  uid?: string;
 };
 
 type CollectionVideo = {
@@ -209,6 +228,8 @@ const StaticBanner = ({
   showQnaExperiment = false,
   reducedMwebMarginOnDisclaimer = false,
   isAirportTransfersMB = false,
+  isDayTrip = false,
+  uid,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
   const { language } = useRecoilValue(appAtom);
@@ -340,7 +361,7 @@ const StaticBanner = ({
           </Conditional>
         </MediaContainer>
       </Conditional>
-      <Container>
+      <Container $isDayTrip={isDayTrip}>
         <ContentContainer
           hasParentChip={displayParentChip}
           hasExtraInfo={hasExtraInfo}
@@ -482,7 +503,9 @@ const StaticBanner = ({
             $isNonPoi={showNonPoiDesign}
             $hideOnMobile={displayParentChip || hasExtraInfo}
           >
-            <Conditional if={!bannerVideo || showThumbnailInBanner}>
+            <Conditional
+              if={!isDayTrip && (!bannerVideo || showThumbnailInBanner)}
+            >
               <Image
                 url={bannerImage?.url}
                 width={WIDTH}
@@ -494,7 +517,9 @@ const StaticBanner = ({
                 loadHigherQualityImage={true}
               />
             </Conditional>
-            <Conditional if={!showThumbnailInBanner && bannerVideo}>
+            <Conditional
+              if={!isDayTrip && !showThumbnailInBanner && bannerVideo}
+            >
               <Video
                 url={bannerVideo!}
                 imageId={'banner-image'}
@@ -506,6 +531,24 @@ const StaticBanner = ({
                 videoPosition={VIDEO_POSITIONS.BANNER}
                 showPlayIcon={false}
                 showPauseIcon={false}
+              />
+            </Conditional>
+
+            <Conditional if={isDayTrip && !showThumbnailInBanner && uid}>
+              <DayTripsVideoPlayer
+                section={DayTripsVideoPlayerSection.BANNER}
+                previewVideoUrl={
+                  DAY_TRIPS_COLLECTION_MBS_VIDEOS[uid!]?.previewVideo
+                }
+                videoUrl={DAY_TRIPS_COLLECTION_MBS_VIDEOS[uid!]?.video1080}
+                thumbnailUrl={DAY_TRIPS_COLLECTION_MBS_VIDEOS[uid!]?.thumbnail}
+                playPauseOnHover
+                playPauseThreshold={0}
+                showPlayButton
+                showChatBubble
+                chatBubbleText={strings.DAY_TRIPS_BANNER.CHAT_BUBBLE_TEXT}
+                muted
+                collectionId={collectionDetails?.id}
               />
             </Conditional>
           </MediaContainer>

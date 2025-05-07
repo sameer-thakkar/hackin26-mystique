@@ -2219,6 +2219,15 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     ],
   },
   POWERED_BY: 'powered by',
+  DAY_TRIPS_BANNER: {
+    CHAT_BUBBLE_TEXT: 'See real guest experiences',
+    BANNER_TITLE: `What it's really like`,
+    BANNER_DESCRIPTION:
+      'Not just reviews — hear feedback from real guests, meet the guides, and see actual moments from the tour.',
+    BANNER_DESCRIPTION_SHORT:
+      'Not just reviews — Hear from real guests and guides. See what the trip is like.',
+    WATCH_VIDEO: 'Watch video',
+  },
 };
 
 export default en;

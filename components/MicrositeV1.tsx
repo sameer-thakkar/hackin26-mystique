@@ -953,6 +953,36 @@ const MicrositeV1 = (props: any) => {
 
   const showBoosters = isBoosterExpEligible || isPOIFiltersEnabled;
 
+  const {
+    isEligible: shouldRunDayTripsVideoExperimentDWeb,
+    variant: dayTripsVideoExperimentDWebVariant,
+    isExperimentResolving: isDayTripsVideoExperimentDWebResolving,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_VIDEO_DWEB',
+    customEligibilityCheckFn: () =>
+      !isMobile &&
+      currentLanguage === 'en' &&
+      DAY_TRIPS_COLLECTION_MBS.includes(uid),
+  });
+
+  const {
+    isEligible: shouldRunDayTripsVideoExperimentMWeb,
+    variant: dayTripsVideoExperimentMWebVariant,
+    isExperimentResolving: isDayTripsVideoExperimentMWebResolving,
+  } = useABTesting({
+    experimentId: 'DAY_TRIPS_VIDEO_MWEB',
+    customEligibilityCheckFn: () =>
+      isMobile &&
+      currentLanguage === 'en' &&
+      DAY_TRIPS_COLLECTION_MBS.includes(uid),
+  });
+
+  const isDayTripsVideoEnabled =
+    (shouldRunDayTripsVideoExperimentDWeb &&
+      dayTripsVideoExperimentDWebVariant === VARIANTS.TREATMENT) ||
+    (shouldRunDayTripsVideoExperimentMWeb &&
+      dayTripsVideoExperimentMWebVariant === VARIANTS.TREATMENT);
+
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -1001,6 +1031,8 @@ const MicrositeV1 = (props: any) => {
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
       activePOIFilter={activePOIFilter}
+      shouldShowDayTripsVideoBanner={isDayTripsVideoEnabled}
+      collectionDetails={collectionDetails}
       {...qnaExperimentData}
       // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
       poiCollectionsSection={
@@ -1131,8 +1163,13 @@ const MicrositeV1 = (props: any) => {
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
     (isPOIFiltersExpEligible && isPOIFiltersExpResolving) ||
     (shouldRunProductRatingsExperiment &&
-      (isProductRatingsExperimentResolving ||
-        (isProductRatingsEnabled && !areRatingsUpdated)))
+      isProductRatingsExperimentResolving &&
+      isProductRatingsEnabled &&
+      !areRatingsUpdated) ||
+    (shouldRunDayTripsVideoExperimentDWeb &&
+      isDayTripsVideoExperimentDWebResolving) ||
+    (shouldRunDayTripsVideoExperimentMWeb &&
+      isDayTripsVideoExperimentMWebResolving)
   )
     return <PageLoader showBouncingLoader={false} />;
 
@@ -1426,6 +1463,8 @@ const MicrositeV1 = (props: any) => {
             isCruisesRevamp={showCruisesFormat}
             reducedMwebMarginOnDisclaimer={isPOIFiltersEnabled}
             isAirportTransfersMB={isAirportTransfersMB}
+            isDayTrip={isDayTripsVideoEnabled}
+            uid={uid}
             {...qnaExperimentData}
           />
         </Conditional>

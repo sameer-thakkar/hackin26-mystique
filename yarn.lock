@@ -6629,6 +6629,11 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
+hls.js@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.6.2.tgz#02272bea644b5f61f71741256618d6b629ae7834"
+  integrity sha512-rx+pETSCJEDThm/JCm8CuadcAC410cVjb1XVXFNDKFuylaayHk1+tFxhkjvnMDAfqsJHxZXDAJ3Uc2d5xQyWlQ==
+
 hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"

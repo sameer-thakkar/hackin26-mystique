@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Hls from 'hls.js';
 import type Plyr from 'plyr';
 import { TVideoPlayerProps } from 'components/common/VideoPlayer/interface';
 import { TitleBar, VideoContainer } from 'components/common/VideoPlayer/styles';
@@ -18,13 +19,15 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
   showMuteControls = false,
   playPauseThreshold = 1,
   tgid,
+  isHls = false,
+  playerProps = {},
+  playsinline = false,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playerState, setPlayerState] = useState(-1);
   const [isSeeking, setIsSeeking] = useState(false);
   const [_, setHidePlayButton] = useState(false);
   const [isPlayerReady, setReady] = useState(false);
-
   const ref = useRef<HTMLVideoElement>(null);
   const playButtonRef = useRef<HTMLButtonElement>(null);
   const plyr = useRef<Plyr>();
@@ -53,26 +56,43 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
           controls[controls.length - 1],
         ];
 
-      const Plyr = await require('plyr');
-      const player: Plyr = new Plyr(ref.current, {
+      const plyrInitProps = {
         fullscreen: { fallback: false, iosNative: false },
         autoplay: true,
         muted: false,
         controls,
-      });
+        playsinline,
+        ...playerProps,
+      };
+
+      const Plyr = await require('plyr');
+      const player: Plyr = new Plyr(ref.current!, plyrInitProps);
+
       plyr.current = player;
       setReady(true);
 
-      player.source = {
-        type: 'video',
-        sources: [
-          {
-            src: videoUrl,
-          },
-        ],
-      };
+      // HLS support
+      if (isHls && Hls.isSupported()) {
+        const hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: true,
+          backBufferLength: 90,
+        });
 
-      onPlayerReady?.();
+        hls.loadSource(videoUrl);
+        hls.attachMedia(ref.current!);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          if (plyrInitProps.autoplay) player.play();
+        });
+      } else {
+        // Fallback for other types (MP4, etc.)
+        player.source = {
+          type: 'video',
+          sources: [{ src: videoUrl }],
+        };
+      }
+
+      onPlayerReady?.(plyr.current);
     };
 
     initialisePlyr();
@@ -204,7 +224,7 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
       )}
 
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video ref={ref} />
+      <video ref={ref} {...(playsinline ? { playsInline: true } : {})} />
     </VideoContainer>
   );
 };
