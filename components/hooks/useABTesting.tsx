@@ -44,7 +44,7 @@ const useABTesting = <T extends keyof typeof EXPERIMENT_NAMES>({
   else if (
     typeof experimentOverride === 'string' &&
     experimentOverride.substring(0, 3).toLowerCase() ===
-      experimentNameKey.substring(0, 3).toLowerCase()
+      experimentName?.substring(0, 3)?.toLowerCase()
     // Here we are comparing the first 3 letters of the experiment name to the override experiment query
   )
     experimentOverrideVariant = experimentOverride.substring(4);
