@@ -1303,12 +1303,12 @@
     styled-components "^5.3.5"
     tailwindcss "npm:@tailwindcss/postcss7-compat"
 
-"@headout/eevee@2.8.0":
-  version "2.8.0"
-  resolved "https://npm.pkg.github.com/download/@headout/eevee/2.8.0/0e551dec935c30ae77f4647834a97c0697678d97#0e551dec935c30ae77f4647834a97c0697678d97"
-  integrity sha512-bwZ7vvnRpZ6LXcjgkfGQOuzhAQuKY1iG1bpDyfK5vlsupbHdXBIELS+q72qpAitKm2WIkXwMhmMgK/1Jw2P1oQ==
+"@headout/eevee@2.14.1":
+  version "2.14.1"
+  resolved "https://npm.pkg.github.com/download/@headout/eevee/2.14.1/1da557dc1b3744789cc7c3f1e8cfac6062c119c7#1da557dc1b3744789cc7c3f1e8cfac6062c119c7"
+  integrity sha512-2rDdE3lzDfLG7c9zfWh17mN0TfyIRabNbUpETBN/ouT1V0rha8SjMKVuMiNNJ1Z0BFd2gn2d1LAr5LZK9cYPvA==
   dependencies:
-    "@headout/onix" "1.3.0"
+    "@headout/onix" "3.1.0"
     "@radix-ui/react-dropdown-menu" "^2.1.2"
 
 "@headout/espeon@2.1.0":
@@ -1330,10 +1330,10 @@
     react-scroll "^1.9.0"
     swiper "^11.1.12"
 
-"@headout/onix@1.3.0":
-  version "1.3.0"
-  resolved "https://npm.pkg.github.com/download/@headout/onix/1.3.0/bfdd01bd8bc17ba2ad64a4649fe4488fea366407#bfdd01bd8bc17ba2ad64a4649fe4488fea366407"
-  integrity sha512-nGA4JHV6SkTuHKqAirrjW7wTRVuiPB4D1PCAFqyPZZ+jW0g2uJzZFiVseSXCL0IVrveB11EeHYOz+FQHD6KTDw==
+"@headout/onix@3.1.0":
+  version "3.1.0"
+  resolved "https://npm.pkg.github.com/download/@headout/onix/3.1.0/cee185a0884035e8b05778b6b959cbc5dcbb84d9#cee185a0884035e8b05778b6b959cbc5dcbb84d9"
+  integrity sha512-AhEWBAy7Xj2ClhXXC/uRnUSeomy1r9hCtTeTpMjBsg76pHUZFsyfPV9+Vnj+VdK9sNbFhasTi7gQXqyA2RVAbw==
 
 "@headout/pixie@1.4.1":
   version "1.4.1"

@@ -1410,6 +1410,29 @@ const it = {
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Scopri più destinazioni a partire da {0}',
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: "Dettagli dell'azienda",
+    LEGAL_INFO: {
+      title: 'Informazioni legali',
+      ENTITY_NAME: "Nome dell'entità legale",
+      ADDRESS: 'Indirizzo di corrispondenza',
+      AUTH_REP: 'Rappresentanti ufficiali',
+      REG_NO: 'Numero Registro Imprese',
+      TIN: 'Codice fiscale (TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Note legali',
+      content:
+        'Tutta la corrispondenza legale deve essere indirizzata al nostro Ufficio Legale via e-mail o posta:',
+      EMAIL_ADD: 'Indirizzo email',
+      POSTAL_ADD: 'Indirizzo postale',
+    },
+    ODR: {
+      title: 'Risoluzione online controversie (ODR)',
+      content:
+        'Headout non è disposta né obbligata a partecipare a procedure di risoluzione controversie dinanzi a un collegio arbitrale dei consumatori. In conformità con la normativa UE, è possibile accedere alla piattaforma di risoluzione online controversie (ODR) della Commissione europea tramite questo link:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Informativa sulla privacy',
     lastUpdated: '31 marzo 2025',

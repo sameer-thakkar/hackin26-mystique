@@ -1373,6 +1373,29 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Ontdek meer bestemmingen vanuit {0}',
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Bedrijfsgegevens',
+    LEGAL_INFO: {
+      title: 'Juridische informatie',
+      ENTITY_NAME: 'Juridische entiteitsnaam',
+      ADDRESS: 'Correspondentieadres',
+      AUTH_REP: 'Bevoegde vertegenwoordigers',
+      REG_NO: 'Registratienummer',
+      TIN: 'Fiscaal identificatienummer (TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Juridische kennisgeving',
+      content:
+        'Alle juridische documenten moeten aan onze juridische afdeling worden bezorgd per e-mail of post:',
+      EMAIL_ADD: 'E-mailadres',
+      POSTAL_ADD: 'Adres',
+    },
+    ODR: {
+      title: 'Onlinegeschillenbeslechting (ODR)',
+      content:
+        'Headout is niet bereid of verplicht om deel te nemen aan geschillenbeslechtingsprocedures voor een consumenten-arbitragecommissie. In overeenstemming met de EU-regelgeving kunt u echter via de volgende link toegang krijgen tot het ODR-platform (Onlinegeschillenbeslechting) van de Europese Commissie:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Privacybeleid van Headout',
     lastUpdated: '31 maart 2025',

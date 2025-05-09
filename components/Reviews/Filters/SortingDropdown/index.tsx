@@ -7,6 +7,7 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
+import ChevronDown from 'assets/chevronDown';
 import CrossiconSvg from 'assets/crossiconSvg';
 import { RadioButton } from './RadioButton';
 import {
@@ -112,7 +113,7 @@ const SortingDropdown = ({
               text={getSortTypeLabel(selectedIndex)}
               state="default"
               size="small"
-              trailingIcon={<Icon name="ChevronDown" className={iconStyles} />}
+              trailingIcon={<Icon svg={ChevronDown} className={iconStyles} />}
               onClick={() => {
                 if (!open)
                   trackEvent({

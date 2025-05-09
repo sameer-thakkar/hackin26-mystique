@@ -1420,6 +1420,29 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Descubra mais destinos saindo de {0}',
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Dados da empresa',
+    LEGAL_INFO: {
+      title: 'Informações legais',
+      ENTITY_NAME: 'Razão social',
+      ADDRESS: 'Endereço postal',
+      AUTH_REP: 'Representante legal autorizados',
+      REG_NO: 'Número de registro da empresa',
+      TIN: 'Número de identificação fiscal (TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Aviso legal',
+      content:
+        'Toda correspondência jurídica deve ser encaminhada ao nosso Departamento Jurídico por e-mail ou correio:',
+      EMAIL_ADD: 'Endereço de e-mail',
+      POSTAL_ADD: 'Endereço postal',
+    },
+    ODR: {
+      title: 'Resolução de Litígios Online (RLO)',
+      content:
+        'A Headout não se dispõe nem é obrigada a participar de procedimentos de resolução de litígios perante um órgão de defesa dos consumidores. No entanto, conforme as regulamentações da União Europeia, você pode acessar a plataforma de Resolução de Litígios Online (RLO) da Comissão Europeia através do seguinte link:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Política de Privacidade',
     lastUpdated: '31 de março de 2025',

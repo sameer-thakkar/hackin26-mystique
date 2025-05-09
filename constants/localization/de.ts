@@ -1417,6 +1417,29 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Weitere Reiseziele ab {0}',
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Unternehmensdaten',
+    LEGAL_INFO: {
+      title: 'Impressum',
+      ENTITY_NAME: 'Rechtsträger',
+      ADDRESS: 'Korrespondenzanschrift',
+      AUTH_REP: 'Vertretungsberechtigte Personen',
+      REG_NO: 'Registernummer',
+      TIN: 'Steueridentifikationsnummer (TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Rechtliche Hinweise',
+      content:
+        'Alle rechtlichen Schreiben sind per E-Mail oder Post an unsere Rechtsabteilung zu richten:',
+      EMAIL_ADD: 'E-Mail-Adresse',
+      POSTAL_ADD: 'Postanschrift',
+    },
+    ODR: {
+      title: 'Online-Streitbeilegung (ODR)',
+      content:
+        'Headout ist weder bereit noch verpflichtet, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Gemäß den EU-Vorschriften können Sie jedoch über den folgenden Link auf die Plattform der Europäischen Kommission zur Online-Streitbeilegung (ODR) zugreifen:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Datenschutzerklärung von Headout',
     lastUpdated: '31. März 2025',

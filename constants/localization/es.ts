@@ -1472,6 +1472,29 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Otros destinos para visitar desde {0}',
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Datos de la empresa',
+    LEGAL_INFO: {
+      title: 'Información legal',
+      ENTITY_NAME: 'Nombre de la entidad jurídica',
+      ADDRESS: 'Dirección de correspondencia',
+      AUTH_REP: 'Representante autorizados',
+      REG_NO: 'N.º de registro de la empresa',
+      TIN: 'N.º de identificación fiscal',
+    },
+    LEGAL_NOTICE: {
+      title: 'Aviso legal',
+      content:
+        'La correspondencia jurídica debe dirigirse al departamento jurídico por correo electrónico o postal:',
+      EMAIL_ADD: 'Correo electrónico',
+      POSTAL_ADD: 'Dirección postal',
+    },
+    ODR: {
+      title: 'Resolución de litigios en línea',
+      content:
+        'Headout no está dispuesta ni obligada a participar en procedimientos de resolución de litigios ante una junta arbitral de consumo. No obstante, de acuerdo con la normativa de la UE, puede acceder a la plataforma de resolución de litigios en línea de la Comisión Europea a través del siguiente enlace:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Política de privacidad',
     lastUpdated: '31 de marzo de 2025',

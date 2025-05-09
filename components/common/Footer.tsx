@@ -279,7 +279,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                             rel="noopener"
                             target="_blank"
                           >
-                            {strings.FOOTER.ABOUT_US}
+                            {strings.FOOTER.COMPANY_DETAILS}
                           </a>
                         </FooterListItem>
                         <FooterListItem isLight={isLight}>

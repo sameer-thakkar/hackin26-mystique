@@ -1425,6 +1425,29 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     },
     NEAR_BY_DESTINATIONS_TITLE: "Découvrir d'autres destinations depuis {0}",
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: "Coordonnées de l'entreprise",
+    LEGAL_INFO: {
+      title: 'Informations juridiques',
+      ENTITY_NAME: "Nom de l'entité juridique",
+      ADDRESS: 'Adresse postale',
+      AUTH_REP: 'Représentant légaux',
+      REG_NO: "Numéro d'immatriculation de l'entreprise",
+      TIN: "Numéro d'identification fiscale (NIF)",
+    },
+    LEGAL_NOTICE: {
+      title: 'Mentions légales',
+      content:
+        'Toute correspondance juridique doit être adressée à notre service juridique par e-mail ou postal :',
+      EMAIL_ADD: 'Adresse électronique',
+      POSTAL_ADD: 'Adresse postale',
+    },
+    ODR: {
+      title: 'Règlement en ligne des litiges (RLL)',
+      content:
+        "Headout n'a ni la volonté ni l'obligation de participer à une procédure de résolution des litiges devant une commission d'arbitrage des consommateurs. Cependant, conformément à la réglementation européenne, vous pouvez accéder à la plateforme de règlement en ligne des litiges (RLL) de la Commission européenne via :",
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Politique de confidentialité de Headout',
     lastUpdated: '31 mars 2025',

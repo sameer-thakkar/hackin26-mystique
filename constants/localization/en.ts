@@ -1556,6 +1556,29 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       NOT_NOW: 'Not now',
     },
   },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Company details',
+    LEGAL_INFO: {
+      title: 'Legal information',
+      ENTITY_NAME: 'Legal entity name',
+      ADDRESS: 'Correspondence address',
+      AUTH_REP: 'Authorised representatives',
+      REG_NO: 'Company registration number',
+      TIN: 'Tax identification number(TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Legal notice',
+      content:
+        'All legal correspondence must be directed to our Legal Department via email or post:',
+      EMAIL_ADD: 'Email address',
+      POSTAL_ADD: 'Postal address',
+    },
+    ODR: {
+      title: 'Online Dispute Resolution (ODR)',
+      content:
+        'Headout is neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board. However, in accordance with EU regulations, you may access the European Commission’s Online Dispute Resolution (ODR) platform via the following link:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Privacy Policy',
     lastUpdated: '31st March 2025',

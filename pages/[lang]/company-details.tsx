@@ -3,14 +3,13 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import { ContentContainer } from 'components/UI/ContentContainer';
-import { TopHeading } from 'components/UI/Headings';
-import Paragraph from 'components/UI/Paragraph';
+import CompanyDetailsComponent from 'components/Legal/company-details/CompanyDetailsComponent';
 import { getHeadoutLanguagecode } from 'utils';
 import { traceError } from 'utils/logutils';
 import getLegalPageData from 'utils/prismicUtils/legalPages';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { DROPDOWN_ELEMENT } from 'const/index';
+import { strings } from 'const/strings';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -28,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const CompanyDetailsPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const { uid, CMSContent, lang, host, isDev } = props;
+  const { uid, CMSContent, lang, host, isDev, localizedStrings } = props;
   const {
     logoUrl,
     logoAltText,
@@ -36,6 +35,11 @@ const CompanyDetailsPage = (
     faviconUrl,
     commonFooter,
   } = CMSContent ?? {};
+
+  strings.setContent({
+    default: localizedStrings ?? {},
+  });
+
   const logoRedirectionUrl = getLogoRedirectionUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
@@ -101,27 +105,7 @@ const CompanyDetailsPage = (
         hideLangCurrencySelector={true}
         hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
       />
-      <ContentContainer>
-        <TopHeading h1>Company Details</TopHeading>
-        <Paragraph>
-          <b>Company Name:</b> <br />
-          Headout Inc.
-        </Paragraph>
-        <Paragraph>
-          <b>Mailing Address:</b>
-          <br /> 82 Nassau St #60351 New York, NY 10038
-        </Paragraph>
-        <Paragraph>
-          <b>Contact Information:</b> <br />
-          <a href="mailto:support@headout.com">support@headout.com</a>
-        </Paragraph>
-      </ContentContainer>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <CompanyDetailsComponent />
       <Footer
         currentLanguage={'en'}
         logoURL={logoUrl}
