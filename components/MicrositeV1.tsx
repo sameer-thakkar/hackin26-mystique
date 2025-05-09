@@ -25,6 +25,7 @@ import { BannerPlaceholder } from 'components/StaticBanner/styles';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import useABTesting from 'hooks/useABTesting';
+import { useIsSimilarityBasedRankingExperimentEnabled } from 'hooks/useIsSimilarityBasedRankingExperimentEnabled';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import {
@@ -90,7 +91,6 @@ import {
   PAGE_TYPES,
   PAGE_URL_STRUCTURE,
   QNA_EXP_UIDS,
-  RANKING_EXPERIMENT_UUIDS,
   RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT,
   SLICE_TYPES,
   TEMPLATES,
@@ -394,15 +394,9 @@ const MicrositeV1 = (props: any) => {
 
   const {
     isEligible: isEligibleForSimilarityBasedRankingExperiment,
-    isExperimentResolving: isSimilarityBasedRankingExperimentResolving,
+    isExpGroupLoading: isSimilarityBasedRankingExperimentResolving,
     variant: similarityBasedRankingExperimentVariant,
-  } = useABTesting({
-    experimentId: 'SIMILARITY_BASED_RANKING_EXPERIMENT',
-    noTrack: true,
-    customEligibilityCheckFn: () => {
-      return RANKING_EXPERIMENT_UUIDS.includes(uid);
-    },
-  });
+  } = useIsSimilarityBasedRankingExperimentEnabled({ uid });
 
   const isSimilarityBasedRankingExperimentTreatment =
     isEligibleForSimilarityBasedRankingExperiment &&

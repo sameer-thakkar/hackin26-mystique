@@ -18,7 +18,7 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import { useIsMBAaTestEnabled } from 'hooks/useIsMBAaTestEnabled';
+import { useIsSimilarityBasedRankingExperimentEnabled } from 'hooks/useIsSimilarityBasedRankingExperimentEnabled';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -375,7 +375,8 @@ const PopulateProducts: any = (props: any) => {
   const clientWidth = useWindowWidth();
   const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
 
-  const { isExpGroupLoading } = useIsMBAaTestEnabled();
+  const { isExpGroupLoading: isSimilarityBasedRankingExpGroupLoading } =
+    useIsSimilarityBasedRankingExperimentEnabled();
 
   const productsRef = useRef([]);
   productsRef.current = [];
@@ -710,7 +711,9 @@ const PopulateProducts: any = (props: any) => {
   };
   const showLoader =
     !isBot &&
-    (productsLoading || isRankingExperimentResolving || isExpGroupLoading);
+    (productsLoading ||
+      isRankingExperimentResolving ||
+      isSimilarityBasedRankingExpGroupLoading);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,

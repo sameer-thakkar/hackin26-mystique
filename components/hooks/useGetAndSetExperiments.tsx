@@ -13,7 +13,7 @@ export const useGetAndSetExperiments = () => {
       const expGroup = JSON.parse(expGroupCookies || '{}');
 
       set({
-        expGroup: typeof expGroup === 'string' ? JSON.parse(expGroup) : {},
+        expGroup,
         isExpGroupLoading: false,
       });
     } catch (e: unknown) {

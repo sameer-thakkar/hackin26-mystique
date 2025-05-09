@@ -22,12 +22,13 @@ const DAY_TRIPS_LISTICLE = 'Day Trips Listicle Experiment';
 const MIXPANEL_SESSION_REPLAY = 'Mixpanel Session Replay';
 const FLEXIBLE_CANCELLATION_EXPERIMENT = 'Cancellation Insurance v1';
 const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
-const MB_AA_TEST = 'mb_aa_test';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
 const PRODUCT_RATINGS_EXPERIMENT = 'Product Ratings Experiment';
 const BRAND_LOADER_EXP = 'New Loader Experiment';
+const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
+  'similarity_based_ranking_experiment';
 const DAY_TRIPS_VIDEO_DWEB = 'Day Trips Video Experiment DWeb';
 const DAY_TRIPS_VIDEO_MWEB = 'Day Trips Video Experiment MWeb';
 
@@ -42,13 +43,13 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LFC_IMPACT,
   LTD_LP_Experiment,
   LTT_CTA_COPY_EXPERIMENT,
-  MB_AA_TEST,
   MIXPANEL_SESSION_REPLAY,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
   PRODUCT_RATINGS_EXPERIMENT,
   SEATMAP_EXPERIMENT,
   SIMILARITY_BASED_RANKING_EXPERIMENT,
+  SIMILARITY_BASED_RANKING_EXPERIMENT_V2,
   SUBATTRACTIONS_EXPERIMENT,
   VIDEO_THUMBNAIL_IN_BANNER,
 };

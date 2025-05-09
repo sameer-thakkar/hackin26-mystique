@@ -84,7 +84,6 @@ import {
 } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 import {
-  AA_TEST_TGIDs,
   CATEGORY_IDS,
   CUSTOM_TYPES,
   DESIGN,
@@ -796,27 +795,6 @@ export const getPageData = async ({
 
       if (hasCategoryTourList && !isCatOrSubCatPage) {
         if (hasCategoryTourListV1) {
-          // same list but additional call
-          const { uid } = getLangUID(req, query);
-          const shouldMakeAdditionalCall = AA_TEST_TGIDs.includes(uid);
-
-          if (shouldMakeAdditionalCall) {
-            categoryTourListPromiseWithAATestEnabled = categoryTourListParserV1(
-              {
-                micrositeProductCardSliceWithData: localisedCategoryTourListV1,
-                currentMicrositeProductCardSliceWithData:
-                  currentPageCategoryTourListV1,
-                hostname,
-                lang: lang ?? 'en',
-                cookies,
-                localizedStrings,
-              }
-            );
-          } else {
-            // immediately resolve if MBs not in the provided list
-            Promise.resolve(categoryTourListPromiseWithAATestEnabled);
-          }
-
           categoryTourListPromise = categoryTourListParserV1({
             micrositeProductCardSliceWithData: localisedCategoryTourListV1,
             currentMicrositeProductCardSliceWithData:

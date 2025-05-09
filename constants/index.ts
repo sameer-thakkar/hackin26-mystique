@@ -2510,16 +2510,6 @@ export const UID_TO_COUNT_MAPPING = {
   'www.thevaticantickets.com': 1200,
 };
 
-export const AA_TEST_TGIDs = [
-  'www.theauschwitztours.com',
-  'www.alcazar-seville-tickets.com',
-  'www.oceanografictickets.com',
-  'www.hagia-sophia-tickets.com',
-  'www.wantelope-canyon-tours.com',
-  'www.pradomuseumtickets.com',
-  'www.doge-palace-tickets.com',
-];
-
 export const DUBAI_DESERT_SAFARI = 'www.desert-safari-dxb.com';
 
 export const TGIDS_WITH_CANCELLATION_INSURANCE = [
