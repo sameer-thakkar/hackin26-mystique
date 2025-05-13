@@ -1,7 +1,10 @@
 import * as Sentry from '@sentry/nextjs';
 import type { TCityInfo } from 'components/AirportTransfers/interface';
 import { fetchCityInfo } from 'utils/apiUtils';
-import { generatePromiseForCategoryTours } from 'utils/index';
+import {
+  generatePromiseForCategoryTours,
+  getHeadoutLanguagecode,
+} from 'utils/index';
 import { sendLog } from 'utils/logger';
 import { accumulatingCategoryAndItemsData } from 'utils/parser';
 import getProductData from '../utils';
@@ -76,7 +79,7 @@ export default async function categoryTourListParserV2({
 
   const cityData = await fetchCityInfo({
     cityCode: city,
-    language: lang,
+    language: getHeadoutLanguagecode(lang),
     hostname,
   });
 

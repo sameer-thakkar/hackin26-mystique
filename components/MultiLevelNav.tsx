@@ -177,7 +177,7 @@ const NestedMenu = styled.ul<{ preventVerticalOverflow: boolean }>`
     right: 100%;
   }
   &::-webkit-scrollbar {
-    width: 0;
+    width: 4px;
   }
   &::-webkit-scrollbar-track {
     border-radius: 8;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { Section } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import {
@@ -17,7 +16,6 @@ import Minus from 'assets/minus';
 import Plus from 'assets/plus';
 import {
   Container,
-  Cta,
   Heading,
   SpaceBlock,
   StyledMobilePassesByCardContainer,
@@ -123,13 +121,6 @@ const PassingBySubCard = ({
                   containerClassName="image-loader"
                 />
               )}
-              <Conditional if={!description && link}>
-                <Link href={link!} passHref legacyBehavior>
-                  <Cta>
-                    CTA copy <TailedArrowSVG />
-                  </Cta>
-                </Link>
-              </Conditional>
             </div>
           </Conditional>
           <Conditional if={description}>

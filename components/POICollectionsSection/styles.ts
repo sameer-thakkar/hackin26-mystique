@@ -6,6 +6,7 @@ export const collectionsSectionStyles = css({
   paddingX: 'space.24',
   position: 'relative',
   marginY: '-space.8',
+  overflow: 'hidden',
 
   '@media (min-width: 768px)': {
     paddingTop: '2.25rem',
