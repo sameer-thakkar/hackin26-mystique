@@ -1940,36 +1940,3 @@ export const fetchCityInfo = async ({
     });
   }
 };
-
-interface FetchRatingsProps extends CommonApiProps {
-  uid: string;
-}
-
-export const fetchRatings = async ({
-  uid,
-  cookies = {},
-}: FetchRatingsProps) => {
-  try {
-    if (!uid) {
-      sendLog({
-        level: LOG_LEVELS.ERROR,
-        message: `[fetchRatings] uid is required - ${uid}`,
-      });
-      return null;
-    }
-
-    const url = `/api/ratings?uid=${encodeURIComponent(uid)}`;
-    const headers = constructHeaders({ cookies });
-
-    const response = await fetch(url, { headers });
-
-    return await response.json();
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchRatings]', error);
-    sendLog({
-      err: error,
-    });
-    return null;
-  }
-};

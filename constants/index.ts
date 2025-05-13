@@ -2649,35 +2649,6 @@ export const RANKING_EXPERIMENT_TGIDS = [
   4012, 189, 325, 4973, 243, 220, 1456, 1455, 2862, 253, 4054,
 ];
 
-export const CALCULATED_RATINGS_KEYS = [
-  'disneyland.paristickets.com',
-  'keukenhof.tickets-amsterdam.com',
-  'notre-dame.tickets-paris.fr',
-  'www.seine-river-cruises.com',
-  'www.antelope-canyon-tours.com',
-  'www.tickets-liverpool.com.anfield-stadium',
-  'www.st-peters-basilica-tickets.com',
-  'www.hop-on-hop-off-tickets.com.singapore-bus-tours',
-  'sagradafamilia.barcelona-tickets.com.home',
-  'www.wieliczka-salt-mine-tours.com',
-  'www.thames-river-cruise.com',
-  'www.ticket-madrid.com.santiago-bernabeu',
-  'www.milford-sound-cruises.co.nz',
-  'www.rottnestislandtours.com',
-  'www.phillip-island-tours.com.phillip-island-penguin-parade-tickets',
-  'www.theauschwitztours.com',
-  'www.dubai-tickets.co.desert-safari-dubai',
-  'montserrat.barcelona-tickets.com',
-  'www.mount-fuji.com',
-  'www.stonehenge-london-tours.com',
-  'www.hop-on-hop-off-tickets.com.barcelona-bus-tours',
-  'www.pompeii-tickets.com.pompeii-volcano-mount-vesuvius-tickets',
-  'www.chichen-itza-tickets.com',
-  'rome-to-pompeii.pompeii-tickets.com',
-  'www.zakopane-tickets.com.zakopane-thermal-baths',
-  'www.niagara-tours.com.niagara-falls-tours.toronto-to-niagara-falls-tours',
-];
-
 export const CDN_IMGIX_BASE_SERVER = 'cdn-imgix.headout.com';
 
 export const GIF_LOADER_WHITE_BG_URL = `https://${CDN_IMGIX_BASE_SERVER}/assets/gif/headoutGifLoaderWhiteBg.gif`;

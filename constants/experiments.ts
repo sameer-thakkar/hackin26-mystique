@@ -25,7 +25,6 @@ const POI_FILTERS_EXPERIMENT = 'POI Filters & Boosters Experiment';
 const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
-const PRODUCT_RATINGS_EXPERIMENT = 'Product Ratings Experiment';
 const BRAND_LOADER_EXP = 'New Loader Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
@@ -46,7 +45,6 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   MIXPANEL_SESSION_REPLAY,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
-  PRODUCT_RATINGS_EXPERIMENT,
   SEATMAP_EXPERIMENT,
   SIMILARITY_BASED_RANKING_EXPERIMENT,
   SIMILARITY_BASED_RANKING_EXPERIMENT_V2,
@@ -123,11 +121,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     PRODUCT_CARD_VIDEO,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
-  ),
-  [PRODUCT_RATINGS_EXPERIMENT]: new Experiment(
-    PRODUCT_RATINGS_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
   ),
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,
