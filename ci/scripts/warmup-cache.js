@@ -45,13 +45,15 @@ const warmupCache = async () => {
         const url = `https://assets.${
           process.env.APP_ENV === 'test' ? 'test-' : ''
         }headout.com/mystique/${assetPath}`;
-        return axios.get(url).then((res) => {
-          if (!res.headers['age']) {
-            // eslint-disable-next-line no-console
-            console.log(`Warmed up ${url} [${res.status}]`);
-          }
-          return res;
-        });
+        return axios
+          .get(url, { headers: { 'Accept-Encoding': 'br' } })
+          .then((res) => {
+            if (!res.headers['age']) {
+              // eslint-disable-next-line no-console
+              console.log(`Warmed up ${url} [${res.status}]`);
+            }
+            return res;
+          });
       })
     );
   }
