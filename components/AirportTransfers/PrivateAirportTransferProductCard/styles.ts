@@ -131,7 +131,7 @@ export const RatingAndDurationContainer = styled.div`
 
   .ratings-count {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-    color: ${COLORS.GRAY.G3};
+    color: ${COLORS.TEXT.CANDY_1};
   }
 
   ${LineSeparator} {

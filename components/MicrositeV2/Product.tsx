@@ -11,9 +11,11 @@ import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { dateToString } from 'utils/dateUtils';
 import { checkIfLTTMB, truncate } from 'utils/helper';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
 import { convertEngToSentenceCase } from 'utils/stringUtils';
 import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
@@ -208,6 +210,7 @@ const ProductCard = styled.div<{
   .total-rating {
     margin: 1px 0;
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+    color: ${COLORS.TEXT.CANDY_1};
   }
 
   .avg-rating svg {
@@ -439,6 +442,8 @@ const Product = (props: any) => {
 
   const hsid = useRecoilValue(hsidAtom);
 
+  const { language } = useRecoilValue(appAtom);
+
   // @ts-expect-error TS(2339): Property 'sliceData' does not exist on type '{}'.
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -476,6 +481,7 @@ const Product = (props: any) => {
   const primaryCategory = allTours[tgid]?.primaryCategory;
   const primarySubCategory = allTours[tgid]?.primarySubCategory;
   const filteredDescriptors = parseDescriptors(secondaryDescriptors);
+  const finalRatingCount = getLocalizedCount(ratingCount, language);
 
   if (isEntertainmentMb) {
     categoryName =
@@ -711,13 +717,7 @@ const Product = (props: any) => {
               </span>
             </Conditional>
             <Conditional if={ratingCount}>
-              <span className="total-rating">
-                (
-                {ratingCount > 999
-                  ? `${(ratingCount / 1000).toFixed(1)}K`
-                  : ratingCount}
-                )
-              </span>
+              <span className="total-rating">({finalRatingCount})</span>
             </Conditional>
           </div>
         </div>
@@ -845,13 +845,7 @@ const Product = (props: any) => {
                     </span>
                   </Conditional>
                   <Conditional if={ratingCount}>
-                    <span className="total-rating">
-                      (
-                      {ratingCount > 999
-                        ? `${(ratingCount / 1000).toFixed(1)}K`
-                        : ratingCount}
-                      )
-                    </span>
+                    <span className="total-rating">({finalRatingCount})</span>
                   </Conditional>
                 </div>
               </div>

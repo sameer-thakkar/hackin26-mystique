@@ -99,7 +99,7 @@ Mystique is the tech that powers over 2500 different microbrands at Headout.
 
 ### Testing on Ondemand Environment (ODE)
 
-- To access nimbus, go to [nimbus](https://nimbus.test-headout.com/).
+- To access nimbus, go to [nimbus](https://nimbus.dev-headout.com/).
 - If you don't have access, ask @platform-oncall for permission or talk to your team lead.
 - To learn how to create a test environment on ODE, watch this [loom video](https://www.loom.com/share/4e536bfc963e4d0a8a940c6b6affd0dd?sid=c0d2feff-edf0-43bb-9c49-4e733c2edcb).
 - If you're wondering what nimbus is, check out [this announcement](https://headout.slack.com/archives/C03RJMW6BDM/p1695209954862449).

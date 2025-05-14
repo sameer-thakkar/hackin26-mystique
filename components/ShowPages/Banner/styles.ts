@@ -183,6 +183,9 @@ export const BannerContent = styled.div`
       margin: 0rem 0.5rem 0rem 1.5rem;
       color: ${COLORS.TEXT.CANDY_1};
     }
+    .ratings-count {
+      color: ${COLORS.TEXT.CANDY_1};
+    }
   }
 
   .details-wrapper {

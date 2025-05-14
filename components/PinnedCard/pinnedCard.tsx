@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
 import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
@@ -11,8 +12,10 @@ import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { generateDescriptor, parseDescriptors } from 'utils/productUtils';
 import { convertUidToUrl, getTagPageLink } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
 import {
@@ -103,12 +106,6 @@ const PinnedCard = (props: any) => {
     lang,
   });
 
-  const ratingCount = (reviewCount: number) => {
-    return reviewCount > 999
-      ? `${(reviewCount / 1000).toFixed(1)}K`
-      : reviewCount;
-  };
-
   const clickHandler = () => {
     window.open(showPageUrl);
     trackEvent({
@@ -125,6 +122,9 @@ const PinnedCard = (props: any) => {
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
     });
   };
+
+  const { language } = useRecoilValue(appAtom);
+  const finalRatingCount = getLocalizedCount(productInfo.reviewCount, language);
 
   return (
     <PinnedCardWrapper>
@@ -157,15 +157,13 @@ const PinnedCard = (props: any) => {
         <Conditional if={productInfo?.averageRating}>
           <div className="rating">
             <span className="avg-rating">
+              <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
               <span className="rating-number">
                 {productInfo.averageRating.toFixed?.(1)}
               </span>
-              <Star color={COLORS.PRIMARY.JOY_MUSTARD} />
             </span>
             <Conditional if={productInfo?.reviewCount}>
-              <span className="total-rating">
-                ({ratingCount(productInfo.reviewCount)})
-              </span>
+              <span className="total-rating">({finalRatingCount})</span>
             </Conditional>
           </div>
         </Conditional>

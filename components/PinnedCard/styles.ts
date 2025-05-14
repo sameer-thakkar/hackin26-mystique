@@ -65,7 +65,7 @@ export const PinnedCardWrapper = styled.div`
     }
     .total-rating {
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-      color: ${COLORS.GRAY.G3};
+      color: ${COLORS.TEXT.CANDY_1};
     }
     .date {
       display: inline-block;

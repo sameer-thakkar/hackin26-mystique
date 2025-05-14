@@ -380,7 +380,7 @@ export const RatingCountWrapper = styled.span<{
 }>`
   display: block;
   margin-top: 1px;
-  color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.TEXT.CANDY_1};
   ${expandFontToken(FONTS.UI_LABEL_SMALL)};
   @media (min-width: 768px) {
     margin: 0;

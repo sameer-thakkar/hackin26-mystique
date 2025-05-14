@@ -230,7 +230,6 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
       align-items: center;
       span {
         text-decoration: underline;
-        color: ${COLORS.BRAND.CANDY};
       }
     }
   }
@@ -258,7 +257,6 @@ export const InfoSection = styled.div<{ $isReviewSectionVisible: boolean }>`
         }
         .review-count {
           ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-          color: ${COLORS.GRAY.G4};
         }
       }
     }

@@ -29,8 +29,10 @@ import {
 } from 'utils/analytics';
 import { fetchCalendarInventory } from 'utils/apiUtils';
 import { dateToString } from 'utils/dateUtils';
+import { getLocalizedCount } from 'utils/localizationUtils';
 import { sendLog } from 'utils/logger';
 import { getTagPageLink } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
@@ -76,6 +78,7 @@ const ShowPageBanner = ({
   const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
+  const { language } = useRecoilValue(appAtom);
 
   const productImage = imageUploads?.length
     ? imageUploads[1] || imageUploads[0]
@@ -489,11 +492,9 @@ const ShowPageBanner = ({
                   <span className="ratings-wrapper">
                     <Star color={COLORS.TEXT.CANDY_1} /> {averageRating}
                   </span>
-                  (
-                  {reviewCount > 999
-                    ? `${(reviewCount / 1000).toFixed(1)}K Reviews`
-                    : reviewCount}
-                  )
+                  <span className="ratings-count">
+                    ({getLocalizedCount(reviewCount, language)})
+                  </span>
                 </span>
               </Conditional>
             </div>

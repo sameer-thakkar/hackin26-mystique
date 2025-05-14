@@ -2,7 +2,6 @@ import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { IRatingProps } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/Ratings/interface';
 import { RatingsWrapper } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/Ratings/style';
-import { truncateNumber } from 'utils';
 import { getLocalizedCount } from 'utils/localizationUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
@@ -15,11 +14,8 @@ const Ratings = ({
   showReviewsText,
   showCount = true,
 }: IRatingProps) => {
-  const { language, isMobile } = useRecoilValue(appAtom);
-
-  const finalRatingCount = isMobile
-    ? getLocalizedCount(ratingCount, language)
-    : truncateNumber(ratingCount);
+  const { language } = useRecoilValue(appAtom);
+  const finalRatingCount = getLocalizedCount(ratingCount, language);
 
   return (
     <RatingsWrapper>

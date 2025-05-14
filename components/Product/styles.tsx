@@ -1597,7 +1597,7 @@ export const StyledRatingsContainer = styled.div<{
 
       &.rating-count {
         ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-        margin-top: 1px;
+        margin-top: -1px;
       }
     }
   }
