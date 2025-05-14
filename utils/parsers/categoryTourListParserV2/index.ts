@@ -77,21 +77,20 @@ export default async function categoryTourListParserV2({
     primarySubCategoryID,
   });
 
-  const cityData = await fetchCityInfo({
+  const cityDataPromise = fetchCityInfo({
     cityCode: city,
     language: getHeadoutLanguagecode(lang),
     hostname,
   });
-
-  let collectionData = Promise.all(collectionPromises);
-  let categoryData = Promise.all(categoryPromises);
-  let subCategoryData = Promise.all(subCategoryPromises);
+  const collectionData = Promise.all(collectionPromises);
+  const categoryData = Promise.all(categoryPromises);
+  const subCategoryData = Promise.all(subCategoryPromises);
 
   await Promise.all([
     collectionData,
     categoryData,
     subCategoryData,
-    cityData,
+    cityDataPromise,
   ]).then((response) => {
     try {
       const [collectionData, categoryData, subCategoryData, cityData] =

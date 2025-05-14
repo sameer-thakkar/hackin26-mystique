@@ -746,7 +746,7 @@ const HeadoutSessionIdSetterComponent = () => {
       });
     const onMessageReceieved = (e: any) => {
       const { origin, data } = e;
-      if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
+      if (origin !== process.env.NEXT_PUBLIC_ASSETS_CDN_BASE_URL) {
         return;
       }
 
@@ -799,7 +799,7 @@ const HeadoutSessionIdSetterComponent = () => {
       tabIndex={-1}
       title="empty"
       className="hidden"
-      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider.html`}
+      src={`${process.env.NEXT_PUBLIC_ASSETS_CDN_BASE_URL}/hsid-provider.html`}
     ></iframe>
   );
 };

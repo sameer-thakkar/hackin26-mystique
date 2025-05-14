@@ -122,7 +122,11 @@ const nextConfig = {
   redirects: async () => {
     return internalRedirects;
   },
-  assetPrefix: process.env.NEXT_PUBLIC_ASSETS_CDN_BASE_URL,
+  assetPrefix: ['ondemand', 'development'].includes(
+    process.env.NEXT_PUBLIC_NODE_ENV
+  )
+    ? ''
+    : process.env.NEXT_PUBLIC_ASSETS_CDN_BASE_URL,
 };
 
 module.exports = withTM(

@@ -198,4 +198,4 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
   );
 };
 
-export default React.forwardRef(Image);
+export default React.memo(React.forwardRef(Image));

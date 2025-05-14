@@ -70,9 +70,9 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
               : item.url
           }
           alt={item.alt}
-          height={189}
-          width={375}
-          fetchPriority="high"
+          height={196}
+          width={362}
+          fetchPriority={index === 0 ? 'high' : 'low'}
           priority={index === 0}
           autoCrop={false}
           className={`banner-image-${index}`}
