@@ -39,6 +39,7 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
 
   useEffect(() => {
     if (!ref.current || plyr.current) return;
+    let hls: Hls;
     const initialisePlyr = async () => {
       let controls = [
         'play',
@@ -73,7 +74,7 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
 
       // HLS support
       if (isHls && Hls.isSupported()) {
-        const hls = new Hls({
+        hls = new Hls({
           enableWorker: true,
           lowLatencyMode: true,
           backBufferLength: 90,
@@ -96,6 +97,10 @@ const VideoPlayer: React.FC<React.PropsWithChildren<TVideoPlayerProps>> = ({
     };
 
     initialisePlyr();
+
+    return () => {
+      hls?.destroy();
+    };
   }, [ref]);
 
   useEffect(() => {
