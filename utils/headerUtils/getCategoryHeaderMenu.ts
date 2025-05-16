@@ -1,3 +1,4 @@
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import { COOKIE, CUSTOM_TYPES, MB_CATEGORISATION } from 'const/index';
 import getA2CatMBMenu from './getA2CatMBMenu';
 import getA2SubcatMBMenu from './getA2SubcatMBMenu';
@@ -10,7 +11,7 @@ const getCategoryHeaderMenu = async ({
   ContentType,
   cookies,
 }: {
-  doc: Record<string, any>;
+  doc: PrismicDocumentWithUID;
   lang: string;
   ContentType: string | undefined;
   cookies?: Record<string, any>;
@@ -18,7 +19,7 @@ const getCategoryHeaderMenu = async ({
   if (!doc || !ContentType) return {};
   const currency = cookies?.[COOKIE.CURRENT_CURRENCY];
 
-  const { data } = doc ?? {};
+  const { uid, data } = doc ?? {};
 
   let categorisationMetadata: TCategorisationMetadata;
 
@@ -63,6 +64,7 @@ const getCategoryHeaderMenu = async ({
     case MB_CATEGORISATION.MB_TYPE.A1_COLLECTION:
     case MB_CATEGORISATION.MB_TYPE.C1_COLLECTION:
       categoryHeaderMenu = await getCollectionMBMenu({
+        uid,
         lang,
         categorisationMetadata,
         currency,
@@ -80,6 +82,7 @@ const getCategoryHeaderMenu = async ({
       break;
     case MB_CATEGORISATION.MB_TYPE.A2_CATEGORY:
       categoryHeaderMenu = await getA2CatMBMenu({
+        uid,
         lang,
         categorisationMetadata,
         currency,
@@ -87,6 +90,7 @@ const getCategoryHeaderMenu = async ({
       break;
     case MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY:
       categoryHeaderMenu = await getA2SubcatMBMenu({
+        uid,
         lang,
         categorisationMetadata,
         currency,

@@ -7,6 +7,7 @@ import shouldIncludeinQueries from './shouldIncludeInQueries';
 const generateShoulderPageMenu = async ({
   isAboutMenu = false,
   menuType,
+  pageUid,
   categorisationMetadata,
   lang,
   shoulderPageDocsStore,
@@ -14,6 +15,7 @@ const generateShoulderPageMenu = async ({
 }: {
   isAboutMenu?: boolean;
   menuType: Record<string, any>;
+  pageUid: string;
   categorisationMetadata: TCategorisationMetadata;
   lang: string;
   shoulderPageDocsStore: PrismicDocumentWithUID[];
@@ -29,6 +31,7 @@ const generateShoulderPageMenu = async ({
       menu[key] = await generateShoulderPageMenu({
         menuType: menuItem.children,
         categorisationMetadata,
+        pageUid,
         lang,
         shoulderPageDocsStore,
         subattractionPageDocsStore,
@@ -54,11 +57,13 @@ const generateShoulderPageMenu = async ({
   if (isAboutMenu) {
     const aboutPage = await generateAboutMenuItem({
       docsStore: shoulderPageDocsStore,
+      pageUid,
       lang,
       categorisationMetadata,
     });
     const subAttractionsPages = await generateSubAttractionsMenu({
       docsStore: [...subattractionPageDocsStore, ...shoulderPageDocsStore],
+      pageUid,
       lang,
     });
 

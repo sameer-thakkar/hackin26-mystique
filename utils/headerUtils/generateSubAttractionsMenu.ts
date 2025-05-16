@@ -8,9 +8,11 @@ import shouldIncludeinQueries from './shouldIncludeInQueries';
 
 const generateSubAttractionsMenu = async ({
   docsStore,
+  pageUid,
   lang,
 }: {
   docsStore: PrismicDocumentWithUID[];
+  pageUid: string;
   lang: string;
 }): Promise<Record<string, any>> => {
   let subAttractionsDocs;
@@ -32,7 +34,11 @@ const generateSubAttractionsMenu = async ({
     const { uid, data } = doc;
 
     const { shoulder_page_custom_label: customLabel } = data || {};
-    if (customLabel && !map.has(customLabel) && shouldIncludeinQueries(doc)) {
+    if (
+      customLabel &&
+      !map.has(customLabel) &&
+      shouldIncludeinQueries(doc, pageUid)
+    ) {
       const data = {
         label: customLabel,
         url: convertUidToUrl({

@@ -10,10 +10,12 @@ import { getMenuUrl } from '.';
 
 const generateAboutMenuItem = async ({
   docsStore,
+  pageUid,
   lang,
   categorisationMetadata,
 }: {
   docsStore: PrismicDocumentWithUID[];
+  pageUid: string;
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
 }) => {
@@ -23,7 +25,7 @@ const generateAboutMenuItem = async ({
   const docFound = docsStore.find(
     (doc) =>
       doc?.data?.shoulder_page_type === ABOUT.ABOUT.label &&
-      shouldIncludeinQueries(doc)
+      shouldIncludeinQueries(doc, pageUid)
   );
 
   if (docFound) {

@@ -4,8 +4,14 @@ import { getStructure } from 'utils/lookerUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { PAGE_URL_STRUCTURE, SEO_SUBDOMAINS } from 'const/index';
 
-const shouldIncludeinQueries = (doc: PrismicDocumentWithUID) => {
+const shouldIncludeinQueries = (
+  doc: PrismicDocumentWithUID,
+  pageUid: string = ''
+) => {
   const { uid, lang, data } = doc || {};
+
+  if (uid === pageUid) return false;
+
   const { noindex, redirect_url, canonical_link } = data || {};
   const pageUrl = convertUidToUrl({
     uid,

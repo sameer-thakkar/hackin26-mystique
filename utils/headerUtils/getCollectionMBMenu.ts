@@ -20,10 +20,12 @@ import {
 } from '.';
 
 const getCollectionMBMenu = async ({
+  uid,
   lang,
   categorisationMetadata,
   currency,
 }: {
+  uid: string;
   lang: string;
   categorisationMetadata: TCategorisationMetadata;
   currency?: string;
@@ -66,6 +68,7 @@ const getCollectionMBMenu = async ({
   const aboutMenuPromise = generateShoulderPageMenu({
     isAboutMenu: true,
     menuType: ABOUT,
+    pageUid: uid,
     categorisationMetadata,
     lang,
     shoulderPageDocsStore: shoulderPageDocs,
@@ -74,6 +77,7 @@ const getCollectionMBMenu = async ({
 
   const visitMenuPromise = generateShoulderPageMenu({
     menuType: VISIT,
+    pageUid: uid,
     categorisationMetadata,
     lang,
     shoulderPageDocsStore: shoulderPageDocs,
@@ -81,6 +85,7 @@ const getCollectionMBMenu = async ({
 
   const thingsToDoMenuPromise = generateShoulderPageMenu({
     menuType: THINGS_TO_DO,
+    pageUid: uid,
     categorisationMetadata,
     lang,
     shoulderPageDocsStore: shoulderPageDocs,
