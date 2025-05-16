@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import Drawer from 'components/common/Drawer';
 import { HighlightTabs } from 'components/Product/components/ProductHighlightTabs';
 import { PRODUCT_CARD_IMAGE_DIMENSIONS } from 'components/Product/styles';
+import LocalisedPrice from 'UI/LPrice';
 import MediaCarousel from 'UI/MediaCarousel';
 import { MBContext } from 'contexts/MBContext';
 import { usePrivateAirportTransferAirports } from 'hooks/airportTransfers/useAirportsList';
@@ -107,7 +108,7 @@ export const PrivateAirportTranferProductCard = ({
     hsid,
   });
 
-  const { finalPrice, localSymbol } = listingPrice;
+  const { finalPrice, currencyCode } = listingPrice;
 
   const { highlights, tabs } = isMobile
     ? extractTabsFromHighlights(scorpioData.highlights)
@@ -271,11 +272,12 @@ export const PrivateAirportTranferProductCard = ({
           {/* from <span className="scratch-price-amount">$ 83</span> */}
         </div>
 
-        <div className="price">
-          <span>
-            {localSymbol} {finalPrice}
-          </span>
-        </div>
+        <LocalisedPrice
+          className="price"
+          currencyCode={currencyCode}
+          lang={currentLanguage}
+          price={finalPrice}
+        />
 
         <a
           target={isMobile ? '_self' : '_blank'}
@@ -350,11 +352,12 @@ export const PrivateAirportTranferProductCard = ({
           <PricingAndCTASection>
             <div className="scratch-price"></div>
 
-            <div className="price">
-              <span>
-                {localSymbol} {finalPrice}
-              </span>
-            </div>
+            <LocalisedPrice
+              className="price"
+              currencyCode={currencyCode}
+              lang={currentLanguage}
+              price={finalPrice}
+            />
 
             <a
               target={isMobile ? '_self' : '_blank'}

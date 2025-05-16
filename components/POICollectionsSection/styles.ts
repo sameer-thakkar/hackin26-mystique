@@ -5,13 +5,14 @@ export const collectionsSectionStyles = css({
   paddingY: '1.875rem',
   paddingX: 'space.24',
   position: 'relative',
-  marginY: '-space.8',
+  marginTop: '-space.8',
   overflow: 'hidden',
+  marginBottom: 'space.48',
 
   '@media (min-width: 768px)': {
     paddingTop: '2.25rem',
     paddingBottom: '2.5rem',
-    marginY: '0.625rem',
+    marginTop: '0.625rem',
   },
 });
 export const topCirclesStyle = css({
