@@ -279,6 +279,13 @@ const no = {
   OPENS: 'Åpner',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout er en autorisert og betrodd partner for arrangementsstedet, og tilbyr kuraterte opplevelser for å gjøre besøket på denne attraksjonen best mulig. Dette er ikke nettstedet til arrangementsstedet.',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Få mest mulig ut av {0}',
+    TOP_EXPERIENCE_PICKS: 'Utvalgte populære opplevelser',
+    EXPERIENCES: 'Mer enn {0} opplevelser',
+    CITY_YOUR_WAY: '{0}, på din måte',
+    DISCOVER_MORE: 'Oppdag mer',
+  },
   POPULAR_CURRENCIES: 'Populære valutaer',
   PRICES_STARTING: 'Priser fra',
   PROMO_CODES: {

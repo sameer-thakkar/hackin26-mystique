@@ -266,6 +266,13 @@ const pl = {
   OPENS: 'Premiera',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Odkryj miasto – {0}',
+    TOP_EXPERIENCE_PICKS: 'Popularne aktywności',
+    EXPERIENCES: '{0}+ aktywności',
+    CITY_YOUR_WAY: '{0}, po Twojemu!',
+    DISCOVER_MORE: 'Zobacz więcej',
+  },
   POPULAR_CURRENCIES: 'Popularne waluty',
   PRICES_STARTING: 'Ceny od',
   PROMO_CODES: {

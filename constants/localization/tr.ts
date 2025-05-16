@@ -276,6 +276,13 @@ const tr = {
   OPENS: 'Açık',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout, bu turistik mekanın tadını çıkarmanız için en iyi deneyimlerden oluşan bir seçki sunan tesisin yetkili ve güvenilir bir ortağıdır. Bu web sitesi, ziyaret alanının web sitesi değildir. ',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: '{0} gezinizden en yüksek verimi alın',
+    TOP_EXPERIENCE_PICKS: 'En popüler deneyimler',
+    EXPERIENCES: '+{0} deneyim',
+    CITY_YOUR_WAY: '{0}, özgün bir keşif için sizi bekliyor!',
+    DISCOVER_MORE: 'Daha fazlasını keşfet',
+  },
   POPULAR_CURRENCIES: 'Popüler Para Birimleri',
   PRICES_STARTING: 'Başlangıç Fiyatları',
   PROMO_CODES: {

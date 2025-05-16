@@ -274,6 +274,13 @@ const ro = {
   OPENS: 'Se deschide',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout este un partener autorizat și de încredere al locației, oferind o selecție curatorială a celor mai bune experiențe pentru a vă bucura de această atracție. Acesta nu este site-ul web al locației.',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Vizitați cât mai mult în {0}',
+    TOP_EXPERIENCE_PICKS: 'Principalele experiențe',
+    EXPERIENCES: '{0}+ experiențe',
+    CITY_YOUR_WAY: '{0}, cum vă place!',
+    DISCOVER_MORE: 'Descoperiți mai mult',
+  },
   POPULAR_CURRENCIES: 'Monede populare',
   PRICES_STARTING: 'Prețuri începând de la',
   PROMO_CODES: {

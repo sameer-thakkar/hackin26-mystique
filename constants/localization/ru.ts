@@ -1383,6 +1383,13 @@ const ru = {
     },
     VERIFIED_REVIEW: 'Проверенный отзыв партнера',
   },
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: '{0}, смотрите самое лучшее!',
+    TOP_EXPERIENCE_PICKS: 'Выбор лучших развлечений',
+    EXPERIENCES: '{0}+ развлечений',
+    CITY_YOUR_WAY: '{0} для вас!',
+    DISCOVER_MORE: 'Посмотреть больше',
+  },
   POWERED_BY: 'на основе',
 };
 

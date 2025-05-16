@@ -276,6 +276,13 @@ const sv = {
   OPENS: 'Öppnar',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout är en auktoriserad och pålitlig partner till resmålet och erbjuder ett urval av de bästa sätten att uppleva sevärdheterna på. Detta är inte resmålets webbplats.',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Få ut det mesta av {0}',
+    TOP_EXPERIENCE_PICKS: 'Utvalda upplevelser',
+    EXPERIENCES: 'Över {0} upplevelser',
+    CITY_YOUR_WAY: '{0}, på ditt sätt!',
+    DISCOVER_MORE: 'Upptäck mer',
+  },
   POPULAR_CURRENCIES: 'Populära valutor',
   PRICES_STARTING: 'Priser från',
   PROMO_CODES: {

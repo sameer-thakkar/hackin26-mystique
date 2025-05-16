@@ -277,6 +277,13 @@ const da = {
   OPENS: 'Åbner',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout er stedets autoriserede og betroede partner og tilbyder et kurateret udvalg af de bedste oplevelsesmuligheder til denne seværdighed. Dette er ikke stedets hjemmeside.',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Få mest muligt ud af {0}',
+    TOP_EXPERIENCE_PICKS: 'De mest populære oplevelser',
+    EXPERIENCES: '{0}+ oplevelser',
+    CITY_YOUR_WAY: '{0}, på din måde!',
+    DISCOVER_MORE: 'Opdag mere',
+  },
   POPULAR_CURRENCIES: 'Populære valutaer',
   PRICES_STARTING: 'Priser fra',
   PROMO_CODES: {
