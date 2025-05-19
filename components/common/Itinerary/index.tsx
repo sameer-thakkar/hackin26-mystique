@@ -108,9 +108,7 @@ const Itinerary = ({
   };
 
   const hasMapView =
-    activeItineraryData?.map &&
-    activeItineraryData?.map.active &&
-    !!activeItineraryData.map.itineraryRoute.polyline;
+    activeItineraryData?.map && activeItineraryData?.map.active;
 
   const handleStopSectionClick = (
     sectionDetails: Section | ChildSection | Omit<Section, 'childSections'>
