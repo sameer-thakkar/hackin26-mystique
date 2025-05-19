@@ -29,7 +29,6 @@ import {
   fetchInventory,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
-import { checkDropsBannerEligibility } from 'utils/dropsUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
@@ -408,7 +407,7 @@ const PopulateProducts: any = (props: any) => {
   const { isDev, host, design } = useContext(MBContext);
   const hostname = getHostName(isDev, host);
 
-  const shouldShowDropsBanner = checkDropsBannerEligibility(uid);
+  const shouldShowDropsBanner = false; // can add again when drops are backcheckDropsBannerEligibility(uid);
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
