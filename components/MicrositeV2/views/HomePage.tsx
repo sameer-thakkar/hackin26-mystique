@@ -178,6 +178,7 @@ const V2MicrositeWrapper = styled.div<{
   }
 
   ${CategoriesSection} {
+    transition: box-shadow 0.1s ease-out;
     ${({ $isCategoriesSectionSticking }) =>
       $isCategoriesSectionSticking &&
       `
@@ -187,6 +188,7 @@ const V2MicrositeWrapper = styled.div<{
   @media (min-width: 768px) {
     ${StyledHeader} {
       .fixed-wrap {
+        transition: box-shadow 0.1s ease-out;
         ${({ $isCategoriesSectionSticking }) =>
           $isCategoriesSectionSticking &&
           `
@@ -460,8 +462,17 @@ export const HomePage = (props: any) => {
     }
   }, [eventsReady]);
 
+  const isCategoriesSectionStickingRef = useRef(isCategoriesSectionSticking);
+
+  useEffect(() => {
+    isCategoriesSectionStickingRef.current = isCategoriesSectionSticking;
+  }, [isCategoriesSectionSticking]);
+
   useLayoutEffect(() => {
     if (!window) return;
+
+    let rafId: number;
+    let ticking = false;
 
     const observeCategoriesSection = () => {
       if (!browseByCategorySectionRef.current) return;
@@ -469,28 +480,36 @@ export const HomePage = (props: any) => {
       const browseByCategorySectionPos =
         browseByCategorySectionRef.current.getBoundingClientRect().top;
       const SCROLL_CUTOFF = isMobile ? 61 : 80;
+      const shouldBeSticking = browseByCategorySectionPos <= SCROLL_CUTOFF;
 
-      if (
-        isCategoriesSectionSticking &&
-        browseByCategorySectionPos > SCROLL_CUTOFF
-      ) {
-        setIsCategoriesSectionSticking(false);
-      }
-      if (
-        !isCategoriesSectionSticking &&
-        browseByCategorySectionPos <= SCROLL_CUTOFF
-      ) {
-        setIsCategoriesSectionSticking(true);
+      if (isCategoriesSectionStickingRef.current !== shouldBeSticking) {
+        setIsCategoriesSectionSticking(shouldBeSticking);
       }
     };
 
-    window.addEventListener('scroll', observeCategoriesSection, {
-      passive: true,
-    });
+    const onScroll = () => {
+      if (!ticking) {
+        // using rAF to only update once per frame
+        rafId = window.requestAnimationFrame(() => {
+          observeCategoriesSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // call once immediately to set initial state correctly
+    observeCategoriesSection();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', observeCategoriesSection);
+      window.removeEventListener('scroll', onScroll);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
     };
-  }, [isCategoriesSectionSticking]);
+  }, [isMobile]);
 
   const finalSlices = heroSectionSlice.filter(
     (slice: any) => slice?.slice_type
