@@ -139,4 +139,3 @@ export const chatBubbleAnimation = {
     transform: 'scale(1) rotate(0deg)',
   },
 };
-

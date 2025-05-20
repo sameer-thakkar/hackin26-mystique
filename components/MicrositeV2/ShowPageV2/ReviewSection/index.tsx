@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
@@ -6,7 +13,6 @@ import { EReviewRatingFilter, EReviewSortType } from 'types/reviews';
 import Conditional from 'components/common/Conditional';
 import type { TReviewSectionProps } from 'components/MicrositeV2/ShowPageV2/ReviewSection/interface';
 import {
-  AllReviewsButton,
   RatingBarAmount,
   RatingBarBase,
   Ratings,
@@ -44,7 +50,6 @@ import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  CTA_TYPE,
   DEFAULT_TOP_REVIEWS_COUNT,
   LANGUAGE_SORT_ORDER,
 } from 'const/index';
@@ -93,7 +98,6 @@ export const getTranslateButtonText = (
 const ReviewSection = ({
   tgid,
   reviewsDetails,
-  reviewPageUrl,
   isMobile = false,
   initialReviews = [],
   maximumNumberOfReviews = 10,
@@ -101,13 +105,13 @@ const ReviewSection = ({
   showFetchMoreButton = false,
   controlledSwiperParams,
   showSkeleton = false,
-  externalButtonContent,
   showReviews = true,
   onImageClick,
   snapshotSectionProps,
   numberOfReviewsToShow: numberOfReviewsToShowProp = 5,
   showCountriesSection = false,
 }: TReviewSectionProps) => {
+  const lastReviewIndex = useRef(0);
   const [reviews, setReviews] = useState<TReviewMediasResponse['items']>(
     initialReviews || []
   );
@@ -135,13 +139,44 @@ const ReviewSection = ({
   const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
   const SCROLL_THRESHOLD = isMobile ? 115 : 150;
 
+  // This scrolls to the first new review in the new reviews batch fetched from the server
+  const smoothScrollToNewReviewBatch = useCallback(() => {
+    const newReviewIndex = lastReviewIndex.current + 1;
+    const firstNewReviewRef = document.querySelector(
+      `#review-item-${newReviewIndex}`
+    );
+
+    if (firstNewReviewRef) {
+      const popupContainer = document.querySelector(
+        "[id*='product-card-popup'], #snapsheet-content-container"
+      );
+      const firstNewReviewPosition =
+        firstNewReviewRef.getBoundingClientRect().top - SCROLL_THRESHOLD;
+
+      popupContainer?.scrollBy({
+        top: firstNewReviewPosition,
+        behavior: 'smooth',
+      });
+    }
+  }, [SCROLL_THRESHOLD]);
+
   const fetchReviews = useCallback(async () => {
     try {
-      if (offset === null || offset >= maximumNumberOfReviews) return;
+      if (
+        typeof maximumNumberOfReviews === 'number' &&
+        (offset === null || offset >= maximumNumberOfReviews)
+      ) {
+        return;
+      }
+      lastReviewIndex.current = Math.max(
+        0,
+        reviews.slice(0, numberOfReviewsToShow).length - 1
+      );
       setIsFetching(true);
+
       const reviewsResponse = await fetchTourGroupReviewsV6({
         tgid,
-        offset,
+        offset: offset ?? 0,
         limit: numberOfReviewsToFetchAtOnce,
         ratingFilter: reviewRatingFilter,
         hasMediaFilter,
@@ -160,25 +195,11 @@ const ReviewSection = ({
       const updatedReviews =
         offset === 0 ? newReviews : [...reviews, ...newReviews];
 
-      const firstNewReviewRef = document.querySelector(
-        `#review-item-${updatedReviews?.length}`
-      );
-
-      if (firstNewReviewRef) {
-        const popupContainer = document.querySelector(
-          "[id*='product-card-popup'], #snapsheet-content-container"
-        );
-        const firstNewReviewPosition =
-          firstNewReviewRef.getBoundingClientRect().top - SCROLL_THRESHOLD;
-
-        popupContainer?.scrollBy({
-          top: firstNewReviewPosition,
-          behavior: 'smooth',
-        });
-      }
-
       setReviews(updatedReviews);
       setOffset(nextOffset);
+      setTimeout(() => {
+        smoothScrollToNewReviewBatch();
+      }, 50);
     } catch (error) {
       return;
     }
@@ -195,8 +216,10 @@ const ReviewSection = ({
   } = reviewsDetails?.displayConfig ?? {};
 
   const showLoadMoreButton =
-    ((isMobile && !reviewPageUrl) || showFetchMoreButton) &&
-    numberOfReviewsToShow < maximumNumberOfReviews &&
+    (isMobile || showFetchMoreButton) &&
+    (typeof maximumNumberOfReviews !== 'number' ||
+      (typeof maximumNumberOfReviews === 'number' &&
+        numberOfReviewsToShow < maximumNumberOfReviews)) &&
     reviews.length >= DEFAULT_TOP_REVIEWS_COUNT &&
     exposeLoadMore;
 
@@ -319,25 +342,6 @@ const ReviewSection = ({
           >
             {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
           </ShowMoreReviewsButton>
-        </Conditional>
-
-        <Conditional
-          if={reviewPageUrl && !showLoadMoreButton && reviews.length > 0}
-        >
-          <AllReviewsButton
-            href={reviewPageUrl}
-            target="_blank"
-            onClick={() => {
-              trackEvent({
-                eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
-                [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.READ_DETAILED_REVIEWS,
-                [ANALYTICS_PROPERTIES.SECTION]: 'Reviews',
-              });
-            }}
-          >
-            {externalButtonContent ??
-              strings.SHOW_PAGE_V2.READ_DETAILED_REVIEWS}
-          </AllReviewsButton>
         </Conditional>
       </Conditional>
     </ReviewSectionWrapper>

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {
-  AllReviewsButton,
   Review,
   ReviewContent,
   ReviewMediaSection,
@@ -12,15 +11,6 @@ import { StyledReviewHeader } from 'components/Reviews/Header/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-
-export const StyledExternalLinkIcon = styled.span`
-  line-height: 0;
-
-  svg path {
-    stroke: ${COLORS.BRAND.PURPS};
-    stroke-width: 1.5px;
-  }
-`;
 
 export const StyledReviewSectionTitle = styled.h6`
   ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
@@ -111,7 +101,7 @@ export const StyledReviewSectionContainer = styled.div`
     }
   }
 
-  ${ShowMoreReviewsButton}, ${AllReviewsButton} {
+  ${ShowMoreReviewsButton} {
     background: ${COLORS.PURPS.LEVEL_10};
     padding: 0.6875rem 1rem 0.8125rem;
     border-radius: 8px;

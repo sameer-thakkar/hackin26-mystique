@@ -31,7 +31,6 @@ import { MBContext } from 'contexts/MBContext';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import {
   createBookingURL,
-  getAlternateLanguageDocUid,
   getAlternateLanguages,
   getHeadoutLanguagecode,
   getNakedDomain,
@@ -44,7 +43,7 @@ import {
 } from 'utils/analytics';
 import { fetchTourGroupsByCollection } from 'utils/apiUtils';
 import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
-import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -117,7 +116,6 @@ const LttShowPageV2 = ({
     alternate_languages,
     lang,
     allShowPagesDocuments,
-    relatedShowPage,
   } = CMSContent;
   const {
     tagged_mb_type: mbType,
@@ -375,20 +373,6 @@ const LttShowPageV2 = ({
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
 
-  const relatedShowPageUid = relatedShowPage
-    ? lang === 'en-us'
-      ? relatedShowPage?.uid
-      : getAlternateLanguageDocUid({ doc: relatedShowPage, lang })
-    : null;
-  const reviewPageUrl =
-    relatedShowPageUid &&
-    convertUidToUrl({
-      uid: relatedShowPageUid,
-      lang: currentLanguage,
-      isDev,
-      hostname: host,
-    });
-
   return (
     <ShowPageWrapper>
       <ShowPageSeoComponents
@@ -456,7 +440,6 @@ const LttShowPageV2 = ({
         <ContentSections
           name={name}
           tourGroupData={tourGroupData}
-          reviewPageUrl={reviewPageUrl}
           isMobile={isMobile}
         />
       </DateSelectorContainer>

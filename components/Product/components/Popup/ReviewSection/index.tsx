@@ -6,12 +6,10 @@ import useFetchReviewMedia from 'hooks/useFetchReviewMedia';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import DiagonalArrow from 'assets/diagonalArrow';
 import TrustOverlay from './TrustElements/Overlay';
 import { MAX_REVIEW_COUNT } from './constants';
 import Gallery from './Gallery';
 import {
-  StyledExternalLinkIcon,
   StyledReviewSectionContainer,
   StyledReviewSectionTitle,
 } from './styles';
@@ -22,7 +20,6 @@ const ReviewSection = ({
   tgid,
   topReviews = [],
   showTitle = true,
-  showExternalButton = true,
   isBot = false,
 }: TReviewSectionProps) => {
   const {
@@ -34,13 +31,6 @@ const ReviewSection = ({
   } = useFetchReviewMedia(tgid);
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
-
-  const externalButtonContent = (
-    <>
-      {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
-      <StyledExternalLinkIcon>{DiagonalArrow}</StyledExternalLinkIcon>
-    </>
-  );
 
   return (
     <>
@@ -75,17 +65,13 @@ const ReviewSection = ({
           tgid={tgid}
           initialReviews={topReviews}
           numberOfReviewsToFetchAtOnce={isBot ? MAX_REVIEW_COUNT : 5}
-          maximumNumberOfReviews={MAX_REVIEW_COUNT}
+          maximumNumberOfReviews={isBot ? MAX_REVIEW_COUNT : null}
           showFetchMoreButton
-          reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
             slidesPerView: 5,
             spaceBetween: 16,
           }}
           showSkeleton
-          externalButtonContent={
-            showExternalButton ? externalButtonContent : undefined
-          }
           showReviews={topReviews && topReviews.length > 0}
           onImageClick={(reviewId, localIndex) => {
             const globalIndex = getReviewMediaGlobalLocation?.(

@@ -3,10 +3,8 @@ import ReviewsSection from 'components/MicrositeV2/ShowPageV2/ReviewSection';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import DiagonalArrow from 'assets/diagonalArrow';
 import { MAX_REVIEW_COUNT } from './constants';
 import {
-  StyledExternalLinkIcon,
   StyledReviewSectionContainer,
   StyledReviewSectionTitle,
 } from './styles';
@@ -22,13 +20,6 @@ const ReviewSection = ({
   snapshotSectionProps,
   isBot = false,
 }: TReviewSectionMobileProps) => {
-  const externalButtonContent = (
-    <>
-      {strings.SHOW_PAGE_V2.SHOW_MORE_REVIEWS}
-      <StyledExternalLinkIcon>{DiagonalArrow}</StyledExternalLinkIcon>
-    </>
-  );
-
   return (
     <>
       <Conditional if={showTitle}>
@@ -42,15 +33,13 @@ const ReviewSection = ({
           tgid={tgid}
           initialReviews={topReviews}
           numberOfReviewsToFetchAtOnce={5}
-          maximumNumberOfReviews={isBot ? MAX_REVIEW_COUNT : 25}
+          maximumNumberOfReviews={isBot ? MAX_REVIEW_COUNT : null}
           showFetchMoreButton
-          reviewPageUrl={`https://www.headout.com/reviews/${tgid}/`}
           controlledSwiperParams={{
             slidesPerView: 'auto',
             spaceBetween: 16,
           }}
           showSkeleton
-          externalButtonContent={externalButtonContent}
           isMobile
           showReviews={!!topReviews?.length}
           onImageClick={(reviewId, localIndex) => {

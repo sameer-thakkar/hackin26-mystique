@@ -99,10 +99,6 @@ import {
   TLANGUAGELOCALE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
-import {
-  MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS,
-  MBS_REVIEWS_V2_ENABLED_DOMAINS,
-} from 'const/reviews';
 import { allShowPagesGq } from './microsite/graphQuery';
 import { TPrismicTrustBooster } from './interface';
 import { getReviewsPageData } from './reviewsPage';
@@ -850,20 +846,15 @@ export const getPageData = async ({
       });
       const languageCode = getHeadoutLanguagecode(lang!);
 
-      const isExtendedReviewsV2Enabled =
-        MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
-      const isReviewsV2Enabled = MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
       categoryId = CATEGORY_IDS?.[taggedCategory];
       subCatId = SUBCATEGORY_IDS?.[taggedSubCategory];
-      collectionReviewsPromise = conditionalPromise(
-        taggedCollection && (isReviewsV2Enabled || isExtendedReviewsV2Enabled),
-        () =>
-          fetchCollectionReviews({
-            collectionId: taggedCollection,
-            cookies,
-            language: languageCode,
-            limit: isExtendedReviewsV2Enabled ? '40' : '8',
-          })
+      collectionReviewsPromise = conditionalPromise(taggedCollection, () =>
+        fetchCollectionReviews({
+          collectionId: taggedCollection,
+          cookies,
+          language: languageCode,
+          limit: '8',
+        })
       );
 
       if (taggedCity && subCatId) {

@@ -43,7 +43,6 @@ const ContentSections = ({
   tourGroupData,
   name,
   isMobile,
-  reviewPageUrl,
 }: TContentSectionsProps) => {
   const contentSectionsRef = useRef<HTMLDivElement>(null);
   const { lang } = useContext(MBContext);
@@ -506,7 +505,6 @@ const ContentSections = ({
               <ReviewSection
                 tgid={id}
                 reviewsDetails={reviewsDetails}
-                reviewPageUrl={reviewPageUrl}
                 isMobile={isMobile}
                 initialReviews={topReviews}
                 showFetchMoreButton

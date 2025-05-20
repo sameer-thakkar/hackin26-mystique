@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { SliceZone } from '@prismicio/react';
@@ -9,14 +9,9 @@ import {
   catOrSubCatPageSliceComponents,
   sliceComponents,
 } from 'components/slices/sliceManager';
-import { MBContext } from 'contexts/MBContext';
 import { moveElement } from 'utils/arrayUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import {
-  MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS,
-  MBS_REVIEWS_V2_ENABLED_DOMAINS,
-} from 'const/reviews';
 import { expandFontToken } from 'const/typography';
 import { SLICE_TYPES } from 'constants/index';
 
@@ -195,8 +190,6 @@ type TLongFormProps = {
 >;
 
 const LongForm = (longFormProps: TLongFormProps) => {
-  const { uid } = useContext(MBContext);
-
   const {
     content,
     isContentPage,
@@ -218,10 +211,6 @@ const LongForm = (longFormProps: TLongFormProps) => {
   const { isRevampedDesign, isVenuePage, isNewsPage } = props;
 
   const parsedContent = useMemo(() => {
-    const isReviewsV2Enabled =
-      MBS_REVIEWS_V2_ENABLED_DOMAINS.includes(uid) ||
-      MBS_EXTENDED_REVIEWS_V2_ENABLED_DOMAINS.includes(uid);
-
     const reviewsSliceIndex = content.findIndex(
       (slice: Record<string, any>) => slice?.slice_type === SLICE_TYPES.REVIEWS
     );
@@ -234,7 +223,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
         hide_slice: false,
       },
       context: {
-        isReviewsV2Enabled,
+        isReviewsV2Enabled: true,
         collectionDetails,
         categoryId,
         subCategoryId,
@@ -257,9 +246,9 @@ const LongForm = (longFormProps: TLongFormProps) => {
       },
     };
 
-    if (isReviewsV2Enabled && reviewsSliceIndex === -1) {
+    if (reviewsSliceIndex === -1) {
       finalContent.push(reviewsV2Slice);
-    } else if (isReviewsV2Enabled && reviewsSliceIndex !== -1) {
+    } else if (reviewsSliceIndex !== -1) {
       finalContent[reviewsSliceIndex] = reviewsV2Slice;
     }
 

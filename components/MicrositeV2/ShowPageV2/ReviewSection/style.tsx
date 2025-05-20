@@ -173,30 +173,6 @@ export const ReviewMediaSection = styled.div`
   }
 `;
 
-export const AllReviewsButton = styled.a`
-  display: flex;
-  padding: 0.6875rem 1.25rem 0.8125rem 1.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  width: 14.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid ${COLORS.GRAY.G2};
-  background: ${COLORS.BRAND.WHITE};
-
-  cursor: pointer;
-  ${expandFontToken(FONTS.BUTTON_BIG)};
-  color: ${COLORS.GRAY.G2};
-  &:hover {
-    box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    width: auto;
-    ${expandFontToken(FONTS.BUTTON_MEDIUM)};
-  }
-`;
-
 export const ShowMoreReviewsButton = styled.button`
   display: flex;
   padding: 0.6875rem 1.25rem 0.8125rem 1.25rem;

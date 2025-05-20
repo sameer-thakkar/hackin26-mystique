@@ -5,15 +5,13 @@ import type { TReviewMediasResponse } from 'utils/apiUtils';
 export type TReviewSectionProps = {
   reviewsDetails: Record<string, any>;
   tgid: string;
-  reviewPageUrl?: string;
   isMobile?: boolean;
   initialReviews?: TReviewMediasResponse['items'];
   numberOfReviewsToFetchAtOnce?: number;
-  maximumNumberOfReviews?: number;
+  maximumNumberOfReviews?: number | null;
   showFetchMoreButton?: boolean;
   showSkeleton?: boolean;
   controlledSwiperParams?: SwiperProps;
-  externalButtonContent?: JSX.Element | JSX.Element[];
   showReviews?: boolean;
   onImageClick?: (reviewId: string | number, localIndex: number) => void;
   snapshotSectionProps?: TSnapshotSectionProps;
