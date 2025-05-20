@@ -398,6 +398,7 @@ const VenuePage = (props: IVenuePageProps) => {
         hasPoweredByHeadoutLogo
         isEntertainmentLandingPageVisible={isLandingPage}
         isVenuePage
+        isEntertainmentMb
       />
       <Conditional if={!isLandingPage}>
         <Banner url={isMobile ? mobileBanner.url : desktopBanner.url}>

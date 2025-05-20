@@ -148,7 +148,7 @@ const NewsPage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (props) => {
         logoUrl={logoUrl}
         hasPoweredByHeadoutLogo
         isNewsPage
-        isEntertainmentMb={isMobile}
+        isEntertainmentMb
       />
       <Conditional if={!isLandingPage}>
         <ArticlePage {...props} />

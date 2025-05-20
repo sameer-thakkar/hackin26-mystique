@@ -72,6 +72,7 @@ interface IStyledHeader {
   $categoryHeaderMenuExists: boolean;
   $isPillBarSticky: boolean;
   $isEntertainmentBanner?: boolean;
+  $isNewsPage?: boolean;
 }
 
 export const StyledHeader = styled.div<IStyledHeader>`
@@ -100,8 +101,11 @@ export const StyledHeader = styled.div<IStyledHeader>`
     width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
-    border-bottom: ${({ isEntertainmentMb, showColoredHeader }) =>
-      isEntertainmentMb && !showColoredHeader && `1px ${COLORS.GRAY.G6} solid`};
+    border-bottom: ${({ isEntertainmentMb, showColoredHeader, $isNewsPage }) =>
+      isEntertainmentMb &&
+      !showColoredHeader &&
+      !$isNewsPage &&
+      `1px ${COLORS.GRAY.G6} solid`};
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
@@ -221,12 +225,15 @@ export const StyledHeader = styled.div<IStyledHeader>`
 const HeaderRight = styled.div<{
   isDarkMode?: boolean;
   isLtt?: boolean;
+  $isEntertainmentMb?: boolean;
 }>`
   display: grid;
   grid-gap: 8px;
   grid-auto-flow: column !important;
   grid-auto-columns: auto;
   align-items: center;
+  ${({ $isEntertainmentMb }) => $isEntertainmentMb && `height: 40px;`}
+
   .buy-tickets {
     font-size: 16px;
     cursor: pointer;
@@ -286,6 +293,8 @@ const HeaderRight = styled.div<{
     grid-auto-flow: unset;
     grid-template-columns: repeat(auto-fill, minmax(1.875rem, 1fr));
     align-items: center;
+    ${({ $isEntertainmentMb }) => $isEntertainmentMb && `height: unset;`}
+
     .buy-tickets {
       display: none;
     }
@@ -506,6 +515,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
   uid,
   showSeatMapExperiment,
   isEntertainmentBanner = false,
+  isNewsPage = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -669,6 +679,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
       $categoryHeaderMenuExists={categoryHeaderMenuExists}
       $isPillBarSticky={isPillBarSticky}
       $isEntertainmentBanner={isEntertainmentBanner}
+      $isNewsPage={isNewsPage}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
@@ -754,6 +765,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
             onMouseLeave={() => setHeaderHover(false)}
             isDarkMode={showColoredHeader}
             isLtt={isEntertainmentLandingPageVisible}
+            $isEntertainmentMb={isEntertainmentMb}
           >
             <Conditional if={!groupedHeaderSlices.length && headerLinks}>
               <HeaderLinks
