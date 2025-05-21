@@ -2058,8 +2058,6 @@ export const MICROBRANDS_URL = 'https://microbrands.headout.com' as const;
 
 export const X_CACHE_HEADER_KEY = 'x-cache' as const;
 
-export const EXPERIMENT_GROUP_COOKIE_KEY = 'headout-exp-group' as const;
-
 export const CALENDAR_UNIT = 'calendar-unit';
 
 function capitalizeFirstLetter(word: string | null) {
