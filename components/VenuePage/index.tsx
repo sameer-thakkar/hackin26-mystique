@@ -31,6 +31,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PLATFORM,
   ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
   SLICE_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -220,6 +221,7 @@ const VenuePage = (props: IVenuePageProps) => {
     window.open(redirectUrlForTabDataContent);
     trackEvent({
       eventName: ANALYTICS_EVENTS.THEATRE_PAGE.BEST_SEATS_CTA_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.VENUE_SEATS_PAGE,
       ...(availableShowsData[0]?.name && {
         [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: availableShowsData[0]?.name,
       }),
@@ -234,6 +236,9 @@ const VenuePage = (props: IVenuePageProps) => {
         [ANALYTICS_PROPERTIES.CATEGORY_NAME]:
           availableShowsData[0]?.primaryCategory?.displayName,
       }),
+    });
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
     });
   };
 
