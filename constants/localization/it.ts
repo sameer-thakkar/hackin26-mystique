@@ -476,6 +476,8 @@ const it = {
     YOUR_TICKETS: 'I tuoi biglietti',
     ABOUT_CONCERT: 'Il concerto',
     PROGRAM: 'Programma',
+    PART_ONE: 'Parte 1',
+    PART_TWO: 'Parte 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Ordina per',
@@ -2101,5 +2103,11 @@ const it = {
     ],
   },
   POWERED_BY: 'con tecnologia',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' ora',
+    HOURS: ' ore',
+    MINUTE: ' min',
+    MINUTES: ' min',
+  },
 };
 export default it;

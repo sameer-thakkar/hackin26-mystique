@@ -4,9 +4,12 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const ImageGalleryWrapper = styled.div`
+export const ImageGalleryWrapper = styled.div<{
+  $isShowPageExperiment?: boolean;
+}>`
   position: absolute;
-  bottom: 6.75rem;
+  bottom: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '10.75rem' : '6.75rem'};
   right: calc((100vw - 75rem) / 2);
 
   @media (max-width: 768px) {

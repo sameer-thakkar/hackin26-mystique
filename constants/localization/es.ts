@@ -537,6 +537,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     YOUR_TICKETS: 'Tus entradas',
     ABOUT_CONCERT: 'El concierto',
     PROGRAM: 'Programa',
+    PART_ONE: 'Parte 1',
+    PART_TWO: 'Parte 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Ordenar por',
@@ -2160,5 +2162,12 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     ],
   },
   POWERED_BY: 'patrocinado por',
+
+  BOOKING_PAGE_TIME: {
+    HOUR: 'h',
+    HOURS: 'h',
+    MINUTE: 'min',
+    MINUTES: 'min',
+  },
 };
 export default es;

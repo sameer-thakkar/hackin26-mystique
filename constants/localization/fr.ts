@@ -487,6 +487,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     YOUR_TICKETS: 'Vos billets',
     ABOUT_CONCERT: 'Le concert',
     PROGRAM: 'Programme',
+    PART_ONE: 'Partie 1',
+    PART_TWO: 'Partie 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Trier par',
@@ -2138,5 +2140,12 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     ],
   },
   POWERED_BY: 'opéré par',
+
+  BOOKING_PAGE_TIME: {
+    HOUR: ' h',
+    HOURS: ' h',
+    MINUTE: ' min',
+    MINUTES: ' min',
+  },
 };
 export default fr;

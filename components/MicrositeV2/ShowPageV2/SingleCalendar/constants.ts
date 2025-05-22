@@ -1,0 +1,5 @@
+export const CALENDAR_CONSTS = {
+  REGULAR_DUMMY_CAL_ROWS_COUNT: 5,
+};
+
+export const LIMITED_AVAILABILITY = 'LIMITED';

@@ -552,6 +552,8 @@ const da = {
     YOUR_TICKETS: 'Dine billetter',
     ABOUT_CONCERT: 'Om koncerten',
     PROGRAM: 'Program',
+    PART_ONE: 'Del 1',
+    PART_TWO: 'Del 2',
   },
   SORT_BY: 'Sortér efter',
   SPECIAL_OFFER: 'Særtilbud',
@@ -1400,6 +1402,12 @@ const da = {
     VERIFIED_REVIEW: 'Verificeret partneranmeldelse',
   },
   POWERED_BY: 'fra',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' time',
+    HOURS: ' timer',
+    MINUTE: ' minut',
+    MINUTES: ' minutter',
+  },
 };
 
 export default da;

@@ -554,6 +554,8 @@ const no = {
     YOUR_TICKETS: 'Billettene dine',
     ABOUT_CONCERT: 'Om konserten',
     PROGRAM: 'Program',
+    PART_ONE: 'Del 1',
+    PART_TWO: 'Del 2',
   },
   SORT_BY: 'Sorter etter',
   SPECIAL_OFFER: 'Spesialtilbud',
@@ -1366,6 +1368,12 @@ const no = {
     VERIFIED_REVIEW: 'Verifisert partneranmeldelse',
   },
   POWERED_BY: 'levert av',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' time',
+    HOURS: ' timer',
+    MINUTE: ' minutt',
+    MINUTES: ' minutter',
+  },
 };
 
 export default no;

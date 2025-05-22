@@ -484,6 +484,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     YOUR_TICKETS: 'Je tickets',
     ABOUT_CONCERT: 'Het Concert',
     PROGRAM: 'Programma',
+    PART_ONE: 'Deel 1',
+    PART_TWO: 'Deel 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sorteer',
@@ -2078,5 +2080,11 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     ],
   },
   POWERED_BY: 'powered by',
+  BOOKING_PAGE_TIME: {
+    HOUR: 'uur',
+    HOURS: 'uur',
+    MINUTE: 'min',
+    MINUTES: 'min',
+  },
 };
 export default nl;

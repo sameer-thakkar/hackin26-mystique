@@ -1355,6 +1355,13 @@ const id = {
       },
     ],
   },
+
+  BOOKING_PAGE_TIME: {
+    HOUR: ' jam',
+    HOURS: ' jam',
+    MINUTE: ' mnt',
+    MINUTES: ' mnt',
+  },
 };
 
 export default id;

@@ -483,6 +483,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     YOUR_TICKETS: 'Ihre Tickets',
     ABOUT_CONCERT: 'Das Konzert',
     PROGRAM: 'Programm',
+    PART_ONE: 'Teil 1',
+    PART_TWO: 'Teil 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sortieren nach',
@@ -2122,6 +2124,12 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     ],
   },
   POWERED_BY: 'powered by',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' Std.',
+    HOURS: ' Std.',
+    MINUTE: ' Min',
+    MINUTES: ' Min',
+  },
 };
 
 export default de;

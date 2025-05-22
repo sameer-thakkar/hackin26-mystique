@@ -3,14 +3,39 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const ShowPageDescriptorSectionWrapper = styled.div`
+export const ShowPageDescriptorSectionWrapper = styled.div<{
+  $isShowPageExperiment: boolean;
+}>`
   width: calc(100% - (5.46vw * 2));
   max-width: 1200px;
   margin: auto;
   padding: 2.5rem 0 1rem 0;
+  ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment &&
+    `
+      padding-top: 2rem;
+      padding-bottom: 0;
+    `}
 
   @media (max-width: 768px) {
     padding: 1.5rem 0 1rem 0;
+  }
+`;
+
+export const Divider = styled.div`
+  max-width: 49.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  height: 1px;
+  background-color: ${COLORS.GRAY.G7};
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 25.5rem;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    width: 30.5rem;
   }
 `;
 

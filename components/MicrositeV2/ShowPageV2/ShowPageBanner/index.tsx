@@ -18,6 +18,7 @@ const ShowPageV2Banner = ({
   isDev,
   breadcrumbs,
   taggedCity,
+  isShowPageExperiment,
 }: TShowPageBannerProps) => {
   const { imageUploads, nativeShowTrailer } = tourGroupData ?? {};
   const { url: trailerUrl } = nativeShowTrailer ?? {};
@@ -82,7 +83,10 @@ const ShowPageV2Banner = ({
         </BannerBackground>
       </Conditional>
       <Conditional if={imageUploads?.length > 1}>
-        <ImageGallery imageUploads={imageUploads} />
+        <ImageGallery
+          imageUploads={imageUploads}
+          isShowPageExperiment={isShowPageExperiment}
+        />
       </Conditional>
     </ShowPageBannerWrapper>
   );

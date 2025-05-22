@@ -30,6 +30,7 @@ const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
 const DAY_TRIPS_VIDEO_DWEB = 'Day Trips Video Experiment DWeb';
 const DAY_TRIPS_VIDEO_MWEB = 'Day Trips Video Experiment MWeb';
+const LTT_SHOW_PAGE_EXPERIMENT_V2 = 'Dweb LTT Show Page Calendar';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BRAND_LOADER_EXP,
@@ -42,6 +43,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LFC_IMPACT,
   LTD_LP_Experiment,
   LTT_CTA_COPY_EXPERIMENT,
+  LTT_SHOW_PAGE_EXPERIMENT_V2,
   MIXPANEL_SESSION_REPLAY,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
@@ -106,6 +108,12 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     LTT_CTA_COPY_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [50, 50]
+  ),
+
+  [LTT_SHOW_PAGE_EXPERIMENT_V2]: new Experiment(
+    LTT_SHOW_PAGE_EXPERIMENT_V2,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [100, 0]
   ),
   [MIXPANEL_SESSION_REPLAY]: new Experiment(
     MIXPANEL_SESSION_REPLAY,

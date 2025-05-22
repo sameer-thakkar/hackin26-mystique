@@ -487,6 +487,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     YOUR_TICKETS: 'Seus ingressos',
     ABOUT_CONCERT: 'Sobre o concerto',
     PROGRAM: 'Programa',
+    PART_ONE: 'Parte 1',
+    PART_TWO: 'Parte 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Ordenar por',
@@ -2107,5 +2109,11 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     ],
   },
   POWERED_BY: 'operado por',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' h',
+    HOURS: ' h',
+    MINUTE: ' min',
+    MINUTES: ' min',
+  },
 };
 export default pt;

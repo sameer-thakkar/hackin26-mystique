@@ -44,4 +44,5 @@ export type TImageGalleryProps = {
   };
   title?: string;
   getAssociatedReview?: (reviewId: number) => TReview | undefined;
+  isShowPageExperiment?: boolean;
 };

@@ -553,6 +553,8 @@ const tr = {
     YOUR_TICKETS: 'Biletleriniz',
     ABOUT_CONCERT: 'Konser Hakkında',
     PROGRAM: 'Program',
+    PART_ONE: 'Bölüm 1',
+    PART_TWO: 'Bölüm 2',
   },
   SORT_BY: 'Sırala',
   SPECIAL_OFFER: 'Özel Teklif',
@@ -1371,6 +1373,12 @@ const tr = {
     VERIFIED_REVIEW: 'Doğrulanmış ortak incelemesi',
   },
   POWERED_BY: 'powered by',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' saat',
+    HOURS: ' saat',
+    MINUTE: ' dk.',
+    MINUTES: ' dk.',
+  },
 };
 
 export default tr;

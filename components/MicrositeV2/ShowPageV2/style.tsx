@@ -197,9 +197,14 @@ export const ShowPageWrapper = styled.div`
     }
   }
 `;
-export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
+export const DateSelectorWrapper = styled.div<{
+  $visible: boolean;
+  $isShowPageExperiment?: boolean;
+  $isAllMediaVisible?: boolean;
+}>`
   position: absolute;
-  top: 24rem;
+  top: ${({ $isShowPageExperiment, $isAllMediaVisible }) =>
+    $isShowPageExperiment ? ($isAllMediaVisible ? '20rem' : '24rem') : '24rem'};
   right: calc((100vw - 75rem) / 2);
   height: calc(100% - 369px);
 
@@ -211,14 +216,16 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     right: calc((50vw - 25.5rem));
     ${ShowPageDateSelectorWrapper} {
-      width: 22rem;
+      width: ${({ $isShowPageExperiment }) =>
+        $isShowPageExperiment ? '24rem' : '22rem'};
       margin-left: 8rem;
     }
   }
   @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     right: calc((50vw - 30.5rem));
     ${ShowPageDateSelectorWrapper} {
-      width: 22rem;
+      width: ${({ $isShowPageExperiment }) =>
+        $isShowPageExperiment ? '24rem' : '22rem'};
     }
   }
 
@@ -227,6 +234,7 @@ export const DateSelectorWrapper = styled.div<{ $visible: boolean }>`
     top: 6.5rem;
     z-index: 9;
   }
+
   @media (max-width: 768px) {
     visibility: visible;
     top: auto;

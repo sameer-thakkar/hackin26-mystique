@@ -60,6 +60,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
+import { useIsLTTShowPageExperiementEnabled } from './hooks/useIsLTTShowPageExperiementEnabled';
 import { Pricing, SavePercentElement } from './ShowPagePricingSection/style';
 
 const SearchPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
@@ -128,6 +129,7 @@ const LttShowPageV2 = ({
     common_header: commonHeader,
     common_footer: commonFooter,
   } = CMSData;
+
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign,
     mbType,
@@ -138,6 +140,8 @@ const LttShowPageV2 = ({
     host,
     uid
   );
+
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
 
   const {
     TicketsUnavailableHeaderMweb,
@@ -412,16 +416,20 @@ const LttShowPageV2 = ({
           isDev={isDev}
           breadcrumbs={breadcrumbs}
           taggedCity={taggedCity}
+          isShowPageExperiment={isShowPageExperiment}
         />
 
         <ShowPageDescriptorSection
           microBrandsHighlight={microBrandsHighlight}
           isMobile={isMobile}
           tgid={tgid}
+          uid={uid}
         />
 
         <DateSelectorWrapper
           $visible={!isMobile || mwebDateSelectorPopupActive}
+          $isShowPageExperiment={isShowPageExperiment}
+          $isAllMediaVisible={tourGroupData?.imageUploads?.length > 1}
         >
           <ShowPagePricingSection
             tourGroupData={tourGroupData}
@@ -441,6 +449,7 @@ const LttShowPageV2 = ({
           name={name}
           tourGroupData={tourGroupData}
           isMobile={isMobile}
+          uid={uid}
         />
       </DateSelectorContainer>
       <PageWrapper>

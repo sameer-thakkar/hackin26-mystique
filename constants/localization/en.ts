@@ -562,6 +562,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     YOUR_TICKETS: 'Your Tickets',
     ABOUT_CONCERT: 'About Concert',
     PROGRAM: 'Program',
+    PART_ONE: 'Part 1',
+    PART_TWO: 'Part 2',
   },
   SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sort by',
@@ -894,6 +896,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Frequently asked questions about {0}',
       AGE_SUITABILITY_AND_GUIDELINES: 'Age & content guide',
       CAST_AND_CREATIVES: 'Cast & creatives',
+      ABOUT_THE_SHOW: 'About the show',
     },
     TICKETS_UNAVAILABLE: 'Tickets unavailable',
     TICKETS_UNAVAILABLE_SUBTEXT:
@@ -2250,6 +2253,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     BANNER_DESCRIPTION_SHORT:
       'Not just reviews — Hear from real guests and guides. See what the trip is like.',
     WATCH_VIDEO: 'Watch video',
+  },
+  BOOKING_PAGE_TIME: {
+    HOUR: ' hr',
+    HOURS: ' hrs',
+    MINUTE: ' min',
+    MINUTES: ' mins',
   },
 };
 

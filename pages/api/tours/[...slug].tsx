@@ -61,7 +61,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
   const queryParamsString = queryParamsObj.toString();
 
   const url = `https://${newCDN === 'true' ? 'api-mb' : 'api'}.${
-    useTest === 'true' || useTest ? 'test-' : ''
+    useTest === 'true' || useTest ? '' : ''
   }headout.com/api/${(req.query.slug as string[])?.join('/')}/${
     queryParamsString ? `?${queryParamsString}` : ''
   }`;

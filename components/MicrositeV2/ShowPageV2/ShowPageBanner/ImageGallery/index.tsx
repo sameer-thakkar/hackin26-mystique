@@ -39,6 +39,7 @@ const ImageGallery = ({
   controller,
   infiniteList,
   title,
+  isShowPageExperiment,
   getAssociatedReview,
 }: TImageGalleryProps) => {
   const [popupState, setPopupState] = useState<EPopupState>(
@@ -188,7 +189,7 @@ const ImageGallery = ({
   }, [activeIndex, popupState]);
 
   return (
-    <ImageGalleryWrapper>
+    <ImageGalleryWrapper $isShowPageExperiment={isShowPageExperiment}>
       <Conditional if={showMoreButton}>
         <AllPhotosCta onClick={() => openPopup()}>
           {AllPhotos} {strings.SHOW_PAGE_V2.ALL_PHOTOS}

@@ -1100,6 +1100,12 @@ const ar = {
       },
     ],
   },
+  BOOKING_PAGE_TIME: {
+    HOUR: 'ساعة',
+    HOURS: ' ساعات',
+    MINUTE: ' دقيقة',
+    MINUTES: 'دقائق',
+  },
 };
 
 export default ar;

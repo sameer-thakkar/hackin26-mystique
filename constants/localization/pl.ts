@@ -541,6 +541,8 @@ const pl = {
     ABOUT_CONCERT: 'O koncercie',
     PROGRAM: 'Program',
     CRITIC_REVIEW: 'Recenzja krytyka',
+    PART_ONE: 'Część 1',
+    PART_TWO: 'Część 2',
   },
   SORT_BY: 'Sortuj według',
   SPECIAL_OFFER: 'Oferta specjalna',
@@ -1954,6 +1956,12 @@ const pl = {
     ],
   },
   POWERED_BY: 'obsługiwane przez',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' godz.',
+    HOURS: ' godz.',
+    MINUTE: ' min',
+    MINUTES: ' min',
+  },
 };
 
 export default pl;

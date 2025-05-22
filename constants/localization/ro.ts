@@ -550,6 +550,8 @@ const ro = {
     YOUR_TICKETS: 'Biletele dumneavoastră',
     ABOUT_CONCERT: 'Despre Concert',
     PROGRAM: 'Program',
+    PART_ONE: 'Partea 1',
+    PART_TWO: 'Partea 2',
   },
   SORT_BY: 'Sortează după',
   SPECIAL_OFFER: 'Ofertă specială',
@@ -1371,6 +1373,12 @@ const ro = {
     VERIFIED_REVIEW: 'Recenzie verificată a partenerului',
   },
   POWERED_BY: 'furnizat de',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' hr',
+    HOURS: ' hrs',
+    MINUTE: ' min',
+    MINUTES: ' mins',
+  },
 };
 
 export default ro;

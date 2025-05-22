@@ -5,17 +5,23 @@ import { expandFontToken } from 'const/typography';
 
 export const ShowPageDateSelectorWrapper = styled.div<{
   $isRedirecting?: boolean;
+  $isShowPageExperiment?: boolean;
+  $showTimeList?: boolean;
 }>`
   display: flex;
   flex-direction: column;
   position: relative;
   width: 24rem;
+
   border-radius: 1rem;
 
   margin-left: 10rem;
   background-color: ${COLORS.BRAND.WHITE};
   z-index: 1;
-  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment
+      ? '0px 1px 6px 1px rgba(17, 17, 17, 0.1)'
+      : '0px 4px 12px 0px rgba(0, 0, 0, 0.1)'};
 
   @media (max-width: 768px) {
     box-shadow: none;
@@ -104,9 +110,18 @@ export const Pricing = styled.div`
   }
 `;
 
-export const BuyButtonWrapper = styled.div`
+export const BuyButtonWrapper = styled.div<{
+  $isShowPageExperiment?: boolean;
+}>`
   background-color: ${COLORS.BRAND.WHITE};
-  margin-top: 1.5rem;
+  margin-top: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '0.5rem' : '1.5rem'};
+  margin-bottom: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '1rem' : '0'};
+  margin-left: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '1rem' : '0'};
+  margin-right: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '1rem' : '0'};
   position: relative;
   z-index: 1;
 

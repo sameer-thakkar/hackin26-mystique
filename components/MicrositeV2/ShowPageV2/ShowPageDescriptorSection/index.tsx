@@ -4,6 +4,7 @@ import Conditional from 'components/common/Conditional';
 import { TShowPageDescriptorSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/interface';
 import {
   DescriptorsWrapper,
+  Divider,
   ShowPageDescriptorSectionWrapper,
   SpecialOfferBanner,
 } from 'components/MicrositeV2/ShowPageV2/ShowPageDescriptorSection/stlye';
@@ -19,11 +20,13 @@ import {
   PERMANENT_SHOWS_TGIDS,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { useIsLTTShowPageExperiementEnabled } from '../hooks/useIsLTTShowPageExperiementEnabled';
 
 const ShowPageDescriptorSection = ({
   microBrandsHighlight,
   isMobile,
   tgid,
+  uid,
 }: TShowPageDescriptorSectionProps) => {
   const { detailsObjects, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
@@ -32,6 +35,8 @@ const ShowPageDescriptorSection = ({
   const { offerHeading, offerText } = specialOffer ?? {};
 
   const { lang } = useContext(MBContext);
+
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
 
   const {
     [strings.SHOW_PAGE.DURATION]: duration,
@@ -84,7 +89,9 @@ const ShowPageDescriptorSection = ({
   }, []);
 
   return (
-    <ShowPageDescriptorSectionWrapper>
+    <ShowPageDescriptorSectionWrapper
+      $isShowPageExperiment={isShowPageExperiment}
+    >
       <DescriptorsWrapper numberOfDescriptors={Object.keys(descriptors).length}>
         {Object.keys(descriptors).map((key) => {
           const { content, icon: Icon, label } = descriptors[key];
@@ -127,6 +134,10 @@ const ShowPageDescriptorSection = ({
           );
         })}
       </DescriptorsWrapper>
+
+      <Conditional if={isShowPageExperiment}>
+        <Divider />
+      </Conditional>
 
       <Conditional if={hasSpecialOffer && offerText}>
         <SpecialOfferBanner>

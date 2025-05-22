@@ -6,4 +6,5 @@ export type TShowPageBannerProps = {
   isDev: boolean;
   breadcrumbs: TBreadcrumbs;
   taggedCity: string;
+  isShowPageExperiment: boolean;
 };

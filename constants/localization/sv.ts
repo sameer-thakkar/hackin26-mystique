@@ -553,6 +553,8 @@ const sv = {
     YOUR_TICKETS: 'Dina biljetter',
     ABOUT_CONCERT: 'Om konserten',
     PROGRAM: 'Program',
+    PART_ONE: 'Del 1',
+    PART_TWO: 'Del 2',
   },
   SORT_BY: 'Sortera efter',
   SPECIAL_OFFER: 'Specialerbjudande',
@@ -1368,6 +1370,12 @@ const sv = {
     VERIFIED_REVIEW: 'Verifierad partnerrecension',
   },
   POWERED_BY: 'drivs av',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' tim',
+    HOURS: ' timmar',
+    MINUTE: ' min',
+    MINUTES: ' min',
+  },
 };
 
 export default sv;

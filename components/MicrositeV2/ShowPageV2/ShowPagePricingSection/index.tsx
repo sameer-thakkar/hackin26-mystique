@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { Button, Text } from '@headout/eevee';
-import { cx } from '@headout/pixie/css';
+import { Box, Button, Text } from '@headout/eevee';
+import { css, cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import HorizontalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard';
 import { TShowPagePricingSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/interface';
@@ -13,12 +14,15 @@ import {
   ShowPageDateSelectorWrapper,
 } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/style';
 import { getUnavailableTicketStylesRecipe } from 'components/MicrositeV2/ShowPageV2/ShowPagePricingSection/ticketUnavailableStyles';
+import { getCurrentDate } from 'components/SeatMapPage/components/SideBar/utils';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
 import useABTesting from 'hooks/useABTesting';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
+import useOnScreen from 'hooks/useOnScreen';
 import { createBookingURL, getNakedDomain, getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
+import { formatInMonthTitleFormat } from 'utils/dateUtils';
 import { checkIfLTTMB, getHostName } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -34,6 +38,10 @@ import {
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import { useIsLTTShowPageExperiementEnabled } from '../hooks/useIsLTTShowPageExperiementEnabled';
+import { useFetchCalendarData } from '../SingleCalendar/hooks/useFetchCalendarData';
+import SingleCalendar from '../SingleCalendar/SingleCalendar';
+import { TimeList } from '../SingleCalendar/TimeList/TimeList';
 import RiveShowPageCTA from './RiveCTA';
 
 const ShowPagePricingSection = ({
@@ -41,12 +49,34 @@ const ShowPagePricingSection = ({
   flowType,
   moreShows,
   primarySubCategory,
+  fromDate,
+  toDate,
+  variantId,
 }: TShowPagePricingSectionProps) => {
+  const router = useRouter();
+  const { query } = router;
+  const defaultTimeSlotIndex = query.timeSlot
+    ? parseInt(query.timeSlot as string)
+    : 0;
+  const defaultSelectedDate = query.date as string;
+
   const [isButtonLoading, setButtonLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = useState(true);
   const [horProductCardLoadedCount, setHorProductCardLoadedCount] = useState(0);
   const [isRiveVisible, setIsRiveVisible] = useState(false);
-
+  const [selectedTourDate, setSelectedTourDate] = useState(defaultSelectedDate);
+  const [tourStartDate, setTourStartDate] = useState(
+    defaultSelectedDate ?? getCurrentDate()
+  );
+  const [selectedTimeSlotIndex, setSelectedTimeSlotIndex] =
+    useState(defaultTimeSlotIndex);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | undefined>(
+    undefined
+  );
+  const [showTimeList, setShowTimeList] = useState(true);
+  const dateSelectorWrapperRef = useRef<HTMLDivElement>(null);
+  const buyButtonWrapperRef = useRef<HTMLDivElement>(null);
   const handleChildLoaded = () => {
     setHorProductCardLoadedCount((prevCount) => prevCount + 1);
   };
@@ -71,6 +101,8 @@ const ShowPagePricingSection = ({
     redirectToHeadoutBookingFlow,
     uid,
   } = useContext(MBContext);
+
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
 
   const { id: tgid, listingPrice } = tourGroupData;
   const {
@@ -111,6 +143,7 @@ const ShowPagePricingSection = ({
   }, []);
 
   const hsid = useRecoilValue(hsidAtom);
+  const checkAvailabilityButtonRef = useRef<HTMLButtonElement>(null);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain || getNakedDomain(hostname),
@@ -122,6 +155,12 @@ const ShowPagePricingSection = ({
     currency,
     flowType,
     hsid,
+    date: isShowPageExperiment
+      ? {
+          startDate: selectedTourDate,
+          startTime: selectedTimeSlot,
+        }
+      : undefined,
   });
 
   useHistoryTraversal({
@@ -182,10 +221,135 @@ const ShowPagePricingSection = ({
       ? 'loading'
       : 'default';
 
+  const isBuyButtonInViewport = useOnScreen({
+    ref: buyButtonWrapperRef,
+    options: {
+      threshold: 1,
+    },
+  });
+
+  const { isValidating, inventoryListsMap, medianPrice } = useFetchCalendarData(
+    {
+      tgid,
+      fromDate,
+      toDate,
+      variantId,
+      currency,
+      setIsLoading,
+      setSelectedTourDate,
+      setTourStartDate,
+      isShowPageExperiment,
+      defaultSelectedDate,
+    }
+  );
+
+  const updateQueryParamsWithDateAndTimeSlot = (
+    date: string,
+    timeSlot: number
+  ) => {
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          date,
+          timeSlot,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <>
-      <ShowPageDateSelectorWrapper>
-        <Conditional if={listingPrice}>
+      <ShowPageDateSelectorWrapper
+        ref={dateSelectorWrapperRef}
+        $isShowPageExperiment={isShowPageExperiment}
+        $showTimeList={showTimeList}
+      >
+        <Conditional if={isShowPageExperiment}>
+          <SingleCalendar
+            hidePrice={false}
+            showTimeList={showTimeList}
+            selectedTourDate={selectedTourDate}
+            inventoryListsMap={inventoryListsMap}
+            medianPrice={medianPrice}
+            type="calendar"
+            onDateSelected={(fullDateAsString: string) => {
+              // bring entire calendar into viewport
+              if (!isBuyButtonInViewport) {
+                dateSelectorWrapperRef.current?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                });
+              }
+              setSelectedTourDate(fullDateAsString);
+              setTourStartDate(fullDateAsString);
+              setSelectedTimeSlotIndex(0);
+              setShowTimeList(true);
+              updateQueryParamsWithDateAndTimeSlot(fullDateAsString, 0);
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.EXPERIENCE_DATE_SELECTED,
+                [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: fullDateAsString,
+                [ANALYTICS_PROPERTIES.TRIGGERED_BY]: 'User',
+              });
+            }}
+            onMonthNavigated={(currVisibleMonth: string) => {
+              if (
+                currVisibleMonth ===
+                formatInMonthTitleFormat(selectedTourDate, lang)
+              ) {
+                setShowTimeList(true);
+              } else {
+                setShowTimeList(false);
+              }
+            }}
+          />
+          <Box
+            className={css({
+              transform: showTimeList ? 'scaleY(1)' : 'scaleY(0)',
+              transformOrigin: 'top',
+              height: showTimeList ? 'auto' : '0',
+              visibility: showTimeList ? 'visible' : 'hidden',
+              transition: showTimeList
+                ? 'transform 0.3s cubic-bezier(0.7, 0, 0.3, 1) !important'
+                : 'none',
+            })}
+          >
+            <TimeList
+              tgid={tgid}
+              tourStartDate={tourStartDate}
+              activeCurrencyCode={currencyCode ?? ''}
+              loading={isLoading}
+              selectedTourDate={selectedTourDate}
+              selectedTimeSlotIndex={selectedTimeSlotIndex}
+              setSelectedTimeSlotIndex={setSelectedTimeSlotIndex}
+              setSelectedTimeSlot={setSelectedTimeSlot}
+              onTimeSlotClick={(index: number) => {
+                updateQueryParamsWithDateAndTimeSlot(selectedTourDate, index);
+              }}
+              defaultSelectedTimeSlotIndex={defaultTimeSlotIndex}
+            />
+            <BuyButtonWrapper $isShowPageExperiment ref={buyButtonWrapperRef}>
+              <Button
+                tabIndex={0}
+                disabled={
+                  !inventoryListsMap || isValidating || !selectedTourDate
+                }
+                as="button"
+                btnType="primary"
+                onClick={onCheckAvailabilityClicked}
+                primaryText={buyButtonText}
+                size="medium"
+                state={buttonType}
+                variant="primary"
+                ref={checkAvailabilityButtonRef}
+              />
+            </BuyButtonWrapper>
+          </Box>
+        </Conditional>
+        <Conditional if={listingPrice && !isShowPageExperiment}>
           <PricingSection>
             <Pricing>
               <div className="pricing">
@@ -253,7 +417,7 @@ const ShowPagePricingSection = ({
             </BuyButtonWrapper>
           </PricingSection>
         </Conditional>
-        <Conditional if={!listingPrice}>
+        <Conditional if={!listingPrice && !isShowPageExperiment}>
           <div className={TicketsUnavailableSection}>
             <div
               className={cx(

@@ -4,6 +4,9 @@ export type TShowPagePricingSectionProps = {
   onClose?: () => void;
   moreShows?: any;
   primarySubCategory?: Record<string, any>;
+  fromDate?: string;
+  toDate?: string;
+  variantId?: string;
 };
 
 export type TRiveCTAProps = {

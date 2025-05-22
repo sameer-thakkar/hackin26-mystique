@@ -16,8 +16,9 @@ export const ContentSectionsWrapper = styled.div`
   }
 `;
 
-export const ContentWrapper = styled.div`
-  width: 44.625rem;
+export const ContentWrapper = styled.div<{ $isShowPageExperiment: boolean }>`
+  width: ${({ $isShowPageExperiment }) =>
+    $isShowPageExperiment ? '49.5rem' : '44.625rem'};
 
   .show-description p,
   .storyline-content p {
@@ -44,6 +45,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
   > p,
   li,
   .show-description > p,
@@ -93,6 +95,7 @@ export const Content = styled.div`
   .show-description {
     margin-top: 3.5rem;
   }
+
   .theatre-name {
     justify-content: space-between;
     span {

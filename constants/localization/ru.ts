@@ -551,6 +551,8 @@ const ru = {
     YOUR_TICKETS: 'Ваши билеты',
     ABOUT_CONCERT: 'О концерте',
     PROGRAM: 'Программа',
+    PART_ONE: 'Часть 1',
+    PART_TWO: 'Часть 2',
   },
   SORT_BY: 'Сортировать по',
   SPECIAL_OFFER: 'Специальное предложение',
@@ -1391,6 +1393,12 @@ const ru = {
     DISCOVER_MORE: 'Посмотреть больше',
   },
   POWERED_BY: 'на основе',
+  BOOKING_PAGE_TIME: {
+    HOUR: ' ч',
+    HOURS: ' часы',
+    MINUTE: ' мин',
+    MINUTES: ' минут',
+  },
 };
 
 export default ru;

@@ -678,5 +678,11 @@ const ko = {
     TRANSPORTATION: '교통',
     FESTIVALS_EVENTS: '축제 및 이벤트',
   },
+  BOOKING_PAGE_TIME: {
+    HOUR: ' 시간',
+    HOURS: ' 시간',
+    MINUTE: ' 분',
+    MINUTES: ' 분',
+  },
 };
 export default ko;

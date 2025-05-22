@@ -1374,6 +1374,7 @@ export const CTA_TYPE = {
   LOAD_MORE: 'Load More',
   MORE_INFORMATION: 'More Information',
   MAP_LINK: 'Map Link',
+  READ_LESS: 'Read Less',
 };
 
 export const HIGHLIGHT_TYPES = {
@@ -2650,3 +2651,6 @@ export const RANKING_EXPERIMENT_TGIDS = [
 export const CDN_IMGIX_BASE_SERVER = 'cdn-imgix.headout.com';
 
 export const GIF_LOADER_WHITE_BG_URL = `https://${CDN_IMGIX_BASE_SERVER}/assets/gif/headoutGifLoaderWhiteBg.gif`;
+
+export const HARRY_POTTER_CURSED_CHILD_UID =
+  'www.london-theater-tickets.com.harry-potter-and-the-cursed-child-tickets';
