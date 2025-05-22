@@ -104,7 +104,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -283,7 +283,6 @@ const Product = (props: any) => {
     isPopUpOnly = false,
     onPopupClosed,
     onPopupOpened,
-    isFlexiCancellationExperimentTriggered,
     scrollToIndex = -1,
     fireCardClickEvent = true,
   } = props;
@@ -846,15 +845,9 @@ const Product = (props: any) => {
     }
   }, [isShortcodePopup]);
 
-  const isProductCardVisible = useOnScreen({
-    ref: productRef,
-    unobserve: true,
-  });
-
   const {
     isEligible: isEligibleForFlexiCancellationExperiment,
     variant: flexiCancellationExperimentVariant,
-    isExperimentResolving,
   } = useABTesting({
     experimentId: 'FLEXIBLE_CANCELLATION_EXPERIMENT',
     customEligibilityCheckFn: () => {
@@ -875,32 +868,6 @@ const Product = (props: any) => {
   });
 
   const hsid = useRecoilValue(hsidAtom);
-
-  useEffect(() => {
-    if (
-      isEligibleForFlexiCancellationExperiment &&
-      !isFlexiCancellationExperimentTriggered?.current &&
-      isProductCardVisible &&
-      !isExperimentResolving &&
-      !!flexiCancellationExperimentVariant
-    ) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-          EXPERIMENT_NAMES.FLEXIBLE_CANCELLATION_EXPERIMENT,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
-          flexiCancellationExperimentVariant,
-      });
-
-      isFlexiCancellationExperimentTriggered.current = true;
-    }
-  }, [
-    flexiCancellationExperimentVariant,
-    isEligibleForFlexiCancellationExperiment,
-    isFlexiCancellationExperimentTriggered,
-    isProductCardVisible,
-    isExperimentResolving,
-  ]);
 
   const boosterTypeIfShown = useMemo(() => {
     const headoutExclusiveTgids = BOOSTER_HEADOUT_EXCLUSIVE_TGIDS.some(

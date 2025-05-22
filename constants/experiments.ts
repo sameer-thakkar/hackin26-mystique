@@ -87,7 +87,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
     FLEXIBLE_CANCELLATION_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [0, 100]
   ),
   [HOHO_REVAMP_PARIS_BARCELONA]: new Experiment(
     HOHO_REVAMP_PARIS_BARCELONA,
@@ -107,7 +107,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [LTT_CTA_COPY_EXPERIMENT]: new Experiment(
     LTT_CTA_COPY_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
 
   [LTT_SHOW_PAGE_EXPERIMENT_V2]: new Experiment(

@@ -209,6 +209,7 @@ const ShowPagePricingSection = ({
   } = useABTesting({
     experimentId: 'LTT_CTA_COPY_EXPERIMENT',
     customEligibilityCheckFn: () => checkIfLTTMB(uid),
+    noTrack: true,
   });
 
   const buyButtonText =
@@ -340,7 +341,7 @@ const ShowPagePricingSection = ({
                 as="button"
                 btnType="primary"
                 onClick={onCheckAvailabilityClicked}
-                primaryText={buyButtonText}
+                primaryText={strings.SELECT_SEATS}
                 size="medium"
                 state={buttonType}
                 variant="primary"
