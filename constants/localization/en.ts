@@ -903,6 +903,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       'Luckily, we have plenty more to choose from right here.',
     MUST_SEE_SHOWS: 'More must-see shows',
     SEE_ALL_SHOWS: 'See all shows',
+    SHOW_ONLY_AVAILABLE_AT: 'This show is only available on',
+    GETTING_TICKETS: 'Getting your tickets',
   },
   HOHO: {
     HOHO: 'Hop On Hop Off Tours',

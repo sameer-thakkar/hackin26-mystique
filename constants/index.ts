@@ -578,7 +578,7 @@ export const ANALYTICS_EVENTS = {
   SHOW_PAGE: {
     RATING_WIDGET_CLICKED: 'Rating Widget Clicked',
     EXPERIENCE_DATE_SELECTED: 'Experience Date Selected',
-    EXPERIENCE_TIME_SELECTED: 'Expereince Time Selected',
+    EXPERIENCE_TIME_SELECTED: 'Experience Time Selected',
     CALENDAR_OPEN: 'Calendar Opened',
     CALENDAR_CLOSED: 'Calendar Closed',
     CALENDAR_DATE_SELECTED: 'Calendar Date Selected',

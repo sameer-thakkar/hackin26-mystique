@@ -831,12 +831,15 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       WHAT_CRITICS_THINK: 'Opinião dos críticos',
       CAST_AND_CREATIVES: 'Elenco e equipe',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Perguntas frequentes',
+      ABOUT_THE_SHOW: 'Sobre o espetáculo',
     },
     TICKETS_UNAVAILABLE: 'Ingressos indisponíveis',
     TICKETS_UNAVAILABLE_SUBTEXT:
       'Por sorte, temos muitas outras opções para você escolher aqui.',
     MUST_SEE_SHOWS: 'Mais espetáculos imperdíveis',
     SEE_ALL_SHOWS: 'Ver todos espetáculos',
+    SHOW_ONLY_AVAILABLE_AT: 'Data(s) do espetáculo:',
+    GETTING_TICKETS: 'Como obter seus ingressos',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guias especializados e multilíngues',

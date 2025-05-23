@@ -513,7 +513,7 @@ const ContentSections = ({
         <Content>
           <h2 id="Tickets redemption">
             <TicketsRedemption />
-            {convertToSentenceCase(strings.SHOW_PAGE.TICKETS_REDEMPTION)}
+            {convertToSentenceCase(strings.SHOW_PAGE_V2.GETTING_TICKETS)}
           </h2>
           <PrismicRichText
             field={ticketRedemption}

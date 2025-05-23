@@ -826,6 +826,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       WHAT_CRITICS_THINK: 'Das sagen Kritiker',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Häufig gestellte Fragen',
       CAST_AND_CREATIVES: 'Besetzung und Crew',
+      ABOUT_THE_SHOW: 'Infos zur Show',
     },
     TICKETS_UNAVAILABLE: 'Tickets nicht verfügbar',
     TICKETS_UNAVAILABLE_SUBTEXT:
@@ -833,6 +834,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MUST_SEE_SHOWS: 'Weitere sehenswerte Shows',
     SEE_ALL_SHOWS: 'Alle Shows anzeigen',
     MUST_DO_EXP: 'Ein unbedingtes Muss',
+    SHOW_ONLY_AVAILABLE_AT: 'Diese Show läuft am',
+    GETTING_TICKETS: 'Tickets erhaltenn',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Fachkundige mehrsprachige Reiseleiter',

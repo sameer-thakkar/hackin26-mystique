@@ -8,6 +8,7 @@ import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { strings } from 'const/strings';
 import { RightArrowSvg } from 'assets/rightArrowSvg';
 import { LoadingCalendar } from './LoadingCalendar';
 import LSpan from './LSpan';
@@ -155,7 +156,7 @@ const SingleCalendar = ({
           })}
         >
           <Text textStyle="Semantics/UI Label/Small" color="core.grey.900">
-            This show is only available on
+            {strings.SHOW_PAGE_V2.SHOW_ONLY_AVAILABLE_AT}
           </Text>
           <Text
             textStyle="Semantics/UI Label/Large (Heavy)"

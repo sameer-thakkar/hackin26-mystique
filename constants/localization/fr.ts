@@ -830,12 +830,15 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       WHAT_CRITICS_THINK: 'Ce que pensent les critiques',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Foire aux questions',
       CAST_AND_CREATIVES: "Les acteurs et l'équipe",
+      ABOUT_THE_SHOW: 'À propos du spectacle',
     },
     TICKETS_UNAVAILABLE: 'Pas de billets disponibles',
     TICKETS_UNAVAILABLE_SUBTEXT:
       "Heureusement, nous en avons beaucoup d'autres à choisir ici.",
     MUST_SEE_SHOWS: 'Plus de spectacles à voir',
     SEE_ALL_SHOWS: 'Voir tous les spectacles',
+    SHOW_ONLY_AVAILABLE_AT: 'Ce spectacle est uniquement proposé le',
+    GETTING_TICKETS: 'Réception des billets',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guides multilingues spécialisés',

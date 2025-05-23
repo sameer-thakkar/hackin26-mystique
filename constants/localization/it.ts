@@ -817,12 +817,15 @@ const it = {
       WHAT_CRITICS_THINK: 'Cosa dice la critica',
       CAST_AND_CREATIVES: 'Cast e troupe',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Domande frequenti',
+      ABOUT_THE_SHOW: 'Informazioni sullo spettacolo',
     },
     TICKETS_UNAVAILABLE: 'I biglietti non sono disponibili',
     TICKETS_UNAVAILABLE_SUBTEXT:
       'Ma hai a disposizione tante altre opzioni tra cui scegliere.',
     MUST_SEE_SHOWS: 'Altri spettacoli imperdibili',
     SEE_ALL_SHOWS: 'Scopri tutti gli spettacoli',
+    SHOW_ONLY_AVAILABLE_AT: 'Spettacolo è disponibile solo',
+    GETTING_TICKETS: 'Stiamo recuperando i biglietti',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guide multilingue esperte',

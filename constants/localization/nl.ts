@@ -827,12 +827,15 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
       WHAT_CRITICS_THINK: 'Wat critici zeggen',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'FAQs',
       CAST_AND_CREATIVES: 'Cast & creatives',
+      ABOUT_THE_SHOW: 'Info over de show',
     },
     TICKETS_UNAVAILABLE: 'Geen tickets beschikbaar',
     TICKETS_UNAVAILABLE_SUBTEXT:
       'Gelukkig vind je hier nog veel meer om uit te kiezen.',
     MUST_SEE_SHOWS: 'Meer aanraders',
     SEE_ALL_SHOWS: 'Bekijk alle shows',
+    SHOW_ONLY_AVAILABLE_AT: 'Deze show is te zien op',
+    GETTING_TICKETS: 'Tickets kopen',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Deskundige meertalige gidsen',

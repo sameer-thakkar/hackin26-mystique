@@ -141,7 +141,10 @@ const LttShowPageV2 = ({
     uid
   );
 
-  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
+    uid,
+    true
+  );
 
   const {
     TicketsUnavailableHeaderMweb,

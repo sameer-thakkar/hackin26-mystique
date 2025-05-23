@@ -881,12 +881,15 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
       WHAT_CRITICS_THINK: 'Opinión de los críticos',
       FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Preguntas frecuentes',
       CAST_AND_CREATIVES: 'Reparto y equipo',
+      ABOUT_THE_SHOW: 'Sobre el espectáculo',
     },
     TICKETS_UNAVAILABLE: 'No hay entradas disponibles',
     TICKETS_UNAVAILABLE_SUBTEXT:
       'Por suerte, aquí encontrarás otras opciones entre las que elegir.',
     MUST_SEE_SHOWS: 'Espectáculos que no te puedes perder',
     SEE_ALL_SHOWS: 'Ver todos los espectáculos',
+    SHOW_ONLY_AVAILABLE_AT: 'Fechas disponibles:',
+    GETTING_TICKETS: 'Información sobre tus entradas',
   },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Guías multilingües expertos',

@@ -88,6 +88,12 @@ const ShowPageDescriptorSection = ({
     setAgeSuitabilitySectionExists(!!ageSuitabilitySection);
   }, []);
 
+  useEffect(() => {
+    if (isShowPageExperiment && ageSuitabilitySectionExists) {
+      setAgeSuitabilitySectionExists(false);
+    }
+  }, [isShowPageExperiment, ageSuitabilitySectionExists]);
+
   return (
     <ShowPageDescriptorSectionWrapper
       $isShowPageExperiment={isShowPageExperiment}
