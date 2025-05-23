@@ -275,7 +275,7 @@ const ImageGallery: React.FC<React.PropsWithChildren<ImageGalleryProps>> = (
   const activeImage = images?.[currentIndex];
   const fullImageHeading = asText(activeImage?.heading as []);
 
-  if (!(images?.[0].linked_image?.url || images?.[0].uploaded_image?.url))
+  if (!(images?.[0]?.linked_image?.url || images?.[0]?.uploaded_image?.url))
     return null;
 
   const parentProps = {
