@@ -1314,8 +1314,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     COMBO_HEADING: 'Mehr für weniger: Kombideals und City Cards',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Tickets buchen',
-  REVIEW_SECTION: {
-    HEADING: 'Unsere Gäste lieben Headout',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Unsere Gäste lieben Headout',
     SORTING: {
       MOST_RELEVANT: 'Relevanteste',
       MOST_RECENT: 'Neueste',
@@ -1333,6 +1333,12 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
       CTA: 'Alle anzeigen',
     },
     VERIFIED_REVIEW: 'Verifizierte Partnerrezension',
+    REVIEW_SECTION_HEADER: 'Was unsere Gäste sagen',
+    TRUST_VB_TAG: 'Bestätigte Buchung',
+    HEADING: 'Von glücklichen Gästen',
+    HEADING_BOOSTER_TEXT: 'Über 35 Millionen Gäste',
+    SEE_MORE_BUTTON_TEXT: 'Alle {0} Bewertungen anzeigen',
+    REVIEW_CARD_MODAL_TITLE: 'Bewertung',
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

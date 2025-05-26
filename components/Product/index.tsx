@@ -10,6 +10,9 @@ import useSWR from 'swr';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
+import { Button as EeveeButton, Text } from '@headout/eevee';
+import { Modal, type TModalRef } from '@headout/espeon/components/common/Modal';
+import ArrowLeft from '@headout/onix/web/ui/arrow/stroke/ArrowLeft';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
@@ -51,6 +54,7 @@ import {
   ProductBody,
   ProductHeader,
   ProductOfferBlock,
+  reviewSectionPopupRecipe,
   SlideUpContainer,
   SlideUpTitle,
   SpecialGuidedTourMoreDetailsCTA,
@@ -180,6 +184,12 @@ const Itinerary = dynamic(
   import(/* webpackChunkName: "Itinerary" */ 'components/common/Itinerary')
 );
 
+const PinnedReviews = dynamic(() =>
+  import(
+    /* webpackChunkName: "PinnedReviews" */ 'components/common/PinnedReviews'
+  ).then((mod) => mod.PinnedReviews)
+);
+
 const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
 const maxProductHeight = 395;
@@ -285,10 +295,12 @@ const Product = (props: any) => {
     onPopupOpened,
     scrollToIndex = -1,
     fireCardClickEvent = true,
+    pinnedReviews,
+    showPinnedReviews = false,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
-
+  const reviewModalControlRef = useRef<TModalRef>(null);
   const {
     data: tgidItineraryData,
     showData: showItinerary,
@@ -473,6 +485,8 @@ const Product = (props: any) => {
     params,
   });
 
+  const reviewSectionPopupStyles = reviewSectionPopupRecipe();
+
   const { data: tourGroupData } = useSWR(
     isComboWithSingleVariant ? tourGroupEndpoint : null,
     { fetcher: swrFetcher }
@@ -600,7 +614,6 @@ const Product = (props: any) => {
       [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
       ...getProductCommonProperties({
         primaryCategory,
-        primaryCollection,
         primarySubCategory,
       }),
     });
@@ -1487,17 +1500,7 @@ const Product = (props: any) => {
         reviewsDetails,
       }),
     });
-
-    const numberOfSections =
-      tabs.length + (showItinerary && !isCruisesRevamp ? 1 : 0);
-
-    if (!isPopup) {
-      popupController.current?.open(numberOfSections, false);
-      trackedToggleContent(false);
-    } else {
-      if (!popupContainerRef.current) return;
-      scrollToSection(numberOfSections);
-    }
+    reviewModalControlRef.current?.open();
   };
 
   const getProductCardElements = ({
@@ -2117,6 +2120,63 @@ const Product = (props: any) => {
                     : null
                 }
               >
+                <Conditional if={(isPopup || isBot) && showPinnedReviews}>
+                  <PinnedReviews
+                    pinnedReviews={pinnedReviews}
+                    lang={lang}
+                    reviewsDetails={reviewsDetails}
+                    onSeeMoreClick={
+                      showReviewSection
+                        ? () => {
+                            reviewModalControlRef.current?.open();
+                          }
+                        : undefined
+                    }
+                    tgid={tgid}
+                  />
+                </Conditional>{' '}
+                <Modal
+                  ref={reviewModalControlRef}
+                  showCloseIcon={false}
+                  header={
+                    <div className={reviewSectionPopupStyles.headerContainer}>
+                      <EeveeButton
+                        as="button"
+                        btnType="transparent"
+                        icon={<ArrowLeft />}
+                        iconPosition="leading"
+                        primaryText=""
+                        size="medium"
+                        state="default"
+                        variant="primary"
+                        className={reviewSectionPopupStyles.backButton}
+                        onClick={() => {
+                          reviewModalControlRef.current?.close();
+                        }}
+                        aria-label="Close modal"
+                      />
+                      <Text textStyle={'Semantics/Heading/Medium'}>
+                        {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
+                      </Text>
+                    </div>
+                  }
+                  headerScrollBehavior={false}
+                  key={`review-section-modal-${tgid}`}
+                  closeOnBackdropClick
+                  closeOnEscape
+                  contentClassName={reviewSectionPopupStyles.content}
+                  headerClassName={reviewSectionPopupStyles.header}
+                  bodyClassName="review-section-overflow-container"
+                  zIndex={100}
+                >
+                  <ReviewSection
+                    reviewsDetails={reviewsDetails}
+                    tgid={tgid}
+                    topReviews={topReviews}
+                    isBot={isBot}
+                    showTitle={false}
+                  />
+                </Modal>
                 <Conditional if={isSpecialGuidedTour && !isPopup}>
                   <SpecialGuidedTourSummary
                     moreDetailsCTA={getMoreDetailsButton()}

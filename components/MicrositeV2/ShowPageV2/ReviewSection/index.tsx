@@ -132,24 +132,33 @@ const ReviewSection = ({
     num > 999 ? `${(num / 1000).toFixed(1)}K` : num;
   const { lang } = useContext(MBContext);
   const localizedRatingsCount = getLocalizedCount(ratingsCount, lang);
-  const [offset, setOffset] = useState<number | null>(
-    !initialReviews ? 0 : Math.max(5, initialReviews?.length || 0)
-  );
+  const initialOffset = !initialReviews
+    ? 0
+    : Math.max(5, initialReviews?.length || 0);
+  const [offset, setOffset] = useState<number | null>(initialOffset);
   const [isFetching, setIsFetching] = useState(!initialReviews?.length);
   const [moreReviewsClickCount, setMoreReviewsClickCount] = useState(1);
   const SCROLL_THRESHOLD = isMobile ? 115 : 150;
 
   // This scrolls to the first new review in the new reviews batch fetched from the server
   const smoothScrollToNewReviewBatch = useCallback(() => {
+    if (lastReviewIndex.current === 0) return;
+
+    const reviewSectionOverflowContainer = document.querySelector(
+      '.review-section-overflow-container'
+    );
+    const popupContainer =
+      reviewSectionOverflowContainer ??
+      document.querySelector(
+        "[id*='product-card-popup'], #snapsheet-content-container"
+      );
+
     const newReviewIndex = lastReviewIndex.current + 1;
-    const firstNewReviewRef = document.querySelector(
+    const firstNewReviewRef = popupContainer?.querySelector(
       `#review-item-${newReviewIndex}`
     );
 
     if (firstNewReviewRef) {
-      const popupContainer = document.querySelector(
-        "[id*='product-card-popup'], #snapsheet-content-container"
-      );
       const firstNewReviewPosition =
         firstNewReviewRef.getBoundingClientRect().top - SCROLL_THRESHOLD;
 
@@ -168,10 +177,11 @@ const ReviewSection = ({
       ) {
         return;
       }
-      lastReviewIndex.current = Math.max(
-        0,
-        reviews.slice(0, numberOfReviewsToShow).length - 1
-      );
+
+      lastReviewIndex.current =
+        offset === initialOffset
+          ? 0
+          : Math.max(0, reviews.slice(0, numberOfReviewsToShow).length - 1);
       setIsFetching(true);
 
       const reviewsResponse = await fetchTourGroupReviewsV6({

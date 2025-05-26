@@ -116,6 +116,7 @@ const MobileProductCard = (props: any) => {
     setShowPricingBar,
     setTitle,
     setSnapDrawerConfig,
+    setShowingAllReviewsBottomSheet,
   } = useProductCard();
 
   const handleSnapSheetExpand = ({
@@ -205,10 +206,7 @@ const MobileProductCard = (props: any) => {
     setDrawerState(SWIPESHEET_STATES.OPEN);
 
     setTimeout(() => {
-      handleSnapSheetExpand({
-        tabId: `tab-${strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}`,
-        transformOffset: -60,
-      });
+      setShowingAllReviewsBottomSheet(true);
     }, 0);
   };
 

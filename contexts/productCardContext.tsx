@@ -30,6 +30,8 @@ interface ProductContextType {
     transform?: string | null;
     isCompleted?: boolean;
   }) => void;
+  showingAllReviewsBottomSheet: boolean;
+  setShowingAllReviewsBottomSheet: (state: boolean) => void;
 }
 
 const productCardContext = createContext({} as ProductContextType);
@@ -57,6 +59,8 @@ export const ProductCardProvider: React.FC<
   const [snapDrawerConfig, setSnapDrawerConfig] = useState({
     isMountedOnTop: false,
   });
+  const [showingAllReviewsBottomSheet, setShowingAllReviewsBottomSheet] =
+    useState(false);
 
   const { Provider: ProductCardContextProvider } = productCardContext;
 
@@ -89,6 +93,8 @@ export const ProductCardProvider: React.FC<
         setHeaderHeight,
         snapDrawerConfig,
         setSnapDrawerConfig,
+        showingAllReviewsBottomSheet,
+        setShowingAllReviewsBottomSheet,
       }}
     >
       {children}

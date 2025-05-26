@@ -1268,8 +1268,8 @@ const pl = {
       RESET_ZOOM: 'Reset Zoom',
     },
   },
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Miliony ludzi uwielbiają podróże z nami',
     SORTING: {
       MOST_RELEVANT: 'Najistotniejsze',
       MOST_RECENT: 'Ostatnie',
@@ -1287,6 +1287,12 @@ const pl = {
       CTA: 'Pokaż wszystkie',
     },
     VERIFIED_REVIEW: 'Zweryfikowana opinia partnera',
+    REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
+    TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
+    HEADING: 'From the happy customers',
+    HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
   TRUST_TOOLTIP_CONTENT:

@@ -126,6 +126,8 @@ export enum HeadoutEndpoints {
   QnaSections,
   TourGroupReviewsV6,
   CityInfo,
+  PinnedReviewsByTgid,
+  PinnedReviewsByTgidList,
 }
 
 const endPointsOnNewCDN = [
@@ -158,6 +160,8 @@ const endPointsOnNewCDN = [
   HeadoutEndpoints.QnaSections,
   HeadoutEndpoints.TourGroupReviewsV6,
   HeadoutEndpoints.CityInfo,
+  HeadoutEndpoints.PinnedReviewsByTgid,
+  HeadoutEndpoints.PinnedReviewsByTgidList,
 ];
 
 export const getHeadoutApiUrl = ({
@@ -294,6 +298,12 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.CityInfo:
       endpointSlug = `/api/tours/v3/cities/${id}/`;
+      break;
+    case HeadoutEndpoints.PinnedReviewsByTgid:
+      endpointSlug = `/api/tours/v6/tour-groups/${id}/pinned-reviews/`;
+      break;
+    case HeadoutEndpoints.PinnedReviewsByTgidList:
+      endpointSlug = `/api/v6/tour-groups/pinned-reviews/`;
       break;
   }
 
@@ -1920,6 +1930,13 @@ export const fetchCityInfo = async ({
   language = 'en',
   hostname,
 }: IFetchCityInfoProps) => {
+  if (!cityCode) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCityInfo] cityCode is required - ${cityCode}`,
+    });
+    return null;
+  }
   const cityInfoEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CityInfo,
     id: cityCode,
@@ -1938,5 +1955,124 @@ export const fetchCityInfo = async ({
     sendLog({
       err: error,
     });
+  }
+};
+
+interface FetchRatingsProps extends CommonApiProps {
+  uid: string;
+}
+
+export const fetchRatings = async ({
+  uid,
+  cookies = {},
+}: FetchRatingsProps) => {
+  try {
+    if (!uid) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchRatings] uid is required - ${uid}`,
+      });
+      return null;
+    }
+
+    const url = `/api/ratings?uid=${encodeURIComponent(uid)}`;
+    const headers = constructHeaders({ cookies });
+
+    const response = await fetch(url, { headers });
+
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchRatings]', error);
+    sendLog({
+      err: error,
+    });
+    return null;
+  }
+};
+
+interface FetchPinnedReviewsByTgidProps extends CommonApiProps {
+  tgid: string;
+}
+
+export const fetchPinnedReviewsByTgid = async ({
+  tgid,
+  cookies = {},
+  language = 'en',
+  hostname,
+}: FetchPinnedReviewsByTgidProps) => {
+  try {
+    if (!tgid) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchPinnedReviewsByTgid] tgid is required - ${tgid}`,
+      });
+      return null;
+    }
+
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.PinnedReviewsByTgid,
+      id: tgid,
+      params: {
+        language,
+      },
+      hostname,
+    });
+
+    const headers = constructHeaders({ cookies });
+
+    const response = await fetch(url, { headers });
+
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchPinnedReviewsByTgid]', error);
+    sendLog({
+      err: error,
+    });
+    return null;
+  }
+};
+
+interface FetchPinnedReviewsByTgidListProps extends CommonApiProps {
+  tgids: Array<string>;
+}
+
+export const fetchPinnedReviewsByTgidList = async ({
+  tgids,
+  cookies = {},
+  language = 'en',
+  hostname,
+}: FetchPinnedReviewsByTgidListProps) => {
+  try {
+    if (!tgids) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchPinnedReviewsByTgidList] tgids is required - ${tgids}`,
+      });
+      return null;
+    }
+
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.PinnedReviewsByTgidList,
+      params: {
+        language,
+        tourGroupIds: tgids.join(','),
+      },
+      hostname,
+    });
+
+    const headers = constructHeaders({ cookies });
+
+    const response = await fetch(url, { headers });
+
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchPinnedReviewsByTgidList]', error);
+    sendLog({
+      err: error,
+    });
+    return null;
   }
 };

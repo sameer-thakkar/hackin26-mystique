@@ -1,13 +1,13 @@
 import { Suspense, useContext, useEffect, useRef, useState } from 'react';
 import { EReviewSortType } from 'types/reviews';
 import { Dropdown, Filters, Icon } from '@headout/eevee';
+import ChevronDown from '@headout/onix/web/ui/chevron/stroke/ChevronDown';
 import { css } from '@headout/pixie/css';
 import { MBContext } from 'contexts/MBContext';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import ChevronDown from 'assets/chevronDown';
 import CrossiconSvg from 'assets/crossiconSvg';
 import { RadioButton } from './RadioButton';
 import {
@@ -53,7 +53,7 @@ const OverlayContents = ({
         data-qa-marker="qaid-review-sorting-dropdown-options-container"
       >
         <div className="overlay-heading">
-          {strings.REVIEW_SECTION.SORTING.SORT_BY}
+          {strings.REVIEWS_SECTION.SORTING.SORT_BY}
           <button className="overlay-cross" onClick={close}>
             <CrossiconSvg />
           </button>

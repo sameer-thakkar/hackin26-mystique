@@ -11,12 +11,12 @@ const EmptyState = ({ onClick }: TExportStateProps) => {
       <NoReviewsIllustration className={illustration} />
       <div className={contentContainer}>
         <Text align="center" textStyle="Semantics/Para/Regular" as="span">
-          {strings.REVIEW_SECTION.EMPTY_STATE.SUB_HEADING}
+          {strings.REVIEWS_SECTION.EMPTY_STATE.SUB_HEADING}
         </Text>
         <Button
           onClick={onClick}
           as="button"
-          primaryText={strings.REVIEW_SECTION.EMPTY_STATE.CTA}
+          primaryText={strings.REVIEWS_SECTION.EMPTY_STATE.CTA}
           size="small"
           btnType="black"
         />

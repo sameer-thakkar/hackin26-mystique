@@ -1353,8 +1353,8 @@ const tr = {
   TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
   AGGREGATED_COUNTRIES:
     '<strong>{0}</strong> ve <strong>dahil olmak üzere {1} ülkeden</strong> gelen konuklar bu deneyimi çok sevdi',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Milyonlarca kişi bizimle yola çıkmayı seviyor',
     SORTING: {
       MOST_RELEVANT: 'En alakalı',
       MOST_RECENT: 'En güncel',
@@ -1371,6 +1371,12 @@ const tr = {
       CTA: 'Tüm yorumları gör',
     },
     VERIFIED_REVIEW: 'Doğrulanmış ortak incelemesi',
+    REVIEW_SECTION_HEADER: 'Konuklarımızın görüşleri',
+    TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
+    HEADING: 'Mutlu müşterilerden',
+    HEADING_BOOSTER_TEXT: '35 milyondan fazla kişi tarafından sevildi',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'powered by',
   BOOKING_PAGE_TIME: {

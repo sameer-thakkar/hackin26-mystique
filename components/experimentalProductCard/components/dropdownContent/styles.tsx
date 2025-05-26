@@ -164,8 +164,7 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  ul,
-  p {
+  ul {
     margin-top: -0.5rem;
     ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
     text-align: left;

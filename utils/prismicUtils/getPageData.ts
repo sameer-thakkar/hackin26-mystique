@@ -799,6 +799,7 @@ export const getPageData = async ({
             lang: lang ?? 'en',
             cookies,
             localizedStrings,
+            isBot,
           });
         } else if (hasCategoryTourListV2 && isLttMonthOnMonthPage) {
           categoryTourListPromise = monthOnMonthPageParser({

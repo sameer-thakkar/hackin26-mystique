@@ -7,6 +7,7 @@ import { getHeadoutLanguagecode } from 'utils';
 import {
   fetchCityInfo,
   fetchCollectionList,
+  fetchPinnedReviewsByTgidList,
   fetchTourGroupsByCategory,
   fetchTourGroupsByCollection,
   fetchTourGroupV6,
@@ -31,6 +32,7 @@ const categoryTourListParserV1 = async ({
   cookies = {},
   localizedStrings,
   isLookerWebhookCall = false,
+  isBot = false,
 }: TCategoryTourListParserV1) => {
   let tourData = [],
     currency: any;
@@ -371,11 +373,19 @@ const categoryTourListParserV1 = async ({
       .filter((tour: any) => tour.variantId)
       .map((tour: any) => tour.tgid);
 
-    const tgidVariantData: any[] = await Promise.all(
+    const [tgidVariantData, pinnedReviews] = await Promise.all([
       allMultiVariantTgids?.map(async (tgid: any) =>
         fetchTourGroupV6({ tgid, hostname, language, cookies })
-      )
-    );
+      ),
+      isBot
+        ? fetchPinnedReviewsByTgidList({
+            tgids: orderedTGIDRanking,
+            hostname,
+            language,
+            cookies,
+          })
+        : {},
+    ]);
 
     let scorpioData = {};
     if (!isLookerWebhookCall) {
@@ -385,6 +395,7 @@ const categoryTourListParserV1 = async ({
         language,
         localizedStrings,
         tgidVariantData,
+        pinnedReviews,
       });
     }
     const finalTgids = finalTours?.map((el) => el?.id);

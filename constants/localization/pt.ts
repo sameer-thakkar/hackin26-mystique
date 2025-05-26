@@ -1323,8 +1323,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   TRUST_TOOLTIP_HEADER: 'Como obtemos as avaliações?',
   TRUST_TOOLTIP_CONTENT:
     'Essas avaliações incluem comentários verificados de clientes tanto da Headout quanto de nossos parceiros de confiança que operam essa experiência no local. Todas as avaliações são de viajantes reais que participaram dessa experiência.',
-  REVIEW_SECTION: {
-    HEADING: 'Milhões de pessoas adoram viajar com a gente',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Milhões de pessoas adoram viajar com a gente',
     SORTING: {
       MOST_RELEVANT: 'Mais relevante',
       MOST_RECENT: 'Mais recente',
@@ -1341,6 +1341,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       CTA: 'Ver todas avaliações',
     },
     VERIFIED_REVIEW: 'Avaliação de parceiro verificada',
+    REVIEW_SECTION_HEADER: 'Avaliações de participantes',
+    TRUST_VB_TAG: 'Reserva verificada',
+    HEADING: 'Opinião dos nossos visitantes',
+    HEADING_BOOSTER_TEXT: 'Mais de 35 milhões aprovam',
+    SEE_MORE_BUTTON_TEXT: 'Ver todas as {0} avaliações',
+    REVIEW_CARD_MODAL_TITLE: 'Avaliação',
   },
 
   FLEXIBLE_CANCELLATION: {

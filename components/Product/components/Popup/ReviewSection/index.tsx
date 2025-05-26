@@ -41,8 +41,8 @@ const ReviewSection = ({
         >
           {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
         </StyledReviewSectionTitle>
-        <TrustOverlay isDesktop />
       </Conditional>
+      <TrustOverlay isDesktop />
       <Gallery
         images={reviewMedias.map((reviewMedia) => ({
           ...reviewMedia,

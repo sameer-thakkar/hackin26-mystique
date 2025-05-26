@@ -1366,8 +1366,8 @@ const ru = {
   SNAPSHOTS_SECTION_HEADER: 'Снимки от наших гостей',
   AGGREGATED_COUNTRIES:
     'Гости из <strong>{0}</strong> и <strong>из более чем {1} стран</strong> в восторге от этого мероприятия',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Миллионы людей путешествуют с нами',
     SORTING: {
       MOST_RELEVANT: 'Самые актуальные',
       MOST_RECENT: 'Самые новые',
@@ -1384,6 +1384,12 @@ const ru = {
       CTA: 'Показать все отзывы',
     },
     VERIFIED_REVIEW: 'Проверенный отзыв партнера',
+    REVIEW_SECTION_HEADER: 'Что говорят наши гости',
+    TRUST_VB_TAG: 'Проверенное бронирование',
+    HEADING: 'От довольных клиентов',
+    HEADING_BOOSTER_TEXT: 'Любим более чем 35 миллионами',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POI_COLLECTIONS_SECTION: {
     MAKE_THE_MOST_OF_CITY: '{0}, смотрите самое лучшее!',

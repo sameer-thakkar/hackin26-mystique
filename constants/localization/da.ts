@@ -1381,8 +1381,9 @@ const da = {
   SNAPSHOTS_SECTION_HEADER: 'Snapshots fra vores gæster',
   AGGREGATED_COUNTRIES:
     'Gæster fra <strong>{0}</strong> og <strong>over {1} andre lande</strong> var vilde med denne oplevelse',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING:
+      'Millioner af mennesker benytter Headout, når de skal ud og opleve verden',
     SORTING: {
       MOST_RELEVANT: 'Mest relevant',
       MOST_RECENT: 'Seneste',
@@ -1400,6 +1401,12 @@ const da = {
       CTA: 'Vis alle anmeldelser',
     },
     VERIFIED_REVIEW: 'Verificeret partneranmeldelse',
+    TRUST_VB_TAG: 'Bekræftet booking',
+    REVIEW_SECTION_HEADER: 'Hvad vores gæster siger',
+    HEADING: 'Fra glade kunder',
+    HEADING_BOOSTER_TEXT: 'Elsket af over 35 millioner',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'fra',
   BOOKING_PAGE_TIME: {

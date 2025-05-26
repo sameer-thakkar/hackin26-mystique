@@ -69,7 +69,7 @@ const FilterChips = ({
     <StyledChipsContainer data-qa-marker="qaid-review-filtering-options-container">
       <Filters
         variant="chip selector"
-        text={strings.REVIEW_SECTION.FILTERING.WITH_IMAGES}
+        text={strings.REVIEWS_SECTION.FILTERING.WITH_IMAGES}
         state={showOnlyReviewsWithMedia ? 'applied' : 'default'}
         onClick={() => handleImageSelect(!showOnlyReviewsWithMedia)}
         size="small"

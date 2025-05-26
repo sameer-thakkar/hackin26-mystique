@@ -1349,8 +1349,8 @@ const sv = {
   SNAPSHOTS_SECTION_HEADER: 'Ögonblicksbilder från våra gäster',
   AGGREGATED_COUNTRIES:
     'Gäster från <strong>{0}</strong> och <strong>över {1} länder</strong> har älskat denna upplevelse',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Miljontals älskar att resa med oss',
     SORTING: {
       MOST_RELEVANT: 'Mest relevant',
       MOST_RECENT: 'Senaste',
@@ -1368,6 +1368,12 @@ const sv = {
       CTA: 'Visa alla recensioner',
     },
     VERIFIED_REVIEW: 'Verifierad partnerrecension',
+    REVIEW_SECTION_HEADER: 'Så här säger våra gäster',
+    TRUST_VB_TAG: 'Verifierad bokning',
+    HEADING: 'Från nöjda kunder',
+    HEADING_BOOSTER_TEXT: 'Älskad av 35 miljoner+',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'drivs av',
   BOOKING_PAGE_TIME: {

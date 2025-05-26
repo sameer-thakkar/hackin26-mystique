@@ -117,6 +117,8 @@ const Popup = ({
     },
   };
 
+  if (!tgid) return null;
+
   return (
     <Modal
       isOpen={isActive}

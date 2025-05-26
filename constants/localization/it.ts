@@ -1308,8 +1308,8 @@ const it = {
     COMBO_HEADING: 'Scopri di più e risparmia: offerte combinate e city card',
   },
   CUSTOM_CTA_EXPERIMENT_TEXT: 'Prenota',
-  REVIEW_SECTION: {
-    HEADING: 'I nostri ospiti amano Headout',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'I nostri ospiti amano Headout',
     SORTING: {
       MOST_RELEVANT: 'Più rilevanti',
       MOST_RECENT: 'Più recenti',
@@ -1326,6 +1326,12 @@ const it = {
       CTA: 'Vedi le recensioni',
     },
     VERIFIED_REVIEW: 'Recensione verificata del partner',
+    REVIEW_SECTION_HEADER: 'Cosa dicono i nostri clienti',
+    TRUST_VB_TAG: 'Prenotazione verificata',
+    HEADING: 'Cosa dicono i nostri ospiti',
+    HEADING_BOOSTER_TEXT: 'Oltre 35 milioni di ospiti',
+    SEE_MORE_BUTTON_TEXT: 'Mostra tutte le {0} recensioni',
+    REVIEW_CARD_MODAL_TITLE: 'Recensione',
   },
 
   FLEXIBLE_CANCELLATION: {

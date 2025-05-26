@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
+import { sva } from '@headout/pixie/css';
 import { ButtonContainer as PopupCloseButtonContainer } from 'components/Product/components/Popup/CloseButton/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { PopupWrapper } from 'UI/ComboPopup';
@@ -3541,3 +3542,33 @@ export const modifiedPopupStyles = css<{
     }
   }
 `;
+
+export const reviewSectionPopupRecipe = sva({
+  slots: ['content', 'header', 'headerContainer', 'backButton'],
+  base: {
+    header: { paddingLeft: 'space.12' },
+    content: {
+      position: 'absolute',
+      inset: '[40px]',
+      border: 'none',
+      backgroundColor: 'core.primary.white',
+      overflow: 'hidden',
+      borderRadius: 'radius.12',
+      outline: 'none',
+      padding: '0',
+      width: '[792px]',
+      margin: '[32px auto 42px]',
+    },
+    headerContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'space.8',
+    },
+    backButton: {
+      '& > span > span': {
+        height: '[24px]',
+        width: '[24px]',
+      },
+    },
+  },
+});

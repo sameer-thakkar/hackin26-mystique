@@ -104,11 +104,23 @@ export const CountryFlagsContainer = styled.div`
   display: flex;
   height: 3.625rem;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow: hidden;
   min-width: 2.03125rem;
+
+  .marquee_countries_wrapper {
+    margin: 0;
+    list-style: none;
+    width: max-content;
+  }
 
   .marquee_countries_wrapper li::before {
     display: none;
+  }
+
+  @media (min-width: 768px) {
+    .marquee_countries_wrapper {
+      transform: translateX(-5px);
+    }
   }
 
   @media (max-width: 768px) {

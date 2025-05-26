@@ -121,3 +121,15 @@ export const getProductCommonProperties = ({
     }),
   };
 };
+
+export type TDlValue = string | number | boolean | null | undefined;
+type TDlProperty = Record<string, TDlValue>;
+
+export const createTrackingHandler =
+  (eventName: string, additionalProps?: TDlProperty) =>
+  (properties?: TDlProperty) =>
+    trackEvent({
+      eventName,
+      ...additionalProps,
+      ...properties,
+    });

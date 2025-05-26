@@ -1,4 +1,5 @@
 import { defineGlobalStyles, defineKeyframes } from '@pandacss/dev';
+import { animations } from '@headout/eevee/animations';
 import { chatBubbleAnimation } from 'components/DayTripsVideoPlayer/styles';
 import {
   float,
@@ -37,6 +38,23 @@ export const globalStyles = defineGlobalStyles({
     },
   'h1, h2, h3, h4, h5, h6': { fontWeight: 500, color: '#444444' },
   '.content-page-container': { maxWidth: '1190px', margin: 'auto' },
+  button: { backgroundColor: 'transparent', backgroundImage: 'none' },
+  'button,\n  select': { textTransform: 'none' },
+  '[type="button"],\n  [type="reset"],\n  [type="submit"],\n  button': {
+    WebkitAppearance: 'button',
+  },
+  'button,\n  input,\n  optgroup,\n  select,\n  textarea': {
+    fontFamily: 'inherit',
+    fontSize: '100%',
+    lineHeight: 'inherit',
+    margin: '0',
+    color: 'inherit',
+    padding: '0',
+  },
+  '*,\n  :after,\n  :before': { border: '0 solid' },
+  'button:focus': {
+    outline: ['1px dotted', '5px auto -webkit-focus-ring-color'],
+  },
   '.main-wrapper, .slice-wrapper': {
     maxWidth: '1200px',
     padding: '0 5.46vw',
@@ -135,4 +153,5 @@ export const keyframeTokens = defineKeyframes({
   chatBubbleAnimation,
   rotateSvgPageLoaderGroup,
   rotateSvgPageLoaderDashOffset,
+  ...animations,
 });

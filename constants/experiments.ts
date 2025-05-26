@@ -26,6 +26,7 @@ const LTT_CTA_COPY_EXPERIMENT = 'LTT CTA Copy Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT =
   'Similarity Based Ranking Experiment';
 const BRAND_LOADER_EXP = 'New Loader Experiment';
+const PINNED_REVIEWS_EXPERIMENT = 'Pinned Reviews Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
 const DAY_TRIPS_VIDEO_DWEB = 'Day Trips Video Experiment DWeb';
@@ -45,6 +46,7 @@ export const EXPERIMENT_NAMES: Record<string, string> = {
   LTT_CTA_COPY_EXPERIMENT,
   LTT_SHOW_PAGE_EXPERIMENT_V2,
   MIXPANEL_SESSION_REPLAY,
+  PINNED_REVIEWS_EXPERIMENT,
   POI_FILTERS_EXPERIMENT,
   PRODUCT_CARD_VIDEO,
   SEATMAP_EXPERIMENT,
@@ -119,6 +121,11 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     MIXPANEL_SESSION_REPLAY,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [95, 5]
+  ),
+  [PINNED_REVIEWS_EXPERIMENT]: new Experiment(
+    PINNED_REVIEWS_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [50, 50]
   ),
   [POI_FILTERS_EXPERIMENT]: new Experiment(
     POI_FILTERS_EXPERIMENT,

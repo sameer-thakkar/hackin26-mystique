@@ -1452,8 +1452,10 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     },
     NEAR_BY_DESTINATIONS_TITLE: 'Explore more destinations from {0}',
   },
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    HEADING: 'From the happy customers',
+    HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
+    SECTION_HEADING: 'Millions love heading out with us',
     SORTING: {
       MOST_RELEVANT: 'Most relevant',
       MOST_RECENT: 'Most recent',
@@ -1470,6 +1472,10 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       CTA: 'Show all reviews',
     },
     VERIFIED_REVIEW: 'Verified Partner Review',
+    TRUST_VB_TAG: 'Verified booking',
+    REVIEW_SECTION_HEADER: 'What our guests say',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:

@@ -1347,8 +1347,8 @@ const no = {
   SNAPSHOTS_SECTION_HEADER: 'Instantanee de la oaspeții noștri',
   AGGREGATED_COUNTRIES:
     'Gjester fra <strong>{0}</strong> og <strong>over {1} land</strong> har elsket denne opplevelsen',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Millioner av mennesker elsker å reise med oss',
     SORTING: {
       MOST_RELEVANT: 'Mest relevant',
       MOST_RECENT: 'Nyest',
@@ -1366,6 +1366,12 @@ const no = {
       CTA: 'Vis alle anmeldelser',
     },
     VERIFIED_REVIEW: 'Verifisert partneranmeldelse',
+    REVIEW_SECTION_HEADER: 'Dette sier gjestene våre',
+    TRUST_VB_TAG: 'Verifisert bestilling',
+    HEADING: 'Fra fornøyde kunder',
+    HEADING_BOOSTER_TEXT: 'Elsket av over 35 millioner',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'levert av',
   BOOKING_PAGE_TIME: {

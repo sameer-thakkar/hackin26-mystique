@@ -89,7 +89,7 @@ const ReviewsV2 = ({
       <StyledReviewsV2Wrapper ref={containerRef}>
         <div className="heading-container">
           <div className="heading">
-            <h2 className="heading-text">{strings.REVIEW_SECTION.HEADING}</h2>
+            <h2 className="heading-text">{strings.REVIEWS_SECTION.HEADING}</h2>
             <HeadoutHeart />
           </div>
           <Conditional if={!isMobile}>

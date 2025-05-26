@@ -96,6 +96,7 @@ const ExperimentalProductCard = (props: any) => {
     showCustomProductCardCTA,
     shouldRunCustomCTAExperiment,
     showCustomProductCardEnglishCTA,
+    pinnedReviews,
   } = props;
 
   const hsid = useRecoilValue(hsidAtom);
@@ -425,6 +426,7 @@ const ExperimentalProductCard = (props: any) => {
           topReviews,
           showCustomProductCardCTA,
           showCustomProductCardEnglishCTA,
+          pinnedReviews,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

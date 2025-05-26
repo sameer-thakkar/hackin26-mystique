@@ -171,3 +171,15 @@ export const onEnterKeyPress = (
 ) => {
   if (e.key === 'Enter') callbackFunction(...args);
 };
+
+export type TRecord = Record<string | number | symbol, unknown>;
+
+export const pickByKeys = <T extends TRecord, K extends keyof T>(
+  obj: T,
+  keys: K[]
+) => {
+  return keys.reduce(
+    (newObj, key) => ({ ...newObj, [key]: obj[key] }),
+    {} as Pick<T, K>
+  );
+};

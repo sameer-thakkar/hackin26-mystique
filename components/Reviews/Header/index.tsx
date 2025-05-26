@@ -47,7 +47,7 @@ const ReviewHeader = ({
           {datePublished}
           <span className="verified">
             {isPartner
-              ? strings.REVIEW_SECTION.VERIFIED_REVIEW
+              ? strings.REVIEWS_SECTION.VERIFIED_REVIEW
               : strings.TRUST_VB_TAG}
           </span>
         </div>

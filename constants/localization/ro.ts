@@ -1353,8 +1353,8 @@ const ro = {
   TRUST_VB_TAG: 'Rezervare verificată',
   AGGREGATED_COUNTRIES:
     'Oaspeții din <strong>{0}</strong> și <strong>peste {1} țări</strong> au apreciat această experiență',
-  REVIEW_SECTION: {
-    HEADING: 'Millions love heading out with us',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Milioane de oameni iubesc să ne aleaga',
     SORTING: {
       MOST_RELEVANT: 'Cel mai relevant',
       MOST_RECENT: 'Cel mai recent',
@@ -1371,6 +1371,12 @@ const ro = {
       CTA: 'Toate recenziile',
     },
     VERIFIED_REVIEW: 'Recenzie verificată a partenerului',
+    REVIEW_SECTION_HEADER: 'Ce spun oaspeții noștri',
+    TRUST_VB_TAG: 'Rezervare verificată',
+    HEADING: 'De la clienți fericiți',
+    HEADING_BOOSTER_TEXT: 'Iubit de peste 35 de milioane',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'furnizat de',
   BOOKING_PAGE_TIME: {

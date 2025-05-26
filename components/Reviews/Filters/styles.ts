@@ -2,7 +2,7 @@ import { css } from '@headout/pixie/css';
 
 export const filterContainerStyles = css({
   display: 'flex',
-  height: '[36px]',
+  height: '[38px]',
   gap: 'space.12',
   marginTop: 'space.16',
   overflowX: 'auto',

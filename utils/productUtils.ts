@@ -791,12 +791,14 @@ export const getScorpioData = async ({
   language,
   localizedStrings,
   tgidVariantData,
+  pinnedReviews,
 }: {
   finalTours: Record<string, any>;
   currency: TCurrencyObj | undefined;
   language: string;
   localizedStrings?: any;
   tgidVariantData?: any;
+  pinnedReviews?: any;
 }) => {
   let minPrice = finalTours?.[0]?.listingPrice?.finalPrice || Infinity;
   let bestDiscount = finalTours?.[0]?.listingPrice?.bestDiscount || 0;
@@ -923,6 +925,7 @@ export const getScorpioData = async ({
           reviewsDetails,
           topReviews,
           experienceItineraryIds,
+          pinnedReviews: pinnedReviews?.result?.tourGroupPinnedReviews?.[id],
         },
       };
     },

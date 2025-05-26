@@ -368,6 +368,7 @@ const PopulateProducts: any = (props: any) => {
     activePOIFilter,
     shouldShowDayTripsVideoBanner,
     collectionDetails,
+    showPinnedReviews = false,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -741,6 +742,7 @@ const PopulateProducts: any = (props: any) => {
       reviewsDetails,
       topReviews,
       experienceItineraryIds = [],
+      pinnedReviews,
     } = scorpioData[tgid];
 
     const { itineraryData = {} } = scorpioData;
@@ -880,6 +882,8 @@ const PopulateProducts: any = (props: any) => {
       poiBooster: props.isPOIFiltersEnabled
         ? getPOIBooster(tgid, scorpioData)
         : null,
+      showPinnedReviews,
+      pinnedReviews,
     };
 
     return isSmallComboCard ? (

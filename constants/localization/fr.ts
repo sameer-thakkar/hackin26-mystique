@@ -1325,8 +1325,8 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   TRUST_TOOLTIP_HEADER: 'Comment recueillons-nous les avis ?',
   TRUST_TOOLTIP_CONTENT:
     'Ces notes comprennent des avis vérifiés provenant à la fois des clients de Headout et de nos partenaires de confiance qui organisent cette expérience au niveau local. Tous les avis proviennent de personnes qui ont vécu cette expérience.',
-  REVIEW_SECTION: {
-    HEADING: 'Des millions de personnes adorent partir avec nous',
+  REVIEWS_SECTION: {
+    SECTION_HEADING: 'Des millions de personnes adorent partir avec nous',
     SORTING: {
       MOST_RELEVANT: 'Le plus pertinent',
       MOST_RECENT: 'Le plus récent',
@@ -1344,6 +1344,12 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
       CTA: 'Voir tous les commentaires',
     },
     VERIFIED_REVIEW: 'Avis de partenaire vérifié',
+    REVIEW_SECTION_HEADER: 'Les avis de nos voyageurs',
+    TRUST_VB_TAG: 'Réservation vérifiée',
+    HEADING: "Ce qu'en disent nos visiteurs",
+    HEADING_BOOSTER_TEXT: 'Aimé par +35 M de gens',
+    SEE_MORE_BUTTON_TEXT: 'Afficher les {0} avis',
+    REVIEW_CARD_MODAL_TITLE: 'Avis',
   },
 
   FLEXIBLE_CANCELLATION: {

@@ -46,6 +46,7 @@ const internalRewrites = [
 const withTM = moduleTranspiler([
   '@headout/aer',
   '@headout/eevee',
+  '@headout/onix',
   '@headout/espeon',
 ]);
 
@@ -94,7 +95,12 @@ const nextConfig = {
 
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,
-      include: [/node_modules\/@headout\/aer/, /node_modules\/@headout\/eevee/],
+      include: [
+        /node_modules\/@headout\/aer/,
+        /node_modules\/@headout\/eevee/,
+        /node_modules\/@headout\/espeon/,
+        /node_modules\/@headout\/onix/,
+      ],
       use: [
         {
           loader: 'babel-loader',

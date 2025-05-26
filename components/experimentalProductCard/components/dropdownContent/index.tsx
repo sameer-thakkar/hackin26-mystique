@@ -16,12 +16,14 @@ import { RichTextField } from '@prismicio/types';
 import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import Conditional from 'components/common/Conditional';
 import Itinerary from 'components/common/Itinerary';
+import { PinnedReviews } from 'components/common/PinnedReviews';
+import type { TPinnedReviewsProps } from 'components/common/PinnedReviews/types';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
 import InclusionsExclusions from 'components/Product/components/NewVerticalsProductCard/InclusionsExclusions';
 import type { TSnapshotSectionProps } from 'components/Product/components/Popup/ReviewSection/Snapshots/interface';
 import TrustOverlay from 'components/Product/components/Popup/ReviewSection/TrustElements/Overlay';
 import type { TReviewSectionMobileProps } from 'components/Product/components/Popup/ReviewSection/types';
-import { TTabListItemProps } from 'UI/Tabs/interface';
+import type { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
 import type { TReviewMediasResponse } from 'utils/apiUtils';
@@ -104,6 +106,8 @@ interface DropdownContentProps {
   snapshotSectionProps?: TSnapshotSectionProps;
   hidePricingBar?: () => void;
   showPricingBar?: () => void;
+  pinnedReviews?: TPinnedReviewsProps['pinnedReviews'];
+  openAllReviewsBottomSheet?: () => void;
 }
 
 const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
@@ -135,6 +139,8 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   imageGalleryController,
   getReviewMediaGlobalLocation,
   snapshotSectionProps,
+  pinnedReviews,
+  openAllReviewsBottomSheet,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -449,6 +455,21 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
           sheetHeight={isModifiedPopup ? '85%' : '100%'}
         >
           <div ref={childRef}>{children}</div>
+          <PinnedReviews
+            pinnedReviews={pinnedReviews || {}}
+            isMobile
+            lang={lang}
+            reviewsDetails={reviewsDetails}
+            tgid={tgid}
+            onSeeMoreClick={
+              reviewsDetails?.showRatings
+                ? () => {
+                    openAllReviewsBottomSheet?.();
+                  }
+                : undefined
+            }
+          />
+
           <ContentContainer>
             {tabs.map((tab, index) => (
               <TabContent
