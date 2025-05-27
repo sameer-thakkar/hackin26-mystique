@@ -221,34 +221,54 @@ const ContentSections = ({
 
   useEffect(() => {
     if (!contentSectionsRef.current) return;
-    const sectionHeaderIdsInOrder = [
-      'Why watch',
-      'Storyline',
-      'Show Timings',
-      'Cast & Crew',
-      'Top songs',
-      'Age & content guide',
-      'Theatre',
-      'Getting there',
-      'Facilities & accessibility',
-      'Additional information',
-      'Tickets redemption',
-      'Cancellation & refunds',
-      'What the critics think',
-      'Ratings & reviews',
-    ];
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        const sectionId = entry.target.id;
-        const rank =
-          sectionHeaderIdsInOrder.findIndex((id) => id === entry.target.id) + 1;
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.SHOW_PAGE_SECTION_VIEWED,
-          [ANALYTICS_PROPERTIES.SECTION]: sectionId,
-          [ANALYTICS_PROPERTIES.RANKING]: rank,
-        });
-        observer.unobserve(entry.target);
-      }
+    const sectionHeaderIdsInOrder = isShowPageExperiment
+      ? [
+          'About the show',
+          'Storyline',
+          'Show Timings',
+          'Cast & Crew',
+          'Top songs',
+          'Age & content guide',
+          'Ratings & reviews',
+          'What the critics think',
+          'Tickets redemption',
+          'Cancellation & refunds',
+          'Theatre',
+          'Getting there',
+          'Facilities & accessibility',
+          'Additional information',
+        ]
+      : [
+          'Why watch',
+          'Storyline',
+          'Show Timings',
+          'Cast & Crew',
+          'Top songs',
+          'Age & content guide',
+          'Theatre',
+          'Getting there',
+          'Facilities & accessibility',
+          'Additional information',
+          'Tickets redemption',
+          'Cancellation & refunds',
+          'What the critics think',
+          'Ratings & reviews',
+        ];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          const rank =
+            sectionHeaderIdsInOrder.findIndex((id) => id === entry.target.id) +
+            1;
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.SHOW_PAGE_SECTION_VIEWED,
+            [ANALYTICS_PROPERTIES.SECTION]: sectionId,
+            [ANALYTICS_PROPERTIES.RANKING]: rank,
+          });
+          observer.unobserve(entry.target);
+        }
+      });
     }, {});
     sectionHeaderIdsInOrder.forEach((id) => {
       const section = document.getElementById(id);
@@ -260,7 +280,7 @@ const ContentSections = ({
     return () => {
       observer?.disconnect();
     };
-  }, [contentSectionsRef]);
+  }, [contentSectionsRef, isShowPageExperiment]);
 
   const componentSerializer = (
     type: any,
