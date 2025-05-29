@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { trackEvent } from 'utils/analytics';
 import { experimentsAtom } from 'store/atoms/experiments';
-import { EXPERIMENT_NAMES } from 'const/experiments';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { ANALYTICS_EVENTS, RANKING_EXPERIMENT_UUIDS } from 'const/index';
 
 type TUseIsSimilarityBasedRankingExperimentEnabledProps = {
@@ -59,6 +59,6 @@ export const useIsSimilarityBasedRankingExperimentEnabled = ({
   return {
     isEligible,
     isExpGroupLoading,
-    variant: experimentVariant,
+    variant: experimentVariant ?? VARIANTS.CONTROL,
   };
 };
