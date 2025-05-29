@@ -10,8 +10,16 @@ export const containerRecipe = sva({
   ],
   base: {
     root: {
+      height: '[248px]',
+      width: '[744px]',
+
       '@media (max-width: 768px)': {
-        padding: 'space.16',
+        height: '[302px]',
+        width: '[calc(100vw - 32px)]',
+
+        '&[data-is-loading="false"]': {
+          padding: 'space.16',
+        },
       },
     },
     headingContainer: {
@@ -28,7 +36,13 @@ export const containerRecipe = sva({
       width: '[752px]',
     },
     mWebCarousel: {
-      width: '[102vw]',
+      width: 'calc(100% + 1rem) !important',
+      marginLeft: '-space.16 !important',
+      paddingRight: 'space.16',
+
+      '& > *:first-child': {
+        marginLeft: 'space.16 !important',
+      },
     },
   },
 });

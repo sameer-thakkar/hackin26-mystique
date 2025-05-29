@@ -19,7 +19,7 @@
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@headout/aer": "headout/aer#b4c8a2096beeeae56d79fac29a543e2c7d6c8620",
     "@headout/eevee": "^3.0.3",
-    "@headout/espeon": "^2.13.1",
+    "@headout/espeon": "2.13.2 ",
     "@headout/onix": "^3.2.0",
     "@headout/pixie": "^2.0.0",
     "@prismicio/client": "^6.7.1",

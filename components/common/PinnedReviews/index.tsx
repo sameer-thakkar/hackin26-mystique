@@ -20,6 +20,7 @@ export const PinnedReviews = ({
   isMobile = false,
   tgid,
 }: TPinnedReviewsProps) => {
+  const [showLoader, setShowLoader] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   // Only fetch data if initialPinnedReviews is empty or doesn't have items
   const shouldFetch =
@@ -29,6 +30,7 @@ export const PinnedReviews = ({
     shouldFetch ? ['pinnedReviews', tgid, lang] : null,
     async () => {
       setIsLoading(true);
+      setShowLoader(true);
       const data = await fetchPinnedReviewsByTgid({
         tgid: tgid!,
         language: lang,
@@ -37,7 +39,7 @@ export const PinnedReviews = ({
       return data?.result || null;
     },
     {
-      fallbackData: initialPinnedReviews || null,
+      errorRetryCount: 0,
       revalidateOnFocus: false,
     }
   );
@@ -45,46 +47,55 @@ export const PinnedReviews = ({
   // Use data from SWR or fallback to initialPinnedReviews
   const pinnedReviews = data || initialPinnedReviews;
 
-  if (isLoading || error || !pinnedReviews) {
-    return <PinnedReviewsSkeleton isMobile={isMobile} />;
-  }
-
   if (
-    !pinnedReviews?.displayConfig?.exposePinnedReviews ||
-    !pinnedReviews?.items?.length
+    !isLoading &&
+    (data === null ||
+      error ||
+      !pinnedReviews?.displayConfig?.exposePinnedReviews ||
+      !pinnedReviews?.items?.length)
   )
     return null;
 
   const styles = containerRecipe.raw();
 
   return (
-    <div className={css(styles.root)}>
-      <PinnedReviewsSection
-        reviews={pinnedReviews?.items || []}
-        isMobile={isMobile}
-        strings={{
-          ...pickByKeys(strings as Record<string, any>, [
-            'REVIEWS_SECTION',
-            'REVIEW_LOC',
-            'ALL_PHOTOS',
-          ]),
-          ...{
-            X_MORE: strings.ITINERARY.MORE,
-            READ_MORE: strings.READ_MORE,
-          },
-          formatString: strings.formatString,
-        }}
-        shouldFocusProductCardOnCTAClick={true}
-        lang={lang}
-        onCTAClick={() => {}}
-        trackingContext={getPinnedReviewsTrackingContext(tgid)}
-        rating={reviewsDetails?.averageRating || 0}
-        ratingsCount={reviewsDetails?.reviewsCount || 0}
-        overrideStyles={styles}
-        {...(pinnedReviews.displayConfig?.exposeLoadMore && {
-          onSeeMoreClick,
-        })}
-      />
+    <div className={css(styles.root)} data-is-loading={showLoader}>
+      {showLoader ? (
+        <PinnedReviewsSkeleton
+          isMobile={isMobile}
+          visible={isLoading}
+          onClose={() => {
+            setShowLoader(false);
+          }}
+        />
+      ) : (
+        <PinnedReviewsSection
+          reviews={pinnedReviews?.items || []}
+          isMobile={isMobile}
+          strings={{
+            ...pickByKeys(strings as Record<string, any>, [
+              'REVIEWS_SECTION',
+              'REVIEW_LOC',
+              'ALL_PHOTOS',
+            ]),
+            ...{
+              X_MORE: strings.ITINERARY.MORE,
+              READ_MORE: strings.READ_MORE,
+            },
+            formatString: strings.formatString,
+          }}
+          shouldFocusProductCardOnCTAClick={true}
+          lang={lang}
+          onCTAClick={() => {}}
+          trackingContext={getPinnedReviewsTrackingContext(tgid)}
+          rating={reviewsDetails?.averageRating || 0}
+          ratingsCount={reviewsDetails?.reviewsCount || 0}
+          overrideStyles={styles}
+          {...(pinnedReviews.displayConfig?.exposeLoadMore && {
+            onSeeMoreClick,
+          })}
+        />
+      )}
     </div>
   );
 };
