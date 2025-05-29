@@ -287,7 +287,7 @@ const categoryTourListParserV1 = async ({
       });
       if (additionalTours?.tourGroups?.length) {
         const allToursWithAdditionalTours = [
-          ...tourData,
+          ...allTours,
           ...additionalTours?.tourGroups,
         ];
         // Keep only unique tours based on ID, preserving the first occurrence

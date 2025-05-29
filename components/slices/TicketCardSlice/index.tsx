@@ -30,7 +30,8 @@ const TicketCard = (props: any) => {
     trackProductCardsViewed,
   } = props;
 
-  const { body1: uncategorizedTours } = micrositeData || {};
+  const { body1: uncategorizedTours, productCardData } = micrositeData || {};
+  const { sp_experience_limit } = productCardData?.primary || {};
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const productCarouselRef = useRef(null);
   const currency = useRecoilValue(currencyAtom);
@@ -39,6 +40,7 @@ const TicketCard = (props: any) => {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
   } = categoryTourListData || {};
+  const finalProductCardsLimit = productCardsLimit || sp_experience_limit;
 
   const isCategorisedTours = categoryTourListData
     ? Object.keys(categoryTourListData)?.length > 0
@@ -190,7 +192,7 @@ const TicketCard = (props: any) => {
   return (
     <Wrapper ref={productCarouselRef}>
       <PopulateProducts
-        productCardsLimit={productCardsLimit}
+        productCardsLimit={finalProductCardsLimit}
         currency={currency}
         uncategorizedTours={orderedTours}
         scorpioData={scorpioData}
