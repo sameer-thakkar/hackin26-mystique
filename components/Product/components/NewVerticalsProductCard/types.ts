@@ -1,6 +1,7 @@
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { ItineraryDetails, ItineraryType, Section } from 'types/itinerary.type';
 import { TController } from 'components/NewVerticals/RouteDetails/Popup/interface';
+import { LanguagesUnion } from 'const/index';
 import { TController as TPdfController } from '../Popup/interface';
 
 export type TGetCustomDescriptors = {
@@ -15,6 +16,7 @@ export type TGetCustomDescriptors = {
   setIsDescriptorClick: Dispatch<SetStateAction<boolean>>;
   itineraryType: ItineraryType;
   tgid: number | string;
+  lang: LanguagesUnion;
 };
 
 export type TDescriptorsList = {

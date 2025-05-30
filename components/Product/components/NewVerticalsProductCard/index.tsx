@@ -193,6 +193,7 @@ const NewVerticalsProductCard = (props: any) => {
     setIsDescriptorClick,
     itineraryType,
     tgid,
+    lang,
   });
 
   const hsid = useRecoilValue(hsidAtom);

@@ -6,6 +6,8 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   DESCRIPTORS,
+  LANGUAGE_CODE_MAP,
+  LanguagesUnion,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { TDescriptorsList, TGetCustomDescriptors } from './types';
@@ -27,6 +29,7 @@ export const getCustomDescriptors = ({
   setIsDescriptorClick,
   itineraryType,
   tgid,
+  lang,
 }: TGetCustomDescriptors) => {
   let descriptorsList: TDescriptorsList[] = [];
 
@@ -83,6 +86,7 @@ export const getCustomDescriptors = ({
     const boardingPoints = getBoardingPointsText({
       totalBoardingPoints,
       itinerarySections,
+      lang,
     });
 
     const moreStopsAvailable = totalStops - upfrontStops;
@@ -138,9 +142,11 @@ export const getCustomDescriptors = ({
 const getBoardingPointsText = ({
   totalBoardingPoints,
   itinerarySections,
+  lang,
 }: {
   totalBoardingPoints: number;
   itinerarySections: Section[];
+  lang: LanguagesUnion;
 }) => {
   if (!totalBoardingPoints) {
     return '';
@@ -155,8 +161,14 @@ const getBoardingPointsText = ({
       `<span class='clickable'>${bpName}</span>`
     );
   }
+
+  const boardingPointString =
+    lang !== LANGUAGE_CODE_MAP.DE
+      ? strings.CRUISES.BOARDING_POINTS.toLowerCase()
+      : '';
+
   return strings.formatString(
     strings.CRUISES.BOARDING_POINTS_AVAILABLE,
-    `<span class='clickable'>${totalBoardingPoints} ${strings.CRUISES.BOARDING_POINTS.toLowerCase()}</span>`
+    `<span class='clickable'>${totalBoardingPoints} ${boardingPointString}</span>`
   );
 };
