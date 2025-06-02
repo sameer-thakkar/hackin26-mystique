@@ -1,20 +1,26 @@
 import { Component } from 'react';
 import { isSubdomain } from 'utils/index';
+import { ROBOTS_TXT_BLOCKED_DOMAINS } from 'const/index';
 
 const fullDomain = (req: any) =>
   req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
 const robotsContent = ({ domain, host }: { domain: string; host: string }) => {
   const isSubdomainHost = isSubdomain(host);
-  const rules = isSubdomainHost
-    ? [`User-agent: *`, 'Disallow: /']
-    : [
-        `User-agent: *`,
-        '',
-        `Sitemap: ${domain}/sitemap.xml`,
-        `Disallow: *amp=`,
-        `Disallow: */ja/*`,
-      ];
+
+  // These domains are completely blocked from robots.txt
+  const shouldBlockDomain = ROBOTS_TXT_BLOCKED_DOMAINS.includes(domain);
+
+  const rules =
+    isSubdomainHost || shouldBlockDomain
+      ? [`User-agent: *`, 'Disallow: /']
+      : [
+          `User-agent: *`,
+          '',
+          `Sitemap: ${domain}/sitemap.xml`,
+          `Disallow: *amp=`,
+          `Disallow: */ja/*`,
+        ];
 
   return rules.join('\n');
 };

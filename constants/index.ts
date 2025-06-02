@@ -2660,3 +2660,8 @@ export const GIF_LOADER_WHITE_BG_URL = `https://${CDN_IMGIX_BASE_SERVER}/assets/
 
 export const HARRY_POTTER_CURSED_CHILD_UID =
   'www.london-theater-tickets.com.harry-potter-and-the-cursed-child-tickets';
+
+export const ROBOTS_TXT_BLOCKED_DOMAINS = [
+  'www.letswanderout.com',
+  'www.ticket-madrid.com',
+];
