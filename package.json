@@ -85,6 +85,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
+    "@headout/eevee-scripts": "^1.0.1",
     "@next/bundle-analyzer": "^10.0.7",
     "@pandacss/dev": "0.41.0",
     "@prismicio/types": "^0.2.8",

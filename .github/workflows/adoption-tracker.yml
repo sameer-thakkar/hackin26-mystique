@@ -1,0 +1,49 @@
+name: DS Adoption Tracker
+
+on:
+  schedule:
+    # Run at 1 PM IST (07:30 UTC) every Tuesday
+    - cron: '30 7 * * 2'
+
+jobs:
+  adoption-tracker:
+    runs-on: self-hosted-prod-4
+    env:
+      PROJECT_NAME: ${{ github.event.repository.name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.17.0'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Setup npm config
+        run: |
+          echo "registry=https://registry.yarnpkg.com/" > .npmrc
+          echo "@headout:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" >> .npmrc
+          echo "always-auth=true" >> .npmrc
+
+      - name: Restore Node Modules
+        uses: actions/cache@v4
+        with:
+          path: ./node_modules_all
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('yarn.lock') }}
+
+      - name: Install Packages
+        run: |
+          git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
+          if [ -d "./node_modules_all" ]; then
+            mv ./node_modules_all ./node_modules
+          fi
+          echo "Installing all dependencies"
+          yarn install --frozen-lockfile
+
+      - name: Run adoption tracker
+        run: node ./node_modules/@headout/eevee-scripts/dist/adoptionTracker.js
