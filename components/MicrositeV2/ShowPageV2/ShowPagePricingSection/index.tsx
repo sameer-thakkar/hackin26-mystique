@@ -113,9 +113,6 @@ const ShowPagePricingSection = ({
     currencyCode,
   } = listingPrice ?? {};
 
-  const totalDiscount = Number(
-    (((originalPrice - finalPrice) / originalPrice) * 100).toFixed(2)
-  );
   const showCashbackElement =
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
@@ -173,7 +170,8 @@ const ShowPagePricingSection = ({
   const moreShowsCategoryUrl = LTT_TAG_PAGE_MAP[primarySubCategory?.name];
 
   const onCheckAvailabilityClicked = () => {
-    const hasDiscountElement = totalDiscount > 0 || showCashbackElement;
+    const hasDiscountElement =
+      listingPrice?.bestDiscount > 0 || showCashbackElement;
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
@@ -375,16 +373,18 @@ const ShowPagePricingSection = ({
                     lang={lang}
                     price={finalPrice}
                   />
-                  <Conditional if={totalDiscount > 0}>
+                  <Conditional if={listingPrice?.bestDiscount > 0}>
                     <SavePercentElement>
                       {strings.formatString(
                         strings.SAVE_UPTO_PERCENT,
-                        `${totalDiscount}`
+                        `${listingPrice.bestDiscount}`
                       )}
                     </SavePercentElement>
                   </Conditional>
 
-                  <Conditional if={totalDiscount <= 0 && showCashbackElement}>
+                  <Conditional
+                    if={listingPrice?.bestDiscount <= 0 && showCashbackElement}
+                  >
                     <SavePercentElement>
                       {strings.formatString(
                         strings.CASHBACK,
