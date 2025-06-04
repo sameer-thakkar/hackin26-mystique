@@ -49,7 +49,7 @@ export const PinnedReviews = ({
 
   if (
     !isLoading &&
-    (data === null ||
+    (pinnedReviews === null ||
       error ||
       !pinnedReviews?.displayConfig?.exposePinnedReviews ||
       !pinnedReviews?.items?.length)

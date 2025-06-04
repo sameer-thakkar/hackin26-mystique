@@ -11,10 +11,15 @@ export const getPinnedReviewsTrackingContext = (tgid?: string | number) => {
       }
     ),
     onSlideChange: createTrackingHandler(
-      ANALYTICS_EVENTS.REVIEWS_CAROUSEL_SCROLLED
+      ANALYTICS_EVENTS.REVIEWS_CAROUSEL_SCROLLED,
+      {
+        [ANALYTICS_PROPERTIES.SECTION]: 'Pinned Reviews',
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+      }
     ),
     onToggleReviewContent: createTrackingHandler(ANALYTICS_EVENTS.REVIEW_LOC),
     onCardClick: createTrackingHandler(ANALYTICS_EVENTS.REVIEW_CARD_CLICKED, {
+      [ANALYTICS_PROPERTIES.SECTION]: 'Pinned Reviews',
       [ANALYTICS_PROPERTIES.TGID]: tgid,
     }),
     onSeeAllClick: createTrackingHandler(
