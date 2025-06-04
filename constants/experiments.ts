@@ -125,7 +125,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [PINNED_REVIEWS_EXPERIMENT]: new Experiment(
     PINNED_REVIEWS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [100, 0]
+    [50, 50]
   ),
   [POI_FILTERS_EXPERIMENT]: new Experiment(
     POI_FILTERS_EXPERIMENT,
