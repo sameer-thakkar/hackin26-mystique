@@ -28,7 +28,7 @@ const HoveredMonth = ({ month, year }: { month: string; year: string }) => (
         fill="black"
         fillOpacity="0.8"
         xmlSpace="preserve"
-        fontFamily="Halyard Display"
+        fontFamily="halyard-display"
         fontSize="24"
         letterSpacing="0.8px"
       >
@@ -39,7 +39,7 @@ const HoveredMonth = ({ month, year }: { month: string; year: string }) => (
       <text
         fill="white"
         xmlSpace="preserve"
-        fontFamily="Halyard Display"
+        fontFamily="halyard-display"
         fontSize="24"
         letterSpacing="0.8px"
       >

@@ -1380,6 +1380,7 @@ const no = {
     MINUTE: ' minutt',
     MINUTES: ' minutter',
   },
+  LTT_SPECIAL_OFFER: 'Spesialtilbudet',
 };
 
 export default no;

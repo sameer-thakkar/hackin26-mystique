@@ -2178,5 +2178,6 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     MINUTE: 'min',
     MINUTES: 'min',
   },
+  LTT_SPECIAL_OFFER: 'Oferta especial',
 };
 export default es;

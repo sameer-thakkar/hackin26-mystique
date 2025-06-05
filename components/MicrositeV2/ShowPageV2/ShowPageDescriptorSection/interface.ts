@@ -3,4 +3,5 @@ export type TShowPageDescriptorSectionProps = {
   isMobile: boolean;
   tgid: number;
   uid: string;
+  showSpecialOfferBanner: boolean;
 };

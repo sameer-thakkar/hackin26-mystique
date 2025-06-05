@@ -2139,6 +2139,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MINUTE: ' Min',
     MINUTES: ' Min',
   },
+  LTT_SPECIAL_OFFER: 'Sonderangebot',
 };
 
 export default de;

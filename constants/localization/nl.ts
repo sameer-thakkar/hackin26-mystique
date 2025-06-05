@@ -2095,5 +2095,6 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     MINUTE: 'min',
     MINUTES: 'min',
   },
+  LTT_SPECIAL_OFFER: 'Speciale actie',
 };
 export default nl;

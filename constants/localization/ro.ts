@@ -1385,6 +1385,7 @@ const ro = {
     MINUTE: ' min',
     MINUTES: ' mins',
   },
+  LTT_SPECIAL_OFFER: 'Ofertă specială',
 };
 
 export default ro;

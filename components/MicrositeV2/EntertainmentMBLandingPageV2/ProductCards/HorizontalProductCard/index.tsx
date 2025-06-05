@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
+import { css } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import { THorizontalProductCardProps } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard/interface';
 import {
@@ -29,6 +30,7 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import LttSaleDesciptor from '../lttSaleDesciptor';
 
 const HorizontalProductCard = ({
   product,
@@ -127,16 +129,26 @@ const HorizontalProductCard = ({
       {...hrefAttribute}
       rel="nofollow noopener"
     >
-      <Image
-        url={verticalImageUrl}
-        alt={`${title} product image`}
-        className={`pinned-card-image`}
-        height={140}
-        width={88}
-        fitCrop
-        autoCrop
-        loadHigherQualityImage={true}
-      />
+      <div
+        className={css({
+          position: 'relative',
+          marginRight: '0.75rem',
+        })}
+      >
+        <Image
+          url={verticalImageUrl}
+          alt={`${title} product image`}
+          className={`pinned-card-image`}
+          height={140}
+          width={88}
+          fitCrop
+          autoCrop
+          loadHigherQualityImage={true}
+        />
+        <Conditional if={bestDiscount > 0}>
+          <LttSaleDesciptor isHorizontalProductCard />
+        </Conditional>
+      </div>
       <div className="image-placeholder">
         <VerticalProductImagePlaceholder $width={88} $height={131} />
       </div>

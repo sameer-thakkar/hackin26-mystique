@@ -47,7 +47,6 @@ export const Wrapper = styled.a<{
   img {
     width: 5.5rem;
     height: 8.1875rem;
-    margin-right: 0.75rem;
     z-index: 0;
   }
 

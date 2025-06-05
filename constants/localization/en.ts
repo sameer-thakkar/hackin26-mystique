@@ -2268,6 +2268,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     MINUTE: ' min',
     MINUTES: ' mins',
   },
+  LTT_SPECIAL_OFFER: 'Special Offer',
 };
 
 export default en;

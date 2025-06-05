@@ -2124,5 +2124,6 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     MINUTE: ' min',
     MINUTES: ' min',
   },
+  LTT_SPECIAL_OFFER: 'Oferta especial',
 };
 export default pt;

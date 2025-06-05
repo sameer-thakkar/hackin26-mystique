@@ -20,7 +20,7 @@ import FeatureCard from 'components/ShowPages/FeatureCard';
 import Gallery from 'components/ShowPages/Gallery';
 import GoogleMap from 'components/ShowPages/GoogleMap';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
-import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
+import { SpecialOfferBanner } from 'components/ShowPages/SpecialOfferBanner';
 import SubHeading from 'components/ShowPages/SubHeading';
 import { StyledAccordion } from 'components/slices/Accordion';
 import { StyledAsideModal } from 'components/UI/AsideModal';

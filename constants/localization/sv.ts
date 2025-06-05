@@ -1382,6 +1382,7 @@ const sv = {
     MINUTE: ' min',
     MINUTES: ' min',
   },
+  LTT_SPECIAL_OFFER: 'Erbjudande',
 };
 
 export default sv;

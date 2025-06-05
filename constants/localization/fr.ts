@@ -2156,5 +2156,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     MINUTE: ' min',
     MINUTES: ' min',
   },
+  LTT_SPECIAL_OFFER: 'Offre spéciale',
 };
 export default fr;

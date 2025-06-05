@@ -28,7 +28,7 @@ const MobileHoveredMonth = ({
           fill="black"
           fillOpacity="0.8"
           xmlSpace="preserve"
-          fontFamily="Halyard Display"
+          fontFamily="halyard-display"
           fontSize="14"
           letterSpacing="0.522449px"
         >
@@ -39,7 +39,7 @@ const MobileHoveredMonth = ({
         <text
           fill="white"
           xmlSpace="preserve"
-          fontFamily="Halyard Display"
+          fontFamily="halyard-display"
           fontSize="12"
           letterSpacing="0.391837px"
         >

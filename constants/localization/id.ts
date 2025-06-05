@@ -1362,6 +1362,7 @@ const id = {
     MINUTE: ' mnt',
     MINUTES: ' mnt',
   },
+  LTT_SPECIAL_OFFER: 'Penawaran',
 };
 
 export default id;

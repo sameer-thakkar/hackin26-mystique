@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
+import LttSaleDesciptor from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/lttSaleDesciptor';
 import { getTranslateButtonText } from 'components/MicrositeV2/ShowPageV2/ReviewSection';
 import { TShowInfoSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ShowInfoSection/interface';
 import {
@@ -22,7 +23,11 @@ import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { getLocalizedCount } from 'utils/localizationUtils';
-import { generateDescriptor, getStars } from 'utils/productUtils';
+import {
+  generateDescriptor,
+  getBoosterValueFromListingPrice,
+  getStars,
+} from 'utils/productUtils';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import { getTagPageLink } from 'utils/urlUtils';
 import COLORS from 'const/colors';
@@ -58,7 +63,10 @@ const ShowInfoSection = ({
     verticalImage,
     primaryCategory = {},
     primaryCity = {},
+    listingPrice = {},
   } = tourGroupData ?? {};
+
+  const { bestDiscount } = getBoosterValueFromListingPrice(listingPrice);
 
   const { url: verticalImageUrl, alt: verticalImageAlt } = verticalImage;
   const { averageRating, ratingsCount } = reviewsDetails;
@@ -155,6 +163,7 @@ const ShowInfoSection = ({
       eventName: ANALYTICS_EVENTS.SHOW_PAGE.VIDEO_CLICKED,
     });
   };
+
   return (
     <ShowInfoSectionWrapper onClick={trackVideoAreaClicked}>
       <Conditional if={!isMobile}>
@@ -187,6 +196,9 @@ const ShowInfoSection = ({
               $width={isMobile ? 120 : 178}
             />
           </span>
+          <Conditional if={bestDiscount > 0}>
+            <LttSaleDesciptor containerHasBorder />
+          </Conditional>
         </div>
         <InfoSectionWrapper>
           <InfoSection $isReviewSectionVisible={averageRating > 0}>

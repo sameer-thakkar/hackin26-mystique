@@ -2118,5 +2118,6 @@ const it = {
     MINUTE: ' min',
     MINUTES: ' min',
   },
+  LTT_SPECIAL_OFFER: 'Offerta speciale',
 };
 export default it;

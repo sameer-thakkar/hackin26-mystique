@@ -87,6 +87,7 @@ export const Hero = styled.div<{ $isImageAvailable: boolean }>`
     transition: transform 0.2s ease;
     padding-bottom: 4px;
     border-radius: 12px;
+    position: relative;
 
     background: linear-gradient(
       180deg,

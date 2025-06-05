@@ -1968,6 +1968,7 @@ const pl = {
     MINUTE: ' min',
     MINUTES: ' min',
   },
+  LTT_SPECIAL_OFFER: 'Oferta specjalna',
 };
 
 export default pl;

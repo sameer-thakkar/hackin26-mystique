@@ -1415,6 +1415,7 @@ const da = {
     MINUTE: ' minut',
     MINUTES: ' minutter',
   },
+  LTT_SPECIAL_OFFER: 'Særtilbud',
 };
 
 export default da;

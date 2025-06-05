@@ -395,7 +395,7 @@ export const CheckAvailability = styled.button`
     background: #8000ff;
     border: 1px solid ${COLORS.BRAND.PURPS};
     padding: 10px 12px;
-    font-family: Halyard Display;
+    font-family: halyard-display;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;

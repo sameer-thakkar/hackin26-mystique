@@ -27,6 +27,7 @@ const ShowPageDescriptorSection = ({
   isMobile,
   tgid,
   uid,
+  showSpecialOfferBanner,
 }: TShowPageDescriptorSectionProps) => {
   const { detailsObjects, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
@@ -145,7 +146,7 @@ const ShowPageDescriptorSection = ({
         <Divider />
       </Conditional>
 
-      <Conditional if={hasSpecialOffer && offerText}>
+      <Conditional if={hasSpecialOffer && offerText && showSpecialOfferBanner}>
         <SpecialOfferBanner>
           <div className="icon"></div>
           <div className="content">

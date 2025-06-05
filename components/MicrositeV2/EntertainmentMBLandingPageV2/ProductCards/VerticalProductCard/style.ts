@@ -87,6 +87,12 @@ export const Wrapper = styled.div<{
       }
     }
   }
+  .price-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.34rem;
+    align-items: flex-end;
+  }
   @media (max-width: 768px) {
     width: 120px;
     max-width: initial;
@@ -229,8 +235,6 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 `;
 
 export const ExclusivePricesBooster = styled.div`
-  margin-top: 0.34rem;
-
   @media (max-width: 768px) {
     margin-top: 0.59rem;
     .booster-text {

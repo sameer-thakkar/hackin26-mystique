@@ -2,7 +2,7 @@ import { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { Button, Text } from '@headout/eevee';
-import { cx } from '@headout/pixie/css';
+import { css, cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';
@@ -25,6 +25,7 @@ import DesktopMoreReads from 'components/NewsPage/components/DesktopMoreReads';
 import MobileMoreReads from 'components/NewsPage/components/MobileMoreReads';
 import { PageWrapper } from 'components/ReviewsPage/styles';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import { LondonCallingSaleBanner } from 'components/ShowPages/SpecialOfferBanner';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
@@ -42,7 +43,11 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { fetchTourGroupsByCollection } from 'utils/apiUtils';
-import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
+import {
+  checkIfCategoryHeaderExists,
+  checkIfLTTMB,
+  getHostName,
+} from 'utils/helper';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
@@ -208,7 +213,11 @@ const LttShowPageV2 = ({
     listingPrice,
   } = tourGroupData;
 
-  const { faqSchema } = parseShowPageData(microBrandsHighlight);
+  const { faqSchema, hasSpecialOffer, specialOffer } =
+    parseShowPageData(microBrandsHighlight);
+  const { offerHeading = 'london calling', offerText } = specialOffer;
+  const isLtt = checkIfLTTMB(uid);
+
   const faqHeading = `${strings.formatString(
     strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
       .FREQUENTLY_ASKED_QUESTIONS_ABOUT,
@@ -398,14 +407,14 @@ const LttShowPageV2 = ({
           host={host}
           isMobile={isMobile}
           allTours={allTours}
-          isEntertainmentMb={true}
-          hasLanguageSelector={true}
+          isEntertainmentMb
+          hasLanguageSelector
           hideCurrencySelector
           isEntertainmentMbListicle={false}
           logoUrl={logoUrl}
           logoAltText={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          isEntertainmentLandingPageVisible={true}
+          isEntertainmentLandingPageVisible
           primaryCity={primaryCity}
           taggedCity={taggedCity}
           categoryHeaderMenu={categoryHeaderMenu}
@@ -427,7 +436,31 @@ const LttShowPageV2 = ({
           isMobile={isMobile}
           tgid={tgid}
           uid={uid}
+          showSpecialOfferBanner={false}
         />
+
+        <Conditional
+          if={(hasSpecialOffer || true) && totalDiscount > 0 && isLtt}
+        >
+          <div
+            className={css({
+              padding: '1rem 1.5rem',
+              width: '100%',
+              boxSizing: 'border-box',
+              '@media (min-width: 768px)': {
+                width: 'calc(100% - (5.46vw * 2))',
+                maxWidth: '1200px',
+                padding: 0,
+                margin: '20px auto 16px',
+              },
+            })}
+          >
+            <LondonCallingSaleBanner
+              saleName={offerHeading}
+              saleDescription={offerText}
+            />
+          </div>
+        </Conditional>
 
         <DateSelectorWrapper
           $visible={!isMobile || mwebDateSelectorPopupActive}
@@ -494,11 +527,7 @@ const LttShowPageV2 = ({
       />
 
       <FaqWrapper>
-        <AccordionGroup
-          accordions={faqSchema}
-          heading={faqHeading}
-          useSchema={true}
-        />
+        <AccordionGroup accordions={faqSchema} heading={faqHeading} useSchema />
       </FaqWrapper>
       <Footer
         currentLanguage={currentLanguage}
@@ -510,8 +539,8 @@ const LttShowPageV2 = ({
         secondarySlices={commonFooter?.data?.body || []}
         secondaryHeading={commonFooter?.data?.footer_heading}
         attraction={commonFooter?.data?.attraction || 'attraction'}
-        isEntertainmentMb={true}
-        isLTT={true}
+        isEntertainmentMb
+        isLTT
       />
 
       <Conditional if={isMobile}>
@@ -533,7 +562,7 @@ const LttShowPageV2 = ({
                         lang={lang}
                         price={originalPrice}
                         className="original-price"
-                        truncateIfLong={true}
+                        truncateIfLong
                         truncateAfter={3}
                       />
                     </Conditional>
@@ -619,7 +648,7 @@ const LttShowPageV2 = ({
           headerProps={headerProps}
           isMobile={isMobile}
           changePage={changePage}
-          isLTT={true}
+          isLTT
         />
       </Conditional>
     </ShowPageWrapper>

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
+import { css } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import { TVerticalProductCardProps } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard/interface';
 import {
@@ -29,6 +30,7 @@ import {
   CASHBACK_TYPES,
 } from 'const/index';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import LttSaleDesciptor from '../lttSaleDesciptor';
 
 const VerticalProductCard = ({
   product,
@@ -119,6 +121,7 @@ const VerticalProductCard = ({
       window.open(destinationUrl, '_blank');
     }
   };
+
   return (
     <Wrapper
       darkTheme={background === 'DARK'}
@@ -126,17 +129,26 @@ const VerticalProductCard = ({
       hoverEffect={!isTopShowsSection}
       isVerticalImageUrlPresent={!!verticalImageUrl}
     >
-      <Image
-        draggable={false}
-        url={verticalImageUrl}
-        alt={`${title} product image`}
-        autoCrop={true}
-        className={`pinned-card-vertical-image`}
-        fitCrop={true}
-        loadHigherQualityImage={true}
-        height={isMobile ? 180 : 270}
-        width={isMobile ? 120 : 180}
-      />
+      <div
+        className={css({
+          position: 'relative',
+        })}
+      >
+        <Image
+          draggable={false}
+          url={verticalImageUrl}
+          alt={`${title} product image`}
+          autoCrop
+          className="pinned-card-vertical-image"
+          fitCrop
+          loadHigherQualityImage
+          height={isMobile ? 180 : 270}
+          width={isMobile ? 120 : 180}
+        />
+        <Conditional if={bestDiscount > 0}>
+          <LttSaleDesciptor />
+        </Conditional>
+      </div>
       <span className="image-placeholder">
         <VerticalProductImagePlaceholder
           $width={isMobile ? 120 : 180}
@@ -170,25 +182,27 @@ const VerticalProductCard = ({
             </div>
           </Conditional>
         </Conditional>
-        <PriceBlock
-          listingPrice={listingPrice}
-          lang="en"
-          showScratchPrice={true}
-          prefix={true}
-        />
-        <Conditional if={bestDiscount > 0 || shouldShowcashbackElement}>
-          <ExclusivePricesBooster>
-            <div className="booster-text">
-              <DiscountTag
-                discount={getEntertainmentMbProductCardDiscountTagString({
-                  bestDiscount,
-                  shouldShowcashbackElement,
-                  cashbackValue,
-                })}
-              />
-            </div>
-          </ExclusivePricesBooster>
-        </Conditional>
+        <div className="price-wrapper">
+          <PriceBlock
+            listingPrice={listingPrice}
+            lang="en"
+            showScratchPrice={true}
+            prefix={true}
+          />
+          <Conditional if={bestDiscount > 0 || shouldShowcashbackElement}>
+            <ExclusivePricesBooster>
+              <div className="booster-text">
+                <DiscountTag
+                  discount={getEntertainmentMbProductCardDiscountTagString({
+                    bestDiscount,
+                    shouldShowcashbackElement,
+                    cashbackValue,
+                  })}
+                />
+              </div>
+            </ExclusivePricesBooster>
+          </Conditional>
+        </div>
       </ProductDetails>
     </Wrapper>
   );

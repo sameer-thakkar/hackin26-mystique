@@ -1405,6 +1405,7 @@ const ru = {
     MINUTE: ' мин',
     MINUTES: ' минут',
   },
+  LTT_SPECIAL_OFFER: 'Скидка',
 };
 
 export default ru;

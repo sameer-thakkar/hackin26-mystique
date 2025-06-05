@@ -1385,6 +1385,7 @@ const tr = {
     MINUTE: ' dk.',
     MINUTES: ' dk.',
   },
+  LTT_SPECIAL_OFFER: 'Özel teklif',
 };
 
 export default tr;
