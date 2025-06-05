@@ -115,7 +115,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [LTT_SHOW_PAGE_EXPERIMENT_V2]: new Experiment(
     LTT_SHOW_PAGE_EXPERIMENT_V2,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [MIXPANEL_SESSION_REPLAY]: new Experiment(
     MIXPANEL_SESSION_REPLAY,
