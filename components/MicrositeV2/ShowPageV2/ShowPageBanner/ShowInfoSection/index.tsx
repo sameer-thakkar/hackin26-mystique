@@ -344,22 +344,24 @@ const ShowInfoSection = ({
               </div>
             </Conditional>
           </TagSection>
-          <TheatreSection $isUnderlined={!!theatrePageUrl}>
-            {Location}
-            <a
-              href={theatrePageUrl}
-              className="theatre-name"
-              target="_blank"
-              onClick={() => {
-                trackEvent({
-                  eventName: ANALYTICS_EVENTS.SHOW_PAGE.THEATRE_NAME_CLICKED,
-                  [ANALYTICS_PROPERTIES.THEATRE_NAME]: theatreName,
-                });
-              }}
-            >
-              {theatreName}
-            </a>
-          </TheatreSection>
+          <Conditional if={!!theatreName}>
+            <TheatreSection $isUnderlined={!!theatrePageUrl}>
+              {Location}
+              <a
+                href={theatrePageUrl}
+                className="theatre-name"
+                target="_blank"
+                onClick={() => {
+                  trackEvent({
+                    eventName: ANALYTICS_EVENTS.SHOW_PAGE.THEATRE_NAME_CLICKED,
+                    [ANALYTICS_PROPERTIES.THEATRE_NAME]: theatreName,
+                  });
+                }}
+              >
+                {theatreName}
+              </a>
+            </TheatreSection>
+          </Conditional>
         </InfoSectionWrapper>
       </Hero>
     </ShowInfoSectionWrapper>
