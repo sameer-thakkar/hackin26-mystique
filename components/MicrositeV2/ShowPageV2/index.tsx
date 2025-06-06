@@ -456,7 +456,7 @@ const LttShowPageV2 = ({
             })}
           >
             <LondonCallingSaleBanner
-              saleName="londond calling"
+              saleName="london calling"
               saleDescription={offerText}
             />
           </div>
