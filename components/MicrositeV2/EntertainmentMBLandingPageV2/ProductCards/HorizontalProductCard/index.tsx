@@ -15,6 +15,7 @@ import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
+import { checkIfLTTMB } from 'utils/helper';
 import {
   getBoosterValueFromListingPrice,
   getEntertainmentMbProductCardDiscountTagString,
@@ -29,6 +30,10 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
 } from 'const/index';
+import {
+  getDiscountTagText,
+  LTT_SALE_HARDCODINGS,
+} from 'const/lttSaleHardcodings';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 import LttSaleDesciptor from '../lttSaleDesciptor';
 
@@ -38,8 +43,9 @@ const HorizontalProductCard = ({
   isTopShowsSection = false,
   handleChildLoaded,
 }: THorizontalProductCardProps) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host, uid } =
     useContext(MBContext);
+  const isLTT = checkIfLTTMB(uid);
   const currency = useRecoilValue(currencyAtom);
 
   const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
@@ -145,7 +151,7 @@ const HorizontalProductCard = ({
           autoCrop
           loadHigherQualityImage={true}
         />
-        <Conditional if={bestDiscount > 0}>
+        <Conditional if={bestDiscount > 0 && isLTT}>
           <LttSaleDesciptor isHorizontalProductCard />
         </Conditional>
       </div>
@@ -181,14 +187,24 @@ const HorizontalProductCard = ({
             showScratchPrice={true}
             prefix={true}
           />
-          <Conditional if={bestDiscount > 0 || shouldShowcashbackElement}>
+          <Conditional
+            if={
+              bestDiscount > 0 ||
+              shouldShowcashbackElement ||
+              LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
+            }
+          >
             <ExclusivePricesBooster>
               <div className="booster-text">
                 <DiscountTag
-                  discount={getEntertainmentMbProductCardDiscountTagString({
-                    bestDiscount,
-                    shouldShowcashbackElement,
-                    cashbackValue,
+                  discount={getDiscountTagText({
+                    tgid,
+                    calculatedDiscount:
+                      getEntertainmentMbProductCardDiscountTagString({
+                        bestDiscount,
+                        shouldShowcashbackElement,
+                        cashbackValue,
+                      }),
                   })}
                 />
               </div>

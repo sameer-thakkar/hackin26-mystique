@@ -63,6 +63,10 @@ import {
   NEWS_PAGE_SECTIONS,
   PAGETYPE,
 } from 'const/index';
+import {
+  getDiscountTagText,
+  LTT_SALE_HARDCODINGS,
+} from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import { useIsLTTShowPageExperiementEnabled } from './hooks/useIsLTTShowPageExperiementEnabled';
@@ -573,12 +577,20 @@ const LttShowPageV2 = ({
                       lang={lang}
                       price={finalPrice}
                     />
-                    <Conditional if={totalDiscount > 0}>
+                    <Conditional
+                      if={
+                        totalDiscount > 0 ||
+                        LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
+                      }
+                    >
                       <SavePercentElement>
-                        {strings.formatString(
-                          strings.SAVE_PERCENT,
-                          `${totalDiscount}`
-                        )}
+                        {getDiscountTagText({
+                          tgid,
+                          calculatedDiscount: strings.formatString(
+                            strings.SAVE_PERCENT,
+                            `${totalDiscount}`
+                          ),
+                        })}
                       </SavePercentElement>
                     </Conditional>
                     <Conditional if={totalDiscount <= 0 && showCashbackElement}>

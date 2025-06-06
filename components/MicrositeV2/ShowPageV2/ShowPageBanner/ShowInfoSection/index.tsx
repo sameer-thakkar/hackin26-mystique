@@ -22,6 +22,7 @@ import { MBContext } from 'contexts/MBContext';
 import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
+import { checkIfLTTMB } from 'utils/helper';
 import { getLocalizedCount } from 'utils/localizationUtils';
 import {
   generateDescriptor,
@@ -37,6 +38,7 @@ import {
   LANGUAGE_MAP,
   REOPENING_CATEGORIES,
 } from 'const/index';
+import { LTT_SALE_HARDCODINGS } from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import ColoredCalendar from 'assets/coloredCalendar';
 import Location from 'assets/location';
@@ -51,6 +53,7 @@ const ShowInfoSection = ({
   taggedCity,
 }: TShowInfoSectionProps) => {
   const { lang, uid } = useContext(MBContext);
+  const isLTT = checkIfLTTMB(uid);
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
   const [mwebShowMoreTagsClicked, setmwebShowMoreTagsClicked] = useState(false);
   const {
@@ -64,6 +67,7 @@ const ShowInfoSection = ({
     primaryCategory = {},
     primaryCity = {},
     listingPrice = {},
+    id: tgid,
   } = tourGroupData ?? {};
 
   const { bestDiscount } = getBoosterValueFromListingPrice(listingPrice);
@@ -196,7 +200,13 @@ const ShowInfoSection = ({
               $width={isMobile ? 120 : 178}
             />
           </span>
-          <Conditional if={bestDiscount > 0}>
+          <Conditional
+            if={
+              (bestDiscount > 0 ||
+                LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG) &&
+              isLTT
+            }
+          >
             <LttSaleDesciptor containerHasBorder />
           </Conditional>
         </div>

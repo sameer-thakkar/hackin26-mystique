@@ -80,6 +80,7 @@ const saleDescriptorTextStyles = ({
     background: 'linear-gradient(103.49deg, #FFE70E 12.97%, #FFFFFF 149.19%)',
     backgroundClip: 'text' as any,
     zIndex: 2,
+    whiteSpace: 'nowrap',
     '@media (min-width: 768px)': {
       fontWeight: 500,
       fontSize: '21px',
