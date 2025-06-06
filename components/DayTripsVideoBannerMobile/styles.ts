@@ -32,7 +32,7 @@ export const dayTripsStyles = sva({
       overflow: 'hidden',
     },
     headerDescription: {
-      textStyle: 'Semantics/Heading/Regular',
+      textStyle: 'heading.regular',
       color: 'semantic.text.grey.1',
       position: 'relative',
       zIndex: 2,

@@ -37,7 +37,7 @@ export const radioStyles = sva({
     },
     label: {
       cursor: 'pointer',
-      textStyle: 'Semantics/Subheading/Regular',
+      textStyle: 'subheading.regular',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -45,7 +45,7 @@ export const radioStyles = sva({
       flexDir: 'row',
 
       '@media(max-width: 768px)': {
-        textStyle: 'Semantics/Subheading/Large',
+        textStyle: 'subheading.large',
       },
     },
   },

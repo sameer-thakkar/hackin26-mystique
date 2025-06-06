@@ -155,14 +155,10 @@ const SingleCalendar = ({
             marginBottom: 'space.4',
           })}
         >
-          <Text textStyle="Semantics/UI Label/Small" color="core.grey.900">
+          <Text textStyle="ui.label.small" color="core.grey.900">
             {strings.SHOW_PAGE_V2.SHOW_ONLY_AVAILABLE_AT}
           </Text>
-          <Text
-            textStyle="Semantics/UI Label/Large (Heavy)"
-            color="core.grey.900"
-            as="h2"
-          >
+          <Text textStyle="ui.label.large.heavy" color="core.grey.900" as="h2">
             {getSingleDateProductDate()}
           </Text>
         </div>

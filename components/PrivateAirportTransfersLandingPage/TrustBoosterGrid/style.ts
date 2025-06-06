@@ -32,7 +32,7 @@ export const gridStyles = css({
 });
 
 export const titleStyles = css({
-  textStyle: 'Semantics/Display/Small',
+  textStyle: 'display.small',
   color: 'core.grey.900',
   marginTop: '0',
   marginBottom: 'space.16',
@@ -40,7 +40,7 @@ export const titleStyles = css({
   gridArea: 'title',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Heading/Large',
+    textStyle: 'heading.large',
     fontFamily: 'font.family.hd',
     fontWeight: 'font.weight.500',
     letterSpacing: 'ls.8',

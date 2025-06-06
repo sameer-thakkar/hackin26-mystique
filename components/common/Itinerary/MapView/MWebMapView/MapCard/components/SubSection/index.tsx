@@ -30,7 +30,7 @@ const SubSection = ({
     <div className={mapViewCardStyles.nearbyThingsContainer}>
       <Text
         as="h6"
-        textStyle="Semantics/Tags/Regular"
+        textStyle="tags.regular"
         color="core.grey.700"
         className={mapViewCardStyles.nearbyThingsHeading}
       >

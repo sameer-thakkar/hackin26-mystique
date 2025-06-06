@@ -75,7 +75,7 @@ export const LondonCallingSaleBanner = ({
     >
       <Text
         as="h1"
-        textStyle="Semantics/Heading/Small"
+        textStyle="heading.small"
         color="transparent"
         className={css({
           background:
@@ -85,7 +85,7 @@ export const LondonCallingSaleBanner = ({
       >
         {saleName}
       </Text>
-      <Text color="core.grey.800" textStyle="Semantics/Para/Small">
+      <Text color="core.grey.800" textStyle="para.small">
         {saleDescription}
       </Text>
     </section>

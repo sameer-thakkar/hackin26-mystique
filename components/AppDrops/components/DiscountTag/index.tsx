@@ -17,11 +17,7 @@ export const DiscountTag = ({
       <div className={styles.tag}>
         <Text
           as="span"
-          textStyle={
-            isMobile
-              ? 'Semantics/Subheading/Regular'
-              : 'Semantics/UI Label/Large (Heavy)'
-          }
+          textStyle={isMobile ? 'subheading.regular' : 'ui.label.large.heavy'}
         >
           {strings.DROPS.DISCOUNT_TAG}
         </Text>

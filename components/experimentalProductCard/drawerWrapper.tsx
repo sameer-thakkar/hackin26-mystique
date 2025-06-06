@@ -367,7 +367,7 @@ const DrawerWrapper = (props: any) => {
           >
             <div className={swipesheetStyles.container}>
               <div className={swipesheetStyles.heading}>
-                <Text textStyle={'Semantics/Heading/Small'}>
+                <Text textStyle={'heading.small'}>
                   {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
                 </Text>
                 <Button

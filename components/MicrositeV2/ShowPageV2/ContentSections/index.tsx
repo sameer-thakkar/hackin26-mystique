@@ -314,7 +314,7 @@ const ContentSections = ({
   };
 
   const sectionHeading = css({
-    textStyle: 'Semantics/Heading/Small !important',
+    textStyle: 'heading.small !important',
     color: 'core.grey.800 !important',
     marginTop: '1.5rem !important',
     marginBottom: '0.75rem !important',
@@ -356,7 +356,7 @@ const ContentSections = ({
   const whyWatchSectionHeading = css({
     marginBottom: '0.75rem !important',
     marginTop: '0.5rem !important',
-    textStyle: 'Semantics/Heading/Regular !important',
+    textStyle: 'heading.regular !important',
     color: 'core.grey.800 !important',
   });
 

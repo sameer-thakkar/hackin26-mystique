@@ -27,7 +27,7 @@ export const nearbyThingsCardStylesRecipe = sva({
       position: 'relative',
       zIndex: 3,
       lineClamp: 2,
-      textStyle: 'Semantics/UI Label/Small (Heavy)',
+      textStyle: 'ui.label.small.heavy',
       color: 'core.primary.white',
     },
     bgImageContainer: {

@@ -71,15 +71,15 @@ export const getUnavailableTicketStylesRecipe = sva({
       backgroundColor: 'semantic.surface.light.white',
     },
     TicketsUnavailableText: {
-      textStyle: 'Semantics/Subheading/Large',
+      textStyle: 'subheading.large',
       color: 'semantic.text.grey.3',
     },
     TicketsUnavailableSubText: {
-      textStyle: 'Semantics/UI Label/Regular',
+      textStyle: 'ui.label.regular',
       color: 'semantic.text.grey.3',
     },
     MustSeeHeading: {
-      textStyle: 'Semantics/Heading/Medium',
+      textStyle: 'heading.medium',
       color: 'semantic.text.grey.2',
     },
     MoreShowsButtonWrapper: {

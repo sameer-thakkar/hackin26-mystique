@@ -152,7 +152,7 @@ const MapViewCard = ({
         <div className={mapViewCardStyles.ctaContainer}>
           <div className={mapViewCardStyles.cta}>
             <Text
-              textStyle={'Semantics/UI Label/Small (Heavy)'}
+              textStyle={'ui.label.small.heavy'}
               color={'semantic.text.grey.1'}
             >
               {strings.ITINERARY.VIEW_DETAILS}

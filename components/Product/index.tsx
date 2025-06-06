@@ -1998,16 +1998,16 @@ const Product = (props: any) => {
                 >
                   <TourAvailableInLanguages>
                     {/*
-                TODO: import language labels from scorpio and prismic here
-                {isSpecialGuidedTour &&
-                  strings.formatString(
-                    strings.TOUR_AVAILABLE_LANGUAGES,
-                    GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
-                      uid ?? ''
-                    ]?.languageLabels
-                      .map((label) => strings.LANGUAGES[label])
-                      .join(', ')
-                  )} */}
+              TODO: import language labels from scorpio and prismic here
+              {isSpecialGuidedTour &&
+                strings.formatString(
+                  strings.TOUR_AVAILABLE_LANGUAGES,
+                  GUIDED_TOUR_PRODUCT_CARD_REVAMP_EXPERIMENT[
+                    uid ?? ''
+                  ]?.languageLabels
+                    .map((label) => strings.LANGUAGES[label])
+                    .join(', ')
+                )} */}
                   </TourAvailableInLanguages>
                 </Conditional>
                 <Conditional
@@ -2155,7 +2155,7 @@ const Product = (props: any) => {
                         }}
                         aria-label="Close modal"
                       />
-                      <Text textStyle={'Semantics/Heading/Medium'}>
+                      <Text textStyle={'heading.medium'}>
                         {strings.SHOW_PAGE_V2.CONTENT_TABS.Reviews}
                       </Text>
                     </div>

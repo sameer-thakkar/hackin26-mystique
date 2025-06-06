@@ -10,7 +10,7 @@ const EmptyState = ({ onClick }: TExportStateProps) => {
     <div className={container}>
       <NoReviewsIllustration className={illustration} />
       <div className={contentContainer}>
-        <Text align="center" textStyle="Semantics/Para/Regular" as="span">
+        <Text align="center" textStyle="para.regular" as="span">
           {strings.REVIEWS_SECTION.EMPTY_STATE.SUB_HEADING}
         </Text>
         <Button

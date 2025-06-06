@@ -70,7 +70,7 @@ const ExitIntentDialogContent = ({
             <Text
               as="h1"
               className={textTitleStyle}
-              textStyle={'Semantics/Display/Small'}
+              textStyle={'display.small'}
               color={'core.candy.800'}
             >
               {strings.DROPS.EXIT_INTENT.TITLE}
@@ -78,7 +78,7 @@ const ExitIntentDialogContent = ({
             <Text
               as="p"
               className={css({ marginTop: '4px' })}
-              textStyle={'Semantics/Para/Regular'}
+              textStyle={'para.regular'}
               color={'semantic.text.grey.2'}
             >
               {strings.DROPS.EXIT_INTENT.DESCRIPTION}
@@ -102,7 +102,7 @@ const ExitIntentDialogContent = ({
           <Text
             as="h3"
             className={titleAppNudge}
-            textStyle={'Semantics/Tags/Booster'}
+            textStyle={'tags.booster'}
             color={'core.candy.800'}
           >
             {translations.TITLE}
@@ -115,7 +115,7 @@ const ExitIntentDialogContent = ({
         <div className={dialogQrCodeContainer}>
           <Text
             as="span"
-            textStyle={'Semantics/UI Label/Small (Heavy)'}
+            textStyle={'ui.label.small.heavy'}
             color={'semantic.text.grey.2'}
           >
             {translations.QR_SCAN_TEXT}

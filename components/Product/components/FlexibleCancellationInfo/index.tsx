@@ -47,7 +47,7 @@ export const FlexibleCancellationInfo = ({
 
       <CrossiconSvg className="cross" onClick={onClose} />
 
-      <Text textStyle={'Semantics/Heading/Medium'}>
+      <Text textStyle={'heading.medium'}>
         {strings.DESCRIPTORS.FLEXIBLE_CANCELLATION}
       </Text>
 
@@ -75,11 +75,7 @@ export const FlexibleCancellationInfo = ({
       </div>
 
       <Text
-        textStyle={
-          isMobile
-            ? 'Semantics/Heading/Small'
-            : 'Semantics/UI Label/Large (Heavy)'
-        }
+        textStyle={isMobile ? 'heading.small' : 'ui.label.large.heavy'}
         color={isMobile ? 'semantic.text.grey.1' : 'semantic.text.grey.2'}
         className={css({
           marginTop: 'space.12',

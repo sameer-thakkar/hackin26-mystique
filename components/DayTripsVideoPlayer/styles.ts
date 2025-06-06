@@ -67,7 +67,7 @@ export const videoPlayerStyles = sva({
     },
     chatBubbleContent: {
       width: '[11.125rem]',
-      textStyle: 'Semantics/Heading/Regular',
+      textStyle: 'heading.regular',
       color: 'core.candy.100',
       position: 'absolute',
       bottom: 'space.24',

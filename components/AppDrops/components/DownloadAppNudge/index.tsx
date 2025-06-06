@@ -22,7 +22,7 @@ export const DownloadAppNudge = () => {
         <Text
           as="h3"
           className={titleAppNudge}
-          textStyle={'Semantics/Tags/Booster'}
+          textStyle={'tags.booster'}
           color={'core.candy.800'}
         >
           {translations.TITLE}
@@ -33,7 +33,7 @@ export const DownloadAppNudge = () => {
       <div className={qrCodeContainer}>
         <Text
           as="span"
-          textStyle={'Semantics/UI Label/Small (Heavy)'}
+          textStyle={'ui.label.small.heavy'}
           color={'semantic.text.grey.2'}
         >
           {translations.QR_SCAN_TEXT}

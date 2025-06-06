@@ -16,10 +16,10 @@ export const styles = {
     },
   }),
   pageTitle: css({
-    textStyle: 'Semantics/Display/Regular',
+    textStyle: 'display.regular',
 
     '@media (max-width: 768px)': {
-      textStyle: 'Semantics/Display/XS',
+      textStyle: 'display.xs',
     },
   }),
   section: css({
@@ -37,22 +37,22 @@ export const styles = {
     },
   }),
   sectionTitle: css({
-    textStyle: 'Semantics/Heading/Large',
+    textStyle: 'heading.large',
     color: 'semantic.text.grey.1',
 
     '@media (max-width: 768px)': {
-      textStyle: 'Semantics/Heading/Medium',
+      textStyle: 'heading.medium',
     },
   }),
   content: css({
-    textStyle: 'Semantics/Para/Large',
+    textStyle: 'para.large',
 
     '@media (max-width: 768px)': {
-      textStyle: 'Semantics/Para/Medium',
+      textStyle: 'para.medium',
     },
   }),
   odrLinkText: css({
-    textStyle: 'Semantics/Subheading/Large',
+    textStyle: 'subheading.large',
   }),
   contentListWrapper: css({
     display: 'flex',
@@ -75,7 +75,7 @@ export const styles = {
   contentListItemKey: css({
     width: '16rem',
     flexShrink: 0,
-    textStyle: 'Semantics/Subheading/Large',
+    textStyle: 'subheading.large',
     color: 'semantic.text.grey.2',
 
     '@media (max-width: 768px)': {
@@ -83,6 +83,6 @@ export const styles = {
     },
   }),
   contentListItemValue: css({
-    textStyle: 'Semantics/UI Label/Large',
+    textStyle: 'ui.label.large',
   }),
 };

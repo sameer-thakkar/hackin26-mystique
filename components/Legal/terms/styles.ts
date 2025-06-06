@@ -16,7 +16,7 @@ export const contentContainer = css({
 });
 
 export const heading = css({
-  textStyle: 'Semantics/Heading/Large',
+  textStyle: 'heading.large',
   marginBottom: 'space.16',
 });
 

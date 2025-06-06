@@ -143,7 +143,7 @@ export const DropsBanner = () => {
               <Text
                 as="h3"
                 className={titleAppNudge}
-                textStyle={'Semantics/Tags/Booster'}
+                textStyle={'tags.booster'}
                 color={'core.candy.800'}
               >
                 {translations.DOWNLOAD_APP_NUDGE.TITLE}
@@ -166,9 +166,7 @@ export const DropsBanner = () => {
           <Text
             as="h1"
             className={title}
-            textStyle={
-              isMobile ? 'Semantics/Heading/Regular' : 'Semantics/Display/XS'
-            }
+            textStyle={isMobile ? 'heading.regular' : 'display.xs'}
             color={'core.candy.800'}
           >
             {translations.TITLE}
@@ -176,9 +174,7 @@ export const DropsBanner = () => {
           <Text
             as="p"
             className={subtitle}
-            textStyle={
-              isMobile ? 'Semantics/UI Label/Small' : 'Semantics/Para/Medium'
-            }
+            textStyle={isMobile ? 'ui.label.small' : 'para.medium'}
             color={'semantic.text.grey.2'}
           >
             {translations.SUBTITLE}

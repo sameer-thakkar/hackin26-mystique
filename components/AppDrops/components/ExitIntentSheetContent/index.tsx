@@ -64,7 +64,7 @@ const ExitIntentBottomSheetContent = ({
       <Text
         as="h1"
         className={exitIntentHeadingMargin}
-        textStyle={'Semantics/Heading/Regular'}
+        textStyle={'heading.regular'}
         color={'core.candy.800'}
       >
         {strings.DROPS.EXIT_INTENT.TITLE}
@@ -73,7 +73,7 @@ const ExitIntentBottomSheetContent = ({
       <Text
         as="p"
         className={exitIntentDescriptionMargin}
-        textStyle={'Semantics/UI Label/Small'}
+        textStyle={'ui.label.small'}
         color={'semantic.text.grey.2'}
       >
         {strings.DROPS.EXIT_INTENT.DESCRIPTION}
@@ -84,7 +84,7 @@ const ExitIntentBottomSheetContent = ({
         <Text
           as="h3"
           className={titleAppNudge}
-          textStyle={'Semantics/Tags/Booster'}
+          textStyle={'tags.booster'}
           color={'core.candy.800'}
         >
           {translations.TITLE}

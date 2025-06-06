@@ -1098,11 +1098,7 @@ const PopulateProducts: any = (props: any) => {
         <Conditional if={availableFilteredOutTours?.length}>
           <>
             <Text
-              textStyle={
-                isMobile
-                  ? 'Semantics/Heading/Medium'
-                  : 'Semantics/Display/Small'
-              }
+              textStyle={isMobile ? 'heading.medium' : 'display.small'}
               mx={'space.24'}
               className="poi-filtered-out-products"
             >

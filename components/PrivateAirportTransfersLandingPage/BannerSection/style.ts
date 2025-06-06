@@ -34,7 +34,7 @@ export const leftColumnStyle = css({
 });
 
 export const headingStyle = css({
-  textStyle: 'Semantics/Display/Medium',
+  textStyle: 'display.medium',
   color: 'semantic.cta.white',
   marginTop: '0',
   marginBottom: '0',
@@ -61,11 +61,11 @@ export const headingStyle = css({
 });
 
 export const subtextStyle = css({
-  textStyle: 'Semantics/Para/Large',
+  textStyle: 'para.large',
   color: 'semantic.cta.white',
   marginTop: '0.725rem',
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Small',
+    textStyle: 'para.small',
     marginBlock: '0',
   },
 });

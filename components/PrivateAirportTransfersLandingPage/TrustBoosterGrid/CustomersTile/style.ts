@@ -121,13 +121,13 @@ export const numberStyle = css({
 
 export const textStyle = css({
   color: 'core.primary.white',
-  textStyle: 'Semantics/Subheading/Large',
+  textStyle: 'subheading.large',
   maxWidth: '40%',
   margin: 0,
   marginTop: '0.25rem',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/UI Label/Small (Heavy)',
+    textStyle: 'ui.label.small.heavy',
     marginTop: '0',
     maxWidth: '100%',
   },

@@ -56,7 +56,7 @@ export const mapViewCardStylesRecipe = sva({
       width: '100%',
     },
     heading: {
-      textStyle: 'Semantics/Heading/Regular',
+      textStyle: 'heading.regular',
       color: 'core.grey.800',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
@@ -70,7 +70,7 @@ export const mapViewCardStylesRecipe = sva({
       marginTop: 'space.16',
     },
     nearbyThingsHeading: {
-      textStyle: 'Semantics/Tags/Regular',
+      textStyle: 'tags.regular',
       letterSpacing: '[0.2px]',
       color: 'core.grey.700',
       textTransform: 'uppercase',

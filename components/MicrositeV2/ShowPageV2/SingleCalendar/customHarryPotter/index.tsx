@@ -31,7 +31,7 @@ export const HpccShowTimingsSection = ({
         marginTop: '0',
       })}
     >
-      <Text textStyle="Semantics/Heading/Small" color="core.grey.800">
+      <Text textStyle="heading.small" color="core.grey.800">
         {strings.SHOW_PAGE_V2.TWO_PART_SHOW}
       </Text>
       <TwoPartTimeSlot>

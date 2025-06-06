@@ -31,14 +31,14 @@ export const leftColumnStyle = css({
 });
 
 export const headingStyle = css({
-  textStyle: 'Semantics/Display/Small',
+  textStyle: 'display.small',
   marginBottom: 'space.8',
   color: 'core.grey.900',
   margin: '0',
   letterSpacing: 'ls.4',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Heading/Large',
+    textStyle: 'heading.large',
     fontFamily: 'font.family.hd',
     fontWeight: 'font.weight.500',
     letterSpacing: 'ls.8',
@@ -46,24 +46,24 @@ export const headingStyle = css({
 });
 
 export const paragraphStyle = css({
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
   color: 'core.grey.800',
   margin: '0',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
     marginBottom: 'space.8',
   },
 });
 
 export const fromTextStyle = css({
   marginTop: 'auto',
-  textStyle: 'Semantics/UI Label/Regular',
+  textStyle: 'ui.label.regular',
   marginBottom: 'space.2',
 });
 
 export const priceStyle = css({
-  textStyle: 'Semantics/Display/Small',
+  textStyle: 'display.small',
   color: 'core.grey.800',
   marginBottom: 'space.8',
 });
@@ -168,21 +168,21 @@ export const detailItemStyles = css({
   display: 'flex',
   alignItems: 'center',
   gap: 'space.6',
-  textStyle: 'Semantics/UI Label/Regular',
+  textStyle: 'ui.label.regular',
   color: 'core.grey.300',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/UI Label/Small',
+    textStyle: 'ui.label.small',
   },
 });
 
 export const carListStyles = css({
-  textStyle: 'Semantics/Para/Regular',
+  textStyle: 'para.regular',
   color: 'core.grey.200',
   margin: '0',
   marginTop: 'space.4',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Small',
+    textStyle: 'para.small',
   },
 });

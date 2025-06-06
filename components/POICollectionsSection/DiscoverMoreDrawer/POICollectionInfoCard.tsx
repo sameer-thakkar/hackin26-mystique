@@ -102,7 +102,7 @@ export const POICollectionInfoCard = ({
       <div className={linkToPOISectionStyles}>
         <Text
           className={css({
-            textStyle: 'Semantics/Heading/Regular',
+            textStyle: 'heading.regular',
             color: 'semantic.text.grey.2!',
           })}
         >
@@ -120,7 +120,7 @@ export const POICollectionInfoCard = ({
 
         <div className={priceSectionStyles}>
           <Text
-            textStyle={'Semantics/UI Label/Small (Heavy)'}
+            textStyle={'ui.label.small.heavy'}
             as="span"
             className={css({
               color: 'semantic.text.grey.3!',
@@ -129,7 +129,7 @@ export const POICollectionInfoCard = ({
             {strings.FROM.toLocaleLowerCase()}
           </Text>
           <Text
-            textStyle={'Semantics/UI Label/Regular (Heavy)'}
+            textStyle={'ui.label.regular.heavy'}
             as="span"
             className={css({
               color: 'semantic.text.grey.2!',

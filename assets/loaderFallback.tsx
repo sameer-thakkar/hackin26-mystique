@@ -18,7 +18,7 @@ const LoaderFallback = ({ isClosing }: { isClosing?: boolean }) => (
     >
       <div
         className={css({
-          textStyle: 'Semantics/CTA/Regular',
+          textStyle: 'cta.regular',
           whiteSpace: 'nowrap',
           color: 'semantic.text.grey.2',
         })}

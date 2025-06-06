@@ -50,7 +50,7 @@ export const boostersContainerStyles = css({
 });
 
 export const boosterStyle = css({
-  textStyle: 'Semantics/Subheading/Small',
+  textStyle: 'subheading.small',
   color: 'semantic.surface.dark.success.2',
 });
 
@@ -64,7 +64,7 @@ export const cancellationInfoListStyles = css({
 
   '& li': {
     listStyleType: 'square',
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
 
     _marker: {
       fontSize: '0.75rem',
@@ -78,7 +78,7 @@ export const cancellationInfoListStyles = css({
     marginBottom: 'unset',
 
     '& li': {
-      textStyle: 'Semantics/Para/Medium',
+      textStyle: 'para.medium',
     },
   },
 });

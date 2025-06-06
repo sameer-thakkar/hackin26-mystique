@@ -21,7 +21,7 @@ export const ProductInfoCard = ({
       />
       <Text
         className={css({
-          textStyle: 'Semantics/Subheading/Regular',
+          textStyle: 'subheading.regular',
           color: 'semantic.text.grey.2!',
         })}
       >

@@ -164,7 +164,7 @@ const monthTitle = css({
   marginTop: 'space.16',
   flex: 1,
   '& .monthName': {
-    textStyle: 'Semantics/Heading/Medium',
+    textStyle: 'heading.medium',
     color: 'core.grey.800',
     userSelect: 'none',
     '&.first': {
@@ -311,7 +311,7 @@ const dateLabel = css({
   alignItems: 'center',
 
   '& span': {
-    textStyle: 'Semantics/UI Label/Large (Heavy)',
+    textStyle: 'ui.label.large.heavy',
     color: 'core.grey.900',
     display: 'block',
     width: '100%',
@@ -336,7 +336,7 @@ const price = css({
   textAlign: 'center',
   whiteSpace: 'nowrap',
   '& .price': {
-    textStyle: 'Semantics/UI Label/Extra Small',
+    textStyle: 'ui.label.extraSmall',
     color: 'semantic.text.grey.2',
     background: 'none',
     borderRadius: 'radius.2',

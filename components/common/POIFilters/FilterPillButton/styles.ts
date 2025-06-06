@@ -68,10 +68,10 @@ export const filterPillButtonStyles = css({
 });
 
 export const filterTextStyle = css({
-  textStyle: 'Semantics/UI Label/Regular (Heavy)',
+  textStyle: 'ui.label.regular.heavy',
   transform: 'translateY(-0.5px)',
 
   '@media (min-width: 768px)': {
-    textStyle: 'Semantics/Subheading/Large',
+    textStyle: 'subheading.large',
   },
 });

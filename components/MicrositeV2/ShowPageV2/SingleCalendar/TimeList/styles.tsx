@@ -57,18 +57,18 @@ const timeSlotStyles = css({
 });
 
 const timeSlotTextStyles = css({
-  textStyle: 'Semantics/UI Label/Regular (Heavy)',
+  textStyle: 'ui.label.regular.heavy',
   color: 'core.grey.900',
   marginBottom: 'space.4',
 });
 
 const timeSlotBoostStyles = css({
-  textStyle: 'Semantics/UI Label/Small',
+  textStyle: 'ui.label.small',
   color: 'core.grey.700',
 });
 
 const listingPriceStyles = css({
-  textStyle: 'Semantics/UI Label/Regular (Heavy)',
+  textStyle: 'ui.label.regular.heavy',
   color: 'core.grey.900',
   marginBottom: 'space.2',
   display: 'flex',
@@ -77,14 +77,14 @@ const listingPriceStyles = css({
 });
 
 const listingPriceStrikeStyles = css({
-  textStyle: 'Semantics/UI Label/Strike/Extra Small',
+  textStyle: 'ui.label.strike.extraSmall',
   color: 'core.grey.700',
   alignSelf: 'center',
   verticalAlign: 'middle',
 });
 
 const discountTagStyles = css({
-  textStyle: 'Semantics/UI Label/Small',
+  textStyle: 'ui.label.small',
   color: 'core.grey.700',
 });
 

@@ -181,7 +181,7 @@ export const ratingsContainerStyles = css({
 
 export const descriptionTextStyles = css({
   color: 'semantic.surface.light.white',
-  textStyle: 'Semantics/Para/Regular',
+  textStyle: 'para.regular',
   lineClamp: 3,
   maxHeight: '0',
   overflow: 'hidden',
@@ -208,10 +208,10 @@ export const priceSectionStyles = css({
 });
 
 export const fromTextStyles = css({
-  textStyle: 'Semantics/UI Label/Small',
+  textStyle: 'ui.label.small',
   '@media (min-width: 768px)': {
     fontSize: '10px',
     fontWeight: 'normal',
-    textStyle: 'Semantics/Para/Extra Small',
+    textStyle: 'para.extraSmall',
   },
 });

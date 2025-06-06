@@ -9,7 +9,7 @@ const StopLabel = ({ labelText, type }: TStopLabelProps) => {
   return (
     <div className={stopLabelStyles.root}>
       <Text
-        textStyle={'Semantics/Tags/Regular'}
+        textStyle={'tags.regular'}
         color={'core.primary.white'}
         className={stopLabelStyles.text}
         as={'h6'}

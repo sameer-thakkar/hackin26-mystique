@@ -53,7 +53,7 @@ export const DiscoverMoreDrawer = ({
 
         <Text
           className={css({
-            textStyle: 'Semantics/Heading/Medium',
+            textStyle: 'heading.medium',
             color: 'semantic.text.grey.2!',
           })}
         >

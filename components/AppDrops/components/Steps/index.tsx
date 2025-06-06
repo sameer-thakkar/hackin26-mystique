@@ -30,11 +30,7 @@ export const Steps = ({
             height={20}
           />
         </div>
-        <Text
-          as="span"
-          textStyle={'Semantics/UI Label/Small'}
-          color={'core.candy.600'}
-        >
+        <Text as="span" textStyle={'ui.label.small'} color={'core.candy.600'}>
           {translations.STEP_1}
         </Text>
       </div>
@@ -49,7 +45,7 @@ export const Steps = ({
         </div>
         <Text
           as="span"
-          textStyle={'Semantics/UI Label/Small'}
+          textStyle={'ui.label.small'}
           color={'core.candy.600'}
           className={styles.timeTextStyle}
         >
@@ -76,11 +72,7 @@ export const Steps = ({
             height={20}
           />
         </div>
-        <Text
-          as="span"
-          textStyle={'Semantics/UI Label/Small'}
-          color={'core.candy.600'}
-        >
+        <Text as="span" textStyle={'ui.label.small'} color={'core.candy.600'}>
           {translations.STEP_3}
         </Text>
       </div>

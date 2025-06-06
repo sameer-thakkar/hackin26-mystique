@@ -33,12 +33,12 @@ export const dayTripsStyles = sva({
       marginLeft: '[2.625rem]',
     },
     title: {
-      textStyle: 'Semantics/Display/Small',
+      textStyle: 'display.small',
       color: 'semantic.text.grey.1',
       marginBottom: 'space.8',
     },
     description: {
-      textStyle: 'Semantics/Para/Large',
+      textStyle: 'para.large',
       color: 'semantic.text.grey.1',
       marginBottom: 'space.24',
     },

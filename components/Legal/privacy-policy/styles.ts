@@ -17,7 +17,7 @@ export const contentContainer = css({
 
 export const pageHeading = css({
   marginBottom: 'space.16',
-  textStyle: 'Semantics/Heading/Large',
+  textStyle: 'heading.large',
 });
 
 export const lastUpdated = css({
@@ -32,22 +32,22 @@ export const lastUpdated = css({
 export const sectionHeading = css({
   marginBottom: '4px',
   paddingTop: '10px',
-  textStyle: 'Semantics/Heading/Regular',
+  textStyle: 'heading.regular',
 });
 
 export const policyItem = css({
   marginBottom: '9px',
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
   lineHeight: 1.5,
   _before: {
-    textStyle: 'Semantics/Para/Medium',
+    textStyle: 'para.medium',
   },
   '& b': { fontWeight: 'bold' },
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
     _before: {
-      textStyle: 'Semantics/Para/Regular',
+      textStyle: 'para.regular',
     },
   },
 });
@@ -82,7 +82,7 @@ export const policySectionStyles = css({
     content: "counters(item, '.') '. '",
     display: 'table-cell',
     paddingRight: '2px',
-    textStyle: 'Semantics/Heading/Regular',
+    textStyle: 'heading.regular',
 
     '@media (max-width: 768px)': { paddingRight: '9px' },
   },
@@ -122,10 +122,10 @@ export const policySectionStyles = css({
 export const italicUnderlineStyles = css({
   fontStyle: 'italic',
   textDecoration: 'underline',
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
   },
 });
 
@@ -142,7 +142,7 @@ export const tableHeaderStyles = css({
   textAlign: 'left',
   fontWeight: 'bold',
   borderBottom: '2px solid #ddd',
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
 });
 
 export const tableRowStyles = css({
@@ -154,10 +154,10 @@ export const tableRowStyles = css({
 export const tableCellStyles = css({
   padding: '12px',
   borderBottom: '1px solid #ddd',
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
 
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
     padding: '8px',
   },
 });

@@ -124,7 +124,7 @@ export const POICard = ({
             <div className={ratingsContainerStyles}>
               <Star color="white" />
               <Text
-                textStyle={'Semantics/Subheading/Regular'}
+                textStyle={'subheading.regular'}
                 as="span"
                 className={css({
                   color: 'semantic.surface.light.grey.1',
@@ -136,7 +136,7 @@ export const POICard = ({
                   : ratingsInfo.averageRating?.toFixed(1)}
               </Text>
               <Text
-                textStyle={'Semantics/Para/Small'}
+                textStyle={'para.small'}
                 as="span"
                 className={css({
                   color: 'semantic.surface.light.grey.1',
@@ -148,11 +148,7 @@ export const POICard = ({
           </Conditional>
 
           <Text
-            textStyle={
-              isMobile
-                ? 'Semantics/Subheading/Large'
-                : 'Semantics/Heading/Regular'
-            }
+            textStyle={isMobile ? 'subheading.large' : 'heading.regular'}
             className={css({
               color: 'semantic.surface.light.white',
             })}
@@ -161,7 +157,7 @@ export const POICard = ({
           </Text>
 
           <Text
-            textStyle={'Semantics/UI Label/Small'}
+            textStyle={'ui.label.small'}
             className={css({
               color: 'semantic.surface.light.white',
               marginTop: 'space.2',
@@ -183,7 +179,7 @@ export const POICard = ({
             <Text as="span" className={fromTextStyles}>
               {strings.FROM.toLocaleLowerCase()}
             </Text>
-            <Text textStyle={'Semantics/UI Label/Regular (Heavy)'} as="span">
+            <Text textStyle={'ui.label.regular.heavy'} as="span">
               {formattedPrice}
             </Text>
           </div>

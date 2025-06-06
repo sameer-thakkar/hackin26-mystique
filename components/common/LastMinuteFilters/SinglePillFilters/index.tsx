@@ -90,7 +90,7 @@ export const SinglePillFilters = ({
           ref={buttonRef}
         >
           <Text
-            textStyle={'Semantics/UI Label/Regular (Heavy)'}
+            textStyle={'ui.label.regular.heavy'}
             color={'white'}
             className={css({
               paddingY: '1px',
@@ -162,7 +162,7 @@ export const SinglePillFilters = ({
                   data-is-available={isDateAvailable(filter.value)}
                 >
                   <Text
-                    textStyle={'Semantics/UI Label/Large (Heavy)'}
+                    textStyle={'ui.label.large.heavy'}
                     className="option-text"
                   >
                     {filter.display_name}

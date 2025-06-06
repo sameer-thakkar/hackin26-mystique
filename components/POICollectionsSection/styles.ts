@@ -37,9 +37,9 @@ export const sectionHeadingStyles = css({
   marginBottom: 'space.12',
   color: '#7D280B',
 
-  textStyle: 'Semantics/Heading/Medium',
+  textStyle: 'heading.medium',
   '@media (min-width: 768px)': {
-    textStyle: 'Semantics/Display/Small',
+    textStyle: 'display.small',
     marginBottom: '1.125rem',
   },
 });

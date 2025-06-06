@@ -20,7 +20,7 @@ export const drawerBodyStyles = css({
 });
 
 export const headerTextStyles = css({
-  textStyle: 'Semantics/UI Label/Small (Heavy)',
+  textStyle: 'ui.label.small.heavy',
   color: 'semantic.text.grey.3!',
   textTransform: 'uppercase',
 });
@@ -63,7 +63,7 @@ export const descriptionTextStyles = css({
   lineClamp: 2,
   overflow: 'hidden',
   color: 'semantic.text.grey.2!',
-  textStyle: 'Semantics/Para/Regular',
+  textStyle: 'para.regular',
 });
 
 export const priceSectionStyles = css({

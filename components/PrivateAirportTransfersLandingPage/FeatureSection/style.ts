@@ -21,7 +21,7 @@ export const iconContainerStyle = css({
 });
 
 export const titleStyle = css({
-  textStyle: 'Semantics/Heading/Medium',
+  textStyle: 'heading.medium',
   fontFamily: 'font.family.hd',
   letterSpacing: 'ls.8',
   fontWeight: 'font.weight.500',
@@ -34,16 +34,16 @@ export const titleStyle = css({
     marginTop: '0.5rem',
     marginBottom: 0,
     letterSpacing: 'initial',
-    textStyle: 'Semantics/Subheading/Large',
+    textStyle: 'subheading.large',
   },
 });
 
 export const descriptionStyle = css({
-  textStyle: 'Semantics/Para/Medium',
+  textStyle: 'para.medium',
   color: `core.grey.700`,
   margin: '0',
   '@media (max-width: 768px)': {
-    textStyle: 'Semantics/Para/Regular',
+    textStyle: 'para.regular',
     marginTop: '0.25rem',
   },
 });
