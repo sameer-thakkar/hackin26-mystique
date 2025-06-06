@@ -37,7 +37,7 @@ export const SpecialSectionWrapper = styled.div`
 
   .content {
     position: relative;
-    padding: 4rem 0 4.5rem 0;
+    padding: 4rem 0 4.5rem 6px;
     margin: 0 auto;
     max-width: 1200px;
     z-index: 10;

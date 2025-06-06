@@ -19,6 +19,7 @@ export const LandingPageWrapper = styled.div`
     max-width: 75rem;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 6px;
   }
 
   @media (max-width: 768px) {

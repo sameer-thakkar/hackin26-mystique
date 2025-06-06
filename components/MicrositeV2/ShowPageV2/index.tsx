@@ -215,7 +215,7 @@ const LttShowPageV2 = ({
 
   const { faqSchema, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
-  const { offerHeading = 'london calling', offerText } = specialOffer;
+  const { offerText } = specialOffer;
   const isLtt = checkIfLTTMB(uid);
 
   const faqHeading = `${strings.formatString(
@@ -440,7 +440,7 @@ const LttShowPageV2 = ({
         />
 
         <Conditional
-          if={(hasSpecialOffer || true) && totalDiscount > 0 && isLtt}
+          if={hasSpecialOffer && totalDiscount > 0 && isLtt && offerText}
         >
           <div
             className={css({
@@ -456,7 +456,7 @@ const LttShowPageV2 = ({
             })}
           >
             <LondonCallingSaleBanner
-              saleName={offerHeading}
+              saleName="londond calling"
               saleDescription={offerText}
             />
           </div>
