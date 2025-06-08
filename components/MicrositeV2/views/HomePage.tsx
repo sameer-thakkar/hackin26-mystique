@@ -90,6 +90,13 @@ const ProductsWrapper: ComponentType<React.PropsWithChildren<any>> = dynamic(
       /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
     ).then((mod) => mod.ProductsWrapper)
 );
+const ShoulderPageTopShowsAdapter: ComponentType<React.PropsWithChildren<any>> =
+  dynamic(
+    () =>
+      import(
+        /* webpackChunkName: "ShoulderPageTopShowsAdapter" */ 'components/MicrositeV2/ShoulderPageTopShowsAdapter'
+      )
+  );
 const Banner: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () => import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
@@ -807,23 +814,35 @@ export const HomePage = (props: any) => {
           !isLttMonthOnMonthPage
         }
       >
-        <ProductsWrapper
-          availableTGIDs={Object.keys(allTours)}
-          hasCategoryTourList={hasCategoryTourList}
-          directTgid={parseInt(directTgid)}
-          allTours={allTours}
-          isMobile={isMobile}
-          isEntertainmentMb={isEntertainmentMb}
-          currentLanguage={currentLanguage}
-          categoryProps={categoryProps}
-          changePage={changePage}
-          host={host}
-          uid={uid}
-          isDev={isDev}
-          isListicle={isListicle}
-          isDiscountedPage={isDiscountedPage}
-          categoryHeaderMenuExists={categoryHeaderMenuExists}
-        />
+        {/* Note: This is a temporary component to hotfix the production issue present in ltt discount page */}
+        <Conditional if={uid?.includes('discount-west-end-tickets')}>
+          <ShoulderPageTopShowsAdapter
+            directTgid={parseInt(directTgid)}
+            allTours={allTours}
+            isMobile={isMobile}
+            categoryProps={categoryProps}
+            isListicle={isListicle}
+          />
+        </Conditional>
+        <Conditional if={!uid?.includes('discount-west-end-tickets')}>
+          <ProductsWrapper
+            availableTGIDs={Object.keys(allTours)}
+            hasCategoryTourList={hasCategoryTourList}
+            directTgid={parseInt(directTgid)}
+            allTours={allTours}
+            isMobile={isMobile}
+            isEntertainmentMb={isEntertainmentMb}
+            currentLanguage={currentLanguage}
+            categoryProps={categoryProps}
+            changePage={changePage}
+            host={host}
+            uid={uid}
+            isDev={isDev}
+            isListicle={isListicle}
+            isDiscountedPage={isDiscountedPage}
+            categoryHeaderMenuExists={categoryHeaderMenuExists}
+          />
+        </Conditional>
       </Conditional>
       <Conditional if={showLttTreatment && !isCatOrSubCatPage}>
         <EntertainmentMBLandingPageV2
