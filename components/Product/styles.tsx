@@ -739,6 +739,7 @@ export const StyledCategoryContainer = styled.div<{
 export const CategoryAndRatingContainer = styled.div<{
   $isExperimentalCard?: boolean;
   $isDrawer?: boolean;
+  $showSeparator?: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -757,7 +758,11 @@ export const CategoryAndRatingContainer = styled.div<{
       position: relative;
 
       &::after {
-        content: '';
+        ${({ $showSeparator }) =>
+          $showSeparator &&
+          css`
+            content: ' ';
+          `}
         position: absolute;
         height: 0.25rem;
         width: 0.25rem;

@@ -1751,7 +1751,7 @@ const Product = (props: any) => {
             <Conditional
               if={!isV3Design && (!disableRatingsLabel || !isNonPoi)}
             >
-              <CategoryAndRatingContainer>
+              <CategoryAndRatingContainer $showSeparator={!disableRatingsLabel}>
                 <Conditional if={!isNonPoi}>
                   <Category
                     primaryCategory={
