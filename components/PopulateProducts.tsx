@@ -32,7 +32,10 @@ import { addDays, formatDateToString } from 'utils/dateUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
-import { getProductDescriptors } from 'utils/productUtils';
+import {
+  getProductDescriptors,
+  shouldDisableRatingsLabelInProductCard,
+} from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -618,6 +621,11 @@ const PopulateProducts: any = (props: any) => {
     }
   );
 
+  const shouldDisableRatingsLabel = shouldDisableRatingsLabelInProductCard({
+    productIds: availableToursList.map((tour: any) => tour.tgid),
+    scorpioData,
+  });
+
   if (subattraction_type === SUBATTRACTION_TYPE.C) {
     availableToursList = availableToursList.splice(0, 5);
   }
@@ -882,6 +890,7 @@ const PopulateProducts: any = (props: any) => {
       poiBooster: props.isPOIFiltersEnabled
         ? getPOIBooster(tgid, scorpioData)
         : null,
+      disableRatingsLabel: shouldDisableRatingsLabel,
       showPinnedReviews,
       pinnedReviews,
     };

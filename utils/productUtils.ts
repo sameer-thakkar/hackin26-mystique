@@ -1315,3 +1315,15 @@ export const isVideoOnProductCardVisibleFn = ({
 
   return showVideoOnProductCard;
 };
+
+export const shouldDisableRatingsLabelInProductCard = ({
+  productIds,
+  scorpioData,
+}: {
+  productIds: number[];
+  scorpioData: Record<number, any>;
+}) => {
+  return !productIds.some((productId) => {
+    return scorpioData[productId]?.reviewsDetails.ratingsCount > 10;
+  });
+};

@@ -297,6 +297,7 @@ const Product = (props: any) => {
     fireCardClickEvent = true,
     pinnedReviews,
     showPinnedReviews = false,
+    disableRatingsLabel = false,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
@@ -1747,7 +1748,9 @@ const Product = (props: any) => {
           </Conditional>
 
           <ProductHeader>
-            <Conditional if={!isV3Design}>
+            <Conditional
+              if={!isV3Design && (!disableRatingsLabel || !isNonPoi)}
+            >
               <CategoryAndRatingContainer>
                 <Conditional if={!isNonPoi}>
                   <Category
@@ -1759,16 +1762,18 @@ const Product = (props: any) => {
                     }
                   />
                 </Conditional>
-                <Ratings
-                  reviewsDetails={reviewsDetails}
-                  onRatingsCountClick={
-                    showPopup &&
-                    !originalIsMobile &&
-                    reviewsDetails?.showRatings
-                      ? () => onRatingsCountClick({ isPopup })
-                      : undefined
-                  }
-                />
+                <Conditional if={!disableRatingsLabel}>
+                  <Ratings
+                    reviewsDetails={reviewsDetails}
+                    onRatingsCountClick={
+                      showPopup &&
+                      !originalIsMobile &&
+                      reviewsDetails?.showRatings
+                        ? () => onRatingsCountClick({ isPopup })
+                        : undefined
+                    }
+                  />
+                </Conditional>
               </CategoryAndRatingContainer>
             </Conditional>
 
