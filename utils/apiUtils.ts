@@ -493,7 +493,7 @@ export const fetchExperienceItineraries = async ({
 export const fetchCollectionReviews = async ({
   collectionId,
   cookies = {},
-  limit = '10',
+  limit = '8',
   offset = '0',
   language = 'EN',
 }: CollectionReviewsProps) => {
@@ -523,7 +523,7 @@ export const fetchCollectionReviews = async ({
 export const fetchCategoryReviews = async ({
   categoryId,
   cookies = {},
-  limit = '10',
+  limit = '8',
   offset = '0',
   language = 'EN',
   cityId,
@@ -558,7 +558,7 @@ export const fetchCategoryReviews = async ({
 export const fetchSubCategoryReviews = async ({
   subCategoryId,
   cookies = {},
-  limit = '10',
+  limit = '8',
   offset = '0',
   language = 'EN',
   cityId,

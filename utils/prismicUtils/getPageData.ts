@@ -858,22 +858,24 @@ export const getPageData = async ({
         })
       );
 
-      if (taggedCity && subCatId) {
+      if (!taggedCollection && taggedCity && subCatId) {
         catSubCatReviewsPromise = conditionalPromise(
           taggedCity && subCatId,
           () =>
             fetchSubCategoryReviews({
               subCategoryId: Number(subCatId),
               cityId: taggedCity,
+              limit: '8',
             })
         );
-      } else if (taggedCity && categoryId) {
+      } else if (!taggedCollection && taggedCity && categoryId) {
         catSubCatReviewsPromise = conditionalPromise(
           taggedCity && categoryId,
           () =>
             fetchCategoryReviews({
               categoryId: Number(categoryId),
               cityId: taggedCity,
+              limit: '8',
             })
         );
       }
