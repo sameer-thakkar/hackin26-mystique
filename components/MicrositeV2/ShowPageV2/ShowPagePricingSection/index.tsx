@@ -394,7 +394,7 @@ const ShowPagePricingSection = ({
                         tgid,
                         calculatedDiscount: strings.formatString(
                           strings.SAVE_UPTO_PERCENT,
-                          `${listingPrice.bestDiscount}`
+                          `${listingPrice?.bestDiscount}`
                         ),
                       })}
                     </SavePercentElement>
