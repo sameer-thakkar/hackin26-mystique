@@ -227,15 +227,17 @@ const LttShowPageV2 = ({
       .FREQUENTLY_ASKED_QUESTIONS_ABOUT,
     name
   )}`;
-  const { originalPrice, finalPrice, cashbackValue, cashbackType } =
-    listingPrice ?? {};
+  const {
+    originalPrice,
+    finalPrice,
+    cashbackValue,
+    cashbackType,
+    bestDiscount,
+  } = listingPrice ?? {};
 
-  const totalDiscount = Number(
-    (((originalPrice - finalPrice) / originalPrice) * 100).toFixed(2)
-  );
   const showCashbackElement =
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
-  const hasDiscountElement = totalDiscount > 0 || showCashbackElement;
+  const hasDiscountElement = bestDiscount > 0 || showCashbackElement;
 
   const LTT_TAG_PAGE_MAP = getTagPageMap(uid);
 
@@ -444,7 +446,7 @@ const LttShowPageV2 = ({
         />
 
         <Conditional
-          if={hasSpecialOffer && totalDiscount > 0 && isLtt && offerText}
+          if={hasSpecialOffer && bestDiscount > 0 && isLtt && offerText}
         >
           <div
             className={css({
@@ -579,7 +581,7 @@ const LttShowPageV2 = ({
                     />
                     <Conditional
                       if={
-                        totalDiscount > 0 ||
+                        bestDiscount > 0 ||
                         LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
                       }
                     >
@@ -588,12 +590,12 @@ const LttShowPageV2 = ({
                           tgid,
                           calculatedDiscount: strings.formatString(
                             strings.SAVE_PERCENT,
-                            `${totalDiscount}`
+                            `${bestDiscount}`
                           ),
                         })}
                       </SavePercentElement>
                     </Conditional>
-                    <Conditional if={totalDiscount <= 0 && showCashbackElement}>
+                    <Conditional if={bestDiscount <= 0 && showCashbackElement}>
                       <SavePercentElement>
                         {strings.formatString(
                           strings.CASHBACK,
