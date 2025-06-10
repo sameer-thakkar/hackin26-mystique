@@ -1289,7 +1289,7 @@ const pl = {
     VERIFIED_REVIEW: 'Zweryfikowana opinia partnera',
     REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
     TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
-    HEADING: 'From the happy customers',
+    HEADING: 'From happy customers',
     HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
     SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
     REVIEW_CARD_MODAL_TITLE: 'Review',

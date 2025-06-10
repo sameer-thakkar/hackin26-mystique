@@ -1453,7 +1453,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     NEAR_BY_DESTINATIONS_TITLE: 'Explore more destinations from {0}',
   },
   REVIEWS_SECTION: {
-    HEADING: 'From the happy customers',
+    HEADING: 'From happy customers',
     HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
     SECTION_HEADING: 'Millions love heading out with us',
     SORTING: {
