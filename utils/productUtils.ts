@@ -1324,6 +1324,6 @@ export const shouldDisableRatingsLabelInProductCard = ({
   scorpioData: Record<number, any>;
 }) => {
   return !productIds.some((productId) => {
-    return scorpioData[productId]?.reviewsDetails.ratingsCount > 10;
+    return scorpioData[productId]?.reviewsDetails?.ratingsCount > 10;
   });
 };
