@@ -18,3 +18,18 @@ export type TShowPageV2Props = {
   breadcrumbs: TBreadcrumbs;
   reviewPageUrl?: string;
 };
+
+export type ListingPrice = {
+  bestDiscount: number;
+  cashbackType: string;
+  cashbackValue: number;
+  currencyCode: string;
+  extraCharges: number;
+  finalPrice: number;
+  groupSize: number | null;
+  isPricingInclusiveOfExtraCharges: boolean;
+  minimumPayablePrice: number;
+  originalPrice: number;
+  otherPricesExist: boolean;
+  type: string;
+};

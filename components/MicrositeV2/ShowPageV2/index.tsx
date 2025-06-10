@@ -58,7 +58,6 @@ import {
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
   BUTTON_LOADING_DURATION,
-  CASHBACK_TYPES,
   CTA_TYPE,
   NEWS_PAGE_SECTIONS,
   PAGETYPE,
@@ -71,6 +70,7 @@ import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import { useIsLTTShowPageExperiementEnabled } from './hooks/useIsLTTShowPageExperiementEnabled';
 import { Pricing, SavePercentElement } from './ShowPagePricingSection/style';
+import { hasDiscountElementAndCashbackElement } from './utils';
 
 const SearchPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
   () =>
@@ -150,11 +150,6 @@ const LttShowPageV2 = ({
     uid
   );
 
-  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
-    uid,
-    true
-  );
-
   const {
     TicketsUnavailableHeaderMweb,
     TicketsUnavailableTextWrapper,
@@ -227,17 +222,17 @@ const LttShowPageV2 = ({
       .FREQUENTLY_ASKED_QUESTIONS_ABOUT,
     name
   )}`;
-  const {
-    originalPrice,
-    finalPrice,
-    cashbackValue,
-    cashbackType,
-    bestDiscount,
-  } = listingPrice ?? {};
+  const { originalPrice, finalPrice, cashbackValue, bestDiscount } =
+    listingPrice ?? {};
 
-  const showCashbackElement =
-    cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
-  const hasDiscountElement = bestDiscount > 0 || showCashbackElement;
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
+    uid,
+    listingPrice,
+    true
+  );
+
+  const { hasDiscountElement, showCashbackElement } =
+    hasDiscountElementAndCashbackElement(listingPrice);
 
   const LTT_TAG_PAGE_MAP = getTagPageMap(uid);
 
@@ -443,6 +438,7 @@ const LttShowPageV2 = ({
           tgid={tgid}
           uid={uid}
           showSpecialOfferBanner={false}
+          listingPrice={listingPrice}
         />
 
         <Conditional

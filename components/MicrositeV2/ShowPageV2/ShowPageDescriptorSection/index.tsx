@@ -28,6 +28,7 @@ const ShowPageDescriptorSection = ({
   tgid,
   uid,
   showSpecialOfferBanner,
+  listingPrice,
 }: TShowPageDescriptorSectionProps) => {
   const { detailsObjects, hasSpecialOffer, specialOffer } =
     parseShowPageData(microBrandsHighlight);
@@ -37,7 +38,10 @@ const ShowPageDescriptorSection = ({
 
   const { lang } = useContext(MBContext);
 
-  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
+    uid,
+    listingPrice
+  );
 
   const {
     [strings.SHOW_PAGE.DURATION]: duration,

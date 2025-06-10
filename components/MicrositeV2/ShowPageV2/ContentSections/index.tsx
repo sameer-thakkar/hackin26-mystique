@@ -61,8 +61,13 @@ const ContentSections = ({
   const [initialScrollPosition, setInitialScrollPosition] = useState(0);
   const { lang } = useContext(MBContext);
 
-  const { microBrandsHighlight, id, reviewsDetails, topReviews } =
-    tourGroupData;
+  const {
+    microBrandsHighlight,
+    id,
+    reviewsDetails,
+    topReviews,
+    listingPrice = {},
+  } = tourGroupData;
   const { ratingsCount } = reviewsDetails ?? {};
   const TABS = [
     strings.SHOW_PAGE_V2.CONTENT_TABS.ABOUT,
@@ -70,7 +75,10 @@ const ContentSections = ({
     strings.SHOW_PAGE_V2.CONTENT_TABS.TICKETS,
   ];
 
-  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
+    uid,
+    listingPrice
+  );
 
   const {
     tabSchemaHighlight,

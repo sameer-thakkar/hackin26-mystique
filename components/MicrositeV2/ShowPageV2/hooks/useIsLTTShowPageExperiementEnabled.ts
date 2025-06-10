@@ -1,6 +1,8 @@
 import useABTesting from 'hooks/useABTesting';
 import { checkIfLTTMB, isMobile } from 'utils/helper';
 import { VARIANTS } from 'const/experiments';
+import { ListingPrice } from '../interface';
+import { hasDiscountElementAndCashbackElement } from '../utils';
 
 const EXCLUDED_UIDS = [
   'www.london-theater-tickets.com.vogue-inventing-the-runway-tickets',
@@ -8,6 +10,7 @@ const EXCLUDED_UIDS = [
 
 export const useIsLTTShowPageExperiementEnabled = (
   uid: string,
+  listingPrice: ListingPrice,
   shouldTrackEvent = false
 ) => {
   const {
@@ -17,7 +20,10 @@ export const useIsLTTShowPageExperiementEnabled = (
   } = useABTesting({
     experimentId: 'LTT_SHOW_PAGE_EXPERIMENT_V2',
     customEligibilityCheckFn: () =>
-      checkIfLTTMB(uid) && !isMobile() && !EXCLUDED_UIDS.includes(uid),
+      checkIfLTTMB(uid) &&
+      !isMobile() &&
+      !EXCLUDED_UIDS.includes(uid) &&
+      !hasDiscountElementAndCashbackElement(listingPrice)?.hasDiscountElement,
     noTrack: !shouldTrackEvent,
   });
 

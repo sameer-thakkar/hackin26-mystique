@@ -107,8 +107,6 @@ const ShowPagePricingSection = ({
     uid,
   } = useContext(MBContext);
 
-  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(uid);
-
   const { id: tgid, listingPrice } = tourGroupData;
   const {
     originalPrice,
@@ -117,6 +115,11 @@ const ShowPagePricingSection = ({
     cashbackType,
     currencyCode,
   } = listingPrice ?? {};
+
+  const { isShowPageExperiment } = useIsLTTShowPageExperiementEnabled(
+    uid,
+    listingPrice
+  );
 
   const showCashbackElement =
     cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
@@ -272,7 +275,7 @@ const ShowPagePricingSection = ({
         $isShowPageExperiment={isShowPageExperiment}
         $showTimeList={showTimeList}
       >
-        <Conditional if={isShowPageExperiment}>
+        <Conditional if={isShowPageExperiment && listingPrice}>
           <SingleCalendar
             hidePrice={false}
             showTimeList={showTimeList}
@@ -436,7 +439,7 @@ const ShowPagePricingSection = ({
             </BuyButtonWrapper>
           </PricingSection>
         </Conditional>
-        <Conditional if={!listingPrice && !isShowPageExperiment}>
+        <Conditional if={!listingPrice}>
           <div className={TicketsUnavailableSection}>
             <div
               className={cx(
