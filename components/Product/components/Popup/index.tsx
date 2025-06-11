@@ -30,13 +30,18 @@ const Popup = ({
   const [trackScroll, setTrackScroll] = useState(false);
   const { uid } = useRecoilValue(appAtom);
 
+  const toggleScrollLock = (shouldLock: boolean) => {
+    document.body.style.overflow = shouldLock ? 'hidden' : 'auto';
+    document.body.classList.toggle('scroll-lock', shouldLock);
+  };
+
   const close = (isButton = false) => {
     setIsVisible(false);
     setTimeout(() => {
       setIsActive(false);
       onStateChange?.(false);
     }, 500);
-    document.body.style.overflow = 'auto';
+    toggleScrollLock(false);
     trackEvent({
       eventName: ANALYTICS_EVENTS.MORE_DETAILS_SWIPESHEET_CLOSED,
       [ANALYTICS_PROPERTIES.ACTION]: isButton
@@ -51,7 +56,7 @@ const Popup = ({
       setIsVisible(true);
       onStateChange?.(true);
     }, 100);
-    document.body.style.overflow = 'hidden';
+    toggleScrollLock(true);
     if (startingIndex !== -1 && startingIndex !== 0)
       setStartingIndex(startingIndex);
     if (shouldTrackScroll) {

@@ -86,7 +86,7 @@ const ExperimentalProductCard = (props: any) => {
     hideDrawerCloseButton = false,
     itineraryInfo,
     tgidItineraryData,
-    scrollToItinerarySection = false,
+    scrollToSection,
     isModifiedPopup = false,
     isModifiedCombo = false,
     isCruisesRevamp = false,
@@ -373,7 +373,7 @@ const ExperimentalProductCard = (props: any) => {
         sendBookNowEvent={sendBookNowEvent}
         tgidItineraryData={tgidItineraryData}
         forceMobile={forceMobile}
-        scrollToItinerarySection={scrollToItinerarySection}
+        scrollToSection={scrollToSection}
         isModifiedPopup={isModifiedPopup}
         customDescriptors={customDescriptors}
         isCruisesRevamp={isCruisesRevamp}

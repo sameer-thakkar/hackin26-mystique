@@ -1025,11 +1025,9 @@ const Product = (props: any) => {
 
   const openProductCardAside = (
     args: {
-      scrollToItinerarySection?: boolean;
+      scrollToSection?: 'itinerary' | 'routes';
     } | void
   ) => {
-    const { scrollToItinerarySection = false } = args || {};
-
     addToAside({
       width: '100vw',
       hideCloseButton: true,
@@ -1052,7 +1050,7 @@ const Product = (props: any) => {
               isSportsSubCategory={isSportsSubCategory}
               showThumbnailInBanner={showThumbnailInBanner}
               showJustDrawer={true}
-              scrollToItinerarySection={scrollToItinerarySection}
+              scrollToSection={args?.scrollToSection}
               tgidItineraryData={tgidItineraryData}
               isModifiedPopup={isModifiedPopup}
               isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
@@ -1735,7 +1733,9 @@ const Product = (props: any) => {
               >
                 <MWebEntryPoint
                   onClick={() => {
-                    openProductCardAside({ scrollToItinerarySection: true });
+                    openProductCardAside({
+                      scrollToSection: isHohoItinerary ? 'routes' : 'itinerary',
+                    });
                     trackItineraryViewCTAClick(tgidItineraryData?.[0]);
                   }}
                   isHOHOItinerary={isHohoItinerary}

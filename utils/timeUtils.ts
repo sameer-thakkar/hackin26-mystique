@@ -106,30 +106,43 @@ export const formatDurationToString = ({
   lang?: string;
 }) => {
   let res = '';
+
   if (hour) {
-    const hourParts = localisedRelativeTimeFormat({
-      locale: lang,
-      unit: 'hour',
-      value: hour,
-      formatToParts: true,
-    });
-    res +=
-      typeof hourParts === 'string'
-        ? hourParts
-        : formatPartsToDuration(hourParts);
+    if (lang === 'en') {
+      // custom formatting for EN to get 'hr' and not 'hr.'
+      res += `${hour} hr`;
+    } else {
+      const hourParts = localisedRelativeTimeFormat({
+        locale: lang,
+        unit: 'hour',
+        value: hour,
+        formatToParts: true,
+      });
+      res +=
+        typeof hourParts === 'string'
+          ? hourParts
+          : formatPartsToDuration(hourParts);
+    }
   }
+
   if (minute) {
-    const minuteParts = localisedRelativeTimeFormat({
-      locale: lang,
-      unit: 'minute',
-      value: minute,
-      formatToParts: true,
-    });
-    res +=
-      typeof minuteParts === 'string'
-        ? ` ${minuteParts}`
-        : ` ${formatPartsToDuration(minuteParts)}`;
+    if (lang === 'en') {
+      // custom formatting for EN to get 'min' and not 'min.'
+      res += `${hour ? ' ' : ''}${minute} min`;
+    } else {
+      const minuteParts = localisedRelativeTimeFormat({
+        locale: lang,
+        unit: 'minute',
+        value: minute,
+        formatToParts: true,
+      });
+      res +=
+        typeof minuteParts === 'string'
+          ? ` ${minuteParts}`
+          : ` ${formatPartsToDuration(minuteParts)}`;
+    }
   }
+
   return res;
 };
 

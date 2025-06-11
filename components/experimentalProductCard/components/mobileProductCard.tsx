@@ -99,7 +99,7 @@ const MobileProductCard = (props: any) => {
     isPoiMwebCard,
     sendBookNowEvent,
     forceMobile,
-    scrollToItinerarySection,
+    scrollToSection,
     isModifiedPopup,
     customDescriptors,
     isCruisesRevamp,
@@ -174,12 +174,21 @@ const MobileProductCard = (props: any) => {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    if (scrollToItinerarySection) {
+    if (scrollToSection === 'itinerary') {
       setDrawerState(SWIPESHEET_STATES.OPEN);
       timeout = setTimeout(() => {
         handleSnapSheetExpand({
           tabId: `tab-${strings.ITINERARY.TAB}`,
           transformOffset: -99,
+        });
+      }, 0);
+    }
+    if (scrollToSection === 'routes') {
+      setDrawerState(SWIPESHEET_STATES.OPEN);
+      timeout = setTimeout(() => {
+        handleSnapSheetExpand({
+          tabId: `tab-${strings.HOHO.ROUTES}`,
+          transformOffset: -115,
         });
       }, 0);
     }

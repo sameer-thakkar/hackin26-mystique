@@ -46,11 +46,10 @@ export const TextIconContainer = styled.span<{ $isMealVariant?: boolean }>`
 
   .routes-text {
     ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
-     color: ${({ $isMealVariant }) =>
-       $isMealVariant ? COLORS.TEXT.JOY_MUSTARD_3 : COLORS.TEXT.PURPS_3};
-     width: ${({ $isMealVariant }) => ($isMealVariant ? '2.813rem' : '3.5rem')};
-     word-wrap: break-word;
-  }
+    color: ${({ $isMealVariant }) =>
+      $isMealVariant ? COLORS.TEXT.JOY_MUSTARD_3 : COLORS.TEXT.PURPS_3};
+    width: ${({ $isMealVariant }) => ($isMealVariant ? '2.813rem' : '3.5rem')};
+    word-wrap: break-word;
   }
 `;
 

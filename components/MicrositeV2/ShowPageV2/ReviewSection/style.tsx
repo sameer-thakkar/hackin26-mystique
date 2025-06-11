@@ -153,6 +153,10 @@ export const ReviewMediaSection = styled.div`
     width: 100%;
   }
 
+  .swiper-slide {
+    width: fit-content;
+  }
+
   img,
   .image-wrap {
     border-radius: 0.375rem;

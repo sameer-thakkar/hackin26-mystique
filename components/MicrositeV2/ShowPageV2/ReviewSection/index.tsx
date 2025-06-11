@@ -325,7 +325,6 @@ const ReviewSection = ({
           {reviews.slice(0, numberOfReviewsToShow).map((review, index) => (
             <ReviewElement
               review={review}
-              isMobile={isMobile}
               key={index}
               controlledSwiperParams={controlledSwiperParams}
               onClick={onImageClick}
@@ -383,13 +382,11 @@ const ReviewSkeleton = ({ isMobile = false }: { isMobile?: boolean }) => {
 
 const ReviewElement = ({
   review,
-  isMobile,
   controlledSwiperParams = {},
   onClick,
   index,
 }: {
   review: TReviewMediasResponse['items'][0];
-  isMobile: boolean;
   controlledSwiperParams?: SwiperProps;
   onClick?: (reviewId: string | number, localIndex: number) => void;
   index: number;
@@ -398,8 +395,8 @@ const ReviewElement = ({
   const { lang } = useContext(MBContext);
 
   const swiperParams: SwiperProps = {
-    spaceBetween: isMobile ? 16 : 24,
-    slidesPerView: isMobile ? 3 : 3.6,
+    spaceBetween: 16,
+    slidesPerView: 'auto',
     freeMode: true,
     ...controlledSwiperParams,
   };
