@@ -5,11 +5,13 @@ export const LTT_SALE_HARDCODINGS: Record<
   {
     SHOW_SALE_TAG?: boolean;
     DISCOUNT_TAG_TEXT?: string;
+    SHOW_SALE_BANNER?: boolean;
   }
 > = {
   3037: {
     SHOW_SALE_TAG: true,
     DISCOUNT_TAG_TEXT: 'LTT_SPECIAL_OFFER',
+    SHOW_SALE_BANNER: true,
   },
 };
 

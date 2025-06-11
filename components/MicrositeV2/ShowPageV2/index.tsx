@@ -442,7 +442,12 @@ const LttShowPageV2 = ({
         />
 
         <Conditional
-          if={hasSpecialOffer && bestDiscount > 0 && isLtt && offerText}
+          if={
+            (hasSpecialOffer && bestDiscount > 0) ||
+            (LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_BANNER &&
+              isLtt &&
+              offerText)
+          }
         >
           <div
             className={css({
