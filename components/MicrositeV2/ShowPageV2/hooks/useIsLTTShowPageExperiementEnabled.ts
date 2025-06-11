@@ -6,6 +6,7 @@ import { hasDiscountElementAndCashbackElement } from '../utils';
 
 const EXCLUDED_UIDS = [
   'www.london-theater-tickets.com.vogue-inventing-the-runway-tickets',
+  'www.london-theater-tickets.com.wicked-tickets',
 ];
 
 export const useIsLTTShowPageExperiementEnabled = (
