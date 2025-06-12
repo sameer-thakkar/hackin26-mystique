@@ -18,7 +18,6 @@ import { sendLog } from 'utils/logger';
 import { getScorpioData, getSingleAriesTag } from 'utils/productUtils';
 import {
   DEFAULT_PRISMIC_LANG,
-  RANKING_EXPERIMENT_TGIDS,
   RANKING_OF_UUIDS_IN_SIMILARITY_BASED_RANKING_EXPERIMENT,
 } from 'const/index';
 import type { TCategoryTourListParserV1 } from './interface';
@@ -271,8 +270,7 @@ const categoryTourListParserV1 = async ({
       }
     }
 
-    const isCollectionSimilarityBasedRankingExperiment =
-      collection && RANKING_EXPERIMENT_TGIDS.includes(collection);
+    const isCollectionSimilarityBasedRankingExperiment = false;
 
     if (isCollectionSimilarityBasedRankingExperiment) {
       const tgidsToFetch =

@@ -18,7 +18,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import { useIsSimilarityBasedRankingExperimentEnabled } from 'hooks/useIsSimilarityBasedRankingExperimentEnabled';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -378,9 +377,6 @@ const PopulateProducts: any = (props: any) => {
   const clientWidth = useWindowWidth();
   const clientIsMobile = clientWidth ? clientWidth <= 768 : false;
 
-  const { isExpGroupLoading: isSimilarityBasedRankingExpGroupLoading } =
-    useIsSimilarityBasedRankingExperimentEnabled();
-
   const productsRef = useRef([]);
   productsRef.current = [];
   const productsWrapperRef = useRef(null);
@@ -718,10 +714,7 @@ const PopulateProducts: any = (props: any) => {
     onSlideChange: () => updateIndex(),
   };
   const showLoader =
-    !isBot &&
-    (productsLoading ||
-      isRankingExperimentResolving ||
-      isSimilarityBasedRankingExpGroupLoading);
+    !isBot && (productsLoading || isRankingExperimentResolving);
 
   const getProductCardFromTourAndIndex = (
     tour: Record<string, any>,
