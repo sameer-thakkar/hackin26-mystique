@@ -26,6 +26,7 @@ import getPageData from 'utils/prismicUtils/getPageData';
 import { isAllowedPath, removePageQuery } from 'utils/urlUtils';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
+import { metaAtom } from 'store/atoms/meta';
 import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
@@ -243,6 +244,16 @@ const Page = (props: PageProps) => {
     isMixpanelSessionReplayExpResolving,
     mixpanelSessionReplayExpVariant,
   ]);
+
+  const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
+  useEffect(() => {
+    if (!refererCollectionId) return;
+    Cookies.set(COOKIE.REFERRER_COLLECTION_ID, refererCollectionId, {
+      domain: getNakedDomain(host),
+      path: '/',
+      expires: TIME.IN_YEARS,
+    });
+  }, [refererCollectionId]);
 
   const shouldShowNewSubattractionsExp =
     isSubattractionsExpEligible &&

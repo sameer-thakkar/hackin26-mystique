@@ -28,6 +28,7 @@ export const COOKIE = {
   HEADOUT_ATTRIBUTION_TRACKER: 'h-attr',
   LANG: 'content_lang',
   MIXPANEL_REPLAY: 'mixpanel-replay',
+  REFERRER_COLLECTION_ID: 'referrer-collection-id',
 };
 
 export const TIME = {
