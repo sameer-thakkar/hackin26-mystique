@@ -202,9 +202,9 @@ const ShowInfoSection = ({
           </span>
           <Conditional
             if={
-              (bestDiscount > 0 ||
-                LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG) &&
-              isLTT
+              (bestDiscount > 0 && isLTT) ||
+              LTT_SALE_HARDCODINGS[tgid as string]
+                ?.SHOW_SPECIAL_OFFER_DESCRIPTION
             }
           >
             <LttSaleDesciptor containerHasBorder />

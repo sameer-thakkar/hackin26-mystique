@@ -151,7 +151,12 @@ const VerticalProductCard = ({
           height={isMobile ? 180 : 270}
           width={isMobile ? 120 : 180}
         />
-        <Conditional if={bestDiscount > 0 && isLTT}>
+        <Conditional
+          if={
+            (bestDiscount > 0 && isLTT) ||
+            LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SPECIAL_OFFER_DESCRIPTION
+          }
+        >
           <LttSaleDesciptor />
         </Conditional>
       </div>

@@ -151,7 +151,12 @@ const HorizontalProductCard = ({
           autoCrop
           loadHigherQualityImage={true}
         />
-        <Conditional if={bestDiscount > 0 && isLTT}>
+        <Conditional
+          if={
+            (bestDiscount > 0 && isLTT) ||
+            LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SPECIAL_OFFER_DESCRIPTION
+          }
+        >
           <LttSaleDesciptor isHorizontalProductCard />
         </Conditional>
       </div>
