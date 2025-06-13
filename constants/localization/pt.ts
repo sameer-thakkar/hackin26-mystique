@@ -2126,10 +2126,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   },
   LTT_SPECIAL_OFFER: 'Oferta especial',
   DROPS: {
-    TITLE: 'Os preços caem para apenas {0}. Diariamente.',
+    TITLE: 'Preços a partir de {0}. Todo dia.',
     SUBTITLE:
       'O melhor de {0} agora pertence a você com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout',
-    NUDGE_CTA: 'Baixe o aplicativo',
+    NUDGE_CTA: 'Instalar',
     CTA_BUTTON_MOBILE: 'Baixe o aplicativo',
     ON: 'na',
     EXIT_INTENT: {

@@ -2157,10 +2157,10 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
   },
   LTT_SPECIAL_OFFER: 'Offre spéciale',
   DROPS: {
-    TITLE: 'Les prix passent à seulement {0}. Tous les jours.',
+    TITLE: 'Prix à {0} seulement. Tous les jours.',
     SUBTITLE:
-      "Le meilleur de {0} s'offre à vous jusqu'à 80% de réduction. De nouvelles offres chaque jour, uniquement sur l'appli Headout",
-    NUDGE_CTA: "Télécharger l'appli",
+      "Profitez de {0} à -80%. Nouvelles offres quotidiennes sur l'app Headout",
+    NUDGE_CTA: 'Télécharger',
     CTA_BUTTON_MOBILE: "Télécharger l'appli",
     ON: 'sur',
     EXIT_INTENT: {

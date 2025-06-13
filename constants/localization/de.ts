@@ -2144,7 +2144,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TITLE: 'Preise sinken auf {0}. Jeden Tag.',
     SUBTITLE:
       'Top-Erlebnisse in {0} jetzt bis zu 80 % günstiger. Täglich neue Deals. Nur in der Headout App.',
-    NUDGE_CTA: 'App herunterladen',
+    NUDGE_CTA: 'Download',
     CTA_BUTTON_MOBILE: 'App herunterladen',
     ON: 'bei',
     EXIT_INTENT: {

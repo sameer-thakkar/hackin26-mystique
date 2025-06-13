@@ -40,7 +40,7 @@ export const qrCodeContainer = css({
 });
 
 export const exitIntentQRContainer = css({
-  width: '380px',
+  width: '380px !important',
 });
 
 export const qrCodeLinksContainer = css({

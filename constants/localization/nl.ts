@@ -2099,8 +2099,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
   DROPS: {
     TITLE: 'Prijzen dalen naar slechts {0}. Dagelijks.',
     SUBTITLE:
-      'Het beste van {0} is nu van jou met tot 80% korting. Elke dag nieuwe druppels, alleen op de Headout-app',
-    NUDGE_CTA: 'App downloaden',
+      'Het beste van {0} met 80% korting. Nieuwe deals elke dag op de Headout-app',
+    NUDGE_CTA: 'Downloaden',
     CTA_BUTTON_MOBILE: 'Download de app',
     ON: 'op',
     EXIT_INTENT: {
