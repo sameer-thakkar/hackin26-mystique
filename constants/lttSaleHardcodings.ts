@@ -15,9 +15,15 @@ export const LTT_SALE_HARDCODINGS: Record<
     SHOW_SALE_BANNER: true,
     SHOW_SPECIAL_OFFER_DESCRIPTION: true,
   },
+  17343: {
+    SHOW_SALE_TAG: true,
+    DISCOUNT_TAG_TEXT: 'LTT_SPECIAL_OFFER',
+    SHOW_SALE_BANNER: true,
+    SHOW_SPECIAL_OFFER_DESCRIPTION: true,
+  },
 };
 
-export const IS_WICKED_SALE_PRODUCT = [3037];
+export const IS_LTT_SALE_PRODUCT = Object.keys(LTT_SALE_HARDCODINGS);
 
 export const getDiscountTagText = ({
   tgid,

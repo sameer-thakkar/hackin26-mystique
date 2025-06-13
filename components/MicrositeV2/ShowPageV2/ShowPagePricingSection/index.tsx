@@ -37,7 +37,7 @@ import {
 } from 'const/index';
 import {
   getDiscountTagText,
-  IS_WICKED_SALE_PRODUCT,
+  IS_LTT_SALE_PRODUCT,
   LTT_SALE_HARDCODINGS,
 } from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
@@ -367,7 +367,7 @@ const ShowPagePricingSection = ({
                   <Conditional
                     if={
                       originalPrice > finalPrice &&
-                      !IS_WICKED_SALE_PRODUCT.includes(tgid)
+                      !IS_LTT_SALE_PRODUCT.includes(tgid)
                     }
                   >
                     <LocalisedPrice

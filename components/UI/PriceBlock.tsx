@@ -10,7 +10,7 @@ import { checkIfLTTMB } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { CASHBACK_TYPES, THEMES } from 'const/index';
-import { IS_WICKED_SALE_PRODUCT } from 'const/lttSaleHardcodings';
+import { IS_LTT_SALE_PRODUCT } from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
@@ -264,8 +264,7 @@ const PriceBlock = ({
           {prefix ? strings.FROM.toLowerCase() + ' ' : ''}
           <Conditional
             if={
-              showScratchPrice &&
-              !IS_WICKED_SALE_PRODUCT.includes(product?.tgid)
+              showScratchPrice && !IS_LTT_SALE_PRODUCT.includes(product?.tgid)
             }
           >
             <LocalisedPrice
