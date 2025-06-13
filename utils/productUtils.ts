@@ -32,6 +32,10 @@ import {
   THEMES,
   VALIDITY_TYPES,
 } from 'const/index';
+import {
+  getDiscountTagText,
+  LTT_SALE_HARDCODINGS,
+} from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import StarEmptyNew from 'assets/starEmptyNew';
 import StarFullNew from 'assets/starFullNew';
@@ -1326,4 +1330,34 @@ export const shouldDisableRatingsLabelInProductCard = ({
   return !productIds.some((productId) => {
     return scorpioData[productId]?.reviewsDetails?.ratingsCount > 10;
   });
+};
+
+type TGetCustomDiscountTag = {
+  bestDiscount: number;
+  cashbackValue: number;
+  shouldShowcashbackElement: boolean;
+  tgid: string;
+};
+
+export const getCustomDiscountTag = ({
+  bestDiscount,
+  cashbackValue,
+  shouldShowcashbackElement,
+  tgid,
+}: TGetCustomDiscountTag) => {
+  const customDiscountTag =
+    bestDiscount > 0 ||
+    shouldShowcashbackElement ||
+    LTT_SALE_HARDCODINGS[tgid]?.SHOW_SALE_TAG
+      ? getDiscountTagText({
+          tgid,
+          calculatedDiscount: getEntertainmentMbProductCardDiscountTagString({
+            bestDiscount,
+            shouldShowcashbackElement,
+            cashbackValue,
+          }),
+        })
+      : undefined;
+
+  return customDiscountTag;
 };

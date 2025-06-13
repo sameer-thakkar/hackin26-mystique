@@ -7,9 +7,7 @@ import {
   ProductDetails,
   Wrapper,
 } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/HorizontalProductCard/style';
-import { ExclusivePricesBooster } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard/style';
 import Ratings from 'components/MicrositeV2/EntertainmentMBLandingPageV2/Ratings';
-import DiscountTag from 'components/Product/components/DiscountTag';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -18,7 +16,7 @@ import { trackEvent } from 'utils/analytics';
 import { checkIfLTTMB } from 'utils/helper';
 import {
   getBoosterValueFromListingPrice,
-  getEntertainmentMbProductCardDiscountTagString,
+  getCustomDiscountTag,
   getOpeningDate,
   getProductCardDestination,
 } from 'utils/productUtils';
@@ -30,10 +28,7 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
 } from 'const/index';
-import {
-  getDiscountTagText,
-  LTT_SALE_HARDCODINGS,
-} from 'const/lttSaleHardcodings';
+import { LTT_SALE_HARDCODINGS } from 'const/lttSaleHardcodings';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
 import LttSaleDesciptor from '../lttSaleDesciptor';
 
@@ -125,6 +120,12 @@ const HorizontalProductCard = ({
     hsid,
   });
   const hrefAttribute = showPageExists ? { href: destinationUrl } : {};
+  const customDiscountTag = getCustomDiscountTag({
+    bestDiscount,
+    cashbackValue,
+    shouldShowcashbackElement,
+    tgid,
+  });
 
   return (
     <Wrapper
@@ -185,37 +186,14 @@ const HorizontalProductCard = ({
             </Conditional>
           </div>
         </Conditional>
-        <div className="price-wrapper">
-          <PriceBlock
-            listingPrice={listingPrice}
-            lang="en"
-            showScratchPrice={true}
-            prefix={true}
-          />
-          <Conditional
-            if={
-              bestDiscount > 0 ||
-              shouldShowcashbackElement ||
-              LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
-            }
-          >
-            <ExclusivePricesBooster>
-              <div className="booster-text">
-                <DiscountTag
-                  discount={getDiscountTagText({
-                    tgid,
-                    calculatedDiscount:
-                      getEntertainmentMbProductCardDiscountTagString({
-                        bestDiscount,
-                        shouldShowcashbackElement,
-                        cashbackValue,
-                      }),
-                  })}
-                />
-              </div>
-            </ExclusivePricesBooster>
-          </Conditional>
-        </div>
+        <PriceBlock
+          listingPrice={listingPrice}
+          lang="en"
+          showScratchPrice={true}
+          prefix={true}
+          tgid={tgid}
+          customDiscountTag={customDiscountTag}
+        />
       </ProductDetails>
     </Wrapper>
   );

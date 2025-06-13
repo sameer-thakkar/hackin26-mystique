@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DiscountTextContainer } from 'components/Product/components/DiscountTag/styles';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -87,12 +88,7 @@ export const Wrapper = styled.div<{
       }
     }
   }
-  .price-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.34rem;
-    align-items: flex-end;
-  }
+
   @media (max-width: 768px) {
     width: 120px;
     max-width: initial;
@@ -235,8 +231,12 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 `;
 
 export const ExclusivePricesBooster = styled.div`
+  ${DiscountTextContainer} {
+    p.discount-text {
+      line-height: 16px;
+    }
+  }
   @media (max-width: 768px) {
-    margin-top: 0.59rem;
     .booster-text {
       & svg {
         margin-right: -0.0625rem;

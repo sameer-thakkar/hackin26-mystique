@@ -81,7 +81,7 @@ const ShoulderPageTopShowsAdapter: React.FC<
   return (
     <div
       className="main-wrapper"
-      style={{ paddingTop: '2rem', marginBottom: '-2rem' }}
+      style={{ padding: '2rem 0 0', marginBottom: '-2rem', width: '100%' }}
     >
       <TopShowsSection
         isMobile={isMobile}

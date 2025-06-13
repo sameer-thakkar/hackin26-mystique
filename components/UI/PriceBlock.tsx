@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import CashbackComponent from 'components/common/CashbackComponent';
 import Conditional from 'components/common/Conditional';
+import { ExclusivePricesBooster } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard/style';
 import DiscountTag from 'components/Product/components/DiscountTag';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
@@ -161,7 +162,8 @@ type PriceBlockProps = {
   newDiscountTagDesignProps?:
     | boolean
     | { showAngledTag?: boolean; shouldPointLeft?: boolean };
-  product?: any;
+  tgid?: number | string;
+  customDiscountTag?: string;
 };
 
 const PriceBlock = ({
@@ -181,7 +183,8 @@ const PriceBlock = ({
   wrapperRef,
   showDummyScratchPrice = false,
   newDiscountTagDesignProps = false,
-  product,
+  tgid,
+  customDiscountTag,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -264,7 +267,7 @@ const PriceBlock = ({
           {prefix ? strings.FROM.toLowerCase() + ' ' : ''}
           <Conditional
             if={
-              showScratchPrice && !IS_LTT_SALE_PRODUCT.includes(product?.tgid)
+              showScratchPrice && !IS_LTT_SALE_PRODUCT.includes(tgid as string)
             }
           >
             <LocalisedPrice
@@ -281,6 +284,13 @@ const PriceBlock = ({
             lang={lang}
             price={finalPrice}
           />
+          <Conditional if={!!customDiscountTag}>
+            <ExclusivePricesBooster>
+              <div className="booster-text">
+                <DiscountTag discount={customDiscountTag as string} />
+              </div>
+            </ExclusivePricesBooster>
+          </Conditional>
           <Conditional if={isLTT && showSavings && save && save > 0}>
             <SavedTag className="savedtag-block">
               {strings.formatString(
