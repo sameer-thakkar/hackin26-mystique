@@ -291,7 +291,7 @@ const HeaderRight = styled.div<{
 
   @media (max-width: 768px) {
     grid-auto-flow: unset;
-    grid-template-columns: repeat(auto-fill, minmax(1.875rem, 1fr));
+    grid-template-columns: 1fr;
     align-items: center;
     ${({ $isEntertainmentMb }) => $isEntertainmentMb && `height: unset;`}
 
@@ -325,7 +325,7 @@ const HeaderLeft = styled.div<IHeaderLeft>`
   display: grid;
   grid-template-columns: auto ${({ hasDropdownLinks }) =>
       hasDropdownLinks ? '1fr' : ''} auto;
-  grid-gap: 24px;
+  grid-gap: 4px;
   align-items: center;
   .header-logo {
     width: 100%;
