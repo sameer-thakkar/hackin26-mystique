@@ -60,7 +60,6 @@ import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
-import { DAY_TRIPS_COLLECTION_MBS } from 'const/daytrips';
 import { VARIANTS } from 'const/experiments';
 import {
   ALLOW_IMMEDIATE_NESTING,
@@ -841,8 +840,7 @@ const MicrositeV1 = (props: any) => {
       !checkIfBroadwayMB(uid) &&
       !orderedTgids?.some((tgid: number) =>
         TGIDS_WITH_CANCELLATION_INSURANCE.includes(tgid)
-      ) &&
-      !DAY_TRIPS_COLLECTION_MBS.includes(uid),
+      ),
   });
 
   const showPopupNonPOI =
@@ -943,36 +941,6 @@ const MicrositeV1 = (props: any) => {
 
   const showBoosters = isBoosterExpEligible || isPOIFiltersEnabled;
 
-  const {
-    isEligible: shouldRunDayTripsVideoExperimentDWeb,
-    variant: dayTripsVideoExperimentDWebVariant,
-    isExperimentResolving: isDayTripsVideoExperimentDWebResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_VIDEO_DWEB',
-    customEligibilityCheckFn: () =>
-      !isMobile &&
-      currentLanguage === 'en' &&
-      DAY_TRIPS_COLLECTION_MBS.includes(uid),
-  });
-
-  const {
-    isEligible: shouldRunDayTripsVideoExperimentMWeb,
-    variant: dayTripsVideoExperimentMWebVariant,
-    isExperimentResolving: isDayTripsVideoExperimentMWebResolving,
-  } = useABTesting({
-    experimentId: 'DAY_TRIPS_VIDEO_MWEB',
-    customEligibilityCheckFn: () =>
-      isMobile &&
-      currentLanguage === 'en' &&
-      DAY_TRIPS_COLLECTION_MBS.includes(uid),
-  });
-
-  const isDayTripsVideoEnabled =
-    (shouldRunDayTripsVideoExperimentDWeb &&
-      dayTripsVideoExperimentDWebVariant === VARIANTS.TREATMENT) ||
-    (shouldRunDayTripsVideoExperimentMWeb &&
-      dayTripsVideoExperimentMWebVariant === VARIANTS.TREATMENT);
-
   const tourListSection = (
     <PopulateProducts
       // @ts-ignore
@@ -1021,7 +989,6 @@ const MicrositeV1 = (props: any) => {
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
       activePOIFilter={activePOIFilter}
-      shouldShowDayTripsVideoBanner={isDayTripsVideoEnabled}
       collectionDetails={collectionDetails}
       {...qnaExperimentData}
       // @ts-expect-error TS(2322): Type 'Element' is not assignable to type 'any'.
@@ -1090,11 +1057,7 @@ const MicrositeV1 = (props: any) => {
     (shouldRunCustomEnglishCTAExperiment &&
       isCustomEnglishCTAExperimentResolving) ||
     (shouldRunHohoRevampExperiment && isHohoExperimentResolving) ||
-    (isPOIFiltersExpEligible && isPOIFiltersExpResolving) ||
-    (shouldRunDayTripsVideoExperimentDWeb &&
-      isDayTripsVideoExperimentDWebResolving) ||
-    (shouldRunDayTripsVideoExperimentMWeb &&
-      isDayTripsVideoExperimentMWebResolving)
+    (isPOIFiltersExpEligible && isPOIFiltersExpResolving)
   )
     return <PageLoader showBouncingLoader={false} />;
 
@@ -1388,7 +1351,6 @@ const MicrositeV1 = (props: any) => {
             isCruisesRevamp={showCruisesFormat}
             reducedMwebMarginOnDisclaimer={isPOIFiltersEnabled}
             isAirportTransfersMB={isAirportTransfersMB}
-            isDayTrip={isDayTripsVideoEnabled}
             uid={uid}
             {...qnaExperimentData}
           />

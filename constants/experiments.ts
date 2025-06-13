@@ -29,16 +29,12 @@ const BRAND_LOADER_EXP = 'New Loader Experiment';
 const PINNED_REVIEWS_EXPERIMENT = 'Pinned Reviews Experiment';
 const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
-const DAY_TRIPS_VIDEO_DWEB = 'Day Trips Video Experiment DWeb';
-const DAY_TRIPS_VIDEO_MWEB = 'Day Trips Video Experiment MWeb';
 const LTT_SHOW_PAGE_EXPERIMENT_V2 = 'Dweb LTT Show Page Calendar';
 
 export const EXPERIMENT_NAMES: Record<string, string> = {
   BRAND_LOADER_EXP,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   DAY_TRIPS_LISTICLE,
-  DAY_TRIPS_VIDEO_DWEB,
-  DAY_TRIPS_VIDEO_MWEB,
   FLEXIBLE_CANCELLATION_EXPERIMENT,
   HOHO_REVAMP_PARIS_BARCELONA,
   LFC_IMPACT,
@@ -75,16 +71,6 @@ export const EXPERIMENTS: Record<string, Experiment> = {
     DAY_TRIPS_LISTICLE,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [100, 0]
-  ),
-  [DAY_TRIPS_VIDEO_DWEB]: new Experiment(
-    DAY_TRIPS_VIDEO_DWEB,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
-  ),
-  [DAY_TRIPS_VIDEO_MWEB]: new Experiment(
-    DAY_TRIPS_VIDEO_MWEB,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
   ),
   [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
     FLEXIBLE_CANCELLATION_EXPERIMENT,

@@ -181,7 +181,6 @@ const Page = (props: PageProps) => {
     isEntertainmentBanner,
     bannerTrustBoosters,
     bannerV3Data,
-    dayTripCollectionData,
     similarityBasedRankingExperimentControlTgids,
   } = props;
 
@@ -404,7 +403,6 @@ const Page = (props: PageProps) => {
               subCategoryId={subCategoryId}
               qnaSections={qnaSections}
               botReviewsByTGID={botReviewsByTGID}
-              dayTripCollectionData={dayTripCollectionData}
             />
           );
         }

@@ -1,6 +1,5 @@
 import { defineGlobalStyles, defineKeyframes } from '@pandacss/dev';
 import { animations } from '@headout/eevee/animations';
-import { chatBubbleAnimation } from 'components/DayTripsVideoPlayer/styles';
 import {
   float,
   floatHalf,
@@ -150,7 +149,6 @@ export const keyframeTokens = defineKeyframes({
   float,
   floatHalf,
   floatReverse,
-  chatBubbleAnimation,
   rotateSvgPageLoaderGroup,
   rotateSvgPageLoaderDashOffset,
   ...animations,

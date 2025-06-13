@@ -71,13 +71,12 @@ export const Overlay = styled.div<{
   ${({ $hideBanner }) => $hideBanner && `display: none;`}
 `;
 
-export const Container = styled.div<{ $isDayTrip?: boolean }>`
+export const Container = styled.div`
   z-index: 1;
   @media (min-width: 768px) {
     display: grid;
     grid-column-gap: 1.5rem;
-    grid-template-columns: ${({ $isDayTrip }) =>
-      $isDayTrip ? 'minmax(1.5rem, 1fr) auto' : '1fr 1fr'};
+    grid-template-columns: 1fr 1fr;
     height: 100%;
     width: 100%;
     align-items: center;
