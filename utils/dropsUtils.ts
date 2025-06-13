@@ -1,5 +1,6 @@
 import {
-  DROPS_ELIGIBLE_URLS,
+  cityDropsEligibleUrls,
+  dropsEligibleCountries,
   dropsExitIntentAvailabilityClickedKey,
 } from 'components/AppDrops/constants';
 import { getUID } from './helper';
@@ -27,24 +28,29 @@ export const storeDropsExitIntentAvailabilityClicked = () => {
 };
 
 /**
- * Checks if the current page is eligible for Drops banner based on its URL
+ * Checks if the user and page are eligible for Drops based on UID
  * @param uid - The unique identifier of the page
- * @returns boolean - Whether the page is eligible for Drops banner
+ * @returns { isEligible: boolean; city: string | null } - Whether the user is eligible and the corresponding city
  */
-export const checkDropsBannerEligibility = (uid: string): boolean => {
-  if (!uid) return false;
+export const checkDropsEligibility = (
+  uid: string
+): { isEligible: boolean; city: string | null } => {
+  if (!uid) return { isEligible: false, city: null };
 
-  // Normalize the uid to handle trailing slashes and protocol variations
   const normalizedUid = getUID(uid);
 
-  // Check if the normalized uid matches or is included in any of the eligible URLs
-  for (const uid of DROPS_ELIGIBLE_URLS) {
-    if (uid === normalizedUid || normalizedUid.includes(uid)) {
-      return true;
+  for (const [city, urls] of Object.entries(cityDropsEligibleUrls)) {
+    for (const eligibleUid of urls) {
+      if (
+        eligibleUid === normalizedUid ||
+        normalizedUid.includes(eligibleUid)
+      ) {
+        return { isEligible: true, city };
+      }
     }
   }
 
-  return false;
+  return { isEligible: false, city: null };
 };
 
 /**
@@ -69,13 +75,44 @@ export const checkIsEligibleForExitIntent = (
     }
   }
 
-  const isUAEUser = countryCode === 'AE';
+  const isDropsCountry = dropsEligibleCountries.includes(countryCode);
 
-  // Non-UAE users who have shown intent are not eligible
-  if (hasShownIntent && !isUAEUser) {
+  // Non-drops eligible countries users who have shown intent are not eligible
+  if (hasShownIntent && !isDropsCountry) {
     return false;
   }
 
-  // User must be on an eligible page
-  return checkDropsBannerEligibility(uid);
+  const pageEligibility = checkDropsEligibility(uid);
+  return pageEligibility?.isEligible;
+};
+
+/**
+ * Sets experience names in the Rive animation based on city code and platform
+ * @param rive - The Rive instance
+ * @param cityCode - The city code to get experience names for
+ * @param strings - The strings object containing experience names
+ * @param isMobile - Whether the platform is mobile
+ */
+export const setRiveExperienceNames = (
+  rive: any,
+  cityCode: string | null,
+  strings: any,
+  isMobile?: boolean
+) => {
+  if (!rive || !cityCode) return;
+
+  const experienceNames =
+    strings.DROPS.RIVE?.[cityCode as keyof typeof strings.DROPS.RIVE]?.[
+      isMobile ? 'MWEB_ExperienceName' : 'DWEB_ExperienceName'
+    ];
+  const cityName = cityCode.toLowerCase();
+  const prefix = isMobile ? `mweb_${cityName}` : `dweb_${cityName}`;
+
+  if (experienceNames) {
+    [...experienceNames, ...experienceNames].forEach(
+      (name: string, index: number) => {
+        rive.setTextRunValue(`${prefix}_exp_${index + 1}`, name);
+      }
+    );
+  }
 };

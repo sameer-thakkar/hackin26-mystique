@@ -1543,28 +1543,37 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     DISCOVER_MORE: 'Discover more',
   },
   DROPS: {
-    DISCOUNT_TAG: 'Up to 80% off with',
-    TITLE: 'Epic experiences at just AED 49',
+    TITLE: 'Prices drop to just {0}. Daily.',
     SUBTITLE:
-      'Participate and win steal deals for Dubai Dolphinarium, Miracle Garden, Yacht Cruises, and much more.',
-    CTA_BUTTON: 'Tell me more',
-    CTA_BUTTON_MOBILE: 'Download the Headout app',
-    DOWNLOAD_APP_NUDGE: {
-      TITLE: 'HOW TO PARTICIPATE AND WIN A DROP',
-      STEP_1: 'Download the Headout app',
-      STEP_2: 'Join daily at',
-      STEP_2_HIGHLIGHT: '5pm,',
-      STEP_2_PART_1: 'GST (Dubai Standard Time), win your experience',
-      STEP_3: 'Book now, travel anytime',
-      QR_SCAN_TEXT: 'Scan QR to download',
-    },
+      '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app',
+    NUDGE_CTA: 'Get the app',
+    CTA_BUTTON_MOBILE: 'Download the app',
+    ON: 'on',
     EXIT_INTENT: {
-      TITLE: 'Walk away now, pay more later: Grab AED 49 deals on the app',
-      DESCRIPTION:
-        'Participate and win steal deals for Dubai Dolphinarium, Miracle Garden, Yacht Cruises, and much more.',
-      CTA_TEXT: 'Explore Deals',
-      DOWNLOAD_APP: 'Download the Headout app',
-      NOT_NOW: 'Not now',
+      DOWNLOAD_APP: 'Download the app',
+      NOT_NOW: `I'll grab the next deal`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: [
+          'Colosseum',
+          'Pizza making class',
+          'St. Peter’s Basilica',
+        ],
+        DWEB_ExperienceName: [
+          'Walk through the Colosseum’s past',
+          'Make pizza like a local',
+          'Marvel at St.Peter’s Basilica',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: ['Eiffel Tower', 'Seine Cruise', 'Notre-Dame'],
+        DWEB_ExperienceName: [
+          'Breathtaking views at the Eiffel Tower',
+          'Cruise along the Seine River',
+          'Explore the majestic notre dame',
+        ],
+      },
     },
   },
   COMPANY_DETAILS_CONTENT: {

@@ -2140,6 +2140,36 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     MINUTES: ' Min',
   },
   LTT_SPECIAL_OFFER: 'Sonderangebot',
+  DROPS: {
+    TITLE: 'Preise sinken auf {0}. Jeden Tag.',
+    SUBTITLE:
+      'Top-Erlebnisse in {0} jetzt bis zu 80 % günstiger. Täglich neue Deals. Nur in der Headout App.',
+    NUDGE_CTA: 'App herunterladen',
+    CTA_BUTTON_MOBILE: 'App herunterladen',
+    ON: 'bei',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'App herunterladen',
+      NOT_NOW: `Ich hol mir den nächsten Deal`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: ['Kolosseum', 'Pizzabackkurs', 'Petersdom'],
+        DWEB_ExperienceName: [
+          'Die Geschichte des Kolosseums entdecken',
+          'Pizza backen wie die Profis',
+          'Den Petersdom erkunden',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: ['Eiffelturm', 'Seine-Fahrt', 'Notre-Dame'],
+        DWEB_ExperienceName: [
+          'Umwerfende Aussichten auf den Eiffelturm',
+          'Schifffahrt auf der Seine',
+          'Die prächtige Notre-Dame besichtigen',
+        ],
+      },
+    },
+  },
 };
 
 export default de;

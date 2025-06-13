@@ -2149,7 +2149,6 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     ],
   },
   POWERED_BY: 'opéré par',
-
   BOOKING_PAGE_TIME: {
     HOUR: ' h',
     HOURS: ' h',
@@ -2157,5 +2156,43 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     MINUTES: ' min',
   },
   LTT_SPECIAL_OFFER: 'Offre spéciale',
+  DROPS: {
+    TITLE: 'Les prix passent à seulement {0}. Tous les jours.',
+    SUBTITLE:
+      "Le meilleur de {0} s'offre à vous jusqu'à 80% de réduction. De nouvelles offres chaque jour, uniquement sur l'appli Headout",
+    NUDGE_CTA: "Télécharger l'appli",
+    CTA_BUTTON_MOBILE: "Télécharger l'appli",
+    ON: 'sur',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: "Télécharger l'appli",
+      NOT_NOW: `Je profite de la prochaine offre`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: [
+          'Colisée',
+          'Cours de préparation de pizzas',
+          'Basilique Saint-Pierre',
+        ],
+        DWEB_ExperienceName: [
+          "Plongez dans l'histoire du Colisée",
+          'Préparez une pizza fraîche comme un·e local·e',
+          'Admirez la Basilique Saint-Pierre',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: [
+          'Tour Eiffel',
+          'Croisière sur la Seine',
+          'Notre-Dame',
+        ],
+        DWEB_ExperienceName: [
+          'Vues imprenables depuis la Tour Eiffel',
+          'Croisière sur la Seine',
+          'Découvrez la majestueuse Notre-Dame',
+        ],
+      },
+    },
+  },
 };
 export default fr;

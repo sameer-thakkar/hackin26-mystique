@@ -2119,5 +2119,43 @@ const it = {
     MINUTES: ' min',
   },
   LTT_SPECIAL_OFFER: 'Offerta speciale',
+  DROPS: {
+    TITLE: 'A soli {0}. Tutti i giorni.',
+    SUBTITLE:
+      "Il meglio di {0} per te, con sconti fino all'80%. Nuove Drops ogni giorno, solo sull'app Headout",
+    NUDGE_CTA: `Scarica l'app`,
+    CTA_BUTTON_MOBILE: `Scarica l'app`,
+    ON: 'su',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: `Scarica l'app`,
+      NOT_NOW: `Prenderò la prossima offerta`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: [
+          'Colosseo',
+          'Lezione di pizza',
+          'Basilica di San Pietro',
+        ],
+        DWEB_ExperienceName: [
+          'Passeggia dentro il Colosseo',
+          'Impara a fare la pizza',
+          'Ammira la Basilica di San Pietro',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: [
+          'Torre Eiffel',
+          'Crociera sulla Senna',
+          'Notre-Dame',
+        ],
+        DWEB_ExperienceName: [
+          'Ammira la Torre Eiffel',
+          'Fai una crociera sulla Senna',
+          'Esplora la maestosa Notre-Dame',
+        ],
+      },
+    },
+  },
 };
 export default it;

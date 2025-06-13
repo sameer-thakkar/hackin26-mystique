@@ -8,13 +8,13 @@ const CloseIcon = (props: any) => (
   >
     <path
       d="M13.3334 2.66669L2.66669 13.3334"
-      stroke="#444444"
+      stroke={props.color ?? '#444444'}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M2.66669 2.66669L13.3334 13.3334"
-      stroke="#444444"
+      stroke={props.color ?? '#444444'}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

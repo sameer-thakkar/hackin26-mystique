@@ -2179,5 +2179,43 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     MINUTES: 'min',
   },
   LTT_SPECIAL_OFFER: 'Oferta especial',
+  DROPS: {
+    TITLE: 'Experiencias diarias desde {0}.',
+    SUBTITLE:
+      'Descubre lo mejor de {0} con hasta un 80 % de descuento. Los Drops se publican todos los días sólo en la aplicación de Headout.',
+    NUDGE_CTA: 'Consigue la app',
+    CTA_BUTTON_MOBILE: 'Descargar la app',
+    ON: 'en',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'Descargar la app',
+      NOT_NOW: `Esperar a la próxima oferta`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: [
+          'Coliseo',
+          'Clase de elaboración de pizza',
+          'Basílica de San Pedro',
+        ],
+        DWEB_ExperienceName: [
+          'Tour por el Coliseo',
+          'Prepara pizza fresca como un local',
+          'Entradas a la Basílica de San Pedro',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: [
+          'Torre Eiffel',
+          'Crucero por el Sena',
+          'Notre-Dame',
+        ],
+        DWEB_ExperienceName: [
+          'Impresionantes vistas de la Torre Eiffel',
+          'Crucero por el río Sena',
+          'Visita a Notre-Dame',
+        ],
+      },
+    },
+  },
 };
 export default es;

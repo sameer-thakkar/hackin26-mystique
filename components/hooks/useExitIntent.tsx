@@ -34,7 +34,7 @@ const useExitIntent = ({
   cookieExpiration = 1,
   isSessionBased = true,
   enabled = false,
-  inactivityTimeout = 20000,
+  inactivityTimeout = 18000,
   swipeThreshold = 200,
   onExitIntent,
 }: IUseExitIntentOptions = {}) => {

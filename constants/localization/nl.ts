@@ -2096,5 +2096,43 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     MINUTES: 'min',
   },
   LTT_SPECIAL_OFFER: 'Speciale actie',
+  DROPS: {
+    TITLE: 'Prijzen dalen naar slechts {0}. Dagelijks.',
+    SUBTITLE:
+      'Het beste van {0} is nu van jou met tot 80% korting. Elke dag nieuwe druppels, alleen op de Headout-app',
+    NUDGE_CTA: 'App downloaden',
+    CTA_BUTTON_MOBILE: 'Download de app',
+    ON: 'op',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'Download de app',
+      NOT_NOW: `Ik pak de volgende deal`,
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: [
+          'Colosseum',
+          'Pizza maken',
+          'Sint-Pietersbasiliek',
+        ],
+        DWEB_ExperienceName: [
+          'Wandel door het verleden van het Colosseum',
+          'Maak verse pizza als een local',
+          'Bewonder de Sint-Pietersbasiliek',
+        ],
+      },
+      PARIS: {
+        MWEB_ExperienceName: [
+          'Eiffeltoren',
+          'Boottocht over de Seine',
+          'Notre-Dame',
+        ],
+        DWEB_ExperienceName: [
+          'Adembenemend uitzicht op de Eiffeltoren',
+          'Cruise langs de Seine',
+          'Verken de majestueuze Notre-Dame',
+        ],
+      },
+    },
+  },
 };
 export default nl;

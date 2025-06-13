@@ -1,14 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Button, Text } from '@headout/eevee';
 import { cx } from '@headout/pixie/css';
 import {
+  CITY_WISE_LABELS,
+  DEFAULT_PRICE,
+  DROPS_FALLBACK_LINK,
+  DROPS_IMAGE_URLS,
   DROPS_MOBILE_BANNER_LINK,
   DROPS_RIVE_URI,
 } from 'components/AppDrops/constants';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
 import { useRive } from 'hooks/useRive';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { trackEvent } from 'utils/analytics';
+import { setRiveExperienceNames } from 'utils/dropsUtils';
+import { pickByKeys } from 'utils/gen';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -16,44 +23,50 @@ import {
   TRUE,
 } from 'const/index';
 import { strings } from 'const/strings';
-import ChevronDown from 'assets/chevronDown';
 import { DiscountTag } from './components/DiscountTag';
-import DownloadAppNudge from './components/DownloadAppNudge';
-import { Steps } from './components/Steps';
+import { DownloadAppNudge } from './components/DownloadAppNudge';
 import {
   animatedNudgeContainer,
   bannerContainer,
   bannerContent,
-  collapseButton,
   ctaButton,
-  expandedContainer,
-  expandedRightSection,
+  DWEB_LEFT_BOTTOM_SECTION_BG,
+  DWEB_RIGHT_SECTION_BG,
   leftSection,
-  leftSectionAppNudge,
-  mobileSection,
-  nudgeHidden,
+  mobileRiveContainer,
   nudgeVisible,
   rightSection,
+  riveBlendingBG,
   subtitle,
   title,
-  titleAppNudge,
 } from './styles';
+import { TDropsComponentProps } from './types';
 
-export const DropsBanner = () => {
+export const DropsBanner = ({ cityCode }: TDropsComponentProps) => {
   const translations = strings.DROPS;
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showNudge, setShowNudge] = useState(false);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth !== undefined && windowWidth < 768;
   const nudgeRef = useRef<HTMLDivElement>(null);
 
   const { RiveComponent, isLoading, isError, rive } = useRive({
     src: DROPS_RIVE_URI,
+    artboard: isMobile ? `mWeb_${cityCode}_Banner` : `dWeb_${cityCode}`,
+    stateMachines: 'State Machine 1',
     autoplay: true,
   });
 
   const hasTracked = useRef(false);
   const observerRef = useRef<MutationObserver | null>(null);
+
+  useLayoutEffect(() => {
+    setRiveExperienceNames(
+      rive,
+      cityCode,
+      pickByKeys(strings as Record<string, any>, ['DROPS']),
+      isMobile
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityCode, rive]);
 
   useEffect(() => {
     if (!hasTracked.current) {
@@ -101,33 +114,12 @@ export const DropsBanner = () => {
     };
   }, [rive]);
 
-  useEffect(() => {
-    if (isExpanded) {
-      setTimeout(() => {
-        setShowNudge(true);
-      }, 100);
-    } else {
-      setShowNudge(false);
-    }
-  }, [isExpanded]);
-
-  const handleToggleExpand = () => {
-    if (isExpanded) {
-      setShowNudge(false);
-      setTimeout(() => {
-        setIsExpanded(false);
-      }, 300);
-    } else {
-      setIsExpanded(true);
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.DROPS_BANNER_CTA_CLICKED,
-        [ANALYTICS_PROPERTIES.CTA_TYPE]: 'Tell Me More',
-      });
-    }
-  };
-
   const handleOpenMobileBanner = () => {
-    window.open(DROPS_MOBILE_BANNER_LINK, '_blank');
+    const link =
+      DROPS_MOBILE_BANNER_LINK[
+        cityCode as keyof typeof DROPS_MOBILE_BANNER_LINK
+      ] ?? DROPS_FALLBACK_LINK;
+    window.open(link, '_blank', 'noopener,noreferrer');
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPS_BANNER_CTA_CLICKED,
       [ANALYTICS_PROPERTIES.CTA_TYPE]: 'Download',
@@ -135,99 +127,75 @@ export const DropsBanner = () => {
   };
 
   return (
-    <div className={cx(bannerContainer, isExpanded && expandedContainer)}>
+    <div className={bannerContainer}>
       <div className={bannerContent}>
         <Conditional if={isMobile}>
-          <div className={mobileSection}>
-            <div className={leftSectionAppNudge}>
-              <Text
-                as="h3"
-                className={titleAppNudge}
-                textStyle={'tags.booster'}
-                color={'core.candy.800'}
-              >
-                {translations.DOWNLOAD_APP_NUDGE.TITLE}
-              </Text>
-              <Steps variant={{ variant: 'default' }} />
-            </div>
-            <Button
-              as={'button'}
-              className={ctaButton}
-              btnType="black"
-              variant={'primary'}
-              size="medium"
-              primaryText={translations.CTA_BUTTON_MOBILE}
-              onClick={handleOpenMobileBanner}
-            />
-          </div>
+          <Button
+            as={'button'}
+            className={ctaButton}
+            btnType="white"
+            variant={'primary'}
+            size="medium"
+            primaryText={translations.CTA_BUTTON_MOBILE}
+            onClick={handleOpenMobileBanner}
+          />
         </Conditional>
         <div className={leftSection}>
-          <DiscountTag isMobile={isMobile} />
+          <DiscountTag />
           <Text
             as="h1"
             className={title}
-            textStyle={isMobile ? 'heading.regular' : 'display.xs'}
-            color={'core.candy.800'}
+            textStyle={isMobile ? 'heading.medium' : 'display.regular'}
+            color={'core.candy.700'}
           >
-            {translations.TITLE}
+            {strings.formatString(
+              translations.TITLE,
+              CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
+                ?.price ?? DEFAULT_PRICE
+            )}
           </Text>
           <Text
             as="p"
             className={subtitle}
-            textStyle={isMobile ? 'ui.label.small' : 'para.medium'}
+            textStyle={isMobile ? 'para.regular' : 'para.medium'}
             color={'semantic.text.grey.2'}
           >
-            {translations.SUBTITLE}
+            {strings.formatString(
+              translations.SUBTITLE,
+              CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
+                ?.city ?? ''
+            )}
           </Text>
           <Conditional if={!isMobile}>
-            <Conditional if={isExpanded}>
-              <div
-                ref={nudgeRef}
-                className={cx(
-                  animatedNudgeContainer,
-                  showNudge ? nudgeVisible : nudgeHidden
-                )}
-              >
-                <DownloadAppNudge />
-              </div>
-            </Conditional>
-            <Conditional if={!isExpanded}>
-              <Button
-                as="button"
-                className={ctaButton}
-                btnType="black"
-                variant="primary"
-                size="small"
-                primaryText={
-                  isMobile
-                    ? translations.CTA_BUTTON_MOBILE
-                    : translations.CTA_BUTTON
-                }
-                onClick={handleToggleExpand}
-              />
-            </Conditional>
+            <div
+              ref={nudgeRef}
+              className={cx(animatedNudgeContainer, nudgeVisible)}
+            >
+              <DownloadAppNudge cityCode={cityCode} />
+            </div>
           </Conditional>
         </div>
-        <div
-          className={cx(
-            rightSection,
-            isExpanded && showNudge && !isMobile && expandedRightSection
-          )}
-        >
-          <Conditional if={!isLoading && !isError}>
-            <RiveComponent height="257px" width="573px" />
-          </Conditional>
-        </div>
+        <Conditional if={!isLoading && !isError && !isMobile}>
+          <div className={rightSection}>
+            <RiveComponent height="366px" width="588px" />
+          </div>
+        </Conditional>
       </div>
-      <Conditional if={isExpanded && !isMobile}>
-        <div
-          role="button"
-          tabIndex={0}
-          className={collapseButton}
-          onClick={handleToggleExpand}
-        >
-          <ChevronDown />
+      <Conditional if={!isMobile}>
+        <Image
+          url={DROPS_IMAGE_URLS.DWEB_RIGHT_SECTION_BG}
+          alt="Drops Web Banner Section BG"
+          width={604}
+          height={366}
+          className={DWEB_RIGHT_SECTION_BG}
+        />
+        <div className={DWEB_LEFT_BOTTOM_SECTION_BG} />
+      </Conditional>
+      <Conditional if={!isLoading && !isError && isMobile}>
+        <div className={mobileRiveContainer}>
+          <RiveComponent />
         </div>
+        <div className={riveBlendingBG} />
       </Conditional>
     </div>
   );

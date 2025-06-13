@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -17,6 +17,7 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
+import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -27,6 +28,7 @@ import {
   fetchInventory,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
+import { checkDropsEligibility } from 'utils/dropsUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { isItineraryValid } from 'utils/itinerary';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
@@ -36,6 +38,7 @@ import {
 } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -373,8 +376,24 @@ const PopulateProducts: any = (props: any) => {
 
   const { isDev, host, design } = useContext(MBContext);
   const hostname = getHostName(isDev, host);
+  const dropsEligibilityInfo = checkDropsEligibility(uid);
 
-  const shouldShowDropsBanner = false; // can add again when drops are backcheckDropsBannerEligibility(uid);
+  const {
+    isEligible: isDropsExperimentEligible,
+    variant: dropsExperimentVariant,
+  } = useABTesting({
+    experimentId: EXPERIMENT_NAMES.DROPS_EXPERIMENT,
+    customEligibilityCheckFn: () => {
+      return dropsEligibilityInfo?.isEligible;
+    },
+  });
+
+  const shouldShowDrops = useMemo(
+    () =>
+      isDropsExperimentEligible &&
+      dropsExperimentVariant === VARIANTS.TREATMENT,
+    [isDropsExperimentEligible, dropsExperimentVariant]
+  );
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -981,14 +1000,14 @@ const PopulateProducts: any = (props: any) => {
               /*
                Render DROPS banner after the first card only
               */
-              if (index === 0 && shouldShowDropsBanner) {
+              if (index === 0 && shouldShowDrops) {
                 return (
                   <>
                     <Conditional if={bannerIndex === index}>
                       {RenderedCustomBanner}
                     </Conditional>
                     {getProductCardFromTourAndIndex(tour, index)}
-                    <DropsBanner />
+                    <DropsBanner cityCode={dropsEligibilityInfo?.city} />
                     <Conditional
                       if={
                         bannerIndex > index &&
@@ -1089,8 +1108,8 @@ const PopulateProducts: any = (props: any) => {
           />
         </CombosContainer>
       </Conditional>
-      <Conditional if={shouldShowDropsBanner}>
-        <DropsExitIntent />
+      <Conditional if={shouldShowDrops}>
+        <DropsExitIntent cityCode={dropsEligibilityInfo?.city} />
       </Conditional>
     </StyledProductsWrapper>
   );

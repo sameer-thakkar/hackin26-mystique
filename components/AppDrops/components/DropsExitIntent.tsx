@@ -4,13 +4,13 @@ import useExitIntent from 'components/hooks/useExitIntent';
 import { MBContext } from 'contexts/MBContext';
 import { checkIsEligibleForExitIntent } from 'utils/dropsUtils';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { TDropsComponentProps } from '../types';
 import ExitIntentDialogContent from './ExitIntentDialogContent';
 import ExitIntentBottomSheetContent from './ExitIntentSheetContent';
 
-export const DropsExitIntent = () => {
+export const DropsExitIntent = ({ cityCode }: TDropsComponentProps) => {
   const [showExitIntentPopup, setShowExitIntentPopup] = useState(false);
   const { uid, countryCode } = useContext(MBContext);
-
   const isEnabled = useMemo(
     () => checkIsEligibleForExitIntent(uid, countryCode),
     [uid, countryCode]
@@ -37,8 +37,13 @@ export const DropsExitIntent = () => {
     <ExitIntentContentWrapper
       isOpen={showExitIntentPopup}
       onClose={handleClose}
-      contentComponent={<ExitIntentDialogContent />}
-      mobileComponent={<ExitIntentBottomSheetContent onClose={handleClose} />}
+      contentComponent={<ExitIntentDialogContent cityCode={cityCode} />}
+      mobileComponent={
+        <ExitIntentBottomSheetContent
+          onClose={handleClose}
+          cityCode={cityCode}
+        />
+      }
       trackingEventName={ANALYTICS_EVENTS.DROPS_BANNER_SHOWN}
       trackingProperties={{
         [ANALYTICS_PROPERTIES.BANNER_TYPE]: 'Exit Modal',

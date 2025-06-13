@@ -2402,17 +2402,17 @@
     compare-func "^2.0.0"
     q "^1.5.1"
 
-"@rive-app/canvas@2.16.0":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@rive-app/canvas/-/canvas-2.16.0.tgz#9d4dbef37fbe8d7256f67881707d672ae035c5e7"
-  integrity sha512-shbtAEZ3Iq6HSCA1EpdoU7CMwY5+p5pD8NTVmp31N+eq8Obxnorh+L/M4PJhqQR8hONMUwgcVLCIrNTdcXUNoA==
+"@rive-app/canvas@2.29.3":
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/@rive-app/canvas/-/canvas-2.29.3.tgz#a50224d174b1871ebbbf7f63eb8bba69a1ad29c1"
+  integrity sha512-tZrKAEMdmjg5ipAAVoOe/CqW9Y+zW/gqZBvFTmWszJGaXbW6wt+hRPkTuHIlpNMLA6oFe57t/5xHsxLoXTq8mA==
 
-"@rive-app/react-canvas@^4.8.2":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas/-/react-canvas-4.10.0.tgz#f92d2c2f22336577d701903caa54676ec13df393"
-  integrity sha512-0Dc1OS2n/22lTPvcawbRcGiJyDM92k8iEn8hy+/vyfbUA9+uze6YDPDsbDZUpdLGU46lDP6rbkcPl+3TWo1WwQ==
+"@rive-app/react-canvas@^4.21.3":
+  version "4.21.3"
+  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas/-/react-canvas-4.21.3.tgz#4c07480281dc4abdac4c0bfe85a4fd388d8171d6"
+  integrity sha512-DUCVwOF4gX7ZeMmESEu3B2LDeHvkw925mPXqq89tA6aybhwsxZchUktHp0jM6WsI2TAFjNgPSylOgIsa9gSavA==
   dependencies:
-    "@rive-app/canvas" "2.16.0"
+    "@rive-app/canvas" "2.29.3"
 
 "@rollup/plugin-commonjs@24.0.0":
   version "24.0.0"

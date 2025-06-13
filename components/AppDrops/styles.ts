@@ -4,24 +4,27 @@ export const bannerContainer = css({
   maxWidth: '75rem',
   margin: '0 1.5rem',
   borderRadius: '16px',
-  background: 'linear-gradient(to right, #FFDDE2, #FFF5EB)',
   position: 'relative',
-  minHeight: '30.125rem',
-
+  minHeight: '28.75rem',
+  border: '1px solid rgba(252, 230, 234, 1)',
+  background:
+    'radial-gradient(97.12% 293.35% at 0% 7.31%, #FFF7D9 0%, #FFFFFF 100%)',
   '@media (min-width: 768px)': {
     width: '100%',
     margin: '0 auto',
     minHeight: '13.125rem',
+    overflow: 'hidden',
   },
 });
 
 export const mobileSection = css({
   display: 'flex',
   justifyContent: 'center',
-  width: '100%',
   flexDirection: 'column',
   alignItems: 'flex-start',
   gap: '0.75rem',
+  zIndex: 2,
+  width: '100%',
 });
 
 export const bannerContent = css({
@@ -34,7 +37,7 @@ export const bannerContent = css({
 
   '@media (min-width: 768px)': {
     flexDirection: 'row',
-    padding: '2rem',
+    padding: '0px',
   },
 });
 
@@ -42,51 +45,55 @@ export const leftSection = css({
   flex: '1',
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: '36rem',
-  marginTop: '13.75rem',
+  maxWidth: '42.5rem',
+  marginTop: '2rem',
+  zIndex: 2,
 
   '@media (min-width: 768px)': {
     marginTop: '0',
-    padding: '0',
+    padding: '1.5rem 0 1.5rem 1.5rem',
   },
 });
 
 export const rightSection = css({
-  position: 'absolute',
-  top: '3.125rem',
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
   height: '12.5rem',
   width: '20.375rem',
+  zIndex: 2,
 
   '@media (min-width: 768px)': {
-    top: 'auto',
-    bottom: '0',
-    right: '0',
-    transform: 'scale(0.75)',
-    transformOrigin: 'bottom right',
-    transition: 'transform 0.5s cubic-bezier(0.7, -0.2, 0.3, 1.2)',
-    height: '21.375rem',
-    width: '37.25rem',
+    scale: '1.11',
+    height: '20.6rem',
+    width: '25.25rem',
   },
 });
 
 export const title = css({
-  margin: '1rem 0 0.25rem 0 !important',
-  '@media (max-width: 767px)': {
-    boxShadow: '-0.0625rem -0.4375rem 1.25rem 0px #ffefc6e0',
+  margin: '0.5rem 0 0.25rem 0 !important',
+  textAlign: 'center !important',
+  '@media (min-width: 768px)': {
+    textAlign: 'left !important',
   },
 });
 
 export const subtitle = css({
-  marginBottom: '1rem',
+  marginBottom: '0.75rem',
+  textAlign: 'center !important',
+  '@media (min-width: 768px)': {
+    width: 'fit-content',
+    textAlign: 'left !important',
+  },
 });
 
 export const ctaButton = css({
-  '@media (min-width: 768px)': {
-    width: 'fit-content',
-  },
+  boxShadow: '-0.0625rem -0.4375rem 1.25rem 0px rgba(158, 19, 86, 0.30)',
+  position: 'absolute',
+  bottom: 20,
+  width: '20.375rem',
+  margin: '0 auto',
+  zIndex: 4,
 });
 
 export const leftSectionAppNudge = css({
@@ -97,37 +104,6 @@ export const leftSectionAppNudge = css({
 
 export const titleAppNudge = css({
   fontWeight: 'bold',
-});
-
-export const expandedContainer = css({
-  transition: 'height 0.3s ease-in-out',
-});
-
-export const expandedRightSection = css({
-  transform: 'scale(1.1) !important',
-  transition: 'transform 0.5s cubic-bezier(0.7, -0.2, 0.3, 1.2)',
-});
-
-export const collapseButton = css({
-  position: 'absolute',
-  bottom: '1rem',
-  right: '1rem',
-  width: '2rem',
-  height: '2rem',
-  borderRadius: '0.5rem',
-  backgroundColor: 'white',
-  border: 'none',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  cursor: 'pointer',
-  rotate: '180deg',
-  zIndex: 1,
-  transition: 'transform 0.2s ease-in-out',
-
-  '&:hover': {
-    transform: 'translateY(-0.125rem)',
-  },
 });
 
 export const animatedNudgeContainer = css({
@@ -142,8 +118,42 @@ export const nudgeVisible = css({
   transform: 'translateY(0)',
 });
 
-export const nudgeHidden = css({
-  maxHeight: '0',
-  opacity: 0,
-  transform: 'translateY(-1.25rem)',
+export const mobileRiveContainer = css({
+  width: '100%',
+  height: '280px',
+  position: 'absolute',
+  bottom: 36,
+  borderBottomRightRadius: 'inherit',
+  borderBottomLeftRadius: 'inherit',
+});
+
+export const DWEB_LEFT_BOTTOM_SECTION_BG = css({
+  position: 'absolute !important',
+  bottom: 0,
+  filter: 'blur(50px)',
+  backgroundColor: 'rgba(255, 229, 240, 1)',
+  left: 0,
+  width: '478px',
+  height: '105px',
+});
+
+export const DWEB_RIGHT_SECTION_BG = css({
+  position: 'absolute !important',
+  top: 0,
+  left: '60%',
+  width: '100%',
+  height: '100%',
+});
+
+export const riveBlendingBG = css({
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  width: '100%',
+  height: '90px',
+  background:
+    'linear-gradient(0deg, #660131 37.51%, rgba(102, 1, 49, 0.00) 100%);',
+  zIndex: 2,
+  borderBottomLeftRadius: '10px',
+  borderBottomRightRadius: '10px',
 });

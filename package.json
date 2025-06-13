@@ -28,7 +28,7 @@
     "@prismicio/react": "^2.5.0",
     "@prismicio/richtext": "^2.1.5",
     "@react-hook/window-size": "^3.0.6",
-    "@rive-app/react-canvas": "^4.8.2",
+    "@rive-app/react-canvas": "^4.21.3",
     "@sentry/integrations": "^7.110.1",
     "@sentry/nextjs": "^7.110.1",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",

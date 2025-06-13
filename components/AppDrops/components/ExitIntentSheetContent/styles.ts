@@ -6,6 +6,8 @@ export const exitIntentBottomSheetContent = css({
   flexDirection: 'column',
   background: 'core.primary.white',
   borderTopRadius: '20px',
+  marginTop: '290px',
+  overflow: 'hidden',
 });
 
 export const exitIntentDiscountTag = css({
@@ -66,20 +68,6 @@ export const exitIntentLogo = css({
   objectFit: 'contain',
 });
 
-export const exitIntentStepsContainer = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6px',
-  marginTop: '12px',
-  marginBottom: '24px',
-});
-
-export const exitIntentStepItem = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-});
-
 export const exitIntentIconContainer = css({
   display: 'flex',
   justifyContent: 'center',
@@ -100,10 +88,10 @@ export const exitIntentAnimationContainer = css({
 });
 
 export const exitIntentRiveContainer = css({
-  scale: '1.15',
-  marginBottom: '24px',
-  height: '10.25rem',
-  width: '21.375rem',
+  position: 'absolute',
+  top: 24,
+  height: '280px',
+  width: '100%',
 });
 
 export const exitIntentButtonContainer = css({
@@ -119,16 +107,35 @@ export const exitIntentDiscountTagPadding = css({
 
 export const exitIntentHeadingMargin = css({
   marginBottom: '4px',
+  textAlign: 'center !important',
+  maxWidth: '300px',
+  '@media (max-width: 767px)': {
+    maxWidth: '500px',
+  },
 });
 
 export const exitIntentDescriptionMargin = css({
   marginBottom: '16px',
-});
-
-export const exitIntentStepsMarginTop = css({
-  marginTop: 8,
+  textAlign: 'center !important',
+  maxWidth: '300px',
+  '@media (max-width: 767px)': {
+    maxWidth: '500px',
+  },
 });
 
 export const exitIntentButton = css({
   height: '2.25rem',
+});
+
+export const riveBlendingBG = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '80px',
+  background:
+    'linear-gradient(180deg, #660131 37.51%, rgba(102, 1, 49, 0.00) 100%);',
+  zIndex: 1,
+  borderTopLeftRadius: '10px',
+  borderTopRightRadius: '10px',
 });

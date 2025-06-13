@@ -716,6 +716,7 @@ export const ANALYTICS_EVENTS = {
   DT_VIDEO_VIEWED: 'Video Viewed',
   DT_VIDEO_PLAYER_OPENED: 'Video Player Opened',
   DT_VIDEO_PLAYER_CLOSED: 'Video Player Closed',
+  STORE_DOWNLOAD_CTA_CLICKED: 'Store Download CTA Clicked',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -1239,6 +1240,9 @@ export const ANALYTICS_PROPERTIES = {
   NAVIGATION_TYPE: 'Navigation Type',
   PLAY_TYPE: 'Play Type',
   VIEW_TYPE: 'View Type',
+  IS_EXIT_INTENT: 'Is Exit Intent',
+  STORE_TYPE: 'Store Type',
+  CITY_CODE: 'City Code',
 };
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 

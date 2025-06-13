@@ -2,7 +2,7 @@ import { css } from '@headout/pixie/css';
 
 export const dialogPopupContainer = css({
   borderRadius: '24px',
-  maxWidth: '762px',
+  maxWidth: '890px',
   maxHeight: '414px',
   padding: '0',
   width: '100%',
@@ -38,10 +38,11 @@ export const dialogCloseButton = css({
 });
 
 export const dialogPopupContent = css({
-  maxWidth: '400px',
+  maxWidth: '500px',
   display: 'flex',
   flexDirection: 'column',
-  padding: '24px 24px 0',
+  padding: '24px',
+  zIndex: 2,
 });
 
 export const dialogFlexContainer = css({
@@ -53,28 +54,11 @@ export const dialogFlexContainer = css({
 });
 
 export const dialogGradientTopSection = css({
-  background: 'linear-gradient(103.58deg, #FFEEE4 29.82%, #FFE8F6 98.11%)',
+  background:
+    'radial-gradient(97.12% 293.35% at 0% 7.31%, #FFF7D9 0%, #FFFFFF 100%)',
   position: 'relative',
   borderRadius: '24px 24px 0 0',
   marginBottom: '-2px',
-});
-
-export const dialogCurvedBottomSection = css({
-  position: 'relative',
-  width: '100%',
-  height: '1.5rem',
-  marginTop: '16px',
-  left: 0,
-  right: 0,
-});
-
-export const dialogCurvedSvgContainer = css({
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  width: '100%',
-  height: '2.25rem',
-  overflow: 'hidden',
 });
 
 export const dialogDiscountTag = css({
@@ -143,13 +127,33 @@ export const dialogDiscountTagPadding = css({
 });
 
 export const dialogRiveContainer = css({
-  height: '13.375rem',
-  width: '19.75rem',
-  scale: '1.2',
+  height: '354px',
+  width: '342px',
   alignSelf: 'flex-end',
-  marginBottom: '-32px',
+  zIndex: 2,
+  position: 'relative',
+  scale: '1.12',
+  marginRight: '20px',
 });
 
 export const textTitleStyle = css({
-  marginTop: '12px',
+  marginTop: '8px',
+});
+
+export const DWEB_LEFT_BOTTOM_SECTION_BG = css({
+  position: 'absolute !important',
+  bottom: 0,
+  filter: 'blur(50px)',
+  backgroundColor: 'rgba(255, 229, 240, 1)',
+  left: 0,
+  width: '478px',
+  height: '105px',
+});
+
+export const DWEB_RIGHT_SECTION_BG = css({
+  position: 'absolute !important',
+  top: 0,
+  left: '47.6%',
+  width: '100%',
+  height: '100%',
 });
