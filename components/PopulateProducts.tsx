@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -38,7 +45,7 @@ import {
 } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -382,7 +389,7 @@ const PopulateProducts: any = (props: any) => {
     isEligible: isDropsExperimentEligible,
     variant: dropsExperimentVariant,
   } = useABTesting({
-    experimentId: EXPERIMENT_NAMES.DROPS_EXPERIMENT,
+    experimentId: 'DROPS_EXPERIMENT',
     customEligibilityCheckFn: () => {
       return dropsEligibilityInfo?.isEligible;
     },
