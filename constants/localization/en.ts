@@ -545,7 +545,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     HIGHLIGHTS: 'Highlights',
     LISTICLE_SHOW_SUMMARY: 'Listicle Show Summary',
     LISTICLE_SHOW_WHY_WATCH: 'Listicle Show Why Watch',
-    OPENING_DATE: 'Opening date',
+    OPENING_DATE: 'Opening Date',
     QUESTION: ['Q-'],
     SAFETY_BANNER: 'Safety Banner',
     SHOW_DETAILS: 'Show Details',
