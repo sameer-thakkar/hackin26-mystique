@@ -72,7 +72,7 @@ export const RowComponent = (props: any) => {
     { minDuration, maxDuration }: any
   ) => {
     const allDescriptors = descriptors?.map((item) => item.code);
-    if (minDuration & maxDuration) {
+    if (minDuration && maxDuration) {
       allDescriptors.push(DESCRIPTORS.DURATION);
     }
     return allDescriptors;

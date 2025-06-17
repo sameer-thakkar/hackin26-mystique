@@ -688,7 +688,9 @@ export const getOpeningDate = ({
     dateFormat: 'MMM-DD-YYYY',
   });
   let OPENING_ON = '';
+  let formattedLocalisedOpeningDate = localisedOpeningDate;
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
+    formattedLocalisedOpeningDate = localisedOpeningDate.toLowerCase();
     OPENING_ON = REOPENING_CATEGORIES.includes(categoryId)
       ? strings.REOPENS
       : strings.OPENS;
@@ -701,7 +703,11 @@ export const getOpeningDate = ({
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
 
   if (!isBeforeToday && openingDate !== INVALID_DATE)
-    return { localisedOpeningDate, openingDate, OPENING_ON };
+    return {
+      localisedOpeningDate: formattedLocalisedOpeningDate,
+      openingDate,
+      OPENING_ON,
+    };
 };
 export const getBoosterValueFromListingPrice = (listingPrice: any) => {
   const {

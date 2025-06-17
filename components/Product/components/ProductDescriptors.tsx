@@ -106,7 +106,7 @@ export const ProductDescriptors = ({
       </Conditional>
 
       {descriptorArray?.map((item: string, index: number) => {
-        const DescriptorSVG = descriptorIcons[item];
+        const DescriptorSVG = descriptorIcons[item] || null;
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
           return null;
 
@@ -154,7 +154,7 @@ export const ProductDescriptors = ({
               }`}
               onMouseEnter={onCancellationPolicyHover}
             >
-              {showIcons && <DescriptorSVG />}
+              {showIcons && DescriptorSVG && <DescriptorSVG />}
               <Conditional if={item === DESCRIPTORS.DURATION}>
                 {getDuration({ minDuration, maxDuration, lang })}
               </Conditional>
