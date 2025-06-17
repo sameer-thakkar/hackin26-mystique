@@ -1,11 +1,11 @@
 // App links
 export const DROPS_MOBILE_BANNER_LINK = {
-  ROME: 'https://headout.app.link/rome/banner_mweb_ho',
-  PARIS: 'https://headout.app.link/paris/banner_mweb_ho',
+  ROME: 'https://headout.app.link/rome/banner_mweb',
+  PARIS: 'https://headout.app.link/paris/banner_mweb',
 };
 export const DROPS_MOBILE_EXIT_INTENT_LINK = {
-  ROME: 'https://headout.app.link/rome/exit_mweb_ho',
-  PARIS: 'https://headout.app.link/paris/exit_mweb_ho',
+  ROME: 'https://headout.app.link/rome/exit_mweb',
+  PARIS: 'https://headout.app.link/paris/exit_mweb',
 };
 
 export const DROPS_FALLBACK_LINK = 'https://headout.app.link/drops-fallback';
@@ -13,14 +13,14 @@ export const DROPS_FALLBACK_LINK = 'https://headout.app.link/drops-fallback';
 // Image and asset URLs
 export const DROPS_QR_CODE_IMAGES = {
   PARIS:
-    'https://cdn-imgix.headout.com/assets/images/drops/qr-code/ho_banner_paris.png',
-  ROME: 'https://cdn-imgix.headout.com/assets/images/drops/qr-code/ho_banner_rome.png',
+    'https://cdn-imgix.headout.com/assets/images/drops/qr-code/mb_banner_paris.png',
+  ROME: 'https://cdn-imgix.headout.com/assets/images/drops/qr-code/mb_banner_rome.png',
 };
 
 export const DROPS_EXIT_INTENT_QR_CODE_IMAGES = {
   PARIS:
-    'https://cdn-imgix.headout.com/assets/images/drops/qr-code/ho_exit_paris.png',
-  ROME: 'https://cdn-imgix.headout.com/assets/images/drops/qr-code/ho_exit_rome.png',
+    'https://cdn-imgix.headout.com/assets/images/drops/qr-code/mb_exit_paris.png',
+  ROME: 'https://cdn-imgix.headout.com/assets/images/drops/qr-code/mb_exit_rome.png',
 };
 
 export const DROPS_IMAGE_URLS = {
