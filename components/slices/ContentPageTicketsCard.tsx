@@ -443,12 +443,12 @@ const TicketCard = (props: any) => {
       }),
     });
     setIsOpened(true);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('scroll-lock');
   };
 
   const popupCloser = () => {
     setIsOpened(false);
-    document.body.style.overflow = 'auto';
+    document.body.classList.remove('scroll-lock');
   };
 
   const sendBookNowEvent = () => {

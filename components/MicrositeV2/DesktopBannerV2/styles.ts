@@ -265,14 +265,14 @@ export const SwiperControls = styled.div<{ $showControls?: boolean }>`
         `}
 `;
 
-export const SlideImageWrapper = styled.div`
+export const SlideImageWrapper = styled.div<{ $noBackground?: boolean }>`
   margin-right: calc((100vw - 1200px) / 2);
   padding: 0 2px 2px;
   border-radius: 1rem;
-  background: linear-gradient(
-    rgba(226, 226, 226, 0) -1.28%,
-    rgb(102, 102, 102, 0.85) 102.98%
-  );
+  background: ${({ $noBackground }) =>
+    $noBackground
+      ? 'none'
+      : 'linear-gradient(rgba(226, 226, 226, 0) -1.28%, rgb(102, 102, 102, 0.85) 102.98%)'};
 
   .image-wrap,
   img {

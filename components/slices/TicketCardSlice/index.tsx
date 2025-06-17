@@ -164,7 +164,7 @@ const TicketCard = (props: any) => {
     uncategorizedTours: orderedTgids.map((tgid: any) => ({ tgid })),
     isMobile,
     forceMobile: true,
-    productCardsLimit: Infinity,
+    productCardsLimit: finalProductCardsLimit,
     scorpioData: scorpioData,
     uid,
     isPoiMwebCard: true,

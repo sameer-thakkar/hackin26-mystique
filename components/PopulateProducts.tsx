@@ -52,6 +52,7 @@ import {
   ANALYTICS_PROPERTIES,
   CRUISE_CATEGORY_ID,
   CRUISE_FORMAT_SUBCAT_IDS,
+  DEFAULT_PC_LIMIT,
   DESIGN,
   MB_CATEGORISATION,
   THEMES,
@@ -322,7 +323,7 @@ const PopulateProducts: any = (props: any) => {
     isAirportTransfersMB,
     isModifiedProductCard = false,
     isPoiMwebCard = false,
-    productCardsLimit = Infinity,
+    productCardsLimit = DEFAULT_PC_LIMIT,
     trackProductCardsViewed = false,
     showThumbnailInBanner,
     showPopup = false,
@@ -579,7 +580,7 @@ const PopulateProducts: any = (props: any) => {
           tour?.tour_description_override?.length)
       );
     })
-    .slice(0, productCardsLimit);
+    .slice(0, productCardsLimit ?? DEFAULT_PC_LIMIT);
 
   const availableFilteredOutTours = props.filteredOutTours?.filter(
     (tour: any) => {

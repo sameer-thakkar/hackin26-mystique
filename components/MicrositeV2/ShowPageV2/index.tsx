@@ -552,7 +552,10 @@ const LttShowPageV2 = ({
 
       <Conditional if={isMobile}>
         <BuyButtonWrapper
-          hasDiscount={hasDiscountElement}
+          hasDiscount={
+            hasDiscountElement ||
+            LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
+          }
           longCtaContent={strings.CHECK_AVAIL.length > 25}
         >
           <Conditional if={finalPrice}>

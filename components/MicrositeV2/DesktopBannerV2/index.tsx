@@ -82,7 +82,9 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
         />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.desktopVideoLink)}>
-        <SlideImageWrapper>
+        <SlideImageWrapper
+          $noBackground={index === 0 && !item?.desktopVideoLink}
+        >
           <Image
             url={item.url}
             alt={item.alt}
@@ -233,9 +235,10 @@ const DesktopBannerV2 = ({
                       <Button
                         className={`banner-cta-button`}
                         fillType="fill"
-                        onClick={() =>
-                          onBannerClicked(item?.showPageUrl?.url ?? '')
-                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onBannerClicked(item?.showPageUrl?.url ?? '');
+                        }}
                         role="button"
                         tabIndex={0}
                       >

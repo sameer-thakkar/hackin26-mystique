@@ -128,7 +128,7 @@ const gridUiCategoriesSectionCss = css`
   position: relative;
   border-radius: 4px;
   background-color: #f8f6ff;
-  padding: 1.5rem 0 1.75rem 1.5rem;
+  padding: 1.5rem 0 1.75rem;
 
   p {
     ${expandFontToken(FONTS.HEADING_SMALL)};
@@ -139,7 +139,8 @@ const gridUiCategoriesSectionCss = css`
   .row-wrapper {
     display: flex;
     flex-direction: column;
-    width: calc(100vw - 1.5rem);
+    padding: 0 1.5rem;
+    width: calc(100vw - 3rem);
     scrollbar-width: none;
     overflow: scroll;
     ::-webkit-scrollbar {
@@ -203,6 +204,7 @@ export const CategoriesSection = styled.div<{ $showGridUI: boolean }>`
         color: ${COLORS.GRAY.G2};
         ${expandFontToken(FONTS.HEADING_SMALL)};
         margin-bottom: 0.75rem;
+        margin-left: 1.5rem;  
       }
     `}
 

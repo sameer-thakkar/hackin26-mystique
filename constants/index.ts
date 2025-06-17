@@ -2668,3 +2668,7 @@ export const ROBOTS_TXT_BLOCKED_DOMAINS = [
   'www.letswanderout.com',
   'www.ticket-madrid.com',
 ];
+
+export const ROBOTS_TXT_ALLOWED_SUBDOMAINS = ['moma.new-york-tickets.com'];
+
+export const DEFAULT_PC_LIMIT = 10;

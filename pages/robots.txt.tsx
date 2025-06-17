@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import { isSubdomain } from 'utils/index';
-import { ROBOTS_TXT_BLOCKED_DOMAINS } from 'const/index';
+import {
+  ROBOTS_TXT_ALLOWED_SUBDOMAINS,
+  ROBOTS_TXT_BLOCKED_DOMAINS,
+} from 'const/index';
 
 const fullDomain = (req: any) =>
   req.headers['x-forwarded-proto'] + '://' + req.headers.host;
@@ -10,9 +13,11 @@ const robotsContent = ({ domain, host }: { domain: string; host: string }) => {
 
   // These domains are completely blocked from robots.txt
   const shouldBlockDomain = ROBOTS_TXT_BLOCKED_DOMAINS.includes(domain);
+  // These subdomains are allowed to be indexed
+  const allowedSubdomains = ROBOTS_TXT_ALLOWED_SUBDOMAINS.includes(host);
 
   const rules =
-    isSubdomainHost || shouldBlockDomain
+    !allowedSubdomains && (isSubdomainHost || shouldBlockDomain)
       ? [`User-agent: *`, 'Disallow: /']
       : [
           `User-agent: *`,
