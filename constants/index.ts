@@ -1576,6 +1576,8 @@ export const MB_TYPES = {
   C1_COLLECTION: 'C1 - Collection MB',
   A2_SUB_CATEGORY: 'A2 - Sub Category MB',
   A2_CATEGORY: 'A2 - Category MB',
+  A2_SUB_CATEGORY_COLLECTION: 'A2 - Sub Category Collection MB',
+  A2_CATEGORY_COLLECTION: 'A2 - Category Collection MB',
 };
 
 export const MB_CATEGORISATION = {
@@ -1590,6 +1592,7 @@ export const MB_CATEGORISATION = {
     B1_GLOBAL: 'B1 - Global MB',
     B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
     C1_COLLECTION: 'C1 - Collection MB',
+    A2_SUB_CATEGORY_COLLECTION: 'A2 - Sub Category Collection MB',
   },
   PAGE_TYPE: {
     LANDING_PAGE: 'Landing Page',

@@ -825,6 +825,12 @@ const MicrositeV1 = (props: any) => {
   const isNonPoiMB =
     isCategoryMicrobrand || isSubCategoryMicrobrand ? true : !baseLangIsPoiMb;
   const isNonPoiCollectionMB = isNonPoiMB && isCollectionMicrobrand;
+  const isCategoryBasedCollectionMB =
+    taggedMbType &&
+    [
+      MB_TYPES.A2_CATEGORY_COLLECTION,
+      MB_TYPES.A2_SUB_CATEGORY_COLLECTION,
+    ].includes(taggedMbType);
 
   const {
     isEligible: isPOIFiltersExpEligible,
@@ -853,11 +859,14 @@ const MicrositeV1 = (props: any) => {
       (isNonPoiCollectionMB &&
         (taggedMbType === MB_TYPES.A1_COLLECTION ||
           taggedMbType === MB_TYPES.B1_GLOBAL ||
-          taggedMbType === MB_TYPES.C1_COLLECTION)));
+          taggedMbType === MB_TYPES.C1_COLLECTION)) ||
+      isCategoryBasedCollectionMB);
 
   const showPopup =
     !isMobile &&
-    (((isA1orC1MB(taggedMbType) || taggedMbType === MB_TYPES.B1_GLOBAL) &&
+    (((isA1orC1MB(taggedMbType) ||
+      taggedMbType === MB_TYPES.B1_GLOBAL ||
+      isCategoryBasedCollectionMB) &&
       baseLangIsPoiMb) ||
       showHohoRevamp ||
       taggedSubCategoryName === 'Day Trips' ||
