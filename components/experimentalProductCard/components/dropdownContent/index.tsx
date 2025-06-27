@@ -108,6 +108,7 @@ interface DropdownContentProps {
   showPricingBar?: () => void;
   pinnedReviews?: TPinnedReviewsProps['pinnedReviews'];
   openAllReviewsBottomSheet?: () => void;
+  showPinnedReviews?: boolean;
 }
 
 const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
@@ -141,6 +142,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   snapshotSectionProps,
   pinnedReviews,
   openAllReviewsBottomSheet,
+  showPinnedReviews = false,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -369,7 +371,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   }, [finalHighlights, tabs]);
 
   useEffect(() => {
-    const { ...historyState } = window.history.state;
+    const { ...historyState } = window?.history?.state ?? {};
     const { ...otherParams } = router.query;
     addUrlParams({
       urlParams: { ...otherParams, selection: tgid as any },
@@ -389,7 +391,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
 
     return () => {
       if (typeof window !== undefined) {
-        const { ...historyState } = window.history.state;
+        const { ...historyState } = window?.history?.state ?? {};
         const { selection: _, ...otherParams } = router.query;
         addUrlParams({
           urlParams: { ...otherParams } as Record<string, string | string[]>,
@@ -455,20 +457,22 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
           sheetHeight={isModifiedPopup ? '85%' : '100%'}
         >
           <div ref={childRef}>{children}</div>
-          <PinnedReviews
-            pinnedReviews={pinnedReviews || {}}
-            isMobile
-            lang={lang}
-            reviewsDetails={reviewsDetails}
-            tgid={tgid}
-            onSeeMoreClick={
-              reviewsDetails?.showRatings
-                ? () => {
-                    openAllReviewsBottomSheet?.();
-                  }
-                : undefined
-            }
-          />
+          <Conditional if={showPinnedReviews}>
+            <PinnedReviews
+              pinnedReviews={pinnedReviews || {}}
+              isMobile
+              lang={lang}
+              reviewsDetails={reviewsDetails}
+              tgid={tgid}
+              onSeeMoreClick={
+                reviewsDetails?.showRatings
+                  ? () => {
+                      openAllReviewsBottomSheet?.();
+                    }
+                  : undefined
+              }
+            />
+          </Conditional>
 
           <ContentContainer>
             {tabs.map((tab, index) => (

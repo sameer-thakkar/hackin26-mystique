@@ -4,9 +4,9 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 export const getPinnedReviewsTrackingContext = (tgid?: string | number) => {
   return {
     onReviewSectionView: createTrackingHandler(
-      ANALYTICS_EVENTS.MORE_DETAILS_SECTION_VIEWED,
+      ANALYTICS_EVENTS.MORE_DETAILS_SECTION_TAB_VIEWED,
       {
-        [ANALYTICS_PROPERTIES.SECTION]: 'Pinned Reviews',
+        [ANALYTICS_PROPERTIES.TAB_NAME]: 'Pinned Reviews',
         [ANALYTICS_PROPERTIES.TGID]: tgid,
       }
     ),
