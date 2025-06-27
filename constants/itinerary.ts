@@ -51,7 +51,7 @@ export const ITINERARY_DESCRIPTORS_DATA: Record<
         });
       }
 
-      return maxDurationString
+      return maxDurationString && maxDurationString !== minDurationString
         ? `${minDurationString} - ${maxDurationString}`
         : minDurationString;
     },

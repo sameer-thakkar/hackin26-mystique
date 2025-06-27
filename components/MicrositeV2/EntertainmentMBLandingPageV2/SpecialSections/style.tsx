@@ -8,7 +8,7 @@ export const SpecialSectionWrapper = styled.div`
   box-sizing: border-box;
   background: linear-gradient(360deg, #150229 42%, rgba(22, 0, 44, 0) 100%),
     linear-gradient(90deg, #160229 43.54%, rgba(54, 0, 108, 0) 100%);
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   min-height: 693px;
 
   .skeleton-placeholder-image svg {
@@ -64,7 +64,7 @@ export const SpecialSectionWrapper = styled.div`
 
     .content {
       margin: 0;
-      padding: 2.5rem 0 2.5rem 1.5rem;
+      padding: 2.5rem 0 2.5rem 1rem;
     }
 
     .title {

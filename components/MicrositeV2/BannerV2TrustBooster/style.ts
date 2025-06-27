@@ -76,7 +76,7 @@ export const Wrapper = styled.div<{ $isHOHORevamp?: boolean }>`
      padding:0; `}
 
   @media (max-width: 768px) {
-    width: calc(100% - (1.5rem * 2));
+    width: calc(100% - (1rem * 2));
     max-width: 1200px;
     box-sizing: border-box;
     overflow: hidden;

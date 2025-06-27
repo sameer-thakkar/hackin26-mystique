@@ -13,7 +13,7 @@ export const TopShowsWrapper = styled.div<{
   align-items: start;
   justify-content: start;
   padding-top: 0.5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 
   .title {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
@@ -155,7 +155,7 @@ export const TopShowsWrapper = styled.div<{
 
     .product-card-container {
       position: relative;
-      margin: 0 1.5rem;
+      margin: 0 1rem;
       transition: ease-in-out 150ms;
       &:active {
         transform: scale(0.98);
@@ -209,7 +209,7 @@ export const TopShowsWrapper = styled.div<{
       display: flex;
       flex-direction: row;
       align-items: start;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
       ${({ $hasShowCampaign }) =>
         $hasShowCampaign &&
         `
@@ -227,8 +227,8 @@ export const TopShowsWrapper = styled.div<{
       margin: 0;
     }
     button {
-      width: calc(100% - 3rem);
-      max-width: 355px;
+      width: calc(100% - 2rem);
+      max-width: none;
       margin: 1.5rem auto 0;
     }
   }

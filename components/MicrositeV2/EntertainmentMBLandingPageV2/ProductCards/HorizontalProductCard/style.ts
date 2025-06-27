@@ -99,12 +99,6 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     margin-right: 0.125rem;
   }
 
-  .count {
-    ${expandFontToken(FONTS.UI_LABEL_XS)};
-    color: ${({ darkTheme }) =>
-      darkTheme ? `rgba(255,255,255,0.8)` : COLORS.CANDY.LIGHT_TONE_1};
-  }
-
   .tour-scratch-price {
     margin-top: 0.5rem;
     &,

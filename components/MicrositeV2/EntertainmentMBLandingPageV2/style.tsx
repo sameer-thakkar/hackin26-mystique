@@ -19,7 +19,6 @@ export const LandingPageWrapper = styled.div`
     max-width: 75rem;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 6px;
   }
 
   @media (max-width: 768px) {
@@ -145,6 +144,6 @@ export const ReviewSectionLazyWrapper = styled.div`
 
   @media (max-width: 768px) {
     min-height: 394px;
-    margin: 2rem 0 4rem;
+    margin: 2rem 0 2rem;
   }
 `;

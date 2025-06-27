@@ -96,6 +96,7 @@ export const DescriptorsWrapper = styled.div<{ numberOfDescriptors: number }>`
     flex-direction: column;
     gap: initial;
     justify-content: space-between;
+    overflow-x: hidden;
 
     .descriptor {
       margin: 0;

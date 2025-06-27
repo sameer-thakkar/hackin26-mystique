@@ -28,14 +28,15 @@ export const CategoryCarousel = styled.div`
   overflow: hidden;
 
   @media (max-width: 768px) {
-    margin-bottom: 2.25rem;
+    padding-bottom: 2.25rem;
+    margin-bottom: 0;
 
     .swiper-slide {
       width: auto;
     }
 
     .swiper-horizontal {
-      width: calc(100vw - 3rem);
+      width: calc(100vw - 2rem);
     }
   }
 `;
@@ -119,10 +120,9 @@ export const TitleRow = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: calc(100% - (5.46vw * 2));
     max-width: 1200px;
     margin: 0 auto 1.5rem;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
 
     .title {
       ${expandFontToken(FONTS.HEADING_LARGE)};
@@ -155,8 +155,8 @@ export const TitleRow = styled.div`
 `;
 
 export const LazyComponentWrapper = styled.div`
-  min-height: 462.5px;
+  min-height: 448px;
   @media (max-width: 768px) {
-    min-height: 342.5px;
+    min-height: 328px;
   }
 `;

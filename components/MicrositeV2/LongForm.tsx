@@ -90,8 +90,8 @@ const StyledLongform = styled.div<{
     border: none;
     padding: 0;
     grid-row-gap: 52px;
-    margin-top: 52px;
-    margin-bottom: 52px;
+    margin-top: 44px;
+    margin-bottom: 44px;
 
     ${({ noBorder }) => noBorder && `margin-top: 32px;`}
 

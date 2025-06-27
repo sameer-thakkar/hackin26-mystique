@@ -17,7 +17,7 @@ export const CategoryWrapper = styled.div<{
   border: 1px solid ${COLORS.GRAY.G6};
   box-sizing: border-box;
   border-radius: 0.5rem;
-  margin-right: 1rem;
+  margin-right: 0.75rem;
   cursor: pointer;
   transition: ease 0.2s;
   background-color: ${COLORS.BRAND.WHITE};
@@ -95,10 +95,10 @@ export const CategoryWrapper = styled.div<{
      padding: 0.38rem 0.75rem 0.38rem 0.5rem;
      
      &:first-child {
-       margin-left: 1.5rem;
+       margin-left: 1rem;
      }
      &:last-child {
-       margin-right: 1.5rem;
+       margin-right: 0;
      }
      .icon {
        height: 1.5rem;
