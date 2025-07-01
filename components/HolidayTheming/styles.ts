@@ -5,7 +5,7 @@ export const RiveStylesDesktop = css({
   zIndex: 0,
   pointerEvents: 'none',
   width: '49.5rem',
-  height: '9.375rem',
+  height: '20rem',
 });
 
 export const RiveStylesMobile = css({

@@ -11,11 +11,12 @@ const HolidayThemeGalleryOverlay = ({
 }: {
   variant?: 'desktop' | 'mobile';
 }) => {
-  const { primaryCity } = useContext(MBContext);
+  const { primaryCity, uid } = useContext(MBContext);
   if (!primaryCity) return;
 
   const activeTheme = validateHolidayTheme(
     Object.values(HOLIDAY_THEME_GALLERY_CONFIG),
+    uid,
     primaryCity.cityCode,
     primaryCity.country?.displayName
   ) as IHolidayGalleryConfig;
@@ -34,6 +35,7 @@ const HolidayThemeGalleryOverlay = ({
         variant={variant}
         riveSrc={animation.assetUrl}
         anchor={animation.anchor}
+        artboard={animation.artboard}
       />
     );
   }

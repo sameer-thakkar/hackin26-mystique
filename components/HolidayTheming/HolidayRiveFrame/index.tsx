@@ -15,6 +15,7 @@ import { useRive } from 'hooks/useRive';
 const HolidayRiveFrame = ({
   variant,
   riveSrc,
+  artboard,
   anchor = 'top',
 }: IHolidayRiveProps) => {
   let RiveStyles = '';
@@ -36,6 +37,7 @@ const HolidayRiveFrame = ({
       ? {
           src: riveSrc,
           stateMachines: 'State Machine 1',
+          artboard: artboard,
           autoplay: true,
           layout: new Layout({
             fit: Fit.Cover,

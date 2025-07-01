@@ -5,6 +5,7 @@ import {
   IHolidayHeaderConfig,
 } from '../components/HolidayTheming/interface';
 import { MARKET_WISE_COUNTRIES } from '../constants/holidayTheming';
+import { checkIf911MemorialMBPage } from './helper';
 
 dayjs.extend(isBetween);
 
@@ -12,10 +13,16 @@ type ThemeConfig = IHolidayHeaderConfig | IHolidayGalleryConfig;
 
 export const validateHolidayTheme = (
   themeConfig: ThemeConfig[],
+  uid: string,
   currentCity?: string,
   currentCountry?: string
 ): IHolidayHeaderConfig | IHolidayGalleryConfig | null => {
-  if (!currentCity || !currentCountry || currentCity.toUpperCase() === 'KRAKOW')
+  if (
+    !currentCity ||
+    !currentCountry ||
+    currentCity.toUpperCase() === 'KRAKOW' ||
+    checkIf911MemorialMBPage(uid)
+  )
     return null;
 
   const currentDate = dayjs();

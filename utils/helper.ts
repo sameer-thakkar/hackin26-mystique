@@ -643,6 +643,9 @@ export const checkIfGpMotorTicketsMB = (uid: string | null | undefined) =>
   !!uid?.includes('f1-baku-tickets.com') ||
   !!uid?.includes('f1-miami-tickets.com');
 
+export const checkIf911MemorialMBPage = (uid: string | null | undefined) =>
+  !!uid?.includes('911-memorial-and-museum');
+
 export const checkIfSportsSubCategory = (
   primarySubcategoryId: number | undefined | null
 ) => primarySubcategoryId === 1042 || primarySubcategoryId === 1109;

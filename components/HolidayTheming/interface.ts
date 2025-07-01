@@ -13,6 +13,7 @@ export interface IParticleIllustration extends IParticleAnimationProps {
 export interface IHolidayRiveProps {
   variant: 'header' | 'desktop' | 'mobile';
   riveSrc: string;
+  artboard?: string;
   anchor?: 'top' | 'bottom';
 }
 
@@ -26,6 +27,7 @@ export interface IHolidayBaseProps {
 export interface IRiveAnimation {
   illustrationType: 'animation';
   assetUrl: string;
+  artboard?: string;
   anchor?: 'top' | 'bottom';
 }
 
