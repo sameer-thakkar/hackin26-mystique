@@ -35,11 +35,6 @@ import {
   CASHBACK_TYPES,
   CTA_TYPE,
 } from 'const/index';
-import {
-  getDiscountTagText,
-  IS_LTT_SALE_PRODUCT,
-  LTT_SALE_HARDCODINGS,
-} from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
@@ -364,12 +359,7 @@ const ShowPagePricingSection = ({
                   <span className="price-starting-from">
                     {strings.FROM?.toLowerCase()}{' '}
                   </span>
-                  <Conditional
-                    if={
-                      originalPrice > finalPrice &&
-                      !IS_LTT_SALE_PRODUCT.includes(tgid)
-                    }
-                  >
+                  <Conditional if={originalPrice > finalPrice}>
                     <LocalisedPrice
                       currencyCode={currencyCode ?? currency ?? ''}
                       lang={lang}
@@ -386,20 +376,12 @@ const ShowPagePricingSection = ({
                     lang={lang}
                     price={finalPrice}
                   />
-                  <Conditional
-                    if={
-                      listingPrice?.bestDiscount > 0 ||
-                      LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
-                    }
-                  >
+                  <Conditional if={listingPrice?.bestDiscount > 0}>
                     <SavePercentElement>
-                      {getDiscountTagText({
-                        tgid,
-                        calculatedDiscount: strings.formatString(
-                          strings.SAVE_UPTO_PERCENT,
-                          `${listingPrice?.bestDiscount}`
-                        ),
-                      })}
+                      {strings.formatString(
+                        strings.SAVE_UPTO_PERCENT,
+                        `${listingPrice?.bestDiscount}`
+                      )}
                     </SavePercentElement>
                   </Conditional>
 

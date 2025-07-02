@@ -2,7 +2,6 @@ import { useContext, useRef, useState } from 'react';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Conditional from 'components/common/Conditional';
 import LinkResolver from 'components/LinkResolver';
-import LttSaleDesciptor from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/lttSaleDesciptor';
 import { getTranslateButtonText } from 'components/MicrositeV2/ShowPageV2/ReviewSection';
 import { TShowInfoSectionProps } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ShowInfoSection/interface';
 import {
@@ -22,13 +21,8 @@ import { MBContext } from 'contexts/MBContext';
 import { getTagPageMap } from 'utils';
 import { trackEvent } from 'utils/analytics';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
-import { checkIfLTTMB } from 'utils/helper';
 import { getLocalizedCount } from 'utils/localizationUtils';
-import {
-  generateDescriptor,
-  getBoosterValueFromListingPrice,
-  getStars,
-} from 'utils/productUtils';
+import { generateDescriptor, getStars } from 'utils/productUtils';
 import { getRandomReviewerImage } from 'utils/reviewUtils';
 import { getTagPageLink } from 'utils/urlUtils';
 import COLORS from 'const/colors';
@@ -38,7 +32,6 @@ import {
   LANGUAGE_MAP,
   REOPENING_CATEGORIES,
 } from 'const/index';
-import { LTT_SALE_HARDCODINGS } from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import ColoredCalendar from 'assets/coloredCalendar';
 import Location from 'assets/location';
@@ -53,7 +46,6 @@ const ShowInfoSection = ({
   taggedCity,
 }: TShowInfoSectionProps) => {
   const { lang, uid } = useContext(MBContext);
-  const isLTT = checkIfLTTMB(uid);
   const [usingTranslatedContent, setUsingTranslatedContent] = useState(true);
   const [mwebShowMoreTagsClicked, setmwebShowMoreTagsClicked] = useState(false);
   const {
@@ -66,11 +58,7 @@ const ShowInfoSection = ({
     verticalImage,
     primaryCategory = {},
     primaryCity = {},
-    listingPrice = {},
-    id: tgid,
   } = tourGroupData ?? {};
-
-  const { bestDiscount } = getBoosterValueFromListingPrice(listingPrice);
 
   const { url: verticalImageUrl, alt: verticalImageAlt } = verticalImage;
   const { averageRating, ratingsCount } = reviewsDetails;
@@ -200,15 +188,6 @@ const ShowInfoSection = ({
               $width={isMobile ? 120 : 178}
             />
           </span>
-          <Conditional
-            if={
-              (bestDiscount > 0 && isLTT) ||
-              LTT_SALE_HARDCODINGS[tgid as string]
-                ?.SHOW_SPECIAL_OFFER_DESCRIPTION
-            }
-          >
-            <LttSaleDesciptor containerHasBorder />
-          </Conditional>
         </div>
         <InfoSectionWrapper>
           <InfoSection $isReviewSectionVisible={averageRating > 0}>

@@ -2,7 +2,7 @@ import { ComponentType, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { Button, Text } from '@headout/eevee';
-import { css, cx } from '@headout/pixie/css';
+import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/MicrositeV2/Header';
@@ -25,7 +25,6 @@ import DesktopMoreReads from 'components/NewsPage/components/DesktopMoreReads';
 import MobileMoreReads from 'components/NewsPage/components/MobileMoreReads';
 import { PageWrapper } from 'components/ReviewsPage/styles';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
-import { LondonCallingSaleBanner } from 'components/ShowPages/SpecialOfferBanner';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
@@ -43,11 +42,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { fetchTourGroupsByCollection } from 'utils/apiUtils';
-import {
-  checkIfCategoryHeaderExists,
-  checkIfLTTMB,
-  getHostName,
-} from 'utils/helper';
+import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
@@ -62,10 +57,6 @@ import {
   NEWS_PAGE_SECTIONS,
   PAGETYPE,
 } from 'const/index';
-import {
-  getDiscountTagText,
-  LTT_SALE_HARDCODINGS,
-} from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import { useIsLTTShowPageExperiementEnabled } from './hooks/useIsLTTShowPageExperiementEnabled';
@@ -212,10 +203,7 @@ const LttShowPageV2 = ({
     listingPrice,
   } = tourGroupData;
 
-  const { faqSchema, hasSpecialOffer, specialOffer } =
-    parseShowPageData(microBrandsHighlight);
-  const { offerText } = specialOffer;
-  const isLtt = checkIfLTTMB(uid);
+  const { faqSchema } = parseShowPageData(microBrandsHighlight);
 
   const faqHeading = `${strings.formatString(
     strings.SHOW_PAGE_V2.CONTENT_SECTION_HEADERS
@@ -441,34 +429,6 @@ const LttShowPageV2 = ({
           listingPrice={listingPrice}
         />
 
-        <Conditional
-          if={
-            (hasSpecialOffer && bestDiscount > 0) ||
-            (LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_BANNER &&
-              isLtt &&
-              offerText)
-          }
-        >
-          <div
-            className={css({
-              padding: '1rem 1.5rem',
-              width: '100%',
-              boxSizing: 'border-box',
-              '@media (min-width: 768px)': {
-                width: 'calc(100% - (5.46vw * 2))',
-                maxWidth: '1200px',
-                padding: 0,
-                margin: '20px auto 16px',
-              },
-            })}
-          >
-            <LondonCallingSaleBanner
-              saleName="london calling"
-              saleDescription={offerText}
-            />
-          </div>
-        </Conditional>
-
         <DateSelectorWrapper
           $visible={!isMobile || mwebDateSelectorPopupActive}
           $isShowPageExperiment={isShowPageExperiment}
@@ -552,10 +512,7 @@ const LttShowPageV2 = ({
 
       <Conditional if={isMobile}>
         <BuyButtonWrapper
-          hasDiscount={
-            hasDiscountElement ||
-            LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
-          }
+          hasDiscount={hasDiscountElement}
           longCtaContent={strings.CHECK_AVAIL.length > 25}
         >
           <Conditional if={finalPrice}>
@@ -583,20 +540,12 @@ const LttShowPageV2 = ({
                       lang={lang}
                       price={finalPrice}
                     />
-                    <Conditional
-                      if={
-                        bestDiscount > 0 ||
-                        LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SALE_TAG
-                      }
-                    >
+                    <Conditional if={bestDiscount > 0}>
                       <SavePercentElement>
-                        {getDiscountTagText({
-                          tgid,
-                          calculatedDiscount: strings.formatString(
-                            strings.SAVE_PERCENT,
-                            `${bestDiscount}`
-                          ),
-                        })}
+                        {strings.formatString(
+                          strings.SAVE_PERCENT,
+                          `${bestDiscount}`
+                        )}
                       </SavePercentElement>
                     </Conditional>
                     <Conditional if={bestDiscount <= 0 && showCashbackElement}>

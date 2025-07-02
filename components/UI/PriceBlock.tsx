@@ -11,7 +11,6 @@ import { checkIfLTTMB } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { CASHBACK_TYPES, THEMES } from 'const/index';
-import { IS_LTT_SALE_PRODUCT } from 'const/lttSaleHardcodings';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
@@ -162,7 +161,6 @@ type PriceBlockProps = {
   newDiscountTagDesignProps?:
     | boolean
     | { showAngledTag?: boolean; shouldPointLeft?: boolean };
-  tgid?: number | string;
   customDiscountTag?: string;
 };
 
@@ -183,7 +181,6 @@ const PriceBlock = ({
   wrapperRef,
   showDummyScratchPrice = false,
   newDiscountTagDesignProps = false,
-  tgid,
   customDiscountTag,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
@@ -265,11 +262,7 @@ const PriceBlock = ({
           }`}
         >
           {prefix ? strings.FROM.toLowerCase() + ' ' : ''}
-          <Conditional
-            if={
-              showScratchPrice && !IS_LTT_SALE_PRODUCT.includes(tgid as string)
-            }
-          >
+          <Conditional if={showScratchPrice}>
             <LocalisedPrice
               currencyCode={currencyCode}
               lang={lang}

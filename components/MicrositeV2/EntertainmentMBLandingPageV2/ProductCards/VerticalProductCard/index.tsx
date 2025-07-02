@@ -13,7 +13,6 @@ import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { shouldDisplayCollectionRatings } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { checkIfLTTMB } from 'utils/helper';
 import {
   getBoosterValueFromListingPrice,
   getCustomDiscountTag,
@@ -28,9 +27,7 @@ import {
   ANALYTICS_PROPERTIES,
   CASHBACK_TYPES,
 } from 'const/index';
-import { LTT_SALE_HARDCODINGS } from 'const/lttSaleHardcodings';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
-import LttSaleDesciptor from '../lttSaleDesciptor';
 
 const VerticalProductCard = ({
   product,
@@ -38,9 +35,8 @@ const VerticalProductCard = ({
   isMobile,
   isTopShowsSection = false,
 }: TVerticalProductCardProps) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host, uid } =
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev, host } =
     useContext(MBContext);
-  const isLTT = checkIfLTTMB(uid);
   const currency = useRecoilValue(currencyAtom);
   const { collectionId: refererCollectionId } = useRecoilValue(metaAtom);
   const hsid = useRecoilValue(hsidAtom);
@@ -127,7 +123,6 @@ const VerticalProductCard = ({
     bestDiscount,
     cashbackValue,
     shouldShowcashbackElement,
-    tgid,
   });
 
   return (
@@ -153,14 +148,6 @@ const VerticalProductCard = ({
           height={isMobile ? 180 : 270}
           width={isMobile ? 120 : 180}
         />
-        <Conditional
-          if={
-            (bestDiscount > 0 && isLTT) ||
-            LTT_SALE_HARDCODINGS[tgid as string]?.SHOW_SPECIAL_OFFER_DESCRIPTION
-          }
-        >
-          <LttSaleDesciptor />
-        </Conditional>
       </div>
       <span className="image-placeholder">
         <VerticalProductImagePlaceholder
@@ -200,7 +187,6 @@ const VerticalProductCard = ({
           lang="en"
           showScratchPrice={true}
           prefix={true}
-          tgid={tgid}
           customDiscountTag={customDiscountTag}
         />
       </ProductDetails>
