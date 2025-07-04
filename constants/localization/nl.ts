@@ -10,6 +10,7 @@ const nl = {
       'Authentieke ervaringen geleverd door geverifieerde en betrouwbare partners.',
   },
   AVAILABLE: 'Beschikbaar',
+  DEFAULT_REVIEWER_NAME: 'Headout-gast',
   BACK: 'Terug',
   BANNER_CTA: 'Koop kaartjes',
   BANNER_FOOTER_SUBTEXT: {

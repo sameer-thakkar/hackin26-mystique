@@ -1,5 +1,6 @@
 import { hashCode } from 'utils/integerUtils';
 import { FLAGS_FOLDER_URL } from 'const/index';
+import { strings } from 'const/strings';
 
 export const getRandomReviewerImage = (
   nonCustomerName: string = ''
@@ -26,4 +27,11 @@ export const getFirstName = (fullName: string) => {
   }
 
   return name;
+};
+
+export const isDefaultReviewerName = (name: string) => {
+  return (
+    name?.toLowerCase().trim() ===
+    strings.DEFAULT_REVIEWER_NAME?.toLowerCase().trim()
+  );
 };

@@ -9,6 +9,7 @@ const pt = {
     SUB_TEXT: 'Experiências reais de parceiros confiáveis e verificados.',
   },
   AVAILABLE: 'Disponível',
+  DEFAULT_REVIEWER_NAME: 'Cliente Headout',
   BACK: 'Voltar',
   BANNER_CTA: 'Faça sua reserva',
   BANNER_FOOTER_SUBTEXT: {

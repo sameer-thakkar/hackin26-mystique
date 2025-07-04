@@ -3,8 +3,7 @@ import { getIntlDate } from '@headout/espeon/utils/date';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { getStars } from 'utils/productUtils';
-import { getRandomReviewerImage } from 'utils/reviewUtils';
-import { DEFAULT_REVIEWER_NAME } from 'const/index';
+import { getRandomReviewerImage, isDefaultReviewerName } from 'utils/reviewUtils';
 import { strings } from 'const/strings';
 import { StyledReviewHeader } from './styles';
 import { TReviewHeaderProps } from './types';
@@ -18,7 +17,7 @@ const ReviewHeader = ({
 }: TReviewHeaderProps) => {
   const customerFirstName = useMemo(() => {
     if (!nonCustomerName) return '';
-    if (nonCustomerName.toLowerCase().trim() === DEFAULT_REVIEWER_NAME)
+    if (isDefaultReviewerName(nonCustomerName))
       return nonCustomerName;
     return nonCustomerName?.split(' ')?.[0];
   }, [nonCustomerName]);

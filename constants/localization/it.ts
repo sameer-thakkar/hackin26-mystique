@@ -10,6 +10,7 @@ const it = {
       'Esperienze autentiche fornite da partner verificati e affidabili.',
   },
   AVAILABLE: 'Disponibile',
+  DEFAULT_REVIEWER_NAME: 'Cliente di Headout',
   BACK: 'INDIETRO',
   BANNER_CTA: 'Scopri le nostre offerte',
   BANNER_FOOTER_SUBTEXT: {

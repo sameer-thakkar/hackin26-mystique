@@ -9,6 +9,7 @@ const de = {
     SUB_TEXT: 'Erlebnisse von verifizierten Partnern.',
   },
   AVAILABLE: 'Verfügbar',
+  DEFAULT_REVIEWER_NAME: 'Headout Gast',
   BACK: 'Zurück',
   BANNER_CTA: 'Tickets kaufen',
   BANNER_FOOTER_SUBTEXT: {

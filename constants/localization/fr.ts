@@ -9,6 +9,7 @@ const fr = {
     SUB_TEXT: 'Expériences authentiques de partenaires fiables et vérifiés.',
   },
   AVAILABLE: 'Disponible',
+  DEFAULT_REVIEWER_NAME: 'Client·e Headout',
   BACK: 'Retour',
   BANNER_CTA: 'Voir nos offres',
   BANNER_FOOTER_SUBTEXT: {

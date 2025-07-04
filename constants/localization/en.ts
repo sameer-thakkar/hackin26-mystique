@@ -9,6 +9,7 @@ const en = {
     SUB_TEXT: 'Authentic experiences from trusted and verified partners.',
   },
   REVIEWS: 'reviews',
+  DEFAULT_REVIEWER_NAME: 'Headout Guest',
   AVAILABLE: 'Available',
   BACK: 'Back',
   BANNER_CTA: 'Buy tickets',

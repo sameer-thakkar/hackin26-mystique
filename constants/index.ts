@@ -2454,8 +2454,6 @@ export const CUSTOM_BANNER = {
   },
 };
 
-export const DEFAULT_REVIEWER_NAME = 'headout guest';
-
 export const DEFAULT_TOP_REVIEWS_COUNT = 5;
 
 export const C1_COLLECTION_EXCLUDED = [
