@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { ItineraryType } from 'types/itinerary.type';
-import Conditional from 'components/common/Conditional';
-import RouteMap from 'components/common/Itinerary/MapView/Map';
-import {
+import type {
   TOnClickTrackEvent,
   TOnZoomTrackEvent,
-} from 'components/common/Itinerary/MapView/Map/interface';
+} from '@headout/espeon/components/Itinerary';
+import { EItineraryType } from '@headout/espeon/components/Itinerary';
+import { RouteMap } from '@headout/espeon/components/NewVerticals/RouteMap';
+import Conditional from 'components/common/Conditional';
 import Legend from 'components/common/Itinerary/MapView/Map/Legend';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
 import { TRouteMap } from './interface';
 import Overlay from './Overlay';
 import { MainContainer, MapContainer } from './styles';
@@ -94,8 +95,9 @@ const HOHORouteMap = (props: TRouteMap) => {
           onClickTrackEvent={handleClickEvent}
           onZoomTrackEvent={handleZoomEvent}
           showStartAsStop={
-            itinerary?.type === ItineraryType.CRUISE || isSightsCoveredLayout
+            itinerary?.type === EItineraryType.Cruise || isSightsCoveredLayout
           }
+          strings={strings}
           enableFreeTouchPropagation
         />
         <Conditional if={showOverlay && !isEnabled}>

@@ -97,6 +97,7 @@ const ExperimentalProductCard = (props: any) => {
     shouldRunCustomCTAExperiment,
     showCustomProductCardEnglishCTA,
     pinnedReviews,
+    itineraryAdditionalTrackingProperties,
     showPinnedReviews = false,
   } = props;
 
@@ -428,6 +429,7 @@ const ExperimentalProductCard = (props: any) => {
           showCustomProductCardCTA,
           showCustomProductCardEnglishCTA,
           pinnedReviews,
+          itineraryAdditionalTrackingProperties,
           showPinnedReviews,
         }}
       >

@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { Itinerary } from 'types/itinerary.type';
+import { IItinerary } from '@headout/espeon/components/Itinerary';
 import { TController } from '../RouteDetails/Popup/interface';
 
 export type TRoutesCTA = {
@@ -21,5 +21,5 @@ export type TItineraryInfo = {
   isCruise?: boolean;
   isMealCruise?: boolean;
   isSightsCoveredLayout?: boolean;
-  itineraryData?: Itinerary[];
+  itineraryData?: IItinerary[];
 };

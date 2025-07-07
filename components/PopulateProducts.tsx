@@ -14,11 +14,12 @@ import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
-import {
-  type Itinerary as TItinerary,
-  ItineraryType,
-} from 'types/itinerary.type';
 import { Text } from '@headout/eevee';
+import {
+  EItineraryType,
+  IItinerary as TItinerary,
+  isItineraryValid,
+} from '@headout/espeon/components/Itinerary';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
@@ -37,7 +38,6 @@ import {
 import { addDays, formatDateToString } from 'utils/dateUtils';
 import { checkDropsEligibility } from 'utils/dropsUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
-import { isItineraryValid } from 'utils/itinerary';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
 import {
   getProductDescriptors,
@@ -776,7 +776,7 @@ const PopulateProducts: any = (props: any) => {
       ) !== -1;
 
     const isHohoItinerary =
-      showItinerary && tgidItineraryData[0].type === ItineraryType.HOHO;
+      showItinerary && tgidItineraryData[0].type === EItineraryType.Hoho;
 
     const isGuidedTour =
       isSpecialGuidedTour || isGuidedTourSubcategory(primarySubCategory?.id);

@@ -1,5 +1,9 @@
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { ItineraryDetails, ItineraryType, Section } from 'types/itinerary.type';
+import {
+  type EItineraryType,
+  IItineraryDetails,
+  ISection,
+} from '@headout/espeon/components/Itinerary';
 import { TController } from 'components/NewVerticals/RouteDetails/Popup/interface';
 import { LanguagesUnion } from 'const/index';
 import { TController as TPdfController } from '../Popup/interface';
@@ -8,13 +12,13 @@ export type TGetCustomDescriptors = {
   isHOHO: boolean;
   isCruises: boolean;
   descriptorsObject: Record<string, string>;
-  itineraryDetails: ItineraryDetails;
-  itinerarySections: Section[];
+  itineraryDetails: IItineraryDetails;
+  itinerarySections: ISection[];
   defaultDescriptors: Record<string, any>;
   itineraryPopupController: React.MutableRefObject<TController | undefined>;
   setIsItineraryDrawerOpen: Dispatch<SetStateAction<boolean>>;
   setIsDescriptorClick: Dispatch<SetStateAction<boolean>>;
-  itineraryType: ItineraryType;
+  itineraryType: EItineraryType;
   tgid: number | string;
   lang: LanguagesUnion;
 };

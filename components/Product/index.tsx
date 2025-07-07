@@ -7,11 +7,11 @@ import { useRecoilValue } from 'recoil';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import useSWR from 'swr';
-import type { Itinerary as TItinerary } from 'types/itinerary.type';
 import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import { Button as EeveeButton, Text } from '@headout/eevee';
 import { Modal, type TModalRef } from '@headout/espeon/components/common/Modal';
+import type { IItinerary as TItinerary } from '@headout/espeon/components/Itinerary';
 import ArrowLeft from '@headout/onix/web/ui/arrow/stroke/ArrowLeft';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';
@@ -68,7 +68,6 @@ import ComboPopup from 'UI/ComboPopup';
 import Image from 'UI/Image';
 import PriceBlock from 'UI/PriceBlock';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
-import { ItineraryProvider } from 'contexts/ItineraryContext';
 import { MBContext } from 'contexts/MBContext';
 import { ProductCardProvider } from 'contexts/productCardContext';
 import useABTesting from 'hooks/useABTesting';
@@ -332,6 +331,7 @@ const Product = (props: any) => {
 
   const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
+  const { city: currentCity, country, collectionName } = pageMetaData;
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isDev, host);
   const [isContentOpen, toggleContentOpen] = useState<boolean>(defaultOpen);
@@ -996,6 +996,20 @@ const Product = (props: any) => {
   const hasV1Booster = booster && asText(booster as []).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
+  const itineraryAdditionalTrackingProperties = {
+    city: currentCity?.code ?? '',
+    categoryId: primaryCategory?.id ?? '',
+    subCategoryId: primarySubCategory?.id ?? '',
+    categoryName: primaryCategory?.name ?? '',
+    subCategoryName: primarySubCategory?.name ?? '',
+    collectionId: primaryCollection?.id,
+    collectionName: collectionName ?? '',
+    country: country?.code ?? '',
+    currency: currency ?? '',
+    experienceName: cardTitle,
+    tgid,
+    pageType: isHohoItinerary ? 'Hop-On Hop-Off' : 'Day-Trips',
+  };
 
   const onMoreDetailsClick = (e?: any) => {
     e?.stopPropagation();
@@ -1042,25 +1056,24 @@ const Product = (props: any) => {
             }
           }}
         >
-          <ItineraryProvider>
-            <ExperimentalProductCard
-              {...props}
-              handleShowComboPopup={handleShowComboPopup}
-              sendBookNowEvent={sendBookNowEvent}
-              isSportsSubCategory={isSportsSubCategory}
-              showThumbnailInBanner={showThumbnailInBanner}
-              showJustDrawer={true}
-              scrollToSection={args?.scrollToSection}
-              tgidItineraryData={tgidItineraryData}
-              isModifiedPopup={isModifiedPopup}
-              isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
-              isCruisesRevamp={isCruisesRevamp}
-              customDescriptors={customDescriptors}
-              showSightsCoveredItineraryLayout={
-                showSightsCoveredItineraryLayout
-              }
-            />
-          </ItineraryProvider>
+          <ExperimentalProductCard
+            {...props}
+            handleShowComboPopup={handleShowComboPopup}
+            sendBookNowEvent={sendBookNowEvent}
+            isSportsSubCategory={isSportsSubCategory}
+            showThumbnailInBanner={showThumbnailInBanner}
+            showJustDrawer={true}
+            scrollToSection={args?.scrollToSection}
+            tgidItineraryData={tgidItineraryData}
+            isModifiedPopup={isModifiedPopup}
+            isModifiedCombo={isCruisesRevamp && isNonCruiseProduct}
+            isCruisesRevamp={isCruisesRevamp}
+            customDescriptors={customDescriptors}
+            showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
+            itineraryAdditionalTrackingProperties={
+              itineraryAdditionalTrackingProperties
+            }
+          />
         </ProductCardProvider>
       ),
       type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -2204,13 +2217,18 @@ const Product = (props: any) => {
                     />
                   </Conditional>
                   <Conditional if={showItinerarySection && !isCruisesRevamp}>
-                    <ItineraryProvider>
-                      <Itinerary
-                        itineraryData={tgidItineraryData}
-                        lang={currentLanguage}
-                        isHohoItinerary={isHohoItinerary}
-                      />
-                    </ItineraryProvider>
+                    <Itinerary
+                      itineraryData={tgidItineraryData}
+                      lang={currentLanguage}
+                      isHohoItinerary={isHohoItinerary}
+                      strings={strings}
+                      trackEventFn={trackEvent}
+                      isMobile={isMobile}
+                      isBot={isBot}
+                      additionalTrackingProperties={
+                        itineraryAdditionalTrackingProperties
+                      }
+                    />
                   </Conditional>
                   <Conditional if={showSightsCoveredItineraryLayout && details}>
                     <SightsCovered
@@ -2601,16 +2619,14 @@ const Product = (props: any) => {
   if (showNewCard)
     return (
       <ProductCardProvider>
-        <ItineraryProvider>
-          <ExperimentalProductCard
-            {...props}
-            handleShowComboPopup={handleShowComboPopup}
-            sendBookNowEvent={sendBookNowEvent}
-            isSportsSubCategory={isSportsSubCategory}
-            showThumbnailInBanner={showThumbnailInBanner}
-            defaultOpen={true}
-          />
-        </ItineraryProvider>
+        <ExperimentalProductCard
+          {...props}
+          handleShowComboPopup={handleShowComboPopup}
+          sendBookNowEvent={sendBookNowEvent}
+          isSportsSubCategory={isSportsSubCategory}
+          showThumbnailInBanner={showThumbnailInBanner}
+          defaultOpen={true}
+        />
       </ProductCardProvider>
     );
 

@@ -1,18 +1,22 @@
 import { useContext, useEffect } from 'react';
-import { Itinerary, SECTION_TYPE } from 'types/itinerary.type';
+import type {
+  IItinerary,
+  ISection,
+} from '@headout/espeon/components/Itinerary';
+import {
+  ESectionType,
+  generateGoogleMapUrl,
+  getItineraryDuration,
+  getItineraryTiming,
+  isCruiseItinerary,
+  isValidMap,
+} from '@headout/espeon/components/Itinerary';
 import Conditional from 'components/common/Conditional';
-import { isValidMap } from 'components/common/Itinerary/MapView/Map/utils';
 import { SECTION_NAMES } from 'components/HOHO/constants';
 import AttractionsCarousel from 'components/NewVerticals/AttractionsCarousel';
 import { MBContext } from 'contexts/MBContext';
 import { genUniqueId } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import {
-  generateGoogleMapUrl,
-  getItineraryDuration,
-  getItineraryTiming,
-  isCruiseItinerary,
-} from 'utils/itinerary';
 import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
@@ -79,12 +83,15 @@ const RouteInfo = (props: TRouteInfo) => {
   const stringConnector =
     firstDepartureTime && lastDepartureTime && frequency ? '|' : '';
   const finalDuration = getItineraryDuration({ duration, lang });
-  const boardingPoints = routeSectionsData?.reduce((acc: string[], stop) => {
-    if (stop?.type === SECTION_TYPE.START_LOCATION) {
-      acc.push(stop?.details?.name || '');
-    }
-    return acc;
-  }, []);
+  const boardingPoints = routeSectionsData?.reduce(
+    (acc: string[], stop: ISection) => {
+      if (stop?.type === ESectionType.StartLocation) {
+        acc.push(stop?.details?.name || '');
+      }
+      return acc;
+    },
+    []
+  );
 
   useEffect(() => {
     if (!showRoutesTimeline) {
@@ -212,7 +219,7 @@ const RouteInfo = (props: TRouteInfo) => {
         showRoutesTimeline={showRoutesTimeline}
         isSideModalOpen={isSideModalOpen}
         routeName={routeName}
-        itinerary={routeData as Itinerary}
+        itinerary={routeData as IItinerary}
         showLegend={showSightsCoveredLayout}
         isOnTop={showSightsCoveredLayout}
         showOverlay={isMobile}

@@ -1,25 +1,18 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import router from 'next/router';
-import { useRecoilValue } from 'recoil';
-import { Itinerary } from 'types/itinerary.type';
 import { Button, Icon, Text } from '@headout/eevee';
 import ArrowLeft from '@headout/onix/web/ui/arrow/stroke/ArrowLeft';
 import { cx } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import { BottomSheet } from 'components/common/DraggableBottomSheet';
-import ItinerarySwipeSheet from 'components/common/Itinerary/ItinerarySwipeSheet';
-import { ItineraryViewMode } from 'components/common/Itinerary/ItineraryViewSwitch/interface';
 import ImageGallery from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery';
 import { TImageGalleryController } from 'components/MicrositeV2/ShowPageV2/ShowPageBanner/ImageGallery/interface';
 import { TSnapshotSectionProps } from 'components/Product/components/Popup/ReviewSection/Snapshots/interface';
 import TrustOverlay from 'components/Product/components/Popup/ReviewSection/TrustElements/Overlay';
-import { TTabListItemProps } from 'UI/Tabs/interface';
-import { useItinerary } from 'contexts/ItineraryContext';
 import { useProductCard } from 'contexts/productCardContext';
 import useFetchReviewMedia from 'hooks/useFetchReviewMedia';
 import { trackEvent } from 'utils/analytics';
-import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -31,13 +24,6 @@ import DropdownContent from './components/dropdownContent';
 import PricingBar from './components/pricingBar';
 import { ImageGalleryContainer } from './components/styles';
 import { swipesheetRecipe } from './styles';
-
-const MWebMapView = dynamic(
-  () =>
-    import(
-      /* webpackChunkName: "MWebMapView" */ 'components/common/Itinerary/MapView/MWebMapView'
-    )
-);
 
 const ReviewSection = dynamic(
   () =>
@@ -96,6 +82,7 @@ const DrawerWrapper = (props: any) => {
     showCustomProductCardCTA,
     showCustomProductCardEnglishCTA,
     pinnedReviews,
+    itineraryAdditionalTrackingProperties,
     showPinnedReviews,
   } = props;
 
@@ -114,20 +101,6 @@ const DrawerWrapper = (props: any) => {
 
   const swipesheetStyles = swipesheetRecipe();
 
-  const [activeItinerary, setActiveItinerary] = useState<Itinerary>(
-    tgidItineraryData?.[0]
-  );
-  const {
-    setActiveItineraryStopId,
-    setActiveStopIndex,
-    isItineraryDetailsSwipeSheetOpen,
-    setIsItineraryDetailsSwipeSheetOpen,
-    itineraryViewMode,
-    setItineraryViewMode,
-  } = useItinerary();
-  const { isMobile } = useRecoilValue(appAtom);
-  const isDesktop = !isMobile;
-
   useEffect(() => {
     if (drawerState === SWIPESHEET_STATES.OPEN) {
       setTimeout(() => {
@@ -135,36 +108,6 @@ const DrawerWrapper = (props: any) => {
       }, 300);
     }
   }, [drawerState]);
-
-  const handleCloseItinerarySwipeSheet = () => {
-    setActiveItineraryStopId(null);
-    setActiveStopIndex(null);
-    setIsItineraryDetailsSwipeSheetOpen(false);
-  };
-
-  const handleActiveItineraryTabChange = (tab: TTabListItemProps) => {
-    const activeItineraryData = (
-      tgidItineraryData as Array<Itinerary | null>
-    ).reduce(
-      (acc, item) => (item?.id.toString() === tab.id ? item : acc),
-      null
-    );
-    if (activeItineraryData) {
-      setActiveItinerary(activeItineraryData);
-    }
-  };
-
-  const handleItineraryMapBottomSheetClose = () => {
-    setItineraryViewMode(ItineraryViewMode.TIMELINE);
-    trackItineraryViewModeChange(ItineraryViewMode.TIMELINE);
-  };
-
-  const trackItineraryViewModeChange = (activeView: ItineraryViewMode) => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.ITINERARY.ITINERARY_TOGGLE_CLICKED,
-      [ANALYTICS_PROPERTIES.ITINERARY_VIEW]: activeView,
-    });
-  };
 
   const hidePricingBar = () => {
     setShowPricingBar(false);
@@ -234,14 +177,7 @@ const DrawerWrapper = (props: any) => {
 
   return (
     <>
-      <Conditional
-        if={
-          showPricingBar &&
-          !isItineraryDetailsSwipeSheetOpen &&
-          itineraryViewMode === ItineraryViewMode.TIMELINE &&
-          !showingAllReviewsBottomSheet
-        }
-      >
+      <Conditional if={showPricingBar && !showingAllReviewsBottomSheet}>
         <PricingBar
           showScratchPrice={showScratchPrice}
           listingPrice={listingPrice}
@@ -309,8 +245,6 @@ const DrawerWrapper = (props: any) => {
             tgidItineraryData={tgidItineraryData}
             showItinerary={showItinerary}
             lang={lang}
-            onActiveItineraryTabChange={handleActiveItineraryTabChange}
-            preventTouchEvents={isItineraryDetailsSwipeSheetOpen}
             isModifiedPopup={isModifiedPopup}
             isModifiedCombo={isModifiedCombo}
             showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
@@ -329,31 +263,13 @@ const DrawerWrapper = (props: any) => {
               setDrawerState(SWIPESHEET_STATES.EXPANDED);
               setShowingAllReviewsBottomSheet(true);
             }}
+            itineraryAdditionalTrackingProperties={
+              itineraryAdditionalTrackingProperties
+            }
           >
             {children}
           </DropdownContent>
         </BottomSheet>
-      </Conditional>
-      <Conditional if={activeItinerary && !showSightsCoveredItineraryLayout}>
-        <ItinerarySwipeSheet
-          visible={isItineraryDetailsSwipeSheetOpen}
-          currentLanguage={lang}
-          itinerary={activeItinerary}
-          onCloseSwipeSheet={handleCloseItinerarySwipeSheet}
-        />
-      </Conditional>
-      <Conditional
-        if={
-          activeItinerary &&
-          !showSightsCoveredItineraryLayout &&
-          itineraryViewMode === ItineraryViewMode.MAP &&
-          !isDesktop
-        }
-      >
-        <MWebMapView
-          itinerary={activeItinerary}
-          onCloseInitBottomSheet={handleItineraryMapBottomSheetClose}
-        />
       </Conditional>
       <Conditional
         if={reviewsDetails?.showRatings && showingAllReviewsBottomSheet}

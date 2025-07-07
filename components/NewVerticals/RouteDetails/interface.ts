@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Itinerary } from 'types/itinerary.type';
+import { IItinerary } from '@headout/espeon/components/Itinerary';
 
 export type TRouteDetails = {
   closePopup: () => void;
@@ -11,7 +11,7 @@ export type TRouteDetails = {
   bookingUrl: string;
   setIsSideDrawerOpen: Dispatch<SetStateAction<boolean>>;
   isCruise?: boolean;
-  itineraryData?: Itinerary[];
+  itineraryData?: IItinerary[];
   isDescriptorClick?: boolean;
   isSightsCoveredLayout?: boolean;
 };

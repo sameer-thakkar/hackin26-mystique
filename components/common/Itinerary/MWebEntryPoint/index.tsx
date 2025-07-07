@@ -13,7 +13,10 @@ const MWebEntryPoint = ({
   };
 
   return (
-    <StyledMWebEntryPointContainer onClick={handleClick}>
+    <StyledMWebEntryPointContainer
+      onClick={handleClick}
+      data-qa-marker="qaid-itinerary-entry-point"
+    >
       <div className="entrypoint-content-wrapper">
         <div className="bg-image">
           <MapRouteSvg height={66} width={59} />

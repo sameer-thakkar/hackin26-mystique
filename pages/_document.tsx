@@ -82,6 +82,10 @@ class MystiqueDocument extends Document {
               src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
             />
           </Conditional>
+          <div
+            id="itinerary-swipesheet-portal"
+            style={{ position: 'relative', zIndex: 101 }} // z-index 101 is used to ensure that the itinerary swipesheet on-top of aside modal
+          />
         </body>
       </Html>
     );

@@ -1,4 +1,4 @@
-import { generateGoogleMapUrl } from 'utils/itinerary';
+import { generateGoogleMapUrl } from '@headout/espeon/components/Itinerary';
 import { TStopsList } from './interface';
 
 export const extractStopsList = ({

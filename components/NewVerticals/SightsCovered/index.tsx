@@ -1,9 +1,11 @@
 import { useRecoilValue } from 'recoil';
-import { Itinerary } from 'types/itinerary.type';
+import {
+  IItinerary,
+  isCruiseItinerary,
+  isValidMap,
+} from '@headout/espeon/components/Itinerary';
 import Conditional from 'components/common/Conditional';
-import { isValidMap } from 'components/common/Itinerary/MapView/Map/utils';
 import TabWrapper from 'components/slices/TabWrapper';
-import { isCruiseItinerary } from 'utils/itinerary';
 import { appAtom } from 'store/atoms/app';
 import {
   ANALYTICS_EVENTS,
@@ -20,7 +22,7 @@ const SightsCovered = ({
   itineraryData,
   isCruisesRevamp,
 }: {
-  itineraryData: Itinerary[];
+  itineraryData: IItinerary[];
   isCruisesRevamp: boolean;
 }) => {
   const { isMobile } = useRecoilValue(appAtom);

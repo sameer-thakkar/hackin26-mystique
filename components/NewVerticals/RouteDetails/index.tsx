@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Itinerary } from 'types/itinerary.type';
+import { IItinerary } from '@headout/espeon/components/Itinerary';
 import Conditional from 'components/common/Conditional';
 import Loader from 'components/common/Loader';
 import { SECTION_NAMES } from 'components/HOHO/constants';
@@ -76,7 +76,7 @@ const RouteDetails = (props: TRouteDetails) => {
 
   const tabs = showSightsCoveredLayout
     ? itineraryData
-    : (itineraries as Itinerary[]);
+    : (itineraries as IItinerary[]);
   const sectionName = showSightsCoveredLayout
     ? en.CRUISES.BOARDING_POINTS
     : SECTION_NAMES.STOPS_AND_ATTRACTIONS;

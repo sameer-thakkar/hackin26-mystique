@@ -13,7 +13,14 @@ import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import { RichTextField } from '@prismicio/types';
-import type { Itinerary as TItinerary } from 'types/itinerary.type';
+import type {
+  IItinerary,
+  TItineraryAdditionalTrackingProperties,
+} from '@headout/espeon/components/Itinerary';
+import {
+  isHOHOItinerary,
+  isItineraryValid,
+} from '@headout/espeon/components/Itinerary';
 import Conditional from 'components/common/Conditional';
 import Itinerary from 'components/common/Itinerary';
 import { PinnedReviews } from 'components/common/PinnedReviews';
@@ -27,7 +34,6 @@ import type { TTabListItemProps } from 'UI/Tabs/interface';
 import { useProductCard } from 'contexts/productCardContext';
 import { trackEvent } from 'utils/analytics';
 import type { TReviewMediasResponse } from 'utils/apiUtils';
-import { isHOHOItinerary, isItineraryValid } from 'utils/itinerary';
 import {
   extractTabsFromHighlights,
   filterHighlights,
@@ -91,7 +97,7 @@ interface DropdownContentProps {
   setActiveTab: (tab: string) => void;
   trackDrawerOpen: () => void;
   hideCloseButton?: boolean;
-  tgidItineraryData?: TItinerary[];
+  tgidItineraryData?: IItinerary[];
   showItinerary?: boolean;
   lang: LanguagesUnion;
   onActiveItineraryTabChange?: (tab: TTabListItemProps) => void;
@@ -108,6 +114,7 @@ interface DropdownContentProps {
   showPricingBar?: () => void;
   pinnedReviews?: TPinnedReviewsProps['pinnedReviews'];
   openAllReviewsBottomSheet?: () => void;
+  itineraryAdditionalTrackingProperties?: TItineraryAdditionalTrackingProperties;
   showPinnedReviews?: boolean;
 }
 
@@ -142,6 +149,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   snapshotSectionProps,
   pinnedReviews,
   openAllReviewsBottomSheet,
+  itineraryAdditionalTrackingProperties,
   showPinnedReviews = false,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
@@ -164,7 +172,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
     !isModifiedPopup &&
     !showSightsCoveredItineraryLayout &&
     !!tgidItineraryData &&
-    tgidItineraryData.findIndex((itinerary: TItinerary) =>
+    tgidItineraryData.findIndex((itinerary: IItinerary) =>
       isItineraryValid(itinerary)
     ) !== -1;
   const reviewSectionLoaded = !!reviewsDetails?.showRatings;
@@ -551,10 +559,17 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
                   if={tab.type === 'itinerary' && hasItinerarySection}
                 >
                   <Itinerary
-                    itineraryData={tgidItineraryData!}
+                    itineraryData={tgidItineraryData as any as IItinerary[]}
                     lang={lang}
                     onActiveTabChange={onActiveItineraryTabChange}
-                    showTitle={false}
+                    isHohoItinerary={isHohoItinerary}
+                    strings={strings}
+                    trackEventFn={trackEvent}
+                    isMobile={true}
+                    isBot={isBot}
+                    additionalTrackingProperties={
+                      itineraryAdditionalTrackingProperties
+                    }
                   />
                 </Conditional>
                 <Conditional

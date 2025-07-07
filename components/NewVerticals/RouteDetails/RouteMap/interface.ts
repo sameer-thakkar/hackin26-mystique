@@ -1,4 +1,4 @@
-import { Itinerary } from 'types/itinerary.type';
+import { IItinerary } from '@headout/espeon/components/Itinerary';
 import { TItineraryMap } from '../interface';
 
 export type TNumberedMarkerIcon = {
@@ -9,7 +9,7 @@ export type TNumberedMarkerIcon = {
 export type TRouteMap = {
   routeMapData: TItineraryMap | undefined;
   routeName: string;
-  itinerary: Itinerary;
+  itinerary: IItinerary;
   showRoutesTimeline?: boolean;
   isSideModalOpen?: boolean;
   showLegend?: boolean;

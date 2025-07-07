@@ -1,6 +1,9 @@
-import { Section, SECTION_TYPE } from 'types/itinerary.type';
+import {
+  ESectionType,
+  isCruiseItinerary,
+  ISection,
+} from '@headout/espeon/components/Itinerary';
 import { trackEvent } from 'utils/analytics';
-import { isCruiseItinerary } from 'utils/itinerary';
 import { IGNORED_HEADINGS } from 'const/descriptors';
 import {
   ANALYTICS_EVENTS,
@@ -76,12 +79,12 @@ export const getCustomDescriptors = ({
       meal?.name || descriptorsObject[IGNORED_HEADINGS.CRUISE_MEALS];
 
     const totalStops = itinerarySections?.filter(
-      (stop: Record<string, any>) => stop?.type === SECTION_TYPE.STOP
+      (stop: Record<string, any>) => stop?.type === ESectionType.Stop
     )?.length;
     const upfrontStops = popularAttractionsCovered?.split(',')?.length || 0;
 
     const totalBoardingPoints = itinerarySections?.filter(
-      (stop: Record<string, any>) => stop?.type === SECTION_TYPE.START_LOCATION
+      (stop: Record<string, any>) => stop?.type === ESectionType.StartLocation
     )?.length;
     const boardingPoints = getBoardingPointsText({
       totalBoardingPoints,
@@ -145,7 +148,7 @@ const getBoardingPointsText = ({
   lang,
 }: {
   totalBoardingPoints: number;
-  itinerarySections: Section[];
+  itinerarySections: ISection[];
   lang: LanguagesUnion;
 }) => {
   if (!totalBoardingPoints) {

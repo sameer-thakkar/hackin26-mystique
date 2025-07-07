@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Itinerary } from 'types/itinerary.type';
+import { IItinerary } from '@headout/espeon/components/Itinerary';
 
 export type TRouteInfo = {
   tgid: number | string;
   rank: number;
   openRoutesTimeline: () => void;
   isMobile: boolean;
-  routeData: Itinerary;
+  routeData: IItinerary;
   isCruise: boolean;
   showRoutesTimeline?: boolean;
   isSideModalOpen?: boolean;

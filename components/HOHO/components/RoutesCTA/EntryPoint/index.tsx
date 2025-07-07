@@ -10,7 +10,7 @@ const ItineraryEntryPoint = ({
   isHOHOItinerary = true,
 }: EntryPointProps) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} data-qa-marker="qaid-itinerary-entry-point">
       <MapBackground />
       <TextIconContainer>
         <Route />

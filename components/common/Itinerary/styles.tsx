@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from '@headout/pixie/css';
 import { StyledTabsContainer } from 'UI/Tabs/styles';
 
 export const StyledItinerarySectionContainer = styled.div`
@@ -48,3 +49,9 @@ export const Block = styled.div<{ $isVisible?: boolean; $hasTabs?: boolean }>`
   display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
   margin-top: ${({ $hasTabs }) => ($hasTabs ? 0.5 : 0)}rem;
 `;
+
+export const itneraryStylesOverride = css({
+  '& p': {
+    margin: 'unset !important',
+  },
+});
