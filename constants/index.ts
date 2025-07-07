@@ -1885,7 +1885,18 @@ export const ATTRACTIONS_PLACEHOLDER =
 export const ENTITY_ICONS_FOLDER_URL =
   'https://cdn-imgix-open.headout.com/categories';
 
-export const LANGUAGE_SORT_ORDER = ['en', 'es', 'fr', 'it', 'de', 'pt', 'nl'];
+export const LANGUAGE_SORT_ORDER = [
+  'en',
+  'es',
+  'fr',
+  'it',
+  'de',
+  'pt',
+  'nl',
+  'no',
+  'sv',
+  'da',
+];
 
 export const ANALYTICS_SECTION_NAMES = {
   TOP_THINGS_TODO: 'Top things to do',

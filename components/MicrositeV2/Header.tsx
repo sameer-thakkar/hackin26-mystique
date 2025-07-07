@@ -141,6 +141,7 @@ export const StyledHeader = styled.div<IStyledHeader>`
       width: 100vw;
       top: 0;
       display: block;
+      background-color: ${COLORS.LTT_BANNER_BACKGROUND_COLOR};
       height: 320px;
       @media (max-width: 789px) {
         height:200px;
@@ -552,7 +553,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
     if (window.scrollY > 450) setShowBuyTickets(true);
     else setShowBuyTickets(false);
   };
-  const throttledScrollHandler = useCallback(throttle(scrollHandler, 500), []);
+  const throttledScrollHandler = useCallback(throttle(scrollHandler, 100), []);
 
   const handleResults = (results: any) => {
     setResults(results);

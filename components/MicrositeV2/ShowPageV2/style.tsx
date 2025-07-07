@@ -178,7 +178,7 @@ export const ShowPageWrapper = styled.div`
     position: relative;
     .fixed-offset {
       &::before {
-        height: 5rem !important;
+        height: 12.5rem !important;
       }
     }
     .search-page {

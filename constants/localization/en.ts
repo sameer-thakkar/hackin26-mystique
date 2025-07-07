@@ -860,6 +860,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       DE: 'German',
       PT: 'Portuguese',
       NL: 'Dutch',
+      NO: 'Norwegian',
+      SV: 'Swedish',
+      DA: 'Danish',
     },
   },
   SHOW_PAGE_V2: {

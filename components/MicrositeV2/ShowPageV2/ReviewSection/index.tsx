@@ -100,7 +100,7 @@ const ReviewSection = ({
   reviewsDetails,
   isMobile = false,
   initialReviews = [],
-  maximumNumberOfReviews = 10,
+  maximumNumberOfReviews = null,
   numberOfReviewsToFetchAtOnce = 10,
   showFetchMoreButton = false,
   controlledSwiperParams,
