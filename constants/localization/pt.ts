@@ -1026,7 +1026,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     HOP_ON_OFF_AT: 'Embarque e desembarque em {0} paradas',
     TIMINGS_FREQUENCY: 'Horários e frequência',
     TOUR_DURATION: 'Duração do tour',
-    EVERY_X_MINS: 'Every {0}',
+    EVERY_X_MINS: 'A cada {0}',
     VIEW_LOCATION: 'Ver a localização',
     BANNER_SUBTEXT:
       'A forma mais rápida e prática de ver todas as atrações da cidade.',

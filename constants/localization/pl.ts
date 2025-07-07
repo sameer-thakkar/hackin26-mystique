@@ -995,7 +995,7 @@ const pl = {
     HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
     TIMINGS_FREQUENCY: 'Timings & frequency',
     TOUR_DURATION: 'Tour duration',
-    EVERY_X_MINS: 'Every {0} mins',
+    EVERY_X_MINS: 'Every {0}',
     VIEW_LOCATION: 'View Location',
     BANNER_SUBTEXT: `Fastest and most convenient way to view
     <span> {0}+ top attractions </span> in all of {1}.`,
