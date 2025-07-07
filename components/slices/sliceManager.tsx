@@ -84,6 +84,7 @@ export const catOrSubCatPageSliceComponents = () => {
     accordion: (props: any) => {
       const { slice, context } = props || {};
       const { isMobile, isRevampedDesign } = context || {};
+
       return sliceWrapper(
         <AccordionGroup
           accordions={slice.items}
@@ -337,6 +338,7 @@ export const sliceComponents = () => {
           subtext={props.slice?.primary?.subtext}
           title={props.slice?.primary?.title}
           parentLandingPageUrl={props?.context?.parentLandingPageUrl}
+          sliceType={props.slice?.slice_type}
           {...props.context}
         />,
         props

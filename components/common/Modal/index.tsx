@@ -23,10 +23,23 @@ const Modal = ({
     const onPopState = () => {
       onClose();
     };
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    if (active) container.current.classList.add('scroll-lock');
 
-    return () => window.removeEventListener('popstate', onPopState);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (active) {
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
+      container.current.classList.add('scroll-lock');
+      document.addEventListener('keydown', onKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [active, isMobile]);
 
   const onClose = (e = null) => {

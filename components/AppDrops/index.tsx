@@ -28,6 +28,7 @@ import { DownloadAppNudge } from './components/DownloadAppNudge';
 import {
   animatedNudgeContainer,
   bannerContainer,
+  bannerContainerNoMargin,
   bannerContent,
   ctaButton,
   DWEB_LEFT_BOTTOM_SECTION_BG,
@@ -42,7 +43,10 @@ import {
 } from './styles';
 import { TDropsComponentProps } from './types';
 
-export const DropsBanner = ({ cityCode }: TDropsComponentProps) => {
+export const DropsBanner = ({
+  cityCode,
+  isMarginNotRequired = false,
+}: TDropsComponentProps) => {
   const translations = strings.DROPS;
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth !== undefined && windowWidth < 768;
@@ -127,7 +131,12 @@ export const DropsBanner = ({ cityCode }: TDropsComponentProps) => {
   };
 
   return (
-    <div className={bannerContainer}>
+    <div
+      className={cx(
+        bannerContainer,
+        isMarginNotRequired && bannerContainerNoMargin
+      )}
+    >
       <div className={bannerContent}>
         <Conditional if={isMobile}>
           <Button

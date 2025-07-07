@@ -18,6 +18,7 @@ export type TExitIntentDialogContentProps = {
 
 export type TDropsComponentProps = {
   cityCode: string | null;
+  isMarginNotRequired?: boolean;
 };
 
 export type TDownloadAppNudgeProps = {

@@ -134,7 +134,7 @@ export const riveBlendingBG = css({
   width: '100%',
   height: '80px',
   background:
-    'linear-gradient(180deg, #660131 37.51%, rgba(102, 1, 49, 0.00) 100%);',
+    'linear-gradient(180deg, #660131 46.51%, rgba(102, 1, 49, 0.00) 100%);',
   zIndex: 1,
   borderTopLeftRadius: '10px',
   borderTopRightRadius: '10px',

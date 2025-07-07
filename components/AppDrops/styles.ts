@@ -17,6 +17,10 @@ export const bannerContainer = css({
   },
 });
 
+export const bannerContainerNoMargin = css({
+  margin: '0 !important',
+});
+
 export const mobileSection = css({
   display: 'flex',
   justifyContent: 'center',
@@ -91,7 +95,7 @@ export const ctaButton = css({
   boxShadow: '-0.0625rem -0.4375rem 1.25rem 0px rgba(158, 19, 86, 0.30)',
   position: 'absolute',
   bottom: 20,
-  width: '20.375rem',
+  width: '90%',
   margin: '0 auto',
   zIndex: 4,
 });
@@ -141,18 +145,18 @@ export const DWEB_RIGHT_SECTION_BG = css({
   position: 'absolute !important',
   top: 0,
   left: '60%',
-  width: '100%',
-  height: '100%',
+  width: '604px !important',
+  height: '366px !important',
 });
 
 export const riveBlendingBG = css({
   position: 'absolute',
-  bottom: 0,
+  bottom: 5,
   left: 0,
   width: '100%',
   height: '90px',
   background:
-    'linear-gradient(0deg, #660131 37.51%, rgba(102, 1, 49, 0.00) 100%);',
+    'linear-gradient(0deg, #660131 50%, rgba(102, 1, 49, 0.00) 100%);',
   zIndex: 2,
   borderBottomLeftRadius: '10px',
   borderBottomRightRadius: '10px',

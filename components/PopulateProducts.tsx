@@ -55,6 +55,7 @@ import {
   DEFAULT_PC_LIMIT,
   DESIGN,
   MB_CATEGORISATION,
+  SLICE_TYPES,
   THEMES,
   VIDEO_EXPERIMENT_MBS,
 } from 'const/index';
@@ -349,6 +350,7 @@ const PopulateProducts: any = (props: any) => {
     poiCollectionsSection,
     activePOIFilter,
     showPinnedReviews = false,
+    sliceType,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -1015,7 +1017,12 @@ const PopulateProducts: any = (props: any) => {
                       {RenderedCustomBanner}
                     </Conditional>
                     {getProductCardFromTourAndIndex(tour, index)}
-                    <DropsBanner cityCode={dropsEligibilityInfo?.city} />
+                    <DropsBanner
+                      cityCode={dropsEligibilityInfo?.city}
+                      isMarginNotRequired={
+                        sliceType === SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD
+                      }
+                    />
                     <Conditional
                       if={
                         bannerIndex > index &&

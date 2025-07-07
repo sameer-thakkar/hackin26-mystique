@@ -2129,7 +2129,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   DROPS: {
     TITLE: 'Preços a partir de {0}. Todo dia.',
     SUBTITLE:
-      'O melhor de {0} agora pertence a você com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout',
+      'O melhor de {0} agora pertence a você com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout.',
     NUDGE_CTA: 'Instalar',
     CTA_BUTTON_MOBILE: 'Baixe o aplicativo',
     ON: 'na',

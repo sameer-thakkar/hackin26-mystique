@@ -1549,7 +1549,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   DROPS: {
     TITLE: 'Prices drop to just {0}. Daily.',
     SUBTITLE:
-      '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app',
+      '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app.',
     NUDGE_CTA: 'Get the app',
     CTA_BUTTON_MOBILE: 'Download the app',
     ON: 'on',

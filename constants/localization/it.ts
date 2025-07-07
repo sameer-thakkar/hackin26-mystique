@@ -2123,7 +2123,7 @@ const it = {
   DROPS: {
     TITLE: 'A soli {0}. Tutti i giorni.',
     SUBTITLE:
-      "Il meglio di {0} per te, con sconti fino all'80%. Nuove Drops ogni giorno, solo sull'app Headout",
+      "Il meglio di {0} per te, con sconti fino all'80%. Nuove Drops ogni giorno, solo sull'app Headout.",
     NUDGE_CTA: `Scarica`,
     CTA_BUTTON_MOBILE: `Scarica l'app`,
     ON: 'su',
