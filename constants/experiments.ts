@@ -77,7 +77,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [DROPS_EXPERIMENT]: new Experiment(
     DROPS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [100, 0]
   ),
   [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
     FLEXIBLE_CANCELLATION_EXPERIMENT,
