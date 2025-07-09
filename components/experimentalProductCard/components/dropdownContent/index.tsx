@@ -150,7 +150,6 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   pinnedReviews,
   openAllReviewsBottomSheet,
   itineraryAdditionalTrackingProperties,
-  showPinnedReviews = false,
 }) => {
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [imageHeight, setImageHeight] = useState(0);
@@ -465,7 +464,12 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
           sheetHeight={isModifiedPopup ? '85%' : '100%'}
         >
           <div ref={childRef}>{children}</div>
-          <Conditional if={showPinnedReviews}>
+          <Conditional
+            if={
+              !pinnedReviews ||
+              pinnedReviews?.displayConfig?.exposePinnedReviews
+            }
+          >
             <PinnedReviews
               pinnedReviews={pinnedReviews || {}}
               isMobile

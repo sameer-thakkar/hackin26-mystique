@@ -98,7 +98,6 @@ const ExperimentalProductCard = (props: any) => {
     showCustomProductCardEnglishCTA,
     pinnedReviews,
     itineraryAdditionalTrackingProperties,
-    showPinnedReviews = false,
   } = props;
 
   const hsid = useRecoilValue(hsidAtom);
@@ -430,7 +429,6 @@ const ExperimentalProductCard = (props: any) => {
           showCustomProductCardEnglishCTA,
           pinnedReviews,
           itineraryAdditionalTrackingProperties,
-          showPinnedReviews,
         }}
       >
         {getProductCardElements(isContentOpen, true, isProductCardLoading)}

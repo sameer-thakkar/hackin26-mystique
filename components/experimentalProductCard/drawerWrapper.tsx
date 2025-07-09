@@ -83,7 +83,6 @@ const DrawerWrapper = (props: any) => {
     showCustomProductCardEnglishCTA,
     pinnedReviews,
     itineraryAdditionalTrackingProperties,
-    showPinnedReviews,
   } = props;
 
   const {
@@ -257,7 +256,6 @@ const DrawerWrapper = (props: any) => {
             showPricingBar={() => {
               setShowPricingBar(true);
             }}
-            showPinnedReviews={showPinnedReviews}
             pinnedReviews={pinnedReviews}
             openAllReviewsBottomSheet={() => {
               setDrawerState(SWIPESHEET_STATES.EXPANDED);

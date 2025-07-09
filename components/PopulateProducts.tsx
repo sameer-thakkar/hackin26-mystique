@@ -349,7 +349,6 @@ const PopulateProducts: any = (props: any) => {
     showLastMinFilters = false,
     poiCollectionsSection,
     activePOIFilter,
-    showPinnedReviews = false,
     sliceType,
   } = props;
 
@@ -880,7 +879,6 @@ const PopulateProducts: any = (props: any) => {
         ? getPOIBooster(tgid, scorpioData)
         : null,
       disableRatingsLabel: shouldDisableRatingsLabel,
-      showPinnedReviews,
       pinnedReviews,
     };
 

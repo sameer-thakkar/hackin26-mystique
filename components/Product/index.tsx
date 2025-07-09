@@ -295,7 +295,6 @@ const Product = (props: any) => {
     scrollToIndex = -1,
     fireCardClickEvent = true,
     pinnedReviews,
-    showPinnedReviews = false,
     disableRatingsLabel = false,
   } = props;
 
@@ -2138,7 +2137,13 @@ const Product = (props: any) => {
                     : null
                 }
               >
-                <Conditional if={(isPopup || isBot) && showPinnedReviews}>
+                <Conditional
+                  if={
+                    (isPopup || isBot) &&
+                    (!pinnedReviews ||
+                      pinnedReviews?.displayConfig?.exposePinnedReviews)
+                  }
+                >
                   <PinnedReviews
                     pinnedReviews={pinnedReviews}
                     lang={lang}
@@ -2152,7 +2157,7 @@ const Product = (props: any) => {
                     }
                     tgid={tgid}
                   />
-                </Conditional>{' '}
+                </Conditional>
                 <Modal
                   ref={reviewModalControlRef}
                   showCloseIcon={false}

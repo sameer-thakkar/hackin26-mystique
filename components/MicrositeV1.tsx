@@ -438,17 +438,6 @@ const MicrositeV1 = (props: any) => {
   const showLFC = lfcExpVariant === VARIANTS.CONTROL && isLFCImpactExpEligible;
 
   const {
-    isEligible: isPinnedReviewsExperimentEligible,
-    variant: pinnedReviewsExperimentVariant,
-  } = useABTesting({
-    experimentId: 'PINNED_REVIEWS_EXPERIMENT',
-  });
-
-  const showPinnedReviews =
-    isPinnedReviewsExperimentEligible &&
-    pinnedReviewsExperimentVariant === VARIANTS.TREATMENT;
-
-  const {
     attraction: attractionCFoot,
     body: slicesCFoot,
     footer_heading: footerHeadingCFoot,
@@ -1013,7 +1002,6 @@ const MicrositeV1 = (props: any) => {
           </LazyComponent>
         ) : null
       }
-      showPinnedReviews={showPinnedReviews}
     />
   );
 
