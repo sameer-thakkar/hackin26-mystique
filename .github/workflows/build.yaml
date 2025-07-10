@@ -137,6 +137,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=branch,prefix=${{ matrix.env }}-,suffix=-{{sha}}-{{date 'YYYYMMDD'}}
+            type=raw,value=${{ github.ref_name }}-${{ github.event.repository.name }},enable=${{ matrix.env == 'test' }}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
 
       - name: Upload Assets to S3 🪣
@@ -171,6 +172,18 @@ jobs:
           cache-from: type=gha,scope=${{ github.workflow }}
           cache-to: type=gha,mode=max,scope=${{ github.workflow }}
           labels: ${{ steps.docker_meta.outputs.labels }}
+
+      - name: Update ODEs
+        if: matrix.env == 'test'
+        run: |
+          echo "Docker Image Tag: ${{ github.ref_name }}-${{ github.event.repository.name }}"
+          curl --location "${{ secrets.MEDUSA_TEST_URL }}/twirp/medusa.pb.qa.automation.ODEWebhook/DeletePodsWithImageTag" \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/json' \
+          --header 'x-api-key: ${{ secrets.MEDUSA_API_KEY }}' \
+          --data '{
+            "image_tag": "${{ github.ref_name }}-${{ github.event.repository.name }}"
+          }'
 
       - name: Delete existing cache for Production
         if: matrix.env == 'production' && steps.next-cache-prod.outputs.cache-hit == 'true'
