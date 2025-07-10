@@ -13,11 +13,16 @@ const Itinerary = (
   props: Omit<TExtendedItineraryProps<TItineraryComponentProps>, 'showTitle'>
 ) => {
   const { isHohoItinerary } = props;
-  const { isMobile } = useRecoilValue(appAtom);
+  const { isMobile, isBot } = useRecoilValue(appAtom);
 
   const handleScroll = (e: React.UIEvent) => {
     e.stopPropagation();
   };
+
+  const portalContainer =
+    typeof window !== 'undefined'
+      ? document.getElementById('itinerary-swipesheet-portal')
+      : null;
 
   return (
     <>
@@ -35,13 +40,16 @@ const Itinerary = (
           {...props}
           showTitle={false}
           disablePathChange={true}
-          usePortal={true}
-          portalContainer={
-            document.getElementById(
-              'itinerary-swipesheet-portal'
-            ) as HTMLElement
-          }
           mwebPagePadding={16}
+          {...(isBot
+            ? {
+                portalContainer: portalContainer as HTMLElement,
+                usePortal: true,
+              }
+            : {
+                usePortal: false,
+                portalContainer: undefined,
+              })}
         />
       </div>
     </>

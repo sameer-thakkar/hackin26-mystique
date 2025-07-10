@@ -54,4 +54,8 @@ export const itneraryStylesOverride = css({
   '& p': {
     margin: 'unset !important',
   },
+
+  '@media only screen and (min-width: 768px)': {
+    maxWidth: 'calc(792px - 48px)', // 24px is the padding of the container
+  },
 });
