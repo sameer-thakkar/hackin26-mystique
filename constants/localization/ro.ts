@@ -251,6 +251,12 @@ const ro = {
     PORTUGUESE: 'Portugheză',
     NEDERLANDS: 'Olandeză',
     POLISH: 'Poloneză',
+    RUSSIAN: 'Rusă',
+    DANISH: 'Daneză',
+    NORWEGIAN: 'Norvegiană',
+    ROMANIAN: 'Română',
+    SWEDISH: 'Suedeză',
+    TURKISH: 'Turcă',
   },
   TOUR_AVAILABLE_LANGUAGES: 'Tur disponibil în {0}',
   LISTICLES: {
