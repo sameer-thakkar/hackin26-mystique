@@ -2106,37 +2106,69 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     TITLE: 'Prijzen dalen naar slechts {0}. Dagelijks.',
     SUBTITLE:
       'Het beste van {0} met 80% korting. Nieuwe deals elke dag op de Headout-app.',
+    TITLE_MOBILE: 'Het beste van {1} voor {1}',
+    SUBTITLE_MOBILE:
+      'Profiteer van beperkte drops voor {0}, alleen op de Headout-app.',
+    NEXT_DROP_IN: 'Volgende drop over {0}',
+    CTA_BUTTON_MOBILE: 'Pak je drop',
     NUDGE_CTA: 'Downloaden',
-    CTA_BUTTON_MOBILE: 'Download de app',
     ON: 'op',
     EXIT_INTENT: {
       DOWNLOAD_APP: 'Download de app',
       NOT_NOW: `Ik pak de volgende deal`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Colosseum',
-          'Pizza maken',
-          'Sint-Pietersbasiliek',
-        ],
-        DWEB_ExperienceName: [
-          'Wandel door het verleden van het Colosseum',
-          'Maak verse pizza als een local',
-          'Bewonder de Sint-Pietersbasiliek',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Rome',
+        price: '€ 10',
       },
       PARIS: {
-        MWEB_ExperienceName: [
-          'Eiffeltoren',
-          'Boottocht over de Seine',
-          'Notre-Dame',
-        ],
-        DWEB_ExperienceName: [
-          'Adembenemend uitzicht op de Eiffeltoren',
-          'Cruise langs de Seine',
-          'Verken de majestueuze Notre-Dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Parijs',
+        price: '€ 10',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colosseum, Palatijn en Forum Romanum',
+            'Big Bus: hop-on hop-offtour door Rome',
+            'Sint-Pietersbasiliek',
+          ],
+          prices: ['€ 57.25', '€ 22.65', '€ 39.55'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Wandel door het verleden van het Colosseum',
+            'Maak verse pizza als een local',
+            'Bewonder de Sint-Pietersbasiliek',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: [
+            'Eiffeltoren',
+            'Rondvaart over de Seine',
+            'Aquarium van Parijs',
+          ],
+          prices: ['€ 69.25', '€ 65.05', '€ 57.15'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Adembenemend uitzicht op de Eiffeltoren',
+            'Cruise langs de Seine',
+            'Verken de majestueuze Notre-Dame',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
       },
     },
   },

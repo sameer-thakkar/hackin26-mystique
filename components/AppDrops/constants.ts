@@ -30,10 +30,17 @@ export const DROPS_IMAGE_URLS = {
     'https://cdn-imgix.headout.com/assets/images/drops/headout-logo-black.png',
   DWEB_RIGHT_SECTION_BG:
     'https://cdn-imgix.headout.com/assets/images/drops/desktop-right-section-bg.svg',
+  BANNER_BACKGROUND:
+    'https://cdn-imgix.headout.com/assets/images/drops/ho-mweb-banner-bg.png',
+  EXIT_INTENT_BACKGROUND:
+    'https://cdn-imgix.headout.com/assets/images/drops/Exit+intent+background.png',
 };
 
 export const DROPS_RIVE_URI =
   'https://cdn-imgix.headout.com/assets/rive/drops_banner.riv';
+
+export const DROPS_RIVE_MWEB_URI =
+  'https://cdn-imgix.headout.com/assets/rive/drops_new_banner.riv';
 
 // data constants
 
@@ -79,18 +86,5 @@ export const cityDropsEligibleUrls = {
   ROME: DROPS_ELIGIBLE_ROME_URLS,
   PARIS: DROPS_ELIGIBLE_PARIS_URLS,
 };
-
-export const CITY_WISE_LABELS = {
-  PARIS: {
-    price: '€10',
-    city: `Paris'`,
-  },
-  ROME: {
-    price: '€10',
-    city: `Rome's`,
-  },
-};
-
-export const DEFAULT_PRICE = '€10';
 
 export const dropsEligibleCountries = ['IT', 'FR'];

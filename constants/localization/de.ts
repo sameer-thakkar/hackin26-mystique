@@ -2150,29 +2150,65 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     TITLE: 'Preise sinken auf {0}. Jeden Tag.',
     SUBTITLE:
       'Top-Erlebnisse in {0} jetzt bis zu 80 % günstiger. Täglich neue Deals. Nur in der Headout App.',
-    NUDGE_CTA: 'Download',
-    CTA_BUTTON_MOBILE: 'App herunterladen',
+    TITLE_MOBILE: 'Erlebnisse in {0} für {1}',
+    SUBTITLE_MOBILE:
+      'Holen Sie sich limitierte Drops für {0}, nur in der Headout App.',
+    NEXT_DROP_IN: 'Nächster Drop in {0}',
+    CTA_BUTTON_MOBILE: 'Drop holen',
+    NUDGE_CTA: 'App herunterladen',
     ON: 'bei',
     EXIT_INTENT: {
       DOWNLOAD_APP: 'App herunterladen',
       NOT_NOW: `Ich hol mir den nächsten Deal`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: ['Kolosseum', 'Pizzabackkurs', 'Petersdom'],
-        DWEB_ExperienceName: [
-          'Die Geschichte des Kolosseums entdecken',
-          'Pizza backen wie die Profis',
-          'Den Petersdom erkunden',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Rome',
+        price: '10 €',
       },
       PARIS: {
-        MWEB_ExperienceName: ['Eiffelturm', 'Seine-Fahrt', 'Notre-Dame'],
-        DWEB_ExperienceName: [
-          'Umwerfende Aussichten auf den Eiffelturm',
-          'Schifffahrt auf der Seine',
-          'Die prächtige Notre-Dame besichtigen',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Paris',
+        price: '10 €',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Kolosseum, Palatin und Forum Romanum',
+            'Big Bus: Rom Hop-on Hop-off',
+            'Petersdom',
+          ],
+          prices: ['57.25 €', '22.65 €', '39.55 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Die Geschichte des Kolosseums entdecken',
+            'Pizza backen wie die Profis',
+            'Den Petersdom erkunden',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Eiffelturm', 'Seine-Fahrt', 'Aquarium de Paris'],
+          prices: ['69.25 €', '65.05 €', '57.15 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Umwerfende Aussichten auf den Eiffelturm',
+            'Schifffahrt auf der Seine',
+            'Die prächtige Notre-Dame besichtigen',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
       },
     },
   },

@@ -1,11 +1,9 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { Button, Text } from '@headout/eevee';
 import {
-  CITY_WISE_LABELS,
-  DEFAULT_PRICE,
   DROPS_FALLBACK_LINK,
   DROPS_MOBILE_EXIT_INTENT_LINK,
-  DROPS_RIVE_URI,
+  DROPS_RIVE_MWEB_URI,
 } from 'components/AppDrops/constants';
 import { TExitIntentBottomSheetContentProps } from 'components/AppDrops/types';
 import Conditional from 'components/common/Conditional';
@@ -16,14 +14,13 @@ import { pickByKeys } from 'utils/gen';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'constants/strings';
 import { DiscountTag } from '../DiscountTag';
+import { DropsTimer } from '../DropsTimer';
 import {
   exitIntentBottomSheetContent,
-  exitIntentButton,
   exitIntentButtonContainer,
   exitIntentDescriptionMargin,
   exitIntentHeadingMargin,
   exitIntentRiveContainer,
-  riveBlendingBG,
 } from './styles';
 
 const ExitIntentBottomSheetContent = ({
@@ -31,11 +28,36 @@ const ExitIntentBottomSheetContent = ({
   cityCode,
 }: TExitIntentBottomSheetContentProps) => {
   const { RiveComponent, isLoading, isError, rive } = useRive({
-    src: DROPS_RIVE_URI,
+    src: DROPS_RIVE_MWEB_URI,
     stateMachines: 'State Machine 1',
-    artboard: `mWeb_${cityCode}_Exit`,
+    artboard: `mWeb_${cityCode}_Banner`,
     autoplay: true,
   });
+
+  const bannerTitle = useMemo(
+    () =>
+      strings.formatString(
+        strings.DROPS.TITLE_MOBILE,
+        strings.DROPS.CITY_WISE_LABELS[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.cityNameMWeb,
+        strings.DROPS.CITY_WISE_LABELS[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.price
+      ),
+    [cityCode]
+  );
+
+  const bannerSubtitle = useMemo(
+    () =>
+      strings.formatString(
+        strings.DROPS.SUBTITLE_MOBILE,
+        strings.DROPS.CITY_WISE_LABELS[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.cityNameMWeb
+      ),
+    [cityCode]
+  );
 
   useLayoutEffect(() => {
     setRiveExperienceNames(
@@ -70,62 +92,48 @@ const ExitIntentBottomSheetContent = ({
   };
 
   return (
-    <div>
-      <div className={exitIntentBottomSheetContent}>
-        <DiscountTag variant={{ variant: 'exitIntent' }} />
-        <div className={riveBlendingBG} />
-        <Text
-          as="h1"
-          className={exitIntentHeadingMargin}
-          textStyle={'heading.medium'}
-          color={'core.candy.700'}
-        >
-          {strings.formatString(
-            strings.DROPS.TITLE,
-            CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-              ?.price ?? DEFAULT_PRICE
-          )}
-        </Text>
-
-        <Text
-          as="p"
-          className={exitIntentDescriptionMargin}
-          textStyle={'ui.label.small'}
-          color={'semantic.text.grey.2'}
-        >
-          {strings.formatString(
-            strings.DROPS.SUBTITLE,
-            CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-              ?.city ?? ''
-          )}
-        </Text>
-
-        <div className={exitIntentButtonContainer}>
-          <Button
-            as="button"
-            variant="primary"
-            size="small"
-            className={exitIntentButton}
-            btnType="black"
-            primaryText={strings.DROPS.EXIT_INTENT.DOWNLOAD_APP}
-            onClick={handleDownloadApp}
-          />
-          <Button
-            as="button"
-            variant="tertiary"
-            className={exitIntentButton}
-            size="small"
-            btnType="black"
-            primaryText={strings.DROPS.EXIT_INTENT.NOT_NOW}
-            onClick={handleNotNow}
-          />
-        </div>
-      </div>
+    <div className={exitIntentBottomSheetContent}>
+      <DiscountTag variant={{ variant: 'exitIntent' }} />
+      <Text
+        as="h1"
+        className={exitIntentHeadingMargin}
+        textStyle="display.xs"
+        color="core.candy.700"
+      >
+        {bannerTitle}
+      </Text>
+      <Text
+        as="p"
+        className={exitIntentDescriptionMargin}
+        textStyle="para.small"
+        color="semantic.text.grey.2"
+      >
+        {bannerSubtitle}
+      </Text>
       <Conditional if={!isLoading && !isError}>
         <div className={exitIntentRiveContainer}>
           <RiveComponent />
         </div>
       </Conditional>
+      <div className={exitIntentButtonContainer}>
+        <DropsTimer cityCode={cityCode || 'ROME'} />
+        <Button
+          as="button"
+          variant="primary"
+          size="medium"
+          btnType="black"
+          primaryText={strings.DROPS.EXIT_INTENT.DOWNLOAD_APP}
+          onClick={handleDownloadApp}
+        />
+        <Button
+          as="button"
+          variant="tertiary"
+          size="medium"
+          btnType="black"
+          primaryText={strings.DROPS.EXIT_INTENT.NOT_NOW}
+          onClick={handleNotNow}
+        />
+      </div>
     </div>
   );
 };

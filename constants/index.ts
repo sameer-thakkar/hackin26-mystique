@@ -1241,6 +1241,7 @@ export const ANALYTICS_PROPERTIES = {
   PLAY_TYPE: 'Play Type',
   VIEW_TYPE: 'View Type',
   IS_EXIT_INTENT: 'Is Exit Intent',
+  EXIT_INTENT_TYPE: 'Exit Intent Type',
   STORE_TYPE: 'Store Type',
   CITY_CODE: 'City Code',
 };

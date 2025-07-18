@@ -1550,33 +1550,64 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     TITLE: 'Prices drop to just {0}. Daily.',
     SUBTITLE:
       '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app.',
+    TITLE_MOBILE: 'The best of {0} for {1}.',
+    SUBTITLE_MOBILE: 'Grab limited Drops for {0}, on the Headout app.',
+    NEXT_DROP_IN: 'Next Drop in {0}',
+    CTA_BUTTON_MOBILE: 'Grab your Drop',
     NUDGE_CTA: 'Get the app',
-    CTA_BUTTON_MOBILE: 'Download the app',
     ON: 'on',
     EXIT_INTENT: {
       DOWNLOAD_APP: 'Download the app',
       NOT_NOW: `I'll grab the next deal`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Colosseum',
-          'Pizza making class',
-          'St. Peter’s Basilica',
-        ],
-        DWEB_ExperienceName: [
-          'Walk through the Colosseum’s past',
-          'Make pizza like a local',
-          'Marvel at St.Peter’s Basilica',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Rome',
+        price: '€10',
       },
       PARIS: {
-        MWEB_ExperienceName: ['Eiffel Tower', 'Seine Cruise', 'Notre-Dame'],
-        DWEB_ExperienceName: [
-          'Breathtaking views at the Eiffel Tower',
-          'Cruise along the Seine River',
-          'Explore the majestic notre dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Paris',
+        price: '€10',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colosseum, Palatine Hill, Roman Forum',
+            'Big Bus: Rome Hop-On Hop-Off',
+            'St. Peter’s Basilica',
+          ],
+          prices: ['€57.25', '€22.65', '€39.55'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Walk through the Colosseum’s past',
+            'Make pizza like a local',
+            'Marvel at St.Peter’s Basilica',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Eiffel Tower', 'Seine Cruise', 'Aquarium de Paris'],
+          prices: ['€69.25', '€65.05', '€57.15'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Breathtaking views at the Eiffel Tower',
+            'Cruise along the Seine River',
+            'Explore the majestic notre dame',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
       },
     },
   },

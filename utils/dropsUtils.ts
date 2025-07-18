@@ -101,10 +101,15 @@ export const setRiveExperienceNames = (
 ) => {
   if (!rive || !cityCode) return;
 
-  const experienceNames =
+  const experiences =
     strings.DROPS.RIVE?.[cityCode as keyof typeof strings.DROPS.RIVE]?.[
       isMobile ? 'MWEB_ExperienceName' : 'DWEB_ExperienceName'
     ];
+
+  const experienceNames = experiences.names;
+  const experiencePrices = experiences.prices;
+  const dropsPrices = experiences.dropsPrice;
+
   const cityName = cityCode.toLowerCase();
   const prefix = isMobile ? `mweb_${cityName}` : `dweb_${cityName}`;
 
@@ -114,5 +119,17 @@ export const setRiveExperienceNames = (
         rive.setTextRunValue(`${prefix}_exp_${index + 1}`, name);
       }
     );
+  }
+  if (experiencePrices && isMobile) {
+    [...experiencePrices, ...experiencePrices].forEach(
+      (price: string, index: number) => {
+        rive.setTextRunValue(`${prefix}_price_${index + 1}`, price);
+      }
+    );
+  }
+  if (dropsPrices && isMobile) {
+    [...dropsPrices, ...dropsPrices].forEach((price: string, index: number) => {
+      rive.setTextRunValue(`${prefix}_drops_price_${index + 1}`, price);
+    });
   }
 };

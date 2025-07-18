@@ -2135,33 +2135,65 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TITLE: 'Preços a partir de {0}. Todo dia.',
     SUBTITLE:
       'O melhor de {0} agora pertence a você com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout.',
+    TITLE_MOBILE: 'O melhor de {0} por {1}',
+    SUBTITLE_MOBILE:
+      'Garanta Drops limitados para {0}, somente no aplicativo da Headout.',
+    NEXT_DROP_IN: 'Próximo Drop em {0}',
+    CTA_BUTTON_MOBILE: 'Pegue seu Drop',
     NUDGE_CTA: 'Instalar',
-    CTA_BUTTON_MOBILE: 'Baixe o aplicativo',
     ON: 'na',
     EXIT_INTENT: {
       DOWNLOAD_APP: 'Baixe o aplicativo',
       NOT_NOW: `Vou aproveitar a próxima oferta`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Coliseu',
-          'Aula de preparação de pizza',
-          'Basílica de São Pedro',
-        ],
-        DWEB_ExperienceName: [
-          'Caminhe pelo passado do Coliseu',
-          'Prepare uma pizza como um autêntico romano',
-          'Maravilhe-se com a Basílica de São Pedro',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Roma',
+        price: '€ 10',
       },
       PARIS: {
-        MWEB_ExperienceName: ['Torre Eiffel', 'Cruzeiro no Sena', 'Notre-Dame'],
-        DWEB_ExperienceName: [
-          'Vistas de tirar o fôlego na Torre Eiffel',
-          'Navegue pelo rio Sena',
-          'Conheça a majestosa Notre-Dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Paris',
+        price: '€ 10',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Coliseu, Monte Palatino e Fórum Romano',
+            'Big Bus: Hop-on hop-off Roma',
+            'Basílica de São Pedro',
+          ],
+          prices: ['€ 57.25', '€ 22.65', '€ 39.55'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Caminhe pelo passado do Coliseu',
+            'Prepare uma pizza como um autêntico romano',
+            'Maravilhe-se com a Basílica de São Pedro',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Torre Eiffel', 'Cruzeiro no Rio Sena', 'Aquário de Paris'],
+          prices: ['€ 69.25', '€ 65.05', '€ 57.15'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Vistas de tirar o fôlego na Torre Eiffel',
+            'Navegue pelo rio Sena',
+            'Conheça a majestosa Notre-Dame',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
       },
     },
   },

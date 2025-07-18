@@ -13,7 +13,8 @@ import { appAtom } from 'store/atoms/app';
  * enabled: if false, exit intent detection is disabled
  * onExitIntent: callback function when exit intent is detected
  * inactivityTimeout: time in ms before inactivity triggers exit intent
- * swipeThreshold: distance in pixels for swipe detection
+ * horizontalSwipeThreshold: distance in pixels for horizontal swipe detection
+ * verticalSwipeThreshold: distance in pixels for vertical swipe detection
  */
 interface IUseExitIntentOptions {
   threshold?: number;
@@ -24,7 +25,17 @@ interface IUseExitIntentOptions {
   enabled?: boolean;
   onExitIntent?: () => void;
   inactivityTimeout?: number;
-  swipeThreshold?: number;
+  horizontalSwipeThreshold?: number;
+  verticalSwipeThreshold?: number;
+}
+
+export enum EXIT_INTENT_TYPE {
+  BackButton = 'Back Button',
+  VisibilityChange = 'Visibility Change',
+  Inactivity = 'Inactivity',
+  Swipe = 'Swipe',
+  RapidScrollToTop = 'Rapid Scroll To Top',
+  MouseLeave = 'Mouse Leave',
 }
 
 const useExitIntent = ({
@@ -35,15 +46,17 @@ const useExitIntent = ({
   isSessionBased = true,
   enabled = false,
   inactivityTimeout = 18000,
-  swipeThreshold = 200,
+  horizontalSwipeThreshold = 80, // Realistic horizontal swipe distance
+  verticalSwipeThreshold = 150, // Realistic vertical swipe distance
   onExitIntent,
 }: IUseExitIntentOptions = {}) => {
   const [isExitIntentDetected, setIsExitIntentDetected] = useState(false);
   const { isMobile } = useRecoilValue(appAtom);
   const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-  const lastScrollTopRef = useRef<number>(0);
-  const scrollDirectionChangeCountRef = useRef<number>(0);
+  const [exitIntentType, setExitIntentType] = useState<EXIT_INTENT_TYPE | null>(
+    null
+  );
 
   useEffect(() => {
     // If exit intent is disabled, don't set up any listeners
@@ -98,12 +111,14 @@ const useExitIntent = ({
     // Desktop exit intent detection
     const desktopExitIntent = (e: MouseEvent) => {
       if (e.clientY <= threshold) {
+        setExitIntentType(EXIT_INTENT_TYPE.MouseLeave);
         triggerExitIntent();
       }
     };
 
     // Mobile exit intent detection - enhanced with multiple signals
     const mobileExitIntent = () => {
+      setExitIntentType(EXIT_INTENT_TYPE.BackButton);
       triggerExitIntent();
 
       // Prevent the back navigation
@@ -120,6 +135,7 @@ const useExitIntent = ({
 
       inactivityTimerRef.current = setTimeout(() => {
         // Trigger exit intent after inactivity
+        setExitIntentType(EXIT_INTENT_TYPE.Inactivity);
         triggerExitIntent();
       }, inactivityTimeout);
     };
@@ -127,6 +143,7 @@ const useExitIntent = ({
     // Handle visibility change (tab switching, minimizing)
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
+        setExitIntentType(EXIT_INTENT_TYPE.VisibilityChange);
         triggerExitIntent();
       }
     };
@@ -154,57 +171,34 @@ const useExitIntent = ({
 
       // Detect horizontal edge swipes (common for back navigation)
       if (
-        Math.abs(deltaX) > swipeThreshold &&
+        Math.abs(deltaX) > horizontalSwipeThreshold &&
         (touchStartRef.current.x < 20 ||
           touchStartRef.current.x > window.innerWidth - 20)
       ) {
+        setExitIntentType(EXIT_INTENT_TYPE.Swipe);
         triggerExitIntent();
       }
 
       // Detect rapid upward swipe from bottom (common for closing tabs)
+      // Only trigger if user has scrolled more than 70% of the page content
       if (
-        deltaY < -swipeThreshold &&
+        deltaY < -verticalSwipeThreshold &&
         touchStartRef.current.y > window.innerHeight - 100
       ) {
-        triggerExitIntent();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const scrollPercentage = scrollTop / (documentHeight - windowHeight);
+
+        // Only trigger if user has scrolled more than 70% of the content
+        if (scrollPercentage > 0.7) {
+          setExitIntentType(EXIT_INTENT_TYPE.RapidScrollToTop);
+          triggerExitIntent();
+        }
       }
 
       touchStartRef.current = null;
-    };
-
-    // Handle scroll - detect rapid scrolling up to top
-    const handleScroll = () => {
-      resetInactivityTimer();
-
-      if (typeof window !== 'undefined') {
-        const currentScrollTop =
-          window.scrollY || document.documentElement.scrollTop;
-
-        // Detect rapid scroll to top
-        if (
-          lastScrollTopRef.current > currentScrollTop &&
-          currentScrollTop < 100
-        ) {
-          triggerExitIntent();
-        }
-
-        // Detect erratic scrolling (up and down repeatedly)
-        if (
-          (lastScrollTopRef.current > currentScrollTop &&
-            lastScrollTopRef.current - currentScrollTop > 50) ||
-          (currentScrollTop > lastScrollTopRef.current &&
-            currentScrollTop - lastScrollTopRef.current > 50)
-        ) {
-          scrollDirectionChangeCountRef.current += 1;
-
-          if (scrollDirectionChangeCountRef.current > 5) {
-            triggerExitIntent();
-            scrollDirectionChangeCountRef.current = 0;
-          }
-        }
-
-        lastScrollTopRef.current = currentScrollTop;
-      }
     };
 
     // Add event listeners based on device type
@@ -238,9 +232,6 @@ const useExitIntent = ({
           handleTouchEnd,
           eventListenerOptions
         );
-
-        // 4. Scroll behavior
-        window.addEventListener('scroll', handleScroll, eventListenerOptions);
 
         // 5. User activity monitoring
         ['touchmove', 'click', 'keydown'].forEach((eventType) => {
@@ -287,12 +278,6 @@ const useExitIntent = ({
             handleTouchEnd,
             eventListenerOptions
           );
-          window.removeEventListener(
-            'scroll',
-            handleScroll,
-            eventListenerOptions
-          );
-
           ['touchmove', 'click', 'keydown'].forEach((eventType) => {
             document.removeEventListener(
               eventType,
@@ -324,10 +309,11 @@ const useExitIntent = ({
     isExitIntentDetected,
     onExitIntent,
     inactivityTimeout,
-    swipeThreshold,
+    horizontalSwipeThreshold,
+    verticalSwipeThreshold,
   ]);
 
-  return { isExitIntentDetected, setIsExitIntentDetected };
+  return { isExitIntentDetected, setIsExitIntentDetected, exitIntentType };
 };
 
 export default useExitIntent;

@@ -2129,37 +2129,64 @@ const it = {
     TITLE: 'A soli {0}. Tutti i giorni.',
     SUBTITLE:
       "Il meglio di {0} per te, con sconti fino all'80%. Nuove Drops ogni giorno, solo sull'app Headout.",
+    TITLE_MOBILE: 'Il meglio di {0} a {1}',
+    SUBTITLE_MOBILE: `Drops limitate per {0}, solo sull'app di Headout.`,
+    NEXT_DROP_IN: 'Prossima Drop tra {0}',
+    CTA_BUTTON_MOBILE: 'Prendi il tuo Drop',
     NUDGE_CTA: `Scarica`,
-    CTA_BUTTON_MOBILE: `Scarica l'app`,
     ON: 'su',
     EXIT_INTENT: {
       DOWNLOAD_APP: `Scarica l'app`,
       NOT_NOW: `Prenderò la prossima offerta`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Colosseo',
-          'Lezione di pizza',
-          'Basilica di San Pietro',
-        ],
-        DWEB_ExperienceName: [
-          'Passeggia dentro il Colosseo',
-          'Impara a fare la pizza',
-          'Ammira la Basilica di San Pietro',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Roma',
+        price: '10€',
       },
       PARIS: {
-        MWEB_ExperienceName: [
-          'Torre Eiffel',
-          'Crociera sulla Senna',
-          'Notre-Dame',
-        ],
-        DWEB_ExperienceName: [
-          'Ammira la Torre Eiffel',
-          'Fai una crociera sulla Senna',
-          'Esplora la maestosa Notre-Dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Parigi',
+        price: '10€',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colosseo, Colle Palatino e Foro Romano',
+            'Big Bus: Roma Hop-on Hop-off',
+            'Basilica di San Pietro',
+          ],
+          prices: ['57.25€', '22.65€', '39.55€'],
+          dropsPrice: ['10€', '10€', '10€'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Passeggia dentro il Colosseo',
+            'Impara a fare la pizza',
+            'Ammira la Basilica di San Pietro',
+          ],
+          prices: ['10€', '10€', '10€'],
+          dropsPrice: ['10€', '10€', '10€'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Torre Eiffel', 'Crociera sulla Senna', 'Acquario di Parigi'],
+          prices: ['69.25€', '65.05€', '57.15€'],
+          dropsPrice: ['10€', '10€', '10€'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Ammira la Torre Eiffel',
+            'Fai una crociera sulla Senna',
+            'Esplora la maestosa Notre-Dame',
+          ],
+          prices: ['10€', '10€', '10€'],
+          dropsPrice: ['10€', '10€', '10€'],
+        },
       },
     },
   },

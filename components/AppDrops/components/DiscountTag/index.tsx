@@ -3,22 +3,26 @@ import { Text } from '@headout/eevee';
 import { DROPS_IMAGE_URLS } from 'components/AppDrops/constants';
 import { TDiscountTagProps } from 'components/AppDrops/types';
 import Image from 'UI/Image';
+import useWindowWidth from 'hooks/useWindowWidth';
 import { strings } from 'const/strings';
 import { discountTagRecipe, headerLogoContainer, onText } from './styles';
 
 export const DiscountTag = ({ variant }: TDiscountTagProps) => {
   const styles = discountTagRecipe(variant);
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth !== undefined && windowWidth < 768;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.tag}>
         <div className={headerLogoContainer}>
-          <div>
+          <div className={styles.dropsLogo}>
             <Image
               url={DROPS_IMAGE_URLS.DROPS_LOGO}
               alt="Drops Logo"
-              width={68}
-              height={20}
+              width={isMobile ? 52 : 68}
+              height={isMobile ? 15 : 20}
+              quality={100}
             />
           </div>
           <div>
@@ -30,8 +34,9 @@ export const DiscountTag = ({ variant }: TDiscountTagProps) => {
             <Image
               url={DROPS_IMAGE_URLS.HEADOUT_LOGO}
               alt="Headout Logo"
-              width={120}
-              height={18}
+              width={isMobile ? 80 : 120}
+              height={isMobile ? 12 : 18}
+              quality={100}
             />
           </div>
         </div>

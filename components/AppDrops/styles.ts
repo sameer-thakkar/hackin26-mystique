@@ -5,12 +5,21 @@ export const bannerContainer = css({
   margin: '0 1.5rem',
   borderRadius: '16px',
   position: 'relative',
-  minHeight: '28.75rem',
+  minHeight: '22.6875rem',
   border: '1px solid rgba(252, 230, 234, 1)',
-  background:
-    'radial-gradient(97.12% 293.35% at 0% 7.31%, #FFF7D9 0%, #FFFFFF 100%)',
+  backgroundImage: `url(https://cdn-imgix.headout.com/assets/images/drops/ho-mweb-banner-bg.png)`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+
+  '@media (min-width: 390px)': {
+    minHeight: '23.25rem',
+  },
+
   '@media (min-width: 768px)': {
     width: '100%',
+    background:
+      'radial-gradient(97.12% 293.35% at 0% 7.31%, #FFF7D9 0%, #FFFFFF 100%)',
     margin: '0 auto',
     minHeight: '13.125rem',
     overflow: 'hidden',
@@ -37,7 +46,7 @@ export const bannerContent = css({
   justifyContent: 'space-between',
   alignItems: 'center',
   gap: '0.5rem',
-  padding: '1rem',
+  padding: '0.8rem',
 
   '@media (min-width: 768px)': {
     flexDirection: 'row',
@@ -48,13 +57,14 @@ export const bannerContent = css({
 export const leftSection = css({
   flex: '1',
   display: 'flex',
+  alignItems: 'center',
   flexDirection: 'column',
   maxWidth: '42.5rem',
-  marginTop: '2rem',
+  marginTop: 0,
   zIndex: 2,
 
   '@media (min-width: 768px)': {
-    marginTop: '0',
+    alignItems: 'flex-start',
     padding: '1.5rem 0 1.5rem 1.5rem',
   },
 });
@@ -75,10 +85,16 @@ export const rightSection = css({
 });
 
 export const title = css({
-  margin: '0.5rem 0 0.25rem 0 !important',
-  textAlign: 'center !important',
-  '@media (min-width: 768px)': {
-    textAlign: 'left !important',
+  margin: '0.5rem 0 0.125rem 0 !important',
+  textAlign: 'left !important',
+  lineHeight: '32px',
+  '@media (max-width: 768px)': {
+    textAlign: 'center !important',
+    background:
+      'radial-gradient(73.99% 312.07% at 13.01% 29.26%, #660031 0%, #CC0062 100%)',
+    WebkitTextFillColor: 'transparent',
+    // @ts-ignore
+    WebkitBackgroundClip: 'text',
   },
 });
 
@@ -93,21 +109,15 @@ export const subtitle = css({
 
 export const ctaButton = css({
   boxShadow: '-0.0625rem -0.4375rem 1.25rem 0px rgba(158, 19, 86, 0.30)',
-  position: 'absolute',
-  bottom: 20,
   width: '90%',
-  margin: '0 auto',
+  margin: '8px auto 0 auto',
+});
+
+export const ctaButtonContainer = css({
+  position: 'absolute',
+  width: '100%',
+  bottom: 12,
   zIndex: 4,
-});
-
-export const leftSectionAppNudge = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.75rem',
-});
-
-export const titleAppNudge = css({
-  fontWeight: 'bold',
 });
 
 export const animatedNudgeContainer = css({
@@ -124,11 +134,12 @@ export const nudgeVisible = css({
 
 export const mobileRiveContainer = css({
   width: '100%',
-  height: '280px',
-  position: 'absolute',
-  bottom: 36,
-  borderBottomRightRadius: 'inherit',
-  borderBottomLeftRadius: 'inherit',
+  height: '170px',
+  marginBottom: 'space.16',
+  '@media (min-width: 390px)': {
+    marginBottom: '24px',
+    scale: '1.09',
+  },
 });
 
 export const DWEB_LEFT_BOTTOM_SECTION_BG = css({
@@ -147,17 +158,4 @@ export const DWEB_RIGHT_SECTION_BG = css({
   left: '60%',
   width: '604px !important',
   height: '366px !important',
-});
-
-export const riveBlendingBG = css({
-  position: 'absolute',
-  bottom: 5,
-  left: 0,
-  width: '100%',
-  height: '90px',
-  background:
-    'linear-gradient(0deg, #660131 50%, rgba(102, 1, 49, 0.00) 100%);',
-  zIndex: 2,
-  borderBottomLeftRadius: '10px',
-  borderBottomRightRadius: '10px',
 });

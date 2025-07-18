@@ -8,6 +8,8 @@ import { TDropsComponentProps } from '../types';
 import ExitIntentDialogContent from './ExitIntentDialogContent';
 import ExitIntentBottomSheetContent from './ExitIntentSheetContent';
 
+const EXIT_INTENT_INACTIVITY_TIMEOUT = 30000;
+
 export const DropsExitIntent = ({ cityCode }: TDropsComponentProps) => {
   const [showExitIntentPopup, setShowExitIntentPopup] = useState(false);
   const { uid, countryCode } = useContext(MBContext);
@@ -24,9 +26,10 @@ export const DropsExitIntent = ({ cityCode }: TDropsComponentProps) => {
     setShowExitIntentPopup(false);
   };
 
-  useExitIntent({
+  const { exitIntentType } = useExitIntent({
     enabled: isEnabled,
     onExitIntent: handleExitIntent,
+    inactivityTimeout: EXIT_INTENT_INACTIVITY_TIMEOUT,
   });
 
   if (!isEnabled) {
@@ -47,6 +50,7 @@ export const DropsExitIntent = ({ cityCode }: TDropsComponentProps) => {
       trackingEventName={ANALYTICS_EVENTS.DROPS_BANNER_SHOWN}
       trackingProperties={{
         [ANALYTICS_PROPERTIES.BANNER_TYPE]: 'Exit Modal',
+        [ANALYTICS_PROPERTIES.EXIT_INTENT_TYPE]: exitIntentType,
       }}
     />
   );

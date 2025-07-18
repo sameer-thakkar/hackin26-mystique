@@ -1,9 +1,7 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { Text } from '@headout/eevee';
 import { css, cx } from '@headout/pixie/css';
 import {
-  CITY_WISE_LABELS,
-  DEFAULT_PRICE,
   DROPS_IMAGE_URLS,
   DROPS_RIVE_URI,
 } from 'components/AppDrops/constants';
@@ -43,6 +41,28 @@ const ExitIntentDialogContent = ({
     autoplay: true,
   });
 
+  const bannerTitle = useMemo(
+    () =>
+      strings.formatString(
+        strings.DROPS.TITLE,
+        strings.DROPS.CITY_WISE_LABELS[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.price
+      ),
+    [cityCode]
+  );
+
+  const bannerSubtitle = useMemo(
+    () =>
+      strings.formatString(
+        strings.DROPS.SUBTITLE,
+        strings.DROPS.CITY_WISE_LABELS[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.cityName
+      ),
+    [cityCode]
+  );
+
   useLayoutEffect(() => {
     setRiveExperienceNames(
       rive,
@@ -75,30 +95,22 @@ const ExitIntentDialogContent = ({
       <div className={dialogGradientTopSection}>
         <div className={dialogFlexDisplay}>
           <div className={dialogPopupContent}>
-            <DiscountTag variant={{ variant: 'dialog' }} />
+            <DiscountTag />
             <Text
               as="h1"
               className={textTitleStyle}
-              textStyle={'display.regular'}
-              color={'core.candy.700'}
+              textStyle="display.regular"
+              color="core.candy.700"
             >
-              {strings.formatString(
-                strings.DROPS.TITLE,
-                CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-                  ?.price ?? DEFAULT_PRICE
-              )}
+              {bannerTitle}
             </Text>
             <Text
               as="p"
               className={css({ marginTop: '8px' })}
-              textStyle={'para.medium'}
-              color={'semantic.text.grey.2'}
+              textStyle="para.medium"
+              color="semantic.text.grey.2"
             >
-              {strings.formatString(
-                strings.DROPS.SUBTITLE,
-                CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-                  ?.city ?? ''
-              )}
+              {bannerSubtitle}
             </Text>
             <DownloadAppNudge cityCode={cityCode} isExitIntent />
           </div>

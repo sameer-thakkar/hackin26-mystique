@@ -1,12 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { Button, Text } from '@headout/eevee';
 import { cx } from '@headout/pixie/css';
 import {
-  CITY_WISE_LABELS,
-  DEFAULT_PRICE,
   DROPS_FALLBACK_LINK,
   DROPS_IMAGE_URLS,
   DROPS_MOBILE_BANNER_LINK,
+  DROPS_RIVE_MWEB_URI,
   DROPS_RIVE_URI,
 } from 'components/AppDrops/constants';
 import Conditional from 'components/common/Conditional';
@@ -25,19 +24,20 @@ import {
 import { strings } from 'const/strings';
 import { DiscountTag } from './components/DiscountTag';
 import { DownloadAppNudge } from './components/DownloadAppNudge';
+import { DropsTimer } from './components/DropsTimer';
 import {
   animatedNudgeContainer,
   bannerContainer,
   bannerContainerNoMargin,
   bannerContent,
   ctaButton,
+  ctaButtonContainer,
   DWEB_LEFT_BOTTOM_SECTION_BG,
   DWEB_RIGHT_SECTION_BG,
   leftSection,
   mobileRiveContainer,
   nudgeVisible,
   rightSection,
-  riveBlendingBG,
   subtitle,
   title,
 } from './styles';
@@ -47,13 +47,12 @@ export const DropsBanner = ({
   cityCode,
   isMarginNotRequired = false,
 }: TDropsComponentProps) => {
-  const translations = strings.DROPS;
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth !== undefined && windowWidth < 768;
   const nudgeRef = useRef<HTMLDivElement>(null);
 
   const { RiveComponent, isLoading, isError, rive } = useRive({
-    src: DROPS_RIVE_URI,
+    src: isMobile ? DROPS_RIVE_MWEB_URI : DROPS_RIVE_URI,
     artboard: isMobile ? `mWeb_${cityCode}_Banner` : `dWeb_${cityCode}`,
     stateMachines: 'State Machine 1',
     autoplay: true,
@@ -61,6 +60,31 @@ export const DropsBanner = ({
 
   const hasTracked = useRef(false);
   const observerRef = useRef<MutationObserver | null>(null);
+
+  const bannerTitle = useMemo(
+    () =>
+      strings.formatString(
+        isMobile ? strings.DROPS.TITLE_MOBILE : strings.DROPS.TITLE,
+        strings.DROPS.CITY_WISE_LABELS?.[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.[isMobile ? 'cityNameMWeb' : 'price'],
+        strings.DROPS.CITY_WISE_LABELS?.[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.price
+      ),
+    [cityCode, isMobile]
+  );
+
+  const bannerSubtitle = useMemo(
+    () =>
+      strings.formatString(
+        isMobile ? strings.DROPS.SUBTITLE_MOBILE : strings.DROPS.SUBTITLE,
+        strings.DROPS.CITY_WISE_LABELS?.[
+          cityCode as keyof typeof strings.DROPS.CITY_WISE_LABELS
+        ]?.[isMobile ? 'cityNameMWeb' : 'cityName']
+      ),
+    [cityCode, isMobile]
+  );
 
   useLayoutEffect(() => {
     setRiveExperienceNames(
@@ -139,41 +163,41 @@ export const DropsBanner = ({
     >
       <div className={bannerContent}>
         <Conditional if={isMobile}>
-          <Button
-            as={'button'}
-            className={ctaButton}
-            btnType="white"
-            variant={'primary'}
-            size="medium"
-            primaryText={translations.CTA_BUTTON_MOBILE}
-            onClick={handleOpenMobileBanner}
-          />
+          <div className={ctaButtonContainer}>
+            <Conditional if={!isLoading && !isError}>
+              <div className={mobileRiveContainer}>
+                <RiveComponent />
+              </div>
+            </Conditional>
+            <DropsTimer cityCode={cityCode || 'ROME'} />
+            <Button
+              as={'button'}
+              className={ctaButton}
+              btnType="black"
+              variant={'primary'}
+              size="medium"
+              primaryText={strings.DROPS.CTA_BUTTON_MOBILE}
+              onClick={handleOpenMobileBanner}
+            />
+          </div>
         </Conditional>
         <div className={leftSection}>
           <DiscountTag />
           <Text
             as="h1"
             className={title}
-            textStyle={isMobile ? 'heading.medium' : 'display.regular'}
+            textStyle={isMobile ? 'display.xs' : 'display.regular'}
             color={'core.candy.700'}
           >
-            {strings.formatString(
-              translations.TITLE,
-              CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-                ?.price ?? DEFAULT_PRICE
-            )}
+            {bannerTitle}
           </Text>
           <Text
             as="p"
             className={subtitle}
-            textStyle={isMobile ? 'para.regular' : 'para.medium'}
+            textStyle={isMobile ? 'para.small' : 'para.medium'}
             color={'semantic.text.grey.2'}
           >
-            {strings.formatString(
-              translations.SUBTITLE,
-              CITY_WISE_LABELS?.[cityCode as keyof typeof CITY_WISE_LABELS]
-                ?.city ?? ''
-            )}
+            {bannerSubtitle}
           </Text>
           <Conditional if={!isMobile}>
             <div
@@ -199,12 +223,6 @@ export const DropsBanner = ({
           className={DWEB_RIGHT_SECTION_BG}
         />
         <div className={DWEB_LEFT_BOTTOM_SECTION_BG} />
-      </Conditional>
-      <Conditional if={!isLoading && !isError && isMobile}>
-        <div className={mobileRiveContainer}>
-          <RiveComponent />
-        </div>
-        <div className={riveBlendingBG} />
       </Conditional>
     </div>
   );

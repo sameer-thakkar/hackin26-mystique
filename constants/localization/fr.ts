@@ -2166,37 +2166,64 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TITLE: 'Prix à {0} seulement. Tous les jours.',
     SUBTITLE:
       "Profitez de {0} à -80%. Nouvelles offres quotidiennes sur l'app Headout",
+    TITLE_MOBILE: 'Le meilleur de {0} pour {1}.',
+    SUBTITLE_MOBILE: `Profitez de Drops limités pour {0}, uniquement sur l'app Headout.`,
+    NEXT_DROP_IN: 'Prochain Drop dans {0}',
     NUDGE_CTA: 'Télécharger',
-    CTA_BUTTON_MOBILE: "Télécharger l'appli",
+    CTA_BUTTON_MOBILE: 'Profitez de votre Drop',
     ON: 'sur',
     EXIT_INTENT: {
       DOWNLOAD_APP: "Télécharger l'appli",
       NOT_NOW: `Je profite de la prochaine offre`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Colisée',
-          'Cours de préparation de pizzas',
-          'Basilique Saint-Pierre',
-        ],
-        DWEB_ExperienceName: [
-          "Plongez dans l'histoire du Colisée",
-          'Préparez une pizza fraîche comme un·e local·e',
-          'Admirez la Basilique Saint-Pierre',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Rome',
+        price: '10 €',
       },
       PARIS: {
-        MWEB_ExperienceName: [
-          'Tour Eiffel',
-          'Croisière sur la Seine',
-          'Notre-Dame',
-        ],
-        DWEB_ExperienceName: [
-          'Vues imprenables depuis la Tour Eiffel',
-          'Croisière sur la Seine',
-          'Découvrez la majestueuse Notre-Dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Paris',
+        price: '10 €',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colisée Palatin et Forum romain',
+            'Big Bus: Tour Hop-On Hop-Off à Rome',
+            'Basilique Saint-Pierre',
+          ],
+          prices: ['57.25 €', '22.65 €', '39.55 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            "Plongez dans l'histoire du Colisée",
+            'Préparez une pizza fraîche comme un·e local·e',
+            'Admirez la Basilique Saint-Pierre',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Tour Eiffel', 'Croisière sur la Seine', 'Aquarium de Paris'],
+          prices: ['69.25 €', '65.05 €', '57.15 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Vues imprenables depuis la Tour Eiffel',
+            'Croisière sur la Seine',
+            'Découvrez la majestueuse Notre-Dame',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
       },
     },
   },

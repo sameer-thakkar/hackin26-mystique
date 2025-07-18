@@ -1008,7 +1008,7 @@ const PopulateProducts: any = (props: any) => {
               /*
                Render DROPS banner after the first card only
               */
-              if (index === 0 && shouldShowDrops) {
+              if (index === 1 && shouldShowDrops) {
                 return (
                   <>
                     <Conditional if={bannerIndex === index}>

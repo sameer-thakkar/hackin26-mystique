@@ -2189,37 +2189,65 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     TITLE: 'Experiencias diarias desde {0}.',
     SUBTITLE:
       'Descubre lo mejor de {0} con hasta un 80 % de descuento. Los Drops se publican todos los días sólo en la aplicación de Headout.',
+    TITLE_MOBILE: 'Lo mejor de {0} por {1}',
+    SUBTITLE_MOBILE:
+      'Drops limitados para {0}, sólo en la aplicación de Headout.',
+    NEXT_DROP_IN: 'Próximo Drop en {0}',
+    CTA_BUTTON_MOBILE: 'Consigue tu Drop',
     NUDGE_CTA: 'Consigue la app',
-    CTA_BUTTON_MOBILE: 'Descargar la app',
     ON: 'en',
     EXIT_INTENT: {
       DOWNLOAD_APP: 'Descargar la app',
       NOT_NOW: `Esperar a la próxima oferta`,
     },
-    RIVE: {
+    CITY_WISE_LABELS: {
       ROME: {
-        MWEB_ExperienceName: [
-          'Coliseo',
-          'Clase de elaboración de pizza',
-          'Basílica de San Pedro',
-        ],
-        DWEB_ExperienceName: [
-          'Tour por el Coliseo',
-          'Prepara pizza fresca como un local',
-          'Entradas a la Basílica de San Pedro',
-        ],
+        cityName: `Rome's`,
+        cityNameMWeb: 'Roma',
+        price: '10 €',
       },
       PARIS: {
-        MWEB_ExperienceName: [
-          'Torre Eiffel',
-          'Crucero por el Sena',
-          'Notre-Dame',
-        ],
-        DWEB_ExperienceName: [
-          'Impresionantes vistas de la Torre Eiffel',
-          'Crucero por el río Sena',
-          'Visita a Notre-Dame',
-        ],
+        cityName: `Paris'`,
+        cityNameMWeb: 'Paris',
+        price: '10 €',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Coliseo, Monte Palatino y foro romano',
+            'Big Bus: tour en autobús turístico',
+            'Basílica de San Pedro',
+          ],
+          prices: ['57.25 €', '22.65 €', '39.55 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Tour por el Coliseo',
+            'Prepara pizza fresca como un local',
+            'Entradas a la Basílica de San Pedro',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Torre Eiffel', 'Crucero por el Sena', 'Acuario de París'],
+          prices: ['69.25 €', '65.05 €', '57.15 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Impresionantes vistas de la Torre Eiffel',
+            'Crucero por el río Sena',
+            'Visita a Notre-Dame',
+          ],
+          prices: ['10 €', '10 €', '10 €'],
+          dropsPrice: ['10 €', '10 €', '10 €'],
+        },
       },
     },
   },
