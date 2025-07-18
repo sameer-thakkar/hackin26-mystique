@@ -2681,6 +2681,8 @@ export const ROBOTS_TXT_BLOCKED_DOMAINS = [
   'www.ticket-madrid.com',
 ];
 
+export const AUTOMATED_PRODUCT_RANKING_VERSION = 'v3';
+
 export const ROBOTS_TXT_ALLOWED_SUBDOMAINS = ['moma.new-york-tickets.com'];
 
 export const DEFAULT_PC_LIMIT = 10;

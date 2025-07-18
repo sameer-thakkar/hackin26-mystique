@@ -12,6 +12,7 @@ import {
 } from 'utils/apiUtils';
 import { chunkArray } from 'utils/arrayUtils';
 import { getHostName } from 'utils/helper';
+import { AUTOMATED_PRODUCT_RANKING_VERSION } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
 
 const TitleWrapper = styled.div`
@@ -87,6 +88,7 @@ const CollectionCard = ({
         ...(lang && {
           language: lang,
         }),
+        'src-version': AUTOMATED_PRODUCT_RANKING_VERSION,
       },
       id,
     });
