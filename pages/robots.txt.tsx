@@ -1,5 +1,7 @@
 import { Component } from 'react';
+import { NextPageContext } from 'next';
 import { isSubdomain } from 'utils/index';
+import { getDomainFromUid, getHostFromUid } from 'utils/urlUtils';
 import {
   ROBOTS_TXT_ALLOWED_SUBDOMAINS,
   ROBOTS_TXT_BLOCKED_DOMAINS,
@@ -39,17 +41,32 @@ const indexDomains = [
 ];
 
 export default class RobotsTxt extends Component {
-  static async getInitialProps({ res, req }: any) {
-    const domain = fullDomain(req);
-    const host = req.headers.host;
+  static async getInitialProps({ res, req, query }: NextPageContext) {
+    const { mystique_uid } = query ?? {};
+    const isDev = Boolean(mystique_uid);
+
+    const domain = isDev
+      ? getDomainFromUid(mystique_uid as string)
+      : fullDomain(req as any);
+    const host = isDev
+      ? getHostFromUid(mystique_uid as string)
+      : req?.headers?.host;
+
+    if (!domain || !host) {
+      res?.setHeader('Content-type', 'text/plain');
+      res?.write('User-agent: *\nDisallow: /');
+      res?.end();
+      return;
+    }
+
     let content = robotsContent({ domain, host });
     indexDomains.forEach((item) => {
       if (domain.includes(item)) {
         content = robotsContent({ domain, host });
       }
     });
-    res.setHeader('Content-type', 'text/plain');
-    res.write(content);
-    res.end();
+    res?.setHeader('Content-type', 'text/plain');
+    res?.write(content);
+    res?.end();
   }
 }

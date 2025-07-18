@@ -119,6 +119,13 @@ export const getDomainFromUid = (uid: string | undefined) => {
   return domain;
 };
 
+export const getHostFromUid = (uid: string | undefined) => {
+  if (!uid) return '';
+  const domain = getDomainFromUid(uid);
+  const host = new URL(`https://${domain}`).host;
+  return host;
+};
+
 export const convertUidToUrl = ({
   uid,
   lang = 'en',
