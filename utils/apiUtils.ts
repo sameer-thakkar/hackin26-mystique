@@ -114,7 +114,6 @@ export enum HeadoutEndpoints {
   CalendarInventoryForTourGroupList,
   NearbyCityList,
   Media,
-  Variants,
   Airports,
   CollectionPoi,
   BulkPoiList,
@@ -254,9 +253,6 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.SubCategoryReviews:
       endpointSlug = `/api/v3/cities/${params?.cityId}/subcategories/${id}/reviews`;
-      break;
-    case HeadoutEndpoints.Variants:
-      endpointSlug = `/api/v7/tour-groups/variants`;
       break;
     case HeadoutEndpoints.Airports:
       endpointSlug = '/api/v1/airport-transfers/fetch-airports';
@@ -1717,44 +1713,6 @@ export const fetchBatchedCalendarInventory = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchBatchedCalendarInventory]', error);
-  }
-};
-
-type TFetchBatchedVariants = {
-  tgids: Array<number | string>;
-  language?: string;
-  currency?: string;
-  populateTours?: boolean;
-  cookies?: Record<string, any>;
-};
-
-export const fetchBatchedVariants = async ({
-  tgids,
-  currency,
-  cookies,
-  language = 'en',
-  populateTours = true,
-}: TFetchBatchedVariants) => {
-  try {
-    const params = {
-      'tour-group-ids': tgids?.join(','),
-      ...(language && { language }),
-      ...(currency && {
-        currency,
-      }),
-      ...(populateTours && { 'populate-tours': 'true' }),
-    };
-    const url = getHeadoutApiUrl({
-      endpoint: HeadoutEndpoints.Variants,
-      id: null,
-      params,
-    });
-    const headers = constructHeaders({ cookies });
-    const res = await fetch(url, { headers });
-    return await res.json();
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('[fetchBatchedVariants]', error);
   }
 };
 
