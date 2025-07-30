@@ -425,7 +425,7 @@ const LttShowPageV2 = ({
           isMobile={isMobile}
           tgid={tgid}
           uid={uid}
-          showSpecialOfferBanner={false}
+          showSpecialOfferBanner
           listingPrice={listingPrice}
         />
 
