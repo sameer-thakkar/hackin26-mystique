@@ -822,6 +822,7 @@ export const HomePage = (props: any) => {
             isMobile={isMobile}
             categoryProps={categoryProps}
             isListicle={isListicle}
+            heading={categoryProps?.categories?.[0]?.name}
           />
         </Conditional>
         <Conditional if={!uid?.includes('discount-west-end-tickets')}>

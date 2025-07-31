@@ -25,6 +25,7 @@ interface ShoulderPageTopShowsAdapterProps {
   directTgid: number;
   allTours: Record<string, any>;
   isMobile: boolean;
+  heading?: string;
   categoryProps: {
     categories: Array<{
       id: number;
@@ -44,7 +45,14 @@ interface ShoulderPageTopShowsAdapterProps {
 // This is a temporary component to hotfix the production issue
 const ShoulderPageTopShowsAdapter: React.FC<
   ShoulderPageTopShowsAdapterProps
-> = ({ directTgid, allTours, isMobile, categoryProps, isListicle }) => {
+> = ({
+  directTgid,
+  allTours,
+  isMobile,
+  categoryProps,
+  isListicle,
+  heading = 'London Calling Sale',
+}) => {
   // Convert allTours object to topShows array format
   const topShowsRaw = Object.values(allTours).filter(Boolean);
 
@@ -87,7 +95,7 @@ const ShoulderPageTopShowsAdapter: React.FC<
         isMobile={isMobile}
         topShows={topShows}
         categoriesToRender={categoriesToRender}
-        heading={'London Calling Sale'}
+        heading={heading}
         showBrowseByCategories={showBrowseByCategories}
         isCategoryPage={isCategoryPage}
         directTgid={directTgid}
