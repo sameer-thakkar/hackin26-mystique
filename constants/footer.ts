@@ -23,8 +23,7 @@ export const PAYMENT_CARD_ICONS = {
     'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/DinerClub.svg',
   IDEAL:
     'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/IDealCard.svg',
-  AFFIRM:
-    'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/Affirm.svg',
+  FPX: 'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/FPXLight.svg',
 };
 
 export const FOOTER_CONTACT_ICON_DIM = 12;
