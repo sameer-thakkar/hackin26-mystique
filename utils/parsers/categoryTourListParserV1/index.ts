@@ -378,7 +378,6 @@ const categoryTourListParserV1 = async ({
       isBot
         ? fetchPinnedReviewsByTgidList({
             tgids: orderedTGIDRanking,
-            hostname,
             language,
             cookies,
           })
