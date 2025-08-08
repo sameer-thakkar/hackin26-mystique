@@ -5,6 +5,7 @@ import { css } from '@headout/pixie/css';
 import Conditional from 'components/common/Conditional';
 import { TProductDescriptors } from 'components/Product/interface';
 import {
+  BookNowPayLaterHoverCard,
   CancellationPolicyHoverCard,
   TourTags,
 } from 'components/Product/styles';
@@ -45,6 +46,8 @@ export const ProductDescriptors = ({
     useState(false);
 
   const popupController = useRef<TController>();
+  const bookNowPayLaterDescription =
+    strings.BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT;
 
   if (descriptorArray?.length && descriptorArray?.length > 4 && forceMobile) {
     descriptorArray = descriptorArray?.slice(0, 4);
@@ -125,6 +128,11 @@ export const ProductDescriptors = ({
           cancellationPolicy &&
           item === DESCRIPTORS.FREE_CANCELLATION;
 
+        const canShowBookNowPayLaterHover =
+          !isMobile &&
+          bookNowPayLaterDescription &&
+          item === DESCRIPTORS.BOOK_NOW_PAY_LATER;
+
         const canShowFlexibleCancellationPolicyHover =
           !isMobile && item === DESCRIPTORS.FLEXIBLE_CANCELLATION;
 
@@ -141,17 +149,27 @@ export const ProductDescriptors = ({
           setCancellationPolicyEventRecorded(true);
         };
 
+        const getClassName = (): string => {
+          let classNames = 'tour-tag';
+          if (
+            canShowCancellationPolicyHover ||
+            canShowFlexibleCancellationPolicyHover
+          ) {
+            classNames += ' free-cancellation';
+          }
+          if (canShowBookNowPayLaterHover) {
+            classNames += ' book-now-pay-later';
+          }
+
+          return classNames;
+        };
+
         return (
           item && (
             <div
               key={`descriptor-${index}`}
               data-card-section={CARD_SECTION_MARKERS.DESCRIPTORS}
-              className={`tour-tag ${
-                canShowCancellationPolicyHover ||
-                canShowFlexibleCancellationPolicyHover
-                  ? 'free-cancellation'
-                  : ''
-              }`}
+              className={getClassName()}
               onMouseEnter={onCancellationPolicyHover}
             >
               {showIcons && DescriptorSVG && <DescriptorSVG />}
@@ -165,6 +183,12 @@ export const ProductDescriptors = ({
                 <CancellationPolicyHoverCard>
                   {cancellationPolicy}
                 </CancellationPolicyHoverCard>
+              </Conditional>
+
+              <Conditional if={canShowBookNowPayLaterHover}>
+                <BookNowPayLaterHoverCard>
+                  {bookNowPayLaterDescription}
+                </BookNowPayLaterHoverCard>
               </Conditional>
 
               <Conditional if={canShowFlexibleCancellationPolicyHover}>

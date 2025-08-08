@@ -142,6 +142,7 @@ const pl = {
     EXTENDED_VALIDITY: 'Przedłużony okres ważności',
     FLEXIBLE_DURATION: 'Elastyczny czas trwania',
     FREE_CANCELLATION: 'Bezpłatne anulowanie',
+    BOOK_NOW_PAY_LATER: 'Rezerwuj teraz, zapłać później',
     GUIDED_TOUR: 'Wycieczka z przewodnikiem',
     HOTEL_PICKUP: 'Odbiór z hotelu',
     INSTANT_CONFIRMATION: 'Natychmiastowe potwierdzenie',
@@ -152,6 +153,8 @@ const pl = {
     MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
     LIVE_GUIDE: 'Live guide',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Zarezerwuj teraz bez płacenia. Zrezygnuj za darmo, jeśli Twoje plany się zmienią.',
   DURATION: 'Czas trwania',
   EARLIEST_AVAILABILITY: 'Najwcześniejszy dostępny termin',
   EMAIL_SUBSCRIPTION: {

@@ -32,6 +32,25 @@ export const CancellationPolicyHoverCard = styled.p`
   transition: all 0.3s;
 `;
 
+export const BookNowPayLaterHoverCard = styled.p`
+  background: ${COLORS.BRAND.WHITE};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 13.375rem;
+  ${expandFontToken(FONTS.PARAGRAPH_SMALL)}
+  height: max-content;
+  text-wrap: wrap;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.75rem 0 #0000001a, 0 0 0.0625rem 0 #0000001a;
+  z-index: 10;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+`;
+
 export const HLine = styled.div<{ $isDashed?: boolean }>`
   grid-area: hline;
   width: 100%;
@@ -108,6 +127,19 @@ export const TourTags = styled.div<{
 
       &:hover {
         ${CancellationPolicyHoverCard} {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    &.book-now-pay-later {
+      text-decoration: underline;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        ${BookNowPayLaterHoverCard} {
           visibility: visible;
           opacity: 1;
         }

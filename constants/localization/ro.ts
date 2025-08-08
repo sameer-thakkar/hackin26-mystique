@@ -155,6 +155,7 @@ const ro = {
     EXTENDED_VALIDITY: 'Valabilitate extinsă',
     FLEXIBLE_DURATION: 'Durată flexibilă',
     FREE_CANCELLATION: 'Anulare gratuită',
+    BOOK_NOW_PAY_LATER: 'Rezervare acum, plată mai târziu',
     GUIDED_TOUR: 'Tur ghidat',
     HOTEL_PICKUP: 'Ridicare de la hotel',
     INSTANT_CONFIRMATION: 'Confirmare instantanee',
@@ -163,6 +164,8 @@ const ro = {
     SKIP_THE_LINE: 'Skip the Line',
     TRANSFERS: 'Transferuri incluse',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Rezervați acum fără niciun avans. Anulați gratuit dacă vi se schimbă planurile.',
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Cea mai apropiată disponibilitate',
   EMAIL_SUBSCRIPTION: {

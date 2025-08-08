@@ -164,6 +164,7 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     EXTENDED_VALIDITY: 'Verlängerte Gültigkeit',
     FLEXIBLE_DURATION: 'Flexible Dauer',
     FREE_CANCELLATION: 'Kostenlose Stornierung',
+    BOOK_NOW_PAY_LATER: 'Jetzt buchen, später zahlen',
     GUIDED_TOUR: 'Geführte Tour',
     HOTEL_PICKUP: 'Hotel-Abholung',
     INSTANT_CONFIRMATION: 'Sofortbestätigung',
@@ -175,6 +176,8 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     LIVE_GUIDE: 'Live-Reiseleiter',
     FLEXIBLE_CANCELLATION: 'Flexible Stornierung',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Buchen Sie jetzt kostenlos. Stornieren Sie gratis, falls sich Ihre Pläne ändern.',
   DURATION: 'Dauer',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   EMAIL_SUBSCRIPTION: {

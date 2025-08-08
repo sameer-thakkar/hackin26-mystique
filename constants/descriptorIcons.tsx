@@ -1,21 +1,5 @@
-const quickSvg = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="none"
-      viewBox="0 0 16 16"
-    >
-      <path
-        stroke="#444"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8.667 1.333L2 9.334h6l-.667 5.334 6.667-8H8l.667-5.333z"
-      ></path>
-    </svg>
-  );
-};
+import { Icon } from '@headout/eevee';
+import BookNowPayLater from '@headout/onix/web/ui/stroke/BookNowPayLater';
 
 const skipSvg = () => {
   return (
@@ -139,25 +123,6 @@ const transferSvg = () => {
         stroke="#444444"
         strokeMiterlimit="10"
       />
-    </svg>
-  );
-};
-
-const phoneSvg = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="none"
-      viewBox="0 0 16 16"
-    >
-      <path
-        stroke="#444"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M11.334 1.333H4.667c-.737 0-1.333.597-1.333 1.334v10.666c0 .737.596 1.334 1.333 1.334h6.667c.736 0 1.333-.597 1.333-1.333V2.667c0-.737-.597-1.333-1.333-1.333zM8 12h.007"
-      ></path>
     </svg>
   );
 };
@@ -744,10 +709,18 @@ const shieldSVG = () => (
 export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
+  BOOK_NOW_PAY_LATER: () => (
+    <Icon
+      svg={BookNowPayLater}
+      ariaLabel="parking icon"
+      width={16}
+      height={16}
+      alignmentBaseline="middle"
+      display="flex"
+    />
+  ),
   FLEXIBLE_CANCELLATION: shieldSVG,
   DURATION: ClockSvg,
-  INSTANT_CONFIRMATION: quickSvg,
-  MOBILE_TICKET: phoneSvg,
   SKIP_THE_LINE: skipSvg,
   HOTEL_PICKUP: hotelSvg,
   MEALS_INCLUDED: foodSvg,

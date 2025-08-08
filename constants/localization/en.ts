@@ -165,6 +165,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     EXTENDED_VALIDITY: 'Extended validity',
     FLEXIBLE_DURATION: 'Flexible duration',
     FREE_CANCELLATION: 'Free cancellation',
+    BOOK_NOW_PAY_LATER: 'Book now, pay later',
     GUIDED_TOUR: 'Guided tour',
     HOTEL_PICKUP: 'Hotel pickup',
     INSTANT_CONFIRMATION: 'Instant confirmation',
@@ -176,6 +177,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     LIVE_GUIDE: 'Live guide',
     FLEXIBLE_CANCELLATION: 'Flexible cancellation',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Book now without paying anything. Cancel for free if your plans change',
   DURATION: 'Duration',
   EARLIEST_AVAILABILITY: 'Earliest availability',
   EMAIL_SUBSCRIPTION: {

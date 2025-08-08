@@ -151,6 +151,7 @@ const tr = {
     EXTENDED_VALIDITY: 'Uzatılmış geçerlilik süresi',
     FLEXIBLE_DURATION: 'Esnek süre',
     FREE_CANCELLATION: 'Ücretsiz iptal',
+    BOOK_NOW_PAY_LATER: 'Rezervasyonu şimdi yap, sonra öde',
     GUIDED_TOUR: 'Rehberli tur',
     HOTEL_PICKUP: 'Otelden araç servisi',
     INSTANT_CONFIRMATION: 'Anında onay',
@@ -159,6 +160,8 @@ const tr = {
     SKIP_THE_LINE: 'Sırayı atla',
     TRANSFERS: 'Transferler dahildir',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Hiçbir ödeme yapmadan şimdi rezervasyon yapın. Planlarınızda değişiklik olursa ücretsiz iptal edin.',
   DURATION: 'Süre',
   EARLIEST_AVAILABILITY: 'En erken rezervasyon',
   EMAIL_SUBSCRIPTION: {

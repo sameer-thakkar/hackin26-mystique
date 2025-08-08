@@ -146,6 +146,7 @@ const it = {
     EXTENDED_VALIDITY: 'Validità estesa',
     FLEXIBLE_DURATION: 'Durata flessibile',
     FREE_CANCELLATION: 'Cancellazione gratuita',
+    BOOK_NOW_PAY_LATER: 'Prenota ora, paga dopo',
     GUIDED_TOUR: 'Tour guidato',
     HOTEL_PICKUP: 'Servizio di Prelievo in Hotel',
     INSTANT_CONFIRMATION: 'Conferma Istantanea',
@@ -157,6 +158,8 @@ const it = {
     LIVE_GUIDE: 'Guida dal vivo',
     FLEXIBLE_CANCELLATION: 'Cancellazione flessibile',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Prenota ora senza pagare. Cancella gratis se cambi idea.',
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Prima disponibilità',
   EMAIL_SUBSCRIPTION: {

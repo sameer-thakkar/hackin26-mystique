@@ -1349,10 +1349,10 @@
   resolved "https://npm.pkg.github.com/download/@headout/onix/3.2.2/6c73989c497d5c2428d3a12c7065b7d88c5e5b43#6c73989c497d5c2428d3a12c7065b7d88c5e5b43"
   integrity sha512-IOHnzR611kOtZMiQwoEULRqcmxy9UhlWi/P4nRfDAZ8/GpfPIAhIKfPfutz5Iyu4lxpVSLgmVJaTs/4TNoBBNg==
 
-"@headout/onix@^3.2.0":
-  version "3.2.0"
-  resolved "https://npm.pkg.github.com/download/@headout/onix/3.2.0/666632b80a6ec5725a705cff04915e24684ed725#666632b80a6ec5725a705cff04915e24684ed725"
-  integrity sha512-p6Tl6iefXVdFnB9CXUYa+MKschgoCY6XTIx1BqPGhOOKKY+bLBmSeO1+91xTXP3Uhfs1WSXEckz2O+n3PscxJg==
+"@headout/onix@^4.0.3":
+  version "4.0.3"
+  resolved "https://npm.pkg.github.com/download/@headout/onix/4.0.3/14b46a85c1ed7699ac4e85c0eec214bb20b8d132#14b46a85c1ed7699ac4e85c0eec214bb20b8d132"
+  integrity sha512-T2A2dtAPp3VgpLnI08S02j7ljaUO4E/fkP4zL9rXGUKcaAjJn1tx5wk6v0h9Dqa3PaaASX8fSvbrPeiMkS06Zg==
 
 "@headout/pixie@^2.1.0":
   version "2.1.0"

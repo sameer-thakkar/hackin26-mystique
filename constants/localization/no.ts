@@ -153,6 +153,7 @@ const no = {
     EXTENDED_VALIDITY: 'Utvidet gyldighet',
     FLEXIBLE_DURATION: 'Fleksibel varighet',
     FREE_CANCELLATION: 'Gratis avbestilling',
+    BOOK_NOW_PAY_LATER: 'Bestill nå, betal senere',
     GUIDED_TOUR: 'Guidet tur',
     HOTEL_PICKUP: 'Henting på hotellet',
     INSTANT_CONFIRMATION: 'Øyeblikkelig bekreftelse',
@@ -161,6 +162,8 @@ const no = {
     SKIP_THE_LINE: 'Hopp over køen',
     TRANSFERS: 'Transport er inkludert',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Bestill nå uten å betale noe. Gratis avbestilling hvis planene dine forandres',
   DURATION: 'Varighet',
   EARLIEST_AVAILABILITY: 'Tidligste tilgjengelighet',
   EMAIL_SUBSCRIPTION: {

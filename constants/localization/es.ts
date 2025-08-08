@@ -166,6 +166,7 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     EXTENDED_VALIDITY: 'Validez ampliada',
     FLEXIBLE_DURATION: 'Duración flexible',
     FREE_CANCELLATION: 'Cancelación gratuita',
+    BOOK_NOW_PAY_LATER: 'Reserva ahora, paga más tarde',
     GUIDED_TOUR: 'Visita guiada',
     HOTEL_PICKUP: 'Traslados de Hotel',
     INSTANT_CONFIRMATION: 'Confirmación instantánea',
@@ -177,6 +178,8 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     LIVE_GUIDE: 'Guía en directo',
     FLEXIBLE_CANCELLATION: 'Cancelación flexible',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Reserva ahora sin pagar nada. Cancela gratis si cambias de planes.',
   DURATION: 'Duración',
   EARLIEST_AVAILABILITY: 'Siguiente disponible',
   EMAIL_SUBSCRIPTION: {

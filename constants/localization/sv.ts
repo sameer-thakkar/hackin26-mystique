@@ -152,6 +152,7 @@ const sv = {
     EXTENDED_VALIDITY: 'Utökad giltighet',
     FLEXIBLE_DURATION: 'Flexibel varaktighet',
     FREE_CANCELLATION: 'Fri avbokning',
+    BOOK_NOW_PAY_LATER: 'Boka nu och betala senare',
     GUIDED_TOUR: 'Guidad rundtur',
     HOTEL_PICKUP: 'Upphämtning på hotellet',
     INSTANT_CONFIRMATION: 'Omedelbar bekräftelse',
@@ -160,6 +161,8 @@ const sv = {
     SKIP_THE_LINE: 'Skippa kön',
     TRANSFERS: 'Transfer ingår',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Boka nu utan att betala någonting. Avboka kostnadsfritt om dina planer ändras.',
   DURATION: 'Varaktighet',
   EARLIEST_AVAILABILITY: 'Tidigaste tillgänglighet',
   EMAIL_SUBSCRIPTION: {

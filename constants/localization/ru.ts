@@ -153,6 +153,7 @@ const ru = {
     EXTENDED_VALIDITY: 'Расширенный срок действия',
     FLEXIBLE_DURATION: 'Гибкая продолжительность',
     FREE_CANCELLATION: 'Бесплатная отмена',
+    BOOK_NOW_PAY_LATER: 'Бронируйте сейчас, платите потом',
     GUIDED_TOUR: 'Экскурсия с гидом',
     HOTEL_PICKUP: 'Трансфер из отеля',
     INSTANT_CONFIRMATION: 'Мгновенное подтверждение',
@@ -163,6 +164,8 @@ const ru = {
     MULTILINGUAL_AUDIO_GUIDE: 'Многоязычный аудиогид',
     LIVE_GUIDE: 'Живой гид',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Бронируйте сейчас без оплаты. Бесплатная отмена, если у вас изменились планы.',
   DURATION: 'Продолжительность',
   EARLIEST_AVAILABILITY: 'Наиболее ранняя доступность',
   EMAIL_SUBSCRIPTION: {

@@ -164,6 +164,7 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     EXTENDED_VALIDITY: 'Verlengde geldigheid',
     FLEXIBLE_DURATION: 'Flexibele duur',
     FREE_CANCELLATION: 'Gratis annuleren',
+    BOOK_NOW_PAY_LATER: 'Boek nu, betaal later',
     GUIDED_TOUR: 'Rondleiding',
     HOTEL_PICKUP: 'Ophalen bij het Hotel',
     INSTANT_CONFIRMATION: 'Directe bevestiging',
@@ -175,6 +176,8 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     LIVE_GUIDE: 'Live gids',
     FLEXIBLE_CANCELLATION: 'Flexibele annulering',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Boek nu zonder iets te betalen. Gratis annuleren als je plannen veranderen.',
   DURATION: 'Looptijd',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
   EMAIL_SUBSCRIPTION: {

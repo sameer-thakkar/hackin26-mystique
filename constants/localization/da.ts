@@ -152,6 +152,7 @@ const da = {
     EXTENDED_VALIDITY: 'Forlænget gyldighed',
     FLEXIBLE_DURATION: 'Fleksibel varighed',
     FREE_CANCELLATION: 'Gratis afbestilling',
+    BOOK_NOW_PAY_LATER: 'Book nu, betal senere',
     GUIDED_TOUR: 'Guidet tur',
     HOTEL_PICKUP: 'Afhentning på hotellet',
     INSTANT_CONFIRMATION: 'Øjeblikkelig bekræftelse',
@@ -160,6 +161,8 @@ const da = {
     SKIP_THE_LINE: 'Spring køen over',
     TRANSFERS: 'Transport inkluderet',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Book nu, uden at betale. Få gratis annullering, hvis dine planer ændrer sig.',
   DURATION: 'Varighed',
   EARLIEST_AVAILABILITY: 'Næste mulighed',
   EMAIL_SUBSCRIPTION: {

@@ -165,6 +165,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     EXTENDED_VALIDITY: 'Validade prolongada',
     FLEXIBLE_DURATION: 'Duração flexível',
     FREE_CANCELLATION: 'Cancelamento gratuito',
+    BOOK_NOW_PAY_LATER: 'Reserve agora, pague depois',
     GUIDED_TOUR: 'Tour guiado',
     HOTEL_PICKUP: 'Traslado do hotel',
     INSTANT_CONFIRMATION: 'Confirmação imediata',
@@ -176,6 +177,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     LIVE_GUIDE: 'Guia presencial',
     FLEXIBLE_CANCELLATION: 'Cancelamento flexível',
   },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Reserve agora sem pagar nada. Cancele gratuitamente se os planos mudarem.',
   DURATION: 'Duração',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
   EMAIL_SUBSCRIPTION: {
