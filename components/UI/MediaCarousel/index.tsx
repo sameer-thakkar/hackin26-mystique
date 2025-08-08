@@ -26,6 +26,7 @@ import {
 import { strings } from 'const/strings';
 import ChevronLeftCircle from 'assets/chevronLeftCircle';
 import VideoPlayIcon from 'assets/playIcon';
+import { getVideoPosition } from './constants';
 
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 const VideoPlayer = dynamic(
@@ -96,6 +97,7 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
   disableOnInteraction = false,
   onSwiper,
   onSlideChange,
+  uid = '',
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
@@ -229,6 +231,8 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
     });
   };
 
+  const VIDEO_POSITION = getVideoPosition(uid);
+
   return (
     <CarouselContainer
       $backgroundColor={backgroundColor}
@@ -241,7 +245,7 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
         {imageList.map((image, index) => {
           const isLCPCandidate = isMobile && isFirstProduct && index === 0;
 
-          return videoUrl && index === 0 ? (
+          return videoUrl && index === VIDEO_POSITION ? (
             <Video
               key={videoUrl}
               url={videoUrl}
@@ -284,7 +288,9 @@ const MediaCarousel: React.FC<React.PropsWithChildren<MediaCarouselProps>> = ({
         })}
       </SwiperWrapper>
 
-      <Conditional if={videoUrl && currentIndex === 0 && !isMobile}>
+      <Conditional
+        if={videoUrl && currentIndex === VIDEO_POSITION && !isMobile}
+      >
         <VideoCTA onClick={onVideoClick}>
           <VideoPlayIcon />
           <p>{strings.SNEAK_PEEK}</p>

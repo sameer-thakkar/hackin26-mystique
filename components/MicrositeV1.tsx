@@ -1505,7 +1505,8 @@ const MicrositeV1 = (props: any) => {
             isA1orC1MB(taggedMbType) &&
             !isDesertSafariMB &&
             !isPOIFiltersEnabled &&
-            categoryHeaderMenu.CITY_ATTRACTIONS
+            categoryHeaderMenu.CITY_ATTRACTIONS &&
+            taggedCategoryName !== 'Entertainment'
           }
         >
           <LazyComponent>
