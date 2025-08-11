@@ -286,7 +286,7 @@ const HeaderRight = styled.div<{
       text-wrap: nowrap;
     }
   }
-  .link-element a span.label {
+  .link-element:not(:has(.menu-item-text > span.label)) a span.label {
     color: ${COLORS.GRAY.G3} !important;
   }
 
