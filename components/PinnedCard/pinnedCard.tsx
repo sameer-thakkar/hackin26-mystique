@@ -35,6 +35,11 @@ const DescriptorList = (props: IFilteredDescriptorProps) => {
         const { code, name } = descriptor;
         if (name && code) {
           const DiscSvgElm = descriptorIcons[code];
+
+          if (!DiscSvgElm) {
+            return null;
+          }
+
           return (
             <div key={name} className="descriptors">
               <DiscSvgElm className="descSvg" />

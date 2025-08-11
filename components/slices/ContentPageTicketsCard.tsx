@@ -348,6 +348,10 @@ const Descriptors = ({
       {descriptorArray.map((item: any, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
 
+        if (!DescriptorSVG) {
+          return null;
+        }
+
         let descEl = item ? (
           <div key={`descriptor-${index}`} className="tour-tag">
             <DescriptorSVG />

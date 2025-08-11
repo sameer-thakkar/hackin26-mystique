@@ -86,6 +86,11 @@ export const ProductDescriptors = ({
       <Conditional if={customDescriptors?.length}>
         {customDescriptors?.map((item, index: number) => {
           const DescriptorSVG = descriptorIcons[item.type];
+
+          if (!DescriptorSVG) {
+            return null;
+          }
+
           const descriptorContent = `${renderToString(
             <DescriptorSVG />
           )}<span>${item.text}</span>`;

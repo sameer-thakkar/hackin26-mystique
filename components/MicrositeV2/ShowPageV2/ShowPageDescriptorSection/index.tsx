@@ -106,7 +106,7 @@ const ShowPageDescriptorSection = ({
       <DescriptorsWrapper numberOfDescriptors={Object.keys(descriptors).length}>
         {Object.keys(descriptors).map((key) => {
           const { content, icon: Icon, label } = descriptors[key];
-          if (!content) return null;
+          if (!content || !Icon) return null;
 
           return (
             <div className="descriptor" key={key}>

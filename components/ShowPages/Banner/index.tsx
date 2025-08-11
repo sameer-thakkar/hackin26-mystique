@@ -120,7 +120,7 @@ const ShowPageBanner = ({
   const { [strings.SHOW_PAGE.THEATRE_NAME]: theatreName, theatrePageUrl } =
     detailsObjects || {};
 
-  let showDetails = {};
+  let showDetails: Record<string, string> = {};
   Object.keys(detailsObjects)?.forEach((key) => {
     switch (key) {
       case strings.SHOW_PAGE.OPENING_DATE:
@@ -143,25 +143,21 @@ const ShowPageBanner = ({
               dateStyle: 'long',
             },
           });
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           showDetails['EXTENDED_VALIDITY'] = `${openingDate} - ${closingDate}`;
         }
         break;
       case strings.SHOW_PAGE.DURATION:
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         showDetails['DURATION'] = detailsObjects[key];
         break;
       case strings.SHOW_PAGE.AGE_LIMIT:
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         showDetails['USER'] = detailsObjects[key];
         break;
     }
   });
   descriptors?.forEach((descriptor: any) => {
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    showDetails[descriptor?.code] =
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      strings.DESCRIPTORS[descriptor?.code] || descriptor.name;
+    if (descriptor?.code && descriptor?.code in strings.DESCRIPTORS) {
+      showDetails[descriptor?.code] = descriptor.displayValue;
+    }
   });
 
   const bannerChange = () => {
@@ -503,13 +499,11 @@ const ShowPageBanner = ({
         <div className="details-wrapper">
           {Object.keys(showDetails)?.map((key, index) => {
             const ShowDetailsSvg = descriptorIcons[key];
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            if (!showDetails[key]) {
+            if (!showDetails?.[key] || !ShowDetailsSvg) {
               return null;
             }
             return (
               <div className="individual-wrapper" key={index}>
-                {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
                 <ShowDetailsSvg /> {showDetails[key]}
               </div>
             );
