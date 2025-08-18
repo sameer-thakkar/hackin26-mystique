@@ -332,12 +332,6 @@ export const RatingsWrapper = styled.div<{
     handleMargin({ $isNonPoi, $showTrustBooster })};
   grid-area: ${({ $isNonPoi, $showTrustBooster, $hasParentChip }) =>
     handleGridArea({ $isNonPoi, $showTrustBooster, $hasParentChip })};
-
-  svg {
-    margin-top: 0.0625rem;
-    height: 0.75rem;
-    width: 0.75rem;
-  }
   z-index: 1;
 
   @media (min-width: 768px) {
@@ -353,37 +347,6 @@ export const RatingsWrapper = styled.div<{
   `}
     margin: ${({ $isNonPoi }) => ($isNonPoi ? '0' : '1rem 0 0')};
     column-gap: 0.25rem;
-    svg {
-      margin-top: 0;
-      height: 1rem;
-      width: 1rem;
-    }
-  }
-`;
-
-export const AverageRatingWrapper = styled.span<{
-  $isNonPoi?: boolean;
-}>`
-  color: ${COLORS.TEXT.CANDY_1};
-  margin: 0 0.1875rem 0 0.125rem;
-  ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
-
-  @media (min-width: 768px) {
-    margin: 0;
-    ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
-  }
-`;
-
-export const RatingCountWrapper = styled.span<{
-  $isNonPoi?: boolean;
-}>`
-  display: block;
-  margin-top: 1px;
-  color: ${COLORS.TEXT.CANDY_1};
-  ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-  @media (min-width: 768px) {
-    margin: 0;
-    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
   }
 `;
 

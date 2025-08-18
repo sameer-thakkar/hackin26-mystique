@@ -1,27 +1,17 @@
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import classNames from 'classnames';
-import { checkIfHarryPotterPage } from 'utils';
-import { isSafari as checkForSafari } from 'utils/helper';
-import { getLocalizedCount } from 'utils/localizationUtils';
+import { StarRating } from '@headout/espeon/components/StarRating';
+import useWindowWidth from 'hooks/useWindowWidth';
 import { appAtom } from 'store/atoms/app';
-import COLORS from 'const/colors';
 import { CARD_SECTION_MARKERS } from 'const/productCard';
 import { strings } from 'const/strings';
-import StarFull from 'assets/starFull';
 import { TRatingsContainerProps } from '../interface';
-import { StyledRatingsContainer } from '../styles';
 
 const Ratings = ({
   reviewsDetails,
   onRatingsCountClick,
 }: TRatingsContainerProps) => {
-  const [isSafari, setIsSafari] = useState(false);
-  const { uid, language } = useRecoilValue(appAtom);
-
-  useEffect(() => {
-    setIsSafari(checkForSafari());
-  }, []);
+  const { language } = useRecoilValue(appAtom);
+  const windowWidth = useWindowWidth();
 
   if (!reviewsDetails) return null;
 
@@ -29,38 +19,21 @@ const Ratings = ({
 
   if (showRatings === undefined) return null;
 
-  const isHarryPotterPage = checkIfHarryPotterPage(uid);
+  const isMobile = windowWidth !== undefined && windowWidth < 768;
 
   return (
-    <StyledRatingsContainer
-      $isHarryPotterPage={isHarryPotterPage}
-      $isSafari={isSafari}
-    >
-      {showRatings && <StarFull fillColor={COLORS.BRAND.CANDY} />}
-      <span
-        data-card-section={CARD_SECTION_MARKERS.REVIEWS}
-        className="avg-rating"
-      >
-        {showRatings ? averageRating?.toFixed(1) : strings.NEW}
-      </span>
-      {showRatings && ratingsCount && (
-        <span
-          className="rating-count"
-          onClick={onRatingsCountClick}
-          role="button"
-          {...(!onRatingsCountClick && {
-            'data-card-section': CARD_SECTION_MARKERS.REVIEWS,
-          })}
-          tabIndex={0}
-        >
-          (
-          <span className={classNames({ underline: onRatingsCountClick })}>
-            {getLocalizedCount(ratingsCount, language)}
-          </span>
-          )
-        </span>
-      )}
-    </StyledRatingsContainer>
+    <span data-card-section={CARD_SECTION_MARKERS.REVIEWS}>
+      <StarRating
+        multipleStars={false}
+        rating={averageRating ?? 0}
+        onRatingCountClick={onRatingsCountClick}
+        ratingCount={ratingsCount}
+        size={isMobile ? 'regular' : 'medium'}
+        lang={language}
+        ratingLabelText={strings.NEW}
+        showNewLabel={!showRatings}
+      />
+    </span>
   );
 };
 

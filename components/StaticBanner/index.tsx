@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { SwiperProps } from 'swiper/react';
+import { StarRating } from '@headout/espeon/components/StarRating';
 import Conditional from 'components/common/Conditional';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import {
-  AverageRatingWrapper,
   BannerDisclaimerText,
   BannerSection,
   Container,
@@ -23,7 +23,6 @@ import {
   MediaContainer,
   Overlay,
   ParentChip,
-  RatingCountWrapper,
   RatingsWrapper,
   Subsection,
 } from 'components/StaticBanner/styles';
@@ -33,9 +32,7 @@ import {
   getF1MBTrustBoosters,
   shouldDisplayCollectionRatings,
 } from 'utils/index';
-import { getLocalizedCount } from 'utils/localizationUtils';
 import { titleCase } from 'utils/stringUtils';
-import { appAtom } from 'store/atoms/app';
 import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
 import {
@@ -47,7 +44,6 @@ import {
 import { strings } from 'const/strings';
 import ChevronLeftBold from 'assets/chevronLeftBold';
 import ChevronRightIcon from 'assets/chevronRight';
-import Star from 'assets/star';
 import { COMPONENT_NAME, SECTION_NAME } from './const';
 import { IllustrationBanner } from './IllustrationBanner';
 import { getBannerDescriptorsArray } from './utils';
@@ -212,7 +208,6 @@ const StaticBanner = ({
   isAirportTransfersMB = false,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const { language } = useRecoilValue(appAtom);
 
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
   const bannerHeading =
@@ -403,18 +398,13 @@ const StaticBanner = ({
               $hasParentChip={displayParentChip}
               className="ratings-wrapper"
             >
-              <Star color={COLORS.TEXT.CANDY_1} />
-              <AverageRatingWrapper $isNonPoi={showNonPoiDesign}>
-                {averageRating?.toPrecision(2)}
-              </AverageRatingWrapper>
-              <RatingCountWrapper $isNonPoi={showNonPoiDesign}>
-                (
-                {strings.formatString(
-                  strings.RATINGS,
-                  getLocalizedCount(ratingsCount, language)
-                )}
-                )
-              </RatingCountWrapper>
+              <StarRating
+                rating={averageRating}
+                ratingCount={ratingsCount}
+                size={isMobile ? 'regular' : 'medium'}
+                multipleStars={false}
+                ratingLabelText=""
+              />
             </RatingsWrapper>
           </Conditional>
           <Conditional if={showNonPoiDesign && !isHOHORevamp}>

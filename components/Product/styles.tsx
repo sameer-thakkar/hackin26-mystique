@@ -1585,30 +1585,8 @@ export const StyledRatingsContainer = styled.div<{
   align-items: center;
   gap: 0.125rem;
 
-  svg {
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-top: ${({ $isSafari }) => ($isSafari ? '0' : '1px')};
-  }
-
   span {
     color: ${COLORS.TEXT.CANDY_1};
-
-    &.avg-rating {
-      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
-      font-family: ${HALYARD.FONT_STACK};
-    }
-
-    &.rating-count {
-      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
-      font-family: ${HALYARD.FONT_STACK};
-      text-align: left;
-
-      & .underline {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    }
   }
 
   ${({ $isHarryPotterPage }) =>
