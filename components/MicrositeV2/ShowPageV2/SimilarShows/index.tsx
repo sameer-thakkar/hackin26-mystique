@@ -191,7 +191,11 @@ const SimilarShows = ({
         <Swiper isFreeMode {...swiperParams}>
           {similarProductData.map((product: Record<string, any>) => (
             <VerticalProductCard
-              product={{ ...product, title: product.name }}
+              product={{
+                ...product,
+                title: product.name,
+                tgid: product.tgid ?? product.id,
+              }}
               key={tgid}
               isMobile={isMobile}
             />

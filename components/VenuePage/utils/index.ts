@@ -1,7 +1,10 @@
+import dayjs from 'dayjs';
+import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import { getObject } from 'components/ShowPages/parseShowPage';
-import { formatDateToString } from 'utils/dateUtils';
 import { SLICE_TYPES } from 'const/index';
 import { strings } from 'const/strings';
+
+dayjs.extend(CustomParseFormat);
 
 export function getShowsBasedOnTimestamp(availableShowsData: []) {
   const nowPlayingShows: Record<string, string>[] = [];
@@ -18,21 +21,17 @@ export function getShowsBasedOnTimestamp(availableShowsData: []) {
       filterHighlights
     );
 
-    const openingDate = formatDateToString(
-      new Date(detailsObjects[strings.SHOW_PAGE.OPENING_DATE]),
-      'en',
-      'MMM D, YYYY'
-    );
+    const openingTimeStamp = dayjs(
+      detailsObjects[strings.SHOW_PAGE.OPENING_DATE],
+      'YYYY-MM-DD'
+    ).unix();
 
-    const closingDate = formatDateToString(
-      new Date(detailsObjects[strings.SHOW_PAGE.CLOSING_DATE]),
-      'en',
-      'MMM D, YYYY'
-    );
+    const closingTimeStamp = dayjs(
+      detailsObjects[strings.SHOW_PAGE.CLOSING_DATE],
+      'YYYY-MM-DD'
+    ).unix();
 
-    const openingTimeStamp = new Date(openingDate).getTime();
-    const closingTimeStamp = new Date(closingDate).getTime();
-    const currentTimeStamp = new Date().getTime();
+    const currentTimeStamp = dayjs().unix();
 
     if (
       show?.listingPrice &&

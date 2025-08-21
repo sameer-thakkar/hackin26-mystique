@@ -13,7 +13,7 @@ import { moveElement } from 'utils/arrayUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-import { SLICE_TYPES } from 'constants/index';
+import { CATEGORY_IDS, SLICE_TYPES } from 'constants/index';
 
 export const StyledLongForm = styled.div<{
   $isRevampedDesign?: boolean;
@@ -246,7 +246,7 @@ const LongForm = (longFormProps: TLongFormProps) => {
       },
     };
 
-    if (reviewsSliceIndex === -1) {
+    if (reviewsSliceIndex === -1 && categoryId !== CATEGORY_IDS.Entertainment) {
       finalContent.push(reviewsV2Slice);
     } else if (reviewsSliceIndex !== -1) {
       finalContent[reviewsSliceIndex] = reviewsV2Slice;
