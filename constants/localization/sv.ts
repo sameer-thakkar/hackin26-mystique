@@ -1324,6 +1324,12 @@ const sv = {
       'Se den fullständiga planen för din upplevelse.',
     OPEN_MAP_VIEW: 'Öppna kartan',
     START_POINT_SAME_AS_END_POINT: 'Din slutpunkt är samma som din startpunkt',
+    ROUTES: 'Rutter',
+    SIGHTS_COVERED: 'Aktuella sevärdheter',
+    BOARDING_POINT: 'Ombordstigningsplats',
+    BOARDING_POINTS: 'Ombordstigningsplatser',
+    LANDMARKS: 'Landmärken',
+    VIEW_IN_MAPS: 'Visa i kartor',
   },
   CITY_AIRPORT_TRANSFERS: '{0} Flygplatstransfer',
   BANNER_SUBTEXT:

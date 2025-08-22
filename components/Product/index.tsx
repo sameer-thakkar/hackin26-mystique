@@ -304,6 +304,7 @@ const Product = (props: any) => {
     data: tgidItineraryData,
     showData: showItinerary,
     isHOHO: isHohoItinerary,
+    isCruisesItinerary,
     showSightsCoveredItineraryLayout,
   } = itineraryInfo || {};
 
@@ -2226,6 +2227,7 @@ const Product = (props: any) => {
                       itineraryData={tgidItineraryData}
                       lang={currentLanguage}
                       isHohoItinerary={isHohoItinerary}
+                      isCruisesItinerary={isCruisesItinerary}
                       strings={strings}
                       trackEventFn={trackEvent}
                       isMobile={isMobile}

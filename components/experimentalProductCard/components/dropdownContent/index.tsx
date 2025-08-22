@@ -18,6 +18,7 @@ import type {
   TItineraryAdditionalTrackingProperties,
 } from '@headout/espeon/components/Itinerary';
 import {
+  EItineraryType,
   isHOHOItinerary,
   isItineraryValid,
 } from '@headout/espeon/components/Itinerary';
@@ -181,6 +182,8 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   const isHohoItinerary = tgidItineraryData?.reduce((acc, itinerary) => {
     return acc || isHOHOItinerary(itinerary.type);
   }, false);
+  const isCruisesItinerary =
+    showItinerary && tgidItineraryData?.[0].type === EItineraryType.Cruise;
 
   const { inclusionsRichText = [], everyRichTextExceptInclusions } = useMemo(
     () =>
@@ -567,6 +570,7 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
                     lang={lang}
                     onActiveTabChange={onActiveItineraryTabChange}
                     isHohoItinerary={isHohoItinerary}
+                    isCruisesItinerary={isCruisesItinerary}
                     strings={strings}
                     trackEventFn={trackEvent}
                     isMobile={true}

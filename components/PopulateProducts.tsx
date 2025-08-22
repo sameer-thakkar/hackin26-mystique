@@ -778,6 +778,8 @@ const PopulateProducts: any = (props: any) => {
 
     const isHohoItinerary =
       showItinerary && tgidItineraryData[0].type === EItineraryType.Hoho;
+    const isCruisesItinerary =
+      showItinerary && tgidItineraryData[0].type === EItineraryType.Cruise;
 
     const isGuidedTour =
       isSpecialGuidedTour || isGuidedTourSubcategory(primarySubCategory?.id);
@@ -861,6 +863,7 @@ const PopulateProducts: any = (props: any) => {
         data: tgidItineraryData,
         showData: showItinerary && !showSightsCoveredItineraryLayout,
         isHOHO: isHohoItinerary,
+        isCruisesItinerary: isCruisesItinerary,
         showSightsCoveredItineraryLayout:
           showSightsCoveredItineraryLayout &&
           !!tgidItineraryData?.length &&

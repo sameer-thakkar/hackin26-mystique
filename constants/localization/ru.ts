@@ -1325,6 +1325,12 @@ const ru = {
     OPEN_MAP_VIEW: 'Открыть карту',
     START_POINT_SAME_AS_END_POINT:
       'Ваше место прибытия будет тем же, что и место отправления.',
+    ROUTES: 'Маршруты',
+    SIGHTS_COVERED: 'Охваченные достопримечательности',
+    BOARDING_POINT: 'Точка посадки',
+    BOARDING_POINTS: 'Точки посадки',
+    LANDMARKS: 'Достопримечательности',
+    VIEW_IN_MAPS: 'Просмотр в Google Maps',
   },
   CRUISES: {
     BANNER_HEADING: 'Прокатитесь по {0} - Исследуйте, пообедайте и отдохните',

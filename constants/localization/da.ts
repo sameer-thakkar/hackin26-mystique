@@ -1322,6 +1322,12 @@ const da = {
     OPEN_MAP_VIEW: 'Åbn kort',
     START_POINT_SAME_AS_END_POINT:
       'Dit slutsted ville blive det samme som dit startsted',
+    ROUTES: 'Ruter',
+    SIGHTS_COVERED: 'Omfattede seværdigheder',
+    BOARDING_POINT: 'Påstigningssted',
+    BOARDING_POINTS: 'Påstigningssteder',
+    LANDMARKS: 'Vartegn',
+    VIEW_IN_MAPS: 'Se på kort',
   },
   CRUISES: {
     BANNER_HEADING: 'Krydstogt gennem {0} – oplevelser, god mad og afslapning',

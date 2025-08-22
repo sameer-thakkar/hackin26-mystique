@@ -1354,6 +1354,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     OPEN_MAP_VIEW: 'Open map',
     START_POINT_SAME_AS_END_POINT:
       'Your ending point would be same as your start point',
+    ROUTES: 'Routes',
+    SIGHTS_COVERED: 'Sights covered',
+    BOARDING_POINT: 'Boarding point',
+    BOARDING_POINTS: 'Boarding points',
+    LANDMARKS: 'Landmarks',
+    VIEW_IN_MAPS: 'View in maps',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

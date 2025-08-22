@@ -1321,6 +1321,12 @@ const no = {
     VIEW_EXPERIENCE_MAPPED_OUT: 'Vis full oversikt over opplevelsen din.',
     OPEN_MAP_VIEW: 'Åpne kart',
     START_POINT_SAME_AS_END_POINT: 'Sluttstedet er det samme som startstedet',
+    ROUTES: 'Ruter',
+    SIGHTS_COVERED: 'Attraksjoner som dekkes',
+    BOARDING_POINT: 'Ombordstigningssted',
+    BOARDING_POINTS: 'Ombordstigningssteder',
+    LANDMARKS: 'Landemerker',
+    VIEW_IN_MAPS: 'Vis i kart',
   },
 
   CITY_AIRPORT_TRANSFERS: 'Flyplasstransport for {0}',

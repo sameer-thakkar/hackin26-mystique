@@ -1294,6 +1294,12 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     OPEN_MAP_VIEW: 'Ouvrir la carte',
     START_POINT_SAME_AS_END_POINT:
       "Votre point d'arrivée sera le même que votre point de départ.",
+    ROUTES: 'Routes',
+    SIGHTS_COVERED: 'Sites inclus',
+    BOARDING_POINT: "Point d'embarquement",
+    BOARDING_POINTS: "Points d'embarquement",
+    LANDMARKS: 'Monuments',
+    VIEW_IN_MAPS: 'Voir sur la carte',
   },
   CRUISES: {
     BANNER_HEADING: 'Croisière à travers {0} : découverte, détente et dîner',

@@ -1292,6 +1292,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     VIEW_EXPERIENCE_MAPPED_OUT: 'Confira sua experiência mapeada.',
     OPEN_MAP_VIEW: 'Abrir o mapa',
     START_POINT_SAME_AS_END_POINT: 'O ponto final será o ponto de partida',
+    ROUTES: 'Rotas',
+    SIGHTS_COVERED: 'Atrações no caminho',
+    BOARDING_POINT: 'Ponto de embarque',
+    BOARDING_POINTS: 'Pontos de embarque',
+    LANDMARKS: 'Pontos turísticos',
+    VIEW_IN_MAPS: 'Ver no mapa',
   },
   CRUISES: {
     BANNER_HEADING:

@@ -1283,6 +1283,12 @@ const it = {
     OPEN_MAP_VIEW: 'Apri la mappa',
     START_POINT_SAME_AS_END_POINT:
       'Il punto di arrivo sarà lo stesso del punto di partenza',
+    ROUTES: 'Itinerari',
+    SIGHTS_COVERED: 'Cosa vedrai',
+    BOARDING_POINT: 'Punto di imbarco',
+    BOARDING_POINTS: 'Punti di imbarco',
+    LANDMARKS: 'Punti di interesse',
+    VIEW_IN_MAPS: 'Vedi sulla mappa',
   },
   CRUISES: {
     BANNER_HEADING: 'Scopri {0} in crociera: pasti, bevande e relax',

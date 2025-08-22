@@ -1329,6 +1329,12 @@ const tr = {
     OPEN_MAP_VIEW: 'Haritayı aç',
     START_POINT_SAME_AS_END_POINT:
       'Bitiş noktanız başlangıç noktanızla aynıdır',
+    ROUTES: 'Rotalar',
+    SIGHTS_COVERED: 'Gezilecek yerler',
+    BOARDING_POINT: 'Kalkış noktası',
+    BOARDING_POINTS: 'Kalkış noktaları',
+    LANDMARKS: 'Simgesel Yapılar',
+    VIEW_IN_MAPS: 'Haritada görüntüle',
   },
   CITY_AIRPORT_TRANSFERS: '{0} Havalimanı Transferleri',
   BANNER_SUBTEXT:

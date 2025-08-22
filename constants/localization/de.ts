@@ -1289,6 +1289,12 @@ _Alle oben in Großbuchstaben geschriebenen Begriffe sind in der Datenschutzrich
     OPEN_MAP_VIEW: 'Karte öffnen',
     START_POINT_SAME_AS_END_POINT:
       'Der Endpunkt ist derselbe wie der Startpunkt',
+    ROUTES: 'Routen',
+    SIGHTS_COVERED: 'Sehens- würdigkeiten',
+    BOARDING_POINT: 'Einstiegsstelle',
+    BOARDING_POINTS: 'Einstiegsstellen',
+    LANDMARKS: 'Sehenswürdigkeiten',
+    VIEW_IN_MAPS: 'Kartenansicht',
   },
   CRUISES: {
     BANNER_HEADING: 'Schifffahrten in {0}: entdecken, essen, entspannen',

@@ -1345,6 +1345,12 @@ _Todos los términos utilizados en mayúsculas se definen en la Política de pri
     OPEN_MAP_VIEW: 'Abrir el mapa',
     START_POINT_SAME_AS_END_POINT:
       'El punto de llegada será el mismo que el de salida',
+    ROUTES: 'Rutas',
+    SIGHTS_COVERED: 'Lugares de interés',
+    BOARDING_POINT: 'Punto de embarque',
+    BOARDING_POINTS: 'Puntos de embarque',
+    LANDMARKS: 'Sitios de interés',
+    VIEW_IN_MAPS: 'Ver en el mapa',
   },
   CRUISES: {
     BANNER_HEADING: 'Descubre {0} en un crucero: comidas, bebidas y relax',

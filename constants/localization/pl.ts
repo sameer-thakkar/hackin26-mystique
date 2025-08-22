@@ -1239,6 +1239,12 @@ const pl = {
     OPEN_MAP_VIEW: 'Otwórz mapę',
     START_POINT_SAME_AS_END_POINT:
       'Twój punkt końcowy byłby taki sam jak punkt startowy',
+    ROUTES: 'Trasy',
+    SIGHTS_COVERED: 'Widoki po drodze',
+    BOARDING_POINT: 'Punkt wejścia na pokład',
+    BOARDING_POINTS: 'Punkty wejścia na pokład',
+    LANDMARKS: 'Zabytki',
+    VIEW_IN_MAPS: 'Zobacz na mapie',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise through {0} & discover scenic landscapes',

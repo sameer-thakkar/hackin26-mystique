@@ -1245,6 +1245,12 @@ _Alle met een hoofdletter geschreven termen die hierboven worden gebruikt, worde
     VIEW_EXPERIENCE_MAPPED_OUT: 'Bekijk je ervaring op de kaart.',
     OPEN_MAP_VIEW: 'Kaart openen',
     START_POINT_SAME_AS_END_POINT: 'Je eindpunt is hetzelfde als je startpunt',
+    ROUTES: 'Routes',
+    SIGHTS_COVERED: 'Locaties',
+    BOARDING_POINT: 'Opstapplaats',
+    BOARDING_POINTS: 'Opstapplaatsen',
+    LANDMARKS: 'Bezienswaardigheden',
+    VIEW_IN_MAPS: 'Bekijk op de kaart',
   },
   CRUISES: {
     BANNER_HEADING: 'Vaar door {0}: ontdek, eet en relax',

@@ -1334,6 +1334,12 @@ const ro = {
     OPEN_MAP_VIEW: 'Deschidere hartă',
     START_POINT_SAME_AS_END_POINT:
       'Punctul de oprire va fi același cu punctul de pornire ',
+    ROUTES: 'Rute',
+    SIGHTS_COVERED: 'Obiective acoperite',
+    BOARDING_POINT: 'Punct de îmbarcare',
+    BOARDING_POINTS: 'Puncte de îmbarcare',
+    LANDMARKS: 'Repere',
+    VIEW_IN_MAPS: 'Vizualizațipe hărți',
   },
 
   CITY_AIRPORT_TRANSFERS: 'Transferuri de la aeroport {0}',

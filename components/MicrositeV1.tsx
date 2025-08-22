@@ -863,9 +863,7 @@ const MicrositeV1 = (props: any) => {
 
   const isPoiMwebCard = isMobile && isA1orC1MB(taggedMbType) && baseLangIsPoiMb;
 
-  const showItineraries =
-    !(taggedCategoryName === 'Cruises') &&
-    !!scorpioData?.itineraryData?.itineraries?.length;
+  const showItineraries = !!scorpioData?.itineraryData?.itineraries?.length;
 
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
