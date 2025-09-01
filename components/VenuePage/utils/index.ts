@@ -23,12 +23,12 @@ export function getShowsBasedOnTimestamp(availableShowsData: []) {
 
     const openingTimeStamp = dayjs(
       detailsObjects[strings.SHOW_PAGE.OPENING_DATE],
-      'YYYY-MM-DD'
+      ['YYYY-MM-DD', 'DD-MM-YYYY']
     ).unix();
 
     const closingTimeStamp = dayjs(
       detailsObjects[strings.SHOW_PAGE.CLOSING_DATE],
-      'YYYY-MM-DD'
+      ['YYYY-MM-DD', 'DD-MM-YYYY']
     ).unix();
 
     const currentTimeStamp = dayjs().unix();
