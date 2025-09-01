@@ -653,9 +653,11 @@ export const checkIfSportsSubCategory = (
 export const checkIfCategoryHeaderExists = ({
   mbDesign,
   mbType,
+  isEntertainmentMb = false,
 }: {
   mbDesign: string | undefined | null;
   mbType: string | undefined | null;
+  isEntertainmentMb?: boolean;
 }) => {
   const supportedMbTypes = [
     MB_CATEGORISATION.MB_TYPE.C1_COLLECTION,
@@ -672,7 +674,9 @@ export const checkIfCategoryHeaderExists = ({
     isMBDesign({
       currentDesign: mbDesign || '',
       expectedDesign: [DESIGN.V1, DESIGN.V3],
-    }) && supportedMbTypes.includes(mbType || '')
+    }) &&
+    supportedMbTypes.includes(mbType || '') &&
+    !isEntertainmentMb
   );
 };
 

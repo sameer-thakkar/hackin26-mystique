@@ -75,6 +75,10 @@ export const getCityListData = async ({
   mbCity,
   lang,
 }: IGetCityListData) => {
+  if (!mbCity) {
+    return new Map();
+  }
+
   const { cities } = await fetchNearbyCityList({
     cookies,
     params: { ...(lang && { language: getHeadoutLanguagecode(lang) }) },

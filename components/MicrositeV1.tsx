@@ -299,6 +299,7 @@ const MicrositeV1 = (props: any) => {
     customBanner,
     baseLangCustomBanner,
     dropdownMenu,
+    is_entertainment_mb,
   } = micrositeData ?? {};
 
   const [isTourListFiltered, setIsTourListFiltered] = useState(false);
@@ -868,6 +869,7 @@ const MicrositeV1 = (props: any) => {
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign: design,
     mbType: taggedMbType,
+    isEntertainmentMb: is_entertainment_mb,
   });
 
   const automatedBreadcrumbsExists = Object.keys(breadcrumbs ?? {}).length > 0;
