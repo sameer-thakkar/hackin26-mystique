@@ -1524,8 +1524,7 @@ const Product = (props: any) => {
   }) => {
     const showItinerarySection = showItinerary && (isPopup || isBot);
     const showReviewSection =
-      (isBot ||
-        (originalIsMobile ? expandContent && isPoiMwebCard : isPopup)) &&
+      (originalIsMobile ? expandContent && isPoiMwebCard : isPopup) &&
       reviewsDetails?.showRatings;
     const mediaCarouselImageWidth = (isPopup ? originalIsMobile : isMobile)
       ? isBannerCard
@@ -2140,7 +2139,8 @@ const Product = (props: any) => {
               >
                 <Conditional
                   if={
-                    (isPopup || isBot) &&
+                    !isBot &&
+                    isPopup &&
                     (!pinnedReviews ||
                       pinnedReviews?.displayConfig?.exposePinnedReviews)
                   }
