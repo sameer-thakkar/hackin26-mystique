@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "concurrently \"NODE_OPTIONS='--max-old-space-size=8192' RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=false next -p 3001\" \"panda --watch\"",
-    "start": "NODE_OPTIONS='--max-old-space-size=3072 -r newrelic' node server.js",
+    "start": "NODE_OPTIONS='--max-old-space-size=3072 -r dd-trace/init' node server.js",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
     "prepare": "panda codegen",
     "lint": "lint-staged",
@@ -36,6 +36,7 @@
     "cookies": "^0.8.0",
     "coralogix-logger": "^1.1.28",
     "dayjs": "^1.10.5",
+    "dd-trace": "^5.62.0",
     "express": "^4.18.2",
     "fuse.js": "^5.2.3",
     "hls.js": "^1.6.2",

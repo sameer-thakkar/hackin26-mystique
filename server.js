@@ -1,3 +1,4 @@
+require('dd-trace').init();
 const express = require('express');
 const next = require('next');
 
