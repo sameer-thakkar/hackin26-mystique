@@ -69,7 +69,7 @@ const Popup = ({
       setTimeout(() => {
         scrollToSection?.(startingIndex, trackScroll);
         setStartingIndex(-1);
-      }, 150);
+      }, 350);
     }
   };
 

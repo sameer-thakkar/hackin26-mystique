@@ -416,6 +416,7 @@ const ContentPage = (props: any) => {
   const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
     mbDesign,
     mbType: taggedMbType,
+    isEntertainmentMb: isEntertainmentMB,
   });
   const breadcrumbsDetails = {
     breadcrumbs,
