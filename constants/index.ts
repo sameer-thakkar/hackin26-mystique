@@ -1435,7 +1435,7 @@ export const LIVE_CHAT = {
 
 export const ZENDESK_CHAT = {
   DELAY: 5000,
-  LICENSE_KEY: '5791c268-bf5b-4545-a4c1-521271954710',
+  LICENSE_KEY: 'b2e6b6c3-e68b-4a11-a91f-4cbeb71a90ab',
 };
 
 export const SLICE_TYPES = {
