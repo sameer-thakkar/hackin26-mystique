@@ -2396,7 +2396,7 @@ export const MYSTIQUE = 'Mystique';
 
 export const HOHO_SUBCATEGORY_ID = 1011;
 export const CRUISE_CATEGORY_ID = 18;
-export const CRUISE_FORMAT_SUBCAT_IDS = [1108, 1068];
+export const CRUISE_FORMAT_SUBCAT_IDS = [1108, 1068, 1065];
 
 export const CRUISES_REVAMP_UIDS = [
   'www.seine-river-cruises.com',

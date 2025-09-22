@@ -660,7 +660,7 @@ _Tous les termes en majuscules utilisés ci-dessus sont définis dans la politiq
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festivals et événements',
   },
-  WHY_WATCH: 'Pourquoi faut-il le voir {0}?',
+  WHY_WATCH: 'Pourquoi faut-il aller voir {0}?',
   FIND_ON_MAP: 'Trouver sur la carte',
   ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {

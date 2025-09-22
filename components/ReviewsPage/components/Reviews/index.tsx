@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PrismicRichText } from '@prismicio/react';
-import dayjs from 'dayjs';
 import useSWR from 'swr';
+import { getIntlDate } from '@headout/espeon/utils/date';
 import Conditional from 'components/common/Conditional';
 import { RatingStars } from 'components/ReviewsPage/components/ReviewCount';
 import {
@@ -49,6 +49,7 @@ const ReviewUI: React.FC<React.PropsWithChildren<TReviewUIProps>> = ({
   handleOnClick,
   showLoadMoreCTA,
   isMobile,
+  lang,
 }) => {
   const { NEWS_PAGE } = strings;
   const { LOAD_MORE } = NEWS_PAGE;
@@ -69,7 +70,13 @@ const ReviewUI: React.FC<React.PropsWithChildren<TReviewUIProps>> = ({
           reviewer_img_url: reviewerImgUrl,
         } = review;
 
-        const formattedDate = dayjs(review_date).format('MMM, YYYY');
+        const reviewDate = review_date;
+        const formattedDate = getIntlDate({
+          lang,
+          date: reviewDate.toString(),
+          dateFormat: 'MMM-YYYY',
+        });
+
         const commaPresence = origin_website_link?.url ? ',' : '';
         const spacePresence = author_name ? ' ' : '';
         const anchorTarget = origin_website_link?.target;
@@ -261,6 +268,7 @@ const Reviews: React.FC<React.PropsWithChildren<TReviewsProps>> = ({
           handleOnClick={handleCriticsLoadMoreClick}
           showLoadMoreCTA={criticReviewsToShow <= criticReviewsData?.length}
           isMobile={isMobile}
+          lang={lang}
         />
       ),
     });
@@ -277,6 +285,7 @@ const Reviews: React.FC<React.PropsWithChildren<TReviewsProps>> = ({
           handleOnClick={getNextSetOfData}
           showLoadMoreCTA={nextPaginatedUrl}
           isMobile={isMobile}
+          lang={lang}
         />
       ),
     });
