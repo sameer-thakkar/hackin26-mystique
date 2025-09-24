@@ -1414,7 +1414,7 @@ const da = {
     REVIEW_SECTION_HEADER: 'Hvad vores gæster siger',
     HEADING: 'Fra glade kunder',
     HEADING_BOOSTER_TEXT: 'Elsket af over 35 millioner',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Vis alle {0} anmeldelser',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'fra',

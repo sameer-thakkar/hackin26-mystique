@@ -1390,7 +1390,7 @@ const ro = {
     TRUST_VB_TAG: 'Rezervare verificată',
     HEADING: 'De la clienți fericiți',
     HEADING_BOOSTER_TEXT: 'Iubit de peste 35 de milioane',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Vizualizați toate cele {0} recenzii',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'furnizat de',

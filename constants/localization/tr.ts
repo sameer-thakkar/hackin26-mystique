@@ -1384,7 +1384,7 @@ const tr = {
     TRUST_VB_TAG: 'Doğrulanmış rezervasyon',
     HEADING: 'Mutlu müşterilerden',
     HEADING_BOOSTER_TEXT: '35 milyondan fazla kişi tarafından sevildi',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: '{0} yorumu görüntüle',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'powered by',

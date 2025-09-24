@@ -1379,7 +1379,7 @@ const no = {
     TRUST_VB_TAG: 'Verifisert bestilling',
     HEADING: 'Fra fornøyde kunder',
     HEADING_BOOSTER_TEXT: 'Elsket av over 35 millioner',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Vis alle de {0} anmeldelsene',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'levert av',

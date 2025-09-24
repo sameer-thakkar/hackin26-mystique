@@ -1397,7 +1397,7 @@ const ru = {
     TRUST_VB_TAG: 'Проверенное бронирование',
     HEADING: 'От довольных клиентов',
     HEADING_BOOSTER_TEXT: 'Любим более чем 35 миллионами',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Показать все {0} отзывов',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POI_COLLECTIONS_SECTION: {

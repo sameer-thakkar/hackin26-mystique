@@ -1300,7 +1300,7 @@ const pl = {
     TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
     HEADING: 'From happy customers',
     HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Pokaż wszystkie recenzje {0}',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',

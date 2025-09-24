@@ -1381,7 +1381,7 @@ const sv = {
     TRUST_VB_TAG: 'Verifierad bokning',
     HEADING: 'Från nöjda kunder',
     HEADING_BOOSTER_TEXT: 'Älskad av 35 miljoner+',
-    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    SEE_MORE_BUTTON_TEXT: 'Visa alla {0} recensioner',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
   POWERED_BY: 'drivs av',
