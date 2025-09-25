@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useId, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { PrismicRichText } from '@prismicio/react';
 import { FilledLinkToWebField, RTNode } from '@prismicio/types';
@@ -93,6 +93,8 @@ const RichTextWithCTAItem = ({
   handleClick: () => void;
   isMobile: boolean;
 }) => {
+  const imageId = useId();
+
   const {
     content_height: contentHeight,
     cta_text,
@@ -101,16 +103,6 @@ const RichTextWithCTAItem = ({
     mobile_image_url,
     image_alt,
   } = block || {};
-  const [imageId] = useState<string>(
-    (Math.random() + 1).toString(36).substring(7)
-  );
-  const imageUrl: string | null = (image_url as FilledLinkToWebField)?.url;
-  const mobileImageUrl: string | null = (
-    mobile_image_url as FilledLinkToWebField
-  )?.url;
-  const finalImageUrl: string | null = isMobile
-    ? mobileImageUrl ?? imageUrl
-    : imageUrl;
 
   const headingArray = (textArray as RTNode[])?.reduce<string[]>((acc, el) => {
     el?.type === 'heading2' && acc.push(el?.text);
@@ -121,7 +113,6 @@ const RichTextWithCTAItem = ({
   const hasIframe = textArray?.some(
     (el) => el?.type === 'paragraph' && el?.text?.includes('{iframe')
   );
-
   /**
    * Image URL parameter is added to rich-text to allow embedding scorpio media
    * instead of Prismic's CDN image uploads.
@@ -129,25 +120,42 @@ const RichTextWithCTAItem = ({
    * This is done ensure smooth migration of image fields from Prismic to Payload
    * since we don't want to move prismic URLs to payload.
    */
-  if (finalImageUrl) {
-    (textArray as RTNode[]).push({
-      type: 'image',
-      copyright: null,
-      alt: image_alt,
-      url: finalImageUrl,
-      id: imageId,
-      edit: {
-        background: 'transparent',
-        x: 0,
-        y: 0,
-        zoom: 1,
-      },
-      dimensions: {
-        width: 1200,
-        height: 750,
-      },
-    });
-  }
+
+  const formattedTextArray = useMemo(() => {
+    const imageUrl: string | null = (image_url as FilledLinkToWebField)?.url;
+    const mobileImageUrl: string | null = (
+      mobile_image_url as FilledLinkToWebField
+    )?.url;
+    const finalImageUrl: string | null = isMobile
+      ? mobileImageUrl ?? imageUrl
+      : imageUrl;
+
+    const hasImage = textArray?.some((el) => el?.type === 'image');
+
+    const newTextArray: RTNode[] = [...textArray];
+
+    if (finalImageUrl && !hasImage) {
+      (newTextArray as RTNode[]).push({
+        type: 'image',
+        copyright: null,
+        alt: image_alt,
+        url: finalImageUrl,
+        id: imageId,
+        edit: {
+          background: 'transparent',
+          x: 0,
+          y: 0,
+          zoom: 1,
+        },
+        dimensions: {
+          width: 1200,
+          height: 750,
+        },
+      });
+    }
+
+    return newTextArray;
+  }, []);
 
   return (
     <Wrapper
@@ -158,7 +166,7 @@ const RichTextWithCTAItem = ({
     >
       <div className="rich-text" id={generateSidenavId(headingArray?.[0])}>
         <PrismicRichText
-          field={textArray}
+          field={formattedTextArray}
           components={(...defaultArgs: any) =>
             shortCodeSerializerWithParentProps(defaultArgs, {
               sectionName: headingArray?.[0],
