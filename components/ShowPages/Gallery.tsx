@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
@@ -67,7 +67,7 @@ const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
     if (isVisibleGalleryPopUp) {
       return `
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     left: 0;
     top: 0;
     text-align:center;

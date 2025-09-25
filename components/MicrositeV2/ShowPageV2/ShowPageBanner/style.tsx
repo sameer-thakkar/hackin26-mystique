@@ -6,6 +6,7 @@ export const ShowPageBannerWrapper = styled.div`
   flex-direction: column;
   justify-content: start;
   position: relative;
+  z-index: 20;
   background: -webkit-linear-gradient(
     0deg,
     ${COLORS.BACKGROUND.LTT_INDIGO} calc(100vw - 42.6875rem),
