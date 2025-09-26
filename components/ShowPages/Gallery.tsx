@@ -67,7 +67,6 @@ const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
     if (isVisibleGalleryPopUp) {
       return `
     position: fixed;
-    z-index: 20;
     left: 0;
     top: 0;
     text-align:center;
@@ -75,6 +74,7 @@ const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
     height: 100%;
     overflow: auto;
     background-color: #F8F8F8;
+    z-index: 20;
   
     ${Wrapper}{
       height: auto;

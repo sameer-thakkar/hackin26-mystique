@@ -66,7 +66,7 @@ export const GalleryPopup = styled.div<{ isPopupActive: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 16;
+  z-index: 20;
 
   width: 100%;
   height: 100%;
