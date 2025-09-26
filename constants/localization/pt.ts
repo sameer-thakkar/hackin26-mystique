@@ -1,15 +1,18 @@
-const pt = {
+import { TDictionary } from './types';
+
+const pt: TDictionary = {
   AUDIO_GUIDE: {
-    BANNER: 'Guia de áudio gratuito',
-    PRODUCT_SUFFIX: 'e Guia de Áudio',
+    BANNER: 'Audioguia gratuito',
+    PRODUCT_SUFFIX: 'com audioguia',
   },
   AUTHORISED_AND_TRUSTED_PARTNER: 'Parceiro autorizado e de confiança',
   AUTHORISED_RESELLER: {
     MAIN_TEXT: 'Revendedor autorizado',
     SUB_TEXT: 'Experiências reais de parceiros confiáveis e verificados.',
   },
-  AVAILABLE: 'Disponível',
+  REVIEWS: 'avaliações',
   DEFAULT_REVIEWER_NAME: 'Cliente Headout',
+  AVAILABLE: 'Disponível',
   BACK: 'Voltar',
   BANNER_CTA: 'Faça sua reserva',
   BANNER_FOOTER_SUBTEXT: {
@@ -32,7 +35,7 @@ const pt = {
     CANCELLABLE_ANYTIME:
       'Cancelamento gratuito a qualquer momento antes do início da sua experiência',
     CANCELLABLE_DAYS:
-      'Você pode cancelar estes ingressos até {0} dias antes do começo da experiência e receber um reembolso completo.',
+      'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
     EXTENDED_BUT_UNKNOWN_VALIDITY:
       'Estes ingressos não podem ser cancelados. No entanto, eles são válidos por um período estendido.',
     HEADING: 'Política de alteração',
@@ -54,10 +57,10 @@ const pt = {
   CATEGORY_SLIDER_HEADING:
     'Os clientes que reservaram esta experiência também viram',
   CHECK_AVAIL: 'Verificar disponibilidade',
-  SELECT_SEATS: 'Escolher assentos',
+  SELECT_SEATS: 'Selecionar assentos',
   CITY_PAGE: {
     BANNER_TITLE: 'Experimente o melhor de',
-    TOP_ATTRACTIONS: 'Melhores atrações',
+    TOP_ATTRACTIONS: 'Principais atrações',
     GO_BEYOND: 'Vá além de {0}',
     ALL_DAY_TRIPS: 'Viagens de um dia',
     CITIES_NEARBY: 'Cidades próximas',
@@ -88,68 +91,52 @@ const pt = {
         'Explore novas cidades com experiências selecionadas, cashback imediato, ofertas exclusivas e dicas de viagem essenciais!',
     },
   },
-  CITY_GUIDE_DESCRIPTIONS: {
-    TRAVEL_GUIDE:
-      'Saiba mais sobre requisitos de visto, câmbio, diferenças de fuso horário e muito mais para garantir uma chegada tranquila e uma estadia agradável.',
-    WHERE_TO_EAT:
-      '{0}: encante-se com a culinária local e prove delícias de todos os cantos da cidade.',
-    WHERE_TO_STAY:
-      '{0}: descubra as melhores opções de hospedagem com conforto e conveniência e tenha uma experiência inesquecível.',
-    THINGS_TO_DO:
-      'Experimente uma infinidade de atividades e atrações emocionantes que atendem a todos os gostos e garantem momentos inesquecíveis.',
-    WEATHER:
-      '{0}: planeje sua viagem e aproveite ao máximo sua visita curtindo experiências incríveis durante todo o ano.',
-    NEIGHBOURHOODS:
-      '{0}: conheça seus bairros vibrantes e as comunidades locais que tornam a cidade única.',
-    TRANSPORTATION:
-      '{0}: use o sistema de transporte e transite com facilidade com opções convenientes para explorar todas as atrações da cidade.',
-    TRIP_PLANNER:
-      '{0}: aproveite ao máximo o seu tempo na cidade com itinerários selecionados cuidadosamente para você curtir cada momento.',
-    FAMILY_TRAVEL:
-      'Curta em família e conheça atrações, parques e opções de entretenimento para crianças de todas as idades.',
-    TRAVEL_TIPS:
-      '{0}: descubra dicas e truques de viagem para melhorar sua visita e ter experiências inesquecíveis.',
-    SHOPPING:
-      'Explore um paraíso de compras com uma grande variedade de butiques, mercados e shoppings, oferecendo de tudo, de artesanato local a moda sofisticada.',
-    ART_AND_CULTURE:
-      '{0}: mergulhe na rica cena artística e cultural, de museus cativantes a festivais vibrantes que celebram o patrimônio local.',
-  },
-  CLOSE: 'Fechar',
   COOKIE_CONSENT: {
     BASIC_DESCRIPTION:
       'Utilizamos cookies e tecnologias semelhantes para muitas finalidades, inclusive para melhorar sua experiência em nosso site e para anúncios.',
     MANAGE_PREFERENCES: 'Configurações',
     PREFERNCES_SAVED: 'Suas preferências foram salvas',
+    COOKIES: 'Cookies:',
     ACCEPT: 'Ok',
     ALLOW_ALL: 'Permitir tudo',
     DENY_ALL: 'Rejeitar tudo',
-    COOKIES: 'Cookies:',
     HEADING: 'Valorizamos sempre a sua privacidade',
-    DESCRIPTION: `*   Os cookies são pequenos ficheiros colocados no seu computador, dispositivo móvel ou qualquer outro dispositivo pelo Website/Plataforma, que contêm os detalhes do seu histórico de navegação entre as suas muitas utilizações.
-*   Utilizamos diferentes tipos de cookies para controlar a sua utilização da nossa Plataforma e armazenar determinadas informações que nos ajudam a fornecer-lhe serviços mais personalizados. Certos cookies podem ser colocados no seu Dispositivo devido à sua utilização de quaisquer serviços disponíveis na nossa Plataforma.
-*   Em termos gerais, utilizamos dois conjuntos diferentes de tecnologias neste âmbito:
-    *   **Cookies ou Cookies de Navegador.** É um pequeno ficheiro que é automaticamente colocado no Seu Dispositivo quando acede à Nossa Plataforma. Pode dar instruções ao seu navegador para recusar todos os Cookies. No caso de não aceitar os nossos Cookies, poderá não conseguir utilizar algumas partes da nossa Plataforma.
-    *   **Web Beacons.** Também designados por "clear gifs", "pixel tags" e "single-pixel gifs" que são anexados em várias secções da nossa Plataforma e dos nossos e-mails e que nos permitem monitorizar e compreender a atividade dos Utilizadores.
-*   Estes cookies armazenados no seu dispositivo podem ser cookies "persistentes" ou de "sessão". Os Cookies persistentes são os que permanecem no seu Dispositivo mesmo quando está offline, enquanto que os Cookies de sessão são automaticamente eliminados assim que fecha o seu browser.
-*   Utilizamos cookies de sessão e persistentes para os fins abaixo indicados:
-    *   Cookies necessários / essenciais
-        *   _Tipo:_ Cookies de sessão
-        *   _Objetivo:_ Estes cookies são essenciais para que o Utilizador aceda a diferentes secções da Plataforma e, se não forem permitidos, poderá não conseguir aceder aos serviços disponíveis na Plataforma. Estes cookies ajudam-nos ainda a autenticar os Utilizadores e a prevenir qualquer tipo de atividade fraudulenta na Plataforma.
-    *   Política de Cookies / Aviso Aceitação de Cookies
-        *   _Tipo:_ Cookies persistentes
-        *   _Objetivo:_ Estes cookies identificam se os utilizadores aceitaram a utilização de cookies.
-    *   Cookies de funcionalidade
-        *   _Tipo:_ Cookies persistentes
-        *   _Objetivo:_ Estes Cookies permitem-nos recordar as escolhas que faz quando utiliza a Plataforma, tais como recordar os seus detalhes de início de sessão ou preferência de idioma. O objetivo principal destes Cookies é proporcionar ao Utilizador uma experiência mais personalizada sempre que utiliza a Plataforma.
-
-_Todos os termos em maiúsculas utilizados acima estão definidos na Política de Privacidade. Para uma compreensão pormenorizada, consulte_ [_a Política de Privacidade_](/privacy-policy/)`,
+    DESCRIPTION:
+      '*   Os Cookies são pequenos arquivos colocados no seu computador, dispositivo móvel ou qualquer outro dispositivo pelo Site/Plataforma, que contêm os detalhes do seu histórico de navegação entre as suas muitas utilizações.\n*   Utilizamos diferentes tipos de cookies para controlar a sua utilização da nossa plataforma e armazenar determinadas informações que nos ajudam a fornecer serviços mais personalizados. Certos cookies podem ser colocados no seu Dispositivo devido à sua utilização de serviços disponíveis na nossa Plataforma.\n*   Em termos gerais, utilizamos dois conjuntos diferentes de tecnologias neste âmbito:\n    *   **Cookies ou Cookies de Navegador.** É um pequeno arquivo automaticamente colocado no seu Dispositivo ao acessar nossa Plataforma. Você pode escolher recusar todos os Cookies no seu navegador. Caso não aceite os nossos Cookies, talvez não seja possível utilizar algumas partes da nossa plataforma.\n    *   **Web Beacons.** Também chamados de "clear gifs", "pixel tags" e "single-pixel gifs", que são anexados em várias áreas da nossa Plataforma e dos nossos e-mails e que nos permitem monitorar e compreender a atividade dos Usuários.\n*   Estes Cookies armazenados no seu dispositivo podem ser Cookies "Persistentes" ou de "Sessão". Os Cookies Persistentes são os que permanecem no seu Dispositivo mesmo offline, enquanto os Cookies de Sessão são automaticamente eliminados ao fechar o navegador.\n*   Utilizamos Cookies de Sessão e Persistentes para os fins abaixo indicados:\n    *   Cookies Necessários / Essenciais\n        *   _Tipo:_ Cookies de Sessão\n        *   _Objetivo:_ Estes Cookies são essenciais para que o Usuário acesse diferentes áreas da Plataforma e, se não forem permitidos, talvez não seja possível acessar os serviços disponíveis na Plataforma. Estes Cookies também nos ajudam a autenticar os Usuários e a prevenir qualquer tipo de atividade fraudulenta na Plataforma.\n    *   Política de Cookies / Cookies do Aviso de Aceitação\n        *   _Tipo:_ Cookies Persistentes\n        *   _Objetivo:_ Estes Cookies identificam se os Usuários aceitaram a utilização de Cookies.\n    *   Cookies de Funcionalidade\n        *   _Tipo:_ Cookies Persistentes\n        *   _Objetivo:_ Estes Cookies nos permitem lembrar das escolhas feitas ao utilizar a Plataforma, como seus detalhes de login ou preferência de idioma. O objetivo principal destes Cookies é proporcionar ao Usuário uma experiência mais personalizada sempre que utilizar a Plataforma.\n\nTodos os termos em maiúsculas utilizados acima estão definidos na Política de Privacidade. Para obter mais detalhes, consulte a [Política de Privacidade](/privacy-policy/)\n',
   },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Saiba mais sobre as exigências de visto, câmbio de moeda, diferenças de fuso horário, entre outros, para garantir uma chegada tranquila e uma estadia agradável.',
+    WHERE_TO_EAT:
+      'Prove o melhor da gastronomia, sentindo diversos sabores e apreciando as iguarias locais em cada canto de {0}.',
+    WHERE_TO_STAY:
+      'Descubra as melhores acomodações de {0}, que oferecem conforto, comodidade e uma experiência memorável para sua estadia.',
+    THINGS_TO_DO:
+      'Experimente uma infinidade de atividades e atrações emocionantes que atendem a todos os interesses e garantem uma experiência inesquecível.',
+    WEATHER:
+      'Planeje sua viagem com sabedoria e aproveite ao máximo sua visita, uma vez que {0} oferece experiências encantadoras durante todo o ano.',
+    NEIGHBOURHOODS:
+      'Conheça as diversas comunidades locais e os bairros vibrantes que tornam {0} singular.',
+    TRANSPORTATION:
+      'Locomova-se por {0} com facilidade usando seu eficiente sistema de transporte, que oferece opções práticas para explorar todas as suas atrações.',
+    TRIP_PLANNER:
+      'Maximize seu tempo em {0} com itinerários cuidadosamente escolhidos, garantindo que você aproveite ao máximo cada momento.',
+    FAMILY_TRAVEL:
+      'Embarque em uma aventura familiar com inúmeras atrações, parques e opções de entretenimento que atendem a crianças de todas as idades.',
+    TRAVEL_TIPS:
+      'Descubra dicas e truques de viagem para aprimorar sua viagem, tornando sua visita a {0} realmente excepcional.',
+    SHOPPING:
+      'Explore o paraíso das compras com uma grande variedade de butiques, mercados e shopping centers, que oferecem tudo, desde artesanato local até moda de alta qualidade.',
+    ART_AND_CULTURE:
+      'Mergulhe no rico cenário artístico e cultural: de museus que prendem a atenção a festivais vibrantes que celebram o patrimônio de {0}.',
+  },
+  CLOSE: 'Fechar',
   COLLECTION_SLICE_HEADING: 'Melhores coisas para fazer em {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecionar',
     SELECT_PREFERENCE: 'Selecione uma opção',
-    SELECT_OPTION: 'Selecione a opção deseja',
-    SELECT_TICKET: 'Selecione seu bilhete',
+    SELECT_OPTION: 'Selecione a opção desejada',
+    SELECT_TICKET: 'Selecione seu ingresso',
   },
   COMPARE_ALL_DETAILS: 'Compare os detalhes',
   COVID19_ALERT: {
@@ -170,7 +157,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     HOTEL_PICKUP: 'Traslado do hotel',
     INSTANT_CONFIRMATION: 'Confirmação imediata',
     MEALS_INCLUDED: 'Refeição incluída',
-    MOBILE_TICKET: 'Ingressos eletrônicos',
+    MOBILE_TICKET: 'Ingresso digital',
     SKIP_THE_LINE: 'Sem filas',
     TRANSFERS: 'Inclui translado',
     MULTILINGUAL_AUDIO_GUIDE: 'Audioguia multilíngue',
@@ -178,15 +165,15 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     FLEXIBLE_CANCELLATION: 'Cancelamento flexível',
   },
   BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
-    'Reserve agora sem pagar nada. Cancele gratuitamente se os planos mudarem.',
+    'Reserve agora sem pagar nada. Cancele gratuitamente se houver mudança de planos',
   DURATION: 'Duração',
-  EARLIEST_AVAILABILITY: 'Próxima disponível: ',
+  EARLIEST_AVAILABILITY: 'Disponibilidade mais próxima',
   EMAIL_SUBSCRIPTION: {
     EMAIL_FIELD_PLACEHOLDER: 'Insira seu e-mail aqui',
     SIGN_UP: 'Inscreva-se',
     THANK_YOU: 'Obrigada!',
     SUBSCRIBED_MSG: 'Você está inscrito agora',
-    ERROR_MSG: 'Por favor, insira um e-mail válido',
+    ERROR_MSG: 'Insira um e-mail válido',
   },
   ENTERTAINMENT_MB: {
     BROADWAY: {
@@ -196,33 +183,34 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       MB_NAME: 'Ingressos para teatro em Londres',
     },
   },
-  EXCLUSIONS: 'Não inclui',
+  EXCLUSIONS: 'Exclusões',
   FEATURE_CARD: {
-    HEADING_CUSTOMER: '+{0} milhões',
+    HEADING_CUSTOMER: '{0} milhões +',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% seguro',
-    HEADING_SUPPORT: 'Atendimento ao cliente 24h',
+    HEADING_SUPPORT: 'Atendimento ao cliente 24 h',
     SUB_HEADING_CUSTOMER:
-      'de clientes satisfeitos com mais de 10.000 experiências',
-    SUB_HEADING_RATING: '+5.000 avaliações com 90% de pontuação excelente',
+      'Clientes satisfeitos com mais de 10 mil experiências',
+    SUB_HEADING_RATING:
+      'Mais de 5 mil avaliações com 90% de pontuação excelente',
     SUB_HEADING_SAFE: 'Todas as experiências ao ar livre são 100% seguras',
     SUB_HEADING_SUPPORT:
-      'Tem uma pergunta? Fale com nossos especialistas locais pelo chat a qualquer hora, de qualquer lugar.',
+      'Tem alguma dúvida? Fale com nossos especialistas locais pelo chat a qualquer hora, de qualquer lugar.',
   },
   FLEXIBLE: 'Flexível',
   FOOTER: {
-    CALL_US: 'Telefone',
-    CHAT_WITH_US: 'Fale conosco',
+    CALL_US: 'Fale conosco',
+    CHAT_WITH_US: 'Entre em contato pelo chat',
     COMPANY_DETAILS: 'Sobre a empresa',
     ABOUT_US: 'Sobre nós',
-    INFORMATION: 'Informações',
+    INFORMATION: 'Informação',
     GMAPS_DISCLAIMER:
       'Todas as imagens de mapas exibidas nesta página são provenientes do Google, de acordo com o uso justo. Todos os direitos sobre tais imagens pertencem à plataforma específica e seu uso destina-se exclusivamente a fins informativos ou orientativos.',
     DISCLAIMER:
-      'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
-    EMAIL_US: 'E-mail',
-    GET_HELP: 'Ajuda',
-    LEGAL: 'Termos Legais',
+      'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique.',
+    EMAIL_US: 'Enviar um e-mail',
+    GET_HELP: 'Nós ajudamos.',
+    LEGAL: 'Termos legais',
     PRIVACY_POLICY: 'Política de privacidade',
     QUICK_LINKS: 'Links diretos',
     TERMS_AND_CONDITIONS: 'Termos e condições',
@@ -230,33 +218,51 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     MADE_WITH: 'Feito com ',
     ALL_OVER_THE: ' para todo o ',
     TERMS_OF_USAGE: 'Termos de uso',
-    GET_HELP_24_7: 'ASSISTÊNCIA 24 H',
+    GET_HELP_24_7: 'Assistência 24 h',
     HELP_CENTER: 'Central de atendimento',
     COMPANY: 'Empresa',
     WE_ACCEPT: 'Métodos de pagamento',
     DOWNLOAD_HEADOUT: 'Baixe o aplicativo da Headout',
     SCAN_CODES: 'Faça a leitura do código',
     STAR_VERIFIED: 'Clique para verificar afiliação à S.T.A.R.',
-    OFFICIAL_TICKET_RETAILER: 'Distribuidor Oficial de Ingressos',
+    OFFICIAL_TICKET_RETAILER: 'Distribuidor oficial de ingressos',
   },
   FREE_CANCELLATION: 'Cancelamento gratuito',
   FREE_CANCELLATION_SUBTEXT:
-    'Se os planos mudarem, cancele gratuitamente até 72h antes do evento. ',
-  FROM: 'a partir de',
-  GET_CASHBACK: 'Garanta {0}% de cashback',
+    'Se os planos mudarem, cancele gratuitamente até 72 h antes do evento.',
+  FROM: 'A partir de',
+  GET_CASHBACK: 'Ganhe {0}% de cashback',
   GROUP_TICKETS: 'Ingressos para grupos',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '{0} Milhões de clientes felizes',
+    MAIN_TEXT: '{0}+ Milhões de clientes satisfeitos',
     SUB_TEXT:
       'A satisfação do cliente é nossa maior prioridade. Faça parte do nosso grupo.',
   },
+  HEADOUT: 'Headout',
   HELP_CENTER: {
-    MAIN_TEXT: 'Suporte 24h/7',
+    MAIN_TEXT: 'Atendimento 24 h',
     SUB_TEXT:
-      'Tem alguma dúvida? Estamos disponíveis por telefone, chat e e-mail.',
+      'Tem alguma dúvida? Estamos disponíveis 24 h por dia por telefone, chat e e-mail.',
   },
   INCLUSIONS: 'Inclusões',
   LANGUAGE: 'Idioma',
+  LANGUAGES: {
+    ENGLISH: 'inglês',
+    SPANISH: 'espanhol',
+    FRENCH: 'francês',
+    ITALIAN: 'italiano',
+    GERMAN: 'alemão',
+    PORTUGUESE: 'português',
+    NEDERLANDS: 'holandês',
+    POLISH: 'polonês',
+    RUSSIAN: 'russo',
+    DANISH: 'dinamarquês',
+    NORWEGIAN: 'norueguês',
+    ROMANIAN: 'romeno',
+    SWEDISH: 'sueco',
+    TURKISH: 'turco',
+  },
+  TOUR_AVAILABLE_LANGUAGES: 'Tour disponível em {0}',
   LISTICLES: {
     KNOW_MORE: 'Saiba mais',
     SEATING_CHART: 'Mapa de assentos',
@@ -266,74 +272,81 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   MORE_CURRENCIES: 'Outras moedas',
   NEW: 'NOVO',
   NEW_ARRIVAL: 'Novidade',
-  NEXT_AVAILABLE: 'Próxima disponível: ',
+  NEXT_AVAILABLE: 'Disponível em breve: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'A Headout já conquistou a confiança de mais de {0} milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
-  NO_RESULT_FOUND: 'Não foi encontrado nenhum resultado',
-  OFF: 'Off',
+  NO_RESULT_FOUND: 'Não foi encontrado nenhum resultado.',
+  OFF: 'Desconto',
   OPEN_DATED_DESCRIPTOR:
-    'Reserve com flexibilidade - não é preciso selecionar uma data',
+    'Reserve com flexibilidade, não é preciso selecionar uma data',
   OPENING_DATE: 'Data de estreia',
   OPENING_ON: 'Estreia em',
-  OPENS: 'Abre',
+  OPENS: 'Estreia',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
-  POPULARITY: 'Popularidade',
-  POPULAR_CURRENCIES: 'Moedas frequentes',
-  PRICE: 'Preço',
+  POPULAR_CURRENCIES: 'Moedas populares',
   PRICES_STARTING: 'Preços a partir de',
   PROMO_CODES: {
-    APPLIED: 'APLICADO',
     APPLY_CODE: 'APLICAR CÓDIGO',
+    APPLIED: 'APLICADO',
+    TOOL_TIP_INFO: 'O desconto será aplicado ao finalizar a compra',
     DESCRIPTION: {
-      ABSOLUTE: 'Desconto de {0}',
-      CAPPED: 'Desconto de {0}%, até {1}',
-      PERCENTAGE: 'Desconto de {0}%',
+      ABSOLUTE: 'Ganhe {0} de desconto',
+      CAPPED: 'Ganhe {0}% de desconto, até {1}',
+      PERCENTAGE: 'Ganhe {0}% de desconto',
     },
     REMOVE: 'REMOVER',
-    TOOL_TIP_INFO: 'O desconto será aplicado no momento da compra',
   },
-  RATINGS: '{0} Avaliações',
-  READ_MORE: 'Saiba mais',
+  RATINGS: '{0} avaliações',
+  READ_MORE: 'Ler mais',
   READ_MORE_TEXT: 'Ver mais',
   READ_LESS: 'Ver menos',
   VIEW_DETAILS: 'Ver detalhes',
   REOPENING: 'Reestreia',
   REOPENING_DATE: 'Data de reestreia',
   REOPENING_ON: 'Reabre em',
-  REOPENS: 'Reabre',
+  REOPENS: 'Reabertura',
   SAFE_EXPERIENCE: {
     AT_DESCRIPTION: {
-      TEXT: 'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
+      CTA_URL:
+        'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
+      TEXT: 'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com o comprovante de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
     },
     AU_DESCRIPTION: {
-      TEXT: 'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
+      CTA_URL:
+        'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
+      TEXT: 'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica. ',
     },
     BANNER_CTA: 'Saiba mais',
     BERLIN_DESCRIPTION: {
+      CTA_URL:
+        'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
       TEXT: 'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
     },
     CTA_TEXT: 'Detalhes das medidas',
     DESCRIPTION_CTA: 'Saiba mais.',
     EU_DESCRIPTION: {
-      TEXT: 'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
+      CTA_URL:
+        'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
+      TEXT: 'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE. ',
     },
     EU_HEADING: 'Certificado Covid da UE necessário',
     EU_PREFIX: 'Atenção: ',
     EXPERIENCE_DESCRIPTION:
       'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
-    FLAG_TEXT: 'Segurança verificada',
+    FLAG_TEXT: 'Segurança',
     GENERAL_DESCRIPTION:
       'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
-    HEADING: 'Melhores medidas de segurança',
+    HEADING: 'Melhores medidas de segurança ',
     IT_DESCRIPTION: {
-      TEXT: 'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
+      CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
+      TEXT: 'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE. ',
     },
     IT_PREFIX: 'Atenção: ',
     MOBILE_HEADING: 'Experiências seguras',
     MODAL: {
       BADGE_DESCRIPTION:
-        'O selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
+        'Este selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
       DETAILS: {
         SAFETY_CLEANED_DEFAULT: {
           DESCRIPTION:
@@ -352,53 +365,53 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         },
         SAFETY_HANDWASH: {
           DESCRIPTION:
-            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e de saneamento durante o tempo de visita. Oferecemos todo o necessário. ',
-          HEADING: 'Instalações disponíveis para lavagem das mãos e saneamento',
+            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e as desinfetar durante o tempo de visita. Oferecemos o que for necessário. ',
+          HEADING: 'Instalações disponíveis para lavagem das mãos',
         },
         SAFETY_MASK_BOTH: {
           DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, oferecendo diversão com segurança máxima.',
+            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, garantindo diversão com segurança máxima. Isso ajuda todos a se divertirem com o máximo de segurança.',
           HEADING: 'Todos devem usar máscara para sua segurança',
         },
         SAFETY_MASK_DEFAULT: {
           DESCRIPTION:
-            'Nossos parceiros, que foram verificados como Experiência Segura, seguem os regulamentos locais em vigor sobre as máscaras faciais. Se obrigatório, todos os visitantes e pessoal usarão máscaras. Todas as medidas possíveis são tomadas para garantir o seu conforto e segurança.',
+            'Nossos parceiros, que foram verificados como Experiência Segura, seguem os regulamentos locais em vigor sobre as máscaras faciais. Se obrigatório, todos os visitantes e funcionários usarão máscaras. Todas as medidas possíveis são tomadas para garantir o seu conforto e segurança.',
           HEADING: 'Todos devem usar máscara para sua segurança',
         },
         SAFETY_MASK_GUEST: {
           DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo diversão com segurança máxima.',
+            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo diversão com segurança máxima. Isso ajuda todos a se divertirem com o máximo de segurança.',
           HEADING: 'Todos devem usar máscara para sua segurança',
         },
         SAFETY_MASK_STAFF: {
           DESCRIPTION:
-            'Todos os membros do pessoal desta experiência usam máscaras faciais para garantir que você possa se divertir sem se preocupar.',
+            'Todos os membros da equipe desta experiência usam máscaras faciais para garantir que você possa se divertir sem se preocupar.',
           HEADING: 'Todos devem usar máscara para sua segurança',
         },
         SAFETY_RESTRICTED_CAPACITY: {
           DESCRIPTION:
             'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade do local para garantir o distanciamento.',
-          HEADING: 'Regras de distanciamento social são seguidas',
+          HEADING: 'Regras de distanciamento social estão sendo seguidas',
         },
         SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
           DESCRIPTION:
-            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade no local para garantir o distanciamento e grandes grupos de visitantes não são permitidos.',
-          HEADING: 'Regras de distanciamento social são seguidas',
+            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade do local para garantir o distanciamento. Portanto, grandes grupos de visitantes não são permitidos.',
+          HEADING: 'Regras de distanciamento social estão sendo seguidas',
         },
         SAFETY_SOCIAL_DISTANCING: {
           DESCRIPTION:
             'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência.',
-          HEADING: 'Regras de distanciamento social são seguidas',
+          HEADING: 'Regras de distanciamento social estão sendo seguidas',
         },
         SAFETY_SOCIAL_DISTANCING_DEFAULT: {
           DESCRIPTION:
-            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Para cumprí-las, pode haver restrições de capacidade e limites no tamanho dos grupos. Fique tranquilo(a).',
-          HEADING: 'Regras de distanciamento social são seguidas',
+            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Para cumpri-las, pode haver restrições de capacidade e limites no tamanho dos grupos. Fique tranquilo(a).',
+          HEADING: 'Regras de distanciamento social estão sendo seguidas',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           DESCRIPTION:
             'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Portanto, grandes grupos de visitantes não são permitidos.',
-          HEADING: 'Regras de distanciamento social são seguidas',
+          HEADING: 'Regras de distanciamento social estão sendo seguidas',
         },
         SAFETY_TEMPERATURE_DEFAULT: {
           DESCRIPTION:
@@ -412,12 +425,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         },
         SAFETY_TEMPERATURE_STAFF: {
           DESCRIPTION:
-            'A temperatura dos membros do pessoal é verificada várias vezes ao dia. A entrada de pessoas com temperatura além do limite não é permitida e é solicitado que fiquem em casa para se recuperarem.',
+            'A temperatura da equipe é verificada várias vezes ao dia. A entrada de pessoas com temperatura além do limite não é permitida e é solicitado que fiquem em casa para se recuperarem.',
           HEADING: 'Verificações de temperatura no local',
         },
         SAFETY_TRAINED_STAFF: {
           DESCRIPTION:
-            'O pessoal disponível durante a experiência é treinado de acordo com as diretrizes da OMS e equipado para lidar com qualquer emergência.',
+            'A equipe disponível durante a experiência é treinado de acordo com as diretrizes da OMS e equipado para lidar com qualquer emergência.',
           HEADING: 'A equipe é treinada de acordo com diretrizes da OMS',
         },
       },
@@ -426,10 +439,54 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         'Estamos trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta!',
     },
     NL_DESCRIPTION: {
-      TEXT: 'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
+      CTA_URL:
+        'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
+      TEXT: 'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório. ',
     },
     SG_DESCRIPTION: {
-      TEXT: 'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
+      CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
+      TEXT: 'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada. ',
+    },
+    SHORT_HEADING: 'As melhores medidas de segurança em vigor',
+  },
+  SAFE_EXPERIENCE_NEW: {
+    CTA_TEXT: 'Detalhes das medidas',
+    EXPERIENCE_DESCRIPTION:
+      'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
+    FLAG_TEXT: 'Segurança',
+    GENERAL_DESCRIPTION:
+      'Este local é SEGURO CONTRA COVID e segue todas as medidas de segurança recomendadas pelo governo para garantir que você desfrute de uma experiência segura e com distanciamento social no teatro.',
+    GENERAL_DESCRIPTION_V2:
+      'Desenvolvemos o selo See it Safely em toda a indústria para que, quando os teatros reabrirem, você possa se sentir confiante e seguro sabendo que o local é seguro contra a COVID e que seguirá as mais recentes orientações do governo e das artes cênicas.',
+    HEADING: 'See it Safely',
+    MOBILE_HEADING: 'Experiências seguras',
+    MORE_CURRENCIES: 'Outras moedas',
+    MODAL: {
+      DETAILS: {
+        CONTACTLESS_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Serão aceitos apenas ingressos impressos por conta própria e ingressos digitais</li>',
+          HEADING: 'Ingressos digitais sem contato',
+        },
+        PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Equipamentos de proteção, como máscaras, são obrigatórios para entrar no local</li>\n            <li>Todos os visitantes estão sujeitos a verificações da temperatura antes de entrar no local</li>',
+          HEADING: 'Medidas de prevenção',
+        },
+        SANITIZATION_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Equipamentos de proteção, como máscaras, são obrigatórios para entrar no local</li>\n            <li>Todos os visitantes estão sujeitos a verificações da temperatura antes de entrar no local</li>',
+          HEADING: 'Medidas de higienização',
+        },
+        SOCIAL_DISTANCING_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>O local foi alterado para minimizar o contato entre todos os visitantes</li>\n            <li>Diferentes grupos serão alocados separadamente</li>\n            <li>A pré-encomenda de petiscos para os intervalos será facilitada sempre que possível</li>\n            <li>Recomendamos transações digitais.</li>\n            <li>Pedimos a todos os visitantes que reduzam seus pertences ao mínimo possível, pois os guarda-volumes podem estar fechados</li>\n            <li>Atividades como tirar fotos com os artistas ou pedir autógrafos podem ser restritas</li>\n            ',
+          HEADING: 'Medidas de distanciamento social',
+        },
+      },
+      HEADING: 'See it Safely',
+      SUB_HEADING:
+        'Tem dúvidas sobre o que está sendo feito para sua segurança? Saiba mais sobre as medidas de segurança e os protocolos contra COVID que os teatros implementaram para garantir sua segurança.',
     },
     SHORT_HEADING: 'As melhores medidas de segurança em vigor',
   },
@@ -437,24 +494,28 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     KEY_TEXT: 'Sua segurança é nossa prioridade',
     TEXT: 'Tomamos medidas significativas para melhorar a limpeza utilizando desinfetantes com uma limpeza frequente das superfícies. O volume de pessoas também está sendo controlado para evitar aglomerações.',
   },
-  SAVE: 'Economize  {0}%',
+  SAVE: 'Economize {0}%',
   SAVE_PERCENT: 'Economize {0}%',
-  SAVE_UPTO: 'Economize até',
   SAVE_UPTO_PERCENT: 'Economize até {0}%',
+  SEE_ALL: 'Ver tudo',
   SEARCH: 'Pesquisar',
-  SEE_ALL: 'Ver todos',
-  SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
+  POPULARITY: 'Mais populares',
+  PRICE: 'Preço',
+  SEE_MORE_SHOWS: 'Ver mais espetáculos',
   SELECT_CITY: 'Selecionar cidade',
   SELECT_SECTION: 'Escolher setor',
   SEE_ALL_PHOTOS: 'Ver todas as fotos',
   SHOW_CLOSED: 'Show encerrado',
+  SHOW_LESS: 'Ver menos',
   SHOW_LESS_TEXT: 'Ver menos',
+  SHOW_MORE: 'Ver mais',
   SHOW_PAGE: {
-    ABOUT_SHOW: 'Sobre o espetáculo',
+    ABOUT_SHOW: 'O espetáculo',
     ABOUT_THEATRE: 'Sobre o teatro',
     ADDITIONAL_INFORMATION: 'Informações adicionais',
     AGE_LIMIT: 'Classificação indicativa',
     AGE_SUITABILITY: 'Faixa etária',
+    CRITIC_REVIEW: 'Avaliação da crítica',
     ANSWER: ['R-'],
     BLOG_SHOW_PAGE: 'Blog Página oficial do espetáculo',
     BLOG_SUMMARY: 'Blog Resumo',
@@ -462,7 +523,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     BLOG_THEATRE_SEATING_PLAN: 'Blog Mapa de assentos do Teatro',
     CANCELLATION_AND_REFUNDS: 'Cancelamento e reembolso',
     CANCELLATION_POLICY: 'Política de cancelamento',
-    CAST_AND_CREW: 'Elenco e equipe',
+    CAST_AND_CREW: 'Elenco e equipe técnica',
     CLOSING_DATE: 'Data de encerramento',
     CLOSING_DATE_SPECIAL_OFFER: 'Data de encerramento da oferta especial',
     DURATION: 'Duração',
@@ -470,7 +531,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     FREQUENTLY_ASKED_QUESTIONS: 'Perguntas frequentes',
     GETTING_THERE: 'Como chegar',
     GETTING_THERE_MAP_LINK: 'Como chegar',
-    GOOGLE_MAP: 'GoogleMaps',
+    GOOGLE_MAP: 'Google Maps',
     HIGHLIGHTS: 'Destaques',
     LISTICLE_SHOW_SUMMARY: 'Listicle Resumo do espetáculo',
     LISTICLE_SHOW_WHY_WATCH: 'Listicle Por que assistir',
@@ -478,10 +539,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     QUESTION: ['P-'],
     SAFETY_BANNER: 'Bandeira de segurança',
     SHOW_DETAILS: 'Detalhes do espetáculo',
-    SHOW_TIMINGS: 'Horários do espetáculo',
+    SHOW_TIMINGS: 'Horários das apresentações',
     SHOW_TYPE: 'Tipo de espetáculo',
     SPECIAL_OFFER: 'Oferta especial',
-    THE_STORY: 'A história',
+    THE_STORY: 'O enredo',
     THEATRE_ADDRESS: 'Endereço do teatro',
     THEATRE_CAPACITY: 'Capacidade do teatro',
     THEATRE_NAME: 'Nome do teatro',
@@ -494,8 +555,9 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PART_ONE: 'Parte 1',
     PART_TWO: 'Parte 2',
   },
-  SNEAK_PEEK: 'Sneak Peek',
+  SNEAK_PEEK: 'Dê uma olhada',
   SORT_BY: 'Ordenar por',
+  SPECIAL_OFFER: 'Oferta especial',
   THEATRE: 'Teatro',
   THEATRE_PAGE: {
     NEARBY_THEATRES: 'Teatros próximos',
@@ -504,63 +566,47 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     PAST_SHOWS: 'Espetáculos passados',
     FIND_BEST_SEATS: 'Encontre os melhores lugares',
   },
-  SPECIAL_OFFER: 'Oferta especial',
   TICKET_CAN_BE_CANCELED:
     'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
   TICKET_CANNOT_BE_CANCELED:
-    'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação',
+    'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação.',
   TICKETS: 'Ingressos',
   TIMINGS: 'Horários',
-  SPECIAL_PRODUCT_HEADING: 'Experiências amadas',
+  SPECIAL_PRODUCT_HEADING: 'Experiências mais curtidas',
   SPECIAL_PRODUCT_DESCRIPTORS: {
-    LOCAL_GUIDES: 'Guias especializados',
+    LOCAL_GUIDES: 'Guia local especializado',
     ENGAGING_STORIES: 'Histórias envolventes',
     TOP_RATED: 'Bem avaliadas',
   },
   GUIDED_TOUR_REVIEWS: [
-    'A nossa guia Angela era óptima e conhecia muito bem o local',
-    'O guia teve todo o gosto em responder a perguntas sobre a visita',
+    'A nossa guia Angela era ótima e conhecia muito bem o local',
+    'O guia foi simpático para responder nossas perguntas sobre o tour',
+    'Nosso guia foi excelente e até nos deu uma ótima recomendação de almoço!',
     'A organização e o nosso guia tornaram a experiência muito agradável',
-    'A excursão foi bem organizada e com a duração certa',
+    'Muito conteúdo educacional, com certeza farei o passeio novamente com meus filhos',
+    'O tour foi bem organizado e durou o tempo certo',
+    'Nosso guia tinha bastante conhecimento e era claramente fã de história',
     'Bom guia e boa organização! Recomendo!!!',
-    'A excursão decorreu a um bom ritmo e não nos sentimos apressados',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
+    'As curiosidades contadas pelo guia prenderam a nossa atenção',
+    'O passeio foi conduzido em um bom ritmo e não foi apressado',
+    'Nossa guia Maria conseguiu os melhores lugares no mirante',
+    'Nosso guia enriqueceu nossa visita além do que teríamos conseguido por conta própria',
+    'Tour detalhado e comovente conduzido pelo nosso guia',
+    'O Jeff nos mostrou aspectos do local que não teríamos visto por conta própria',
   ],
-  LANGUAGES: {
-    ENGLISH: 'Inglês',
-    SPANISH: 'Espanhol',
-    FRENCH: 'Francês',
-    ITALIAN: 'Italiano',
-    GERMAN: 'Alemão',
-    PORTUGUESE: 'Português',
-    NEDERLANDS: 'Holandês',
-    POLISH: 'Polonês',
-    RUSSIAN: 'Russo',
-    DANISH: 'Dinamarquês',
-    NORWEGIAN: 'Norueguês',
-    ROMANIAN: 'Romeno',
-    SWEDISH: 'Sueco',
-    TURKISH: 'Turco',
-  },
-  TOUR_AVAILABLE_LANGUAGES: 'Tour disponível em {0}',
-  GUIDES_BANNER: 'Explore como um local com guias favoritos pelos visitantes.',
+  GUIDES_BANNER:
+    'Explore como um habitante local com guias favoritos pelos visitantes.',
   SPECIAL_GUIDED_TOUR_PRODUCT_SUMMARY: [
     'Fazer uma visita guiada é a melhor maneira de aproveitar. Nossos guias são como amigos locais compartilhando histórias, informações privilegiadas e recomendações de viagem.',
-    'Não apenas visite - viva!',
+    'Não apenas visite, viva a experiência!',
   ],
   HEAR_FROM_OUR_GUESTS: 'Opinião dos visitantes',
-  TODAY: 'hoje',
-  TOMORROW: 'amanhã',
-  TOUR_LIST_HEADING: 'Selecione a experiência desejada',
+  GUIDES: 'Guias',
+  TODAY: 'Hoje',
+  TOMORROW: 'Amanhã',
+  TOUR_LIST_HEADING: 'Selecione sua experiência',
   TOUR_LIST_SUB_HEADING:
-    'Escolha entre diferentes opções de ingressos, excursões e combos de operadores verificados:',
+    'Escolha entre diferentes opções de ingressos, tours e combos de operadores verificados:',
   UGC: {
     FOLLOW: 'Seguir',
     FOLLOW_IG: 'Seguir no Instagram',
@@ -581,87 +627,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   VIEW_LESS: 'Mostrar menos',
   VIEW_MORE: 'Ver mais',
   WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',
-  CATEGORY_HEADER: {
-    MAIN_MENU: 'Menu principal',
-    EXPLORE: 'Explore',
-    VISIT: 'Visite',
-    THINGS_TO_DO: 'Coisas para fazer',
-    CITY_ATTRACTIONS: 'Atrações de {0}',
-    TOP_THINGS_TO_DO: 'Principais coisas para fazer',
-    CITY_TOURS: 'Tours em {0}',
-    CITY_GUIDE: 'Guia da cidade',
-    ATTRACTIONS: 'Atrações',
-    CRUISES: 'Cruzeiros',
-    THEMES: 'Temas',
-    ABOUT: 'Sobre',
-    TOURS: 'Passeios',
-    SKIP_THE_LINE: 'Visitas sem fila',
-    GUIDED_TOURS: 'Visitas guiadas',
-    NIGHT_TOURS: 'Visitas à noite',
-    FOOD_TOURS: 'Tours gastronômicos',
-    HISTORY: 'História',
-    ARCHITECTURE: 'Arquitetura',
-    DESIGN: 'Design',
-    INSIDE: 'Interior',
-    COLLECTIONS: 'Coleções',
-    PAINTINGS: 'Pinturas',
-    ANIMALS_EXHIBITS: 'Animais e exposições',
-    HABITATS: 'Habitats',
-    CONSERVATION: 'Conservação',
-    PROGRAMMES: 'Programas',
-    A2_SIGHTSEEING_CRUISES: 'Cruzeiros Turísticos',
-    A2_DINNER_CRUISES: 'Cruzeiros com jantar',
-    A2_EVENING_CRUISES: 'Cruzeiros Noturnos',
-    A2_LUNCH_CRUISES: 'Cruzeiros com almoço',
-    A2_YACHT_TOURS: 'Yacht Tours',
-    PLAN_YOUR_VISIT: 'Planeje sua visita',
-    TIMINGS: 'Horários',
-    DIRECTIONS: 'Direções',
-    PARKING: 'Estacionamento',
-    ROUTES: 'Rotas',
-    REQUIREMENTS: 'Requisitos',
-    LOCATION: 'Local',
-    RULES: 'Regras',
-    FAQs: 'Perguntas frequentes',
-    ENTRANCES: 'Entradas',
-    RESTAURANTS: 'Restaurantes',
-    FACTS: 'Curiosidades',
-    TIPS: 'Dicas',
-    MAP: 'Mapa',
-    RIDES: 'Atrações',
-    SHOWS: 'Shows',
-    DINING: 'Restaurantes',
-    SHOPPING: 'Compras',
-    EVENTS: 'Eventos',
-    HALLOWEEN: 'Halloween',
-    CHRISTMAS: 'Natal',
-    NEW_YEARS_EVE: 'Virada do ano',
-    TRAVEL_GUIDE: 'Guia de viagem',
-    TRIP_PLANNER: 'Planejador de viagem',
-    ITINERARY: 'Itinerário',
-    TRAVEL_TIPS: 'Dicas de viagem',
-    WEATHER: 'Clima',
-    BEST_TIME_TO_VISIT: 'Quando visitar',
-    JANUARY: 'Janeiro',
-    FEBRUARY: 'Fevereiro',
-    MARCH: 'Março',
-    APRIL: 'Abril',
-    MAY: 'Maio',
-    JUNE: 'Junho',
-    JULY: 'Julho',
-    AUGUST: 'Agosto',
-    SEPTEMBER: 'Setembro',
-    OCTOBER: 'Outubro',
-    NOVEMBER: 'Novembro',
-    DECEMBER: 'Dezembro',
-    WHERE_TO_EAT: 'Onde comer',
-    WHERE_TO_STAY: 'Onde ficar',
-    NEIGHBOURHOODS: 'Bairros',
-    FAMILY_TRAVEL: 'Viagem em família',
-    TRANSPORTATION: 'Transporte',
-    FESTIVALS_EVENTS: 'Festivais e eventos',
-  },
-  WHY_WATCH: 'Por que assistir {0}?',
+  WHY_WATCH: 'Por que assistir a {0}?',
   FIND_ON_MAP: 'Ver no mapa',
   ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
@@ -670,33 +636,33 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         DESCRIPTION: 'Confirmação imediata no seu celular',
       },
       CHOOSE_YOUR_SEATS: {
-        NAME: `Escolha seus assentos`,
-        DESCRIPTION: 'Sempre com a visão que quiser',
+        NAME: 'Escolha seus assentos',
+        DESCRIPTION: 'Sempre com a visão que preferir',
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Ofertas e descontos exclusivos',
-        DESCRIPTION: `Economize nos melhores espetáculos`,
+        DESCRIPTION: 'Economize nos melhores espetáculos de {0}',
       },
       BOOK_AND_RELAX: {
-        NAME: 'Reserve com tranquilidade',
+        NAME: 'Reserve e relaxe',
         DESCRIPTION: '{0} milhões de clientes satisfeitos',
       },
     },
     YOUR_PICK: 'Sua escolha',
-    BROWSE_BY_CATEGORIES: 'Navegue por categoria',
-    TOP_WEST_END_SHOWS: 'Os melhores espetáculos West End',
+    BROWSE_BY_CATEGORIES: 'Explorar por categoria',
+    TOP_WEST_END_SHOWS: 'Os melhores espetáculos de West End',
+    TOP_THEATRE_SHOWS: '{0}: melhores espetáculos',
     TOP_SHOWS: 'Melhores espetáculos',
-    TOP_THEATRE_SHOWS: '{0}: os melhores espetáculos',
+    SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     LAST_MINUTE_TICKETS: 'Ingressos de última hora',
     LOVED_BY_MILLIONS: 'Favoritos de milhares',
     TODAY: 'Hoje',
     TOMORROW: 'Amanhã',
-    SEE_ALL: 'Ver todos',
-    SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
-    GRAB_YOUR_TICKETS: 'Garanta seus ingressos agora',
+    SEE_ALL: 'Ver tudo',
+    GRAB_YOUR_TICKETS: 'Garanta já seus ingressos',
   },
   TAG_NAME: {
-    BALLET: 'Balés',
+    BALLET: 'Balé',
     CABARET: 'Cabaré',
     CHRISTMAS: 'Natal',
     CIRCUS: 'Circo',
@@ -731,29 +697,110 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     OFF_BROADWAY: 'Fora da Broadway',
   },
   INVENTORY_UNAVAILABLE: {
-    HEADING: 'Opa! Parece que temos um problema',
-    MESSAGE: `Que pena! Todas as experiências estão esgotadas ou indisponíveis nesta data. Mas há muitas outras datas para escolher, confira!`,
+    HEADING: 'Ops! Parece que temos um problema',
+    MESSAGE:
+      'Que pena! Todas as experiências estão esgotadas ou\n    indisponíveis nesta data. Mas há muitas outras datas para escolher, confira! Você só precisa\n    ter um pouco de flexibilidade.',
     CTA: 'Ver datas disponíveis',
   },
   ALL_DATES: 'Todas as datas',
+  CATEGORY_HEADER: {
+    MAIN_MENU: 'Menu principal',
+    EXPLORE: 'Explorar',
+    VISIT: 'Visitar',
+    THINGS_TO_DO: 'O que fazer',
+    CITY_ATTRACTIONS: '{0} atrações',
+    TOP_THINGS_TO_DO: 'Melhores coisas para fazer',
+    CITY_TOURS: 'Tours em {0}',
+    CITY_GUIDE: 'Guia da cidade',
+    ATTRACTIONS: 'Atrações',
+    CRUISES: 'Cruzeiros',
+    THEMES: 'Temas',
+    ABOUT: 'Sobre',
+    TOURS: 'Tours',
+    SKIP_THE_LINE: 'Tours sem filas',
+    GUIDED_TOURS: 'Tours guiados',
+    NIGHT_TOURS: 'Tours noturnos',
+    FOOD_TOURS: 'Tours gastronômicos',
+    HISTORY: 'História',
+    ARCHITECTURE: 'Arquitetura',
+    DESIGN: 'Design',
+    INSIDE: 'Interior',
+    COLLECTIONS: 'Coleções',
+    PAINTINGS: 'Pinturas',
+    ANIMALS_EXHIBITS: 'Animais e exposições',
+    HABITATS: 'Habitats',
+    CONSERVATION: 'Conservação',
+    PROGRAMMES: 'Programas',
+    A2_SIGHTSEEING_CRUISES: 'Cruzeiros turísticos',
+    A2_DINNER_CRUISES: 'Cruzeiros com jantar',
+    A2_EVENING_CRUISES: 'Cruzeiros noturnos',
+    A2_LUNCH_CRUISES: 'Cruzeiros com almoço',
+    A2_YACHT_TOURS: 'Passeios de iate',
+    PLAN_YOUR_VISIT: 'Planeje sua visita',
+    TIMINGS: 'Horários',
+    DIRECTIONS: 'Como chegar',
+    PARKING: 'Estacionamento',
+    ROUTES: 'Rotas',
+    REQUIREMENTS: 'Requisitos',
+    LOCATION: 'Local',
+    RULES: 'Regras',
+    FAQs: 'Perguntas frequentes',
+    ENTRANCES: 'Entradas',
+    RESTAURANTS: 'Restaurantes',
+    FACTS: 'Curiosidades',
+    TIPS: 'Dicas',
+    MAP: 'Mapa',
+    RIDES: 'Atrações',
+    SHOWS: 'Shows',
+    DINING: 'Restaurantes',
+    SHOPPING: 'Compras',
+    EVENTS: 'Eventos',
+    HALLOWEEN: 'Halloween',
+    CHRISTMAS: 'Natal',
+    NEW_YEARS_EVE: 'Véspera de ano-novo',
+    TRAVEL_GUIDE: 'Guia de viagem',
+    TRIP_PLANNER: 'Planejador de viagem',
+    ITINERARY: 'Itinerário',
+    TRAVEL_TIPS: 'Dicas de viagem',
+    WEATHER: 'Clima',
+    BEST_TIME_TO_VISIT: 'Melhor época para visitar',
+    JANUARY: 'Janeiro',
+    FEBRUARY: 'Fevereiro',
+    MARCH: 'Março',
+    APRIL: 'Abril',
+    MAY: 'Maio',
+    JUNE: 'Junho',
+    JULY: 'Julho',
+    AUGUST: 'Agosto',
+    SEPTEMBER: 'Setembro',
+    OCTOBER: 'Outubro',
+    NOVEMBER: 'Novembro',
+    DECEMBER: 'Dezembro',
+    WHERE_TO_EAT: 'Onde comer',
+    WHERE_TO_STAY: 'Onde se hospedar',
+    NEIGHBOURHOODS: 'Bairros',
+    FAMILY_TRAVEL: 'Viagem em família',
+    TRANSPORTATION: 'Transporte',
+    FESTIVALS_EVENTS: 'Festivais e eventos',
+  },
   BREADCRUMBS: {
     HOME: 'Página inicial',
     TRAVEL_GUIDE: 'Guia de viagem',
     THINGS_TO_DO: 'O que fazer em {0}',
-    SHOW_NAME_TICKETS: '{0} - Ingressos',
-    LTT_HOME: 'Ingressos para o London Theatre',
+    SHOW_NAME_TICKETS: '{0}: Ingressos',
+    LTT_HOME: 'Ingressos dos teatros em Londres',
     LTT_VENUE_PAGE_HOME: 'Teatros em Londres',
-    BROADWAY_HOME: 'Ingressos para shows da Broadway',
+    BROADWAY_HOME: 'Ingressos de espetáculos da Broadway',
     BROADWAY_VENUE_PAGE_HOME: 'Teatros da Broadway',
     VIENNA_CONCERT_HOME: 'Ingressos para concertos em Viena',
     VIENNA_CONCERT_VENUE_PAGE_HOME: 'Salas de concerto em Viena',
     ATTRACTIONS: 'Atrações',
-    A2_SIGHTSEEING_CRUISES: 'Cruzeiros Turísticos',
+    A2_SIGHTSEEING_CRUISES: 'Cruzeiros turísticos',
     A2_DINNER_CRUISES: 'Cruzeiros com jantar',
-    A2_EVENING_CRUISES: 'Cruzeiros Noturnos',
+    A2_EVENING_CRUISES: 'Cruzeiros noturnos',
     A2_LUNCH_CRUISES: 'Cruzeiros com almoço',
-    A2_YACHT_TOURS: 'Yacht Tours',
-    LONDON_THEATRE_NEWS: 'Novidades do London Theatre',
+    A2_YACHT_TOURS: 'Passeios de iate',
+    LONDON_THEATRE_NEWS: 'Novidades dos teatros de Londres',
     BROADWAY_SHOW_NEWS: 'Novidades da Broadway',
     NEWS_PAGE: 'Novidades',
     REVIEWS_PAGE_BANNER_HEADING: 'Avaliações de {0}',
@@ -764,10 +811,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     'Dedicated Parking': 'Estacionamento exclusivo',
     Elevators: 'Elevador',
     Lift: 'Elevador',
-    'Wheelchair Accessible': 'Acessível para cadeira de rodas',
+    'Wheelchair Accessible': 'Acessível para cadeirantes',
     Cloakroom: 'Chapelaria',
     'Air Conditioning': 'Ar condicionado',
-    WiFi: 'WiFi',
+    WiFi: 'Wi-fi',
     Bar: 'Bar',
     'Water Fountain': 'Bebedouro',
     Washrooms: 'Banheiro',
@@ -781,13 +828,14 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     Shop: 'Loja',
     'Souvenir Shop': 'Loja de lembranças',
     'Guide Dogs': 'Cães-guia',
-    'Baby Changing Facilities': 'Fraldário para bebês',
-    'Security Check': 'Verificação de segurança',
+    'Baby Changing Facilities': 'Fraldários',
+    'Security Check': 'Controle de segurança',
     Ramp: 'Rampa',
-    'Level Access': 'Acesso ao local',
+    'Level Access': 'Acesso ao andar',
   },
   CALENDAR: {
     FOOTNOTE: '* Preços exibidos em {0}',
+    PICK_DATE: 'Escolha uma data',
   },
   REVIEW_LOC: {
     VIEW_ORIGINAL: 'Ver a avaliação original em {0}',
@@ -796,23 +844,24 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TRANSLATE: 'Traduzir a avaliação para {0}',
     LANGUAGES: {
       EN: 'inglês',
-      ES: 'espanhol',
+      ES: 'Espanhol',
       FR: 'francês',
-      IT: 'italiano',
+      IT: 'Italiano',
       DE: 'alemão',
       PT: 'português',
       NL: 'holandês',
+      NO: 'norueguês',
+      SV: 'sueco',
+      DA: 'dinamarquês',
     },
   },
   SHOW_PAGE_V2: {
-    TWO_PART_SHOW: 'Espetáculo em duas partes',
-    INTERVAL: 'Intervalo',
-    SELLING_OUT_FAST: 'Esgota rápido',
-    MUST_DO_EXP: 'Imperdível',
     READ_MORE_REVIEWS: 'Ler mais avaliações',
     SHOW_MORE_REVIEWS: 'Mostrar mais avaliações',
+    MUST_DO_EXP: 'Experiência imperdível',
     ALL_PHOTOS: 'Todas as fotos',
     MORE_DATES: 'Mais datas',
+    SELLING_OUT_FAST: 'Esgota rápido',
     SELECT_TIME_SLOT: 'Selecione um horário',
     SELECT_TIME_SLOT_ERROR: 'Selecione um horário para continuar',
     PRICE_STARTING_FROM: 'Preço dos assentos a partir de',
@@ -820,10 +869,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     READ_MORE: 'Ler mais',
     RATINGS_AND_REVIEWS: 'Avaliações e comentários',
     READ_DETAILED_REVIEWS: 'Ler comentários completos',
+    INTERVAL: 'Intervalo',
+    TWO_PART_SHOW: 'Espetáculo em duas partes',
     UNTIL_DATE: 'Até {0}',
     AVAILABLE_TIME: 'Horário disponível',
     EXPERIENCE_AVAILABLE_ONLY_AT:
-      'Esta experiência somente está disponível no seguinte horário',
+      'Esta experiência está disponível apenas no seguinte horário',
     CONTENT_TABS: {
       ABOUT: 'Sobre',
       VENUE: 'Local',
@@ -835,23 +886,82 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SIMILAR_SHOWS: 'Você também pode gostar',
     CONTENT_SECTION_HEADERS: {
       STORYLINE: 'Enredo',
+      WHAT_CRITICS_THINK: 'Opinião dos críticos',
+      FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Perguntas frequentes sobre {0}',
       AGE_SUITABILITY_AND_GUIDELINES:
         'Classificação indicativa e outras orientações',
-      WHAT_CRITICS_THINK: 'Opinião dos críticos',
       CAST_AND_CREATIVES: 'Elenco e equipe',
-      FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Perguntas frequentes',
       ABOUT_THE_SHOW: 'Sobre o espetáculo',
     },
     TICKETS_UNAVAILABLE: 'Ingressos indisponíveis',
     TICKETS_UNAVAILABLE_SUBTEXT:
-      'Por sorte, temos muitas outras opções para você escolher aqui.',
-    MUST_SEE_SHOWS: 'Mais espetáculos imperdíveis',
-    SEE_ALL_SHOWS: 'Ver todos espetáculos',
-    SHOW_ONLY_AVAILABLE_AT: 'Data(s) do espetáculo:',
-    GETTING_TICKETS: 'Como obter seus ingressos',
+      'Felizmente, temos muitas opções para você escolher aqui.',
+    MUST_SEE_SHOWS: 'Mais shows imperdíveis',
+    SEE_ALL_SHOWS: 'Ver todos os shows',
+    SHOW_ONLY_AVAILABLE_AT: 'Esse show só está disponível em',
+    GETTING_TICKETS: 'Seus ingressos',
+  },
+  HOHO: {
+    HOHO: 'Tours hop-on hop-off',
+    BUS_ROUTES_DETAILS: 'Rotas de ônibus',
+    TOUR_DETAILS: 'Detalhes do tour',
+    ROUTES_SCHEDULES: ' Rotas e horários',
+    VALIDITY: 'Válido por 1 dia',
+    VALIDITY_NOTE:
+      'Sua experiência é valida por {0} dia(s) corrido(s). Se você reservar um bilhete para 6 de maio de 2023, ele será válido até 6 de maio de 2023, 21h PST (fuso horário do Pacífico).',
+    BESTSELLER: 'Mais vendido',
+    SEE_ALL: 'Ver tudo',
+    TIMINGS: 'HORÁRIO',
+    FREQUENCY: 'FREQUÊNCIA',
+    DURATION: 'DURAÇÃO',
+    STARTING_LOCATION: 'Local de partida',
+    CALENDAR_FOOTNOTE: '* Preços exibidos em {0}',
+    TOUR_TIMINGS: 'Horário',
+    TOUR_FREQUENCY: 'Frequência',
+    GOT_IT: 'Entendido',
+    SELECT_DATE: 'Selecione uma data',
+    SELECT_TOUR: 'Selecione o tipo de tour',
+    VIEW_TOUR_DETAILS: 'Ver detalhes do tour',
+    BUS_DETAILS: 'MAIS DETALHES',
+    VIEW_ROUTES: 'Ver todas as rotas',
+    BUS_ROUTES: 'ROTAS DE ÔNIBUS',
+    ATTRACTIONS_PREVIEW:
+      'O jeito mais rápido de ver mais de {0} atrações, incluindo',
+    ROUTES: 'Rotas',
+    COMBO_SUBTITLE: 'Economize mais com',
+    COMBO_TITLE: 'Ofertas combinadas no seu tour hop-on hop-off',
+    COMBO_DWEB_TITLE:
+      'Economize mais com ofertas combinadas no seu tour hop-on hop-off',
+    STOPS_AND_ATTRACTIONS: 'Paradas e atrações ao redor',
+    HOP_ON_OFF_AT: 'Embarque e desembarque em {0} paradas',
+    TIMINGS_FREQUENCY: 'Horários e frequência',
+    TOUR_DURATION: 'Duração do tour',
+    EVERY_X_MINS: 'A cada {0}',
+    VIEW_LOCATION: 'Ver localização',
+    BANNER_SUBTEXT:
+      'A forma mais rápida e prática de ver todas as atrações da cidade.',
+    TOP_ATTRACTIONS: 'Atrações principais',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Reserva de última hora',
+        DESCRIPTION: 'Confirmação imediata no seu celular',
+      },
+      COST_EFF: {
+        NAME: 'Passeio econômico',
+        DESCRIPTION: 'Várias atrações, um só bilhete',
+      },
+      DAILY_RIDES: {
+        NAME: 'Trajetos diários ilimitados',
+        DESCRIPTION: 'Explore a cidade no seu próprio ritmo',
+      },
+      BOOK_RELAX: {
+        NAME: 'Reserve e relaxe',
+        DESCRIPTION: '{0} milhões de clientes satisfeitos',
+      },
+    },
   },
   BANNER_DESCRIPTORS: {
-    EXPERT_MULTILINGUAL_GUIDES: 'Guias especializados e multilíngues',
+    EXPERT_MULTILINGUAL_GUIDES: 'Guias poliglotas especializados',
     STL: 'Acesso sem fila',
     PERSONALIZED: 'Experiência personalizada',
     LOCAL_FOOD: 'Experiência gastronômica e cultural',
@@ -861,10 +971,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     SIGHTSEEING_MEAL: 'Passeio turístico e refeições a bordo',
     MULTILINGUAL_GT: 'Visitas guiadas multilíngues',
     AUDIOGUIDE_COMMENTARY: 'Audioguia e comentários disponíveis',
-    ALL_TOP_ATTRACTIONS_COVERED: 'All top attractions covered',
-    REG_SCHEDULE_UNLIMITED_RIDES: 'Regular schedule. Unlimited rides',
+    ALL_TOP_ATTRACTIONS_COVERED: 'Todas as melhores atrações no trajeto',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Horários regulares. Trajetos ilimitados',
     LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
-      'Last minute availability. Instant confirmation',
+      'Disponibilidade de última hora. Confirmação imediata',
     MULTI_ROUTES: 'Diversas opções de rotas',
     HASSLE_FREE: 'Reserva sem complicações',
     FREQUENT_DEPARTURES: 'Partidas frequentes',
@@ -873,20 +983,20 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     FLEXI_EXCHANGE_CANCEL: 'Trocas e cancelamentos flexíveis',
     EXTRA_DISCOUNT: 'Descontos extras para jovens, idosos e famílias',
     PREPAID: 'Conveniências pré-pagas',
-    EASY_ACTIVATION: 'Fácil ativação',
+    EASY_ACTIVATION: 'Ativação fácil',
     INSTANT_CONNECTIVITY: 'Conexão instantânea com cobertura global',
-    ROUND_TRIP: 'Transfer de ida e volta',
+    ROUND_TRIP: 'Transporte de ida e volta',
     CULTURAL_EXPERIENCE: 'Experiências culturais autênticas',
-    GUARANTEED_SEAT: 'Guaranteed Seat',
-    ONBOARD_WIFI: 'Onboard Wi-Fi & Charging Ports',
+    GUARANTEED_SEAT: 'Assento garantido',
+    ONBOARD_WIFI: 'Wi-fi e tomadas a bordo',
     LUGGAGE_ASSISTANCE: 'Assistência com bagagens',
-    TOP_ATTRACTIONS: 'Melhores atrações inclusas',
+    TOP_ATTRACTIONS: 'Inclui as melhores atrações',
     FREQ_DEP_MULTI_ROUTE: 'Partidas frequentes para diversas rotas',
-    CHARGING: 'Estação de carregamento',
+    CHARGING: 'Tomadas',
     WIFI: 'Acesso ao wi-fi',
     FnB: 'Refeições e bebidas disponíveis',
     LUXURY: 'Experiência de luxo',
-    FOOD_DRINK: 'Comidas e bebidas',
+    FOOD_DRINK: 'Alimentos e bebidas',
     PANAROMIC: 'Vistas panorâmicas das principais atrações',
     PANAROMIC_2: 'Vistas panorâmicas',
     PANAROMIC_3: 'Vistas panorâmicas a céu aberto',
@@ -895,10 +1005,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     GOURMET_2: 'Jantar gourmet e bebidas',
     NIGHTTIME: 'Vistas noturnas incríveis',
     ROMANTIC: 'Atmosfera romântica',
-    TRANSFERS: 'Inclui traslado',
+    TRANSFERS: 'Inclui translado',
     CERTIFIED_OP: 'Empresas certificadas',
     BIRD_EYE: 'Vistas panorâmicas',
-    MULTI_JUMP: 'Múltiplas horas de salto',
+    MULTI_JUMP: 'Diversos horários para o salto',
     EXTREME_ADV: 'Aventura extrema',
     PHOTO_OP: 'Oportunidade de tirar fotos espetaculares',
     TOP_ATTRACTIONS_COVERED: 'Principais atrações inclusas',
@@ -906,7 +1016,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     EXCLUSIVE_DISC: 'Descontos exclusivos',
     EFFICIENT_PUBLIC_TRANSIT: 'Transporte público eficiente',
     FREQUENT_SERVICE: 'Serviço frequente',
-    PREBOOKING: 'Pré-reserva facilitada',
+    PREBOOKING: 'Pré-reserva fácil',
     LOCAL_CULTURE_IMM: 'Imersão na cultura local',
     DISCOVER_HIDDEN: 'Descubra lugares secretos',
     CITY_SIGHTSEEING: 'Passeios turísticos',
@@ -917,7 +1027,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     HIDDEN_GEMS: 'Locais escondidos e atrações incomuns',
     EXPLORE_LOCAL: 'Conheça bairros locais',
     CUSTOMIZED_TREATMENTS: 'Tratamentos personalizados',
-    TRAINED_THERAPISTS: 'Terapeutas treinadoss',
+    TRAINED_THERAPISTS: 'Terapeutas treinados',
     HOLISTIC_WELLNESS: 'Bem-estar holístico',
     FLEXIBLE_DURATION: 'Duração flexível',
     MULTI_BOAT: 'Ampla variedade de barcos',
@@ -937,10 +1047,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     ALL_ATTR_ONE_CARD: 'Todas as atrações em apenas um cartão',
     MULTI_CARD: 'Diversas opções',
     COST_EFF: 'Econômico e prático',
-    EASY_BEST: 'Fácil de reservar. Os melhores preços',
-    INSTANT_MOBILE: 'Confirmação imediata. Ingressos digitais',
-    MULTI_TRANSPORT: 'Diversas opções de transporte',
     BEST_PRICES: 'Os melhores preços',
+    MULTI_TRANSPORT: 'Diversas opções de transporte',
   },
   CAT_SUBCAT_PAGE: {
     ALL: 'Tudo',
@@ -948,7 +1056,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TOP_CATEGORY: '{0}: as melhores experiências',
     ATTRACTIONS: 'Atrações',
     ALL_SUBCATEGORY: '{0}: todas as experiências',
-    BROWSE_BY_CATEGORIES: 'Buscar por categorias',
+    BROWSE_BY_CATEGORIES: 'Explorar por categoria',
     TICKETS_FROM: 'Ingressos a partir de',
     PRICE_LOW_HIGH: 'Preço (do menor ao maior)',
     PRICE_HIGH_LOW: 'Preço (do maior ao menor)',
@@ -980,14 +1088,15 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     MAILER: {
       HEADING:
         'As melhores ofertas e novidades do teatro diretamente na sua caixa de entrada',
-      SUBHEADING: `Inscreva-se na nossa newsletter para receber as últimas novidades e ofertas incríveis dos espetáculos teatrais.`,
+      SUBHEADING:
+        'Inscreva-se na nossa newsletter para receber as últimas novidades e ofertas incríveis dos espetáculos teatrais.',
     },
   },
   REVIEWS_PAGE: {
     BANNER_HEADING: 'Avaliações de {0}',
-    REVIEWS_COUNT: '{0} avaliações',
+    REVIEWS_COUNT: 'Avaliações de {0}',
     AWESOME: 'Incrível',
-    GOOD: 'Bom',
+    GOOD: 'Boa',
     AVERAGE: 'Mediano',
     POOR: 'Ruim',
     TERRIBLE: 'Péssimo',
@@ -1000,75 +1109,17 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     USER_REVIEWS: 'Avaliações dos usuários',
     CONTRIBUTORS_REVIEW: 'Avaliação da redação',
   },
-  HOHO: {
-    HOHO: 'Bilhetes hop-on hop-off',
-    BUS_ROUTES_DETAILS: 'Rotas',
-    TOUR_DETAILS: 'Detalhes do tour',
-    ROUTES_SCHEDULES: 'Rotas e horários',
-    VALIDITY: 'Válido por 1 dia',
-    VALIDITY_NOTE:
-      'Sua experiência é valida por {0} dia(s) corrido(s). Se você reservar seu bilhete para 6 de maio de 2023, ele será válido até 6 de maio de 2023, 21:00 PST',
-    BESTSELLER: 'Mais vendido',
-    SEE_ALL: 'Ver tudo',
-    TIMINGS: 'HORÁRIO',
-    FREQUENCY: 'FREQUÊNCIA',
-    DURATION: 'DURAÇÃO',
-    STARTING_LOCATION: 'Local de partida',
-    CALENDAR_FOOTNOTE: '* Preços exibidos em {0}',
-    GOT_IT: 'Entendido',
-    TOUR_TIMINGS: 'Horário',
-    TOUR_FREQUENCY: 'Frequência',
-    SELECT_DATE: 'Select a date',
-    SELECT_TOUR: 'Select Tour Type',
-    VIEW_TOUR_DETAILS: 'View tour details',
-    BUS_DETAILS: 'MORE DETAILS',
-    VIEW_ROUTES: 'View all routes',
-    BUS_ROUTES: 'BUS ROUTES',
-    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
-    ROUTES: 'Rotas',
-    COMBO_SUBTITLE: 'Poupe mais com',
-    COMBO_TITLE: 'Ofertas combinadas na sua excursão Hop-on Hop-off',
-    COMBO_DWEB_TITLE:
-      'Poupe mais com ofertas combinadas na sua excursão Hop-on Hop-off',
-    STOPS_AND_ATTRACTIONS: 'Paradas e atrações ao redor',
-    HOP_ON_OFF_AT: 'Embarque e desembarque em {0} paradas',
-    TIMINGS_FREQUENCY: 'Horários e frequência',
-    TOUR_DURATION: 'Duração do tour',
-    EVERY_X_MINS: 'A cada {0}',
-    VIEW_LOCATION: 'Ver a localização',
-    BANNER_SUBTEXT:
-      'A forma mais rápida e prática de ver todas as atrações da cidade.',
-    TOP_ATTRACTIONS: 'Atrações principais',
-    TRUST_BOOSTERS: {
-      LAST_MIN: {
-        NAME: 'Reserva de última hora',
-        DESCRIPTION: 'Confirmação imediata no seu celular',
-      },
-      COST_EFF: {
-        NAME: 'Passeio econômico',
-        DESCRIPTION: 'Várias atrações, um só bilhete',
-      },
-      DAILY_RIDES: {
-        NAME: 'Trajetos diários ilimitados',
-        DESCRIPTION: 'Explore a cidade no seu próprio ritmo',
-      },
-      BOOK_RELAX: {
-        NAME: 'Reserve e relaxe',
-        DESCRIPTION: '{0} milhões de viajantes satisfeitos',
-      },
-    },
-  },
   AIRPORT_TRANSFER: {
     PRIVATE_TRANSFERS: 'Traslados privados',
     SHARED_TRANSFERS: 'Traslados compartilhados',
     BOOKING_STEPS: {
       BOOK_ONLINE: {
-        TITLE: 'Reserve online',
+        TITLE: 'Reservas online',
         DESCRIPTION:
           'Tenha uma experiência de reserva rápida e conveniente ao reservar suas passagens online.',
       },
       INSTANT_CONFIRMATION: {
-        TITLE: 'Confirmação imediata',
+        TITLE: 'Confirmação instantânea',
         DESCRIPTION:
           'Receba uma confirmação imediata ao reservar sua passagem de traslado de/para o aeroporto.',
       },
@@ -1082,47 +1133,42 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         DESCRIPTION: 'Chegue ao seu destino de forma rápida e confortável.',
       },
     },
-
     SHARED_TRANSFERS_IN: 'Traslados compartilhados em {0}',
     SHARED_TRANSFERS_DESCRIPTION:
-      'Uma opção de transporte confortável e econômica para vários passageiros partindo de ou para um aeroporto.',
+      ' Uma opção de transporte confortável e econômica para vários passageiros partindo de ou para um aeroporto.',
     PRIVATE_TRANSFERS_IN: 'Traslados privados em {0}',
     PRIVATE_TRANSFERS_DESCRIPTION:
-      'Um serviço de transporte conveniente e personalizado para indivíduos e pequenos grupos, que oferece uma viagem confortável e direta partindo de ou para um aeroporto.',
+      ' Um serviço de transporte conveniente e personalizado para indivíduos e pequenos grupos, que oferece uma viagem confortável e direta partindo de ou para um aeroporto.',
     ANYWHERE_IN_THE_CITY: 'Qualquer lugar da cidade',
     DESCRIPTORS: {
       MULTIPLE_VEHICLE: 'Diversas opções de veículos',
-      FREE_CANCELLATION: 'Cancelamento grátis',
+      FREE_CANCELLATION: 'Cancelamento gratuito',
     },
-    SEAMLESS_TRANSFERS: 'Traslados cômodos e confiáveis em todo mundo',
+    SEAMLESS_TRANSFERS: 'Traslados cômodos e confiáveis no mundo todo',
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Escolha o melhor traslado de/para o aeroporto',
     HASSLE_FREE_TRANSFER: 'Traslado de/para o aeroporto sem complicações',
-
-    // New experiment (AT LP)
     EFFORT_LESS_AIRPORT_TRANSFERS: 'Traslados de/para aeroportos em {0} de',
     BUSES: 'ônibus',
     TRAINS: 'trem',
     PRIVATE_TAXIS: 'táxi privado',
     BUS_TRAIN: 'Ônibus/Trem',
     PRIVATE_TAXI: 'Táxi privado',
-
-    FROM: 'Partida',
-    TO: 'Chegada',
+    FROM: 'a partir de',
     SELECT_PICKUP: 'Selecionar ponto de partida',
+    TO: 'Destino',
     SELECT_DROPOFF: 'Selecionar destino',
     ENTER_DESTINATION: 'Insira o seu destino',
-    ENTER_PICKUP: 'Introduzir o local de recolha',
-    PICKUP_DATE: 'Data de partida',
+    ENTER_PICKUP: 'Insira o ponto de partida',
+    PICKUP_DATE: 'Data da partida',
     SELECT_DATE: 'Escolher data',
     PICKUP_TIME: 'Hora de partida',
-    SELECT_TIME: 'Escolher hora',
-    GUESTS: 'Hóspedes',
-    GUEST: 'Hóspede',
-    ADD_GUESTS: 'Somar hóspedes',
+    SELECT_TIME: 'Selecione o horário de início',
+    GUEST: 'Visitante',
+    GUESTS: 'N° de visitantes',
+    ADD_GUESTS: 'Adicionar visitantes',
     EXPLORE_TRANSFERS: 'Traslados e outras experiências',
     COMBOS_AND_EXTRAS: 'Combos e adicionais',
-
     YOUR_RIDE_DOORSTEP: 'Sua viagem de porta a porta',
     COMFORTABLE_RIDE:
       'Reserve um táxi privado confortável de/para os principais aeroportos de {0}',
@@ -1134,29 +1180,24 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     TRANSFER_OPTIONS: 'Opções de traslados encontradas',
     TRANSFERS_AVAILABLE_PLURAL: '{0} traslados disponíveis',
     TRANSFERS_AVAILABLE_SINGULAR: '1 traslado disponível',
-
     TRUSTED_PARTNERS: 'Mais de 35 parceiros confiáveis {0}',
     WORLDWIDE: 'no mundo',
     COMFORTABLE_RIDES: 'Traslados confortáveis',
     FREQUENT_DEPARTURES: 'Partidas frequentes',
     MULTIPLE_TRANSPORT_OPTIONS: 'Várias opções de transporte',
     AND_MANY_MORE: 'E muito mais',
-
     ADD_PICKUP_LOCATION: 'Adicionar local de partida',
     ADD_DROPOFF_LOCATION: 'Adicionar local de destino',
     SELECT_PICKUP_DATE_AND_TIME: 'Selecionar data e hora da partida',
-    SELECT_A_DATE: 'Selecionar data',
-
+    SELECT_A_DATE: 'Selecione uma data',
     TRAIN_STATION: 'Estação de trem',
     BUS_STOP: 'Ponto de ônibus',
-
     ADD_RETURN: 'Adicionar volta',
     HEADS_UP: 'Atenção!',
     ADDED_RETURN_TRIP: 'Você adicionou uma viagem de volta.',
     RETURN_NOTE:
-      'Os detalhes da sua viagem de volta serão exibidos nas próximas etapas',
+      'Os detalhes da sua viagem de volta serão exibidos nas próximas etapas.',
     OKAY_I_UNDERSTAND: 'Entendi!',
-
     SERVING_GUESTS: 'Servindo {0} em {1} no mundo',
     GUESTS_COUNT: 'mais de 220 mil viajantes',
     CITIES_COUNT: 'mais de 55 cidades',
@@ -1183,8 +1224,8 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
   CONTENT_PAGE: {
     CONTENT_GUIDE: 'Guia do conteúdo',
     QUICK_INFORMATION: 'Informações gerais',
-    PEAK: 'horário de pico',
-    OFF_PEAK: 'fora do horário de pico',
+    PEAK: 'Horário de pico',
+    OFF_PEAK: 'Fora do horário de pico',
     ADDRESS: 'ENDEREÇO',
     RECOMMENDED_DURATION: 'DURAÇÃO RECOMENDADA',
     VISITORS_PER_YEAR: 'VISITANTES POR ANO',
@@ -1204,33 +1245,34 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     ALSO_KNOWN_AS: 'Também conhecido como',
     FOUNDED_ON: 'Fundado em',
     FOUNDED_BY: 'Fundado por',
-    FROM: 'A partir de',
+    FROM: 'a partir de',
     CLOSED_TODAY: 'Fechado hoje',
     TODAY: 'Hoje',
     CLOSED: 'Fechado',
-    OPEN: 'Abrir',
-    LAST_ADMISSION: 'Última Admissão',
+    OPEN: 'Aberto',
+    LAST_ADMISSION: 'Última admissão',
     DAYS: 'Dias',
     BEST_TIME_TO_VISIT: 'Melhor época para visitar',
-    WEEKDAY_VS_WEEKEND: 'Dia útil vs Fim de semana',
-    PEAK_VS_LOW_SEASON: 'Temporada alta vs Temporada baixa',
+    WEEKDAY_VS_WEEKEND: 'Dia útil x Fim de semana',
+    PEAK_VS_LOW_SEASON: 'Alta temporada x Baixa temporada',
     PLEASANT: 'Agradável',
     CROWDED: 'Lotado',
     VERY_CROWDED: 'Muito lotado',
     LOW_SEASON: 'Baixa temporada',
-    MID_SEASON: 'Temporada moderada',
+    MID_SEASON: 'Média temporada',
     PEAK_SEASON: 'Alta temporada',
     TO: 'ATÉ',
-    TO_LOWER: 'até',
-    LAST_ENTRY: 'última entrada',
-    SUBATTRACTIONS: 'Subatrações',
+    LOWER_TO: 'até',
+    LAST_ENTRY: 'último acesso',
+    SUBATTRACTIONS: 'Outras atrações',
     INCLUDED_WITH_TICKETS: 'Incluído nos ingressos para {0}',
     INCLUDED_WITH_SOME_TICKETS: 'Incluído em alguns ingressos para {0}',
-    EXPLORE_ALL_POI_TICKETS: 'Explorar os ingressos e tours para {0} & {1}',
+    EXPLORE_ALL_POI_TICKETS: 'Explorar os ingressos e tours de {0} e {1}',
+    EXPLORE_PARENT_TICKETS: 'Explorar os ingressos e tours de {0}',
+    SELECT_YOUR_EXPERIENCE: 'Selecione sua experiência',
     OPERATING_HOURS: 'Horário de funcionamento',
     SEE_MORE: 'Ver mais',
     MORE_INSIGHTS: 'Mais informações',
-    SELECT_YOUR_EXPERIENCE: 'Selecione sua experiência',
   },
   OFF_PERCENT: '{0}% de desconto',
   THEATRE_LANDING_PAGE: {
@@ -1275,14 +1317,14 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
       ATTRACTIONS_COUNT: '{0} atrações',
       ACTIVITIES_COUNT: '{0} atividades',
-      TOTAL_DURATION: 'Duração total',
-      FREQUENCY: 'Frequência',
-      FIRST_DEPARTURE: 'Primeira partida',
-      LAST_DEPARTURE: 'Última partida',
-      FIRST_DEPARTURE_TIME: 'Hora da primeira partida',
-      LAST_DEPARTURE_TIME: 'Hora da última partida',
-      MODE_OF_TRANSPORT: 'Meio de transporte',
-      FOOD_AND_DRINKS: 'Alimentos e bebidas',
+      TOTAL_DURATION: 'DURAÇÃO TOTAL',
+      FREQUENCY: 'FREQUÊNCIA',
+      FIRST_DEPARTURE: 'PRIMEIRA PARTIDA',
+      LAST_DEPARTURE: 'ÚLTIMA PARTIDA',
+      FIRST_DEPARTURE_TIME: 'HORA DA PRIMEIRA PARTIDA',
+      LAST_DEPARTURE_TIME: 'HORA DA ÚLTIMA PARTIDA',
+      MODE_OF_TRANSPORT: 'MEIO DE TRANSPORTE',
+      FOOD_AND_DRINKS: 'ALIMENTOS E BEBIDAS',
     },
     WALK_DURATION: '{0} a pé',
     MORE: 'mais {0}',
@@ -1300,173 +1342,282 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     VIEW_IN_MAPS: 'Ver no mapa',
   },
   CRUISES: {
-    BANNER_HEADING:
-      'Descubra {0} em um cruzeiro: refeições, bebidas e tranquilidade',
+    BANNER_HEADING: 'Cruzeiro por {0} - Descubra, jante e relaxe ',
     FILTERS: {
-      ALL: 'Todos',
-      SIGHTSEEING: 'Passeio turístico',
+      ALL: 'Tudo',
+      SIGHTSEEING: 'Passeios turísticos',
       LUNCH: 'Almoço',
       DINNER: 'Jantar',
       COMBOS: 'Combos',
     },
     MAP_OVERLAY: 'Clique ou toque para mover o mapa',
-    SIGHTS_COVERED: 'Atrações no caminho',
+    SIGHTS_COVERED: 'Locais visitados',
     MENU: 'Menu',
     BOARD_AT: 'Embarque em {0}',
     BOARDING_POINTS_AVAILABLE: '{0} disponíveis',
-    VIEW_POPULAR_SIGHTS: 'Veja pontos turísticos famosos como {0} {1}',
+    VIEW_POPULAR_SIGHTS:
+      'Veja os pontos turísticos mais populares, como {0} {1}',
     X_BOARDING_POINTS: '{0} pontos de embarque',
     BOARDING_POINT: 'Ponto de embarque',
     BOARDING_POINTS: 'Pontos de embarque',
     LANDMARKS: 'Pontos turísticos',
     GET_DIRECTIONS: 'Como chegar',
-    FOOD_MENU: 'Menu',
+    FOOD_MENU: 'Cardápio',
     X_PAGE: '{0} página',
     X_PAGES: '{0} páginas',
-    MORE: 'e mais {1}',
+    MORE: 'mais {0}',
     PDF: {
-      ZOOM_IN: 'Ampliar zoom',
-      ZOOM_OUT: 'Diminuir zoom',
-      FIT_TO_WIDTH: 'Ajustar à largura',
-      RESET_ZOOM: 'Redefinir zoom',
+      ZOOM_IN: 'Ampliar',
+      ZOOM_OUT: 'Reduzir o zoom',
+      FIT_TO_WIDTH: 'Ajuste à largura',
+      RESET_ZOOM: 'Redefinir o zoom',
     },
-    COMBO_HEADING: 'Veja mais por menos: ofertas em combos e city cards',
-    REVIEW_SECTION_HEADER: 'Avaliações de participantes',
-    TRUST_VB_TAG: 'Reserva verificada',
-    SNAPSHOTS_SECTION_HEADER: 'Fotos para os nossos clientes',
+    COMBO_HEADING:
+      'Experimente mais por menos: Ofertas combinadas e City Cards',
   },
-  TRUST_TOOLTIP_HEADER: 'Como obtemos as avaliações?',
-  TRUST_TOOLTIP_CONTENT:
-    'Essas avaliações incluem comentários verificados de clientes tanto da Headout quanto de nossos parceiros de confiança que operam essa experiência no local. Todas as avaliações são de viajantes reais que participaram dessa experiência.',
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Ver disponibilidade',
+  SELECT_AN_OPTION: 'Ver opções',
+  PRIVATE_AT_LANDING_PAGE: {
+    CITY_AIRPORT_TRANSFERS: 'Traslados do aeroporto {0} ',
+    BANNER_SUBTEXT:
+      'Desfrute de uma viagem sem estresse com um traslado do aeroporto confiável e  já reservado.',
+    BEST_PRICES: 'Os melhores preços, sem taxas escondidas',
+    BEST_PRICES_SUBTEXT:
+      'Preços fixos sem surpresas, oferecendo taxas competitivas por um serviço premium.',
+    FREE_WAIT_TIME: 'Sem tempo de espera e pressa',
+    FREE_WAIT_TIME_SUBTEXT:
+      'Tenha um tempo livre de 45 minutos enquanto retira sua bagagem',
+    COMFORTABLE_RIDE: 'Viagens confortáveis',
+    COMFORTABLE_RIDE_SUBTEXT:
+      'Viaje com estilo com a nossa frota de veículos de primeira classe, dirigidos por motoristas treinados e escolhidos a dedo.',
+    FREE_CANCELLATION: 'Cancelamento gratuito',
+    FREE_CANCELLATION_SUBTEXT:
+      'Os planos mudaram? Sem problemas. Aproveite o cancelamento gratuito e a assistência 24 h.',
+    EXCELLENCE_HEADING: 'Um histórico de excelência e confiança',
+    ACTIVE_CITIES: 'cidades dinâmicas, em todo o mundo',
+    CUSTOMERS_SERVED: 'clientes atendidos',
+    YEARS_OF_SERVICE: 'anos de serviço excepcional',
+    FIND_YOUR_RIDE: 'Encontre as atrações perfeitas para você',
+    FIND_YOUR_RIDE_SUBTEXT:
+      'De vans tamanho família a sedãs de luxo, escolha um carro que se adapte à sua bagagem e ao tamanho do grupo',
+  },
+  VIEW_ALL_EXPERIENCES: 'Todas experiências',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT:
+        'Evite o estresse do planejamento. Tomamos conta de todos os detalhes - itinerário com curadoria, traslados confortáveis e guias especializados. É a melhor maneira de ver os pontos turísticos sem complicações.',
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Reserve sem estresse com a Headout',
+      CURATED_EXPERIENCES: {
+        TITLE:
+          'Tome decisões traquilas com nossas experiências escolhidas a dedo.',
+        DESCRIPTION:
+          'Cuidamos de todos os detalhes, desde os traslados até as refeições, para que você tenha uma viagem inesquecível.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Tenha uma experiência pelos olhos de um especialista local',
+        DESCRIPTION:
+          'Em cada viagem, nossos guias trazem percepções ricas e histórias inesquecíveis.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Desfrute de tranquilidade com o máximo de flexibilidade ',
+        DESCRIPTION:
+          'Imprevistos acontecem e nós entendemos: você pode cancelar gratuitamente ou remarcar tranquilamente.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: 'Suporte 24 h disponível para você em todos os momentos',
+        DESCRIPTION:
+          'Viaje com tranquilidade sabendo que nossa equipe está a apenas uma ligação ou mensagem de distância.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: 'Mais de {0} mi de viajantes felizes',
+        SUBTITLE_WITH_REVIEWS: 'Leia comentários reais de viajantes reais',
+        SUBTITLE_WITHOUT_REVIEWS: 'Oferecendo o melhor no quesito experiências',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Por que reservar com a gente?',
+        SUBTITLE: 'Viaje sem complicações. Saiba como.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Explore mais destinos saindo de {0}',
+  },
   REVIEWS_SECTION: {
+    HEADING: 'de clientes satisfeitos',
+    HEADING_BOOSTER_TEXT: 'Amado por mais de 35 milhões de pessoas',
     SECTION_HEADING: 'Milhões de pessoas adoram viajar com a gente',
     SORTING: {
-      MOST_RELEVANT: 'Mais relevante',
-      MOST_RECENT: 'Mais recente',
-      SORT_BY: 'Classificar por',
+      MOST_RELEVANT: 'Mais relevantes',
+      MOST_RECENT: 'Mais recentes',
+      SORT_BY: 'Ordenar por',
     },
     FILTERING: {
-      GREATER_THAN_4: '4 estrelas ou mais',
+      GREATER_THAN_4: 'Mais de 4 estrelas',
       EQUAL_TO_3: '3 estrelas',
       LESS_THAN_3: 'Menos de 3 estrelas',
       WITH_IMAGES: 'Com imagens',
     },
     EMPTY_STATE: {
-      SUB_HEADING: 'Não encontramos avaliações com os filtros selecionados.',
-      CTA: 'Ver todas avaliações',
+      SUB_HEADING:
+        'Não foi possível encontrar avaliações que correspondam aos filtros que você selecionou.',
+      CTA: 'Ver todos os comentários',
     },
-    VERIFIED_REVIEW: 'Avaliação de parceiro verificada',
-    REVIEW_SECTION_HEADER: 'Avaliações de participantes',
+    VERIFIED_REVIEW: 'Avaliação do parceiro verificado',
     TRUST_VB_TAG: 'Reserva verificada',
-    HEADING: 'Opinião dos nossos visitantes',
-    HEADING_BOOSTER_TEXT: 'Mais de 35 milhões aprovam',
-    SEE_MORE_BUTTON_TEXT: 'Ver todas as {0} avaliações',
+    REVIEW_SECTION_HEADER: 'O que nossos clientes dizem',
+    SEE_MORE_BUTTON_TEXT: 'Ver todos os comentários',
     REVIEW_CARD_MODAL_TITLE: 'Avaliação',
   },
-
   FLEXIBLE_CANCELLATION: {
     TOOLTIP_TEXT:
-      'Receba reembolso total por uma pequena taxa se você cancelar dentro de 24 horas antes do início da experiência.',
+      'Obtenha o reembolso total por uma pequena taxa se cancelar 24 horas antes do horário de início da experiência.',
     KNOW_MORE: 'Saiba mais',
     FULL_REFUND: 'Reembolso total',
-    INSTANT: 'Em instantes',
-    NO_QUESTIONS: 'Sem questionamentos',
+    INSTANT: 'Imediato',
+    NO_QUESTIONS: 'Sem perguntas',
     TNC: 'Termos e condições',
     ELIGIBILITY:
-      'Elegibilidade: o plano de cancelamento flexível deve ser selecionado e comprado no momento da reserva.',
+      'Elegibilidade: O plano de cancelamento flexível deve ser selecionado e adquirido no momento da reserva.',
     CANCELLATION_DEADLINE:
-      'Prazo de cancelamento: a reserva pode ser cancelada até 24 horas antes do início da experiência.',
+      'Prazo de cancelamento: A reserva pode ser cancelada até 24 horas antes do horário de início da experiência.',
     REFUND_AMOUNT:
-      'Valor do reembolso: você receberá o reembolso do valor original pago na reserva (subtraindo a taxa de proteção em caso de cancelamento).',
-    NON_TRANSFERABLE: 'Intransferível: válido apenas para esta reserva.',
+      'Valor do reembolso: Você receberá um reembolso do valor original da reserva paga (menos a taxa de proteção contra cancelamento). ',
+    NON_TRANSFERABLE: 'Não transferível: Válido apenas para esta reserva.',
     GUIDELINES:
-      'Diretrizes: o plano se torna inválido se o cliente validar ou utilizar qualquer parte do ingresso antes do cancelamento. Nesses casos, aplicam-se as políticas de cancelamento padrão e nenhum reembolso adicional será concedido.',
-  },
-
-  FILTERS: {
-    DATE_SELECTION: 'Escolha a data',
-    DEALS: 'Ofertas',
-    ENTRY_TICKETS: 'Ingressos',
-  },
-
-  BOOSTERS: {
-    MOST_LOVED: 'Mais curtido',
-    SPECIAL_DEAL: 'Oferta especial',
-    HEADOUT_EXCLUSIVE: 'Exclusivo da Headout',
-  },
-
-  OTHER_EXPERIENCES: 'Outras experiências',
-
-  POI_COLLECTIONS_SECTION: {
-    MAKE_THE_MOST_OF_CITY: 'Aproveite o melhor de {0}',
-    TOP_EXPERIENCE_PICKS: 'Melhores experiências',
-    EXPERIENCES: 'Mais de {0} atrações',
-    CITY_YOUR_WAY: '{0} do seu jeito',
-    DISCOVER_MORE: 'Descobrir mais',
+      'Diretrizes: Esta opção se torna indisponível caso o visitante retire ou utilize qualquer parte do ingresso antes do cancelamento. Nesses casos, aplicam-se as Políticas de cancelamento padrão, e nenhum reembolso adicional será concedido.',
   },
   AGGREGATED_COUNTRIES:
     'Visitantes de <strong>mais de {1} países</strong>, incluindo <strong>{0}</strong>, amaram esta experiência',
-  DAY_TRIPS: {
-    BANNER: {
-      SUBTEXT: `Esqueça o estresse antes de viajar. Nós cuidamos de todos os detalhes: itinerário, traslados confortáveis e guias. É a melhor forma de fazer turismo sem complicar sua vida.`,
+  TRUST_TOOLTIP_HEADER: 'Como coletamos as avaliações?',
+  TRUST_TOOLTIP_CONTENT:
+    'As avaliações incluem comentários verificados de clientes da Headout e de nossos parceiros locais que oferecem essa experiência. Todas as avaliações foram feitas por viajantes reais que participaram dessa experiência.',
+  REVIEW_SECTION_HEADER: 'O que nossos clientes dizem',
+  TRUST_VB_TAG: 'Reserva verificada',
+  SNAPSHOTS_SECTION_HEADER: 'Fotos dos nossos clientes',
+  SEE_MORE_RESPONSES: 'Ver mais respostas',
+  SEE_ALL_RESPONSES: 'Ver todas as respostas',
+  HIDE_RESPONSES: 'Ocultar respostas',
+  GUEST_QNA: 'Perguntas e respostas dos clientes',
+  ASKED_AND_ANSWERED: 'Perguntas e respostas',
+  ADVICE_FROM_TRAVELLERS: 'Conselhos de {0} viajantes',
+  VIEW_ALL_QNA: 'Ver todas as perguntas e respostas',
+  EXPLORE_ALL: 'Explorar tudo',
+  EXPLORE_MORE_QUESTIONS: 'Explorar mais perguntas',
+  GUESTS: 'participantes',
+  RESPONSES: 'respostas',
+  ADVICE: 'Conselhos de {0} viajantes',
+  REAL_TIPS:
+    'Dicas reais de pessoas reais que já participaram da experiência. <span><span>',
+  GENUINE_TIPS: 'Dicas reais de quem já participou',
+  ANSWERS_COUNT: '{0} respostas',
+  SEE_ALL_QNA: 'Ver todas as perguntas e respostas',
+  FILTERS: {
+    DATE_SELECTION: 'Selecionar data',
+    DEALS: 'Ofertas',
+    ENTRY_TICKETS: 'Ingressos',
+  },
+  BOOSTERS: {
+    MOST_LOVED: 'Experiências mais curtidas',
+    SPECIAL_DEAL: 'Ofertas especiais',
+    HEADOUT_EXCLUSIVE: 'Só na Headout',
+  },
+  OTHER_EXPERIENCES: 'Outras experiências',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Aproveite {0} ao máximo',
+    TOP_EXPERIENCE_PICKS: 'Principais opções de experiências',
+    EXPERIENCES: 'Mais de {0} experiências',
+    CITY_YOUR_WAY: '{0}: do seu jeito!',
+    DISCOVER_MORE: 'Explorar mais',
+  },
+  DROPS: {
+    TITLE: 'Os preços caíram para apenas {0}. Diariamente.',
+    SUBTITLE:
+      'O melhor de {0} com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout.',
+    TITLE_MOBILE: 'O melhor de {0} por {1}.',
+    SUBTITLE_MOBILE:
+      'Garanta Drops limitados para {0}, somente no aplicativo da Headout.',
+    NEXT_DROP_IN: 'Próximo Drop em {0}',
+    CTA_BUTTON_MOBILE: 'Não perca seu Drop',
+    NUDGE_CTA: 'Baixe o aplicativo',
+    ON: 'na',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'Baixe o app',
+      NOT_NOW: 'Vou aproveitar a próxima oferta',
     },
-    WHY_WITH_HO: {
-      TITLE: 'Faça sua reserva sem estresse com a Headout',
-      CURATED_EXPERIENCES: {
-        TITLE: 'É mais fácil de decidir com experiências escolhidas a dedo.',
-        DESCRIPTION:
-          'Cuidamos de todos os detalhes para que você faça uma viagem inesquecível.',
+    CITY_WISE_LABELS: {
+      ROME: {
+        cityName: "Rome's",
+        cityNameMWeb: 'Rome',
+        price: '€ 10',
       },
-      EXPERT_GUIDES: {
-        TITLE: 'Viva a viagem pelos olhos de um especialista local.',
-        DESCRIPTION:
-          'Nossos guias trazem ricas informações e histórias memoráveis para cada viagem.',
-      },
-      FLEXI_CANCELLATION: {
-        TITLE: 'Aproveite com tranquilidade e o máximo de flexibilidade',
-        DESCRIPTION:
-          'Imprevistos acontecem, mas oferecemos cancelamento e reagendamento gratuito.',
-      },
-      GUEST_SUPPORT: {
-        TITLE: 'Atendimento 24 h à sua disposição sempre',
-        DESCRIPTION:
-          'Nossa equipe está disponível para te ajudar por telefone ou e-mail.',
+      PARIS: {
+        cityName: "Paris'",
+        cityNameMWeb: 'Paris',
+        price: '€ 10',
       },
     },
-    JUMP_LINK_ITEMS: {
-      TESTIMONIALS: {
-        TITLE: 'Mais de {0}M de viajantes satisfeitos',
-        SUBTITLE_WITH_REVIEWS: 'Leia as avaliações dos nossos viajantes',
-        SUBTITLE_WITHOUT_REVIEWS: 'Oferecemos a melhor experiência',
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Coliseu, Monte Palatino, Fórum Romano',
+            'Big Bus: Hop-on hop-off Roma',
+            'Basílica de São Pedro',
+          ],
+          prices: ['€ 57,25', '€ 22,65', '€ 39,55'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Caminhe pelo passado do Coliseu',
+            'Faça pizza como um habitante local',
+            'Maravilhe-se com a Basílica de São Pedro',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
       },
-      HEADOUT_VERIFIED: {
-        TITLE: 'Por que fazer sua reserva conosco?',
-        SUBTITLE: 'Viajar ficou mais fácil. Descubra mais.',
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Torre Eiffel', 'Cruzeiro no Sena', 'Aquário de Paris'],
+          prices: ['€ 69,25', '€ 65,05', '€ 57,15'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Vistas de tirar o fôlego na Torre Eiffel',
+            'Navegue pelo rio Sena',
+            'Conheça a majestosa Notre-Dame',
+          ],
+          prices: ['€ 10', '€ 10', '€ 10'],
+          dropsPrice: ['€ 10', '€ 10', '€ 10'],
+        },
       },
     },
-    NEAR_BY_DESTINATIONS_TITLE: 'Descubra mais destinos saindo de {0}',
   },
   COMPANY_DETAILS_CONTENT: {
-    title: 'Dados da empresa',
+    title: 'Sobre a empresa',
     LEGAL_INFO: {
       title: 'Informações legais',
-      ENTITY_NAME: 'Razão social',
-      ADDRESS: 'Endereço postal',
-      AUTH_REP: 'Representante legal autorizados',
+      ENTITY_NAME: 'Nome da entidade legal',
+      ADDRESS: 'Endereço para correspondência',
+      AUTH_REP: 'Representantes autorizados',
       REG_NO: 'Número de registro da empresa',
       TIN: 'Número de identificação fiscal (TIN)',
     },
     LEGAL_NOTICE: {
       title: 'Aviso legal',
       content:
-        'Toda correspondência jurídica deve ser encaminhada ao nosso Departamento Jurídico por e-mail ou correio:',
+        'Todas as correspondências legais devem ser direcionadas ao nosso Departamento Jurídico por e-mail ou correio:',
       EMAIL_ADD: 'Endereço de e-mail',
       POSTAL_ADD: 'Endereço postal',
     },
     ODR: {
-      title: 'Resolução de Litígios Online (RLO)',
+      title: 'Resolução de disputas online (ODR)',
       content:
-        'A Headout não se dispõe nem é obrigada a participar de procedimentos de resolução de litígios perante um órgão de defesa dos consumidores. No entanto, conforme as regulamentações da União Europeia, você pode acessar a plataforma de Resolução de Litígios Online (RLO) da Comissão Europeia através do seguinte link:',
+        'A Headout não está disposta nem é obrigada a participar de procedimentos de resolução de disputas perante um conselho de arbitragem de consumidores. No entanto, de acordo com os regulamentos da UE, você pode acessar a plataforma de Resolução de Disputas Online (ODR) da Comissão Europeia por meio do seguinte link:',
     },
   },
   PRIVACY_POLICY_CONTENT: {
@@ -1477,13 +1628,13 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Qual é o propósito desta Política de Privacidade?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'A Headout está atenta e comprometida com a proteção e o gerenciamento dos Seus Dados Pessoais. Assim, implementamos esta Política de Privacidade com o objetivo de proteger Seus Dados Pessoais.',
               },
               {
-                text: 'A presente Política descreve , entre outros, os procedimentos da Headout para a coleta, processamento, divulgação e proteção dos Seus Dados Pessoais quando Você i.) como usuário acessa nosso site www.headout.com ou seu aplicativo móvel ("Plataforma"), ou ii.) como Parceiro Fornecedor acessa https://hub.headout.com/ ("Hub da Headout") ou iii.) como Parceiro Afiliado acessa https://partner.headout.com/affiliate/ ("Plataforma de Parceiros da Headout") ou iv.) como Parceiro Criador acessa nosso site de criação ("Plataforma de Criadores")[Plataforma, Plataforma de Parceiros Fornecedores, Plataforma de Parceiros Afiliados e Plataforma de Criadores serão denominadas em conjunto como "Plataformas da Headout"]. Esta Política também se destina a orientar Você sobre Seus direitos de privacidade. Nos termos desta Política, também sugerimos como Você pode entrar em contato conosco caso Você tenha algum problema ou dúvida.',
+                text: 'A presente Política descreve, entre outros, os procedimentos da Headout para a coleta, processamento, divulgação e proteção dos Seus Dados Pessoais quando Você i.) como usuário acessa nosso site www.headout.com ou seu aplicativo móvel ("Plataforma"), ou ii.) como Parceiro Fornecedor acessa https://hub.headout.com/ ("Hub da Headout") ou iii.) como Parceiro Afiliado acessa https://partner.headout.com/affiliate/ ("Plataforma de Parceiros da Headout") ou iv.) como Parceiro Criador acessa nosso site de criação ("Plataforma de Criadores")[Plataforma, Plataforma de Parceiros Fornecedores, Plataforma de Parceiros Afiliados e Plataforma de Criadores serão denominadas em conjunto como "Plataformas da Headout"]. Esta Política também tem como objetvo orientar Você sobre Seus direitos de privacidade. Nos termos desta Política, também sugerimos como Você pode entrar em contato conosco caso Você tenha algum problema ou dúvida.',
               },
               {
                 text: 'Vale ressaltar que usamos Seus Dados Pessoais para, entre outros fins, fornecer a Você os serviços disponíveis nas Plataformas da Headout da melhor maneira possível, otimizar o uso geral das Plataformas da Headout e realizar outras atividades de processamento descritas nesta Política.',
@@ -1503,7 +1654,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
           'De que forma Você está sujeito aos termos desta Política de Privacidade?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Ao usar ou acessar as Plataformas da Headout, Você concorda com a coleta e o uso/processamento de Dados Pessoais de acordo com esta Política de Privacidade. Essa coleta de informações é necessária para fornecer os serviços nas Plataformas da Headout. Em caso de dúvida, entre em contato conosco pelo e-mail privacy@headout.com.',
@@ -1516,7 +1667,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Termos mencionados na Política de Privacidade',
         content: [
           {
-            type: 'paragraph',
+            type: 'parágrafo',
             items: [
               {
                 text: 'Para os fins desta Política de Privacidade:',
@@ -1524,13 +1675,13 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
             ],
           },
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Conta significa uma conta exclusiva criada para Você nas Plataformas da Headout para acessar nosso Serviço ou partes do nosso Serviço.',
               },
               {
-                text: 'Empresa (referida como "Headout", "a Empresa", "Nós", "Conosco" ou "Nosso " nesta Política) refere-se à Headout. Inc., suas afiliadas, subsidiárias e/ou qualquer outra entidade corporativa relacionada à Headout.',
+                text: 'Empresa (referida como "Headout", "a Empresa", "Nós", "Conosco" ou "Nosso" nesta Política) refere-se à Headout. Inc., suas afiliadas, subsidiárias e/ou qualquer outra entidade corporativa relacionada à Headout.',
               },
               {
                 text: 'Cookies são pequenos arquivos que são colocados no Seu computador, dispositivo móvel ou qualquer outro dispositivo pelas Plataformas da Headout, contendo os detalhes do Seu histórico de navegação, entre outros usos.',
@@ -1539,7 +1690,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                 text: 'Dispositivo significa qualquer dispositivo que possa ser usado para acessar as Plataformas da Headout, como um computador, um telefone celular ou um tablet digital.',
               },
               {
-                text: 'Dados Pessoais são quaisquer informações relacionadas a Você e que ajudam na sua identificação. Os Dados Pessoaissão compartilhados por Você ao utilizar os serviços disponíveis nas Plataformas da Headout. A Headout coleta esses dados para fornecer a Você os serviços disponíveis nas Plataformas da Headout e para cumprir suas diferentes obrigações legais. Consulte o item 5 (Que tipo de Dados Pessoais são coletados pela Headout?) para obter informações detalhadas.',
+                text: 'Dados Pessoais são quaisquer informações relacionadas a Você e que ajudam na sua identificação. Os Dados Pessoais são compartilhados por Você ao utilizar os serviços disponíveis nas Plataformas da Headout. A Headout coleta esses dados para fornecer a Você os serviços disponíveis nas Plataformas da Headout e para cumprir suas diferentes obrigações legais. Consulte o item 5 (Que tipo de Dados Pessoais são coletados pela Headout?) para obter informações detalhadas.',
               },
               {
                 text: 'Política de Privacidade/Política significa e inclui este documento e alterações que possam ser feitas a este documento no futuro. Isso também incluirá qualquer outro documento que a Headout venha a criar no futuro com relação a esta Política.',
@@ -1554,7 +1705,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                 text: 'Fornecedores Terceirizados refere-se a empresas ou indivíduos terceirizados que podem ser contratados pela Empresa para que as Plataformas da Headout funcionem de forma eficiente e livre de erros. Esses terceiros também podem ser contratados pela Empresa para facilitar os serviços disponíveis nas Plataformas da Headout, o que inclui a análise do Seu uso das Plataformas da Headout.',
               },
               {
-                text: 'Usuário refere-se a qualquer pessoa que visita/mostra interesse/utiliza qualquer Serviço disponível nas Plataformas',
+                text: 'Usuário refere-se a qualquer pessoa que visita/mostra interesse/utiliza qualquer Serviço disponível nas Plataformas ',
               },
               {
                 text: 'Site refere-se a www.headout.com',
@@ -1570,10 +1721,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Por que a Headout coleta Seus Dados Pessoais?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
-                text: 'Os Dados Pessoais e outras informações relacionadas são coletados por Nós para, entre outras coisas, nos ajudar a fornecer a Você os serviços disponíveis nas Plataformas da Headout e também para realizar outras atividades de processamento descritas nesta Política.',
+                text: 'Os Dados Pessoais e outras informações relacionadas são coletados por Nós para nos ajudar a fornecer a Você os serviços disponíveis nas Plataformas da Headout e também para realizar outras atividades de processamento descritas nesta Política.',
               },
             ],
           },
@@ -1583,7 +1734,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Que tipo de dados são coletados pela Headout?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Dados Pessoais:',
@@ -1592,7 +1743,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                     text: 'Os Dados Pessoais que coletamos sobre o usuário dependem de diversas variáveis, incluindo, entre outras, o contexto de Suas interações Conosco, os produtos, serviços e recursos que Você utiliza, Sua localização e as leis aplicáveis. Os Dados Pessoais coletados por nós podem ser divididos em duas categorias: Dados Pessoais Não Identificáveis e Dados Pessoais Identificáveis.',
                   },
                   {
-                    text: '"Dados Pessoais Não Identificáveis" são dados que não podem ser usados para identificar Você ou uma pessoa específica. Esses dados também podem ser anônimos por natureza. Esses dados incluem, mas não se limitam a, dados agregados sobre o uso dos serviços disponíveis nas Plataformas, endereços IP mascarados etc.\n"Dados Pessoais Identificáveis" são dados que identificam Você pessoalmente e que podem ser usados para distinguir ou rastrear sua identidade. Esses dados também são coletados por Nós para que Você tenha acesso a determinados recursos das Plataformas da Headout. Esses dados incluem, entre outros, dados como nome, número do seguro social, data e local de nascimento, número de telefone, endereço, endereço de e-mail, dados de pagamento/cartão etc.',
+                    text: '"Dados Pessoais Não Identificáveis" são dados que não podem ser usados para identificar Você ou uma pessoa específica. Esses dados também podem ser anônimos por natureza. Esses dados incluem, mas não se limitam a, dados agregados sobre o uso dos serviços disponíveis nas Plataformas, endereços IP mascarados etc.\n"Dados Pessoais Identificáveis" são dados que identificam Você pessoalmente e que podem ser usados para distinguir ou rastrear sua identidade. Esses dados também são coletados por Nós para que Você tenha acesso a determinados recursos das Plataformas da Headout . Esses dados incluem, entre outros, dados como nome, número do seguro social, data e local de nascimento, número de telefone, endereço, endereço de e-mail, dados de pagamento/cartão etc.',
                   },
                 ],
               },
@@ -1600,12 +1751,12 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                 text: 'Dados Automatizados:',
                 subItems: [
                   {
-                    text: 'Quando Você acessa as Plataformas da Headout, alguns dos Seus dados são capturados automaticamente. Esses dados automatizados que capturamos se enquadram na categoria de Dados Pessoais Não Identificáveis. A seguir estão os principais tipos de dados que são capturados automaticamente:',
+                    text: 'Quando Você acessa as Plataformas da Headout , alguns dos Seus dados são capturados automaticamente. Esses dados automatizados que capturamos se enquadram na categoria de Dados Pessoais Não Identificáveis. A seguir estão os principais tipos de dados que são capturados automaticamente:',
                     bulletPoints: [
                       'Informações do dispositivo, como o navegador usado para acessar as Plataformas da Headout, o dispositivo usado para acessar as Plataformas da Headout, o sistema operacional, o número da versão do aplicativo etc.',
                       'Os dados de IP também são capturados quando Você acessa as Plataformas da Headout.',
-                      'Dados comportamentais, ou seja, como Você está acessando as Plataformas da Headout, quais diferentes seções das Plataformas da Headout Você acessa, duração do Seu acesso etc.',
-                      'Data e horário em que Você acessa as Plataformas da Headout.',
+                      'Dados comportamentais, ou seja, como Você está acessando as Plataformas da Headout , quais diferentes seções das Plataformas da Headout Você acessa, duração do Seu acesso etc.',
+                      'Data e horário em que Você acessa as Plataformas da Headout .',
                     ],
                   },
                   {
@@ -1623,20 +1774,20 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                 text: 'Cookies:',
                 subItems: [
                   {
-                    text: 'Além disso, também usamos diferentes tipos de cookies para rastrear Seu uso das Plataformas da Headout e armazenar determinados dados que nos ajudam a fornecer a Você serviços mais personalizados. Determinados cookies podem ser colocados em Seu dispositivo devido ao Seu uso de quaisquer serviços disponíveis nas Plataformas da Headout.',
+                    text: 'Além disso, também usamos diferentes tipos de cookies para rastrear Seu uso das Plataformas da Headout e armazenar determinados dados que nos ajudam a fornecer a Você serviços mais personalizados. Determinados cookies podem ser colocados em Seu dispositivo devido ao Seu uso de quaisquer serviços disponíveis nas Plataformas da Headout .',
                   },
                   {
                     text: 'Em linhas gerais, Nós usamos dois conjuntos diferentes de tecnologias nesta categoria, a saber:',
                     bulletPoints: [
-                      'Cookies ou Cookies de navegador: um pequeno arquivo automaticamente colocado em Seu dispositivo quando Você acessa as Plataformas da Headout. Você pode instruir seu navegador a recusar todos os cookies ou a indicar quando um cookie deve ser salvo. Caso Você se recuse a aceitar nossos cookies, talvez não consiga usar algumas partes das Plataformas da Headout.',
+                      'Cookies ou Cookies de navegador: um pequeno arquivo automaticamente colocado em Seu dispositivo quando Você acessa as Plataformas da Headout . Você pode instruir seu navegador a recusar todos os cookies ou a indicar quando um cookie deve ser salvo. Caso Você se recuse a aceitar nossos cookies, talvez não consiga usar algumas partes das Plataformas da Headout .',
                       'Web Beacons. Também chamados de clear gifs, pixel tags e single-pixel gifs, são anexados em várias seções das Plataformas da Headout e dos Nossos e-mails, para que possamos monitorar e entender a atividade dos Usuários.',
                     ],
                   },
                   {
-                    text: 'Esses cookies armazenados no Seu Dispositivo podem ser "Persistentes" ou "de Sessão". Os cookies Persistentes são aqueles que permanecem no Seu dispositivo mesmo quando Você fica off-line, enquanto os cookies de Sessão são automaticamente excluídos assim que Você fecha o navegador da Web.',
+                    text: 'Esses cookies armazenados no Seu Dispositivo podem ser "Persistentes" ou "de Sessão". Os Cookies Persistentes são os que permanecem no seu Dispositivo mesmo offline, enquanto os Cookies de Sessão são automaticamente eliminados ao fechar o navegador.',
                   },
                   {
-                    text: 'Usamos cookies de Sessão e Persistentes para as finalidades definidas abaixo:',
+                    text: 'Utilizamos Cookies de Sessão e Persistentes para os fins abaixo indicados:',
                     bulletPoints: [
                       'Cookies necessários/essenciais\nTipo: Cookies de Sessão\nFinalidade: esses cookies são essenciais para que Você acesse diferentes seções das Plataformas da Headout e, se não forem permitidos, Você talvez não consiga acessar os serviços disponíveis nas Plataformas da Headout. Esses cookies também nos ajudam a autenticar Sua identidade e a evitar qualquer tipo de atividade fraudulenta nas Plataformas da Headout.',
                       'Política de Cookies/Cookies de Aceitação de Aviso\nTipo: Cookies Persistentes\nFinalidade: esses Cookies identificam se Você aceitou o uso de Cookies.',
@@ -1654,7 +1805,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
           'Para que usamos Seus Dados Pessoais e com quem os compartilhamos?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Seus Dados Pessoais coletados enquanto Você acessa as Plataformas da Headout são usadas somente para fins legais e com o objetivo de fornecer os serviços. Não vendemos nem alugamos esses dados a ninguém, tampouco compartilhamos Seus Dados com terceiros, a menos que seja previsto de outra forma pela legislação aplicável e especificado nesta Política de Privacidade e/ou que não seja necessário para atender à Sua solicitação. Caso qualquer um dos Seus dados seja compartilhado com terceiros em conformidade com esta Política de Privacidade e se eles processarem qualquer um desses dados, isso será feito de acordo com suas respectivas políticas de privacidade. Solicitamos que Você consulte as políticas de privacidade desses respectivos terceiros de forma proativa.',
@@ -1699,7 +1850,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                     text: 'Com Fornecedores Terceirizados: podemos compartilhar Seus Dados Pessoais com Fornecedores Terceirizados para monitorar e analisar o uso do Nosso Serviço, entrar em contato com Você ou iniciar as ações apropriadas necessárias para fornecer a Você Nossos Serviços.',
                   },
                   {
-                    text: 'Com Afiliadas: podemos compartilhar Seus Dados Pessoais com nossas afiliadas e, nesse caso, exigiremos que essas afiliadas cumpram esta Política de Privacidade. As afiliadas incluem Nossa empresa controladora e quaisquer outras subsidiárias, parceiros de joint venture ou outras empresas que controlamos ou que estão sob controle comum Conosco. Para referência, a lista de nossas subsidiárias com as quais podemos compartilhar Seus Dados Pessoais como parte das operações é a seguinte',
+                    text: 'Com afiliadas: podemos compartilhar Seus Dados Pessoais com nossas afiliadas e, nesse caso, exigiremos que essas afiliadas cumpram esta Política de Privacidade. As afiliadas incluem Nossa empresa controladora e quaisquer outras subsidiárias, parceiros de joint venture ou outras empresas que controlamos ou que estão sob controle comum Conosco. Para referência, a lista de nossas subsidiárias com as quais podemos compartilhar Seus Dados Pessoais como parte das operações é a seguinte',
                     bulletPoints: [
                       'Tourlandish Online Ventures Private Limited',
                       'Headout Europe GmbH',
@@ -1711,10 +1862,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                     text: 'Com parceiros de pagamento: para concluir os serviços prestados por meio das Plataformas da Headout, Você precisará fazer um pagamento ou compartilhar seus dados financeiros conosco, como detalhes de conta bancária/cartão. Processaremos os Dados Pessoais relevantes exigidos em cada caso, dependendo dos serviços disponibilizados nas Plataformas da Headout. Da mesma forma, alguns de Seus Dados Pessoais serão processados por terceiros que auxiliam no processamento do pagamento, incluindo, entre outros, gateways de pagamento, parceiros bancários ou qualquer outro terceiro que possa estar envolvido nesse processo.',
                   },
                   {
-                    text: 'Com uma Empresa: podemos compartilhar ou transferir Seus Dados Pessoais com uma Empresa em conexão com, ou durante as negociações de, qualquer fusão, venda de ativos da empresa, financiamento ou aquisição de todo ou parte de nossos negócios para outra empresa.',
+                    text: 'Com uma empresa: podemos compartilhar ou transferir Seus Dados Pessoais com uma empresa em conexão com, ou durante as negociações de, qualquer fusão, venda de ativos da empresa, financiamento ou aquisição de todo ou parte de nossos negócios para outra empresa.',
                   },
                   {
-                    text: 'Com outros usuários: quando o Usuário compartilha Dados Pessoais ouinterage de outra forma em público com outros Usuários em Nossas Plataformas ou em qualquer outra plataforma de terceiros/mídias sociais, esses dados podem ser visualizados por todos os usuários e podem ser distribuídos publicamente no exterior. Se o Usuário interagir com outros usuários ou se registrar por meio de plataformas de mídia social/ terceiros, os contatos do Usuário nas plataformas de mídia social/terceiros poderão vero nome, perfil, fotos e descrição das atividades do Usuário.',
+                    text: 'Com outros usuários: quando o Usuário compartilha Dados Pessoais ou interage de outra forma em público com outros Usuários em Nossas Plataformas ou em qualquer outra plataforma de terceiros/mídias sociais, esses dados podem ser visualizados por todos os usuários e podem ser distribuídos publicamente no exterior. Se o Usuário interagir com outros usuários ou se registrar por meio de plataformas de mídia social/terceiros, os contatos do Usuário nas plataformas de mídia social/terceiros poderão ver o nome, perfil, fotos e descrição das atividades do Usuário. ',
                   },
                   {
                     text: 'Além dos cenários enumerados acima, Seus Dados Pessoais podem ainda ser compartilhados, se necessário:',
@@ -1737,7 +1888,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Conteúdo gerado pelo usuário e plataformas de mídia social:',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Qualquer conteúdo carregado, enviado e/ou publicado pelos Usuários, incluindo, entre outros, avaliações, classificações, bate-papos ou discussões na Plataforma ou em qualquer plataforma de mídia social é coletivamente denominado "Conteúdo do Usuário". O Usuário será o único responsável pela autenticidade e correção de todo o Conteúdo do Usuário.',
@@ -1759,7 +1910,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Coleta de dados de Crianças',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'De acordo com nossos Termos de Uso, sugerimos que somente uma pessoa que tenha atingido a maioridade faça a reserva na Plataforma. No entanto, pode haver certos cenários em que uma reserva será feita para crianças por uma pessoa que tenha atingido a maioridade. Para esses cenários, gostaríamos de afirmar que na Headout valorizamos a privacidade de todos, inclusive das crianças. Se recebermos os Dados Pessoais de uma criança/menor, garantiremos que tais informações sejam processadas legalmente e na medida em que o consentimento para o processamento de tais informações seja recebido de uma pessoa maior de idade. Caso a Headout tome conhecimento de que o Usuário é menor de idade ou abaixo da idade legal para consentir na jurisdição em questão, a Headout se reserva o direito de encerrar todos os serviços para tal Usuário/Conta sem qualquer aviso prévio.',
@@ -1772,7 +1923,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Por quanto tempo mantemos Seus Dados Pessoais?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Seus Dados Pessoais são mantido em nossos servidores pelo período necessário para atender à finalidade para a qual foram coletados. No entanto, podemos reter Seus Dados Pessoais por um período mais longo, caso seja exigido por lei. Aqui está o cronograma de retenção de dados que explica melhor o período de retenção para cada categoria dos Seus dados coletados:',
@@ -1789,7 +1940,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                     ],
                     [
                       'Dados de pagamento',
-                      'Pelo tempo que for necessário para processar a transação/reserva, inclusive quaisquer problemas que possam surgir.',
+                      'Pelo tempo que for necessário para processar a transação/reserva, incluindo quaisquer consultas que possam surgir.',
                     ],
                     [
                       'Registros do sistema',
@@ -1819,7 +1970,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Como protegemos Seus Dados Pessoais?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Implementamos medidas de segurança razoáveis para manter Seus Dados Pessoais protegidas contra qualquer forma de acesso não autorizado. Nesse processo de manter Seus Dados Pessoais protegidos, implantamos protocolos de segurança, bem como limitações técnicas e físicas de acesso. Assegure-se de que Seus Dados Pessoais somente poderão ser acessados por profissionais autorizados que tenham permissão para acessar Dados Pessoais como parte de suas atribuições.',
@@ -1832,7 +1983,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Onde armazenamos Seus Dados Pessoais?',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Seus Dados Pessoais são armazenados em arquivos pessoais ou nos registros eletrônicos (em servidores nos EUA ou em outros países) da Headout.',
@@ -1845,7 +1996,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         title: 'Seus direitos em relação aos Seus Dados Pessoais',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Se Você tiver uma solicitação de privacidade de dados, como acesso ou exclusão de seus dados, entre em contato conosco pelo e-mail privacy@headout.com. Atenderemos à Sua solicitação e responderemos dentro do prazo legal aplicável. Você também pode solicitar uma cópia dos dados que mantemos sobre Você enviando um e-mail para o mesmo endereço. Para qualquer reclamação sobre o processamento dos Seus Dados Pessoais, entre em contato Conosco pelo mesmo endereço de e-mail. Se Você tiver alguma dúvida ou preocupação que exija a atenção de nosso Diretor de Proteção de Dados (DPO), encaminhe Sua solicitação para dpo@headout.com, e nosso DPO ajudará da maneira adequada. Ao lidar com qualquer uma dessas solicitações descritas acima, temos o direito de verificar a identidade do solicitante para garantir que seja a pessoa com direito a fazer a solicitação. Em caso de qualquer reclamação/disputa, Você tem o direito de entrar em contato com a autoridade supervisora de sua escolha.',
@@ -1854,25 +2005,25 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
                 text: 'Além disso, de acordo com a lei, Você tem os direitos abaixo mencionados disponíveis. Para exercer esses direitos, Você pode fazer uma solicitação a privacy@headout.com:',
                 subItems: [
                   {
-                    text: 'Direito de Acesso aos Dados\nVocê tem o direito de solicitar, a qualquer momento, um resumo completo dos Dados Pessoais que mantemos sobre Você.',
+                    text: 'Direito de acessar informações\nVocê tem o direito de solicitar, a qualquer momento, um resumo completo das Informações Pessoais que mantemos sobre Você.',
                   },
                   {
-                    text: 'Direito à Correção de Dados Imprecisos\nSe Você acredita que qualquer Dado Pessoal que mantemos sobre Você está incorreto ou incompleto, Você pode solicitar sua correção imediata.',
+                    text: 'Direito de corrigir dados imprecisos\nSe Você acredita que qualquer Dado Pessoal que mantemos sobre Você está incorreto ou incompleto, Você pode solicitar sua correção imediata.',
                   },
                   {
-                    text: 'Direito à Exclusão\nVocê tem o direito de solicitar a exclusão de seus dados pessoais quando eles não forem mais necessários para a finalidade original, tiverem sido processados ilegalmente ou quando houver uma exigência legal aplicável para a exclusão.',
+                    text: 'Direito à exclusão\nVocê tem o direito de solicitar a exclusão de seus dados pessoais quando eles não forem mais necessários para a finalidade original, tiverem sido processados ilegalmente ou quando houver uma exigência legal aplicável para a exclusão.',
                   },
                   {
-                    text: 'Direito à Restrição de Processamento\nVocê pode solicitar que Nós limitemos a forma como processamos seus dados pessoais nas condições especificadas pela legislação pertinente. Esse direito pode ser invocado, por exemplo, se Você contestar a exatidão dos Seus dados ou se precisar que eles sejam preservados apenas para fins de estabelecimento, exercício ou defesa de reivindicações legais.',
+                    text: 'Direito de restringir o processamento\nVocê pode solicitar que limitemos a forma como processamos seus dados pessoais sob as condições especificadas na legislação pertinente. Esse direito pode ser invocado, por exemplo, se Você contestar a exatidão dos Seus dados ou se precisar que eles sejam preservados apenas para fins de estabelecimento, exercício ou defesa de reivindicações legais.',
                   },
                   {
-                    text: 'Direito à Portabilidade de Dados\nVocê tem o direito de receber os Dados Pessoais que Nos forneceu em um formato estruturado, comumente usado e legível por máquina, que permita a transferência desses dados para outro provedor de serviços por Você.',
+                    text: 'Direito à portabilidade de dados\nVocê tem o direito de receber os Dados Pessoais que Nos forneceu em um formato estruturado, comumente usado e legível por máquina, que permita a transferência desses dados para outro provedor de serviços por Você.',
                   },
                   {
-                    text: 'Direito à Objeção\nVocê pode se opor, a qualquer momento e por motivos específicos à sua situação, ao processamento de Seus dados pessoais. Nesses casos, interromperemos o processamento dos Seus dados, a menos que possamos demonstrar razões legítimas e convincentes para seu uso contínuo ou que isso seja necessário para o exercício ou a defesa de reivindicações legais.',
+                    text: 'Direito de objeção\nVocê pode se opor, a qualquer momento e por motivos específicos à sua situação, ao processamento de Seus dados pessoais. Nesses casos, interromperemos o processamento dos Seus dados, a menos que possamos demonstrar razões legítimas e convincentes para seu uso contínuo ou que isso seja necessário para o exercício ou a defesa de reivindicações legais.',
                   },
                   {
-                    text: 'Direito à Revogação do Consentimento\nVocê tem o direito de revogar qualquer consentimento que tenha dado anteriormente para o processamento dos seus Dados Pessoais a qualquer momento.',
+                    text: 'Direito de revogar o consentimento\nVocê tem o direito de revogar qualquer consentimento que tenha dado anteriormente para o processamento de suas Informações Pessoais a qualquer momento.',
                   },
                 ],
               },
@@ -1881,10 +2032,10 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'Interpretação da Política de Privacidade e suas Alterações na',
+        title: 'Interpretação da Política de Privacidade e suas Alterações',
         content: [
           {
-            type: 'list',
+            type: 'lista',
             items: [
               {
                 text: 'Como esta Política de Privacidade é comumente aplicável a todos os nossos Usuários, Parceiros Fornecedores, Parceiros Afiliados, Parceiros Criadores etc., ela deve sempre ser interpretada com os [Termos de Uso], [Contrato de Parceiros Fornecedores], [Termos de Parceiros Afiliados] e [Termos de Parceiros Criadores] para melhor compreensão e interpretação. No caso de qualquer discrepância, inconsistência ou conflito entre a versão em inglês desta Política e qualquer tradução, a versão em inglês deverá prevalecer e reger a interpretação e a aplicação.',
@@ -1899,23 +2050,23 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
     ],
   },
   TERMS_OF_USE_CONTENT: {
-    title: 'Headout - Termos de Uso',
-    lastUpdated: '31 de março de 2025',
+    title: 'Headout: Termos de uso',
     introduction:
       'Estes Termos de Uso entrarão em vigor a partir da data da Última Atualização mencionada acima ("Termos de Uso").',
+    lastUpdated: '31 de março de 2025',
     sections: [
       {
-        title: 'Definições:',
+        title: 'Definições',
         items: [
           'Informações Adicionais: a Headout poderá buscar determinados dados sobre o Usuário e todas as outras pessoas que devem fazer parte da Reserva, para avaliar a elegibilidade para concluir a Reserva e/ou obter os Serviços relevantes.',
           'Reserva: significa a reserva de um Serviço pelo Usuário na Plataforma/Site da Headout.',
           'Confirmação de reserva: inclui um voucher/ingresso de confirmação de reserva juntamente com um e-mail de confirmação emitido pela Headout quando o Usuário conclui o pagamento de uma reserva.',
           'Experiências/Serviços: inclui passeios turísticos, atividades de lazer, ingressos para atrações e outros serviços de turismo e entretenimento.',
           'Headout/Nós: Headout Inc. é uma corporação de Delaware, com endereço em 82 Nassau St #60351 New York, NY 10038 e inclui suas afiliadas, empresas do grupo/relacionadas, seus sucessores e cessionários.',
-          'Conta da Headout: a conta criada por qualquer Usuário ao se cadastrar na Plataforma/Site da Headout.',
+          'Conta da Headout: A conta criada por qualquer Usuário ao se cadastrar na Plataforma/Site da Headout.',
           'Credenciais da Conta da Headout: significa o ID de login e a senha definidos por qualquer Usuário ao criar uma Conta da Headout.',
-          '"Créditos da Headout": são créditos de reservaválidos para futuras reservas feitas na Plataforma. Estes podem ser adquiridos pelos Usuários como um reembolso de uma reserva ou serviço cancelado, por meio de campanhas de marketing direcionadas ou outros mecanismos que a Headout possa determinar a seu critério. Os Créditos da Headout estão disponíveis apenas para Usuários que tenham uma Conta da Headout válida.',
-          'Fóruns Interativos: significa fóruns de discussão, quadros de avisos, serviços de análise ou outros fóruns nos quais Você e outros usuários do site podem publicar Conteúdo do Usuário.',
+          'Créditos da Headout: são créditos de reserva válidos para futuras reservas feitas na Plataforma. Você poderá adquiri-los como reembolso de uma reserva ou serviço cancelado, por meio de campanhas de marketing direcionadas ou outros mecanismos que a Headout determinar a seu critério. Os Créditos Headout estão disponíveis apenas para usuários que tenham uma Conta Headout válida.',
+          'Fóruns Interativos: são fóruns de discussão, quadros de avisos, serviços de análise ou outros fóruns nos quais Você e outros usuários do site podem publicar Conteúdo do Usuário.',
           'Item: cada Experiência ou Serviço listados na Plataforma.',
           'Plataforma/Site: a plataforma de reservas na Internet da Headout, acessível pelo site www.headout.com. Também inclui sites relacionados, sites de afiliados e parceiros, aplicativos móveis, ferramentas, plataformas, contas de mídia social vinculadas ou outros recursos.',
           'Política de Privacidade: um documento legal que rege os termos de privacidade da Headout.',
@@ -1931,14 +2082,14 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'INTRODUÇÃO',
+        title: 'Introdução',
         items: [
-          'Estes Termos de Uso, juntamente com a [Política de Privacidade][1], constituem um contrato vinculativo entre o Usuário e a Headout. Estes Termos de Uso regem, entre outros, o uso de qualquer Canal de Vendas pelo Usuário, incluindo, mas não se limitando à Plataforma/Site. A Headout opera a Plataforma/Site que permite , entre outros, (a) que os Fornecedores ofereçam Experiências/Serviços listados na Plataforma aos Usuários; e (b) a celebração de contratos diretamente entre os Usuários e os Fornecedores de tais Serviços.',
+          'Estes Termos de Uso, juntamente com a Política de Privacidade, constituem um contrato vinculativo entre o Usuário e a Headout. Estes Termos de Uso regem, entre outros, o uso de qualquer Canal de Vendas pelo Usuário, incluindo, mas não se limitando à Plataforma/Site. A Headout opera a Plataforma/Site que permite , entre outros, (a) que os Fornecedores ofereçam Experiências/Serviços listados na Plataforma aos Usuários; e (b) a celebração de contratos diretamente entre os Usuários e os Fornecedores de tais Serviços.',
           'A Headout não é uma agência de viagens ou de turismo e não fornece tais Experiências ou Serviços por conta própria. Quando um Usuário reserva uma Experiência ou Serviço na Plataforma, ele o compra diretamente do Fornecedor. A Headout, por meio da sua Plataforma, apenas facilita a compra de ingressos para as Experiências. A Headout também não atua como agente do Usuário, em qualquer capacidade, exceto na medida em que facilita os pagamentos do Usuário aos Fornecedores.',
         ],
       },
       {
-        title: 'ACESSO E USO DA PLATAFORMA',
+        title: 'Acesso e uso da Plataforma',
         items: [
           'Ao acessar, cadastrar-se e/ou fazer uma Reserva na Plataforma, o Usuário concorda com cada um dos termos mencionados nos Termos de Uso, sem qualquer modificação. O Usuário declara que leu e compreendeu os Termos de Uso. Em todas as Reservas, considera-se que a pessoa que faz a Reserva aceitou estes Termos de Uso em nome de todas as pessoas mencionadas na Reserva.',
           'A Headout poderá revisar estes Termos de Uso periodicamente. A versão revisada entrará em vigor a partir da data em que for publicada, a menos que especificado de outra forma. Se as alterações/revisões destes Termos de Uso reduzirem os direitos do usuário ou aumentarem suas responsabilidades, a Headout publicará um aviso sobre tal no site da Headout ou informará seus Usuários por e-mail. Ao continuar a usar a Plataforma depois que a Headout fizer alterações nestes Termos de Uso, Você concorda em cumprir e ficar vinculado a essas alterações. Se Você não concordar com qualquer um dos termos mencionados neste documento, não deverá usar ou acessar a Plataforma da Headout.',
@@ -1954,7 +2105,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'PESQUISA E RESERVA NA HEADOUT',
+        title: 'Pesquisa e reserva na Headout',
         items: [
           'Você pode pesquisar Experiências usando as várias opções disponibilizadas no Site ou usando critérios como o tipo de Experiência, destino de viagem etc. Os resultados da pesquisa são baseados na relevância para a Sua pesquisa e em outros critérios.',
           'Quando Você reserva um Item, concorda em pagar o preço mencionado no Item, os impostos aplicáveis e outras taxas aplicáveis, como a taxa de serviço Headout e quaisquer outras taxas/encargos identificados durante a compra. O preço de cada Item será cotado por pessoa, a menos que especificado de outra forma. Os preços são baseados na tarifa especificada pelo Fornecedor que disponibilizou o respectivo Item na Plataforma. A Headout não determina o preço dos Itens. Os preços serão listados na moeda escolhida por Você ao usar o Site. Qualquer conversão de moeda necessária para efetuar o pagamento da Reserva será feita de acordo com a taxa determinada pela Headout. Os preços cotados em um Item estão sujeitos a alterações sem aviso prévio até que a Reserva seja feita.',
@@ -1962,26 +2113,26 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
           'Embora estes Termos de Uso regulem Seu uso do Site, inclusive Sua solicitação de Reserva, a prestação dos Serviços pelo Fornecedor e Sua utilização dos Serviços serão regidos pelos Termos do Fornecedor. Esses Termos do Fornecedor podem ser especificados no Item, comunicados a Você após a conclusão da Reserva ou estar disponíveis no site do Fornecedor ou da Experiência em questão. Você concorda em ler, entender e se vincular aos Termos do Fornecedor antes de utilizar os Serviços de uma Reserva. Não obstante o acima exposto, na medida em que os Termos do Fornecedor entrem em conflito com estes Termos de Uso no que diz respeito à Sua relação jurídica com a Headout, estes Termos de Uso prevalecerão. Suas interações com os Fornecedores são por Sua própria conta e risco.',
           'Você também concorda e reconhece que a Headout não será responsável perante Você ou qualquer outra pessoa por quaisquer perdas, despesas, danos (incluindo danos à propriedade) ou lesões causadas a Você por conta de (i) não comunicação dos Termos do Fornecedor a Você; (ii) Sua falha em ler e entender os Termos do Fornecedor; (iii) violação dos Termos do Fornecedor pelo Fornecedor; (iv) qualquer erro, defeito ou imprecisão nos Termos do Fornecedor; ou (v) quaisquer outros atos, omissões, erros, representações, garantias, violações ou negligência de um Fornecedor.',
           'A Reserva de determinados Itens exige que Você atenda a determinados pré-requisitos ou critérios para estabelecer sua elegibilidade para reservar o Item e usufruir dos Serviços relevantes. Você deve ler e entender os pré-requisitos ou critérios que fazem parte dos Termos do Fornecedor. Podemos até buscar determinadas Informações Adicionais para avaliar Sua elegibilidade para concluir a Reserva e/ou obter os Serviços relevantes. Você concorda em fornecer as Informações Adicionais com precisão. Se uma Reserva for concluída com base em Informações Adicionais imprecisas e o Fornecedor considerar Você inelegível para obter os Serviços, a Headout não será responsável por quaisquer perdas, danos ou custos por Você incorridos em relação a essa Reserva. A Headout também não terá a obrigação de reembolsar o preço da Reserva se Você não puder obter os Serviços do Fornecedor porque o Fornecedor considerou Você inelegível para eles.',
-          'Quando Você concluir o pagamento de uma Reserva, uma Confirmação de Reserva será emitida pela Headout. Após a conclusão do pagamento de uma Reserva, um contrato bipartido para o fornecimento e a compra dos Serviços é formado diretamente entre Você e o Fornecedor.',
+          'Quando Você concluir o pagamento de uma Reserva, uma Confirmação de Reserva será emitida pela Headout. Após a conclusão do pagamento de uma Reserva, um contrato bipartido para o fornecimento e a compra dos Serviços é formado diretamente entre Você e o Fornecedor. ',
           'Além destes Termos de Uso, o Usuário também deverá ler as Perguntas Frequentes disponíveis na seção "Ajuda" no Site da Headout para ter uma compreensão detalhada dos serviços prestados pela Headout. O Usuário concorda que estará vinculado ao conteúdo de tais Perguntas Frequentes, além destes Termos de Uso.',
         ],
       },
       {
-        title: 'PAGAMENTOS',
+        title: 'Pagamentos',
         items: [
           'Quando Você faz uma Reserva, a Headout coleta seus dados de pagamento e processa o pagamento para garantir que o preço pago por Você pela Reserva seja transferido e depositado na conta do Fornecedor, após a dedução dos encargos da Headout, se houver. Ao fazer isso, a Headout tem a responsabilidade limitada de coletar o pagamento do Usuário e transferi-lo para o Fornecedor. O pagamento integral é necessário para fazer ou confirmar uma Reserva, a menos que especificado de outra forma.',
           'O valor da Reserva pode estar sujeito a impostos, taxas de transações estrangeiras, câmbio ou outras taxas aplicáveis em seu país de residência. Seu banco ou empresa de cartão de pagamento poderá converter o pagamento para a moeda local (do seu país de residência) e poderá cobrar taxas, resultando em diferenças entre o valor exibido no Item e o valor final cobrado de Você. A Headout recomenda que Você entre em contato com o seu banco ou empresa de cartão se tiver alguma dúvida sobre qualquer conversão de moeda ou taxas aplicáveis.',
-          'Os Créditos da Headout podem ser usados por usuários registrados do Headout para futuras Reservas. Os Créditos da Headout não são transferíveis e não podem ser reembolsados ou trocados por dinheiro. A Headout se reserva o direito de fazer alterações nos Termos de Uso dos Créditos da Headout, incluindo, mas não se limitando, ao seu valor, uso e validade, sem aviso prévio ou intimação. No caso de a Headout descobrir que Você está usando indevidamente os Créditos da Headout com a intenção de causar uma perda ilegítima para a Headout e um ganho para si, a Headout terá todos os direitos de tomar as medidas apropriadas, incluindo, mas não se limitando a, reversão dos Créditos da Headout e desativação da Conta da Headout.',
+          'Os Créditos da Headout podem ser usados por usuários registrados do Headout para futuras Reservas. Os Créditos Headout não são transferíveis e não podem ser reembolsados ou trocados por dinheiro. A Headout se reserva o direito de fazer alterações nos Termos de Uso dos Créditos da Headout, incluindo, mas não se limitando a, valor, uso e validade, sem aviso prévio ou intimação. No caso de a Headout descobrir que Você está usando indevidamente os Créditos da Headout com a intenção de causar uma perda ilegítima para a Headout e um ganho para si, a Headout terá todos os direitos de tomar as medidas apropriadas, incluindo, mas não se limitando a, reversão dos Créditos da Headout e desativação da Conta da Headout.',
           'A Headout, por ser um mercado online, não pode emitir uma fatura fiscal para a Reserva feita por um Usuário. No entanto, mediante solicitação por escrito do Usuário, a Headout poderá emitir um recibo de pagamento para uma Reserva concluída. Esse recibo deverá incluir detalhes, inclusive, entre outros, o valor pago, quaisquer Créditos da Headout aplicados, o nome do hóspede e os detalhes relevantes do passeio. O Usuário poderá solicitar um recibo entrando em contato com support@headout.com, e a Headout se esforçará para emitir tal recibo dentro de vinte e quatro (24) horas após o recebimento da solicitação. A Headout se reserva o direito de determinar o formato e o conteúdo do recibo a seu exclusivo critério.',
         ],
       },
       {
-        title: 'CANCELAMENTOS E ALTERAÇÕES DE RESERVAS',
+        title: 'Cancelamento e alteração de reservas',
         items: [
           'Após a conclusão de uma Reserva, ela não poderá ser alterada por Você ou cancelada com reembolso, salvo indicação em contrário no Item ou nos Termos do Fornecedor aplicáveis a esse Item.',
           'Todas as questões relativas a cancelamento e modificações de Reservas são decididas e/ou determinadas pelo Fornecedor. Dado que a compra da Experiência é um contrato entre Você e o Fornecedor, a Headout não define os termos de cancelamento/alteração das Reservas nem toma qualquer decisão relativa ao cancelamento/alteração das Reservas, salvo acordo em contrário entre a Headout e o Fornecedor em questão.',
           'Sujeito aos termos de cancelamento/alteração estabelecidos no Item ou nos Termos do Fornecedor, Você poderá: (i) optar por cancelar ou alterar uma Reserva; ou (ii) entrar em contato com a Headout por meio dos dados de contato especificados na Confirmação de Reserva para obter informações sobre as opções disponíveis para cancelamento/alteração de uma Reserva. A Headout poderá, ao receber tal solicitação, se necessário, entrar em contato com o Fornecedor em questão e obter informações ou buscar confirmação antes do cancelamento/alteração de uma Reserva.',
-          'Se uma Reserva tiver sido cancelada/alterada por Você de acordo com os termos mencionados neste documento e de acordo com os termos de cancelamento do Fornecedor, a Headout, sujeita ao recebimento do Valor de Reembolso do Fornecedor, reembolsará o valor aplicável a Você. A Headout esclarece que, em nenhuma circunstância, a Headout pagará a Você o Valor do Reembolso até que a Headout o receba do Fornecedor. Assim que a Headout receber o Valor do Reembolso do Fornecedor, a Headout se esforçará para iniciar o reembolso dentro de sete (7) dias após o recebimento do Fornecedor. Como prática padrão , a Headout processao Valor do Reembolso para a fonte original de pagamento. No entanto, caso a fonte original de pagamento não esteja disponível, Você pode optar por receber o reembolso no formato de Créditos da Headout na Conta da Headout do usuário. Esses Créditos da Headout não são transferíveis, nem podem ser reembolsados ou resgatados na forma de dinheiro. Conforme mencionado anteriormente, atualmente, os Créditos da Headout não podem ser usados parcialmente para uma reserva. A Headout se reserva o direito de fazer alterações nos Termos de Uso dos Créditos da Headout, incluindo, mas não se limitando a, valor, uso e validade, sem aviso prévio ou intimação.',
+          'Se uma Reserva tiver sido cancelada/alterada por Você de acordo com os termos mencionados neste documento e de acordo com os termos de cancelamento do Fornecedor, a Headout, sujeita ao recebimento do Valor de Reembolso do Fornecedor, reembolsará o valor aplicável a Você. A Headout esclarece que, em nenhuma circunstância, a Headout pagará a Você o Valor do Reembolso até que a Headout o receba do Fornecedor. Assim que a Headout receber o Valor do Reembolso do Fornecedor, a Headout se esforçará para iniciar o reembolso dentro de sete (7) dias após o recebimento do Fornecedor. Como prática padrão, o Headout processa o valor do reembolso para a fonte original de pagamento. No entanto, caso a fonte original de pagamento não esteja disponível, Você poderá optar por receber o reembolso na forma de Créditos Headout na Conta Headout do usuário. Esses Créditos da Headout não são transferíveis, nem podem ser reembolsados ou resgatados na forma de dinheiro. Conforme mencionado anteriormente, atualmente, os Créditos da Headout não podem ser usados parcialmente para uma reserva. A Headout se reserva o direito de fazer alterações nos Termos de Uso dos Créditos da Headout, incluindo, mas não se limitando a, valor, uso e validade, sem aviso prévio ou intimação.',
           'Se Você fizer uma Reserva usando um código promocional ou se aceitar um desconto ou preço de oferta especial durante o processo de compra, poderá invalidar seu desconto ou preço de oferta especial cancelando/alterando sua Reserva. A Headout processará qualquer reembolso a Você após ajustar o desconto ou a oferta especial utilizados por Você no momento da Reserva.',
           'Nenhum reembolso estará disponível após o início de uma Experiência ou em relação a qualquer pacote de Experiência, acomodação, refeições ou quaisquer outros Serviços que Você tenha começado a utilizar.',
           'Um Fornecedor pode fazer uma alteração em uma Reserva após sua compra, alterações que incluem, entre outras, a data, o preço, as inclusões, a cobertura, os requisitos de idade e/ou quaisquer outros recursos e/ou requisitos da Experiência. A Headout se esforçará para comunicar a Você qualquer alteração na primeira oportunidade possível, assim que a Headout tiver conhecimento de tal alteração. Seus direitos, em relação a essas alterações, perante o Fornecedor, serão regidos pelos Termos do Fornecedor. A Headout não será responsável perante Você ou qualquer outra pessoa por quaisquer perdas, despesas, custos, danos ou lesões decorrentes de ou sobre tais alterações feitas na Reserva.',
@@ -1991,14 +2142,14 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'SUA RESPONSABILIDADE E ASSUNÇÃO DE RISCOS',
+        title: 'Sua Responsabilidade e Assunção de Riscos',
         items: [
           'Você é responsável por seus atos e omissões e também é responsável pelos atos e omissões de qualquer pessoa que participe da Experiência. Por exemplo, isso significa que: (i) Você é responsável por deixar o local de uma Experiência nas mesmas condições ou substancialmente nas mesmas condições em que se encontrava quando chegou; (ii) Você deve agir com integridade, tratar os outros no local da Experiência com respeito, sempre cumprir todas as leis aplicáveis e quaisquer termos ou regras que possam ser estabelecidos pelo Fornecedor. O não cumprimento das leis locais aplicáveis ou dos termos estabelecidos pelo Fornecedor pode resultar na solicitação do Fornecedor para que Você deixe/saia da Experiência ou atração ou em qualquer outra ação de acordo com a lei.',
           'Você reconhece que as atividades após a Reserva acarretam riscos inerentes e, portanto, concorda que, na medida máxima permitida pela legislação aplicável, assume todos os riscos decorrentes do seu acesso e uso da Plataforma, da participação em qualquer Experiência e de qualquer outra interação que tenha com outras pessoas no local da Experiência ou online. Isso significa que Você é responsável por analisar e entender que a Experiência escolhida por Você para a Reserva é adequada para Você por todos os meios e maneiras. Por exemplo, as Experiências podem acarretar o risco de doenças, lesões corporais, invalidez ou morte, e Você assume livre e voluntariamente esses riscos ao optar por participar dessas Experiências.',
         ],
       },
       {
-        title: 'ATIVIDADES PROIBIDAS NO SITE',
+        title: 'Atividades proibidas no Site',
         items: [
           'O Conteúdo do Site, bem como a infraestrutura usada para fornecer esse Conteúdo do Site, é de nossa propriedade ou nos foi concedido por meio de uma licença válida. Você concorda em não modificar, copiar, distribuir, transmitir, exibir, executar, reproduzir, publicar, licenciar, criar trabalhos derivados, transferir, vender ou revender qualquer Conteúdo do Site ou quaisquer produtos ou serviços obtidos do Site ou por meio dele. Qualquer outro uso do Conteúdo do Site, produtos e/ou serviços requer a permissão prévia por escrito da Headout.',
           {
@@ -2018,7 +2169,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
               'tentem obter acesso não autorizado ao Site, a contas de usuários, a sistemas de computadores ou a redes conectadas ao Site por meio de hacking, extração de senhas ou qualquer outro meio;',
               'usem o Site para transmitir qualquer vírus de computador, worms, defeitos, cavalos de Troia ou outros itens de natureza destrutiva;',
               'usem qualquer dispositivo, software ou rotina que interfira no funcionamento adequado do Site, ou que de outra forma tente interferir no funcionamento adequado do Site;',
-              'usem o Site para violar a segurança de qualquer rede de computadores, decifrar senhas ou códigos de criptografia de segurança',
+              'usem o Site para violar a segurança de qualquer rede de computadores, decifrar senhas ou códigos de criptografia de segurança;',
               'interrompam ou interfiram na segurança do Site, ou de outra forma causar danos a ele',
               'removam, contornem, desativem, danifiquem ou interfiram de outra forma com quaisquer recursos relacionados à segurança do Site, recursos que impeçam ou restrinjam o uso ou a cópia do Conteúdo do Site ou recursos que imponham limitações ao uso do Site',
               'publiquem qualquer conteúdo no site que viole ou seja especificamente proibido pelas leis dos Estados Unidos da América ou pelas leis locais do país de onde o Site está sendo acessado.',
@@ -2027,14 +2178,14 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'ATIVIDADES FRAUDULENTAS',
+        title: 'Atividades fraudulentas',
         items: [
           'Mantemos uma política de tolerância zero para qualquer atividade fraudulenta. Em determinadas ocasiões, quando suspeitarmos da ocorrência de uma transação fraudulenta, poderemos entrar em contato com Você para solicitar Informações Adicionais a fim de verificar a legitimidade da sua Reserva e garantir que ela não esteja associada a nenhuma atividade fraudulenta. Se Você optar por não fornecer essas informações solicitadas, reservamo-nos o direito de cancelar sua Reserva. Observe que essas ações são estritamente no melhor interesse de todos os Usuários, bem como dos Fornecedores, e a Headout não será responsável por nenhum desses cancelamentos.',
           'Os fraudadores podem empregar diferentes técnicas de phishing para obter informações pessoais e confidenciais, inclusive dados de pagamento de indivíduos, com a intenção de fraudá-los. Essas técnicas de phishing podem envolver a criação de sites, mensagens e e-mails falsos e muito mais. Recomendamos enfaticamente que Você permaneça vigilante e informado sobre esses métodos de phishing. Se Você se deparar com ou for vítima de tentativas de phishing em nome da Headout, solicitamos que informe imediatamente essas atividades para orm@headout.com. Também pedimos que Você informe imediatamente essas transações ao Seu banco ou a qualquer outra autoridade que possa ser exigida por lei.',
         ],
       },
       {
-        title: 'COMUNICAÇÕES ELETRÔNICAS',
+        title: 'Comunicações eletrônicas',
         items: [
           'Quando Você usa o Site do Headout ou envia e-mails, mensagens de texto e outras comunicações do seu computador ou dispositivo móvel para Nós, Você está se comunicando eletronicamente Conosco e concorda que podemos nos comunicar com Você de várias maneiras, como por e-mail, notificações push no aplicativo ou postando avisos e mensagens no Site.',
           'Você pode cancelar a assinatura de e-mails relacionados a marketing fazendo uma solicitação em support@headout.com. Qualquer solicitação desse tipo será tratada em até sete (7) dias úteis após o recebimento da solicitação. No entanto, a Headout poderá continuar a enviar a Você mensagens que não sejam de marketing, como mensagens relacionadas a Reservas futuras.',
@@ -2042,13 +2193,13 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'CONTEÚDO',
+        title: 'Conteúdo',
         items: [
-          'Você e outros usuários do Site poderão publicar ou enviar algum Conteúdo do Usuário para a Headout ou para o Site. Podemos usar esse Conteúdo do Usuário de várias maneiras diferentes, inclusive, entre outras, exibindo-o no Site, reformatando-o, traduzindo-o para outros idiomas, editando-o para fins de clareza e gramática, incorporando-o a anúncios e outros materiais, criando materiais derivados dele, promovendo-o e distribuindo-o. Você também concorda que a Headout poderá entrar em contato com Você para publicar avaliações e/ou gravar vídeos ou imagens das experiências reservadas por Você, o que é totalmente opcional. Caso Você concorde em compartilhar tal Conteúdo do Usuário com a Headout, a Headout terá o direito ilimitado de usar, redirecionar ou reproduzir tal Conteúdo do Usuário em sua Plataforma. Nenhuma contraprestação será paga pela Headout a Você por tal Conteúdo do Usuário.',
+          'Você e outros usuários do Site poderão publicar ou enviar algum Conteúdo do Usuário para a Headout ou para o Site. Podemos usar esse Conteúdo do Usuário de várias maneiras diferentes, inclusive, entre outras, exibindo-o no Site, reformatando-o, traduzindo-o para outros idiomas, editando-o para fins de clareza e gramática, incorporando-o a anúncios e outros materiais, criando materiais derivados dele, promovendo-o,  e distribuindo-o. Você também concorda que a Headout poderá entrar em contato com Você para publicar avaliações e/ou gravar vídeos ou imagens das experiências reservadas por Você, o que é totalmente opcional. Caso Você concorde em compartilhar tal Conteúdo do Usuário com a Headout, a Headout terá o direito ilimitado de usar, redirecionar ou reproduzir tal Conteúdo do Usuário em sua Plataforma. Nenhuma contraprestação será paga pela Headout a Você por tal Conteúdo do Usuário.',
           'Ao enviar Conteúdo do Usuário, o usuário concede à Headout e suas subsidiárias e/ou afiliadas o direito mundial, não exclusivo, isento de royalties, totalmente pago, perpétuo, transferível, irrevogável e totalmente sublicenciável de (a) usar, reproduzir, modificar, adaptar, traduzir, distribuir, publicar, criar materiais derivados e exibir e executar publicamente esse Conteúdo do Usuário em todo o mundo, em qualquer mídia, agora conhecida ou futuramente concebida, para qualquer finalidade; e (b) usar o nome que Você enviar em conexão com esse Conteúdo do Usuário. Você reconhece que a Headout poderá optar por fornecer a atribuição do seu Conteúdo do Usuário a Nosso critério. Você reconhece e concorda que o Conteúdo do Usuário não é confidencial e não é proprietário. Se for determinado que Você retém direitos morais (incluindo direitos de atribuição ou integridade) do Conteúdo do Usuário, Você declara que não exige que qualquer informação de identificação pessoal seja usada em conexão com o Conteúdo do Usuário, ou quaisquer materiais derivados ou upgrades ou atualizações do mesmo; (b) Você não tem objeção à publicação, uso, modificação, exclusão e exploração do Conteúdo do Usuário pela Headout ou seus licenciados, sucessores e cessionários; (c) Você renuncia e concorda em não reivindicar ou afirmar qualquer direito a todo e qualquer direito moral de um autor em qualquer Conteúdo do Usuário; e (d) Você libera para sempre a Headout e seus licenciados, sucessores e cessionários, de quaisquer reivindicações que Você poderia fazer contra a Headout sob quaisquer desses direitos morais.',
-          'O Site também contém alguns Fóruns Interativos e Você é o único responsável pelo uso desses Fóruns Interativos. Você concorda que usará esses Fóruns Interativos por sua própria conta e risco. Ao usar esses Fóruns Interativos, Você concorda expressamente em não postar, carregar, transmitir, distribuir, armazenar, criar ou publicar de outra forma, por meio do Site, qualquer Conteúdo do Usuário que inclua ou compreenda:',
+          'O Site também contém alguns Fóruns Interativos e Você é o único responsável pelo uso desses Fóruns Interativos. Você concorda que usará esses Fóruns Interativos por sua própria conta e risco. Ao usar qualquer um desses  Fóruns interativos, Você concorda expressamente em não publicar, carregar, transmitir, distribuir, armazenar, criar ou de outra forma publicar através do Site qualquer Conteúdo de Usuário que compreenda ou inclua:',
           {
-            text: '',
+            text: 'O conteúdo proibido inclui:',
             subItems: [
               'conteúdo que seja ilegal, calunioso, difamatório, obsceno, pornográfico, indecente, lascivo, sugestivo, assediador, ameaçador, invasivo da privacidade ou dos direitos de publicidade, abusivo, provocador, fraudulento ou de outra forma censurável;',
               'conteúdo que constitua, incentive ou forneça instruções para uma ofensa criminal, viole os direitos de qualquer parte ou, de outra forma, crie responsabilidade ou viole qualquer lei aplicável;',
@@ -2056,37 +2207,37 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
               'conteúdo que se faça passar por qualquer pessoa ou entidade ou que de outra forma deturpe sua afiliação com uma pessoa ou entidade, incluindo a Headout;',
               'dados privados de terceiros, incluindo, sem limitação, nome, endereço, número de telefone, endereço de e-mail e número de cartão de crédito;',
               'vírus, dados corrompidos ou outros arquivos prejudiciais, perturbadores ou destrutivos;',
-              'conteúdo que não esteja relacionado ao tópico das Áreas Interativas nas quais tal Conteúdo do Usuário foi publicado; ou',
+              'conteúdo que não esteja relacionado ao tópico das Áreas Interativas nas quais tal Conteúdo do Usuário foi publicado;',
               'conteúdo ou links para conteúdo que, a critério exclusivo da Headout, (i) viole as subseções anteriores deste documento, (ii) seja questionável, (iii) restrinja ou iniba qualquer outra pessoa de usar ou aproveitar as Áreas Interativas ou o Site, e/ou (iv) possa expor a Headout ou suas afiliadas ou usuários do Site a qualquer dano ou responsabilidade de qualquer tipo.',
             ],
           },
           'Você é o único responsável pelo Conteúdo do Usuário que enviar. Você assume todos os riscos associados a esse Conteúdo do Usuário, incluindo a confiança de qualquer pessoa em sua precisão, integridade ou utilidade, ou qualquer divulgação Sua de informações contidas nesse Conteúdo do Usuário que tornem Você uma pessoalmente identificável. Você declara que tem as permissões necessárias para usar e autorizar o uso do Conteúdo do Usuário conforme descrito neste documento. Você não poderá dar a entender que o Conteúdo do Usuário é de alguma forma patrocinado ou endossado pela Headout.',
           'O Usuário será o único responsável por qualquer Conteúdo do Usuário publicado, armazenado ou carregado na Plataforma, ou por qualquer perda ou dano a ele. O Usuário concorda em não publicar qualquer Conteúdo do Usuário que possa representar difamação, calúnia, injúria, omissões, falsidades, obscenidade, pornografia, profanação ou que viole a lei de qualquer forma. Caso a Headout seja responsabilizada por qualquer tribunal ou autoridade governamental por qualquer Conteúdo do Usuário publicado por Você no Site, Você concorda em manter a Headout isenta de quaisquer perdas e/ou danos sofridos pela Headout.',
           'A Headout poderá filtrar, editar ou monitorar o Conteúdo do Usuário. A Headout se reserva o direito, e tem absoluta discrição, de remover, filtrar, traduzir ou editar, sem aviso prévio, qualquer Conteúdo do Usuário a qualquer momento e por qualquer motivo, e/ou fazer com que tais ações sejam executadas por terceiros em seu nome, e Você é o único responsável pela criação de cópias de segurança e substituições do seu Conteúdo do Usuário, às suas próprias custas. A Headout não tem nenhuma obrigação de reter ou fornecer a Você cópias do seu Conteúdo do Usuário.',
-          'Se algum usuário identificar um Conteúdo na plataforma Headout que seja ilegal ou que viole as leis aplicáveis, poderá enviar uma reclamação por escrito para legal@headout.com. Após o recebimento de tal reclamação, a Headout envidará seus melhores esforços para analisar e resolver o problema no prazo de 3 dias úteis. A Headout notificará o reclamante sobre sua decisão, dentro do mesmo prazo. A Headout se reserva o direito de tomar qualquer medida que julgar apropriada, incluindo, mas não se limitando à remoção ou modificação do conteúdo denunciado.',
+          'Se algum usuário identificar um Conteúdo na plataforma Headout que seja ilegal ou que viole as leis aplicáveis, poderá enviar uma reclamação por escrito para legal@headout.com. Após o recebimento de tal reclamação, a Headout envidará seus melhores esforços para analisar e resolver o problema no prazo de 3 dias  úteis. A Headout notificará o reclamante sobre sua decisão, dentro do mesmo prazo. A Headout se reserva o direito de tomar qualquer medida que julgar apropriada, incluindo, mas não se limitando à remoção ou modificação do conteúdo denunciado.',
           'Se um Usuário for afetado negativamente por uma ação de moderação de conteúdo tomada pela Headout, ele poderá criar uma disputa enviando uma solicitação por escrito para legal@headout.com dentro de seis (6) meses a partir da data de tal ação. A Headout analisará a solicitação e comunicará sua decisão ao Usuário. Se o Usuário estiver insatisfeito com a determinação da Headout, ele poderá buscar mecanismos extrajudiciais de resolução de disputas, conforme disponível na legislação aplicável.',
           'Qualquer uso dos Fóruns Interativos ou de outras partes do Site por Você que viole o disposto acima viola estes Termos de Uso e pode resultar, entre outros, na rescisão ou suspensão de Seus direitos de uso dos Fóruns Interativos, do Site e/ou no encerramento da Sua Conta da Headout.',
         ],
       },
       {
-        title: 'LINKS PARA SITES DE TERCEIROS',
+        title: 'Links para Sites de Terceiros',
         items: [
-          'O Site pode conter hyperlinks para sites de terceiros. Esses hiperlinks são fornecidos apenas para Sua referência. A presença deles no Site não significa qualquer endosso da Headout ao material contido nesses Sites de Terceiros nem qualquer associação com seus operadores. Não controlamos Sites de Terceiros e não somos responsáveis por seu conteúdo, nem pela privacidade ou outras práticas daqueles que os possuem e operam. É de Sua exclusiva responsabilidade garantir que os hiperlinks que Você selecionar e/ou o software que Você baixar de tais Sites de Terceiros estejam livres de vírus.',
+          'O Site pode conter hyperlinks para Sites de Terceiros. Esses hiperlinks são fornecidos apenas para Sua referência. A presença deles no Site não significa qualquer endosso da Headout ao material contido nesses Sites de Terceiros nem qualquer associação com seus operadores. Não controlamos Sites de Terceiros e não somos responsáveis por seu conteúdo, nem pela privacidade ou outras práticas daqueles que os possuem e operam. É de Sua exclusiva responsabilidade garantir que os hiperlinks que Você selecionar e/ou o software que Você baixar de tais Sites de Terceiros estejam livres de vírus.',
           'Em alguns casos, um Site de Terceiros poderá perguntar a Você se deseja vincular seu perfil à Plataforma da Headout. Essa escolha é totalmente opcional. Se Você decidir vincular seus perfis e, posteriormente, desejar desativar esses links, deverá entrar em contato com o respectivo Site de Terceiros.',
           'Você poderá notar alguns links de Sites de Terceiros disponíveis no site da Headout. Se o Usuário acessar esses links, o fará por sua própria conta e risco e a Headout não será responsabilizada em caso de qualquer perda ou dano sofrido pelo acesso a esses links e pelo compartilhamento voluntário de dados pessoais nesses links. Os Usuários estarão vinculados aos termos de uso e à política de privacidade de tais Sites de Terceiros e são aconselhados a analisar esses termos.',
         ],
       },
       {
-        title: 'CONFORMIDADE COM A LEI DE DIREITOS AUTORAIS DO MILÊNIO DIGITAL',
+        title: 'Conformidade com a lei de direitos autorais do milênio digital',
         items: [
           'Se Você acredita que Seu trabalho foi copiado em nosso Site ou em qualquer um de Nossos outros sistemas ou redes de uma forma que constitua violação de direitos autorais, escreva para IP@headout.com. Ao enviar qualquer notificação sob este título de qualquer suposta infração, forneça as seguintes informações à Headout:',
           {
-            text: '',
+            text: 'Sua notificação deve incluir:',
             subItems: [
               'Uma assinatura eletrônica ou física da pessoa autorizada a agir em nome do proprietário dos direitos autorais;',
-              'Uma descrição do trabalho protegido por direitos autorais que Você alega ter sido violado;',
-              'Uma descrição de onde o material que Você alega estar infringindo está localizado no site;',
-              'Seu endereço, número de telefone e endereço de e-mail;',
+              'uma descrição do trabalho protegido por direitos autorais que Você alega ter sido violado;',
+              'uma descrição de onde o material que Você alega estar infringindo está localizado no site;',
+              'Seu endereço, número de telefone e endereço de e-mail',
               'Uma declaração Sua de que Você tem boa fé e acredita que o uso alegado não é autorizado pelo proprietário dos direitos autorais, seu agente ou pela lei;',
               'Uma declaração Sua, feita sob pena de perjúrio, de que as informações acima em sua notificação são precisas e que Você é o proprietário dos direitos autorais ou está autorizado a agir em nome do proprietário dos direitos autorais.',
             ],
@@ -2096,7 +2247,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'ISENÇÃO DE GARANTIAS E LIMITAÇÃO DE RESPONSABILIDADE',
+        title: 'Isenção de garantias e limitação de Responsabilidade',
         items: [
           'FORNECEMOS A PLATAFORMA E TODO O CONTEÚDO DO SITE "NO ESTADO EM QUE SE ENCONTRAM", SEM QUALQUER TIPO DE GARANTIA, E NOS ISENTAMOS DE TODAS AS GARANTIAS, SEJAM ELAS EXPRESSAS OU IMPLÍCITAS. POR EXEMPLO: (I) NÃO ENDOSSAMOS NEM GARANTIMOS A EXISTÊNCIA, A CONDUTA, O DESEMPENHO, A SEGURANÇA, A QUALIDADE, A LEGALIDADE OU A ADEQUAÇÃO DE QUALQUER FORNECEDOR, ITEM OU EXPERIÊNCIA; (II) NÃO GARANTIMOS O DESEMPENHO OU A NÃO INTERRUPÇÃO DO SITE; E (III) NÃO GARANTIMOS QUE A VERIFICAÇÃO, A IDENTIDADE OU AS VERIFICAÇÕES DE ANTECEDENTES CONDUZIDAS EM ITENS OU FORNECEDORES (SE HOUVER) IDENTIFICARÃO MÁ CONDUTA PASSADA OU EVITARÃO MÁ CONDUTA FUTURA. AS ISENÇÕES DE RESPONSABILIDADE CONTIDAS NESTES TERMOS DE USO SE APLICAM ATÉ O LIMITE MÁXIMO PERMITIDO POR LEI. SE VOCÊ TIVER DIREITOS OU GARANTIAS LEGAIS DOS QUAIS NÃO PODEMOS NOS ISENTAR, A DURAÇÃO DE TAIS DIREITOS OU GARANTIAS EXIGIDOS POR LEI SERÁ LIMITADA À EXTENSÃO MÁXIMA PERMITIDA POR LEI.',
           'NÃO OBSTANTE QUALQUER DISPOSIÇÃO CONTIDA NESTE DOCUMENTO, EM NENHUMA HIPÓTESE A HEADOUT SERÁ RESPONSÁVEL PERANTE VOCÊ OU QUALQUER OUTRA PARTE POR QUAISQUER DANOS CONSEQUENCIAIS, INDIRETOS, EXEMPLARES, ESPECIAIS OU PUNITIVOS, SEJAM ELES DECORRENTES DE VIOLAÇÃO DE CONTRATO, ATO ILÍCITO (INCLUINDO NEGLIGÊNCIA) OU DE OUTRA FORMA, INDEPENDENTEMENTE DE TAIS DANOS SEREM PREVISÍVEIS E DE A HEADOUT TER SIDO OU NÃO AVISADA DA POSSIBILIDADE DE TAIS DANOS.',
@@ -2104,7 +2255,7 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'FORÇA MAIOR',
+        title: 'Força Maior',
         items: [
           'O Usuário concorda que pode haver certas circunstâncias excepcionais em que a Headout e/ou o Fornecedor podem acabar em um cenário em que não estarão em posição de honrar as Reservas confirmadas devido a vários motivos, como um ato de Deus, uma pandemia, uma epidemia, exigências comerciais, agitação trabalhista, insolvência, decisões governamentais, atividade terrorista, quaisquer problemas operacionais e técnicos ou qualquer outro motivo além do controle da Headout e/ou do Fornecedor.',
           'O Usuário compreende e concorda que Headout, por ser apenas um mercado onde a Reserva foi feita, não pode ser responsabilizado por qualquer circunstância de Força Maior que leve ao cancelamento de uma Reserva. No entanto, caso a Headout tenha conhecimento antecipado de qualquer cenário que possa levar ao cancelamento ou desoneração de Reservas, ela terá a responsabilidade limitada de reembolsar o valor da Reserva após a dedução dos encargos necessários e aplicáveis, se reembolsados pelo Fornecedor em questão.',
@@ -2113,13 +2264,13 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
         ],
       },
       {
-        title: 'INDENIZAÇÃO',
+        title: 'Indenização',
         items: [
           'O usuário indenizará, defenderá e isentará a Headout e seus funcionários, diretores, agentes e Fornecedores de e contra qualquer ação, reivindicação, processo, procedimento, demanda, investigação ou cobrança alegando quaisquer custos, perdas, responsabilidades, danos, multas, julgamentos, honorários ou despesas (incluindo honorários advocatícios razoáveis e custas judiciais) decorrentes de (i) violação destes Termos de Uso ou dos Termos do Fornecedor por Você (ii) Sua falha em cumprir a lei aplicável em relação ao uso do Site ou à obtenção dos Serviços; ou (iii) qualquer lesão pessoal, dano à propriedade ou morte resultante do Seu ato ou omissão em relação ao uso do Site, à participação nas Experiências ou à utilização de qualquer um dos Serviços.',
         ],
       },
       {
-        title: 'DISPOSIÇÕES GERAIS',
+        title: 'Disposições Gerais',
         items: [
           'Lei Aplicável e Jurisdição: estes Termos de Uso serão regidos, interpretados e aplicados de acordo com as leis do Estado de Nova York, sem referência a princípios de conflito de leis. Por meio deste instrumento, cada Parte se submete irrevogavelmente à jurisdição exclusiva dos tribunais estaduais e federais do Estado de Nova York com relação a qualquer disputa decorrente ou relacionada a estes Termos de Uso.',
           'Alívio Injuntivo: Você reconhece e concorda que o descumprimento de algumas de Suas obrigações aqui previstas pode causar danos substanciais à Headout, que não poderiam ser remediados apenas pelo pagamento de indenizações. Dessa forma, Você concorda que a Headout terá o direito de buscar medidas cautelares preliminares e permanentes, sem a necessidade de prestar caução, em qualquer jurisdição onde possam ocorrer danos, além de todos os outros recursos disponíveis para tal violação.',
@@ -2132,79 +2283,23 @@ _Todos os termos em maiúsculas utilizados acima estão definidos na Política d
       },
     ],
   },
-  POWERED_BY: 'operado por',
+  POWERED_BY: 'feito por',
+  DAY_TRIPS_BANNER: {
+    CHAT_BUBBLE_TEXT: 'Veja as experiências reais dos visitantes',
+    BANNER_TITLE: 'Como realmente é',
+    BANNER_DESCRIPTION:
+      'Não apenas avaliações - veeja o feedback de visitantes reais, encontre seus guias e veja destaques reais do tour.',
+    BANNER_DESCRIPTION_SHORT:
+      'Não apenas avaliações - veja o que visitantes e guias reais dizem sobre. Veja como é a viagem.',
+    WATCH_VIDEO: 'Assista ao vídeo',
+  },
   BOOKING_PAGE_TIME: {
     HOUR: ' h',
     HOURS: ' h',
     MINUTE: ' min',
     MINUTES: ' min',
   },
-  LTT_SPECIAL_OFFER: 'Oferta especial',
-  DROPS: {
-    TITLE: 'Preços a partir de {0}. Todo dia.',
-    SUBTITLE:
-      'O melhor de {0} agora pertence a você com até 80% de desconto. Novos Drops todos os dias, somente no aplicativo da Headout.',
-    TITLE_MOBILE: 'O melhor de {0} por {1}',
-    SUBTITLE_MOBILE:
-      'Garanta Drops limitados para {0}, somente no aplicativo da Headout.',
-    NEXT_DROP_IN: 'Próximo Drop em {0}',
-    CTA_BUTTON_MOBILE: 'Pegue seu Drop',
-    NUDGE_CTA: 'Instalar',
-    ON: 'na',
-    EXIT_INTENT: {
-      DOWNLOAD_APP: 'Baixe o aplicativo',
-      NOT_NOW: `Vou aproveitar a próxima oferta`,
-    },
-    CITY_WISE_LABELS: {
-      ROME: {
-        cityName: `Rome's`,
-        cityNameMWeb: 'Roma',
-        price: '€ 10',
-      },
-      PARIS: {
-        cityName: `Paris'`,
-        cityNameMWeb: 'Paris',
-        price: '€ 10',
-      },
-    },
-    RIVE: {
-      ROME: {
-        MWEB_ExperienceName: {
-          names: [
-            'Coliseu, Monte Palatino e Fórum Romano',
-            'Big Bus: Hop-on hop-off Roma',
-            'Basílica de São Pedro',
-          ],
-          prices: ['€ 57.25', '€ 22.65', '€ 39.55'],
-          dropsPrice: ['€ 10', '€ 10', '€ 10'],
-        },
-        DWEB_ExperienceName: {
-          names: [
-            'Caminhe pelo passado do Coliseu',
-            'Prepare uma pizza como um autêntico romano',
-            'Maravilhe-se com a Basílica de São Pedro',
-          ],
-          prices: ['€ 10', '€ 10', '€ 10'],
-          dropsPrice: ['€ 10', '€ 10', '€ 10'],
-        },
-      },
-      PARIS: {
-        MWEB_ExperienceName: {
-          names: ['Torre Eiffel', 'Cruzeiro no Rio Sena', 'Aquário de Paris'],
-          prices: ['€ 69.25', '€ 65.05', '€ 57.15'],
-          dropsPrice: ['€ 10', '€ 10', '€ 10'],
-        },
-        DWEB_ExperienceName: {
-          names: [
-            'Vistas de tirar o fôlego na Torre Eiffel',
-            'Navegue pelo rio Sena',
-            'Conheça a majestosa Notre-Dame',
-          ],
-          prices: ['€ 10', '€ 10', '€ 10'],
-          dropsPrice: ['€ 10', '€ 10', '€ 10'],
-        },
-      },
-    },
-  },
+  LTT_SPECIAL_OFFER: 'Oferta especial ',
 };
+
 export default pt;

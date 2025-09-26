@@ -1,4 +1,6 @@
-const pl = {
+import { TDictionary } from './types';
+
+const pl: TDictionary = {
   AUDIO_GUIDE: {
     BANNER: 'Darmowy audioprzewodnik',
     PRODUCT_SUFFIX: 'z audioprzewodnikiem',
@@ -10,6 +12,7 @@ const pl = {
       'Autentyczne doświadczenia zaufanych i zweryfikowanych partnerów.',
   },
   REVIEWS: 'ocen(-y)',
+  DEFAULT_REVIEWER_NAME: 'Headout Guest',
   AVAILABLE: 'Dostępne',
   BACK: 'Wstecz',
   BANNER_CTA: 'Kup bilety',
@@ -27,11 +30,6 @@ const pl = {
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję.',
   BOOK_NOW_CTA: 'Zarezerwuj teraz',
   BUY_TICKETS_CTA: 'Kup bilety',
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: 'Tylko na Headout',
-  },
   CANCELLATION_POLICY: {
     CANCELLABLE:
       'Możesz anulować te bilety do {0} godzin przed rozpoczęciem aktywności, aby uzyskać pełen zwrot.',
@@ -94,6 +92,36 @@ const pl = {
         'Popularne atrakcje, sposoby na budżetowe podróżowanie, transport publiczny, najlepsze restauracje i hotele, wskazówki dotyczące kultury i więcej!',
     },
   },
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'Używamy plików cookie i podobnych technologii do wielu celów, w tym w celu poprawy doświadczenia użytkownika na naszej stronie i dla reklam.',
+    MANAGE_PREFERENCES: 'Zarządzaj preferencjami',
+    PREFERNCES_SAVED: 'Twoje preferencje zostały zapisane',
+    COOKIES: 'Pliki cookie:',
+    ACCEPT: 'OK',
+    ALLOW_ALL: 'Zezwalaj na wszystkie',
+    DENY_ALL: 'Odrzuć wszystkie',
+    HEADING: 'Zawsze cenimy Twoją prywatność',
+    DESCRIPTION: `*   Pliki cookie to małe pliki umieszczane na Twoim komputerze, urządzeniu mobilnym lub innym urządzeniu przez Witrynę/Platformę. Zawierają one szczegóły historii przeglądania, wśród innych zastosowań.
+*   Używamy różnych rodzajów plików cookie, aby monitorować to, jak korzystasz z Naszej Platformy i przechowywać pewne informacje, które pomagają nam świadczyć bardziej spersonalizowane usługi. Niektóre pliki cookie mogą zostać umieszczone na Twoim Urządzeniu z powodu Korzystania przez Ciebie z usług dostępnych na naszej Platformie.
+*   Ogólnie rzecz biorąc, ten termin obejmuje dwa różne zestawy używanych przez nas technologii:
+    *   **Pliki cookie lub Pliki cookie przeglądarki.** Jest to mały plik, który automatycznie zostaje utworzony na Twoim Urządzeniu, gdy korzystasz z Naszej platformy. Możesz ustawić odrzucanie wszystkich Plików cookie w swojej przeglądarce. W tym przypadku, jeśli nie akceptujesz Naszych plików cookie, możesz nie być w stanie korzystać z niektórych części Naszej platformy.
+    *   **Pliki typu web beacon.** Są nazywane również znacznikami pikselowymi. Znajdują się w różnych sekcjach Naszej platformy oraz Naszych e-maili i pozwalają nam monitorować i rozumieć aktywność użytkowników.
+*   Te Pliki cookie przechowywane na Twoim urządzeniu mogą być „Trwałymi” lub „Sesyjnymi” plikami cookie. Trwałe pliki cookie to te, które pozostają na Twoim urządzeniu, nawet gdy przechodzisz do trybu offline, podczas gdy Sesyjne pliki cookie są automatycznie usuwane, gdy tylko zamkniesz Przeglądarkę internetową.
+*   Wykorzystujemy zarówno Sesyjne, jak i Trwałe pliki cookie do celów określonych poniżej:
+    *   Niezbędne / Kluczowe pliki cookie
+        *   _Typ:_ Sesyjne pliki cookie
+        *   _Cel:_ Te pliki cookie są niezbędne do korzystania z różnych sekcji Platformy, a jeśli są niedozwolone, możesz nie mieć dostępu do usług dostępnych na Platformie. Te pliki cookie pomagają nam uwierzytelniać użytkowników i zapobiegać wszelkim rodzajom nieuczciwych działań na Platformie.
+    *   Polityka plików cookie / Akceptacja plików cookies
+        *   _Typ:_ Trwałe pliki cookie
+        *   _Cel:_ Te Pliki cookie określają, czy Użytkownicy zaakceptowali korzystanie z Plików cookie.
+    *   Funkcjonalne pliki cookie
+        *   _Typ:_ Trwałe pliki cookie
+        *   _Cel:_ Te Pliki cookie pozwalają nam zapamiętać wybory, których dokonujesz podczas korzystania z Platformy, takie jak zapamiętanie Danych logowania lub preferencji językowych. Celem tych Plików cookie jest zapewnienie bardziej spersonalizowanej obsługi za każdym razem, gdy korzystasz z Platformy.
+
+Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Polityce prywatności. Aby uzyskać szczegółowe informacje, zapoznaj się z [Polityką prywatności](/privacy-policy/)
+`,
+  },
   CITY_GUIDE_DESCRIPTIONS: {
     TRAVEL_GUIDE:
       'Dowiedz się więcej o wymaganiach wizowych, wymianie walut, różnicach stref czasowych i nie tylko, by cieszyć się bezproblemową podróżą i przyjemnym pobytem.',
@@ -124,9 +152,9 @@ const pl = {
   COLLECTION_SLICE_HEADING: 'Popularne aktywności w mieście {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Wybierz',
+    SELECT_PREFERENCE: 'Wybierz swoje preferencje',
     SELECT_OPTION: 'Wybierz opcję',
     SELECT_TICKET: 'Wybierz bilet',
-    SELECT_PREFERENCE: 'Wybierz swoje preferencje',
   },
   COMPARE_ALL_DETAILS: 'Porównaj wszystkie szczegóły',
   COVID19_ALERT: {
@@ -152,6 +180,7 @@ const pl = {
     TRANSFERS: 'Transfery wliczone w cenę',
     MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
     LIVE_GUIDE: 'Live guide',
+    FLEXIBLE_CANCELLATION: 'Flexible cancellation',
   },
   BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
     'Zarezerwuj teraz bez płacenia. Zrezygnuj za darmo, jeśli Twoje plany się zmienią.',
@@ -193,13 +222,13 @@ const pl = {
     COMPANY_DETAILS: 'Dane firmy',
     ABOUT_US: 'O nas',
     INFORMATION: 'Informacja',
+    GMAPS_DISCLAIMER:
+      'Wszystkie zrzuty ekranu map znajdujące się na tej stronie są pozyskiwane z Google zgodnie z zasadami dozwolonego użytku. Wszelkie prawa do takich zrzutów ekranu należą do konkretnej platformy, a ich wykorzystanie służy wyłącznie celom informacyjnym lub orientacyjnym.',
     DISCLAIMER:
       'Ta strona nie jest oficjalną stroną internetową <attraction>. Jest prowadzona przez Headout, które współpracuje z operatorami atrakcji i wycieczek, aby zapewniać niezwykłe doświadczenia w kilku kliknięciach.',
     EMAIL_US: 'Napisz do nas',
     GET_HELP: 'Uzyskaj pomoc',
     LEGAL: 'Informacje prawne',
-    GMAPS_DISCLAIMER:
-      'Wszystkie zrzuty ekranu map znajdujące się na tej stronie są pozyskiwane z Google zgodnie z zasadami dozwolonego użytku. Wszelkie prawa do takich zrzutów ekranu należą do konkretnej platformy, a ich wykorzystanie służy wyłącznie celom informacyjnym lub orientacyjnym.',
     PRIVACY_POLICY: 'Polityka prywatności',
     QUICK_LINKS: 'Szybkie linki',
     TERMS_AND_CONDITIONS: 'Warunki korzystania',
@@ -213,6 +242,8 @@ const pl = {
     WE_ACCEPT: 'Opcje płatności',
     DOWNLOAD_HEADOUT: 'Pobierz aplikację Headout',
     SCAN_CODES: 'Skanuj kody',
+    STAR_VERIFIED: 'click to verify S.T.A.R membership',
+    OFFICIAL_TICKET_RETAILER: 'Official ticket retailer',
   },
   FREE_CANCELLATION: 'Bezpłatne anulowanie',
   FREE_CANCELLATION_SUBTEXT:
@@ -225,6 +256,7 @@ const pl = {
     SUB_TEXT:
       'Zadowolenie klientów jest naszym priorytetem. Dołącz do grona naszych szczęśliwych klientów.',
   },
+  HEADOUT: 'Headout',
   HELP_CENTER: {
     MAIN_TEXT: 'Centrum pomocy 24/7',
     SUB_TEXT:
@@ -269,13 +301,6 @@ const pl = {
   OPENS: 'Premiera',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję. To nie jest strona internetowa obiektu.',
-  POI_COLLECTIONS_SECTION: {
-    MAKE_THE_MOST_OF_CITY: 'Odkryj miasto – {0}',
-    TOP_EXPERIENCE_PICKS: 'Popularne aktywności',
-    EXPERIENCES: '{0}+ aktywności',
-    CITY_YOUR_WAY: '{0}, po Twojemu!',
-    DISCOVER_MORE: 'Zobacz więcej',
-  },
   POPULAR_CURRENCIES: 'Popularne waluty',
   PRICES_STARTING: 'Ceny od',
   PROMO_CODES: {
@@ -461,18 +486,23 @@ const pl = {
           HEADING: 'Bezdotykowe e-bilety',
         },
         PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
+          DESCRIPTION: `<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>
+            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>`,
           HEADING: 'Zapobiegawcze środki bezpieczeństwa',
         },
         SANITIZATION_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>\n            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>',
+          DESCRIPTION: `<li>Aby wejść do obiektu, konieczne jest noszenie środków ochrony osobistej takich jak maseczki</li>
+            <li>Przed wejściem do&nbsp;obiektu sprawdzona zostanie temperatura wszystkich widzów</li>`,
           HEADING: 'Sanitaryzacja',
         },
         SOCIAL_DISTANCING_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Obiekt został zmieniony, tak aby minimalizować kontakt między widzami</li>\n            <li>Różnym grupom przydzielane są oddzielne miejsca</li>\n            <li>W&nbsp;miarę możliwości zorganizowane zostanie wstępne zamawianie przekąsek na przerwę</li>\n            <li>Zalecane są bezdotykowe, elektroniczne transakcje.</li>\n            <li>Widzów prosi się o ograniczenie ilości zabieranych ze sobą przedmiotów osobistych, ponieważ szatnie mogą być zamknięte</li>\n            <li>Aktywności takie jak robienie zdjęć z&nbsp;artystami czy rozdawanie autografów mogą być ograniczone</li>\n            ',
+          DESCRIPTION: `<li>Obiekt został zmieniony, tak aby minimalizować kontakt między widzami</li>
+            <li>Różnym grupom przydzielane są oddzielne miejsca</li>
+            <li>W&nbsp;miarę możliwości zorganizowane zostanie wstępne zamawianie przekąsek na przerwę</li>
+            <li>Zalecane są bezdotykowe, elektroniczne transakcje.</li>
+            <li>Widzów prosi się o ograniczenie ilości zabieranych ze sobą przedmiotów osobistych, ponieważ szatnie mogą być zamknięte</li>
+            <li>Aktywności takie jak robienie zdjęć z&nbsp;artystami czy rozdawanie autografów mogą być ograniczone</li>
+            `,
           HEADING: 'Środki dystansu społecznego',
         },
       },
@@ -507,6 +537,7 @@ const pl = {
     ADDITIONAL_INFORMATION: 'Informacje dodatkowe',
     AGE_LIMIT: 'Ograniczenie wiekowe',
     AGE_SUITABILITY: 'Odpowiedni wiek',
+    CRITIC_REVIEW: 'Recenzja krytyka',
     ANSWER: ['Odpowiedź:'],
     BLOG_SHOW_PAGE: 'Blog: strona spektaklu',
     BLOG_SUMMARY: 'Blog: podsumowanie',
@@ -543,10 +574,10 @@ const pl = {
     YOUR_TICKETS: 'Twoje bilety',
     ABOUT_CONCERT: 'O koncercie',
     PROGRAM: 'Program',
-    CRITIC_REVIEW: 'Recenzja krytyka',
     PART_ONE: 'Część 1',
     PART_TWO: 'Część 2',
   },
+  SNEAK_PEEK: 'Sneak Peek',
   SORT_BY: 'Sortuj według',
   SPECIAL_OFFER: 'Oferta specjalna',
   THEATRE: 'Teatr',
@@ -628,12 +659,13 @@ const pl = {
         DESCRIPTION: 'Natychmiastowe potwierdzenie na telefon',
       },
       CHOOSE_YOUR_SEATS: {
-        NAME: `Wybór miejsc`,
+        NAME: 'Wybór miejsc',
         DESCRIPTION: 'Widok, na jakim Ci zależy, zawsze',
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Wyjątkowe oferty i zniżki',
-        DESCRIPTION: `Zaoszczędź na najlepszych spektaklach, które do zaoferowania ma {0}`,
+        DESCRIPTION:
+          'Zaoszczędź na najlepszych spektaklach, które do zaoferowania ma {0}',
       },
       BOOK_AND_RELAX: {
         NAME: 'Prosta rezerwacja',
@@ -643,6 +675,7 @@ const pl = {
     YOUR_PICK: 'Twój wybór',
     BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
     TOP_WEST_END_SHOWS: 'Popularne spektakle na West Endzie',
+    TOP_THEATRE_SHOWS: 'Top {0} shows',
     TOP_SHOWS: 'Popularne spektakle',
     SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     LAST_MINUTE_TICKETS: 'Bilety last minute',
@@ -689,8 +722,9 @@ const pl = {
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Ups, mamy problem',
-    MESSAGE:
-      'Przepraszamy! Wszystkie aktywności tego dnia są wyprzedane lub\n    niedostępne. Ale jest ich mnóstwo w innych terminach. Jedyne,\n    co musisz zrobić, to zachować elastyczność.',
+    MESSAGE: `Przepraszamy! Wszystkie aktywności tego dnia są wyprzedane lub
+    niedostępne. Ale jest ich mnóstwo w innych terminach. Jedyne,
+    co musisz zrobić, to zachować elastyczność.`,
     CTA: 'Wyświetl wszystkie daty',
   },
   ALL_DATES: 'Wszystkie daty',
@@ -774,46 +808,6 @@ const pl = {
     TRANSPORTATION: 'Transport',
     FESTIVALS_EVENTS: 'Festiwale i imprezy',
   },
-  CALENDAR: {
-    FOOTNOTE: '* Wszystkie ceny są podane w {0}',
-    PICK_DATE: 'Wybierz datę',
-  },
-  SHOW_PAGE_V2: {
-    READ_MORE_REVIEWS: 'Czytaj więcej recenzji',
-    SHOW_MORE_REVIEWS: 'Pokaż więcej recenzji',
-    ALL_PHOTOS: 'Wszystkie zdjęcia',
-    MORE_DATES: 'Więcej dat',
-    SELLING_OUT_FAST: 'Szybko się wyprzedaje',
-    SELECT_TIME_SLOT: 'Wybierz przedział czasowy',
-    SELECT_TIME_SLOT_ERROR: 'Wybierz przedział czasowy, aby kontynuować',
-    PRICE_STARTING_FROM: 'Cena miejsc od',
-    SELECT_SEATS: 'Wybierz miejsca',
-    READ_MORE: 'Czytaj więcej',
-    RATINGS_AND_REVIEWS: 'Oceny i recenzje',
-    READ_DETAILED_REVIEWS: 'Przeczytaj szczegółowe recenzje',
-    INTERVAL: 'Przerwa',
-    TWO_PART_SHOW: 'Spektakl w dwóch częściach',
-    UNTIL_DATE: 'Do {0}',
-    AVAILABLE_TIME: 'Dostępny przedział czasowy',
-    EXPERIENCE_AVAILABLE_ONLY_AT:
-      'Ta aktywność jest dostępna tylko o poniższej godzinie',
-    CONTENT_TABS: {
-      ABOUT: 'Informacje',
-      VENUE: 'Obiekt',
-      TICKETS: 'Bilety',
-      Reviews: 'Recenzje',
-    },
-    SELECT_SHOW_TIMMING: 'Wybierz godzinę spektaklu',
-    ONLY_ONE_SLOT: 'Tylko 1 przedział czasowy dostępny w wybranym dniu',
-    SIMILAR_SHOWS: 'To też może Ci się spodobać',
-    CONTENT_SECTION_HEADERS: {
-      STORYLINE: 'Fabuła',
-      AGE_SUITABILITY_AND_GUIDELINES: 'Odpowiedni wiek i dodatkowe wytyczne',
-      WHAT_CRITICS_THINK: 'Co myślą krytycy',
-      FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Często zadawane pytania: {0}',
-      CAST_AND_CREATIVES: 'Obsada i twórcy',
-    },
-  },
   BREADCRUMBS: {
     HOME: 'Strona główna',
     TRAVEL_GUIDE: 'Przewodnik turystyczny',
@@ -864,6 +858,130 @@ const pl = {
     Ramp: 'Rampa',
     'Level Access': 'Wejście bez schodów',
   },
+  CALENDAR: {
+    FOOTNOTE: '* Wszystkie ceny są podane w {0}',
+    PICK_DATE: 'Wybierz datę',
+  },
+  REVIEW_LOC: {
+    VIEW_ORIGINAL: 'Wyświetl oryginalną recenzję: język {0}',
+    VIEW_ORIGINAL_NO_LANG:
+      'Ta recenzja została przetłumaczona. Pokaż oryginalną recenzję.',
+    TRANSLATE: 'Przetłumacz recenzję na język {0}',
+    LANGUAGES: {
+      EN: 'angielski',
+      ES: 'hiszpański',
+      FR: 'francuski',
+      IT: 'włoski',
+      DE: 'niemiecki',
+      PT: 'portugalski',
+      NL: 'holenderski',
+      NO: 'Norwegian',
+      SV: 'Swedish',
+      DA: 'Danish',
+    },
+  },
+  SHOW_PAGE_V2: {
+    READ_MORE_REVIEWS: 'Czytaj więcej recenzji',
+    SHOW_MORE_REVIEWS: 'Pokaż więcej recenzji',
+    MUST_DO_EXP: 'Must-do experience',
+    ALL_PHOTOS: 'Wszystkie zdjęcia',
+    MORE_DATES: 'Więcej dat',
+    SELLING_OUT_FAST: 'Szybko się wyprzedaje',
+    SELECT_TIME_SLOT: 'Wybierz przedział czasowy',
+    SELECT_TIME_SLOT_ERROR: 'Wybierz przedział czasowy, aby kontynuować',
+    PRICE_STARTING_FROM: 'Cena miejsc od',
+    SELECT_SEATS: 'Wybierz miejsca',
+    READ_MORE: 'Czytaj więcej',
+    RATINGS_AND_REVIEWS: 'Oceny i recenzje',
+    READ_DETAILED_REVIEWS: 'Przeczytaj szczegółowe recenzje',
+    INTERVAL: 'Przerwa',
+    TWO_PART_SHOW: 'Spektakl w dwóch częściach',
+    UNTIL_DATE: 'Do {0}',
+    AVAILABLE_TIME: 'Dostępny przedział czasowy',
+    EXPERIENCE_AVAILABLE_ONLY_AT:
+      'Ta aktywność jest dostępna tylko o poniższej godzinie',
+    CONTENT_TABS: {
+      ABOUT: 'Informacje',
+      VENUE: 'Obiekt',
+      TICKETS: 'Bilety',
+      Reviews: 'Recenzje',
+    },
+    SELECT_SHOW_TIMMING: 'Wybierz godzinę spektaklu',
+    ONLY_ONE_SLOT: 'Tylko 1 przedział czasowy dostępny w wybranym dniu',
+    SIMILAR_SHOWS: 'To też może Ci się spodobać',
+    CONTENT_SECTION_HEADERS: {
+      STORYLINE: 'Fabuła',
+      WHAT_CRITICS_THINK: 'Co myślą krytycy',
+      FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Często zadawane pytania: {0}',
+      AGE_SUITABILITY_AND_GUIDELINES: 'Odpowiedni wiek i dodatkowe wytyczne',
+      CAST_AND_CREATIVES: 'Obsada i twórcy',
+      ABOUT_THE_SHOW: 'About the show',
+    },
+    TICKETS_UNAVAILABLE: 'Tickets unavailable',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Luckily, we have plenty more to choose from right here.',
+    MUST_SEE_SHOWS: 'More must-see shows',
+    SEE_ALL_SHOWS: 'See all shows',
+    SHOW_ONLY_AVAILABLE_AT: 'This show is only available on',
+    GETTING_TICKETS: 'Getting your tickets',
+  },
+  HOHO: {
+    HOHO: 'Wycieczki typu wskakuj/wyskakuj',
+    BUS_ROUTES_DETAILS: 'Trasy autobusowe',
+    TOUR_DETAILS: 'Szczegóły wycieczki',
+    ROUTES_SCHEDULES: 'Trasy i harmonogramy',
+    VALIDITY: 'Ważne przez 1 dzień',
+    VALIDITY_NOTE:
+      'Twoja wycieczka jest ważna przez {0} dzień/dni kalendarzowe. Jeśli zarezerwujesz bilet na 06.05.2023 r., bilet będzie ważny do 06.05.2023 r. do godz. 21:00 czasu pacyficznego.',
+    BESTSELLER: 'Bestseller',
+    SEE_ALL: 'Zobacz wszystko',
+    TIMINGS: 'GODZINY',
+    FREQUENCY: 'CZĘSTOTLIWOŚĆ',
+    DURATION: 'CZAS TRWANIA',
+    STARTING_LOCATION: 'Miejsce startu',
+    CALENDAR_FOOTNOTE: '* Wszystkie ceny są podane w {0}',
+    TOUR_TIMINGS: 'Godziny wycieczek',
+    TOUR_FREQUENCY: 'Częstotliwość wycieczek',
+    GOT_IT: 'Rozumiem',
+    SELECT_DATE: 'Wybierz datę',
+    SELECT_TOUR: 'Wybierz typ wycieczki',
+    VIEW_TOUR_DETAILS: 'Wyświetl szczegóły wycieczki',
+    BUS_DETAILS: 'WIĘCEJ SZCZEGÓŁÓW',
+    VIEW_ROUTES: 'Wyświetl wszystkie trasy',
+    BUS_ROUTES: 'TRASY AUTOBUSOWE',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routes',
+    COMBO_SUBTITLE: 'Save more with',
+    COMBO_TITLE: 'Combo deals on your Hop-on Hop-off tour',
+    COMBO_DWEB_TITLE: 'Save more with combo deals on your Hop-on Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Stops & nearby attractions',
+    HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
+    TIMINGS_FREQUENCY: 'Timings & frequency',
+    TOUR_DURATION: 'Tour duration',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'View Location',
+    BANNER_SUBTEXT: `Fastest and most convenient way to view
+    <span> {0}+ top attractions </span> in all of {1}.`,
+    TOP_ATTRACTIONS: 'Top attractions covered on route',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last minute availability',
+        DESCRIPTION: 'Instantly confirmed to your phone',
+      },
+      COST_EFF: {
+        NAME: 'Cost-effective exploring',
+        DESCRIPTION: 'Multiple landmarks, one ticket',
+      },
+      DAILY_RIDES: {
+        NAME: 'Daily unlimited rides',
+        DESCRIPTION: "Experience {0}'s best in one tour",
+      },
+      BOOK_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by {0} million guests and counting',
+      },
+    },
+  },
   BANNER_DESCRIPTORS: {
     EXPERT_MULTILINGUAL_GUIDES: 'Profesjonalni wielojęzyczni przewodnicy',
     STL: 'Wstęp bez kolejki',
@@ -872,7 +990,9 @@ const pl = {
     MULTILINGUAL_GUIDES: 'Wielojęzyczni przewodnicy',
     CULINARY_EXPERTS: 'Specjaliści kulinarni',
     SIGHTSEEING: 'Zwiedzanie i rozrywka na pokładzie',
+    SIGHTSEEING_MEAL: 'Sightseeing & onboard meal options',
     MULTILINGUAL_GT: 'Wycieczki z przewodnikiem w wielu językach',
+    AUDIOGUIDE_COMMENTARY: 'Audioguide & commentary available',
     ALL_TOP_ATTRACTIONS_COVERED: 'Obejmuje wszystkie popularne atrakcje',
     REG_SCHEDULE_UNLIMITED_RIDES:
       'Regularny harmonogram. Nielimitowane przejazdy',
@@ -902,8 +1022,12 @@ const pl = {
     FOOD_DRINK: 'Jedzenie i napoje',
     PANAROMIC: 'Panoramiczne widoki na popularne atrakcje',
     PANAROMIC_2: 'Panoramiczne widoki',
+    PANAROMIC_3: 'Panoramic, open-top views',
     BEVERAGES: 'Napoje na pokładzie',
     GOURMET: 'Wyszukana kolacja',
+    GOURMET_2: 'Gourmet dinner & drinks',
+    NIGHTTIME: 'Stunning nighttime views',
+    ROMANTIC: 'Romantic atmosphere',
     TRANSFERS: 'Transfery wliczone w cenę',
     CERTIFIED_OP: 'Certyfikowani operatorzy',
     BIRD_EYE: 'Widok z lotu ptaka',
@@ -938,6 +1062,30 @@ const pl = {
     EQUIPMENT: 'Sprzęt w cenie',
     SCENIC_FLYOVERS: 'Malownicze trasy',
     LIVE_COMMENTARY: 'Komentarz na żywo',
+    BEST_AERIAL_VIEWS: 'Best aerial views',
+    SAFE_CERT_OP: 'Safe & certified operations',
+    HANDPICKED: 'Handpicked tours',
+    EFFORTLESS: 'Effortless planning',
+    EXPERT_GUIDES: 'Expert guides. Unique insights',
+    ALL_ATTR_ONE_CARD: 'All attractions, one card',
+    MULTI_CARD: 'Multiple card options',
+    COST_EFF: 'Cost-effective and convenient',
+    BEST_PRICES: 'Best prices',
+    MULTI_TRANSPORT: 'Multiple transport options',
+  },
+  CAT_SUBCAT_PAGE: {
+    ALL: 'Wszystko',
+    POPULAR_SUBCATEGORY: 'Popularne: {0}',
+    TOP_CATEGORY: 'Najpopularniejsze: {0}',
+    ATTRACTIONS: 'Atrakcje',
+    ALL_SUBCATEGORY: 'Wszystkie: {0}',
+    BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
+    TICKETS_FROM: 'Bilety od',
+    PRICE_LOW_HIGH: 'Cena (od najniższej do najwyższej)',
+    PRICE_HIGH_LOW: 'Cena (od najwyższej do najniższej)',
+    FILTERS: 'Filtry',
+    RESET: 'Resetuj',
+    APPLY: 'Zastosuj',
   },
   COOKIE_BANNER: {
     DESKTOP:
@@ -967,118 +1115,6 @@ const pl = {
         'Dołącz do naszej listy mailingowej, żeby otrzymywać najnowsze wiadomości i najciekawsze oferty na spektakle teatralne.',
     },
   },
-  HOHO: {
-    MORE_DETAILS: 'Więcej szczegółów',
-    HOHO: 'Wycieczki typu wskakuj/wyskakuj',
-    BUS_ROUTES_DETAILS: 'Trasy autobusowe',
-    TOUR_DETAILS: 'Szczegóły wycieczki',
-    ROUTES_SCHEDULES: 'Trasy i harmonogramy',
-    VALIDITY: 'Ważne przez 1 dzień',
-    VALIDITY_NOTE:
-      'Twoja wycieczka jest ważna przez {0} dzień/dni kalendarzowe. Jeśli zarezerwujesz bilet na 06.05.2023 r., bilet będzie ważny do 06.05.2023 r. do godz. 21:00 czasu pacyficznego.',
-    BESTSELLER: 'Bestseller',
-    SEE_ALL: 'Zobacz wszystko',
-    TIMINGS: 'GODZINY',
-    FREQUENCY: 'CZĘSTOTLIWOŚĆ',
-    DURATION: 'CZAS TRWANIA',
-    STARTING_LOCATION: 'Miejsce startu',
-    TOP_ATTRACTIONS: 'Top attractions covered on route',
-    CALENDAR_FOOTNOTE: '* Wszystkie ceny są podane w {0}',
-    TOUR_TIMINGS: 'Godziny wycieczek',
-    TOUR_FREQUENCY: 'Częstotliwość wycieczek',
-    GOT_IT: 'Rozumiem',
-    SELECT_DATE: 'Wybierz datę',
-    SELECT_TOUR: 'Wybierz typ wycieczki',
-    VIEW_TOUR_DETAILS: 'Wyświetl szczegóły wycieczki',
-    BUS_DETAILS: 'WIĘCEJ SZCZEGÓŁÓW',
-    VIEW_ROUTES: 'Wyświetl wszystkie trasy',
-    BUS_ROUTES: 'TRASY AUTOBUSOWE',
-    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
-    STOPS_AND_ATTRACTIONS: 'Stops & nearby attractions',
-    HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
-    TIMINGS_FREQUENCY: 'Timings & frequency',
-    TOUR_DURATION: 'Tour duration',
-    EVERY_X_MINS: 'Every {0}',
-    VIEW_LOCATION: 'View Location',
-    BANNER_SUBTEXT: `Fastest and most convenient way to view
-    <span> {0}+ top attractions </span> in all of {1}.`,
-    TRUST_BOOSTERS: {
-      LAST_MIN: {
-        NAME: 'Last minute availability',
-        DESCRIPTION: 'Instantly confirmed to your phone',
-      },
-      DAILY_RIDES: {
-        NAME: 'Daily unlimited rides',
-        DESCRIPTION: "Experience {0}'s best in one tour",
-      },
-      DEALS_DISCOUNTS: {
-        NAME: 'Exclusive deals & discounts',
-        DESCRIPTION: 'Save big on hop on hop off tours',
-      },
-      BOOK_RELAX: {
-        NAME: 'Book and relax',
-        DESCRIPTION: 'Trusted by {0} million guests and counting',
-      },
-    },
-  },
-  PC_EXP: {
-    SHOW_INCL: 'Zobacz, co wchodzi w cenę biletu i poznaj inne informacje',
-    CLEAR: 'Wyczyść',
-    ALL_EXPERIENCES: 'Wszystkie aktywności',
-    FILTER_BY_CATEGORIES: 'Filtruj według kategorii',
-    CATEGORIES: 'Kategorie',
-    COMBOS: {
-      HEADING:
-        'Podobno im więcej, tym lepiej. Dlatego oferujemy zestawy biletów.',
-      DESCRIPTOR_1: 'Zaoszczędź na biletach',
-      DESCRIPTOR_2: 'Lepiej zaplanuj podróż',
-    },
-  },
-  OFF_PERCENT: '{0}% zniżki',
-  COOKIE_CONSENT: {
-    BASIC_DESCRIPTION:
-      'Używamy plików cookie i podobnych technologii do wielu celów, w tym w celu poprawy doświadczenia użytkownika na naszej stronie i dla reklam.',
-    MANAGE_PREFERENCES: 'Zarządzaj preferencjami',
-    PREFERNCES_SAVED: 'Twoje preferencje zostały zapisane',
-    COOKIES: 'Pliki cookie:',
-    ACCEPT: 'OK',
-    ALLOW_ALL: 'Zezwalaj na wszystkie',
-    DENY_ALL: 'Odrzuć wszystkie',
-    HEADING: 'Zawsze cenimy Twoją prywatność',
-    DESCRIPTION:
-      '*   Pliki cookie to małe pliki umieszczane na Twoim komputerze, urządzeniu mobilnym lub innym urządzeniu przez Witrynę/Platformę. Zawierają one szczegóły historii przeglądania, wśród innych zastosowań.\n*   Używamy różnych rodzajów plików cookie, aby monitorować to, jak korzystasz z Naszej Platformy i przechowywać pewne informacje, które pomagają nam świadczyć bardziej spersonalizowane usługi. Niektóre pliki cookie mogą zostać umieszczone na Twoim Urządzeniu z powodu Korzystania przez Ciebie z usług dostępnych na naszej Platformie.\n*   Ogólnie rzecz biorąc, ten termin obejmuje dwa różne zestawy używanych przez nas technologii:\n    *   **Pliki cookie lub Pliki cookie przeglądarki.** Jest to mały plik, który automatycznie zostaje utworzony na Twoim Urządzeniu, gdy korzystasz z Naszej platformy. Możesz ustawić odrzucanie wszystkich Plików cookie w swojej przeglądarce. W tym przypadku, jeśli nie akceptujesz Naszych plików cookie, możesz nie być w stanie korzystać z niektórych części Naszej platformy.\n    *   **Pliki typu web beacon.** Są nazywane również znacznikami pikselowymi. Znajdują się w różnych sekcjach Naszej platformy oraz Naszych e-maili i pozwalają nam monitorować i rozumieć aktywność użytkowników.\n*   Te Pliki cookie przechowywane na Twoim urządzeniu mogą być „Trwałymi” lub „Sesyjnymi” plikami cookie. Trwałe pliki cookie to te, które pozostają na Twoim urządzeniu, nawet gdy przechodzisz do trybu offline, podczas gdy Sesyjne pliki cookie są automatycznie usuwane, gdy tylko zamkniesz Przeglądarkę internetową.\n*   Wykorzystujemy zarówno Sesyjne, jak i Trwałe pliki cookie do celów określonych poniżej:\n    *   Niezbędne / Kluczowe pliki cookie\n        *   _Typ:_ Sesyjne pliki cookie\n        *   _Cel:_ Te pliki cookie są niezbędne do korzystania z różnych sekcji Platformy, a jeśli są niedozwolone, możesz nie mieć dostępu do usług dostępnych na Platformie. Te pliki cookie pomagają nam uwierzytelniać użytkowników i zapobiegać wszelkim rodzajom nieuczciwych działań na Platformie.\n    *   Polityka plików cookie / Akceptacja plików cookies\n        *   _Typ:_ Trwałe pliki cookie\n        *   _Cel:_ Te Pliki cookie określają, czy Użytkownicy zaakceptowali korzystanie z Plików cookie.\n    *   Funkcjonalne pliki cookie\n        *   _Typ:_ Trwałe pliki cookie\n        *   _Cel:_ Te Pliki cookie pozwalają nam zapamiętać wybory, których dokonujesz podczas korzystania z Platformy, takie jak zapamiętanie Danych logowania lub preferencji językowych. Celem tych Plików cookie jest zapewnienie bardziej spersonalizowanej obsługi za każdym razem, gdy korzystasz z Platformy.\n\nWszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Polityce prywatności. Aby uzyskać szczegółowe informacje, zapoznaj się z [Polityką prywatności](/privacy-policy/)\n',
-  },
-
-  REVIEW_LOC: {
-    VIEW_ORIGINAL: 'Wyświetl oryginalną recenzję: język {0}',
-    VIEW_ORIGINAL_NO_LANG:
-      'Ta recenzja została przetłumaczona. Pokaż oryginalną recenzję.',
-    TRANSLATE: 'Przetłumacz recenzję na język {0}',
-    LANGUAGES: {
-      EN: 'angielski',
-      ES: 'hiszpański',
-      FR: 'francuski',
-      IT: 'włoski',
-      DE: 'niemiecki',
-      PT: 'portugalski',
-      NL: 'holenderski',
-    },
-  },
-  CAT_SUBCAT_PAGE: {
-    ALL: 'Wszystko',
-    POPULAR_SUBCATEGORY: 'Popularne: {0}',
-    TOP_CATEGORY: 'Najpopularniejsze: {0}',
-    ATTRACTIONS: 'Atrakcje',
-    ALL_SUBCATEGORY: 'Wszystkie: {0}',
-    BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
-    TICKETS_FROM: 'Bilety od',
-    PRICE_LOW_HIGH: 'Cena (od najniższej do najwyższej)',
-    PRICE_HIGH_LOW: 'Cena (od najwyższej do najniższej)',
-    FILTERS: 'Filtry',
-    RESET: 'Resetuj',
-    APPLY: 'Zastosuj',
-  },
-
   REVIEWS_PAGE: {
     BANNER_HEADING: 'Recenzje: {0}',
     REVIEWS_COUNT: 'Recenzje: {0}',
@@ -1136,6 +1172,74 @@ const pl = {
     PICK_THE_BEST_AIRPORT_TRANSFER:
       'Wybierz najlepszy transfer z lotniska dla siebie',
     HASSLE_FREE_TRANSFER: 'Bezproblemowy transfer z lotniska',
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Effortless airport transfers in {0} by',
+    BUSES: 'buses',
+    TRAINS: 'trains',
+    PRIVATE_TAXIS: 'private taxis',
+    BUS_TRAIN: 'Bus/Train',
+    PRIVATE_TAXI: 'Private taxi',
+    FROM: 'From',
+    SELECT_PICKUP: 'Select pick-up',
+    TO: 'To',
+    SELECT_DROPOFF: 'Select drop-off',
+    ENTER_DESTINATION: 'Enter your destination',
+    ENTER_PICKUP: 'Enter pick-up location',
+    PICKUP_DATE: 'Pick-up date',
+    SELECT_DATE: 'Select date',
+    PICKUP_TIME: 'Pick-up time',
+    SELECT_TIME: 'Select time',
+    GUEST: 'Guest',
+    GUESTS: 'Guests',
+    ADD_GUESTS: 'Add guests',
+    EXPLORE_TRANSFERS: 'Explore transfers and more',
+    COMBOS_AND_EXTRAS: 'Combos and extras',
+    YOUR_RIDE_DOORSTEP: 'Your ride, at your doorstep',
+    COMFORTABLE_RIDE:
+      'Book a comfortable private taxi to and from major airports in {0}',
+    TRUSTED_DRIVERS: 'Trusted drivers',
+    RIDES_24_7: 'Rides available 24/7',
+    FLIGHT_TRACKING: 'Flight tracking',
+    KNOW_MORE: 'Know more',
+    RESERVE_YOUR_RIDE: 'Reserve your ride',
+    TRANSFER_OPTIONS: 'Transfer options found',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} transfers available',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 transfer available',
+    TRUSTED_PARTNERS: '35+ trusted partners, {0}',
+    WORLDWIDE: 'worldwide',
+    COMFORTABLE_RIDES: 'Comfortable rides',
+    FREQUENT_DEPARTURES: 'Frequent departures',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Multiple transport options',
+    AND_MANY_MORE: 'And many more',
+    ADD_PICKUP_LOCATION: 'Add pick-up location',
+    ADD_DROPOFF_LOCATION: 'Add drop-off location',
+    SELECT_PICKUP_DATE_AND_TIME: 'Select pick-up date and time',
+    SELECT_A_DATE: 'Select a date',
+    TRAIN_STATION: 'Train station',
+    BUS_STOP: 'Bus stop',
+    ADD_RETURN: 'Add return',
+    HEADS_UP: 'Heads up!',
+    ADDED_RETURN_TRIP: 'You’ve added a return trip!',
+    RETURN_NOTE:
+      'Please note, we’ll show the return journey details in the next steps.',
+    OKAY_I_UNDERSTAND: 'Okay, I understand',
+    SERVING_GUESTS: 'Serving {0} in {1} around the globe',
+    GUESTS_COUNT: '220K+ guests',
+    CITIES_COUNT: '55+ cities',
+    PARNTER_WITH_BEST:
+      'We partner with only the best, to make sure you have an unforgettable experience. Let us handle the details — while you sit back, unwind, and enjoy the ride',
+  },
+  PC_EXP: {
+    SHOW_INCL: 'Zobacz, co wchodzi w cenę biletu i poznaj inne informacje',
+    CLEAR: 'Wyczyść',
+    ALL_EXPERIENCES: 'Wszystkie aktywności',
+    FILTER_BY_CATEGORIES: 'Filtruj według kategorii',
+    CATEGORIES: 'Kategorie',
+    COMBOS: {
+      HEADING:
+        'Podobno im więcej, tym lepiej. Dlatego oferujemy zestawy biletów.',
+      DESCRIPTOR_1: 'Zaoszczędź na biletach',
+      DESCRIPTOR_2: 'Lepiej zaplanuj podróż',
+    },
   },
   TOP: 'Najpopularniejsze: {0}',
   VIEW_CALENDAR: 'Wyświetl kalendarz',
@@ -1183,7 +1287,24 @@ const pl = {
     MID_SEASON: 'Sezon umiarkowany',
     PEAK_SEASON: 'Szczyt sezonu',
     TO: 'DO',
+    LOWER_TO: 'to',
     LAST_ENTRY: 'Ostatni wstęp',
+    SUBATTRACTIONS: 'Sub-Attractions',
+    INCLUDED_WITH_TICKETS: 'Included with {0} tickets',
+    INCLUDED_WITH_SOME_TICKETS: 'Included with some {0} tickets',
+    EXPLORE_ALL_POI_TICKETS: 'Explore {0} & {1} tickets & tours',
+    EXPLORE_PARENT_TICKETS: 'Explore {0} tickets & tours',
+    SELECT_YOUR_EXPERIENCE: 'Select your experience',
+    OPERATING_HOURS: 'Operating hours',
+    SEE_MORE: 'See more',
+    MORE_INSIGHTS: 'More insights',
+  },
+  OFF_PERCENT: '{0}% zniżki',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Seat plan',
+    CAPACITY: 'Capacity: {0} seats',
+    WHATS_ON: "What's on",
+    CATEGORIES: 'Categories',
   },
   NEXT: 'Następne',
   PREVIOUS: 'Poprzednie',
@@ -1276,8 +1397,79 @@ const pl = {
       FIT_TO_WIDTH: 'Fit to width',
       RESET_ZOOM: 'Reset Zoom',
     },
+    COMBO_HEADING: 'Experience more for less: Combo deals & city cards',
+  },
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Check availability',
+  SELECT_AN_OPTION: 'See options',
+  PRIVATE_AT_LANDING_PAGE: {
+    CITY_AIRPORT_TRANSFERS: '{0} Airport Transfers',
+    BANNER_SUBTEXT:
+      'Enjoy stress-free travel with a reliable, pre-booked airport transfer.',
+    BEST_PRICES: 'Best prices, no hidden fees',
+    BEST_PRICES_SUBTEXT:
+      'Fixed pricing with no surprises, offering you competitive rates for premium service.',
+    FREE_WAIT_TIME: 'Free wait time, no rush',
+    FREE_WAIT_TIME_SUBTEXT:
+      'Enjoy a free waiting time of 45 minutes while you claim your baggage',
+    COMFORTABLE_RIDE: 'Comfortable ride',
+    COMFORTABLE_RIDE_SUBTEXT:
+      'Ride in style with a fleet of top-class vehicles, driven by handpicked and trained drivers.',
+    FREE_CANCELLATION: 'Free cancellation',
+    FREE_CANCELLATION_SUBTEXT:
+      'Plans changed? No problem. Enjoy free cancellation and 24/7 support.',
+    EXCELLENCE_HEADING: 'A track record of excellence and trust',
+    ACTIVE_CITIES: 'active cities, worldwide',
+    CUSTOMERS_SERVED: 'customers served',
+    YEARS_OF_SERVICE: 'years of excellent service',
+    FIND_YOUR_RIDE: 'Find your perfect ride',
+    FIND_YOUR_RIDE_SUBTEXT:
+      'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
+  },
+  VIEW_ALL_EXPERIENCES: 'View all experiences',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT:
+        "Skip the stress of planning. We cover every detail - curated itinerary, comfortable transfers and expert guides. It's the best way to see the sights without the hassle.",
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Book stress free with Headout',
+      CURATED_EXPERIENCES: {
+        TITLE: 'Simple decision making with carefully chosen experiences',
+        DESCRIPTION:
+          'We handle every detail from transfers to meals so you have a memorable trip.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Experience the trip through the eyes of a local expert',
+        DESCRIPTION:
+          'Our guides bring rich insights and memorable stories to every journey.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Enjoy peace of mind with maximum flexibility ',
+        DESCRIPTION:
+          'Life happens, but we’ve got you covered with free cancellations or easy reschedule.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: '24x7 support available for you at all times',
+        DESCRIPTION:
+          'Travel with peace of mind knowing that our team is just a call or message away.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: '{0}M+ travellers love us',
+        SUBTITLE_WITH_REVIEWS: 'Read real reviews from real travellers',
+        SUBTITLE_WITHOUT_REVIEWS: 'Delivering best in class experience',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Why book with us?',
+        SUBTITLE: 'Hassle-free trips. Find out how.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Explore more destinations from {0}',
   },
   REVIEWS_SECTION: {
+    HEADING: 'From happy customers',
+    HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
     SECTION_HEADING: 'Miliony ludzi uwielbiają podróże z nami',
     SORTING: {
       MOST_RELEVANT: 'Najistotniejsze',
@@ -1296,18 +1488,160 @@ const pl = {
       CTA: 'Pokaż wszystkie',
     },
     VERIFIED_REVIEW: 'Zweryfikowana opinia partnera',
-    REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
     TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
-    HEADING: 'From happy customers',
-    HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
+    REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
     SEE_MORE_BUTTON_TEXT: 'Pokaż wszystkie recenzje {0}',
     REVIEW_CARD_MODAL_TITLE: 'Review',
   },
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Get full refund for a small fee if you cancel 24 hours before the experience start time.',
+    KNOW_MORE: 'Know more',
+    FULL_REFUND: 'Full refund',
+    INSTANT: 'Instant',
+    NO_QUESTIONS: 'No questions asked',
+    TNC: 'Terms and conditions',
+    ELIGIBILITY:
+      'Eligibility: The Flexible cancellation plan must be selected and purchased at the time of booking.',
+    CANCELLATION_DEADLINE:
+      'Cancellation deadline: Booking can be cancelled up to 24 hours before the experience start time.',
+    REFUND_AMOUNT:
+      'Refund amount: You’ll receive a refund of the original paid booking amount (minus the cancellation protection charge). ',
+    NON_TRANSFERABLE: 'Non-Transferable: Valid for this booking only.',
+    GUIDELINES:
+      'Guidelines: This plan becomes void if the guest redeems or uses any part of the ticket before cancellation. In such cases, standard cancellation policies apply, and no additional refund will be given.',
+  },
+  AGGREGATED_COUNTRIES:
+    'Guests from <strong>{0}</strong> and <strong>over {1} countries</strong> have loved this experience',
   TRUST_TOOLTIP_HEADER: 'Jak zbieramy recenzje?',
   TRUST_TOOLTIP_CONTENT:
     'Te oceny zawierają zweryfikowane recenzje zarówno od klientów Headout, jak i naszych zaufanych partnerów, którzy obsługują tę aktywność na miejscu. Wszystkie recenzje pochodzą od prawdziwych podróżników, którzy wzięli udział w tej aktywności.',
   REVIEW_SECTION_HEADER: 'Co mówią nasi podróżnicy',
   TRUST_VB_TAG: 'Zweryfikowana rezerwacja',
+  SNAPSHOTS_SECTION_HEADER: 'Snapshots from our guests',
+  SEE_MORE_RESPONSES: 'See more responses',
+  SEE_ALL_RESPONSES: 'See all responses',
+  HIDE_RESPONSES: 'Hide responses',
+  GUEST_QNA: 'Guest Q&A',
+  ASKED_AND_ANSWERED: 'Asked & answered',
+  ADVICE_FROM_TRAVELLERS: 'Advice from {0} travelers',
+  VIEW_ALL_QNA: 'View all Q/As',
+  EXPLORE_ALL: 'Explore all',
+  EXPLORE_MORE_QUESTIONS: 'Explore more questions',
+  GUESTS: 'guests',
+  RESPONSES: 'responses',
+  ADVICE: 'Advice from {0} travelers',
+  REAL_TIPS:
+    'Real tips from real people who’ve been there, <span>done that!<span>',
+  GENUINE_TIPS: 'Genuine tips from those who’ve been there',
+  ANSWERS_COUNT: '{0} answers',
+  SEE_ALL_QNA: 'See all Q&A',
+  FILTERS: {
+    DATE_SELECTION: 'Date selection',
+    DEALS: 'Deals',
+    ENTRY_TICKETS: 'Entry tickets',
+  },
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Tylko na Headout',
+  },
+  OTHER_EXPERIENCES: 'Other experiences',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Odkryj miasto – {0}',
+    TOP_EXPERIENCE_PICKS: 'Popularne aktywności',
+    EXPERIENCES: '{0}+ aktywności',
+    CITY_YOUR_WAY: '{0}, po Twojemu!',
+    DISCOVER_MORE: 'Zobacz więcej',
+  },
+  DROPS: {
+    TITLE: 'Prices drop to just {0}. Daily.',
+    SUBTITLE:
+      '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app.',
+    TITLE_MOBILE: 'The best of {0} for {1}.',
+    SUBTITLE_MOBILE: 'Grab limited Drops for {0}, on the Headout app.',
+    NEXT_DROP_IN: 'Next Drop in {0}',
+    CTA_BUTTON_MOBILE: 'Grab your Drop',
+    NUDGE_CTA: 'Get the app',
+    ON: 'on',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'Download the app',
+      NOT_NOW: "I'll grab the next deal",
+    },
+    CITY_WISE_LABELS: {
+      ROME: {
+        cityName: "Rome's",
+        cityNameMWeb: 'Rome',
+        price: '€10',
+      },
+      PARIS: {
+        cityName: "Paris'",
+        cityNameMWeb: 'Paris',
+        price: '€10',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colosseum, Palatine Hill, Roman Forum',
+            'Big Bus: Rome Hop-On Hop-Off',
+            'St. Peter’s Basilica',
+          ],
+          prices: ['€57.25', '€22.65', '€39.55'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Walk through the Colosseum’s past',
+            'Make pizza like a local',
+            'Marvel at St.Peter’s Basilica',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Eiffel Tower', 'Seine Cruise', 'Aquarium de Paris'],
+          prices: ['€69.25', '€65.05', '€57.15'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Breathtaking views at the Eiffel Tower',
+            'Cruise along the Seine River',
+            'Explore the majestic notre dame',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+      },
+    },
+  },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Company details',
+    LEGAL_INFO: {
+      title: 'Legal information',
+      ENTITY_NAME: 'Legal entity name',
+      ADDRESS: 'Correspondence address',
+      AUTH_REP: 'Authorised representatives',
+      REG_NO: 'Company registration number',
+      TIN: 'Tax identification number(TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Legal notice',
+      content:
+        'All legal correspondence must be directed to our Legal Department via email or post:',
+      EMAIL_ADD: 'Email address',
+      POSTAL_ADD: 'Postal address',
+    },
+    ODR: {
+      title: 'Online Dispute Resolution (ODR)',
+      content:
+        'Headout is neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board. However, in accordance with EU regulations, you may access the European Commission’s Online Dispute Resolution (ODR) platform via the following link:',
+    },
+  },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Privacy Policy',
     lastUpdated: '31st March 2025',
@@ -1355,11 +1689,7 @@ const pl = {
         content: [
           {
             type: 'paragraph',
-            items: [
-              {
-                text: 'For the purposes of this Privacy Policy:',
-              },
-            ],
+            items: [{ text: 'For the purposes of this Privacy Policy:' }],
           },
           {
             type: 'list',
@@ -1394,9 +1724,7 @@ const pl = {
               {
                 text: 'User refers to any person who visits/shows interest/avails any Service available on Platform',
               },
-              {
-                text: 'Website refers to www.headout.com',
-              },
+              { text: 'Website refers to www.headout.com' },
               {
                 text: 'You/Your shall mean the User, Service Provider and Creator Partner',
               },
@@ -1971,6 +2299,15 @@ const pl = {
     ],
   },
   POWERED_BY: 'obsługiwane przez',
+  DAY_TRIPS_BANNER: {
+    CHAT_BUBBLE_TEXT: 'See real guest experiences',
+    BANNER_TITLE: "What it's really like",
+    BANNER_DESCRIPTION:
+      'Not just reviews — hear feedback from real guests, meet the guides, and see actual moments from the tour.',
+    BANNER_DESCRIPTION_SHORT:
+      'Not just reviews — Hear from real guests and guides. See what the trip is like.',
+    WATCH_VIDEO: 'Watch video',
+  },
   BOOKING_PAGE_TIME: {
     HOUR: ' godz.',
     HOURS: ' godz.',

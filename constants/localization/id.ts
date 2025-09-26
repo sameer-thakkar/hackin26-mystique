@@ -1,8 +1,17 @@
-const id = {
+import type { TDictionary } from './types';
+
+const id: TDictionary = {
   AUDIO_GUIDE: {
     BANNER: 'Panduan Audio Gratis',
     PRODUCT_SUFFIX: 'dengan Panduan Audio',
   },
+  AUTHORISED_AND_TRUSTED_PARTNER: 'Authorised & Trusted Partner',
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Authorized reseller',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners.',
+  },
+  REVIEWS: 'reviews',
+  DEFAULT_REVIEWER_NAME: 'Headout Guest',
   AVAILABLE: 'Tersedia',
   BACK: 'Kembali',
   BANNER_CTA: 'Beli tiket',
@@ -18,8 +27,6 @@ const id = {
   },
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout merupakan mitra tepercaya dan berizin dari objek wisata yang menawarkan pengalaman wisata pilihan terbaik untuk dinikmati pelanggan.',
-  BANNER_SUBTEXT_DISCLAIMER:
-    'Kami adalah mitra tepercaya yang menawarkan pilihan tiket dan tur terbaik. Ini bukan situs web resmi.',
   BOOK_NOW_CTA: 'Pesan sekarang',
   BUY_TICKETS_CTA: 'Beli tiket',
   CANCELLATION_POLICY: {
@@ -45,11 +52,102 @@ const id = {
   },
   CANCELLATION_POLICY_HEADING: 'Kebijakan Pembatalan',
   CASHBACK: 'Cashback {0}',
+  CASHBACK_INFO:
+    'You will receive <strong>{0}%</strong> cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
   CATEGORY_SLIDER_HEADING:
     'Pelanggan yang Memesan Pertunjukan Ini Juga Menonton',
   CHECK_AVAIL: 'Periksa ketersediaan',
   SELECT_SEATS: 'Select Seats',
+  CITY_PAGE: {
+    BANNER_TITLE: 'Experience the best of',
+    TOP_ATTRACTIONS: 'Top attractions',
+    GO_BEYOND: 'Go beyond {0}',
+    ALL_DAY_TRIPS: 'See all day trips',
+    CITIES_NEARBY: 'Nearby cities',
+    POPULAR_CATEGORIES: 'Popular categories',
+    GO_TO_GUIDE: 'Go-to {0} guide',
+    VIEW_TRAVEL_GUIDE: 'View travel guide',
+    EXPLORE: 'Explore {0}',
+    GUIDE_SUBHEADING:
+      'Exploring {0} has never been easier! Our {0} travel guide has all you need to know about the city, from what to eat and what to see to how to get there, where to stay and plenty more!',
+    GUIDE_ITEM_HEADINGS: {
+      TRAVEL_GUIDE: 'General information',
+      WHERE_TO_EAT: 'What to eat',
+      WHERE_TO_STAY: 'Where to stay',
+      THINGS_TO_DO: 'What to do',
+      WEATHER: 'Best time to visit',
+      NEIGHBOURHOODS: 'Local community',
+      TRANSPORTATION: 'Getting around',
+      TRIP_PLANNER: 'Travel plan',
+      FAMILY_TRAVEL: 'Traveling with kids',
+      TRAVEL_TIPS: 'Travel tips & hacks',
+      SHOPPING: 'Shopping',
+      ART_AND_CULTURE: 'Arts & culture',
+    },
+    MAILER: {
+      HEADING: '{0} travel inspiration straight to your inbox',
+      SUBHEADING:
+        'Explore new cities with curated experiences, instant cashback, exclusive deals and essential travel tips!',
+    },
+  },
+  COOKIE_CONSENT: {
+    BASIC_DESCRIPTION:
+      'We use cookies and similar technologies for many purposes, including to improve your experience on our site and for ads.',
+    MANAGE_PREFERENCES: 'Manage',
+    PREFERNCES_SAVED: 'Your preferences have been saved',
+    COOKIES: 'Cookies:',
+    ACCEPT: 'Okay',
+    ALLOW_ALL: 'Allow all',
+    DENY_ALL: 'Deny all',
+    HEADING: 'We value your privacy, always',
+    DESCRIPTION: `*   Cookies are small files placed on Your computer, mobile device, or any other device by Website/Platform, containing the details of Your browsing history among its many uses.
+*   We use different types of cookies to track Your usage of Our Platform and store certain information that further helps us to provide You with more personalized services. Certain cookies may get placed on Your Device because of Your usage of any services available on Our Platform.
+*   Broadly, We use two different sets of technologies under this head:
+    *   **Cookies or Browser Cookies.** it is a small file that automatically gets placed on Your Device when You access Our Platform. You can instruct Your browser to refuse all Cookies. In case, if You do not accept Our Cookies, You may not be able to use some parts of Our Platform.
+    *   **Web Beacons.** Also referred to as clear gifs, pixel tags, and single-pixel gifs that are attached in various sections of Our Platform and Our emails that permit us to monitor and understand the activity of Users.
+*   These Cookies stored on Your Device can be "Persistent" or "Session" Cookies. Persistent Cookies are the ones that remain on Your Device even when You go offline, whereas, Session Cookies are automatically deleted as soon as You close Your web browser.
+*   We use both Session and Persistent Cookies for the purposes set out below:
+    *   Necessary / Essential Cookies
+        *   _Type:_ Session Cookies
+        *   _Purpose:_ These Cookies are essential for You to access different sections of the Platform and if these are not allowed You may not be able to access the services available on the Platform. These cookies further help us to authenticate the Users and prevent any sort of fraudulent activity on the Platform.
+    *   Cookies Policy / Notice Acceptance Cookies
+        *   _Type:_ Persistent Cookies
+        *   _Purpose:_ These Cookies identify if Users have accepted the use of Cookies.
+    *   Functionality Cookies
+        *   _Type:_ Persistent Cookies
+        *   _Purpose:_ These Cookies allow us to remember choices You make when You use the Platform, such as remembering Your login details or language preference. The larger purpose of these Cookies is to provide You with a more personalized experience every time You use the Platform.
+
+All capitalized terms used above are defined in the Privacy Policy. For a detailed understanding please refer [Privacy Policy](/privacy-policy/)
+`,
+  },
+  CITY_GUIDE_DESCRIPTIONS: {
+    TRAVEL_GUIDE:
+      'Learn about visa requirements, currency exchange, time zone differences, and more to ensure a smooth arrival and enjoyable stay.',
+    WHERE_TO_EAT:
+      'Indulge in the vibrant culinary scene, savoring diverse flavors and enjoying local delicacies in every corner of the {0}.',
+    WHERE_TO_STAY:
+      'Discover the best accommodations {0}, offering comfort, convenience, and a memorable experience for your stay.',
+    THINGS_TO_DO:
+      'Experience a plethora of exciting activities and attractions that cater to every interest and ensure an unforgettable time.',
+    WEATHER:
+      'Plan your trip wisely and make the most of your visit, as {0} offers enchanting experiences throughout the year.',
+    NEIGHBOURHOODS:
+      'Get to know the diverse local communities and vibrant neighborhoods that give {0} its unique character.',
+    TRANSPORTATION:
+      'Navigate {0} with ease using its efficient transportation system, providing convenient options for exploring all its attractions.',
+    TRIP_PLANNER:
+      'Maximize your time in {0} with carefully curated itineraries, ensuring you make the most of every moment.',
+    FAMILY_TRAVEL:
+      'Embark on a family-friendly adventure with numerous attractions, parks, and entertainment options that cater to kids of all ages.',
+    TRAVEL_TIPS:
+      'Discover insider tips and travel hacks to enhance your journey, making your visit to {0} truly exceptional.',
+    SHOPPING:
+      "Explore a shopper's paradise with a wide range of boutiques, markets, and malls, offering everything from local crafts to high-end fashion.",
+    ART_AND_CULTURE:
+      'Immerse yourself in the rich art and cultural scene, from captivating museums to vibrant festivals celebrating {0} heritage.',
+  },
   CLOSE: 'Tutup',
+  COLLECTION_SLICE_HEADING: 'Top things to do in {0}',
   COMBO_VARIANT: {
     SELECT_CTA: 'Pilih',
     SELECT_PREFERENCE: 'Pilih preferensi Anda',
@@ -70,6 +168,7 @@ const id = {
     EXTENDED_VALIDITY: 'Perpanjangan Masa Berlaku',
     FLEXIBLE_DURATION: 'Durasi Fleksibel',
     FREE_CANCELLATION: 'Pembatalan Gratis',
+    BOOK_NOW_PAY_LATER: 'Book now, pay later',
     GUIDED_TOUR: 'Tur dengan Pemandu',
     HOTEL_PICKUP: 'Penjemputan di Hotel',
     INSTANT_CONFIRMATION: 'Konfirmasi Instan',
@@ -77,121 +176,21 @@ const id = {
     MOBILE_TICKET: 'Tiket Seluler',
     SKIP_THE_LINE: 'Lewati Antrean',
     TRANSFERS: 'Termasuk Transfer',
+    MULTILINGUAL_AUDIO_GUIDE: 'Multilingual audioguide',
+    LIVE_GUIDE: 'Live guide',
+    FLEXIBLE_CANCELLATION: 'Flexible cancellation',
   },
-  DISCOUNTED_FUTURES: {
-    BANNER: {
-      DESCRIPTION_LINE1: 'Hemat hingga 50%.',
-      DESCRIPTION_LINE2:
-        'Berlaku untuk kunjungan kapan saja antara <cooldownDate> dan 31 Des 21.',
-      HEADING_LINE1: 'Tidak yakin kapan Anda bisa bepergian selanjutnya?',
-      HEADING_LINE2:
-        'Pesan tiket terbuka untuk mendapatkan lebih banyak keleluasaan dan penghematan!',
-    },
-    BOOKING_MODAL: {
-      BOOK_NOW: 'Pesan Sekarang',
-      BOOK_NOW_HEADING: 'Tiket Berjangka Waktu',
-      BOOK_NOW_PITCH:
-        'Pilih tanggal atau slot waktu untuk memesan pengalaman Anda.',
-      GET_THIS: 'Pesan Sekarang',
-      GO_LATER_HEADING: 'Tiket Terbuka',
-      GO_LATER_PITCH:
-        'Pesan pengalaman ini dengan diskon dan dapatkan keleluasaan untuk memilih tanggal kunjungan Anda nanti. Dapat ditukarkan dengan tanggal perjalanan apa pun antara tanggal <stDate> hingga <edDate>.',
-      LEARN_MORE: 'Pelajari Selengkapnya',
-      LIMITED: 'Penawaran Periode Terbatas',
-      SELECT_DATE: 'Pilih Tanggal',
-    },
-    DESCRIPTION:
-      'Selama waktu terbatas, Anda dapat memesan **tiket terbuka** untuk aktivitas favorit Anda yang bisa digunakan kapan saja hingga 31 Des 2021. Dengan demikian, Anda bisa menghemat lebih banyak uang dan mendapatkan keleluasaan lebih untuk merencanakan liburan berikutnya yang dijamin akan seru!',
-    FAQ_QUESTIONS: {
-      CANCEL: {
-        ANSWER:
-          'Jika Anda belum menukarkan tiket terbuka, Anda dapat membatalkan reservasi kapan pun sebelum tanggal 31 Des 2021 dan mendapatkan pengembalian dana penuh. Jika Anda telah menggunakan tiket terbuka untuk memesan tiket pada tanggal tertentu, Anda tidak dapat lagi mengubah atau membatalkan reservasi Anda.',
-        QUESTION: 'Apa kebijakan pembatalan untuk pemesanan ini?',
-      },
-      DATE_TIME: {
-        ANSWER:
-          "Produk yang memenuhi syarat dalam promosi 'Pesan Sekarang, Pergi kapan saja' akan diberi tag yang sesuai dan Anda akan mendapatkan opsi untuk memilih tiket terbuka untuk pengalaman tersebut. Saat Anda memesan tiket terbuka, Anda tidak harus segera memilih tanggal dan waktu kunjungan secara spesifik. Anda dapat menukarkan tiket terbuka untuk waktu dan tanggal tertentu di kemudian hari jika sudah memungkinkan.",
-        QUESTION: `Bagaimana cara memesan opsi "Pesan Sekarang, Pergi kapan saja" di Headout?`,
-      },
-      ELIGIBLE: {
-        ANSWER:
-          'Produk yang memenuhi syarat dalam promosi ini akan ditandai dengan tag ***Pesan sekarang, pergi kapan saja***.',
-        QUESTION: 'Produk apa yang memenuhi syarat untuk opsi ini?',
-      },
-      EXERCISE: {
-        ANSWER: [
-          'Saat menyelesaikan reservasi, Anda akan menerima tanda terima untuk pemesanan dan voucher untuk pengalaman yang dipilih di email Anda',
-          'Anda juga akan menerima email yang berisi tautan pemesanan yang dapat digunakan untuk menukarkan voucher pada tanggal dan waktu pemesanan yang Anda pilih. Jika tempat wisata atau operator pengalaman pilihan Anda belum kembali dibuka, Anda akan menerima tautan pemesanan ini saat mereka memulai kembali layanannya. Anda dapat menyelesaikan langkah ini kapan saja selama masa berlaku voucher, yaitu 31 Des 2021',
-          'Setelah menukarkan voucher, Anda akan menerima tiket terkonfirmasi untuk pengalaman tersebut pada tanggal dan waktu yang Anda pilih melalui email',
-          'Kunjungi lokasi acara pada tanggal serta waktu yang dipilih dan nikmati pengalaman yang telah Anda pesan.',
-        ],
-        QUESTION: 'Bagaimana cara melakukan pemesanan ini?',
-      },
-      LIMITS: {
-        ANSWER: [
-          'Kode diskon atau kupon tidak berlaku saat membeli tiket terbuka',
-          'Cashback atau kredit di wallet <mbName> Anda tidak dapat digunakan untuk memesan tiket terbuka',
-          'Setelah menukarkan tiket terbuka dengan memilih tanggal aktivitas, Anda tidak dapat mengubah atau membatalkan reservasi.',
-          'Maksimal 2 reservasi per orang per pengalaman diperbolehkan selama durasi promosi ini',
-        ],
-        QUESTION:
-          'Apakah ada ketentuan atau batasan dalam pembelian tiket terbuka?',
-      },
-      WHEN: {
-        ANSWER:
-          'Anda dapat menukarkan tiket terbuka kapan saja setelah menyelesaikan reservasi. Tanggal kunjungan Anda tidak boleh lebih awal dari 30 hari setelah tanggal reservasi dan paling lambat tanggal 31 Des 2021.',
-        QUESTION: `Kapan saya dapat menukarkan pemesanan "Pesan Sekarang, Pergi kapan saja?”`,
-      },
-      WORKING: {
-        ANSWER:
-          'Kini kami memberi Anda kenyamanan untuk memesan tiket pengalaman, tempat wisata, dan hiburan favorit Anda tanpa perlu menentukan tanggal dan waktu secara spesifik. Anda kini dapat membeli produk yang memenuhi syarat sebagai tiket terbuka dan menggunakannya kapan saja hingga 31 Desember 2021. Semua produk dalam opsi ini dikenakan diskon khusus. Jika Anda sudah siap bertamasya dan menikmati pengalaman yang dibeli, Anda dapat menukarkan tiket terbuka tersebut dengan memilih tanggal dan waktu kunjungan tertentu',
-        QUESTION: `Apa itu opsi "Pesan Sekarang, Pergi kapan saja?”`,
-      },
-    },
-    FLAG_TEXT: 'Pesan Sekarang, Pergi Kapan Saja',
-    HEADING: 'Pesan sekarang, hemat uang, dan bepergian kapan pun Anda mau',
-    HEADING_WORKS: 'Bagaimana cara kerjanya?',
-    HOW_IT_WORKS: {
-      PICK: {
-        HEADING: 'Pilih pengalaman idaman Anda',
-        SUB_TEXT:
-          "Semua pengalaman yang diberi label 'Pesan Sekarang, Pergi Kapan Saja' dapat dibeli sebagai tiket terbuka dengan diskon besar, jadi lanjutkan dan pilih pengalaman yang Anda inginkan, lalu pesan tiket terbuka Anda.",
-      },
-      REDEEM: {
-        HEADING: 'Selamat bersenang-senang!',
-        SUB_TEXT: 'Anda sudah siap. Keluarlah dan nikmati liburan Anda!',
-      },
-      VOUCHER: {
-        HEADING: 'Tukarkan dan pesan tiket kapan pun Anda siap',
-        SUB_TEXT:
-          'Saat rencana perjalanan Anda dikonfirmasi, tukarkan tiket terbuka dengan memesan pada tanggal dan waktu yang Anda inginkan. Tiket Anda berlaku untuk perjalanan mulai tanggai <cooldownDate> hingga 31 Des 2021.',
-      },
-    },
-    IMAGES_SECTION: {
-      HEADING: 'Dunia sedang menanti - ayo pergi berlibur',
-    },
-    PITCH: {
-      BUCKET_LIST: {
-        HEADING: 'Pembatalan yang fleksibel',
-        SUB_TEXT:
-          'Jika Anda belum menukarkan voucher, Anda dapat membatalkan pemesanan kapan saja dan mendapatkan pengembalian dana penuh. Kami tahu bahwa mengubah rencana perjalanan bisa membuat stres sehingga dengan opsi ini, Anda tidak perlu lagi khawatir.',
-      },
-      GO_ANYTIME: {
-        HEADING: 'Bepergian di waktu yang Anda suka',
-        SUB_TEXT:
-          'Kami tahu sulit untuk memastikan jadwal Anda saat ini. Karena itulah kami menghadirkan opsi voucher ini yang bisa Anda gunakan kapan saja hingga <date>. Dengan begitu, Anda punya keleluasaan untuk merencanakan waktu liburan berikutnya.',
-      },
-      SAVE_MONEY: {
-        HEADING: 'Lebih hemat',
-        SUB_TEXT:
-          'Diskon besar yang Anda lihat di sini adalah untuk penghematan pada perjalanan Anda berikutnya. Dengan begitu, Anda punya alasan untuk kembali berlibur.',
-      },
-    },
-    SHORT_DESCRIPTION:
-      'Beli tiket terbuka untuk mendapatkan lebih banyak keleluasaan dan penghematan. Berlaku untuk kunjungan kapan saja hingga 31 Des 21.',
-  },
+  BOOK_NOW_PAY_LATER_DESCRIPTOR_SUBTEXT:
+    'Book now without paying anything. Cancel for free if your plans change',
   DURATION: 'Durasi',
   EARLIEST_AVAILABILITY: 'Ketersediaan paling awal',
+  EMAIL_SUBSCRIPTION: {
+    EMAIL_FIELD_PLACEHOLDER: 'Enter your email here',
+    SIGN_UP: 'Sign up',
+    THANK_YOU: 'Thank you!',
+    SUBSCRIBED_MSG: 'You are subscribed now',
+    ERROR_MSG: 'Please enter a valid email',
+  },
   ENTERTAINMENT_MB: {
     BROADWAY: {
       MB_NAME: 'Tiket Teater Broadway',
@@ -219,32 +218,80 @@ const id = {
     CALL_US: 'Telepon Kami',
     CHAT_WITH_US: 'Mengobrol dengan Kami',
     COMPANY_DETAILS: 'Detail Perusahaan',
+    ABOUT_US: 'About us',
+    INFORMATION: 'Information',
+    GMAPS_DISCLAIMER:
+      'All screenshots of maps found on this page are sourced from Google in accordance with fair use. All rights to such screenshots lie with the specific platform, and their use is solely for informational or guidance purposes.',
+    DISCLAIMER:
+      'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
     EMAIL_US: 'Hubungi Kami Lewat Email',
     GET_HELP: 'Minta Bantuan',
     LEGAL: 'Legal',
-    PENAFIAN:
-      'Situs web ini bukan situs web resmi <attraction>. Situs web ini dijalankan oleh Headout dan bekerja sama dengan tempat wisata dan operator tur untuk memberikan pengalaman luar biasa lewat satu ketukan tombol.',
     PRIVACY_POLICY: 'Kebijakan Privasi',
     QUICK_LINKS: 'Tautan Cepat',
     TERMS_AND_CONDITIONS: 'Syarat dan Ketentuan',
+    COPYRIGHT: '© Headout Inc.',
+    MADE_WITH: 'Made with ',
+    ALL_OVER_THE: ' all over the ',
+    TERMS_OF_USAGE: 'Terms of usage',
+    GET_HELP_24_7: 'Get help 24/7',
+    HELP_CENTER: 'Help center',
+    COMPANY: 'Company',
+    WE_ACCEPT: 'We accept',
+    DOWNLOAD_HEADOUT: 'Download the Headout app',
+    SCAN_CODES: 'Scan code',
+    STAR_VERIFIED: 'click to verify S.T.A.R membership',
+    OFFICIAL_TICKET_RETAILER: 'Official ticket retailer',
   },
   FREE_CANCELLATION: 'Pembatalan Gratis',
+  FREE_CANCELLATION_SUBTEXT:
+    'We understand plans change, cancel for free up to 72 hours before the event.',
   FROM: 'Dari',
+  GET_CASHBACK: 'Get {0}% cashback',
   GROUP_TICKETS: 'Tiket Grup',
+  HAPPY_CUSTOMER: {
+    MAIN_TEXT: '{0}+ Million happy customers',
+    SUB_TEXT:
+      'Customer satisfaction is our top priority. Join our happy customer base.',
+  },
+  HEADOUT: 'Headout',
+  HELP_CENTER: {
+    MAIN_TEXT: '24x7 help center',
+    SUB_TEXT:
+      'Questions or concerns? We’re here to help 24/7 — on phone, chat, and email.',
+  },
   INCLUSIONS: 'Sudah Termasuk',
   LANGUAGE: 'Bahasa',
+  LANGUAGES: {
+    ENGLISH: 'English',
+    SPANISH: 'Spanish',
+    FRENCH: 'French',
+    ITALIAN: 'Italian',
+    GERMAN: 'German',
+    PORTUGUESE: 'Portuguese',
+    NEDERLANDS: 'Dutch',
+    POLISH: 'Polish',
+    RUSSIAN: 'Russian',
+    DANISH: 'Danish',
+    NORWEGIAN: 'Norwegian',
+    ROMANIAN: 'Romanian',
+    SWEDISH: 'Swedish',
+    TURKISH: 'Turkish',
+  },
+  TOUR_AVAILABLE_LANGUAGES: 'Tour available in {0}',
   LISTICLES: {
     KNOW_MORE: 'Pelajari selengkapnya',
     SEATING_CHART: 'Denah Tempat Duduk',
     WHY_BOOK_FROM_US: 'Mengapa Sebaiknya Memesan Lewat Kami?',
   },
   MORE_DETAILS: 'Detail selengkapnya',
-  MORE_FROM: 'More from',
+  MORE_CURRENCIES: 'More currencies',
   NEW: 'BARU',
   NEW_ARRIVAL: 'Penawaran Baru',
   NEXT_AVAILABLE: 'Tersedia berikutnya: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout adalah merek yang dipercaya oleh lebih dari {0} juta tamu yang menawarkan pengalaman wisata pilihan terbaik untuk dinikmati pelanggan. Ini bukanlah situs resmi objek wisata.',
+  NO_RESULT_FOUND: 'Hmm, no results found.',
   OFF: 'Diskon',
   OPEN_DATED_DESCRIPTOR:
     'Leluasa dalam memesan. Tidak perlu menentukan tanggal',
@@ -253,9 +300,12 @@ const id = {
   OPENS: 'Dibuka',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout merupakan mitra tepercaya dan berizin dari objek wisata yang menawarkan pengalaman wisata pilihan terbaik untuk dinikmati pelanggan. Ini bukanlah situs resmi objek wisata.',
+  POPULAR_CURRENCIES: 'Popular currencies',
   PRICES_STARTING: 'Harga Mulai',
   PROMO_CODES: {
     APPLY_CODE: 'GUNAKAN KODE',
+    APPLIED: 'APPLIED',
+    TOOL_TIP_INFO: 'This discount is applied at checkout',
     DESCRIPTION: {
       ABSOLUTE: 'Dapatkan diskon {0}',
       CAPPED: 'Dapatkan diskon {0}%, hingga {1}',
@@ -266,6 +316,8 @@ const id = {
   RATINGS: '{0} Nilai',
   READ_MORE: 'Baca selengkapnya',
   READ_MORE_TEXT: 'Baca selengkapnya',
+  READ_LESS: 'Read less',
+  VIEW_DETAILS: 'View details',
   REOPENING: 'Dibuka kembali',
   REOPENING_DATE: 'Tanggal Pembukaan Kembali',
   REOPENING_ON: 'Dibuka kembali pada',
@@ -326,11 +378,6 @@ const id = {
           DESCRIPTION:
             'Semua kendaraan yang tersedia selama pengalaman Anda akan selalu dibersihkan secara menyeluruh setelah setiap kali digunakan.',
           HEADING: 'Semua kendaraan telah dibersihkan',
-        },
-        SAFETY_CONTACTLESS: {
-          DESCRIPTION:
-            'Sekarang sudah tahun 2020 dan Anda kini dapat menikmati pengalaman tanpa harus menyentuh apa pun atau siapa pun.',
-          HEADING: 'Jalur masuk bebas sentuhan dan hambatan ',
         },
         SAFETY_HANDWASH: {
           DESCRIPTION:
@@ -434,6 +481,7 @@ const id = {
       'Kami telah mengembangkan tanda Dapat Ditonton dengan Aman yang digunakan di seluruh industri. Dengan demikian, ketika teater kembali buka, kamu  tidak perlu khawatir karena objek wisatanya sudah aman dari COVID serta mengikuti pedoman seni pertunjukan dan arahan pemerintah.',
     HEADING: 'Lihat dengan aman',
     MOBILE_HEADING: 'Pengalaman yang Aman',
+    MORE_CURRENCIES: 'More currencies',
     MODAL: {
       DETAILS: {
         CONTACTLESS_MEASURES_DEFAULT: {
@@ -442,18 +490,23 @@ const id = {
           HEADING: 'E-Tiket Tanpa Kontak',
         },
         PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Perlengkapan pelindung, misalnya masker wajah, wajib dipakai untuk masuk ke lokasi</li>\n<li>Semua penonton wajib melalui pemeriksaan suhu tubuh sebelum masuk ke lokasi</li>',
+          DESCRIPTION: `<li>Perlengkapan pelindung, misalnya masker wajah, wajib dipakai untuk masuk ke lokasi</li>
+<li>Semua penonton wajib melalui pemeriksaan suhu tubuh sebelum masuk ke lokasi</li>`,
           HEADING: 'Langkah Pencegahan demi Keselamatan',
         },
         SANITIZATION_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Perlengkapan pelindung, misalnya masker wajah, wajib dipakai untuk masuk ke lokasi</li>\n<li>Semua penonton wajib melalui pemeriksaan suhu tubuh sebelum masuk ke lokasi</li>',
+          DESCRIPTION: `<li>Perlengkapan pelindung, misalnya masker wajah, wajib dipakai untuk masuk ke lokasi</li>
+<li>Semua penonton wajib melalui pemeriksaan suhu tubuh sebelum masuk ke lokasi</li>`,
           HEADING: 'Langkah Sanitasi',
         },
         SOCIAL_DISTANCING_MEASURES_DEFAULT: {
-          DESCRIPTION:
-            '<li>Objek wisata telah dirancang ulang untuk meminimalkan kontak antarpenonton</li>\n<li>Penonton akan diberikan tempat duduk terpisah berdasarkan kelompoknya</li>\n<li>Prapemesanan makanan ringan akan difasilitasi jika memungkinkan</li>\n<li>Disarankan melakukan transaksi pembelian tanpa uang tunai.</li>\n<li>Semua penonton diminta untuk membawa barang seperlunya karena ruang penitipan mungkin ditutup</li>\n<li>Aktivitas tertentu, misalnya berfoto dengan seniman atau meminta tanda tangan mungkin dibatasi</li>\n',
+          DESCRIPTION: `<li>Objek wisata telah dirancang ulang untuk meminimalkan kontak antarpenonton</li>
+<li>Penonton akan diberikan tempat duduk terpisah berdasarkan kelompoknya</li>
+<li>Prapemesanan makanan ringan akan difasilitasi jika memungkinkan</li>
+<li>Disarankan melakukan transaksi pembelian tanpa uang tunai.</li>
+<li>Semua penonton diminta untuk membawa barang seperlunya karena ruang penitipan mungkin ditutup</li>
+<li>Aktivitas tertentu, misalnya berfoto dengan seniman atau meminta tanda tangan mungkin dibatasi</li>
+`,
           HEADING: 'Protokol Jaga Jarak',
         },
       },
@@ -469,20 +522,26 @@ const id = {
   },
   SAVE: 'Hemat {0}%',
   SAVE_PERCENT: 'Hemat {0}%',
-  SAVE_UPTO: 'Hemat hingga',
   SAVE_UPTO_PERCENT: 'Hemat hingga {0}%',
   SEE_ALL: 'Lihat semua',
+  SEARCH: 'Search',
+  POPULARITY: 'Popularity',
+  PRICE: 'Price',
   SEE_MORE_SHOWS: 'Lihat Pertunjukan Lainnya',
   SELECT_CITY: 'Pilih kota',
+  SELECT_SECTION: 'Select section',
   SEE_ALL_PHOTOS: 'Tampilkan semua foto',
   SHOW_CLOSED: 'Pertunjukan Ditutup',
+  SHOW_LESS: 'Show less',
   SHOW_LESS_TEXT: 'Tampilkan lebih sedikit',
+  SHOW_MORE: 'Show more',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Tentang Pertunjukan',
     ABOUT_THEATRE: 'Tentang Teater',
     ADDITIONAL_INFORMATION: 'Informasi Tambahan',
     AGE_LIMIT: 'Batas Usia',
     AGE_SUITABILITY: 'Kesesuaian Usia',
+    CRITIC_REVIEW: 'Critic Review',
     ANSWER: ['J-'],
     BLOG_SHOW_PAGE: 'Halaman Pertunjukan Blog',
     BLOG_SUMMARY: 'Ringkasan Blog',
@@ -517,15 +576,57 @@ const id = {
     TICKETS_REDEMPTION: 'Penukaran Tiket',
     TOP_SONGS: 'Lagu Teratas',
     YOUR_TICKETS: 'Tiket Anda',
+    ABOUT_CONCERT: 'About Concert',
+    PROGRAM: 'Program',
+    PART_ONE: 'Part 1',
+    PART_TWO: 'Part 2',
   },
+  SNEAK_PEEK: 'Sneak Peek',
+  SORT_BY: 'Sort by',
   SPECIAL_OFFER: 'Penawaran Khusus',
   THEATRE: 'Teater',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Nearby theatres',
+    NOW_PLAYING: 'Now Playing',
+    UPCOMING_SHOWS: 'Upcoming Shows',
+    PAST_SHOWS: 'Past shows',
+    FIND_BEST_SEATS: 'Find best seats',
+  },
   TICKET_CAN_BE_CANCELED:
     'Anda dapat membatalkan hingga {hours} jam sebelumnya untuk mendapatkan pengembalian dana penuh.',
   TICKET_CANNOT_BE_CANCELED:
     'Tiket ini tidak dapat dibatalkan, tetapi dapat dijadwalkan ulang berdasarkan permintaan.',
   TICKETS: 'Tiket',
   TIMINGS: 'Jadwal',
+  SPECIAL_PRODUCT_HEADING: 'Most loved',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Expert local guides',
+    ENGAGING_STORIES: 'Engaging stories',
+    TOP_RATED: 'Top-rated',
+  },
+  GUIDED_TOUR_REVIEWS: [
+    'Our guide Angela was great and full of knowledge of the venue',
+    'The guide was very happy to answer questions about the tour',
+    'Our guide was great & she even gave us a great lunch recommendation!',
+    'The organization and our guide made the experience very pleasant',
+    'A lot of educational content, I will surely do it again with my kids',
+    'The tour was well organised and just the right time length as well',
+    'Our guide really knew his stuff and his passion for history was clear',
+    'Good guide and organization! Will recommend!!!',
+    "Our guide's little fun facts kept us all engaged and interested",
+    "The tour went at a good pace and didn't feel rushed",
+    'Our guide Maria was able to get spots for our best viewing point',
+    "Our guide enriched our visit beyond what we would've achieved on our own",
+    'Detailed and deeply moving tour led by passionate guide',
+    'Jeff showed us aspects of the venue that we would have missed otherwise',
+  ],
+  GUIDES_BANNER: 'Explore like a local with our guest-loved super guides.',
+  SPECIAL_GUIDED_TOUR_PRODUCT_SUMMARY: [
+    'Taking a guided tour is the best way to get the most from this destination. Our expert guides serve as your local buddies, sharing stories, insider gems, and travel recommendations.',
+    "Don't just visit - experience!",
+  ],
+  HEAR_FROM_OUR_GUESTS: 'Hear from our guests',
+  GUIDES: 'Guides',
   TODAY: 'Hari ini',
   TOMORROW: 'Besok',
   TOUR_LIST_HEADING: 'Pilih Pengalaman Anda',
@@ -547,13 +648,43 @@ const id = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Tiket ini berlaku selama {0} bulan sejak tanggal pembelian.',
   },
+  TABLE_OF_CONTENTS: 'Contents',
   VIEW_LESS: 'Hilangkan sebagian',
   VIEW_MORE: 'Lihat lainnya',
   WHY_TAKE_THIS_DAY_TRIP: 'Mengapa Melakukan Day Trip Ini?',
   WHY_WATCH: 'Alasan Menonton',
+  FIND_ON_MAP: 'Find on map',
   ENTERTAINMENT_MB_LANDING_PAGE: {
+    TRUST_BOOSTERS: {
+      BOX_OFFICE_TICKETS: {
+        NAME: 'Box office tickets',
+        DESCRIPTION: 'Instantly confirmed to your phone',
+      },
+      CHOOSE_YOUR_SEATS: {
+        NAME: 'Choose your seats',
+        DESCRIPTION: 'The view you want, every time',
+      },
+      EXCLUSIVE_DEALS: {
+        NAME: 'Exclusive deals & discounts',
+        DESCRIPTION: "Save big on {0}'s best shows",
+      },
+      BOOK_AND_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by {0} million guests and counting',
+      },
+    },
+    YOUR_PICK: 'Your pick',
+    BROWSE_BY_CATEGORIES: 'Browse by categories',
     TOP_WEST_END_SHOWS: 'Top West End shows',
+    TOP_THEATRE_SHOWS: 'Top {0} shows',
+    TOP_SHOWS: 'Top shows',
+    SEE_MORE_SHOWS: 'See {0} more shows',
+    LAST_MINUTE_TICKETS: 'Last-minute tickets',
     LOVED_BY_MILLIONS: 'Loved by Millions',
+    TODAY: 'Today',
+    TOMORROW: 'Tomorrow',
+    SEE_ALL: 'See all',
+    GRAB_YOUR_TICKETS: 'Grab your tickets now',
   },
   TAG_NAME: {
     BALLET: 'Ballet',
@@ -587,12 +718,15 @@ const id = {
     STARS_ON_STAGE: 'Stars on Stage',
     THEATRICAL_CONCERT: 'Theatrical Concert',
     TRUE_STORY: 'True Story',
+    TONY_WINNER: 'Tony Winner',
+    OFF_BROADWAY: 'Off Broadway',
   },
   INVENTORY_UNAVAILABLE: {
     HEADING: 'Uh oh, we’ve a problem',
     MESSAGE: `Sorry! All experiences for this date are either sold out or
     unavailable. But we’ve loads of them available on other dates. All
     you gotta do is be flexible.`,
+    CTA: 'View all dates',
   },
   ALL_DATES: 'All dates',
   CATEGORY_HEADER: {
@@ -675,23 +809,832 @@ const id = {
     TRANSPORTATION: 'Transportasi',
     FESTIVALS_EVENTS: 'Festival dan Acara',
   },
+  BREADCRUMBS: {
+    HOME: 'Home',
+    TRAVEL_GUIDE: 'Travel Guide',
+    THINGS_TO_DO: 'Things to do in {0}',
+    SHOW_NAME_TICKETS: '{0} - Tickets',
+    LTT_HOME: 'London Theatre Tickets',
+    LTT_VENUE_PAGE_HOME: 'Theatres in London',
+    BROADWAY_HOME: 'Broadway Show Tickets',
+    BROADWAY_VENUE_PAGE_HOME: 'Broadway Theatres',
+    VIENNA_CONCERT_HOME: 'Vienna Concert Tickets',
+    VIENNA_CONCERT_VENUE_PAGE_HOME: 'Concert Halls in Vienna',
+    ATTRACTIONS: 'Attractions',
+    A2_SIGHTSEEING_CRUISES: 'Sightseeing Cruises',
+    A2_DINNER_CRUISES: 'Dinner Cruises',
+    A2_EVENING_CRUISES: 'Evening Cruises',
+    A2_LUNCH_CRUISES: 'Lunch Cruises',
+    A2_YACHT_TOURS: 'Yacht Tours',
+    LONDON_THEATRE_NEWS: 'London Theatre News',
+    BROADWAY_SHOW_NEWS: 'Broadway Show News',
+    NEWS_PAGE: 'News Page',
+    REVIEWS_PAGE_BANNER_HEADING: '{0} reviews',
+  },
+  AMENITIES: {
+    Restaurant: 'Restaurant',
+    Cafe: 'Cafe',
+    'Dedicated Parking': 'Dedicated Parking',
+    Elevators: 'Elevators',
+    Lift: 'Lift',
+    'Wheelchair Accessible': 'Wheelchair Accessible',
+    Cloakroom: 'Cloakroom',
+    'Air Conditioning': 'Air Conditioning',
+    WiFi: 'WiFi',
+    Bar: 'Bar',
+    'Water Fountain': 'Water Fountain',
+    Washrooms: 'Washrooms',
+    Toilets: 'Toilets',
+    Binoculars: 'Binoculars',
+    'Adapted Toilets': 'Adapted Toilets',
+    'Accessible Toilets': 'Accessible Toilets',
+    'Assistive Listening System': 'Assistive Listening System',
+    'Hearing Assistance': 'Hearing Assistance',
+    'Booster Cushions': 'Booster Cushions',
+    Shop: 'Shop',
+    'Souvenir Shop': 'Souvenir Shop',
+    'Guide Dogs': 'Guide Dogs',
+    'Baby Changing Facilities': 'Baby Changing Facilities',
+    'Security Check': 'Security Check',
+    Ramp: 'Ramp',
+    'Level Access': 'Level Access',
+  },
   CALENDAR: {
     FOOTNOTE: '* Semua harga dalam {0}',
+    PICK_DATE: 'Pick a date',
+  },
+  REVIEW_LOC: {
+    VIEW_ORIGINAL: 'View original review in {0}',
+    VIEW_ORIGINAL_NO_LANG: 'This review is translated. Show original review.',
+    TRANSLATE: 'Translate review in {0}',
+    LANGUAGES: {
+      EN: 'English',
+      ES: 'Spanish',
+      FR: 'French',
+      IT: 'Italian',
+      DE: 'German',
+      PT: 'Portuguese',
+      NL: 'Dutch',
+      NO: 'Norwegian',
+      SV: 'Swedish',
+      DA: 'Danish',
+    },
   },
   SHOW_PAGE_V2: {
     READ_MORE_REVIEWS: 'Read more reviews',
+    SHOW_MORE_REVIEWS: 'Show more reviews',
+    MUST_DO_EXP: 'Must-do experience',
     ALL_PHOTOS: 'All photos',
+    MORE_DATES: 'More dates',
     SELLING_OUT_FAST: 'Laris',
+    SELECT_TIME_SLOT: 'Select a time slot',
+    SELECT_TIME_SLOT_ERROR: 'Select a time slot to continue',
+    PRICE_STARTING_FROM: 'Seats price starting from',
+    SELECT_SEATS: 'Select seats',
+    READ_MORE: 'Read more',
+    RATINGS_AND_REVIEWS: 'Ratings & reviews',
+    READ_DETAILED_REVIEWS: 'Read detailed reviews',
+    INTERVAL: 'Interval',
+    TWO_PART_SHOW: 'Two-part show',
+    UNTIL_DATE: 'Until {0}',
+    AVAILABLE_TIME: 'Available time slot',
+    EXPERIENCE_AVAILABLE_ONLY_AT:
+      'This experience is available at the below time only',
+    CONTENT_TABS: {
+      ABOUT: 'About',
+      VENUE: 'Venue',
+      TICKETS: 'Tickets',
+      Reviews: 'Reviews',
+    },
+    SELECT_SHOW_TIMMING: 'Select your showtime',
+    ONLY_ONE_SLOT: 'Only 1 time slot available on the selected date',
+    SIMILAR_SHOWS: 'You might also like',
+    CONTENT_SECTION_HEADERS: {
+      STORYLINE: 'Storyline',
+      WHAT_CRITICS_THINK: 'What the critics think',
+      FREQUENTLY_ASKED_QUESTIONS_ABOUT: 'Frequently asked questions about {0}',
+      AGE_SUITABILITY_AND_GUIDELINES: 'Age & content guide',
+      CAST_AND_CREATIVES: 'Cast & creatives',
+      ABOUT_THE_SHOW: 'About the show',
+    },
+    TICKETS_UNAVAILABLE: 'Tickets unavailable',
+    TICKETS_UNAVAILABLE_SUBTEXT:
+      'Luckily, we have plenty more to choose from right here.',
+    MUST_SEE_SHOWS: 'More must-see shows',
+    SEE_ALL_SHOWS: 'See all shows',
+    SHOW_ONLY_AVAILABLE_AT: 'This show is only available on',
+    GETTING_TICKETS: 'Getting your tickets',
   },
   HOHO: {
-    ROUTE_DETAILS: 'Route Details',
-    MORE_DETAILS: 'More Details',
+    HOHO: 'Hop On Hop Off Tours',
+    BUS_ROUTES_DETAILS: 'Bus routes',
+    TOUR_DETAILS: 'Tour details',
     ROUTES_SCHEDULES: 'Routes & Schedules',
-    TOP_ATTRACTIONS: 'Top attractions covered',
+    VALIDITY: 'Valid for 1 day',
+    VALIDITY_NOTE:
+      'Your experience is valid for {0} calendar day(s). If you book your ticket for 6th May, 2023- your ticket will be valid till 6th May 2023, 9:00 PM PST.',
+    BESTSELLER: 'Bestseller',
+    SEE_ALL: 'See all',
     TIMINGS: 'TIMINGS',
     FREQUENCY: 'FREQUENCY',
     DURATION: 'DURATION',
+    STARTING_LOCATION: 'Starting location',
     CALENDAR_FOOTNOTE: '* Semua harga dalam {0}',
+    TOUR_TIMINGS: 'Tour timings',
+    TOUR_FREQUENCY: 'Tour frequency',
+    GOT_IT: 'Got it',
+    SELECT_DATE: 'Select a date',
+    SELECT_TOUR: 'Select tour type',
+    VIEW_TOUR_DETAILS: 'View tour details',
+    BUS_DETAILS: 'MORE DETAILS',
+    VIEW_ROUTES: 'View all routes',
+    BUS_ROUTES: 'BUS ROUTES',
+    ATTRACTIONS_PREVIEW: 'Fastest way to view {0}+ top attractions including',
+    ROUTES: 'Routes',
+    COMBO_SUBTITLE: 'Save more with',
+    COMBO_TITLE: 'Combo deals on your Hop-on Hop-off tour',
+    COMBO_DWEB_TITLE: 'Save more with combo deals on your Hop-on Hop-off tour',
+    STOPS_AND_ATTRACTIONS: 'Stops & nearby attractions',
+    HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
+    TIMINGS_FREQUENCY: 'Timings & frequency',
+    TOUR_DURATION: 'Tour duration',
+    EVERY_X_MINS: 'Every {0}',
+    VIEW_LOCATION: 'View location',
+    BANNER_SUBTEXT:
+      'Most convenient and quickest way to see all top attractions in the city.',
+    TOP_ATTRACTIONS: 'Top attractions covered',
+    TRUST_BOOSTERS: {
+      LAST_MIN: {
+        NAME: 'Last minute booking',
+        DESCRIPTION: 'Instantly confirmed to your phone',
+      },
+      COST_EFF: {
+        NAME: 'Cost-effective exploring',
+        DESCRIPTION: 'Multiple landmarks, one ticket',
+      },
+      DAILY_RIDES: {
+        NAME: 'Daily unlimited rides',
+        DESCRIPTION: 'Explore the city at your pace',
+      },
+      BOOK_RELAX: {
+        NAME: 'Book and relax',
+        DESCRIPTION: 'Trusted by {0} million guests',
+      },
+    },
+  },
+  BANNER_DESCRIPTORS: {
+    EXPERT_MULTILINGUAL_GUIDES: 'Expert multilingual guides',
+    STL: 'Skip-the-line access',
+    PERSONALIZED: 'Personalized experience',
+    LOCAL_FOOD: 'Local food & culture',
+    MULTILINGUAL_GUIDES: 'Multilingual guides',
+    CULINARY_EXPERTS: 'Culinary experts',
+    SIGHTSEEING: 'Sightseeing & onboard entertainment',
+    SIGHTSEEING_MEAL: 'Sightseeing & onboard meal options',
+    MULTILINGUAL_GT: 'Multilingual guided tours',
+    AUDIOGUIDE_COMMENTARY: 'Audioguide & commentary available',
+    ALL_TOP_ATTRACTIONS_COVERED: 'All top attractions covered',
+    REG_SCHEDULE_UNLIMITED_RIDES: 'Regular schedule. Unlimited rides',
+    LAST_MIN_AVAIL_INSTANT_CONFIRMATION:
+      'Last minute availability. Instant confirmation',
+    MULTI_ROUTES: 'Multiple route options',
+    HASSLE_FREE: 'Hassle-free booking',
+    FREQUENT_DEPARTURES: 'Frequent departures',
+    ONBOARD_AMENITIES: 'Best onboard amenities',
+    FLEXI_TRAVEL: 'Flexible travel on multiple routes',
+    FLEXI_EXCHANGE_CANCEL: 'Flexible exchanges and cancellations',
+    EXTRA_DISCOUNT: 'Extra discounts for youths, seniors & families',
+    PREPAID: 'Prepaid convenience',
+    EASY_ACTIVATION: 'Easy activation',
+    INSTANT_CONNECTIVITY: 'Instant connectivity with global coverage',
+    ROUND_TRIP: 'Round-trip transfers',
+    CULTURAL_EXPERIENCE: 'Authentic cultural experiences',
+    GUARANTEED_SEAT: 'Guaranteed seat',
+    ONBOARD_WIFI: 'Onboard Wi-Fi & charging ports',
+    LUGGAGE_ASSISTANCE: 'Luggage assistance',
+    TOP_ATTRACTIONS: 'Top attractions included',
+    FREQ_DEP_MULTI_ROUTE: 'Frequent departures on multiple routes',
+    CHARGING: 'Charging station',
+    WIFI: 'Wi-Fi access',
+    FnB: 'F&B availability',
+    LUXURY: 'Luxury experience',
+    FOOD_DRINK: 'Food & drinks',
+    PANAROMIC: 'Panoramic views of top attractions',
+    PANAROMIC_2: 'Panoramic views',
+    PANAROMIC_3: 'Panoramic, open-top views',
+    BEVERAGES: 'Onboard beverages',
+    GOURMET: 'Gourmet dinner',
+    GOURMET_2: 'Gourmet dinner & drinks',
+    NIGHTTIME: 'Stunning nighttime views',
+    ROMANTIC: 'Romantic atmosphere',
+    TRANSFERS: 'Transfers included',
+    CERTIFIED_OP: 'Certified operations',
+    BIRD_EYE: "Bird's-eye view",
+    MULTI_JUMP: 'Multiple jump times',
+    EXTREME_ADV: 'Extreme adventure',
+    PHOTO_OP: 'Scenic photo opportunities',
+    TOP_ATTRACTIONS_COVERED: 'Top attractions covered',
+    LOCAL_CULTURE: 'Experience local culture',
+    EXCLUSIVE_DISC: 'Exclusive discounts',
+    EFFICIENT_PUBLIC_TRANSIT: 'Efficient public transit',
+    FREQUENT_SERVICE: 'Frequent service',
+    PREBOOKING: 'Easy pre-booking',
+    LOCAL_CULTURE_IMM: 'Local cultural immersion',
+    DISCOVER_HIDDEN: 'Discover hidden places',
+    CITY_SIGHTSEEING: 'City sightseeing',
+    OFFBEAT_ADV: 'Offbeat adventure',
+    DRINK_DEALS: 'Drink deals',
+    OFFBEAT_EXP: 'Offbeat experience',
+    MULTIPLE_VARIETIES: 'Multiple varieties included',
+    HIDDEN_GEMS: 'Hidden gems & offbeat attractions',
+    EXPLORE_LOCAL: 'Explore local neighbourhoods',
+    CUSTOMIZED_TREATMENTS: 'Customized treatments',
+    TRAINED_THERAPISTS: 'Trained therapists',
+    HOLISTIC_WELLNESS: 'Holistic wellness',
+    FLEXIBLE_DURATION: 'Flexible duration',
+    MULTI_BOAT: 'Multiple boat options',
+    SCENIC_ROUTES: 'Scenic routes',
+    HANDS_ON: 'Hands-on learning',
+    CULTURAL_CULINARY: 'Cultural & culinary insights',
+    EXPERT_HOSTS: 'Expert hosts',
+    ADVENTURE_EXPERIENCE: 'Adventure experience',
+    EQUIPMENT: 'Equipment included',
+    SCENIC_FLYOVERS: 'Scenic flyovers',
+    LIVE_COMMENTARY: 'Live commentary',
+    BEST_AERIAL_VIEWS: 'Best aerial views',
+    SAFE_CERT_OP: 'Safe & certified operations',
+    HANDPICKED: 'Handpicked tours',
+    EFFORTLESS: 'Effortless planning',
+    EXPERT_GUIDES: 'Expert guides. Unique insights',
+    ALL_ATTR_ONE_CARD: 'All attractions, one card',
+    MULTI_CARD: 'Multiple card options',
+    COST_EFF: 'Cost-effective and convenient',
+    BEST_PRICES: 'Best prices',
+    MULTI_TRANSPORT: 'Multiple transport options',
+  },
+  CAT_SUBCAT_PAGE: {
+    ALL: 'All',
+    POPULAR_SUBCATEGORY: 'Popular {0}',
+    TOP_CATEGORY: 'Top {0}',
+    ATTRACTIONS: 'Attractions',
+    ALL_SUBCATEGORY: 'All {0}',
+    BROWSE_BY_CATEGORIES: 'Browse by categories',
+    TICKETS_FROM: 'Tickets from',
+    PRICE_LOW_HIGH: 'Price (low to high)',
+    PRICE_HIGH_LOW: 'Price (high to low)',
+    FILTERS: 'Filters',
+    RESET: 'Reset',
+    APPLY: 'Apply',
+  },
+  COOKIE_BANNER: {
+    DESKTOP:
+      'Headout uses cookies to enhance your website journey one byte at a time.',
+    MOBILE: 'Cookies at work.',
+    LEARN_MORE: 'Learn more.',
+  },
+  SHOW_UNAVAILABLE: 'Show unavailable',
+  NEWS_PAGE: {
+    FEATURED_NEWS: 'Featured news',
+    ALL_NEWS: 'All news',
+    MORE_READS: 'More reads',
+    LOAD_MORE: 'Load more',
+    TRAILERS: 'Trailers',
+    GET_YOUR_TICKETS: 'Get your tickets',
+    POPULAR_SHOWS: 'Popular shows',
+    FEATURED: 'Featured',
+    RECENT_NEWS: 'Recent news',
+    SHOW_MORE_ARTICLES: 'Show more articles',
+    COLLAPSE_ALL: 'Collapse all',
+    REVIEWS: 'Reviews',
+    SHOW_ALL_REVIEWS: 'Show all reviews',
+    MAILER: {
+      HEADING: 'Best theatre deals & news straight to your inbox',
+      SUBHEADING:
+        'Join our mailing list to get the latest news & hottest deals on theatre shows.',
+    },
+  },
+  REVIEWS_PAGE: {
+    BANNER_HEADING: '{0} reviews',
+    REVIEWS_COUNT: '{0} reviews',
+    AWESOME: 'Awesome',
+    GOOD: 'Good',
+    AVERAGE: 'Average',
+    POOR: 'Poor',
+    TERRIBLE: 'Terrible',
+    REVIEW_BY_HEADOUT: 'Here’s what we think: Review by Headout',
+    WHAT_PEOPLE_ARE_SAYING: 'What people are saying',
+    MOST_RELEVANT: 'Most relevant',
+    RATING_HIGH_TO_LOW: 'Rating: High to Low',
+    RATING_LOW_TO_HIGH: 'Rating: Low to High',
+    CRITIC_REVIEWS: 'Critic reviews',
+    USER_REVIEWS: 'User reviews',
+    CONTRIBUTORS_REVIEW: 'Contributor’s review',
+  },
+  AIRPORT_TRANSFER: {
+    PRIVATE_TRANSFERS: 'Private transfers',
+    SHARED_TRANSFERS: 'Shared transfers',
+    BOOKING_STEPS: {
+      BOOK_ONLINE: {
+        TITLE: 'Book online',
+        DESCRIPTION:
+          'Enjoy a fast, and convenient booking experience by booking your tickets online.',
+      },
+      INSTANT_CONFIRMATION: {
+        TITLE: 'Instant confirmation',
+        DESCRIPTION:
+          'Get instant confirmation on booking your airport transfer ticket.',
+      },
+      CONVENIENT_PICKUP: {
+        TITLE: 'Convenient pickup',
+        DESCRIPTION:
+          'Avoid the hassle of long queues as your transfer vehicle will be waiting for you at your selected pickup point.',
+      },
+      DROP_OFF: {
+        TITLE: 'Drop off',
+        DESCRIPTION:
+          'Get to reach your destination in a fast and comfortable manner.',
+      },
+    },
+    SHARED_TRANSFERS_IN: 'Shared transfers in {0}',
+    SHARED_TRANSFERS_DESCRIPTION:
+      ' A comfortable cost-effective transportation option in for multiple passengers traveling to or from an airport.',
+    PRIVATE_TRANSFERS_IN: 'Private transfers in {0}',
+    PRIVATE_TRANSFERS_DESCRIPTION:
+      ' A convenient, personalized transportation service for individuals or small groups, offering a comfortable and direct ride to and from an airport.',
+    ANYWHERE_IN_THE_CITY: 'Anywhere in the city',
+    DESCRIPTORS: {
+      MULTIPLE_VEHICLE: 'Multiple vehicle options',
+      FREE_CANCELLATION: 'Free cancellation',
+    },
+    SEAMLESS_TRANSFERS: 'Seamless transfers, trusted worldwide',
+    PICK_THE_BEST_AIRPORT_TRANSFER: 'Pick the best airport transfer for you',
+    HASSLE_FREE_TRANSFER: 'Hassle-free airport transfer experience',
+    EFFORT_LESS_AIRPORT_TRANSFERS: 'Effortless airport transfers in {0} by',
+    BUSES: 'buses',
+    TRAINS: 'trains',
+    PRIVATE_TAXIS: 'private taxis',
+    BUS_TRAIN: 'Bus/Train',
+    PRIVATE_TAXI: 'Private taxi',
+    FROM: 'From',
+    SELECT_PICKUP: 'Select pick-up',
+    TO: 'To',
+    SELECT_DROPOFF: 'Select drop-off',
+    ENTER_DESTINATION: 'Enter your destination',
+    ENTER_PICKUP: 'Enter pick-up location',
+    PICKUP_DATE: 'Pick-up date',
+    SELECT_DATE: 'Select date',
+    PICKUP_TIME: 'Pick-up time',
+    SELECT_TIME: 'Select time',
+    GUEST: 'Guest',
+    GUESTS: 'Guests',
+    ADD_GUESTS: 'Add guests',
+    EXPLORE_TRANSFERS: 'Explore transfers and more',
+    COMBOS_AND_EXTRAS: 'Combos and extras',
+    YOUR_RIDE_DOORSTEP: 'Your ride, at your doorstep',
+    COMFORTABLE_RIDE:
+      'Book a comfortable private taxi to and from major airports in {0}',
+    TRUSTED_DRIVERS: 'Trusted drivers',
+    RIDES_24_7: 'Rides available 24/7',
+    FLIGHT_TRACKING: 'Flight tracking',
+    KNOW_MORE: 'Know more',
+    RESERVE_YOUR_RIDE: 'Reserve your ride',
+    TRANSFER_OPTIONS: 'Transfer options found',
+    TRANSFERS_AVAILABLE_PLURAL: '{0} transfers available',
+    TRANSFERS_AVAILABLE_SINGULAR: '1 transfer available',
+    TRUSTED_PARTNERS: '35+ trusted partners, {0}',
+    WORLDWIDE: 'worldwide',
+    COMFORTABLE_RIDES: 'Comfortable rides',
+    FREQUENT_DEPARTURES: 'Frequent departures',
+    MULTIPLE_TRANSPORT_OPTIONS: 'Multiple transport options',
+    AND_MANY_MORE: 'And many more',
+    ADD_PICKUP_LOCATION: 'Add pick-up location',
+    ADD_DROPOFF_LOCATION: 'Add drop-off location',
+    SELECT_PICKUP_DATE_AND_TIME: 'Select pick-up date and time',
+    SELECT_A_DATE: 'Select a date',
+    TRAIN_STATION: 'Train station',
+    BUS_STOP: 'Bus stop',
+    ADD_RETURN: 'Add return',
+    HEADS_UP: 'Heads up!',
+    ADDED_RETURN_TRIP: 'You’ve added a return trip!',
+    RETURN_NOTE:
+      'Please note, we’ll show the return journey details in the next steps.',
+    OKAY_I_UNDERSTAND: 'Okay, I understand',
+    SERVING_GUESTS: 'Serving {0} in {1} around the globe',
+    GUESTS_COUNT: '220K+ guests',
+    CITIES_COUNT: '55+ cities',
+    PARNTER_WITH_BEST:
+      'We partner with only the best, to make sure you have an unforgettable experience. Let us handle the details — while you sit back, unwind, and enjoy the ride',
+  },
+  PC_EXP: {
+    SHOW_INCL: 'Show inclusions & important info',
+    CLEAR: 'Clear',
+    ALL_EXPERIENCES: 'All experiences',
+    FILTER_BY_CATEGORIES: 'Filter by categories',
+    CATEGORIES: 'Categories',
+    COMBOS: {
+      HEADING: 'Everything good comes in pairs. Just like our saver combos.',
+      DESCRIPTOR_1: 'Money saving deals',
+      DESCRIPTOR_2: 'Plan your trip better',
+    },
+  },
+  TOP: 'Top {0}',
+  VIEW_CALENDAR: 'View calendar',
+  SHOWS_CALENDAR: 'Shows calendar',
+  IN: 'in',
+  SEATS: 'Seats',
+  CONTENT_PAGE: {
+    CONTENT_GUIDE: 'Content Guide',
+    QUICK_INFORMATION: 'Quick Information',
+    PEAK: 'Peak',
+    OFF_PEAK: 'Off Peak',
+    ADDRESS: 'ADDRESS',
+    RECOMMENDED_DURATION: 'RECOMMENDED DURATION',
+    VISITORS_PER_YEAR: 'VISITORS PER YEAR',
+    NUMBER_OF_ENTRANCES: 'NUMBER OF ENTRANCES',
+    EXPECTED_WAIT_TIME_STANDARD: 'EXPECTED WAIT TIME - STANDARD',
+    EXPECTED_WAIT_TIME_SKIP_THE_LINE: 'EXPECTED WAIT TIME - SKIP THE LINE',
+    UNESCO_YEAR: 'UNESCO YEAR',
+    ARCHITECTURE_STYLE: 'ARCHITECTURE STYLE',
+    TIMINGS: 'Timings',
+    SIZE_HEIGHT: 'SIZE/HEIGHT',
+    TICKETS: 'TICKETS',
+    FUN_FACTS: 'Fun facts',
+    DID_YOU_KNOW: 'Did you know?',
+    MORE_INTERESTING_FACTS: 'More interesting facts',
+    PLAN_YOUR_VISIT: 'Plan your visit',
+    ALSO_KNOWN_AS: 'Also Known As',
+    FOUNDED_ON: 'Founded On',
+    FOUNDED_BY: 'Founded By',
+    FROM: 'From',
+    CLOSED_TODAY: 'Closed today',
+    TODAY: 'Today',
+    CLOSED: 'Closed',
+    OPEN: 'Open',
+    LAST_ADMISSION: 'Last Admission',
+    DAYS: 'Days',
+    BEST_TIME_TO_VISIT: 'Best time to visit the',
+    WEEKDAY_VS_WEEKEND: 'Weekday vs Weekend',
+    PEAK_VS_LOW_SEASON: 'Peak season vs low season',
+    PLEASANT: 'Pleasant',
+    CROWDED: 'Crowded',
+    VERY_CROWDED: 'Very Crowded',
+    LOW_SEASON: 'Off Season',
+    MID_SEASON: 'Moderate Season',
+    PEAK_SEASON: 'Peak Season',
+    TO: 'TO',
+    LOWER_TO: 'to',
+    LAST_ENTRY: 'last entry',
+    SUBATTRACTIONS: 'Sub-Attractions',
+    INCLUDED_WITH_TICKETS: 'Included with {0} tickets',
+    INCLUDED_WITH_SOME_TICKETS: 'Included with some {0} tickets',
+    EXPLORE_ALL_POI_TICKETS: 'Explore {0} & {1} tickets & tours',
+    EXPLORE_PARENT_TICKETS: 'Explore {0} tickets & tours',
+    SELECT_YOUR_EXPERIENCE: 'Select your experience',
+    OPERATING_HOURS: 'Operating hours',
+    SEE_MORE: 'See more',
+    MORE_INSIGHTS: 'More insights',
+  },
+  OFF_PERCENT: '{0}% off',
+  THEATRE_LANDING_PAGE: {
+    SEAT_PLAN: 'Seat plan',
+    CAPACITY: 'Capacity: {0} seats',
+    WHATS_ON: "What's on",
+    CATEGORIES: 'Categories',
+  },
+  NEXT: 'Next',
+  PREVIOUS: 'Previous',
+  ITINERARY: {
+    TAB: 'Itinerary',
+    HEADING: 'Experience itinerary',
+    VIEW_ITINERARY: 'View Itinerary',
+    VIEW_DETAILS: 'View details',
+    PASSES_BY_SECTION_HEADING: 'Passes by',
+    SUB_SECTION_HEADING: {
+      HIGHLIGHTS: 'Highlights',
+      NEARBY_THINGS_TO_DO: 'Nearby things to do',
+      THINGS_TO_DO: 'Things to do',
+    },
+    STOP_CARD: {
+      TITLE: {
+        START: 'START POINT',
+        END: 'END POINT',
+        STARTING_POINT: 'STARTING POINT',
+        STOP: 'STOP',
+        ENDING_POINT: 'ENDING POINT',
+        PASSING_BY: 'PASSING BY',
+      },
+      MULTI_POINTS_AVAILABLE: {
+        START: '{0} starting points available',
+        END: '{0} ending points available',
+      },
+    },
+    GET_DIRECTION: 'Get direction',
+    DESCRIPTORS: {
+      DURATION: {
+        FULL: '{0} hours {1} mins',
+        WITHOUT_HOURS: '{0} mins',
+        WITHOUT_MINS: '{0} hours',
+      },
+      ATTRACTIONS_COUNT: '{0} attractions',
+      ACTIVITIES_COUNT: '{0} activities',
+      TOTAL_DURATION: 'TOTAL DURATION',
+      FREQUENCY: 'FREQUENCY',
+      FIRST_DEPARTURE: 'FIRST DEPARTURE',
+      LAST_DEPARTURE: 'LAST DEPARTURE',
+      FIRST_DEPARTURE_TIME: 'FIRST DEPARTURE TIME',
+      LAST_DEPARTURE_TIME: 'LAST DEPARTURE TIME',
+      MODE_OF_TRANSPORT: 'MODE OF TRANSFER',
+      FOOD_AND_DRINKS: 'FOOD & DRINKS',
+    },
+    WALK_DURATION: '{0} walk',
+    MORE: '{0} more',
+    TIMELINE_VIEW: 'Timeline',
+    MAP_VIEW: 'Map',
+    MAP_OVERLAY: 'Use CTRL/⌘ + scroll to move the map',
+    VIEW_EXPERIENCE_MAPPED_OUT: 'View your experience all mapped out.',
+    OPEN_MAP_VIEW: 'Open map',
+    START_POINT_SAME_AS_END_POINT:
+      'Your ending point would be same as your start point',
+    ROUTES: 'Routes',
+    SIGHTS_COVERED: 'Sights covered',
+    BOARDING_POINT: 'Boarding point',
+    BOARDING_POINTS: 'Boarding points',
+    LANDMARKS: 'Landmarks',
+    VIEW_IN_MAPS: 'View in maps',
+  },
+  CRUISES: {
+    BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',
+    FILTERS: {
+      ALL: 'All',
+      SIGHTSEEING: 'Sightseeing',
+      LUNCH: 'Lunch',
+      DINNER: 'Dinner',
+      COMBOS: 'Combos',
+    },
+    MAP_OVERLAY: 'Click or tap to move around the map',
+    SIGHTS_COVERED: 'Sights covered',
+    MENU: 'Menu',
+    BOARD_AT: 'Board at {0}',
+    BOARDING_POINTS_AVAILABLE: '{0} available',
+    VIEW_POPULAR_SIGHTS: 'View popular sights like {0} {1}',
+    X_BOARDING_POINTS: '{0} boarding points',
+    BOARDING_POINT: 'Boarding point',
+    BOARDING_POINTS: 'Boarding points',
+    LANDMARKS: 'Landmarks',
+    GET_DIRECTIONS: 'Get directions',
+    FOOD_MENU: 'Food menu',
+    X_PAGE: '{0} page',
+    X_PAGES: '{0} pages',
+    MORE: '+{0} more',
+    PDF: {
+      ZOOM_IN: 'Zoom in',
+      ZOOM_OUT: 'Zoom out',
+      FIT_TO_WIDTH: 'Fit to width',
+      RESET_ZOOM: 'Reset zoom',
+    },
+    COMBO_HEADING: 'Experience more for less: Combo deals & city cards',
+  },
+  CUSTOM_CTA_EXPERIMENT_TEXT: 'Check availability',
+  SELECT_AN_OPTION: 'See options',
+  PRIVATE_AT_LANDING_PAGE: {
+    CITY_AIRPORT_TRANSFERS: '{0} Airport Transfers',
+    BANNER_SUBTEXT:
+      'Enjoy stress-free travel with a reliable, pre-booked airport transfer.',
+    BEST_PRICES: 'Best prices, no hidden fees',
+    BEST_PRICES_SUBTEXT:
+      'Fixed pricing with no surprises, offering you competitive rates for premium service.',
+    FREE_WAIT_TIME: 'Free wait time, no rush',
+    FREE_WAIT_TIME_SUBTEXT:
+      'Enjoy a free waiting time of 45 minutes while you claim your baggage',
+    COMFORTABLE_RIDE: 'Comfortable ride',
+    COMFORTABLE_RIDE_SUBTEXT:
+      'Ride in style with a fleet of top-class vehicles, driven by handpicked and trained drivers.',
+    FREE_CANCELLATION: 'Free cancellation',
+    FREE_CANCELLATION_SUBTEXT:
+      'Plans changed? No problem. Enjoy free cancellation and 24/7 support.',
+    EXCELLENCE_HEADING: 'A track record of excellence and trust',
+    ACTIVE_CITIES: 'active cities, worldwide',
+    CUSTOMERS_SERVED: 'customers served',
+    YEARS_OF_SERVICE: 'years of excellent service',
+    FIND_YOUR_RIDE: 'Find your perfect ride',
+    FIND_YOUR_RIDE_SUBTEXT:
+      'From family-sized vans to luxury sedans, pick a car that fits your luggage and group size',
+  },
+  VIEW_ALL_EXPERIENCES: 'View all experiences',
+  DAY_TRIPS: {
+    BANNER: {
+      SUBTEXT:
+        "Skip the stress of planning. We cover every detail - curated itinerary, comfortable transfers and expert guides. It's the best way to see the sights without the hassle.",
+    },
+    WHY_WITH_HO: {
+      TITLE: 'Book stress free with Headout',
+      CURATED_EXPERIENCES: {
+        TITLE: 'Simple decision making with carefully chosen experiences',
+        DESCRIPTION:
+          'We handle every detail from transfers to meals so you have a memorable trip.',
+      },
+      EXPERT_GUIDES: {
+        TITLE: 'Experience the trip through the eyes of a local expert',
+        DESCRIPTION:
+          'Our guides bring rich insights and memorable stories to every journey.',
+      },
+      FLEXI_CANCELLATION: {
+        TITLE: 'Enjoy peace of mind with maximum flexibility ',
+        DESCRIPTION:
+          'Life happens, but we’ve got you covered with free cancellations or easy reschedule.',
+      },
+      GUEST_SUPPORT: {
+        TITLE: '24x7 support available for you at all times',
+        DESCRIPTION:
+          'Travel with peace of mind knowing that our team is just a call or message away.',
+      },
+    },
+    JUMP_LINK_ITEMS: {
+      TESTIMONIALS: {
+        TITLE: '{0}M+ travellers love us',
+        SUBTITLE_WITH_REVIEWS: 'Read real reviews from real travellers',
+        SUBTITLE_WITHOUT_REVIEWS: 'Delivering best in class experience',
+      },
+      HEADOUT_VERIFIED: {
+        TITLE: 'Why book with us?',
+        SUBTITLE: 'Hassle-free trips. Find out how.',
+      },
+    },
+    NEAR_BY_DESTINATIONS_TITLE: 'Explore more destinations from {0}',
+  },
+  REVIEWS_SECTION: {
+    HEADING: 'From happy customers',
+    HEADING_BOOSTER_TEXT: 'Loved by 35 million+',
+    SECTION_HEADING: 'Millions love heading out with us',
+    SORTING: {
+      MOST_RELEVANT: 'Most relevant',
+      MOST_RECENT: 'Most recent',
+      SORT_BY: 'Sort by',
+    },
+    FILTERING: {
+      GREATER_THAN_4: '4+ stars',
+      EQUAL_TO_3: '3 stars',
+      LESS_THAN_3: '<3 stars',
+      WITH_IMAGES: 'With images',
+    },
+    EMPTY_STATE: {
+      SUB_HEADING: "We couldn't find reviews matching your selected filters.",
+      CTA: 'Show all reviews',
+    },
+    VERIFIED_REVIEW: 'Verified Partner Review',
+    TRUST_VB_TAG: 'Verified booking',
+    REVIEW_SECTION_HEADER: 'What our guests say',
+    SEE_MORE_BUTTON_TEXT: 'Show all {0} reviews',
+    REVIEW_CARD_MODAL_TITLE: 'Review',
+  },
+  FLEXIBLE_CANCELLATION: {
+    TOOLTIP_TEXT:
+      'Get full refund for a small fee if you cancel 24 hours before the experience start time.',
+    KNOW_MORE: 'Know more',
+    FULL_REFUND: 'Full refund',
+    INSTANT: 'Instant',
+    NO_QUESTIONS: 'No questions asked',
+    TNC: 'Terms and conditions',
+    ELIGIBILITY:
+      'Eligibility: The Flexible cancellation plan must be selected and purchased at the time of booking.',
+    CANCELLATION_DEADLINE:
+      'Cancellation deadline: Booking can be cancelled up to 24 hours before the experience start time.',
+    REFUND_AMOUNT:
+      'Refund amount: You’ll receive a refund of the original paid booking amount (minus the cancellation protection charge). ',
+    NON_TRANSFERABLE: 'Non-Transferable: Valid for this booking only.',
+    GUIDELINES:
+      'Guidelines: This plan becomes void if the guest redeems or uses any part of the ticket before cancellation. In such cases, standard cancellation policies apply, and no additional refund will be given.',
+  },
+  AGGREGATED_COUNTRIES:
+    'Guests from <strong>{0}</strong> and <strong>over {1} countries</strong> have loved this experience',
+  TRUST_TOOLTIP_HEADER: 'How do we collect reviews?',
+  TRUST_TOOLTIP_CONTENT:
+    "These ratings include verified reviews from both Headout guests and our trusted partners who operate this experience locally. All reviews come from real travelers who've taken this experience.",
+  REVIEW_SECTION_HEADER: 'What our guests say',
+  TRUST_VB_TAG: 'Verified booking',
+  SNAPSHOTS_SECTION_HEADER: 'Snapshots from our guests',
+  SEE_MORE_RESPONSES: 'See more responses',
+  SEE_ALL_RESPONSES: 'See all responses',
+  HIDE_RESPONSES: 'Hide responses',
+  GUEST_QNA: 'Guest Q&A',
+  ASKED_AND_ANSWERED: 'Asked & answered',
+  ADVICE_FROM_TRAVELLERS: 'Advice from {0} travelers',
+  VIEW_ALL_QNA: 'View all Q/As',
+  EXPLORE_ALL: 'Explore all',
+  EXPLORE_MORE_QUESTIONS: 'Explore more questions',
+  GUESTS: 'guests',
+  RESPONSES: 'responses',
+  ADVICE: 'Advice from {0} travelers',
+  REAL_TIPS:
+    'Real tips from real people who’ve been there, <span>done that!<span>',
+  GENUINE_TIPS: 'Genuine tips from those who’ve been there',
+  ANSWERS_COUNT: '{0} answers',
+  SEE_ALL_QNA: 'See all Q&A',
+  FILTERS: {
+    DATE_SELECTION: 'Date selection',
+    DEALS: 'Deals',
+    ENTRY_TICKETS: 'Entry tickets',
+  },
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Headout Exclusive',
+  },
+  OTHER_EXPERIENCES: 'Other experiences',
+  POI_COLLECTIONS_SECTION: {
+    MAKE_THE_MOST_OF_CITY: 'Make the most of {0}',
+    TOP_EXPERIENCE_PICKS: 'Top experience picks',
+    EXPERIENCES: '{0}+ experiences',
+    CITY_YOUR_WAY: '{0}, your way!',
+    DISCOVER_MORE: 'Discover more',
+  },
+  DROPS: {
+    TITLE: 'Prices drop to just {0}. Daily.',
+    SUBTITLE:
+      '{0} best is now yours at up to 80% off. New drops everyday, only on the Headout app.',
+    TITLE_MOBILE: 'The best of {0} for {1}.',
+    SUBTITLE_MOBILE: 'Grab limited Drops for {0}, on the Headout app.',
+    NEXT_DROP_IN: 'Next Drop in {0}',
+    CTA_BUTTON_MOBILE: 'Grab your Drop',
+    NUDGE_CTA: 'Get the app',
+    ON: 'on',
+    EXIT_INTENT: {
+      DOWNLOAD_APP: 'Download the app',
+      NOT_NOW: "I'll grab the next deal",
+    },
+    CITY_WISE_LABELS: {
+      ROME: {
+        cityName: "Rome's",
+        cityNameMWeb: 'Rome',
+        price: '€10',
+      },
+      PARIS: {
+        cityName: "Paris'",
+        cityNameMWeb: 'Paris',
+        price: '€10',
+      },
+    },
+    RIVE: {
+      ROME: {
+        MWEB_ExperienceName: {
+          names: [
+            'Colosseum, Palatine Hill, Roman Forum',
+            'Big Bus: Rome Hop-On Hop-Off',
+            'St. Peter’s Basilica',
+          ],
+          prices: ['€57.25', '€22.65', '€39.55'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Walk through the Colosseum’s past',
+            'Make pizza like a local',
+            'Marvel at St.Peter’s Basilica',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+      },
+      PARIS: {
+        MWEB_ExperienceName: {
+          names: ['Eiffel Tower', 'Seine Cruise', 'Aquarium de Paris'],
+          prices: ['€69.25', '€65.05', '€57.15'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+        DWEB_ExperienceName: {
+          names: [
+            'Breathtaking views at the Eiffel Tower',
+            'Cruise along the Seine River',
+            'Explore the majestic notre dame',
+          ],
+          prices: ['€10', '€10', '€10'],
+          dropsPrice: ['€10', '€10', '€10'],
+        },
+      },
+    },
+  },
+  COMPANY_DETAILS_CONTENT: {
+    title: 'Company details',
+    LEGAL_INFO: {
+      title: 'Legal information',
+      ENTITY_NAME: 'Legal entity name',
+      ADDRESS: 'Correspondence address',
+      AUTH_REP: 'Authorised representatives',
+      REG_NO: 'Company registration number',
+      TIN: 'Tax identification number(TIN)',
+    },
+    LEGAL_NOTICE: {
+      title: 'Legal notice',
+      content:
+        'All legal correspondence must be directed to our Legal Department via email or post:',
+      EMAIL_ADD: 'Email address',
+      POSTAL_ADD: 'Postal address',
+    },
+    ODR: {
+      title: 'Online Dispute Resolution (ODR)',
+      content:
+        'Headout is neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board. However, in accordance with EU regulations, you may access the European Commission’s Online Dispute Resolution (ODR) platform via the following link:',
+    },
   },
   PRIVACY_POLICY_CONTENT: {
     title: 'Headout: Privacy Policy',
@@ -740,11 +1683,7 @@ const id = {
         content: [
           {
             type: 'paragraph',
-            items: [
-              {
-                text: 'For the purposes of this Privacy Policy:',
-              },
-            ],
+            items: [{ text: 'For the purposes of this Privacy Policy:' }],
           },
           {
             type: 'list',
@@ -779,9 +1718,7 @@ const id = {
               {
                 text: 'User refers to any person who visits/shows interest/avails any Service available on Platform',
               },
-              {
-                text: 'Website refers to www.headout.com',
-              },
+              { text: 'Website refers to www.headout.com' },
               {
                 text: 'You/Your shall mean the User, Service Provider and Creator Partner',
               },
@@ -1355,7 +2292,16 @@ const id = {
       },
     ],
   },
-
+  POWERED_BY: 'powered by',
+  DAY_TRIPS_BANNER: {
+    CHAT_BUBBLE_TEXT: 'See real guest experiences',
+    BANNER_TITLE: "What it's really like",
+    BANNER_DESCRIPTION:
+      'Not just reviews — hear feedback from real guests, meet the guides, and see actual moments from the tour.',
+    BANNER_DESCRIPTION_SHORT:
+      'Not just reviews — Hear from real guests and guides. See what the trip is like.',
+    WATCH_VIDEO: 'Watch video',
+  },
   BOOKING_PAGE_TIME: {
     HOUR: ' jam',
     HOURS: ' jam',
