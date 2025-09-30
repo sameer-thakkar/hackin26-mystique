@@ -3,7 +3,7 @@ import {
   type EItineraryType,
   IItineraryDetails,
   ISection,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import { TController } from 'components/NewVerticals/RouteDetails/Popup/interface';
 import { LanguagesUnion } from 'const/index';
 import { TController as TPdfController } from '../Popup/interface';

@@ -26,6 +26,12 @@ export default defineConfig({
       },
     },
   },
+  conditions: {
+    extend: {
+      mobile: '@media (max-width: 768px)',
+      desktop: '@media (min-width: 768px)',
+    },
+  },
   outdir: 'styled-system',
   importMap: ['@headout/pixie'],
   jsxFramework: 'react',

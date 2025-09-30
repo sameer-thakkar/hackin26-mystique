@@ -1,4 +1,4 @@
-import type { IItinerary } from '@headout/espeon/components/Itinerary';
+import type { IItinerary } from '@headout/espeon/components/ItineraryV2';
 import type { TTabListItemProps } from 'UI/Tabs/interface';
 
 export type TItineraryComponentProps = {

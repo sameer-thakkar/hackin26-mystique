@@ -1,9 +1,10 @@
+import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import {
   IItinerary,
   isCruiseItinerary,
   isValidMap,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
 import TabWrapper from 'components/slices/TabWrapper';
 import { appAtom } from 'store/atoms/app';
@@ -15,8 +16,14 @@ import {
 import { strings } from 'const/strings';
 import AttractionsCarousel from '../AttractionsCarousel';
 import BoardingPoints from '../RouteDetails/BoardingPoint';
-import HOHORouteMap from '../RouteDetails/RouteMap';
 import { Container, Wrapper } from './styles';
+
+const HOHORouteMap = dynamic(
+  () => import('../RouteDetails/RouteMap').then((mod) => mod.default),
+  {
+    ssr: false,
+  }
+);
 
 const SightsCovered = ({
   itineraryData,

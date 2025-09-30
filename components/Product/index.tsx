@@ -11,7 +11,7 @@ import parse from 'url-parse';
 import Button from '@headout/aer/src/atoms/Button';
 import { Button as EeveeButton, Text } from '@headout/eevee';
 import { Modal, type TModalRef } from '@headout/espeon/components/common/Modal';
-import type { IItinerary as TItinerary } from '@headout/espeon/components/Itinerary';
+import type { IItinerary as TItinerary } from '@headout/espeon/components/ItineraryV2';
 import ArrowLeft from '@headout/onix/web/ui/arrow/stroke/ArrowLeft';
 import { trackPageSection } from 'components/CityPageContainer/utils';
 import Conditional from 'components/common/Conditional';

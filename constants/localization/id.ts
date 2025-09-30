@@ -1308,7 +1308,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     HEADING: 'Experience itinerary',
     VIEW_ITINERARY: 'View Itinerary',
     VIEW_DETAILS: 'View details',
-    PASSES_BY_SECTION_HEADING: 'Passes by',
+    PASSES_BY_SECTION_HEADING: 'Passes By',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Highlights',
       NEARBY_THINGS_TO_DO: 'Nearby things to do',
@@ -1336,7 +1336,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
         WITHOUT_MINS: '{0} hours',
       },
       ATTRACTIONS_COUNT: '{0} attractions',
+      ATTRACTION_COUNT: '{0} attraction',
       ACTIVITIES_COUNT: '{0} activities',
+      ACTIVITY_COUNT: '{0} activity',
       TOTAL_DURATION: 'TOTAL DURATION',
       FREQUENCY: 'FREQUENCY',
       FIRST_DEPARTURE: 'FIRST DEPARTURE',
@@ -1361,6 +1363,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     BOARDING_POINTS: 'Boarding points',
     LANDMARKS: 'Landmarks',
     VIEW_IN_MAPS: 'View in maps',
+    VIEW_ALL_STOPS: 'View all stops',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

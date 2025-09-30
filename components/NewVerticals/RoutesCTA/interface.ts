@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { IItinerary } from '@headout/espeon/components/Itinerary';
+import { IItinerary } from '@headout/espeon/components/ItineraryV2';
 import { TController } from '../RouteDetails/Popup/interface';
 
 export type TRoutesCTA = {

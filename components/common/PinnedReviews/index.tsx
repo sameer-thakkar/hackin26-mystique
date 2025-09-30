@@ -47,6 +47,29 @@ export const PinnedReviews = ({
   // Use data from SWR or fallback to initialPinnedReviews
   const pinnedReviews = data || initialPinnedReviews;
 
+  const reviewCardLabels = {
+    MODAL_TITLE: strings.REVIEWS_SECTION.REVIEW_CARD_MODAL_TITLE,
+    VERIFIED_PARTNER_REVIEW: strings.REVIEWS_SECTION.VERIFIED_REVIEW,
+    VERIFIED_BOOKING: strings.REVIEWS_SECTION.TRUST_VB_TAG,
+    X_MORE: strings.ITINERARY.MORE,
+    READ_MORE: strings.READ_MORE,
+    READ_LESS: strings.READ_LESS,
+    REVIEW_LOC: {
+      VIEW_ORIGINAL: strings.REVIEW_LOC.VIEW_ORIGINAL,
+      VIEW_ORIGINAL_NO_LANG: strings.REVIEW_LOC.VIEW_ORIGINAL_NO_LANG,
+      TRANSLATE: strings.REVIEW_LOC.TRANSLATE,
+      LANGUAGES: {
+        EN: strings.REVIEW_LOC.LANGUAGES.EN,
+        ES: strings.REVIEW_LOC.LANGUAGES.ES,
+        FR: strings.REVIEW_LOC.LANGUAGES.FR,
+        IT: strings.REVIEW_LOC.LANGUAGES.IT,
+        DE: strings.REVIEW_LOC.LANGUAGES.DE,
+        PT: strings.REVIEW_LOC.LANGUAGES.PT,
+        NL: strings.REVIEW_LOC.LANGUAGES.NL,
+      },
+    },
+  };
+
   if (
     !isLoading &&
     (pinnedReviews === null ||
@@ -73,16 +96,9 @@ export const PinnedReviews = ({
           reviews={pinnedReviews?.items || []}
           isMobile={isMobile}
           strings={{
-            ...pickByKeys(strings as Record<string, any>, [
-              'REVIEWS_SECTION',
-              'REVIEW_LOC',
-              'ALL_PHOTOS',
-            ]),
-            ...{
-              X_MORE: strings.ITINERARY.MORE,
-              READ_MORE: strings.READ_MORE,
-            },
+            REVIEW_CARD: reviewCardLabels,
             formatString: strings.formatString,
+            ...pickByKeys(strings as Record<string, any>, ['REVIEWS_SECTION']),
           }}
           shouldFocusProductCardOnCTAClick={true}
           lang={lang}

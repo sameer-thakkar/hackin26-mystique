@@ -1,4 +1,4 @@
-import { IItinerary } from '@headout/espeon/components/Itinerary';
+import { IItinerary } from '@headout/espeon/components/ItineraryV2';
 import { TItineraryMap } from '../interface';
 
 export type TNumberedMarkerIcon = {

@@ -17,9 +17,9 @@ import type { Swiper as TSwiper } from 'swiper/types';
 import { Text } from '@headout/eevee';
 import {
   EItineraryType,
-  IItinerary as TItinerary,
+  type IItinerary as TItinerary,
   isItineraryValid,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';

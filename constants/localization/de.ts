@@ -1285,6 +1285,7 @@ const de: TDictionary = {
     HEADING: 'Erlebnisplan',
     VIEW_ITINERARY: 'Plan anzeigen',
     VIEW_DETAILS: 'Details anzeigen',
+    VIEW_ALL_STOPS: 'Alle Haltestellen anzeigen',
     PASSES_BY_SECTION_HEADING: 'Teil der Route',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Highlights',
@@ -1313,7 +1314,9 @@ const de: TDictionary = {
         WITHOUT_MINS: '{0} Std.',
       },
       ATTRACTIONS_COUNT: '{0} Attraktionen',
+      ATTRACTION_COUNT: '{0} Attraktion',
       ACTIVITIES_COUNT: '{0} Aktivitäten',
+      ACTIVITY_COUNT: '{0} Aktivität',
       TOTAL_DURATION: 'Gesamtzeit',
       FREQUENCY: 'HÄUFIGKEIT',
       FIRST_DEPARTURE: 'Erste Abfahrt',

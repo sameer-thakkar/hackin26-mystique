@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { IItinerary } from '@headout/espeon/components/Itinerary';
+import { IItinerary } from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
 import Loader from 'components/common/Loader';
 import { SECTION_NAMES } from 'components/HOHO/constants';

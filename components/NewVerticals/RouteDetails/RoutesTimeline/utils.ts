@@ -1,4 +1,4 @@
-import { generateGoogleMapUrl } from '@headout/espeon/components/Itinerary';
+import { generateGoogleMapPlacesUrl } from '@headout/espeon/components/ItineraryV2';
 import { TStopsList } from './interface';
 
 export const extractStopsList = ({
@@ -14,7 +14,11 @@ export const extractStopsList = ({
           currentObject || {};
         const stopData = {
           stopName: currentObject?.details?.name,
-          stopLocation: generateGoogleMapUrl({ latitude, longitude, placeId }),
+          stopLocation: generateGoogleMapPlacesUrl({
+            latitude,
+            longitude,
+            placeId,
+          }),
           attractionsCovered: currentObject?.childSections?.map(
             (section: Record<string, any>) => section?.details?.name
           ),

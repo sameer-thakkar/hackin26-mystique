@@ -1295,6 +1295,7 @@ const es: TDictionary = {
     HEADING: 'Itinerario de la experiencia',
     VIEW_ITINERARY: 'Ver itinerario',
     VIEW_DETAILS: 'Ver detalles',
+    VIEW_ALL_STOPS: 'Ver todas las paradas',
     PASSES_BY_SECTION_HEADING: 'Pasa por',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Lo más destacado',
@@ -1323,7 +1324,9 @@ const es: TDictionary = {
         WITHOUT_MINS: '{0} h',
       },
       ATTRACTIONS_COUNT: '{0} atracciones',
+      ATTRACTION_COUNT: '{0} atracción',
       ACTIVITIES_COUNT: '{0} actividades',
+      ACTIVITY_COUNT: '{0} actividad',
       TOTAL_DURATION: 'Duración',
       FREQUENCY: 'Frecuencia',
       FIRST_DEPARTURE: 'Primera salida',

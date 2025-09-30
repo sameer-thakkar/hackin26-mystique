@@ -13,7 +13,7 @@ export const StyledMWebEntryPointContainer = styled.button`
   );
   border-radius: 8px;
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 0.75rem;
   right: 0.75rem;
   width: 3.6875rem;
   height: 4.125rem;

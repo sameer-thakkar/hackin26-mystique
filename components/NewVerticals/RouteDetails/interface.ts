@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { IItinerary } from '@headout/espeon/components/Itinerary';
+import { IItinerary } from '@headout/espeon/components/ItineraryV2';
 
 export type TRouteDetails = {
   closePopup: () => void;

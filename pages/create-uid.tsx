@@ -4,6 +4,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Head from 'next/head';
 import { getUID } from '../utils/helper';
 
+// Force SSR instead of static generation to prevent build-time Leaflet imports
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
+
 export default class CreateUID extends React.Component<any, any> {
   constructor(props: any) {
     super(props);

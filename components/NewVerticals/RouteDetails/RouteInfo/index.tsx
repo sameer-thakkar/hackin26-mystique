@@ -1,16 +1,17 @@
 import { useContext, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import type {
   IItinerary,
   ISection,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import {
   ESectionType,
-  generateGoogleMapUrl,
+  generateGoogleMapPlacesUrl,
   getItineraryDuration,
   getItineraryTiming,
   isCruiseItinerary,
   isValidMap,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
 import { SECTION_NAMES } from 'components/HOHO/constants';
 import AttractionsCarousel from 'components/NewVerticals/AttractionsCarousel';
@@ -29,7 +30,6 @@ import ChevronRight from 'assets/chevronRight';
 import { LegendMarker } from 'assets/legendMarker';
 import BoardingPoints from '../BoardingPoint';
 import BoardingPointItem from '../BoardingPoint/BoardingPointItem';
-import HOHORouteMap from '../RouteMap';
 import RoutesTimeline from '../RoutesTimeline';
 import { TRouteInfo } from './interface';
 import {
@@ -40,6 +40,8 @@ import {
   TimelineWrapper,
   Title,
 } from './styles';
+
+const HOHORouteMap = dynamic(() => import('../RouteMap'), { ssr: false });
 
 const RouteInfo = (props: TRouteInfo) => {
   const {
@@ -172,7 +174,7 @@ const RouteInfo = (props: TRouteInfo) => {
         <BoardingPointItem
           stopNumber={1}
           stopName={firstStopName}
-          stopLocation={generateGoogleMapUrl({
+          stopLocation={generateGoogleMapPlacesUrl({
             latitude,
             longitude,
             placeId,

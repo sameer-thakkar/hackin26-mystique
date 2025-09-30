@@ -1,4 +1,4 @@
-import { generateGoogleMapUrl } from '@headout/espeon/components/Itinerary';
+import { generateGoogleMapPlacesUrl } from '@headout/espeon/components/ItineraryV2';
 import { TBoardingPoint } from './types';
 
 export const extractBoardingPoints = ({
@@ -16,7 +16,11 @@ export const extractBoardingPoints = ({
         const boardingPointData = {
           stopNumber: index + 1,
           stopName: currentObject?.details?.name,
-          stopLocation: generateGoogleMapUrl({ latitude, longitude, placeId }),
+          stopLocation: generateGoogleMapPlacesUrl({
+            latitude,
+            longitude,
+            placeId,
+          }),
           hideStop: !latitude || !longitude,
         };
         acc.push(boardingPointData);

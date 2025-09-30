@@ -2,7 +2,7 @@ import {
   ESectionType,
   isCruiseItinerary,
   ISection,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import { trackEvent } from 'utils/analytics';
 import { IGNORED_HEADINGS } from 'const/descriptors';
 import {

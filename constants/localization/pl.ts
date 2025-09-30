@@ -1313,6 +1313,7 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     HEADING: 'Plan wycieczki',
     VIEW_ITINERARY: 'Wyświetl plan podróży',
     VIEW_DETAILS: 'Wyświetl szczegóły',
+    VIEW_ALL_STOPS: 'Wyświetl wszystkie przystanki',
     PASSES_BY_SECTION_HEADING: 'Widok na:',
     SUB_SECTION_HEADING: {
       HIGHLIGHTS: 'Główne punkty',
@@ -1341,7 +1342,9 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
         WITHOUT_MINS: '{0} godz.',
       },
       ATTRACTIONS_COUNT: 'Atrakcje: {0}',
+      ATTRACTION_COUNT: '{0} atrakcja',
       ACTIVITIES_COUNT: 'Aktywności: {0}',
+      ACTIVITY_COUNT: '{0} aktywność',
       TOTAL_DURATION: 'Całkowity czas trwania',
       FREQUENCY: 'Częstotliwość',
       FIRST_DEPARTURE: 'Pierwszy kurs',

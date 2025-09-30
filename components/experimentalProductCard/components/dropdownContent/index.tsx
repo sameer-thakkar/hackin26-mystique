@@ -16,14 +16,13 @@ import { RichTextField } from '@prismicio/types';
 import type {
   IItinerary,
   TItineraryAdditionalTrackingProperties,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import {
   EItineraryType,
   isHOHOItinerary,
   isItineraryValid,
-} from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
-import Itinerary from 'components/common/Itinerary';
 import { PinnedReviews } from 'components/common/PinnedReviews';
 import type { TPinnedReviewsProps } from 'components/common/PinnedReviews/types';
 import SightsCovered from 'components/NewVerticals/SightsCovered';
@@ -71,6 +70,8 @@ const ReviewSection = dynamic(
     /* webpackChunkName: "ReviewSection" */ 'components/Product/components/Popup/ReviewSection/mobile'
   )
 );
+
+const Itinerary = dynamic(() => import('components/common/Itinerary'));
 
 interface TabData {
   heading: string;

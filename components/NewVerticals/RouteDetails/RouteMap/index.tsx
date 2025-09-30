@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import type {
-  TOnClickTrackEvent,
-  TOnZoomTrackEvent,
-} from '@headout/espeon/components/Itinerary';
-import { EItineraryType } from '@headout/espeon/components/Itinerary';
-import { RouteMap } from '@headout/espeon/components/NewVerticals/RouteMap';
+import dynamic from 'next/dynamic';
+import { EItineraryType } from '@headout/espeon/components/ItineraryV2';
 import Conditional from 'components/common/Conditional';
 import Legend from 'components/common/Itinerary/MapView/Map/Legend';
 import useOnScreen from 'hooks/useOnScreen';
@@ -14,6 +10,14 @@ import { strings } from 'const/strings';
 import { TRouteMap } from './interface';
 import Overlay from './Overlay';
 import { MainContainer, MapContainer } from './styles';
+
+const RouteMap = dynamic(
+  () =>
+    import('@headout/espeon/components/NewVerticals/RouteMap').then(
+      (mod) => mod.RouteMap
+    ),
+  { ssr: false }
+);
 
 const HOHORouteMap = (props: TRouteMap) => {
   const {
@@ -56,30 +60,6 @@ const HOHORouteMap = (props: TRouteMap) => {
 
   const { itineraryRoute: { polyline = '' } = {} } = routeMapData || {};
 
-  const handleClickEvent = ({
-    type,
-    stopName,
-    stopNumber,
-  }: TOnClickTrackEvent) => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MAP_CLICKED,
-      [ANALYTICS_PROPERTIES.SECTION]: sectionName,
-      [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
-      [ANALYTICS_PROPERTIES.CLICK_TYPE]: type,
-      [ANALYTICS_PROPERTIES.STOP_NAME]: stopName,
-      [ANALYTICS_PROPERTIES.STOP_NUMBER]: stopNumber,
-    });
-  };
-
-  const handleZoomEvent = ({ zoomType }: TOnZoomTrackEvent) => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MAP_ZOOMED,
-      [ANALYTICS_PROPERTIES.SECTION]: sectionName,
-      [ANALYTICS_PROPERTIES.ITINERARY_NAME]: routeName,
-      [ANALYTICS_PROPERTIES.ZOOM_TYPE]: zoomType,
-    });
-  };
-
   if (!itinerary?.sections?.length)
     return <MapContainer $isTimelineModal={showRoutesTimeline} />;
   return (
@@ -92,8 +72,6 @@ const HOHORouteMap = (props: TRouteMap) => {
       >
         <RouteMap
           itinerary={itinerary}
-          onClickTrackEvent={handleClickEvent}
-          onZoomTrackEvent={handleZoomEvent}
           showStartAsStop={
             itinerary?.type === EItineraryType.Cruise || isSightsCoveredLayout
           }

@@ -2,8 +2,8 @@ import { useRecoilValue } from 'recoil';
 import type {
   TExtendedItineraryProps,
   TItineraryComponentProps,
-} from '@headout/espeon/components/Itinerary';
-import { Itinerary as EspeonItinerary } from '@headout/espeon/components/Itinerary';
+} from '@headout/espeon/components/ItineraryV2';
+import { ItineraryV2 as EspeonItinerary } from '@headout/espeon/components/ItineraryV2';
 import { appAtom } from 'store/atoms/app';
 import { strings } from 'const/strings';
 import Conditional from '../Conditional';
@@ -41,15 +41,9 @@ const Itinerary = (
           showTitle={false}
           disablePathChange={true}
           mwebPagePadding={16}
-          {...(isBot
-            ? {
-                portalContainer: portalContainer as HTMLElement,
-                usePortal: true,
-              }
-            : {
-                usePortal: false,
-                portalContainer: undefined,
-              })}
+          portalContainer={portalContainer as HTMLElement}
+          isBot={isBot}
+          consumer="mystique"
         />
       </div>
     </>
