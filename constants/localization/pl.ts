@@ -30,6 +30,12 @@ const pl: TDictionary = {
     'Headout jest autoryzowanym i zaufanym partnerem obiektu, który oferuje wybór najlepszych aktywności, pozwalających Ci poznać tę atrakcję.',
   BOOK_NOW_CTA: 'Zarezerwuj teraz',
   BUY_TICKETS_CTA: 'Kup bilety',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Tylko na Headout',
+    PREMIUM: 'Premium',
+  },
   CANCELLATION_POLICY: {
     CANCELLABLE:
       'Możesz anulować te bilety do {0} godzin przed rozpoczęciem aktywności, aby uzyskać pełen zwrot.',
@@ -1543,11 +1549,6 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     DATE_SELECTION: 'Date selection',
     DEALS: 'Deals',
     ENTRY_TICKETS: 'Entry tickets',
-  },
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: 'Tylko na Headout',
   },
   OTHER_EXPERIENCES: 'Other experiences',
   POI_COLLECTIONS_SECTION: {

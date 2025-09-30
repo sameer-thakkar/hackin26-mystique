@@ -28,6 +28,12 @@ const sv: TDictionary = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout är en auktoriserad och pålitlig partner till resmålet och erbjuder ett urval av de bästa sätten att uppleva sevärdheterna på.',
   BOOK_NOW_CTA: 'Boka nu',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Endast hos Headout',
+    PREMIUM: 'Premium',
+  },
   BUY_TICKETS_CTA: 'Köp biljetter',
   CANCELLATION_POLICY: {
     CANCELLABLE:
@@ -1537,11 +1543,6 @@ Alla termer med versaler som används ovan definieras i integritetspolicyn. Bes�
     DATE_SELECTION: 'Date selection',
     DEALS: 'Deals',
     ENTRY_TICKETS: 'Entry tickets',
-  },
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: 'Endast hos Headout',
   },
   OTHER_EXPERIENCES: 'Other experiences',
   POI_COLLECTIONS_SECTION: {

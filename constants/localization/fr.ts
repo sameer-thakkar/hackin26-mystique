@@ -1531,6 +1531,7 @@ const fr: TDictionary = {
     MOST_LOVED: 'Coup de cœur',
     SPECIAL_DEAL: 'Offre spéciale',
     HEADOUT_EXCLUSIVE: 'Exclusivité Headout',
+    PREMIUM: 'Premium',
   },
   OTHER_EXPERIENCES: 'Autres expériences',
   POI_COLLECTIONS_SECTION: {

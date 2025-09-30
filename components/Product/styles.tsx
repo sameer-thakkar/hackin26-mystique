@@ -3081,19 +3081,22 @@ export const BoosterText = styled.p<{
   $iconHeight: number;
   $textColor: string;
   $iconStyles: Record<string, number>;
+  $lineHeight?: number;
+  $padding?: string;
 }>`
   background-color: ${({ $theme }) => $theme};
   position: relative;
   font-family: ${HALYARD.FONT_STACK};
   font-size: 15px;
   font-weight: 500;
-  line-height: 20px;
+  line-height: ${({ $lineHeight }) => `${$lineHeight}px ` || '20px'};
   letter-spacing: 0em;
   text-align: left;
   color: ${({ $textColor }) => $textColor};
   margin: 0;
 
-  padding: 0.125rem 0.375rem 0.125rem 0.5rem;
+  padding: ${({ $padding }) =>
+    $padding ? $padding : '0.125rem 0.375rem 0.125rem 0.5rem'};
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 

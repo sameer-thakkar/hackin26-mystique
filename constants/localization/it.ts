@@ -1531,6 +1531,7 @@ const it: TDictionary = {
     ENTRY_TICKETS: "Biglietti d'ingresso",
   },
   BOOSTERS: {
+    PREMIUM: 'Premium',
     MOST_LOVED: 'Esperienze più amate',
     SPECIAL_DEAL: 'Offerta speciale',
     HEADOUT_EXCLUSIVE: 'Esclusiva Headout',

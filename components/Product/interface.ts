@@ -142,6 +142,7 @@ export enum BoosterType {
   MOST_LOVED = 'Most loved',
   SPECIAL_DEAL = 'Special deal',
   HEADOUT_EXCLUSIVE = 'Headout Exclusive',
+  PREMIUM = 'Premium',
 }
 export type TBoosterProps = {
   type: BoosterType;
@@ -153,4 +154,29 @@ export type TDiscountTagProps = {
   discount: string | number;
   showAngledTag?: boolean;
   shouldPointLeft?: boolean;
+};
+
+export type TBoosterInfo = {
+  title: string;
+  icon: React.ReactElement;
+  theme: string;
+  transform: string;
+  borderTheme: string;
+  iconHeight: number;
+  mobileStyles: {
+    top: number;
+    left: number;
+  };
+  textColor: string;
+  rotateDeg: number;
+  iconStyles: {
+    top: number;
+    left: number;
+  };
+  boosterStyles: {
+    top: number;
+    left: number;
+  };
+  lineHeight?: number;
+  padding?: string;
 };

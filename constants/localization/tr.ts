@@ -28,6 +28,12 @@ const tr: TDictionary = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout, bu turistik mekanın tadını çıkarmanız için en iyi deneyimlerden oluşan bir seçki sunan tesisin yetkili ve güvenilir bir ortağıdır.',
   BOOK_NOW_CTA: 'Hemen rezervasyon yapın',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: "Sadece Headout'ta",
+    PREMIUM: 'Premium',
+  },
   BUY_TICKETS_CTA: 'Bilet Satın Al',
   CANCELLATION_POLICY: {
     CANCELLABLE:
@@ -1542,11 +1548,6 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     DATE_SELECTION: 'Date selection',
     DEALS: 'Deals',
     ENTRY_TICKETS: 'Entry tickets',
-  },
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: "Sadece Headout'ta",
   },
   OTHER_EXPERIENCES: 'Other experiences',
   POI_COLLECTIONS_SECTION: {

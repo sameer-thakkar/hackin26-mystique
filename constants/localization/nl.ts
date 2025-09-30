@@ -1515,6 +1515,7 @@ const nl: TDictionary = {
     MOST_LOVED: 'Sterk aanbevolen',
     SPECIAL_DEAL: 'Speciale deal',
     HEADOUT_EXCLUSIVE: 'Exclusief bij Headout',
+    PREMIUM: 'Premium',
   },
   OTHER_EXPERIENCES: 'Andere ervaringen',
   POI_COLLECTIONS_SECTION: {

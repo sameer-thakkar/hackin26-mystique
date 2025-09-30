@@ -28,6 +28,12 @@ const ru: TDictionary = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout — авторизованный и надежный партнер локации. Мы подбираем уникальные впечатления, чтобы вы могли максимально насладиться этой достопримечательностью.',
   BOOK_NOW_CTA: 'Забронировать сейчас',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Эксклюзивно на Headout',
+    PREMIUM: 'Premium',
+  },
   BUY_TICKETS_CTA: 'Купить билеты',
   CANCELLATION_POLICY: {
     CANCELLABLE:
@@ -1545,11 +1551,6 @@ const ru: TDictionary = {
     DATE_SELECTION: 'Date selection',
     DEALS: 'Deals',
     ENTRY_TICKETS: 'Entry tickets',
-  },
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: 'Эксклюзивно на Headout',
   },
   OTHER_EXPERIENCES: 'Other experiences',
   POI_COLLECTIONS_SECTION: {

@@ -2490,6 +2490,10 @@ export const BOOSTER_EXPERIMENT_UIDS = new Map([
     'www.flamenco-show-tickets.com.seville',
     new Map([[BoosterType.MUST_DO_EXP, [26549]]]),
   ],
+  [
+    'www.flamenco-show-tickets.com.barcelona',
+    new Map([[BoosterType.PREMIUM, [9373]]]),
+  ],
 ]);
 
 export const TEMP_HARDCODED_PRODUCT = {

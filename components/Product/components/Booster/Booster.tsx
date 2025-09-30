@@ -24,6 +24,8 @@ const Booster = ({
     rotateDeg,
     iconStyles,
     boosterStyles,
+    lineHeight,
+    padding,
   } = getBoosterInfo(type, shouldAnimateBooster);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -56,6 +58,8 @@ const Booster = ({
         $iconHeight={iconHeight}
         $textColor={textColor}
         $iconStyles={iconStyles}
+        $lineHeight={lineHeight || 20}
+        $padding={padding}
       >
         {icon}
         {title}

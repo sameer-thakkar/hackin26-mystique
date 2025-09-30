@@ -1,12 +1,12 @@
-import { BoosterType } from 'components/Product/interface';
+import { BoosterType, TBoosterInfo } from 'components/Product/interface';
 import { strings } from 'const/strings';
-import { Diamond, Spark, YellowDiamond } from 'assets/boosters';
+import { CrownIconSVG, Diamond, Spark, YellowDiamond } from 'assets/boosters';
 import { BoosterRiveIcon } from './BoosterRiveIcon';
 
 export const getBoosterInfo = (
   boosterType: BoosterType,
   shouldAnimateBooster?: boolean
-) => {
+): TBoosterInfo => {
   const BOOSTER_INFO = {
     [BoosterType.BESTSELLER]: {
       title: strings.HOHO.BESTSELLER,
@@ -154,6 +154,30 @@ export const getBoosterInfo = (
       boosterStyles: {
         top: 0.75,
         left: 1.8,
+      },
+    },
+    [BoosterType.PREMIUM]: {
+      title: strings.BOOSTERS.PREMIUM,
+      icon: <CrownIconSVG />,
+      theme: '#6321AE',
+      transform: 'translate(-20px,-2.5px)',
+      borderTheme: 'none',
+      iconHeight: 26,
+      mobileStyles: {
+        top: 8,
+        left: 28,
+      },
+      padding: '1px 6px 3px 8px',
+      lineHeight: 18,
+      textColor: '#fff',
+      rotateDeg: 0,
+      iconStyles: {
+        top: 1.5,
+        left: 0,
+      },
+      boosterStyles: {
+        top: 2.125,
+        left: 3.25,
       },
     },
   };

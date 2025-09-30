@@ -1547,6 +1547,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     MOST_LOVED: 'Most loved',
     SPECIAL_DEAL: 'Special deal',
     HEADOUT_EXCLUSIVE: 'Headout Exclusive',
+    PREMIUM: 'Premium',
   },
 
   OTHER_EXPERIENCES: 'Other experiences',

@@ -29,6 +29,12 @@ const ro: TDictionary = {
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout este un partener autorizat și de încredere al locației, oferind o selecție curatorială a celor mai bune experiențe pentru a vă bucura de această atracție.',
   BOOK_NOW_CTA: 'Rezervați acum',
+  BOOSTERS: {
+    MOST_LOVED: 'Most loved',
+    SPECIAL_DEAL: 'Special deal',
+    HEADOUT_EXCLUSIVE: 'Exclusiv Headout',
+    PREMIUM: 'Premium',
+  },
   BUY_TICKETS_CTA: 'Cumpărați bilete',
   CANCELLATION_POLICY: {
     CANCELLABLE:
@@ -1546,11 +1552,6 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     DATE_SELECTION: 'Date selection',
     DEALS: 'Deals',
     ENTRY_TICKETS: 'Entry tickets',
-  },
-  BOOSTERS: {
-    MOST_LOVED: 'Most loved',
-    SPECIAL_DEAL: 'Special deal',
-    HEADOUT_EXCLUSIVE: 'Exclusiv Headout',
   },
   OTHER_EXPERIENCES: 'Other experiences',
   POI_COLLECTIONS_SECTION: {
