@@ -126,7 +126,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [SEATMAP_EXPERIMENT]: new Experiment(
     SEATMAP_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
+    [0, 100]
   ),
   [SIMILARITY_BASED_RANKING_EXPERIMENT]: new Experiment(
     SIMILARITY_BASED_RANKING_EXPERIMENT,
