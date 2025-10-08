@@ -28,6 +28,7 @@ import {
   ANALYTICS_PROPERTIES,
   COLLECTION_ID_THEATRE_NAMES_MAP,
   RESOURCE_ASSET_TYPE,
+  TEMP_HARDCODED_PRODUCT,
 } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -42,7 +43,7 @@ const EntertainmentMBLandingPageV2 = ({
   directTgid,
   collectionId,
 }: TLandingPageV2Props) => {
-  const { lang } = useContext(MBContext);
+  const { uid, lang } = useContext(MBContext);
 
   const { categories } = categoryProps;
   const categoriesToRender: Array<Record<string, any>> =
@@ -58,6 +59,12 @@ const EntertainmentMBLandingPageV2 = ({
   if (directTgid) {
     topShowsTgids.unshift(directTgid);
   }
+
+  //temporary fix for hardcoded product, will be reverted
+  if (TEMP_HARDCODED_PRODUCT.has(uid)) {
+    topShowsTgids.unshift(TEMP_HARDCODED_PRODUCT.get(uid)?.TGID);
+  }
+
   const duplicateTgids: Record<number, boolean> = {};
 
   const topShows: Array<Record<string, any>> = [];

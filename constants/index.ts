@@ -2496,12 +2496,35 @@ export const BOOSTER_EXPERIMENT_UIDS = new Map([
   ],
 ]);
 
-export const TEMP_HARDCODED_PRODUCT = {
-  UID: 'www.broadway-show-tickets.com.home',
-  TGID: 30704,
-  COLLECTION_ID: 24,
-  SUBCAT_ID: 1036,
-};
+export const TEMP_HARDCODED_PRODUCT = new Map([
+  [
+    'www.broadway-show-tickets.com',
+    {
+      UID: 'www.broadway-show-tickets.com',
+      TGID: 30704,
+      COLLECTION_ID: 24,
+      SUBCAT_ID: 1036,
+    },
+  ],
+  [
+    'www.broadway-show-tickets.com.home',
+    {
+      UID: 'www.broadway-show-tickets.com.home',
+      TGID: 2505,
+      COLLECTION_ID: 24,
+      SUBCAT_ID: 1036,
+    },
+  ],
+  [
+    'www.vegas-show-tickets.com',
+    {
+      UID: 'www.vegas-show-tickets.com',
+      TGID: 36495,
+      CAT_ID: 7,
+      SUBCAT_ID: 1104,
+    },
+  ],
+]);
 
 export const INVALID_DATE = 'Invalid Date';
 

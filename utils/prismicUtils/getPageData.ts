@@ -1067,8 +1067,8 @@ export const getPageData = async ({
     tgidsArray = [...tgidsArray];
 
     //temporary fix for hardcoded product, will be reverted
-    if (uid === TEMP_HARDCODED_PRODUCT.UID) {
-      tgidsArray.push(TEMP_HARDCODED_PRODUCT.TGID);
+    if (TEMP_HARDCODED_PRODUCT.has(uid)) {
+      tgidsArray.push(TEMP_HARDCODED_PRODUCT.get(uid)?.TGID);
     }
 
     const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
@@ -1202,17 +1202,29 @@ export const getPageData = async ({
         const { hidden } = tour ?? {};
         //temporary fix for hardcoded product, will be reverted
         if (
-          uid === TEMP_HARDCODED_PRODUCT.UID &&
-          tour?.id === TEMP_HARDCODED_PRODUCT.TGID
+          TEMP_HARDCODED_PRODUCT.has(uid) &&
+          tour?.id === TEMP_HARDCODED_PRODUCT.get(uid)?.TGID
         )
           return true;
+
+        if (
+          uid ===
+            TEMP_HARDCODED_PRODUCT.get('www.broadway-show-tickets.com')?.UID &&
+          tour?.id ===
+            TEMP_HARDCODED_PRODUCT.get('www.broadway-show-tickets.com.home')
+              ?.TGID
+        ) {
+          // make sure tgid 2505 doesnt show up on broadway-show-tickets.com
+          return false;
+        }
+
         return !hidden;
       })
       ?.reduce(async (accum: {}, tour: Record<string, any>) => {
         //temporary fix for hardcoded product, will be reverted. god forgive me for this garbage i needed to write
         if (
-          uid === TEMP_HARDCODED_PRODUCT.UID &&
-          tour?.id === TEMP_HARDCODED_PRODUCT.TGID
+          TEMP_HARDCODED_PRODUCT.has(uid) &&
+          tour?.id === TEMP_HARDCODED_PRODUCT.get(uid)?.TGID
         ) {
           const {
             microBrandsDescriptor,
@@ -1337,7 +1349,7 @@ export const getPageData = async ({
           const mediaData = await fetchMediaResource({
             language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
             resourceType: 'MB_EXPERIENCE',
-            entityIds: String(TEMP_HARDCODED_PRODUCT.TGID),
+            entityIds: String(TEMP_HARDCODED_PRODUCT.get(uid)?.TGID),
           });
           mediaData?.resourceEntityMedias?.forEach((resource) => {
             const verticalImageData = resource.medias.find(
@@ -1367,7 +1379,10 @@ export const getPageData = async ({
               graphQuery: allShowPagesGq,
               predicates: [
                 predicate.not(`document.tags`, [PRISMIC_DEV_TAG]),
-                predicate.at('my.showpage.tgid', TEMP_HARDCODED_PRODUCT.TGID),
+                predicate.at(
+                  'my.showpage.tgid',
+                  TEMP_HARDCODED_PRODUCT.get(uid)?.TGID as number
+                ),
               ],
             });
           } catch (error) {
@@ -1542,27 +1557,68 @@ export const getPageData = async ({
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
 
     //temporary fix for hardcoded product, will be reverted. god forgive me for this garbage i needed to write
-    if (uid === TEMP_HARDCODED_PRODUCT.UID) {
+    if (TEMP_HARDCODED_PRODUCT.has(uid)) {
       scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap = {
         ...scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap,
         ...tourGroupData,
       };
-      scorpioAllTourGroupData.simplifiedCategoryTourListData[
-        TEMP_HARDCODED_PRODUCT.COLLECTION_ID
-      ] = [
-        TEMP_HARDCODED_PRODUCT.TGID,
-        ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
-          TEMP_HARDCODED_PRODUCT.COLLECTION_ID
-        ],
-      ];
-      scorpioAllTourGroupData.simplifiedCategoryTourListData[
-        TEMP_HARDCODED_PRODUCT.SUBCAT_ID
-      ] = [
-        TEMP_HARDCODED_PRODUCT.TGID,
-        ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
-          TEMP_HARDCODED_PRODUCT.SUBCAT_ID
-        ],
-      ];
+
+      const hardcodedProductCollectionId =
+        TEMP_HARDCODED_PRODUCT.get(uid)?.COLLECTION_ID;
+      const hardcodedProductCatId = TEMP_HARDCODED_PRODUCT.get(uid)?.CAT_ID;
+      const hardcodedProductSubCatId =
+        TEMP_HARDCODED_PRODUCT.get(uid)?.SUBCAT_ID;
+
+      if (
+        hardcodedProductCollectionId &&
+        Object.hasOwn(
+          scorpioAllTourGroupData.simplifiedCategoryTourListData,
+          hardcodedProductCollectionId
+        )
+      ) {
+        scorpioAllTourGroupData.simplifiedCategoryTourListData[
+          hardcodedProductCollectionId
+        ] = [
+          TEMP_HARDCODED_PRODUCT.get(uid)?.TGID,
+          ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
+            hardcodedProductCollectionId
+          ],
+        ];
+      }
+
+      if (
+        hardcodedProductCatId &&
+        Object.hasOwn(
+          scorpioAllTourGroupData.simplifiedCategoryTourListData,
+          hardcodedProductCatId
+        )
+      ) {
+        scorpioAllTourGroupData.simplifiedCategoryTourListData[
+          hardcodedProductCatId
+        ] = [
+          TEMP_HARDCODED_PRODUCT.get(uid)?.TGID,
+          ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
+            hardcodedProductCatId
+          ],
+        ];
+      }
+
+      if (
+        hardcodedProductSubCatId &&
+        Object.hasOwn(
+          scorpioAllTourGroupData.simplifiedCategoryTourListData,
+          hardcodedProductSubCatId
+        )
+      ) {
+        scorpioAllTourGroupData.simplifiedCategoryTourListData[
+          hardcodedProductSubCatId
+        ] = [
+          TEMP_HARDCODED_PRODUCT.get(uid)?.TGID,
+          ...scorpioAllTourGroupData.simplifiedCategoryTourListData[
+            hardcodedProductSubCatId
+          ],
+        ];
+      }
     }
 
     return {

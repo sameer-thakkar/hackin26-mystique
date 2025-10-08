@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SwiperProps } from 'swiper/react';
 import type { Swiper as TSwiper } from 'swiper/types';
@@ -15,9 +15,14 @@ import {
   TitleRow,
 } from 'components/MicrositeV2/EntertainmentMBLandingPageV2/CategoryCarouselsSection/styles';
 import VerticalProductCard from 'components/MicrositeV2/EntertainmentMBLandingPageV2/ProductCards/VerticalProductCard';
+import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  TEMP_HARDCODED_PRODUCT,
+} from 'const/index';
 import { strings } from 'const/strings';
 import LttChevronLeft from 'assets/lttChevronLeft';
 import LttChevronRight from 'assets/lttChevronRight';
@@ -33,9 +38,22 @@ export const CategoryCarouselSwiper = ({
   allTours,
   index,
 }: TCategoryCarouselSwiperProps) => {
-  const sliderList = isMobile
+  const { uid } = useContext(MBContext);
+
+  let sliderList = isMobile
     ? category.ranking.popularity.slice(0, 10)
     : category.ranking.popularity;
+
+  //temporary fix for hardcoded product, will be reverted
+  if (
+    TEMP_HARDCODED_PRODUCT.has(uid) &&
+    category.id === TEMP_HARDCODED_PRODUCT.get(uid)?.SUBCAT_ID
+  ) {
+    const hardcodedTgid = TEMP_HARDCODED_PRODUCT.get(uid)?.TGID;
+    sliderList = sliderList.filter((tgid: number) => tgid !== hardcodedTgid);
+    sliderList.unshift(hardcodedTgid);
+  }
+
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [slidesPerView, setSlidesPerView] = useState(6);
