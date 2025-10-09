@@ -73,7 +73,7 @@ const ReviewUI: React.FC<React.PropsWithChildren<TReviewUIProps>> = ({
         const reviewDate = review_date;
         const formattedDate = getIntlDate({
           lang,
-          date: reviewDate.toString(),
+          date: reviewDate,
           dateFormat: 'MMM-YYYY',
         });
 

@@ -832,6 +832,7 @@ interface IFetchTourGroupsByCollectionProps extends CommonApiProps {
   limit?: string;
   primarySubCategoryID?: NumberField | string;
   useAutomatedRankings?: boolean;
+  includeHidden?: boolean;
 }
 
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
@@ -890,6 +891,7 @@ export const fetchTourGroupsByCollection = async ({
   cookies,
   primarySubCategoryID,
   useAutomatedRankings = false,
+  includeHidden = false,
 }: IFetchTourGroupsByCollectionProps) => {
   const params = {
     language,
@@ -905,6 +907,9 @@ export const fetchTourGroupsByCollection = async ({
     }),
     ...(useAutomatedRankings && {
       'src-version': 'v3',
+    }),
+    ...(includeHidden && {
+      'include-hidden': String(includeHidden),
     }),
   };
 

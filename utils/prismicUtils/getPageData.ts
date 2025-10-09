@@ -1214,7 +1214,7 @@ export const getPageData = async ({
             TEMP_HARDCODED_PRODUCT.get('www.broadway-show-tickets.com.home')
               ?.TGID
         ) {
-          // make sure tgid 2505 doesnt show up on broadway-show-tickets.com
+          // ensures tgid 2505 doesnt show up on broadway-show-tickets.com
           return false;
         }
 
@@ -1558,6 +1558,24 @@ export const getPageData = async ({
 
     //temporary fix for hardcoded product, will be reverted. god forgive me for this garbage i needed to write
     if (TEMP_HARDCODED_PRODUCT.has(uid)) {
+      // ensures tgid 2505 doesnt show up on broadway-show-tickets.com
+      const broadwayHomeTGID = TEMP_HARDCODED_PRODUCT.get(
+        'www.broadway-show-tickets.com.home'
+      )?.TGID as number;
+
+      if (
+        uid ===
+          TEMP_HARDCODED_PRODUCT.get('www.broadway-show-tickets.com')?.UID &&
+        Object.hasOwn(
+          scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap,
+          broadwayHomeTGID
+        )
+      ) {
+        scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap[
+          broadwayHomeTGID
+        ] = {};
+      }
+
       scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap = {
         ...scorpioAllTourGroupData.simplifiedCategoryTourListData.tourGroupMap,
         ...tourGroupData,

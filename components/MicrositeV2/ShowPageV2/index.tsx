@@ -43,7 +43,7 @@ import {
 } from 'utils/analytics';
 import { fetchTourGroupsByCollection } from 'utils/apiUtils';
 import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
-import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { getDomainFromUid, getLogoRedirectionUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -56,6 +56,7 @@ import {
   CTA_TYPE,
   NEWS_PAGE_SECTIONS,
   PAGETYPE,
+  TEMP_HARDCODED_PRODUCT,
 } from 'const/index';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
@@ -224,6 +225,8 @@ const LttShowPageV2 = ({
 
   const LTT_TAG_PAGE_MAP = getTagPageMap(uid);
 
+  const parentPageUid = getDomainFromUid(uid) || '';
+
   useEffect(() => {
     const fetchCollection = async () => {
       const response =
@@ -232,14 +235,36 @@ const LttShowPageV2 = ({
           limit: String(allShowPagesDocuments?.length ?? '600'),
           currency: currency ?? '',
           language: currentLanguage,
+          includeHidden: TEMP_HARDCODED_PRODUCT.has(parentPageUid), //temporary fix for hardcoded product, will be reverted
         })) ?? {};
+
       const { pageData } = response;
-      const allTours = pageData?.items?.map((tour: Record<string, any>) => ({
-        ...tour,
-        showPageUid: allShowPagesDocuments?.find(
-          (doc: Record<string, any>) => doc.data.tgid === tour.id
-        )?.uid,
-      }));
+
+      const allTours = pageData?.items
+        ?.filter((tour: Record<string, any>) => {
+          //temporary fix for hardcoded product, entire filter() block will be reverted
+          const { hidden, id: tourId } = tour ?? {};
+
+          if (tourId === tgid) return true;
+
+          // for hardcoded products, exclude tgid 2505 from broadway-show-tickets.com
+          if (
+            TEMP_HARDCODED_PRODUCT.has(parentPageUid) &&
+            tourId ===
+              TEMP_HARDCODED_PRODUCT.get('www.broadway-show-tickets.com.home')
+                ?.TGID
+          ) {
+            return false;
+          }
+
+          return !hidden;
+        })
+        ?.map((tour: Record<string, any>) => ({
+          ...tour,
+          showPageUid: allShowPagesDocuments?.find(
+            (doc: Record<string, any>) => doc.data.tgid === tour.id
+          )?.uid,
+        }));
 
       setAllTours(allTours ?? []);
     };

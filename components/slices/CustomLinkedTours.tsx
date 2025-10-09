@@ -17,6 +17,7 @@ import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { DESIGN, SLICE_TYPES } from 'const/index';
+import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import StarFull from 'assets/starFull';
 
@@ -224,7 +225,7 @@ const CustomLinkedTours = ({
                     <StarFull fillColor={COLORS.TEXT.CANDY_1} />{' '}
                     <span>
                       {averageRating}{' '}
-                      {reviewCount ? `| ${reviewCount} reviews` : ''}
+                      {reviewCount ? `| ${reviewCount} ${strings.REVIEWS}` : ''}
                     </span>
                   </Booster>
                 </Conditional>
