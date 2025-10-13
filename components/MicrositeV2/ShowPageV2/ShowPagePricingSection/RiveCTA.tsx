@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alignment, Fit, Layout } from '@rive-app/react-canvas';
 import Conditional from 'components/common/Conditional';
 import { useRive } from 'hooks/useRive';
-import { RIV_CTA_LTT_BASE, RIVE_CONTENT_TYPE } from 'const/index';
+import { RIV_CTA_LTT_BASE } from 'const/index';
 import { TRiveCTAProps } from './interface';
 import { riveComponentStyles, RiveCtaWrapper } from './style';
 
@@ -36,9 +36,12 @@ const RiveShowPageCTA = ({
   useEffect(() => {
     const determineRiveSource = async () => {
       for (const src of sources) {
+        const contentType = await checkFileResponse(src);
+
+        //eliminates non-existent and default imgix poster images
         if (
           src === COMMON_RIVE_PATH ||
-          (await checkFileResponse(src)) === RIVE_CONTENT_TYPE
+          (contentType !== null && !contentType.startsWith('image/'))
         ) {
           setRiveSrc(src);
           break;
