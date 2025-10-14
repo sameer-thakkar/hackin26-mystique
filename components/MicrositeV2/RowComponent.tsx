@@ -102,6 +102,8 @@ export const RowComponent = (props: any) => {
       multiVariant,
       productImage,
       images,
+      averageRating,
+      reviewCount,
     } = currTour;
     return (
       <V3DetailedProductCard
@@ -137,6 +139,10 @@ export const RowComponent = (props: any) => {
         isPopUpOnly={!isMobile && showPopup}
         isModifiedProductCard={true}
         onPopupClosed={closeDescription}
+        reviewsDetails={{
+          averageRating,
+          reviewsCount: reviewCount,
+        }}
       />
     );
   };
