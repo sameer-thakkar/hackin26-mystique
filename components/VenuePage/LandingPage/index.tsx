@@ -4,6 +4,7 @@ import VenueLandingPageBanner from 'components/MicrositeV2/CategoryPageBanner';
 import VerticalProductCardSlide from 'components/NewsPage/components/VerticalProductCardSlide';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
+import { groupSlices } from 'utils/helper';
 import { THEATRE_LANDING_PAGE_ILLUSTRATION } from 'const/index';
 import BrowseByCategories from '../components/BrowseCategories';
 import TheatreGrid from '../components/TheatreGrid';
@@ -65,7 +66,7 @@ const VenueLandingPage: React.FC<
         <ProductsContextProvider ready={false}>
           <InteractionContextProvider>
             <LongForm
-              content={contentFrameworkData?.data?.body ?? []}
+              content={groupSlices(contentFrameworkData?.data?.body ?? [])}
               isMobile={isMobile}
               isVenuePage
             />
