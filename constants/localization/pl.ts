@@ -681,7 +681,7 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     YOUR_PICK: 'Twój wybór',
     BROWSE_BY_CATEGORIES: 'Przeglądaj według kategorii',
     TOP_WEST_END_SHOWS: 'Popularne spektakle na West Endzie',
-    TOP_THEATRE_SHOWS: 'Top {0} shows',
+    TOP_THEATRE_SHOWS: 'Popularne spektakle na {0}',
     TOP_SHOWS: 'Popularne spektakle',
     SEE_MORE_SHOWS: 'Ver mais {0} espetáculos',
     LAST_MINUTE_TICKETS: 'Bilety last minute',

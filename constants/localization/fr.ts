@@ -230,7 +230,7 @@ const fr: TDictionary = {
   FREE_CANCELLATION: 'Annulation gratuite',
   FREE_CANCELLATION_SUBTEXT:
     "Nous savons que les plans changent. Annulez jusqu'à 72 h à l'avance.",
-  FROM: 'Depuis',
+  FROM: 'à partir de',
   GET_CASHBACK: 'Recevez un cashback de {0} %',
   GROUP_TICKETS: 'Billets de groupe',
   HAPPY_CUSTOMER: {
@@ -1248,7 +1248,7 @@ const fr: TDictionary = {
     ALSO_KNOWN_AS: 'Aussi connu comme',
     FOUNDED_ON: 'Fondé en',
     FOUNDED_BY: 'Fondé par',
-    FROM: 'Depuis',
+    FROM: 'à partir de',
     CLOSED_TODAY: "Fermé aujourd'hui",
     TODAY: "Aujourd'hui",
     CLOSED: 'Fermé',
