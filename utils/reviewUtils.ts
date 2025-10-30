@@ -1,6 +1,5 @@
 import { hashCode } from 'utils/integerUtils';
-import { FLAGS_FOLDER_URL } from 'const/index';
-import { strings } from 'const/strings';
+import { FLAGS_FOLDER_URL, HEADOUT_REVIEWER_TAG } from 'const/index';
 
 export const getRandomReviewerImage = (
   nonCustomerName: string = ''
@@ -30,8 +29,5 @@ export const getFirstName = (fullName: string) => {
 };
 
 export const isDefaultReviewerName = (name: string) => {
-  return (
-    name?.toLowerCase().trim() ===
-    strings.DEFAULT_REVIEWER_NAME?.toLowerCase().trim()
-  );
+  return name?.toLowerCase().trim().includes(HEADOUT_REVIEWER_TAG);
 };
