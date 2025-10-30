@@ -44,12 +44,12 @@ import {
 } from 'const/footer';
 import { SIDEBAR_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
+import { Blimp } from 'assets/blimp';
 import MailIcon from 'assets/footerMail';
 import MessageIcon from 'assets/footerMessage';
 import PhoneIcon from 'assets/footerPhone';
 import OutlinedInfoIcon from 'assets/outlinedInfoIcon';
 import PoweredByHeadout from 'assets/poweredByHeadout';
-import WhiteBlip from 'assets/whiteBlip';
 
 const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
   logoURL,
@@ -365,7 +365,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                 <div className="footer-chin">
                   <div className="white-line" />
                   <div className="super-brand-logo">
-                    {WhiteBlip}
+                    <Blimp className="super-brand-logo-blimp" />
                     <span className="address">{`© 2014-${new Date().getFullYear()} ${HEADOUT_ADDRESS}`}</span>
                   </div>
                   <SocialLinks

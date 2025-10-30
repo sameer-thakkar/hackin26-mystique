@@ -43,6 +43,21 @@ const internalRewrites = [
   },
 ];
 
+const externalRewrites = [
+  {
+    source: '/group-tickets',
+    has: [
+      {
+        type: 'host',
+        value: 'london-theater-tickets.com',
+      },
+    ],
+    destination: 'https://authentic-photos-977977.framer.app/',
+  },
+];
+
+const rewriteRules = [...internalRewrites, ...externalRewrites];
+
 const withTM = moduleTranspiler([
   '@headout/aer',
   '@headout/eevee',
@@ -123,7 +138,7 @@ const nextConfig = {
     return config;
   },
   rewrites: async () => {
-    return internalRewrites;
+    return rewriteRules;
   },
   redirects: async () => {
     return internalRedirects;

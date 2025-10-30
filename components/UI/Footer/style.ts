@@ -58,12 +58,9 @@ export const FooterLegalWrapper = styled.div<{
         color: ${({ theme, isLight }) =>
           isLight ? theme.footer.secondaryColor : theme.footer.primaryColor};
       }
-      svg {
-        height: 1rem;
-      }
-      svg path {
-        fill: ${({ theme, isLight }) =>
-          isLight ? theme.footer.secondaryColor : theme.footer.primaryColor};
+      .super-brand-logo-blimp {
+        height: 0.8rem;
+        width: fit-content;
       }
     }
     .social-links {
@@ -92,8 +89,9 @@ export const FooterLegalWrapper = styled.div<{
         align-items: flex-start;
         justify-content: flex-start;
         gap: 1rem;
-        svg {
-          height: 1rem;
+        .super-brand-logo-blimp {
+          height: 0.8rem;
+          width: fit-content;
         }
       }
       .social-links {
