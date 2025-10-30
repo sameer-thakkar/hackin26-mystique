@@ -45,11 +45,11 @@ const internalRewrites = [
 
 const externalRewrites = [
   {
-    source: '/group-tickets',
+    source: '/group-tickets/',
     has: [
       {
         type: 'host',
-        value: 'london-theater-tickets.com',
+        value: 'www.london-theater-tickets.com',
       },
     ],
     destination: 'https://authentic-photos-977977.framer.app/',
