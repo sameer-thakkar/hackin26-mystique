@@ -84,10 +84,14 @@ const EntertainmentMBLandingPageV2 = ({
     'YYYY-MM-DD'
   );
 
+  const validTgids = Object.keys(allTours)
+    .map((key) => Number(key))
+    .filter((tgid) => !isNaN(tgid) && tgid > 0);
+
   const inventoryEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CalendarInventoryForTourGroupList,
     params: {
-      'tour-group-ids': Object.keys(allTours).join(','),
+      'tour-group-ids': validTgids.join(','),
       'from-date': DATE_TODAY,
       'to-date': DATE_TOMORROW,
       ...(currency && {
