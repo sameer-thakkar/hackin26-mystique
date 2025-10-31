@@ -6,6 +6,7 @@ import type {
 } from '@prismicio/types';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
+import { checkIfLTTMB } from 'utils/helper';
 import {
   attachedContentFrameworkData,
   baseLangMicrositeDataForContentPage,
@@ -36,6 +37,7 @@ import {
   SEO_SUBDOMAINS,
   SLICE_TYPES,
 } from 'const/index';
+import { HO_FAVICONS } from 'const/seo';
 
 const getUpdatedDocuments = async ({ documentIds }: any) => {
   const prismicClient = createClient();
@@ -168,6 +170,8 @@ const parseDocuments = async ({ documents, host }: any) => {
     const focusKeyword =
       docType === DOC_TYPES.venue_page ? focus_keywords : focus_keyword;
 
+    const isLttMb = checkIfLTTMB(uid);
+
     const metaData = {
       id,
       uid,
@@ -212,7 +216,7 @@ const parseDocuments = async ({ documents, host }: any) => {
       ),
       custom_banner_subtext: banner_subtext,
       layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
-      favicon_url: faviconUrl,
+      favicon_url: isLttMb ? faviconUrl : HO_FAVICONS[48],
       meta_image_url: getMetaImageUrl(doc),
       header_logo_url: logo?.logoUrl,
       footer_logo_url: logo?.logoUrl,

@@ -1310,7 +1310,6 @@ const MicrositeV1 = (props: any) => {
             orderedTgids={orderedTgids}
           />
         </Conditional>
-
         <Conditional if={isCityPageMB && !isCatOrSubCatPage}>
           <CityPageContainer
             cityPageData={cityPageData}
@@ -1322,7 +1321,6 @@ const MicrositeV1 = (props: any) => {
             pageUrl={pageUrl}
           />
         </Conditional>
-
         <Conditional
           if={showNewBanner && !isCatOrSubCatPage && !isEntertainmentBanner}
         >
@@ -1414,7 +1412,6 @@ const MicrositeV1 = (props: any) => {
         >
           <TextBanner bannerHeading={bannerHeading || null} />
         </Conditional>
-
         <Conditional
           if={
             !isEntertainmentBanner &&
@@ -1427,7 +1424,6 @@ const MicrositeV1 = (props: any) => {
             <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>
         </Conditional>
-
         <Conditional if={shouldDisplayProductTrustBoosters}>
           <F1TrustBoosters
             f1TrustBooster={getF1MBTrustBoosters(false)}
@@ -1446,7 +1442,6 @@ const MicrositeV1 = (props: any) => {
         >
           {tourListSection}
         </Conditional>
-
         <Conditional if={showAirportTransferProducts}>
           <PopulateAirportTransfersProducts
             uncategorizedTours={orderedFilteredTours}
@@ -1458,7 +1453,6 @@ const MicrositeV1 = (props: any) => {
             currentLanguage={currentLanguage}
           />
         </Conditional>
-
         <Conditional
           if={
             automatedBreadcrumbsExists &&
@@ -1475,7 +1469,6 @@ const MicrositeV1 = (props: any) => {
             />
           </LazyComponent>
         </Conditional>
-
         <Conditional if={isCatOrSubCatPage}>
           <CatAndSubCatPage
             catAndSubCatPageData={catAndSubCatPageData}
@@ -1484,14 +1477,12 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-
         <Conditional if={isAirportTransfersMB && longFormContent}>
           <AirportTransferLFAndStaticContent
             isMobile={isMobile}
             content={contentFWSlices}
           />
         </Conditional>
-
         <Conditional if={showQnaExperiment}>
           <LfcQna
             qnaSections={qnaExperimentData.qnaSections}
@@ -1499,7 +1490,6 @@ const MicrositeV1 = (props: any) => {
             collectionId={qnaExperimentData.collectionId}
           />
         </Conditional>
-
         <Conditional
           if={
             isA1orC1MB(taggedMbType) &&
@@ -1518,7 +1508,6 @@ const MicrositeV1 = (props: any) => {
             />
           </LazyComponent>
         </Conditional>
-
         <Conditional if={longFormContentArr?.length}>
           <div ref={lfcRef}>
             <Conditional if={!hideLFC}>
@@ -1548,7 +1537,6 @@ const MicrositeV1 = (props: any) => {
             </Conditional>
           </div>
         </Conditional>
-
         <Conditional if={isCatOrSubCatPage}>
           <LazyComponent>
             <Mailer
@@ -1563,7 +1551,6 @@ const MicrositeV1 = (props: any) => {
             />
           </LazyComponent>
         </Conditional>
-
         <Footer
           currentLanguage={currentLanguage}
           attraction={footerAttractionName}
@@ -1582,7 +1569,6 @@ const MicrositeV1 = (props: any) => {
           isDarkPurps={showHohoRevamp}
           footerRef={footerRef}
         />
-
         <Conditional if={hasOffer}>
           <FreeTourPopup
             popupState={freeTourPopupOpen}

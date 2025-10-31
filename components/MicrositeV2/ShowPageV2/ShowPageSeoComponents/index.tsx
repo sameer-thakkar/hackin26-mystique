@@ -10,7 +10,6 @@ import { getDurationISO } from 'utils/dateUtils';
 import { getProductSchema } from 'utils/schemaUtils';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
-import { FAVICON_LONDON_THEATRE_TICKETS } from 'const/index';
 import { strings } from 'const/strings';
 
 const ShowPageSeoComponents = ({
@@ -157,7 +156,7 @@ const ShowPageSeoComponents = ({
           languages: alternateLanguages,
           isMobile,
           bannerImages,
-          faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
+          faviconUrl,
           logoUrl: logoUrl,
         }}
       />

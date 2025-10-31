@@ -58,7 +58,6 @@ import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -513,7 +512,7 @@ const ShowPage = (props: any) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages,
-            faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
+            faviconUrl,
             logoUrl: logoUrl,
             breadcrumbsDetails: {
               breadcrumbs,

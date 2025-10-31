@@ -71,7 +71,6 @@ import {
   COOKIE,
   DEFAULT_PRISMIC_SHOWPAGE_UID,
   DEFAULT_SHOWPAGE_HOSTNAME,
-  FAVICON_LONDON_THEATRE_TICKETS,
   LANGUAGE_MAP,
   LanguagesUnion,
 } from 'const/index';
@@ -523,7 +522,7 @@ const ExperiencePage = ({
             languages: [],
             isMobile,
             bannerImages,
-            faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
+            faviconUrl,
             logoUrl,
             uid,
           }}
