@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -25,7 +18,6 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { Paginator } from 'UI/Paginator';
 import { StyledDotsContainer } from 'UI/Paginator/styles';
 import { MBContext } from 'contexts/MBContext';
-import useABTesting from 'hooks/useABTesting';
 import useOnScreen from 'hooks/useOnScreen';
 import useWindowWidth from 'hooks/useWindowWidth';
 import { isGuidedTourSubcategory, isMBDesign, legacyBooleanCheck } from 'utils';
@@ -36,7 +28,6 @@ import {
   fetchInventory,
 } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
-import { checkDropsEligibility } from 'utils/dropsUtils';
 import { generateSidenavId, getHostName } from 'utils/helper';
 import { getPOIBooster } from 'utils/poiBoosterUtils';
 import {
@@ -45,7 +36,6 @@ import {
 } from 'utils/productUtils';
 import { appAtom } from 'store/atoms/app';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
@@ -55,19 +45,16 @@ import {
   DEFAULT_PC_LIMIT,
   DESIGN,
   MB_CATEGORISATION,
-  SLICE_TYPES,
   THEMES,
   VIDEO_EXPERIMENT_MBS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import PercentageStamp from 'assets/percentageStamp';
-import { DropsExitIntent } from './AppDrops/components/DropsExitIntent';
 import { trackPageSection } from './CityPageContainer/utils';
 import { SECTION_NAMES } from './HOHO/constants';
 import { CardLoadingSkeleton } from './Product/components/CardLoadingSkeleton';
 import { SHOULDER_PAGE_SECTIONS } from './ShoulderPages/const';
-import DropsBanner from './AppDrops';
 import CustomBanner from './CustomBanner';
 
 const Product = dynamic(
@@ -349,7 +336,6 @@ const PopulateProducts: any = (props: any) => {
     showLastMinFilters = false,
     poiCollectionsSection,
     activePOIFilter,
-    sliceType,
   } = props;
 
   const { SUBATTRACTION_TYPE } = MB_CATEGORISATION;
@@ -385,24 +371,6 @@ const PopulateProducts: any = (props: any) => {
 
   const { isDev, host, design } = useContext(MBContext);
   const hostname = getHostName(isDev, host);
-  const dropsEligibilityInfo = checkDropsEligibility(uid);
-
-  const {
-    isEligible: isDropsExperimentEligible,
-    variant: dropsExperimentVariant,
-  } = useABTesting({
-    experimentId: 'DROPS_EXPERIMENT',
-    customEligibilityCheckFn: () => {
-      return dropsEligibilityInfo?.isEligible;
-    },
-  });
-
-  const shouldShowDrops = useMemo(
-    () =>
-      isDropsExperimentEligible &&
-      dropsExperimentVariant === VARIANTS.TREATMENT,
-    [isDropsExperimentEligible, dropsExperimentVariant]
-  );
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -1008,34 +976,6 @@ const PopulateProducts: any = (props: any) => {
                 );
               }
 
-              /*
-               Render DROPS banner after the first card only
-              */
-              if (index === 1 && shouldShowDrops) {
-                return (
-                  <>
-                    <Conditional if={bannerIndex === index}>
-                      {RenderedCustomBanner}
-                    </Conditional>
-                    {getProductCardFromTourAndIndex(tour, index)}
-                    <DropsBanner
-                      cityCode={dropsEligibilityInfo?.city}
-                      isMarginNotRequired={
-                        sliceType === SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD
-                      }
-                    />
-                    <Conditional
-                      if={
-                        bannerIndex > index &&
-                        index == availableToursList.length - 1
-                      }
-                    >
-                      {RenderedCustomBanner}
-                    </Conditional>
-                  </>
-                );
-              }
-
               return (
                 <>
                   <Conditional if={bannerIndex === index}>
@@ -1123,9 +1063,6 @@ const PopulateProducts: any = (props: any) => {
             inactiveColor={`${COLORS.BLACK}20`}
           />
         </CombosContainer>
-      </Conditional>
-      <Conditional if={shouldShowDrops}>
-        <DropsExitIntent cityCode={dropsEligibilityInfo?.city} />
       </Conditional>
     </StyledProductsWrapper>
   );
