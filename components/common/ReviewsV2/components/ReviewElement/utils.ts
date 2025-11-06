@@ -3,11 +3,11 @@ import { getFirstName, isDefaultReviewerName } from 'utils/reviewUtils';
 import { titleCase } from 'utils/stringUtils';
 
 export const getCapitalizedFirstName = (nonCustomerName: string) => {
-  return titleCase(
-    isDefaultReviewerName(nonCustomerName ?? '')
-      ? nonCustomerName ?? ''
-      : getFirstName(nonCustomerName)
-  );
+  if (!nonCustomerName) return '';
+
+  return isDefaultReviewerName(nonCustomerName)
+    ? nonCustomerName
+    : titleCase(getFirstName(nonCustomerName));
 };
 
 export const parseReviewMedia = ({
