@@ -962,7 +962,7 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
     HOP_ON_OFF_AT: 'Hopp på og hopp av på alle disse {0}-stoppestedene',
     TIMINGS_FREQUENCY: 'Tidspunkter og hyppighet',
     TOUR_DURATION: 'Turens varighet',
-    EVERY_X_MINS: 'Hvert {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Vis beliggenhet',
     BANNER_SUBTEXT:
       'Den raskeste og mest praktiske måten å se alle de mest populære attraksjonene i byen på.',

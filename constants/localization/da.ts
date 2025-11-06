@@ -962,7 +962,7 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. L�
       'Vælg selv, på hvilke af disse {0} stop du vil hoppe på og af',
     TIMINGS_FREQUENCY: 'Tider og hyppighed',
     TOUR_DURATION: 'Turens varighed',
-    EVERY_X_MINS: 'Hvert {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Se placering',
     BANNER_SUBTEXT:
       'Det nemmeste og hurtigste overblik over alle byens vigtigste seværdigheder.',

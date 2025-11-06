@@ -931,7 +931,7 @@ const nl: TDictionary = {
     HOP_ON_OFF_AT: 'Stap in en uit bij elk van deze {0} stops',
     TIMINGS_FREQUENCY: 'Vertrektijden en frequentie',
     TOUR_DURATION: 'Duur van de tour',
-    EVERY_X_MINS: 'Elke {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Bekijk locatie',
     BANNER_SUBTEXT:
       'De snelste en gemakkelijkste manier om alle populaire bezienswaardigheden te zien in de stad.',

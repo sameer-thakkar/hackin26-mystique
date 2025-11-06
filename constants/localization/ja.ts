@@ -952,7 +952,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     HOP_ON_OFF_AT: 'Hop on and hop off at any of these {0} stops',
     TIMINGS_FREQUENCY: 'Timings & frequency',
     TOUR_DURATION: 'Tour duration',
-    EVERY_X_MINS: 'Every {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'View location',
     BANNER_SUBTEXT:
       'Most convenient and quickest way to see all top attractions in the city.',

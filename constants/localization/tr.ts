@@ -964,7 +964,7 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     HOP_ON_OFF_AT: '{0} durak arasında istediğiniz gibi inin ve binin',
     TIMINGS_FREQUENCY: 'Sefer saatleri ve sıklığı',
     TOUR_DURATION: 'Tur süresi',
-    EVERY_X_MINS: 'Her {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Konumu Görüntüle',
     BANNER_SUBTEXT:
       'Şehirdeki tüm gözde turistik yerleri görmenin en uygun ve en hızlı yolu.',

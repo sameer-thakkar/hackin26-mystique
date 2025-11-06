@@ -942,7 +942,7 @@ const it: TDictionary = {
     HOP_ON_OFF_AT: 'Sali e scendi a qualsiasi di queste {0} fermate',
     TIMINGS_FREQUENCY: 'Orari e frequenza',
     TOUR_DURATION: 'Durata del tour',
-    EVERY_X_MINS: 'Ogni {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Guarda la posizione',
     BANNER_SUBTEXT:
       'Il modo più comodo e veloce per visitare tutte le principali attrazioni della città.',

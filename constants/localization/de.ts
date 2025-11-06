@@ -931,7 +931,7 @@ const de: TDictionary = {
     HOP_ON_OFF_AT: 'Steigen Sie an diesen {0} Stationen ein/aus',
     TIMINGS_FREQUENCY: 'Fahrzeiten und Häufigkeit',
     TOUR_DURATION: 'Dauer der Tour',
-    EVERY_X_MINS: 'Alle {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Standort anzeigen',
     BANNER_SUBTEXT:
       'Die bequemste und schnellste Art, um alle Wahrzeichen der Stadt zu sehen.',

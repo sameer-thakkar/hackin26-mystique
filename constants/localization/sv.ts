@@ -961,7 +961,7 @@ Alla termer med versaler som anv채nds ovan definieras i integritetspolicyn. Bes�
     HOP_ON_OFF_AT: 'Hoppa p책 och av vid dessa {0} h책llplatser',
     TIMINGS_FREQUENCY: 'Tider och frekvenser',
     TOUR_DURATION: 'Turens l채ngd',
-    EVERY_X_MINS: 'Var {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Visa plats',
     BANNER_SUBTEXT:
       'Det bekv채maste och snabbaste s채ttet att se alla toppsev채rdheter i staden.',

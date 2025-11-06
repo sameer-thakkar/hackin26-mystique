@@ -936,7 +936,7 @@ const fr: TDictionary = {
     HOP_ON_OFF_AT: "Montez et descendez à l'un de ces {0} arrêts.",
     TIMINGS_FREQUENCY: 'Horaires et fréquence',
     TOUR_DURATION: 'Durée du tour',
-    EVERY_X_MINS: 'Toutes les {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Voir le lieu',
     BANNER_SUBTEXT:
       'Le moyen le plus pratique et le plus rapide de visiter les principales attractions de la ville.',

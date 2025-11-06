@@ -967,7 +967,7 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     HOP_ON_OFF_AT: 'Urcați și coborâți la oricare dintre aceste {0} opriri',
     TIMINGS_FREQUENCY: 'Orar și frecvență ',
     TOUR_DURATION: 'Durata turului',
-    EVERY_X_MINS: 'La fiecare {0}',
+    EVERY_X_MINS: '{0}',
     VIEW_LOCATION: 'Vedeți locația',
     BANNER_SUBTEXT:
       'Cea mai convenabilă și rapidă modalitate de a vedea toate atracțiile de top din oraș.',
