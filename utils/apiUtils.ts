@@ -986,6 +986,7 @@ interface FetchCollectionProps extends CommonApiProps {
   limit?: string;
   useSeatmapPrices?: string;
   primarySubCategoryID?: string;
+  enableSections?: boolean;
 }
 export const fetchCollection = async ({
   collectionId,
@@ -997,6 +998,7 @@ export const fetchCollection = async ({
   useSeatmapPrices = '1',
   cookies = {},
   primarySubCategoryID,
+  enableSections = false,
 }: FetchCollectionProps) => {
   const params = {
     language,
@@ -1010,6 +1012,7 @@ export const fetchCollection = async ({
     ...(primarySubCategoryID && {
       'filter-by-subcategory-id': primarySubCategoryID,
     }),
+    ...(enableSections && { 'include-carousel-sections': 'true' }),
   };
   const finalUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CollectionSections,

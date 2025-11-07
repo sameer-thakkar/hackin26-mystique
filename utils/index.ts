@@ -606,6 +606,7 @@ export const generateSubcatFitleredCollectionsPromises = ({
       language: getHeadoutLanguagecode(lang),
       cookies,
       primarySubCategoryID: catId,
+      enableSections: true,
     });
     return promise;
   });
