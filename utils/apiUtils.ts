@@ -10,6 +10,7 @@ import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn, isServer } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import {
+  AUTOMATED_PRODUCT_RANKING_FILTER,
   AUTOMATED_PRODUCT_RANKING_VERSION,
   COOKIE,
   CUSTOM_HEADER,
@@ -960,6 +961,7 @@ export const fetchTourGroupsByCategory = async ({
       'filter-by-subcategory-id': String(primarySubCategoryID),
     }),
     'src-version': AUTOMATED_PRODUCT_RANKING_VERSION,
+    'sort-type': AUTOMATED_PRODUCT_RANKING_FILTER.POPULARITY,
   };
   const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({

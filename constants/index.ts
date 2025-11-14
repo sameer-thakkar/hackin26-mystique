@@ -2712,3 +2712,7 @@ export const HEADOUT_REVIEWER_TAG = 'headout';
 export const ROBOTS_TXT_ALLOWED_SUBDOMAINS = ['moma.new-york-tickets.com'];
 
 export const DEFAULT_PC_LIMIT = 10;
+
+export const AUTOMATED_PRODUCT_RANKING_FILTER = {
+  POPULARITY: 'POPULARITY',
+} as const;
