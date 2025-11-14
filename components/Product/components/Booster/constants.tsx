@@ -159,7 +159,7 @@ export const getBoosterInfo = (
     [BoosterType.PREMIUM]: {
       title: strings.BOOSTERS.PREMIUM,
       icon: <CrownIconSVG />,
-      theme: '#6321AE',
+      theme: '#FFFDE5',
       transform: 'translate(-20px,-2.5px)',
       borderTheme: 'none',
       iconHeight: 26,
@@ -169,7 +169,7 @@ export const getBoosterInfo = (
       },
       padding: '1px 6px 3px 8px',
       lineHeight: 18,
-      textColor: '#fff',
+      textColor: '#9F6B00',
       rotateDeg: 0,
       iconStyles: {
         top: 1.5,
