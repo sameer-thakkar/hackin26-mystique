@@ -11,6 +11,11 @@ export const StyledFooter = styled.footer<{
   display: grid;
   ${({ $isCatOrSubCatPage }) => !$isCatOrSubCatPage && `margin-top: 72px;`}
   border-top: 1px solid ${COLORS.GRAY.G8};
+  @media (max-width: 768px) {
+    display: flex;
+    overflow-x: hidden;
+    flex-direction: column;
+  }
 `;
 
 export const FooterLegalWrapper = styled.div<{
