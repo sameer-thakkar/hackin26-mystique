@@ -8,6 +8,8 @@ export const VARIANTS = {
   CONTROL2: 'Control 2',
   SHOWPAGE_REDIRECT: 'LP to showpage',
   TREATMENT: 'Treatment',
+  TREATMENT_A: 'Treatment A',
+  TREATMENT_B: 'Treatment B',
 };
 
 const LFC_IMPACT = 'LFC Impact';
@@ -30,8 +32,10 @@ const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
 const LTT_SHOW_PAGE_EXPERIMENT_V2 = 'Dweb LTT Show Page Calendar';
 const DROPS_EXPERIMENT = 'Drops Experiment';
+const AAA_EXPERIMENT = 'AAA Experiment';
 
 export const EXPERIMENT_NAMES = {
+  AAA_EXPERIMENT,
   BRAND_LOADER_EXP,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   DAY_TRIPS_LISTICLE,
@@ -57,6 +61,11 @@ export const EXPERIMENT_NAMES = {
  * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
  */
 export const EXPERIMENTS: Record<string, Experiment> = {
+  [AAA_EXPERIMENT]: new Experiment(
+    AAA_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT_A, VARIANTS.TREATMENT_B],
+    [95, 5, 5]
+  ),
   [BRAND_LOADER_EXP]: new Experiment(
     BRAND_LOADER_EXP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],

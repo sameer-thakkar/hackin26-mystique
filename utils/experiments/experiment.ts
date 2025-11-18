@@ -90,7 +90,9 @@ class Experiment {
     let experimentOverrideVariant = null;
     if (
       experimentOverride === VARIANTS.CONTROL ||
-      experimentOverride === VARIANTS.TREATMENT
+      experimentOverride === VARIANTS.TREATMENT ||
+      experimentOverride === VARIANTS.TREATMENT_A ||
+      experimentOverride === VARIANTS.TREATMENT_B
     )
       experimentOverrideVariant = experimentOverride;
     else if (

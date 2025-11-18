@@ -332,6 +332,12 @@ export const HomePage = (props: any) => {
       customEligibilityCheckFn: () => isTheatreInSeatingExperiment,
     });
 
+  useABTesting({
+    experimentId: 'AAA_EXPERIMENT',
+    noTrack: false,
+    customEligibilityCheckFn: () => showLttTreatment, //Experiment eligible only for LTT & Broadway Home Pages
+  });
+
   const isSeatMapExpControlAndEligible =
     isTheatreInSeatingExperiment && SeatMapExpVariant === VARIANTS.CONTROL;
 
