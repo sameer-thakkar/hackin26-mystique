@@ -1314,6 +1314,13 @@ export const QUERY_PARAMS = {
   GOOGLE_CAMPAIGN_ID: 'gclid',
   FACEBOOK_CAMPAIGN_ID: 'fbclid',
   BING_CAMPAIGN_ID: 'msclkid',
+  GBRAID: 'gbraid',
+  WBRAID: 'wbraid',
+  TTOLCID: 'ttoclid',
+  CAMPAIGN_ID: 'campaign_id',
+  ADGROUP_ID: 'adgroup_id',
+  DEVICE: 'device',
+  KEYWORD: 'keyword',
 };
 
 export const LOCALE_ORDER = [

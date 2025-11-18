@@ -11,6 +11,13 @@ type THOAttribution = {
   ref?: string; // Referrer
   lp: string; // Landing Page
   ts: number; // Timestamp
+  gbraid?: string | null; // Google Click Identifier for iOS 14.5+
+  wbraid?: string | null; // Google Click Identifier for iOS web-to-app
+  ttoclid?: string | null; // TikTok Identifier
+  campaign_id?: string | null; // Campaign ID
+  adgroup_id?: string | null; // Ad Group ID
+  device?: string | null; // Device
+  keyword?: string | null; // Keyword
 };
 
 const MAX_ATTRIBUTION_LENGTH = 20;
@@ -38,6 +45,13 @@ const useAttribution = () => {
       QUERY_PARAMS.FACEBOOK_CAMPAIGN_ID
     );
     const bingCampaignId = searchParams.get(QUERY_PARAMS.BING_CAMPAIGN_ID);
+    const gbraid = searchParams.get(QUERY_PARAMS.GBRAID);
+    const wbraid = searchParams.get(QUERY_PARAMS.WBRAID);
+    const ttoclid = searchParams.get(QUERY_PARAMS.TTOLCID);
+    const campaignId = searchParams.get(QUERY_PARAMS.CAMPAIGN_ID);
+    const adgroupId = searchParams.get(QUERY_PARAMS.ADGROUP_ID);
+    const device = searchParams.get(QUERY_PARAMS.DEVICE);
+    const keyword = searchParams.get(QUERY_PARAMS.KEYWORD);
 
     const currentHost = getNakedDomain(host);
     /**
@@ -57,6 +71,13 @@ const useAttribution = () => {
       ...(bingCampaignId && {
         [QUERY_PARAMS.BING_CAMPAIGN_ID]: bingCampaignId,
       }),
+      ...(gbraid && { [QUERY_PARAMS.GBRAID]: gbraid }),
+      ...(wbraid && { [QUERY_PARAMS.WBRAID]: wbraid }),
+      ...(ttoclid && { [QUERY_PARAMS.TTOLCID]: ttoclid }),
+      ...(campaignId && { [QUERY_PARAMS.CAMPAIGN_ID]: campaignId }),
+      ...(adgroupId && { [QUERY_PARAMS.ADGROUP_ID]: adgroupId }),
+      ...(device && { [QUERY_PARAMS.DEVICE]: device }),
+      ...(keyword && { [QUERY_PARAMS.KEYWORD]: keyword }),
     };
 
     if (BLACK_LISTED_ROUTES.some((partialRoute) => href.includes(partialRoute)))
