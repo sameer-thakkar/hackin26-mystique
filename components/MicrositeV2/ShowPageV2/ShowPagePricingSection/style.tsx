@@ -1,4 +1,4 @@
-import styled, { CSSProperties } from 'styled-components';
+import styled, { css, CSSProperties } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -7,6 +7,7 @@ export const ShowPageDateSelectorWrapper = styled.div<{
   $isRedirecting?: boolean;
   $isShowPageExperiment?: boolean;
   $showTimeList?: boolean;
+  $showGroupBooking?: boolean;
 }>`
   display: flex;
   flex-direction: column;
@@ -22,6 +23,15 @@ export const ShowPageDateSelectorWrapper = styled.div<{
     $isShowPageExperiment
       ? '0px 1px 6px 1px rgba(17, 17, 17, 0.1)'
       : '0px 4px 12px 0px rgba(0, 0, 0, 0.1)'};
+
+  ${({ $showGroupBooking }) =>
+    $showGroupBooking &&
+    css`
+      box-shadow: none;
+      ${PricingSection} {
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+      }
+    `}
 
   @media (max-width: 768px) {
     box-shadow: none;

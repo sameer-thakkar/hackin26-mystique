@@ -2314,6 +2314,11 @@ const fr: TDictionary = {
     MINUTES: ' min',
   },
   LTT_SPECIAL_OFFER: 'Offre spéciale',
+  GROUP_BOOKING: {
+    TITLE: 'Vous réservez pour 10 personnes ou plus ?',
+    SUBTEXT: "Économisez jusqu'à 57 % et bénéficiez d'un service client dédié.",
+    LINK_TEXT: 'Obtenir un prix de groupe',
+  },
 };
 
 export default fr;

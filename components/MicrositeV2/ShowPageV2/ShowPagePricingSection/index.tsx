@@ -34,14 +34,17 @@ import {
   BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
+  GROUP_BOOKING_TGIDS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
 import VerticalProductImagePlaceholder from 'assets/verticalProductImagePlaceholder';
+import GroupBookingCTA from '../GroupBookingCTA';
 import { useIsLTTShowPageExperiementEnabled } from '../hooks/useIsLTTShowPageExperiementEnabled';
 import { useFetchCalendarData } from '../SingleCalendar/hooks/useFetchCalendarData';
 import SingleCalendar from '../SingleCalendar/SingleCalendar';
 import { TimeList } from '../SingleCalendar/TimeList/TimeList';
+import { LTT_GROUP_BOOKING_URL } from './constants';
 import RiveShowPageCTA from './RiveCTA';
 
 const ShowPagePricingSection = ({
@@ -52,6 +55,7 @@ const ShowPagePricingSection = ({
   fromDate,
   toDate,
   variantId,
+  isMobile,
 }: TShowPagePricingSectionProps) => {
   const router = useRouter();
   const { query } = router;
@@ -263,12 +267,15 @@ const ShowPagePricingSection = ({
     );
   };
 
+  const showGroupBooking = !isMobile && GROUP_BOOKING_TGIDS.includes(tgid);
+
   return (
     <>
       <ShowPageDateSelectorWrapper
         ref={dateSelectorWrapperRef}
         $isShowPageExperiment={isShowPageExperiment}
         $showTimeList={showTimeList}
+        $showGroupBooking={showGroupBooking}
       >
         <Conditional if={isShowPageExperiment && listingPrice}>
           <SingleCalendar
@@ -420,6 +427,9 @@ const ShowPagePricingSection = ({
               />
             </BuyButtonWrapper>
           </PricingSection>
+        </Conditional>
+        <Conditional if={showGroupBooking}>
+          <GroupBookingCTA ctaUrl={LTT_GROUP_BOOKING_URL} tgid={tgid} />
         </Conditional>
         <Conditional if={!listingPrice}>
           <div className={TicketsUnavailableSection}>

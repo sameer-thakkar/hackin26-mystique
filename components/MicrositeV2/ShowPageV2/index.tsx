@@ -470,6 +470,7 @@ const LttShowPageV2 = ({
             }}
             moreShows={moreShows}
             primarySubCategory={primarySubCategory}
+            isMobile={isMobile}
           />
         </DateSelectorWrapper>
 

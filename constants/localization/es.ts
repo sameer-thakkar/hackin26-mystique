@@ -2313,6 +2313,12 @@ const es: TDictionary = {
     MINUTES: ' min',
   },
   LTT_SPECIAL_OFFER: 'Oferta especial',
+  GROUP_BOOKING: {
+    TITLE: '¿Quieres reservar para 10 o más personas?',
+    SUBTEXT:
+      'Ahorra hasta un 57 % con descuentos para grupos y disfruta de atención al cliente personalizada.',
+    LINK_TEXT: 'Obtener descuento para grupos',
+  },
 };
 
 export default es;

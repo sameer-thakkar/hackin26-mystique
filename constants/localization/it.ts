@@ -2313,6 +2313,12 @@ const it: TDictionary = {
     MINUTES: ' min',
   },
   LTT_SPECIAL_OFFER: 'Offerta speciale',
+  GROUP_BOOKING: {
+    TITLE: 'Prenoti 10 o più biglietti?',
+    SUBTEXT:
+      'Con gli sconti per gruppi, risparmi il 57% e ottieni assistenza dedicata.',
+    LINK_TEXT: 'Sconti per gruppi',
+  },
 };
 
 export default it;

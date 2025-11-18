@@ -7,6 +7,7 @@ export type TShowPagePricingSectionProps = {
   fromDate?: string;
   toDate?: string;
   variantId?: string;
+  isMobile?: boolean;
 };
 
 export type TRiveCTAProps = {

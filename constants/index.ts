@@ -717,6 +717,7 @@ export const ANALYTICS_EVENTS = {
   DT_VIDEO_PLAYER_OPENED: 'Video Player Opened',
   DT_VIDEO_PLAYER_CLOSED: 'Video Player Closed',
   STORE_DOWNLOAD_CTA_CLICKED: 'Store Download CTA Clicked',
+  GROUP_BOOKING_CTA_CLICKED: 'Group Booking CTA Clicked',
 };
 
 export const MORE_DETAILS_SWIPESHEET = {
@@ -2712,6 +2713,10 @@ export const HEADOUT_REVIEWER_TAG = 'headout';
 export const ROBOTS_TXT_ALLOWED_SUBDOMAINS = ['moma.new-york-tickets.com'];
 
 export const DEFAULT_PC_LIMIT = 10;
+
+export const GROUP_BOOKING_TGIDS = [
+  20045, 3031, 3027, 30910, 13402, 17343, 2863, 16818, 3026, 11817, 20498, 2843,
+];
 
 export const AUTOMATED_PRODUCT_RANKING_FILTER = {
   POPULARITY: 'POPULARITY',

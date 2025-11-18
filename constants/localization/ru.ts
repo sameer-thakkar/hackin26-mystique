@@ -2321,6 +2321,12 @@ const ru: TDictionary = {
     MINUTES: ' минут',
   },
   LTT_SPECIAL_OFFER: 'Скидка',
+  GROUP_BOOKING: {
+    TITLE: 'Бронируете на 10 человек и более?',
+    SUBTEXT:
+      'Сэкономьте до 57 % с групповыми скидками и получите персональную поддержку для гостей.',
+    LINK_TEXT: 'Скидка для группы',
+  },
 };
 
 export default ru;

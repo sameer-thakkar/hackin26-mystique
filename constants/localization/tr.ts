@@ -2318,6 +2318,12 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     MINUTES: ' dk.',
   },
   LTT_SPECIAL_OFFER: 'Özel teklif',
+  GROUP_BOOKING: {
+    TITLE: '10 ve üzeri kişilik grup rezervasyonu mu yapacaksınız?',
+    SUBTEXT:
+      'Grup rezervasyonlarında %57’ye varan indirim ve kişiye özel destek fırsatı sizi bekliyor.',
+    LINK_TEXT: 'Grup indiriminden yararlanın',
+  },
 };
 
 export default tr;

@@ -2300,6 +2300,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     MINUTES: ' mins',
   },
   LTT_SPECIAL_OFFER: 'Special offer',
+  GROUP_BOOKING: {
+    TITLE: 'Booking for 10 or more?',
+    SUBTEXT:
+      'Unlock exclusive group discounts and get personalized assistance from our team.',
+    LINK_TEXT: 'Request a group quote',
+  },
 };
 
 export default cn;
