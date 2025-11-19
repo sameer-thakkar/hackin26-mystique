@@ -19,7 +19,6 @@ export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
       graphQuery: micrositeStaticPageGq,
     });
     const {
-      faviconUrl,
       logo: { logoUrl, showPoweredLogo },
       name: whiteLabelName,
     } = (await fetchDomainConfig(uid ?? '')) ?? {};
@@ -29,7 +28,6 @@ export const getStaticPageMicrosite = async ({ uid }: { uid: string }) => {
         CMSContent: {
           ...micrositeData.data,
           commonFooter: micrositeData.data.footer_ref,
-          faviconUrl,
           logoUrl,
           logoAltText: whiteLabelName,
           hasPoweredByHeadoutLogo: showPoweredLogo ?? true,
@@ -62,7 +60,6 @@ export const getStaticPageGlobalMB = async ({ uid }: { uid: string }) => {
       }
     );
     const {
-      faviconUrl,
       logo: { logoUrl, showPoweredLogo },
       name: whiteLabelName,
     } = await fetchDomainConfig(uid ?? '');
@@ -71,7 +68,6 @@ export const getStaticPageGlobalMB = async ({ uid }: { uid: string }) => {
         CMSContent: {
           ...globalHomepageData.data,
           commonFooter: globalHomepageData.data.common_footer,
-          faviconUrl,
           logoUrl,
           logoAltText: whiteLabelName,
           hasPoweredByHeadoutLogo: showPoweredLogo ?? true,

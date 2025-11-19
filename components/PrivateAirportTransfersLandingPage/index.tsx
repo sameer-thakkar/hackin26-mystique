@@ -110,7 +110,6 @@ export const PrivateAirportTransfersLandingPage = ({
   const currentLanguage = getLangObject(lang).code;
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -193,7 +192,6 @@ export const PrivateAirportTransfersLandingPage = ({
           languages: alternateLanguages,
           isMobile,
           bannerImages: [],
-          faviconUrl,
           logoUrl,
         }}
       />

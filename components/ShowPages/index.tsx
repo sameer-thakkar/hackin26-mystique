@@ -230,7 +230,6 @@ const ShowPage = (props: any) => {
   const { code: cityCode } = city || {};
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -512,7 +511,6 @@ const ShowPage = (props: any) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages,
-            faviconUrl,
             logoUrl: logoUrl,
             breadcrumbsDetails: {
               breadcrumbs,

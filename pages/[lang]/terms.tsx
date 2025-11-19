@@ -80,7 +80,6 @@ const TermsPage = (
     logoUrl,
     logoAltText,
     hasPoweredByHeadoutLogo,
-    faviconUrl,
     commonFooter,
     theme_override: footerTheme,
     theme: mbTheme,
@@ -111,7 +110,6 @@ const TermsPage = (
       >
         <MinimalHelmet
           title="Terms"
-          faviconUrl={faviconUrl}
           description={`Terms and Conditions page for ${host}`}
         />
         <Header

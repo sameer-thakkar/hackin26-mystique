@@ -59,7 +59,6 @@ const NewsPage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (props) => {
   } = CMSData ?? {};
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -122,7 +121,6 @@ const NewsPage: React.FC<React.PropsWithChildren<TNewsPageProps>> = (props) => {
           languages: alternateLanguages,
           isMobile,
           bannerImages: [],
-          faviconUrl,
           logoUrl: logoUrl,
         }}
       />

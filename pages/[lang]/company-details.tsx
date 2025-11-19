@@ -28,13 +28,8 @@ const CompanyDetailsPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const { uid, CMSContent, lang, host, isDev, localizedStrings } = props;
-  const {
-    logoUrl,
-    logoAltText,
-    hasPoweredByHeadoutLogo,
-    faviconUrl,
-    commonFooter,
-  } = CMSContent ?? {};
+  const { logoUrl, logoAltText, hasPoweredByHeadoutLogo, commonFooter } =
+    CMSContent ?? {};
 
   strings.setContent({
     default: localizedStrings ?? {},
@@ -88,7 +83,6 @@ const CompanyDetailsPage = (
     <>
       <MinimalHelmet
         title="Company Details"
-        faviconUrl={faviconUrl}
         description={`Company Details page for ${host}`}
       />
       <Header

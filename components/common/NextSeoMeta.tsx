@@ -26,7 +26,7 @@ import {
   createHrefLangObj,
   generateHoFaviconLinkTags,
 } from 'utils/headUtils';
-import { checkIfLTTMB, withShortcodes } from 'utils/helper';
+import { withShortcodes } from 'utils/helper';
 import { getStructure } from 'utils/lookerUtils';
 import { titleCase } from 'utils/stringUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -40,7 +40,7 @@ import {
   SEO_SUBDOMAINS,
   siteNameMappings,
 } from 'const/index';
-import { FAVICON_LONDON_THEATRE_TICKETS, HO_FAVICONS } from 'const/seo';
+import { HO_FAVICONS } from 'const/seo';
 
 type TBreadcrumbsDetails = {
   breadcrumbs: TBreadcrumbs;
@@ -59,7 +59,6 @@ type PopulateMetaProps = {
   collectionDetails?: CollectionDetails;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
-  faviconUrl: string;
   logoUrl?: string;
   uid?: string;
   breadcrumbsDetails?: TBreadcrumbsDetails;
@@ -74,7 +73,6 @@ export default function PopulateMeta({
   bannerImages,
   serverRequestStartTimestamp,
   collectionDetails,
-  faviconUrl,
   logoUrl,
   uid,
   breadcrumbsDetails,
@@ -154,12 +152,6 @@ export default function PopulateMeta({
 
   const { WIDTH } = isMobile ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
 
-  const isLttMb = checkIfLTTMB(uidFromMBContext ?? uid);
-
-  const lttFaviconUrl = faviconUrl || FAVICON_LONDON_THEATRE_TICKETS;
-
-  const finalFaviconUrl = isLttMb ? lttFaviconUrl : HO_FAVICONS[48];
-
   const [firstBannerImage] = bannerImages || [];
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
@@ -167,7 +159,7 @@ export default function PopulateMeta({
     lang,
     title,
     logo: metaImageUrl,
-    favicon: finalFaviconUrl,
+    favicon: HO_FAVICONS[48],
     description,
     dateModified,
     datePublished,
@@ -244,10 +236,7 @@ export default function PopulateMeta({
   );
 
   // Add link tags for Headout favicons
-  const additionalLinkTags = generateHoFaviconLinkTags({
-    isLttMb,
-    lttFaviconUrl: lttFaviconUrl,
-  });
+  const additionalLinkTags = generateHoFaviconLinkTags();
 
   let siteName = null;
   for (let [siteNameKey, siteNameValue] of siteNameMappings.entries()) {
@@ -353,22 +342,14 @@ export default function PopulateMeta({
 export const MinimalHelmet = ({
   title,
   description,
-  faviconUrl,
 }: {
   title: string;
   description: string;
-  faviconUrl: string;
 }) => {
-  const { uid } = useContext(MBContext);
-
-  const isLttMb = checkIfLTTMB(uid);
-
-  const lttFaviconUrl = faviconUrl || FAVICON_LONDON_THEATRE_TICKETS;
-
   const seoProps = {
     title,
     description,
-    additionalLinkTags: generateHoFaviconLinkTags({ isLttMb, lttFaviconUrl }),
+    additionalLinkTags: generateHoFaviconLinkTags(),
   };
   return <NextSeo {...seoProps} />;
 };

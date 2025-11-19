@@ -93,7 +93,6 @@ const ReviewsPage: React.FC<React.PropsWithChildren<TReviewsPageProps>> = (
   } = CMSData ?? {};
 
   const {
-    faviconUrl,
     logo: { logoUrl = '' } = {},
     showPoweredLogo = true,
     name: whiteLabelName,
@@ -275,7 +274,6 @@ const ReviewsPage: React.FC<React.PropsWithChildren<TReviewsPageProps>> = (
           languages: alternateLanguages,
           isMobile,
           bannerImages: [],
-          faviconUrl,
           logoUrl: logoUrl,
         }}
       />

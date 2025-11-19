@@ -61,7 +61,7 @@ const ShowPageSeoComponents = ({
       alt: name,
     },
   ];
-  const { faviconUrl, logo: { logoUrl = '' } = {} } = domainConfig || {};
+  const { logo: { logoUrl = '' } = {} } = domainConfig || {};
   const productSchema = getProductSchema({
     productName: name,
     price: listingPrice?.finalPrice,
@@ -156,7 +156,6 @@ const ShowPageSeoComponents = ({
           languages: alternateLanguages,
           isMobile,
           bannerImages,
-          faviconUrl,
           logoUrl: logoUrl,
         }}
       />

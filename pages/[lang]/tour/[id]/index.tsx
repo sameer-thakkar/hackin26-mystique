@@ -250,7 +250,6 @@ const ExperiencePage = ({
   const { code: currencyCode } = currency || {};
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -522,7 +521,6 @@ const ExperiencePage = ({
             languages: [],
             isMobile,
             bannerImages,
-            faviconUrl,
             logoUrl,
             uid,
           }}

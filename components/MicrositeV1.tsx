@@ -467,7 +467,6 @@ const MicrositeV1 = (props: any) => {
     : scorpioDataUncategorised;
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -1170,7 +1169,6 @@ const MicrositeV1 = (props: any) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages: finalBannerImages,
-            faviconUrl,
             logoUrl: logoUrl,
             breadcrumbsDetails,
             collectionDetails,

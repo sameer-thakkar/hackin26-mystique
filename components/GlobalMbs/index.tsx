@@ -111,7 +111,6 @@ const GlobalMB = (props: any) => {
   } = footer || {};
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -395,7 +394,6 @@ const GlobalMB = (props: any) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages: finalBannerImages,
-            faviconUrl,
             logoUrl: logoUrl,
           }}
         />

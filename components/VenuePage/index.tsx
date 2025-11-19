@@ -153,7 +153,6 @@ const VenuePage = (props: IVenuePageProps) => {
   const { SHOW_MORE, SHOW_LESS, SEATS } = strings;
 
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -365,7 +364,6 @@ const VenuePage = (props: IVenuePageProps) => {
           languages: alternateLanguages,
           isMobile,
           bannerImages: [],
-          faviconUrl,
           logoUrl: logoUrl,
           breadcrumbsDetails: {
             breadcrumbs,

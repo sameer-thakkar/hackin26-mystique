@@ -81,7 +81,6 @@ const PrivacyPage = (
     logoUrl,
     logoAltText,
     hasPoweredByHeadoutLogo,
-    faviconUrl,
     commonFooter,
     theme_override: footerTheme,
     theme: mbTheme,
@@ -112,7 +111,6 @@ const PrivacyPage = (
       >
         <MinimalHelmet
           title="Privacy Policy"
-          faviconUrl={faviconUrl}
           description={`Privacy Policy page for ${host}`}
         />
         <Header

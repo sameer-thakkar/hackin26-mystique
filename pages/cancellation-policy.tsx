@@ -75,7 +75,6 @@ const CancellationPolicyPage = (
     logoUrl,
     logoAltText,
     hasPoweredByHeadoutLogo,
-    faviconUrl,
     commonFooter,
     theme_override: footerTheme,
     theme: mbTheme,
@@ -101,7 +100,6 @@ const CancellationPolicyPage = (
       >
         <MinimalHelmet
           title="Cancellation Policy"
-          faviconUrl={faviconUrl}
           description={`Cancellation Policy page for ${host}`}
         />
         <Header

@@ -403,7 +403,6 @@ const ContentPage = (props: any) => {
   const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
   const currentLanguage = getLangObject(lang).code;
   const {
-    faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
@@ -655,7 +654,6 @@ const ContentPage = (props: any) => {
           languages: alternateLanguages,
           isMobile: isMobile,
           bannerImages: [featuredImage],
-          faviconUrl,
           logoUrl: logoUrl,
           breadcrumbsDetails,
         }}

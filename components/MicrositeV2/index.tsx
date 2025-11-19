@@ -577,7 +577,6 @@ class MicrositeV2 extends Component<any, any> {
             languages: alternateLanguages,
             isMobile: this.state.isMobile,
             bannerImages: heroProps?.banners,
-            faviconUrl: domainConfig?.faviconUrl,
             logoUrl: domainConfig?.logo?.logoUrl,
             breadcrumbsDetails,
           }}
