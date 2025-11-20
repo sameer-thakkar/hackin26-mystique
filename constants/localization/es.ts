@@ -1304,8 +1304,8 @@ const es: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'LUGAR DE SALIDA',
-        END: 'LUGAR DE LLEGADA',
+        START: 'Punto de salida',
+        END: 'Punto de llegada',
         STARTING_POINT: 'PUNTO DE SALIDA',
         STOP: 'PARADA',
         ENDING_POINT: 'PUNTO DE LLEGADA',
@@ -1351,6 +1351,9 @@ const es: TDictionary = {
     BOARDING_POINTS: 'Puntos de embarque',
     LANDMARKS: 'Sitios de interés',
     VIEW_IN_MAPS: 'Ver en el mapa',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'en',
   },
   CRUISES: {
     BANNER_HEADING: 'Crucero por {0} - Descubre, cena y relájate ',

@@ -1290,8 +1290,8 @@ const nl: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'STARTPUNT',
-        END: 'EINDPUNT',
+        START: 'Startpunt',
+        END: 'Eindpunt',
         STARTING_POINT: 'STARTPUNT',
         STOP: 'STOPPUNT',
         ENDING_POINT: 'EINDPUNT',
@@ -1336,6 +1336,9 @@ const nl: TDictionary = {
     BOARDING_POINTS: 'Opstapplaatsen',
     LANDMARKS: 'Bezienswaardigheden',
     VIEW_IN_MAPS: 'Bekijk op de kaart',
+    KM: 'km',
+    MIN: 'min.',
+    BY: 'per',
   },
   CRUISES: {
     BANNER_HEADING: 'Vaar door {0} - Ontdek, eet lekker en relax ',

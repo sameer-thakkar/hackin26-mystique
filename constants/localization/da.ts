@@ -1320,8 +1320,8 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. LÃ
     },
     STOP_CARD: {
       TITLE: {
-        START: 'STARTSTED',
-        END: 'SLUTSTED',
+        START: 'Startsted',
+        END: 'Slutsted',
         STARTING_POINT: 'STARTSTED',
         STOP: 'STOP',
         ENDING_POINT: 'SLUTSTED',
@@ -1367,6 +1367,9 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. LÃ
     BOARDING_POINTS: 'PÃ¥stigningssteder',
     LANDMARKS: 'Vartegn',
     VIEW_IN_MAPS: 'Se pÃ¥ kort',
+    KM: 'km',
+    MIN: 'min.',
+    BY: 'med',
   },
   CRUISES: {
     BANNER_HEADING: 'Krydstogt gennem {0} â€“ oplevelser, god mad og afslapning',

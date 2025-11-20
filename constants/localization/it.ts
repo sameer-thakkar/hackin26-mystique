@@ -1307,8 +1307,8 @@ const it: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'INIZIO',
-        END: 'FINE',
+        START: 'Inizio',
+        END: 'Fine',
         STARTING_POINT: 'INIZIO',
         STOP: 'FERMATA',
         ENDING_POINT: 'FINE',
@@ -1354,6 +1354,9 @@ const it: TDictionary = {
     BOARDING_POINTS: 'Punti di imbarco',
     LANDMARKS: 'Punti di interesse',
     VIEW_IN_MAPS: 'Vedi sulla mappa',
+    KM: 'km',
+    MIN: 'min.',
+    BY: 'in',
   },
   CRUISES: {
     BANNER_HEADING: 'Attraversa {0} - Scoprire, mangiare e rilassarsi ',

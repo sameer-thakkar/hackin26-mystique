@@ -1300,8 +1300,8 @@ const fr: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'Point de départ',
-        END: "Point d'arrivée",
+        START: 'Départ',
+        END: 'Arrivée',
         STARTING_POINT: 'POINT DE DÉPART',
         STOP: 'ARRÊT',
         ENDING_POINT: "POINT D'ARRIVÉE",
@@ -1347,6 +1347,9 @@ const fr: TDictionary = {
     BOARDING_POINTS: "Points d'embarquement",
     LANDMARKS: 'Monuments',
     VIEW_IN_MAPS: 'Voir sur la carte',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'en',
   },
   CRUISES: {
     BANNER_HEADING: 'Croisière à travers {0}  : découverte, détente et dîner ',

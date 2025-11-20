@@ -1328,8 +1328,8 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     },
     STOP_CARD: {
       TITLE: {
-        START: 'PUNKT STARTOWY',
-        END: 'PUNKT KOŃCOWY',
+        START: 'Punkt startowy',
+        END: 'Punkt końcowy',
         STARTING_POINT: 'PUNKT STARTOWY',
         STOP: 'PRZYSTANEK',
         ENDING_POINT: 'PUNKT KOŃCOWY',
@@ -1375,6 +1375,9 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     BOARDING_POINTS: 'Punkty wejścia na pokład',
     LANDMARKS: 'Zabytki',
     VIEW_IN_MAPS: 'Zobacz na mapie',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'środkiem transportu:',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise through {0} & discover scenic landscapes',

@@ -1328,8 +1328,8 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     },
     STOP_CARD: {
       TITLE: {
-        START: 'BAŞLANGIÇ NOKTASI',
-        END: 'VARIŞ NOKTASI',
+        START: 'Başlangıç noktası',
+        END: 'Bitiş noktası',
         STARTING_POINT: 'BAŞLANGIÇ NOKTASI',
         STOP: 'DURUŞ NOKTASI',
         ENDING_POINT: 'VARIŞ NOKTASI',
@@ -1375,6 +1375,9 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     BOARDING_POINTS: 'Kalkış noktaları',
     LANDMARKS: 'Simgesel Yapılar',
     VIEW_IN_MAPS: 'Haritada görüntüle',
+    KM: 'km',
+    MIN: 'dk.',
+    BY: 'ulaşım aracı',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

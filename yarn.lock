@@ -1374,10 +1374,10 @@
     "@headout/onix" "4.0.3"
     "@radix-ui/react-dropdown-menu" "^2.1.2"
 
-"@headout/espeon@2.31.3":
-  version "2.31.3"
-  resolved "https://npm.pkg.github.com/download/@headout/espeon/2.31.3/a8fa7eaa7792af9e66b102e3c53a5913a7984ca4#a8fa7eaa7792af9e66b102e3c53a5913a7984ca4"
-  integrity sha512-+25X45lXKNqy1RIJyNb4QX1nEVgrNNq/SJbYbIMsWy1TLeSFwj2eJuwFj7nRdNGJmpE5OGYrqo15EPigwBawjw==
+"@headout/espeon@2.32.1":
+  version "2.32.1"
+  resolved "https://npm.pkg.github.com/download/@headout/espeon/2.32.1/76e328a510009af689c9cfc3b751e0fc39952725#76e328a510009af689c9cfc3b751e0fc39952725"
+  integrity sha512-SagY/wBQ7gnYVqjHHnGtOhJhy1mnq5aM5TWEslBJKMpGgqaPAS7EevxH2hvrfpHv0G68SR0slIIA6IJyqSMyfw==
   dependencies:
     "@googlemaps/js-api-loader" "^1.16.8"
     "@googlemaps/polyline-codec" "^1.0.28"

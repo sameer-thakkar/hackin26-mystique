@@ -1294,8 +1294,8 @@ const de: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'STARTPUNKT',
-        END: 'ENDPUNKT',
+        START: 'Startpunkt',
+        END: 'Endpunkt',
         STARTING_POINT: 'STARTPUNKT',
         STOP: 'HALTEPUNKT',
         ENDING_POINT: 'ENDPUNKT',
@@ -1342,6 +1342,9 @@ const de: TDictionary = {
     BOARDING_POINTS: 'Einstiegsstellen',
     LANDMARKS: 'Sehenswürdigkeiten',
     VIEW_IN_MAPS: 'Kartenansicht',
+    KM: 'km',
+    MIN: 'Min.',
+    BY: ':',
   },
   CRUISES: {
     BANNER_HEADING: 'Schifffahrten in {0}: entdecken, essen, entspannen ',

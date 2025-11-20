@@ -1329,8 +1329,8 @@ const ru: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'МЕСТО ОТПРАВЛЕНИЯ',
-        END: 'МЕСТО ПРИБЫТИЯ',
+        START: 'Место старта',
+        END: 'Конечный пункт',
         STARTING_POINT: 'МЕСТО ОТПРАВЛЕНИЯ',
         STOP: 'ОСТАНОВКА',
         ENDING_POINT: 'МЕСТО ПРИБЫТИЯ',
@@ -1376,6 +1376,9 @@ const ru: TDictionary = {
     BOARDING_POINTS: 'Точки посадки',
     LANDMARKS: 'Достопримечательности',
     VIEW_IN_MAPS: 'Просмотр в Google Maps',
+    KM: 'км',
+    MIN: 'мин.',
+    BY: 'на',
   },
   CRUISES: {
     BANNER_HEADING: 'Прокатитесь по {0} - Исследуйте, пообедайте и отдохните',

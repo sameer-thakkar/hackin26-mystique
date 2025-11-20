@@ -1332,8 +1332,8 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     },
     STOP_CARD: {
       TITLE: {
-        START: 'PUNCT DE PORNIRE',
-        END: 'PUNCT DE OPRIRE',
+        START: 'Punct de pornire',
+        END: 'Punct final',
         STARTING_POINT: 'PUNCT DE PORNIRE',
         STOP: 'OPRIRE',
         ENDING_POINT: 'PUNCT DE OPRIRE',
@@ -1379,6 +1379,9 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     BOARDING_POINTS: 'Puncte de îmbarcare',
     LANDMARKS: 'Repere',
     VIEW_IN_MAPS: 'Vizualizațipe hărți',
+    KM: 'km',
+    MIN: 'min.',
+    BY: 'cu',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

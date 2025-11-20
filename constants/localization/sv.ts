@@ -1322,8 +1322,8 @@ Alla termer med versaler som anv√§nds ovan definieras i integritetspolicyn. Bes√
     },
     STOP_CARD: {
       TITLE: {
-        START: 'STARTPUNKT',
-        END: 'SLUTPUNKT',
+        START: 'Startpunkt',
+        END: 'Slutpunkt',
         STARTING_POINT: 'STARTPUNKT',
         STOP: 'STOPP',
         ENDING_POINT: 'SLUTPUNKT',
@@ -1369,6 +1369,9 @@ Alla termer med versaler som anv√§nds ovan definieras i integritetspolicyn. Bes√
     BOARDING_POINTS: 'Ombordstigningsplatser',
     LANDMARKS: 'Landm√§rken',
     VIEW_IN_MAPS: 'Visa i kartor',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'med',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

@@ -1320,8 +1320,8 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
     },
     STOP_CARD: {
       TITLE: {
-        START: 'STARTSTED',
-        END: 'ENDESTED',
+        START: 'Startsted',
+        END: 'Endested',
         STARTING_POINT: 'STARTSTED',
         STOP: 'STOPP',
         ENDING_POINT: 'ENDESTED',
@@ -1366,6 +1366,9 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
     BOARDING_POINTS: 'Ombordstigningssteder',
     LANDMARKS: 'Landemerker',
     VIEW_IN_MAPS: 'Vis i kart',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'med',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

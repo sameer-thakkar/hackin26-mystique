@@ -1315,8 +1315,8 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     },
     STOP_CARD: {
       TITLE: {
-        START: 'START POINT',
-        END: 'END POINT',
+        START: 'Start point',
+        END: 'End Point',
         STARTING_POINT: 'STARTING POINT',
         STOP: 'STOP',
         ENDING_POINT: 'ENDING POINT',
@@ -1363,6 +1363,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     LANDMARKS: 'Landmarks',
     VIEW_IN_MAPS: 'View in maps',
     VIEW_ALL_STOPS: 'View all stops',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'by',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

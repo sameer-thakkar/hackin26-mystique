@@ -1297,8 +1297,8 @@ const pt: TDictionary = {
     },
     STOP_CARD: {
       TITLE: {
-        START: 'PONTO DE PARTIDA',
-        END: 'PONTO FINAL',
+        START: 'Ponto de partida',
+        END: 'Ponto de chegada',
         STARTING_POINT: 'PONTO DE PARTIDA',
         STOP: 'PARADA',
         ENDING_POINT: 'PONTO FINAL',
@@ -1343,6 +1343,9 @@ const pt: TDictionary = {
     BOARDING_POINTS: 'Pontos de embarque',
     LANDMARKS: 'Pontos turísticos',
     VIEW_IN_MAPS: 'Ver no mapa',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'em',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruzeiro por {0} - Descubra, jante e relaxe ',

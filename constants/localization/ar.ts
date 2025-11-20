@@ -1354,6 +1354,9 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     LANDMARKS: 'Landmarks',
     VIEW_IN_MAPS: 'View in maps',
     VIEW_ALL_STOPS: 'View all stops',
+    KM: 'km',
+    MIN: 'min',
+    BY: 'by',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',
