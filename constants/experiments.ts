@@ -64,7 +64,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [AAA_EXPERIMENT]: new Experiment(
     AAA_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT_A, VARIANTS.TREATMENT_B],
-    [95, 5, 5]
+    [34, 33, 33]
   ),
   [BRAND_LOADER_EXP]: new Experiment(
     BRAND_LOADER_EXP,
