@@ -879,7 +879,7 @@ const fr: TDictionary = {
       ABOUT: 'À propos',
       VENUE: 'Lieu',
       TICKETS: 'Billets',
-      Reviews: 'Commentaires',
+      Reviews: 'Avis',
     },
     SELECT_SHOW_TIMMING: "Sélectionner l'heure du spectacle",
     ONLY_ONE_SLOT:
@@ -1084,7 +1084,7 @@ const fr: TDictionary = {
     RECENT_NEWS: 'Derniers articles',
     SHOW_MORE_ARTICLES: "Afficher plus d'articles",
     COLLAPSE_ALL: 'Réduire tout',
-    REVIEWS: 'Commentaires',
+    REVIEWS: 'Avis',
     SHOW_ALL_REVIEWS: 'Voir tous les avis',
     MAILER: {
       HEADING:
