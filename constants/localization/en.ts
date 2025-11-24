@@ -2335,6 +2335,28 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
       'Save up to 57% with group discounts and get dedicated guest support.',
     LINK_TEXT: 'Get group discount',
   },
+  ENTT_COPY_EXPERIMENT: {
+    LTT: {
+      VARIANT_A: {
+        BANNER_TITLE: 'London theatre tickets trusted by millions',
+      },
+      VARIANT_B: {
+        BANNER_TITLE: 'Head out to the best of the West End',
+        BANNER_SUBTEXT:
+          'Authorised tickets, prime seats, great deals, and trusted reviews',
+      },
+    },
+    BROADWAY: {
+      VARIANT_A: {
+        BANNER_TITLE: 'Broadway tickets trusted by millions',
+      },
+      VARIANT_B: {
+        BANNER_TITLE: 'Head out to the best of Broadway',
+        BANNER_SUBTEXT:
+          'Authorised tickets, prime seats, great deals, and trusted reviews',
+      },
+    },
+  },
 };
 
 export default en;

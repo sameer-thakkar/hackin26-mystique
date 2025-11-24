@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -68,6 +68,7 @@ export const SwiperWrapper = styled.div`
 
 export const SlideDescription = styled.div<{
   index: number;
+  $showModifiedBanner?: boolean;
 }>`
   background: transparent;
   .container {
@@ -83,15 +84,46 @@ export const SlideDescription = styled.div<{
   bottom: 1rem;
   z-index: 999;
   width: 100%;
+
+  @media (max-width: 768px) {
+    ${({ $showModifiedBanner }) =>
+      $showModifiedBanner &&
+      css`
+        .container {
+          color: ${COLORS.BRAND.WHITE};
+          margin: 0;
+          padding: 0 1rem;
+          max-width: 19.625rem;
+          position: absolute;
+          bottom: -3.625rem;
+
+          .banner-header {
+            ${expandFontToken(FONTS.HEADING_LARGE)};
+            padding: 0;
+            font-size: 28px;
+            line-height: 130%;
+            letter-spacing: 0.4px;
+          }
+          .experiment-subtext {
+            ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
+            margin: 0.375rem 0 0;
+          }
+        }
+      `}
+  }
 `;
 
-export const MediaContainer = styled.div`
+export const MediaContainer = styled.div<{ $showModifiedBanner?: boolean }>`
   position: relative;
   height: 12.5rem;
   width: calc(100vw - 5.6vw * 2);
+  ${({ $showModifiedBanner }) => $showModifiedBanner && `width: 100%;`}
 `;
 
-export const LinearGradient = styled.div`
+export const LinearGradient = styled.div<{
+  $showModifiedBanner?: boolean;
+  $position?: 'top' | 'bottom';
+}>`
   position: relative;
   width: calc(100% - 0.25rem);
   z-index: 99;
@@ -100,4 +132,33 @@ export const LinearGradient = styled.div`
   height: 4.125rem;
   background: linear-gradient(180deg, rgba(26, 14, 10, 0) 0%, #150029 50%);
   border-radius: 0 0 0.625rem 0.625rem;
+
+  ${({ $showModifiedBanner, $position }) =>
+    $showModifiedBanner &&
+    css`
+      width: 100%;
+      left: 0;
+      border-radius: 0;
+      position: absolute;
+      ${$position === 'top'
+        ? css`
+            bottom: unset;
+            top: 0;
+            background: linear-gradient(
+              180deg,
+              #150029 9.93%,
+              rgba(21, 3, 40, 0) 100%
+            );
+            height: 2.063rem;
+          `
+        : css`
+            bottom: -2.625rem;
+            height: 10.188rem;
+            background: linear-gradient(
+              180deg,
+              rgba(26, 14, 10, 0) 0%,
+              #150029 85.94%
+            );
+          `}
+    `}
 `;

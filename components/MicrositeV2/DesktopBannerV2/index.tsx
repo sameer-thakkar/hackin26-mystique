@@ -22,6 +22,7 @@ import {
   SwiperWrapper,
 } from 'components/MicrositeV2/DesktopBannerV2/styles';
 import {
+  ELttOrBroadway,
   IBannerProps,
   IMediaProps,
 } from 'components/MicrositeV2/MobileBannerV2/interface';
@@ -31,6 +32,7 @@ import { Paginator } from 'UI/Paginator';
 import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -40,6 +42,7 @@ import {
 import { strings } from 'const/strings';
 import ChevronLeft from 'assets/chevronLeft';
 import ChevronRight from 'assets/chevronRight';
+import { getFirstBannerHeading } from '../utils';
 import { IBannerImageProps } from './interface';
 
 const Swiper = dynamic(
@@ -104,13 +107,23 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
 
 const DesktopBannerV2 = ({
   allTours = {},
-  bannerImages,
+  bannerImages: originalBannerImages,
   trustBoosters,
   isEntertainmentBanner,
+  isLttCopyExperimentEligible = false,
+  lttCopyExperimentVariant = null,
+  lttOrBroadway = null,
 }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
+  const showTreatmentB =
+    isLttCopyExperimentEligible &&
+    lttCopyExperimentVariant === VARIANTS.TREATMENT_B;
+
+  const bannerImages = showTreatmentB
+    ? originalBannerImages?.slice(0, 1) ?? []
+    : originalBannerImages ?? [];
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -205,6 +218,13 @@ const DesktopBannerV2 = ({
       >
         <Swiper {...swiperParams} className="swiper-no-swiping">
           {bannerImages?.map((item: IBannerImageProps, index: number) => {
+            const firstBannerHeading = getFirstBannerHeading(
+              isLttCopyExperimentEligible,
+              index,
+              item?.bannerHeading,
+              lttCopyExperimentVariant,
+              lttOrBroadway
+            );
             return (
               <BannerSlide key={index}>
                 <Media fallbackImage={item?.url} item={item} index={index} />
@@ -212,21 +232,31 @@ const DesktopBannerV2 = ({
                 <SlideDescription index={index}>
                   <div className="container">
                     <Conditional if={item?.bannerHeading}>
-                      {index === 0 ? (
+                      <Conditional if={index === 0}>
                         <h1
                           className="banner-header"
                           dangerouslySetInnerHTML={{
-                            __html: item?.bannerHeading,
+                            __html: firstBannerHeading,
                           }}
                         />
-                      ) : (
+                        <Conditional if={showTreatmentB}>
+                          <p className="experiment-subtext">
+                            {
+                              strings.ENTT_COPY_EXPERIMENT[
+                                lttOrBroadway ?? ELttOrBroadway.LTT
+                              ].VARIANT_B.BANNER_SUBTEXT
+                            }
+                          </p>
+                        </Conditional>
+                      </Conditional>
+                      <Conditional if={index !== 0}>
                         <h2
                           className="banner-header"
                           dangerouslySetInnerHTML={{
                             __html: item?.bannerHeading,
                           }}
                         />
-                      )}
+                      </Conditional>
                     </Conditional>
                     <Conditional if={item?.bannerSubText}>
                       <p>{item?.bannerSubText}</p>
@@ -298,10 +328,12 @@ const DesktopBannerV2 = ({
           </div>
         </SwiperControls>
       </SwiperWrapper>
-      <TrustBooster
-        trustBoosters={trustBoosters}
-        isEntertainmentBanner={isEntertainmentBanner}
-      />
+      <Conditional if={!showTreatmentB}>
+        <TrustBooster
+          trustBoosters={trustBoosters}
+          isEntertainmentBanner={isEntertainmentBanner}
+        />
+      </Conditional>
     </Container>
   );
 };

@@ -72,6 +72,7 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 import Location from 'assets/location';
+import { ELttOrBroadway } from '../MobileBannerV2/interface';
 
 const Alert = dynamic(
   () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),
@@ -332,11 +333,20 @@ export const HomePage = (props: any) => {
       customEligibilityCheckFn: () => isTheatreInSeatingExperiment,
     });
 
-  useABTesting({
-    experimentId: 'AAA_EXPERIMENT',
+  const {
+    isEligible: isLttCopyExperimentEligible,
+    variant: lttCopyExperimentVariant,
+  } = useABTesting({
+    experimentId: 'ENTT_COPY_EXPERIMENT',
     noTrack: false,
-    customEligibilityCheckFn: () => showLttTreatment, //Experiment eligible only for LTT & Broadway Home Pages
+    customEligibilityCheckFn: () =>
+      currentLanguage === LANGUAGE_MAP['en'].code && showLttTreatment,
   });
+  const lttOrBroadway = showLttTreatment
+    ? checkIfLTTMBLandingPage(uid)
+      ? ELttOrBroadway.LTT
+      : ELttOrBroadway.BROADWAY
+    : null;
 
   const isSeatMapExpControlAndEligible =
     isTheatreInSeatingExperiment && SeatMapExpVariant === VARIANTS.CONTROL;
@@ -665,6 +675,9 @@ export const HomePage = (props: any) => {
           bannerImages={heroProps.banners}
           allTours={allTours}
           isEntertainmentBanner={isEntertainmentBanner}
+          isLttCopyExperimentEligible={isLttCopyExperimentEligible}
+          lttCopyExperimentVariant={lttCopyExperimentVariant}
+          lttOrBroadway={lttOrBroadway}
         />
       </Conditional>
       <Conditional
@@ -679,6 +692,9 @@ export const HomePage = (props: any) => {
           bannerImages={heroProps.banners}
           allTours={allTours}
           isEntertainmentBanner={isEntertainmentBanner}
+          isLttCopyExperimentEligible={isLttCopyExperimentEligible}
+          lttCopyExperimentVariant={lttCopyExperimentVariant}
+          lttOrBroadway={lttOrBroadway}
         />
       </Conditional>
       <Conditional

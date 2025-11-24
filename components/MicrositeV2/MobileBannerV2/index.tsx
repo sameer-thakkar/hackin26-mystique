@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import TrustBooster from 'components/MicrositeV2/BannerV2TrustBooster';
 import { IBannerImageProps } from 'components/MicrositeV2/DesktopBannerV2/interface';
 import {
+  ELttOrBroadway,
   IBannerProps,
   IMediaProps,
 } from 'components/MicrositeV2/MobileBannerV2/interface';
@@ -21,25 +22,35 @@ import { Paginator } from 'UI/Paginator';
 import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
   VIDEO_POSITIONS,
 } from 'const/index';
+import { strings } from 'const/strings';
+import { getFirstBannerHeading } from '../utils';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
-const Media = ({ index, item, fallbackImage }: IMediaProps) => {
+const Media = ({
+  index,
+  item,
+  fallbackImage,
+  showModifiedBanner,
+  lttOrBroadway = null,
+}: IMediaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const swiperParentNode = containerRef.current?.parentNode as HTMLDivElement;
   const eventTracking = swiperParentNode?.classList?.contains(
     'swiper-slide-duplicate-active'
   );
+
   return (
-    <MediaContainer ref={containerRef}>
+    <MediaContainer ref={containerRef} $showModifiedBanner={showModifiedBanner}>
       <Conditional if={index === 0 && item?.mobileVideoLink}>
         <Video
           key={item.mobileVideoLink}
@@ -60,7 +71,33 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
           showPauseIcon={false}
           showPlayIcon={false}
         />
-        <LinearGradient />
+        <Conditional if={showModifiedBanner}>
+          <LinearGradient
+            $showModifiedBanner={showModifiedBanner}
+            $position="top"
+          />
+          <SlideDescription index={0} $showModifiedBanner={showModifiedBanner}>
+            <div className="container">
+              <h1
+                className="banner-header"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    strings.ENTT_COPY_EXPERIMENT[
+                      lttOrBroadway ?? ELttOrBroadway.LTT
+                    ].VARIANT_B.BANNER_TITLE,
+                }}
+              />
+              <p className="experiment-subtext">
+                {
+                  strings.ENTT_COPY_EXPERIMENT[
+                    lttOrBroadway ?? ELttOrBroadway.LTT
+                  ].VARIANT_B.BANNER_SUBTEXT
+                }
+              </p>
+            </div>
+          </SlideDescription>
+        </Conditional>
+        <LinearGradient $showModifiedBanner={showModifiedBanner} />
       </Conditional>
       <Conditional if={index !== 0 || (index === 0 && !item?.mobileVideoLink)}>
         <Image
@@ -85,13 +122,24 @@ const Media = ({ index, item, fallbackImage }: IMediaProps) => {
 
 const MobileBannerV2 = ({
   allTours = {},
-  bannerImages,
+  bannerImages: originalBannerImages,
   trustBoosters,
   isEntertainmentBanner,
+  isLttCopyExperimentEligible = false,
+  lttCopyExperimentVariant = null,
+  lttOrBroadway = null,
 }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
+
+  const showTreatmentB =
+    isLttCopyExperimentEligible &&
+    lttCopyExperimentVariant === VARIANTS.TREATMENT_B;
+
+  const bannerImages = showTreatmentB
+    ? originalBannerImages?.slice(0, 1) ?? []
+    : originalBannerImages ?? [];
 
   const updateIndex = useCallback(() => {
     if (swiper !== null) {
@@ -148,54 +196,72 @@ const MobileBannerV2 = ({
 
   return (
     <Container>
-      <SwiperWrapper>
-        <Swiper {...swiperParams}>
-          {bannerImages.map((item: IBannerImageProps, index: number) => {
-            return (
-              <div
-                key={index}
-                onClick={() => onBannerClicked(item?.showPageUrl?.url ?? '')}
-                role="button"
-                tabIndex={0}
-              >
-                <Media
-                  index={index}
-                  item={item}
-                  fallbackImage={item?.url}
-                  hasSubText={!!item.bannerSubText}
-                />
-                <SlideDescription index={index}>
-                  <div className="container">
-                    <Conditional if={item?.bannerHeading && index === 0}>
-                      <h1
-                        className="banner-header"
-                        dangerouslySetInnerHTML={{
-                          __html: item?.bannerHeading,
-                        }}
-                      />
-                    </Conditional>
-                  </div>
-                </SlideDescription>
-              </div>
-            );
-          })}
-        </Swiper>
-        <div className="paginator">
-          <Paginator
-            tabSize={1.25}
-            dotSize={0.375}
-            margin={0.125}
-            totalCount={bannerImages.length}
-            activeIndex={activeSlideIndex}
-            activeSlideTimer={swiper?.realIndex === 0 ? 12000 : 2400}
-          />
-        </div>
-      </SwiperWrapper>
-      <TrustBooster
-        isMobile={true}
-        trustBoosters={trustBoosters}
-        isEntertainmentBanner={isEntertainmentBanner}
-      />
+      <Conditional if={showTreatmentB}>
+        <Media
+          fallbackImage={bannerImages?.[0]?.mobile_url}
+          item={bannerImages?.[0]}
+          index={0}
+          showModifiedBanner={showTreatmentB}
+          lttOrBroadway={lttOrBroadway}
+        />
+      </Conditional>
+      <Conditional if={!showTreatmentB}>
+        <SwiperWrapper>
+          <Swiper {...swiperParams}>
+            {bannerImages.map((item: IBannerImageProps, index: number) => {
+              const firstBannerHeading = getFirstBannerHeading(
+                isLttCopyExperimentEligible,
+                index,
+                item?.bannerHeading,
+                lttCopyExperimentVariant,
+                lttOrBroadway
+              );
+              return (
+                <div
+                  key={index}
+                  onClick={() => onBannerClicked(item?.showPageUrl?.url ?? '')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <Media
+                    index={index}
+                    item={item}
+                    fallbackImage={item?.url}
+                    hasSubText={!!item.bannerSubText}
+                  />
+                  <SlideDescription index={index}>
+                    <div className="container">
+                      <Conditional if={item?.bannerHeading && index === 0}>
+                        <h1
+                          className="banner-header"
+                          dangerouslySetInnerHTML={{
+                            __html: firstBannerHeading,
+                          }}
+                        />
+                      </Conditional>
+                    </div>
+                  </SlideDescription>
+                </div>
+              );
+            })}
+          </Swiper>
+          <div className="paginator">
+            <Paginator
+              tabSize={1.25}
+              dotSize={0.375}
+              margin={0.125}
+              totalCount={bannerImages.length}
+              activeIndex={activeSlideIndex}
+              activeSlideTimer={swiper?.realIndex === 0 ? 12000 : 2400}
+            />
+          </div>
+        </SwiperWrapper>
+        <TrustBooster
+          isMobile={true}
+          trustBoosters={trustBoosters}
+          isEntertainmentBanner={isEntertainmentBanner}
+        />
+      </Conditional>
     </Container>
   );
 };

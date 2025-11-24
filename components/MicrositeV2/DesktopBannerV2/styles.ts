@@ -184,7 +184,12 @@ export const SlideDescription = styled.div<{
       max-width: ${({ index }) => (index === 0 ? `31.25rem;` : `23.9375rem;;`)};
       ${expandFontToken(FONTS.PARAGRAPH_REGULAR)};
       color: ${COLORS.BRAND.WHITE};
+      &.experiment-subtext {
+        ${expandFontToken(FONTS.PARAGRAPH_LARGE)};
+        max-width: 20.75rem;
+      }
     }
+
     button {
       pointer-events: all;
       margin-top: 1.5rem;

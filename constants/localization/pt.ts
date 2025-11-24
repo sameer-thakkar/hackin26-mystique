@@ -2312,6 +2312,28 @@ const pt: TDictionary = {
     SUBTEXT: 'Economize até 57% com atendimento exclusivo ao cliente.',
     LINK_TEXT: 'Garanta o desconto para grupos',
   },
+  ENTT_COPY_EXPERIMENT: {
+    LTT: {
+      VARIANT_A: {
+        BANNER_TITLE: 'London theatre tickets trusted by millions',
+      },
+      VARIANT_B: {
+        BANNER_TITLE: 'Head out to the best of the West End',
+        BANNER_SUBTEXT:
+          'Authorised tickets, prime seats, great deals, and trusted reviews',
+      },
+    },
+    BROADWAY: {
+      VARIANT_A: {
+        BANNER_TITLE: 'Broadway tickets trusted by millions',
+      },
+      VARIANT_B: {
+        BANNER_TITLE: 'Head out to the best of Broadway',
+        BANNER_SUBTEXT:
+          'Authorised tickets, prime seats, great deals, and trusted reviews',
+      },
+    },
+  },
 };
 
 export default pt;
