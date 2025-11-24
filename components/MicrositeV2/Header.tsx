@@ -417,7 +417,7 @@ const SearchWrapper = styled.div<{ showColoredHeader: boolean }>`
     left: 0;
     border-radius: 6px;
     width: 100%;
-    z-index: 10;
+    z-index: 1000;
     background: #fff;
     display: grid;
     grid-row-gap: 10px;
@@ -742,20 +742,16 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
                   isDarkMode={showColoredHeader}
                 />
                 <Conditional if={displaySearchResults}>
-                  <div>
-                    <div className="results" ref={resultSectionRef}>
-                      {results.map(
-                        ({ item }: { item: Record<string, any> }) => {
-                          return (
-                            <SearchItem
-                              key={item.tgid}
-                              {...item}
-                              onSearchResultClick={onSearchResultClick}
-                            />
-                          );
-                        }
-                      )}
-                    </div>
+                  <div className="results" ref={resultSectionRef}>
+                    {results.map(({ item }: { item: Record<string, any> }) => {
+                      return (
+                        <SearchItem
+                          key={item.tgid}
+                          {...item}
+                          onSearchResultClick={onSearchResultClick}
+                        />
+                      );
+                    })}
                   </div>
                 </Conditional>
               </SearchWrapper>

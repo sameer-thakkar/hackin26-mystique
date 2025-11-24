@@ -720,6 +720,8 @@ export const ANALYTICS_EVENTS = {
   GROUP_BOOKING_CTA_CLICKED: 'Group Booking CTA Clicked',
 };
 
+export const HOHO_SUBCATEGORY_NAMES = ['HOHO', 'Hop-on Hop-off Bus Tours'];
+
 export const MORE_DETAILS_SWIPESHEET = {
   ACTION: {
     CLOSE_BUTTON: 'Close Button',

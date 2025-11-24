@@ -31,6 +31,7 @@ import {
   DESIGN,
   ENTITY_ICONS_FOLDER_URL,
   F1_SPORTS_EXPERIMENT_TGIDS,
+  HOHO_SUBCATEGORY_NAMES,
   LANGUAGE_MAP,
   MB_CATEGORISATION,
   MONTHS,
@@ -862,6 +863,19 @@ const mapDescriptorItems = ({ descriptors = [], cityName, language }: any) =>
     []
   ) || [];
 
+const isHOHOSubcategory = ({
+  taggedSubCategoryName,
+  subCategoryName,
+}: {
+  taggedSubCategoryName: string;
+  subCategoryName: string;
+}) => {
+  return (
+    subCategoryName === 'HOHO' &&
+    HOHO_SUBCATEGORY_NAMES.includes(taggedSubCategoryName)
+  );
+};
+
 export const getBannerDescriptors = ({
   taggedMbType,
   taggedCategoryName,
@@ -904,7 +918,12 @@ export const getBannerDescriptors = ({
     descriptors = findDescriptors(id);
   } else if (isCategoryMB(taggedMbType) && taggedCategoryName) {
     descriptors = categoryDescriptors;
-  } else if (isCollectionMB(taggedMbType) && taggedSubCategoryName === name) {
+  } else if (
+    isCollectionMB(taggedMbType) &&
+    taggedSubCategoryName &&
+    (isHOHOSubcategory({ taggedSubCategoryName, subCategoryName: name }) ||
+      taggedSubCategoryName === name)
+  ) {
     descriptors = findDescriptors(id);
   } else if (isCollectionMB(taggedMbType) && taggedCategoryName) {
     descriptors = categoryDescriptors;
