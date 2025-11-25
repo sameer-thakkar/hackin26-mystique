@@ -32,11 +32,9 @@ const SIMILARITY_BASED_RANKING_EXPERIMENT_V2 =
   'similarity_based_ranking_experiment';
 const LTT_SHOW_PAGE_EXPERIMENT_V2 = 'Dweb LTT Show Page Calendar';
 const DROPS_EXPERIMENT = 'Drops Experiment';
-const AAA_EXPERIMENT = 'AAA Experiment';
 const ENTT_COPY_EXPERIMENT = 'LTT/Broadway Home Page Experiment';
 
 export const EXPERIMENT_NAMES = {
-  AAA_EXPERIMENT,
   BRAND_LOADER_EXP,
   C1_COLLECTION_PRODUCT_CARD_CTA_EXPERIMENT_ENGLISH,
   DAY_TRIPS_LISTICLE,
@@ -63,11 +61,6 @@ export const EXPERIMENT_NAMES = {
  * Ensure Experiment Variant at index 0 is always Control (Current) Variant.
  */
 export const EXPERIMENTS: Record<string, Experiment> = {
-  [AAA_EXPERIMENT]: new Experiment(
-    AAA_EXPERIMENT,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT_A, VARIANTS.TREATMENT_B],
-    [34, 33, 33]
-  ),
   [BRAND_LOADER_EXP]: new Experiment(
     BRAND_LOADER_EXP,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
@@ -91,7 +84,7 @@ export const EXPERIMENTS: Record<string, Experiment> = {
   [ENTT_COPY_EXPERIMENT]: new Experiment(
     ENTT_COPY_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT_A, VARIANTS.TREATMENT_B],
-    [100, 0, 0]
+    [80, 10, 10]
   ),
   [FLEXIBLE_CANCELLATION_EXPERIMENT]: new Experiment(
     FLEXIBLE_CANCELLATION_EXPERIMENT,

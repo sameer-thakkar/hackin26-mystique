@@ -28,7 +28,6 @@ import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import AccordionGroup from 'components/slices/AccordionGroup';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
-import useABTesting from 'hooks/useABTesting';
 import { useHistoryTraversal } from 'hooks/useHistoryTraversal';
 import {
   createBookingURL,
@@ -50,7 +49,6 @@ import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import {
-  AAA_EXPERIMENT_UIDS,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   BOOLEAN_STATES,
@@ -404,12 +402,6 @@ const LttShowPageV2 = ({
     setButtonLoading(true);
     setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
   };
-
-  useABTesting({
-    experimentId: 'AAA_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () => AAA_EXPERIMENT_UIDS.includes(uid),
-  });
 
   return (
     <ShowPageWrapper>

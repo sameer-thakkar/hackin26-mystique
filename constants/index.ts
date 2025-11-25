@@ -2730,9 +2730,3 @@ export const GROUP_BOOKING_TGIDS = [
 export const AUTOMATED_PRODUCT_RANKING_FILTER = {
   POPULARITY: 'POPULARITY',
 } as const;
-export const AAA_EXPERIMENT_UIDS = [
-  'www.london-theater-tickets.com.othello-tickets',
-  'www.london-theater-tickets.com.shows-in-london.circus-shows.come-alive-tickets',
-  'www.broadway-show-tickets.com.musical.the-book-of-mormon-tickets',
-  'www.broadway-show-tickets.com.musical.six-the-musical-tickets',
-];
