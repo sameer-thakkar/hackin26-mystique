@@ -418,13 +418,15 @@ const ShowPagePricingSection = ({
                   variant="primary"
                 />
               </Conditional>
-              <RiveShowPageCTA
-                onClick={onCheckAvailabilityClicked}
-                onRiveVisible={(status: boolean) => setIsRiveVisible(status)}
-                primaryText={buyButtonText}
-                tgid={tgid}
-                primarySubCatId={primarySubCategory?.id}
-              />
+              <Conditional if={lang !== 'ru'}>
+                <RiveShowPageCTA
+                  onClick={onCheckAvailabilityClicked}
+                  onRiveVisible={(status: boolean) => setIsRiveVisible(status)}
+                  primaryText={buyButtonText}
+                  tgid={tgid}
+                  primarySubCatId={primarySubCategory?.id}
+                />
+              </Conditional>
             </BuyButtonWrapper>
           </PricingSection>
         </Conditional>

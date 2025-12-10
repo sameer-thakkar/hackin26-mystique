@@ -200,10 +200,11 @@ const DesktopTrailer: React.FC<
             <TrailerHeading>{TRAILERS}</TrailerHeading>
           </Container>
           <Swiper className="no-swiping" {...mainSwiperOptions}>
-            {trailerData.map((trailer, index: number) => {
-              const shortSummary = trailer?.shortSummary
-                ?.replace('<p>', '')
-                ?.replace('</p>', '');
+            {trailerData.map((trailer, index) => {
+              const shortSummary = trailer?.shortSummary?.replace(
+                /<\/?p>|<\/?em>/g,
+                ''
+              );
 
               const showPageUid = showPageDocuments?.reduce((acc, curr) => {
                 return (acc += trailer.id === curr?.data?.tgid ? curr.uid : '');

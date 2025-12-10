@@ -317,6 +317,7 @@ export const TourTitleWrapper = styled.h2<{
   $isTicketCard?: boolean;
 }>`
   ${expandFontToken(FONTS.HEADING_LARGE)}
+  word-break: break-word;
   margin: 0;
   max-width: 768px;
   svg {
@@ -2893,7 +2894,7 @@ export const HighlightsPanel = styled.div<{
   $showPopup?: boolean;
   $isV3Design?: boolean;
 }>`
-  max-height: ${({ $isV3Design }) => ($isV3Design ? 16 : 15)}rem;
+  max-height: ${({ $isV3Design }) => ($isV3Design ? 16 : 14)}rem;
   overflow: hidden;
   align-self: stretch;
 
