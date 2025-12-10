@@ -32,7 +32,6 @@ interface PricingBarProps {
   isAsideBarOverlay: boolean;
   sendBookNowEvent: (placement: string) => void;
   handleShowComboPopup: (placement: string) => void;
-  isV3Design: boolean;
   tgid: string;
   isSportsExperiment: boolean;
   isGpMotorTicketsMb: boolean;
@@ -48,17 +47,14 @@ const getDiscountText = (bestDiscount: number): string => {
 };
 
 const getBookNowButtonText = ({
-  isV3Design,
   isSportsExperiment,
   isGpMotorTicketsMb,
   isSportsSubCategory,
 }: {
-  isV3Design: boolean;
   isSportsExperiment: boolean;
   isGpMotorTicketsMb: boolean;
   isSportsSubCategory: boolean;
 }): string => {
-  if (isV3Design) return strings.BOOK_NOW_CTA;
   if (isSportsExperiment) return strings.SELECT_SECTION;
   if (isGpMotorTicketsMb && isSportsSubCategory) return strings.BUY_TICKETS_CTA;
   return strings.CHECK_AVAIL;
@@ -72,7 +68,6 @@ const PricingBar: FC<React.PropsWithChildren<PricingBarProps>> = ({
   mbTheme,
   sendBookNowEvent,
   handleShowComboPopup,
-  isV3Design,
   isSportsExperiment,
   isGpMotorTicketsMb,
   isSportsSubCategory,
@@ -92,7 +87,6 @@ const PricingBar: FC<React.PropsWithChildren<PricingBarProps>> = ({
     : showCustomProductCardEnglishCTA
     ? strings.SELECT_AN_OPTION
     : getBookNowButtonText({
-        isV3Design,
         isSportsExperiment,
         isGpMotorTicketsMb,
         isSportsSubCategory,

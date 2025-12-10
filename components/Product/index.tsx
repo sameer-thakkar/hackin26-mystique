@@ -1256,8 +1256,6 @@ const Product = (props: any) => {
 
   const getBookNowButtonText = (): string => {
     switch (true) {
-      case isV3Design: // This is just for the experiment. Will revert this at a later time or figure a better to do this
-        return strings.BOOK_NOW_CTA;
       case isSportsExperiment:
         return strings.SELECT_SECTION;
       case isGpMotorTicketsMb && isSportsSubCategory:

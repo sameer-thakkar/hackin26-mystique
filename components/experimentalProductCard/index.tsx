@@ -401,7 +401,6 @@ const ExperimentalProductCard = (props: any) => {
           handleShowComboPopup,
           tgid,
           rank: position,
-          isV3Design,
           isSportsExperiment,
           isGpMotorTicketsMb,
           isSportsSubCategory,

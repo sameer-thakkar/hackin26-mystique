@@ -55,7 +55,6 @@ const DrawerWrapper = (props: any) => {
     handleShowComboPopup,
     tgid,
     rank,
-    isV3Design,
     isSportsExperiment,
     isGpMotorTicketsMb,
     isSportsSubCategory,
@@ -188,7 +187,6 @@ const DrawerWrapper = (props: any) => {
           sendBookNowEvent={sendBookNowEvent}
           handleShowComboPopup={handleShowComboPopup}
           tgid={tgid}
-          isV3Design={isV3Design}
           isSportsExperiment={isSportsExperiment}
           isGpMotorTicketsMb={isGpMotorTicketsMb}
           isSportsSubCategory={isSportsSubCategory}
