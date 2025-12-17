@@ -113,6 +113,7 @@ export const drawerStyles = (isDarkMode?: boolean) => css`
       top: 24px;
     }
     ${Panel} {
+      overscroll-behavior: none;
       padding: 0 24px;
       max-height: calc(100vh - 152px);
       overflow-y: scroll;
