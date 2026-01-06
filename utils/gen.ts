@@ -94,18 +94,53 @@ export function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
  *
  * @param fn callback function
  * @param thresholdTriggerMs time interval in milliseconds after which fn needs to be called.
+ * @param trailing If true, ensures the last event is executed after the throttle period (default: true)
  * @returns
  */
 export function throttle<F extends (...args: Parameters<F>) => ReturnType<F>>(
   callback: F,
-  thresholdTriggerMs: number
+  thresholdTriggerMs: number,
+  trailing = true
 ) {
   let lastTime = 0;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let lastArgs: Parameters<typeof callback> | null = null;
+  let lastContext: unknown | null = null;
+
   return function <U>(this: U, ...args: Parameters<typeof callback>) {
-    let now = new Date().getTime();
+    const now = new Date().getTime();
+    const context = this;
+
+    // Store the latest arguments and context for trailing execution
+    if (trailing) {
+      lastArgs = args;
+      lastContext = context;
+    }
+
+    // Execute immediately if enough time has passed
     if (now - lastTime >= thresholdTriggerMs) {
-      callback.apply(this, args);
+      // Clear any pending trailing execution
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+
+      callback.apply(context, args);
       lastTime = now;
+    } else if (trailing && !timeoutId) {
+      // Schedule trailing execution for the last event
+      const timeSinceLastExecution = now - lastTime;
+      const remainingTime = thresholdTriggerMs - timeSinceLastExecution;
+
+      timeoutId = setTimeout(() => {
+        if (lastArgs) {
+          callback.apply(lastContext, lastArgs);
+          lastTime = new Date().getTime();
+        }
+        timeoutId = null;
+        lastArgs = null;
+        lastContext = null;
+      }, remainingTime);
     }
   };
 }

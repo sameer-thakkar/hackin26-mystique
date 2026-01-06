@@ -661,25 +661,25 @@ const ru: TDictionary = {
   ENTERTAINMENT_MB_LANDING_PAGE: {
     TRUST_BOOSTERS: {
       BOX_OFFICE_TICKETS: {
-        NAME: 'Билеты в кассе',
+        NAME: 'Билеты без посредников',
         DESCRIPTION: 'Мгновенное подтверждение на ваш телефон',
       },
       CHOOSE_YOUR_SEATS: {
         NAME: 'Выберите места',
-        DESCRIPTION: 'Каждый раз — именно тот вид, который вы ищете',
+        DESCRIPTION: 'Идеальный обзор — каждый раз',
       },
       EXCLUSIVE_DEALS: {
         NAME: 'Эксклюзивные предложения и скидки',
-        DESCRIPTION: 'Сэкономьте на лучших шоу {0}',
+        DESCRIPTION: 'Экономьте на лучших шоу {0}',
       },
       BOOK_AND_RELAX: {
         NAME: 'Забронируйте и расслабьтесь',
-        DESCRIPTION: 'Нам доверяют уже более {0} миллионов гостей',
+        DESCRIPTION: 'Нам доверяют более {0} миллионов гостей',
       },
     },
     YOUR_PICK: 'Ваш выбор',
     BROWSE_BY_CATEGORIES: 'Просмотр по категориям',
-    TOP_WEST_END_SHOWS: 'Лучшие шоу Вэст-Энда',
+    TOP_WEST_END_SHOWS: 'Лучшие шоу Вест-Энда',
     TOP_THEATRE_SHOWS: 'Лучшие шоу {0}',
     TOP_SHOWS: 'Лучшие шоу',
     SEE_MORE_SHOWS: 'Смотрите другие шоу {0}',

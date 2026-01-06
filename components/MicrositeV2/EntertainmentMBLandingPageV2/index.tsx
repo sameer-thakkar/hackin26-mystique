@@ -204,6 +204,10 @@ const EntertainmentMBLandingPageV2 = ({
   };
 
   const theatreName = COLLECTION_ID_THEATRE_NAMES_MAP[collectionId];
+  const overrideTheatreName =
+    collectionId === 167 && lang === 'ru'
+      ? strings.ENTERTAINMENT_MB_LANDING_PAGE.TOP_WEST_END_SHOWS
+      : '';
 
   return (
     <LandingPageWrapper>
@@ -218,10 +222,11 @@ const EntertainmentMBLandingPageV2 = ({
         isMobile={isMobile}
         topShows={topShows}
         heading={
-          strings.formatString(
+          overrideTheatreName ||
+          (strings.formatString(
             strings.ENTERTAINMENT_MB_LANDING_PAGE.TOP_THEATRE_SHOWS,
             theatreName
-          ) as string
+          ) as string)
         }
         directTgid={directTgid}
         showBrowseByCategories={false}
