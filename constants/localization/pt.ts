@@ -1346,6 +1346,7 @@ const pt: TDictionary = {
     KM: 'km',
     MIN: 'min',
     BY: 'em',
+    AT: 'às',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruzeiro por {0} - Descubra, jante e relaxe ',

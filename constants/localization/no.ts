@@ -1369,6 +1369,7 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
     KM: 'km',
     MIN: 'min',
     BY: 'med',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

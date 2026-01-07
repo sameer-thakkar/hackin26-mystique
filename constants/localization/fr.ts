@@ -1350,6 +1350,7 @@ const fr: TDictionary = {
     KM: 'km',
     MIN: 'min',
     BY: 'en',
+    AT: 'à',
   },
   CRUISES: {
     BANNER_HEADING: 'Croisière à travers {0}  : découverte, détente et dîner ',

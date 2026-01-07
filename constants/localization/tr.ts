@@ -1378,6 +1378,7 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     KM: 'km',
     MIN: 'dk.',
     BY: 'ulaşım aracı',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

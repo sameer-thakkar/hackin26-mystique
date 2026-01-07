@@ -1372,6 +1372,7 @@ Alla termer med versaler som anv√§nds ovan definieras i integritetspolicyn. Bes√
     KM: 'km',
     MIN: 'min',
     BY: 'med',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

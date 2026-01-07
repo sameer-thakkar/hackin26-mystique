@@ -1382,6 +1382,7 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     KM: 'km',
     MIN: 'min.',
     BY: 'cu',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

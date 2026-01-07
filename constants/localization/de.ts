@@ -1345,6 +1345,7 @@ const de: TDictionary = {
     KM: 'km',
     MIN: 'Min.',
     BY: ':',
+    AT: 'um',
   },
   CRUISES: {
     BANNER_HEADING: 'Schifffahrten in {0}: entdecken, essen, entspannen ',

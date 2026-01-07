@@ -1357,6 +1357,7 @@ const it: TDictionary = {
     KM: 'km',
     MIN: 'min.',
     BY: 'in',
+    AT: 'alle',
   },
   CRUISES: {
     BANNER_HEADING: 'Attraversa {0} - Scoprire, mangiare e rilassarsi ',

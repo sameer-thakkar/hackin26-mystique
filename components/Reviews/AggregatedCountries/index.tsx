@@ -104,7 +104,7 @@ const CountriesReviewSummary = ({
               strings.AGGREGATED_COUNTRIES,
               mainCountries,
               count.toString()
-            ),
+            ) as string,
           }}
         />
 

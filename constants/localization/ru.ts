@@ -1379,6 +1379,7 @@ const ru: TDictionary = {
     KM: 'км',
     MIN: 'мин.',
     BY: 'на',
+    AT: 'в',
   },
   CRUISES: {
     BANNER_HEADING: 'Прокатитесь по {0} - Исследуйте, пообедайте и отдохните',

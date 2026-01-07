@@ -1370,6 +1370,7 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. LÃ
     KM: 'km',
     MIN: 'min.',
     BY: 'med',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Krydstogt gennem {0} â€“ oplevelser, god mad og afslapning',

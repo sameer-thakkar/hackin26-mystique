@@ -1352,6 +1352,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     KM: 'km',
     MIN: 'min',
     BY: 'by',
+    AT: 'at',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise Through {0} - Discover, Dine & Relax ',

@@ -1339,6 +1339,7 @@ const nl: TDictionary = {
     KM: 'km',
     MIN: 'min.',
     BY: 'per',
+    AT: 'om',
   },
   CRUISES: {
     BANNER_HEADING: 'Vaar door {0} - Ontdek, eet lekker en relax ',

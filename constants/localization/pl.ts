@@ -1378,6 +1378,7 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     KM: 'km',
     MIN: 'min',
     BY: 'środkiem transportu:',
+    AT: 'o',
   },
   CRUISES: {
     BANNER_HEADING: 'Cruise through {0} & discover scenic landscapes',
