@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Image from 'UI/Image';
-import { PAYMENT_CARD_ICONS } from 'const/footer';
+import { PAYMENT_CARD_ICONS, REVOLUT_ICON } from 'const/footer';
 
 const Grid = styled.div`
   display: grid;
@@ -17,10 +17,17 @@ const GridItem = styled.div`
 
 const PAYMENT_METHODS = Object.entries(PAYMENT_CARD_ICONS);
 
-export const PaymentMethods = () => {
+type TPaymentMethodsProps = {
+  hasDarkBg?: boolean;
+};
+
+export const PaymentMethods = ({ hasDarkBg }: TPaymentMethodsProps) => {
+  const revolutLink = hasDarkBg ? REVOLUT_ICON.LIGHT : REVOLUT_ICON.DARK;
+
+  const iconList = [...PAYMENT_METHODS, [REVOLUT_ICON.NAME, revolutLink]];
   return (
     <Grid>
-      {PAYMENT_METHODS.map(([iconName, iconURL]) => {
+      {iconList.map(([iconName, iconURL]) => {
         return (
           <GridItem key={iconName}>
             <Image fitCrop={true} url={iconURL} alt={iconName} />

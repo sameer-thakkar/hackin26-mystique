@@ -334,7 +334,9 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                       <FooterHeading isLight={isLight}>
                         <span>{strings.FOOTER.WE_ACCEPT}</span>
                       </FooterHeading>
-                      <PaymentMethods />
+                      <PaymentMethods
+                        hasDarkBg={isLTT || isDark || isDarkPurps}
+                      />
                     </LinksWrapper>
                   </div>
                   <Conditional if={isLTT}>

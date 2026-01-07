@@ -26,6 +26,13 @@ export const PAYMENT_CARD_ICONS = {
   FPX: 'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/FPXLight.svg',
 };
 
+export const REVOLUT_ICON = {
+  NAME: 'REVOLUT',
+  LIGHT:
+    'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/RevolutCardWhite.svg',
+  DARK: 'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/RevolutCardBlack.svg',
+};
+
 export const FOOTER_CONTACT_ICON_DIM = 12;
 
 export const CONTACT_ICONS = {
