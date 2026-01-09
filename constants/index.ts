@@ -2503,15 +2503,6 @@ export const BOOSTER_EXPERIMENT_UIDS = new Map([
 
 export const TEMP_HARDCODED_PRODUCT = new Map([
   [
-    'www.broadway-show-tickets.com',
-    {
-      UID: 'www.broadway-show-tickets.com',
-      TGID: 30704,
-      COLLECTION_ID: 24,
-      SUBCAT_ID: 1036,
-    },
-  ],
-  [
     'www.broadway-show-tickets.com.home',
     {
       UID: 'www.broadway-show-tickets.com.home',

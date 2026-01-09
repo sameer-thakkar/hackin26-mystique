@@ -54,6 +54,8 @@ export const CategoryCarouselSwiper = ({
     sliderList.unshift(hardcodedTgid);
   }
 
+  sliderList = Array.from(new Set(sliderList));
+
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const [slidesPerView, setSlidesPerView] = useState(6);
