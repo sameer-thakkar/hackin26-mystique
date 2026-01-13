@@ -250,6 +250,12 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
     SCAN_CODES: 'Skanuj kody',
     STAR_VERIFIED: 'click to verify S.T.A.R membership',
     OFFICIAL_TICKET_RETAILER: 'Official ticket retailer',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'Aby uzyskać szybszą pomoc w sprawie rezerwacji:',
+      SUBTEXT1: 'Zadzwoń z numeru telefonu podanego podczas rezerwacji.',
+      SUBTEXT2:
+        'Jeśli dzwonisz z innego numeru, przygotuj numer rezerwacji oraz cztery ostatnie cyfry numeru telefonu użytego podczas rezerwacji.',
+    },
   },
   FREE_CANCELLATION: 'Bezpłatne anulowanie',
   FREE_CANCELLATION_SUBTEXT:

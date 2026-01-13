@@ -249,6 +249,13 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
     SCAN_CODES: 'Scanare cod',
     STAR_VERIFIED: 'click pentru a verifica apartenența la S.T.A.R',
     OFFICIAL_TICKET_RETAILER: 'Distribuitor oficial de bilete',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'Pentru asistență mai rapidă în legătură cu o rezervare:',
+      SUBTEXT1:
+        'Sunați de pe numărul de telefon pe care l-ați introdus la efectuarea rezervării.',
+      SUBTEXT2:
+        'Dacă sunați de pe un alt număr, aveți la îndemână ID-ul rezervării și ultimele patru cifre ale numărului de telefon utilizat la efectuarea rezervării.',
+    },
   },
   FREE_CANCELLATION: 'Anulare gratuită',
   FREE_CANCELLATION_SUBTEXT:

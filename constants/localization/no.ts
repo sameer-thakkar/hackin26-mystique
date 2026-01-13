@@ -248,6 +248,12 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
     SCAN_CODES: 'Skann kode',
     STAR_VERIFIED: 'klikk for å bekrefte S.T.A.R-medlemskap',
     OFFICIAL_TICKET_RETAILER: 'Offisiell billettforhandler',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'For raskere support ved bestilling:',
+      SUBTEXT1: 'Ring fra telefonnummeret du oppga ved bestillingen.',
+      SUBTEXT2:
+        'Hvis du ringer fra et annet nummer, må du ha bestillingsnummeret og de fire siste sifrene i telefonnummeret som ble brukt ved bestillingen, klart.',
+    },
   },
   FREE_CANCELLATION: 'Gratis avbestilling',
   FREE_CANCELLATION_SUBTEXT:

@@ -246,6 +246,12 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
     SCAN_CODES: 'Kodu tarayın',
     STAR_VERIFIED: 'S.T.A.R üyeliğini doğrulamak için tıklayın',
     OFFICIAL_TICKET_RETAILER: 'Resmi Bilet Bayisi',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'Rezervasyonla ilgili daha hızlı destek için:',
+      SUBTEXT1: 'Rezervasyon sırasında girdiğiniz telefon numarasından arayın.',
+      SUBTEXT2:
+        'Başka bir numaradan arıyorsanız, rezervasyon numaranızı ve rezervasyon sırasında kullandığınız telefon numarasının son dört hanesini hazır bulundurun.',
+    },
   },
   FREE_CANCELLATION: 'Ücretsiz İptal',
   FREE_CANCELLATION_SUBTEXT:

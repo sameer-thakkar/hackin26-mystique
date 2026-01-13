@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import { Box, Text } from '@headout/eevee';
+import { css as pixieCss } from '@headout/pixie/css';
 import Drawer from 'components/common/Drawer';
 import COLORS from 'const/colors';
 import { HO_CONTACT_NUMBERS } from 'const/contacts';
@@ -42,7 +44,7 @@ const ContactNumber = styled.div`
 
 const mobileCallUsPanelStyles = css`
   .call_us_panel_drawer {
-    height: 54.5vh;
+    height: 64.5vh;
     -webkit-overflow-scrolling: touch;
     grid-row-gap: unset;
 
@@ -67,9 +69,54 @@ const mobileCallUsPanelStyles = css`
   }
 `;
 
+const disclaimerContainer = pixieCss({
+  padding: 'space.12',
+  borderRadius: 'radius.8',
+  backgroundColor: 'semantic.surface.light.grey.2',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'space.10',
+});
+
+const disclaimerSubtitleContainer = pixieCss({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'space.6',
+  paddingLeft: 'space.16',
+  listStyleType: 'disc',
+  margin: 0,
+});
+
+const disclaimerHeading = pixieCss({
+  color: 'text.grey.2',
+  textStyle: 'ui.label.medium.heavy',
+});
+
+const disclaimerSubtext = pixieCss({
+  textStyle: 'para.regular',
+  color: 'text.grey.2',
+});
+
 const ContactUs = () => {
   return (
     <ContactsContainer>
+      <Box className={disclaimerContainer}>
+        <Text className={disclaimerHeading}>
+          {strings.FOOTER.FT_CALL_US_DISCLAIMER.HEADING}
+        </Text>
+        <Box as="ul" className={disclaimerSubtitleContainer}>
+          <Box as="li">
+            <Text as="span" className={disclaimerSubtext}>
+              {strings.FOOTER.FT_CALL_US_DISCLAIMER.SUBTEXT1}
+            </Text>
+          </Box>
+          <Box as="li">
+            <Text as="span" className={disclaimerSubtext}>
+              {strings.FOOTER.FT_CALL_US_DISCLAIMER.SUBTEXT2}
+            </Text>
+          </Box>
+        </Box>
+      </Box>
       {HO_CONTACT_NUMBERS.map((contact, index) => {
         return (
           <ContactsWrapper key={index}>

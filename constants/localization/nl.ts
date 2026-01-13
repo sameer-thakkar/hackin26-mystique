@@ -224,6 +224,13 @@ const nl: TDictionary = {
     SCAN_CODES: 'Scan codes',
     STAR_VERIFIED: 'Klik om je registratie voor S.T.A.R. te verifiëren.',
     OFFICIAL_TICKET_RETAILER: 'Officiële ticketverkoper',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'Voor snellere ondersteuning bij een boeking:',
+      SUBTEXT1:
+        'Bel vanaf het telefoonnummer dat u bij het boeken hebt opgegeven.',
+      SUBTEXT2:
+        'Als u vanaf een ander nummer belt, houd dan uw boekingsnummer bij de hand, samen met de laatste vier cijfers van het telefoonnummer dat u bij het boeken hebt gebruikt.',
+    },
   },
   FREE_CANCELLATION: 'Gratis annuleren',
   FREE_CANCELLATION_SUBTEXT: 'Je kunt tot 72 uur van tevoren annuleren.',

@@ -246,6 +246,12 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. L√
     SCAN_CODES: 'Scan kode',
     STAR_VERIFIED: 'klik for at bekr√¶fte S.T.A.R.-medlemskab',
     OFFICIAL_TICKET_RETAILER: 'Officiel billetforhandler',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'For hurtigere support ved en reservation:',
+      SUBTEXT1: 'Ring fra det telefonnummer, du angav ved reservationen.',
+      SUBTEXT2:
+        'Hvis du ringer fra et andet nummer, skal du have dit reservationsnummer klar sammen med de sidste fire cifre i det telefonnummer, der blev brugt ved reservationen.',
+    },
   },
   FREE_CANCELLATION: 'Gratis afbestilling',
   FREE_CANCELLATION_SUBTEXT:

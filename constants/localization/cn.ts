@@ -239,6 +239,12 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
     SCAN_CODES: 'Scan code',
     STAR_VERIFIED: 'click to verify S.T.A.R membership',
     OFFICIAL_TICKET_RETAILER: 'Official ticket retailer',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'For faster support on a booking:',
+      SUBTEXT1: 'Call from the phone number you entered while booking.',
+      SUBTEXT2:
+        "If you're calling from another number, keep your booking ID ready along with the last four digits of the phone number used during booking.",
+    },
   },
   FREE_CANCELLATION: 'Free cancellation',
   FREE_CANCELLATION_SUBTEXT:

@@ -246,6 +246,12 @@ Alla termer med versaler som används ovan definieras i integritetspolicyn. Bes�
     SCAN_CODES: 'Skanna kod',
     STAR_VERIFIED: 'Klicka för att verifiera S.T.A.R-medlemskap',
     OFFICIAL_TICKET_RETAILER: 'Officiell biljettåterförsäljare',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: 'Rezervasyonla ilgili daha hızlı destek için:',
+      SUBTEXT1: 'Rezervasyon sırasında girdiğiniz telefon numarasından arayın.',
+      SUBTEXT2:
+        'Başka bir numaradan arıyorsanız, rezervasyon numaranızı ve rezervasyon sırasında kullandığınız telefon numarasının son dört hanesini hazır bulundurun.',
+    },
   },
   FREE_CANCELLATION: 'Fri avbokning',
   FREE_CANCELLATION_SUBTEXT:

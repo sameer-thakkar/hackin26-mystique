@@ -226,6 +226,13 @@ const it: TDictionary = {
     SCAN_CODES: 'scannerizza i codici',
     STAR_VERIFIED: "Clicca per verificare l'iscrizione a S.T.A.R.",
     OFFICIAL_TICKET_RETAILER: 'Rivenditore ufficiale di biglietti',
+    FT_CALL_US_DISCLAIMER: {
+      HEADING: "Per un'assistenza più rapida su una prenotazione:",
+      SUBTEXT1:
+        'Chiama dal numero di telefono che hai inserito al momento della prenotazione.',
+      SUBTEXT2:
+        'Se chiami da un altro numero, tieni a portata di mano il tuo ID di prenotazione e le ultime quattro cifre del numero di telefono utilizzato durante la prenotazione.',
+    },
   },
   FREE_CANCELLATION: 'Cancellazione gratuita',
   FREE_CANCELLATION_SUBTEXT:
