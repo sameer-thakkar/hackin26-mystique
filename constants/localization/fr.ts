@@ -525,7 +525,7 @@ const fr: TDictionary = {
     AGE_LIMIT: "Limite d'âge",
     AGE_SUITABILITY: "Limite d'âge",
     CRITIC_REVIEW: 'R-',
-    ANSWER: ['A-'],
+    ANSWER: ['A-', 'R-'],
     BLOG_SHOW_PAGE: 'Page du spectacle du blog',
     BLOG_SUMMARY: 'Résumé du blog',
     BLOG_THEATRE_PAGE: 'Page du théâtre du blog',
