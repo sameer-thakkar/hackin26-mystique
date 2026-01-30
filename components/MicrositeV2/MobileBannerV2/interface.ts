@@ -15,8 +15,6 @@ export interface IBannerProps {
   allTours: any;
   trustBoosters?: TPrismicTrustBooster[];
   isEntertainmentBanner?: boolean;
-  isLttCopyExperimentEligible?: boolean;
-  lttCopyExperimentVariant?: string | null;
   lttOrBroadway?: ELttOrBroadway | null;
 }
 

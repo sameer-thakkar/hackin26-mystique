@@ -22,7 +22,6 @@ import { Paginator } from 'UI/Paginator';
 import Video from 'UI/Video';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
-import { VARIANTS } from 'const/experiments';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -82,16 +81,16 @@ const Media = ({
                 className="banner-header"
                 dangerouslySetInnerHTML={{
                   __html:
-                    strings.ENTT_COPY_EXPERIMENT[
+                    strings.LTT_BROADWAY_BANNER[
                       lttOrBroadway ?? ELttOrBroadway.LTT
-                    ].VARIANT_B.BANNER_TITLE,
+                    ].BANNER_TITLE,
                 }}
               />
               <p className="experiment-subtext">
                 {
-                  strings.ENTT_COPY_EXPERIMENT[
+                  strings.LTT_BROADWAY_BANNER[
                     lttOrBroadway ?? ELttOrBroadway.LTT
-                  ].VARIANT_B.BANNER_SUBTEXT
+                  ].BANNER_SUBTEXT
                 }
               </p>
             </div>
@@ -125,19 +124,13 @@ const MobileBannerV2 = ({
   bannerImages: originalBannerImages,
   trustBoosters,
   isEntertainmentBanner,
-  isLttCopyExperimentEligible = false,
-  lttCopyExperimentVariant = null,
   lttOrBroadway = null,
 }: IBannerProps) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [swiper, setSwiperInstance] = useState<TSwiper | null>(null);
   const { lang } = useContext(MBContext);
 
-  const showTreatmentB =
-    isLttCopyExperimentEligible &&
-    lttCopyExperimentVariant === VARIANTS.TREATMENT_B;
-
-  const bannerImages = showTreatmentB
+  const bannerImages = lttOrBroadway
     ? originalBannerImages?.slice(0, 1) ?? []
     : originalBannerImages ?? [];
 
@@ -196,24 +189,22 @@ const MobileBannerV2 = ({
 
   return (
     <Container>
-      <Conditional if={showTreatmentB}>
+      <Conditional if={lttOrBroadway}>
         <Media
           fallbackImage={bannerImages?.[0]?.mobile_url}
           item={bannerImages?.[0]}
           index={0}
-          showModifiedBanner={showTreatmentB}
+          showModifiedBanner={!!lttOrBroadway}
           lttOrBroadway={lttOrBroadway}
         />
       </Conditional>
-      <Conditional if={!showTreatmentB}>
+      <Conditional if={!lttOrBroadway}>
         <SwiperWrapper>
           <Swiper {...swiperParams}>
             {bannerImages.map((item: IBannerImageProps, index: number) => {
               const firstBannerHeading = getFirstBannerHeading(
-                isLttCopyExperimentEligible,
                 index,
                 item?.bannerHeading,
-                lttCopyExperimentVariant,
                 lttOrBroadway
               );
               return (

@@ -2330,26 +2330,16 @@ const it: TDictionary = {
       'Con gli sconti per gruppi, risparmi il 57% e ottieni assistenza dedicata.',
     LINK_TEXT: 'Sconti per gruppi',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'I migliori spettacoli del West End di Londra',
+      BANNER_SUBTEXT:
+        'Biglietti ufficiali. I posti migliori. Offerte incredibili. Recensioni stellari.',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'I migliori spettacoli di Broadway',
+      BANNER_SUBTEXT:
+        'Biglietti ufficiali. I posti migliori. Offerte incredibili. Recensioni stellari.',
     },
   },
 };

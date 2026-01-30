@@ -2331,26 +2331,16 @@ const fr: TDictionary = {
     SUBTEXT: "Économisez jusqu'à 57 % et bénéficiez d'un service client dédié.",
     LINK_TEXT: 'Obtenir un prix de groupe',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Les meilleurs spectacles de Londres',
+      BANNER_SUBTEXT:
+        "Sélectionnez des places de choix, bénéficiez d'offres exclusives et réservez des billets officiels pour vos spectacles préférés. Le tout, validé par des avis vérifiés.",
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Les meilleurs spectacles de Broadway',
+      BANNER_SUBTEXT:
+        "Sélectionnez des places de choix, bénéficiez d'offres exclusives et réservez des billets officiels pour vos spectacles préférés. Le tout, validé par des avis vérifiés.",
     },
   },
 };

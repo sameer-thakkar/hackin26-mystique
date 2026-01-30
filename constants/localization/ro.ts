@@ -2339,26 +2339,16 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
       'Economisiți până la 57% cu reducerile de grup și beneficiați de asistență dedicată.',
     LINK_TEXT: 'Obțineți reducerea de grup',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Descoperiți cele mai bune spectacole West End',
+      BANNER_SUBTEXT:
+        'Bilete autorizate, locuri excelente, reduceri și recenzii de încredere',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Descoperiți cele mai bune spectacole Broadway',
+      BANNER_SUBTEXT:
+        'Bilete autorizate, locuri excelente, reduceri și recenzii de încredere',
     },
   },
 };

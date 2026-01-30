@@ -2335,26 +2335,16 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
       'Zaoszczędź do 57% na zniżkach grupowych i otrzymaj dedykowaną obsługę klienta.',
     LINK_TEXT: 'Zdobądź zniżkę grupową',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Odkryj to, co najlepsze na West Endzie',
+      BANNER_SUBTEXT:
+        'Autoryzowane bilety, najlepsze miejsca, świetne oferty i recenzje, którym możesz ufać',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Odkryj to, co najlepsze na Broadwayu',
+      BANNER_SUBTEXT:
+        'Autoryzowane bilety, najlepsze miejsca, świetne oferty i recenzje, którym możesz ufać',
     },
   },
 };

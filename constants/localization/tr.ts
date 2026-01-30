@@ -2334,26 +2334,16 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
       'Grup rezervasyonlarında %57’ye varan indirim ve kişiye özel destek fırsatı sizi bekliyor.',
     LINK_TEXT: 'Grup indiriminden yararlanın',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'En iyi West End gösterilerini Headout ile deneyimleyin',
+      BANNER_SUBTEXT:
+        'Resmî biletler, en iyi koltuklar, avantajlı fiyatlar ve güvenilir değerlendirmeler',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'En iyi Broadway gösterilerini Headout ile deneyimleyin',
+      BANNER_SUBTEXT:
+        'Resmî biletler, en iyi koltuklar, avantajlı fiyatlar ve güvenilir değerlendirmeler',
     },
   },
 };

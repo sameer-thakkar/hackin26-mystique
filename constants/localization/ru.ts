@@ -2338,26 +2338,16 @@ const ru: TDictionary = {
       'Сэкономьте до 57 % с групповыми скидками и получите персональную поддержку для гостей.',
     LINK_TEXT: 'Скидка для группы',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Посмотрите лучшее в Вест-Энд',
+      BANNER_SUBTEXT:
+        'Авторизованные билеты, лучшие места, отличные сделки и надёжные отзывы',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Посмотрите лучшее в Бродвее',
+      BANNER_SUBTEXT:
+        'Авторизованные билеты, лучшие места, отличные сделки и надёжные отзывы',
     },
   },
 };

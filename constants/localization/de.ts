@@ -2318,26 +2318,16 @@ const de: TDictionary = {
       'Sparen Sie bis zu 57 % mit Gruppenrabatten und buchen Sie mit persönlichem Support.',
     LINK_TEXT: 'Gruppenrabatt nutzen',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'London Theater: Die besten Shows im West End',
+      BANNER_SUBTEXT:
+        'Offizielle Tickets, beste Plätze, attraktive Angebote und ehrliche Bewertungen',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Broadway New York: Die besten Shows am Broadway erleben',
+      BANNER_SUBTEXT:
+        'Offizielle Tickets, beste Plätze, attraktive Angebote und ehrliche Bewertungen',
     },
   },
 };

@@ -306,7 +306,7 @@ export const HomePage = (props: any) => {
 
   const { collectionId } = pageMetaData;
 
-  const showLttTreatment =
+  const isLttOrBroadway =
     checkIfLTTMBLandingPage(uid) || checkIfBroadwayMBLandingPage(uid);
 
   const isTheatreInSeatingExperiment =
@@ -333,16 +333,7 @@ export const HomePage = (props: any) => {
       customEligibilityCheckFn: () => isTheatreInSeatingExperiment,
     });
 
-  const {
-    isEligible: isLttCopyExperimentEligible,
-    variant: lttCopyExperimentVariant,
-  } = useABTesting({
-    experimentId: 'ENTT_COPY_EXPERIMENT',
-    noTrack: false,
-    customEligibilityCheckFn: () =>
-      currentLanguage === LANGUAGE_MAP['en'].code && showLttTreatment,
-  });
-  const lttOrBroadway = showLttTreatment
+  const lttOrBroadway = isLttOrBroadway
     ? checkIfLTTMBLandingPage(uid)
       ? ELttOrBroadway.LTT
       : ELttOrBroadway.BROADWAY
@@ -587,7 +578,7 @@ export const HomePage = (props: any) => {
         isMonthOnMonthPage={isLttMonthOnMonthPage}
         isEntertainmentLandingPageVisible={
           isEntertainmentBanner ||
-          showLttTreatment ||
+          isLttOrBroadway ||
           isCategoryPage ||
           isLttMonthOnMonthPage
         }
@@ -667,7 +658,7 @@ export const HomePage = (props: any) => {
         if={
           !showSeatMapExperiment &&
           isMobile &&
-          (isEntertainmentBanner || (showLttTreatment && !isCatOrSubCatPage))
+          (isEntertainmentBanner || (isLttOrBroadway && !isCatOrSubCatPage))
         }
       >
         <MobileBannerV2
@@ -675,8 +666,6 @@ export const HomePage = (props: any) => {
           bannerImages={heroProps.banners}
           allTours={allTours}
           isEntertainmentBanner={isEntertainmentBanner}
-          isLttCopyExperimentEligible={isLttCopyExperimentEligible}
-          lttCopyExperimentVariant={lttCopyExperimentVariant}
           lttOrBroadway={lttOrBroadway}
         />
       </Conditional>
@@ -684,7 +673,7 @@ export const HomePage = (props: any) => {
         if={
           !showSeatMapExperiment &&
           !isMobile &&
-          (isEntertainmentBanner || (showLttTreatment && !isCatOrSubCatPage))
+          (isEntertainmentBanner || (isLttOrBroadway && !isCatOrSubCatPage))
         }
       >
         <DesktopBannerV2
@@ -692,8 +681,6 @@ export const HomePage = (props: any) => {
           bannerImages={heroProps.banners}
           allTours={allTours}
           isEntertainmentBanner={isEntertainmentBanner}
-          isLttCopyExperimentEligible={isLttCopyExperimentEligible}
-          lttCopyExperimentVariant={lttCopyExperimentVariant}
           lttOrBroadway={lttOrBroadway}
         />
       </Conditional>
@@ -703,7 +690,7 @@ export const HomePage = (props: any) => {
           !showSeatMapExperiment &&
           mbTheme === THEMES.DEFAULT &&
           !isListicle &&
-          !showLttTreatment &&
+          !isLttOrBroadway &&
           !isCatOrSubCatPage &&
           !isCategoryPage &&
           mbDesign === DESIGN.V3
@@ -725,7 +712,7 @@ export const HomePage = (props: any) => {
           mbTheme === THEMES.DEFAULT &&
           heroProps.banners.length &&
           !isListicle &&
-          !showLttTreatment &&
+          !isLttOrBroadway &&
           !isCatOrSubCatPage &&
           !isCategoryPage &&
           mbDesign !== DESIGN.V3 &&
@@ -830,7 +817,7 @@ export const HomePage = (props: any) => {
       <Conditional
         if={
           hasToursSection &&
-          !showLttTreatment &&
+          !isLttOrBroadway &&
           !isCatOrSubCatPage &&
           !isCategoryPage &&
           !isLttMonthOnMonthPage
@@ -867,7 +854,7 @@ export const HomePage = (props: any) => {
           />
         </Conditional>
       </Conditional>
-      <Conditional if={showLttTreatment && !isCatOrSubCatPage}>
+      <Conditional if={isLttOrBroadway && !isCatOrSubCatPage}>
         <EntertainmentMBLandingPageV2
           isMobile={isMobile}
           allTours={allTours}
@@ -938,7 +925,7 @@ export const HomePage = (props: any) => {
       <Conditional
         if={
           isEntertainmentMb &&
-          !showLttTreatment &&
+          !isLttOrBroadway &&
           !isCatOrSubCatPage &&
           !isCategoryPage &&
           !isLttMonthOnMonthPage
@@ -984,7 +971,7 @@ export const HomePage = (props: any) => {
           isEntertainmentMb={isEntertainmentMb}
           isCatOrSubCatPage={isCatOrSubCatPage}
           isLTT={isLTT}
-          isDarkPurps={showLttTreatment}
+          isDarkPurps={isLttOrBroadway}
         />
       </LazyComponent>
     </V2MicrositeWrapper>

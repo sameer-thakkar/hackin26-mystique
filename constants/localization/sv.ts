@@ -2329,26 +2329,16 @@ Alla termer med versaler som används ovan definieras i integritetspolicyn. Bes�
       'Spara upp till 57 % med grupprabatter och få personlig gästsupport.',
     LINK_TEXT: 'Få grupprabatter',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Upplev det bästa på West End',
+      BANNER_SUBTEXT:
+        'Auktoriserade biljetter, premiumplatser, bra erbjudanden och pålitliga recensioner',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Upplev det bästa på Broadway',
+      BANNER_SUBTEXT:
+        'Auktoriserade biljetter, premiumplatser, bra erbjudanden och pålitliga recensioner',
     },
   },
 };

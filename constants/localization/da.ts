@@ -2327,26 +2327,16 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. L�
     SUBTEXT: 'Spar op til 57 % med grupperabat og få dedikeret gæstesupport.',
     LINK_TEXT: 'Få grupperabat',
   },
-  ENTT_COPY_EXPERIMENT: {
+  LTT_BROADWAY_BANNER: {
     LTT: {
-      VARIANT_A: {
-        BANNER_TITLE: 'London theatre tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of the West End',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Oplev det bedste fra West End',
+      BANNER_SUBTEXT:
+        'Godkendte billetter, gode pladser, gode tilbud og pålidelige anmeldelser',
     },
     BROADWAY: {
-      VARIANT_A: {
-        BANNER_TITLE: 'Broadway tickets trusted by millions',
-      },
-      VARIANT_B: {
-        BANNER_TITLE: 'Head out to the best of Broadway',
-        BANNER_SUBTEXT:
-          'Authorised tickets, prime seats, great deals, and trusted reviews',
-      },
+      BANNER_TITLE: 'Oplev det bedste fra Broadway',
+      BANNER_SUBTEXT:
+        'Godkendte billetter, gode pladser, gode tilbud og pålidelige anmeldelser',
     },
   },
 };
