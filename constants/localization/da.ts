@@ -2323,7 +2323,7 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. L�
   },
   LTT_SPECIAL_OFFER: 'Særtilbud',
   GROUP_BOOKING: {
-    TITLE: 'Booker du til over 10?',
+    TITLE: 'Booker du til over {0}?',
     SUBTEXT: 'Spar op til 57 % med grupperabat og få dedikeret gæstesupport.',
     LINK_TEXT: 'Få grupperabat',
   },

@@ -2334,7 +2334,7 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
   },
   LTT_SPECIAL_OFFER: 'Ofertă specială',
   GROUP_BOOKING: {
-    TITLE: 'Rezervați pentru peste 10 persoane?',
+    TITLE: 'Rezervați pentru peste {0} persoane?',
     SUBTEXT:
       'Economisiți până la 57% cu reducerile de grup și beneficiați de asistență dedicată.',
     LINK_TEXT: 'Obțineți reducerea de grup',

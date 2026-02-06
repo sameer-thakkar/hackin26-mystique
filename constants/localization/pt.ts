@@ -2316,7 +2316,7 @@ const pt: TDictionary = {
   },
   LTT_SPECIAL_OFFER: 'Oferta especial ',
   GROUP_BOOKING: {
-    TITLE: 'Reservando para 10 ou mais pessoas?',
+    TITLE: 'Reservando para {0} ou mais pessoas?',
     SUBTEXT: 'Economize até 57% com atendimento exclusivo ao cliente.',
     LINK_TEXT: 'Garanta o desconto para grupos',
   },

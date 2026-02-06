@@ -2337,7 +2337,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   },
   LTT_SPECIAL_OFFER: 'Special offer',
   GROUP_BOOKING: {
-    TITLE: 'Booking for 10 or more?',
+    TITLE: 'Booking for {0} or more?',
     SUBTEXT:
       'Save up to 57% with group discounts and get dedicated guest support.',
     LINK_TEXT: 'Get group discount',

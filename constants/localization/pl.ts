@@ -2330,7 +2330,7 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
   },
   LTT_SPECIAL_OFFER: 'Oferta specjalna',
   GROUP_BOOKING: {
-    TITLE: 'Rezerwujesz dla co najmniej 10 osób?',
+    TITLE: 'Rezerwujesz dla co najmniej {0} osób?',
     SUBTEXT:
       'Zaoszczędź do 57% na zniżkach grupowych i otrzymaj dedykowaną obsługę klienta.',
     LINK_TEXT: 'Zdobądź zniżkę grupową',

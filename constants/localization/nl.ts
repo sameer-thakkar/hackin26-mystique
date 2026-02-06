@@ -2308,7 +2308,7 @@ const nl: TDictionary = {
   },
   LTT_SPECIAL_OFFER: 'Speciale actie',
   GROUP_BOOKING: {
-    TITLE: 'Met 10 of meer personen boeken?',
+    TITLE: 'Met {0} of meer personen boeken?',
     SUBTEXT:
       'Krijg tot 57% korting op groepsboekingen en hulp van een eigen supportteam.',
     LINK_TEXT: 'Ontvang je groepskorting',

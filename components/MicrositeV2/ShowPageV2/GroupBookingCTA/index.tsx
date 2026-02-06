@@ -5,6 +5,13 @@ import { strings } from 'const/strings';
 import GroupBookingSvg from 'assets/groupBookingSvg';
 import { groupBookingCtaRecipe } from './styles';
 
+const GROUP_BOOKING_MIN_PAX = {
+  DEFAULT: 10,
+  ABBA: 15,
+};
+
+const ABBA_TGID = 20045;
+
 const GroupBookingCTA = ({
   ctaUrl,
   tgid,
@@ -13,10 +20,14 @@ const GroupBookingCTA = ({
   tgid: number | string;
 }) => {
   const styles = groupBookingCtaRecipe();
+  const minPAXRequired =
+    Number(tgid) === ABBA_TGID
+      ? GROUP_BOOKING_MIN_PAX.ABBA
+      : GROUP_BOOKING_MIN_PAX.DEFAULT;
   return (
     <div className={styles.root}>
       <Text as="h3" className={styles.title}>
-        {strings.GROUP_BOOKING.TITLE}
+        {strings.formatString(strings.GROUP_BOOKING.TITLE, minPAXRequired)}
       </Text>
       <Text as="p" className={styles.subtext}>
         {strings.GROUP_BOOKING.SUBTEXT}

@@ -2324,7 +2324,7 @@ Alla termer med versaler som används ovan definieras i integritetspolicyn. Bes�
   },
   LTT_SPECIAL_OFFER: 'Erbjudande',
   GROUP_BOOKING: {
-    TITLE: 'Vill du boka för tio personer eller fler?',
+    TITLE: 'Vill du boka för {0} personer eller fler?',
     SUBTEXT:
       'Spara upp till 57 % med grupprabatter och få personlig gästsupport.',
     LINK_TEXT: 'Få grupprabatter',

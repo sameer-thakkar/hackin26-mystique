@@ -2324,7 +2324,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
   },
   LTT_SPECIAL_OFFER: 'Penawaran',
   GROUP_BOOKING: {
-    TITLE: 'Booking for 10 or more?',
+    TITLE: 'Booking for {0} or more?',
     SUBTEXT:
       'Unlock exclusive group discounts and get personalized assistance from our team.',
     LINK_TEXT: 'Request a group quote',

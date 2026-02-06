@@ -2313,7 +2313,7 @@ const de: TDictionary = {
   },
   LTT_SPECIAL_OFFER: 'Sonderangebot',
   GROUP_BOOKING: {
-    TITLE: 'Buchen Sie für mind. 10 Personen?',
+    TITLE: 'Buchen Sie für mind. {0} Personen?',
     SUBTEXT:
       'Sparen Sie bis zu 57 % mit Gruppenrabatten und buchen Sie mit persönlichem Support.',
     LINK_TEXT: 'Gruppenrabatt nutzen',

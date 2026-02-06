@@ -2321,7 +2321,7 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
   },
   LTT_SPECIAL_OFFER: 'Spesialtilbudet',
   GROUP_BOOKING: {
-    TITLE: 'Bestiller du for 10 eller flere personer?',
+    TITLE: 'Bestiller du for {0} eller flere personer?',
     SUBTEXT:
       'Spar opptil 57 % med grupperabatter og få personlig gjestesupport.',
     LINK_TEXT: 'Få grupperabatt',
