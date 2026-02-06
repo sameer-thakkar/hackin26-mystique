@@ -5,22 +5,22 @@ import { getAppTheme } from 'style/theme';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import {
-  contentContainer,
-  lastUpdated,
-  pageHeading,
-  policyList,
-  policySectionStyles,
-  sectionHeading,
-} from 'components/Legal/privacy-policy/styles';
-import { renderContentBlock } from 'components/Legal/privacy-policy/utils';
+import PrivacyPolicyContent from 'components/Legal/privacy-policy/PrivacyPolicyContent';
 import { MBContextProvider } from 'contexts/MBContext';
 import { getHeadoutLanguagecode } from 'utils';
 import { traceError } from 'utils/logutils';
 import getLegalPageData from 'utils/prismicUtils/legalPages';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { strings } from 'const/strings';
-import { DESIGN, DROPDOWN_ELEMENT, THEMES } from 'constants/index';
+import {
+  DEFAULT_LANGUAGE_CODE,
+  DEFAULT_PRISMIC_LANG,
+  DESIGN,
+  DROPDOWN_ELEMENT,
+  THEMES,
+} from 'constants/index';
+
+const PRIOR_PRIVACY_POLICY_LINK = '/prior-privacy-policy';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -98,13 +98,14 @@ const PrivacyPage = (
   });
 
   const themeOverride = footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
+  const content = strings.PRIVACY_POLICY_CONTENT;
 
   return (
     <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
       <MBContextProvider
         host={host}
         uid={uid}
-        lang={'en-us'}
+        lang={DEFAULT_PRISMIC_LANG}
         microsite={{}}
         design={DESIGN.V1}
         mbTheme={mbTheme}
@@ -117,8 +118,8 @@ const PrivacyPage = (
           headerLinks={null}
           logoUrl={logoUrl}
           logoAltText={logoAltText}
-          currentLanguage={'en'}
-          selectedLanguage={'en'}
+          currentLanguage={DEFAULT_LANGUAGE_CODE}
+          selectedLanguage={DEFAULT_LANGUAGE_CODE}
           uid={uid}
           isMobile={isMobile}
           logoRedirectionURL={logoRedirectionUrl}
@@ -127,32 +128,15 @@ const PrivacyPage = (
           hideLangCurrencySelector={true}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
         />
-        <main className={contentContainer}>
-          <h1 className={pageHeading} data-qa-marker="pp-heading">
-            {strings.PRIVACY_POLICY_CONTENT.title}
-          </h1>
-          <p className={lastUpdated}>
-            <b>Last Updated:</b> {strings.PRIVACY_POLICY_CONTENT.lastUpdated}
-          </p>
-          <ol className={policyList} data-qa-marker="pp-content">
-            {strings.PRIVACY_POLICY_CONTENT.sections.map(
-              (section, sectionIndex) => (
-                <li key={sectionIndex} className={policySectionStyles}>
-                  <h2 className={sectionHeading}>{section.title}</h2>
-                  {section.content.map((contentBlock, contentIndex) =>
-                    renderContentBlock(contentBlock, contentIndex)
-                  )}
-                </li>
-              )
-            )}
-          </ol>
-        </main>
-        <br />
-        <br />
-        <br />
-        <br />
+        <PrivacyPolicyContent
+          title={content.title}
+          lastUpdatedDate={content.lastUpdated}
+          sections={content.sections}
+          linkText={content.linkText}
+          linkHref={PRIOR_PRIVACY_POLICY_LINK}
+        />
         <Footer
-          currentLanguage={'en'}
+          currentLanguage={DEFAULT_LANGUAGE_CODE}
           logoURL={logoUrl}
           logoAlt={logoAltText}
           attraction={commonFooter?.data?.attraction || 'attraction'}

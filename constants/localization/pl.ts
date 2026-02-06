@@ -1656,8 +1656,9 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
         'Headout is neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board. However, in accordance with EU regulations, you may access the European Commission’s Online Dispute Resolution (ODR) platform via the following link:',
     },
   },
-  PRIVACY_POLICY_CONTENT: {
-    title: 'Headout: Privacy Policy',
+  PRIOR_PRIVACY_POLICY_CONTENT: {
+    linkText: 'Current Privacy Policy',
+    title: 'Headout: Prior Privacy Policy',
     lastUpdated: '31st March 2025',
     sections: [
       {
@@ -1703,7 +1704,11 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
         content: [
           {
             type: 'paragraph',
-            items: [{ text: 'For the purposes of this Privacy Policy:' }],
+            items: [
+              {
+                text: 'For the purposes of this Privacy Policy:',
+              },
+            ],
           },
           {
             type: 'list',
@@ -1738,7 +1743,9 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
               {
                 text: 'User refers to any person who visits/shows interest/avails any Service available on Platform',
               },
-              { text: 'Website refers to www.headout.com' },
+              {
+                text: 'Website refers to www.headout.com',
+              },
               {
                 text: 'You/Your shall mean the User, Service Provider and Creator Partner',
               },
@@ -2078,8 +2085,9 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
       },
     ],
   },
-  TERMS_OF_USE_CONTENT: {
-    title: 'Headout: Terms of Use',
+  PRIOR_TERMS_OF_USE_CONTENT: {
+    linkText: 'Current Terms of Use',
+    title: 'Headout: Prior Terms of Use',
     introduction:
       'These Terms of Use will be effective from the Last Updated date mentioned above ("Terms of Use").',
     lastUpdated: '31st March 2025',
@@ -2308,6 +2316,757 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
           "No waiver: No waiver of any term or condition of these Terms of Use will be valid or binding on Headout unless the same has been assented to in writing by an officer of Headout. Headout's failure to enforce at any time any of the provisions of these Terms of Use, or the failure to require at any time performance by You of any of the provisions of these Terms of Use, will in no way be construed to be a present or future waiver of such provisions, nor in any way affect Headout's ability to enforce each and every such provision thereafter.",
           'Entire Agreement: Between You and Headout, these Terms of Use set forth the entire agreement and understanding relating to the subject matter herein and supersede all prior and contemporaneous communications, representations, discussions, and agreements concerning such subject matter.',
           'In the event of any inconsistency or conflict between the English version of these Terms of Use and any translation, the English version shall prevail and be the governing document for all purposes.',
+        ],
+      },
+    ],
+  },
+  TERMS_OF_USE_CONTENT: {
+    linkText: 'Poprzednie warunki korzystania',
+    title: 'Headout: Warunki korzystania',
+    introduction:
+      'Niniejsze Warunki korzystania obowiązują od daty ostatniej aktualizacji podanej powyżej („Warunki korzystania”).',
+    lastUpdated: '30 stycznia 2026 r.',
+    sections: [
+      {
+        title: 'Definicje',
+        items: [
+          'Dodatkowe informacje: Headout może poszukiwać pewnych informacji o Użytkowniku i wszystkich innych osobach, które mają być częścią Rezerwacji, w celu oceny kwalifikowalności do ukończenia Rezerwacji i/lub uzyskania odpowiednich Usług.',
+          'Rezerwacja: oznacza rezerwację Wycieczki przez Użytkownika na Platformie/Stronie internetowej Headout, w tym, ale nie wyłącznie, jakichkolwiek Dodatkowych usług Headout.',
+          'Potwierdzenie rezerwacji: obejmuje kupon/bilet potwierdzający rezerwację wraz z e-mailem potwierdzającym wydanym przez Headout po dokonaniu przez Użytkownika płatności za Rezerwację.',
+          'Wycieczki / Usługi dostawcy: obejmuje wycieczki krajoznawcze, zajęcia rekreacyjne, bilety na atrakcje oraz inne usługi turystyczne i rozrywkowe dostarczane przez dostawcę.',
+          'Headout / My: Headout Inc. jest korporacją stanu Delaware, z siedzibą pod adresem 82 Nassau St #60351 New York, NY 10038 i obejmuje jej podmioty stowarzyszone, grupy/powiązane spółki, następców prawnych i cesjonariuszy.',
+          'Konto Headout: konto utworzone przez dowolnego Użytkownika podczas rejestracji na Platformie/Stronie internetowej Headout.',
+          'Dane logowania do konta Headout: oznacza identyfikator logowania i hasło ustawione przez dowolnego Użytkownika podczas tworzenia Konta Headout.',
+          'Punkty Headout: punkty rezerwacyjne ważne dla przyszłych rezerwacji dokonanych na Platformie. Użytkownik może je zdobyć w ramach zwrotu środków za anulowaną rezerwację, poprzez ukierunkowane kampanie marketingowe lub inne mechanizmy, które Headout może określić według własnego uznania. Punky Headout są dostępne wyłącznie dla Użytkowników posiadających ważne Konto Headout.',
+          'Usługi Headout: obejmują (a) prowadzenie Platformy/Strony internetowej, która umożliwia między innymi Dostawcom oferowanie Użytkownikom Wycieczek wymienionych na Platformie; oraz (b) umożliwianie zawierania umów bezpośrednio pomiędzy Użytkownikami a dostawcami takich Usług. Usługi Headout mogą również obejmować dostarczanie audioprzewodników, które mogą zostać opracowane wspólnie przez Headout i Dostawcę, w aplikacji mobilnej Headout Dex, z funkcjami sztucznej inteligencji w związku z Wycieczkami rezerwowanymi za pośrednictwem Platformy („Dodatkowe usługi Headout").',
+          'Interaktywne fora: oznacza fora dyskusyjne, tablice ogłoszeń, usługi recenzji lub inne fora, na których Użytkownik i inni użytkownicy Strony internetowej mogą publikować Treści użytkownika.',
+          'Oferta: każda Wycieczka lub Usługa Headout wymieniona na Platformie.',
+          'Platforma / Strona internetowa: internetowa platforma rezerwacji Headout dostępna pod adresem www.headout.com. Obejmuje ona również powiązane strony internetowe, strony stowarzyszone i partnerskie, aplikacje mobilne (w tym aplikację mobilną Headout Dex), narzędzia, platformy, powiązane konta w mediach społecznościowych lub inne udogodnienia.',
+          'Polityka prywatności: dokument prawny regulujący warunki prywatności Headout.',
+          'Kwota zwrotu: oznacza kwotę przetworzoną/zwróconą przez Dostawcę po anulowaniu Rezerwacji.',
+          'Kanały sprzedaży: obejmuje strony internetowe Headout, aplikacje mobilne, sprzedawców, centra telefoniczne, oddziały, agentów itp.',
+          'Usługi: oznaczają łącznie Usługi dostawcy i Usługi Headout, stosownie do kontekstu interakcji Użytkownika z Platformą.',
+          'Dostawcy: obejmuje dostawcę usług końcowych, tj. operatorów wyceiczek, organizatorów aktywności, atrakcje, biura podróży i dostawców biletów.',
+          'Warunki dostawcy: Warunki określone przez Dostawcę, które będą regulować świadczenie Usług przez Dostawcę i korzystanie z Usług Dostawcy.',
+          'Warunki korzystania: Dokument prawny regulujący korzystanie z dowolnego Kanału sprzedaży przez Użytkownika.',
+          'Strony internetowe osób trzecich: oznaczają strony internetowe obsługiwane przez podmioty inne niż Headout.',
+          'Użytkownik / Ty / Twoje: każda osoba, która odwiedzi / wykaże zainteresowanie / skorzysta z dowolnej Usługi dostępnej na Platformie Headout lub za pośrednictwem któregokolwiek z jej Kanałów sprzedaży.',
+          'Treści użytkownika: oznacza wszelkie treści publikowane przez Użytkownika na Platformie na kilka różnych sposobów, w tym między innymi pisanie recenzji, publikowanie postów, przesyłanie i publikowanie zdjęć lub filmów, zgłaszanie komentarzy lub sugestii, zgłaszanie pomysłów, ocenianie wkładu innych użytkowników i dokonywanie innych podobnych wkładów lub zgłoszeń na Stronie internetowej i/lub w inny sposób do Headout. Treści użytkownika są widoczne dla wszystkich Użytkowników Platformy.',
+          'Zawartość strony internetowej: oznacza treści i informacje dostępne na Stronie internetowej, w tym między innymi wiadomości, dane, informacje, tekst, muzykę, dźwięk, zdjęcia, grafikę, wideo, mapy, ikony, oprogramowanie, kod lub inne materiały.',
+        ],
+      },
+      {
+        title: 'Wprowadzenie',
+        items: [
+          'Niniejsze Warunki korzystania wraz z Polityką prywatności stanowią wiążącą umowę pomiędzy Użytkownikiem a Headout. Niniejsze Warunki korzystania regulują między innymi korzystanie z Platformy przez Użytkownika',
+          'Headout nie jest biurem podróży ani biurem wycieczek i nie zapewnia takich Wycieczek ani Usług dostawcy we własnym zakresie. Gdy Użytkownik rezerwuje Wycieczkę na Platformie, nabywa je bezpośrednio od Dostawcy. Headout za pośrednictwem swojej Platformy jedynie ułatwia zakup biletów na Wycieczki. Headout nie działa również jako agent Użytkownika, w jakimkolwiek charakterze, z wyjątkiem zakresu ułatwiania płatności dokonywanych przez Użytkownika na rzecz Dostawców.',
+        ],
+      },
+      {
+        title: 'Dostęp i korzystanie z Platformy',
+        items: [
+          'Uzyskując dostęp, rejestrując się, korzystając i/lub dokonując Rezerwacji na Platformie, Użytkownik wyraża zgodę na każdy z warunków wymienionych w Warunkach korzystania, bez żadnych modyfikacji. Użytkownik oświadcza, że przeczytał i zrozumiał Warunki korzystania. W przypadku wszystkich Rezerwacji uznaje się, że osoba dokonująca Rezerwacji zaakceptowała niniejsze Warunki korzystania w imieniu wszystkich osób wymienionych w Rezerwacji.',
+          'Headout może od czasu do czasu zmieniać niniejsze Warunki korzystania. Zmieniona wersja będzie obowiązywać od daty jej opublikowania, chyba że określono inaczej. Jeśli zmiany/nowelizacje niniejszych Warunków korzystania ograniczą prawa lub zwiększą obowiązki Użytkownika, Headout opublikuje powiadomienie o tym fakcie na stronie internetowej Headout lub poinformuje o tym Użytkowników za pośrednictwem poczty elektronicznej. Kontynuując korzystanie z Platformy po wprowadzeniu przez Headout zmian w niniejszych Warunkach korzystania, Użytkownik zgadza się przestrzegać tych zmian i być nimi związany. Jeśli Użytkownik nie wyraża zgody na którykolwiek z warunków wymienionych w niniejszym dokumencie, nie może korzystać z Platformy Headout ani uzyskiwać do niej dostępu.',
+          'Jako warunek korzystania z Platformy, Użytkownik oświadcza i gwarantuje, że: (i) wszystkie informacje podane przez Użytkownika w trakcie korzystania z Platformy i/lub dokonywania Rezerwacji są prawdziwe, dokładne, aktualne i kompletne oraz (ii) Użytkownik ma ukończone 18 lat.',
+          'Jeśli Użytkownik jest osobą niepełnoletnią i chce korzystać z Platformy, jakichkolwiek Usług Headout i dokonać jakiejkolwiek Rezerwacji na Platformie, jest zobowiązany zapewnić, że takie korzystanie / taka Rezerwacja zostanie dokonane(-a) wyłącznie przez osobę pełnoletnią (rodziców, rodzeństwo lub opiekuna prawnego) lub za zgodą takiej osoby i pod jej nadzorem.',
+          'Korzystanie ze Strony internetowej, Usług Headout i dokonywanie Rezerwacji jest dozwolone wyłącznie do osobistego, niekomercyjnego użytku i/lub w celu składania uzasadnionych wniosków o dokonanie Rezerwacji Wycieczek oferowanych na Stronie internetowej. Użytkownik zobowiązuje się nie korzystać ze Strony internetowej w celu składania jakichkolwiek spekulacyjnych, fałszywych lub oszukańczych wniosków lub w jakimkolwiek celu zakazanym w ramach niniejszych Warunków korzystania. W przypadku gdy Headout dowie się o jakimkolwiek takim przypadku, będzie mieć prawo anulować takie Rezerwacje lub zawiesić dostęp Użytkownika do stosownych Usług Headout lub Platformy, a Użytkownik nie będzie miał prawa żądać żadnego odszkodowania od Headout.',
+          'Ponadto użytkownik oświadcza i gwarantuje, że (a) jego Konto Headout nie jest obecnie zawieszone i nie został on wcześniej ograniczony przez Headout w korzystaniu ze Strony internetowej; (b) Użytkownik nie działa w imieniu konkurenta Headout; (c) Użytkownik nie utworzy więcej niż jednego Konta Headout; oraz (d) Użytkownik ma pełne prawo i upoważnienie do zawarcia niniejszej prawnie wiążącej umowy z Headout i nie naruszy przy tym żadnej innej umowy, której jest stroną.',
+          'Zastrzegamy sobie prawo, według własnego uznania, do odmowy dostępu do Strony internetowej każdemu w dowolnym czasie i z dowolnego powodu, w tym między innymi z powodu naruszenia niniejszych Warunków korzystania.',
+          'Uzyskując dostęp do Strony internetowej i korzystając z niej, Użytkownik zgadza się i przyjmuje do wiadomości, że Headout nie popiera żadnych Ofert ani treści na Stronie internetowej, a Headout nie może ręczyć za ich dokładność. Użytkownik zgadza się również, że Headout zapewnia jedynie platformę rynkową i nie jest faktycznym dostawcą jakiejkolwiek Wycieczki. Użytkownik uzyskuje zatem dostęp do Strony internetowej i korzysta z niej na własne ryzyko.',
+          'Konieczne może być utworzenie przez Użytkownika Konta Headout i podanie informacji o sobie w celu korzystania z niektórych funkcji Strony internetowej, w tym podczas dokonywania Rezerwacji. Użytkownik jest odpowiedzialny za zachowanie poufności swoich Danych logowania do Konta Headout. Użytkownik ponosi również wyłączną odpowiedzialność za wszelkie działania (w tym Rezerwacje), które mają miejsce w związku z jego Kontem Headout. W przypadku zauważenia jakiegokolwiek nieautoryzowanego użycia Konta Headout Użytkownik niezwłocznie (1) zmieni Dane logowania do konta Headout i (2) poinformuje Headout o takim nieautoryzowanym użyciu, wysyłając e-mail na adres support@headout.com. Użytkownik zgadza się również, że w przypadku jakiegokolwiek nieautoryzowanego użycia Konta Headout nie będzie podnosił żadnych roszczeń wobec Headout. Jako Użytkownik Strony internetowej, Użytkownik rozumie i zgadza się, że ani Headout, ani jego podmioty stowarzyszone nie będą ponosić żadnej odpowiedzialności wobec Użytkownika lub innych osób za jakiekolwiek nieautoryzowane rezerwacje dokonane przy użyciu konta Headout i/lub danych logowania do konta Headout.',
+          'Możemy zakończyć lub zawiesić dostęp do Konta Headout lub możliwość korzystania ze Strony internetowej, w całości lub w części, według własnego uznania, z dowolnego powodu lub bez powodu, bez powiadomienia lub jakiejkolwiek odpowiedzialności. Na przykład możemy zamknąć lub zawiesić Konto Headout lub możliwość korzystania ze Strony internetowej w przypadku niewłaściwego korzystania ze Strony internetowej. Każde takie rozwiązanie lub zawieszenie może uniemożliwić Użytkownikowi dostęp do Konta Headout, Strony internetowej, Usług Headout, Treści użytkownika, Treści strony internetowej i/lub wszelkich innych powiązanych informacji, w tym między innymi do aktywnych Rezerwacji.',
+          'Użytkownik może zażądać dezaktywacji Konta Headout w dowolnym momencie, kontaktując się z nami i zaprzestając korzystania z dowolnej części Strony internetowej. W przypadku zażądania przez Użytkownika dezaktywacji Konta Headout możemy nadal wyświetlać wcześniej opublikowane Treści użytkownika i nie jesteśmy zobowiązani do usuwania takich Treści użytkownika.',
+          'Korzystanie z Dodatkowych usług Headout i/lub niektórych funkcji na Platformie może wymagać włączenia uprawnień urządzenia, takich jak mikrofon, kamera, usługi lokalizacyjne i dostęp do biblioteki zdjęć. Użytkownik może zarządzać tymi uprawnieniami lub cofnąć je w dowolnym momencie za pośrednictwem ustawień urządzenia, ale niektóre funkcje i/lub Dodatkowe usługi Headout mogą nie działać poprawnie, jeśli uprawnienia są wyłączone.',
+        ],
+      },
+      {
+        title: 'Wyszukiwanie i Rezerwacja na Platformie',
+        items: [
+          'Użytkownik może wyszukiwać Wycieczki, korzystając z różnych opcji dostępnych na Stronie internetowej lub stosując kryteria takie jak rodzaj Wycieczki, kierunek podróży itp. Wyniki wyszukiwania są oparte na trafności wyszukiwania i innych kryteriach.',
+          'Dokonując rezerwacji oferty, Użytkownik zgadza się zapłacić cenę podaną w ofercie, obowiązujące podatki i inne obowiązujące opłaty, takie jak opłata za usługę Headout i wszelkie inne opłaty określone podczas dokonywania rezerwacji. Cena każdej Oferty będzie podawana w przeliczeniu na osobę, chyba że określono inaczej. Ceny są oparte na taryfie określonej przez Dostawcę, który udostępnił daną Ofertę na Platformie. Headout nie określa cen Ofert. Niektóre Wycieczki mogą mieć różne warianty, w tym takie, w których Headout świadczy Dodatkowe usługi Headout. Jeśli Użytkonik wybierze taki wariant, cena i wszelkie obowiązujące opłaty za ten wariant zostaną odzwierciedlone podczas realizacji zakupu. Ceny będą podane w walucie wybranej przez Użytkownika podczas korzystania ze Strony internetowej. Wszelkie przeliczenia walut wymagane do dokonania płatności za Rezerwację będą dokonywane po kursie określonym przez Headout. Ceny podane w Ofercie mogą ulec zmianie bez powiadomienia do momentu dokonania Rezerwacji.',
+          'Usługi zawarte w Rezerwacji są określane przez Dostawcę, chyba że Użytkownik zdecyduje się na wariant z Dodatkowymi usługami Headout. Ceny podane w Ofercie obejmują wyłącznie usługi, które zostały wyraźnie przedstawione na stronie Oferty.',
+          'Podczas gdy niniejsze Warunki korzystania regulują korzystanie ze Strony internetowej przez Użytkownika, w tym żądanie Rezerwacji, świadczenie Usług dostawcy i korzystanie z Usług dostawcy przez Użytkownika będzie podlegać Warunkom dostawcy. Warunki Dostawcy mogą być określone w Ofercie, przekazane Użytkownikowi po dokonaniu Rezerwacji lub dostępne na stronie internetowej Dostawcy lub danej Wycieczki. Przed skorzystaniem z Usług dostawcy w ramach Rezerwacji Użytkownik zgadza się przeczytać i zrozumieć Warunki dostawcy oraz zobowiązuje się do ich przestrzegania. Niezależnie od powyższego, w zakresie, w jakim Warunki dostawcy są sprzeczne z niniejszymi Warunkami korzystania w odniesieniu do stosunku prawnego Użytkownika z Headout, niniejsze Warunki korzystania mają pierwszeństwo. Użytkownik wchodzi w interakcje z Dostawcami na własne ryzyko.',
+          'Ponadto Użytkownik zgadza się i przyjmuje do wiadomości, że Headout nie będzie ponosić odpowiedzialności wobec Użytkownika ani żadnej innej osoby za jakiekolwiek straty, wydatki, szkody (w tym szkody majątkowe) lub obrażenia poniesione przez Użytkownika w związku z (i) nieprzekazaniem Użytkownikowi Warunków dostawcy; (ii) nieprzeczytaniem i niezrozumieniem przez Użytkownika Warunków Dostawcy; (iii) naruszeniem przez Dostawcę Warunków Dostawców; (iv) wszelkimi błędami, wadami lub nieścisłościami w Warunkach dostawcy; lub (v) wszelkimi innymi działaniami, zaniechaniami, błędami, oświadczeniami, gwarancjami, naruszeniami lub zaniedbaniami Dostawcy.',
+          'Rezerwacja niektórych Ogłoszeń wymaga spełnienia przez Użytkownika określonych warunków wstępnych lub kryteriów w celu ustalenia jego dostępności do rezerwacji Ogłoszenia i korzystania z odpowiednich Usług dostawcy. Użytkownik jest zobowiązany do przeczytania i zrozumienia warunków wstępnych lub kryteriów, które są częścią Warunków dostawcy. Możemy nawet poszukiwać pewnych Informacji dodatkowych, aby ocenić, czy Użytkownik kwalifikuje się do dokonania Rezerwacji i/lub uzyskania odpowiednich Usług dostawcy. Użytkownik wyraża zgodę na dokładne podanie Informacji dodatkowych. Jeśli Rezerwacja zostanie dokonana na podstawie niedokładnych Informacji dodatkowych, a Dostawca uzna, że Użytkownik nie kwalifikuje się do uzyskania Usług dostawcy, Headout nie będzie ponosić odpowiedzialności za jakiekolwiek straty, szkody lub koszty poniesione przez Użytkownika w związku z taką Rezerwacją. Headout nie będzie również zobowiązany do zwrotu pieniędzy za Rezerwację, jeśli Użytkownik nie będzie w stanie uzyskać Usług dostawcy, ponieważ Dostawca uznał, że Użytkownik nie kwalifikuje się do ich otrzymania.',
+          'Po dokonaniu płatności za Rezerwację Headout wyda Potwierdzenie rezerwacji. Po dokonaniu płatności za Rezerwację bezpośrednio pomiędzy Użytkownikiem a Dostawcą zostaje zawarta dwustronna umowa na dostawę i zakup Usług dostawcy.',
+          'W przypadku rezerwacji wariantu Wycieczki, który obejmuje Dodatkowe usługi Headout, Headout może przekazać Użytkownikowi wytyczne dotyczące dostępu do takich usług za pośrednictwem e-maila lub innego środka, które Headout może od czasu do czasu uznać za stosowne. Dostęp do Dodatkowych usług Headout będzie ograniczony do Użytkowników, którzy dokonali Rezerwacji odpowiedniej Wycieczki. Headout udziela Użytkownikowi ograniczonej, niewyłącznej, niezbywalnej licencji na korzystanie z Dodatkowych usług Headout na czas trwania dostępu zapewnionego przez Headout. Użytkownik nie może kopiować, rozpowszechniać, modyfikować, tworzyć dzieł pochodnych ani w inny sposób wykorzystywać żadnych Dodatkowych usług Headout, z wyjątkiem przypadków wyraźnie dozwolonych w niniejszym dokumencie.',
+          'Oprócz niniejszych Warunków korzystania Użytkownik powinien również zapoznać się z często zadawanymi pytaniami (FAQ) dostępnymi w sekcji „Pomoc" na Stronie internetowej Headout, aby uzyskać szczegółowe informacje na temat Usług Headout. Użytkownik zgadza się, że będzie związany treścią takich Często zadawanych pytań w uzupełnieniu do niniejszych Warunków korzystania.',
+        ],
+      },
+      {
+        title: 'Ogólne warunki Headout Promise',
+        items: [
+          {
+            text: 'Zakres Headout Promise:',
+            subItems: [
+              'Headout Promise gwarantuje, że (a) Użytkownik otrzyma odpowiednie bilety na czas; (b) doświadczy tego, na co dokonał rezerwacji; i że (c) jesteśmy dostępni, aby udzielić pomocy 24/7.',
+              'Jeśli coś po naszej stronie pójdzie nie tak, naprawimy to lub zwrócimy Użytkownikowi pieniądze (zgodnie z podejściem „najpierw naprawa").',
+            ],
+          },
+          'Kiedy ma zastosowanie: Headout Promise dotyczy wyłącznie Rezerwacji dokonanych bezpośrednio przez Headout.',
+          {
+            text: 'Podejście „najpierw naprawa": W przypadku powstania problemu z winy Headout lub jego Dostawcy, Headout:',
+            subItems: [
+              'najpierw podejmie próbę rozwiązania problemu poprzez zmianę rezerwacji, wystawienie poprawionych biletów i',
+              'zapewni zwrot pieniędzy tylko wtedy, gdy problemu nie można w rozsądny sposób naprawić lub gdy Użytkownik odrzuci oferowaną naprawę (jeśli jest to dozwolone).',
+            ],
+          },
+          {
+            text: 'Gwarancja wycieczki:',
+            subItems: [
+              'Gwarancja wycieczki ma zastosowanie, gdy: (a) wycieczka lub miejsce wydarzenia zostaną nieoczekiwanie zamknięte; (b) nasz Partner na miejscu anuluje Wycieczkę; (c) przewodnik nie pojawia się na Wycieczce z przewodnikiem; (d) brak jakichkolwiek istotnych elementów obiecanych zgodnie z Rezerwacją (np. obiecane wejście, transfery lub inne istotne elementy zgodnie z rezerwacją).',
+              'Jeśli wystąpi którakolwiek z wyżej wymienionych sytuacji, Headout zaoferuje jeden z następujących środków zaradczych: (a) Zmiana rezerwacji – za zgodą Użytkownika zmienimy rezerwację na taką samą lub podobną Wycieczkę bez dodatkowych kosztów; lub (b) Zwrot pieniędzy – jeśli Użytkownik nie chce zmienić rezerwacji, otrzyma zwrot pieniędzy zapłaconych za Wycieczkę.',
+              'Gwarancja wycieczki nie ma zastosowania w przypadku, gdy (a) Rezerwacja została anulowana przez Użytkownika; (b) problemy wynikają z winy Użytkownika, w tym z podania przez niego nieprawidłowych informacji, spóźnienia się na wejście, niespełnienia wymogów wejścia lub nieobecności; (c) problemy wynikają ze złej pogody, długiego czasu oczekiwania i przepełnienia w godzinach szczytu, zakłóceń w ruchu, strajków i opóźnień w transporcie lokalnym; lub (d) niezadowolenie dotyczy jakości usług lub subiektywnych oczekiwań wykraczających poza opublikowane usługi zawarte w cenie.',
+              'Użytkownik rozumie, że Headout działa wyłącznie jako pośrednik w rezerwacji dla Użytkownika, ale ostateczna odpowiedzialność za wykonanie, dostarczenie i obsługę wycieczki spoczywa wyłącznie na Dostawcy.',
+            ],
+          },
+          {
+            text: 'Gwarancja dotycząca biletów:',
+            subItems: [
+              'Gwarancja dotycząca biletów ma zastosowanie w przypadku, gdy (a) Bilety wydane przez Headout odzwierciedlają inną datę, godzinę lub opcję niż wybrana przez Użytkownika; (b) Bilety są opóźnione lub nie zostały dostarczone na czas z powodu błędu po stronie Headout; lub (c) Bilety nie działają na miejscu z powodu przetwarzania związanego z Headout lub problemów technicznych.',
+              'Jeśli którykolwiek z powyższych problemów wystąpi wyłącznie z powodu błędu Headout, niezwłocznie wystawimy poprawione bilety lub, jeśli poprawione bilety nie będą mogły zostać dostarczone na czas, zwrócimy Użytkownikowi całą kwotę rezerwacji.',
+              'Gwarancja dotycząca biletów nie ma zastosowania, jeśli (a) Użytkownik wybrał niewłaściwą datę, godzinę lub opcję biletu; (b) bilet nie zadziała z powodu systemów technicznych obiektu, awarii systemu wejścia lub problemów ze sprzętem skanującym, na które nie mamy wpływu; lub (c) wystąpiły opóźnienia lub bilety zostały niedostarczone z powodu ustawień e-maila Użytkownika czy nieprawidłowych danych kontaktowych.',
+            ],
+          },
+          'Gwarancja wsparcia: Headout zapewnia wielojęzyczną obsługę klienta 24/7 przed wycieczką, w trakcie i po jej zakończeniu. Użytkownik może skontaktować się z nami za pośrednictwem czatu, telefonu lub e-maila, a Headout dołoży wszelkich starań, aby jak najszybciej rozwiązać zapytanie.',
+          {
+            text: 'Ubieganie się o korzyści w ramach Headout Promise:',
+            subItems: [
+              'Aby skorzystać ze świadczeń w ramach Headout Promise, Użytkownik musi (a) skontaktować się z pomocą techniczną Headout w ciągu 24 godzin od wystąpienia problemu; (b) podać dokładne informacje dotyczące Rezerwacji; i (c) przedstawić rozsądne szczegóły/dowody (takie jak zrzuty ekranu, dowód odmowy na miejscu, komunikacja z Partnerem itp.).',
+              'Niezgłoszenie się w wymaganym terminie może ograniczyć lub unieważnić uprawnienia do świadczeń.',
+            ],
+          },
+          {
+            text: 'Limity zwrotów pieniędzy:',
+            subItems: [
+              'Tylko kwota zapłacona w momencie Rezerwacji zostanie zwrócona w ramach Headout Promise.',
+              'Nie obejmuje ona (a) kosztów następczych lub przypadkowych (koszty podróży, zakwaterowania, wyżywienia itp.); (b) strat osobowych, obrażeń lub szkód powstałych podczas Wycieczki; lub (c) strat wynikających z błędu klienta (nieprawidłowe dane, spóźnione przybycie, nieobecność).',
+            ],
+          },
+          'Mechanizm zwrotu: Domyślnie Headout przetwarza kwotę zwrotu pieniędzy do pierwotnego źródła płatności. Jednakże, w przypadku gdy pierwotne źródło płatności jest niedostępne, Użytkownik może zdecydować się na otrzymanie zwrotu pieniędzy w formie Punktów Headout na swoje Konto Headout, które mogą być wykorzystane do dokonywania przyszłych rezerwacji na Headout. Punkty Headout nie podlegają przeniesieniu, zwrotowi pieniędzy ani wymianie na gotówkę. Zwroty pieniędzy będą przetwarzane w wyznaczonych terminach. Rzeczywisty czas realizacji może się różnić w zależności od banku Użytkownika lub dostawcy usług płatniczych.',
+          {
+            text: 'Zastrzeżenie praw: Headout może dodać, zmodyfikować, zawiesić lub wycofać Headout Promise (lub dowolną jej część) w dowolnym momencie, bez wcześniejszego powiadomienia lub ponoszenia odpowiedzialności. W przypadku podejrzenia niewłaściwego użycia, nadużycia, oszustwa lub naruszenia niniejszych Warunków, Headout może:',
+            subItems: [
+              'odmówić przyznania świadczeń w ramach Headout Promise;',
+              'anulować Rezerwację; i/lub',
+              'zawiesić prawo do przyszłych świadczeń w ramach programu.',
+            ],
+          },
+          'Zastosowanie mają wszystkie pozostałe warunki zawarte w Zasadach anulowania i Polityce prywatności.',
+        ],
+      },
+      {
+        title: 'Płatności',
+        items: [
+          'Gdy Użytkownik dokonuje Rezerwacji, Headout gromadzi informacje o płatności Użytkownika i przetwarza płatność w celu zapewnienia, że cena zapłacona przez Użytkownika za Rezerwację zostanie przekazana i zdeponowana na koncie Dostawcy, po odliczeniu ewentualnych opłat Headout. W ten sposób Headout ponosi ograniczoną odpowiedzialność za pobranie płatności od Użytkownika i przekazanie jej Dostawcy. O ile nie określono inaczej, do dokonania lub potwierdzenia Rezerwacji wymagana jest pełna płatność.',
+          'Wartość Rezerwacji może podlegać opłatom celnym, opłacie za transakcje zagraniczne, opłacie za wymianę waluty lub innym opłatom obowiązującym w kraju zamieszkania Użytkownika. Bank lub operator karty płatniczej Użytkownika może przeliczyć płatność na walutę lokalną (kraju zamieszkania Użytkownika) i może naliczyć opłaty, powodując różnice między kwotą wyświetlaną w Ofercie a ostateczną kwotą pobraną od Użytkownika. Headout zaleca skontaktowanie się z bankiem lub operatorem karty w przypadku jakichkolwiek pytań dotyczących przeliczenia waluty lub opłat.',
+          'Punkty Headout mogą być wykorzystywane przez zarejestrowanych Użytkowników Headout do przyszłych rezerwacji. Punkty Headout są niezbywalne i nie podlegają zwrotowi pieniędzy ani wymianie na gotówkę. Headout zastrzega sobie prawo do wprowadzania zmian w warunkach korzystania z Punktów Headout, w tym między innymi ich wartości, wykorzystania i ważności, bez uprzedniego powiadomienia. W przypadku gdy Headout dowie się, że użytkownik nadużywa Punktów Headout w celu spowodowania bezprawnej straty dla Headout i zysku dla siebie, Headout będzie mieć wszelkie prawa do podjęcia odpowiednich działań, w tym między innymi do cofnięcia Punktów Headout i dezaktywacji Konta Headout.',
+          'Headout jako platforma internetowa nie może wystawić faktury podatkowej za Rezerwację dokonaną przez Użytkownika. Jednakże, na pisemną prośbę Użytkownika, Headout może wystawić potwierdzenie płatności za dokonaną rezerwację. Takie pokwitowanie będzie zawierać szczegółowe informacje, w tym między innymi zapłaconą kwotę, zastosowane Punkty Headout, imię i nazwisko odwiedzającego oraz odpowiednie szczegóły wycieczki. Użytkownik może zażądać pokwitowania, kontaktując się z support@headout.com, a Headout dołoży starań, aby wystawić je w ciągu dwudziestu czterech (24) godzin od otrzymania żądania. Headout rezerwuje sobie prawo do określenia formatu i treści paragonu według własnego uznania.',
+        ],
+      },
+      {
+        title: 'Anulowanie i modyfikacje Rezerwacji',
+        items: [
+          'Po dokonaniu Rezerwacji nie może ona zostać zmieniona przez Użytkownika ani anulowana ze zwrotem pieniędzy, chyba że co innego wynika z Oferty lub Warunków dostawcy lub jakichkolwiek innych warunków mających zastosowanie do takiej Oferty.',
+          'Wszelkie kwestie dotyczące anulowania i modyfikacji Rezerwacji są rozstrzygane i/lub ustalane przez Dostawcę i/lub Headout (w zależności od przypadku). Biorąc pod uwagę, że zakup Wycieczki jest umową pomiędzy Użytkownikiem a Dostawcą, Headout nie określa warunków związanych z Wycieczką, w tym między innymi warunków anulowania/modyfikacji z nią związanych, chyba że uzgodniono inaczej pomiędzy Headout a danym Dostawcą.',
+          'Z zastrzeżeniem warunków anulowania/modyfikacji określonych w Ofercie lub Warunkach dostawcy lub jakichkolwiek innych dotyczących Oferty, Użytkownik może: (i) zdecydować się na anulowanie lub modyfikację Rezerwacji; lub (ii) skontaktować się z Headout na Dane kontaktowe podane w Potwierdzeniu rezerwacji, aby zapytać o opcje dostępne w celu anulowania/modyfikacji Rezerwacji. Po otrzymaniu takiego żądania Headout może, w razie potrzeby, skontaktować się z danym Dostawcą i uzyskać informacje lub uzyskać potwierdzenie przed anulowaniem/modyfikacją Rezerwacji.',
+          'Jeśli Rezerwacja została anulowana/zmodyfikowana przez Użytkownika zgodnie z warunkami wymienionymi w niniejszym dokumencie i zgodnie z warunkami anulowania Dostawcy, Headout, z zastrzeżeniem otrzymania Kwoty zwrotu od Dostawcy, zwróci Użytkownikowi odpowiednią kwotę. Headout wyjaśnia, że w żadnym wypadku nie wypłaci Użytkownikowi Kwoty zwrotu, dopóki Headout nie otrzyma jej od Dostawcy. Po otrzymaniu przez Headout Kwoty zwrotu od Dostawcy Headout podejmie starania w celu zainicjowania zwrotu pieniędzy w ciągu siedmiu (7) dni od jej otrzymania od Dostawcy. Domyślnie Headout przetwarza Kwotę zwrotu pieniędzy do pierwotnego źródła płatności. Jednakże, w przypadku gdy pierwotne źródło płatności jest niedostępne, Użytkownik może wybrać otrzymanie zwrotu pieniędzy w formie Punktów Headout na Konto Headout użytkownika. Punkty Headout nie podlegają przeniesieniu, zwrotowi pieniędzy ani wymianie na gotówkę. Jak wspomniano wcześniej, obecnie Punkty Headout nie mogą być wykorzystane częściowo na rezerwację. Headout zastrzega sobie prawo do wprowadzania zmian w warunkach korzystania z Punktów Headout, w tym między innymi ich wartości, wykorzystania i ważności, bez wcześniejszego powiadomienia.',
+          'W przypadku dokonania Rezerwacji przy użyciu kodu promocyjnego lub zaakceptowania rabatu lub ceny specjalnej podczas procesu dokonywania rezerwacji Użytkownik może unieważnić rabat lub cenę specjalną poprzez anulowanie/modyfikację Rezerwacji. Headout przetworzy wszelkie zwroty pieniędzy dla Użytkownika po dostosowaniu takiej zniżki lub oferty specjalnej, z której Użytkownik skorzystał w momencie Rezerwacji.',
+          'Zwrot pieniędzy nie jest dostępny po rozpoczęciu Wycieczki lub w odniesieniu do pakietu, zakwaterowania, posiłków lub innych usług, z których Użytkownik zaczął korzystać.',
+          'Dostawca może wprowadzić zmiany w Rezerwacji po dokonaniu zakupu przez Użytkownika, w tym między innymi zmiany dotyczące daty, ceny, objętych usług, zakresu, wymagań wiekowych i/lub wszelkich innych funkcji i/lub wymagań dotyczących Wycieczki. Headout dołoży wszelkich starań, aby poinformować Użytkownika o wszelkich takich zmianach w najwcześniejszym możliwym terminie, gdy tylko Headout się o nich dowie. Prawa Użytkownika dotyczące takich zmian w stosunku do Dostawcy podlegają Warunkom Dostawcy. Headout nie ponosi odpowiedzialności wobec Użytkownika lub jakiejkolwiek innej osoby za jakiekolwiek straty, koszty, szkody lub obrażenia powstałe w związku z takimi zmianami dokonanymi w rezerwacji.',
+          'Zgodnie z taką zmianą (zmianami), jeśli Dostawca anuluje Rezerwację lub zezwoli Użytkownikowi na anulowanie Rezerwacji, Headout dołoży starań, aby przetworzyć Kwotę zwrotu pieniędzy otrzymaną od Dostawcy w ciągu siedmiu (7) dni od jej otrzymania od Dostawcy. Jeśli Dostawca zezwoli Użytkownikowi na modyfikację Rezerwacji zgodnie z wprowadzonymi zmianami, wszelkie informacje otrzymane przez nas w tej sprawie zostaną przekazane Użytkownikowi niezwłocznie po ich uzyskaniu. Headout nie ponosi odpowiedzialności wobec Użytkownika lub jakiejkolwiek innej osoby za jakiekolwiek straty, wydatki, koszty lub szkody wynikające z (i) niemożności modyfikacji Rezerwacji przez Użytkownika, (ii) braku komunikacji Dostawcy w sprawie modyfikacji Rezerwacji z nami lub Użytkownikiem, lub (iii) Usług dostawcy wykorzystanych zgodnie z modyfikacją Rezerwacji.',
+          'Możemy zdecydować, według własnego uznania, że jest to konieczne lub pożądane dla ochrony naszych interesów, interesów Dostawcy i/lub interesów Użytkownika, aby wycofać nasze usługi, co spowoduje unieważnienie zasad anulowania Dostawcy. Możemy również, według własnego uznania, zorganizować dla Użytkownika zwrot części lub całości kwot pobranych od Użytkownika. Użytkownik zgadza się, że nie będziemy ponosić odpowiedzialności za takie anulowanie i zwroty pieniędzy.',
+          'W każdym przypadku anulowania Rezerwacji Użytkownik zgadza się i rozumie, że Headout będzie odpowiedzialny za przetworzenie zwrotu kwoty Rezerwacji po otrzymaniu jej od Dostawcy. Użytkownik zgadza się również, że wszelkie zobowiązania z tytułu Rezerwacji obciążają Dostawcę. Headout nie ponosi żadnej innej odpowiedzialności, w tym między innymi za jakiekolwiek przypadkowe straty poniesione przez Użytkownika.',
+          'W celu uniknięcia wątpliwości, w przypadku gdy rezerwacja Użytkownika obejmuje jakiekolwiek Dodatkowe usługi Headout, które są świadczone bezpośrednio przez Headout, a nie przez Dostawcę, Headout ponosi wyłączną odpowiedzialność za określenie i przetworzenie wszelkich zwrotów pieniędzy przypisanych do takich Dodatkowych usług Headout, zgodnie z obowiązującymi warunkami.',
+        ],
+      },
+      {
+        title: 'Odpowiedzialność Użytkownika i przejęcie ryzyka',
+        items: [
+          'Użytkownik ponosi odpowiedzialność za swoje działania i zaniechania, a także za działania i zaniechania wszystkich osób uczestniczących w Wycieczce. Oznacza to na przykład, że: (i) Użytkownik jest odpowiedzialny za opuszczenie miejsca Wycieczki w takim samym lub zasadniczo takim samym stanie, w jakim znajdowało się ono w momencie przybycia Użytkownika; (ii) Użytkownik musi postępować uczciwie, traktować inne osoby w miejscu realizacji Wycieczki z szacunkiem, zawsze przestrzegać wszystkich obowiązujących przepisów prawa oraz wszelkich warunków lub zasad określonych przez Dostawcę. Nieprzestrzeganie przez Użytkownika obowiązujących przepisów prawa lokalnego lub warunków określonych przez Dostawcę może skutkować poproszeniem Użytkownika przez Dostawcę o opuszczenie Wycieczki lub atrakcji lub podjęciem innych działań zgodnie z prawem.',
+          'Użytkownik przyjmuje do wiadomości, że działania podejmowane po dokonaniu Rezerwacji wiążą się z nieodłącznym ryzykiem i w związku z tym zgadza się, że w maksymalnym zakresie dozwolonym przez obowiązujące prawo ponosi całkowite ryzyko wynikające z dostępu do Platformy i korzystania z niej, udziału w jakiejkolwiek Wycieczce, wszelkich innych interakcji z innymi osobami w miejscu Wycieczki lub online. Oznacza to, że Użytkownik jest odpowiedzialny za przeanalizowanie i zrozumienie, że Wycieczka wybrana przez niego do Rezerwacji jest dla niego odpowiednia pod każdym względem. Na przykład Wycieczki mogą wiązać się z ryzykiem choroby, obrażeń ciała, niepełnosprawności lub śmierci, a Użytkownik dobrowolnie i świadomie przyjmuje na siebie to ryzyko, decydując się na udział w tych Wycieczkach.',
+        ],
+      },
+      {
+        title: 'Działania zabronione na stronie internetowej',
+        items: [
+          'Zawartość strony internetowej i/lub Dodatkowe usługi Headout, jak również infrastruktura wykorzystywana do ich dostarczania, są albo naszą własnością, albo zostały nam udzielone na podstawie ważnej licencji. Użytkownik zgadza się w żaden inny sposób nie modyfikować, kopiować, dystrybuować, transmitować, wyświetlać, wykonywać, powielać, publikować, licencjonować, tworzyć dzieł pochodnych, przenosić ani sprzedawać lub odsprzedawać Zawartości strony internetowej i/lub Dodatkowych usług Headout lub jakichkolwiek produktów lub usług uzyskanych ze Strony internetowej lub za jej pośrednictwem. Jakiekolwiek inne wykorzystanie Zawartości strony internetowej produktów i/lub usług wymaga uprzedniej pisemnej zgody Headout.',
+          {
+            text: 'Ponadto Użytkownik zgadza się, że nie będzie pomagał ani umożliwiał innym osobom:',
+            subItems: [
+              'korzystania ze Strony internetowej lub Zawartości strony internetowej w celach komercyjnych lub niezgodnych z prawem;',
+              'uzyskiwania dostępu, monitorowania lub kopiowania jakiejkolwiek Zawartości strony internetowej przy użyciu jakiegokolwiek robota, pająków, skrobaków lub innych zautomatyzowanych środków lub jakichkolwiek ręcznych procesów w celu uzyskania dostępu, skrobania, indeksowania, pobierania lub w inny sposób korzystania ze Strony internetowej lub jakiejkolwiek Zawartości strony internetowej w jakimkolwiek celu bez naszej wyraźnej pisemnej zgody;',
+              'naruszania ograniczeń na Stronie internetowej lub omijania lub obchodzenia innych środków zastosowanych w celu uniemożliwienia lub ograniczenia dostępu do Strony internetowej;',
+              'podejmowania jakichkolwiek działań, które nakładają lub mogą nakładać, według naszego uznania, nieuzasadnione lub nieproporcjonalnie duże obciążenie na naszą infrastrukturę lub powodują nadmierny ruch na Stronie internetowej;',
+              '„osadzania" lub „odzwierciedlania" ani w żaden inny sposób włączania jakiejkolwiek części Strony internetowej do innej witryny internetowej bez naszej uprzedniej pisemnej zgody;',
+              'próby modyfikacji, tłumaczenia, adaptacji, edycji, dekompilacji, dezasemblacji lub inżynierii wstecznej jakiegokolwiek oprogramowania związanego ze Stroną internetową;',
+              'korzystania ze Strony internetowej w celu grożenia, prześladowania, oszukiwania, podżegania, nękania lub zachęcania do nękania innej osoby lub w inny sposób zakłócania korzystania ze Strony internetowej przez innego użytkownika;',
+              'korzystania ze Strony internetowej w celu promowania bigoterii lub dyskryminacji chronionych klas;',
+              'korzystania ze Strony internetowej w celu naruszenia jakichkolwiek praw osób trzecich, w tym naruszenia zaufania, praw autorskich, znaków towarowych, patentów, tajemnic handlowych, praw moralnych, prawa do prywatności, prawa do wizerunku lub innych praw własności intelektualnej lub praw własności;',
+              'korzystania ze Strony internetowej w celu przesyłania pornografii lub treści niezgodnych z prawem;',
+              'korzystania ze Strony internetowej w celu pozyskiwania danych osobowych od nieletnich, wyrządzania krzywdy lub grożenia wyrządzeniem krzywdy jakiejkolwiek osobie, w tym nieletnim;',
+              'próby uzyskania nieautoryzowanego dostępu do Strony internetowej, kont użytkowników, systemów komputerowych lub sieci połączonych ze Stroną internetową poprzez hakowanie, eksplorację haseł lub w jakikolwiek inny sposób;',
+              'korzystania ze Strony internetowej w celu przesyłania wirusów komputerowych, robaków, defektów, koni trojańskich lub innych elementów o charakterze destrukcyjnym;',
+              'używania jakichkolwiek urządzeń, oprogramowania lub procedur, które zakłócają prawidłowe działanie Strony internetowej lub w inny sposób próbują zakłócać prawidłowe działanie Strony internetowej;',
+              'korzystania ze Strony internetowej w celu naruszenia bezpieczeństwa jakiejkolwiek sieci komputerowej, łamania haseł lub kodów szyfrujących;',
+              'zakłócania lub ingerowania w bezpieczeństwo lub w inny sposób powodowanie szkód na Stronie internetowej;',
+              'usuwania, obchodzenia, wyłączania, uszkadzania lub w inny sposób ingerowania w jakiekolwiek funkcje Strony internetowej związane z bezpieczeństwem, funkcje, które uniemożliwiają lub ograniczają korzystanie lub kopiowanie Zawartości strony internetowej, lub funkcje, które wymuszają ograniczenia w korzystaniu ze Strony internetowej;',
+              'publikowania na stronie internetowej jakichkolwiek treści, które naruszają lub są wyraźnie zabronione przez prawo Stanów Zjednoczonych Ameryki lub lokalne prawo kraju, z którego uzyskuje się dostęp do Strony internetowej.',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Nieuczciwe działania',
+        items: [
+          'Prowadzimy politykę zerowej tolerancji dla wszelkich nieuczciwych działań. W niektórych przypadkach, gdy podejrzewamy nieuczciwą transakcję, możemy skontaktować się z Użytkownikiem w celu uzyskania dodatkowych informacji, aby zweryfikować legalność Rezerwacji i upewnić się, że nie jest ona związana z żadnymi nieuczciwymi działaniami. W przypadku niepodania wymaganych informacji zastrzegamy sobie prawo do anulowania Rezerwacji. Uwaga: działania te są podejmowane wyłącznie w najlepszym interesie wszystkich Użytkowników, jak również Dostawców, a Headout nie ponosi odpowiedzialności za takie anulacje.',
+          'Oszuści mogą wykorzystywać różne techniki phishingu w celu uzyskania danych osobowych i poufnych, w tym szczegółów płatności osób fizycznych, ze złym zamiarem oszukania ich. Techniki phishingu mogą obejmować tworzenie fałszywych stron internetowych, wiadomości, e-maili i nie tylko. Zdecydowanie zalecamy zachowanie czujności i informowanie o tych metodach phishingu. W przypadku natknięcia się lub stania się ofiarą takich prób phishingu w imieniu Headout uprzejmie prosimy o niezwłoczne zgłaszanie takich działań na adres orm@headout.com. Wzywamy również Użytkownika do niezwłocznego zgłaszania takich transakcji do swojego banku lub innego organu, który może być wymagany zgodnie z prawem.',
+        ],
+      },
+      {
+        title: 'Komunikacja elektroniczna',
+        items: [
+          'Korzystając ze Strony internetowej Headout lub wysyłając do nas wiadomości e-mail, wiadomości tekstowe i inne wiadomości z komputera stacjonarnego lub urządzenia mobilnego, Użytkownik komunikuje się z nami drogą elektroniczną i zgadza się, że możemy komunikować się z nim na różne sposoby, takie jak za pośrednictwem poczty elektronicznej, powiadomień push w aplikacji lub poprzez publikowanie powiadomień i wiadomości na Stronie internetowej.',
+          'Użytkownik może zrezygnować z subskrypcji wiadomości e-mail o charakterze marketingowym, zgłaszając taką prośbę na adres support@headout.com. Każdy taki wniosek zostanie rozpatrzony w ciągu siedmiu (7) dni roboczych od jego otrzymania. Headout może jednak nadal wysyłać Użytkownikowi wiadomości niemarketingowe, takie jak wiadomości związane z wszelkimi nadchodzącymi Rezerwacjami.',
+          'Użytkownik zabezpieczy Headout przed wszelkimi stratami, wydatkami, kosztami, szkodami lub obrażeniami wynikającymi z działań podjętych przez lokalny organ regulacyjny ds. telekomunikacji lub jakikolwiek inny organ w związku z błędną skargą złożoną przez Użytkownika w odniesieniu do komunikacji, o której mowa powyżej, lub w związku z błędnymi informacjami kontaktowymi podanymi przez Użytkownika z jakiegokolwiek powodu.',
+        ],
+      },
+      {
+        title: 'Treść',
+        items: [
+          'Użytkownik i inni użytkownicy Strony internetowej mogą publikować lub przesyłać pewne Treści użytkownika do Headout lub na jego Stronę internetową. Możemy wykorzystywać takie Treści użytkownika na kilka różnych sposobów, w tym między innymi wyświetlać je na Stronie internetowej, formatować, tłumaczyć na inne języki, edytować pod kątem jasności i gramatyki, włączać do reklam i innych dzieł, tworzyć na ich podstawie dzieła pochodne, promować je czy rozprowadzać. Użytkownik zgadza się również, że Headout może skontaktować się z nim w celu opublikowania recenzji i/lub nakręcenia filmów lub zdjęć z Wycieczek zarezerwowanych przez Użytkownika i z Usług Headout, z których skorzystał, co jest całkowicie opcjonalne. W przypadku wyrażenia przez Użytkownika zgody na udostępnienie Headout takich Treści użytkownika Headout będzie mieć nieograniczone prawo do wykorzystywania, zmiany przeznaczenia lub powielania takich Treści użytkownika na swojej Platformie. Headout nie zapłaci Użytkownikowi żadnego wynagrodzenia za takie Treści użytkownika.',
+          'Przesyłając Treści użytkownika, Użytkownik przyznaje Headout i jej spółkom zależnym i/lub stowarzyszonym ogólnoświatowe, niewyłączne, wolne od tantiem, w pełni opłacone, wieczyste, zbywalne, nieodwołalne i w pełni podlegające sublicencjonowaniu prawo do (a) używania, powielania, modyfikowania, adaptowania, tłumaczenia, rozpowszechniania, publikowania, tworzenia dzieł pochodnych oraz publicznego wyświetlania i wykonywania takich Treści użytkownika na całym świecie we wszelkich mediach, obecnie znanych lub opracowanych w przyszłości, w dowolnym celu; oraz (b) używania nazwy podanej przez Użytkownika w związku z takimi Treściami użytkownika. Użytkownik przyjmuje do wiadomości, że Headout może zdecydować o przypisaniu Treści użytkownika według własnego uznania. Użytkownik przyjmuje do wiadomości i zgadza się, że Treści użytkownika są jawne i niezastrzeżone. W przypadku stwierdzenia, że Użytkownik zachowuje autorskie prawa osobiste (w tym prawa do autorstwa lub integralności) do Treści użytkownika, Użytkownik niniejszym oświadcza, że (a) nie wymaga, aby jakiekolwiek dane osobowe były wykorzystywane w związku z Treściami użytkownika lub jakimikolwiek dziełami pochodnymi lub ich aktualizacjami; (b) Użytkownik nie ma nic przeciwko publikowaniu, używaniu, modyfikowaniu, usuwaniu i wykorzystywaniu Treści użytkownika przez Headout lub jego licencjobiorców, następców i cesjonariuszy; (c) Użytkownik na zawsze zrzeka się i zgadza się nie rościć ani nie dochodzić żadnych praw autorskich osobistych do Treści użytkownika; oraz (d) użytkownik na zawsze zwalnia Headout oraz jej licencjobiorców, następców prawnych i cesjonariuszy z wszelkich roszczeń, które użytkownik mógłby w inny sposób wysuwać przeciwko Headout na podstawie takich autorskich praw osobistych.',
+          'Strona internetowa zawiera również pewne Interaktywne fora, a Użytkownik ponosi wyłączną odpowiedzialność za korzystanie z takich Interaktywnych forów. Użytkownik zgadza się korzystać z takich Interaktywnych forów na własne ryzyko. Korzystając z Interaktywnych forów, Użytkownik wyraźnie zgadza się nie publikować, nie przesyłać, nie przekazywać, nie rozpowszechniać, nie przechowywać, nie tworzyć ani w żaden inny sposób nie publikować za pośrednictwem Strony internetowej żadnych Treści użytkownika, które obejmują lub zawierają:',
+          {
+            text: 'Zabronione treści obejmują:',
+            subItems: [
+              'treści niezgodne z prawem, oszczercze, zniesławiające, obsceniczne, pornograficzne, nieprzyzwoite, lubieżne, sugestywne, nękające, zawierające groźby, naruszające prywatność lub prawa do wizerunku, obraźliwe, podżegające, oszukańcze lub w inny sposób budzące zastrzeżenia;',
+              'treści, które stanowiłyby przestępstwo, zachęcałyby do jego popełnienia lub dostarczałyby instrukcji do jego popełnienia, naruszałyby prawa jakiejkolwiek strony lub w inny sposób powodowałyby odpowiedzialność lub naruszałyby jakiekolwiek obowiązujące prawo;',
+              'treści, które mogą naruszać jakiekolwiek patenty, znaki towarowe, tajemnice handlowe, prawa autorskie lub inne prawa intelektualne lub własnościowe jakiejkolwiek strony;',
+              'treści, które podszywają się pod jakąkolwiek osobę lub podmiot lub w inny sposób fałszywie przedstawiają powiązania Użytkownika z osobą lub podmiotem, w tym z Headout;',
+              'prywatne informacje osób trzecich, w tym między innymi imię i nazwisko, adres, numer telefonu, adres e-mail i numer karty kredytowej;',
+              'wirusy, uszkodzone dane lub inne szkodliwe, zakłócające lub niszczące pliki;',
+              'treści niezwiązane z tematem Obszaru(-ów) interaktywnego(-ych), w którym(-ych) takie Treści użytkownika zostały opublikowane;',
+              'treści lub linki do treści, które w wyłącznej ocenie Headout (i) naruszają poprzednie podpunkty niniejszego dokumentu, (ii) są niewłaściwe, (iii) ograniczają lub uniemożliwiają innym osobom korzystanie z Obszarów interaktywnych lub Strony internetowej i/lub (iv) mogą narazić Headout, jej podmioty stowarzyszone lub użytkowników Strony internetowej na jakiekolwiek szkody lub odpowiedzialność jakiegokolwiek rodzaju.',
+            ],
+          },
+          'Użytkownik ponosi wyłączną odpowiedzialność za Treści użytkownika, które przesyła. Użytkownik przyjmuje na siebie wszelkie ryzyko związane z takimi Treściami użytkownika, w tym poleganie przez kogokolwiek na ich dokładności, kompletności lub przydatności, lub jakiekolwiek ujawnienie przez Użytkownika informacji zawartych w takich Treściach użytkownika, które umożliwiają identyfikację Użytkownika. Użytkownik oświadcza, że jest właścicielem lub posiada niezbędne uprawnienia do korzystania i autoryzowania korzystania z Treści użytkownika w sposób opisany w niniejszym dokumencie. Użytkownik nie może sugerować, że takie Treści użytkownika są w jakikolwiek sposób sponsorowane lub popierane przez Headout.',
+          'Użytkownik ponosi wyłączną odpowiedzialność za wszelkie Treści użytkownika opublikowane, przechowywane lub przesłane na Platformę, a także za wszelkie straty lub szkody z nimi związane. Użytkownik zgadza się nie publikować żadnych Treści użytkownika, które mogą stanowić zniesławienie, oszczerstwo, pomówienie, pominięcie, fałsz, obsceniczność, pornografię, profanację lub w jakikolwiek sposób naruszają prawo. W przypadku gdy Headout zostanie pociągnięty do odpowiedzialności przez jakikolwiek sąd lub organ rządowy za jakiekolwiek Treści użytkownika opublikowane przez Użytkownika na Stronie internetowej, Użytkownik zobowiązuje się zwolnić Headout z odpowiedzialności i zabezpieczyć go przed wszelkimi stratami i/lub szkodami poniesionymi przez Headout w związku z tym.',
+          'Headout może sprawdzać, edytować lub monitorować Treści użytkownika. Headout zastrzega sobie prawo, według własnego uznania, do usuwania, wyświetlania, tłumaczenia lub edytowania bez uprzedzenia Treści użytkownika w dowolnym czasie i z dowolnego powodu i/lub do zlecania takich działań stronom trzecim w swoim imieniu, a Użytkownik ponosi wyłączną odpowiedzialność za tworzenie kopii zapasowych i zamienników Treści użytkownika na swój wyłączny koszt. Headout nie ma obowiązku przechowywania ani dostarczania Użytkownikowi kopii Treści użytkownika.',
+          'Jeśli jakikolwiek Użytkownik zidentyfikuje Treści na Platformie, które są niezgodne z prawem lub w inny sposób naruszają obowiązujące przepisy prawa, może złożyć pisemną skargę na adres legal@headout.com. Po otrzymaniu takiej skargi Headout dołoży wszelkich starań, aby ją rozpatrzyć i zająć się nią w ciągu 3 dni roboczych. Headout powiadomi skarżącego o swojej decyzji w tym samym terminie. Headout zastrzega sobie prawo do podjęcia wszelkich działań, które uzna za stosowne, w tym między innymi do usunięcia lub modyfikacji zgłoszonych treści.',
+          'Jeśli Użytkownik zostanie poszkodowany w wyniku działania moderacji treści podjętego przez Headout, może zgłosić spór, przesyłając pisemny wniosek na adres legal@headout.com w ciągu sześciu (6) miesięcy od daty takiego działania. Headout rozpatrzy wniosek i przekaże swoją decyzję Użytkownikowi. Jeśli Użytkownik jest niezadowolony z decyzji Headout, może skorzystać z pozasądowych mechanizmów rozstrzygania sporów, które mogą być dostępne zgodnie z obowiązującym prawem.',
+          'Jakiekolwiek korzystanie przez Użytkownika z Interaktywnych forów lub innych części Strony internetowej z naruszeniem powyższego stanowi naruszenie niniejszych Warunków korzystania i może skutkować, między innymi, zakończeniem lub zawieszeniem praw Użytkownika do korzystania z Interaktywnych forów, Strony internetowej i/lub zamknięciem Konta Headout.',
+        ],
+      },
+      {
+        title: 'Linki do stron internetowych osób trzecich',
+        items: [
+          'Strona internetowa może zawierać hiperłącza do stron internetowych osób trzecich. Takie hiperłącza są udostępniane wyłącznie w celach informacyjnych. Ich obecność na Stronie Internetowej nie oznacza jakiegokolwiek poparcia Headout dla materiałów znajdujących się na takich Stronach internetowych osób trzecich ani jakiegokolwiek powiązania z ich operatorami. Nie kontrolujemy Stron internetowych osób trzecich i nie ponosimy odpowiedzialności za ich zawartość, prywatność ani inne praktyki stosowane przez ich właścicieli i operatorów. Użytkownik uzyskuje dostęp do takich linków na własne ryzyko, a Headout nie ponosi odpowiedzialności za jakiekolwiek straty lub szkody poniesione w wyniku uzyskania dostępu do takich linków i dobrowolnego udostępnienia danych osobowych za ich pośrednictwem. Użytkownicy będą związani warunkami korzystania i polityką prywatności takich Stron internetowych osób trzecich i zaleca się zapoznanie się z takimi warunkami. Użytkownik ponosi wyłączną odpowiedzialność za upewnienie się, że wybrane przez niego hiperłącza i/lub oprogramowanie pobrane z takich Stron internetowych osób trzecich są wolne od wirusów.',
+          'W niektórych przypadkach Użytkownik może zostać zapytany na Stronie internetowej osoby trzeciej, czy chce połączyć swój profil z Platformą Headout. Wybór takiej opcji jest całkowicie opcjonalny. Jeśli Użytkownik zdecyduje się połączyć swoje profile, a następnie zechce wyłączyć takie łącza, powinien skontaktować się z odpowiednią Stroną internetową osoby trzeciej.',
+        ],
+      },
+      {
+        title: 'Zgodność z ustawą Digital Millennium Copyright Act',
+        items: [
+          'Jeśli Użytkownik uważa, że jego utwór został skopiowany na naszej Stronie internetowej lub w którymkolwiek z naszych innych systemów lub sieci w sposób stanowiący naruszenie praw autorskich, prosimy o napisanie do nas na adres IP@headout.com. Wysyłając zawiadomienie na podstawie niniejszego nagłówka o jakimkolwiek domniemanym naruszeniu, należy podać Headout następujące informacje:',
+          {
+            text: 'Powiadomienie musi zawierać:',
+            subItems: [
+              'Elektroniczny lub fizyczny podpis osoby upoważnionej do działania w imieniu właściciela praw autorskich',
+              'Opis utworu chronionego prawem autorskim, który zdaniem Użytkownika został naruszony',
+              'Opis miejsca na Stronie internetowej, w którym znajduje się materiał, co do którego Użytkownik twierdzi, że narusza prawa autorskie',
+              'Adres, numer telefonu i adres e-mail',
+              'Oświadczenie Użytkownika, że działa on w dobrej wierze i w przekonaniu, że domniemane wykorzystanie nie jest dozwolone przez właściciela praw autorskich, jego przedstawiciela lub prawo',
+              'Oświadczenie Użytkownika, złożone pod rygorem odpowiedzialności karnej za składanie fałszywych zeznań, że powyższe informacje zawarte w powiadomieniu są dokładne i że Użytkownik jest właścicielem praw autorskich lub jest upoważniony do działania w imieniu właściciela praw autorskich',
+            ],
+          },
+          'Headout odpowie tylko na te powiadomienia, które zasadniczo spełniają powyższe wymagania. Przeprowadzimy dochodzenie w sprawie roszczenia i powiadomimy Użytkownika za pośrednictwem metody kontaktu użytej do złożenia zawiadomienia.',
+          'Aby upewnić się, że powiadomienie jest zgodne z wymogami ustawy Digital Millennium Copyright Act, patrz 17 U.S.C. § 512(c)(3).',
+        ],
+      },
+      {
+        title:
+          'Zastrzeżenie dotyczące gwarancji i ograniczenie odpowiedzialności',
+        items: [
+          'UDOSTĘPNIAMY PLATFORMĘ I CAŁĄ ZAWARTOŚĆ STRONY INTERNETOWEJ „W STANIE, W JAKIM SIĘ ZNAJDUJE" BEZ JAKIEJKOLWIEK GWARANCJI I ZRZEKAMY SIĘ WSZELKICH GWARANCJI, ZARÓWNO WYRAŹNYCH, JAK I DOROZUMIANYCH. NA PRZYKŁAD: (I) NIE POPIERAMY ANI NIE GWARANTUJEMY ISTNIENIA, POSTĘPOWANIA, DZIAŁANIA, BEZPIECZEŃSTWA, JAKOŚCI, LEGALNOŚCI LUB PRZYDATNOŚCI JAKIEGOKOLWIEK DOSTAWCY, OFERTY LUB WYCIECZKI; (II) NIE GWARANTUJEMY WYDAJNOŚCI ANI NIEPRZERWANEGO DZIAŁANIA STRONY INTERNETOWEJ; ORAZ (III) NIE GWARANTUJEMY, ŻE WERYFIKACJA, TOŻSAMOŚĆ LUB ZAMELDOWANIE PRZEPROWADZONE NA LISTACH LUB DOSTAWCACH (JEŚLI ISTNIEJĄ) ZIDENTYFIKUJE PRZESZŁE WYKROCZENIA LUB ZAPOBIEGNIE PRZYSZŁYM WYKROCZENIOM. ZASTRZEŻENIA ZAWARTE W NINIEJSZYCH WARUNKACH KORZYSTANIA MAJĄ ZASTOSOWANIE W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO. JEŚLI UŻYTKOWNIKOWI PRZYSŁUGUJĄ USTAWOWE PRAWA LUB GWARANCJE, KTÓRYCH NIE MOŻEMY SIĘ ZRZEC, CZAS TRWANIA TAKICH USTAWOWO WYMAGANYCH PRAW LUB GWARANCJI BĘDZIE OGRANICZONY DO MAKSYMALNEGO ZAKRESU DOZWOLONEGO PRZEZ PRAWO.',
+          'NIEZALEŻNIE OD JAKICHKOLWIEK POSTANOWIEŃ ZAWARTYCH W NINIEJSZYM DOKUMENCIE, W ŻADNYM WYPADKU HEADOUT NIE BĘDZIE PONOSIĆ ODPOWIEDZIALNOŚCI WOBEC UŻYTKOWNIKA LUB JAKIEJKOLWIEK INNEJ STRONY ZA JAKIEKOLWIEK SZKODY WTÓRNE, POŚREDNIE, PRZYKŁADOWE, SZCZEGÓLNE LUB MORALNE, NIEZALEŻNIE OD TEGO, CZY WYNIKAJĄ ONE Z NARUSZENIA UMOWY, CZYNU NIEDOZWOLONEGO (W TYM ZANIEDBANIA) LUB W INNY SPOSÓB, NIEZALEŻNIE OD TEGO, CZY TAKIE SZKODY BYŁY MOŻLIWE DO PRZEWIDZENIA I NIEZALEŻNIE OD TEGO, CZY HEADOUT ZOSTAŁ POINFORMOWANY O MOŻLIWOŚCI WYSTĄPIENIA TAKICH SZKÓD.',
+          'ŁĄCZNA ODPOWIEDZIALNOŚĆ HEADOUT NA MOCY NINIEJSZYCH WARUNKÓW KORZYSTANIA NIE PRZEKROCZY KWOTY ZAPŁACONEJ PRZEZ UŻYTKOWNIKA NA RZECZ HEADOUT W ZWIĄZKU Z REZERWACJĄ, KTÓRA STANOWI PRZEDMIOT ROSZCZENIA NA MOCY NINIEJSZYCH WARUNKÓW. ZASTRZEŻENIA I OGRANICZENIA ZAWARTE W NINIEJSZEJ KLAUZULI BĘDĄ MIAŁY ZASTOSOWANIE NIEZALEŻNIE OD NIEPOWODZENIA ZASADNICZEGO CELU JAKIEGOKOLWIEK OGRANICZONEGO ŚRODKA ZARADCZEGO I W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ OBOWIĄZUJĄCE PRAWO.',
+        ],
+      },
+      {
+        title: 'Siła wyższa',
+        items: [
+          'Użytkownik zgadza się, że mogą wystąpić pewne wyjątkowe okoliczności, w których Headout i/lub Dostawca mogą znaleźć się w sytuacji, w której nie będą w stanie zrealizować potwierdzonych Rezerwacji lub świadczyć Usług dostawcy lub Usług Headout z różnych powodów, takich jak siła wyższa, pandemia, epidemia, okoliczności biznesowe, niepokoje pracownicze, niewypłacalność, decyzje rządowe, działalność terrorystyczna, wszelkie kwestie operacyjne i techniczne lub wszelkie inne przyczyny pozostające poza kontrolą Headout i/lub Dostawcy.',
+          'Użytkownik rozumie i zgadza się, że Headout, będąc jedynie rynkiem, na którym dokonano Rezerwacji, nie może być pociągnięty do odpowiedzialności za jakiekolwiek okoliczności Siły wyższej prowadzące do anulowania Rezerwacji. Jednakże, w przypadku gdy Headout posiada jakąkolwiek wiedzę z wyprzedzeniem o takim scenariuszu, który może prowadzić do anulowania lub nieuznania Rezerwacji, będzie miał ograniczoną odpowiedzialność za zwrot kwoty rezerwacji po odliczeniu wymaganych i obowiązujących opłat, jeśli zostaną one zwrócone przez danego Dostawcę.',
+          'Użytkownik zgadza się również, że w przypadku gdy Rezerwacja nie zostanie potwierdzona z przyczyn technicznych (takich jak przestój sieci, problem z serwerem strony trzeciej, problem z bramką płatności / bankami itp.) lub innych podobnych kwestii, Headout będzie miał ograniczoną odpowiedzialność za zwrot kwoty Rezerwacji, jeśli taka istnieje, otrzymanej od Użytkownika. Użytkownik zgadza się również, że po przetworzeniu wspomnianego zwrotu pieniędzy Headout zostanie zwolniony z wszelkich zobowiązań.',
+          'W przypadku wystąpienia jakichkolwiek szkód pośrednich, karnych, przypadkowych, specjalnych lub wtórnych Headout nie ponosi za nie odpowiedzialności, a Użytkownik nie będzie dochodził od Headout zwrotu takich strat.',
+        ],
+      },
+      {
+        title: 'Odszkodowanie',
+        items: [
+          'Użytkownik zwolni Headout i jego pracowników, dyrektorów, agentów i Dostawców z odpowiedzialności i zabezpieczy ich przed wszelkimi działaniami, roszczeniami, pozwami, postępowaniami, żądaniami, dochodzeniami lub opłatami związanymi z wszelkimi kosztami, stratami, zobowiązaniami, odszkodowaniami, grzywnami, wyrokami, opłatami lub wydatkami (w tym uzasadnionymi opłatami adwokackimi i kosztami sądowymi) wynikającymi z (i) naruszenia przez Użytkownika niniejszych Warunków korzystania lub Warunków dostawcy (ii) nieprzestrzegania przez Użytkownika obowiązującego prawa w związku z korzystaniem ze Strony internetowej lub uzyskiwaniem Usług; lub (iii) wszelkich obrażeń ciała, szkód majątkowych lub śmierci wynikających z działania lub zaniechania Użytkownika w związku z korzystaniem ze Strony internetowej, uczestnictwem w Wycieczkach lub korzystaniem z Usług.',
+        ],
+      },
+      {
+        title: 'Postanowienia ogólne',
+        items: [
+          'Prawo właściwe i jurysdykcja: Niniejsze Warunki korzystania będą regulowane, interpretowane i egzekwowane zgodnie z prawem stanu Nowy Jork, bez odniesienia do norm kolizyjnych. Każda ze stron niniejszym nieodwołalnie poddaje się wyłącznej jurysdykcji sądów stanowych i federalnych w stanie Nowy Jork w odniesieniu do wszelkich sporów wynikających z niniejszych Warunków korzystania lub z nimi związanych.',
+          'Zabezpieczenie roszczeń: Użytkownik przyjmuje do wiadomości i zgadza się, że naruszenie niektórych z jego zobowiązań może wyrządzić Headout znaczną szkodę, której nie można naprawić wyłącznie poprzez wypłatę odszkodowania. W związku z tym Użytkownik niniejszym zgadza się, że Headout będzie uprawniony do ubiegania się o wstępny i stały nakaz sądowy, bez wymogu złożenia kaucji, w każdej jurysdykcji, w której mogą wystąpić szkody, oprócz wszelkich innych środków zaradczych dostępnych dla niego w przypadku takiego naruszenia.',
+          'Przydział; Wiążący skutek: Użytkownik nie może cedować ani delegować niniejszych Warunków korzystania ani żadnych swoich praw lub obowiązków wynikających z niniejszych Warunków korzystania bez uprzedniej pisemnej zgody Headout, a wszelkie rzekome cesje będą nieważne i nie będą miały mocy ani skutku. Headout może dowolnie cedować lub delegować niniejsze Warunki korzystania lub jakiekolwiek swoje licencje, prawa lub obowiązki wynikające z niniejszych Warunków korzystania według własnego uznania. Niniejsze Warunki korzystania będą wiążące i będą działać na korzyść Headout, jej następców prawnych i dozwolonych cesjonariuszy.',
+          'Częściowa nieważność: Jeśli którekolwiek z postanowień niniejszych Warunków korzystania zostanie uznane za nieważne lub niewykonalne przez sąd właściwej jurysdykcji, wówczas pozostałe postanowienia pozostaną w pełnej mocy, a takie postanowienie zostanie zreformowane w sposób realizujący pierwotną intencję postanowienia w formie, w jakiej zostało włączone do niniejszych Warunków korzystania. Jeśli takie przekształcenie nie jest możliwe w sposób możliwy do wyegzekwowania, wówczas taki warunek zostanie oddzielony od pozostałych warunków, a pozostałe warunki pozostaną w mocy.',
+          'Brak zrzeczenia się: Żadne zrzeczenie się któregokolwiek z warunków niniejszych Warunków korzystania nie będzie ważne ani wiążące dla Headout, chyba że zostało zatwierdzone na piśmie przez upoważnionego przedstawiciela Headout. Nieegzekwowanie przez Headout w dowolnym momencie któregokolwiek z postanowień niniejszych Warunków korzystania lub niewymaganie w dowolnym momencie wykonania przez Użytkownika któregokolwiek z postanowień niniejszych Warunków korzystania nie będzie w żaden sposób interpretowane jako obecne lub przyszłe zrzeczenie się takich postanowień, ani w żaden sposób nie wpłynie na zdolność Headout do egzekwowania każdego takiego postanowienia w późniejszym czasie.',
+          'Całość umowy: Pomiędzy Użytkownikiem a Headout, niniejsze Warunki korzystania określają całość umowy i porozumienia odnoszącego się do przedmiotu niniejszej umowy i zastępują wszelkie wcześniejsze i równoczesne komunikaty, oświadczenia, dyskusje i umowy dotyczące takiego przedmiotu.',
+          'W przypadku jakichkolwiek niespójności lub konfliktu między angielską wersją niniejszych Warunków korzystania a jakimkolwiek tłumaczeniem, wersja angielska ma pierwszeństwo i jest dokumentem regulującym dla wszystkich celów.',
+        ],
+      },
+    ],
+  },
+  PRIVACY_POLICY_CONTENT: {
+    linkText: 'Poprzednia polityka prywatności',
+    title: 'Headout: Polityka prywatności',
+    lastUpdated: '30 stycznia 2026 r.',
+    sections: [
+      {
+        title: 'Jaki jest cel niniejszej Polityki prywatności?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Headout dokłada starań, by chronić Dane osobowe Użytkowników i odpowiednio nimi zarządzać. W związku z tym firma Headout wdrożyła niniejszą Politykę prywatności, która ma na celu ochronę Danych osobowych Użytkowników.',
+              },
+              {
+                text: 'Niniejsza Polityka opisuje między innymi procedury Headout dotyczące gromadzenia, przetwarzania, ujawniania i ochrony Danych osobowych Użytkownika, gdy i.) jako użytkownik uzyskuje dostęp do naszej strony internetowej www.headout.com lub aplikacji mobilnej Headout Dex („Platforma”), lub ii.) jako Dostawca uzyskuje dostęp do https://hub.headout.com/ („Centrum Headout”) lub iii.) jako Partner afiliacyjny uzyskuje dostęp do strony https://partner.headout.com/affiliate/ („Platforma partnera Headout”) lub iv.) jako Partner twórca uzyskuje dostęp do naszej strony twórcy („Platforma twórcy”) [Platforma, Platforma dostawcy, Platforma Partnera afiliacyjnego i Platforma twórcy będą łącznie określane jako „Platforma Headout”]. Niniejsza Polityka ma również na celu poinformowanie Użytkownika o jego prawach do prywatności. W niniejszej Polityce wyjaśniliśmy również, w jaki sposób Użytkownik może skontaktować się z nami w przypadku jakichkolwiek problemów czy wątpliwości.',
+              },
+              {
+                text: 'Wykorzystujemy Dane osobowe Użytkowników między innymi w celu zapewnienia im usług dostępnych na Platformie Headout w najlepszy możliwy sposób, poprawy ogólnego korzystania z Platformy Headout oraz wykonywania innych czynności przetwarzania danych określonych w niniejszej Polityce.',
+              },
+              {
+                text: 'Niniejsza Polityka prywatności nie ma zastosowania do stron internetowych/aplikacji firm zewnętrznych, które mogą być powiązane z Platformą Headout. Użytkownicy proszeni są o zapoznanie się z politykami prywatności odpowiednich stron internetowych/aplikacji firm zewnętrznych, aby zrozumieć, w jaki sposób takie strony internetowe/aplikacje gromadzą i przetwarzają ich Dane osobowe.',
+              },
+              {
+                text: 'Niniejszą Politykę prywatności należy czytać wraz z Warunkami korzystania, Umową z Dostawcami, Warunkami dla Partnerów afiliacyjnych i Warunkami dla Twórców, a wszystkie terminy pisane wielką literą, które nie zostały zdefiniowane w niniejszym dokumencie, mają znaczenie przypisane im w wyżej wymienionych poszczególnych warunkach. W przypadku nakładania się lub braku zgodności interpretacji ostateczna decyzja zawsze będzie podejmowana przez Headout, a Użytkownik nie będzie interpretował warunków według własnej wygody.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          'W jaki sposób Użytkownik jest związany warunkami niniejszej Polityki prywatności?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Korzystając z Platformy Headout lub uzyskując do niej dostęp, Użytkownik wyraża zgodę na gromadzenie i wykorzystywanie/przetwarzanie Danych osobowych zgodnie z niniejszą Polityką prywatności. Gromadzenie tych informacji jest niezbędne do świadczenia usług na Platformie Headout. W razie jakichkolwiek wątpliwości prosimy o kontakt pod adresem privacy@headout.com.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Terminy, o których mowa w Polityce prywatności',
+        content: [
+          {
+            type: 'paragraph',
+            items: [
+              {
+                text: 'Dla celów niniejszej Polityki prywatności:',
+              },
+            ],
+          },
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Konto oznacza unikalne konto utworzone dla Użytkownika na Platformie Headout w celu uzyskania dostępu do Naszej usługi lub jej części.',
+              },
+              {
+                text: 'Firma (określana w niniejszej Umowie jako „Headout”, „Firma”, „My”, „Nas” lub „Nasza”) odnosi się do firmy Headout. Inc., jej podmiotów stowarzyszonych, podmiotów zależnych i/lub wszelkich innych podmiotów powiązanych z Headout.',
+              },
+              {
+                text: 'Pliki cookie to małe pliki, które są umieszczane na komputerze, urządzeniu mobilnym lub innym urządzeniu Użytkownika przez Platformę Headout, między innymi zawierające szczegóły historii przeglądania Użytkownika.',
+              },
+              {
+                text: 'Urządzenie oznacza dowolne urządzenie, za pomocą którego można uzyskać dostęp do Platformy Headout, takie jak komputer, telefon komórkowy lub tablet.',
+              },
+              {
+                text: 'Dane osobowe to wszelkie informacje, które odnoszą się do Użytkownika i pomagają w jego identyfikacji. Dane osobowe są udostępniane przez Użytkownika podczas korzystania z usług dostępnych na Platformie Headout. Headout gromadzi te informacje od Użytkownika w celu świadczenia usług dostępnych na Platformie Headout i wypełniania różnych zobowiązań prawnych. Więcej informacji można uzyskać w punkcie 5 (Jakiego rodzaju informacje są gromadzone przez Headout?).',
+              },
+              {
+                text: 'Polityka prywatności/Polityka oznacza i obejmuje niniejszy dokument oraz zmiany, które mogą zostać do niego wprowadzone w przyszłości. Obejmuje to również wszelkie inne dokumenty związane z tą polityką, które firma Headout może opracować w przyszłości.',
+              },
+              {
+                text: 'Platformy sieci społecznościowych odnoszą się do platform takich jak Facebook, Instagram itp., wykorzystywanych do komunikowania się z Firmą w różnych scenariuszach i/lub do utworzenia konta na Platformie Headout.',
+              },
+              {
+                text: 'Usługodawcy odnoszą się do sprzedawców/dostawców wymienionych na Platformie Headout, w tym podmiotów stowarzyszonych i innych partnerów biznesowych.',
+              },
+              {
+                text: 'Dostawcy zewnętrzni to firmy zewnętrze lub osoby trzecie, z których usług Firma może korzystać w celu zapewnienia sprawnego i bezbłędnego działania Platformy Headout. Firma może też korzystać z usług takich osób trzecich w celu ułatwienia korzystania z usług dostępnych na Platformie Headout, co obejmuje analizę korzystania z Platformy Headout przez Użytkownika.',
+              },
+              {
+                text: 'Użytkownik odnosi się do każdej osoby, która odwiedza/pokazuje zainteresowanie/wykonuje dowolną Usługę dostępną na Platformie.',
+              },
+              {
+                text: 'Strona internetowa odnosi się do www.headout.com',
+              },
+              {
+                text: 'Użytkownik/Użytkownika oznacza Użytkownika, Usługodawcę i Partnera twórcę',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Dlaczego Headout gromadzi Dane osobowe Użytkownika?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dane osobowe i inne powiązane informacje są przez nas gromadzone między innymi w celu ułatwienia nam świadczenia Użytkownikowi usług dostępnych na Platformie Headout, a także w celu wykonywania innych czynności przetwarzania danych określonych w niniejszej Polityce.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Jakiego rodzaju informacje są gromadzone przez Headout?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dane osobowe:',
+                subItems: [
+                  {
+                    text: 'Dane osobowe, które gromadzimy na temat Użytkownika, zależą od różnych zmiennych, w tym między innymi od kontekstu interakcji Użytkownika z Firmą, produktów, usług i funkcji, z których korzysta Użytkownik, lokalizacji Użytkownika oraz obowiązujących przepisów prawa. Gromadzone przez nas dane osobowe można podzielić na dwie kategorie, tj. Dane osobowe niepozwalające na identyfikację i Dane osobowe pozwalające na identyfikację.',
+                  },
+                  {
+                    text: '„Dane osobowe niepozwalające na identyfikację” to informacje, których nie można wykorzystać do zidentyfikowania Użytkownika ani innej konkretnej osoby. Dane te mogą mieć również charakter anonimowy. Dane te obejmują między innymi zagregowane dane dotyczące korzystania z usług dostępnych na Platformie, zamaskowane adresy IP itp. „Dane osobowe pozwalające na identyfikację” to informacje, które umożliwiają identyfikację Użytkownika i których można użyć do rozpoznania lub śledzenia tożsamości Użytkownika. Te informacje gromadzimy również w celu zapewnienia Użytkownikowi dostępu do niektórych funkcji Platformy Headout. Obejmują one między innymi imię i nazwisko, numer ubezpieczenia społecznego, datę i miejsce urodzenia, numer telefonu, adres, adres e-mail, dane dotyczące płatności/karty itp.',
+                  },
+                ],
+              },
+              {
+                text: 'Zautomatyzowane informacje:',
+                subItems: [
+                  {
+                    text: 'Gdy Użytkownik uzyskuje dostęp do Platformy Headout, niektóre z informacji na jego temat są automatycznie przechwytywane. Te zautomatyzowane informacje, które gromadzimy, należą do kategorii Danych osobowych niepozwalających na identyfikację. Poniżej przedstawiono ogólne rodzaje informacji, które są automatycznie przechwytywane:',
+                    bulletPoints: [
+                      'Informacje o urządzeniu, takie jak przeglądarka i urządzenie używane do uzyskiwania dostępu do Platformy Headout, system operacyjny, wersja aplikacji itp.',
+                      'Gdy Użytkownik uzyskuje dostęp do Platformy Headout, informacje o IP również są przechwytywane.',
+                      'Informacje behawioralne, tj. w jaki sposób Użytkownik uzyskuje dostęp do Platformy Headout, do których sekcji Platformy Headout uzyskuje dostęp, czas korzystania z Platformy Headout itp.',
+                      'Data i godzina uzyskania dostępu do Platformy Headout przez Użytkownika.',
+                    ],
+                  },
+                  {
+                    text: 'Wszystkie wyżej wymienione informacje zbierane automatycznie są wykorzystywane do następujących celów:',
+                    bulletPoints: [
+                      'W celu zapewnienia bezpieczeństwa Naszych systemów informatycznych, na przykład w celu obrony przed określonymi atakami na Nasze systemy i rozpoznawania wzorców ataków;',
+                      'Aby zrównoważyć obciążenie, tj. rozdzielić dostęp do Platformy Headout na kilka urządzeń i móc zaoferować Użytkownikowi jak najszybszy czas ładowania;',
+                      'Zrozumienie danych demograficznych, zainteresowań i zachowań Użytkownika w celu zapewnienia mu jak najlepszych usług;',
+                      'w przypadku konkretnych przesłanek wskazujących na popełnienie przestępstwa w celu umożliwienia wszczęcia postępowania karnego, uniknięcia szkody lub kary sądowej.',
+                    ],
+                  },
+                ],
+              },
+              {
+                text: 'Uprawnienia urządzenia:',
+                subItems: [
+                  {
+                    text: 'Oprócz informacji opisanych powyżej, niektóre funkcje Platformy Headout mogą wymagać dostępu do określonych funkcji Urządzenia Użytkownika. Uprawnienia te są opcjonalne i są dostępne wyłącznie za wyraźną zgodą Użytkownika. Można zarządzać takimi uprawnieniami lub cofnąć je w dowolnym momencie za pośrednictwem ustawień urządzenia.',
+                  },
+                  {
+                    text: 'Mikrofon (w tym funkcja nagrywania dźwięku) – dostęp do mikrofonu (w tym funkcji nagrywania dźwięku) jest wymagany wyłącznie w celu umożliwienia interaktywnych wycieczek z audioprzewodnikiem, zapewnienia nawigacji głosowej lub pomocy; i nagrywania dźwięku, jeśli takie nagranie jest wymagane do świadczenia lub ulepszania odpowiedniej usługi. Jeśli dźwięk jest nagrywany, takie nagrania będą przechowywane i przetwarzane w celu realizacji żądanej usługi.',
+                  },
+                  {
+                    text: 'Aparat fotograficzny, galeria zdjęć/media – dostęp do aparatu fotograficznego jest wymagany wyłącznie w celu umożliwienia Użytkownikowi udostępniania treści związanych z wycieczką, w przypadku gdy taka funkcja jest oferowana na Platformie Headout lub w celu obsługi rzeczywistości rozszerzonej lub innych funkcji treści wizualnych, aby ulepszyć doświadczenie Użytkownika lub zrealizować żądaną usługę. Takie obrazy lub filmy będą przetwarzane wyłącznie w celu zapewnienia żądanych funkcji i/lub improwizacji Usług Headout.',
+                  },
+                  {
+                    text: 'Lokalizacja – możemy gromadzić dokładne lub przybliżone dane dotyczące lokalizacji w celu: (a) pokazywania Użytkownikowi odpowiednich dostępnych wycieczek, usług lub wydarzeń w pobliżu bieżącej lokalizacji Użytkownika; (b) włączenia funkcji audio i informacyjnych opartych na lokalizacji; (c) poprawienia ogólnego wrażenia Użytkownika i (d) ulepszenia Usługi Headout.',
+                  },
+                ],
+              },
+              {
+                text: 'Pliki cookie:',
+                subItems: [
+                  {
+                    text: 'Ponadto używamy również różnych rodzajów plików cookie, aby śledzić korzystanie z Platformy Headout przez Użytkownika i przechowywać pewne informacje, które pomagają nam świadczyć Użytkownikowi bardziej spersonalizowane usługi. Istnieją pewne Pliki cookie, które mogą zostać umieszczone na urządzeniu Użytkownika w związku z korzystaniem przez niego z usług dostępnych na Platformie Headout.',
+                  },
+                  {
+                    text: 'Zasadniczo korzystamy z dwóch różnych zestawów technologii, tj:',
+                    bulletPoints: [
+                      'Pliki cookie lub pliki cookie przeglądarki. To niewielkie pliki, które są automatycznie umieszczane na urządzeniu Użytkownika, gdy uzyska on dostęp do Platformy Headout. Użytkownik może skonfigurować przeglądarkę tak, aby odrzucała wszystkie Pliki cookie, lub wskazać, kiedy Plik cookie ma zostać zapisany. Jeśli Użytkownik nie zaakceptuje Naszych Plików cookie, może nie być w stanie korzystać z niektórych części Platformy Headout.',
+                      'Pliki typu web beacon. Są nazywane również znacznikami pikselowymi. Znajdują się w różnych sekcjach Platformy Headout oraz Naszych wiadomości e-mail i pozwalają nam monitorować i rozumieć aktywność Użytkowników.',
+                    ],
+                  },
+                  {
+                    text: 'Te Pliki cookie przechowywane na urządzeniu Użytkownika mogą być „Trwałymi” lub „Sesyjnymi” Plikami cookie. Trwałe Pliki cookie to te, które pozostają na urządzeniu Użytkownika nawet po przejściu w tryb offline, podczas gdy Sesyjne Pliki cookie są automatycznie usuwane po zamknięciu przeglądarki internetowej.',
+                  },
+                  {
+                    text: 'Używamy zarówno Sesyjnych, jak i Trwałych plików cookie do celów określonych poniżej:',
+                    bulletPoints: [
+                      'Wymagane / Podstawowe Rodzaje Plików cookie: Cel sesyjnych plików cookie: Te Pliki cookie są niezbędne, aby Użytkownik mógł uzyskać dostęp do różnych sekcji Platformy Headout, a jeśli nie są one dozwolone, Użytkownik może nie mieć dostępu do usług dostępnych na Platformie Headout. Te pliki cookie pomagają nam uwierzytelniać tożsamość Użytkowników i zapobiegać wszelkim rodzajom nieuczciwych działań na Platformie Headout.',
+                      'Polityka plików cookie / Akceptacja plików cookie Rodzaje plików cookie: Cel Trwałych plików cookie: Te Pliki cookie identyfikują, czy Użytkownik zaakceptował korzystanie z Plików cookie.',
+                      'Funkcjonalne Rodzaje plików cookie: Cel Trwałych plików cookie: Te Pliki cookie umożliwiają nam zapamiętywanie wyborów dokonywanych przez Użytkownika podczas korzystania z Platformy Headout, takich jak zapamiętywanie danych logowania lub preferencji językowych Użytkownika. Głównym celem tych Plików cookie jest zapewnienie Użytkownikom bardziej spersonalizowanych doświadczeń podczas każdego korzystania z Platformy Headout.',
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          'Do czego wykorzystujemy Dane osobowe Użytkowników i komu je udostępniamy?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dane osobowe Użytkowników gromadzone podczas korzystania z Platformy Headout są wykorzystywane wyłącznie do celów zgodnych z prawem i w celu świadczenia usług Użytkownikom. Nie sprzedajemy ani nie wypożyczamy tych informacji nikomu, ani nie udostępniamy danych Użytkowników żadnym stronom trzecim, chyba że obowiązujące prawo i niniejsza Polityka prywatności stanowią inaczej i/lub jest to konieczne do spełnienia żądania Użytkownika. W przypadku gdy jakiekolwiek informacje Użytkownika są udostępniane stronom trzecim zgodnie z niniejszą Polityką Prywatności i jeśli przetwarzają one takie informacje, będzie się to odbywać zgodnie z ich odpowiednimi politykami prywatności. Prosimy o aktywne zapoznawanie się z polityką prywatności takich stron trzecich.',
+              },
+              {
+                text: 'Dane osobowe zebrane od Użytkowników są wykorzystywane w następujący sposób:',
+                subItems: [
+                  {
+                    text: 'Do celów rezerwacji: Wykorzystujemy Dane osobowe Użytkowników, które mogą obejmować imię i nazwisko Użytkownika i współpodróżnych, adres e-mail, szczegóły płatności itp. w celu zapewnienia, że wszystkie rezerwacje dokonane na Platformie Headout są realizowane w zadowalający sposób.',
+                  },
+                  {
+                    text: 'Do celów marketingowych: Prowadzimy kampanie marketingowe i promocyjne wraz z Usługodawcami i/lub innymi stronami trzecimi i możemy wykorzystywać Dane osobowe, które mogą obejmować imię i nazwisko, adres e-mail, dane kontaktowe itp., aby zapewnić, że określone korzyści zostaną przyznane Użytkownikom w ramach takich kampanii marketingowych i promocyjnych. Ponadto Użytkownicy mogą również otrzymywać wiadomości e-mail/powiadomienia dotyczące kampanii marketingowych, biuletynów, programów nagród i ekskluzywnych promocji oferujących specjalne oferty. W ramach tej sekcji będziemy również wykorzystywać treści przesłane przez Twórcę treści do prowadzenia działań promocyjnych na rzecz Headout. Użytkownik może zrezygnować z komunikacji marketingowej w dowolnym momencie, korzystając z linku „anuluj subskrypcję” w e-mailu.',
+                  },
+                  {
+                    text: 'Obsługa klienta: Headout wykorzystuje również informacje przekazane przez Usługodawców (które mogą obejmować dane osobowe) w celu świadczenia wszelkiego rodzaju usług wsparcia. Może to obejmować między innymi odpowiadanie na prośby, pytania lub wątpliwości Usługodawców lub Użytkowników.',
+                  },
+                  {
+                    text: 'Rejestracja i cele administracyjne: Headout wykorzystuje również dane kontaktowe oraz dane finansowe w celu skutecznego zarządzania umową handlową z Usługodawcą. Wszelkie informacje, w tym nazwa i adres Usługodawcy, będą wykorzystywane zgodnie z niniejszą Polityką i umową zawartą z Usługodawcą.',
+                  },
+                  {
+                    text: 'Z innych powodów: Możemy również wykorzystywać Dane osobowe Użytkownika z kilku innych powodów, które obejmują między innymi:',
+                    bulletPoints: [
+                      'Zapewnianie, utrzymywanie i ulepszanie naszych usług;',
+                      'Personalizacja lub ulepszenie doświadczenia Użytkownika;',
+                      'Komunikacja z Użytkownikiem w różnych celach, w tym między innymi w celu informowania o wszelkich aktualizacjach dotyczących usług świadczonych na Platformie Headout;',
+                      'Wszelkie zmiany wprowadzone na Platformie Headout;',
+                      'Do celów obsługi klienta;',
+                      'W celu uzyskania opinii o usługach;',
+                      'Do celów ankietowych;',
+                      'Do celów bankowych;',
+                      'W jakimkolwiek innym celu, aby zapewnić Użytkownikowi najlepsze usługi.',
+                    ],
+                  },
+                ],
+              },
+              {
+                text: 'Udostępniamy dane Użytkownika różnym stronom trzecim, w tym stronom w innych krajach poza Stanami Zjednoczonymi Ameryki, w celach wymienionych poniżej:',
+                subItems: [
+                  {
+                    text: 'Z dostawcami usług: Możemy udostępniać Dane Osobowe Użytkowników Usługodawcom w celu oferowania Użytkownikom określonych produktów, usług lub promocji.',
+                  },
+                  {
+                    text: 'Dostawcom zewnętrznym: Możemy udostępniać Dane osobowe Użytkowników Dostawcom zewnętrznym w celu monitorowania i analizowania korzystania z naszej Usługi oraz kontaktowania się z Użytkownikiem lub inicjowania odpowiednich działań wymaganych do świadczenia Użytkownikowi Naszych usług.',
+                  },
+                  {
+                    text: 'Podmiotom stowarzyszonym: Możemy udostępniać Dane osobowe Użytkowników Naszym podmiotom stowarzyszonym; w takim przypadku będziemy wymagać od tych podmiotów stowarzyszonych przestrzegania niniejszej Polityki prywatności. Podmioty stowarzyszone obejmują Naszą firmą matkę i wszelkie inne podmioty zależne, partnerów joint venture lub inne firmy, które kontrolujemy lub które są kontrolowane przez ten sam podmiot, co My. Dla porównania, lista spółek zależnych, którym możemy udostępniać Dane osobowe Użytkownika w ramach działalności operacyjnej, jest następująca:',
+                    bulletPoints: [
+                      'Tourlandish Online Ventures Private Limited',
+                      'Headout Europe GmbH',
+                      'Headout Events Bilety LLC',
+                      'Headout UK Limited',
+                    ],
+                  },
+                  {
+                    text: 'Partnerom płatniczym: w celu zakończenia świadczenia usług za pośrednictwem Platformy Headout wymagane będzie dokonanie płatności lub udostępnienie nam danych finansowych, takich jak dane konta bankowego/karty. Będziemy przetwarzać odpowiednie Dane Osobowe wymagane w każdym przypadku w zależności od usług dostępnych na Platformie Headout. Niektóre z Danych osobowych Użytkownika będą też przetwarzane przez firmy, które pomagają w przetwarzaniu płatności, w tym między innymi przez bramki płatnicze, partnerów bankowych lub inne strony trzecie, które mogą być zaangażowane w taki proces.',
+                  },
+                  {
+                    text: 'Spółce: Możemy udostępniać lub przekazywać Dane osobowe Użytkownika spółce w związku z fuzją, sprzedażą aktywów Firmy, finansowania lub przejęcia całości bądź części Naszej działalności przez inną spółkę, lub podczas negocjacji dotyczących wymienionych działań.',
+                  },
+                  {
+                    text: 'Z innymi użytkownikami: gdy Użytkownik udostępnia Dane Osobowe lub w inny sposób wchodzi w publiczne interakcje z innymi Użytkownikami na Platformie lub innych platformach stron trzecich/mediów społecznościowych, takie informacje mogą być wyświetlane wszystkim użytkownikom i mogą być publicznie rozpowszechniane na zewnątrz. Jeśli Użytkownik wchodzi w interakcje z innymi Użytkownikami lub rejestruje się za pośrednictwem platform stron trzecich/mediów społecznościowych, kontakty Użytkownika na platformach stron trzecich/mediów społecznościowych mogą wyświetlić imię i nazwisko, profil, zdjęcia i opis aktywności Użytkownika.',
+                  },
+                  {
+                    text: 'Poza sytuacjami wymienionymi powyżej Dane osobowe Użytkownika mogą zostać ujawnione, jeśli:',
+                    bulletPoints: [
+                      'Wymaga tego prawo, nakazu sądowy, jakikolwiek organ wykonawczy lub w związku z jakimikolwiek celami prawnymi;',
+                      'Do celów audytu i zgodności;',
+                      'W jakimkolwiek innym celu, który leży w interesie Użytkownika.',
+                    ],
+                  },
+                ],
+              },
+              {
+                text: 'Niektóre strony trzecie/dostawcy zewnętrzni mogą zdecydować się na zachowanie niektórych Danych osobowych Użytkownika. Jest to jednak ograniczone do celów świadczenia Użytkownikowi usług zgodnie z niniejszą Polityką lub innymi warunkami, które mogą mieć zastosowanie do Użytkownika w drodze odrębnych ustaleń zawartych z Użytkownikiem przez Headout. Te strony trzecie/dostawcy zewnętrzni poinformowali nas, że przestrzegają obowiązujących przepisów o ochronie prywatności i stosują szczegółową politykę prywatności. Jeśli Użytkownik chce uzyskać informacje o tych stronach trzecich/dostawcach zewnętrznych, może zgłosić taką prośbę, pisząc na adres privacy@headout.com. Postaramy się odpowiedzieć na takie prośby w najlepszy możliwy sposób.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title:
+          'Treści generowane przez Użytkowników i platformy mediów społecznościowych:',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Wszelkie treści przesyłane, umieszczane i/lub publikowane przez Użytkowników, w tym między innymi recenzje, oceny, czaty lub dyskusje na Platformie lub dowolnej platformie mediów społecznościowych, są łącznie określane jako „Treści użytkownika”. Użytkownik ponosi wyłączną odpowiedzialność za autentyczność i poprawność wszystkich Treści użytkownika.',
+              },
+              {
+                text: 'Treści użytkownika opublikowane przez dowolnego Użytkownika są widoczne dla innych Użytkowników uzyskujących dostęp do Platformy lub platformy mediów społecznościowych, na której takie Treści użytkownika zostały opublikowane. Użytkownik zgadza się nie zgłaszać co do tego żadnych zastrzeżeń.',
+              },
+              {
+                text: 'Możemy zezwolić Użytkownikom na utworzenie konta na Platformie przy użyciu ich osobistych kont w mediach społecznościowych, takich jak Facebook, Google itp. W takim przypadku możemy przechwycić niektóre Dane osobowe Użytkownika z jego konta w mediach społecznościowych, takie jak imię, nazwisko, adres e-mail, numer telefonu itp.',
+              },
+              {
+                text: 'Ponadto, gdy Użytkownik wchodzi z nami w interakcję w mediach społecznościowych lub za pośrednictwem Naszych publikacji, możemy gromadzić i przetwarzać informacje ujawnione podczas takich interakcji. Może się to zdarzyć, gdy Użytkownik „polubi”, „udostępni” lub „prześle dalej” publikację, zostawi komentarz lub prześle inne treści na Naszej platformie mediów społecznościowych. Przetwarzanie danych w tym zakresie odbywa się zgodnie z odpowiednimi przepisami dotyczącymi prywatności i w celu zapewnienia Użytkownikowi jak najlepszych usług. W przypadku takiego korzystania z platform mediów społecznościowych zastosowanie będą miały również polityki prywatności tych platform mediów społecznościowych oraz ustawienia prywatności wybrane przez Użytkownika na tych platformach.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Zbieranie danych od dzieci',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Zgodnie z naszymi Warunkami korzystania sugerujemy, aby rezerwacji na Platformie dokonywały wyłącznie osoby pełnoletnie. Mogą jednak wystąpić sytuacje, w których rezerwacja zostanie dokonana dla dzieci przez osobę pełnoletnią. W takich przypadkach chcielibyśmy oświadczyć, że w Headout cenimy prywatność wszystkich osób, w tym dzieci. Jeśli otrzymamy Dane osobowe dziecka/osoby niepełnoletniej, zapewniamy, że takie dane są przetwarzane zgodnie z prawem i w zakresie, na jaki uzyskano zgodę. W przypadku, gdy Headout dowie się, że Użytkownik jest osobą niepełnoletnią lub poniżej wieku przyzwolenia w danej jurysdykcji, Headout zastrzega sobie prawo do zakończenia świadczenia wszystkich usług na rzecz takiego Użytkownika/Konta bez wcześniejszego powiadomienia.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Jak długo przechowujemy Dane osobowe Użytkownika?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dane osobowe Użytkownika są przechowywane na naszych serwerach przez okres wymagany do realizacji celu, dla którego zostały zgromadzone. Możemy jednak przechowywać Dane osobowe Użytkownika przez dłuższy okres, jeśli wymaga tego prawo. Poniżej znajduje się Harmonogram przechowywania danych, który dokładniej wyjaśnia okres przechowywania każdej kategorii informacji zebranych od Użytkownika:',
+                tableData: {
+                  headers: ['Informacja', 'Okres przechowywania'],
+                  rows: [
+                    [
+                      'Dane dotyczące rezerwacji, dane dotyczące zameldowania, dane dotyczące specjalnych życzeń',
+                      'Tak długo, jak Użytkownik pozostaje klientem',
+                    ],
+                    [
+                      'Dane kontaktowe użytkownika',
+                      'Tak długo, jak Użytkownik pozostaje klientem',
+                    ],
+                    [
+                      'Informacje dotyczące płatności',
+                      'Tak długo, jak jest to konieczne do przetworzenia transakcji/rezerwacji, w tym wszelkich zapytań, które mogą się pojawić.',
+                    ],
+                    [
+                      'Dzienniki systemowe',
+                      '10 lat lub taki dłuższy okres, jaki może być wymagany',
+                    ],
+                    [
+                      'Informacje dotyczące Dostawców lub innych stron trzecich, które handlowały z nami',
+                      'Wygaśnięcie umowy lub okres 7 lat, w zależności od tego, co nastąpi później.',
+                    ],
+                  ],
+                },
+              },
+              {
+                text: 'Okres przechowywania może ulec zmianie w przypadku skorzystania przez Użytkownika z praw przewidzianych w punkcie 12 poniżej.',
+              },
+              {
+                text: 'W przypadku jakichkolwiek wątpliwości lub jeśli Użytkownik uważa, że istnieje kategoria informacji nieuwzględniona w powyższym harmonogramie przechowywania, prosimy o kontakt z naszym inspektorem ochrony danych pod adresem dpo@headout.com.',
+              },
+              {
+                text: 'Jeśli Dane osobowe Użytkownika nie są już potrzebne, zapewnimy ich bezpieczne usunięcie lub przechowywanie w formacie, w którym nie będą już wykorzystywane przez firmę.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Jak chronimy Dane osobowe Użytkowników?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Wdrożyliśmy rozsądne środki bezpieczeństwa, aby chronić Dane osobowe Użytkowników przed wszelkimi formami nieuprawnionego dostępu. W ramach tego procesu ochrony Danych osobowych Użytkowników wdrożyliśmy protokoły bezpieczeństwa, a także techniczne i fizyczne ograniczenia dostępu. Zapewniamy, że dostęp do Danych osobowych Użytkowników może uzyskać wyłącznie upoważniony personel, który ma prawo dostępu do Danych osobowych w ramach swojej pracy.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Gdzie przechowujemy Dane osobowe Użytkowników?',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Dane osobowe Użytkowników są przechowywane w aktach osobowych lub w rejestrach elektronicznych (na serwerach w USA lub innych krajach) firmy Headout.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Prawa Użytkownika w odniesieniu do jego Danych osobowych',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'W przypadku próśb dotyczących prywatności danych, takich jak dostęp do danych lub ich usunięcie, prosimy o kontakt pod adresem privacy@headout.com. Odniesiemy się do żądania Użytkownika i odpowiemy na nie w obowiązujących ramach czasowych. Użytkownik może również poprosić o kopię informacji, które przechowujemy na jego temat, wysyłając e-mail na ten sam adres. W przypadku jakichkolwiek skarg dotyczących przetwarzania Danych osobowych Użytkownika, prosimy o kontakt pod tym samym adresem e-mail. W przypadku jakichkolwiek pytań lub wątpliwości, które wymagają uwagi naszego inspektora ochrony danych (IOD), prosimy o skierowanie zapytania na adres dpo@headout.com, a nasz IOD udzieli stosownej pomocy. Podczas rozpatrywania któregokolwiek z powyższych wniosków mamy prawo sprawdzić tożsamość wnioskodawcy, aby upewnić się, że jest on osobą uprawnioną do złożenia wniosku. W przypadku jakichkolwiek skarg/sporów Użytkownik ma prawo skontaktować się z wybranym przez siebie organem nadzorczym.',
+              },
+              {
+                text: 'Ponadto, zgodnie z prawem, Użytkownikowi przysługują wymienione poniżej prawa. Aby skorzystać z tych praw, Użytkownik może złożyć wniosek, pisząc do nas na adres privacy@headout.com:',
+                subItems: [
+                  {
+                    text: 'Prawo dostępu do informacji – Użytkownik ma prawo w dowolnym momencie zażądać pełnego podsumowania przechowywanych przez nas jego Danych osobowych.',
+                  },
+                  {
+                    text: 'Prawo do sprostowania nieprawidłowych danych – Jeśli Użytkownik uważa, że przechowywane przez nas jego Dane osobowe są nieprawidłowe lub niekompletne, może zażądać ich niezwłocznego poprawienia.',
+                  },
+                  {
+                    text: 'Prawo do usunięcia – Użytkownik ma prawo zwrócić się do nas o usunięcie jego Danych osobowych, gdy nie są one już potrzebne do pierwotnego celu, były przetwarzane niezgodnie z prawem lub gdy istnieje prawny wymóg ich usunięcia.',
+                  },
+                  {
+                    text: 'Prawo do ograniczenia przetwarzania – Użytkownik może zażądać, abyśmy ograniczyli sposób przetwarzania jego danych osobowych na warunkach określonych w odpowiednich przepisach prawa. Na prawo to można się powołać, na przykład, jeśli Użytkownik kwestionuje dokładność swoich danych lub jeśli potrzebuje ich konserwacji wyłącznie w celu ustalenia, wykonania lub obrony roszczeń prawnych.',
+                  },
+                  {
+                    text: 'Prawo do przenoszenia danych – Użytkownik ma prawo do otrzymania przekazanych nam Danych osobowych w ustrukturyzowanym, powszechnie używanym formacie nadającym się do odczytu maszynowego, umożliwiającym przekazanie tych danych innemu usługodawcy.',
+                  },
+                  {
+                    text: 'Prawo do wniesienia sprzeciwu – Użytkownik może w dowolnym momencie wnieść sprzeciw – z przyczyn związanych z jego sytuacją – wobec przetwarzania jego danych osobowych. W takich przypadkach zaprzestaniemy przetwarzania danych Użytkownika, chyba że będziemy w stanie wykazać istotne uzasadnione powody ich dalszego wykorzystywania lub że jest to konieczne do dochodzenia lub obrony roszczeń prawnych.',
+                  },
+                  {
+                    text: 'Prawo do wycofania zgody – Użytkownik ma prawo w dowolnym momencie odwołać udzieloną wcześniej zgodę na przetwarzanie jego Danych osobowych.',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Interpretacja Polityki prywatności i jej zmiany',
+        content: [
+          {
+            type: 'list',
+            items: [
+              {
+                text: 'Ponieważ niniejsza Polityka prywatności ma powszechne zastosowanie do wszystkich naszych Użytkowników, Dostawców, Partnerów afiliacyjnych, Partnerów twórców itp., należy ją zawsze interpretować z [Warunkami korzystania], [Umową z Dostawcą], [Warunkami Partnera afiliacyjnego] i [Warunkami Partnera twórcy] w celu lepszego zrozumienia i interpretacji. W przypadku jakichkolwiek rozbieżności, niespójności lub konfliktu między angielską wersją niniejszej Polityki a jakimkolwiek tłumaczeniem, wersja angielska ma pierwszeństwo i reguluje interpretację i egzekwowanie.',
+              },
+              {
+                text: 'Od czasu do czasu możemy aktualizować Naszą Politykę prywatności. Powiadomimy Użytkowników o wszelkich zmianach, publikując nową Politykę prywatności na tej stronie. Umieścimy również datę ostatniej aktualizacji na górze niniejszej Polityki za każdym razem, gdy zostanie ona zaktualizowana. Zaleca się okresowe sprawdzanie niniejszej Polityki prywatności pod kątem wszelkich zmian. Zmiany niniejszej Polityki prywatności wchodzą w życie z chwilą ich opublikowania na tej stronie.',
+              },
+            ],
+          },
         ],
       },
     ],

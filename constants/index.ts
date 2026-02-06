@@ -279,6 +279,7 @@ export const LANGUAGE_MAP_TRANSLATE_CONSTANT = () => {
 };
 
 export const DEFAULT_PRISMIC_LANG = LANGUAGE_MAP['en'].locale;
+export const DEFAULT_LANGUAGE_CODE = LANGUAGE_MAP['en'].code;
 
 export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'en-us': 'en',

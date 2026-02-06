@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ThemeProvider } from 'styled-components';
 import { getAppTheme } from 'style/theme';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import TermsContent from 'components/Legal/terms/TermsContent';
+import PrivacyPolicyContent from 'components/Legal/privacy-policy/PrivacyPolicyContent';
 import { MBContextProvider } from 'contexts/MBContext';
 import { getHeadoutLanguagecode } from 'utils';
 import { traceError } from 'utils/logutils';
@@ -20,11 +20,11 @@ import {
   THEMES,
 } from 'constants/index';
 
-const PRIOR_TERMS_LINK = '/prior-terms';
+const PRIVACY_POLICY_LINK = '/privacy-policy';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const data = await getLegalPageData(context);
+    const data = getLegalPageData(context);
     return data;
   } catch (error) {
     const { req } = context;
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const TermsPage = (
+const PriorPrivacyPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const [dropdown, setDropdown] = useState({
@@ -76,7 +76,7 @@ const TermsPage = (
     }
   };
 
-  const { uid, CMSContent, lang, host, isDev, localizedStrings } = props || {};
+  const { CMSContent, host, uid, isDev, lang, localizedStrings } = props ?? {};
   const {
     logoUrl,
     logoAltText,
@@ -84,7 +84,7 @@ const TermsPage = (
     commonFooter,
     theme_override: footerTheme,
     theme: mbTheme,
-  } = CMSContent || {};
+  } = CMSContent ?? {};
 
   strings.setContent({
     default: localizedStrings ?? {},
@@ -98,7 +98,7 @@ const TermsPage = (
   });
 
   const themeOverride = footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
-  const content = strings.TERMS_OF_USE_CONTENT;
+  const content = strings.PRIOR_PRIVACY_POLICY_CONTENT;
 
   return (
     <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
@@ -111,8 +111,8 @@ const TermsPage = (
         mbTheme={mbTheme}
       >
         <MinimalHelmet
-          title="Terms"
-          description={`Terms and Conditions page for ${host}`}
+          title="Prior Privacy Policy"
+          description={`Prior Privacy Policy page for ${host}`}
         />
         <Header
           headerLinks={null}
@@ -128,13 +128,12 @@ const TermsPage = (
           hideLangCurrencySelector={true}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
         />
-        <TermsContent
+        <PrivacyPolicyContent
           title={content.title}
           lastUpdatedDate={content.lastUpdated}
-          introduction={content.introduction}
           sections={content.sections}
           linkText={content.linkText}
-          linkHref={PRIOR_TERMS_LINK}
+          linkHref={PRIVACY_POLICY_LINK}
         />
         <Footer
           currentLanguage={DEFAULT_LANGUAGE_CODE}
@@ -151,4 +150,4 @@ const TermsPage = (
   );
 };
 
-export default TermsPage;
+export default PriorPrivacyPage;

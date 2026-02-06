@@ -20,7 +20,7 @@ import {
   THEMES,
 } from 'constants/index';
 
-const PRIOR_TERMS_LINK = '/prior-terms';
+const TERMS_LINK = '/terms';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const TermsPage = (
+const PriorTermsPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const [dropdown, setDropdown] = useState({
@@ -98,7 +98,7 @@ const TermsPage = (
   });
 
   const themeOverride = footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
-  const content = strings.TERMS_OF_USE_CONTENT;
+  const content = strings.PRIOR_TERMS_OF_USE_CONTENT;
 
   return (
     <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
@@ -111,8 +111,8 @@ const TermsPage = (
         mbTheme={mbTheme}
       >
         <MinimalHelmet
-          title="Terms"
-          description={`Terms and Conditions page for ${host}`}
+          title="Prior Terms"
+          description={`Prior Terms and Conditions page for ${host}`}
         />
         <Header
           headerLinks={null}
@@ -134,7 +134,7 @@ const TermsPage = (
           introduction={content.introduction}
           sections={content.sections}
           linkText={content.linkText}
-          linkHref={PRIOR_TERMS_LINK}
+          linkHref={TERMS_LINK}
         />
         <Footer
           currentLanguage={DEFAULT_LANGUAGE_CODE}
@@ -151,4 +151,4 @@ const TermsPage = (
   );
 };
 
-export default TermsPage;
+export default PriorTermsPage;

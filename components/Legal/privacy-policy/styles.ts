@@ -2,7 +2,8 @@ import { css } from '@headout/pixie/css';
 
 export const contentContainer = css({
   maxWidth: '1200px',
-  margin: '36px auto 10px',
+  margin: '36px auto token(spacing.space.96)',
+  paddingBottom: 'space.24',
   color: 'misc.brilliantLiqourice',
 
   '& > div': {
@@ -159,5 +160,17 @@ export const tableCellStyles = css({
   '@media (max-width: 768px)': {
     textStyle: 'para.regular',
     padding: '8px',
+  },
+});
+
+export const legalLink = css({
+  textDecoration: 'underline',
+  textStyle: 'ui.label.regular.heavy',
+  color: 'semantic.link.candy',
+  _hover: {
+    color: 'core.candy.700',
+  },
+  _focusVisible: {
+    color: 'core.candy.700',
   },
 });
