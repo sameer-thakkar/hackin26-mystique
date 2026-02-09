@@ -3096,6 +3096,7 @@ Alle begreber, der bruges ovenfor, er defineret i databeskyttelsespolitikken. L�
         'Godkendte billetter, gode pladser, gode tilbud og pålidelige anmeldelser',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Prisen varierer efter gruppestørrelse',
 };
 
 export default da;

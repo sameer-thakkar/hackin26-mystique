@@ -3109,6 +3109,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
         'Authorised tickets, prime seats, great deals, and trusted reviews',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Price varies by group size',
 };
 
 export default en;

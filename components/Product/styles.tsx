@@ -594,11 +594,13 @@ export const CTABlock = styled.div<{
   shouldOffset?: boolean;
   $forceMobile?: boolean;
   isPoiMwebCard?: boolean;
+  $isGroupPaxProduct?: boolean;
 }>`
   a {
     text-decoration: none;
   }
 
+  ${({ $isGroupPaxProduct }) => $isGroupPaxProduct && 'align-self: flex-end;'}
   ${({ $forceMobile }) => !$forceMobile && '@media (max-width: 768px) {'}
   grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
 

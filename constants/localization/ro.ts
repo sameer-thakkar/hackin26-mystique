@@ -3108,6 +3108,8 @@ Toți termenii cu majuscule utilizați mai sus sunt definiți în Politica de co
         'Bilete autorizate, locuri excelente, reduceri și recenzii de încredere',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE:
+    'Prețul variază în funcție de dimensiunea grupului',
 };
 
 export default ro;

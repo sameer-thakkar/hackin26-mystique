@@ -3098,6 +3098,7 @@ Alla termer med versaler som används ovan definieras i integritetspolicyn. Bes�
         'Auktoriserade biljetter, premiumplatser, bra erbjudanden och pålitliga recensioner',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Priset varierar beroende på gruppstorlek',
 };
 
 export default sv;

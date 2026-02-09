@@ -117,6 +117,7 @@ import {
   CRUISE_FORMAT_SUBCAT_IDS,
   DESCRIPTORS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
+  PAX_PROFILE_TYPE,
   PRODUCT_CARD_REVAMP,
   SIDEBAR_TYPES,
   SUBCATEGORY_IDS,
@@ -2471,6 +2472,9 @@ const Product = (props: any) => {
               isSticky={false}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
               $isTicketCard={isTicketCard}
+              $isGroupPaxProduct={
+                finalListingPrice?.type === PAX_PROFILE_TYPE.PER_GROUP
+              }
             >
               <Conditional if={!isCombo}>
                 <BookNowCta

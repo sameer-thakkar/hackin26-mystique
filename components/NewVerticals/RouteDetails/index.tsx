@@ -19,6 +19,7 @@ import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  PAX_PROFILE_TYPE,
   PRODUCT_CARD_REVAMP,
 } from 'const/index';
 import en from 'const/localization/en';
@@ -236,7 +237,12 @@ const RouteDetails = (props: TRouteDetails) => {
                     newDiscountTagDesignProps={{ shouldPointLeft: !isMobile }}
                   />
                 </PriceContainer>
-                <CTABlock isSticky={false}>
+                <CTABlock
+                  isSticky={false}
+                  $isGroupPaxProduct={
+                    listingPrice?.type === PAX_PROFILE_TYPE.PER_GROUP
+                  }
+                >
                   <BookNowCta
                     clickHandler={() => {
                       sendBookNowEvent(PRODUCT_CARD_REVAMP.PLACEMENT.POPUP);

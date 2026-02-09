@@ -10,23 +10,23 @@ import { MBContext } from 'contexts/MBContext';
 import { checkIfLTTMB } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { CASHBACK_TYPES, THEMES } from 'const/index';
+import { CASHBACK_TYPES, PAX_PROFILE_TYPE, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 
 export const StyledPriceBlock = styled.div<{
   showScratchPrice: boolean;
   isSportsExperiment?: boolean;
+  lang: string;
 }>`
   display: grid;
   grid-template-columns: auto auto;
-  grid-row-gap: ${({ isSportsExperiment }) =>
-    isSportsExperiment ? '.125rem' : '.25rem'};
+  grid-row-gap: 0.125rem;
   grid-column-gap: 8px;
   align-items: end;
   align-self: center;
   text-transform: camelcase;
-  width: max-content;
+  width: fit-content;
   .tour-price {
     column-gap: 4px;
     & .strike-through {
@@ -58,6 +58,17 @@ export const StyledPriceBlock = styled.div<{
         isSportsExperiment && `${COLORS.GRAY.G3}`};
     }
   }
+
+  .group-price-disclaimer {
+    color: ${COLORS.GRAY.G3};
+    font-weight: ${({ lang }) => (lang !== 'en' ? '500' : '300')};
+    font-style: normal;
+    font-size: ${({ lang }) => (lang !== 'en' ? '0.625rem' : '0.75rem')};
+    line-height: ${({ lang }) => (lang !== 'en' ? '1.2' : '1rem')};
+    letter-spacing: 0;
+    grid-row: 3;
+  }
+
   @media (max-width: 768px) {
     .tour-price-container {
       gap: 0.3125rem;
@@ -183,7 +194,7 @@ const PriceBlock = ({
   newDiscountTagDesignProps = false,
   customDiscountTag,
 }: PriceBlockProps) => {
-  const { uid } = useContext(MBContext);
+  const { uid, lang: contextLang } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
 
   const {
@@ -193,6 +204,7 @@ const PriceBlock = ({
     bestDiscount,
     cashbackType,
     cashbackValue,
+    type: priceProfileType,
   } = listingPrice ?? {};
   const showScratchPrice =
     (originalPrice > finalPrice && showScratchPriceProp) ||
@@ -224,6 +236,7 @@ const PriceBlock = ({
           className="styled-price-block"
           showScratchPrice={showScratchPrice}
           isSportsExperiment={isSportsExperiment}
+          lang={contextLang}
         >
           <span className="tour-scratch-price">
             <Skeleton
@@ -252,6 +265,7 @@ const PriceBlock = ({
         className="styled-price-block"
         showScratchPrice={showScratchPrice}
         isSportsExperiment={isSportsExperiment}
+        lang={contextLang}
         ref={wrapperRef}
       >
         <span
@@ -323,6 +337,12 @@ const PriceBlock = ({
             )}
           </Conditional>
         </div>
+
+        <Conditional if={priceProfileType === PAX_PROFILE_TYPE.PER_GROUP}>
+          <span className="group-price-disclaimer">
+            {strings.PRICE_VARIES_BY_GROUP_SIZE}
+          </span>
+        </Conditional>
       </StyledPriceBlock>
       <Conditional
         if={showcashbackElm && (showCashbackBlock || isSportsExperiment)}

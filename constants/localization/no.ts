@@ -3095,6 +3095,7 @@ Alle begreper med store bokstaver som brukes ovenfor, er definert i personverner
         'Autoriserte billetter, prima seter, gode tilbud og pålitelige anmeldelser',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Prisen varierer etter gruppestørrelse',
 };
 
 export default no;

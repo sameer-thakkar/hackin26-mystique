@@ -2722,3 +2722,8 @@ export const GROUP_BOOKING_TGIDS = [
 export const AUTOMATED_PRODUCT_RANKING_FILTER = {
   POPULARITY: 'POPULARITY',
 } as const;
+
+export const PAX_PROFILE_TYPE = {
+  PER_PERSON: 'PER_PERSON',
+  PER_GROUP: 'PER_GROUP',
+} as const;

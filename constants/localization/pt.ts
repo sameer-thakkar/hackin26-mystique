@@ -3082,6 +3082,7 @@ const pt: TDictionary = {
         'Ingressos oficiais, ótimos assentos, ofertas imperdíveis e avaliações confiáveis',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'O preço varia de acordo com o tamanho do grupo',
 };
 
 export default pt;

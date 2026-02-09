@@ -3080,6 +3080,7 @@ const de: TDictionary = {
         'Offizielle Tickets, beste Plätze, attraktive Angebote und ehrliche Bewertungen',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Der Preis variiert je nach Gruppengröße',
 };
 
 export default de;

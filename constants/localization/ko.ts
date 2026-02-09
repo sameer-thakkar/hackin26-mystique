@@ -3085,6 +3085,7 @@ All capitalized terms used above are defined in the Privacy Policy. For a detail
         'Authorised tickets, prime seats, great deals, and trusted reviews',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: '가격은 그룹 규모에 따라 다릅니다',
 };
 
 export default ko;

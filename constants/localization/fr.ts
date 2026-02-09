@@ -3093,6 +3093,8 @@ const fr: TDictionary = {
         "Sélectionnez des places de choix, bénéficiez d'offres exclusives et réservez des billets officiels pour vos spectacles préférés. Le tout, validé par des avis vérifiés.",
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE:
+    'Le prix varie en fonction de la taille du groupe',
 };
 
 export default fr;

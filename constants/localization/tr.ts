@@ -3103,6 +3103,8 @@ Yukarıda büyük harf ile yazılmış tüm terimler Gizlilik Politikasında tan
         'Resmî biletler, en iyi koltuklar, avantajlı fiyatlar ve güvenilir değerlendirmeler',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE:
+    'Fiyatlandırma grup büyüklüğüne göre değişiklik gösterir',
 };
 
 export default tr;

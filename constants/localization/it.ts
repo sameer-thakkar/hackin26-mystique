@@ -3092,6 +3092,8 @@ const it: TDictionary = {
         'Biglietti ufficiali. I posti migliori. Offerte incredibili. Recensioni stellari.',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE:
+    'Il prezzo varia in base alle dimensioni del gruppo',
 };
 
 export default it;

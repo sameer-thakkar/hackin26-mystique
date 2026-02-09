@@ -3106,6 +3106,7 @@ Wszystkie użyte powyżej terminy pisane wielką literą są zdefiniowane w Poli
         'Autoryzowane bilety, najlepsze miejsca, świetne oferty i recenzje, którym możesz ufać',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'Cena zależy od wielkości grupy',
 };
 
 export default pl;

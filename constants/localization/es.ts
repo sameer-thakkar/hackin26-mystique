@@ -3094,6 +3094,7 @@ const es: TDictionary = {
         'Entradas oficiales, asientos privilegiados, ofertas increíbles y reseñas de confianza.',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'El precio varía según el tamaño del grupo',
 };
 
 export default es;

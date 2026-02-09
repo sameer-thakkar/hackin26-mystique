@@ -3076,5 +3076,6 @@ const nl: TDictionary = {
         'Officiële tickets, topzitplaatsen, scherpe deals en betrouwbare reviews',
     },
   },
+  PRICE_VARIES_BY_GROUP_SIZE: 'De prijs hangt af van hoe groot de groep is',
 };
 export default nl;
