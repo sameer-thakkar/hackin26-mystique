@@ -368,9 +368,13 @@ const HeaderLeft = styled.div<IHeaderLeft>`
     width: auto;
     ${({ isDarkMode }) =>
       isDarkMode &&
-      `.cls-1 {
+      `.headout-text path{
         fill: #fff;
-      }`}
+      }
+      .stroke-by path{
+        fill: #888;
+      }
+      `}
   }
 
   @media (max-width: 768px) {

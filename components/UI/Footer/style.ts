@@ -305,10 +305,9 @@ export const FooterLegal = styled.div<{
       }
       svg {
         height: 2.5rem;
-        width: 6.25rem;
+        width: auto;
         path {
-          fill: ${({ isLight }) =>
-            isLight ? COLORS.BRAND.PURPS : COLORS.BRAND.WHITE};
+          fill: ${({ isLight }) => !isLight && COLORS.BRAND.WHITE};
         }
       }
     }

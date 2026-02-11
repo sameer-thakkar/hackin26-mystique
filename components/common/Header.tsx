@@ -168,10 +168,11 @@ const StyledHeaderContainer = styled.div`
 
 const StyledLogo = styled.div<{
   isEntertainmentMB: boolean;
+  isAirportTransfersLandingPage?: boolean;
   $isDarkTheme?: boolean;
   $reducedMargin?: boolean;
 }>(
-  ({ isEntertainmentMB, $isDarkTheme }) => css`
+  ({ isEntertainmentMB, $isDarkTheme, isAirportTransfersLandingPage }) => css`
     display: grid;
     grid-auto-flow: column;
     align-items: center;
@@ -203,7 +204,11 @@ const StyledLogo = styled.div<{
     svg {
       height: 40px;
       width: auto;
-      margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
+      margin-left: ${isAirportTransfersLandingPage
+        ? '0.75rem'
+        : isEntertainmentMB
+        ? '-1px'
+        : '0'};
       ${$isDarkTheme && `filter: invert(50%) brightness(2);`};
     }
 
@@ -331,12 +336,14 @@ const StyledMenuItem = styled.div`
 const LogoPlaceholderWrapper = styled.div`
   display: flex;
   svg {
-    height: 1.9rem;
+    height: 2.5rem;
+    width: 9.5rem;
+    padding-left: 0.375rem;
   }
 
   @media (max-width: 768px) {
     svg {
-      height: 1.4rem;
+      height: 1.625rem;
     }
   }
 `;
@@ -482,6 +489,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
         <a href={logoRedirectionURL || '/'}>
           <StyledLogo
             isEntertainmentMB={isEntertainmentMB}
+            isAirportTransfersLandingPage={isAirportTransfersLandingPage}
             $isDarkTheme={showDarkHeader}
             $reducedMargin={isDarkTheme}
             className="logo"
@@ -498,12 +506,7 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
               fetchPriority="high"
             />
             <Conditional
-              if={
-                (hasPoweredByHeadoutLogo &&
-                  !isEntertainmentMB &&
-                  !isDarkTheme) ||
-                isAirportTransfersLandingPage
-              }
+              if={hasPoweredByHeadoutLogo && !isEntertainmentMB && !isDarkTheme}
             >
               <StyledVerticalDivider
                 $isAirportTransfersLandingPage={isAirportTransfersLandingPage}
@@ -516,14 +519,14 @@ const Header: React.FC<React.PropsWithChildren<any>> = (props) => {
                 }
                 delay={5000}
               >
-                <RiveLogoComponent hasDarkBg={isDarkTheme} />
+                <RiveLogoComponent />
               </DeferredComponent>
             </Conditional>
             <Conditional
               if={
                 hasPoweredByHeadoutLogo &&
                 (isEntertainmentMB || isDarkTheme) &&
-                !isAirportTransfersLandingPage
+                isAirportTransfersLandingPage
               }
             >
               <PoweredByHeadout />

@@ -848,8 +848,7 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_2: 'Type-2',
 };
 
-export const RIV_LOGO =
-  'https://cdn-imgix-open.headout.com/MB/RIV/mbLogo_guest.riv';
+export const RIV_LOGO = 'https://cdn-imgix-open.headout.com/MB/RIV/mb-logo.riv';
 
 export const RIV_CTA_LTT_BASE =
   'https://cdn-imgix-open.headout.com/MB/RIV/CTA/ltt-cta-';

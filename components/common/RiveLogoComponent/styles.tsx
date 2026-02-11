@@ -2,7 +2,7 @@ import styled, { CSSProperties } from 'styled-components';
 
 export const StyledRizLogoWrapper = styled.div`
   height: 2.5rem;
-  width: 7rem;
+  width: 9.5rem;
   padding-left: 0.375rem;
   @media (max-width: 768px) {
     height: 1.625rem;
@@ -12,6 +12,5 @@ export const StyledRizLogoWrapper = styled.div`
 `;
 
 export const fallbackStyles: CSSProperties = {
-  width: 92,
-  marginLeft: 5,
+  width: '9.5rem',
 };
