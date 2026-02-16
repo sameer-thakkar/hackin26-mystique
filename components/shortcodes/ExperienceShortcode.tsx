@@ -78,6 +78,8 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
       defaultOpen: false,
       isShortcodePopup: true,
       handleShortcodeDrawer: handleDrawer,
+      reviewsDetails: scorpioData?.[id]?.reviewsDetails,
+      topReviews: scorpioData?.[id]?.topReviews,
     }),
     [handleDrawer, host, id, lang, scorpioData]
   );
