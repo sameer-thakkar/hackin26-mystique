@@ -57,6 +57,9 @@ export const ProductDescriptors = ({
     !descriptorArray?.includes(DESCRIPTORS.FREE_CANCELLATION) &&
     showFlexiCancellationDescriptor;
 
+  const uniqueCustomDescriptors = [...(new Set(customDescriptors) || [])];
+  const uniqueDescriptorArray = [...(new Set(descriptorArray) || [])];
+
   if (isLoading)
     return (
       <TourTags
@@ -83,8 +86,8 @@ export const ProductDescriptors = ({
       $isClickable={allowClick}
       className="tour-tags"
     >
-      <Conditional if={customDescriptors?.length}>
-        {customDescriptors?.map((item, index: number) => {
+      <Conditional if={uniqueCustomDescriptors?.length}>
+        {uniqueCustomDescriptors?.map((item, index: number) => {
           const DescriptorSVG = descriptorIcons[item.type];
 
           if (!DescriptorSVG) {
@@ -113,7 +116,7 @@ export const ProductDescriptors = ({
         })}
       </Conditional>
 
-      {descriptorArray?.map((item: string, index: number) => {
+      {uniqueDescriptorArray?.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item] || null;
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
           return null;
