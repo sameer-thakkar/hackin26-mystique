@@ -184,7 +184,7 @@ const VerticalProductCard = ({
         </Conditional>
         <PriceBlock
           listingPrice={listingPrice}
-          lang="en"
+          lang={lang}
           showScratchPrice={true}
           prefix={true}
           customDiscountTag={customDiscountTag}
