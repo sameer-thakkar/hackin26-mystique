@@ -35,6 +35,7 @@ import {
   PAGE_TYPES,
   PARTNERED_AND_SENSITIVE_COMBINATIONS,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  QUERY_PARAMS,
   SHOW_DATE_SELECTION_PAGE_TGIDS,
   SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
@@ -249,6 +250,7 @@ type TCreateBookingUrl = {
   cancellationInsuranceVariant?: string;
   hsid?: any;
   refererCollectionId?: string | number;
+  openCalendarByDefault?: boolean;
 };
 
 export const createBookingURL = ({
@@ -271,6 +273,7 @@ export const createBookingURL = ({
   cancellationInsuranceVariant,
   hsid,
   refererCollectionId,
+  openCalendarByDefault = true,
 }: TCreateBookingUrl) => {
   const experimentOverride = Cookies.get('experimentOverride');
   const bookingFlowSubdomain =
@@ -388,6 +391,10 @@ export const createBookingURL = ({
 
   if (hsid) {
     urlObject.searchParams.set('hsid', hsid);
+  }
+
+  if (openCalendarByDefault) {
+    urlObject.searchParams.set(QUERY_PARAMS.OPEN_CALENDAR, 'true');
   }
 
   urlObject.searchParams.set('cookieBanner', 'false');

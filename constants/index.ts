@@ -1305,6 +1305,7 @@ export const PROMO_CODES = {
   },
 };
 export const QUERY_PARAMS = {
+  OPEN_CALENDAR: 'openCalendar',
   CATEGORY: 'category',
   LIMIT: 'limit',
   OFFSET: 'offset',
