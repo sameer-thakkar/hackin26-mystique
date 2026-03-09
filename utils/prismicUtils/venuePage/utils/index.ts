@@ -209,6 +209,7 @@ export const getLandingPageGroups = async (
     const { group_name, poi_ids: commaSeparatePoiIds } = landingPageGroup;
     const poiIds = commaSeparatePoiIds
       ?.split(',')
+      .filter((id: string) => id.trim())
       .map((poiId: string) => Number(poiId));
 
     const poiData = await fetchBulkPoisInfo({
