@@ -1366,12 +1366,13 @@
     react-scanner "^1.2.0"
     recast "^0.23.11"
 
-"@headout/eevee@4.5.4":
-  version "4.5.4"
-  resolved "https://npm.pkg.github.com/download/@headout/eevee/4.5.4/ed5fcbbeb4cafe70e191618457dc95705edafdf4#ed5fcbbeb4cafe70e191618457dc95705edafdf4"
-  integrity sha512-0Zdcn4JigsxeHT7WoO9yS1BHQacugvB4ImKrX4d6onD7SgXGFAV8RcaRCQEjRRViuczfSn8UlBTaZS89ov7snQ==
+"@headout/eevee@5.8.3":
+  version "5.8.3"
+  resolved "https://npm.pkg.github.com/download/@headout/eevee/5.8.3/3c68cb73fa75df27c64de37a85534f8303f75bb2#3c68cb73fa75df27c64de37a85534f8303f75bb2"
+  integrity sha512-UgnUCXPz8+0FfqqYDRK+FwgBwAD1RYlIGRfye80T3QBkCSU23WCQQ34sMaKRf86O34fOB578+m2e02wtSvdxMg==
   dependencies:
-    "@headout/onix" "4.0.3"
+    "@headout/onix" "4.2.2"
+    "@radix-ui/react-dialog" "^1.1.15"
     "@radix-ui/react-dropdown-menu" "^2.1.2"
 
 "@headout/espeon@2.38.2":
@@ -1404,15 +1405,15 @@
     react-zoom-pan-pinch "^3.4.4"
     swiper "^11.1.12"
 
-"@headout/onix@4.0.3":
-  version "4.0.3"
-  resolved "https://npm.pkg.github.com/download/@headout/onix/4.0.3/14b46a85c1ed7699ac4e85c0eec214bb20b8d132#14b46a85c1ed7699ac4e85c0eec214bb20b8d132"
-  integrity sha512-T2A2dtAPp3VgpLnI08S02j7ljaUO4E/fkP4zL9rXGUKcaAjJn1tx5wk6v0h9Dqa3PaaASX8fSvbrPeiMkS06Zg==
+"@headout/onix@4.2.2":
+  version "4.2.2"
+  resolved "https://npm.pkg.github.com/download/@headout/onix/4.2.2/40f3ff92eb48372cdd010c37838f3e2525170ed9#40f3ff92eb48372cdd010c37838f3e2525170ed9"
+  integrity sha512-eBJt7a2p1FSGYRXAKenkw/G3ZDtVLXSTmctNr5uZ/tExXTvOVuY7lyo814IpHHrMpkE35lfK9wfNq8NsDXox8Q==
 
-"@headout/pixie@2.1.1":
-  version "2.1.1"
-  resolved "https://npm.pkg.github.com/download/@headout/pixie/2.1.1/c64cf1ef8bc53aab0a0005b9db9b65785912c354#c64cf1ef8bc53aab0a0005b9db9b65785912c354"
-  integrity sha512-/wwJjwqDLYhdQ5YrFEMRFuubrz1murMTwqlqWvE9oMYKKWKCHtKFXFnAwoXpJatmT6B+a46i/eUBIvroYDOc8A==
+"@headout/pixie@2.2.1":
+  version "2.2.1"
+  resolved "https://npm.pkg.github.com/download/@headout/pixie/2.2.1/1378114858b8545a49ff16a88a2ac21ae7741a08#1378114858b8545a49ff16a88a2ac21ae7741a08"
+  integrity sha512-/fYYhuJod7l28u6TAyOwavDElxwWOM+h4PWYvtsSntdP04S7cNj2Y2oCAkbLTpccfmHTnwcvpNV5TbYhqROjMw==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -2275,6 +2276,26 @@
   resolved "https://registry.yarnpkg.com/@radix-ui/react-context/-/react-context-1.1.2.tgz#61628ef269a433382c364f6f1e3788a6dc213a36"
   integrity sha512-jCi/QKUM2r1Ju5a3J64TH2A5SpKAgh0LpknyqdQ4m6DCV0xJ2HG1xARRwNGPQfi1SLdLWZ1OJz6F4OMBBNiGJA==
 
+"@radix-ui/react-dialog@^1.1.15":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-1.1.15.tgz#1de3d7a7e9a17a9874d29c07f5940a18a119b632"
+  integrity sha512-TCglVRtzlffRNxRMEyR36DGBLJpeusFcgMVD9PZEzAKnUs1lKCgX5u9BmC2Yg+LL9MgZDugFFs1Vl+Jp4t/PGw==
+  dependencies:
+    "@radix-ui/primitive" "1.1.3"
+    "@radix-ui/react-compose-refs" "1.1.2"
+    "@radix-ui/react-context" "1.1.2"
+    "@radix-ui/react-dismissable-layer" "1.1.11"
+    "@radix-ui/react-focus-guards" "1.1.3"
+    "@radix-ui/react-focus-scope" "1.1.7"
+    "@radix-ui/react-id" "1.1.1"
+    "@radix-ui/react-portal" "1.1.9"
+    "@radix-ui/react-presence" "1.1.5"
+    "@radix-ui/react-primitive" "2.1.3"
+    "@radix-ui/react-slot" "1.2.3"
+    "@radix-ui/react-use-controllable-state" "1.2.2"
+    aria-hidden "^1.2.4"
+    react-remove-scroll "^2.6.3"
+
 "@radix-ui/react-direction@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-direction/-/react-direction-1.1.0.tgz#a7d39855f4d077adc2a1922f9c353c5977a09cdc"
@@ -2320,6 +2341,11 @@
   resolved "https://registry.yarnpkg.com/@radix-ui/react-focus-guards/-/react-focus-guards-1.1.1.tgz#8635edd346304f8b42cae86b05912b61aef27afe"
   integrity sha512-pSIwfrT1a6sIoDASCSpFwOasEwKTZWDw/iBdtnqKO7v6FeOzYJ7U53cPzYFVR3geGGXgVHaH+CdngrrAzqUGxg==
 
+"@radix-ui/react-focus-guards@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-focus-guards/-/react-focus-guards-1.1.3.tgz#2a5669e464ad5fde9f86d22f7fdc17781a4dfa7f"
+  integrity sha512-0rFg/Rj2Q62NCm62jZw0QX7a3sz6QCQU0LpZdNrJX8byRGaGVTqbrW9jAoIAHyMQqsNpeZ81YgSizOt5WXq0Pw==
+
 "@radix-ui/react-focus-scope@1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-focus-scope/-/react-focus-scope-1.1.1.tgz#5c602115d1db1c4fcfa0fae4c3b09bb8919853cb"
@@ -2328,6 +2354,15 @@
     "@radix-ui/react-compose-refs" "1.1.1"
     "@radix-ui/react-primitive" "2.0.1"
     "@radix-ui/react-use-callback-ref" "1.1.0"
+
+"@radix-ui/react-focus-scope@1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-focus-scope/-/react-focus-scope-1.1.7.tgz#dfe76fc103537d80bf42723a183773fd07bfb58d"
+  integrity sha512-t2ODlkXBQyn7jkl6TNaw/MtVEVvIGelJDCG41Okq/KwUsJBwQ4XVZsHAVUkK4mBv3ewiAS3PGuUWuY2BoK4ZUw==
+  dependencies:
+    "@radix-ui/react-compose-refs" "1.1.2"
+    "@radix-ui/react-primitive" "2.1.3"
+    "@radix-ui/react-use-callback-ref" "1.1.1"
 
 "@radix-ui/react-hover-card@^1.1.14", "@radix-ui/react-hover-card@^1.1.15":
   version "1.1.15"
@@ -2350,6 +2385,13 @@
   integrity sha512-EJUrI8yYh7WOjNOqpoJaf1jlFIH2LvtgAl+YcFqNCa+4hj64ZXmPkAKOFs/ukjz3byN6bdb/AVUqHkI8/uWWMA==
   dependencies:
     "@radix-ui/react-use-layout-effect" "1.1.0"
+
+"@radix-ui/react-id@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-id/-/react-id-1.1.1.tgz#1404002e79a03fe062b7e3864aa01e24bd1471f7"
+  integrity sha512-kGkGegYIdQsOb4XjsfM97rXsiHaBwco+hFI66oO4s9LU+PLAC5oJ7khdOVFxkhsmlbpUqDAvXw11CluXP+jkHg==
+  dependencies:
+    "@radix-ui/react-use-layout-effect" "1.1.1"
 
 "@radix-ui/react-menu@2.1.5":
   version "2.1.5"
@@ -11314,6 +11356,17 @@ react-remove-scroll@^2.6.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.6.3.tgz#df02cde56d5f2731e058531f8ffd7f9adec91ac2"
   integrity sha512-pnAi91oOk8g8ABQKGF5/M9qxmmOPxaAnopyTHYfqYEwJhyFrbbBtHuSgtKEoH0jpcxx5o3hXqH1mNd9/Oi+8iQ==
+  dependencies:
+    react-remove-scroll-bar "^2.3.7"
+    react-style-singleton "^2.2.3"
+    tslib "^2.1.0"
+    use-callback-ref "^1.3.3"
+    use-sidecar "^1.1.3"
+
+react-remove-scroll@^2.6.3:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.7.2.tgz#6442da56791117661978ae99cd29be9026fecca0"
+  integrity sha512-Iqb9NjCCTt6Hf+vOdNIZGdTiH1QSqr27H/Ek9sv/a97gfueI/5h1s3yRi1nngzMUaOOToin5dI1dXKdXiF+u0Q==
   dependencies:
     react-remove-scroll-bar "^2.3.7"
     react-style-singleton "^2.2.3"

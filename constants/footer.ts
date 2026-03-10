@@ -21,9 +21,12 @@ export const PAYMENT_CARD_ICONS = {
     'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/DiscoverCard.svg',
   DINERS:
     'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/DinerClub.svg',
-  IDEAL:
-    'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/IDealCard.svg',
   FPX: 'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/FPXLight.svg',
+};
+
+export const IDEAL_ICON = {
+  NAME: 'IDEAL',
+  LINK: 'https://cdn-imgix-open.headout.com/headout-connect/payment-methods/WeroxIDeal.svg',
 };
 
 export const REVOLUT_ICON = {
