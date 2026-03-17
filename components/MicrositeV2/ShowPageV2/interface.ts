@@ -17,6 +17,7 @@ export type TShowPageV2Props = {
   categoryHeaderMenu: any;
   breadcrumbs: TBreadcrumbs;
   reviewPageUrl?: string;
+  isLTT: boolean;
 };
 
 export type ListingPrice = {

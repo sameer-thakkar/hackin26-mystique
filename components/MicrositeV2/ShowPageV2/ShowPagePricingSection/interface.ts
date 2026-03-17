@@ -1,4 +1,5 @@
 export type TShowPagePricingSectionProps = {
+  isLTT: boolean;
   tourGroupData: Record<string, any>;
   flowType: string;
   onClose?: () => void;

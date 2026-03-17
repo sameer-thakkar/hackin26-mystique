@@ -34,7 +34,6 @@ import {
   BUTTON_LOADING_DURATION,
   CASHBACK_TYPES,
   CTA_TYPE,
-  GROUP_BOOKING_TGIDS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import BanSvg from 'assets/banSvg';
@@ -48,6 +47,7 @@ import { LTT_GROUP_BOOKING_URL } from './constants';
 import RiveShowPageCTA from './RiveCTA';
 
 const ShowPagePricingSection = ({
+  isLTT,
   tourGroupData,
   flowType,
   moreShows,
@@ -267,7 +267,7 @@ const ShowPagePricingSection = ({
     );
   };
 
-  const showGroupBooking = !isMobile && GROUP_BOOKING_TGIDS.includes(tgid);
+  const showGroupBooking = !isMobile && isLTT;
 
   return (
     <>

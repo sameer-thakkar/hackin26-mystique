@@ -442,6 +442,7 @@ const Page = (props: PageProps) => {
         return showLttSpTreatment ? (
           <ShowPageV2
             CMSContent={CMSContent}
+            isLTT={isLTT}
             newsArticlesWithSameTgid={newsArticlesWithSameTgid}
             featuredNewsArticles={featuredNewsArticles}
             newsLandingPageUrl={newsLandingPageUrl}

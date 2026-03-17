@@ -74,6 +74,7 @@ const SearchPage: ComponentType<React.PropsWithChildren<any>> = dynamic(
 
 const LttShowPageV2 = ({
   CMSContent,
+  isLTT,
   newsArticlesWithSameTgid,
   featuredNewsArticles,
   newsLandingPageUrl,
@@ -460,6 +461,7 @@ const LttShowPageV2 = ({
           $isAllMediaVisible={tourGroupData?.imageUploads?.length > 1}
         >
           <ShowPagePricingSection
+            isLTT={isLTT}
             tourGroupData={tourGroupData}
             flowType={flowType}
             onClose={() => {
