@@ -24,6 +24,7 @@ import {
 } from 'UI/Footer/style';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
 import { isProduction } from 'utils/gen';
 import { addLanguageParamToUrl } from 'utils/urlUtils';
 import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
@@ -42,7 +43,13 @@ import {
   STAR_VERIFICATION_LINK,
   TERMS_LINK,
 } from 'const/footer';
-import { SIDEBAR_TYPES, THEMES } from 'const/index';
+import {
+  ANALYTICS_PROPERTIES,
+  SIDEBAR_TYPES,
+  SUPPORT_EVENT_SOURCE,
+  SUPPORT_EVENTS,
+  THEMES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { Blimp } from 'assets/blimp';
 import MailIcon from 'assets/footerMail';
@@ -91,6 +98,10 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
   } = useContext(MBContext);
 
   const toggleCallUsPanel = () => {
+    trackEvent({
+      eventName: SUPPORT_EVENTS.CALL,
+      [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.FOOTER,
+    });
     if (isMobile) {
       onToggleMobileCallUsDrawer();
     } else {
@@ -116,6 +127,21 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
   };
 
   const isProd = isProduction();
+
+  const onChatPress = () => {
+    trackEvent({
+      eventName: SUPPORT_EVENTS.CHAT,
+      [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.FOOTER,
+    });
+    showAndOpenZendeskChat();
+  };
+
+  const onEmailPress = () => {
+    trackEvent({
+      eventName: SUPPORT_EVENTS.EMAIL,
+      [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.FOOTER,
+    });
+  };
 
   /**
    * Legacy setup:
@@ -229,7 +255,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                           {MessageIcon}
                           <button
                             className="toggle_panel_button"
-                            onClick={showAndOpenZendeskChat}
+                            onClick={onChatPress}
                           >
                             {strings.FOOTER.CHAT_WITH_US}
                           </button>
@@ -249,6 +275,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                             href={HEADOUT_MAIL_REDIRECT}
                             rel="noopener"
                             target="_blank"
+                            onClick={onEmailPress}
                           >
                             {strings.FOOTER.EMAIL_US}
                           </a>

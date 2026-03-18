@@ -2,8 +2,14 @@ import styled, { css } from 'styled-components';
 import { Box, Text } from '@headout/eevee';
 import { css as pixieCss } from '@headout/pixie/css';
 import Drawer from 'components/common/Drawer';
+import { trackEvent } from 'utils/analytics';
 import COLORS from 'const/colors';
 import { HO_CONTACT_NUMBERS } from 'const/contacts';
+import {
+  ANALYTICS_PROPERTIES,
+  SUPPORT_EVENT_SOURCE,
+  SUPPORT_EVENTS,
+} from 'const/index';
 import { strings } from 'const/strings';
 
 type MobileCallUsPanelDrawerProps = {
@@ -98,6 +104,13 @@ const disclaimerSubtext = pixieCss({
 });
 
 const ContactUs = () => {
+  const onContactClick = () => {
+    trackEvent({
+      eventName: SUPPORT_EVENTS.CONTACT_NUMBER_CLICKED,
+      [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.SIDE_PANEL_SECTION,
+    });
+  };
+
   return (
     <ContactsContainer>
       <Box className={disclaimerContainer}>
@@ -122,7 +135,9 @@ const ContactUs = () => {
           <ContactsWrapper key={index}>
             <ContactCountry>{contact.countryName}</ContactCountry>
             <ContactNumber>
-              <a href={`tel:${contact.phoneNumber}`}>{contact.phoneNumber}</a>
+              <a href={`tel:${contact.phoneNumber}`} onClick={onContactClick}>
+                {contact.phoneNumber}
+              </a>
             </ContactNumber>
           </ContactsWrapper>
         );

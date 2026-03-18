@@ -1243,7 +1243,21 @@ export const ANALYTICS_PROPERTIES = {
   EXIT_INTENT_TYPE: 'Exit Intent Type',
   STORE_TYPE: 'Store Type',
   CITY_CODE: 'City Code',
+  SOURCE: 'Source',
 };
+
+export const SUPPORT_EVENT_SOURCE = {
+  FOOTER: 'Footer',
+  SIDE_PANEL_SECTION: 'Side Panel Section',
+};
+
+export const SUPPORT_EVENTS = {
+  CHAT: 'Initiate Chat',
+  EMAIL: 'Initiate Email',
+  CALL: 'Initiate Call',
+  CONTACT_NUMBER_CLICKED: 'Contact Number Clicked',
+};
+
 export const CUSTOM_BANNER_SLICE = 'Custom Banner Slice';
 
 export const PAGE_TYPES = {
