@@ -3,7 +3,7 @@ import Cookies from 'cookies';
 import TurndownService from 'turndown';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { sendLog } from 'utils/logger';
-import { COOKIE } from 'const/index';
+import { COOKIE, CUSTOM_HEADER, UK_COUNTRY_CODE } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
@@ -35,6 +35,17 @@ const ToursAPI: NextApiHandler = async (req, res) => {
 
   if (originalChannel) {
     headers.set('x-channel', originalChannel);
+  }
+
+  // Check both SSR and client cookies — see IndexPage.tsx for why two cookies exist.
+  const isUkExtraChargeEnabled =
+    req.headers[CUSTOM_HEADER.PRICE_TRANSPARENCY_ENABLED] === 'true' ||
+    cookies.get(COOKIE.UK_EXTRA_CHARGE_SSR) === 'true' ||
+    cookies.get(COOKIE.UK_EXTRA_CHARGE_ENABLED) === 'true';
+
+  if (isUkExtraChargeEnabled) {
+    headers.set(CUSTOM_HEADER.PRICE_TRANSPARENCY_ENABLED, 'true');
+    headers.set(CUSTOM_HEADER.FORWARDED_COUNTRY_CODE, UK_COUNTRY_CODE);
   }
 
   const queryParamsObj = new URLSearchParams();

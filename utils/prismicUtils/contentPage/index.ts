@@ -447,6 +447,7 @@ const getContentPageDocument = async ({
           currency,
           language: languageCode,
           hostname,
+          cookies: req?.cookies as Record<string, string>,
         });
         parentTgidsList = tgidsResult?.pageData?.items || [];
         parentTgidsData = await getScorpioData({
@@ -464,6 +465,7 @@ const getContentPageDocument = async ({
             language: languageCode,
             currency,
             hostname,
+            cookies: req?.cookies as Record<string, string>,
           });
           childTgidsList = tgidsResult?.tourGroups || [];
           childTgidsData = await getScorpioData({
@@ -478,6 +480,7 @@ const getContentPageDocument = async ({
             language: languageCode,
             hostname,
             currency,
+            cookies: req?.cookies as Record<string, string>,
           });
           childTgidsList = tgidsResult?.pageData?.items || [];
           childTgidsData = await getScorpioData({

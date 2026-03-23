@@ -16,6 +16,7 @@ import { useGetAndSetExperiments } from 'hooks/useGetAndSetExperiments';
 import { getLanguageFromPathname, getNakedDomain, reflect } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
+import { getUkExtraChargeExpVariant } from 'utils/experiments/experimentUtils';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { getLocalizationLabels } from 'utils/localizationUtils';
@@ -42,6 +43,7 @@ import { LOG_LEVELS } from 'const/logs';
 import { strings } from 'const/strings';
 import Loader from './common/Loader';
 import Analytics from './Analytics';
+import UKExtraChargeExperimentTracker from './UKExtraChargeExperimentTracker';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ShoulderPages'));
@@ -182,6 +184,7 @@ const Page = (props: PageProps) => {
     bannerTrustBoosters,
     bannerV3Data,
     similarityBasedRankingExperimentControlTgids,
+    ukExtraChargeExpVariant,
   } = props;
 
   const isLTT = checkIfLTTMB(uid);
@@ -547,6 +550,11 @@ const Page = (props: PageProps) => {
           >
             <Analytics cmsContent={CMSContent} contentType={ContentType} />
             {Component}
+            {ukExtraChargeExpVariant ? (
+              <UKExtraChargeExperimentTracker
+                variant={ukExtraChargeExpVariant}
+              />
+            ) : null}
             {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
           </MBContextProvider>
         </ThemeProvider>
@@ -645,6 +653,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  /** UK_EXTRA_CHARGE_ENABLED is a browser cookie set client-side after the first render.
+   * UK_EXTRA_CHARGE_SSR is set on the request object during SSR (server-side only) since
+   * browser cookies aren't available on the very first server-side render.
+   * Both represent the same experiment state; we check both to cover SSR and client contexts.
+   */
+
+  const ukExtraChargeExpVariant = getUkExtraChargeExpVariant(req?.headers);
+
+  const isUkExtraChargeTreatment =
+    ukExtraChargeExpVariant === VARIANTS.TREATMENT ? 'true' : 'false';
+  try {
+    req.cookies[COOKIE.UK_EXTRA_CHARGE_SSR] = isUkExtraChargeTreatment;
+
+    serverCookies.set(
+      COOKIE.UK_EXTRA_CHARGE_ENABLED,
+      isUkExtraChargeTreatment,
+      {
+        domain: getNakedDomain(host as string) || undefined,
+        path: '/',
+        httpOnly: false,
+      }
+    );
+  } catch (e) {
+    // silently fail
+  }
+
   const response = await reflect(
     getPageData({
       res,
@@ -716,6 +750,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         biLink,
         headers: JSON.stringify(req?.headers),
         countryCode,
+        ukExtraChargeExpVariant,
       },
     };
     const removeEmpty = (obj: any) => {

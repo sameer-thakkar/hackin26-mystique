@@ -1,6 +1,7 @@
+import type { IncomingHttpHeaders } from 'http';
 import { isServer } from 'utils/gen';
-import { EXPERIMENTS, VARIANTS } from 'const/experiments';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { EXPERIMENT_NAMES, EXPERIMENTS, VARIANTS } from 'const/experiments';
+import { ANALYTICS_EVENTS, CUSTOM_HEADER, UK_COUNTRY_CODE } from 'const/index';
 import { trackEvent } from '../analytics';
 import type Experiment from './experiment';
 
@@ -54,3 +55,27 @@ export const getExperimentVariables = (experimentName: string) =>
   ((window as any)?.experiments &&
     (window as any).experiments[experimentName]) ??
   {};
+
+export const getUkExtraChargeExpVariant = (
+  headers?: IncomingHttpHeaders
+): string | null => {
+  const expGroupHeader = headers?.[CUSTOM_HEADER.EXP_GROUP];
+  if (!expGroupHeader) return null;
+
+  try {
+    const expGroup =
+      typeof expGroupHeader === 'string'
+        ? JSON.parse(expGroupHeader)
+        : expGroupHeader;
+
+    const countryCode = headers?.[
+      CUSTOM_HEADER.CLOUDFRONT_VIEWER_COUNTRY
+    ] as string;
+
+    if (countryCode?.toUpperCase() !== UK_COUNTRY_CODE) return null;
+
+    return expGroup?.[EXPERIMENT_NAMES.UK_EXTRA_CHARGE_EXPERIMENT] || null;
+  } catch {
+    return null;
+  }
+};

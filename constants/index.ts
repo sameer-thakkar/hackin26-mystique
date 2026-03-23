@@ -17,6 +17,8 @@ export const PREFERRED_COUNTRIES_CODES = [
 ];
 
 export const COOKIE = {
+  UK_EXTRA_CHARGE_ENABLED: 'uk-extra-charge-exp-enabled',
+  UK_EXTRA_CHARGE_SSR: 'uk-extra-charge-ssr',
   SANDBOX_ID: 'h-sid',
   CASHBACK_EXP_VIEWED: 'cshbck-exp',
   CURRENT_CURRENCY: 'currentCurrency',
@@ -1540,7 +1542,11 @@ export const ENTERTAINMENT_MB_BREADCRUMBS = {
 };
 
 export const CUSTOM_HEADER = {
+  CLOUDFRONT_VIEWER_COUNTRY: 'cloudfront-viewer-country',
+  FORWARDED_COUNTRY_CODE: 'x-forwarded-country-code',
   ORIGIN: 'h-origin',
+  PRICE_TRANSPARENCY_ENABLED: 'x-headout-price-transparency-enabled',
+  EXP_GROUP: 'x-exp-group',
 };
 
 export const PAGE_URL_STRUCTURE = {
@@ -2078,6 +2084,7 @@ export const GDPR_COUNTRY_CODES = [
   'UY',
 ];
 export const COOKIE_BANNER_KEY = 'cookie-banner-state';
+export const UK_COUNTRY_CODE = 'GB';
 export const UAE_COUNTRY_CODE = 'ae';
 export const THRESHOLD = [90, 75, 50, 25];
 

@@ -16,6 +16,7 @@ import {
   CUSTOM_HEADER,
   MICROBRANDS_URL,
   QNA_EXP_UIDS,
+  UK_COUNTRY_CODE,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 import { withTrailingSlash } from './helper';
@@ -64,6 +65,7 @@ export const constructHeaders = ({
         ''
       )
     );
+
   /**
    * Added to whitelist API calls originating from server on WAF.
    *
@@ -72,6 +74,21 @@ export const constructHeaders = ({
   if (isServer()) {
     headers.set('x-api-key', process.env?.WAF_API_WHITELIST_TOKEN || '');
     headers.delete('content-length');
+  }
+
+  try {
+    // Check both SSR and client cookies — see IndexPage.tsx for why two cookies exist.
+    const isUkExtraChargeEnabled =
+      cookies[COOKIE.UK_EXTRA_CHARGE_SSR] === 'true' ||
+      cookies[COOKIE.UK_EXTRA_CHARGE_ENABLED] === 'true' ||
+      (!isServer() && Cookies.get(COOKIE.UK_EXTRA_CHARGE_ENABLED) === 'true');
+
+    if (isUkExtraChargeEnabled) {
+      headers.set(CUSTOM_HEADER.PRICE_TRANSPARENCY_ENABLED, 'true');
+      headers.set(CUSTOM_HEADER.FORWARDED_COUNTRY_CODE, UK_COUNTRY_CODE);
+    }
+  } catch {
+    // Silent fallback: don't break request if experiment lookup fails
   }
 
   return headers;
