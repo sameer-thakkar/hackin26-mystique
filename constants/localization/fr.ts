@@ -532,7 +532,7 @@ const fr: TDictionary = {
     BLOG_THEATRE_SEATING_PLAN: 'Plan du théâtre du blog',
     CANCELLATION_AND_REFUNDS: 'Annulation et remboursement',
     CANCELLATION_POLICY: "Politique d'annulation",
-    CAST_AND_CREW: "Les acteurs et l'équipe",
+    CAST_AND_CREW: 'Distribution et équipe',
     CLOSING_DATE: 'Dernière représentation',
     CLOSING_DATE_SPECIAL_OFFER:
       'Offre spéciale pour la dernière représentation',
@@ -542,7 +542,7 @@ const fr: TDictionary = {
     GETTING_THERE: "Comment s'y rendre",
     GETTING_THERE_MAP_LINK: "Comment s'y rendre",
     GOOGLE_MAP: 'Google Maps',
-    HIGHLIGHTS: 'Points forts',
+    HIGHLIGHTS: 'Résumé',
     LISTICLE_SHOW_SUMMARY: 'Listicle Résumé du spectacle',
     LISTICLE_SHOW_WHY_WATCH: 'Listicle Pourquoi faut-il voir le spectacle',
     OPENING_DATE: 'Première représentation',
