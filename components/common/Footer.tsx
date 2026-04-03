@@ -27,7 +27,7 @@ import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { isProduction } from 'utils/gen';
 import { addLanguageParamToUrl } from 'utils/urlUtils';
-import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
+// import { showAndOpenZendeskChat } from 'utils/zenchatUtils';
 import {
   CANCELLATION_POLICY_LINK,
   COMPANY_DETAILS_LINK,
@@ -53,7 +53,7 @@ import {
 import { strings } from 'const/strings';
 import { Blimp } from 'assets/blimp';
 import MailIcon from 'assets/footerMail';
-import MessageIcon from 'assets/footerMessage';
+// import MessageIcon from 'assets/footerMessage';
 import PhoneIcon from 'assets/footerPhone';
 import OutlinedInfoIcon from 'assets/outlinedInfoIcon';
 import PoweredByHeadout from 'assets/poweredByHeadout';
@@ -128,13 +128,13 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
 
   const isProd = isProduction();
 
-  const onChatPress = () => {
-    trackEvent({
-      eventName: SUPPORT_EVENTS.CHAT,
-      [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.FOOTER,
-    });
-    showAndOpenZendeskChat();
-  };
+  // const onChatPress = () => {
+  //   trackEvent({
+  //     eventName: SUPPORT_EVENTS.CHAT,
+  //     [ANALYTICS_PROPERTIES.SOURCE]: SUPPORT_EVENT_SOURCE.FOOTER,
+  //   });
+  //   showAndOpenZendeskChat();
+  // };
 
   const onEmailPress = () => {
     trackEvent({
@@ -251,7 +251,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                         <span>{strings.FOOTER.GET_HELP_24_7}</span>
                       </FooterHeading>
                       <ul className="links">
-                        <FooterListItem isLight={isLight}>
+                        {/* <FooterListItem isLight={isLight}>
                           {MessageIcon}
                           <button
                             className="toggle_panel_button"
@@ -259,7 +259,7 @@ const Footer: React.FC<React.PropsWithChildren<FooterProps>> = ({
                           >
                             {strings.FOOTER.CHAT_WITH_US}
                           </button>
-                        </FooterListItem>
+                        </FooterListItem> */}
                         <FooterListItem isLight={isLight}>
                           {PhoneIcon}
                           <button
