@@ -37,7 +37,8 @@ export const StyledPriceBlock = styled.div<{
 
   .tour-price-container {
     display: flex;
-    row-gap: 0.3125rem;
+    flex-wrap: wrap;
+    row-gap: 0.375rem;
 
     .tour-price {
       column-gap: 4px;

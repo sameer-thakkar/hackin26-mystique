@@ -128,15 +128,27 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
   .row {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
     margin-top: 4px;
+    gap: 0.25rem;
+
+    .divider {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: ${COLORS.GRAY.G6};
+      flex-shrink: 0;
+      transform: translateY(1px);
+    }
 
     .subcategory-name {
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
-      font-weight: 300;
-
+      font-weight: 400;
       color: ${({ darkTheme }) =>
         darkTheme ? `${COLORS.BRAND.WHITE}BF` : COLORS.GRAY.G3};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     ${({ darkTheme }) =>
@@ -151,7 +163,7 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
           fill:${COLORS.CANDY.LIGHT_TONE_1};
         }
       }
-      
+
       `};
   }
 
@@ -194,12 +206,9 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     width: 120px;
 
     .row {
-      .subcategory-name {
-        ${expandFontToken(FONTS.UI_LABEL_XS)};
-        font-weight: 300;
-      }
       .average-rating {
-        ${expandFontToken(FONTS.UI_LABEL_XS)};
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+        font-weight: 400;
         margin-right: 2px;
       }
     }

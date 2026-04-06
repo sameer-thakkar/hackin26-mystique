@@ -738,7 +738,7 @@ export const getEntertainmentMbProductCardDiscountTagString = ({
 }) => {
   if (bestDiscount > 0) {
     return strings.formatString(
-      strings.SAVE_PERCENT,
+      strings.OFF_PERCENT,
       `${bestDiscount}`
     ) as string;
   } else if (shouldShowcashbackElement) {

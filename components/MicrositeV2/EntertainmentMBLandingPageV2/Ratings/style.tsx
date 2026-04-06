@@ -8,13 +8,15 @@ export const RatingsWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   .average-rating {
-    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    font-weight: 400;
     color: ${COLORS.TEXT.CANDY_1};
     margin-left: 0.125rem;
   }
 
   .count {
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    font-weight: 300;
     color: ${COLORS.TEXT.CANDY_1};
     margin-left: 0.125rem;
   }

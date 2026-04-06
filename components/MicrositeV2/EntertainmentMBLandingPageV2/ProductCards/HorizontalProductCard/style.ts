@@ -88,8 +88,8 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    text-transform: uppercase;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    font-weight: 400;
     color: ${({ darkTheme }) => (darkTheme ? COLORS.GRAY.G6 : COLORS.GRAY.G3)};
     margin-bottom: 0.25rem;
   }

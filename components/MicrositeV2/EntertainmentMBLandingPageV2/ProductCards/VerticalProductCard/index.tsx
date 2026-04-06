@@ -157,9 +157,6 @@ const VerticalProductCard = ({
       </span>
       <ProductDetails darkTheme={background === 'DARK'}>
         <div className="row">
-          <span className="subcategory-name">
-            {subCategoryName?.toUpperCase()}
-          </span>
           <Conditional
             if={shouldDisplayCollectionRatings({
               averageRating,
@@ -172,7 +169,9 @@ const VerticalProductCard = ({
               showReviewsText={false}
               showCount={!isMobile}
             />
+            <span className="divider" />
           </Conditional>
+          <span className="subcategory-name">{subCategoryName}</span>
         </div>
         <p>{title ?? name}</p>
         <Conditional if={reopeningDate}>
