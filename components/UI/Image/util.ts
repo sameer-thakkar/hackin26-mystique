@@ -18,7 +18,8 @@ export const generateImageImgixUrl = (
     x?: number;
     y?: number;
     zoom?: number; // 1 to 10
-  }
+  },
+  fitClamp?: boolean
 ): string => {
   if (!url) {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
@@ -82,6 +83,11 @@ export const generateImageImgixUrl = (
 
   if (addDarkOverlay) {
     imigxOptionsQueryParams.set('exp', '-10');
+  }
+
+  if (fitClamp) {
+    imigxOptionsQueryParams.delete('fill');
+    imigxOptionsQueryParams.set('fit', 'clamp');
   }
 
   return attachQueryParam(

@@ -106,11 +106,12 @@ const Media = ({
               : item.url
           }
           alt={item.alt}
-          height={196}
-          width={362}
+          width={333}
+          height={200}
           fetchPriority={index === 0 ? 'high' : 'low'}
           priority={index === 0}
           autoCrop={false}
+          fitClamp
           className={`banner-image-${index}`}
           loadHigherQualityImage={true}
         />

@@ -92,9 +92,10 @@ const Media = ({ index, item, fallbackImage, className }: IMediaProps) => {
             alt={item.alt}
             fetchPriority="high"
             priority
-            height={433}
-            width={784}
+            width={612}
+            height={257}
             autoCrop={false}
+            fitClamp
             className={`banner-image-${index} ${className}`}
             loadHigherQualityImage={true}
           />

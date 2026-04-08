@@ -41,4 +41,6 @@ export interface IImageProps
   dataAttributes?: {
     [key: `data-${string}`]: string | number | boolean;
   };
+  /** Imgix `fit=clamp` — resize to fit inside w×h without upscaling past intrinsic size. */
+  fitClamp?: boolean;
 }

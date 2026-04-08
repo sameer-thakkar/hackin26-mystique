@@ -67,6 +67,7 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     placeholder = 'empty',
     dataAttributes,
     onLoad,
+    fitClamp = false,
   },
   ref
 ) => {
@@ -108,7 +109,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fitCrop,
     blurFill,
     minFit,
-    focalPointParams
+    focalPointParams,
+    fitClamp
   );
 
   defaultImageSrc = generateImageImgixUrl(
@@ -124,7 +126,8 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     fitCrop,
     blurFill,
     minFit,
-    focalPointParams
+    focalPointParams,
+    fitClamp
   );
 
   const fallbackImgUrl = generateImageImgixUrl(
@@ -139,7 +142,9 @@ const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
     addDarkOverlay,
     fitCrop,
     blurFill,
-    minFit
+    minFit,
+    undefined,
+    fitClamp
   );
 
   const [useFallback, setUseFallback] = useState(false);
