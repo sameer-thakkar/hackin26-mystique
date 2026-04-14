@@ -73,6 +73,10 @@ const ReviewSection = dynamic(
 
 const Itinerary = dynamic(() => import('components/common/Itinerary'));
 
+// router.beforePopState is a global singleton; this counter tracks how many
+// mounted drawers are using it so we only restore it when the last one unmounts.
+let _popstateBlockCount = 0;
+
 interface TabData {
   heading: string;
   contents: RichTextField;
@@ -382,34 +386,46 @@ const DropdownContent: FC<React.PropsWithChildren<DropdownContentProps>> = ({
   }, [finalHighlights, tabs]);
 
   useEffect(() => {
-    const { ...historyState } = window?.history?.state ?? {};
-    const { ...otherParams } = router.query;
-    addUrlParams({
-      urlParams: { ...otherParams, selection: tgid as any },
-      historyState: { ...historyState },
-      replace: false,
-    });
+    const existingParams = new URLSearchParams(window.location.search);
+    const currentSelection = existingParams.get('selection');
+    const isUrlManagedElsewhere =
+      existingParams.has('popup') || String(currentSelection) === String(tgid);
+    const shouldBlockNextPopState = !isUrlManagedElsewhere;
 
-    trackDrawerOpen();
+    if (shouldBlockNextPopState) {
+      _popstateBlockCount++;
+    }
+    if (shouldBlockNextPopState && _popstateBlockCount === 1) {
+      router.beforePopState(() => false);
+    }
 
-    setTimeout(() => {
-      setActive(true);
-    }, 500);
-
-    window.onpopstate = function () {
+    const onPopState = () => {
       setDrawerState(SWIPESHEET_STATES.HIDDEN);
     };
+    window.addEventListener('popstate', onPopState);
+
+    if (!isUrlManagedElsewhere) {
+      const { ...historyState } = window?.history?.state ?? {};
+      const { ...otherParams } = router.query;
+      addUrlParams({
+        urlParams: { ...otherParams, selection: tgid as any },
+        historyState: { ...historyState },
+        replace: false,
+      });
+    }
+
+    trackDrawerOpen();
+    const tid = setTimeout(() => setActive(true), 500);
 
     return () => {
-      if (typeof window !== undefined) {
-        const { ...historyState } = window?.history?.state ?? {};
-        const { selection: _, ...otherParams } = router.query;
-        addUrlParams({
-          urlParams: { ...otherParams } as Record<string, string | string[]>,
-          historyState: { ...historyState },
-          replace: false,
-        });
+      clearTimeout(tid);
+      if (shouldBlockNextPopState) {
+        _popstateBlockCount--;
       }
+      if (shouldBlockNextPopState && _popstateBlockCount === 0) {
+        router.beforePopState(() => true);
+      }
+      window.removeEventListener('popstate', onPopState);
     };
   }, []);
 

@@ -108,6 +108,7 @@ const MobileProductCard = (props: any) => {
   const [discountText, setDiscountText] = useState('');
 
   const productRef = useRef<HTMLDivElement | null>(null);
+  const lastSelectionHandledRef = useRef<string | null>(null);
   const router = useRouter();
 
   const {
@@ -152,25 +153,44 @@ const MobileProductCard = (props: any) => {
   };
 
   useLayoutEffect(() => {
-    if (!router || !productRef.current) return;
-    const { selection } = router.query;
-    let timeout: NodeJS.Timeout;
-    if (selection == tgid) {
-      productRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-
-      timeout = setTimeout(() => {
-        setDrawerState(SWIPESHEET_STATES.OPEN);
-        setShowPricingBar(true);
-      }, 200);
+    if (isDrawer) return;
+    const selection = router.query?.selection;
+    if (
+      selection == null ||
+      String(selection) !== String(tgid) ||
+      !productRef.current
+    ) {
+      return;
     }
+    const key = String(selection);
+    if (lastSelectionHandledRef.current === key) return;
+    lastSelectionHandledRef.current = key;
 
-    return () => {
-      timeout && clearTimeout(timeout);
-    };
-  }, [router, productRef]);
+    productRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+
+    const timeout = setTimeout(() => {
+      setDrawerState(SWIPESHEET_STATES.OPEN);
+      setShowPricingBar(true);
+    }, 200);
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isDrawer,
+    router.query?.selection,
+    tgid,
+    // setDrawerState / setShowPricingBar intentionally omitted: they're recreated
+    // each render (no useCallback), which would cancel the 200 ms timeout early.
+  ]);
+
+  useEffect(() => {
+    if (!router.query?.selection) {
+      lastSelectionHandledRef.current = null;
+    }
+  }, [router.query?.selection]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

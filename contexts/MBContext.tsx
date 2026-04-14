@@ -9,6 +9,24 @@ import { SIDEBAR_TYPES } from 'const/index';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 
+interface ISidebarModal {
+  children?: React.ReactNode;
+  title?: string;
+  width?: string;
+  sidePadding?: number;
+  type?: string;
+  onCloseCallback?: () => void;
+  history?: {
+    enable?: boolean;
+    params?: Record<string, any>;
+    isQueryRestore?: boolean;
+  };
+  isProductCardTracking?: boolean;
+  tgid?: string | number;
+  hideCloseButton?: boolean;
+  noBackgroundOverlay?: boolean;
+}
+
 export const MBContext = createContext<{
   [x: string]: any;
   primaryCity: TCityInfo | null;
@@ -62,12 +80,23 @@ export const MBContextProvider = (props: any) => {
     categoryHeaderMenu,
     userCountry,
   } = props;
-  const [sidebarModalStack, setSidebarModalStack] = useState([]);
+  const [sidebarModalStack, setSidebarModalStack] = useState<ISidebarModal[]>(
+    []
+  );
   const router = useRouter();
   // edge case
   //2. handle URLs for desktop
   // a. combo should redirect to booking flow
   // b. pid should scroll to that card
+
+  const getDefinedQueryParams = (
+    query: Record<string, string | string[] | undefined>
+  ) =>
+    Object.fromEntries(
+      Object.entries(query).filter(
+        (entry): entry is [string, string | string[]] => entry[1] !== undefined
+      )
+    );
 
   const addToAside = ({
     children,
@@ -96,8 +125,18 @@ export const MBContextProvider = (props: any) => {
       noBackgroundOverlay,
     };
 
-    // @ts-expect-error TS(2322): Type '{ children: any; title: any; width: any; sid... Remove this comment to see the full error message
-    setSidebarModalStack([...sidebarModalStack, modalState]);
+    // PRODUCT_CARD replaces the stack (one sheet at a time); stacking two broke iOS Safari.
+    // Callbacks are read from the closure-captured stack (not the updater's prev) to
+    // avoid side effects inside a pure updater — which fires twice in StrictMode.
+    // Trade-off: two synchronous PRODUCT_CARD calls in the same React batch would both
+    // read the same stale stack, but that scenario cannot occur via user interaction.
+    if (type === SIDEBAR_TYPES.PRODUCT_CARD) {
+      sidebarModalStack.forEach((entry) => entry.onCloseCallback?.());
+    }
+    setSidebarModalStack((prev) => {
+      if (type === SIDEBAR_TYPES.PRODUCT_CARD) return [modalState];
+      return [...prev, modalState];
+    });
     if (history) {
       const {
         pid: routerPid,
@@ -125,8 +164,30 @@ export const MBContextProvider = (props: any) => {
     }
   };
 
+  const restoreAsideHistory = (aside?: ISidebarModal) => {
+    if (!aside?.history?.isQueryRestore) return;
+
+    const {
+      pid: _routerPid,
+      popup: _routerPopup,
+      ...otherParams
+    } = router.query;
+    const {
+      pid: _pid,
+      popup: _popup,
+      ...historyState
+    } = window.history.state ?? {};
+
+    addUrlParams({
+      urlParams: getDefinedQueryParams(otherParams),
+      historyState: { ...historyState },
+      replace: true,
+    });
+  };
+
   const closeAside = () => {
-    setSidebarModalStack([...sidebarModalStack.slice(0, -1)]);
+    restoreAsideHistory(sidebarModalStack[sidebarModalStack.length - 1]);
+    setSidebarModalStack((prev: ISidebarModal[]) => prev.slice(0, -1));
   };
   const resetAside = () => setSidebarModalStack([]);
 

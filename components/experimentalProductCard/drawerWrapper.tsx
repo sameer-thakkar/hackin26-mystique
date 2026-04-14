@@ -1,6 +1,5 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import router from 'next/router';
 import { Button, Icon, Text } from '@headout/eevee';
 import ArrowLeft from '@headout/onix/web/ui/arrow/stroke/ArrowLeft';
 import { cx } from '@headout/pixie/css';
@@ -13,6 +12,7 @@ import TrustOverlay from 'components/Product/components/Popup/ReviewSection/Trus
 import { useProductCard } from 'contexts/productCardContext';
 import useFetchReviewMedia from 'hooks/useFetchReviewMedia';
 import { trackEvent } from 'utils/analytics';
+import { addUrlParams } from 'utils/urlUtils';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -200,18 +200,22 @@ const DrawerWrapper = (props: any) => {
           snapHeight={'5rem'}
           onCloseInit={hidePricingBar}
           onCloseCompletion={(action?: string) => {
-            if (!router) return;
-            const { selection } = router.query;
-            if (selection) {
-              const { ['selection']: _, ...restParams } = router.query;
-              router.replace(
-                {
-                  pathname: router.pathname,
-                  query: restParams,
-                },
-                undefined,
-                { shallow: true }
-              );
+            const urlParams = new URLSearchParams(window.location.search);
+            const hadTrackedParams =
+              urlParams.has('selection') ||
+              urlParams.has('pid') ||
+              urlParams.has('popup');
+
+            if (hadTrackedParams) {
+              urlParams.delete('selection');
+              urlParams.delete('pid');
+              urlParams.delete('popup');
+
+              addUrlParams({
+                urlParams: Object.fromEntries(urlParams.entries()),
+                historyState: window.history.state ?? {},
+                replace: true,
+              });
             }
             setDrawerState(SWIPESHEET_STATES.HIDDEN);
             trackEvent({

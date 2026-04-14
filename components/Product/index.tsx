@@ -1016,7 +1016,9 @@ const Product = (props: any) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
-      if (showPopup && !originalIsMobile) {
+      // Use client viewport, not SSR `originalIsMobile`, so real phones always get
+      // the aside/swipesheet even when the server misclassified the device as desktop.
+      if (showPopup && !originalIsMobile && !clientIsMobile) {
         setIsUnScrolled(true);
         popupController.current?.open(
           activeTabIndex + (showItinerary && activeTabIndex > 0 ? 1 : 0)
@@ -1093,6 +1095,7 @@ const Product = (props: any) => {
           pid: tgid,
           popup: 'details',
         },
+        isQueryRestore: true,
       },
     });
   };
@@ -1172,6 +1175,7 @@ const Product = (props: any) => {
       return (
         <MoreDetailsBtnWrapper $forceMobile={forceMobile}>
           <Button
+            type="button"
             color="purps"
             size="medium"
             variant="tertiary"
