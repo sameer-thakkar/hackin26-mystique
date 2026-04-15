@@ -382,9 +382,7 @@ const Product = (props: any) => {
     const popup = urlParams.get('popup');
     if (pid != tgid) return;
     if (detialsPopupShown) return;
-    if (!setDetailsPopupShown) {
-      setDetailsPopupShown?.(true);
-    }
+    setDetailsPopupShown?.(true);
     if (popup === 'combo') {
       if (originalIsMobile && isComboWithMultiVariant && !isV3Design) {
         addToAside({

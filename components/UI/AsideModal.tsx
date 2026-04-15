@@ -662,14 +662,16 @@ const AsideModal = ({
 
     const close = (popHistory = false) => {
       setIsOpen(!active);
-      if (popHistory && isQueryRestore) {
-        //go to landing page
+      // URL cleanup for isQueryRestore asides is handled by
+      // MBContext.closeAside → restoreAsideHistory (replaceState).
+      // Doing it here too would double-push history on mobile Safari.
+      if (popHistory && !isQueryRestore) {
         const {
           pid: _routerPid,
           popup: _routerPopup,
           ...otherParams
         } = router.query;
-        const { _pid, _popup, ...historyState } = window.history.state;
+        const { _pid, _popup, ...historyState } = window.history.state ?? {};
         addUrlParams({
           // @ts-expect-error TS(2531): Object is possibly 'null'.
           urlParams: { ...otherParams },

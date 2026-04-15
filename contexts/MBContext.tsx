@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createContext, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { TCityInfo } from 'components/AirportTransfers/interface';
@@ -84,6 +84,7 @@ export const MBContextProvider = (props: any) => {
     []
   );
   const router = useRouter();
+  const popstateBlockedRef = useRef(false);
   // edge case
   //2. handle URLs for desktop
   // a. combo should redirect to booking flow
@@ -111,6 +112,15 @@ export const MBContextProvider = (props: any) => {
     hideCloseButton = false,
     noBackgroundOverlay = false,
   }: any) => {
+    const activeAside = sidebarModalStack[sidebarModalStack.length - 1];
+    const shouldIgnoreDuplicateProductCardOpen =
+      type === SIDEBAR_TYPES.PRODUCT_CARD &&
+      !!tgid &&
+      activeAside?.type === SIDEBAR_TYPES.PRODUCT_CARD &&
+      String(activeAside?.tgid) === String(tgid);
+
+    if (shouldIgnoreDuplicateProductCardOpen) return;
+
     const modalState = {
       children,
       title,
@@ -147,6 +157,14 @@ export const MBContextProvider = (props: any) => {
       const urlParams = new URLSearchParams(window.location.search);
       const pid = urlParams.get('pid');
       const popup = urlParams.get('popup');
+
+      // Block Next.js from processing popstate as a route transition
+      // (which would call getServerSideProps and reload the page).
+      // The aside's own popstate handler in AsideModal handles close.
+      if (!popstateBlockedRef.current) {
+        router.beforePopState(() => false);
+        popstateBlockedRef.current = true;
+      }
 
       //for multilevel replace params
       if (pid && popup)
@@ -187,9 +205,23 @@ export const MBContextProvider = (props: any) => {
 
   const closeAside = () => {
     restoreAsideHistory(sidebarModalStack[sidebarModalStack.length - 1]);
-    setSidebarModalStack((prev: ISidebarModal[]) => prev.slice(0, -1));
+    setSidebarModalStack((prev: ISidebarModal[]) => {
+      const next = prev.slice(0, -1);
+      // Restore Next.js back-button handling when no aside owns the URL.
+      if (next.length === 0 && popstateBlockedRef.current) {
+        router.beforePopState(() => true);
+        popstateBlockedRef.current = false;
+      }
+      return next;
+    });
   };
-  const resetAside = () => setSidebarModalStack([]);
+  const resetAside = () => {
+    if (popstateBlockedRef.current) {
+      router.beforePopState(() => true);
+      popstateBlockedRef.current = false;
+    }
+    setSidebarModalStack([]);
+  };
 
   const getActiveAside = () =>
     sidebarModalStack && sidebarModalStack[sidebarModalStack.length - 1];
