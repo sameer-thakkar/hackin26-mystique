@@ -250,6 +250,7 @@ type TCreateBookingUrl = {
   cancellationInsuranceVariant?: string;
   hsid?: any;
   refererCollectionId?: string | number;
+  mbUid?: string;
   openCalendarByDefault?: boolean;
 };
 
@@ -273,6 +274,7 @@ export const createBookingURL = ({
   cancellationInsuranceVariant,
   hsid,
   refererCollectionId,
+  mbUid = '',
   openCalendarByDefault = true,
 }: TCreateBookingUrl) => {
   const experimentOverride = Cookies.get('experimentOverride');
@@ -332,7 +334,9 @@ export const createBookingURL = ({
     process.env.NEXT_PUBLIC_ODE_NAMESPACE.length &&
     process.env.APP_ENV !== 'production'
   ) {
-    finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.dev-headout.com`;
+    finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.zapdos.dev-headout.com`;
+  } else if (process.env.APP_ENV !== 'production' && process.env.NEXT_PUBLIC_BOOKING_BASE_HOST) {
+    finalHost = process.env.NEXT_PUBLIC_BOOKING_BASE_HOST;
   }
 
   const urlObject = new URL(
@@ -401,6 +405,11 @@ export const createBookingURL = ({
 
   if (experimentOverride) {
     urlObject.searchParams.set('experimentOverride', experimentOverride);
+  }
+
+  // Append mb_uid in query params for test/ODE environments
+  if (mbUid && process.env.APP_ENV !== 'production') {
+    urlObject.searchParams.set('mb_uid', mbUid);
   }
 
   return urlObject.toString();

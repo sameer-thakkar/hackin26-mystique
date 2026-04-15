@@ -57,6 +57,7 @@ export const useBookingURL = ({
     flowType: flowType,
     hsid,
     refererCollectionId,
+    mbUid: uid,
   });
 
   return productBookingUrl;

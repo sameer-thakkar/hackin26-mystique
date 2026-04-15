@@ -522,7 +522,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
   isEntertainmentBanner = false,
   isNewsPage = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, uid: mbUid } =
     useContext(MBContext);
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
@@ -598,6 +598,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
       redirectToHeadoutBookingFlow,
       flowType,
       hsid,
+      mbUid,
     });
     const showPageUrl = showPageUid
       ? convertUidToUrl({ uid: showPageUid, hostname: host, lang })

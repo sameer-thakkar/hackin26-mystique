@@ -515,6 +515,7 @@ const Product = (props: any) => {
     currency,
     flowType,
     hsid,
+    mbUid: uid,
   });
 
   let showPageUrl = bookingURL;

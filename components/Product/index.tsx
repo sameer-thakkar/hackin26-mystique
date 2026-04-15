@@ -1247,6 +1247,7 @@ const Product = (props: any) => {
       ? flexiCancellationExperimentVariant ?? undefined
       : undefined,
     hsid,
+    mbUid: uid,
   });
 
   const onSidePanelClose = () => {
