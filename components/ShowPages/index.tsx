@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { PrismicRichText } from '@prismicio/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import cloneDeep from 'lodash.clonedeep';
+import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -200,8 +201,6 @@ const ShowPage = (props: any) => {
     breadcrumbs,
   } = props;
   const tourGroupData = cloneDeep(tempTourGroupData);
-  const [customerReviews, setCustomerReviews] = useState([]);
-  const [similarProductData, setSimilarProductData] = useState([]);
   const hostname = getHostName(isDev, host);
   const currency = useRecoilValue(currencyAtom);
 
@@ -310,29 +309,68 @@ const ShowPage = (props: any) => {
     ALLOW_IMMEDIATE_NESTING
   );
 
-  useEffect(() => {
-    fetchTourGroupsByCategory({
-      categoryId: primarySubCategoryID,
-      hostname,
-      isSubCategory: true,
-      city: cityCode,
-      language: currentLanguage,
-      limit: '100',
-    }).then((data) => {
-      const { pageData } = data || {};
+  const { data: categoryData } = useSWR(
+    primarySubCategoryID
+      ? [
+          'tourGroupsByCategory',
+          primarySubCategoryID,
+          hostname,
+          cityCode,
+          currentLanguage,
+        ]
+      : null,
+    () =>
+      fetchTourGroupsByCategory({
+        categoryId: primarySubCategoryID,
+        hostname,
+        isSubCategory: true,
+        city: cityCode,
+        language: currentLanguage,
+        limit: '100',
+      })
+  );
 
-      const filteredData = pageData?.items?.filter(
-        (element: any) =>
-          element.id !== tgid &&
-          !!allShowPagesDocuments?.find(
-            (doc: any) => doc.data.tgid === element.id
-          )
-      );
-      if (filteredData?.length) {
-        setSimilarProductData(filteredData);
+  const similarProductData = useMemo(() => {
+    if (!categoryData) return [];
+    const { pageData } = categoryData || {};
+    const filteredData = pageData?.items?.filter(
+      (element: any) =>
+        element.id !== tgid &&
+        !!allShowPagesDocuments?.find(
+          (doc: any) => doc.data.tgid === element.id
+        )
+    );
+
+    return filteredData ?? [];
+  }, [categoryData, allShowPagesDocuments, tgid]);
+
+  const { data: reviewsData } = useSWR(
+    tgid ? ['tourGroupReviews', tgid, hostname, currentLanguage] : null,
+    () =>
+      fetchTourGroupReviews({
+        tgid,
+        hostname,
+        limit: 5,
+        language: currentLanguage,
+      })
+  );
+
+  const customerReviews = useMemo(() => {
+    if (!reviewsData) return [];
+
+    const { items: reviews } = reviewsData || {};
+    const filteredReviews = reviews?.reduce((acc: any, review: any) => {
+      if (review?.nonCustomerName && review?.content) {
+        acc.push({
+          name: review?.nonCustomerName,
+          content: review?.content,
+        });
       }
-    });
-  }, []);
+      return acc;
+    }, []);
+
+    return filteredReviews ?? [];
+  }, [reviewsData, tgid]);
 
   useEffect(() => {
     if (eventsReady) {
@@ -361,31 +399,6 @@ const ShowPage = (props: any) => {
   useEffect(() => {
     setIsMobile(width <= 768);
   }, [width]);
-
-  useEffect(() => {
-    const reviewTourGroup = async () => {
-      const data = await fetchTourGroupReviews({
-        tgid,
-        hostname,
-        limit: 5,
-        language: currentLanguage,
-      });
-
-      const tourGroupReviews = data?.items
-        ?.filter(
-          (review: Record<string, any>) =>
-            review?.nonCustomerName && review?.content
-        )
-        ?.map((review: any) => ({
-          name: review?.nonCustomerName,
-          content: review?.content,
-        }));
-
-      setCustomerReviews(tourGroupReviews);
-    };
-
-    reviewTourGroup();
-  }, [tgid]);
 
   const pageUrl = convertUidToUrl({
     uid,
@@ -630,7 +643,7 @@ const ShowPage = (props: any) => {
               useSchema
             />
           </LazyComponent>
-          <Conditional if={customerReviews.length}>
+          <Conditional if={customerReviews?.length}>
             <LazyComponent>
               <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
               <CustomerReview cards={customerReviews} isMobile={isMobile} />
