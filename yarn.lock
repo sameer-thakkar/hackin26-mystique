@@ -1366,19 +1366,19 @@
     react-scanner "^1.2.0"
     recast "^0.23.11"
 
-"@headout/eevee@5.8.3":
-  version "5.8.3"
-  resolved "https://npm.pkg.github.com/download/@headout/eevee/5.8.3/3c68cb73fa75df27c64de37a85534f8303f75bb2#3c68cb73fa75df27c64de37a85534f8303f75bb2"
-  integrity sha512-UgnUCXPz8+0FfqqYDRK+FwgBwAD1RYlIGRfye80T3QBkCSU23WCQQ34sMaKRf86O34fOB578+m2e02wtSvdxMg==
+"@headout/eevee@5.15.1":
+  version "5.15.1"
+  resolved "https://npm.pkg.github.com/download/@headout/eevee/5.15.1/652ab4f610f16c93e50bde5037b2a605ff7e8e7c#652ab4f610f16c93e50bde5037b2a605ff7e8e7c"
+  integrity sha512-J3iLQKvAM1Xu1o6EuIeGy9P+bHGLo+Y3+EzQdIPj64nESsUuOJcB/qfDxihcIX/hPkbh/Qx3SE6JWdRIOPNVMA==
   dependencies:
-    "@headout/onix" "4.2.2"
+    "@headout/onix" "4.2.12"
     "@radix-ui/react-dialog" "^1.1.15"
     "@radix-ui/react-dropdown-menu" "^2.1.2"
 
-"@headout/espeon@2.38.2":
-  version "2.38.2"
-  resolved "https://npm.pkg.github.com/download/@headout/espeon/2.38.2/bf9b0238d1af3b6ff326e4136f85b1baf5a8d46b#bf9b0238d1af3b6ff326e4136f85b1baf5a8d46b"
-  integrity sha512-PYk4Ghhcn6ABfwq0MN2hR9/Yry4qMuhJ9JJ1vuabKZ2cAdrS6ZK8E8EzvFizzr6jnze8LnzlhObFHdPp+3Xitw==
+"@headout/espeon@2.62.0":
+  version "2.62.0"
+  resolved "https://npm.pkg.github.com/download/@headout/espeon/2.62.0/9705824a3ccfe3e1501b9a73641f8e9a3df2cf30#9705824a3ccfe3e1501b9a73641f8e9a3df2cf30"
+  integrity sha512-/aPx/j+5xe8duOmTKu3itUBjASfktbQp31WnJGoAo68IkPemNbA8Lfn4KLullv7GrT/f9q9sLN5C/nWHsop1vA==
   dependencies:
     "@googlemaps/js-api-loader" "^1.16.8"
     "@googlemaps/polyline-codec" "^1.0.28"
@@ -1387,12 +1387,12 @@
     babel-plugin-dynamic-import-node "^2.3.3"
     dayjs "^1.11.13"
     dompurify "^3.3.0"
-    dynamic-marquee-react "^1.0.4"
     geojson "^0.5.0"
     jest-coverage-badges "^1.1.2"
     leaflet "^1.9.4"
     leaflet-defaulticon-compatibility "^0.1.2"
     lottie-web "^5.13.0"
+    markdown-to-jsx "^7.7.2"
     plyr "^3.7.3"
     qs "^6.13.0"
     react-content-loader "^7.1.1"
@@ -1404,16 +1404,17 @@
     react-scroll "^1.9.0"
     react-zoom-pan-pinch "^3.4.4"
     swiper "^11.1.12"
+    web-vitals "^3.5.2"
 
-"@headout/onix@4.2.2":
-  version "4.2.2"
-  resolved "https://npm.pkg.github.com/download/@headout/onix/4.2.2/40f3ff92eb48372cdd010c37838f3e2525170ed9#40f3ff92eb48372cdd010c37838f3e2525170ed9"
-  integrity sha512-eBJt7a2p1FSGYRXAKenkw/G3ZDtVLXSTmctNr5uZ/tExXTvOVuY7lyo814IpHHrMpkE35lfK9wfNq8NsDXox8Q==
+"@headout/onix@4.2.12":
+  version "4.2.12"
+  resolved "https://npm.pkg.github.com/download/@headout/onix/4.2.12/e43ed3fe88f02cb90575b60e41a54894c7e16675#e43ed3fe88f02cb90575b60e41a54894c7e16675"
+  integrity sha512-DrIPwhr36BVzdyI7hQV3z2GyaNwkMuB06lD3jMqzJsfFnm6rvCI9o6ylpOfv5JKK1DzVNa7Ueh2EocLy2xvYgQ==
 
-"@headout/pixie@2.2.1":
-  version "2.2.1"
-  resolved "https://npm.pkg.github.com/download/@headout/pixie/2.2.1/1378114858b8545a49ff16a88a2ac21ae7741a08#1378114858b8545a49ff16a88a2ac21ae7741a08"
-  integrity sha512-/fYYhuJod7l28u6TAyOwavDElxwWOM+h4PWYvtsSntdP04S7cNj2Y2oCAkbLTpccfmHTnwcvpNV5TbYhqROjMw==
+"@headout/pixie@2.2.3":
+  version "2.2.3"
+  resolved "https://npm.pkg.github.com/download/@headout/pixie/2.2.3/9a3734d99b214bd07365fee66ad71ffe6f7f467b#9a3734d99b214bd07365fee66ad71ffe6f7f467b"
+  integrity sha512-j+gvhqVxh0SsBydobnUTXYIW4Lwqw4NcIshl1RxZjepdoAfJHGa95rtgLPcQrlZlGz4xYpU3SMaV3myDJSpF2g==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -5622,11 +5623,6 @@ duplexer@^0.1.2:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dynamic-marquee-react@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/dynamic-marquee-react/-/dynamic-marquee-react-1.0.4.tgz#bbaeaf1329b182c048a0fff75a33611b6d559a12"
-  integrity sha512-/42t933dcPbVNYS38NzMbTu3hwL6sewN8UUL0SGvR9BkGaRNyL26NxcxoZemVz59WAQxc3nbSgGxCiRIzhyIiw==
-
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -8904,6 +8900,11 @@ markdown-escapes@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
+
+markdown-to-jsx@^7.7.2:
+  version "7.7.17"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.7.17.tgz#6e997d6aa4dbe2e69c423c65745541846777483c"
+  integrity sha512-7mG/1feQ0TX5I7YyMZVDgCC/y2I3CiEhIRQIhyov9nGBP5eoVrOXXHuL5ZP8GRfxVZKRiXWJgwXkb9It+nQZfQ==
 
 marked-terminal@^4.1.1:
   version "4.2.0"
