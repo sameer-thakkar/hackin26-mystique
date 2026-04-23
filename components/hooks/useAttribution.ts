@@ -13,7 +13,6 @@ type THOAttribution = {
   ts: number; // Timestamp
   gbraid?: string | null; // Google Click Identifier for iOS 14.5+
   wbraid?: string | null; // Google Click Identifier for iOS web-to-app
-  ttoclid?: string | null; // TikTok Identifier
   campaign_id?: string | null; // Campaign ID
   adgroup_id?: string | null; // Ad Group ID
   device?: string | null; // Device
@@ -54,6 +53,14 @@ const useAttribution = () => {
     const keyword = searchParams.get(QUERY_PARAMS.KEYWORD);
 
     const currentHost = getNakedDomain(host);
+
+    if (ttoclid) {
+      Cookies.set(COOKIE.TIKTOK_CLICK_ID, ttoclid, {
+        path: '/',
+        domain: currentHost,
+      });
+    }
+
     /**
      * PS: is likely direct traffic, not guaranteed.
      * no-follow config and/or privacy centric browsers.
@@ -73,7 +80,6 @@ const useAttribution = () => {
       }),
       ...(gbraid && { [QUERY_PARAMS.GBRAID]: gbraid }),
       ...(wbraid && { [QUERY_PARAMS.WBRAID]: wbraid }),
-      ...(ttoclid && { [QUERY_PARAMS.TTOLCID]: ttoclid }),
       ...(campaignId && { [QUERY_PARAMS.CAMPAIGN_ID]: campaignId }),
       ...(adgroupId && { [QUERY_PARAMS.ADGROUP_ID]: adgroupId }),
       ...(device && { [QUERY_PARAMS.DEVICE]: device }),

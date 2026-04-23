@@ -31,6 +31,7 @@ export const COOKIE = {
   LANG: 'content_lang',
   MIXPANEL_REPLAY: 'mixpanel-replay',
   REFERRER_COLLECTION_ID: 'referrer-collection-id',
+  TIKTOK_CLICK_ID: 'ttoclid',
 };
 
 export const TIME = {
