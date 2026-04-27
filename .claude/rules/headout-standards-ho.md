@@ -1,0 +1,10 @@
+# Headout Standards
+
+Always check for and follow AGENTS.md if present in the workspace root.
+This file contains cross-tool engineering standards used across all AI coding tools at Headout.
+
+If AGENTS.md exists, treat its contents as project guidelines for:
+- Code style and conventions
+- Architecture patterns
+- Testing requirements
+- Git workflow

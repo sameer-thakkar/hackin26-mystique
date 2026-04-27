@@ -1,0 +1,19 @@
+
+# AI agent configs - managed by headout/HeadoutAgentsConfig
+.claude/
+.claude.backup.*/
+.cursor/
+.cursor.backup.*/
+.windsurf/
+.windsurf.backup.*/
+.codex/
+.codex.backup.*/
+.opencode/
+.opencode.backup.*/
+.factory/
+.factory.backup.*/
+.agent/
+.agent.backup.*/
+.github.backup.*/
+.agents-manifest.json
+.agents-version

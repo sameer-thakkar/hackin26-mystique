@@ -1,0 +1,9 @@
+{
+  "source": "headout/HeadoutAgentsConfig",
+  "version": "790c94e",
+  "commit": "790c94e",
+  "branch": "main",
+  "installed": "2026-04-22T05:44:33Z",
+  "repo_name": "mystique",
+  "agents": ["claude", "cursor", "windsurf", "codex", "opencode", "factory", "agent"]
+}

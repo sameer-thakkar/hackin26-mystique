@@ -1,0 +1,58 @@
+---
+trigger: always_on
+description: MCP Script Rules
+---
+
+---
+globs: ["scripts/**/*.py"]
+---
+
+# MCP Script Rules
+
+Guidelines for working with MCP (Model Context Protocol) wrapper scripts in `scripts/`:
+
+## DO
+- Use CLI arguments for all parameters (argparse)
+- Include USAGE docstring at top of file
+- Handle errors gracefully with informative messages
+- Print results to stdout for Claude to process
+- Document required MCP servers in script header
+
+## DON'T
+- Hardcode parameters in the script
+- Edit scripts to change parameters (use CLI args instead)
+- Assume MCP servers are available without checking
+
+## Tool Naming Convention
+MCP tool IDs typically use double underscore: `serverName__toolName`
+
+Examples:
+- `playwright__browser_snapshot`
+- `github__search_code`
+
+## Script Template
+
+```python
+#!/usr/bin/env python3
+"""
+USAGE: python script_name.py --query "search term"
+
+Requires MCP server: <server-name>
+"""
+import argparse
+
+def main():
+    parser = argparse.ArgumentParser(description='Script description')
+    parser.add_argument('--query', required=True, help='Search query')
+    args = parser.parse_args()
+
+    # Call MCP tool via your configured runtime
+    # Implementation depends on your MCP setup
+
+if __name__ == '__main__':
+    main()
+```
+
+## Note
+
+This rule provides guidelines for MCP wrapper scripts. Actual implementation depends on your organization's MCP server configuration and runtime setup.

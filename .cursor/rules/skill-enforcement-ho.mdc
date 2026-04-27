@@ -1,0 +1,82 @@
+---
+description: CRITICAL - Mandatory skill usage rules that override default workflows
+alwaysApply: true
+---
+
+# Skill Enforcement Rules
+
+**CRITICAL**: These skills OVERRIDE default workflows. Always use these skills instead of built-in alternatives.
+
+## Mandatory Skills
+
+### Planning: Use `/create_plan` skill
+**Instead of**: Built-in plan mode, manual planning, or ad-hoc exploration
+
+**Trigger phrases**:
+- "create a plan", "make a plan", "plan this"
+- "how should we implement", "design the approach"
+- Any non-trivial feature request that needs planning
+
+**Action**:
+- Claude Code: `Skill("create_plan")`
+- Cursor: `/create_plan`
+
+**NEVER**: Use built-in plan mode for planning. The /create_plan skill has research, validation, and structured output that built-in planning lacks.
+
+---
+
+### Implementation: Use `/implement_plan` skill
+**Instead of**: Direct implementation after planning, manual code changes for planned work
+
+**Trigger phrases**:
+- "implement the plan", "execute the plan"
+- "build this", "implement this feature" (when a plan exists)
+- After any planning phase completes
+
+**Action**:
+- Claude Code: `Skill("implement_plan", args="path/to/plan.md")`
+- Cursor: `/implement_plan path/to/plan.md`
+
+**NEVER**: Implement a plan directly. Always delegate to /implement_plan which provides:
+- Task tracking with handoffs
+- Agent orchestration for larger plans
+- Review loops
+- Compaction-resistant execution
+
+---
+
+## Workflow Override
+
+### Old workflow (DO NOT USE):
+```
+User: "Add feature X"
+Agent: [plan mode] → [explore] → [exit plan] → [implement directly]
+```
+
+### New workflow (ALWAYS USE):
+```
+User: "Add feature X"
+Agent: /create_plan → [plan created] → /implement_plan path/to/plan.md
+```
+
+---
+
+## Enforcement Checklist
+
+Before starting any multi-step implementation:
+- [ ] Is there a plan needed? → Use `/create_plan`
+- [ ] Is there an existing plan to implement? → Use `/implement_plan`
+- [ ] Am I about to use built-in plan mode? → STOP, use `/create_plan` instead
+- [ ] Am I about to implement plan changes directly? → STOP, use `/implement_plan` instead
+
+---
+
+## Exception: Trivial Changes
+
+Skills are NOT required for:
+- Single-line fixes
+- Typo corrections
+- Simple config changes
+- Direct user instructions like "change X to Y in file Z"
+
+If unsure, default to using the skills.

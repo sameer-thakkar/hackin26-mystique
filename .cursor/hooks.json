@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "./.cursor/hooks/skill-activation-prompt-ho.sh"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+# Cross-Tool Compatibility
+
+Always check for and follow AGENTS.md if present in the workspace root.
+This file contains cross-tool engineering standards.
+
+If AGENTS.md exists, treat its contents as authoritative project guidelines.
+Also check for additional AGENTS.md files in subdirectories for context-specific rules.

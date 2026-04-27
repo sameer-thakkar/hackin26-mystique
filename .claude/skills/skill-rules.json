@@ -1,0 +1,872 @@
+{
+  "version": "1.0",
+  "description": "Skill activation triggers for HeadoutAgentsConfig. Controls when skills automatically suggest.",
+  "skills": {
+    "create_handoff": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "critical",
+      "description": "Create handoff document to preserve work across sessions",
+      "promptTriggers": {
+        "keywords": [
+          "handoff",
+          "create handoff",
+          "preserve work",
+          "save progress",
+          "context high",
+          "before clear"
+        ],
+        "intentPatterns": [
+          "(create|make|write).*?handoff",
+          "(preserve|save).*?(work|progress|context)",
+          "before.*(clear|compaction)"
+        ]
+      }
+    },
+    "resume_handoff": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "critical",
+      "description": "Resume work from handoff document",
+      "promptTriggers": {
+        "keywords": [
+          "resume handoff",
+          "resume work",
+          "continue from",
+          "pick up where",
+          "latest handoff"
+        ],
+        "intentPatterns": [
+          "(resume|continue|pick up).*?(handoff|work|where)",
+          "latest.*?handoff"
+        ]
+      }
+    },
+    "create_plan": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create implementation plan with research and validation",
+      "promptTriggers": {
+        "keywords": [
+          "create plan",
+          "make plan",
+          "implementation plan",
+          "plan this",
+          "how should we implement"
+        ],
+        "intentPatterns": [
+          "(create|make|write).*?plan",
+          "plan.*(this|feature|implementation)",
+          "how.*?(should|would).*?implement"
+        ]
+      }
+    },
+    "multi_repo_plan": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create implementation plans across multiple repositories with contract passing",
+      "promptTriggers": {
+        "keywords": [
+          "multi repo",
+          "multiple repos",
+          "multiple repositories",
+          "frontend and backend",
+          "backend and frontend",
+          "cross repo",
+          "across repos",
+          "plan across",
+          "multi codebase",
+          "multiple codebases",
+          "continue multi repo",
+          "multi repo continue",
+          "multi repo plan continue",
+          "resume multi repo",
+          "next repo plan",
+          "continue planning repos"
+        ],
+        "intentPatterns": [
+          "(multi|multiple|cross).*?(repo|codebase)",
+          "(frontend|backend).*?and.*?(frontend|backend)",
+          "plan.*?(across|multiple).*?(repo|codebase)",
+          "(prd|spec|feature).*?(multiple|several).*?(repo|codebase)",
+          "(continue|resume|next|pick up).*?multi.*?(repo|codebase)",
+          "multi.*?(repo|codebase).*?(continue|resume|next)",
+          "(continue|resume).*?planning.*?repo"
+        ]
+      }
+    },
+    "implement_plan": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Implement plan from thoughts/shared/plans with verification",
+      "promptTriggers": {
+        "keywords": [
+          "implement plan",
+          "execute plan",
+          "implement the plan",
+          "follow the plan"
+        ],
+        "intentPatterns": [
+          "(implement|execute|follow).*?plan",
+          "build.*?from.*?plan"
+        ]
+      }
+    },
+    "feature-interview": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Interview user to create comprehensive feature specification",
+      "promptTriggers": {
+        "keywords": [
+          "build me",
+          "create app",
+          "new project",
+          "new feature",
+          "add feature",
+          "feature spec",
+          "feature interview"
+        ],
+        "intentPatterns": [
+          "(build|create|make).*?(me|app|project|feature)",
+          "(new|add).*?feature",
+          "feature.*(spec|interview)"
+        ]
+      }
+    },
+    "commit": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create git commits without Claude attribution",
+      "promptTriggers": {
+        "keywords": [
+          "commit",
+          "git commit",
+          "push changes",
+          "save changes"
+        ],
+        "intentPatterns": [
+          "(commit|push).*?(changes|code)",
+          "git.*?commit"
+        ]
+      }
+    },
+    "debug": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Debug issues by investigating logs, database, git history",
+      "promptTriggers": {
+        "keywords": [
+          "debug",
+          "not working",
+          "broken",
+          "error",
+          "investigate",
+          "what's wrong"
+        ],
+        "intentPatterns": [
+          "(debug|investigate|diagnose).*?(issue|error|problem)",
+          "(not|isn't).*?working",
+          "what.*?(wrong|broken|failing)"
+        ]
+      }
+    },
+    "research-agent": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Research external documentation, best practices, library APIs",
+      "promptTriggers": {
+        "keywords": [
+          "research",
+          "best practices",
+          "how does",
+          "documentation",
+          "library docs"
+        ],
+        "intentPatterns": [
+          "(research|find|look up).*?(best practices|docs|documentation)",
+          "how.*?(does|should).*?(library|api|framework)"
+        ]
+      }
+    },
+    "add-agent-config": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Add configuration for a new AI coding agent",
+      "promptTriggers": {
+        "keywords": [
+          "add agent",
+          "new agent config",
+          "configure cursor",
+          "configure windsurf",
+          "add tool config"
+        ],
+        "intentPatterns": [
+          "(add|configure|setup).*?(agent|cursor|windsurf|cline|aider)"
+        ]
+      }
+    },
+    "skill-developer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create new Claude Code skills",
+      "promptTriggers": {
+        "keywords": [
+          "create skill",
+          "new skill",
+          "write skill",
+          "skill developer"
+        ],
+        "intentPatterns": [
+          "(create|make|write).*?skill"
+        ]
+      }
+    },
+    "find-skills": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "low",
+      "description": "Discover and install available skills",
+      "promptTriggers": {
+        "keywords": [
+          "find skill",
+          "available skills",
+          "what skills",
+          "install skill"
+        ],
+        "intentPatterns": [
+          "(find|discover|list|what).*?skill"
+        ]
+      }
+    },
+    "frontend-design": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create distinctive, production-grade frontend interfaces",
+      "promptTriggers": {
+        "keywords": [
+          "frontend",
+          "ui design",
+          "web component",
+          "landing page",
+          "dashboard",
+          "react component"
+        ],
+        "intentPatterns": [
+          "(create|build|design).*?(frontend|ui|component|page|dashboard)"
+        ]
+      }
+    },
+    "continuity_ledger": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create or update continuity ledger for state preservation across /clear",
+      "promptTriggers": {
+        "keywords": [
+          "ledger",
+          "continuity",
+          "context high",
+          "before clear",
+          "70%",
+          "80%"
+        ],
+        "intentPatterns": [
+          "(create|update).*?ledger",
+          "(before|prepare).*?clear",
+          "context.*(high|full)"
+        ]
+      }
+    },
+    "claude-to-cursor-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to Cursor - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate cursor",
+          "cursor migration",
+          "sync cursor",
+          "sync to cursor",
+          "update cursor",
+          "port to cursor",
+          "claude to cursor"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?cursor",
+          "cursor.*(migration|config|setup)",
+          "claude.*?to.*?cursor",
+          "(new|added).*(skill|rule|agent).*sync"
+        ]
+      }
+    },
+    "claude-to-codex-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to OpenAI Codex - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate codex",
+          "codex migration",
+          "sync codex",
+          "sync to codex",
+          "update codex",
+          "port to codex",
+          "claude to codex"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?codex",
+          "codex.*(migration|config|setup)",
+          "claude.*?to.*?codex"
+        ]
+      }
+    },
+    "claude-to-opencode-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to OpenCode - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate opencode",
+          "opencode migration",
+          "sync opencode",
+          "sync to opencode",
+          "claude to opencode"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?opencode",
+          "opencode.*(migration|config|setup)",
+          "claude.*?to.*?opencode"
+        ]
+      }
+    },
+    "claude-to-factory-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to Factory/Droid - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate factory",
+          "factory migration",
+          "sync factory",
+          "migrate droid",
+          "droid migration",
+          "claude to factory",
+          "claude to droid"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?(factory|droid)",
+          "(factory|droid).*(migration|config|setup)",
+          "claude.*?to.*?(factory|droid)"
+        ]
+      }
+    },
+    "claude-to-antigravity-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to Google Antigravity (.agent/) - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate antigravity",
+          "antigravity migration",
+          "sync antigravity",
+          "sync to antigravity",
+          "migrate gemini",
+          "gemini agent",
+          "claude to antigravity",
+          "claude to gemini"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?(antigravity|gemini)",
+          "(antigravity|gemini).*(migration|config|setup)",
+          "claude.*?to.*?(antigravity|gemini)"
+        ]
+      }
+    },
+    "create-jira-tickets": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create Jira tickets from feature specs and implementation plans",
+      "promptTriggers": {
+        "keywords": [
+          "jira tickets",
+          "create tickets",
+          "create jira",
+          "jira issues",
+          "plan to jira",
+          "tickets from plan"
+        ],
+        "intentPatterns": [
+          "(create|make|generate).*?jira.*?(ticket|issue)",
+          "(create|make|generate).*?ticket",
+          "(plan|spec).*?to.*?jira",
+          "jira.*?(from|based on).*?(plan|spec)"
+        ]
+      }
+    },
+    "claude-to-windsurf-migration": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Migrate Claude Code configs to Windsurf (.windsurf/) - full or incremental",
+      "promptTriggers": {
+        "keywords": [
+          "migrate windsurf",
+          "windsurf migration",
+          "sync windsurf",
+          "sync to windsurf",
+          "migrate codeium",
+          "cascade migration",
+          "claude to windsurf"
+        ],
+        "intentPatterns": [
+          "(migrate|sync|port|update).*?(windsurf|codeium|cascade)",
+          "(windsurf|codeium).*(migration|config|setup)",
+          "claude.*?to.*?(windsurf|codeium)"
+        ]
+      }
+    },
+    "create-pr": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create a well-structured GitHub PR with summary and test plan",
+      "promptTriggers": {
+        "keywords": [
+          "create pr",
+          "open pr",
+          "make pr",
+          "raise pr",
+          "submit pr",
+          "pull request",
+          "push and create pr",
+          "create pull request"
+        ],
+        "intentPatterns": [
+          "(create|open|make|raise|submit).*?(pr|pull request)",
+          "(push|send).*?(pr|pull request|for review)",
+          "ready.*?(pr|review|merge)"
+        ]
+      }
+    },
+    "club-prs": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Merge multiple PRs into a single branch with intelligent conflict resolution",
+      "promptTriggers": {
+        "keywords": [
+          "club prs",
+          "club pr",
+          "combine prs",
+          "merge prs together",
+          "combine pull requests",
+          "club pull requests"
+        ],
+        "intentPatterns": [
+          "club.*?(prs|pr|pull requests).*?\\d+",
+          "(combine|merge).*?(prs|pull requests).*?\\d+",
+          "club.*?#?\\d+.*?#?\\d+",
+          "(merge|combine).*?pr.*?#?\\d+.*?(and|,|with).*?#?\\d+"
+        ]
+      }
+    },
+    "pr-describe": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Generate PR titles and descriptions optimized for human reviewers",
+      "promptTriggers": {
+        "keywords": [
+          "pr description",
+          "pr title",
+          "describe pr",
+          "write pr description",
+          "update pr description",
+          "generate pr description",
+          "pr describe"
+        ],
+        "intentPatterns": [
+          "(describe|write|generate|update|create).*?pr.*(description|title)",
+          "pr.*(describe|description|title)",
+          "(write|generate).*?pull request"
+        ]
+      }
+    },
+    "resolve-pr-comments": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Resolve PR review comments by making code changes and replying in-thread",
+      "promptTriggers": {
+        "keywords": [
+          "resolve pr comments",
+          "address review",
+          "fix pr comments",
+          "review feedback",
+          "resolve review comments",
+          "pr review",
+          "address pr comments"
+        ],
+        "intentPatterns": [
+          "(resolve|address|fix).*?(pr|review).*?comment",
+          "(pr|review).*?(feedback|comment).*?(resolve|address|fix)",
+          "work.*?through.*?review"
+        ]
+      }
+    },
+    "sync-all-agents": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Sync skills, rules, and agents from .claude/ to all supported agent directories at once",
+      "promptTriggers": {
+        "keywords": [
+          "sync all agents",
+          "sync all",
+          "migrate all",
+          "sync to all",
+          "update all agents",
+          "sync everywhere",
+          "sync skill to all",
+          "sync rule to all"
+        ],
+        "intentPatterns": [
+          "sync.*?all.*?(agents|tools)",
+          "migrate.*?all",
+          "sync.*?(skill|rule|agent).*?all",
+          "(update|push|deploy).*?all.*?(agents|tools)",
+          "sync.*?everywhere"
+        ]
+      }
+    },
+    "mirrord-test": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Run any service with mirrord against a Kubernetes ODE environment, test API changes end-to-end",
+      "promptTriggers": {
+        "keywords": [
+          "mirrord",
+          "run with mirrord",
+          "test with mirrord",
+          "mirrord test",
+          "mirrord exec"
+        ],
+        "intentPatterns": [
+          "(run|test|start).*?mirrord",
+          "mirrord.*(test|run|start|exec)",
+          "test.*?kubernetes.*?local",
+          "test.*?ode"
+        ]
+      }
+    },
+    "vendor-booking-browser-automation": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Onboard a new vendor automation \u2014 capture HTML, generate locators/data/inventory/booking files, validate XPaths, register routing. macOS only.",
+      "promptTriggers": {
+        "keywords": [
+          "vendor locator",
+          "new vendor",
+          "onboard vendor",
+          "add vendor",
+          "new attraction",
+          "capture session",
+          "generate locators",
+          "automate vendor",
+          "selenium vendor"
+        ],
+        "intentPatterns": [
+          "(add|onboard|create|new).*?(vendor|attraction|site)",
+          "(generate|create).*?locators",
+          "vendor.*(locator|automation|onboard)",
+          "(capture|automate).*?(vendor|portal|site)"
+        ]
+      }
+    },
+    "create-component": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create production-ready Eevee design system components from Figma designs",
+      "promptTriggers": {
+        "keywords": [
+          "create component",
+          "build component",
+          "figma component",
+          "eevee component",
+          "design system component",
+          "component from figma",
+          "new component"
+        ],
+        "intentPatterns": [
+          "(create|build|make|new).*?(component|eevee)",
+          "figma.*(component|design)",
+          "design system.*?component",
+          "(create|build).*?from.*?figma"
+        ]
+      }
+    },
+    "create-agents-md": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Generate AGENTS.md, CLAUDE.md, and .claude/rules/ files for any repository",
+      "promptTriggers": {
+        "keywords": [
+          "create agents.md",
+          "setup claude.md",
+          "configure agent files",
+          "onboard repo",
+          "agents md",
+          "create claude.md"
+        ],
+        "intentPatterns": [
+          "(create|setup|generate).*?(agents?.md|claude.md)",
+          "(configure|setup).*?agent.*?files",
+          "onboard.*?(repo|codebase).*?agent"
+        ]
+      }
+    },
+    "jira-workflow": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Create Jira tickets and matching git branches from task descriptions, or work with existing tickets",
+      "promptTriggers": {
+        "keywords": [
+          "jira ticket",
+          "create ticket",
+          "new task",
+          "start working on",
+          "set up branch",
+          "jira workflow"
+        ],
+        "intentPatterns": [
+          "(create|make|new).*?(ticket|task|issue)",
+          "(start|begin).*?work.*?on",
+          "[A-Z]+-\\d+",
+          "(set up|create).*?branch.*?(for|from)",
+          "jira.*?(ticket|workflow|issue)"
+        ]
+      }
+    },
+    "grafana-monitoring": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Generate Prometheus metrics, Grafana dashboards, and alert rules from PR changes",
+      "promptTriggers": {
+        "keywords": [
+          "grafana",
+          "dashboard",
+          "metrics",
+          "prometheus",
+          "alerts",
+          "monitoring",
+          "observability"
+        ],
+        "intentPatterns": [
+          "(create|generate|add).*?(dashboard|metrics|alerts|monitoring)",
+          "grafana.*(dashboard|panel|alert)",
+          "prometheus.*(metric|counter|histogram)",
+          "(monitor|observe).*?(service|endpoint|api)"
+        ]
+      }
+    },
+    "deploy-non-prod": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Deploy Headout services to test/ODE environments",
+      "promptTriggers": {
+        "keywords": [
+          "deploy",
+          "deploy to test",
+          "deploy to ode",
+          "non-prod deploy",
+          "test environment",
+          "ode deploy"
+        ],
+        "intentPatterns": [
+          "deploy.*?(test|ode|non-prod|staging)",
+          "(push|ship).*?(test|ode)",
+          "deploy.*?service"
+        ]
+      }
+    },
+    "harden-pr": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Harden an open PR with edge cases, error handling, tests, and safety checks",
+      "promptTriggers": {
+        "keywords": [
+          "harden pr",
+          "harden pull request",
+          "review pr",
+          "strengthen pr",
+          "improve pr"
+        ],
+        "intentPatterns": [
+          "harden.*?(pr|pull request)",
+          "(strengthen|improve|review).*?(pr|pull request)",
+          "(edge case|error handling|safety).*?(pr|pull request)"
+        ]
+      }
+    },
+    "investigate": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Investigate production incidents using logs, databases, and git history",
+      "promptTriggers": {
+        "keywords": [
+          "investigate",
+          "incident",
+          "production issue",
+          "outage",
+          "what happened",
+          "root cause"
+        ],
+        "intentPatterns": [
+          "investigate.*?(incident|issue|outage|problem)",
+          "(production|prod).*?(issue|incident|bug|error)",
+          "(root cause|postmortem|what happened)"
+        ]
+      }
+    },
+    "swift-code-fixer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Fix common AI-generated Swift/SwiftUI anti-patterns",
+      "promptTriggers": {
+        "keywords": [
+          "swift fix",
+          "swiftui fix",
+          "swift anti-pattern",
+          "fix swift code",
+          "swift code fixer"
+        ],
+        "intentPatterns": [
+          "(fix|correct).*?(swift|swiftui).*?(code|pattern|issue)",
+          "swift.*(anti-pattern|mistake|error)"
+        ]
+      }
+    },
+    "update-pr-stack": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Update PR descriptions for stacked PR workflows",
+      "promptTriggers": {
+        "keywords": [
+          "pr stack",
+          "stacked pr",
+          "update pr stack",
+          "pr chain",
+          "dependent prs"
+        ],
+        "intentPatterns": [
+          "(update|refresh).*?pr.*?stack",
+          "stacked.*?(pr|pull request)",
+          "pr.*?(chain|dependency|stack)"
+        ]
+      }
+    },
+    "gtm-launch": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "low",
+      "description": "Generate B2B SaaS GTM launch playbook",
+      "promptTriggers": {
+        "keywords": [
+          "gtm",
+          "go to market",
+          "launch plan",
+          "gtm launch",
+          "product launch"
+        ],
+        "intentPatterns": [
+          "(gtm|go to market).*?(plan|launch|strategy)",
+          "(product|feature).*?launch.*?plan"
+        ]
+      }
+    },
+    "qa": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "QA testing skills for API, UI, visual design, and app testing",
+      "promptTriggers": {
+        "keywords": [
+          "qa",
+          "quality assurance",
+          "test plan",
+          "test cases",
+          "qa testing",
+          "crest test",
+          "visual qa"
+        ],
+        "intentPatterns": [
+          "(qa|test).*?(plan|case|suite|run)",
+          "(quality|visual).*?(assurance|test|check)",
+          "crest.*(test|api)"
+        ]
+      }
+    }
+  },
+  "agents": {
+    "debug-agent": {
+      "type": "agent",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Investigate issues using codebase exploration and logs",
+      "promptTriggers": {
+        "keywords": [
+          "debug",
+          "investigate issue",
+          "find bug",
+          "trace error"
+        ],
+        "intentPatterns": [
+          "(debug|investigate|trace).*?(issue|bug|error)"
+        ]
+      }
+    },
+    "research-agent": {
+      "type": "agent",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Research external docs and best practices",
+      "promptTriggers": {
+        "keywords": [
+          "research",
+          "best practices",
+          "external docs"
+        ],
+        "intentPatterns": [
+          "research.*?(docs|practices|patterns)"
+        ]
+      }
+    }
+  }
+}

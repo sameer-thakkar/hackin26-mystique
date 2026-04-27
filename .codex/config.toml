@@ -1,0 +1,16 @@
+# Codex Configuration
+# See: https://developers.openai.com/codex/config-reference
+
+# Model settings
+# model = "o4-mini"
+# model_provider = "openai"
+
+# Approval & Sandbox
+# approval_policy = "untrusted"
+# sandbox_mode = "workspace-write"
+
+# MCP Servers
+# [mcp_servers.github]
+# command = "npx"
+# args = ["-y", "@modelcontextprotocol/server-github"]
+# env = { GITHUB_TOKEN = "${GITHUB_TOKEN}" }
