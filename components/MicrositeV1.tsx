@@ -71,6 +71,7 @@ import {
   CRUISE_CATEGORY_ID,
   CRUISE_FORMAT_SUBCAT_IDS,
   CRUISES_REVAMP_UIDS,
+  DEFAULT_PC_LIMIT,
   DT_LISTICLE_EXPERIMENT_UIDS,
   DUBAI_DESERT_SAFARI,
   EMAIL_SUBCRIPTION,
@@ -456,6 +457,7 @@ const MicrositeV1 = (props: any) => {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
   } = categoryTourListData || {};
+  const productCardsLimit = productCardData?.limit || DEFAULT_PC_LIMIT;
 
   const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -983,6 +985,7 @@ const MicrositeV1 = (props: any) => {
       showSightsCoveredItineraryLayout={showSightsCoveredItineraryLayout}
       showBoosters={showBoosters}
       isPOIFiltersEnabled={isPOIFiltersEnabled}
+      productCardsLimit={productCardsLimit}
       botReviewsByTGID={botReviewsByTGID}
       showLastMinFilters={showLastMinFilters}
       activePOIFilter={activePOIFilter}
