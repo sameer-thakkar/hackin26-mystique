@@ -335,7 +335,10 @@ export const createBookingURL = ({
     process.env.APP_ENV !== 'production'
   ) {
     finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.zapdos.dev-headout.com`;
-  } else if (process.env.APP_ENV !== 'production' && process.env.NEXT_PUBLIC_BOOKING_BASE_HOST) {
+  } else if (
+    process.env.APP_ENV !== 'production' &&
+    process.env.NEXT_PUBLIC_BOOKING_BASE_HOST
+  ) {
     finalHost = process.env.NEXT_PUBLIC_BOOKING_BASE_HOST;
   }
 

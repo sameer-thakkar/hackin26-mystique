@@ -446,8 +446,21 @@ export const fetchTourGroupMedia = async ({
   resourceType,
 }: TourListMediaProps) => {
   try {
+    const uniqueTgids = [
+      ...new Set((tgids || [])?.filter(Boolean).map(String)),
+    ];
+    if (!uniqueTgids.length) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchTourGroupMedia] tgids is required - ${tgids?.join(
+          ','
+        )}`,
+      });
+      return {};
+    }
+
     const params = {
-      'resource-entity-ids': tgids?.join(','),
+      'resource-entity-ids': uniqueTgids.join(','),
       'resource-type': resourceType,
     };
     const apiUrl = getHeadoutApiUrl({
@@ -455,12 +468,6 @@ export const fetchTourGroupMedia = async ({
       params,
       id: null,
     });
-    if (!tgids.join(',')) {
-      sendLog({
-        level: LOG_LEVELS.ERROR,
-        message: `[fetchTourGroupMedia] tgids is required - ${tgids.join(',')}`,
-      });
-    }
 
     const headers = constructHeaders({ cookies });
 
@@ -768,6 +775,14 @@ export const fetchReviewMedias = async ({
   cookies = {},
 }: TFetchReviewMediasTypes) => {
   try {
+    if (!tgid) {
+      sendLog({
+        level: LOG_LEVELS.ERROR,
+        message: `[fetchReviewMedias] tgid is required - ${tgid}`,
+      });
+      return {} as TReviewMediasResponse;
+    }
+
     const params = {
       ...(language && {
         language,
@@ -806,6 +821,14 @@ export const fetchTourGroupV6 = async ({
   currency,
   cookies,
 }: TourGroupProps) => {
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupV6] tgid is required - ${tgid}`,
+    });
+    return {};
+  }
+
   const params = {
     ...(language && { language }),
     ...(currency && { currency }),
@@ -818,12 +841,6 @@ export const fetchTourGroupV6 = async ({
     params,
     id: tgid,
   });
-  if (!tgid) {
-    sendLog({
-      level: LOG_LEVELS.ERROR,
-      message: `[fetchTourGroupV6] tgid is required - ${tgid}`,
-    });
-  }
 
   const res = await fetch(apiUrl, { headers });
   return await res.json();
@@ -964,6 +981,14 @@ export const fetchTourGroupsByCategory = async ({
   cookies,
   primarySubCategoryID,
 }: fetchTourGroupsByCategoryProps) => {
+  if (!categoryId) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupsByCategory] categoryId is required - ${categoryId}`,
+    });
+    return {};
+  }
+
   const params = {
     language,
     'use-seatmap-prices': '1',
@@ -1110,6 +1135,14 @@ export const fetchCollectionTop = async ({
   useSeatmapPrices = '1',
   cookies = {},
 }: FetchCollectionTopProps) => {
+  if (!city) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCollectionTop] city is required - ${city}`,
+    });
+    return {};
+  }
+
   const params = {
     ...(city && { city }),
     ...(categoryId && { categoryId: categoryId.toString() }),
@@ -1210,6 +1243,14 @@ export const fetchTourGroupReviewsV6 = async ({
   language?: string;
   hostname?: string;
 }) => {
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupReviewsV6] -  tgid is required - ${tgid}`,
+    });
+    return {};
+  }
+
   const params = {
     language,
     ...(limit && {
@@ -1235,13 +1276,6 @@ export const fetchTourGroupReviewsV6 = async ({
     params,
     hostname,
   });
-
-  if (!tgid) {
-    sendLog({
-      level: LOG_LEVELS.ERROR,
-      message: `[fetchTourGroupReviewsV6] -  tgid is required - ${tgid}`,
-    });
-  }
 
   try {
     const res = await fetch(url);
@@ -1273,6 +1307,14 @@ export const fetchTourGroupReviews = async ({
   cookies?: { [_key: string]: any };
   language?: string;
 }) => {
+  if (!tgid) {
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupReviews] -  tgid is required - ${tgid}`,
+    });
+    return {};
+  }
+
   const params = {
     language,
     ...(limit && {
@@ -1297,12 +1339,6 @@ export const fetchTourGroupReviews = async ({
     hostname,
     params,
   });
-  if (!tgid) {
-    sendLog({
-      level: LOG_LEVELS.ERROR,
-      message: `[fetchTourGroupReviews] -  tgid is required - ${tgid}`,
-    });
-  }
 
   try {
     const headers = constructHeaders({ cookies });

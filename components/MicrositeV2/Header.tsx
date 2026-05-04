@@ -522,8 +522,12 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderProps>> = ({
   isEntertainmentBanner = false,
   isNewsPage = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, uid: mbUid } =
-    useContext(MBContext);
+  const {
+    lang,
+    nakedDomain,
+    redirectToHeadoutBookingFlow,
+    uid: mbUid,
+  } = useContext(MBContext);
   const { isMobile, isPillBarSticky } = useRecoilValue(appAtom);
 
   const resultSectionRef = useRef<HTMLDivElement>(null);

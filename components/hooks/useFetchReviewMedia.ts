@@ -23,6 +23,8 @@ export type TReviewMediaList = Array<
  * @param limit number of items to fetch
  */
 const useFetchReviewMedia = (tgid: string | number, limit = 8) => {
+  const normalizedTgid = tgid?.toString().trim();
+  const hasTgid = Boolean(normalizedTgid);
   const [offset, setOffset] = useState(0);
   const [total, setTotal] = useState(10000);
   const [shouldFetch, setShouldFetch] = useState(true);
@@ -37,10 +39,10 @@ const useFetchReviewMedia = (tgid: string | number, limit = 8) => {
     total?: number | null;
     nextOffset?: number | null;
   }>(
-    shouldFetch
+    shouldFetch && hasTgid
       ? getHeadoutApiUrl({
           endpoint: HeadoutEndpoints.TourGroupReviewMedias,
-          id: tgid,
+          id: normalizedTgid,
           params: { offset: String(offset), limit: String(limit) },
         })
       : null,
@@ -63,6 +65,11 @@ const useFetchReviewMedia = (tgid: string | number, limit = 8) => {
   };
 
   useEffect(() => {
+    if (!hasTgid) {
+      if (shouldFetch) setShouldFetch(false);
+      return;
+    }
+
     if (
       !shouldFetch ||
       offset === null ||
@@ -141,7 +148,7 @@ const useFetchReviewMedia = (tgid: string | number, limit = 8) => {
 
   return {
     reviewMedias: reviewMedias,
-    canFetch: offset < total,
+    canFetch: hasTgid && offset < total,
     fetchNext,
     getAssociatedReview,
     getReviewMediaGlobalLocation,
