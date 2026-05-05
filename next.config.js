@@ -52,7 +52,7 @@ const externalRewrites = [
         value: 'www.london-theater-tickets.com',
       },
     ],
-    destination: 'https://authentic-photos-977977.framer.app/:path*',
+    destination: 'https://ltt-groups.framer.website/:path*',
   },
 ];
 
