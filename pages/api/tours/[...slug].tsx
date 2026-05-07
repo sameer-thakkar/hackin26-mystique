@@ -1,29 +1,19 @@
 import { NextApiHandler } from 'next';
 import Cookies from 'cookies';
-import TurndownService from 'turndown';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { sendLog } from 'utils/logger';
+import {
+  createSafeTourTransformer,
+  safeMarkdownToRichtext,
+} from 'utils/tourGroups/richText';
 import { COOKIE, CUSTOM_HEADER, UK_COUNTRY_CODE } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
-const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
-
-const turndownService = new TurndownService();
-
-const getRichTextFromHtmlContent = (properties: string) => {
-  if (!properties) return '';
-
-  const markedProperties = turndownService.turndown(properties);
-  return markdownToRichtext(markedProperties)?.map((inclusion: THighlight) => ({
-    ...inclusion,
-    ...inclusion.content,
-  }));
-};
+const BLACKLIST_QUERY_PARAMS = new Set(['slug', 'useTest', 'newCDN']);
 
 const ToursAPI: NextApiHandler = async (req, res) => {
   const { useTest: useTestOverride, newCDN } = req?.query;
   const cookies = new Cookies(req, res);
-  const blackListQueryParams = ['slug', 'useTest', 'newCDN'];
   const headers = new Headers();
   const useTest =
     useTestOverride ||
@@ -55,7 +45,7 @@ const ToursAPI: NextApiHandler = async (req, res) => {
   });
 
   Object.entries(req.query ?? {}).forEach(([key, value]) => {
-    if (!blackListQueryParams.includes(key))
+    if (!BLACKLIST_QUERY_PARAMS.has(key))
       queryParamsObj.set(key, value as string);
   });
 
@@ -77,110 +67,77 @@ const ToursAPI: NextApiHandler = async (req, res) => {
     queryParamsString ? `?${queryParamsString}` : ''
   }`;
 
-  await fetch(url, { headers })
-    .then((apiResponse) => {
-      if (!apiResponse.ok) {
-        sendLog({
-          level: LOG_LEVELS.INFO,
-          message: {
-            host: req.headers.host,
-            url,
-            message: 'Proxy API Error',
-            statusCode: apiResponse.status,
+  try {
+    const apiResponse = await fetch(url, { headers });
+
+    if (!apiResponse.ok) {
+      sendLog({
+        level: LOG_LEVELS.INFO,
+        message: JSON.stringify({
+          host: req.headers.host,
+          url,
+          message: 'Proxy API Error',
+          statusCode: apiResponse.status,
+        }),
+      });
+      return res
+        .status(apiResponse.status)
+        .json({ message: 'Proxy API Error' });
+    }
+
+    const data = await apiResponse.json();
+    const transformTour = createSafeTourTransformer();
+
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.headout.com');
+    res.setHeader('Content-type', 'application/json');
+
+    if (data?.tourGroups?.length) {
+      data.tourGroups = data.tourGroups.map(transformTour);
+    }
+
+    if (data?.products?.length) {
+      data.products = data.products.map(transformTour);
+    }
+
+    if (data?.microBrandsHighlight) {
+      data.microBrandsHighlight = safeMarkdownToRichtext({
+        value: data?.microBrandsHighlight || '',
+        context: 'response field=microBrandsHighlight',
+      });
+    }
+
+    if (data?.pageData?.items?.length) {
+      data.pageData.items = data.pageData.items.map(transformTour);
+    }
+
+    if (data?.sections?.length) {
+      data.sections = data.sections.map((section: any) => {
+        const { type, tourGroups } = section || {};
+        return {
+          type,
+          tourGroups: {
+            ...tourGroups,
+            items: tourGroups?.items?.map(transformTour),
           },
-        });
-        res.status(apiResponse.status);
-        throw new Error('Proxy API Error');
-      }
+        };
+      });
+    }
 
-      return apiResponse;
-    })
-    .then((r) => r.json())
-    .then((r) => {
-      let data = r;
-      res.setHeader('Access-Control-Allow-Origin', 'https://www.headout.com');
-      res.setHeader('Content-type', 'application/json');
-      if (data?.tourGroups?.length) {
-        data.tourGroups = data.tourGroups.map((tour: any) => ({
-          ...tour,
-
-          microBrandsHighlight: markdownToRichtext(
-            tour.microBrandsHighlight || ''
-          )?.map((highlight: any) => ({
-            ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
-        }));
-      }
-      if (data?.products?.length) {
-        data.products = data.products.map((tour: any) => ({
-          ...tour,
-
-          microBrandsHighlight: markdownToRichtext(
-            tour.microBrandsHighlight || ''
-          )?.map((highlight: any) => ({
-            ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
-        }));
-      }
-      if (data?.microBrandsHighlight) {
-        data.microBrandsHighlight = markdownToRichtext(
-          data?.microBrandsHighlight || ''
-        );
-      }
-      if (data?.pageData?.items?.length) {
-        data.pageData.items = data?.pageData?.items.map((tour: any) => ({
-          ...tour,
-
-          microBrandsHighlight: markdownToRichtext(
-            tour.microBrandsHighlight || ''
-          )?.map((highlight: any) => ({
-            ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
-        }));
-      }
-      if (data?.sections?.length) {
-        data.sections = data?.sections?.map((section: any) => {
-          const { type, tourGroups } = section || {};
-          return {
-            type,
-            tourGroups: {
-              ...tourGroups,
-              items: tourGroups?.items.map((tour: any) => ({
-                ...tour,
-
-                microBrandsHighlight: markdownToRichtext(
-                  tour.microBrandsHighlight || ''
-                )?.map((highlight: any) => ({
-                  ...highlight,
-                  ...highlight.content,
-                })),
-                inclusionsRichText: getRichTextFromHtmlContent(
-                  tour.inclusions || ''
-                ),
-                exclusionsRichText: getRichTextFromHtmlContent(
-                  tour.exclusions || ''
-                ),
-              })),
-            },
-          };
-        });
-      }
-
-      res.write(JSON.stringify(data));
-      res.end();
-    })
-    .catch(() => {
-      res.end();
+    res.status(200).json(data);
+  } catch (error) {
+    sendLog({
+      err: error,
+      level: LOG_LEVELS.INFO,
+      message: JSON.stringify({
+        host: req.headers.host,
+        url,
+        message: 'Proxy API Error',
+        statusCode: 500,
+      }),
     });
+
+    return res.status(500).json({ message: 'Proxy API Error' });
+  }
 };
 
 export default ToursAPI;

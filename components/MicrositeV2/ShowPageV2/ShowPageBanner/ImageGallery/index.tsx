@@ -27,7 +27,7 @@ import SwipesheetCross from 'assets/swipesheetCross';
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
 const ImageGallery = ({
-  imageUploads,
+  imageUploads = [],
   startFrom = 0,
   onHide,
   onShow,
@@ -58,7 +58,7 @@ const ImageGallery = ({
     identifier: (item) =>
       `.image-gallery-list-${item?.globalIndex}[data-review-id="${item?.reviewId}"][data-local-index="${item?.localIndex}"]`,
     canFetch: infiniteList?.canFetch,
-    items: imageUploads.map(({ location }) => location),
+    items: imageUploads?.map(({ location }) => location),
   });
 
   const swiperParams: SwiperProps = {
@@ -131,7 +131,7 @@ const ImageGallery = ({
       } else if (
         event.key === 'ArrowRight' &&
         swiper &&
-        activeIndex < imageUploads.length - 1
+        activeIndex < imageUploads?.length - 1
       ) {
         moveNext();
       } else if (event.key === 'ArrowLeft' && swiper && activeIndex > 0) {
@@ -141,7 +141,7 @@ const ImageGallery = ({
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [popupState, swiper, activeIndex, imageUploads.length]);
+  }, [popupState, swiper, activeIndex, imageUploads?.length]);
 
   const onListImageClicked = (index: number) => {
     swiper?.slideTo(index);
@@ -245,7 +245,7 @@ const ImageGallery = ({
               role="button"
               tabIndex={0}
               className={`chevron chevron-right ${
-                (activeIndex ?? 0) >= imageUploads.length - 1 ? 'inactive' : ''
+                (activeIndex ?? 0) >= imageUploads?.length - 1 ? 'inactive' : ''
               }`}
             >
               {ChevronLeftCircle}

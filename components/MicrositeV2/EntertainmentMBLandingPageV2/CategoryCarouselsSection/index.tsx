@@ -40,18 +40,18 @@ export const CategoryCarouselSwiper = ({
 }: TCategoryCarouselSwiperProps) => {
   const { uid } = useContext(MBContext);
 
+  const categoryPopularity = category.ranking?.popularity ?? [];
   let sliderList = isMobile
-    ? category.ranking.popularity.slice(0, 10)
-    : category.ranking.popularity;
+    ? categoryPopularity.slice(0, 10)
+    : [...categoryPopularity];
 
   //temporary fix for hardcoded product, will be reverted
-  if (
-    TEMP_HARDCODED_PRODUCT.has(uid) &&
-    category.id === TEMP_HARDCODED_PRODUCT.get(uid)?.SUBCAT_ID
-  ) {
-    const hardcodedTgid = TEMP_HARDCODED_PRODUCT.get(uid)?.TGID;
-    sliderList = sliderList.filter((tgid: number) => tgid !== hardcodedTgid);
-    sliderList.unshift(hardcodedTgid);
+  const hardcodedProduct = TEMP_HARDCODED_PRODUCT.get(uid);
+  if (hardcodedProduct?.TGID && category.id === hardcodedProduct.SUBCAT_ID) {
+    sliderList = sliderList.filter(
+      (tgid: number) => tgid !== hardcodedProduct.TGID
+    );
+    sliderList.unshift(hardcodedProduct.TGID);
   }
 
   sliderList = Array.from(new Set(sliderList));

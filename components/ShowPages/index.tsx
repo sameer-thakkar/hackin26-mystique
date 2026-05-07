@@ -599,8 +599,11 @@ const ShowPage = (props: any) => {
               contentArr={tabSchemaHighlight}
             />
           )}
-          <Conditional if={imageUploads.length >= 5}>
-            <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
+          <Conditional if={imageUploads?.length >= 5}>
+            <Gallery
+              galleryArray={imageUploads?.slice(2)}
+              isMobile={isMobile}
+            />
           </Conditional>
           <SubHeading content={tabSectionHeading} />
           <AboutTheatreSectionWrapper>

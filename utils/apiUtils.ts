@@ -474,9 +474,9 @@ export const fetchTourGroupMedia = async ({
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchTourGroupMedia]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupMedia] - ${tgids}`,
       err: error,
     });
   }
@@ -504,9 +504,9 @@ export const fetchExperienceItineraries = async ({
 
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchExperienceItineraries]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchExperienceItineraries] - ${tgids}`,
       err: error,
     });
   }
@@ -534,9 +534,9 @@ export const fetchCollectionReviews = async ({
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchCollectionReviews]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCollectionReviews] - ${collectionId}`,
       err: error,
     });
   }
@@ -569,9 +569,9 @@ export const fetchCategoryReviews = async ({
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchCategoryReviews]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCategoryReviews] - ${categoryId}`,
       err: error,
     });
   }
@@ -604,9 +604,9 @@ export const fetchSubCategoryReviews = async ({
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchSubCategoryReviews]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchSubCategoryReviews] - ${subCategoryId}`,
       err: error,
     });
   }
@@ -905,14 +905,18 @@ export const fetchProductData = async ({
       level: LOG_LEVELS.ERROR,
       message: `[fetchProductData] id is required - ${id}`,
     });
+    return {};
   }
   try {
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
-    const response = await fetch(url, headers);
+    const response = await fetch(url, { headers });
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchProductData] - ${id}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -964,8 +968,11 @@ export const fetchTourGroupsByCollection = async ({
     const response = await fetch(url, { headers });
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchTourGroupsByCollectionV1]', error);
+    sendLog({
+      err: error,
+      message: `[fetchTourGroupsByCollectionV1] - ${collectionId}`,
+    });
+    return {};
   }
 };
 
@@ -1020,8 +1027,14 @@ export const fetchTourGroupsByCategory = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchTGIDsByCategoryV2Obj]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupsByCategory] ${
+        isSubCategory ? 'subCategory' : 'category'
+      } - ${categoryId}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1072,8 +1085,12 @@ export const fetchCollection = async ({
     });
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchCollection]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCollection] - ${collectionId}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1345,8 +1362,12 @@ export const fetchTourGroupReviews = async ({
     const res = await fetch(url, { headers });
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchTourGroupReviews]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupReviews] - ${tgid}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1403,8 +1424,12 @@ export const fetchInventory = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchInventory]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchInventory] - ${tgid}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1464,8 +1489,12 @@ export const fetchInventoryV7 = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchInventory]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchInventoryV7] - ${tgid}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1529,8 +1558,12 @@ export const fetchBulkInventories = async ({
 
     return inventory;
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchInventory]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchBulkInventories] - ${tgids}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1568,8 +1601,12 @@ export const fetchTourGroupSlots = async ({
 
     return simplifySlotData(data);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchTourGroupSlots]', error);
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchTourGroupSlots] - ${tgid}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1618,9 +1655,12 @@ export const fetchCalendarInventory = async ({
 
     return { sortedInventoryDates, metaData, dates };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('[fetchCalendarInventory]', error);
-    throw error;
+    sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCalendarInventory] - ${tgid}`,
+      err: error,
+    });
+    return {};
   }
 };
 
@@ -1973,11 +2013,12 @@ export const fetchCityInfo = async ({
     const res = await fetch(cityInfoEndpoint);
     return await res.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchCityInfo]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchCityInfo] - ${cityCode}`,
       err: error,
     });
+    return {};
   }
 };
 
@@ -2005,9 +2046,9 @@ export const fetchRatings = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchRatings]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchRatings] - ${uid}`,
       err: error,
     });
     return null;
@@ -2048,9 +2089,9 @@ export const fetchPinnedReviewsByTgid = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchPinnedReviewsByTgid]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchPinnedReviewsByTgid] - ${tgid}`,
       err: error,
     });
     return null;
@@ -2091,9 +2132,9 @@ export const fetchPinnedReviewsByTgidList = async ({
 
     return await response.json();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchPinnedReviewsByTgidList]', error);
     sendLog({
+      level: LOG_LEVELS.ERROR,
+      message: `[fetchPinnedReviewsByTgidList] - ${tgids}`,
       err: error,
     });
     return null;

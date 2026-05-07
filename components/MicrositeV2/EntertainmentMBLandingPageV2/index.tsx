@@ -52,17 +52,20 @@ const EntertainmentMBLandingPageV2 = ({
         category.id !== collectionId && category.ranking?.popularity?.length
     ) ?? [];
 
-  const topShowsTgids = categoryProps.categories.find(
-    (category: any) => category.id === collectionId
-  )?.ranking?.popularity;
+  const topShowsTgids = [
+    ...(categoryProps.categories.find(
+      (category: any) => category.id === collectionId
+    )?.ranking?.popularity ?? []),
+  ];
 
   if (directTgid) {
     topShowsTgids.unshift(directTgid);
   }
 
   //temporary fix for hardcoded product, will be reverted
-  if (TEMP_HARDCODED_PRODUCT.has(uid)) {
-    topShowsTgids.unshift(TEMP_HARDCODED_PRODUCT.get(uid)?.TGID);
+  const hardcodedProductTgid = TEMP_HARDCODED_PRODUCT.get(uid)?.TGID;
+  if (hardcodedProductTgid) {
+    topShowsTgids.unshift(hardcodedProductTgid);
   }
 
   const duplicateTgids: Record<number, boolean> = {};
