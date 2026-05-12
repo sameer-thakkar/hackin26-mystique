@@ -226,15 +226,19 @@ export const getOrderedMonthsBasedOnCurrentMonth = (
   const today = dayjs().locale(locale);
   const nextYear = today.add(1, 'year');
   const monthsList = [];
+  const shortMonthFormatter = new Intl.DateTimeFormat(locale, {
+    month: 'short',
+  });
 
   let currentMonth = today;
   while (
     currentMonth.isBefore(nextYear.subtract(1, 'month'), 'month') ||
     currentMonth.isSame(nextYear.subtract(1, 'month'), 'month')
   ) {
+    const asDate = currentMonth.toDate();
     monthsList.push({
-      long_format_month: currentMonth.format('MMMM'),
-      short_format_month: currentMonth.format('MMM'),
+      long_format_month: currentMonth.locale('en').format('MMMM'),
+      short_format_month: shortMonthFormatter.format(asDate),
       year: currentMonth.format('YYYY'),
     });
     currentMonth = currentMonth.add(1, 'month');

@@ -110,7 +110,7 @@ const CalendarUnit: React.FC<React.PropsWithChildren<TCalendarUnitProps>> = ({
               return null;
             }
 
-            const month = monthDetails.title.toUpperCase();
+            const month = short_format_month.toUpperCase();
             const hrefAttribute =
               long_format_month !== displayMonth
                 ? { href: getHref(long_format_month) }
