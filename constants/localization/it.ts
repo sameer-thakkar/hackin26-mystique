@@ -551,7 +551,7 @@ const it: TDictionary = {
     HIGHLIGHTS: 'Punti salienti',
     LISTICLE_SHOW_SUMMARY: 'Listicle Riassunto dello spettacolo',
     LISTICLE_SHOW_WHY_WATCH: 'Listicle Perché vale la pena vedere questo show',
-    OPENING_DATE: 'Data di apertura D-',
+    OPENING_DATE: 'Data di apertura',
     QUESTION: ['D-'],
     SAFETY_BANNER: 'Banner di sicurezza',
     SHOW_DETAILS: 'Dettagli dello spettacolo',
