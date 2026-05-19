@@ -54,6 +54,8 @@ export const CategoryCarouselSwiper = ({
     sliderList.unshift(hardcodedProduct.TGID);
   }
 
+  sliderList = sliderList.filter((tgid: number) => !allTours[tgid]?.combo);
+
   sliderList = Array.from(new Set(sliderList));
 
   const [activeSlideIdx, setActiveSlideIdx] = useState<number>(0);
