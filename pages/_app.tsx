@@ -14,6 +14,7 @@ import {
   checkIfHarryPotterPage,
   containsPOIAndSeatmap,
   getAnalyticsPageType,
+  isSubCategoryMB,
 } from 'utils';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { dynamicPolyfillIntlLocale } from 'utils/currency';
@@ -157,7 +158,6 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
       categoryTourListData,
-      catAndSubCatPageData,
       isCatOrSubCatPage,
       cityPageParams,
       isBot,
@@ -174,7 +174,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     const { baseLangCategorisationMetadata } = CMSContent?.data ?? {};
     const { isCityPageMB } = cityPageParams || {};
     const isHOHO = refs?.productCardData?.template === TEMPLATES.HOHO;
-    const { isSubCategoryPage } = catAndSubCatPageData || {};
+    const isSubCategoryPage = isSubCategoryMB(CMSContent?.data?.baseLangCategorisationMetadata?.tagged_mb_type);
 
     let primaryCollectionId;
 

@@ -1112,7 +1112,7 @@ export const getAnalyticsPageType = ({
       return PAGE_TYPES.AIRPORT_TRANSFERS;
     case isCatOrSubCatPage && !isSubCategoryPage:
       return PAGE_TYPES.CATEGORY_PAGE;
-    case isCatOrSubCatPage && isSubCategoryPage:
+    case isSubCategoryPage:
       return PAGE_TYPES.SUB_CATEGORY_PAGE;
     default:
       return defaultType;
