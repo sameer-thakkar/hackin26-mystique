@@ -77,11 +77,7 @@ import {
   labeledPromiseAllSettled,
 } from 'utils/promiseUtils';
 import { setShortTTL } from 'utils/serverUtils';
-import {
-  getEncodedUrlSlugs,
-  getLangUID,
-  getValidUrlParams,
-} from 'utils/urlUtils';
+import { getEncodedUrlSlugs, getLangUID } from 'utils/urlUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 import {
   CATEGORY_IDS,
@@ -104,6 +100,34 @@ import { TPrismicTrustBooster } from './interface';
 import { getReviewsPageData } from './reviewsPage';
 import { getVenuePageData } from './venuePage';
 import { fetchPrismicDocument } from '.';
+
+const appendMissingQueryParams = (url: string, query: Record<string, any>) => {
+  const hashIndex = url.indexOf('#');
+  const urlWithoutHash = hashIndex >= 0 ? url.slice(0, hashIndex) : url;
+  const hash = hashIndex >= 0 ? url.slice(hashIndex) : '';
+  const queryIndex = urlWithoutHash.indexOf('?');
+  const baseUrl =
+    queryIndex >= 0 ? urlWithoutHash.slice(0, queryIndex) : urlWithoutHash;
+  const currentSearch =
+    queryIndex >= 0 ? urlWithoutHash.slice(queryIndex + 1) : '';
+  const searchParams = new URLSearchParams(currentSearch);
+
+  Object.entries(query)
+    .filter(([key, value]) => key !== 'slug' && value != null)
+    .forEach(([key, value]) => {
+      if (searchParams.has(key)) return;
+
+      if (Array.isArray(value)) {
+        value.forEach((item) => searchParams.append(key, String(item)));
+      } else {
+        searchParams.set(key, String(value));
+      }
+    });
+
+  const updatedSearch = searchParams.toString();
+
+  return `${baseUrl}${updatedSearch ? `?${updatedSearch}` : ''}${hash}`;
+};
 
 function getQueryparams(req: NextApiRequest) {
   try {
@@ -185,10 +209,7 @@ export const getPageData = async ({
 
     if (redirectInfo) {
       const { url, type } = redirectInfo;
-      const queryParamsString = getValidUrlParams(query);
-      const urlWithParams = `${url}${
-        queryParamsString ? `?${queryParamsString}` : ''
-      }`;
+      const urlWithParams = appendMissingQueryParams(url, query);
 
       return {
         redirectInfo: {
