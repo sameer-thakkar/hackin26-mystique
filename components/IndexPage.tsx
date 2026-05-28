@@ -622,7 +622,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
     : window?.outerWidth < 768;
 
-  // Checking if mystique is running in dev or is a preview
   const isDev = req
     ? !!query.mystique_uid
     : window.location.search.includes('mystique_uid');
