@@ -324,7 +324,7 @@ export const HomePage = (props: any) => {
     isEntertainmentMbListicle &&
     !!displayMonths &&
     heroSectionSlice[0]?.items?.[0]?.month_label !== null;
-  const isCategoryPage = !!primarySubCategoryId;
+  const isCategoryPage = !!primarySubCategoryId && !isEntertainmentBanner;
 
   const { isEligible: isSeatMapExpEligible, variant: SeatMapExpVariant } =
     useABTesting({
