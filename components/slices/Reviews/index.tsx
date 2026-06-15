@@ -197,7 +197,7 @@ const Reviews: React.FC<React.PropsWithChildren<ReviewsProps>> = ({
                       />
                     </ReviewerCountry>
                   </Conditional>
-                  {reviewerSubtext}
+                  <span>{reviewerSubtext}</span>
                 </ReviewerSubtext>
               </Reviewer>
               <RatingWrapper>

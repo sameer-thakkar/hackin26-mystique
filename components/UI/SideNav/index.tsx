@@ -126,7 +126,7 @@ const SideNavModal: React.FC<React.PropsWithChildren<ISideNavModalProps>> = ({
       <Conditional if={isMobile}>
         <StyledIcon className="list-icon">{ListIcon}</StyledIcon>
       </Conditional>
-      {strings.TABLE_OF_CONTENTS}
+      <span>{strings.TABLE_OF_CONTENTS}</span>
       <Conditional if={!isMobile}>
         <StyledIcon className="double-chevron">{DoubleChevron}</StyledIcon>
       </Conditional>

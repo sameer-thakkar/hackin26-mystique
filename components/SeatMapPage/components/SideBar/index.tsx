@@ -502,7 +502,8 @@ const SideBar = (props: TSideBarProps) => {
                 <Conditional if={bestDiscount > 0}>
                   <span className="discount">
                     {cashbackValue}
-                    {cashbackType === 'PERCENTAGE' && '%'} Cashback
+                    {cashbackType === 'PERCENTAGE' && <span>%</span>}
+                    <span> Cashback</span>
                   </span>
                 </Conditional>
               </div>

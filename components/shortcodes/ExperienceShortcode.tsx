@@ -147,7 +147,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
             {text}
           </a>
         ) : (
-          text
+          <span>{text}</span>
         )}
       </Conditional>
       <Conditional if={type === 'POPUP' && id}>
@@ -161,7 +161,7 @@ const ExperienceShortcode = ({ type, id, text }: TExperienceShortcode) => {
             {text}
           </span>
         ) : (
-          text
+          <span>{text}</span>
         )}
         <ExperienceDrawerPortal isPopUpOpen={isPopUpOpen} {...childProps} />
       </Conditional>

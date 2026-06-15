@@ -215,7 +215,7 @@ const ImageGallery = ({
                 <BackArrow />
               </div>
             </Conditional>
-            {title ?? strings.SHOW_PAGE_V2.ALL_PHOTOS}
+            <span>{title ?? strings.SHOW_PAGE_V2.ALL_PHOTOS}</span>
           </div>
           <Conditional if={navigation === 'cross'}>
             <div

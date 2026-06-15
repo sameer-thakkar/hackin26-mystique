@@ -273,7 +273,7 @@ const ExperienceCarousel: FunctionComponent<
                   <Conditional if={bestDiscount > 0}>
                     <span className="discount">
                       {bestDiscount}
-                      {cashbackType === 'PERCENTAGE' && '%'}
+                      {cashbackType === 'PERCENTAGE' && <span>%</span>}
                     </span>
                   </Conditional>
                 </div>
