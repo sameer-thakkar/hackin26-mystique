@@ -46,6 +46,31 @@ export const SvgMapContainer = styled.div`
     height: 100%;
     width: 100%;
   }
+
+  .flash-deal-seat {
+    stroke: #f59e0b;
+    stroke-width: 3px;
+    animation: flash-deal-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes flash-deal-pulse {
+    0%,
+    100% {
+      stroke-opacity: 1;
+    }
+    50% {
+      stroke-opacity: 0.4;
+    }
+  }
+
+  .flash-deal-label {
+    fill: #f59e0b;
+    font-size: 9px;
+    font-weight: 500;
+    text-anchor: middle;
+    pointer-events: none;
+    user-select: none;
+  }
 `;
 
 export const SVGContainer = styled.div`

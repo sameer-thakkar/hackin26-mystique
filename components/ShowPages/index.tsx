@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { ProductJsonLd } from 'next-seo';
@@ -355,6 +355,23 @@ const ShowPage = (props: any) => {
       })
   );
 
+  const seatMapRef = useRef<HTMLDivElement>(null);
+
+  const { data: sellBackData } = useSWR(
+    tgid ? ['sellBackAvailable', tgid] : null,
+    () =>
+      fetch(`/api/v1/sell-back/available?experienceId=${tgid}`).then(r =>
+        r.json()
+      ),
+    { revalidateOnFocus: false }
+  );
+
+  const hasSellBackListings = (sellBackData?.listings?.length ?? 0) > 0;
+
+  const handleScrollToSeatMap = () => {
+    seatMapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const customerReviews = useMemo(() => {
     if (!reviewsData) return [];
 
@@ -566,6 +583,8 @@ const ShowPage = (props: any) => {
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
           isProd={!isDev}
+          hasSellBackListings={hasSellBackListings}
+          onScrollToSeatMap={handleScrollToSeatMap}
         />
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner
@@ -574,7 +593,7 @@ const ShowPage = (props: any) => {
             specialOffer={specialOffer}
           />
         </Conditional>
-        <Wrapper>
+        <Wrapper ref={seatMapRef}>
           <HighlightsSectionWrapper>
             <PrismicRichText
               field={(highlightsSection as any)?.tab_content}

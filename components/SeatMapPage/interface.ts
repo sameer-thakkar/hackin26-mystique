@@ -67,6 +67,7 @@ export type TSeatMapPageParams = {
   isMobile: boolean;
   breadcrumbs: any;
   addVenueSeatsPageSectionViewedDataEvents: TAddVenueSeatsPageSectionViewedDataEvents;
+  flashDealSlots?: string[];
 };
 
 export type TTheatreSvgParams = {

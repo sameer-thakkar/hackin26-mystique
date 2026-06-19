@@ -29,4 +29,6 @@ export interface IShowPageBannerProps {
   hostname: string;
   hasSpecialOffer: boolean;
   isProd: boolean;
+  hasSellBackListings?: boolean;
+  onScrollToSeatMap?: () => void;
 }

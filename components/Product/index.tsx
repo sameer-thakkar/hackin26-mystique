@@ -128,6 +128,7 @@ import { CARD_SECTION_MARKERS, SWIPESHEET_STATES } from 'const/productCard';
 import { strings } from 'const/strings';
 import ChevronRight from 'assets/chevronRight';
 import GuidedTourLabelBackground from 'assets/guidedtourlabelbackground';
+import { FlashDealBadge } from 'components/FlashDeal/FlashDealBadge';
 import Booster from './components/Booster/Booster';
 import NewVerticalsProductCard from './components/NewVerticalsProductCard';
 import HorizontalDescriptors from './components/NewVerticalsProductCard/HorizontalDescriptors';
@@ -297,6 +298,7 @@ const Product = (props: any) => {
     fireCardClickEvent = true,
     pinnedReviews,
     disableRatingsLabel = false,
+    hasSellBackListings = false,
   } = props;
 
   const imageGalleryController = useRef<TImageGalleryController>(null);
@@ -1668,6 +1670,9 @@ const Product = (props: any) => {
                   />
                   {strings.DESCRIPTORS.GUIDED_TOUR}
                 </GuidedTourLabel>
+              </Conditional>
+              <Conditional if={hasSellBackListings && !isGuidedTour}>
+                <FlashDealBadge>Flash Deal</FlashDealBadge>
               </Conditional>
               <Conditional if={!isLoading}>
                 <MediaCarousel

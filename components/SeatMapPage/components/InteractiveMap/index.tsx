@@ -43,12 +43,16 @@ import {
   SvgMapContainer,
 } from './styles';
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const FLASH_DEAL_STYLE_ID = 'flash-deal-keyframes';
+
 const InteractiveMap = ({
   isMobile,
   theatreType,
   isFirstScroll,
   theatreShowTgid,
   addVenueSeatsPageSectionViewedDataEvents,
+  flashDealSlots = [],
 }: TInteractiveMapParams) => {
   const DEFAULT_VIEW_BOX = SEATING_MAP.viewBox[theatreType]?.(isMobile);
   const seatMapSvgs = SEATING_MAP.seatMapSvgs;
@@ -117,6 +121,70 @@ const InteractiveMap = ({
       document.body.classList.remove('scroll-lock');
     };
   }, [isDrawerOpen]);
+
+  useEffect(() => {
+    if (!flashDealSlots.length || !svgContainerRef.current) return;
+
+    const svgEl = svgContainerRef.current.querySelector('svg');
+    if (!svgEl) return;
+
+    // Inject keyframes style once
+    if (!svgEl.querySelector(`#${FLASH_DEAL_STYLE_ID}`)) {
+      const styleEl = document.createElementNS(SVG_NS, 'style');
+      styleEl.id = FLASH_DEAL_STYLE_ID;
+      styleEl.textContent = `
+        @keyframes flash-deal-pulse {
+          0%, 100% { stroke-opacity: 1; }
+          50% { stroke-opacity: 0.3; }
+        }
+        .flash-deal-section {
+          stroke: #F59E0B;
+          stroke-width: 3px;
+          animation: flash-deal-pulse 2s ease-in-out infinite;
+        }
+        .flash-deal-text {
+          fill: #F59E0B;
+          font-size: 9px;
+          font-weight: 600;
+          text-anchor: middle;
+          pointer-events: none;
+        }
+      `;
+      svgEl.prepend(styleEl);
+    }
+
+    const slotSet = new Set(flashDealSlots);
+    const injectedLabels: SVGTextElement[] = [];
+
+    svgEl.querySelectorAll<SVGGraphicsElement>('[class]').forEach((el) => {
+      const cls = (el as SVGElement & { className: SVGAnimatedString })
+        .className?.baseVal;
+      if (!cls || !slotSet.has(cls)) return;
+
+      el.classList.add('flash-deal-section');
+
+      try {
+        const bbox = el.getBBox();
+        const text = document.createElementNS(SVG_NS, 'text') as SVGTextElement;
+        text.classList.add('flash-deal-text');
+        text.setAttribute('x', String(bbox.x + bbox.width / 2));
+        text.setAttribute('y', String(bbox.y - 4));
+        text.textContent = '⚡ Flash Deal';
+        svgEl.appendChild(text);
+        injectedLabels.push(text);
+      } catch {
+        // getBBox can throw when SVG is not yet laid out — skip gracefully
+      }
+    });
+
+    return () => {
+      svgEl.querySelectorAll('.flash-deal-section').forEach((el) => {
+        el.classList.remove('flash-deal-section');
+      });
+      injectedLabels.forEach((t) => t.parentNode?.removeChild(t));
+      svgEl.querySelector(`#${FLASH_DEAL_STYLE_ID}`)?.remove();
+    };
+  }, [flashDealSlots, theatreType]);
 
   const mapMouseMoveFn = (event: MouseEvent) => {
     const targetElement = event.target as SVGElement;
@@ -196,6 +264,8 @@ const InteractiveMap = ({
   };
 
   const sectionInfo = mapHoveredSectionInfo.sectionInfo;
+  const flashDealSlotSet = new Set(flashDealSlots);
+  const hoveredSectionIsFlashDeal = flashDealSlotSet.has(mapHoveredSectionInfo.sectionId);
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
@@ -241,6 +311,8 @@ const InteractiveMap = ({
           isVisible={mapHoveredSectionInfo.isVisible}
           sectionInfo={sectionInfo}
           theatreType={theatreType}
+          isFlashDeal={hoveredSectionIsFlashDeal}
+          flashDealDiscount="20% off"
         />
       </Conditional>
 

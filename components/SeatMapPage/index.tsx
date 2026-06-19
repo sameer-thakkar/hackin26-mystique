@@ -13,6 +13,7 @@ const SeatMapPage = (props: TSeatMapPageParams) => {
     isMobile,
     breadcrumbs,
     addVenueSeatsPageSectionViewedDataEvents,
+    flashDealSlots,
   } = props;
   const { lang } = useContext(MBContext);
   const [isFirstScroll, setIsFirstScroll] = useState(false);
@@ -60,6 +61,7 @@ const SeatMapPage = (props: TSeatMapPageParams) => {
               addVenueSeatsPageSectionViewedDataEvents={
                 addVenueSeatsPageSectionViewedDataEvents
               }
+              flashDealSlots={flashDealSlots}
             />
           </div>
           <div className="seatmap-body-right">

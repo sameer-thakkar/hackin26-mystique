@@ -6,4 +6,5 @@ export type TInteractiveMapParams = {
   isFirstScroll: boolean;
   theatreShowTgid: string;
   addVenueSeatsPageSectionViewedDataEvents: TAddVenueSeatsPageSectionViewedDataEvents;
+  flashDealSlots?: string[];
 };

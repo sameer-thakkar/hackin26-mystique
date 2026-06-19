@@ -3,6 +3,9 @@ import { IconWrapper } from '../InteractiveMap/styles';
 import { TMapHoverInfoCardParams } from './interface';
 import {
   Body,
+  FlashDealBanner,
+  FlashDealMeta,
+  FlashDealTitle,
   Header,
   HeaderLeft,
   HeaderRight,
@@ -19,17 +22,33 @@ const MapHoverInfoCard = ({
   top,
   isVisible,
   theatreType,
+  isFlashDeal = false,
+  flashDealDiscount = '20% off',
+  flashDealSeatsLeft,
 }: TMapHoverInfoCardParams) => {
+  const metaLabel = flashDealSeatsLeft != null
+    ? `${flashDealSeatsLeft} seat${flashDealSeatsLeft !== 1 ? 's' : ''} left · ${flashDealDiscount}`
+    : flashDealDiscount;
+
   return (
     <MapSectionInfoCardContainer left={left} top={top} isVisible={isVisible}>
       <MapSectionInfoCard>
-        <Header>
-          <HeaderLeft>
+        {isFlashDeal && (
+          <FlashDealBanner>
+            <FlashDealTitle>⚡ Flash Deal</FlashDealTitle>
+            <FlashDealMeta>{metaLabel}</FlashDealMeta>
+          </FlashDealBanner>
+        )}
+
+        <Header style={isFlashDeal ? { borderRadius: 0 } : undefined}>
+          <HeaderLeft style={isFlashDeal ? { borderTopLeftRadius: 0 } : undefined}>
             {theatreType !== THEATRE_TYPES.ABBA_ARENA
               ? `${sectionInfo?.theatreSectionLabel}`
               : `${sectionInfo?.blockName} - ${sectionInfo?.theatreSectionLabel}`}
           </HeaderLeft>
-          <HeaderRight>{sectionInfo?.rows}</HeaderRight>
+          <HeaderRight style={isFlashDeal ? { borderTopRightRadius: 0 } : undefined}>
+            {sectionInfo?.rows}
+          </HeaderRight>
         </Header>
 
         <Body>

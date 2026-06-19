@@ -6,4 +6,7 @@ export type TMapHoverInfoCardParams = {
   top: number;
   isVisible: boolean;
   theatreType: string;
+  isFlashDeal?: boolean;
+  flashDealDiscount?: string;
+  flashDealSeatsLeft?: number;
 };

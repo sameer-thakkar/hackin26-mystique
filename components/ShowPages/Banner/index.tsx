@@ -48,6 +48,7 @@ import { strings } from 'const/strings';
 import Location from 'assets/location';
 import PlayCircle from 'assets/playCircle';
 import Star from 'assets/star';
+import SellBackBanner from 'components/FlashDeal/SellBackBanner';
 
 const ShowPageBanner = ({
   detailsObjects,
@@ -60,6 +61,8 @@ const ShowPageBanner = ({
   hostname,
   hasSpecialOffer,
   isProd,
+  hasSellBackListings = false,
+  onScrollToSeatMap,
 }: IShowPageBannerProps) => {
   const {
     listingPrice,
@@ -444,6 +447,14 @@ const ShowPageBanner = ({
                   />
                 </div>
               </Conditional>
+              {!listingPrice && hasSellBackListings && (
+                <SellBackBanner
+                  title="Flash Deals available for tonight's show"
+                  subtitle="Verified seats at 20% off · Limited availability"
+                  ctaLabel="See Flash Deals"
+                  onCta={() => onScrollToSeatMap?.()}
+                />
+              )}
               <div className="buy-button-wrapper">
                 <Button
                   tabIndex={0}

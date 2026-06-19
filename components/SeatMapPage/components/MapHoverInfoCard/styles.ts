@@ -104,3 +104,28 @@ export const HR = styled.hr`
   height: 1px;
   background: linear-gradient(90deg, #e2e2e2 0%, rgba(226, 226, 226, 0) 100%);
 `;
+
+export const FlashDealBanner = styled.div`
+  background: #fffbeb;
+  border-top: 3px solid #f59e0b;
+  border-radius: 1rem 1rem 0 0;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+`;
+
+export const FlashDealTitle = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
+  color: #92400e;
+`;
+
+export const FlashDealMeta = styled.span`
+  ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+  color: #b45309;
+  white-space: nowrap;
+`;
