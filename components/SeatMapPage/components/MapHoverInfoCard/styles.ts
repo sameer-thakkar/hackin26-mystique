@@ -129,3 +129,79 @@ export const FlashDealMeta = styled.span`
   color: #b45309;
   white-space: nowrap;
 `;
+
+/* ── Flash Deal card panel (shown instead of normal card) ── */
+
+export const FlashDealCard = styled.div`
+  min-width: 18.75rem;
+  max-width: 20rem;
+  border: 1.5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+`;
+
+export const FlashDealCardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+`;
+
+export const FlashDealCardHeaderText = styled.span`
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f59e0b;
+`;
+
+export const FlashDealCardSeatLabel = styled.p`
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+  padding: 0;
+`;
+
+export const FlashDealCardPricingRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+`;
+
+export const FlashDealCardOriginalPrice = styled.span`
+  font-size: 13px;
+  color: #9ca3af;
+  text-decoration: line-through;
+`;
+
+export const FlashDealCardFlashPrice = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+`;
+
+export const FlashDealCardSavingsBadge = styled.span`
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+`;
+
+export const FlashDealCardCTA = styled.button`
+  width: 100%;
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+`;

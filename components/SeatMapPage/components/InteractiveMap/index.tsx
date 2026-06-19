@@ -154,7 +154,7 @@ const InteractiveMap = ({
     }
 
     const slotSet = new Set(flashDealSlots);
-    const injectedLabels: SVGTextElement[] = [];
+    const injectedTooltips: SVGGElement[] = [];
 
     svgEl.querySelectorAll<SVGGraphicsElement>('[class]').forEach((el) => {
       const cls = (el as SVGElement & { className: SVGAnimatedString })
@@ -165,13 +165,63 @@ const InteractiveMap = ({
 
       try {
         const bbox = el.getBBox();
-        const text = document.createElementNS(SVG_NS, 'text') as SVGTextElement;
-        text.classList.add('flash-deal-text');
-        text.setAttribute('x', String(bbox.x + bbox.width / 2));
-        text.setAttribute('y', String(bbox.y - 4));
-        text.textContent = '⚡ Flash Deal';
-        svgEl.appendChild(text);
-        injectedLabels.push(text);
+
+        // Tooltip dimensions
+        const TOOLTIP_W = 78;
+        const TOOLTIP_H = 34;
+        const TRIANGLE_H = 6;
+        const cx = bbox.x + bbox.width / 2;
+        const tooltipX = cx - TOOLTIP_W / 2;
+        const tooltipY = bbox.y - TOOLTIP_H - TRIANGLE_H - 4;
+
+        const group = document.createElementNS(SVG_NS, 'g') as SVGGElement;
+        group.classList.add('flash-deal-tooltip');
+
+        // Dark pill background
+        const rect = document.createElementNS(SVG_NS, 'rect');
+        rect.setAttribute('x', String(tooltipX));
+        rect.setAttribute('y', String(tooltipY));
+        rect.setAttribute('width', String(TOOLTIP_W));
+        rect.setAttribute('height', String(TOOLTIP_H));
+        rect.setAttribute('rx', '6');
+        rect.setAttribute('fill', '#1A1A1A');
+
+        // Downward-pointing triangle
+        const triTop = tooltipY + TOOLTIP_H;
+        const triangle = document.createElementNS(SVG_NS, 'polygon');
+        triangle.setAttribute(
+          'points',
+          `${cx - 5},${triTop} ${cx + 5},${triTop} ${cx},${triTop + TRIANGLE_H}`
+        );
+        triangle.setAttribute('fill', '#1A1A1A');
+
+        // Line 1: "⚡ Flash Deal" in amber
+        const text1 = document.createElementNS(SVG_NS, 'text') as SVGTextElement;
+        text1.setAttribute('x', String(cx));
+        text1.setAttribute('y', String(tooltipY + 13));
+        text1.setAttribute('fill', '#F59E0B');
+        text1.setAttribute('font-size', '9');
+        text1.setAttribute('font-weight', '700');
+        text1.setAttribute('text-anchor', 'middle');
+        text1.setAttribute('pointer-events', 'none');
+        text1.textContent = '⚡ Flash Deal';
+
+        // Line 2: "20% off" in white
+        const text2 = document.createElementNS(SVG_NS, 'text') as SVGTextElement;
+        text2.setAttribute('x', String(cx));
+        text2.setAttribute('y', String(tooltipY + 25));
+        text2.setAttribute('fill', '#FFFFFF');
+        text2.setAttribute('font-size', '9');
+        text2.setAttribute('text-anchor', 'middle');
+        text2.setAttribute('pointer-events', 'none');
+        text2.textContent = '20% off';
+
+        group.appendChild(rect);
+        group.appendChild(triangle);
+        group.appendChild(text1);
+        group.appendChild(text2);
+        svgEl.appendChild(group);
+        injectedTooltips.push(group);
       } catch {
         // getBBox can throw when SVG is not yet laid out — skip gracefully
       }
@@ -181,7 +231,7 @@ const InteractiveMap = ({
       svgEl.querySelectorAll('.flash-deal-section').forEach((el) => {
         el.classList.remove('flash-deal-section');
       });
-      injectedLabels.forEach((t) => t.parentNode?.removeChild(t));
+      injectedTooltips.forEach((g) => g.parentNode?.removeChild(g));
       svgEl.querySelector(`#${FLASH_DEAL_STYLE_ID}`)?.remove();
     };
   }, [flashDealSlots, theatreType]);

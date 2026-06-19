@@ -9,4 +9,7 @@ export type TMapHoverInfoCardParams = {
   isFlashDeal?: boolean;
   flashDealDiscount?: string;
   flashDealSeatsLeft?: number;
+  flashDealOriginalPrice?: string;
+  flashDealPrice?: string;
+  flashDealSavings?: string;
 };

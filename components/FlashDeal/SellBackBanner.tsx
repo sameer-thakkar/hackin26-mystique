@@ -1,68 +1,66 @@
 import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
-import COLORS from 'const/colors';
 
-const BannerWrapper = styled.div`
+const BannerStrip = styled.div`
+  border-radius: 12px;
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  background: #faeeda;
-  border-left: 4px solid #f59e0b;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin-bottom: 0.75rem;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(245, 158, 11, 0.12);
 `;
 
-const BannerLeft = styled.div`
+const LeftSection = styled.div`
   display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  flex: 1;
+  align-items: center;
+  gap: 14px;
 `;
 
-const BoltIcon = styled.span`
-  font-size: 1.125rem;
-  line-height: 1.4;
+const IconContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 `;
 
-const TextBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
+const TextBlock = styled.div``;
+
+const Headline = styled.p`
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 3px;
 `;
 
-const Title = styled.p`
+const SubText = styled.p`
+  font-size: 13px;
+  color: #6b6b6b;
   margin: 0;
-  color: ${COLORS.GRAY.G2};
-  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
 `;
 
-const Subtitle = styled.p`
-  margin: 0;
-  color: ${COLORS.GRAY.G3};
-  ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+const Highlight = styled.span`
+  color: #f59e0b;
+  font-weight: 700;
 `;
 
 const CtaButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.875rem;
-  background: #f59e0b;
+  background: #7c3aed;
   color: #ffffff;
   border: none;
-  border-radius: 1rem;
+  border-radius: 8px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)}
-
-  &:hover {
-    background: #d97706;
-  }
+  font-family: Inter, system-ui, sans-serif;
 `;
 
 type SellBackBannerProps = {
@@ -72,20 +70,43 @@ type SellBackBannerProps = {
   onCta: () => void;
 };
 
+const renderSubtitle = (subtitle: string) => {
+  const match = subtitle.match(/(.*?)(20% off)(.*)/);
+  if (!match) return subtitle;
+  const [, before, highlight, after] = match;
+  return (
+    <>
+      {before}
+      <Highlight>{highlight}</Highlight>
+      {after}
+    </>
+  );
+};
+
 const SellBackBanner = ({ title, subtitle, ctaLabel, onCta }: SellBackBannerProps) => {
   return (
-    <BannerWrapper>
-      <BannerLeft>
-        <BoltIcon>⚡</BoltIcon>
+    <BannerStrip>
+      <LeftSection>
+        <IconContainer>
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="#F59E0B"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </IconContainer>
         <TextBlock>
-          <Title>{title}</Title>
-          <Subtitle>{subtitle}</Subtitle>
+          <Headline>{title}</Headline>
+          <SubText>{renderSubtitle(subtitle)}</SubText>
         </TextBlock>
-      </BannerLeft>
-      <CtaButton onClick={onCta} type="button">
-        {ctaLabel} →
+      </LeftSection>
+      <CtaButton type="button" onClick={onCta}>
+        {ctaLabel}
       </CtaButton>
-    </BannerWrapper>
+    </BannerStrip>
   );
 };
 
